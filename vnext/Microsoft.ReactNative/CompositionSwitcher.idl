@@ -91,6 +91,16 @@ namespace Microsoft.ReactNative.Composition
 
   [webhosthidden]
   [experimental]
+  interface ICaretVisual
+  {
+    IVisual InnerVisual { get; };
+    void Size(Windows.Foundation.Numerics.Vector2 size);
+    void Position(Windows.Foundation.Numerics.Vector2 position);
+    Boolean IsVisible { get; set; };
+  }
+
+  [webhosthidden]
+  [experimental]
   interface ICompositionContext
   {
     ICompositionDrawingSurface CreateDrawingSurface(Windows.Foundation.Size surfaceSize,
@@ -99,7 +109,7 @@ namespace Microsoft.ReactNative.Composition
 
     SpriteVisual CreateSpriteVisual();
     ScrollVisual CreateScrollerVisual();
-    IVisual CreateCaratVisual();
+    ICaretVisual CreateCaretVisual();
     IDropShadow CreateDropShadow();
     IBrush CreateColorBrush(Windows.UI.Color color);
     SurfaceBrush CreateSurfaceBrush(ICompositionDrawingSurface surface);

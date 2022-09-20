@@ -525,6 +525,66 @@ struct CompScrollerVisual : winrt::Microsoft::ReactNative::Composition::implemen
   winrt::Windows::UI::Composition::Interactions::VisualInteractionSource m_visualInteractionSource{nullptr};
 };
 
+struct CompCaretVisual : winrt::implements<CompCaretVisual, winrt::Microsoft::ReactNative::Composition::ICaretVisual> {
+
+  CompCaretVisual(winrt::Windows::UI::Composition::Compositor const &compositor)
+      : m_compositor(compositor),
+        m_compVisual(compositor.CreateSpriteVisual()),
+        m_opacityAnimation(compositor.CreateScalarKeyFrameAnimation()) {
+    m_visual = winrt::make<Composition::CompSpriteVisual>(m_compVisual);
+
+    // TODO should make the caret use an invert brush by default
+    m_compVisual.Brush(m_compositor.CreateColorBrush(winrt::Windows::UI::Colors::Black()));
+    m_compVisual.Opacity(1.0f);
+    m_compVisual.RelativeSizeAdjustment({0.0f, 1.0f});
+
+    // Blinking animation
+    constexpr float ftCaretFadePct = 0.2385714285714f;
+    constexpr float stayVisFrame = (1.0f - ftCaretFadePct) / 2.0f;
+    constexpr float fadeVisFrame = ftCaretFadePct / 2.0f;
+
+    m_opacityAnimation.InsertKeyFrame(0.0f, 1.0f);
+    m_opacityAnimation.InsertKeyFrame(stayVisFrame, 1.0f);
+    m_opacityAnimation.InsertKeyFrame(stayVisFrame + fadeVisFrame, 0.0f, m_compositor.CreateLinearEasingFunction());
+    m_opacityAnimation.InsertKeyFrame(stayVisFrame + fadeVisFrame + stayVisFrame, 0.0f);
+    m_opacityAnimation.InsertKeyFrame(1.0f, 1.0f, m_compositor.CreateLinearEasingFunction());
+    m_opacityAnimation.Duration(std::chrono::milliseconds{1000});
+    m_opacityAnimation.IterationBehavior(winrt::Windows::UI::Composition::AnimationIterationBehavior::Count);
+    m_opacityAnimation.IterationCount(500);
+  }
+
+  winrt::Microsoft::ReactNative::Composition::IVisual InnerVisual() const noexcept {
+    return m_visual;
+  }
+
+  void Size(winrt::Windows::Foundation::Numerics::float2 size) noexcept {
+    m_compVisual.Size(size);
+  }
+
+  void Position(winrt::Windows::Foundation::Numerics::float2 position) noexcept {
+    m_compVisual.Offset({position.x, position.y, 0.0f});
+  }
+
+  bool IsVisible() const noexcept {
+    return m_isVisible;
+  }
+
+  void IsVisible(bool value) noexcept {
+    if (value) {
+      m_compVisual.StartAnimation(L"opacity", m_opacityAnimation);
+    } else {
+      m_compVisual.StopAnimation(L"opacity");
+    }
+  }
+
+ private:
+  bool m_isVisible{false};
+  winrt::Windows::UI::Composition::SpriteVisual m_compVisual;
+  winrt::Microsoft::ReactNative::Composition::IVisual m_visual;
+  winrt::Windows::UI::Composition::ScalarKeyFrameAnimation m_opacityAnimation;
+  winrt::Windows::UI::Composition::Compositor m_compositor{nullptr};
+};
+
 struct CompContext : winrt::implements<
                          CompContext,
                          winrt::Microsoft::ReactNative::Composition::ICompositionContext,
@@ -629,29 +689,8 @@ struct CompContext : winrt::implements<
     return winrt::make<Composition::CompSurfaceBrush>(m_compositor, surface);
   }
 
-  winrt::Microsoft::ReactNative::Composition::IVisual CreateCaratVisual() noexcept {
-    auto compVisual = m_compositor.CreateSpriteVisual();
-    auto carat = winrt::make<Composition::CompSpriteVisual>(compVisual);
-
-    compVisual.Brush(m_compositor.CreateColorBrush(winrt::Windows::UI::Colors::Black()));
-    compVisual.Opacity(1.0f);
-    compVisual.RelativeSizeAdjustment({0.0f, 1.0f});
-
-    // Blinking animation
-    constexpr float ftCaretFadePct = 0.2385714285714f;
-    constexpr float stayVisFrame = (1.0f - ftCaretFadePct) / 2.0f;
-    constexpr float fadeVisFrame = ftCaretFadePct / 2.0f;
-
-    auto opacityAnimation = m_compositor.CreateScalarKeyFrameAnimation();
-    opacityAnimation.InsertKeyFrame(0.0f, 1.0f);
-    opacityAnimation.InsertKeyFrame(stayVisFrame, 1.0f);
-    opacityAnimation.InsertKeyFrame(stayVisFrame + fadeVisFrame, 0.0f, m_compositor.CreateLinearEasingFunction());
-    opacityAnimation.InsertKeyFrame(stayVisFrame + fadeVisFrame + stayVisFrame, 0.0f);
-    opacityAnimation.InsertKeyFrame(1.0f, 1.0f, m_compositor.CreateLinearEasingFunction());
-    opacityAnimation.Duration(std::chrono::milliseconds{1000});
-    opacityAnimation.IterationBehavior(winrt::Windows::UI::Composition::AnimationIterationBehavior::Forever);
-
-    return carat;
+  winrt::Microsoft::ReactNative::Composition::ICaretVisual CreateCaretVisual() noexcept {
+    return winrt::make<Composition::CompCaretVisual>(m_compositor);
   }
 
   winrt::Windows::UI::Composition::CompositionGraphicsDevice CompositionGraphicsDevice() noexcept {

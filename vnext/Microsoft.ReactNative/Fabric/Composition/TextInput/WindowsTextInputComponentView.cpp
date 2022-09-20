@@ -953,10 +953,8 @@ void WindowsTextInputComponentView::DrawCaret(bool show) noexcept {
 
   if (show && !m_caretShown) {
     m_caretVisual.IsVisible(true);
-    // m_caretVisual.StartAnimation(L"opacity", m_caretOpacityAnimation);
   } else if (!show && m_caretShown) {
     m_caretVisual.IsVisible(false);
-    // m_caretVisual.Opacity(0.0f);
   }
 
   m_caretShown = show;
@@ -972,7 +970,7 @@ void WindowsTextInputComponentView::DrawCaret(bool show) noexcept {
 
     auto rcClient = getClientRect();
     xPos -= rcClient.left;
-    m_caretVisual.Offset({static_cast<float>(xPos), 0.0f, 0.0f});
+    m_caretVisual.Position({static_cast<float>(xPos), 0.0f});
   }
 }
 
@@ -1062,8 +1060,8 @@ void WindowsTextInputComponentView::ensureVisual() noexcept {
   }
 
   if (!m_caretVisual) {
-    m_caretVisual = m_compContext.CreateCaratVisual();
-    m_visual.InsertAt(m_caretVisual, 0);
+    m_caretVisual = m_compContext.CreateCaretVisual();
+    m_visual.InsertAt(m_caretVisual.InnerVisual(), 0);
   }
 }
 
