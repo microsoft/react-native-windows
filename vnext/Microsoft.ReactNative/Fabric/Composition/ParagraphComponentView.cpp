@@ -374,6 +374,8 @@ void ParagraphComponentView::DrawText() noexcept {
     d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
     assert(d2dDeviceContext->GetUnitMode() == D2D1_UNIT_MODE_DIPS);
     const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
+    float oldDpiX, oldDpiY;
+    d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
     d2dDeviceContext->SetDpi(dpi, dpi);
 
     // Draw the line of text at the specified offset, which corresponds to the top-left
@@ -385,6 +387,9 @@ void ParagraphComponentView::DrawText() noexcept {
             static_cast<FLOAT>((offset.y + m_layoutMetrics.contentInsets.top) / m_layoutMetrics.pointScaleFactor)),
         m_textLayout.get(),
         brush.get());
+
+    // restore dpi to old state
+    d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
 
     // Our update is done. EndDraw never indicates rendering device removed, so any
     // failure here is unexpected and, therefore, fatal.

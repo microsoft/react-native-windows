@@ -151,8 +151,7 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Create the caret
   BOOL TxCreateCaret(HBITMAP hbmp, INT xWidth, INT yHeight) override {
-    m_outer->m_caretVisual.Size(
-        {xWidth * m_outer->m_layoutMetrics.pointScaleFactor, yHeight * m_outer->m_layoutMetrics.pointScaleFactor});
+    m_outer->m_caretVisual.Size({static_cast<float>(xWidth), static_cast<float>(yHeight)});
     return true;
   }
 
@@ -257,15 +256,15 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Get the view rectangle relative to the inset
   HRESULT TxGetViewInset(LPRECT prc) override {
-    // Use 0 for all insets to avoid problems where the measured rect doesn't match the rect needed at render-time.
-    // If you really want these insets, add them AROUND the RichEdit rather than telling RichEdit to account for
-    // them inside its space.
-    int cxInset = 0;
+    // Inset is in HIMETRIC
+    constexpr float HmPerInchF = 2540.0f;
+    constexpr float PointsPerInch = 96.0f;
+    constexpr float dipToHm = HmPerInchF / PointsPerInch;
 
-    prc->left = cxInset;
-    prc->top = cxInset;
-    prc->bottom = cxInset;
-    prc->right = cxInset;
+    prc->left = static_cast<LONG>(m_outer->m_layoutMetrics.contentInsets.left * dipToHm);
+    prc->top = static_cast<LONG>(m_outer->m_layoutMetrics.contentInsets.top * dipToHm);
+    prc->bottom = static_cast<LONG>(m_outer->m_layoutMetrics.contentInsets.bottom * dipToHm);
+    prc->right = static_cast<LONG>(m_outer->m_layoutMetrics.contentInsets.right * dipToHm);
 
     return NOERROR;
   }
@@ -988,6 +987,8 @@ void WindowsTextInputComponentView::DrawText() noexcept {
     d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
     assert(d2dDeviceContext->GetUnitMode() == D2D1_UNIT_MODE_DIPS);
     const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
+    float oldDpiX, oldDpiY;
+    d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
     d2dDeviceContext->SetDpi(dpi, dpi);
 
     RECTL rc{
@@ -1007,6 +1008,9 @@ void WindowsTextInputComponentView::DrawText() noexcept {
     // TODO keep track of proper invalid rect
     auto hrDraw = m_textServices->TxDrawD2D(d2dDeviceContext.get(), &rc, nullptr, TXTVIEW_ACTIVE);
     winrt::check_hresult(hrDraw);
+
+    // restore dpi state
+    d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
 
     // Our update is done. EndDraw never indicates rendering device removed, so any
     // failure here is unexpected and, therefore, fatal.

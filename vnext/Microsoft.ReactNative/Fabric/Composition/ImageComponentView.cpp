@@ -312,7 +312,15 @@ void ImageComponentView::DrawImage() noexcept {
         static_cast<float>((offset.x + m_imgWidth) / m_layoutMetrics.pointScaleFactor),
         static_cast<float>((offset.y + m_imgHeight) / m_layoutMetrics.pointScaleFactor));
 
+    const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
+    float oldDpiX, oldDpiY;
+    d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
+    d2dDeviceContext->SetDpi(dpi, dpi);
+
     d2dDeviceContext->DrawBitmap(bitmap.get(), rect);
+
+    // Restore old dpi setting
+    d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
 
     // Our update is done. EndDraw never indicates rendering device removed, so any
     // failure here is unexpected and, therefore, fatal.
