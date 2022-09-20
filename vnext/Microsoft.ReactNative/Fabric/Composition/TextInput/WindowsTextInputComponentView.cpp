@@ -741,7 +741,7 @@ void WindowsTextInputComponentView::UpdateText(const std::string &str) noexcept 
   stt.codepage = CP_UTF8;
   LRESULT res;
 
-  	CHARRANGE cr;
+  CHARRANGE cr;
   cr.cpMin = cr.cpMax = 0;
   winrt::check_hresult(m_textServices->TxSendMessage(EM_EXGETSEL, 0, reinterpret_cast<LPARAM>(&cr), &res));
 

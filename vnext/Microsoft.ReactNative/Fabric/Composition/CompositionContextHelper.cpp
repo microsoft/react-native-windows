@@ -526,7 +526,6 @@ struct CompScrollerVisual : winrt::Microsoft::ReactNative::Composition::implemen
 };
 
 struct CompCaretVisual : winrt::implements<CompCaretVisual, winrt::Microsoft::ReactNative::Composition::ICaretVisual> {
-
   CompCaretVisual(winrt::Windows::UI::Composition::Compositor const &compositor)
       : m_compositor(compositor),
         m_compVisual(compositor.CreateSpriteVisual()),

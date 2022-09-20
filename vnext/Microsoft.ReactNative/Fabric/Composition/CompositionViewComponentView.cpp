@@ -757,7 +757,10 @@ void pixelRoundBorderRadii(facebook::react::BorderRadii &borderRadii, float scal
   borderRadii.bottomRight = std::floor(borderRadii.bottomRight * scaleFactor);
 }
 
-void scaleAndPixelRoundBorderWidths(facebook::react::BorderMetrics &borderMetrics, float scaleFactor) noexcept {
+void scaleAndPixelRoundBorderWidths(
+    facebook::react::LayoutMetrics const &layoutMetrics,
+    facebook::react::BorderMetrics &borderMetrics,
+    float scaleFactor) noexcept {
   borderMetrics.borderWidths.left = (borderMetrics.borderWidths.left == 0)
       ? 0.f
       : std::max(1.f, std::round(borderMetrics.borderWidths.left * scaleFactor));
@@ -770,6 +773,16 @@ void scaleAndPixelRoundBorderWidths(facebook::react::BorderMetrics &borderMetric
   borderMetrics.borderWidths.bottom = (borderMetrics.borderWidths.bottom == 0)
       ? 0.f
       : std::max(1.f, std::round(borderMetrics.borderWidths.bottom * scaleFactor));
+
+  // If we rounded both sides of the borderWidths up, we may have made the borderWidths larger than the total
+  if (layoutMetrics.frame.size.width * scaleFactor <
+      (borderMetrics.borderWidths.left + borderMetrics.borderWidths.right)) {
+    borderMetrics.borderWidths.right--;
+  }
+  if (layoutMetrics.frame.size.height * scaleFactor <
+      (borderMetrics.borderWidths.top + borderMetrics.borderWidths.bottom)) {
+    borderMetrics.borderWidths.bottom--;
+  }
 }
 
 // react-native uses black as a default color when none is specified.
@@ -794,7 +807,7 @@ facebook::react::BorderMetrics resolveAndAlignBorderMetrics(
   auto borderMetrics = viewProps.resolveBorderMetrics(layoutMetrics);
 
   pixelRoundBorderRadii(borderMetrics.borderRadii, layoutMetrics.pointScaleFactor);
-  scaleAndPixelRoundBorderWidths(borderMetrics, layoutMetrics.pointScaleFactor);
+  scaleAndPixelRoundBorderWidths(layoutMetrics, borderMetrics, layoutMetrics.pointScaleFactor);
   assignDefaultBlackBorders(borderMetrics);
   return borderMetrics;
 }
