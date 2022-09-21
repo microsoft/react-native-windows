@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 20 Sep 2022 05:13:21 GMT and should not be manually modified.
+This log was last generated on Wed, 21 Sep 2022 05:11:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.551
+
+Wed, 21 Sep 2022 05:11:34 GMT
+
+### Changes
+
+- Fix formatting in App.xaml.cs in C# WinAppSDK project template (lyahdav@users.noreply.github.com)
 
 ## 0.0.0-canary.550
 

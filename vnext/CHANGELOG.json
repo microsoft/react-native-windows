@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 21 Sep 2022 05:11:34 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.551",
+      "version": "0.0.0-canary.551",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "lyahdav@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "9c1ef6d2aa787ad862803b15a26512603c086762",
+            "comment": "Fix formatting in App.xaml.cs in C# WinAppSDK project template"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 20 Sep 2022 05:13:21 GMT",
       "tag": "react-native-windows_v0.0.0-canary.550",
       "version": "0.0.0-canary.550",
