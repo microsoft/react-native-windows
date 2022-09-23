@@ -439,7 +439,7 @@
     },
     {
       "type": "derived",
-      "file": "src/Libraries/Network/RCTNetworkingWinShared.js",
+      "file": "src/Libraries/Network/RCTNetworking.windows.js",
       "baseFile": "Libraries/Network/RCTNetworking.ios.js",
       "baseHash": "1af41a494d7354a1fb51697e906dbcd5761ad8fb"
     },
