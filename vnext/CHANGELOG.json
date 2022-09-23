@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 19 Sep 2022 15:10:15 GMT",
+      "tag": "react-native-windows_v0.70.1",
+      "version": "0.70.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "4161b2c6985d7b92b6f29de096a2074cfa84e51e",
+            "comment": "Implement HTTP redirection (#10534)"
+          },
+          {
+            "author": "ericroz@fb.com",
+            "package": "react-native-windows",
+            "commit": "76794bf8a66d76539e21050698d226dc687e79b1",
+            "comment": "Fixes bug introduced by pointerEvents change"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 12 Sep 2022 17:54:21 GMT",
       "tag": "react-native-windows_v0.70.0",
       "version": "0.70.0",

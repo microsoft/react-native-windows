@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 12 Sep 2022 17:54:21 GMT and should not be manually modified.
+This log was last generated on Mon, 19 Sep 2022 15:10:15 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.70.1
+
+Mon, 19 Sep 2022 15:10:15 GMT
+
+### Patches
+
+- Implement HTTP redirection (#10534) (julio.rocha@microsoft.com)
+- Fixes bug introduced by pointerEvents change (ericroz@fb.com)
 
 ## 0.70.0
 
