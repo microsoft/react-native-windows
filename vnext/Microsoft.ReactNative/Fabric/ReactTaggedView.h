@@ -20,14 +20,14 @@ struct ReactTaggedView {
     m_tag = m_view->tag();
   }
 
-  std::shared_ptr<IComponentView>& view() noexcept {
+  std::shared_ptr<IComponentView> &view() noexcept {
     if (m_view && m_view->tag() != m_tag) {
       m_view = nullptr;
     }
     return m_view;
   }
 
-private:
+ private:
   facebook::react::Tag m_tag;
   std::shared_ptr<IComponentView> m_view;
 };
