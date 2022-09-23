@@ -49,6 +49,9 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
   void parent(IComponentView *parent) noexcept override;
   void OnRenderingDeviceLost() noexcept override;
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
+  void onFocusLost() noexcept override;
+  void onFocusGained() noexcept override;
+  facebook::react::SharedTouchEventEmitter touchEventEmitter() noexcept override;
 
  private:
   struct DrawBlock {
@@ -61,7 +64,7 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
   void ensureVisual() noexcept;
   void ensureDrawingSurface() noexcept;
   void DrawText() noexcept;
-  void DrawCaret(bool show) noexcept;
+  void ShowCaret(bool show) noexcept;
   void UpdateCharFormat() noexcept;
   void UpdateParaFormat() noexcept;
   void UpdateText(const std::string &str) noexcept;
@@ -71,7 +74,7 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
 
   winrt::Windows::UI::Composition::CompositionSurfaceBrush m_brush{nullptr};
   winrt::Microsoft::ReactNative::Composition::SpriteVisual m_visual{nullptr};
-  winrt::Microsoft::ReactNative::Composition::IVisual m_caretVisual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::ICaretVisual m_caretVisual{nullptr};
   winrt::Microsoft::ReactNative::ReactContext m_context;
   winrt::Microsoft::ReactNative::Composition::ICompositionDrawingSurface m_drawingSurface{nullptr};
 
@@ -90,7 +93,6 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
   bool m_comingFromState{false};
   int m_cDrawBlock{0};
   bool m_needsRedraw{false};
-  bool m_caretShown{false};
   bool m_drawing{false};
 };
 

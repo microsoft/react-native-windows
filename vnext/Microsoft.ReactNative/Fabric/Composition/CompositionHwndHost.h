@@ -18,7 +18,7 @@ struct CompositionHwndHost : CompositionHwndHostT<CompositionHwndHost> {
   void Initialize(uint64_t hwnd) noexcept;
 
   // property ReactNativeHost
-  ReactNative::ReactNativeHost ReactNativeHost() noexcept;
+  ReactNative::ReactNativeHost ReactNativeHost() const noexcept;
   void ReactNativeHost(ReactNative::ReactNativeHost const &value) noexcept;
 
   // property ComponentName
@@ -30,8 +30,6 @@ struct CompositionHwndHost : CompositionHwndHostT<CompositionHwndHost> {
   void InitialProps(ReactNative::JSValueArgWriter const &value) noexcept;
 
   void ReloadView() noexcept;
-  winrt::Windows::UI::Composition::Compositor Compositor() const noexcept;
-  void Compositor(winrt::Windows::UI::Composition::Compositor const &value) noexcept;
   winrt::Windows::UI::Composition::Visual RootVisual() const noexcept;
 
   LRESULT TranslateMessage(int msg, uint64_t wParam, int64_t lParam) noexcept;
@@ -39,6 +37,7 @@ struct CompositionHwndHost : CompositionHwndHostT<CompositionHwndHost> {
  private:
   // Possibly should be public..
   winrt::Windows::UI::Composition::Desktop::DesktopWindowTarget Target() const noexcept;
+  winrt::Windows::UI::Composition::Compositor Compositor() const noexcept;
 
   void EnsureTarget() noexcept;
   void CreateDesktopWindowTarget(HWND window);
@@ -52,7 +51,6 @@ struct CompositionHwndHost : CompositionHwndHostT<CompositionHwndHost> {
 
   // Store locally if set before we have a rootview
   hstring m_componentName;
-  winrt::Windows::UI::Composition::Compositor m_compositor{nullptr};
   ReactNative::ReactNativeHost m_reactNativeHost{nullptr};
   ReactNative::JSValueArgWriter m_initialPropsWriter{nullptr};
 };

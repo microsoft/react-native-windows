@@ -111,22 +111,31 @@ facebook::react::Tag ParagraphComponentView::hitTest(facebook::react::Point pt, 
     const noexcept {
   facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
 
-  /*
-  facebook::react::Tag tag;
-  if (std::any_of(m_children.rbegin(), m_children.rend(), [&tag, &ptLocal](auto child) {
-        tag = static_cast<CompositionBaseComponentView *>(child)->hitTest(ptLocal);
-        return tag != -1;
-      }))
-    return tag;
-    */
+  facebook::react::Tag targetTag;
 
-  if (ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
+  /*
+    if ((m_props.pointerEvents == facebook::react::PointerEventsMode::Auto ||
+        m_props.pointerEvents == facebook::react::PointerEventsMode::BoxNone) && std::any_of(m_children.rbegin(),
+    m_children.rend(), [&targetTag, &ptLocal, &localPt](auto child) { targetTag = static_cast<const
+    CompositionBaseComponentView
+    *>(child)->hitTest(ptLocal, localPt); return targetTag != -1;
+        }))
+      return targetTag;
+      */
+
+  if ((m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
+       m_props->pointerEvents == facebook::react::PointerEventsMode::BoxOnly) &&
+      ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
       ptLocal.y <= m_layoutMetrics.frame.size.height) {
     localPt = ptLocal;
-    return Tag();
+    return tag();
   }
 
   return -1;
+}
+
+facebook::react::SharedTouchEventEmitter ParagraphComponentView::touchEventEmitter() noexcept {
+  return m_eventEmitter;
 }
 
 void ParagraphComponentView::ensureVisual() noexcept {
@@ -374,6 +383,8 @@ void ParagraphComponentView::DrawText() noexcept {
     d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
     assert(d2dDeviceContext->GetUnitMode() == D2D1_UNIT_MODE_DIPS);
     const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
+    float oldDpiX, oldDpiY;
+    d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
     d2dDeviceContext->SetDpi(dpi, dpi);
 
     // Draw the line of text at the specified offset, which corresponds to the top-left
@@ -385,6 +396,9 @@ void ParagraphComponentView::DrawText() noexcept {
             static_cast<FLOAT>((offset.y + m_layoutMetrics.contentInsets.top) / m_layoutMetrics.pointScaleFactor)),
         m_textLayout.get(),
         brush.get());
+
+    // restore dpi to old state
+    d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
 
     // Our update is done. EndDraw never indicates rendering device removed, so any
     // failure here is unexpected and, therefore, fatal.

@@ -22,6 +22,16 @@ CompositionBaseComponentView *GetFocusedComponent() noexcept {
   return g_focusedComponent;
 }
 void SetFocusedComponent(CompositionBaseComponentView *value) noexcept {
+  if (g_focusedComponent == value)
+    return;
+
+  if (g_focusedComponent) {
+    g_focusedComponent->onFocusLost();
+  }
+
+  if (value)
+    value->onFocusGained();
+
   g_focusedComponent = value;
 }
 
@@ -30,7 +40,7 @@ CompositionBaseComponentView::CompositionBaseComponentView(
     facebook::react::Tag tag)
     : m_tag(tag), m_compContext(compContext) {}
 
-facebook::react::Tag CompositionBaseComponentView::Tag() const noexcept {
+facebook::react::Tag CompositionBaseComponentView::tag() const noexcept {
   return m_tag;
 }
 
@@ -41,6 +51,10 @@ void CompositionBaseComponentView::parent(IComponentView *parent) noexcept {
 IComponentView *CompositionBaseComponentView::parent() const noexcept {
   return m_parent;
 }
+
+void CompositionBaseComponentView::onFocusLost() noexcept {}
+
+void CompositionBaseComponentView::onFocusGained() noexcept {}
 
 void CompositionBaseComponentView::updateEventEmitter(
     facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {
@@ -757,7 +771,10 @@ void pixelRoundBorderRadii(facebook::react::BorderRadii &borderRadii, float scal
   borderRadii.bottomRight = std::floor(borderRadii.bottomRight * scaleFactor);
 }
 
-void scaleAndPixelRoundBorderWidths(facebook::react::BorderMetrics &borderMetrics, float scaleFactor) noexcept {
+void scaleAndPixelRoundBorderWidths(
+    facebook::react::LayoutMetrics const &layoutMetrics,
+    facebook::react::BorderMetrics &borderMetrics,
+    float scaleFactor) noexcept {
   borderMetrics.borderWidths.left = (borderMetrics.borderWidths.left == 0)
       ? 0.f
       : std::max(1.f, std::round(borderMetrics.borderWidths.left * scaleFactor));
@@ -770,6 +787,16 @@ void scaleAndPixelRoundBorderWidths(facebook::react::BorderMetrics &borderMetric
   borderMetrics.borderWidths.bottom = (borderMetrics.borderWidths.bottom == 0)
       ? 0.f
       : std::max(1.f, std::round(borderMetrics.borderWidths.bottom * scaleFactor));
+
+  // If we rounded both sides of the borderWidths up, we may have made the borderWidths larger than the total
+  if (layoutMetrics.frame.size.width * scaleFactor <
+      (borderMetrics.borderWidths.left + borderMetrics.borderWidths.right)) {
+    borderMetrics.borderWidths.right--;
+  }
+  if (layoutMetrics.frame.size.height * scaleFactor <
+      (borderMetrics.borderWidths.top + borderMetrics.borderWidths.bottom)) {
+    borderMetrics.borderWidths.bottom--;
+  }
 }
 
 // react-native uses black as a default color when none is specified.
@@ -794,7 +821,7 @@ facebook::react::BorderMetrics resolveAndAlignBorderMetrics(
   auto borderMetrics = viewProps.resolveBorderMetrics(layoutMetrics);
 
   pixelRoundBorderRadii(borderMetrics.borderRadii, layoutMetrics.pointScaleFactor);
-  scaleAndPixelRoundBorderWidths(borderMetrics, layoutMetrics.pointScaleFactor);
+  scaleAndPixelRoundBorderWidths(layoutMetrics, borderMetrics, layoutMetrics.pointScaleFactor);
   assignDefaultBlackBorders(borderMetrics);
   return borderMetrics;
 }
@@ -1043,20 +1070,29 @@ facebook::react::Tag CompositionViewComponentView::hitTest(facebook::react::Poin
     const noexcept {
   facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
 
-  facebook::react::Tag tag;
-  if (std::any_of(m_children.rbegin(), m_children.rend(), [&tag, &ptLocal, &localPt](auto child) {
-        tag = static_cast<const CompositionBaseComponentView *>(child)->hitTest(ptLocal, localPt);
-        return tag != -1;
-      }))
-    return tag;
+  facebook::react::Tag targetTag;
 
-  if (ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
+  if ((m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
+       m_props->pointerEvents == facebook::react::PointerEventsMode::BoxNone) &&
+      std::any_of(m_children.rbegin(), m_children.rend(), [&targetTag, &ptLocal, &localPt](auto child) {
+        targetTag = static_cast<const CompositionBaseComponentView *>(child)->hitTest(ptLocal, localPt);
+        return targetTag != -1;
+      }))
+    return targetTag;
+
+  if ((m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
+       m_props->pointerEvents == facebook::react::PointerEventsMode::BoxOnly) &&
+      ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
       ptLocal.y <= m_layoutMetrics.frame.size.height) {
     localPt = ptLocal;
-    return Tag();
+    return tag();
   }
 
   return -1;
+}
+
+facebook::react::SharedTouchEventEmitter CompositionViewComponentView::touchEventEmitter() noexcept {
+  return m_eventEmitter;
 }
 
 bool CompositionViewComponentView::ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept {
@@ -1102,8 +1138,7 @@ void CompositionViewComponentView::finalizeUpdates(RNComponentViewUpdateMask upd
 
 void CompositionViewComponentView::prepareForRecycle() noexcept {}
 facebook::react::Props::Shared CompositionViewComponentView::props() noexcept {
-  assert(false);
-  return {};
+  return m_props;
 }
 
 winrt::Microsoft::ReactNative::Composition::IVisual CompositionViewComponentView::Visual() const noexcept {
