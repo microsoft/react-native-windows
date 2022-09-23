@@ -15,6 +15,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace http = boost::beast::http;
 
+using folly::dynamic;
 using Microsoft::React::Networking::IHttpResource;
 using Microsoft::React::Networking::OriginPolicy;
 using std::make_shared;
@@ -82,7 +83,8 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     auto reqHandler = [&serverArgs](const DynamicRequest& request) -> ResponseWrapper
     {
-      return { std::move(serverArgs.Response) };
+      // Don't use move constructor in case of multiple requests
+      return { serverArgs.Response };
     };
 
     switch (clientArgs.Method)
@@ -133,7 +135,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
         clientArgs.ResponseContent = std::move(content);
         clientArgs.ContentPromise.set_value();
     });
-    resource->SetOnError([&clientArgs](int64_t, string&& message)
+    resource->SetOnError([&clientArgs](int64_t, string&& message, bool)
     {
       clientArgs.ErrorMessage = std::move(message);
       clientArgs.ContentPromise.set_value();
@@ -144,10 +146,10 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
       string{server1Args.Url},
       0,                          /*requestId*/
       std::move(clientArgs.RequestHeaders),
-      {},                         /*data*/
+      dynamic::object("string", ""),  /*data*/
       "text",
       false,                      /*useIncrementalUpdates*/
-      1000,                       /*timeout*/
+      0,                       /*timeout*/
       clientArgs.WithCredentials, /*withCredentials*/
       [](int64_t){}               /*reactCallback*/
     );
@@ -187,7 +189,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
       clientArgs.ResponseContent = std::move(content);
       clientArgs.ContentPromise.set_value();
     });
-    resource->SetOnError([&clientArgs](int64_t, string&& message)
+    resource->SetOnError([&clientArgs](int64_t, string&& message, bool)
     {
       clientArgs.ErrorMessage = std::move(message);
       clientArgs.ContentPromise.set_value();
@@ -198,10 +200,10 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
       string{serverArgs.Url},
       0,                          /*requestId*/
       std::move(clientArgs.RequestHeaders),
-      {},                         /*data*/
+      dynamic::object("string", ""),  /*data*/
       "text",
       false,                      /*useIncrementalUpdates*/
-      1000,                       /*timeout*/
+      0,                       /*timeout*/
       clientArgs.WithCredentials, /*withCredentials*/
       [](int64_t) {}              /*reactCallback*/
     );
@@ -223,15 +225,15 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
   TEST_METHOD_CLEANUP(MethodCleanup)
   {
+    // Clear any runtime options that may be used by tests in this class.
     SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::None));
     SetRuntimeOptionString("Http.GlobalOrigin", {});
+    SetRuntimeOptionBool("Http.OmitCredentials", false);
 
     // Bug in HttpServer does not correctly release TCP port between test methods.
     // Using a different por per test for now.
     s_port++;
   }
-
-  //TODO: NoCors_InvalidMethod_Failed?
 
   BEGIN_TEST_METHOD_ATTRIBUTE(NoCorsForbiddenMethodSucceeds)
     // CONNECT, TRACE, and TRACK methods not supported by Windows.Web.Http
@@ -283,7 +285,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
         getContent = std::move(content);
         getDataPromise.set_value();
       });
-    resource->SetOnError([&server, &error, &getDataPromise](int64_t, string&& message)
+    resource->SetOnError([&server, &error, &getDataPromise](int64_t, string&& message, bool)
       {
         error = std::move(message);
         getDataPromise.set_value();
@@ -296,11 +298,10 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
       {
         {"ValidHeader", "AnyValue"}
       },
-      {},                         /*data*/
-      //{} /*bodyData*/,
+      dynamic::object("string", ""),  /*data*/
       "text",
       false /*useIncrementalUpdates*/,
-      1000 /*timeout*/,
+      0 /*timeout*/,
       false /*withCredentials*/,
       [](int64_t) {} /*callback*/
     );
@@ -324,6 +325,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
     SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::SimpleCrossOriginResourceSharing));
+
     TestOriginPolicy(serverArgs, clientArgs, s_shouldFail);
   }// SimpleCorsForbiddenMethodFails
 
@@ -343,8 +345,6 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     TestOriginPolicy(serverArgs, clientArgs, true /*shouldSucceed*/);
   }// NoCorsCrossOriginFetchRequestSucceeds
-
-  //NoCors_CrossOriginFetchRequestWithTimeout_Succeeded //TODO: Implement timeout
 
   BEGIN_TEST_METHOD_ATTRIBUTE(NoCorsCrossOriginPatchSucceededs)
   END_TEST_METHOD_ATTRIBUTE()
@@ -377,6 +377,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     SetRuntimeOptionString("Http.GlobalOrigin", serverArgs.Url.c_str());
     SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::SimpleCrossOriginResourceSharing));
+
     TestOriginPolicy(serverArgs, clientArgs, true /*shouldSucceed*/);
   }// SimpleCorsSameOriginSucceededs
 
@@ -390,6 +391,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
     SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::SimpleCrossOriginResourceSharing));
+
     TestOriginPolicy(serverArgs, clientArgs, s_shouldFail);
   }// SimpleCorsCrossOriginFetchFails
 
@@ -404,6 +406,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     SetRuntimeOptionString("Http.GlobalOrigin", serverArgs.Url.c_str());
     SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+
     TestOriginPolicy(serverArgs, clientArgs, true /*shouldSucceed*/);
   }// FullCorsSameOriginRequestSucceeds
 
@@ -669,9 +672,6 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   } // FullCorsCrossOriginToAnotherCrossOriginRedirectSucceeds
 
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginToAnotherCrossOriginRedirectWithPreflightSucceeds)
-    // [0x80072f88] The HTTP redirect request must be confirmed by the user
-    //TODO: Figure out manual redirection.
-    TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(FullCorsCrossOriginToAnotherCrossOriginRedirectWithPreflightSucceeds)
   {
@@ -763,8 +763,6 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   // The current implementation omits withCredentials flag from request and always sets it to false
   // Configure the responses for CORS request
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginWithCredentialsSucceeds)
-    //TODO: Fails if run after FullCorsCrossOriginWithCredentialsFails
-    TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(FullCorsCrossOriginWithCredentialsSucceeds)
   {
@@ -823,15 +821,6 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     TestOriginPolicy(serverArgs, clientArgs, s_shouldFail);
   }// RequestWithProxyAuthorizationHeaderFails
-
-  BEGIN_TEST_METHOD_ATTRIBUTE(ExceedingRedirectLimitFails)
-    TEST_IGNORE()
-  END_TEST_METHOD_ATTRIBUTE()
-  TEST_METHOD(ExceedingRedirectLimitFails)
-  {
-    Assert::Fail(L"NOT IMPLEMENTED");
-  }// ExceedingRedirectLimitFails
-
 };
 
 uint16_t HttpOriginPolicyIntegrationTest::s_port = 7777;

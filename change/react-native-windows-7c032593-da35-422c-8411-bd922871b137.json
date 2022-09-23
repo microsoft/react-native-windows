@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Export OriginPolicy.h to NuGet package (#10615)",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}

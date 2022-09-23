@@ -3,11 +3,14 @@
 
 #pragma once
 
+#include "IRedirectEventSource.h"
 #include "OriginPolicy.h"
 
 // Windows API
+#include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Web.Http.Filters.h>
+#include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/Windows.Web.Http.h>
 
 // Standard Library
@@ -16,7 +19,8 @@
 namespace Microsoft::React::Networking {
 
 class OriginPolicyHttpFilter
-    : public winrt::implements<OriginPolicyHttpFilter, winrt::Windows::Web::Http::Filters::IHttpFilter> {
+    : public winrt::
+          implements<OriginPolicyHttpFilter, winrt::Windows::Web::Http::Filters::IHttpFilter, IRedirectEventSource> {
  public:
   struct ConstWcharComparer {
     bool operator()(const wchar_t *, const wchar_t *) const;
@@ -75,7 +79,7 @@ class OriginPolicyHttpFilter
       winrt::Windows::Web::Http::HttpResponseMessage const &response,
       bool removeAll);
 
-  OriginPolicyHttpFilter(winrt::Windows::Web::Http::Filters::IHttpFilter &&innerFilter);
+  OriginPolicyHttpFilter(winrt::Windows::Web::Http::Filters::IHttpFilter const &innerFilter);
 
   OriginPolicyHttpFilter();
 
@@ -92,12 +96,21 @@ class OriginPolicyHttpFilter
   void ValidateAllowOrigin(
       winrt::hstring const &allowedOrigin,
       winrt::hstring const &allowCredentials,
-      winrt::Windows::Foundation::IInspectable const &iArgs) const;
+      winrt::Windows::Foundation::Collections::IMap<winrt::hstring, winrt::Windows::Foundation::IInspectable> props)
+      const;
 
   winrt::Windows::Foundation::IAsyncOperationWithProgress<
       winrt::Windows::Web::Http::HttpResponseMessage,
       winrt::Windows::Web::Http::HttpProgress>
   SendPreflightAsync(winrt::Windows::Web::Http::HttpRequestMessage const &request) const;
+
+#pragma region IRedirectEventSource
+
+  bool OnRedirecting(
+      winrt::Windows::Web::Http::HttpRequestMessage const &request,
+      winrt::Windows::Web::Http::HttpResponseMessage const &response) noexcept override;
+
+#pragma endregion IRedirectEventSource
 
 #pragma region IHttpFilter
 
