@@ -1,8 +1,41 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 15 Sep 2022 05:11:52 GMT and should not be manually modified.
+This log was last generated on Fri, 23 Sep 2022 05:11:38 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.552
+
+Fri, 23 Sep 2022 05:11:38 GMT
+
+### Changes
+
+- Remove comment (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.551
+
+Wed, 21 Sep 2022 05:11:34 GMT
+
+### Changes
+
+- Fix formatting in App.xaml.cs in C# WinAppSDK project template (lyahdav@users.noreply.github.com)
+
+## 0.0.0-canary.550
+
+Tue, 20 Sep 2022 05:13:21 GMT
+
+### Changes
+
+- Switch to std::unordered_map for shadow and Yoga nodes (erozell@outlook.com)
+
+## 0.0.0-canary.549
+
+Sat, 17 Sep 2022 05:11:03 GMT
+
+### Changes
+
+- Alter Accessibility Protocol (34109996+chiaramooney@users.noreply.github.com)
+- Implement HTTP redirection (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.548
 
