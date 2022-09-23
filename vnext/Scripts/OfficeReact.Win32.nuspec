@@ -57,6 +57,7 @@
     <file src="$nugetroot$\inc\Shared\Modules\I18nModule.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\NativeModuleProvider.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\Networking\IWebSocketResource.h" target="inc"/>
+    <file src="$nugetroot$\inc\Shared\Networking\OriginPolicy.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\RuntimeOptions.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\Tracing.h" target="inc"/>
 

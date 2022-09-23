@@ -72,9 +72,11 @@ static void SetUpHttpResource(
   };
   resource->SetOnData(std::move(onDataDynamic));
 
-  resource->SetOnError([weakReactInstance](int64_t requestId, string &&message) {
+  resource->SetOnError([weakReactInstance](int64_t requestId, string &&message, bool isTimeout) {
     dynamic args = dynamic::array(requestId, std::move(message));
-    // TODO: isTimeout errorArgs.push_back(true);
+    if (isTimeout) {
+      args.push_back(true);
+    }
 
     SendEvent(weakReactInstance, completedResponse, std::move(args));
   });
