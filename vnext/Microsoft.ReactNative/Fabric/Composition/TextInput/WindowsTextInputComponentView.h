@@ -51,6 +51,7 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
   void onFocusLost() noexcept override;
   void onFocusGained() noexcept override;
+  facebook::react::SharedTouchEventEmitter touchEventEmitter() noexcept override;
 
  private:
   struct DrawBlock {

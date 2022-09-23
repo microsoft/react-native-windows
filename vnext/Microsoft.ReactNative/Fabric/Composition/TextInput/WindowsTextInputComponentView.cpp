@@ -847,8 +847,7 @@ void WindowsTextInputComponentView::finalizeUpdates(RNComponentViewUpdateMask up
 }
 void WindowsTextInputComponentView::prepareForRecycle() noexcept {}
 facebook::react::Props::Shared WindowsTextInputComponentView::props() noexcept {
-  assert(false);
-  return {};
+  return m_props;
 }
 
 void WindowsTextInputComponentView::UpdateCharFormat() noexcept {
@@ -1025,21 +1024,31 @@ facebook::react::Tag WindowsTextInputComponentView::hitTest(facebook::react::Poi
     const noexcept {
   facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
 
+  facebook::react::Tag targetTag;
+
   /*
-    facebook::react::Tag tag;
-    if (std::any_of(m_children.rbegin(), m_children.rend(), [&tag, &ptLocal, &localPt](auto child) {
-          tag = static_cast<const CompositionBaseComponentView *>(child)->hitTest(ptLocal, localPt);
-          return tag != -1;
+    if ((m_props.pointerEvents == facebook::react::PointerEventsMode::Auto ||
+        m_props.pointerEvents == facebook::react::PointerEventsMode::BoxNone) && std::any_of(m_children.rbegin(),
+    m_children.rend(), [&targetTag, &ptLocal, &localPt](auto child) { targetTag = static_cast<const
+    CompositionBaseComponentView
+    *>(child)->hitTest(ptLocal, localPt); return targetTag != -1;
         }))
-      return tag;
-  */
-  if (ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
+      return targetTag;
+      */
+
+  if ((m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
+       m_props->pointerEvents == facebook::react::PointerEventsMode::BoxOnly) &&
+      ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
       ptLocal.y <= m_layoutMetrics.frame.size.height) {
     localPt = ptLocal;
-    return Tag();
+    return tag();
   }
 
   return -1;
+}
+
+facebook::react::SharedTouchEventEmitter WindowsTextInputComponentView::touchEventEmitter() noexcept {
+  return m_eventEmitter;
 }
 
 void WindowsTextInputComponentView::ensureVisual() noexcept {

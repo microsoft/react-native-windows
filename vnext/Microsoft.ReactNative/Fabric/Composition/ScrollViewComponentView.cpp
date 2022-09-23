@@ -170,7 +170,7 @@ void ScrollViewComponentView::updateProps(
     m_needsBorderUpdate = true;
   }
   */
-  // m_props = std::static_pointer_cast<facebook::react::TextProps const>(props);
+  m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
 }
 
 void ScrollViewComponentView::updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {}
@@ -323,20 +323,28 @@ facebook::react::Tag ScrollViewComponentView::hitTest(facebook::react::Point pt,
       ptViewport.x + m_visual.ScrollPosition().x / m_layoutMetrics.pointScaleFactor,
       ptViewport.y + m_visual.ScrollPosition().y / m_layoutMetrics.pointScaleFactor};
 
-  facebook::react::Tag tag;
-  if (std::any_of(m_children.rbegin(), m_children.rend(), [&tag, &ptContent, &localPt](auto child) {
-        tag = static_cast<const CompositionBaseComponentView *>(child)->hitTest(ptContent, localPt);
-        return tag != -1;
+  facebook::react::Tag targetTag;
+  if ((m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
+       m_props->pointerEvents == facebook::react::PointerEventsMode::BoxNone) &&
+      std::any_of(m_children.rbegin(), m_children.rend(), [&targetTag, &ptContent, &localPt](auto child) {
+        targetTag = static_cast<const CompositionBaseComponentView *>(child)->hitTest(ptContent, localPt);
+        return targetTag != -1;
       }))
-    return tag;
+    return targetTag;
 
-  if (ptViewport.x >= 0 && ptViewport.x <= m_layoutMetrics.frame.size.width && ptViewport.y >= 0 &&
+  if ((m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
+       m_props->pointerEvents == facebook::react::PointerEventsMode::BoxOnly) &&
+      ptViewport.x >= 0 && ptViewport.x <= m_layoutMetrics.frame.size.width && ptViewport.y >= 0 &&
       ptViewport.y <= m_layoutMetrics.frame.size.height) {
     localPt = ptViewport;
-    return Tag();
+    return this->tag();
   }
 
   return -1;
+}
+
+facebook::react::SharedTouchEventEmitter ScrollViewComponentView::touchEventEmitter() noexcept {
+  return m_eventEmitter;
 }
 
 winrt::Microsoft::ReactNative::Composition::IVisual ScrollViewComponentView::Visual() const noexcept {

@@ -165,6 +165,24 @@ void ViewManagerBase::GetExportedCustomBubblingEventTypeConstants(
       // Keyboard events
       L"KeyUp",
       L"KeyDown",
+
+      // Pointer events
+      L"PointerCancel",
+      L"PointerCancelCapture",
+      L"PointerDown",
+      L"PointerDownCapture",
+      L"PointerEnter",
+      L"PointerEnterCapture",
+      L"PointerLeave",
+      L"PointerLeaveCapture",
+      L"PointerMove",
+      L"PointerMoveCapture",
+      L"PointerUp",
+      L"PointerUpCapture",
+      L"PointerOut",
+      L"PointerOutCapture",
+      L"PointerOver",
+      L"PointerOverCapture",
   };
 
   folly::dynamic bubblingEvents = folly::dynamic::object();

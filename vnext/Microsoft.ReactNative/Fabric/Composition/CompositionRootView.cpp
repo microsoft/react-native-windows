@@ -245,8 +245,8 @@ void CompositionRootView::InitRootView(
   get_strong().as(CompositionRootView);
 
   m_reactViewOptions = std::make_unique<Mso::React::ReactViewOptions>(std::move(reactViewOptions));
-  m_CompositionEventHandler = std::make_shared<::Microsoft::ReactNative::CompositionEventHandler>(
-      *m_context, true && !reactInstance->Options().UseWebDebugger(), CompositionRootView);
+  m_CompositionEventHandler =
+      std::make_shared<::Microsoft::ReactNative::CompositionEventHandler>(*m_context, CompositionRootView);
 
   UpdateRootViewInternal();
 

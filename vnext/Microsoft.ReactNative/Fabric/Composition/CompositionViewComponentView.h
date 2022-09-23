@@ -32,9 +32,8 @@ struct CompositionBaseComponentView : public IComponentView {
   void onFocusLost() noexcept override;
   void onFocusGained() noexcept override;
 
-  facebook::react::Tag Tag() const noexcept;
+  facebook::react::Tag tag() const noexcept override;
 
-  virtual facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt) const noexcept = 0;
   virtual bool ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept;
   virtual int64_t SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept;
   RECT getClientRect() const noexcept override;
@@ -94,6 +93,7 @@ struct CompositionViewComponentView : public CompositionBaseComponentView {
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
   void finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept override;
   void prepareForRecycle() noexcept override;
+  facebook::react::SharedTouchEventEmitter touchEventEmitter() noexcept override;
 
   facebook::react::Props::Shared props() noexcept override;
 
