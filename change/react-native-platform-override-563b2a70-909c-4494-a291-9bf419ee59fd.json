@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Consolidate JavaScript HTTP module specifications",
-  "packageName": "react-native-platform-override",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -2,6 +2,21 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Sat, 24 Sep 2022 05:11:51 GMT",
+      "tag": "react-native-platform-override_v1.6.14",
+      "version": "1.6.14",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-platform-override",
+            "commit": "230b1a05549ebe696e76592c908ed05ac1623376",
+            "comment": "Consolidate JavaScript HTTP module specifications"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 04 Jun 2022 05:10:05 GMT",
       "tag": "react-native-platform-override_v1.6.13",
       "version": "1.6.13",
