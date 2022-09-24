@@ -1,93 +1,117 @@
 /**
- * Copyright (c) Meta Platforms, Inc. and affiliates.
+ * Copyright (c) Microsoft Corporation.
+ * Licensed under the MIT License.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
+ * @flow strict-local
  * @format
- * @flow
  */
 
-// Do not require the native RCTNetworking module directly! Use this wrapper module instead.
-// It will add the necessary requestId, so that you don't have to generate it yourself.
-import NativeEventEmitter from '../EventEmitter/NativeEventEmitter';
-import convertRequestBody from './convertRequestBody';
+'use strict';
 
-// [Win32
-import type {RequestBody} from './convertRequestBody';
-const NativeModules = require('../BatchedBridge/NativeModules');
-const RCTNetworkingNative = NativeModules.Networking;
-// Win32]
+import RCTDeviceEventEmitter from '../EventEmitter/RCTDeviceEventEmitter';
+const RCTNetworkingNative =
+  require('../BatchedBridge/NativeModules').Networking; // [Windows]
+import {type NativeResponseType} from './XMLHttpRequest';
+import convertRequestBody, {type RequestBody} from './convertRequestBody';
+import {type EventSubscription} from '../vendor/emitter/EventEmitter';
 
-type Header = [string, string];
-
-// Convert FormData headers to arrays, which are easier to consume in
-// native on Android.
-function convertHeadersMapToArray(headers: Object): Array<Header> {
-  const headerArray = [];
-  for (const name in headers) {
-    headerArray.push([name, headers[name]]);
-  }
-  return headerArray;
-}
+type RCTNetworkingEventDefinitions = $ReadOnly<{
+  didSendNetworkData: [
+    [
+      number, // requestId
+      number, // progress
+      number, // total
+    ],
+  ],
+  didReceiveNetworkResponse: [
+    [
+      number, // requestId
+      number, // status
+      ?{[string]: string}, // responseHeaders
+      ?string, // responseURL
+    ],
+  ],
+  didReceiveNetworkData: [
+    [
+      number, // requestId
+      string, // response
+    ],
+  ],
+  didReceiveNetworkIncrementalData: [
+    [
+      number, // requestId
+      string, // responseText
+      number, // progress
+      number, // total
+    ],
+  ],
+  didReceiveNetworkDataProgress: [
+    [
+      number, // requestId
+      number, // loaded
+      number, // total
+    ],
+  ],
+  didCompleteNetworkResponse: [
+    [
+      number, // requestId
+      string, // error
+      boolean, // timeOutError
+    ],
+  ],
+}>;
 
 let _requestId = 1;
 function generateRequestId(): number {
   return _requestId++;
 }
 
-/**
- * This class is a wrapper around the native RCTNetworking module. It adds a necessary unique
- * requestId to each network request that can be used to abort that request later on.
- */
-// FIXME: use typed events
-class RCTNetworking extends NativeEventEmitter<$FlowFixMe> {
-  constructor() {
-    super(RCTNetworkingNative); // [Win32] Use RCTNetworkingNative
-  }
+const RCTNetworking = {
+  addListener<K: $Keys<RCTNetworkingEventDefinitions>>(
+    eventType: K,
+    listener: (...$ElementType<RCTNetworkingEventDefinitions, K>) => mixed,
+    context?: mixed,
+  ): EventSubscription {
+    return RCTDeviceEventEmitter.addListener(eventType, listener, context);
+  },
 
   sendRequest(
     method: string,
     trackingName: string,
     url: string,
-    headers: Object,
+    headers: {...},
     data: RequestBody,
-    responseType: 'text' | 'base64',
+    responseType: NativeResponseType,
     incrementalUpdates: boolean,
     timeout: number,
-    callback: (requestId: number) => mixed,
+    callback: (requestId: number) => void,
     withCredentials: boolean,
   ) {
-    const body = convertRequestBody(data);
-    if (body && body.formData) {
-      body.formData = body.formData.map((part) => ({
-        ...part,
-        headers: convertHeadersMapToArray(part.headers),
-      }));
-    }
     const requestId = generateRequestId();
+    const body = convertRequestBody(data);
     RCTNetworkingNative.sendRequest(
-      // [Win32] Use RCTNetworkingNative
-      method,
-      url,
-      requestId,
-      convertHeadersMapToArray(headers),
-      {...body, trackingName},
-      responseType,
-      incrementalUpdates,
-      timeout,
-      withCredentials,
+      {
+        method,
+        url,
+        requestId,
+        data: {...body, trackingName},
+        headers,
+        responseType,
+        incrementalUpdates,
+        timeout,
+        withCredentials,
+      },
+      callback,
     );
-    callback(requestId);
-  }
+  },
 
   abortRequest(requestId: number) {
-    RCTNetworkingNative.abortRequest(requestId); // [Win32] Use RCTNetworkingNative
-  }
+    RCTNetworkingNative.abortRequest(requestId);
+  },
 
-  clearCookies(callback: (result: boolean) => any) {
-    RCTNetworkingNative.clearCookies(callback); // [Win32] Use RCTNetworkingNative
-  }
-}
+  clearCookies(callback: (result: boolean) => void) {
+    RCTNetworkingNative.clearCookies(callback);
+  },
+};
 
-module.exports = (new RCTNetworking(): RCTNetworking);
+module.exports = RCTNetworking;
