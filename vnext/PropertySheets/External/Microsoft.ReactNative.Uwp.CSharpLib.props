@@ -13,4 +13,5 @@
   </PropertyGroup>
 
   <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.Uwp.Common.props" />
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\NuGet.CSharp.props" />
 </Project>
