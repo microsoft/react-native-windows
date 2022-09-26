@@ -1,0 +1,53 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+import "CompositionContext.idl";
+import "IJSValueWriter.idl";
+import "ReactNativeHost.idl";
+#include "NamespaceRedirect.h"
+#include "DocString.h"
+
+namespace Microsoft.ReactNative
+{
+  [default_interface]
+  [webhosthidden]
+  [experimental]
+  DOC_STRING("A windows composition component that hosts React Native UI elements.")
+  runtimeclass CompositionRootView
+  {
+    DOC_STRING("Creates a new instance of @CompositionRootView.")
+    CompositionRootView();
+
+    DOC_STRING("The @ReactNativeHost associated with the @CompositionRootView. It must be set to show any React UI elements.")
+    ReactNativeHost ReactNativeHost { get; set; };
+
+    DOC_STRING("The RootVisual associated with the @CompositionRootView. It must be set to show any React UI elements.")
+    Microsoft.ReactNative.Composition.IVisual RootVisual { get; set; };
+
+    Windows.Foundation.Size Size {get; set; };
+
+    DOC_STRING("ScaleFactor for this windows (DPI/96)")
+    Double ScaleFactor {get; set;};
+
+    Windows.Foundation.Size Measure(Windows.Foundation.Size availableSize);
+    Windows.Foundation.Size Arrange(Windows.Foundation.Size availableSize);
+
+    Int64 SendMessage(UInt32 Msg, UInt64 WParam, Int64 LParam);
+
+    //void OnPointerPressed(PointerPressedArgs args);
+    //void OnMouseUp(Windows.Foundation.Point point);
+    void OnScrollWheel(Windows.Foundation.Point point, Int32 delta);
+
+    DOC_STRING(
+      "The name of the root UI component registered in JavaScript with help of the "
+      "[`AppRegistry.registerComponent`](https://reactnative.dev/docs/appregistry#registercomponent) method.")
+    String ComponentName { get; set; };
+
+    DOC_STRING("The @JSValueArgWriter that is used to serialize the main component initial properties.")
+    JSValueArgWriter InitialProps { get; set; };
+
+    DOC_STRING("Reloads the current @ReactRootView UI components.")
+    void ReloadView();
+  }
+
+} // namespace Microsoft.ReactNative

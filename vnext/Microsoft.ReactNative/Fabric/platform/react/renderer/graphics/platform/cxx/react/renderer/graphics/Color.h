@@ -12,6 +12,7 @@
 #include <limits>
 
 #include <CppWinRTIncludes.h>
+#include <d2d1_1.h>
 #include <react/renderer/graphics/ColorComponents.h>
 #include <optional>
 
@@ -83,8 +84,24 @@ class SharedColor {
     return m_color != nullptr;
   }
 
+  D2D1::ColorF AsD2DColor() const {
+    return {
+        m_color->m_color.R / 255.0f,
+        m_color->m_color.G / 255.0f,
+        m_color->m_color.B / 255.0f,
+        m_color->m_color.A / 255.0f};
+  }
+
   winrt::Windows::UI::Color AsWindowsColor() const {
     return m_color->m_color;
+  }
+
+  COLORREF AsColorRefNoAlpha() const {
+    return RGB(m_color->m_color.R, m_color->m_color.G, m_color->m_color.B);
+  }
+
+  COLORREF AsColorRefWithAlpha() const {
+    return RGB(m_color->m_color.R, m_color->m_color.G, m_color->m_color.B) | (m_color->m_color.A << 24);
   }
 
 #ifndef CORE_ABI

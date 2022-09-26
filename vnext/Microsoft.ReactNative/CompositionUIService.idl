@@ -1,0 +1,24 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+import "IReactContext.idl";
+import "IReactPropertyBag.idl";
+import "CompositionContext.idl";
+
+#include "NamespaceRedirect.h"
+#include "DocString.h"
+
+namespace Microsoft.ReactNative.Composition
+{
+  [default_interface]
+  [webhosthidden]
+  [experimental]
+  DOC_STRING(
+    "Provides access to Composition UI-specific functionality. ")
+  runtimeclass CompositionUIService
+  {
+    DOC_STRING(
+      "Sets the CompositionContext for this react instance.  This can be created using @CompositionContextHelper.CreateContext")
+    static void SetCompositionContext(Microsoft.ReactNative.IReactPropertyBag properties, ICompositionContext compositionContext);
+  }
+} // namespace Microsoft.ReactNative.Composition
