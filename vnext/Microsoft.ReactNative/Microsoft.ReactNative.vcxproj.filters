@@ -158,7 +158,7 @@
     <ClCompile Include="Modules\NativeUIManager.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\TimingModule.cpp">
+    <ClCompile Include="Modules\XamlTimingModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="Views\Image\ImageViewManager.cpp">
@@ -517,7 +517,7 @@
     <ClInclude Include="Modules\NativeUIManager.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Modules\TimingModule.h">
+    <ClInclude Include="Modules\XamlTimingModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="Views\Image\ImageViewManager.h">

@@ -12,7 +12,8 @@
 #include <Modules/AsyncStorageModuleWin32.h>
 #include <Modules/ClipboardModule.h>
 #include <Modules/NativeUIManager.h>
-#include <Modules/PaperUIManagerModule.h>
+#include <Modules/XamlTimingModule.h>
+#include <QuirkSettings.h>
 #include <Threading/MessageQueueThreadFactory.h>
 
 // Shared
@@ -37,6 +38,7 @@ ReactPropertyId<bool> HttpUseMonolithicModuleProperty() noexcept {
 
 std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
     const std::shared_ptr<facebook::react::MessageQueueThread> &batchingUIMessageQueue,
+    const std::shared_ptr<facebook::react::MessageQueueThread> &uiMessageQueue,
     const std::shared_ptr<facebook::react::MessageQueueThread>
         &jsMessageQueue, // JS engine thread (what we use for external modules)
     Mso::CntPtr<AppearanceChangeListener> &&appearanceListener,
@@ -60,10 +62,18 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
         batchingUIMessageQueue);
   }
 
-  modules.emplace_back(
-      "Timing",
-      [batchingUIMessageQueue]() { return facebook::react::CreateTimingModule(batchingUIMessageQueue); },
-      batchingUIMessageQueue);
+  if (winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetUseLegacyTimingModule(
+          ReactPropertyBag(context->Properties()))) {
+    modules.emplace_back(
+        "Timing",
+        [batchingUIMessageQueue]() { return CreateXamlTimingModule(batchingUIMessageQueue); },
+        batchingUIMessageQueue);
+  } else {
+    modules.emplace_back(
+        "Timing",
+        [uiMessageQueue]() { return Microsoft::ReactNative::CreateTimingModule(uiMessageQueue); },
+        batchingUIMessageQueue);
+  }
 
   // Note: `context` is moved to remove the reference from the current scope.
   // This should either be the last usage of `context`, or the std::move call should happen later in this method.

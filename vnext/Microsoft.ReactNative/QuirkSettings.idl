@@ -46,5 +46,11 @@ namespace Microsoft.ReactNative
       "`inactive` tracks the [Window.Activated Event](https://docs.microsoft.com/uwp/api/windows.ui.core.corewindow.activated) when the window is deactivated.")
     DOC_DEFAULT("false")
     static void SetMapWindowDeactivatedToAppStateInactive(ReactInstanceSettings settings, Boolean value);
+
+    DOC_STRING(
+      "Use older TimingModule implementation.  If the new Timing module is causing "
+      "problems please file an issue at https://www.github.com/microsoft/react-native-windows")
+    DOC_DEFAULT("false")
+    static void SetUseLegacyTimingModule(ReactInstanceSettings settings, Boolean value);
   }
 } // namespace Microsoft.ReactNative
