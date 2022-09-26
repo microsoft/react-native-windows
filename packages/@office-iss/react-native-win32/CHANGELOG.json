@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 26 Sep 2022 15:09:58 GMT",
+      "tag": "@office-iss/react-native-win32_v0.69.3",
+      "version": "0.69.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "4f811090d62bdb02ab2a94cd28e33e0adbb0e196",
+            "comment": "Consolidate JavaScript HTTP module specifications (#10628)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 19 Sep 2022 15:09:55 GMT",
       "tag": "@office-iss/react-native-win32_v0.69.2",
       "version": "0.69.2",

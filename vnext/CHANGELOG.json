@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 26 Sep 2022 15:09:58 GMT",
+      "tag": "react-native-windows_v0.69.9",
+      "version": "0.69.9",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "4f811090d62bdb02ab2a94cd28e33e0adbb0e196",
+            "comment": "Consolidate JavaScript HTTP module specifications (#10628)"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "61a16cd809b8ee02cc4098493bcde61eca518466",
+            "comment": "Move required PackageRestore properties into shared property sheets"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "c6f2e2314a34724f854b67eb2c4ca3e7a1a53720",
+            "comment": "Export OriginPolicy.h to NuGet package (#10615)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 19 Sep 2022 15:09:55 GMT",
       "tag": "react-native-windows_v0.69.8",
       "version": "0.69.8",
