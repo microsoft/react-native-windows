@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Use `IsNativeControlWithSelfLayout` in ReplaceView",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}

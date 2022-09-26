@@ -3,6 +3,7 @@
 
 #define NAPI_EXPERIMENTAL
 
+#include "pch.h"
 #include "NodeApiJsiRuntime.h"
 
 // Standard Library

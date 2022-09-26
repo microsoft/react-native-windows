@@ -1,8 +1,26 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 12 Sep 2022 20:01:46 GMT and should not be manually modified.
+This log was last generated on Sat, 24 Sep 2022 05:11:51 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.161
+
+Sat, 24 Sep 2022 05:11:51 GMT
+
+### Changes
+
+- Consolidate JavaScript HTTP module specifications (julio.rocha@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.50
+- Bump react-native-platform-override to v1.6.14
+
+## 0.0.0-canary.160
+
+Thu, 15 Sep 2022 05:11:51 GMT
+
+### Changes
+
+- Add Dimensions.win32 implementation to support text scale factor (patboyd@microsoft.com)
 
 ## 0.0.0-canary.159
 

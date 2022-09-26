@@ -1,8 +1,70 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 12 Sep 2022 20:01:46 GMT and should not be manually modified.
+This log was last generated on Sat, 24 Sep 2022 05:11:52 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.553
+
+Sat, 24 Sep 2022 05:11:52 GMT
+
+### Changes
+
+- Consolidate JavaScript HTTP module specifications (julio.rocha@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.50
+- Bump react-native-platform-override to v1.6.14
+
+## 0.0.0-canary.552
+
+Fri, 23 Sep 2022 05:11:38 GMT
+
+### Changes
+
+- Remove comment (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.551
+
+Wed, 21 Sep 2022 05:11:34 GMT
+
+### Changes
+
+- Fix formatting in App.xaml.cs in C# WinAppSDK project template (lyahdav@users.noreply.github.com)
+
+## 0.0.0-canary.550
+
+Tue, 20 Sep 2022 05:13:21 GMT
+
+### Changes
+
+- Switch to std::unordered_map for shadow and Yoga nodes (erozell@outlook.com)
+
+## 0.0.0-canary.549
+
+Sat, 17 Sep 2022 05:11:03 GMT
+
+### Changes
+
+- Alter Accessibility Protocol (34109996+chiaramooney@users.noreply.github.com)
+- Implement HTTP redirection (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.548
+
+Thu, 15 Sep 2022 05:11:52 GMT
+
+### Changes
+
+- Move required PackageRestore properties into shared property sheets (jthysell@microsoft.com)
+- Move some image functions into separate file (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.547
+
+Wed, 14 Sep 2022 05:12:18 GMT
+
+### Changes
+
+- Update references to Facebook to Meta, and fix typo causing the LICENSE file to not be present in the npm package (asklar@microsoft.com)
+- Remove ExperimentalUseFabric from ReactRootView (30809111+acoates-ms@users.noreply.github.com)
+- Use `IsNativeControlWithSelfLayout` in ReplaceView (erozell@outlook.com)
 
 ## 0.0.0-canary.546
 

@@ -1,6 +1,6 @@
 {
   "name": "@office-iss/react-native-win32",
-  "version": "0.0.0-canary.159",
+  "version": "0.0.0-canary.161",
   "description": "Implementation of react native on top of Office's Win32 platform.",
   "license": "MIT",
   "main": "./index.win32.js",
@@ -25,7 +25,7 @@
     "@react-native-community/cli": "^9.0.0-alpha.5",
     "@react-native-community/cli-platform-android": "^9.0.0-alpha.5",
     "@react-native-community/cli-platform-ios": "^9.0.0-alpha.5",
-    "@react-native-windows/virtualized-list": "0.0.0-canary.49",
+    "@react-native-windows/virtualized-list": "0.0.0-canary.50",
     "@react-native/assets": "1.0.0",
     "@react-native/normalize-color": "2.0.0",
     "@react-native/polyfills": "2.0.0",
@@ -75,7 +75,7 @@
     "prettier": "^2.4.1",
     "react": "18.1.0",
     "react-native": "0.0.0-20220729-2025-a21a1f845",
-    "react-native-platform-override": "^1.6.13",
+    "react-native-platform-override": "^1.6.14",
     "react-shallow-renderer": "16.14.1",
     "typescript": "^4.4.4"
   },

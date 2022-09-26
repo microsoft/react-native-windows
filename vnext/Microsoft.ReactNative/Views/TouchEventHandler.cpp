@@ -6,12 +6,6 @@
 #include <Views/ShadowNodeBase.h>
 #include "TouchEventHandler.h"
 
-#ifdef USE_FABRIC
-#include <Fabric/FabricUIManagerModule.h>
-#include <Fabric/ViewComponentView.h>
-#include <react/renderer/components/view/TouchEventEmitter.h>
-#endif
-
 #include <Modules/NativeUIManager.h>
 #include <Modules/PaperUIManagerModule.h>
 #include <UI.Xaml.Controls.h>
@@ -36,11 +30,10 @@ namespace Microsoft::ReactNative {
 
 std::vector<int64_t> GetTagsForBranch(INativeUIManagerHost *host, int64_t tag, int64_t rootTag);
 
-TouchEventHandler::TouchEventHandler(const Mso::React::IReactContext &context, bool fabric)
+TouchEventHandler::TouchEventHandler(const Mso::React::IReactContext &context)
     : m_xamlView(nullptr),
       m_rootView(nullptr),
       m_context(&context),
-      m_fabric(fabric),
       m_batchingEventEmitter{
           std::make_shared<winrt::Microsoft::ReactNative::BatchingEventEmitter>(Mso::CntPtr(&context))} {}
 
@@ -406,233 +399,26 @@ winrt::Microsoft::ReactNative::JSValue TouchEventHandler::GetPointerJson(const R
       {"altKey", pointer.altKey}};
 }
 
-#ifdef USE_FABRIC
-// This work should probably be delegated to the ComponentViews
-facebook::react::SharedEventEmitter EventEmitterForElement(
-    std::shared_ptr<FabricUIManager> &uimanager,
-    facebook::react::Tag tag) noexcept {
-  auto &registry = uimanager->GetViewRegistry();
-
-  auto descriptor = registry.componentViewDescriptorWithTag(tag);
-  auto view = std::static_pointer_cast<BaseComponentView const>(descriptor.view);
-  auto emitter = view->GetEventEmitter();
-  if (emitter)
-    return emitter;
-
-  auto element = view->Element();
-  while (auto parent = element.Parent()) {
-    if (element = parent.try_as<xaml::FrameworkElement>()) {
-      auto elementTag = GetTag(element);
-      if (elementTag != InvalidTag) {
-        if ((tag = static_cast<facebook::react::Tag>(elementTag)) != InvalidTag)
-          return EventEmitterForElement(uimanager, tag);
-      }
-    }
-  }
-  return nullptr;
-}
-
-facebook::react::Touch TouchEventHandler::TouchForPointer(const ReactPointer &pointer) noexcept {
-  facebook::react::Touch t;
-  t.force = pointer.pressure;
-  t.identifier = static_cast<int>(pointer.identifier);
-  t.pagePoint.x = pointer.positionRoot.X; // TODO: This should be relative to the rootview, not the XAML tree
-  t.pagePoint.y = pointer.positionRoot.Y; // TODO: This should be relative to the rootview, not the XAML tree
-  t.screenPoint.x = pointer.positionRoot.X;
-  t.screenPoint.y = pointer.positionRoot.Y;
-  t.offsetPoint.x = pointer.positionView.X;
-  t.offsetPoint.y = pointer.positionView.Y;
-  t.target = static_cast<facebook::react::Tag>(pointer.target);
-  t.timestamp = static_cast<facebook::react::Float>(pointer.timestamp);
-  return t;
-}
-
-winrt::IPropertyValue TestHit(
-    const winrt::Collections::IVectorView<xaml::Documents::Inline> &inlines,
-    const winrt::Point &pointerPos,
-    bool &isHit) {
-  winrt::IPropertyValue tag(nullptr);
-
-  for (const auto &el : inlines) {
-    if (const auto span = el.try_as<xaml::Documents::Span>()) {
-      auto resTag = TestHit(span.Inlines().GetView(), pointerPos, isHit);
-
-      if (resTag)
-        return resTag;
-
-      if (isHit) {
-        tag = el.GetValue(ReactTagProperty()).try_as<winrt::IPropertyValue>();
-        if (tag) {
-          return tag;
-        }
-      }
-    } else if (const auto run = el.try_as<xaml::Documents::Run>()) {
-      const auto start = el.ContentStart();
-      const auto end = el.ContentEnd();
-
-      auto startRect = start.GetCharacterRect(xaml::Documents::LogicalDirection::Forward);
-      auto endRect = end.GetCharacterRect(xaml::Documents::LogicalDirection::Forward);
-
-      // Swap rectangles in RTL scenarios.
-      if (startRect.X > endRect.X) {
-        const auto tempRect = startRect;
-        startRect = endRect;
-        endRect = tempRect;
-      }
-
-      // Approximate the bounding rect (for now, don't account for text wrapping).
-      if ((startRect.X <= pointerPos.X) && (endRect.X + endRect.Width >= pointerPos.X) &&
-          (startRect.Y <= pointerPos.Y) && (endRect.Y + endRect.Height >= pointerPos.Y)) {
-        isHit = true;
-        return nullptr;
-      }
-    }
-  }
-
-  return tag;
-}
-
-bool TagFromOriginalSource(const winrt::PointerRoutedEventArgs &args, int64_t *pTag, xaml::UIElement *pSourceElement) {
-  assert(pTag != nullptr);
-  assert(pSourceElement != nullptr);
-
-  // Find the React element that triggered the input event
-  xaml::UIElement sourceElement = args.OriginalSource().try_as<xaml::UIElement>();
-  winrt::IPropertyValue tag(nullptr);
-
-  while (sourceElement) {
-    auto tagValue = sourceElement.ReadLocalValue(ReactTagProperty());
-    if (tagValue != xaml::DependencyProperty::UnsetValue()) {
-      tag = tagValue.try_as<winrt::IPropertyValue>();
-      // If a TextBlock was the UIElement event source, perform a more accurate hit test,
-      // searching for the tag of the nested Run/Span XAML elements that the user actually clicked.
-      // This is to support nested <Text> elements in React.
-      // Nested React <Text> elements get translated into nested XAML <Span> elements,
-      // while the content of the <Text> becomes a list of XAML <Run> elements.
-      // However, we should report the Text element as the target, not the contexts of the text.
-      if (const auto textBlock = sourceElement.try_as<xaml::Controls::TextBlock>()) {
-        const auto pointerPos = args.GetCurrentPoint(textBlock).RawPosition();
-        const auto inlines = textBlock.Inlines().GetView();
-
-        bool isHit = false;
-        const auto finerTag = TestHit(inlines, pointerPos, isHit);
-        if (finerTag) {
-          tag = finerTag;
-        }
-      }
-
-      break;
-    }
-
-    sourceElement = winrt::VisualTreeHelper::GetParent(sourceElement).try_as<xaml::UIElement>();
-  }
-
-  if (tag == nullptr) {
-    // If the root view fails to be fully created, then the Tag property will
-    // never be set. This can happen,
-    //  for example, when the red box error box is shown.
-    return false;
-  }
-
-  *pTag = tag.GetInt64();
-  *pSourceElement = sourceElement;
-  return true;
-}
-
-bool TouchEventHandler::IsEndishEventType(TouchEventType eventType) noexcept {
-  switch (eventType) {
-    case TouchEventType::End:
-    case TouchEventType::Cancel:
-    case TouchEventType::CaptureLost:
-      return true;
-    default:
-      return false;
-  }
-}
-#endif
-
 void TouchEventHandler::DispatchTouchEvent(TouchEventType eventType, size_t pointerIndex) {
   winrt::Microsoft::ReactNative::JSValueArray changedIndices;
   changedIndices.push_back(pointerIndex);
 
-#ifdef USE_FABRIC
-  std::shared_ptr<FabricUIManager> fabricuiManager;
-  if (m_fabric &&
-      !!(fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
-             winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties())))) {
-    std::unordered_set<facebook::react::SharedTouchEventEmitter> uniqueEventEmitters = {};
-    std::vector<facebook::react::SharedTouchEventEmitter> emittersForIndex;
+  winrt::Microsoft::ReactNative::JSValueArray touches;
+  for (const auto &pointer : m_pointers) {
+    touches.push_back(GetPointerJson(pointer, pointer.target));
+  }
 
-    facebook::react::TouchEvent te;
+  // Package up parameters and invoke the JS event emitter
+  const wchar_t *eventName = GetTouchEventTypeName(eventType);
+  if (eventName == nullptr)
+    return;
 
-    size_t index = 0;
-    for (const auto &pointer : m_pointers) {
-      bool isChangedPointer = pointerIndex == index++;
-
-      if (!isChangedPointer || !IsEndishEventType(eventType)) {
-        te.touches.insert(TouchForPointer(pointer));
-      }
-
-      if (isChangedPointer)
-        te.changedTouches.insert(TouchForPointer(pointer));
-
-      auto emitter = std::static_pointer_cast<facebook::react::TouchEventEmitter>(
-          std::const_pointer_cast<facebook::react::EventEmitter>(
-              EventEmitterForElement(fabricuiManager, static_cast<facebook::react::Tag>(pointer.target))));
-      emittersForIndex.push_back(emitter);
-      if (emitter)
-        uniqueEventEmitters.insert(emitter);
-    }
-
-    for (const auto emitter : uniqueEventEmitters) {
-      te.targetTouches.clear();
-      index = 0;
-      for (const auto &pointer : m_pointers) {
-        auto pointerEmitter = emittersForIndex[index++];
-        if (emitter == pointerEmitter)
-          te.targetTouches.insert(TouchForPointer(pointer));
-      }
-
-      switch (eventType) {
-        case TouchEventType::Start:
-          emitter->onTouchStart(te);
-          break;
-        case TouchEventType::Move:
-          emitter->onTouchMove(te);
-          break;
-        case TouchEventType::End:
-          emitter->onTouchEnd(te);
-          break;
-        case TouchEventType::Cancel:
-        case TouchEventType::CaptureLost:
-          emitter->onTouchCancel(te);
-          break;
-      }
-    }
-  } else
-#endif // USE_FABRIC
-  {
-    winrt::Microsoft::ReactNative::JSValueArray touches;
-    for (const auto &pointer : m_pointers) {
-      touches.push_back(GetPointerJson(pointer, pointer.target));
-    }
-
-    // Package up parameters and invoke the JS event emitter
-    const wchar_t *eventName = GetTouchEventTypeName(eventType);
-    if (eventName == nullptr)
-      return;
-
-    const auto paramsWriter = MakeJSValueArgWriter(eventName, std::move(touches), std::move(changedIndices));
-    if (eventType == TouchEventType::Move || eventType == TouchEventType::PointerMove) {
-      BatchingEmitter().EmitCoalescingJSEvent(
-          L"RCTEventEmitter",
-          L"receiveTouches",
-          std::move(eventName),
-          m_pointers[pointerIndex].pointerId,
-          paramsWriter);
-    } else {
-      BatchingEmitter().EmitJSEvent(L"RCTEventEmitter", L"receiveTouches", paramsWriter);
-    }
+  const auto paramsWriter = MakeJSValueArgWriter(eventName, std::move(touches), std::move(changedIndices));
+  if (eventType == TouchEventType::Move || eventType == TouchEventType::PointerMove) {
+    BatchingEmitter().EmitCoalescingJSEvent(
+        L"RCTEventEmitter", L"receiveTouches", std::move(eventName), m_pointers[pointerIndex].pointerId, paramsWriter);
+  } else {
+    BatchingEmitter().EmitJSEvent(L"RCTEventEmitter", L"receiveTouches", paramsWriter);
   }
 }
 
@@ -719,18 +505,6 @@ bool TouchEventHandler::PropagatePointerEventAndFindReactSourceBranch(
     xaml::UIElement *pSourceElement) {
   assert(pTagsForBranch != nullptr);
   assert(pSourceElement != nullptr);
-
-#ifdef USE_FABRIC
-  if (m_fabric) {
-    int64_t tag;
-    if (TagFromOriginalSource(args.Args(), &tag, pSourceElement)) {
-      std::vector<int64_t> tagsForBranch;
-      tagsForBranch.push_back(tag);
-      *pTagsForBranch = std::move(tagsForBranch);
-    }
-    return pSourceElement != nullptr;
-  }
-#endif
 
   if (const auto uiManager = GetNativeUIManager(*m_context).lock()) {
     xaml::UIElement sourceElement = args.Args().OriginalSource().try_as<xaml::UIElement>();

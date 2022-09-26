@@ -41,14 +41,14 @@ boost::beast::multi_buffer CreateStringResponseBody(string&& content)
 
 #pragma region ResponseWrapper
 
-ResponseWrapper::ResponseWrapper(DynamicResponse&& res)
-  : m_response{ make_shared<DynamicResponse>(std::move(res)) }
+ResponseWrapper::ResponseWrapper(DynamicResponse&& response)
+  : m_response{ make_shared<DynamicResponse>(std::move(response)) }
   , m_type{ ResponseType::Dynamic }
 {
 }
 
-ResponseWrapper::ResponseWrapper(EmptyResponse&& res)
-  : m_response{ make_shared<EmptyResponse>(std::move(res)) }
+ResponseWrapper::ResponseWrapper(EmptyResponse&& response)
+  : m_response{ make_shared<EmptyResponse>(std::move(response)) }
   , m_type{ ResponseType::Empty }
 {
 }
@@ -61,6 +61,24 @@ ResponseWrapper::ResponseWrapper(FileResponse&& response)
 
 ResponseWrapper::ResponseWrapper(StringResponse&& response)
   : m_response{ make_shared<StringResponse>(std::move(response)) }
+  , m_type{ ResponseType::String }
+{
+}
+
+ResponseWrapper::ResponseWrapper(DynamicResponse const& response)
+  : m_response{ make_shared<DynamicResponse>(response) }
+  , m_type{ ResponseType::Dynamic }
+{
+}
+
+ResponseWrapper::ResponseWrapper(EmptyResponse const& response)
+  : m_response{ make_shared<EmptyResponse>(response) }
+  , m_type{ ResponseType::Empty }
+{
+}
+
+ResponseWrapper::ResponseWrapper(StringResponse const& response)
+  : m_response{ make_shared<StringResponse>(response) }
   , m_type{ ResponseType::String }
 {
 }

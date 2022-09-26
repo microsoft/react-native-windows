@@ -15,7 +15,7 @@ namespace Microsoft::React {
 
 ///
 /// Realizes <c>NativeModules</c> projection.
-/// <remarks>See src\Libraries\Network\RCTNetworkingWinShared.js</remarks>
+/// <remarks>See src\Libraries\Network\RCTNetworking.windows.js</remarks>
 ///
 class HttpModule : public facebook::xplat::module::CxxModule {
  public:

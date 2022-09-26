@@ -128,9 +128,6 @@ struct ReactViewOptions {
 
   // Initial component properties.
   winrt::Microsoft::ReactNative::JSValueArgWriter InitialProps;
-
-  //! Use Fabric for this ReactView
-  bool UseFabric{false};
 };
 
 struct ReactDevOptions {

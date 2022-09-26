@@ -2,6 +2,48 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Sat, 24 Sep 2022 05:11:51 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.161",
+      "version": "0.0.0-canary.161",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "230b1a05549ebe696e76592c908ed05ac1623376",
+            "comment": "Consolidate JavaScript HTTP module specifications"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.50",
+            "commit": "230b1a05549ebe696e76592c908ed05ac1623376"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump react-native-platform-override to v1.6.14",
+            "commit": "230b1a05549ebe696e76592c908ed05ac1623376"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 15 Sep 2022 05:11:51 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.160",
+      "version": "0.0.0-canary.160",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "patboyd@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "6a5b394611088bc363afc319c5eeca5df6d3102e",
+            "comment": "Add Dimensions.win32 implementation to support text scale factor"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 12 Sep 2022 20:01:46 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.159",
       "version": "0.0.0-canary.159",

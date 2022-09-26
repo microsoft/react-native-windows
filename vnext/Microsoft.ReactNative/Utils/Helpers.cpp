@@ -119,4 +119,12 @@ bool IsWinUI3Island() {
 #endif
 }
 
+bool IsFabricEnabled(winrt::Microsoft::ReactNative::IReactPropertyBag const & /*properties*/) {
+#ifdef USE_FABRIC
+  return false; // Once we add an instance property to control switching to fabric, this will check that.
+#else
+  return false;
+#endif
+}
+
 } // namespace Microsoft::ReactNative

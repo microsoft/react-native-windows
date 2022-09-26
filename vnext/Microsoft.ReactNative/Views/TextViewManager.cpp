@@ -150,7 +150,7 @@ class TextShadowNode final : public ShadowNodeBase {
   void ToggleTouchEvents(XamlView xamlView, bool selectable) {
     if (selectable) {
       if (m_touchEventHandler == nullptr) {
-        m_touchEventHandler = std::make_unique<TouchEventHandler>(GetViewManager()->GetReactContext(), false);
+        m_touchEventHandler = std::make_unique<TouchEventHandler>(GetViewManager()->GetReactContext());
       }
 
       m_selectionChangedRevoker = xamlView.as<xaml::Controls::TextBlock>().SelectionChanged(

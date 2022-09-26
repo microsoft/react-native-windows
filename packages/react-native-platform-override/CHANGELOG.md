@@ -1,8 +1,16 @@
 # Change Log - react-native-platform-override
 
-This log was last generated on Sat, 04 Jun 2022 05:10:05 GMT and should not be manually modified.
+This log was last generated on Sat, 24 Sep 2022 05:11:51 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.6.14
+
+Sat, 24 Sep 2022 05:11:51 GMT
+
+### Patches
+
+- Consolidate JavaScript HTTP module specifications (julio.rocha@microsoft.com)
 
 ## 1.6.13
 
