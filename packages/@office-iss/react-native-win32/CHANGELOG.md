@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Sat, 17 Sep 2022 02:23:36 GMT and should not be manually modified.
+This log was last generated on Mon, 26 Sep 2022 15:08:21 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.68.6
+
+Mon, 26 Sep 2022 15:08:21 GMT
+
+### Patches
+
+- Consolidate JavaScript HTTP module specifications (#10628) (julio.rocha@microsoft.com)
 
 ## 0.68.5
 

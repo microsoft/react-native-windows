@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 17 Sep 2022 02:23:36 GMT and should not be manually modified.
+This log was last generated on Mon, 26 Sep 2022 15:08:21 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.68.18
+
+Mon, 26 Sep 2022 15:08:21 GMT
+
+### Patches
+
+- Consolidate JavaScript HTTP module specifications (#10628) (julio.rocha@microsoft.com)
+- [0.68] Move required PackageRestore properties into shared property sheets (jthysell@microsoft.com)
+- Export OriginPolicy.h to NuGet package (#10615) (julio.rocha@microsoft.com)
 
 ## 0.68.17
 
