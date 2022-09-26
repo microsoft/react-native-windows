@@ -48,7 +48,7 @@ Object {
       "Clip": null,
       "CornerRadius": "0,0,0,0",
       "FlowDirection": "LeftToRight",
-      "Foreground": "#FF000000",
+      "Foreground": "#E4000000",
       "HorizontalAlignment": "Stretch",
       "Left": 0,
       "Margin": "0,0,0,0",
