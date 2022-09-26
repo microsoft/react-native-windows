@@ -20,7 +20,6 @@
 #include <Shobjidl.h>
 #include <Utils/Helpers.h>
 #include <winrt/Windows.UI.Popups.h>
-#include "XamlUtils.h"
 #endif // USE_FABRIC
 #include <UI.Xaml.Controls.Primitives.h>
 #include <UI.Xaml.Controls.h>
@@ -36,6 +35,7 @@
 #include "CppWinRTIncludes.h"
 #include "Utils/Helpers.h"
 #endif // CORE_ABI
+#include "XamlUtils.h"
 
 using namespace winrt::Windows::Foundation;
 

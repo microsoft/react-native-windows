@@ -53,7 +53,7 @@ LRESULT CALLBACK LogBoxWndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lp
 
   if (data) {
     winrt::check_hresult(data->QueryInterface(winrt::guid_of<React::CompositionHwndHost>(), winrt::put_abi(host)));
-    auto result = host.TranslateMessage(message, wparam, lparam);
+    auto result = static_cast<LRESULT>(host.TranslateMessage(message, wparam, lparam));
     if (result)
       return result;
   }
