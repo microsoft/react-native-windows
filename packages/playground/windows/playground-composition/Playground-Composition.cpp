@@ -185,7 +185,7 @@ struct WindowData {
 
   LRESULT TranslateMessage(UINT message, WPARAM wparam, LPARAM lparam) noexcept {
     if (m_CompositionHwndHost) {
-      return m_CompositionHwndHost.TranslateMessage(message, wparam, lparam);
+      return static_cast<LRESULT>(m_CompositionHwndHost.TranslateMessage(message, wparam, lparam));
     }
     return 0;
   }
