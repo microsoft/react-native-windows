@@ -46,7 +46,7 @@ class ViewShadowNode : public ShadowNodeBase {
   void createView(const winrt::Microsoft::ReactNative::JSValueObject &props) override {
     Super::createView(props);
 
-    auto panel = GetViewPanel();
+    auto panel = GetPanel();
 
     DynamicAutomationProperties::SetAccessibilityInvokeEventHandler(panel, [=]() {
       if (OnClick())
@@ -150,16 +150,16 @@ class ViewShadowNode : public ShadowNodeBase {
           Microsoft::Common::Unicode::Utf16ToUtf8(name.c_str()));
     }
 
-    GetViewPanel().InsertAt(static_cast<uint32_t>(index), view.as<xaml::UIElement>());
+    GetPanel().Children().InsertAt(static_cast<uint32_t>(index), view.as<xaml::UIElement>());
   }
 
   void RemoveChildAt(int64_t indexToRemove) override {
     if (indexToRemove == static_cast<uint32_t>(indexToRemove))
-      GetViewPanel().RemoveAt(static_cast<uint32_t>(indexToRemove));
+      GetPanel().Children().RemoveAt(static_cast<uint32_t>(indexToRemove));
   }
 
   void removeAllChildren() override {
-    GetViewPanel().Clear();
+    GetPanel().Children().Clear();
 
     XamlView current = m_view;
 
@@ -183,12 +183,12 @@ class ViewShadowNode : public ShadowNodeBase {
   }
 
   void ReplaceChild(const XamlView &oldChildView, const XamlView &newChildView) override {
-    auto pPanel = GetViewPanel();
+    auto pPanel = GetPanel();
     if (pPanel != nullptr) {
       uint32_t index;
       if (pPanel.Children().IndexOf(oldChildView.as<xaml::UIElement>(), index)) {
-        pPanel.RemoveAt(index);
-        pPanel.InsertAt(index, newChildView.as<xaml::UIElement>());
+        pPanel.Children().RemoveAt(index);
+        pPanel.Children().InsertAt(index, newChildView.as<xaml::UIElement>());
       } else {
         assert(false);
       }
@@ -204,7 +204,7 @@ class ViewShadowNode : public ShadowNodeBase {
     static_cast<FrameworkElementViewManager *>(GetViewManager())->RefreshTransformMatrix(this);
   }
 
-  winrt::Microsoft::ReactNative::ViewPanel GetViewPanel() {
+  xaml::Controls::Panel GetPanel() {
     XamlView current = m_view;
 
     if (IsControl()) {
@@ -219,7 +219,7 @@ class ViewShadowNode : public ShadowNodeBase {
       }
     }
 
-    auto panel = current.try_as<winrt::Microsoft::ReactNative::ViewPanel>();
+    auto panel = current.try_as<xaml::Controls::Panel>();
     assert(panel != nullptr);
 
     return panel;
@@ -399,7 +399,7 @@ bool ViewViewManager::UpdateProperty(
     const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
   auto *pViewShadowNode = static_cast<ViewShadowNode *>(nodeToUpdate);
 
-  auto pPanel = pViewShadowNode->GetViewPanel();
+  auto pPanel = pViewShadowNode->GetPanel().as<winrt::Microsoft::ReactNative::ViewPanel>();
   bool ret = true;
   if (pPanel != nullptr) {
     if (TryUpdateBackgroundBrush(pPanel, propertyName, propertyValue)) {
@@ -455,7 +455,7 @@ bool ViewViewManager::UpdateProperty(
 
 void ViewViewManager::OnPropertiesUpdated(ShadowNodeBase *node) {
   auto *viewShadowNode = static_cast<ViewShadowNode *>(node);
-  auto panel = viewShadowNode->GetViewPanel();
+  auto panel = viewShadowNode->GetPanel().as<winrt::Microsoft::ReactNative::ViewPanel>();
 
   if (panel.ReadLocalValue(ViewPanel::ViewBackgroundProperty()) == xaml::DependencyProperty::UnsetValue()) {
     // In XAML, a null background means no hit-test will happen.
@@ -627,7 +627,7 @@ void ViewViewManager::SetLayoutProps(
   // Do this first so that it is setup properly before any events are fired by
   // the Super implementation
   auto *pViewShadowNode = static_cast<ViewShadowNode *>(&nodeToUpdate);
-  auto pPanel = pViewShadowNode->GetViewPanel();
+  auto pPanel = pViewShadowNode->GetPanel().as<winrt::Microsoft::ReactNative::ViewPanel>();
   if (pViewShadowNode->IsControl()) {
     pPanel.Width(width);
     pPanel.Height(height);
