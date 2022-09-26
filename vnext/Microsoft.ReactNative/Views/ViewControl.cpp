@@ -27,14 +27,14 @@ winrt::AutomationPeer ViewControl::OnCreateAutomationPeer() {
   return winrt::make<winrt::Microsoft::ReactNative::implementation::DynamicAutomationPeer>(*this);
 }
 
-winrt::Microsoft::ReactNative::ViewPanel ViewControl::GetPanel() const {
+xaml::Controls::Panel ViewControl::GetPanel() const {
   auto child = Content();
 
   if (auto border = child.try_as<xaml::Controls::Border>()) {
     child = border.Child();
   }
 
-  auto panel = child.try_as<winrt::Microsoft::ReactNative::ViewPanel>();
+  auto panel = child.try_as<xaml::Controls::Panel>();
   assert(panel != nullptr);
 
   return panel;
