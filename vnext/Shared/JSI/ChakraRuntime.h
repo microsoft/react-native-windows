@@ -68,17 +68,6 @@ class ChakraRuntime : public facebook::jsi::Runtime, public ChakraApi, ChakraApi
   std::string utf8(const facebook::jsi::PropNameID &id) override;
   bool compare(const facebook::jsi::PropNameID &lhs, const facebook::jsi::PropNameID &rhs) override;
 
-  facebook::jsi::BigInt createBigIntFromInt64(int64_t value) override;
-  facebook::jsi::BigInt createBigIntFromUint64(uint64_t value) override;
-  bool bigintIsInt64(const facebook::jsi::BigInt &) override;
-  bool bigintIsUint64(const facebook::jsi::BigInt &) override;
-  uint64_t truncate(const facebook::jsi::BigInt &) override;
-  facebook::jsi::String bigintToString(const facebook::jsi::BigInt &, int) override;
-
-  bool hasNativeState(const facebook::jsi::Object &) override;
-  std::shared_ptr<facebook::jsi::NativeState> getNativeState(const facebook::jsi::Object &) override;
-  void setNativeState(const facebook::jsi::Object &, std::shared_ptr<facebook::jsi::NativeState> state) override;
-
   std::string symbolToString(const facebook::jsi::Symbol &s) override;
 
   // Despite its name, createPropNameIDFromAscii is the same function as

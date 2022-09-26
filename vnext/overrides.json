@@ -76,6 +76,34 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/jsi-inl.h",
+      "baseFile": "ReactCommon/jsi/jsi/jsi-inl.h",
+      "baseHash": "957a4ecab0e42f559c0f9daf0035261f21292e19",
+      "issue": 9791
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/jsi.cpp",
+      "baseFile": "ReactCommon/jsi/jsi/jsi.cpp",
+      "baseHash": "8c5ad54892a6cc0edb0692f650d7881293551e79",
+      "issue": 9791
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/jsi.h",
+      "baseFile": "ReactCommon/jsi/jsi/jsi.h",
+      "baseHash": "fbb29e6f9d367ab697543244f0a84c2e12adfc9a",
+      "issue": 9791
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/decorator.h",
+      "baseFile": "ReactCommon/jsi/jsi/decorator.h",
+      "baseHash": "95a6fd14e80719f9796942ffe59dd850a56d544c",
+      "issue": 9791
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/attributedstring/AttributedString.cpp",
       "baseFile": "ReactCommon/react/renderer/attributedstring/AttributedString.cpp",
       "baseHash": "7261d79ceb15c77a7b85bf1eb4edd67bfcc91541"

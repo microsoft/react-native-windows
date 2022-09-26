@@ -321,47 +321,6 @@ facebook::jsi::PropNameID ChakraRuntime::createPropNameIDFromSymbol(const facebo
   return MakePointer<facebook::jsi::PropNameID>(propSym);
 }
 
-facebook::jsi::BigInt ChakraRuntime::createBigIntFromInt64(int64_t val) {
-  return facebook::jsi::BigInt::fromInt64(*this, val);
-}
-
-facebook::jsi::BigInt ChakraRuntime::createBigIntFromUint64(uint64_t val) {
-  return facebook::jsi::BigInt::fromUint64(*this, val);
-}
-
-bool ChakraRuntime::bigintIsInt64(const facebook::jsi::BigInt &val) {
-  return val.isInt64(*this);
-}
-
-bool ChakraRuntime::bigintIsUint64(const facebook::jsi::BigInt &val) {
-  return val.isUint64(*this);
-}
-
-uint64_t ChakraRuntime::truncate(const facebook::jsi::BigInt &val) {
-  return val.asInt64(*this);
-}
-
-facebook::jsi::String ChakraRuntime::bigintToString(const facebook::jsi::BigInt &val, int radix) {
-  return val.toString(*this);
-}
-
-bool ChakraRuntime::hasNativeState(const facebook::jsi::Object &val) {
-  // Not implemented
-  return true;
-}
-
-std::shared_ptr<facebook::jsi::NativeState> ChakraRuntime::getNativeState(const facebook::jsi::Object &val) {
-  // Not implemented
-  throw;
-}
-
-void ChakraRuntime::setNativeState(
-    const facebook::jsi::Object &val,
-    std::shared_ptr<facebook::jsi::NativeState> state) {
-  // Not implemented
-  throw;
-}
-
 std::string ChakraRuntime::utf8(const facebook::jsi::PropNameID &id) {
   return Common::Unicode::Utf16ToUtf8(GetPropertyNameFromId(GetJsRef(id)));
 }
