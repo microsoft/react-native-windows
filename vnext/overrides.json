@@ -408,12 +408,6 @@
       "file": "src/Libraries/Network/RCTNetworking.windows.js"
     },
     {
-      "type": "derived",
-      "file": "src/Libraries/Network/RCTNetworkingWinShared.js",
-      "baseFile": "Libraries/Network/RCTNetworking.ios.js",
-      "baseHash": "1af41a494d7354a1fb51697e906dbcd5761ad8fb"
-    },
-    {
       "type": "patch",
       "file": "src/Libraries/NewAppScreen/components/DebugInstructions.windows.js",
       "baseFile": "Libraries/NewAppScreen/components/DebugInstructions.js",

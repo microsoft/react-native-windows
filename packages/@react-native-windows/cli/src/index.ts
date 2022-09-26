@@ -13,6 +13,7 @@ import {
 } from './generator-windows';
 
 import {autoLinkCommand} from './runWindows/utils/autolink';
+import {codegenCommand} from './codegen';
 import {runWindowsCommand} from './runWindows/runWindows';
 import {dependencyConfigWindows} from './config/dependencyConfig';
 import {projectConfigWindows} from './config/projectConfig';
@@ -94,7 +95,7 @@ const assertStableInterface: typeof generateWindows extends (
   : never = true;
 assertStableInterface;
 
-export const commands = [autoLinkCommand, runWindowsCommand];
+export const commands = [autoLinkCommand, codegenCommand, runWindowsCommand];
 export const dependencyConfig = dependencyConfigWindows;
 export const projectConfig = projectConfigWindows;
 export * from './healthChecks';

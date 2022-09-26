@@ -11,7 +11,6 @@
 #include <windows.h>
 #include <windowsx.h>
 
-
 namespace Microsoft::ReactNative {
 
 const PointerId MOUSE_POINTER_ID = 1; // TODO ensure this is something that does not conflict with pointer point IDs.
@@ -762,8 +761,7 @@ void CompositionEventHandler::DispatchTouchEvent(
       facebook::react::Point ptLocal;
       auto targetTag = rootComponentViewDescriptor.view->hitTest(pointerEvent.clientPoint, ptLocal);
       auto targetComponentViewDescriptor = viewRegistry.componentViewDescriptorWithTag(targetTag);
-      targetView =
-          FindClosestFabricManagedTouchableView(targetComponentViewDescriptor.view.get());
+      targetView = FindClosestFabricManagedTouchableView(targetComponentViewDescriptor.view.get());
     }
 
     auto handler = [&activeTouch, eventType, &pointerEvent](std::vector<IComponentView *> &eventPathViews) {

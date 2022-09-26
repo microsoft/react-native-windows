@@ -3743,9 +3743,9 @@ bcrypt-pbkdf@^1.0.0:
     tweetnacl "^0.14.3"
 
 beachball@^2.20.0:
-  version "2.31.1"
-  resolved "https://registry.yarnpkg.com/beachball/-/beachball-2.31.1.tgz#dc649688e635f2f667c0b803402c4aea6c45e682"
-  integrity sha512-evxdaylIXwMRPTjnKGUSjF0xdScw2EpE+VMfI+Q27uZrRXhdgHEfkQvVMbIs60bX5wbdUToi9FXF/CJVW0DM6A==
+  version "2.31.2"
+  resolved "https://registry.yarnpkg.com/beachball/-/beachball-2.31.2.tgz#6705d2180cd9277812706af4876e2ff9ce4bfef3"
+  integrity sha512-gQqjNfKHOZz9UxOojfgy/Q7bd4aN8hc1w/sxqKNCcJR3SxZ4hya9Czn9HJflAJZUQXQ41/VHlJvZgWzkjx402g==
   dependencies:
     cosmiconfig "^7.0.0"
     execa "^5.0.0"
@@ -3753,7 +3753,7 @@ beachball@^2.20.0:
     lodash "^4.17.15"
     minimatch "^3.0.4"
     p-limit "^3.0.2"
-    prompts "^2.1.0"
+    prompts "^2.4.2"
     semver "^7.0.0"
     toposort "^2.0.2"
     uuid "^9.0.0"
@@ -9943,7 +9943,7 @@ promise@^8.0.3:
   dependencies:
     asap "~2.0.6"
 
-prompts@^2.0.1, prompts@^2.1.0, prompts@^2.4.0, prompts@^2.4.1:
+prompts@^2.0.1, prompts@^2.4.0, prompts@^2.4.1, prompts@^2.4.2:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/prompts/-/prompts-2.4.2.tgz#7b57e73b3a48029ad10ebd44f74b01722a4cb069"
   integrity sha512-NxNv/kLguCA7p3jE8oL2aEBsrJWgAakBpgmgK6lpPWV+WuOmY6r2/zbAVnP+T8bQlA0nzHXSJSJW0Hq7ylaD2Q==

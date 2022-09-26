@@ -67,6 +67,10 @@ export const CodedErrors = {
   NeedAutolinking: 3003,
   AddProjectToSolution: 3004,
   Autolinking: 3005,
+
+  // codegen-windows
+  NeedCodegen: 4000,
+  InvalidCodegenConfig: 4001,
 };
 
 export type CodedErrorType = keyof typeof CodedErrors;

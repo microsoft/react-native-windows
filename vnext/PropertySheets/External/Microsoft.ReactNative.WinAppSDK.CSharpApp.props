@@ -22,6 +22,7 @@
   <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.WinAppSDK.Common.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Appx.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Autolink.props" />
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Codegen.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\NuGet.CSharp.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\WinUI.props" />
 </Project>

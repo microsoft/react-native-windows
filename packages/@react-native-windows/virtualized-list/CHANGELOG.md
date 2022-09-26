@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/virtualized-list
 
-This log was last generated on Sat, 20 Aug 2022 05:08:54 GMT and should not be manually modified.
+This log was last generated on Sat, 24 Sep 2022 05:11:52 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.50
+
+Sat, 24 Sep 2022 05:11:52 GMT
+
+### Changes
+
+- Bump react-native-platform-override to v1.6.14
 
 ## 0.0.0-canary.49
 

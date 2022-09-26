@@ -2,7 +2,7 @@
   "name": "@react-native-windows/codegen",
   "version": "0.0.0-canary.35",
   "description": "Generators for react-native-codegen targeting react-native-windows",
-  "main": "index.js",
+  "main": "lib-commonjs/index.js",
   "repository": "https://github.com/microsoft/react-native-windows",
   "license": "MIT",
   "private": false,
