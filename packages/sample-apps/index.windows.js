@@ -20,7 +20,7 @@ import { NativeEventEmitter, TurboModuleRegistry } from 'react-native';
 
 import {MyComp} from './myComp';
 
-import {default as MyModule} from './NativeMyModule';
+import {default as MyModule} from './src/NativeMyModule';
 
 const SampleModuleCS = TurboModuleRegistry.get('SampleModuleCS');
 const SampleModuleCpp = TurboModuleRegistry.get('SampleModuleCpp');

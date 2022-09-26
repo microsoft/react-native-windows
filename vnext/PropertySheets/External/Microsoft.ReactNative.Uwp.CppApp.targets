@@ -29,6 +29,8 @@
   <Import Project="$(ProjectDir)\AutolinkedNativeModules.g.targets"
           Condition="Exists('$(ProjectDir)\AutolinkedNativeModules.g.targets')" />
 
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Codegen.targets" />
+
   <Import Project="$(OutputPath)$(AssemblyName).Build.appxrecipe"
           Condition="Exists('$(OutputPath)$(AssemblyName).Build.appxrecipe') And '$(DeployLayout)'=='true'" />
 

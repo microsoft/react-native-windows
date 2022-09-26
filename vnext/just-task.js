@@ -27,7 +27,7 @@ option('clean');
 
 task('codegen', () => {
   execSync(
-    'react-native-windows-codegen --files Libraries/**/*[Nn]ative*.js --namespace Microsoft::ReactNativeSpecs --libraryName rnwcore',
+    'react-native-windows-codegen --files Libraries/**/*Native*.js --namespace Microsoft::ReactNativeSpecs --libraryName rnwcore',
     {env: process.env},
   );
 });
