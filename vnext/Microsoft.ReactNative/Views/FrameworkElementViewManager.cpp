@@ -27,6 +27,7 @@
 #include <Views/ViewPanel.h>
 #include "Unicode.h"
 #include "cdebug.h"
+#include <iterator>
 
 namespace winrt {
 using namespace xaml;
@@ -280,12 +281,12 @@ bool FrameworkElementViewManager::UpdateProperty(
     } else if (propertyName == "accessible") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
         if (propertyValue.AsBoolean()) {
-          xaml::Automation::AutomationProperties::SetAccessibilityView(element, winrt::AccessibilityView::Content);
+          ApplyAccessability(element, winrt::AccessibilityView::Content);
         } else {
-          xaml::Automation::AutomationProperties::SetAccessibilityView(element, winrt::AccessibilityView::Raw);
+          ApplyAccessability(element, winrt::AccessibilityView::Raw);
         }
       } else if (propertyValue.IsNull()) {
-        element.ClearValue(xaml::Automation::AutomationProperties::AccessibilityViewProperty());
+        ClearAccessability(element);
       }
     } else if (propertyName == "accessibilityLiveRegion") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
@@ -696,6 +697,42 @@ void FrameworkElementViewManager::RefreshTransformMatrix(ShadowNodeBase *shadowN
     // Start a new ExpressionAnimation targeting the new
     // UIElement.TransformMatrix.
     StartTransformAnimation(uielement, shadowNode->EnsureTransformPS());
+  }
+}
+
+void FrameworkElementViewManager::ApplyAccessability(winrt::Windows::UI::Xaml::FrameworkElement const& element,
+  winrt::Windows::UI::Xaml::Automation::Peers::AccessibilityView const& value) {
+
+  xaml::Automation::AutomationProperties::SetAccessibilityView(element, value);
+  
+  auto children = element.GetChildrenInTabFocusOrder();
+  if (children != nullptr) {
+    for (auto const& child : children)
+    {
+      xaml::Automation::AutomationProperties::SetAccessibilityView(child, value);
+
+     // maybe recursively ?
+      if (auto childElement = child.try_as<winrt::Windows::UI::Xaml::FrameworkElement>()) {
+        ApplyAccessability(childElement, value);
+       }
+    }
+  }
+}
+
+void FrameworkElementViewManager::ClearAccessability(winrt::Windows::UI::Xaml::FrameworkElement const& element) {
+  element.ClearValue(xaml::Automation::AutomationProperties::AccessibilityViewProperty());
+
+  auto children = element.GetChildrenInTabFocusOrder();
+  if (children != nullptr) {
+    for (auto const& child : children)
+    {
+      child.ClearValue(xaml::Automation::AutomationProperties::AccessibilityViewProperty());
+      
+      // maybe recursively ?
+      if (auto childElement = child.try_as<winrt::Windows::UI::Xaml::FrameworkElement>()) {
+        ClearAccessability(childElement);
+      }
+    }
   }
 }
 
