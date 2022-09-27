@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Tue, 27 Sep 2022 05:11:30 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.45",
+      "version": "0.0.0-canary.45",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "c808a5234ee05f68df7edff71536012d8bf860e4",
+            "comment": "Add codes for codegen-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 21 Jun 2022 05:09:36 GMT",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.44",
       "version": "0.0.0-canary.44",

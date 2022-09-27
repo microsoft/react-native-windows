@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Sat, 04 Jun 2022 05:10:05 GMT and should not be manually modified.
+This log was last generated on Tue, 27 Sep 2022 05:11:30 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.36
+
+Tue, 27 Sep 2022 05:11:30 GMT
+
+### Changes
+
+- Export functionality to allow cli to use it (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.35
 

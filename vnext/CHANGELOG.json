@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 27 Sep 2022 05:11:30 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.554",
+      "version": "0.0.0-canary.554",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "302f62a48b41a0afdd516583095a3c69141173da",
+            "comment": "Initial rnwincomp files"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c808a5234ee05f68df7edff71536012d8bf860e4",
+            "comment": "Align codegen filter with core"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.136",
+            "commit": "c808a5234ee05f68df7edff71536012d8bf860e4"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.36",
+            "commit": "c808a5234ee05f68df7edff71536012d8bf860e4"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 24 Sep 2022 05:11:52 GMT",
       "tag": "react-native-windows_v0.0.0-canary.553",
       "version": "0.0.0-canary.553",

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add codes for codegen-windows",
-  "packageName": "@react-native-windows/telemetry",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
