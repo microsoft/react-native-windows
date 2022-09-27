@@ -1,8 +1,18 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Fri, 19 Aug 2022 05:09:34 GMT and should not be manually modified.
+This log was last generated on Tue, 27 Sep 2022 05:11:30 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.136
+
+Tue, 27 Sep 2022 05:11:30 GMT
+
+### Changes
+
+- Add codegen-windows command to run windows codegen (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.36
+- Bump @react-native-windows/telemetry to v0.0.0-canary.45
 
 ## 0.0.0-canary.135
 

@@ -2,6 +2,33 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Tue, 27 Sep 2022 05:11:30 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.136",
+      "version": "0.0.0-canary.136",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "c808a5234ee05f68df7edff71536012d8bf860e4",
+            "comment": "Add codegen-windows command to run windows codegen"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.36",
+            "commit": "c808a5234ee05f68df7edff71536012d8bf860e4"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.45",
+            "commit": "c808a5234ee05f68df7edff71536012d8bf860e4"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 19 Aug 2022 05:09:34 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.135",
       "version": "0.0.0-canary.135",
