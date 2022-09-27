@@ -504,6 +504,13 @@ void ViewViewManager::TryUpdateView(
   if (isControl == useControl && hadOuterBorder == hasOuterBorder)
     return;
 
+  // This short-circuits if we are already a control and no longer need to be.
+  // Chances are if something was a control at one point in time, it will need
+  // to be a control again, so it is an over-optimization to remove the control
+  // wrapper.
+  if (!useControl && isControl)
+    return;
+
   //
   // 1. Ensure we have the new 'root' and do the child replacement
   //      This is first to ensure that we can re-parent the Border or ViewPanel
