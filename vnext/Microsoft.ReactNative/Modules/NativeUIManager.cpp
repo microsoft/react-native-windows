@@ -202,25 +202,6 @@ int64_t NativeUIManager::AddMeasuredRootView(facebook::react::IReactRootView *ro
 
   m_host->RegisterRootView(rootView, tag, width, height);
 
-  // TODO: call UpdateRootNodeSize when ReactRootView size changes
-  /*var resizeCount = 0;
-  rootView.SetOnSizeChangedListener((sender, args) =>
-  {
-  var currentCount = ++resizeCount;
-  var newWidth = args.NewSize.Width;
-  var newHeight = args.NewSize.Height;
-
-  Context.RunOnNativeModulesQueueThread(() =>
-  {
-  if (currentCount == resizeCount)
-  {
-  Context.AssertOnNativeModulesQueueThread();
-  _uiImplementation.UpdateRootNodeSize(tag, newWidth, newHeight,
-  _eventDispatcher);
-  }
-  });
-  });*/
-
   return tag;
 }
 
