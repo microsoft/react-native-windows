@@ -798,7 +798,10 @@ std::shared_ptr<IRedBoxHandler> ReactInstanceWin::GetRedBoxHandler() noexcept {
 #ifndef CORE_ABI
   } else if (UseDeveloperSupport()) {
     auto localWkReactHost = m_weakReactHost;
-    return CreateDefaultRedBoxHandler(std::move(localWkReactHost), *m_uiQueue);
+    return CreateDefaultRedBoxHandler(
+        winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()),
+        std::move(localWkReactHost),
+        *m_uiQueue);
 #endif
   } else {
     return {};
@@ -979,11 +982,8 @@ void ReactInstanceWin::AttachMeasuredRootView(
     facebook::react::IReactRootView *rootView,
     const winrt::Microsoft::ReactNative::JSValueArgWriter &initialProps,
     bool useFabric) noexcept {
-#ifndef CORE_ABI
   if (State() == ReactInstanceState::HasError)
     return;
-
-  int64_t rootTag = -1;
 
 #ifdef USE_FABRIC
   if (useFabric && !m_useWebDebugger) {
@@ -993,10 +993,12 @@ void ReactInstanceWin::AttachMeasuredRootView(
     auto rootTag = Microsoft::ReactNative::getNextRootViewTag();
     rootView->SetTag(rootTag);
     uiManager->startSurface(rootView, rootTag, rootView->JSComponentName(), DynamicWriter::ToDynamic(initialProps));
-
-  } else
+  }
 #endif
-  {
+#ifndef CORE_ABI
+  if (!useFabric || m_useWebDebugger) {
+    int64_t rootTag = -1;
+
     if (auto uiManager = Microsoft::ReactNative::GetNativeUIManager(*m_reactContext).lock()) {
       rootTag = uiManager->AddMeasuredRootView(rootView);
       rootView->SetTag(rootTag);

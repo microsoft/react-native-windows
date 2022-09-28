@@ -127,9 +127,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)HermesShim.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\BlobModule.cpp">
-      <Filter>Source Files\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\HttpModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
@@ -399,15 +396,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)HermesShim.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IWebSocketModuleContentHandler.h">
-      <Filter>Header Files\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\BlobModule.h">
-      <Filter>Header Files\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IWebSocketModuleProxy.h">
-      <Filter>Header Files\Modules</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\HttpModule.h">
       <Filter>Header Files\Modules</Filter>
