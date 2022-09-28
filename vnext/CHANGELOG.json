@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 28 Sep 2022 05:11:57 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.555",
+      "version": "0.0.0-canary.555",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "dbe1ac75d8df2e749782999e09b70023c218a7a4",
+            "comment": "Deletes irrelevant TODO from NativeUIManager"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 27 Sep 2022 05:11:30 GMT",
       "tag": "react-native-windows_v0.0.0-canary.554",
       "version": "0.0.0-canary.554",

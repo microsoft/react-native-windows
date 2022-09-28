@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 27 Sep 2022 05:11:30 GMT and should not be manually modified.
+This log was last generated on Wed, 28 Sep 2022 05:11:57 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.555
+
+Wed, 28 Sep 2022 05:11:57 GMT
+
+### Changes
+
+- Deletes irrelevant TODO from NativeUIManager (erozell@outlook.com)
 
 ## 0.0.0-canary.554
 
