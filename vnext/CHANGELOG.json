@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 29 Sep 2022 05:11:44 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.556",
+      "version": "0.0.0-canary.556",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e1dbae3fa7d05e37b167d8a825c5fd61d9b41235",
+            "comment": "Changes to support logbox/redbox in fabric"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 28 Sep 2022 05:11:57 GMT",
       "tag": "react-native-windows_v0.0.0-canary.555",
       "version": "0.0.0-canary.555",
