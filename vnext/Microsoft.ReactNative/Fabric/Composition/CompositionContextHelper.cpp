@@ -245,8 +245,8 @@ struct CompSpriteVisual : winrt::Microsoft::ReactNative::Composition::implementa
   void InsertAt(const winrt::Microsoft::ReactNative::Composition::IVisual &visual, uint32_t index) noexcept {
     auto containerChildren = m_visual.Children();
     auto compVisual = winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerVisual(visual);
-    if (index == 0 || containerChildren.Count() == 0) {
-      containerChildren.InsertAtTop(compVisual);
+    if (index == 0) {
+      containerChildren.InsertAtBottom(compVisual);
       return;
     }
     auto insertAfter = containerChildren.First();
