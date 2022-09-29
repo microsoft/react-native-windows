@@ -462,7 +462,9 @@ struct CompScrollerVisual : winrt::Microsoft::ReactNative::Composition::implemen
   }
 
   void Size(winrt::Windows::Foundation::Numerics::float2 const &size) noexcept {
+    m_visualSize = size;
     m_visual.Size(size);
+    UpdateMaxPosition();
   }
 
   void Offset(winrt::Windows::Foundation::Numerics::float3 const &offset) noexcept {
@@ -499,8 +501,9 @@ struct CompScrollerVisual : winrt::Microsoft::ReactNative::Composition::implemen
   }
 
   void ContentSize(winrt::Windows::Foundation::Numerics::float2 const &size) noexcept {
+    m_contentSize = size;
     m_contentVisual.Size(size);
-    m_interactionTracker.MaxPosition({size.x, size.y, 0});
+    UpdateMaxPosition();
   }
 
   winrt::Windows::Foundation::Numerics::float3 ScrollPosition() noexcept {
@@ -516,6 +519,15 @@ struct CompScrollerVisual : winrt::Microsoft::ReactNative::Composition::implemen
     m_scrollPositionChangedEvent(*this, winrt::make<CompScrollPositionChangedArgs>(position));
   }
 
+  void UpdateMaxPosition() {
+    m_interactionTracker.MaxPosition(
+        {std::max<float>(m_contentSize.x - m_visualSize.x, 0),
+         std::max<float>(m_contentSize.y - m_visualSize.y, 0),
+         0});
+  }
+
+  winrt::Windows::Foundation::Numerics::float2 m_contentSize{0};
+  winrt::Windows::Foundation::Numerics::float2 m_visualSize{0};
   winrt::event<
       winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::Composition::ScrollPositionChangedArgs>>
       m_scrollPositionChangedEvent;
