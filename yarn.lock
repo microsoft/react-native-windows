@@ -7744,9 +7744,9 @@ kleur@^3.0.3:
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
 lage@^1.5.0:
-  version "1.8.8"
-  resolved "https://registry.yarnpkg.com/lage/-/lage-1.8.8.tgz#0bc9e36b49b6144b78d6613e47b25bd74230b1c5"
-  integrity sha512-rMXedlK1lvC69P+bVir6r9EaGqy/NZm1Rg4vE7LD1vlDzNLYkCnvD1JkMxxQHkbMjhKXBLwcB6JnAti79GdLgA==
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/lage/-/lage-1.9.0.tgz#68dac4f8d23e179dab1d934548d4beffb822fa34"
+  integrity sha512-wCGZRlg/XUM47Cye2Sven6PCvEGAr9sk4YpTwoybqN0htdY1APcuN1WSHZTyEA5rUGo+ugwWiyZKJW7bFDtV9g==
   dependencies:
     "@lage-run/logger" "*"
     "@xmldom/xmldom" "^0.8.0"
