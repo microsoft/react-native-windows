@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Fix +1 problem in LocalBundleReader",
-  "packageName": "react-native-windows",
-  "email": "aeulitz@microsoft.com",
-  "dependentChangeType": "none"
-}
