@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Tue, 27 Sep 2022 05:11:30 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.36",
+      "version": "0.0.0-canary.36",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "c808a5234ee05f68df7edff71536012d8bf860e4",
+            "comment": "Export functionality to allow cli to use it"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 04 Jun 2022 05:10:05 GMT",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.35",
       "version": "0.0.0-canary.35",

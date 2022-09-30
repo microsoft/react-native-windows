@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Tue, 21 Jun 2022 05:09:36 GMT and should not be manually modified.
+This log was last generated on Tue, 27 Sep 2022 05:11:30 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.45
+
+Tue, 27 Sep 2022 05:11:30 GMT
+
+### Changes
+
+- Add codes for codegen-windows (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.44
 

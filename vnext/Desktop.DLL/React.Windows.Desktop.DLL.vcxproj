@@ -100,6 +100,10 @@
       </AdditionalDependencies>
       <DelayLoadDLLs>Chakra.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
+    <Link Condition="'$(UseFabric)' == 'true'">
+      <AdditionalDependencies>windowscodecs.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>Windowscodecs.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Platform)'=='x64'">
     <Link>

@@ -76,14 +76,15 @@ std::future<std::string> LocalBundleReader::LoadBundleAsync(const std::string &b
   auto fileBuffer{co_await winrt::Windows::Storage::FileIO::ReadBufferAsync(file)};
   auto dataReader{winrt::Windows::Storage::Streams::DataReader::FromBuffer(fileBuffer)};
 
-  std::string script(fileBuffer.Length() + 1, '\0');
+  // No need to use length + 1, STL guarantees that string storage is null-terminated.
+  std::string script(fileBuffer.Length(), '\0');
 
   // Construct the array_view to slice into the first fileBuffer.Length bytes.
   // DataReader.ReadBytes will read as many bytes as are present in the
   // array_view. The backing string has fileBuffer.Length() + 1 bytes, without
   // an explicit end it will read 1 byte to many and throw.
   dataReader.ReadBytes(winrt::array_view<uint8_t>{
-      reinterpret_cast<uint8_t *>(&script[0]), reinterpret_cast<uint8_t *>(&script[script.length() - 1])});
+      reinterpret_cast<uint8_t *>(&script[0]), reinterpret_cast<uint8_t *>(&script[script.length()])});
   dataReader.Close();
 
   co_return script;

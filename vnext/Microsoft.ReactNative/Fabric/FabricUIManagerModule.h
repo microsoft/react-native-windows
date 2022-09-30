@@ -2,11 +2,13 @@
 // Licensed under the MIT License.
 #pragma once
 
+#include <Fabric/Composition/CompositionHelpers.h>
 #include <NativeModules.h>
 #include <React.h>
 #include <react/renderer/scheduler/SchedulerDelegate.h>
 #include <react/renderer/scheduler/SurfaceManager.h>
-#include "ComponentViewRegistry.h"
+#include <winrt/Windows.UI.Composition.h>
+#include "Composition/ComponentViewRegistry.h"
 
 namespace facebook::react {
 class Scheduler;
@@ -44,7 +46,7 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
       const facebook::react::LayoutConstraints &layoutConstraints,
       const facebook::react::LayoutContext &layoutContext) const noexcept;
 
-  const ComponentViewRegistry &GetViewRegistry() const noexcept;
+  const IComponentViewRegistry &GetViewRegistry() const noexcept;
 
  private:
   void installFabricUIManager() noexcept;
@@ -58,6 +60,7 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
   void didMountComponentsWithRootTag(facebook::react::SurfaceId surfaceId) noexcept;
 
   winrt::Microsoft::ReactNative::ReactContext m_context;
+  winrt::Microsoft::ReactNative::Composition::ICompositionContext m_compContext;
   std::shared_ptr<facebook::react::Scheduler> m_scheduler;
   std::shared_ptr<facebook::react::SurfaceManager> m_surfaceManager;
   std::mutex m_schedulerMutex; // Protect m_scheduler
@@ -65,9 +68,11 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
   bool m_followUpTransactionRequired{false};
 
   ComponentViewRegistry m_registry;
-#ifndef CORE_ABI
-  std::unordered_map<facebook::react::SurfaceId, XamlView> m_surfaceRegistry;
-#endif // CORE_ABI
+  struct SurfaceInfo {
+    winrt::Microsoft::ReactNative::Composition::IVisual rootVisual{nullptr};
+  };
+
+  std::unordered_map<facebook::react::SurfaceId, SurfaceInfo> m_surfaceRegistry;
 
   // Inherited via SchedulerDelegate
   virtual void schedulerDidFinishTransaction(

@@ -13,10 +13,7 @@ const {execSync} = require('child_process');
 require('@rnw-scripts/just-task');
 
 task('codegen', () => {
-  execSync(
-    'react-native-windows-codegen --file NativeMyModule.js --namespace SampleLibraryCpp',
-    {env: process.env},
-  );
+  execSync('npx react-native codegen-windows --logging', {env: process.env});
 });
 
 task('prepareBundle', () => {
