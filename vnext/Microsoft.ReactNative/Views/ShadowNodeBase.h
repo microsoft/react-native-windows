@@ -44,6 +44,13 @@ enum class ShadowCorners : uint8_t {
   CountCorners
 };
 
+struct ShadowNodeLayout {
+  float Left;
+  float Top;
+  float Width;
+  float Height;
+};
+
 extern const DECLSPEC_SELECTANY double c_UndefinedEdge = -1;
 #define INIT_UNDEFINED_EDGES                                                                              \
   {                                                                                                       \
@@ -131,6 +138,9 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public ShadowNode {
 
   // Pointer events
   PointerEventsKind m_pointerEvents = PointerEventsKind::Auto;
+
+  // Layout
+  ShadowNodeLayout m_layout;
 
   // Support Keyboard
  public:
