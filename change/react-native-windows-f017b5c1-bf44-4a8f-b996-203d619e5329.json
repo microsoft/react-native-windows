@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Fabric: fix zorder issues",
+  "comment": "Fabric: simplify border code, and fix some border issues",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
   "dependentChangeType": "patch"
