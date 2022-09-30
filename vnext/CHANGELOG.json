@@ -2,6 +2,50 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 30 Sep 2022 05:11:35 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.557",
+      "version": "0.0.0-canary.557",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e3b38c16f2be17131e6d2891f1e26ac17bb66180",
+            "comment": "Fabric: Stop ScrollView from scrolling past content"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "9b5caf496bcb3fe89375c757ee70c6723c7353f3",
+            "comment": "Fabric: fix zorder issues"
+          }
+        ],
+        "none": [
+          {
+            "author": "aeulitz@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "663554a0fde5ed72af727aba939473560c54bd9b",
+            "comment": "Fix +1 problem in LocalBundleReader"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 29 Sep 2022 05:11:44 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.556",
+      "version": "0.0.0-canary.556",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e1dbae3fa7d05e37b167d8a825c5fd61d9b41235",
+            "comment": "Changes to support logbox/redbox in fabric"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 28 Sep 2022 05:11:57 GMT",
       "tag": "react-native-windows_v0.0.0-canary.555",
       "version": "0.0.0-canary.555",
