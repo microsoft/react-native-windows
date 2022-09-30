@@ -310,7 +310,9 @@ exports.examples = [
     title: 'Background Color',
     render(): React.Node {
       return (
-        <View style={{backgroundColor: '#527FE4', padding: 5}}>
+        <View
+          style={{backgroundColor: '#527FE4', padding: 5}}
+          testID="background-color">
           <Text style={{fontSize: 11}}>Blue background</Text>
         </View>
       );
@@ -320,7 +322,9 @@ exports.examples = [
     title: 'Border',
     render(): React.Node {
       return (
-        <View style={{borderColor: '#527FE4', borderWidth: 5, padding: 10}}>
+        <View
+          style={{borderColor: '#527FE4', borderWidth: 5, padding: 10}}
+          testID="border">
           <Text style={{fontSize: 11}}>5px blue border</Text>
         </View>
       );
@@ -337,7 +341,9 @@ exports.examples = [
         },
       });
       return (
-        <View style={{borderColor: '#bb0000', borderWidth: 0.5}}>
+        <View
+          style={{borderColor: '#bb0000', borderWidth: 0.5}}
+          testID="padding-margin">
           <View style={[styles.box, {padding: 5}]}>
             <Text style={{fontSize: 11}}>5px padding</Text>
           </View>
@@ -360,7 +366,9 @@ exports.examples = [
     title: 'Border Radius',
     render(): React.Node {
       return (
-        <View style={{borderWidth: 0.5, borderRadius: 5, padding: 5}}>
+        <View
+          style={{borderWidth: 0.5, borderRadius: 5, padding: 5}}
+          testID="border-radius">
           <Text style={{fontSize: 11}}>
             Too much use of `borderRadius` (especially large radii) on anything
             which is scrolling may result in dropped frames. Use sparingly.
@@ -379,7 +387,7 @@ exports.examples = [
     title: 'Rounded Borders',
     render(): React.Node {
       return (
-        <View style={{flexDirection: 'row'}}>
+        <View style={{flexDirection: 'row'}} testID="rounded-borders">
           <View
             style={{
               width: 50,
@@ -446,7 +454,7 @@ exports.examples = [
       // NOTE: The <View> that sets `overflow` should only have other layout
       // styles so that we can accurately test view flattening optimizations.
       return (
-        <View style={{flexDirection: 'row'}}>
+        <View style={{flexDirection: 'row'}} testID="overflow">
           <View style={styles.container}>
             <View style={[StyleSheet.absoluteFill]}>
               <Text style={styles.content}>undefined</Text>
@@ -470,7 +478,7 @@ exports.examples = [
     title: 'Opacity',
     render(): React.Node {
       return (
-        <View>
+        <View testID="opacity">
           <View style={{opacity: 0}}>
             <Text>Opacity 0</Text>
           </View>
@@ -518,7 +526,7 @@ exports.examples = [
     title: 'ToolTip',
     render(): React.Node {
       return (
-        <View tooltip="Parent View">
+        <View tooltip="Parent View" testID="tool-tip">
           <Text style={{fontSize: 11}}>
             This Parent View has tooltip "Parent View"
           </Text>
@@ -544,7 +552,9 @@ exports.examples = [
           <Text style={{paddingBottom: 10}}>
             View #1, front is visible, back is hidden.
           </Text>
-          <View style={{justifyContent: 'center', alignItems: 'center'}}>
+          <View
+            style={{justifyContent: 'center', alignItems: 'center'}}
+            testID="backface-visibility">
             <View
               style={{
                 height: 200,
@@ -574,7 +584,9 @@ exports.examples = [
           <Text style={{paddingVertical: 10}}>
             View #2, front is hidden, back is visible.
           </Text>
-          <View style={{justifyContent: 'center', alignItems: 'center'}}>
+          <View
+            style={{justifyContent: 'center', alignItems: 'center'}}
+            testID="backface-visibility-2">
             <View
               style={{
                 height: 200,
