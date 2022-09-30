@@ -19,6 +19,8 @@ CompositionBaseComponentView *GetFocusedComponent() noexcept;
 void SetFocusedComponent(CompositionBaseComponentView *value) noexcept;
 
 struct CompositionBaseComponentView : public IComponentView {
+  static constexpr size_t numSpecialBorderLayers = 8;
+
   CompositionBaseComponentView(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag);
@@ -49,9 +51,10 @@ struct CompositionBaseComponentView : public IComponentView {
   virtual void OnRenderingDeviceLost() noexcept;
 
  protected:
-  std::array<winrt::Microsoft::ReactNative::Composition::SpriteVisual, 12> FindSpecialBorderLayers() const noexcept;
+  std::array<winrt::Microsoft::ReactNative::Composition::SpriteVisual, numSpecialBorderLayers> FindSpecialBorderLayers()
+      const noexcept;
   bool TryUpdateSpecialBorderLayers(
-      std::array<winrt::Microsoft::ReactNative::Composition::SpriteVisual, 12> &spBorderVisuals,
+      std::array<winrt::Microsoft::ReactNative::Composition::SpriteVisual, numSpecialBorderLayers> &spBorderVisuals,
       facebook::react::LayoutMetrics const &layoutMetrics,
       const facebook::react::ViewProps &viewProps) noexcept;
   void UpdateSpecialBorderLayers(
@@ -66,12 +69,6 @@ struct CompositionBaseComponentView : public IComponentView {
   facebook::react::LayoutMetrics m_layoutMetrics;
   bool m_needsBorderUpdate{false};
   uint8_t m_numBorderVisuals{0};
-
-  /*
-    winrt::Windows::UI::Composition::ShapeVisual m_borderVisual{nullptr};
-    winrt::Windows::UI::Composition::CompositionSpriteShape m_borderShape{nullptr};
-    winrt::Windows::UI::Composition::CompositionRoundedRectangleGeometry m_borderGeometry{nullptr};
-    */
 };
 
 struct CompositionViewComponentView : public CompositionBaseComponentView {
