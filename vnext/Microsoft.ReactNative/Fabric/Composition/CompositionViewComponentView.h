@@ -51,8 +51,8 @@ struct CompositionBaseComponentView : public IComponentView {
   virtual void OnRenderingDeviceLost() noexcept;
 
  protected:
-  std::array<winrt::Microsoft::ReactNative::Composition::SpriteVisual, SpecialBorderLayerCount> FindSpecialBorderLayers()
-      const noexcept;
+  std::array<winrt::Microsoft::ReactNative::Composition::SpriteVisual, SpecialBorderLayerCount>
+  FindSpecialBorderLayers() const noexcept;
   bool TryUpdateSpecialBorderLayers(
       std::array<winrt::Microsoft::ReactNative::Composition::SpriteVisual, SpecialBorderLayerCount> &spBorderVisuals,
       facebook::react::LayoutMetrics const &layoutMetrics,
