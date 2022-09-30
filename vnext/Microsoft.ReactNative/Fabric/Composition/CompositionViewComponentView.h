@@ -19,7 +19,7 @@ CompositionBaseComponentView *GetFocusedComponent() noexcept;
 void SetFocusedComponent(CompositionBaseComponentView *value) noexcept;
 
 struct CompositionBaseComponentView : public IComponentView {
-  static constexpr size_t numSpecialBorderLayers = 8;
+  static constexpr size_t SpecialBorderLayerCount = 8;
 
   CompositionBaseComponentView(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
@@ -51,10 +51,10 @@ struct CompositionBaseComponentView : public IComponentView {
   virtual void OnRenderingDeviceLost() noexcept;
 
  protected:
-  std::array<winrt::Microsoft::ReactNative::Composition::SpriteVisual, numSpecialBorderLayers> FindSpecialBorderLayers()
+  std::array<winrt::Microsoft::ReactNative::Composition::SpriteVisual, SpecialBorderLayerCount> FindSpecialBorderLayers()
       const noexcept;
   bool TryUpdateSpecialBorderLayers(
-      std::array<winrt::Microsoft::ReactNative::Composition::SpriteVisual, numSpecialBorderLayers> &spBorderVisuals,
+      std::array<winrt::Microsoft::ReactNative::Composition::SpriteVisual, SpecialBorderLayerCount> &spBorderVisuals,
       facebook::react::LayoutMetrics const &layoutMetrics,
       const facebook::react::ViewProps &viewProps) noexcept;
   void UpdateSpecialBorderLayers(

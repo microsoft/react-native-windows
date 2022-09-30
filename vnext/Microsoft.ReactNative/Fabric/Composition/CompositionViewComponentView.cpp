@@ -92,9 +92,9 @@ bool CompositionBaseComponentView::ScrollWheel(facebook::react::Point pt, int32_
 
 std::array<
     winrt::Microsoft::ReactNative::Composition::SpriteVisual,
-    CompositionBaseComponentView::numSpecialBorderLayers>
+    CompositionBaseComponentView::SpecialBorderLayerCount>
 CompositionBaseComponentView::FindSpecialBorderLayers() const noexcept {
-  std::array<winrt::Microsoft::ReactNative::Composition::SpriteVisual, numSpecialBorderLayers> layers{
+  std::array<winrt::Microsoft::ReactNative::Composition::SpriteVisual, SpecialBorderLayerCount> layers{
       nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr};
 
   if (m_numBorderVisuals) {
@@ -526,7 +526,7 @@ void DrawAllBorderLayers(
     winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     std::array<
         winrt::Microsoft::ReactNative::Composition::SpriteVisual,
-        CompositionBaseComponentView::numSpecialBorderLayers> &spBorderLayers,
+        CompositionBaseComponentView::SpecialBorderLayerCount> &spBorderLayers,
     TShape &shape,
     const facebook::react::BorderWidths &borderWidths,
     const facebook::react::BorderRadii &borderRadii,
@@ -536,7 +536,7 @@ void DrawAllBorderLayers(
     facebook::react::BorderStyle borderStyle) {
   // Now that we've drawn our nice border in one layer, split it into its component layers
   winrt::com_ptr<Composition::ICompositionDrawingSurfaceInterop>
-      spTextures[CompositionBaseComponentView::numSpecialBorderLayers];
+      spTextures[CompositionBaseComponentView::SpecialBorderLayerCount];
 
   // Set component border properties
   // Top Left Corner
@@ -820,7 +820,7 @@ facebook::react::BorderMetrics resolveAndAlignBorderMetrics(
 }
 
 bool CompositionBaseComponentView::TryUpdateSpecialBorderLayers(
-    std::array<winrt::Microsoft::ReactNative::Composition::SpriteVisual, numSpecialBorderLayers> &spBorderVisuals,
+    std::array<winrt::Microsoft::ReactNative::Composition::SpriteVisual, SpecialBorderLayerCount> &spBorderVisuals,
     facebook::react::LayoutMetrics const &layoutMetrics,
     const facebook::react::ViewProps &viewProps) noexcept {
   auto borderMetrics = resolveAndAlignBorderMetrics(layoutMetrics, viewProps);
@@ -836,7 +836,7 @@ bool CompositionBaseComponentView::TryUpdateSpecialBorderLayers(
 
   // Create the special border layers if they don't exist yet
   if (!spBorderVisuals[0]) {
-    for (uint8_t i = 0; i < numSpecialBorderLayers; i++) {
+    for (uint8_t i = 0; i < SpecialBorderLayerCount; i++) {
       auto visual = m_compContext.CreateSpriteVisual();
       Visual().InsertAt(visual, i);
       spBorderVisuals[i] = std::move(visual);
