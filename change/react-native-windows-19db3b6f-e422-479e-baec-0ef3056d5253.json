@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Enable RCTNetworkingNative as TurboModule (JS only)",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
