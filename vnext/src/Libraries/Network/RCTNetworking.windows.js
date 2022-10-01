@@ -9,8 +9,7 @@
 'use strict';
 
 import RCTDeviceEventEmitter from '../EventEmitter/RCTDeviceEventEmitter';
-const RCTNetworkingNative =
-  require('../BatchedBridge/NativeModules').Networking; // [Windows]
+const RCTNetworkingNative = TurboModuleRegistry.getEnforcing('Networking');
 import {type NativeResponseType} from './XMLHttpRequest';
 import convertRequestBody, {type RequestBody} from './convertRequestBody';
 import {type EventSubscription} from '../vendor/emitter/EventEmitter';
