@@ -17,8 +17,8 @@
   },
   "main": "lib-commonjs/automationChannel.js",
   "dependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.20.0",
-    "@typescript-eslint/parser": "^5.20.0",
+    "@typescript-eslint/eslint-plugin": "^5.30.5",
+    "@typescript-eslint/parser": "^5.30.5",
     "jsonrpc-lite": "^2.2.0"
   },
   "devDependencies": {

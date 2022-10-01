@@ -98,7 +98,7 @@ struct JsiRuntime : JsiRuntimeT<JsiRuntime> {
 
   hstring SymbolToString(JsiSymbolRef symbol);
   void SymbolToUtf8(JsiSymbolRef symbol, JsiByteArrayUser const &useUtf8String);
- 
+
   JsiStringRef CreateString(hstring const &value);
   JsiStringRef CreateStringFromAscii(array_view<uint8_t const> utf8);
   JsiStringRef CreateStringFromUtf8(array_view<uint8_t const> utf8);

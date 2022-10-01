@@ -26,7 +26,7 @@ import {
   computeWindowedRenderLimits,
 } from './VirtualizeUtils';
 
-import * as VirtualizedListInjection from 'react-native/Libraries/Lists/VirtualizedListInjection';
+import * as VirtualizedListInjection from './VirtualizedListInjection';
 import * as React from 'react';
 import type {ScrollResponderType} from 'react-native/Libraries/Components/ScrollView/ScrollView';
 import type {ViewStyleProp} from 'react-native/Libraries/StyleSheet/StyleSheet';

@@ -44,6 +44,12 @@
     },
     {
       "type": "copy",
+      "file": "src/VirtualizedListInjection.js",
+      "baseFile": "Libraries/Lists/VirtualizedListInjection.js",
+      "baseHash": "cf72dddea1b22afc7c1cff339897cd88c00b4943",
+    },
+    {
+      "type": "copy",
       "file": "src/VirtualizeUtils.js",
       "baseFile": "Libraries/Lists/VirtualizeUtils.js",
       "baseHash": "4d01165c6c549549a459e6049b02d0ff0c8f0c18"

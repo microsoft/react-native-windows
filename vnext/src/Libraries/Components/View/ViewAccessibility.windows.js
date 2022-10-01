@@ -80,7 +80,7 @@ export type AccessibilityRole =
   | 'timer'
   | 'list'
   | 'toolbar'
-  | 'grid';
+  | 'grid'
   | 'listitem'; // RNW-only
 
 // the info associated with an accessibility action
