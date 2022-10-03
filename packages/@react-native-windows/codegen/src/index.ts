@@ -20,7 +20,9 @@ const rnPath = path.dirname(require.resolve('react-native/package.json'));
 const rncodegenPath = path.dirname(
   require.resolve('react-native-codegen/package.json', {paths: [rnPath]}),
 );
-const {parseFile} = require(path.resolve(rncodegenPath, 'lib/parsers/flow'));
+const FlowParser = require(path.resolve(rncodegenPath, 'lib/parsers/flow'));
+const TypeScriptParser = require(path.resolve(rncodegenPath, 'lib/parsers/typescript'));
+
 const schemaValidator = require(path.resolve(
   rncodegenPath,
   'lib/schemaValidator',
@@ -120,9 +122,12 @@ function writeMapToFiles(map: Map<string, string>, outputDir: string) {
   return success;
 }
 
-export function parseFlowFile(filename: string): SchemaType {
+export function parseFile(filename: string): SchemaType {
   try {
-    const schema = parseFile(filename);
+    const isTypeScript =
+    path.extname(filename) === '.ts' || path.extname(filename) === '.tsx';
+
+    const schema = isTypeScript ? TypeScriptParser.parseFile(filename) : FlowParser.parseFile(filename);
     // there will be at most one turbo module per file
     const moduleName = Object.keys(schema.modules)[0];
     if (moduleName) {
@@ -157,7 +162,7 @@ export function combineSchemas(files: string[]): SchemaType {
         (/export\s+default\s+\(?codegenNativeComponent</.test(contents) ||
           contents.includes('extends TurboModule'))
       ) {
-        const schema = parseFlowFile(filename);
+        const schema = parseFile(filename);
         merged.modules = {...merged.modules, ...schema.modules};
       }
       return merged;
@@ -275,7 +280,7 @@ export function runCodeGen(options: CodeGenOptions): boolean {
     throw new Error('Must specify file or files option');
 
   const schema = options.file
-    ? parseFlowFile(options.file)
+    ? parseFile(options.file)
     : combineSchemas(globby.sync(options.files!));
 
   const libraryName = options.libraryName;
