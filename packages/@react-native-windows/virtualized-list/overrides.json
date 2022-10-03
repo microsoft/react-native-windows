@@ -46,7 +46,7 @@
       "type": "copy",
       "file": "src/VirtualizedListInjection.js",
       "baseFile": "Libraries/Lists/VirtualizedListInjection.js",
-      "baseHash": "cf72dddea1b22afc7c1cff339897cd88c00b4943",
+      "baseHash": "cf72dddea1b22afc7c1cff339897cd88c00b4943"
     },
     {
       "type": "copy",

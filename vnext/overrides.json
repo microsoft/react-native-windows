@@ -17,6 +17,36 @@
       "baseHash": "80da3e01a99821e4813d04b0a8226c74f9c89217"
     },
     {
+      "type": "derived",
+      "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputComponentDescriptor.h",
+      "baseFile": "ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputComponentDescriptor.h",
+      "baseHash": "0e8bc2d76cda863ed7986747546d2b96af876ada"
+    },
+    {
+      "type": "derived",
+      "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputShadowNode.cpp",
+      "baseFile": "ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputShadowNode.cpp",
+      "baseHash": "3e816f8b2f137fad9bfc641857ece6101eb3436e"
+    },
+    {
+      "type": "derived",
+      "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputShadowNode.h",
+      "baseFile": "ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputShadowNode.h",
+      "baseHash": "3cf5d3da7910c603737b0001879f204fbbcf1f76"
+    },
+    {
+      "type": "derived",
+      "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputState.cpp",
+      "baseFile": "ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputState.cpp",
+      "baseHash": "ab386b821cfe714d9aaaa394d82785227762ab6b"
+    },
+    {
+      "type": "derived",
+      "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputState.h",
+      "baseFile": "ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputState.h",
+      "baseHash": "86ac95fb195394bc314b2481907026d2568a0c45"
+    },
+    {
       "type": "patch",
       "file": "Microsoft.ReactNative/Fabric/platform/react/renderer/graphics/Color.cpp",
       "baseFile": "ReactCommon/react/renderer/graphics/platform/cxx/react/renderer/graphics/Color.cpp",
@@ -38,67 +68,37 @@
       "issue": 7821
     },
     {
-      "type": "derived",
-      "file": "Microsoft.ReactNative/Fabric/TextInput/WindowsTextInputComponentDescriptor.h",
-      "baseFile": "ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputComponentDescriptor.h",
-      "baseHash": "0e8bc2d76cda863ed7986747546d2b96af876ada"
-    },
-    {
-      "type": "derived",
-      "file": "Microsoft.ReactNative/Fabric/TextInput/WindowsTextInputShadowNode.cpp",
-      "baseFile": "ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputShadowNode.cpp",
-      "baseHash": "3e816f8b2f137fad9bfc641857ece6101eb3436e"
-    },
-    {
-      "type": "derived",
-      "file": "Microsoft.ReactNative/Fabric/TextInput/WindowsTextInputShadowNode.h",
-      "baseFile": "ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputShadowNode.h",
-      "baseHash": "3cf5d3da7910c603737b0001879f204fbbcf1f76"
-    },
-    {
-      "type": "derived",
-      "file": "Microsoft.ReactNative/Fabric/TextInput/WindowsTextInputState.cpp",
-      "baseFile": "ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputState.cpp",
-      "baseHash": "ab386b821cfe714d9aaaa394d82785227762ab6b"
-    },
-    {
-      "type": "derived",
-      "file": "Microsoft.ReactNative/Fabric/TextInput/WindowsTextInputState.h",
-      "baseFile": "ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputState.h",
-      "baseHash": "86ac95fb195394bc314b2481907026d2568a0c45"
-    },
-    {
       "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/test/testlib.cpp",
-      "baseFile": "ReactCommon/jsi/jsi/test/testlib.cpp",
-      "baseHash": "95a6fd14e80719f9796942ffe59dd850a56d544c",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/decorator.h",
+      "baseFile": "ReactCommon/jsi/jsi/decorator.h",
+      "baseHash": "8e7642194d662f6b93203cb151b8ad3e24e11bc6",
       "issue": 9791
     },
     {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/jsi-inl.h",
       "baseFile": "ReactCommon/jsi/jsi/jsi-inl.h",
-      "baseHash": "957a4ecab0e42f559c0f9daf0035261f21292e19",
+      "baseHash": "d2ed6788f396708a31c1f2a5ceb36b81e273121e",
       "issue": 9791
     },
     {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/jsi.cpp",
       "baseFile": "ReactCommon/jsi/jsi/jsi.cpp",
-      "baseHash": "8c5ad54892a6cc0edb0692f650d7881293551e79",
+      "baseHash": "45901861cb39be3f58fac072a6145a39d0a34cb8",
       "issue": 9791
     },
     {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/jsi.h",
       "baseFile": "ReactCommon/jsi/jsi/jsi.h",
-      "baseHash": "fbb29e6f9d367ab697543244f0a84c2e12adfc9a",
+      "baseHash": "9022689490930d324d3915d1e3cc3c3541005988",
       "issue": 9791
     },
     {
       "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/decorator.h",
-      "baseFile": "ReactCommon/jsi/jsi/decorator.h",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/test/testlib.cpp",
+      "baseFile": "ReactCommon/jsi/jsi/test/testlib.cpp",
       "baseHash": "95a6fd14e80719f9796942ffe59dd850a56d544c",
       "issue": 9791
     },
