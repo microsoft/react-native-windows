@@ -21,7 +21,10 @@ const rncodegenPath = path.dirname(
   require.resolve('react-native-codegen/package.json', {paths: [rnPath]}),
 );
 const FlowParser = require(path.resolve(rncodegenPath, 'lib/parsers/flow'));
-const TypeScriptParser = require(path.resolve(rncodegenPath, 'lib/parsers/typescript'));
+const TypeScriptParser = require(path.resolve(
+  rncodegenPath,
+  'lib/parsers/typescript',
+));
 
 const schemaValidator = require(path.resolve(
   rncodegenPath,
@@ -125,9 +128,11 @@ function writeMapToFiles(map: Map<string, string>, outputDir: string) {
 export function parseFile(filename: string): SchemaType {
   try {
     const isTypeScript =
-    path.extname(filename) === '.ts' || path.extname(filename) === '.tsx';
+      path.extname(filename) === '.ts' || path.extname(filename) === '.tsx';
 
-    const schema = isTypeScript ? TypeScriptParser.parseFile(filename) : FlowParser.parseFile(filename);
+    const schema = isTypeScript
+      ? TypeScriptParser.parseFile(filename)
+      : FlowParser.parseFile(filename);
     // there will be at most one turbo module per file
     const moduleName = Object.keys(schema.modules)[0];
     if (moduleName) {
