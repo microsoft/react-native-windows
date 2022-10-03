@@ -6,7 +6,10 @@
 
 'use strict';
 
-import {NativeModuleBaseTypeAnnotation, Nullable} from 'react-native-tscodegen';
+import type {
+  NativeModuleBaseTypeAnnotation,
+  Nullable,
+} from 'react-native-tscodegen';
 import {
   AliasMap,
   getAliasCppName,

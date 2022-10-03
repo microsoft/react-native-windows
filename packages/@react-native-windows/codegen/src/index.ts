@@ -13,11 +13,18 @@ import {
   generateTypeScript,
   setOptionalTurboModule,
 } from './generators/GenerateTypeScript';
-import {SchemaType} from 'react-native-tscodegen';
-// @ts-ignore
-import {parseFile} from 'react-native-tscodegen/lib/rncodegen/src/parsers/flow';
-// @ts-ignore
-import schemaValidator from 'react-native-tscodegen/lib/rncodegen/src/schemaValidator';
+import type {SchemaType} from 'react-native-tscodegen';
+
+// Load react-native-codegen from react-native
+const rnPath = path.dirname(require.resolve('react-native/package.json'));
+const rncodegenPath = path.dirname(
+  require.resolve('react-native-codegen/package.json', {paths: [rnPath]}),
+);
+const {parseFile} = require(path.resolve(rncodegenPath, 'lib/parsers/flow'));
+const schemaValidator = require(path.resolve(
+  rncodegenPath,
+  'lib/schemaValidator',
+));
 
 interface Options {
   libraryName: string;
