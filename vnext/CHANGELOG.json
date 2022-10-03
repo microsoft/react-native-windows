@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 01 Oct 2022 05:11:34 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.558",
+      "version": "0.0.0-canary.558",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "9b5caf496bcb3fe89375c757ee70c6723c7353f3",
+            "comment": "Fabric: simplify border code, and fix some border issues"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 30 Sep 2022 05:11:35 GMT",
       "tag": "react-native-windows_v0.0.0-canary.557",
       "version": "0.0.0-canary.557",
