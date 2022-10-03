@@ -1,3 +1,3 @@
 module.exports = {
-  extends: "@rnw-scripts/babel-node-config",
+  extends: "@rnw-scripts/babel-react-native-config",
 };

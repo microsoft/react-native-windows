@@ -23,6 +23,7 @@
     "react-native-xaml": "^0.0.50"
   },
   "devDependencies": {
+    "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.1.13",
     "@rnw-scripts/just-task": "2.2.5",
     "@rnw-scripts/ts-config": "2.0.2",
