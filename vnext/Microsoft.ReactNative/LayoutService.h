@@ -16,8 +16,7 @@ struct LayoutService : LayoutServiceT<LayoutService> {
   static winrt::Microsoft::ReactNative::LayoutService FromContext(IReactContext context);
   static ReactPropertyId<LayoutService> LayoutServiceProperty() noexcept;
 
-  void ApplyLayout() noexcept;
-  void ApplyLayout(int64_t reactTag) noexcept;
+  void ApplyLayoutForAllNodes() noexcept;
   void ApplyLayout(int64_t reactTag, float width, float height) noexcept;
   bool IsInBatch() noexcept;
   void MarkDirty(int64_t reactTag) noexcept;

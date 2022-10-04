@@ -15,13 +15,16 @@ namespace Microsoft.ReactNative
     DOC_STRING("Use this method to get access to the @LayoutService associated with the @IReactContext.")
     static LayoutService FromContext(IReactContext context);
 
-    DOC_STRING("Applies layout to all root nodes.")
-    void ApplyLayout();
+    DOC_STRING(
+      "Recursively applies layout to all root nodes. This method will trigger "
+      "a Yoga layout operation on roots attached to the React instance and "
+      "apply the layout results to all descendant nodes.")
+    void ApplyLayoutForAllNodes();
 
-    DOC_STRING("Applies layout from a given React node.")
-    void ApplyLayout(Int64 reactTag);
-
-    DOC_STRING("Applies layout from a given React node with root layout constraints.")
+    DOC_STRING(
+      "Recursively applies layout from the given React node with the supplied "
+      "size constraints. This method will trigger a Yoga layout operation on the "
+      "given node and its descendants and apply the layout results to these nodes.")
     void ApplyLayout(Int64 reactTag, Single width, Single height);
 
     DOC_STRING(

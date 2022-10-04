@@ -22,15 +22,9 @@ LayoutService::LayoutService(Mso::CntPtr<Mso::React::IReactContext> &&context) n
   return layoutServiceProperty;
 }
 
-void LayoutService::ApplyLayout() noexcept {
+void LayoutService::ApplyLayoutForAllNodes() noexcept {
   if (auto uiManager = ::Microsoft::ReactNative::GetNativeUIManager(*m_context).lock()) {
     uiManager->DoLayout();
-  }
-}
-
-void LayoutService::ApplyLayout(int64_t reactTag) noexcept {
-  if (auto uiManager = ::Microsoft::ReactNative::GetNativeUIManager(*m_context).lock()) {
-    uiManager->ApplyLayout(reactTag);
   }
 }
 
