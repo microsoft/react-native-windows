@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Fabric: simplify border code, and fix some border issues",
+  "comment": "Fabric: ImageRequest should kick off from ImageShadowNode instead of ImageComponentView",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
   "dependentChangeType": "patch"
