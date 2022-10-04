@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Adds LayoutService interface to allow native layout updates",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
