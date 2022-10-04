@@ -28,10 +28,12 @@ namespace Microsoft.ReactNative
     void ApplyLayout(Int64 reactTag, Single width, Single height);
 
     DOC_STRING(
-      "Determines whether the UIManager is currently processing a batch of node updates."
-      "This is useful for optimizing layout and ensuring that applying layout to a particular "
-      "node will not cause tearing in the rendered UI.")
-    Boolean IsInBatch();
+        "Determines whether the UIManager is currently processing a batch of node updates."
+        "This is useful for optimizing layout and ensuring that applying layout to a particular "
+        "node will not cause tearing in the rendered UI.")
+    Boolean IsInBatch {
+      get;
+    };
 
     DOC_STRING("Mark a particular React node as dirty for Yoga layout.")
     void MarkDirty(Int64 reactTag);
