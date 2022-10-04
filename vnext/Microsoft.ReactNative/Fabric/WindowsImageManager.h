@@ -14,8 +14,7 @@ struct WindowsImageManager {
 
   facebook::react::ImageRequest requestImage(
       const facebook::react::ImageSource &imageSource,
-      facebook::react::SurfaceId surfaceId)
-      const;
+      facebook::react::SurfaceId surfaceId) const;
 };
 
 } // namespace Microsoft::ReactNative

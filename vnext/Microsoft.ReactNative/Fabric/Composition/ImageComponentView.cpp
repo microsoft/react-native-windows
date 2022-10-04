@@ -13,8 +13,8 @@
 
 #include <react/renderer/components/image/ImageEventEmitter.h>
 
-#include <Utils/ImageUtils.h>
 #include <Fabric/FabricUIManagerModule.h>
+#include <Utils/ImageUtils.h>
 #include <shcore.h>
 #include <winrt/Windows.UI.Composition.h>
 #include <winrt/Windows.Web.Http.Headers.h>
@@ -25,7 +25,8 @@ extern "C" HRESULT WINAPI WICCreateImagingFactory_Proxy(UINT SDKVersion, IWICIma
 
 namespace Microsoft::ReactNative {
 
-ImageComponentView::WindowsImageResponseObserver::WindowsImageResponseObserver(std::shared_ptr<ImageComponentView> image) {
+ImageComponentView::WindowsImageResponseObserver::WindowsImageResponseObserver(
+    std::shared_ptr<ImageComponentView> image) {
   m_image = image;
 }
 
@@ -37,9 +38,7 @@ void ImageComponentView::WindowsImageResponseObserver::didReceiveImage(
     facebook::react::ImageResponse const &imageResponse) const {
   auto sharedwicbmp = std::static_pointer_cast<winrt::com_ptr<IWICBitmap>>(imageResponse.getImage());
   m_image->m_context.UIDispatcher().Post(
-      [wicbmp = *sharedwicbmp, image = m_image]() {
-        image->didReceiveImage(wicbmp);
-      });
+      [wicbmp = *sharedwicbmp, image = m_image]() { image->didReceiveImage(wicbmp); });
 }
 
 void ImageComponentView::WindowsImageResponseObserver::didReceiveFailure() const {
@@ -53,7 +52,6 @@ ImageComponentView::ImageComponentView(
     : Super(compContext, tag), m_context(reactContext) {
   static auto const defaultProps = std::make_shared<facebook::react::ImageProps const>();
   m_props = defaultProps;
-
 }
 
 std::vector<facebook::react::ComponentDescriptorProvider>
@@ -132,12 +130,13 @@ void ImageComponentView::updateState(
   auto newImageState = std::static_pointer_cast<facebook::react::ImageShadowNode::ConcreteState const>(state);
 
   if (!m_imageResponseObserver) {
+    // Should ViewComponents enable_shared_from_this? then we dont need this dance to get a shared_ptr
+    std::shared_ptr<FabricUIManager> fabricuiManager =
+        ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties());
+    auto componentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(m_tag);
 
-      // Should ViewComponents enable_shared_from_this? then we dont need this dance to get a shared_ptr
-      std::shared_ptr<FabricUIManager> fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties());
-      auto componentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(m_tag);
-
-      m_imageResponseObserver = std::make_shared<WindowsImageResponseObserver>(std::static_pointer_cast<ImageComponentView>(componentViewDescriptor.view));
+    m_imageResponseObserver = std::make_shared<WindowsImageResponseObserver>(
+        std::static_pointer_cast<ImageComponentView>(componentViewDescriptor.view));
   }
 
   setStateAndResubscribeImageResponseObserver(newImageState);

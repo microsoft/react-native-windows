@@ -5,20 +5,18 @@
 
 #include "WindowsImageManager.h"
 
-#include <wincodec.h>
 #include <Utils/ImageUtils.h>
 #include <shcore.h>
+#include <wincodec.h>
 
 extern "C" HRESULT WINAPI WICCreateImagingFactory_Proxy(UINT SDKVersion, IWICImagingFactory **ppIWICImagingFactory);
 
 namespace Microsoft::ReactNative {
 
-WindowsImageManager::WindowsImageManager() {
-}
+WindowsImageManager::WindowsImageManager() {}
 
 winrt::com_ptr<IWICBitmapSource> wicBitmapSourceFromStream(
     const winrt::Windows::Storage::Streams::IRandomAccessStream &results) noexcept {
-
   if (!results) {
     return nullptr;
   }
@@ -41,7 +39,9 @@ winrt::com_ptr<IWICBitmapSource> wicBitmapSourceFromStream(
   return decodedFrame;
 }
 
-void generateBitmap(std::weak_ptr<const facebook::react::ImageResponseObserverCoordinator> weakObserverCoordinator, const winrt::Windows::Storage::Streams::IRandomAccessStream &results) noexcept {
+void generateBitmap(
+    std::weak_ptr<const facebook::react::ImageResponseObserverCoordinator> weakObserverCoordinator,
+    const winrt::Windows::Storage::Streams::IRandomAccessStream &results) noexcept {
   auto observerCoordinator = weakObserverCoordinator.lock();
   if (!observerCoordinator) {
     return;
@@ -70,7 +70,7 @@ void generateBitmap(std::weak_ptr<const facebook::react::ImageResponseObserverCo
   winrt::com_ptr<IWICBitmap> wicbmp;
   winrt::check_hresult(imagingFactory->CreateBitmapFromSource(converter.get(), WICBitmapCacheOnLoad, wicbmp.put()));
 
-  //ImageResponse saves a shared_ptr<void> for its data, so we need to wrap the com_ptr in a shared_ptr...
+  // ImageResponse saves a shared_ptr<void> for its data, so we need to wrap the com_ptr in a shared_ptr...
   auto sharedwicbmp = std::make_shared<winrt::com_ptr<IWICBitmap>>(wicbmp);
 
   observerCoordinator->nativeImageResponseComplete(facebook::react::ImageResponse(sharedwicbmp, nullptr /*metadata*/));
@@ -81,8 +81,8 @@ facebook::react::ImageRequest WindowsImageManager::requestImage(
     facebook::react::SurfaceId surfaceId) const {
   auto imageRequest = facebook::react::ImageRequest(imageSource, nullptr);
 
-  auto weakObserverCoordinator =
-      (std::weak_ptr<const facebook::react::ImageResponseObserverCoordinator>)imageRequest.getSharedObserverCoordinator();
+  auto weakObserverCoordinator = (std::weak_ptr<const facebook::react::ImageResponseObserverCoordinator>)
+                                     imageRequest.getSharedObserverCoordinator();
 
   ReactImageSource source;
   source.uri = imageSource.uri;
@@ -90,13 +90,12 @@ facebook::react::ImageRequest WindowsImageManager::requestImage(
   source.width = imageSource.size.width;
   source.sourceType = ImageSourceType::Download;
 
-  auto task = GetImageStreamAsync(source); 
+  auto task = GetImageStreamAsync(source);
 
   // TODO progress? - Can we register for progress off the download task?
   // observerCoordinator->nativeImageResponseProgress((float)progress / (float)total);
 
   task.Completed([weakObserverCoordinator](auto asyncOp, auto status) {
-
     auto observerCoordinator = weakObserverCoordinator.lock();
     if (!observerCoordinator) {
       return;
