@@ -6,7 +6,7 @@
 
 'use strict';
 
-import {
+import type {
   NamedShape,
   NativeModuleParamTypeAnnotation,
   Nullable,

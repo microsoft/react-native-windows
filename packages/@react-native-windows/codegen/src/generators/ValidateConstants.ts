@@ -6,7 +6,7 @@
 
 'use strict';
 
-import {NativeModuleSchema} from 'react-native-tscodegen';
+import type {NativeModuleSchema} from 'react-native-tscodegen';
 import {AliasMap, getAnonymousAliasCppName} from './AliasManaging';
 
 export function generateValidateConstants(
