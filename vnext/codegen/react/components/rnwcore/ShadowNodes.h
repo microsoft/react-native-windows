@@ -46,15 +46,6 @@ using AndroidDrawerLayoutShadowNode = ConcreteViewShadowNode<
     AndroidDrawerLayoutProps,
 AndroidDrawerLayoutEventEmitter>;
 
-extern const char RCTMaskedViewComponentName[];
-
-/*
- * `ShadowNode` for <RCTMaskedView> component.
- */
-using RCTMaskedViewShadowNode = ConcreteViewShadowNode<
-    RCTMaskedViewComponentName,
-    RCTMaskedViewProps>;
-
 extern const char RCTProgressViewComponentName[];
 
 /*

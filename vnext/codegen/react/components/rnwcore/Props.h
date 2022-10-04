@@ -356,16 +356,6 @@ class AndroidDrawerLayoutProps final : public ViewProps {
   SharedColor statusBarBackgroundColor{};
 };
 
-class RCTMaskedViewProps final : public ViewProps {
- public:
-  RCTMaskedViewProps() = default;
-  RCTMaskedViewProps(const PropsParserContext& context, const RCTMaskedViewProps &sourceProps, const RawProps &rawProps);
-
-#pragma mark - Props
-
-  
-};
-
 class AndroidProgressBarProps final : public ViewProps {
  public:
   AndroidProgressBarProps() = default;

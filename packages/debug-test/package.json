@@ -12,8 +12,8 @@
     "@react-native-windows/fs": "^0.0.0-canary.5",
     "@rnw-scripts/eslint-config": "1.1.13",
     "@types/jest": "^26.0.20",
-    "@typescript-eslint/eslint-plugin": "^5.20.0",
-    "@typescript-eslint/parser": "^5.20.0",
+    "@typescript-eslint/eslint-plugin": "^5.30.5",
+    "@typescript-eslint/parser": "^5.30.5",
     "lodash": "^4.17.15",
     "ts-jest": "^26.3.0",
     "ws": "^6.1.4"

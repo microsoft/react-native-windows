@@ -18,8 +18,8 @@
     "format-files": "./bin.js"
   },
   "dependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.20.0",
-    "@typescript-eslint/parser": "^5.20.0",
+    "@typescript-eslint/eslint-plugin": "^5.30.5",
+    "@typescript-eslint/parser": "^5.30.5",
     "async": "^3.2.3",
     "clang-format": "^1.7.0",
     "source-map-support": "^0.5.19"
@@ -30,7 +30,7 @@
     "@rnw-scripts/ts-config": "2.0.2",
     "@types/async": "^3.2.5",
     "@types/node": "^14.14.22",
-    "eslint": "^7.32.0",
+    "eslint": "^8.19.0",
     "prettier": "^2.4.1",
     "typescript": "^4.4.4"
   },

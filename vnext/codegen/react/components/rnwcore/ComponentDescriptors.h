@@ -19,7 +19,6 @@ namespace react {
 using ActivityIndicatorViewComponentDescriptor = ConcreteComponentDescriptor<ActivityIndicatorViewShadowNode>;
 using DatePickerComponentDescriptor = ConcreteComponentDescriptor<DatePickerShadowNode>;
 using AndroidDrawerLayoutComponentDescriptor = ConcreteComponentDescriptor<AndroidDrawerLayoutShadowNode>;
-using RCTMaskedViewComponentDescriptor = ConcreteComponentDescriptor<RCTMaskedViewShadowNode>;
 using RCTProgressViewComponentDescriptor = ConcreteComponentDescriptor<RCTProgressViewShadowNode>;
 using AndroidSwipeRefreshLayoutComponentDescriptor = ConcreteComponentDescriptor<AndroidSwipeRefreshLayoutShadowNode>;
 using PullToRefreshViewComponentDescriptor = ConcreteComponentDescriptor<PullToRefreshViewShadowNode>;

@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "@rnw-scripts/eslint-config": "1.1.13",
-    "eslint": "^7.32.0",
+    "eslint": "^8.19.0",
     "prettier": "^2.4.1"
   },
   "engines": {

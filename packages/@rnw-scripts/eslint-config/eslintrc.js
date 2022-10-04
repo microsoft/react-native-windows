@@ -20,6 +20,13 @@ module.exports = {
   ignorePatterns: ['/lib/**', '/lib-commonjs/**'],
   overrides: [
     {
+      files: ['*.js'],
+      parserOptions: {
+        parser: '@babel/eslint-parser',
+        requireConfigFile: false,
+      }
+    },
+    {
       files: ['*.ts', '*.tsx'],
       excludedFiles: ['*.d.ts'],
       parser: '@typescript-eslint/parser',

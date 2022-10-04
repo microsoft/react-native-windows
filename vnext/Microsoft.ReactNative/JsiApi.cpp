@@ -195,6 +195,14 @@ struct RuntimeAccessor : facebook::jsi::Runtime {
     return *reinterpret_cast<facebook::jsi::BigInt const *>(ptr);
   }
 
+  static uint64_t const &AsUint64(facebook::jsi::Runtime::PointerValue *pointerValue) noexcept {
+    return {reinterpret_cast<uint64_t>(pointerValue)};
+  }
+
+  static int64_t const &AsInt64(facebook::jsi::Runtime::PointerValue *pointerValue) noexcept {
+    return {reinterpret_cast<int64_t>(pointerValue)};
+  }
+
   static facebook::jsi::String const &AsString(facebook::jsi::Runtime::PointerValue const **ptr) noexcept {
     return *reinterpret_cast<facebook::jsi::String const *>(ptr);
   }
