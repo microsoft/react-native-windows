@@ -281,6 +281,16 @@ bool FrameworkElementViewManager::UpdateProperty(
     } else if (propertyName == "accessible") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
         if (propertyValue.AsBoolean()) {
+          xaml::Automation::AutomationProperties::SetAccessibilityView(element, winrt::AccessibilityView::Content);
+        } else {
+          xaml::Automation::AutomationProperties::SetAccessibilityView(element, winrt::AccessibilityView::Raw);
+        }
+      } else if (propertyValue.IsNull()) {
+        element.ClearValue(xaml::Automation::AutomationProperties::AccessibilityViewProperty());
+      }
+    } else if (propertyName == "importantForAccessibility") {
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
+        if (propertyValue.AsBoolean()) {
           ApplyAccessability(element, winrt::AccessibilityView::Content);
         } else {
           ApplyAccessability(element, winrt::AccessibilityView::Raw);
