@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "integrate 7/29/22",
-  "packageName": "@rnw-scripts/take-screenshot",
-  "email": "tatianakapos@microsoft.com",
-  "dependentChangeType": "patch"
-}

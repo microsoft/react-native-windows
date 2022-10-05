@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "integrate 7/29/22",
-  "packageName": "@rnw-scripts/babel-node-config",
-  "email": "tatianakapos@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/jest-debug-config",
-  "version": "1.2.8",
+  "version": "1.3.0",
   "license": "MIT",
   "main": "jest.debug.config.js",
   "repository": {
@@ -9,7 +9,7 @@
     "directory": "packages/@rnw-scripts/jest-debug-config"
   },
   "dependencies": {
-    "@rnw-scripts/babel-node-config": "2.0.6"
+    "@rnw-scripts/babel-node-config": "2.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",
