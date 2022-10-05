@@ -60,11 +60,6 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
         batchingUIMessageQueue);
   }
 
-  modules.emplace_back(
-      "Timing",
-      [batchingUIMessageQueue]() { return facebook::react::CreateTimingModule(batchingUIMessageQueue); },
-      batchingUIMessageQueue);
-
   // Note: `context` is moved to remove the reference from the current scope.
   // This should either be the last usage of `context`, or the std::move call should happen later in this method.
   modules.emplace_back(
