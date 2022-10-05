@@ -329,6 +329,9 @@ void ReactInstanceWin::LoadModules(
       L"Alert", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::Alert>());
 
   registerTurboModule(
+      L"Appearance", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::Appearance>());
+
+  registerTurboModule(
       L"AppState", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::AppState>());
 
   registerTurboModule(
@@ -383,8 +386,7 @@ void ReactInstanceWin::Initialize() noexcept {
       Microsoft::ReactNative::AppThemeHolder::InitAppThemeHolder(strongThis->GetReactContext());
       Microsoft::ReactNative::I18nManager::InitI18nInfo(
           winrt::Microsoft::ReactNative::ReactPropertyBag(strongThis->Options().Properties));
-      strongThis->m_appearanceListener = Mso::Make<Microsoft::ReactNative::AppearanceChangeListener>(
-          strongThis->GetReactContext(), *(strongThis->m_uiQueue));
+      Microsoft::ReactNative::Appearance::InitOnUIThread(strongThis->GetReactContext());
       Microsoft::ReactNative::DeviceInfoHolder::InitDeviceInfoHolder(strongThis->GetReactContext());
 
 #endif // CORE_ABI
@@ -429,8 +431,8 @@ void ReactInstanceWin::Initialize() noexcept {
 #else
           // Acquire default modules and then populate with custom modules.
           // Note that some of these have custom thread affinity.
-          std::vector<facebook::react::NativeModuleDescription> cxxModules = Microsoft::ReactNative::GetCoreModules(
-              m_batchingUIThread, m_jsMessageThread.Load(), std::move(m_appearanceListener), m_reactContext);
+          std::vector<facebook::react::NativeModuleDescription> cxxModules =
+              Microsoft::ReactNative::GetCoreModules(m_batchingUIThread, m_jsMessageThread.Load(), m_reactContext);
 #endif
 
           auto nmp = std::make_shared<winrt::Microsoft::ReactNative::NativeModulesProvider>();
