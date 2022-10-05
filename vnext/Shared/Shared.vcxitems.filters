@@ -152,6 +152,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Networking\RedirectHttpFilter.cpp">
       <Filter>Source Files\Networking</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\BlobModule.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
@@ -457,6 +458,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Networking\IRedirectEventSource.h">
       <Filter>Header Files\Networking</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\BlobModule.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IWebSocketModuleContentHandler.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IWebSocketModuleProxy.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)tracing\rnw.wprp">

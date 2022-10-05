@@ -163,7 +163,7 @@ export class Telemetry {
 
     // Despite trying to disable the statsbeat, it might still be running: https://github.com/microsoft/ApplicationInsights-node.js/issues/943
     // So we want to disable it, and despite the method's typing, getStatsbeat() _can_ return undefined
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+
     Telemetry.client.getStatsbeat()?.enable(false);
 
     Telemetry.client.channel.setUseDiskRetryCaching(!Telemetry.isTest);
