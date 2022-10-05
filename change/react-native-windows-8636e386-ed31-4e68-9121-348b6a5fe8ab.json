@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "renamed isPressed to isKeyDown",
+  "packageName": "react-native-windows",
+  "email": "helewxdong@gmail.com",
+  "dependentChangeType": "patch"
+}
