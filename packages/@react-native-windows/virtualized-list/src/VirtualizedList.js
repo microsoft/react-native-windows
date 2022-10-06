@@ -7,11 +7,6 @@
  * @flow
  * @format
  */
-
-import type {ScrollResponderType} from '../Components/ScrollView/ScrollView';
-import type {ViewStyleProp} from '../StyleSheet/StyleSheet';
-import type {LayoutEvent, ScrollEvent} from '../Types/CoreEventTypes';
-
 import type {ViewToken} from './ViewabilityHelper';
 const Batchinator = require('react-native/Libraries/Interaction/Batchinator');
 const FillRateHelper = require('./FillRateHelper');

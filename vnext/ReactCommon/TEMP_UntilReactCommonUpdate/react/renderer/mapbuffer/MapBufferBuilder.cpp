@@ -118,7 +118,7 @@ void MapBufferBuilder::putMapBufferList(
     MapBuffer::Key key,
     const std::vector<MapBuffer> &mapBufferList) {
   auto offset = dynamicData_.size();
-  auto dataSize = 0;
+  size_t dataSize = 0;
   for (const MapBuffer &mapBuffer : mapBufferList) {
     dataSize = dataSize + INT_SIZE + mapBuffer.size();
   }
