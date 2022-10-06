@@ -426,7 +426,7 @@ export default class Pressability {
   |}>;
   _touchActivateTime: ?number;
   _touchState: TouchState = 'NOT_RESPONDER';
-  _isKeyDown : boolean = false;
+  _isKeyDown: boolean = false;
 
   constructor(config: PressabilityConfig) {
     this.configure(config);
@@ -467,8 +467,8 @@ export default class Pressability {
         const {onBlur} = this._config;
         if (onBlur != null) {
           onBlur(event);
-          this._isKeyDown = false;
         }
+        this._isKeyDown = false;
       },
       onFocus: (event: FocusEvent): void => {
         const {onFocus} = this._config;
@@ -595,7 +595,8 @@ export default class Pressability {
           (event.nativeEvent.code === 'Space' ||
             event.nativeEvent.code === 'Enter' ||
             event.nativeEvent.code === 'GamepadA') &&
-          event.defaultPrevented != true && this._isKeyDown
+          event.defaultPrevented != true &&
+          this._isKeyDown
         ) {
           const {onPressOut, onPress} = this._config;
           // $FlowFixMe: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of passing KeyEvents instead
