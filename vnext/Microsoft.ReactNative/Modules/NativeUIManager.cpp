@@ -1131,8 +1131,8 @@ void NativeUIManager::blur(int64_t reactTag) {
 // m_tagsToXamlReactControl to get the IXamlReactControl
 winrt::weak_ref<winrt::Microsoft::ReactNative::ReactRootView> NativeUIManager::GetParentXamlReactControl(
     int64_t tag) const {
-  if (auto shadowNode = static_cast<ShadowNodeBase *>(m_host->FindParentRootShadowNode(tag))) {
-    auto it = m_tagsToXamlReactControl.find(shadowNode->m_tag);
+  if (auto shadowNode = m_host->FindShadowNodeForTag(tag)) {
+    auto it = m_tagsToXamlReactControl.find(shadowNode->m_rootTag);
     if (it != m_tagsToXamlReactControl.end()) {
       return it->second;
     }
