@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Retain ViewControl even if not needed",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
