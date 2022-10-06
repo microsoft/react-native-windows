@@ -47,6 +47,12 @@
       "baseHash": "86ac95fb195394bc314b2481907026d2568a0c45"
     },
     {
+      "type": "derived",
+      "file": "Microsoft.ReactNative/Fabric/ImageRequest.cpp",
+      "baseFile": "ReactCommon/react/renderer/imagemanager/platform/ios/ImageRequest.cpp",
+      "baseHash": "f227c50397e2edf5deb496b7b1953df5ea1dc800"
+    },
+    {
       "type": "patch",
       "file": "Microsoft.ReactNative/Fabric/platform/react/renderer/graphics/Color.cpp",
       "baseFile": "ReactCommon/react/renderer/graphics/platform/cxx/react/renderer/graphics/Color.cpp",

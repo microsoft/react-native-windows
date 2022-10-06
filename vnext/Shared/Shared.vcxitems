@@ -230,6 +230,8 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\DebugStringConvertible.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\DebugStringConvertibleItem.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\graphics\Transform.cpp" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\imagemanager\ImageResponse.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\imagemanager\ImageResponseObserverCoordinator.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\leakchecker\LeakChecker.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\leakchecker\WeakFamilyRegistry.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\Differentiator.cpp" DisableSpecificWarnings="4018;4389;%(DisableSpecificWarnings)" />
@@ -269,6 +271,7 @@
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\platform\react\renderer\graphics\Color.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\platform\react\renderer\textlayoutmanager\TextLayoutManager.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\ReactNativeConfigProperties.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\WindowsImageManager.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\SchedulerSettings.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\Composition\ComponentViewRegistry.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\Composition\CompositionEventHandler.cpp" />
