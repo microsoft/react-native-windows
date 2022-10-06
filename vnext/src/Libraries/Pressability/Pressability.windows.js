@@ -604,6 +604,7 @@ export default class Pressability {
           // $FlowFixMe: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of passing KeyEvents instead
           onPress && onPress(event);
         }
+        // Native windows app clears the key pressed state when another key press interrupts the current
         this._isKeyDown = false;
       },
       onKeyDown: (event: KeyEvent): void => {
