@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Simplify root node lookups",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
