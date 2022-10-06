@@ -78,7 +78,7 @@ RECT CompositionBaseComponentView::getClientRect() const noexcept {
   rc.left += static_cast<LONG>(m_layoutMetrics.frame.origin.x * m_layoutMetrics.pointScaleFactor);
   rc.top += static_cast<LONG>(m_layoutMetrics.frame.origin.y * m_layoutMetrics.pointScaleFactor);
   rc.right = rc.left + static_cast<LONG>(m_layoutMetrics.frame.size.width * m_layoutMetrics.pointScaleFactor);
-  rc.bottom = rc.left + static_cast<LONG>(m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor);
+  rc.bottom = rc.top + static_cast<LONG>(m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor);
   return rc;
 }
 
