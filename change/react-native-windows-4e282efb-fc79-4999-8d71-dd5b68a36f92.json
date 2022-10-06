@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "getClientReact returns incorrect bottom value",
+  "comment": "Fabric: TextInput caret is incorrect size",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
   "dependentChangeType": "patch"
