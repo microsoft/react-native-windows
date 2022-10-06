@@ -25,8 +25,8 @@ struct JSCHeapCaptureSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "captureComplete",
-          "    REACT_METHOD(captureComplete) void captureComplete(std::string path, std::optional<std::string> error) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(captureComplete) static void captureComplete(std::string path, std::optional<std::string> error) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(captureComplete) void captureComplete(std::string path, std::optional<std::string> error) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(captureComplete) static void captureComplete(std::string path, std::optional<std::string> error) noexcept { /* implementation */ }\n");
   }
 };
 

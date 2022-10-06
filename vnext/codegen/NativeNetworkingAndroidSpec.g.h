@@ -29,28 +29,28 @@ struct NetworkingAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "sendRequest",
-          "    REACT_METHOD(sendRequest) void sendRequest(std::string method, std::string url, double requestId, ::React::JSValueArray && headers, ::React::JSValue && data, std::string responseType, bool useIncrementalUpdates, double timeout, bool withCredentials) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(sendRequest) static void sendRequest(std::string method, std::string url, double requestId, ::React::JSValueArray && headers, ::React::JSValue && data, std::string responseType, bool useIncrementalUpdates, double timeout, bool withCredentials) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(sendRequest) void sendRequest(std::string method, std::string url, double requestId, ::React::JSValueArray && headers, ::React::JSValue && data, std::string responseType, bool useIncrementalUpdates, double timeout, bool withCredentials) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(sendRequest) static void sendRequest(std::string method, std::string url, double requestId, ::React::JSValueArray && headers, ::React::JSValue && data, std::string responseType, bool useIncrementalUpdates, double timeout, bool withCredentials) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "abortRequest",
-          "    REACT_METHOD(abortRequest) void abortRequest(double requestId) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(abortRequest) static void abortRequest(double requestId) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(abortRequest) void abortRequest(double requestId) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(abortRequest) static void abortRequest(double requestId) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "clearCookies",
-          "    REACT_METHOD(clearCookies) void clearCookies(std::function<void(bool)> const & callback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(clearCookies) static void clearCookies(std::function<void(bool)> const & callback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(clearCookies) void clearCookies(std::function<void(bool)> const & callback) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(clearCookies) static void clearCookies(std::function<void(bool)> const & callback) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "addListener",
-          "    REACT_METHOD(addListener) void addListener(std::string eventName) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(addListener) static void addListener(std::string eventName) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(addListener) void addListener(std::string eventName) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(addListener) static void addListener(std::string eventName) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           4,
           "removeListeners",
-          "    REACT_METHOD(removeListeners) void removeListeners(double count) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(removeListeners) static void removeListeners(double count) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(removeListeners) void removeListeners(double count) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(removeListeners) static void removeListeners(double count) noexcept { /* implementation */ }\n");
   }
 };
 

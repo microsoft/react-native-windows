@@ -68,53 +68,53 @@ struct AccessibilityManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "getCurrentBoldTextState",
-          "    REACT_METHOD(getCurrentBoldTextState) void getCurrentBoldTextState(std::function<void(bool)> const & onSuccess, std::function<void(::React::JSValue const &)> const & onError) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(getCurrentBoldTextState) static void getCurrentBoldTextState(std::function<void(bool)> const & onSuccess, std::function<void(::React::JSValue const &)> const & onError) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(getCurrentBoldTextState) void getCurrentBoldTextState(std::function<void(bool)> const & onSuccess, std::function<void(::React::JSValue const &)> const & onError) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(getCurrentBoldTextState) static void getCurrentBoldTextState(std::function<void(bool)> const & onSuccess, std::function<void(::React::JSValue const &)> const & onError) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "getCurrentGrayscaleState",
-          "    REACT_METHOD(getCurrentGrayscaleState) void getCurrentGrayscaleState(std::function<void(bool)> const & onSuccess, std::function<void(::React::JSValue const &)> const & onError) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(getCurrentGrayscaleState) static void getCurrentGrayscaleState(std::function<void(bool)> const & onSuccess, std::function<void(::React::JSValue const &)> const & onError) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(getCurrentGrayscaleState) void getCurrentGrayscaleState(std::function<void(bool)> const & onSuccess, std::function<void(::React::JSValue const &)> const & onError) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(getCurrentGrayscaleState) static void getCurrentGrayscaleState(std::function<void(bool)> const & onSuccess, std::function<void(::React::JSValue const &)> const & onError) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "getCurrentInvertColorsState",
-          "    REACT_METHOD(getCurrentInvertColorsState) void getCurrentInvertColorsState(std::function<void(bool)> const & onSuccess, std::function<void(::React::JSValue const &)> const & onError) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(getCurrentInvertColorsState) static void getCurrentInvertColorsState(std::function<void(bool)> const & onSuccess, std::function<void(::React::JSValue const &)> const & onError) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(getCurrentInvertColorsState) void getCurrentInvertColorsState(std::function<void(bool)> const & onSuccess, std::function<void(::React::JSValue const &)> const & onError) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(getCurrentInvertColorsState) static void getCurrentInvertColorsState(std::function<void(bool)> const & onSuccess, std::function<void(::React::JSValue const &)> const & onError) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "getCurrentReduceMotionState",
-          "    REACT_METHOD(getCurrentReduceMotionState) void getCurrentReduceMotionState(std::function<void(bool)> const & onSuccess, std::function<void(::React::JSValue const &)> const & onError) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(getCurrentReduceMotionState) static void getCurrentReduceMotionState(std::function<void(bool)> const & onSuccess, std::function<void(::React::JSValue const &)> const & onError) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(getCurrentReduceMotionState) void getCurrentReduceMotionState(std::function<void(bool)> const & onSuccess, std::function<void(::React::JSValue const &)> const & onError) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(getCurrentReduceMotionState) static void getCurrentReduceMotionState(std::function<void(bool)> const & onSuccess, std::function<void(::React::JSValue const &)> const & onError) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           4,
           "getCurrentReduceTransparencyState",
-          "    REACT_METHOD(getCurrentReduceTransparencyState) void getCurrentReduceTransparencyState(std::function<void(bool)> const & onSuccess, std::function<void(::React::JSValue const &)> const & onError) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(getCurrentReduceTransparencyState) static void getCurrentReduceTransparencyState(std::function<void(bool)> const & onSuccess, std::function<void(::React::JSValue const &)> const & onError) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(getCurrentReduceTransparencyState) void getCurrentReduceTransparencyState(std::function<void(bool)> const & onSuccess, std::function<void(::React::JSValue const &)> const & onError) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(getCurrentReduceTransparencyState) static void getCurrentReduceTransparencyState(std::function<void(bool)> const & onSuccess, std::function<void(::React::JSValue const &)> const & onError) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           5,
           "getCurrentVoiceOverState",
-          "    REACT_METHOD(getCurrentVoiceOverState) void getCurrentVoiceOverState(std::function<void(bool)> const & onSuccess, std::function<void(::React::JSValue const &)> const & onError) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(getCurrentVoiceOverState) static void getCurrentVoiceOverState(std::function<void(bool)> const & onSuccess, std::function<void(::React::JSValue const &)> const & onError) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(getCurrentVoiceOverState) void getCurrentVoiceOverState(std::function<void(bool)> const & onSuccess, std::function<void(::React::JSValue const &)> const & onError) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(getCurrentVoiceOverState) static void getCurrentVoiceOverState(std::function<void(bool)> const & onSuccess, std::function<void(::React::JSValue const &)> const & onError) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           6,
           "setAccessibilityContentSizeMultipliers",
-          "    REACT_METHOD(setAccessibilityContentSizeMultipliers) void setAccessibilityContentSizeMultipliers(AccessibilityManagerSpec_setAccessibilityContentSizeMultipliers_JSMultipliers && JSMultipliers) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(setAccessibilityContentSizeMultipliers) static void setAccessibilityContentSizeMultipliers(AccessibilityManagerSpec_setAccessibilityContentSizeMultipliers_JSMultipliers && JSMultipliers) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(setAccessibilityContentSizeMultipliers) void setAccessibilityContentSizeMultipliers(AccessibilityManagerSpec_setAccessibilityContentSizeMultipliers_JSMultipliers && JSMultipliers) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(setAccessibilityContentSizeMultipliers) static void setAccessibilityContentSizeMultipliers(AccessibilityManagerSpec_setAccessibilityContentSizeMultipliers_JSMultipliers && JSMultipliers) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           7,
           "setAccessibilityFocus",
-          "    REACT_METHOD(setAccessibilityFocus) void setAccessibilityFocus(double reactTag) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(setAccessibilityFocus) static void setAccessibilityFocus(double reactTag) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(setAccessibilityFocus) void setAccessibilityFocus(double reactTag) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(setAccessibilityFocus) static void setAccessibilityFocus(double reactTag) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           8,
           "announceForAccessibility",
-          "    REACT_METHOD(announceForAccessibility) void announceForAccessibility(std::string announcement) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(announceForAccessibility) static void announceForAccessibility(std::string announcement) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(announceForAccessibility) void announceForAccessibility(std::string announcement) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(announceForAccessibility) static void announceForAccessibility(std::string announcement) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           9,
           "announceForAccessibilityWithOptions",
-          "    REACT_METHOD(announceForAccessibilityWithOptions) void announceForAccessibilityWithOptions(std::string announcement, AccessibilityManagerSpec_announceForAccessibilityWithOptions_options && options) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(announceForAccessibilityWithOptions) static void announceForAccessibilityWithOptions(std::string announcement, AccessibilityManagerSpec_announceForAccessibilityWithOptions_options && options) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(announceForAccessibilityWithOptions) void announceForAccessibilityWithOptions(std::string announcement, AccessibilityManagerSpec_announceForAccessibilityWithOptions_options && options) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(announceForAccessibilityWithOptions) static void announceForAccessibilityWithOptions(std::string announcement, AccessibilityManagerSpec_announceForAccessibilityWithOptions_options && options) noexcept { /* implementation */ }\n");
   }
 };
 

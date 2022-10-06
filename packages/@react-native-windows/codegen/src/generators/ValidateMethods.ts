@@ -45,7 +45,7 @@ function getPossibleMethodSignatures(
     funcType.returnTypeAnnotation,
     aliases,
     baseAliasName,
-  )} ${prop.name}(${args.join(', ')}) noexcept { /* implementation */ }}`;
+  )} ${prop.name}(${args.join(', ')}) noexcept { /* implementation */ }`;
 
   const staticsig = `REACT_${isMethodSync(funcType) ? 'SYNC_' : ''}METHOD(${
     prop.name
@@ -53,7 +53,7 @@ function getPossibleMethodSignatures(
     funcType.returnTypeAnnotation,
     aliases,
     baseAliasName,
-  )} ${prop.name}(${args.join(', ')}) noexcept { /* implementation */ }}`;
+  )} ${prop.name}(${args.join(', ')}) noexcept { /* implementation */ }`;
 
   return [sig, staticsig];
 }

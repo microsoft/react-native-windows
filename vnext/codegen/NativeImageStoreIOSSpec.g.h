@@ -40,23 +40,23 @@ struct ImageStoreIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "getBase64ForTag",
-          "    REACT_METHOD(getBase64ForTag) void getBase64ForTag(std::string uri, std::function<void(std::string)> const & successCallback, std::function<void(ImageStoreIOSSpec_getBase64ForTag_errorCallback_error const &)> const & errorCallback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(getBase64ForTag) static void getBase64ForTag(std::string uri, std::function<void(std::string)> const & successCallback, std::function<void(ImageStoreIOSSpec_getBase64ForTag_errorCallback_error const &)> const & errorCallback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(getBase64ForTag) void getBase64ForTag(std::string uri, std::function<void(std::string)> const & successCallback, std::function<void(ImageStoreIOSSpec_getBase64ForTag_errorCallback_error const &)> const & errorCallback) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(getBase64ForTag) static void getBase64ForTag(std::string uri, std::function<void(std::string)> const & successCallback, std::function<void(ImageStoreIOSSpec_getBase64ForTag_errorCallback_error const &)> const & errorCallback) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "hasImageForTag",
-          "    REACT_METHOD(hasImageForTag) void hasImageForTag(std::string uri, std::function<void(bool)> const & callback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(hasImageForTag) static void hasImageForTag(std::string uri, std::function<void(bool)> const & callback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(hasImageForTag) void hasImageForTag(std::string uri, std::function<void(bool)> const & callback) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(hasImageForTag) static void hasImageForTag(std::string uri, std::function<void(bool)> const & callback) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "removeImageForTag",
-          "    REACT_METHOD(removeImageForTag) void removeImageForTag(std::string uri) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(removeImageForTag) static void removeImageForTag(std::string uri) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(removeImageForTag) void removeImageForTag(std::string uri) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(removeImageForTag) static void removeImageForTag(std::string uri) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "addImageFromBase64",
-          "    REACT_METHOD(addImageFromBase64) void addImageFromBase64(std::string base64ImageData, std::function<void(std::string)> const & successCallback, std::function<void(ImageStoreIOSSpec_addImageFromBase64_errorCallback_error const &)> const & errorCallback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(addImageFromBase64) static void addImageFromBase64(std::string base64ImageData, std::function<void(std::string)> const & successCallback, std::function<void(ImageStoreIOSSpec_addImageFromBase64_errorCallback_error const &)> const & errorCallback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(addImageFromBase64) void addImageFromBase64(std::string base64ImageData, std::function<void(std::string)> const & successCallback, std::function<void(ImageStoreIOSSpec_addImageFromBase64_errorCallback_error const &)> const & errorCallback) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(addImageFromBase64) static void addImageFromBase64(std::string base64ImageData, std::function<void(std::string)> const & successCallback, std::function<void(ImageStoreIOSSpec_addImageFromBase64_errorCallback_error const &)> const & errorCallback) noexcept { /* implementation */ }\n");
   }
 };
 
