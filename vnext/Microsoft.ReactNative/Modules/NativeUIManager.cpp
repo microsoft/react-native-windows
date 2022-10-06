@@ -1012,7 +1012,9 @@ void NativeUIManager::measureInWindow(
   ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
 
   if (auto view = node.GetView().try_as<xaml::FrameworkElement>()) {
-    auto windowTransform = view.TransformToVisual(xaml::Window::Current().Content());
+    // When supplied with nullptr, TransformToVisual will return the position
+    // relative to the root XAML element.
+    auto windowTransform = view.TransformToVisual(nullptr);
     auto positionInWindow = windowTransform.TransformPoint({0, 0});
 
     m_context.JSDispatcher().Post(
