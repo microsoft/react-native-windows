@@ -469,9 +469,10 @@ void ViewViewManager::OnPropertiesUpdated(ShadowNodeBase *node) {
     // keep it around, so not adding that code (yet).
   }
 
+  // If component is already ViewControl, it should be ViewControl.
   // If component is focusable, it should be a ViewControl.
   // If component is a View with accessible set to true, the component should be focusable, thus we need a ViewControl.
-  bool shouldBeControl =
+  bool shouldBeControl = viewShadowNode->IsControl() ||
       (viewShadowNode->IsFocusable() || (viewShadowNode->IsAccessible() && !viewShadowNode->OnClick()));
   if (auto view = viewShadowNode->GetView().try_as<xaml::UIElement>()) {
     // If we have DynamicAutomationProperties, we need a ViewControl with a
@@ -495,13 +496,6 @@ void ViewViewManager::TryUpdateView(
 
   // This short-circuits all of the update code when we have the same hierarchy
   if (isControl == useControl && hadOuterBorder == hasOuterBorder)
-    return;
-
-  // This short-circuits if we are already a control and no longer need to be.
-  // Chances are if something was a control at one point in time, it will need
-  // to be a control again, so it is an over-optimization to remove the control
-  // wrapper.
-  if (!useControl && isControl)
     return;
 
   //
@@ -530,7 +524,7 @@ void ViewViewManager::TryUpdateView(
   }
 
   // Clean up child of Control if needed
-  if (isControl && (!useControl || (hasOuterBorder != hadOuterBorder))) {
+  if (isControl && hasOuterBorder != hadOuterBorder) {
     pViewShadowNode->GetControl().Content(nullptr);
   }
 
