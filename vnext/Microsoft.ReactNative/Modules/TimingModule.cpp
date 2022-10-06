@@ -10,11 +10,6 @@
 #include <UI.Xaml.Media.h>
 #include <Utils/ValueUtils.h>
 
-#include <cxxreact/CxxModule.h>
-#include <cxxreact/Instance.h>
-
-#include <cxxreact/JsArgumentHelpers.h>
-
 #include <unknwnbase.h>
 
 using namespace facebook::xplat;
@@ -75,22 +70,12 @@ bool TimerQueue::IsEmpty() {
 // Timing
 //
 
-Timing::Timing(TimingModule *parent) : m_parent(parent) {}
-
-void Timing::Disconnect() {
-  m_parent = nullptr;
-  StopTicks();
-}
-
-std::weak_ptr<facebook::react::Instance> Timing::getInstance() noexcept {
-  if (!m_parent)
-    return std::weak_ptr<facebook::react::Instance>();
-
-  return m_parent->getInstance();
+void Timing::Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
+  m_context = reactContext;
 }
 
 void Timing::OnTick() {
-  std::vector<int64_t> readyTimers;
+  winrt::Microsoft::ReactNative::JSValueArray readyTimers;
   auto now = TDateTime::clock::now();
 
   auto emittedAnimationFrame = false;
@@ -118,15 +103,8 @@ void Timing::OnTick() {
   }
 
   if (!readyTimers.empty()) {
-    if (auto instance = getInstance().lock()) {
-      // Package list of Timer Ids to fire in a dynamic array to pass as
-      // parameter
-      folly::dynamic params = folly::dynamic::array();
-      for (size_t i = 0, c = readyTimers.size(); i < c; ++i)
-        params.push_back(folly::dynamic(readyTimers[i]));
-
-      instance->callJSFunction("JSTimers", "callTimers", folly::dynamic::array(params));
-    }
+    m_context.CallJSFunction(
+        L"JSTimers", L"callTimers", winrt::Microsoft::ReactNative::JSValueArray{std::move(readyTimers)});
   }
 }
 
@@ -176,12 +154,12 @@ void Timing::StopTicks() {
     m_dispatcherQueueTimer.Stop();
 }
 
-void Timing::createTimer(int64_t id, double duration, double jsSchedulingTime, bool repeat) {
+void Timing::createTimerOnQueue(int64_t id, double duration, double jsSchedulingTime, bool repeat) noexcept {
   if (duration == 0 && !repeat) {
-    if (auto instance = getInstance().lock()) {
-      folly::dynamic params = folly::dynamic::array(id);
-      instance->callJSFunction("JSTimers", "callTimers", folly::dynamic::array(params));
-    }
+    m_context.CallJSFunction(
+        L"JSTimers",
+        L"callTimers",
+        winrt::Microsoft::ReactNative::JSValueArray{winrt::Microsoft::ReactNative::JSValueArray{id}});
 
     return;
   }
@@ -201,68 +179,32 @@ void Timing::createTimer(int64_t id, double duration, double jsSchedulingTime, b
   }
 }
 
-void Timing::deleteTimer(int64_t id) {
+void Timing::createTimer(double id, double duration, double jsSchedulingTime, bool repeat) noexcept {
+  winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::PostToUIBatchingQueue(
+      m_context.Handle(), [wkThis = std::weak_ptr(this->shared_from_this()), id, duration, jsSchedulingTime, repeat]() {
+        if (auto pThis = wkThis.lock()) {
+          pThis->createTimerOnQueue(static_cast<int64_t>(id), duration, jsSchedulingTime, repeat);
+        }
+      });
+}
+
+void Timing::deleteTimerOnQueue(int64_t id) noexcept {
   m_timerQueue.Remove(id);
   if (m_timerQueue.IsEmpty())
     StopTicks();
 }
 
-void Timing::setSendIdleEvents(bool /*sendIdleEvents*/) {
+void Timing::deleteTimer(double id) noexcept {
+  winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::PostToUIBatchingQueue(
+      m_context.Handle(), [wkThis = std::weak_ptr(this->shared_from_this()), id]() {
+        if (auto pThis = wkThis.lock()) {
+          pThis->deleteTimerOnQueue(static_cast<int64_t>(id));
+        }
+      });
+}
+
+void Timing::setSendIdleEvents(bool /*sendIdleEvents*/) noexcept {
   // TODO: Implement.
 }
 
-//
-// TimingModule
-//
-const char *TimingModule::name = "Timing";
-
-TimingModule::TimingModule() : m_timing(std::make_shared<Timing>(this)) {}
-
-TimingModule::~TimingModule() {
-  if (m_timing != nullptr)
-    m_timing->Disconnect();
-}
-
-std::string TimingModule::getName() {
-  return name;
-}
-
-auto TimingModule::getConstants() -> std::map<std::string, dynamic> {
-  return {};
-}
-
-auto TimingModule::getMethods() -> std::vector<Method> {
-  std::shared_ptr<Timing> timing(m_timing);
-  return {
-      Method(
-          "createTimer",
-          [timing](dynamic args) // int64_t id, double duration, double
-                                 // jsSchedulingTime, bool repeat
-          {
-            timing->createTimer(
-                jsArgAsInt(args, 0), jsArgAsDouble(args, 1), jsArgAsDouble(args, 2), jsArgAsBool(args, 3));
-          }),
-      Method(
-          "deleteTimer",
-          [timing](dynamic args) // int64_t code, const std::string& reason,
-                                 // int64_t id
-          { timing->deleteTimer(jsArgAsInt(args, 0)); }),
-      Method(
-          "setSendIdleEvents",
-          [timing](dynamic args) // const std::string& message, int64_t id
-          { timing->setSendIdleEvents(jsArgAsBool(args, 0)); }),
-  };
-}
-
 } // namespace Microsoft::ReactNative
-
-namespace facebook {
-namespace react {
-
-std::unique_ptr<facebook::xplat::module::CxxModule> CreateTimingModule(
-    const std::shared_ptr<facebook::react::MessageQueueThread> &) noexcept {
-  return std::make_unique<Microsoft::ReactNative::TimingModule>();
-}
-
-} // namespace react
-} // namespace facebook

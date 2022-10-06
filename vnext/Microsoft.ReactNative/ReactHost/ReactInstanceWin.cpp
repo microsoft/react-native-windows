@@ -54,6 +54,7 @@
 #include "Modules/LogBoxModule.h"
 #include "Modules/NativeUIManager.h"
 #include "Modules/PaperUIManagerModule.h"
+#include "Modules/TimingModule.h"
 #endif
 #include "Modules/ReactRootViewTagGenerator.h"
 
@@ -361,6 +362,8 @@ void ReactInstanceWin::LoadModules(
       L"LinkingManager",
       winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::LinkingManager>());
 
+  registerTurboModule(
+      L"Timing", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::Timing>());
 #endif
 }
 
