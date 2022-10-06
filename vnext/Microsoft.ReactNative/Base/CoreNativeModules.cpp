@@ -8,7 +8,6 @@
 #include <AppModelHelpers.h>
 #include <AsyncStorageModule.h>
 #include <Modules/Animated/NativeAnimatedModule.h>
-#include <Modules/AppearanceModule.h>
 #include <Modules/AsyncStorageModuleWin32.h>
 #include <Modules/ClipboardModule.h>
 #include <Modules/NativeUIManager.h>
@@ -39,7 +38,6 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
     const std::shared_ptr<facebook::react::MessageQueueThread> &batchingUIMessageQueue,
     const std::shared_ptr<facebook::react::MessageQueueThread>
         &jsMessageQueue, // JS engine thread (what we use for external modules)
-    Mso::CntPtr<AppearanceChangeListener> &&appearanceListener,
     Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept {
   std::vector<facebook::react::NativeModuleDescription> modules;
 
@@ -71,13 +69,6 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
       NativeAnimatedModule::name,
       [context = std::move(context)]() mutable { return std::make_unique<NativeAnimatedModule>(std::move(context)); },
       batchingUIMessageQueue);
-
-  modules.emplace_back(
-      AppearanceModule::Name,
-      [appearanceListener = std::move(appearanceListener)]() mutable {
-        return std::make_unique<AppearanceModule>(std::move(appearanceListener));
-      },
-      jsMessageQueue);
 
   // AsyncStorageModule doesn't work without package identity (it indirectly depends on
   // Windows.Storage.StorageFile), so check for package identity before adding it.
