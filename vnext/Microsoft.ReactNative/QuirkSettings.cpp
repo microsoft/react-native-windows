@@ -103,7 +103,7 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> MapWindowDeactivatedToAppSt
 }
 
 /*static*/ bool QuirkSettings::GetUseWebFlexBasisBehavior(ReactPropertyBag properties) noexcept {
-  return properties.Get(MatchAndroidAndIOSStretchBehaviorProperty()).value_or(true);
+  return properties.Get(UseWebFlexBasisBehaviorProperty()).value_or(false);
 }
 
 /*static*/ bool QuirkSettings::GetAcceptSelfSigned(ReactPropertyBag properties) noexcept {
