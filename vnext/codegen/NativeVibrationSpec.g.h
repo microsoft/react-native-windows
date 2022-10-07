@@ -27,18 +27,18 @@ struct VibrationSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "vibrate",
-          "    REACT_METHOD(vibrate) void vibrate(double pattern) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(vibrate) static void vibrate(double pattern) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(vibrate) void vibrate(double pattern) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(vibrate) static void vibrate(double pattern) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "vibrateByPattern",
-          "    REACT_METHOD(vibrateByPattern) void vibrateByPattern(std::vector<double> const & pattern, double repeat) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(vibrateByPattern) static void vibrateByPattern(std::vector<double> const & pattern, double repeat) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(vibrateByPattern) void vibrateByPattern(std::vector<double> const & pattern, double repeat) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(vibrateByPattern) static void vibrateByPattern(std::vector<double> const & pattern, double repeat) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "cancel",
-          "    REACT_METHOD(cancel) void cancel() noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(cancel) static void cancel() noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(cancel) void cancel() noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(cancel) static void cancel() noexcept { /* implementation */ }\n");
   }
 };
 

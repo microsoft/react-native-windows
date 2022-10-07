@@ -30,33 +30,33 @@ struct LinkingManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "getInitialURL",
-          "    REACT_METHOD(getInitialURL) void getInitialURL(::React::ReactPromise<::React::JSValue> &&result) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(getInitialURL) static void getInitialURL(::React::ReactPromise<::React::JSValue> &&result) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(getInitialURL) void getInitialURL(::React::ReactPromise<::React::JSValue> &&result) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(getInitialURL) static void getInitialURL(::React::ReactPromise<::React::JSValue> &&result) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "canOpenURL",
-          "    REACT_METHOD(canOpenURL) void canOpenURL(std::string url, ::React::ReactPromise<::React::JSValue> &&result) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(canOpenURL) static void canOpenURL(std::string url, ::React::ReactPromise<::React::JSValue> &&result) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(canOpenURL) void canOpenURL(std::string url, ::React::ReactPromise<::React::JSValue> &&result) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(canOpenURL) static void canOpenURL(std::string url, ::React::ReactPromise<::React::JSValue> &&result) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "openURL",
-          "    REACT_METHOD(openURL) void openURL(std::string url, ::React::ReactPromise<::React::JSValue> &&result) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(openURL) static void openURL(std::string url, ::React::ReactPromise<::React::JSValue> &&result) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(openURL) void openURL(std::string url, ::React::ReactPromise<::React::JSValue> &&result) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(openURL) static void openURL(std::string url, ::React::ReactPromise<::React::JSValue> &&result) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "openSettings",
-          "    REACT_METHOD(openSettings) void openSettings(::React::ReactPromise<::React::JSValue> &&result) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(openSettings) static void openSettings(::React::ReactPromise<::React::JSValue> &&result) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(openSettings) void openSettings(::React::ReactPromise<::React::JSValue> &&result) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(openSettings) static void openSettings(::React::ReactPromise<::React::JSValue> &&result) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           4,
           "addListener",
-          "    REACT_METHOD(addListener) void addListener(std::string eventName) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(addListener) static void addListener(std::string eventName) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(addListener) void addListener(std::string eventName) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(addListener) static void addListener(std::string eventName) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           5,
           "removeListeners",
-          "    REACT_METHOD(removeListeners) void removeListeners(double count) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(removeListeners) static void removeListeners(double count) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(removeListeners) void removeListeners(double count) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(removeListeners) static void removeListeners(double count) noexcept { /* implementation */ }\n");
   }
 };
 

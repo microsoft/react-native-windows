@@ -25,8 +25,8 @@ struct ImageStoreAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "getBase64ForTag",
-          "    REACT_METHOD(getBase64ForTag) void getBase64ForTag(std::string uri, std::function<void(std::string)> const & successCallback, std::function<void(std::string)> const & errorCallback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(getBase64ForTag) static void getBase64ForTag(std::string uri, std::function<void(std::string)> const & successCallback, std::function<void(std::string)> const & errorCallback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(getBase64ForTag) void getBase64ForTag(std::string uri, std::function<void(std::string)> const & successCallback, std::function<void(std::string)> const & errorCallback) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(getBase64ForTag) static void getBase64ForTag(std::string uri, std::function<void(std::string)> const & successCallback, std::function<void(std::string)> const & errorCallback) noexcept { /* implementation */ }\n");
   }
 };
 

@@ -25,8 +25,8 @@ struct DevSplitBundleLoaderSpec : winrt::Microsoft::ReactNative::TurboModuleSpec
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "loadBundle",
-          "    REACT_METHOD(loadBundle) void loadBundle(std::string bundlePath, ::React::ReactPromise<::React::JSValue> &&result) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(loadBundle) static void loadBundle(std::string bundlePath, ::React::ReactPromise<::React::JSValue> &&result) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(loadBundle) void loadBundle(std::string bundlePath, ::React::ReactPromise<::React::JSValue> &&result) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(loadBundle) static void loadBundle(std::string bundlePath, ::React::ReactPromise<::React::JSValue> &&result) noexcept { /* implementation */ }\n");
   }
 };
 

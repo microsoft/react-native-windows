@@ -42,13 +42,13 @@ struct SettingsManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "setValues",
-          "    REACT_METHOD(setValues) void setValues(::React::JSValue && values) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(setValues) static void setValues(::React::JSValue && values) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(setValues) void setValues(::React::JSValue && values) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(setValues) static void setValues(::React::JSValue && values) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "deleteValues",
-          "    REACT_METHOD(deleteValues) void deleteValues(std::vector<std::string> const & values) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(deleteValues) static void deleteValues(std::vector<std::string> const & values) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(deleteValues) void deleteValues(std::vector<std::string> const & values) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(deleteValues) static void deleteValues(std::vector<std::string> const & values) noexcept { /* implementation */ }\n");
   }
 };
 
