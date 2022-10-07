@@ -1,8 +1,20 @@
 # Change Log - @rnw-scripts/doxysaurus
 
-This log was last generated on Wed, 27 Jul 2022 05:09:28 GMT and should not be manually modified.
+This log was last generated on Wed, 05 Oct 2022 05:13:44 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.2.0
+
+Wed, 05 Oct 2022 05:13:44 GMT
+
+### Minor changes
+
+- integrate 7/29/22 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.6
+- Bump @rnw-scripts/eslint-config to v1.1.14
+- Bump @rnw-scripts/jest-unittest-config to v1.3.0
+- Bump @rnw-scripts/just-task to v2.2.6
 
 ## 0.1.19
 

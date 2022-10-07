@@ -3,51 +3,44 @@
 
 #pragma once
 
-#include <cxxreact/CxxModule.h>
-#include <eventWaitHandle/eventWaitHandle.h>
-
-#include <winrt/Windows.UI.ViewManagement.h>
-
-#include <IReactDispatcher.h>
+#include "../../codegen/NativeAppearanceSpec.g.h"
 #include <React.h>
-#include <object/refCountedObject.h>
-#include "IReactInstance.h"
+#include <winrt/Windows.UI.ViewManagement.h>
 
 namespace Microsoft::ReactNative {
 
-// Listens for the current theme on the UI thread, storing the most recent. Will emit JS events on Appearance change.
-class AppearanceChangeListener final : public Mso::RefCountedObject<Mso::RefCountStrategy::WeakRef, Mso::IRefCounted> {
+REACT_MODULE(Appearance)
+struct Appearance : std::enable_shared_from_this<Appearance> {
   using ApplicationTheme = xaml::ApplicationTheme;
   using UISettings = winrt::Windows::UI::ViewManagement::UISettings;
+  using ModuleSpec = ReactNativeSpecs::AppearanceSpec;
 
- public:
-  AppearanceChangeListener(
-      const Mso::React::IReactContext &context,
-      const Mso::React::IDispatchQueue2 &uiQueue) noexcept;
-  const char *GetColorScheme() const noexcept;
+  REACT_INIT(Initialize)
+  void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
+
+  REACT_SYNC_METHOD(getColorScheme)
+  std::optional<std::string> getColorScheme() noexcept;
+
+  REACT_METHOD(addListener)
+  void addListener(std::string eventName) noexcept;
+
+  REACT_METHOD(removeListeners)
+  void removeListeners(double count) noexcept;
+
+  REACT_EVENT(appearanceChanged);
+  std::function<void(std::string const &)> appearanceChanged;
+
+  // This function allows the module to get the current theme on the UI thread before it is requested by any JS thread
+  static void InitOnUIThread(const Mso::React::IReactContext &context) noexcept;
 
  private:
   static const char *ToString(ApplicationTheme theme) noexcept;
-  void OnColorValuesChanged() noexcept;
+  ApplicationTheme GetCurrentTheme() noexcept;
+  void RequeryTheme() noexcept;
 
-  Mso::CntPtr<const Mso::React::IDispatchQueue2> m_queue;
+  winrt::Microsoft::ReactNative::ReactContext m_context;
   UISettings m_uiSettings;
   UISettings::ColorValuesChanged_revoker m_revoker;
-  std::atomic<ApplicationTheme> m_currentTheme;
-  Mso::CntPtr<const Mso::React::IReactContext> m_context;
-  std::weak_ptr<IReactInstance> m_weakReactInstance;
-};
-
-class AppearanceModule final : public facebook::xplat::module::CxxModule {
- public:
-  static constexpr const char *Name = "Appearance";
-
-  AppearanceModule(Mso::CntPtr<AppearanceChangeListener> &&appearanceListener) noexcept;
-  std::string getName() override;
-  std::vector<Method> getMethods() override;
-
- private:
-  Mso::CntPtr<AppearanceChangeListener> m_changeListener;
 };
 
 } // namespace Microsoft::ReactNative

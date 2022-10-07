@@ -8,13 +8,49 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20220714-2051-8af7870c6",
+  "baseVersion": "0.0.0-20220729-2025-a21a1f845",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "fb425c3818276b4141f4c1877d4f0629f10e18ba"
+      "baseHash": "80da3e01a99821e4813d04b0a8226c74f9c89217"
+    },
+    {
+      "type": "derived",
+      "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputComponentDescriptor.h",
+      "baseFile": "ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputComponentDescriptor.h",
+      "baseHash": "0e8bc2d76cda863ed7986747546d2b96af876ada"
+    },
+    {
+      "type": "derived",
+      "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputShadowNode.cpp",
+      "baseFile": "ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputShadowNode.cpp",
+      "baseHash": "3e816f8b2f137fad9bfc641857ece6101eb3436e"
+    },
+    {
+      "type": "derived",
+      "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputShadowNode.h",
+      "baseFile": "ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputShadowNode.h",
+      "baseHash": "3cf5d3da7910c603737b0001879f204fbbcf1f76"
+    },
+    {
+      "type": "derived",
+      "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputState.cpp",
+      "baseFile": "ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputState.cpp",
+      "baseHash": "ab386b821cfe714d9aaaa394d82785227762ab6b"
+    },
+    {
+      "type": "derived",
+      "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputState.h",
+      "baseFile": "ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputState.h",
+      "baseHash": "86ac95fb195394bc314b2481907026d2568a0c45"
+    },
+    {
+      "type": "derived",
+      "file": "Microsoft.ReactNative/Fabric/ImageRequest.cpp",
+      "baseFile": "ReactCommon/react/renderer/imagemanager/platform/ios/ImageRequest.cpp",
+      "baseHash": "f227c50397e2edf5deb496b7b1953df5ea1dc800"
     },
     {
       "type": "patch",
@@ -39,6 +75,34 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/decorator.h",
+      "baseFile": "ReactCommon/jsi/jsi/decorator.h",
+      "baseHash": "8e7642194d662f6b93203cb151b8ad3e24e11bc6",
+      "issue": 9791
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/jsi-inl.h",
+      "baseFile": "ReactCommon/jsi/jsi/jsi-inl.h",
+      "baseHash": "d2ed6788f396708a31c1f2a5ceb36b81e273121e",
+      "issue": 9791
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/jsi.cpp",
+      "baseFile": "ReactCommon/jsi/jsi/jsi.cpp",
+      "baseHash": "45901861cb39be3f58fac072a6145a39d0a34cb8",
+      "issue": 9791
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/jsi.h",
+      "baseFile": "ReactCommon/jsi/jsi/jsi.h",
+      "baseHash": "9022689490930d324d3915d1e3cc3c3541005988",
+      "issue": 9791
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/test/testlib.cpp",
       "baseFile": "ReactCommon/jsi/jsi/test/testlib.cpp",
       "baseHash": "95a6fd14e80719f9796942ffe59dd850a56d544c",
@@ -46,10 +110,15 @@
     },
     {
       "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/CompactValue.h",
-      "baseFile": "ReactCommon/yoga/yoga/CompactValue.h",
-      "baseHash": "493638f3a2cdf828c46bbb523240588c0ddedec1",
-      "issue": 10145
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/attributedstring/AttributedString.cpp",
+      "baseFile": "ReactCommon/react/renderer/attributedstring/AttributedString.cpp",
+      "baseHash": "7261d79ceb15c77a7b85bf1eb4edd67bfcc91541"
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/LayoutableShadowNode.cpp",
+      "baseFile": "ReactCommon/react/renderer/core/LayoutableShadowNode.cpp",
+      "baseHash": "9c4ba7b81ea2b68089ac0b9d99eb3cad4d42ad05"
     },
     {
       "type": "patch",
@@ -90,7 +159,7 @@
       "type": "derived",
       "file": "src/index.windows.js",
       "baseFile": "index.js",
-      "baseHash": "2a0bd511c691be2ac3da45a3c77250aaf55414e1"
+      "baseHash": "5ec87ef7736ad3b7d03f627ff5ac6475ce0bc6bf"
     },
     {
       "type": "platform",
@@ -134,7 +203,7 @@
       "type": "patch",
       "file": "src/Libraries/Alert/Alert.windows.js",
       "baseFile": "Libraries/Alert/Alert.js",
-      "baseHash": "f915bdebd13c9c76d7d76b7a5d85903a308b44fd"
+      "baseHash": "51fc12aa32c2ea6e5613bfcf45a845e73d519be3"
     },
     {
       "type": "platform",
@@ -156,7 +225,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.windows.js",
       "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.js",
-      "baseHash": "821a00b041478c1a6a62afac525c1dd5ea62eb1a",
+      "baseHash": "318fa0b04d231c747d95bc4fb34a9a4152009786",
       "issue": 4578
     },
     {
@@ -209,12 +278,6 @@
       "file": "src/Libraries/Components/Keyboard/KeyboardExtProps.ts"
     },
     {
-      "type": "derived",
-      "file": "src/Libraries/Components/MaskedView/MaskedViewIOS.windows.js",
-      "baseFile": "Libraries/Components/MaskedView/MaskedViewIOS.android.js",
-      "baseHash": "22608421eb48a1c0eb0c26e68ae00a0a5be6e71d"
-    },
-    {
       "type": "platform",
       "file": "src/Libraries/Components/Popup/Popup.tsx"
     },
@@ -256,7 +319,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "40e5d8415243c15dc31bab4f1246f42d5d52e679"
+      "baseHash": "44fadc4a6bc51291e44f6bb8d7f38563e63bcbff"
     },
     {
       "type": "patch",
@@ -316,13 +379,13 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewAccessibility.windows.js",
       "baseFile": "Libraries/Components/View/ViewAccessibility.js",
-      "baseHash": "2040905374a966b2a57494632acaaef10eed2590"
+      "baseHash": "981fa7aec06fa8c93994adba50dbb3baa16e22dd"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewPropTypes.windows.js",
       "baseFile": "Libraries/Components/View/ViewPropTypes.js",
-      "baseHash": "acfad8aae28439dad8792c141b5be321b3ef83b1"
+      "baseHash": "52170daa86f15afc549b4f284371e4c4154aa3dd"
     },
     {
       "type": "platform",
@@ -336,14 +399,14 @@
       "type": "patch",
       "file": "src/Libraries/Image/Image.windows.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseHash": "3e5ddb2e2c7fe2f4c0d3d58d07cc38e2f85d1479",
+      "baseHash": "bb18293e3169fc7a32dd85e1c53835dcbddb33fe",
       "issue": 4590
     },
     {
       "type": "copy",
       "file": "src/Libraries/Lists/__tests__/CellRenderMask-test.js",
       "baseFile": "Libraries/Lists/__tests__/CellRenderMask-test.js",
-      "baseHash": "bfb778c766301230ffb3b2aab0c25954e993419a"
+      "baseHash": "ac27afe639dc574d8d3e78eb12912b3dbc0333bb"
     },
     {
       "type": "copy",
@@ -376,7 +439,7 @@
       "type": "copy",
       "file": "src/Libraries/Lists/__tests__/VirtualizedList-test.js",
       "baseFile": "Libraries/Lists/__tests__/VirtualizedList-test.js",
-      "baseHash": "948d12e5f6a2638cb649bfcdc36da719150b7cd7",
+      "baseHash": "ee51a288629bcc3f043204a4cc99a3567bc7f736",
       "issue": 0
     },
     {
@@ -401,7 +464,7 @@
       "type": "derived",
       "file": "src/Libraries/NativeComponent/BaseViewConfig.windows.js",
       "baseFile": "Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "a0dca36e4c9d6c7ad4890cc0a34ec02cbbab9405"
+      "baseHash": "54969c94ee141ce38ac1a0c5a16aa01bf27c66fe"
     },
     {
       "type": "platform",
@@ -472,7 +535,7 @@
       "type": "copy",
       "file": "src/Libraries/Utilities/BackHandler.windows.js",
       "baseFile": "Libraries/Utilities/BackHandler.android.js",
-      "baseHash": "78cc11a8ac198bce4b7be8297b1d10dcfa643952",
+      "baseHash": "796868f6764037baf433afd88053bb51f3194ddc",
       "issue": 4629
     },
     {

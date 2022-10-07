@@ -53,6 +53,7 @@ namespace Microsoft.ReactNative.Composition
     void Size(Windows.Foundation.Numerics.Vector2 size);
     void Offset(Windows.Foundation.Numerics.Vector3 offset);
     void Offset(Windows.Foundation.Numerics.Vector3 offset, Windows.Foundation.Numerics.Vector3 relativeAdjustment);
+    void RelativeSizeWithOffset(Windows.Foundation.Numerics.Vector2 size, Windows.Foundation.Numerics.Vector2 relativeSizeAdjustment);
   }
 
   [webhosthidden]

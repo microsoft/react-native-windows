@@ -17,18 +17,18 @@
     "directory": "packages/@rnw-scripts/beachball-config"
   },
   "dependencies": {
-    "@react-native-windows/package-utils": "0.0.0-canary.31",
+    "@react-native-windows/package-utils": "0.0.0-canary.32",
     "@rnw-scripts/stamp-version": "0.0.0",
     "find-up": "^4.1.0"
   },
   "devDependencies": {
-    "@rnw-scripts/eslint-config": "1.1.13",
+    "@rnw-scripts/eslint-config": "1.1.14",
     "@rnw-scripts/generated-beachball-config": "0.0.0",
-    "@rnw-scripts/just-task": "2.2.5",
+    "@rnw-scripts/just-task": "2.2.6",
     "@rnw-scripts/ts-config": "2.0.2",
     "@types/node": "^14.14.22",
     "beachball": "^2.20.0",
-    "eslint": "^7.32.0",
+    "eslint": "^8.19.0",
     "prettier": "^2.4.1",
     "typescript": "^4.4.4"
   },

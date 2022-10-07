@@ -25,6 +25,18 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> MatchAndroidAndIOSStretchBe
   properties.Set(MatchAndroidAndIOSStretchBehaviorProperty(), value);
 }
 
+winrt::Microsoft::ReactNative::ReactPropertyId<bool> UseWebFlexBasisBehaviorProperty() noexcept {
+  static winrt::Microsoft::ReactNative::ReactPropertyId<bool> propId{
+      L"ReactNative.QuirkSettings", L"UseWebFlexBasisBehavior"};
+  return propId;
+}
+
+/*static*/ void QuirkSettings::SetUseWebFlexBasisBehavior(
+    winrt::Microsoft::ReactNative::ReactPropertyBag properties,
+    bool value) noexcept {
+  properties.Set(UseWebFlexBasisBehaviorProperty(), value);
+}
+
 winrt::Microsoft::ReactNative::ReactPropertyId<bool> AcceptSelfSignedCertsProperty() noexcept {
   winrt::Microsoft::ReactNative::ReactPropertyId<bool> propId{
       L"ReactNative.QuirkSettings", L"Networking.AcceptSelfSigned"};
@@ -60,6 +72,12 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> MapWindowDeactivatedToAppSt
   SetMatchAndroidAndIOSStretchBehavior(ReactPropertyBag(settings.Properties()), value);
 }
 
+/*static*/ void QuirkSettings::SetUseWebFlexBasisBehavior(
+    winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
+    bool value) noexcept {
+  SetUseWebFlexBasisBehavior(ReactPropertyBag(settings.Properties()), value);
+}
+
 /*static*/ void QuirkSettings::SetAcceptSelfSigned(
     winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
     bool value) noexcept {
@@ -82,6 +100,10 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> MapWindowDeactivatedToAppSt
 
 /*static*/ bool QuirkSettings::GetMatchAndroidAndIOSStretchBehavior(ReactPropertyBag properties) noexcept {
   return properties.Get(MatchAndroidAndIOSStretchBehaviorProperty()).value_or(true);
+}
+
+/*static*/ bool QuirkSettings::GetUseWebFlexBasisBehavior(ReactPropertyBag properties) noexcept {
+  return properties.Get(UseWebFlexBasisBehaviorProperty()).value_or(false);
 }
 
 /*static*/ bool QuirkSettings::GetAcceptSelfSigned(ReactPropertyBag properties) noexcept {

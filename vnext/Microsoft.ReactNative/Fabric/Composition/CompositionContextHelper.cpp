@@ -230,6 +230,13 @@ struct CompVisual : public winrt::implements<
     m_visual.RelativeOffsetAdjustment(relativeAdjustment);
   }
 
+  void RelativeSizeWithOffset(
+      winrt::Windows::Foundation::Numerics::float2 size,
+      winrt::Windows::Foundation::Numerics::float2 relativeSizeAdjustment) noexcept {
+    m_visual.Size(size);
+    m_visual.RelativeSizeAdjustment(relativeSizeAdjustment);
+  }
+
  private:
   winrt::Windows::UI::Composition::Visual m_visual;
 };
@@ -245,8 +252,8 @@ struct CompSpriteVisual : winrt::Microsoft::ReactNative::Composition::implementa
   void InsertAt(const winrt::Microsoft::ReactNative::Composition::IVisual &visual, uint32_t index) noexcept {
     auto containerChildren = m_visual.Children();
     auto compVisual = winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerVisual(visual);
-    if (index == 0 || containerChildren.Count() == 0) {
-      containerChildren.InsertAtTop(compVisual);
+    if (index == 0) {
+      containerChildren.InsertAtBottom(compVisual);
       return;
     }
     auto insertAfter = containerChildren.First();
@@ -303,6 +310,13 @@ struct CompSpriteVisual : winrt::Microsoft::ReactNative::Composition::implementa
       winrt::Windows::Foundation::Numerics::float3 relativeAdjustment) noexcept {
     m_visual.Offset(offset);
     m_visual.RelativeOffsetAdjustment(relativeAdjustment);
+  }
+
+  void RelativeSizeWithOffset(
+      winrt::Windows::Foundation::Numerics::float2 size,
+      winrt::Windows::Foundation::Numerics::float2 relativeSizeAdjustment) noexcept {
+    m_visual.Size(size);
+    m_visual.RelativeSizeAdjustment(relativeSizeAdjustment);
   }
 
   void SetClippingPath(ID2D1Geometry *clippingPath) noexcept {
@@ -462,7 +476,9 @@ struct CompScrollerVisual : winrt::Microsoft::ReactNative::Composition::implemen
   }
 
   void Size(winrt::Windows::Foundation::Numerics::float2 const &size) noexcept {
+    m_visualSize = size;
     m_visual.Size(size);
+    UpdateMaxPosition();
   }
 
   void Offset(winrt::Windows::Foundation::Numerics::float3 const &offset) noexcept {
@@ -474,6 +490,13 @@ struct CompScrollerVisual : winrt::Microsoft::ReactNative::Composition::implemen
       winrt::Windows::Foundation::Numerics::float3 relativeAdjustment) noexcept {
     m_visual.Offset(offset);
     m_visual.RelativeOffsetAdjustment(relativeAdjustment);
+  }
+
+  void RelativeSizeWithOffset(
+      winrt::Windows::Foundation::Numerics::float2 size,
+      winrt::Windows::Foundation::Numerics::float2 relativeSizeAdjustment) noexcept {
+    m_visual.Size(size);
+    m_visual.RelativeSizeAdjustment(relativeSizeAdjustment);
   }
 
   void SetClippingPath(ID2D1Geometry *clippingPath) noexcept {
@@ -499,8 +522,9 @@ struct CompScrollerVisual : winrt::Microsoft::ReactNative::Composition::implemen
   }
 
   void ContentSize(winrt::Windows::Foundation::Numerics::float2 const &size) noexcept {
+    m_contentSize = size;
     m_contentVisual.Size(size);
-    m_interactionTracker.MaxPosition({size.x, size.y, 0});
+    UpdateMaxPosition();
   }
 
   winrt::Windows::Foundation::Numerics::float3 ScrollPosition() noexcept {
@@ -516,6 +540,15 @@ struct CompScrollerVisual : winrt::Microsoft::ReactNative::Composition::implemen
     m_scrollPositionChangedEvent(*this, winrt::make<CompScrollPositionChangedArgs>(position));
   }
 
+  void UpdateMaxPosition() {
+    m_interactionTracker.MaxPosition(
+        {std::max<float>(m_contentSize.x - m_visualSize.x, 0),
+         std::max<float>(m_contentSize.y - m_visualSize.y, 0),
+         0});
+  }
+
+  winrt::Windows::Foundation::Numerics::float2 m_contentSize{0};
+  winrt::Windows::Foundation::Numerics::float2 m_visualSize{0};
   winrt::event<
       winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::Composition::ScrollPositionChangedArgs>>
       m_scrollPositionChangedEvent;

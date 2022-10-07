@@ -4,23 +4,21 @@
 #include "pch.h"
 
 #include <react/renderer/imagemanager/ImageManager.h>
+#include "WindowsImageManager.h"
 
 namespace facebook {
 namespace react {
 
-ImageManager::ImageManager(ContextContainer::Shared const &contextContainer) {
-  // Silence unused-private-field warning.
-  (void)self_;
-  // Not implemented.
+ImageManager::ImageManager(ContextContainer::Shared const &) {
+  self_ = new Microsoft::ReactNative::WindowsImageManager();
 }
 
 ImageManager::~ImageManager() {
-  // Not implemented.
+  delete (Microsoft::ReactNative::WindowsImageManager *)self_;
 }
 
 ImageRequest ImageManager::requestImage(const ImageSource &imageSource, SurfaceId surfaceId) const {
-  // Not implemented.
-  return ImageRequest(imageSource, nullptr);
+  return ((Microsoft::ReactNative::WindowsImageManager *)self_)->requestImage(imageSource, surfaceId);
 }
 
 } // namespace react

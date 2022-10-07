@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/eslint-config",
-  "version": "1.1.13",
+  "version": "1.1.14",
   "license": "MIT",
   "main": "eslintrc.js",
   "repository": {
@@ -9,11 +9,13 @@
     "directory": "packages/@rnw-scripts/eslint-config"
   },
   "dependencies": {
-    "@react-native-community/eslint-config": "^2.0.0",
-    "eslint-config-prettier": "^6.0.0"
+    "@babel/core": "^7.14.0",
+    "@babel/eslint-parser": "^7.18.2",
+    "@react-native-community/eslint-config": "3.0.3",
+    "eslint-config-prettier": "^8.5.0"
   },
   "devDependencies": {
-    "eslint": "^7.32.0",
+    "eslint": "^8.19.0",
     "prettier": "^2.4.1"
   },
   "peerDependencies": {

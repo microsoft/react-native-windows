@@ -78,33 +78,33 @@ struct AsyncSQLiteDBStorageSpec : winrt::Microsoft::ReactNative::TurboModuleSpec
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "multiGet",
-          "    REACT_METHOD(multiGet) void multiGet(std::vector<std::string> const & keys, std::function<void(std::optional<std::vector<AsyncSQLiteDBStorageSpec_multiGet_callback_errors_element>>, std::optional<std::vector<std::vector<std::string>>>)> const & callback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(multiGet) static void multiGet(std::vector<std::string> const & keys, std::function<void(std::optional<std::vector<AsyncSQLiteDBStorageSpec_multiGet_callback_errors_element>>, std::optional<std::vector<std::vector<std::string>>>)> const & callback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(multiGet) void multiGet(std::vector<std::string> const & keys, std::function<void(std::optional<std::vector<AsyncSQLiteDBStorageSpec_multiGet_callback_errors_element>>, std::optional<std::vector<std::vector<std::string>>>)> const & callback) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(multiGet) static void multiGet(std::vector<std::string> const & keys, std::function<void(std::optional<std::vector<AsyncSQLiteDBStorageSpec_multiGet_callback_errors_element>>, std::optional<std::vector<std::vector<std::string>>>)> const & callback) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "multiSet",
-          "    REACT_METHOD(multiSet) void multiSet(std::vector<std::vector<std::string>> const & kvPairs, std::function<void(std::optional<std::vector<AsyncSQLiteDBStorageSpec_multiSet_callback_errors_element>>)> const & callback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(multiSet) static void multiSet(std::vector<std::vector<std::string>> const & kvPairs, std::function<void(std::optional<std::vector<AsyncSQLiteDBStorageSpec_multiSet_callback_errors_element>>)> const & callback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(multiSet) void multiSet(std::vector<std::vector<std::string>> const & kvPairs, std::function<void(std::optional<std::vector<AsyncSQLiteDBStorageSpec_multiSet_callback_errors_element>>)> const & callback) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(multiSet) static void multiSet(std::vector<std::vector<std::string>> const & kvPairs, std::function<void(std::optional<std::vector<AsyncSQLiteDBStorageSpec_multiSet_callback_errors_element>>)> const & callback) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "multiMerge",
-          "    REACT_METHOD(multiMerge) void multiMerge(std::vector<std::vector<std::string>> const & kvPairs, std::function<void(std::optional<std::vector<AsyncSQLiteDBStorageSpec_multiMerge_callback_errors_element>>)> const & callback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(multiMerge) static void multiMerge(std::vector<std::vector<std::string>> const & kvPairs, std::function<void(std::optional<std::vector<AsyncSQLiteDBStorageSpec_multiMerge_callback_errors_element>>)> const & callback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(multiMerge) void multiMerge(std::vector<std::vector<std::string>> const & kvPairs, std::function<void(std::optional<std::vector<AsyncSQLiteDBStorageSpec_multiMerge_callback_errors_element>>)> const & callback) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(multiMerge) static void multiMerge(std::vector<std::vector<std::string>> const & kvPairs, std::function<void(std::optional<std::vector<AsyncSQLiteDBStorageSpec_multiMerge_callback_errors_element>>)> const & callback) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "multiRemove",
-          "    REACT_METHOD(multiRemove) void multiRemove(std::vector<std::string> const & keys, std::function<void(std::optional<std::vector<AsyncSQLiteDBStorageSpec_multiRemove_callback_errors_element>>)> const & callback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(multiRemove) static void multiRemove(std::vector<std::string> const & keys, std::function<void(std::optional<std::vector<AsyncSQLiteDBStorageSpec_multiRemove_callback_errors_element>>)> const & callback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(multiRemove) void multiRemove(std::vector<std::string> const & keys, std::function<void(std::optional<std::vector<AsyncSQLiteDBStorageSpec_multiRemove_callback_errors_element>>)> const & callback) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(multiRemove) static void multiRemove(std::vector<std::string> const & keys, std::function<void(std::optional<std::vector<AsyncSQLiteDBStorageSpec_multiRemove_callback_errors_element>>)> const & callback) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           4,
           "clear",
-          "    REACT_METHOD(clear) void clear(std::function<void(AsyncSQLiteDBStorageSpec_clear_callback_error const &)> const & callback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(clear) static void clear(std::function<void(AsyncSQLiteDBStorageSpec_clear_callback_error const &)> const & callback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(clear) void clear(std::function<void(AsyncSQLiteDBStorageSpec_clear_callback_error const &)> const & callback) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(clear) static void clear(std::function<void(AsyncSQLiteDBStorageSpec_clear_callback_error const &)> const & callback) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           5,
           "getAllKeys",
-          "    REACT_METHOD(getAllKeys) void getAllKeys(std::function<void(std::optional<AsyncSQLiteDBStorageSpec_getAllKeys_callback_error>, std::optional<std::vector<std::string>>)> const & callback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(getAllKeys) static void getAllKeys(std::function<void(std::optional<AsyncSQLiteDBStorageSpec_getAllKeys_callback_error>, std::optional<std::vector<std::string>>)> const & callback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(getAllKeys) void getAllKeys(std::function<void(std::optional<AsyncSQLiteDBStorageSpec_getAllKeys_callback_error>, std::optional<std::vector<std::string>>)> const & callback) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(getAllKeys) static void getAllKeys(std::function<void(std::optional<AsyncSQLiteDBStorageSpec_getAllKeys_callback_error>, std::optional<std::vector<std::string>>)> const & callback) noexcept { /* implementation */ }\n");
   }
 };
 

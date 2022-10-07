@@ -12,6 +12,10 @@
 #include <appmodel.h>
 #include <processthreadsapi.h>
 
+#ifdef USE_FABRIC
+#include <Fabric/Composition/CompositionUIService.h>
+#endif // USE_FABRIC
+
 namespace winrt {
 using namespace xaml::Controls::Primitives;
 using namespace xaml::Media;
@@ -119,9 +123,10 @@ bool IsWinUI3Island() {
 #endif
 }
 
-bool IsFabricEnabled(winrt::Microsoft::ReactNative::IReactPropertyBag const & /*properties*/) {
+bool IsFabricEnabled(winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) {
 #ifdef USE_FABRIC
-  return false; // Once we add an instance property to control switching to fabric, this will check that.
+  return winrt::Microsoft::ReactNative::Composition::implementation::CompositionUIService::GetCompositionContext(
+             properties) != nullptr;
 #else
   return false;
 #endif

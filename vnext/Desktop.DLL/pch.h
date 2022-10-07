@@ -3,7 +3,11 @@
 
 #pragma once
 
-#ifndef NOGDI
-#define NOGDI
-#endif
+#define _USE_MATH_DEFINES
+#include <Math.h>
+
 #include <windows.h>
+
+#ifdef GetCurrentTime
+#undef GetCurrentTime
+#endif

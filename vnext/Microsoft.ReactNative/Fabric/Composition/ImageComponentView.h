@@ -8,6 +8,8 @@
 
 #include <Microsoft.ReactNative.Cxx/ReactContext.h>
 #include <Views/Image/ReactImage.h>
+#include <react/renderer/components/image/ImageShadowNode.h>
+#include <react/renderer/imagemanager/ImageResponseObserver.h>
 #include <wincodec.h>
 #include <winrt/Windows.UI.Composition.h>
 #include "CompositionHelpers.h"
@@ -22,6 +24,8 @@
 #include <winrt/Windows.Storage.Streams.h>
 
 namespace Microsoft::ReactNative {
+
+struct WindowsImageResponseObserver;
 
 struct ImageComponentView : CompositionBaseComponentView {
   using Super = CompositionBaseComponentView;
@@ -51,11 +55,27 @@ struct ImageComponentView : CompositionBaseComponentView {
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
 
  private:
+  struct WindowsImageResponseObserver : facebook::react::ImageResponseObserver {
+   public:
+    WindowsImageResponseObserver(std::shared_ptr<ImageComponentView> image);
+    void didReceiveProgress(float progress) const override;
+    void didReceiveImage(facebook::react::ImageResponse const &imageResponse) const override;
+    void didReceiveFailure() const override;
+
+   private:
+    std::shared_ptr<ImageComponentView> m_image;
+  };
+
   void ensureVisual() noexcept;
-  void beginDownloadImage() noexcept;
-  void generateBitmap(const winrt::Windows::Storage::Streams::IRandomAccessStream &stream) noexcept;
   void ensureDrawingSurface() noexcept;
   void DrawImage() noexcept;
+
+  void ImageLoadStart() noexcept;
+  void ImageLoaded() noexcept;
+  void didReceiveImage(const winrt::com_ptr<IWICBitmap> &wicbmp) noexcept;
+  void didReceiveFailureFromObserver() noexcept;
+  void setStateAndResubscribeImageResponseObserver(
+      facebook::react::ImageShadowNode::ConcreteState::Shared const &state) noexcept;
 
   facebook::react::SharedViewProps m_props;
 
@@ -63,18 +83,8 @@ struct ImageComponentView : CompositionBaseComponentView {
   winrt::Microsoft::ReactNative::ReactContext m_context;
   winrt::Microsoft::ReactNative::Composition::ICompositionDrawingSurface m_drawingSurface;
   winrt::com_ptr<IWICBitmap> m_wicbmp;
-  unsigned int m_imgWidth{0}, m_imgHeight{0};
-  bool m_reloadImage{false};
-
-  enum class ImageState {
-    None,
-    Loading,
-    Loaded,
-    Error,
-  };
-
-  ImageState m_state;
-  std::string m_url;
+  std::shared_ptr<WindowsImageResponseObserver> m_imageResponseObserver;
+  facebook::react::ImageShadowNode::ConcreteState::Shared m_state;
 };
 
 } // namespace Microsoft::ReactNative

@@ -34,11 +34,6 @@ import type {
 export type ViewLayout = Layout;
 export type ViewLayoutEvent = LayoutEvent;
 
-type BubblingEventProps = $ReadOnly<{|
-  onBlur?: ?(event: BlurEvent) => mixed,
-  onFocus?: ?(event: FocusEvent) => mixed,
-|}>;
-
 type DirectEventProps = $ReadOnly<{|
   /**
    * When `accessible` is true, the system will try to invoke this function
@@ -104,6 +99,13 @@ type PointerEventProps = $ReadOnly<{|
   onPointerDownCapture?: ?(e: PointerEvent) => void,
   onPointerUp?: ?(e: PointerEvent) => void,
   onPointerUpCapture?: ?(e: PointerEvent) => void,
+|}>;
+
+type FocusEventProps = $ReadOnly<{|
+  onBlur?: ?(event: BlurEvent) => void,
+  onBlurCapture?: ?(event: BlurEvent) => void,
+  onFocus?: ?(event: FocusEvent) => void,
+  onFocusCapture?: ?(event: FocusEvent) => void,
 |}>;
 
 type TouchEventProps = $ReadOnly<{|
@@ -442,11 +444,11 @@ type WindowsViewProps = $ReadOnly<{|
 // Windows]
 
 export type ViewProps = $ReadOnly<{|
-  ...BubblingEventProps,
   ...DirectEventProps,
   ...GestureResponderEventProps,
   ...MouseEventProps,
   ...PointerEventProps,
+  ...FocusEventProps,
   ...TouchEventProps,
   ...AndroidViewProps,
   ...IOSViewProps,

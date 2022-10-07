@@ -6,7 +6,7 @@
 
 'use strict';
 
-import {SchemaType} from 'react-native-tscodegen';
+import type {SchemaType} from 'react-native-tscodegen';
 import {AliasMap, setPreferredModuleName} from './AliasManaging';
 import {createAliasMap, generateAliases} from './AliasGen';
 import {generateValidateConstants} from './ValidateConstants';

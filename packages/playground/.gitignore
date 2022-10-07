@@ -92,5 +92,6 @@ packages/
 **/Generated Files/**
 
 windows/playground/Bundle
+windows/playground-composition/Bundle
 windows/playground-win32/Bundle
 CoreApp/Bundle

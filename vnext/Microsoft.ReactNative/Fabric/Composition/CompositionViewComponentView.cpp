@@ -78,7 +78,7 @@ RECT CompositionBaseComponentView::getClientRect() const noexcept {
   rc.left += static_cast<LONG>(m_layoutMetrics.frame.origin.x * m_layoutMetrics.pointScaleFactor);
   rc.top += static_cast<LONG>(m_layoutMetrics.frame.origin.y * m_layoutMetrics.pointScaleFactor);
   rc.right = rc.left + static_cast<LONG>(m_layoutMetrics.frame.size.width * m_layoutMetrics.pointScaleFactor);
-  rc.bottom = rc.left + static_cast<LONG>(m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor);
+  rc.bottom = rc.top + static_cast<LONG>(m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor);
   return rc;
 }
 
@@ -90,10 +90,12 @@ bool CompositionBaseComponentView::ScrollWheel(facebook::react::Point pt, int32_
   return false;
 }
 
-std::array<winrt::Microsoft::ReactNative::Composition::SpriteVisual, 12>
+std::array<
+    winrt::Microsoft::ReactNative::Composition::SpriteVisual,
+    CompositionBaseComponentView::SpecialBorderLayerCount>
 CompositionBaseComponentView::FindSpecialBorderLayers() const noexcept {
-  std::array<winrt::Microsoft::ReactNative::Composition::SpriteVisual, 12> layers{
-      nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr};
+  std::array<winrt::Microsoft::ReactNative::Composition::SpriteVisual, SpecialBorderLayerCount> layers{
+      nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr};
 
   if (m_numBorderVisuals) {
     for (uint8_t i = 0; i < m_numBorderVisuals; i++) {
@@ -375,6 +377,8 @@ void SetBorderLayerPropertiesCommon(
     const D2D1_RECT_F &textureRect,
     facebook::react::Point anchorPoint,
     facebook::react::Point anchorOffset,
+    winrt::Windows::Foundation::Numerics::float2 size,
+    winrt::Windows::Foundation::Numerics::float2 relativeSizeAdjustment,
     FLOAT strokeWidth,
     const facebook::react::SharedColor &borderColor,
     facebook::react::BorderStyle borderStyle) {
@@ -389,7 +393,7 @@ void SetBorderLayerPropertiesCommon(
 
   layer.Brush(compContext.CreateSurfaceBrush(surface));
   layer.Offset({anchorOffset.x, anchorOffset.y, 0}, {anchorPoint.x, anchorPoint.y, 0});
-  layer.Size({textureRect.right - textureRect.left, textureRect.bottom - textureRect.top});
+  layer.RelativeSizeWithOffset(size, relativeSizeAdjustment);
 
   AutoDrawHelper autoDraw(borderTexture);
 
@@ -462,6 +466,8 @@ void SetBorderLayerProperties(
     const D2D1_RECT_F &textureRect,
     facebook::react::Point anchorPoint,
     facebook::react::Point anchorOffset,
+    winrt::Windows::Foundation::Numerics::float2 size,
+    winrt::Windows::Foundation::Numerics::float2 relativeSizeAdjustment,
     FLOAT strokeWidth,
     const facebook::react::SharedColor &borderColor,
     facebook::react::BorderStyle borderStyle) {
@@ -474,6 +480,8 @@ void SetBorderLayerProperties(
         textureRect,
         anchorPoint,
         anchorOffset,
+        size,
+        relativeSizeAdjustment,
         strokeWidth,
         borderColor,
         borderStyle);
@@ -516,16 +524,19 @@ const float Bottom = 1.0;
 template <typename TShape>
 void DrawAllBorderLayers(
     winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-    std::array<winrt::Microsoft::ReactNative::Composition::SpriteVisual, 12> &spBorderLayers,
+    std::array<
+        winrt::Microsoft::ReactNative::Composition::SpriteVisual,
+        CompositionBaseComponentView::SpecialBorderLayerCount> &spBorderLayers,
     TShape &shape,
-    FLOAT strokeWidth,
+    const facebook::react::BorderWidths &borderWidths,
+    const facebook::react::BorderRadii &borderRadii,
     float textureWidth,
     float textureHeight,
     const facebook::react::BorderColors &borderColors,
     facebook::react::BorderStyle borderStyle) {
   // Now that we've drawn our nice border in one layer, split it into its component layers
-  winrt::com_ptr<Composition::ICompositionDrawingSurfaceInterop> spTextures[12];
-  float cornerSize = strokeWidth;
+  winrt::com_ptr<Composition::ICompositionDrawingSurfaceInterop>
+      spTextures[CompositionBaseComponentView::SpecialBorderLayerCount];
 
   // Set component border properties
   // Top Left Corner
@@ -534,162 +545,144 @@ void DrawAllBorderLayers(
       spBorderLayers[0],
       shape,
       spTextures[0], // Target Layer, Source Texture, Target Texture
-      {0, 0, cornerSize, cornerSize}, // Texture Left, Top, Width, Height
+      {0,
+       0,
+       borderRadii.topLeft + borderWidths.left,
+       borderRadii.topLeft + borderWidths.top}, // Texture Left, Top, Width, Height
       {AnchorPosition::Left, AnchorPosition::Top}, // Layer Anchor Point
       {0, 0}, // Layer Anchor Offset
-      strokeWidth,
-      borderColors.left ? borderColors.left : borderColors.top,
-      borderStyle);
-
-  // Top Left Inset Corner
-  SetBorderLayerProperties(
-      compContext,
-      spBorderLayers[1],
-      shape,
-      spTextures[1],
-      {cornerSize, cornerSize, std::ceil(textureWidth / 2.0f), std::ceil(textureHeight / 2.0f)},
-      {AnchorPosition::Left, AnchorPosition::Top},
-      {cornerSize, cornerSize},
-      strokeWidth,
+      {borderRadii.topLeft + borderWidths.left, borderRadii.topLeft + borderWidths.top}, // size
+      {0.0f, 0.0f}, // relativeSize
+      std::max(borderWidths.left, borderWidths.top),
       borderColors.left ? borderColors.left : borderColors.top,
       borderStyle);
 
   // Top Edge Border
   SetBorderLayerProperties(
       compContext,
-      spBorderLayers[2],
+      spBorderLayers[1],
       shape,
-      spTextures[2],
-      {cornerSize, 0, textureWidth - cornerSize, cornerSize},
+      spTextures[1],
+      {borderRadii.topLeft + borderWidths.left,
+       0,
+       textureWidth - (borderRadii.topRight + borderWidths.right),
+       borderWidths.top},
       {AnchorPosition::Left, AnchorPosition::Top},
-      {cornerSize, 0},
-      strokeWidth,
+      {borderRadii.topLeft + borderWidths.left, 0},
+      {-(borderRadii.topLeft + borderWidths.left + borderRadii.topRight + borderWidths.right),
+       borderWidths.top}, // size
+      {1.0f, 0.0f}, // relativeSize
+      borderWidths.top,
       borderColors.top,
       borderStyle);
 
   // Top Right Corner Border
   SetBorderLayerProperties(
       compContext,
-      spBorderLayers[3],
+      spBorderLayers[2],
       shape,
-      spTextures[3],
-      {textureWidth - cornerSize, 0, textureWidth, cornerSize},
+      spTextures[2],
+      {textureWidth - (borderRadii.topRight + borderWidths.right),
+       0,
+       textureWidth,
+       borderRadii.topRight + borderWidths.top},
       {AnchorPosition::Right, AnchorPosition::Top},
-      {-cornerSize, 0},
-      strokeWidth,
-      borderColors.right ? borderColors.right : borderColors.top,
-      borderStyle);
-
-  // Top Right Inset Corner Border
-  SetBorderLayerProperties(
-      compContext,
-      spBorderLayers[4],
-      shape,
-      spTextures[4],
-      {std::floor(textureWidth / 2.0f),
-       cornerSize,
-       textureWidth - cornerSize /* - (textureWidth % 2)*/,
-       std::ceil(textureHeight / 2.0f)},
-      {AnchorPosition::Right, AnchorPosition::Top},
-      {-std::floor(textureWidth / 2.0f), cornerSize},
-      strokeWidth,
+      {-(borderRadii.topRight + borderWidths.right), 0},
+      {borderRadii.topRight + borderWidths.right, borderRadii.topRight + borderWidths.top},
+      {0.0f, 0.0f},
+      std::max(borderWidths.right, borderWidths.top),
       borderColors.right ? borderColors.right : borderColors.top,
       borderStyle);
 
   // Right Edge Border
   SetBorderLayerProperties(
       compContext,
-      spBorderLayers[5],
+      spBorderLayers[3],
       shape,
-      spTextures[5],
-      {textureWidth - cornerSize, cornerSize, textureWidth, textureHeight - cornerSize},
+      spTextures[3],
+      {textureWidth - borderWidths.right,
+       borderWidths.top + borderRadii.topRight,
+       textureWidth,
+       textureHeight - (borderWidths.bottom + borderRadii.bottomRight)},
       {AnchorPosition::Right, AnchorPosition::Top},
-      {-cornerSize, cornerSize},
-      strokeWidth,
+      {-borderWidths.right, borderWidths.top + borderRadii.topRight},
+      {borderWidths.right,
+       -(borderWidths.top + borderRadii.topRight + borderWidths.bottom + borderRadii.bottomRight)}, // size
+      {0.0f, 1.0f},
+      borderWidths.right,
       borderColors.right,
       borderStyle);
 
   // Bottom Right Corner Border
   SetBorderLayerProperties(
       compContext,
-      spBorderLayers[6],
+      spBorderLayers[4],
       shape,
-      spTextures[6],
-      {textureWidth - cornerSize, textureHeight - cornerSize, textureWidth, textureHeight},
+      spTextures[4],
+      {textureWidth - (borderWidths.right + borderRadii.bottomRight),
+       textureHeight - (borderWidths.bottom + borderRadii.bottomRight),
+       textureWidth,
+       textureHeight},
       {AnchorPosition::Right, AnchorPosition::Bottom},
-      {-cornerSize, -cornerSize},
-      strokeWidth,
-      borderColors.right ? borderColors.right : borderColors.bottom,
-      borderStyle);
-
-  // Bottom Right Inset Corner Border
-  SetBorderLayerProperties(
-      compContext,
-      spBorderLayers[7],
-      shape,
-      spTextures[7],
-      {std::floor(textureWidth / 2),
-       std::floor(textureHeight / 2.0f),
-       textureWidth - cornerSize /* - (textureWidth % 2)*/,
-       textureHeight - cornerSize /* - (textureHeight % 2) */},
-      {AnchorPosition::Right, AnchorPosition::Bottom},
-      {-std::floor(textureWidth / 2.0f), -std::floor(textureHeight / 2.0f)},
-      strokeWidth,
+      {-(borderWidths.right + borderRadii.bottomRight), -(borderWidths.bottom + borderRadii.bottomRight)},
+      {borderWidths.right + borderRadii.bottomRight, borderWidths.bottom + borderRadii.bottomRight},
+      {0, 0},
+      std::max(borderWidths.right, borderWidths.bottom),
       borderColors.right ? borderColors.right : borderColors.bottom,
       borderStyle);
 
   // Bottom Edge Border
   SetBorderLayerProperties(
       compContext,
-      spBorderLayers[8],
+      spBorderLayers[5],
       shape,
-      spTextures[8],
-      {cornerSize, textureHeight - cornerSize, textureWidth - cornerSize, textureHeight},
+      spTextures[5],
+      {borderWidths.left + borderRadii.bottomLeft,
+       textureHeight - borderWidths.bottom,
+       textureWidth - (borderWidths.right + borderRadii.bottomLeft),
+       textureHeight},
       {AnchorPosition::Left, AnchorPosition::Bottom},
-      {cornerSize, -cornerSize},
-      strokeWidth,
+      {borderWidths.left + borderRadii.bottomLeft, -borderWidths.bottom},
+      {-(borderWidths.right + borderRadii.bottomLeft + borderWidths.left + borderRadii.bottomLeft),
+       borderWidths.bottom},
+      {1.0f, 0.0f},
+      borderWidths.bottom,
       borderColors.bottom,
       borderStyle);
 
   // Bottom Left Corner Border
   SetBorderLayerProperties(
       compContext,
-      spBorderLayers[9],
+      spBorderLayers[6],
       shape,
-      spTextures[9],
-      {0, textureHeight - cornerSize, cornerSize, textureHeight},
+      spTextures[6],
+      {0,
+       textureHeight - (borderWidths.bottom + borderRadii.bottomLeft),
+       borderWidths.left + borderRadii.bottomLeft,
+       textureHeight},
       {AnchorPosition::Left, AnchorPosition::Bottom},
-      {0, -cornerSize},
-      strokeWidth,
-      borderColors.left ? borderColors.left : borderColors.bottom,
-      borderStyle);
-
-  // Bottom Left Inset Corner Border
-  SetBorderLayerProperties(
-      compContext,
-      spBorderLayers[10],
-      shape,
-      spTextures[10],
-      {cornerSize,
-       std::floor(textureHeight / 2.0f),
-       std::ceil(textureWidth / 2.0f),
-       textureHeight - cornerSize /* - (textureHeight % 2)*/},
-      {AnchorPosition::Left, AnchorPosition::Bottom},
-      {cornerSize, -std::floor(textureHeight / 2.0f)},
-      strokeWidth,
+      {0, -(borderWidths.bottom + borderRadii.bottomLeft)},
+      {borderWidths.left + borderRadii.bottomLeft, borderWidths.bottom + borderRadii.bottomLeft},
+      {0, 0},
+      std::max(borderWidths.left, borderWidths.bottom),
       borderColors.left ? borderColors.left : borderColors.bottom,
       borderStyle);
 
   // Left Edge Border
   SetBorderLayerProperties(
       compContext,
-      spBorderLayers[11],
+      spBorderLayers[7],
       shape,
-      spTextures[11],
-      {0, cornerSize, cornerSize, textureHeight - cornerSize},
+      spTextures[7],
+      {0,
+       borderWidths.top + borderRadii.topLeft,
+       borderWidths.left,
+       textureHeight - (borderWidths.bottom + borderRadii.bottomLeft)},
       {AnchorPosition::Left, AnchorPosition::Top},
-      {0, cornerSize},
-      strokeWidth,
+      {0, borderWidths.top + borderRadii.topLeft},
+      {borderWidths.left, -(borderWidths.top + borderRadii.topLeft + borderWidths.bottom + borderRadii.bottomLeft)},
+      {0, 1},
+      borderWidths.left,
       borderColors.left,
       borderStyle);
 }
@@ -827,7 +820,7 @@ facebook::react::BorderMetrics resolveAndAlignBorderMetrics(
 }
 
 bool CompositionBaseComponentView::TryUpdateSpecialBorderLayers(
-    std::array<winrt::Microsoft::ReactNative::Composition::SpriteVisual, 12> &spBorderVisuals,
+    std::array<winrt::Microsoft::ReactNative::Composition::SpriteVisual, SpecialBorderLayerCount> &spBorderVisuals,
     facebook::react::LayoutMetrics const &layoutMetrics,
     const facebook::react::ViewProps &viewProps) noexcept {
   auto borderMetrics = resolveAndAlignBorderMetrics(layoutMetrics, viewProps);
@@ -843,7 +836,7 @@ bool CompositionBaseComponentView::TryUpdateSpecialBorderLayers(
 
   // Create the special border layers if they don't exist yet
   if (!spBorderVisuals[0]) {
-    for (uint8_t i = 0; i < 12; i++) {
+    for (uint8_t i = 0; i < SpecialBorderLayerCount; i++) {
       auto visual = m_compContext.CreateSpriteVisual();
       Visual().InsertAt(visual, i);
       spBorderVisuals[i] = std::move(visual);
@@ -859,13 +852,11 @@ bool CompositionBaseComponentView::TryUpdateSpecialBorderLayers(
     if (borderStyle == facebook::react::BorderStyle::Dotted || borderStyle == facebook::react::BorderStyle::Dashed) {
       // Because in DirectX geometry starts at the center of the stroke, we need to deflate
       // rectangle by half the stroke width to render correctly.
-      float strokeCenteringOffset = borderMetrics.borderWidths.left / 2.0f;
-
       facebook::react::RectangleEdges<float> rectPathGeometry = {
-          strokeCenteringOffset,
-          strokeCenteringOffset,
-          extentWidth - strokeCenteringOffset,
-          extentHeight - strokeCenteringOffset};
+          borderMetrics.borderWidths.left / 2.0f,
+          borderMetrics.borderWidths.top / 2.0f,
+          extentWidth - borderMetrics.borderWidths.right / 2.0f,
+          extentHeight - borderMetrics.borderWidths.bottom / 2.0f};
 
       winrt::com_ptr<ID2D1PathGeometry> pathGeometry =
           GenerateRoundedRectPathGeometry(m_compContext, borderMetrics.borderRadii, {0, 0, 0, 0}, rectPathGeometry);
@@ -875,7 +866,8 @@ bool CompositionBaseComponentView::TryUpdateSpecialBorderLayers(
             m_compContext,
             spBorderVisuals,
             *pathGeometry,
-            borderMetrics.borderWidths.left,
+            borderMetrics.borderWidths,
+            borderMetrics.borderRadii,
             extentWidth,
             extentHeight,
             borderMetrics.borderColors,
@@ -897,7 +889,8 @@ bool CompositionBaseComponentView::TryUpdateSpecialBorderLayers(
           m_compContext,
           spBorderVisuals,
           *pathGeometry,
-          borderMetrics.borderWidths.left,
+          borderMetrics.borderWidths,
+          borderMetrics.borderRadii,
           extentWidth,
           extentHeight,
           borderMetrics.borderColors,
@@ -906,18 +899,17 @@ bool CompositionBaseComponentView::TryUpdateSpecialBorderLayers(
   } else {
     // Because in DirectX geometry starts at the center of the stroke, we need to deflate rectangle by half the stroke
     // width / height to render correctly.
-    float strokeCenteringOffsetX = (borderMetrics.borderWidths.left / 2.0f);
-    float strokeCenteringOffsetY = (borderMetrics.borderWidths.top / 2.0f);
     D2D1_RECT_F rectShape{
-        strokeCenteringOffsetX,
-        strokeCenteringOffsetY,
-        extentWidth - strokeCenteringOffsetX,
-        extentHeight - strokeCenteringOffsetY};
+        borderMetrics.borderWidths.left / 2.0f,
+        borderMetrics.borderWidths.top / 2.0f,
+        extentWidth - (borderMetrics.borderWidths.right / 2.0f),
+        extentHeight - (borderMetrics.borderWidths.bottom / 2.0f)};
     DrawAllBorderLayers(
         m_compContext,
         spBorderVisuals,
         rectShape,
-        borderMetrics.borderWidths.left,
+        borderMetrics.borderWidths,
+        borderMetrics.borderRadii,
         extentWidth,
         extentHeight,
         borderMetrics.borderColors,
