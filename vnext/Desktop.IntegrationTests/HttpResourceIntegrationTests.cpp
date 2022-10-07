@@ -8,6 +8,7 @@
 
 #include <Networking/IHttpResource.h>
 #include <Networking/OriginPolicy.h>
+#include <RuntimeOptions.h>
 #include <Test/HttpServer.h>
 #include <unicode.h>
 
@@ -40,7 +41,10 @@ TEST_CLASS (HttpResourceIntegrationTest) {
   static uint16_t s_port;
 
   TEST_METHOD_CLEANUP(MethodCleanup) {
-    // Bug in WebSocketServer does not correctly release TCP port between test methods.
+    // Clear any runtime options that may be used by tests in this class.
+    MicrosoftReactSetRuntimeOptionString("Http.UserAgent", nullptr);
+
+    // Bug in test HTTP server does not correctly release TCP port between test methods.
     // Using a different por per test for now.
     s_port++;
   }
@@ -162,6 +166,120 @@ TEST_CLASS (HttpResourceIntegrationTest) {
         Assert::Fail(Microsoft::Common::Unicode::Utf8ToUtf16(message).c_str());
       }
     }
+  }
+
+  TEST_METHOD(RequestGetExplicitUserAgentSucceeds) {
+    string url = "https://api.github.com/repos/microsoft/react-native-xaml";
+
+    promise<void> rcPromise;
+    string error;
+    IHttpResource::Response response;
+
+    auto resource = IHttpResource::Make();
+    resource->SetOnResponse([&rcPromise, &response](int64_t, IHttpResource::Response callbackResponse) {
+      response = callbackResponse;
+      rcPromise.set_value();
+    });
+    resource->SetOnError([&rcPromise, &error](int64_t, string &&message, bool) {
+      error = std::move(message);
+      rcPromise.set_value();
+    });
+
+    //clang-format off
+    resource->SendRequest(
+        "GET",
+        std::move(url),
+        0, /*requestId*/
+        {{"User-Agent", "React Native Windows"}},
+        {}, /*data*/
+        "text", /*responseType*/
+        false,
+        0 /*timeout*/,
+        false /*withCredentials*/,
+        [](int64_t) {});
+    //clang-format on
+
+    rcPromise.get_future().wait();
+
+    Assert::AreEqual({}, error, L"Error encountered");
+    Assert::AreEqual(static_cast<int64_t>(200), response.StatusCode);
+  }
+
+  TEST_METHOD(RequestGetImplicitUserAgentSucceeds) {
+    string url = "https://api.github.com/repos/microsoft/react-native-windows";
+
+    promise<void> rcPromise;
+    string error;
+    IHttpResource::Response response;
+
+    auto resource = IHttpResource::Make();
+    resource->SetOnResponse([&rcPromise, &response](int64_t, IHttpResource::Response callbackResponse) {
+      response = callbackResponse;
+      rcPromise.set_value();
+    });
+    resource->SetOnError([&rcPromise, &error](int64_t, string &&message, bool) {
+      error = std::move(message);
+      rcPromise.set_value();
+    });
+
+    MicrosoftReactSetRuntimeOptionString("Http.UserAgent", "React Native Windows");
+
+    //clang-format off
+    resource->SendRequest(
+        "GET",
+        std::move(url),
+        0, /*requestId*/
+        {}, /*headers*/
+        {}, /*data*/
+        "text", /*responseType*/
+        false,
+        0 /*timeout*/,
+        false /*withCredentials*/,
+        [](int64_t) {});
+    //clang-format on
+
+    rcPromise.get_future().wait();
+
+    Assert::AreEqual({}, error, L"Error encountered");
+    Assert::AreEqual(static_cast<int64_t>(200), response.StatusCode);
+  }
+
+  TEST_METHOD(RequestGetMissingUserAgentFails) {
+    // string url = "http://localhost:" + std::to_string(s_port);
+    string url = "https://api.github.com/repos/microsoft/react-native-macos";
+
+    promise<void> rcPromise;
+    string error;
+    IHttpResource::Response response;
+
+    auto resource = IHttpResource::Make();
+    resource->SetOnResponse([&rcPromise, &response](int64_t, IHttpResource::Response callbackResponse) {
+      response = callbackResponse;
+      rcPromise.set_value();
+    });
+    resource->SetOnError([&rcPromise, &error](int64_t, string &&message, bool) {
+      error = std::move(message);
+      rcPromise.set_value();
+    });
+
+    //clang-format off
+    resource->SendRequest(
+        "GET",
+        std::move(url),
+        0, /*requestId*/
+        {}, /*headers*/
+        {}, /*data*/
+        "text", /*responseType*/
+        false,
+        0 /*timeout*/,
+        false /*withCredentials*/,
+        [](int64_t) {});
+    //clang-format on
+
+    rcPromise.get_future().wait();
+
+    Assert::AreEqual({}, error, L"Error encountered");
+    Assert::AreEqual(static_cast<int64_t>(403), response.StatusCode);
   }
 
   TEST_METHOD(RequestGetFails) {
