@@ -2,6 +2,87 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 07 Oct 2022 05:11:46 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.560",
+      "version": "0.0.0-canary.560",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "0a18b3d00fbf3c3dd0406847a96eea6227f50efa",
+            "comment": "Explicitly measure relative to the root XAML element"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "10d24c1cdb25009572e1d8fdf0f60307d56dc536",
+            "comment": "Refactor the onLayout event for view flattening"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "6a9f59ae11c076052cc199bf0c3e9a21ec64e9a1",
+            "comment": "Prevent crash in XAML Islands Flyout"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "26bf4921b44c7921ef5584330050fb47cbcb9f08",
+            "comment": "Make appearance module use codegen spec file and be a turbomodule"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "321ad2b93d57727f1634ecc5ccfac823e89b9f7c",
+            "comment": "Fabric: TextInput caret is incorrect size"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "3ef3a984ef060166819267217fd072d7c331ce33",
+            "comment": "Fix bad fix for size_t -> int truncation from RN merge"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "39ae0be547cc69399171c7d77c9a883e095031bc",
+            "comment": "Move timing native module to TurboModule"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "07f1b90ffdbb632ab370e9df456ea8dff3b1d68b",
+            "comment": "Adds QuirkSetting to use YGExperimentalFeatureWebFlexBasis"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "07e0f2dd9d862aa01dbd77aecd6d6163ca91223a",
+            "comment": "Remove extra paren in codegen output"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "9b5caf496bcb3fe89375c757ee70c6723c7353f3",
+            "comment": "Fabric: ImageRequest should kick off from ImageShadowNode instead of ImageComponentView"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.138",
+            "commit": "07e0f2dd9d862aa01dbd77aecd6d6163ca91223a"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.38",
+            "commit": "07e0f2dd9d862aa01dbd77aecd6d6163ca91223a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 05 Oct 2022 05:13:45 GMT",
       "tag": "react-native-windows_v0.0.0-canary.559",
       "version": "0.0.0-canary.559",

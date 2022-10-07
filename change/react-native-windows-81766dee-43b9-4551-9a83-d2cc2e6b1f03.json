@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Adds QuirkSetting to use YGExperimentalFeatureWebFlexBasis",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}

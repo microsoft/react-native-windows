@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Fri, 07 Oct 2022 05:11:46 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.38",
+      "version": "0.0.0-canary.38",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "07e0f2dd9d862aa01dbd77aecd6d6163ca91223a",
+            "comment": "Remove extra paren in codegen output"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 05 Oct 2022 05:13:46 GMT",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.37",
       "version": "0.0.0-canary.37",

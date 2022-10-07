@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix bad fix for size_t -> int truncation from RN merge",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

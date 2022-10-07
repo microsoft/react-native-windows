@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Make appearance module use codegen spec file and be a turbomodule",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove extra paren in codegen output",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

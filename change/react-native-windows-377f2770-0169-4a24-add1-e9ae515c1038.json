@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Refactor the onLayout event for view flattening",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Explicitly measure relative to the root XAML element",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}

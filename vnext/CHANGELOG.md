@@ -1,8 +1,27 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 05 Oct 2022 05:13:45 GMT and should not be manually modified.
+This log was last generated on Fri, 07 Oct 2022 05:11:46 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.560
+
+Fri, 07 Oct 2022 05:11:46 GMT
+
+### Changes
+
+- Explicitly measure relative to the root XAML element (erozell@outlook.com)
+- Refactor the onLayout event for view flattening (erozell@outlook.com)
+- Prevent crash in XAML Islands Flyout (erozell@outlook.com)
+- Make appearance module use codegen spec file and be a turbomodule (30809111+acoates-ms@users.noreply.github.com)
+- Fabric: TextInput caret is incorrect size (30809111+acoates-ms@users.noreply.github.com)
+- Fix bad fix for size_t -> int truncation from RN merge (30809111+acoates-ms@users.noreply.github.com)
+- Move timing native module to TurboModule (30809111+acoates-ms@users.noreply.github.com)
+- Adds QuirkSetting to use YGExperimentalFeatureWebFlexBasis (erozell@outlook.com)
+- Remove extra paren in codegen output (30809111+acoates-ms@users.noreply.github.com)
+- Fabric: ImageRequest should kick off from ImageShadowNode instead of ImageComponentView (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.138
+- Bump @react-native-windows/codegen to v0.0.0-canary.38
 
 ## 0.0.0-canary.559
 
