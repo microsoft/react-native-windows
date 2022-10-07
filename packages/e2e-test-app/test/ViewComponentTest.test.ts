@@ -25,10 +25,6 @@ describe('ViewTests', () => {
     const dump = await dumpVisualTree('padding-margin');
     expect(dump).toMatchSnapshot();
   });
-  test('Views can have a border radius', async () => {
-    const dump = await dumpVisualTree('border-radius');
-    expect(dump).toMatchSnapshot();
-  });
   test('Views can have rounded borders', async () => {
     const dump = await dumpVisualTree('rounded-borders');
     expect(dump).toMatchSnapshot();
