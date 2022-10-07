@@ -368,7 +368,7 @@ exports.examples = [
     render(): React.Node {
       return (
         <>
-          <View style={{borderWidth: 0.5, borderRadius: 5, padding: 5}} testID="border-radius">
+          <View style={{borderWidth: 0.5, borderRadius: 5, padding: 5}}>
             <Text style={{fontSize: 11}}>
               Too much use of `borderRadius` (especially large radii) on
               anything which is scrolling may result in dropped frames. Use
