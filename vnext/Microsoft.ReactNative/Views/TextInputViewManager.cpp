@@ -123,6 +123,10 @@ class TextInputShadowNode : public ShadowNodeBase {
     return true;
   }
 
+  bool IsFocused() override {
+    return m_view.as<xaml::Controls::Control>().FocusState() != xaml::FocusState::Unfocused;
+  }
+
  private:
   void dispatchTextInputChangeEvent(winrt::hstring newText);
   void registerEvents();

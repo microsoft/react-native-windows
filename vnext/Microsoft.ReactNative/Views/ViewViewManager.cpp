@@ -195,6 +195,10 @@ class ViewShadowNode : public ShadowNodeBase {
     }
   }
 
+  bool IsFocused() override {
+    return IsControl() && m_view.as<xaml::Controls::Control>().FocusState() != xaml::FocusState::Unfocused;
+  }
+
   void RefreshProperties() {
     // The view may have been replaced, so transfer properties stored on the
     // shadow node to the view

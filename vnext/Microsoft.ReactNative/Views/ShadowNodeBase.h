@@ -101,6 +101,9 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public ShadowNode {
   virtual bool IsWindowed() {
     return false;
   }
+  virtual bool IsFocused() {
+    return false;
+  }
 
   void ReplaceView(XamlView view);
 
