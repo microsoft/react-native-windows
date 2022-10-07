@@ -761,6 +761,17 @@ ResponseOperation OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage co
       ValidatePreflightResponse(coRequest, preflightResponse);
     }
 
+    // Set User-Agent after validating request and preflight.
+    auto userAgent = GetRuntimeOptionString("Http.UserAgent");
+    if (userAgent.size() > 0) {
+      coRequest.Headers().Append(L"User-Agent", to_hstring(userAgent));
+    }
+
+    if (originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing ||
+        originPolicy == OriginPolicy::CrossOriginResourceSharing) {
+      coRequest.Headers().Insert(L"Origin", s_origin.AbsoluteCanonicalUri());
+    }
+
     auto response = co_await m_innerFilter.SendRequestAsync(coRequest);
 
     ValidateResponse(response, originPolicy);
