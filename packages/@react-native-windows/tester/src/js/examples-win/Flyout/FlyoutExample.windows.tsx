@@ -39,7 +39,9 @@ const placementValues: string[] = [
 ];
 
 class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
+  // eslint-disable-next-line @typescript-eslint/prefer-readonly
   private _anchor: any;
+  // eslint-disable-next-line @typescript-eslint/prefer-readonly
   private _anchorTwo: any;
 
   public state: IFlyoutExampleState = {
@@ -67,7 +69,7 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
 
     return (
       <View>
-        <View style={{flexDirection: 'row', paddingTop: 20}}>
+        <View style={{flexDirection: 'row', paddingTop: 20}} testID="flyout">
           <Text style={{padding: 10}}>Placement Options: </Text>
           <Picker
             style={{width: 200, height: 35}}

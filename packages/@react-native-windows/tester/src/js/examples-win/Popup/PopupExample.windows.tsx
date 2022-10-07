@@ -31,7 +31,7 @@ class AnchoredPopupExample extends React.Component<
 
   public render() {
     return (
-      <View>
+      <View testID="anchor-popup">
         <Text style={{width: 250}}>The following tests popup Anchor</Text>
         <View style={{flexDirection: 'row'}}>
           <Text style={{padding: 10, width: 300, height: 32}}>
@@ -96,7 +96,7 @@ class PopupPlacementExample extends React.Component<
 
   public render() {
     return (
-      <View style={{width: 500, height: 500}}>
+      <View style={{width: 500, height: 500}} testID="popup-placement">
         <Button onPress={this._togglePopup} title={'Toggle popup'} />
         {this.state.showPopup && (
           <Popup
