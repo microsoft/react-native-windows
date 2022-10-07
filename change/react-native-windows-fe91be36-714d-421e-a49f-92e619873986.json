@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Set User-Agent header in Origin Policy filter (#10695)",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
