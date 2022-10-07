@@ -455,6 +455,13 @@
       "file": "src/Libraries/Lists/VirtualizedList.windows.js"
     },
     {
+      "type": "patch",
+      "file": "src/Libraries/Lists/VirtualizedListProps.windows.js",
+      "baseFile": "Libraries/Lists/VirtualizedListProps.js",
+      "baseHash": "0012b8b4ee449a771c9e877c5ad023f3a4316b0d",
+      "issue": 10694
+    },
+    {
       "type": "derived",
       "file": "src/Libraries/NativeComponent/BaseViewConfig.windows.js",
       "baseFile": "Libraries/NativeComponent/BaseViewConfig.ios.js",

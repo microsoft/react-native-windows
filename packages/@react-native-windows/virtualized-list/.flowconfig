@@ -14,6 +14,10 @@
 ; Ignore "BUCK" generated dirs
 <PROJECT_ROOT>/\.buckd/
 
+; Ignore "BUCK" generated dirs
+<PROJECT_ROOT>/packages/@react-native-windows/virtualized-list/src/VirtualizedListProps.js
+src/VirtualizedListProps.js
+
 ; Flow doesn't support platforms
 .*/Libraries/Utilities/LoadingView.js
 

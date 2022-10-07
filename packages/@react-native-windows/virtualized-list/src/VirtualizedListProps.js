@@ -15,8 +15,8 @@ import type {
   ViewToken,
 } from './ViewabilityHelper';
 
-const ScrollView = require('react-native/Libraries/Components/ScrollView/ScrollView');
-import type {ViewStyleProp} from 'react-native/Libraries/StyleSheet/StyleSheet';
+import type {ViewStyleProp} from '../StyleSheet/StyleSheet';
+import typeof ScrollView from '../Components/ScrollView/ScrollView';
 
 export type Item = any;
 
@@ -267,7 +267,7 @@ type OptionalProps = {|
 |};
 
 export type Props = {|
-  ...React.ElementConfig<typeof ScrollView>,
+  ...React.ElementConfig<ScrollView>,
   ...RequiredProps,
   ...OptionalProps,
 |};

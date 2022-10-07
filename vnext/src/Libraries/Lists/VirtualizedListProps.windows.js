@@ -19,7 +19,7 @@ import type {
 //import typeof ScrollView from '../Components/ScrollView/ScrollView';
 
 const ScrollView = require('react-native/Libraries/Components/ScrollView/ScrollView');
-import type ViewStyleProp = require('react-native/Libraries/StyleSheet/ViewStyleProp');
+import type {ViewStyleProp} from 'react-native/Libraries/StyleSheet/StyleSheet';
 
 export type Item = any;
 
