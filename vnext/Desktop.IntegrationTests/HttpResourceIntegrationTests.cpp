@@ -8,6 +8,7 @@
 
 #include <Networking/IHttpResource.h>
 #include <Networking/OriginPolicy.h>
+#include <RuntimeOptions.h>
 #include <Test/HttpServer.h>
 #include <unicode.h>
 
@@ -40,7 +41,10 @@ TEST_CLASS (HttpResourceIntegrationTest) {
   static uint16_t s_port;
 
   TEST_METHOD_CLEANUP(MethodCleanup) {
-    // Bug in WebSocketServer does not correctly release TCP port between test methods.
+    // Clear any runtime options that may be used by tests in this class.
+    MicrosoftReactSetRuntimeOptionString("Http.UserAgent", nullptr);
+
+    // Bug in test HTTP server does not correctly release TCP port between test methods.
     // Using a different por per test for now.
     s_port++;
   }
