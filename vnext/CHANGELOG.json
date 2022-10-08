@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 08 Oct 2022 05:11:18 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.561",
+      "version": "0.0.0-canary.561",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "635a86b1f8c85de006f8faa9f5d881b13f667a78",
+            "comment": "Set Origin HTTP header during CORS"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "59c2ab9fa9f859d5df99c3726c6ebdc14f1e9ec8",
+            "comment": "Add Snapshots"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "9ded99c24ff2e211fa6a4e4e20f21e4562bff9c4",
+            "comment": "Set User-Agent header in Origin Policy filter"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 07 Oct 2022 05:11:46 GMT",
       "tag": "react-native-windows_v0.0.0-canary.560",
       "version": "0.0.0-canary.560",

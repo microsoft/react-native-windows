@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 07 Oct 2022 05:11:46 GMT and should not be manually modified.
+This log was last generated on Sat, 08 Oct 2022 05:11:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.561
+
+Sat, 08 Oct 2022 05:11:18 GMT
+
+### Changes
+
+- Set Origin HTTP header during CORS (julio.rocha@microsoft.com)
+- Add Snapshots (34109996+chiaramooney@users.noreply.github.com)
+- Set User-Agent header in Origin Policy filter (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.560
 
