@@ -761,6 +761,11 @@ ResponseOperation OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage co
       ValidatePreflightResponse(coRequest, preflightResponse);
     }
 
+    if (originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing ||
+        originPolicy == OriginPolicy::CrossOriginResourceSharing) {
+      coRequest.Headers().Insert(L"Origin", s_origin.AbsoluteCanonicalUri());
+    }
+
     auto response = co_await m_innerFilter.SendRequestAsync(coRequest);
 
     ValidateResponse(response, originPolicy);
