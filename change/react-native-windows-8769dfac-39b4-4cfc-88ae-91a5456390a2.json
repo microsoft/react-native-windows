@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Set Origin HTTP header during CORS",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}
