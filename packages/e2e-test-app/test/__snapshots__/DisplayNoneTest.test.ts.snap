@@ -211,14 +211,14 @@ exports[`DisplayNoneTest DisplayNoneEnabledTest 1`] = `
   "Clip": null,
   "CornerRadius": "0,0,0,0",
   "FlowDirection": "LeftToRight",
-  "Height": 0,
+  "Height": 40,
   "HorizontalAlignment": "Stretch",
   "Left": 0,
   "Margin": "0,0,0,0",
-  "Top": 0,
+  "Top": 50,
   "VerticalAlignment": "Stretch",
   "Visibility": "Collapsed",
-  "Width": 0,
+  "Width": 718,
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
@@ -229,7 +229,7 @@ exports[`DisplayNoneTest DisplayNoneEnabledTest 1`] = `
       "CornerRadius": "0,0,0,0",
       "FlowDirection": "LeftToRight",
       "Foreground": "#E4000000",
-      "Height": 0,
+      "Height": 40,
       "HorizontalAlignment": "Stretch",
       "Left": 0,
       "Margin": "0,0,0,0",
@@ -238,7 +238,7 @@ exports[`DisplayNoneTest DisplayNoneEnabledTest 1`] = `
       "Top": 0,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 0,
+      "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBox",
       "children": [
         {

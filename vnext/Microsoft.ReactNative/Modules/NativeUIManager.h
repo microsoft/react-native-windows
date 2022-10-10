@@ -105,7 +105,7 @@ class NativeUIManager final : public INativeUIManager {
   void ApplyLayout(int64_t tag, float width = YGUndefined, float height = YGUndefined);
 
  private:
-  void SetLayoutPropsRecursive(int64_t tag);
+  void SetLayoutPropsRecursive(int64_t tag, bool isCollapsed = false);
   YGNodeRef GetYogaNode(int64_t tag) const;
 
   winrt::weak_ref<winrt::Microsoft::ReactNative::ReactRootView> GetParentXamlReactControl(int64_t tag) const;

@@ -913,12 +913,16 @@ void NativeUIManager::ApplyLayout(int64_t tag, float width, float height) {
   }
 }
 
-void NativeUIManager::SetLayoutPropsRecursive(int64_t tag) {
+void NativeUIManager::SetLayoutPropsRecursive(int64_t tag, bool isCollapsed) {
   ShadowNodeBase &shadowNode = static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(tag));
+  const auto view = shadowNode.GetView();
+  if (auto yogaNode = GetYogaNode(tag)) {
+    isCollapsed |= YGNodeStyleGetDisplay(yogaNode) == YGDisplay::YGDisplayNone;
+  }
   auto *pViewManager = shadowNode.GetViewManager();
   if (!pViewManager->IsNativeControlWithSelfLayout()) {
     for (const auto child : shadowNode.m_children) {
-      SetLayoutPropsRecursive(child);
+      SetLayoutPropsRecursive(child, isCollapsed);
     }
   }
 
@@ -932,9 +936,10 @@ void NativeUIManager::SetLayoutPropsRecursive(int64_t tag) {
     float top = YGNodeLayoutGetTop(yogaNode);
     float width = YGNodeLayoutGetWidth(yogaNode);
     float height = YGNodeLayoutGetHeight(yogaNode);
-    auto view = shadowNode.GetView();
-    auto pViewManager = shadowNode.GetViewManager();
-    pViewManager->SetLayoutProps(shadowNode, view, left, top, width, height);
+    const auto uiElement = view.try_as<xaml::UIElement>();
+    if (!isCollapsed) {
+      pViewManager->SetLayoutProps(shadowNode, view, left, top, width, height);
+    }
     if (shadowNode.m_onLayoutRegistered) {
       const auto hasLayoutChanged = !YogaFloatEquals(left, shadowNode.m_layout.Left) ||
           !YogaFloatEquals(top, shadowNode.m_layout.Top) || !YogaFloatEquals(width, shadowNode.m_layout.Width) ||
