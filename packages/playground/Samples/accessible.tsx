@@ -34,31 +34,19 @@ export default class Bootstrap extends React.Component<
 
   render() {
     return (
-      <View style={styles.container}>
-        <View style={styles.item} accessibilityLabel="FIRST ITEM" focusable>
+      <View
+        importantForAccessibility="no-hide-descendants"
+        style={styles.container}>
+        <View
+          //importantForAccessibility="no-hide-descendants"
+          style={styles.item}
+          accessibilityLabel="FIRST ITEM"
+          focusable>
           <Text style={styles.text}>Welcome to React Native! (FIRST ITEM)</Text>
         </View>
-        <ViewWindows
-          style={styles.item}
-          accessibilityLabel="SECOND ITEM"
-          focusable
-          enableFocusRing={false}>
-          <Text style={styles.text}>No focus visual (SECOND ITEM)</Text>
-        </ViewWindows>
-        <ViewWindows
-          style={styles.item}
-          accessibilityLabel="THIRD ITEM"
-          focusable
-          enableFocusRing={false}
-          {...{
-            // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
-            onFocus: () => this.setState({displayText: 'FOCUSED'}),
-            onBlur: () => this.setState({displayText: 'BLURRED'}),
-          }}>
-          <Text style={styles.text}>{this.state.displayText}</Text>
-        </ViewWindows>
         <TouchableHighlight
           style={styles.item}
+          //importantForAccessibility="no-hide-descendants"
           accessibilityLabel="counter"
           accessible={true}
           accessibilityRole="button"
@@ -72,6 +60,7 @@ export default class Bootstrap extends React.Component<
           </Text>
         </TouchableHighlight>
         <TouchableHighlight
+          // importantForAccessibility="no-hide-descendants"
           style={styles.item}
           accessibilityLabel="button imitating slider control"
           accessible={true}
@@ -90,6 +79,7 @@ export default class Bootstrap extends React.Component<
           </Text>
         </TouchableHighlight>
         <TouchableHighlight
+          //importantForAccessibility="no-hide-descendants"
           style={styles.item}
           accessibilityLabel="TEST Announce For Accessibility"
           onPress={() => {
@@ -102,6 +92,7 @@ export default class Bootstrap extends React.Component<
           <Text style={styles.text}>TEST announceForAccessibility</Text>
         </TouchableHighlight>
         <TouchableHighlight
+          //importantForAccessibility="no-hide-descendants"
           style={styles.item}
           accessibilityLabel="TEST Set Accessibility Focus"
           onPress={() => {
