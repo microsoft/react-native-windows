@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 10 Oct 2022 15:07:51 GMT",
+      "tag": "react-native-windows_v0.68.19",
+      "version": "0.68.19",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b44cfb98e2268d7112bc007eac9faa2732d480e3",
+            "comment": "Set Origin HTTP header during CORS (#10700)"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e9e42509a8ebf996bb23e39b07e5b116d061a6c2",
+            "comment": "Set User-Agent header in Origin Policy filter (#10695)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 26 Sep 2022 15:08:21 GMT",
       "tag": "react-native-windows_v0.68.18",
       "version": "0.68.18",
