@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Set Origin HTTP header during CORS (#10700)",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}
