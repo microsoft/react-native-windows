@@ -28,9 +28,9 @@ import {CodedError} from '@react-native-windows/telemetry';
 
 export default class MSBuildTools {
   /**
-   * @param version is something like 16.0 for 2019
+   * @param version is something like 17.0 for 2022
    * @param installationPath  Path to installation root
-   * @param installationVersion is the full version e.g. 16.3.29411.108
+   * @param installationVersion is the full version e.g. 17.3.32929.385
    */
   constructor(
     public readonly version: string,
@@ -200,7 +200,7 @@ export default class MSBuildTools {
       'Microsoft.Component.MSBuild',
       getVCToolsByArch(buildArch),
     ];
-    const minVersion = process.env.VisualStudioVersion || '16.7';
+    const minVersion = process.env.VisualStudioVersion || '17.0';
     const vsInstallation = findLatestVsInstall({
       requires,
       minVersion,

@@ -7,7 +7,7 @@ param(
     [string]$Check = [CheckId]::All,
 
     [Parameter(ValueFromRemainingArguments)]
-    [ValidateSet('appDev', 'rnwDev', 'buildLab', 'vs2019', 'clone')]
+    [ValidateSet('appDev', 'rnwDev', 'buildLab', 'vs2022', 'clone')]
     [String[]]$Tags = @('appDev'),
     [switch]$Enterprise = $false
 )
@@ -73,7 +73,7 @@ $vsWorkloads = @('Microsoft.VisualStudio.Workload.ManagedDesktop',
     'Microsoft.VisualStudio.Workload.Universal');
 
 # The minimum VS version to check for
-$vsver = "16.5"
+$vsver = "17.0"
 
 $v = [System.Environment]::OSVersion.Version;
 if ($env:Agent_BuildDirectory) {
@@ -116,9 +116,9 @@ function InstallVS {
         # No VSWhere / VS_Installer
         if ($Enterprise) {
             # The CI machines need the enterprise version of VS as that is what is hardcoded in all the scripts
-            & choco install -y visualstudio2019enterprise
+            & choco install -y visualstudio2022enterprise
         } else {
-            & choco install -y visualstudio2019community
+            & choco install -y visualstudio2022community
         }
         $channelId = & $vsWhere -version $vsver -property channelId
         $productId = & $vsWhere -version $vsver -property productId
@@ -279,7 +279,7 @@ $requirements = @(
     @{
         Id=[CheckId]::VSUWP;
         Name = 'Compilers, build tools, SDKs and Visual Studio';
-        Tags = @('appDev', 'vs2019');
+        Tags = @('appDev', 'vs2022');
         Valid = { CheckVS; }
         Install = { InstallVS };
     },
@@ -378,14 +378,14 @@ $requirements = @(
     },
     @{
         ID=[CheckId]::DotNetCore;
-        Name = ".net core 3.1"
+        Name = ".NET 6"
         Tags = @('appDev');
         Valid = { try {
-            $x = dotnet --info | Where-Object { $_ -like  '*Microsoft.NETCore.App 3.1*'};
+            $x = dotnet --info | Where-Object { $_ -like  '*Microsoft.NETCore.App 6.0.*'};
             ($x -ne $null) -and ($x.Length -ge 1)
         } catch { $false }; }
         Install = {
-            & choco install -y dotnetcore-3.1-sdk
+            & choco install -y dotnet-6.0-sdk
         }
     }
 );

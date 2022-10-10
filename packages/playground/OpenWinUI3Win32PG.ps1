@@ -41,6 +41,6 @@ foreach ($filePath in $filesToUpdate) {
 
 $env:UseWinUI3='true'
 $env:UseExperimentalIXP='true'
-& "C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\Common7\IDE\devenv.exe" $PSScriptRoot\windows\playground-win32-packaged.sln
+& "C:\Program Files\Microsoft Visual Studio\2022\Preview\Common7\IDE\devenv.exe" $PSScriptRoot\windows\playground-win32-packaged.sln
 
 

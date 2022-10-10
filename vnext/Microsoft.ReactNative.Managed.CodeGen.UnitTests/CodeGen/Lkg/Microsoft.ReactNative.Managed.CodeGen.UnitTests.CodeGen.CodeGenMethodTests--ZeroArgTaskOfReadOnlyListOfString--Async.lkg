@@ -3,6 +3,4 @@ moduleBuilder.AddMethod("MyMethod", global::Microsoft.ReactNative.MethodReturnTy
     global::Microsoft.ReactNative.Managed.JSValueReader.ReadArgs(reader);
     global::System.Threading.Tasks.Task<global::System.Collections.Generic.IReadOnlyList<string>> result = module.Method();
     global::Microsoft.ReactNative.Managed.ReactTaskExtensions.ContinueWith(result, writer, resolve, reject);
-}
-
-);
+});

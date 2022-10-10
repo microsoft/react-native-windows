@@ -3,8 +3,8 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
 
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Platforms>x64;x86;ARM;ARM64</Platforms>
+    <TargetFramework>net6.0</TargetFramework>
+    <Platforms>x64;x86;ARM64</Platforms>
     <RuntimeIdentifiers>win-x86;win-x64</RuntimeIdentifiers>
 
     <Platform>x64</Platform>
@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Humanizer" Version="2.8.11" />
+    <PackageReference Include="Humanizer" Version="2.14.1" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.7.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.7.0" />
     <PackageReference Include="RuntimeContracts" Version="0.3.0" />

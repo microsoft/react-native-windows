@@ -6,10 +6,10 @@ parameters:
   default:
     Medium:
       name: rnw-pool-4-microsoft
-      demands: ImageOverride -equals rnw-img-node16
+      demands: ImageOverride -equals rnw-img-test # temp, revert to rnw-img-node16
     Large:
       name: rnw-pool-8-microsoft
-      demands: ImageOverride -equals rnw-img-node16
+      demands: ImageOverride -equals rnw-img-test # temp, revert to rnw-img-node16
 - name: forceCodeQL
   displayName: Force CodeQL to rebuild databases
   type: boolean

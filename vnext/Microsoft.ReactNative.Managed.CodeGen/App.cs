@@ -111,7 +111,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
                 }
 
                 // Ensure output directory
-                Directory.CreateDirectory(Path.GetDirectoryName(path));
+                Directory.CreateDirectory(Path.GetDirectoryName(path)!);
 
                 await File.WriteAllTextAsync(path, contents, m_cancellationToken);
 

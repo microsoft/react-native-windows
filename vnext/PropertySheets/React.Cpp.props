@@ -7,7 +7,7 @@
 
   <PropertyGroup Label="Globals">
     <DefaultLanguage>en-US</DefaultLanguage>
-    <MinimumVisualStudioVersion>16.0</MinimumVisualStudioVersion>
+    <MinimumVisualStudioVersion>17.0</MinimumVisualStudioVersion>
   </PropertyGroup>
 
   <PropertyGroup Label="Configuration">

@@ -275,7 +275,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
 
         internal bool TryExtractModule(INamedTypeSymbol type, [NotNullWhen(returnValue: true)] out ReactModule? module)
         {
-            if (TryFindAttribute(type, ReactTypes.ReactModuleAttribute, out var attr))
+            if (TryFindAttribute(type, ReactTypes.ReactModuleAttribute, out var attr) && attr != null)
             {
                 string? moduleName = null;
                 string? eventEmitterName = null;
@@ -371,7 +371,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
         {
             Contract.Requires(m_reactTypes != null);
 
-            if (TryFindAttribute(method, attributeType, out var attr))
+            if (TryFindAttribute(method, attributeType, out var attr) && attr != null)
             {
                 string? name = null;
                 if (attr.ConstructorArguments.Length > 0)
@@ -596,7 +596,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
 
         private bool TryExtractConstant(ISymbol symbol, [NotNullWhen(returnValue: true)] out ReactConstant? constant)
         {
-            if (TryFindAttribute(symbol, ReactTypes.ReactConstantAttribute, out var attr))
+            if (TryFindAttribute(symbol, ReactTypes.ReactConstantAttribute, out var attr) && attr != null)
             {
                 string? name = null;
                 if (attr.ConstructorArguments.Length > 0)
@@ -693,7 +693,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
             name = null;
             callbackContextName = null;
 
-            if (TryFindAttribute(symbol, attribute, out var attr))
+            if (TryFindAttribute(symbol, attribute, out var attr) && attr != null)
             {
                 name = null;
                 callbackContextName = null;
@@ -813,7 +813,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
             }
         }
 
-        private bool TryFindAttribute(ISymbol symbol, INamedTypeSymbol attributeType, out AttributeData attr)
+        private bool TryFindAttribute(ISymbol symbol, INamedTypeSymbol attributeType, out AttributeData? attr)
         {
             attr = symbol.GetAttributes().FirstOrDefault(potentialMatch => potentialMatch.AttributeClass != null && potentialMatch.AttributeClass.Equals(attributeType, SymbolEqualityComparer.Default));
             return attr != null;
