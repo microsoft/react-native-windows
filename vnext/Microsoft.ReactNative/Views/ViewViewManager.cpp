@@ -126,9 +126,6 @@ class ViewShadowNode : public ShadowNodeBase {
   }
   void IsFocusable(bool isFocusable) {
     m_isFocusable = isFocusable;
-
-    if (IsControl())
-      GetControl().IsTabStop(m_isFocusable);
   }
 
   bool IsAccessible() const {
@@ -490,6 +487,7 @@ void ViewViewManager::OnPropertiesUpdated(ShadowNodeBase *node) {
   panel.FinalizeProperties();
 
   TryUpdateView(viewShadowNode, panel, shouldBeControl);
+  SyncFocusableAndAccessible(viewShadowNode, shouldBeControl);
 }
 
 void ViewViewManager::TryUpdateView(
@@ -602,21 +600,23 @@ void ViewViewManager::TryUpdateView(
 
   if (useControl)
     pViewShadowNode->GetControl().Content(visualRoot);
+}
 
+void ViewViewManager::SyncFocusableAndAccessible(ViewShadowNode *pViewShadowNode, bool useControl) {
   // If developer specifies either the accessible and focusable prop to be false
   // remove accessibility and keyboard focus for component. Exception is made
   // for case where a View with undefined onPress is specified, where
   // component gains accessibility focus when either the accessible and focusable prop are true.
-  if (useControl && pViewShadowNode->IsAccessible() != pViewShadowNode->IsFocusable()) {
-    if (!pViewShadowNode->OnClick()) {
-      pViewShadowNode->GetControl().IsTabStop(true);
-      xaml::Automation::AutomationProperties::SetAccessibilityView(
-          pViewShadowNode->GetControl(), xaml::Automation::Peers::AccessibilityView::Content);
-    } else {
-      pViewShadowNode->GetControl().IsTabStop(false);
-      xaml::Automation::AutomationProperties::SetAccessibilityView(
-          pViewShadowNode->GetControl(), xaml::Automation::Peers::AccessibilityView::Raw);
-    }
+  if (useControl) {
+    const auto isFocusable = pViewShadowNode->IsFocusable();
+    const auto isAccessible = pViewShadowNode->IsAccessible();
+    const auto isPressable = pViewShadowNode->OnClick();
+    const auto isTabStop =
+        (isPressable && isFocusable && isAccessible) || (!isPressable && (isFocusable || isAccessible));
+    const auto accessibilityView = isTabStop ? xaml::Automation::Peers::AccessibilityView::Content
+                                             : xaml::Automation::Peers::AccessibilityView::Raw;
+    pViewShadowNode->GetControl().IsTabStop(isTabStop);
+    xaml::Automation::AutomationProperties::SetAccessibilityView(pViewShadowNode->GetControl(), accessibilityView);
   }
 }
 

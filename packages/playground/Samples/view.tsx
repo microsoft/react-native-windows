@@ -11,6 +11,8 @@ export default class Bootstrap extends React.Component<
   {},
   {
     focusable: boolean;
+    accessible: boolean;
+    pressable: boolean;
     hasStyle: boolean;
     hasBorder: boolean;
     radius: boolean;
@@ -23,6 +25,8 @@ export default class Bootstrap extends React.Component<
     super(props);
     this.state = {
       focusable: true,
+      accessible: true,
+      pressable: true,
       hasStyle: true,
       hasBorder: true,
       radius: true,
@@ -96,6 +100,22 @@ export default class Bootstrap extends React.Component<
 
         <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
           <Switch
+            onValueChange={value => this.setState({accessible: value})}
+            value={this.state.accessible}
+          />
+          <Text>accessible</Text>
+        </View>
+
+        <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
+          <Switch
+            onValueChange={value => this.setState({pressable: value})}
+            value={this.state.pressable}
+          />
+          <Text>pressable</Text>
+        </View>
+
+        <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
+          <Switch
             onValueChange={value => this.setState({hasStyle: value})}
             value={this.state.hasStyle}
           />
@@ -155,6 +175,8 @@ export default class Bootstrap extends React.Component<
           }}>
           <View
             focusable={this.state.focusable ? true : false}
+            accessible={this.state.accessible ? true : false}
+            {...{onClick: this.state.pressable}}
             style={
               this.state.hasStyle
                 ? this.state.hasBorder
