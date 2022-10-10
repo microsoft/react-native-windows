@@ -34,6 +34,11 @@ static YogaNodePtr make_yoga_node(YGConfigRef config) {
   return result;
 }
 
+static inline bool YogaFloatEquals(float x, float y) {
+  // Epsilon value of 0.0001f is taken from the YGFloatsEqual method in Yoga.
+  return std::fabs(x - y) < 0.0001f;
+};
+
 #if defined(_DEBUG)
 static int YogaLog(
     const YGConfigRef /*config*/,
@@ -145,6 +150,8 @@ XamlView NativeUIManager::reactPeerOrContainerFrom(xaml::FrameworkElement fe) {
 NativeUIManager::NativeUIManager(winrt::Microsoft::ReactNative::ReactContext const &reactContext)
     : m_context(reactContext) {
   m_yogaConfig = YGConfigNew();
+  if (React::implementation::QuirkSettings::GetUseWebFlexBasisBehavior(m_context.Properties()))
+    YGConfigSetExperimentalFeatureEnabled(m_yogaConfig, YGExperimentalFeatureWebFlexBasis, true);
   if (React::implementation::QuirkSettings::GetMatchAndroidAndIOSStretchBehavior(m_context.Properties()))
     YGConfigSetUseLegacyStretchBehaviour(m_yogaConfig, true);
 
@@ -924,6 +931,17 @@ void NativeUIManager::SetLayoutPropsRecursive(int64_t tag) {
     auto view = shadowNode.GetView();
     auto pViewManager = shadowNode.GetViewManager();
     pViewManager->SetLayoutProps(shadowNode, view, left, top, width, height);
+    if (shadowNode.m_onLayoutRegistered) {
+      const auto hasLayoutChanged = !YogaFloatEquals(left, shadowNode.m_layout.Left) ||
+          !YogaFloatEquals(top, shadowNode.m_layout.Top) || !YogaFloatEquals(width, shadowNode.m_layout.Width) ||
+          !YogaFloatEquals(height, shadowNode.m_layout.Height);
+      if (hasLayoutChanged) {
+        React::JSValueObject layout{{"x", left}, {"y", top}, {"height", height}, {"width", width}};
+        React::JSValueObject eventData{{"target", tag}, {"layout", std::move(layout)}};
+        pViewManager->DispatchCoalescingEvent(tag, L"topLayout", MakeJSValueWriter(std::move(eventData)));
+      }
+    }
+    shadowNode.m_layout = {left, top, width, height};
   }
 }
 
@@ -1012,7 +1030,9 @@ void NativeUIManager::measureInWindow(
   ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
 
   if (auto view = node.GetView().try_as<xaml::FrameworkElement>()) {
-    auto windowTransform = view.TransformToVisual(xaml::Window::Current().Content());
+    // When supplied with nullptr, TransformToVisual will return the position
+    // relative to the root XAML element.
+    auto windowTransform = view.TransformToVisual(nullptr);
     auto positionInWindow = windowTransform.TransformPoint({0, 0});
 
     m_context.JSDispatcher().Post(

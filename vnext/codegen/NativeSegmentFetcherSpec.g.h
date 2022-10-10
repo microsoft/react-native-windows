@@ -26,13 +26,13 @@ struct SegmentFetcherSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "fetchSegment",
-          "    REACT_METHOD(fetchSegment) void fetchSegment(double segmentId, ::React::JSValue && options, std::function<void(std::optional<::React::JSValue>)> const & callback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(fetchSegment) static void fetchSegment(double segmentId, ::React::JSValue && options, std::function<void(std::optional<::React::JSValue>)> const & callback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(fetchSegment) void fetchSegment(double segmentId, ::React::JSValue && options, std::function<void(std::optional<::React::JSValue>)> const & callback) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(fetchSegment) static void fetchSegment(double segmentId, ::React::JSValue && options, std::function<void(std::optional<::React::JSValue>)> const & callback) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "getSegment",
-          "    REACT_METHOD(getSegment) void getSegment(double segmentId, ::React::JSValue && options, std::function<void(std::optional<::React::JSValue>, std::optional<std::string>)> const & callback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(getSegment) static void getSegment(double segmentId, ::React::JSValue && options, std::function<void(std::optional<::React::JSValue>, std::optional<std::string>)> const & callback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(getSegment) void getSegment(double segmentId, ::React::JSValue && options, std::function<void(std::optional<::React::JSValue>, std::optional<std::string>)> const & callback) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(getSegment) static void getSegment(double segmentId, ::React::JSValue && options, std::function<void(std::optional<::React::JSValue>, std::optional<std::string>)> const & callback) noexcept { /* implementation */ }\n");
   }
 };
 

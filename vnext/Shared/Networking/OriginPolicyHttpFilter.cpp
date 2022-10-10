@@ -640,8 +640,6 @@ void OriginPolicyHttpFilter::ValidateResponse(HttpResponseMessage const &respons
 }
 
 ResponseOperation OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage const &request) const {
-  // TODO: Inject user agent?
-
   auto coRequest = request;
 
   HttpRequestMessage preflightRequest;
@@ -759,6 +757,11 @@ ResponseOperation OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage co
       }
 
       ValidatePreflightResponse(coRequest, preflightResponse);
+    }
+
+    if (originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing ||
+        originPolicy == OriginPolicy::CrossOriginResourceSharing) {
+      coRequest.Headers().Insert(L"Origin", s_origin.AbsoluteCanonicalUri());
     }
 
     auto response = co_await m_innerFilter.SendRequestAsync(coRequest);

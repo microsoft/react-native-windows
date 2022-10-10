@@ -90,6 +90,10 @@ class REACTWINDOWS_EXPORT ViewManagerBase : public IViewManager {
       int64_t viewTag,
       winrt::hstring &&eventName,
       const winrt::Microsoft::ReactNative::JSValueArgWriter &eventDataWriter) const noexcept;
+  void DispatchCoalescingEvent(
+      int64_t viewTag,
+      winrt::hstring &&eventName,
+      const winrt::Microsoft::ReactNative::JSValueArgWriter &eventDataWriter) const noexcept;
 
   virtual void TransferProperties(const XamlView &oldView, const XamlView &newView);
 
