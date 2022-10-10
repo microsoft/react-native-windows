@@ -18,6 +18,7 @@ export type AlertButtonStyle = 'default' | 'cancel' | 'destructive';
 export type Buttons = Array<{
   text?: string,
   onPress?: ?Function,
+  isPreferred?: boolean,
   style?: AlertButtonStyle,
   ...
 }>;

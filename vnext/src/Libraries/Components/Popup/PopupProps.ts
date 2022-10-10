@@ -29,4 +29,5 @@ export interface IPopupProps extends ViewProps {
    */
   target?: React.ReactNode;
   onDismiss?: () => void;
+  testID?: string;
 }

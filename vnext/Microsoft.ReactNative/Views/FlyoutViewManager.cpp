@@ -404,7 +404,9 @@ winrt::Flyout FlyoutShadowNode::GetFlyout() {
 void FlyoutShadowNode::OnShowFlyout() {
   AdjustDefaultFlyoutStyle(50000, 50000);
   if (m_isFlyoutShowOptionsSupported) {
-    if (!m_targetElement && m_targetTag > 0) {
+    if (!m_flyout.XamlRoot()) {
+      LogErrorAndClose("The target view window was closed before flyout could be shown.");
+    } else if (!m_targetElement && m_targetTag > 0) {
       LogErrorAndClose("The target view unmounted before flyout could be shown.");
     } else if (m_targetElement && m_flyout.XamlRoot() != m_targetElement.XamlRoot()) {
       LogErrorAndClose("The target view window lost focus before flyout could be shown.");

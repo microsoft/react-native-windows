@@ -2,6 +2,39 @@
   "name": "@react-native-windows/virtualized-list",
   "entries": [
     {
+      "date": "Wed, 05 Oct 2022 05:13:43 GMT",
+      "tag": "@react-native-windows/virtualized-list_v0.0.0-canary.51",
+      "version": "0.0.0-canary.51",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@react-native-windows/virtualized-list",
+            "commit": "d9bc366f9bfb47fd8107285242f82a6df7c5cd59",
+            "comment": "integrate 7/29/22"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/virtualized-list",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.14",
+            "commit": "c6fb7f909fc9f7d1a0709f86023e6d3edd0c83eb"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/virtualized-list",
+            "comment": "Bump @rnw-scripts/just-task to v2.2.6",
+            "commit": "c6fb7f909fc9f7d1a0709f86023e6d3edd0c83eb"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/virtualized-list",
+            "comment": "Bump react-native-platform-override to v1.7.0",
+            "commit": "c6fb7f909fc9f7d1a0709f86023e6d3edd0c83eb"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 24 Sep 2022 05:11:52 GMT",
       "tag": "@react-native-windows/virtualized-list_v0.0.0-canary.50",
       "version": "0.0.0-canary.50",

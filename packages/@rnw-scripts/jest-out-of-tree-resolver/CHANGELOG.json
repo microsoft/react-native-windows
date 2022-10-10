@@ -2,6 +2,27 @@
   "name": "@rnw-scripts/jest-out-of-tree-resolver",
   "entries": [
     {
+      "date": "Wed, 05 Oct 2022 05:13:45 GMT",
+      "tag": "@rnw-scripts/jest-out-of-tree-resolver_v1.1.0",
+      "version": "1.1.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@rnw-scripts/jest-out-of-tree-resolver",
+            "commit": "d9bc366f9bfb47fd8107285242f82a6df7c5cd59",
+            "comment": "integrate 7/29/22"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/jest-out-of-tree-resolver",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.14",
+            "commit": "c6fb7f909fc9f7d1a0709f86023e6d3edd0c83eb"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 12 May 2022 05:09:45 GMT",
       "tag": "@rnw-scripts/jest-out-of-tree-resolver_v1.0.8",
       "version": "1.0.8",

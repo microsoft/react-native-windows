@@ -181,9 +181,6 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   std::shared_ptr<facebook::react::MessageQueueThread> m_batchingUIThread;
 
   std::shared_ptr<IRedBoxHandler> m_redboxHandler;
-#ifndef CORE_ABI
-  Mso::CntPtr<Microsoft::ReactNative::AppearanceChangeListener> m_appearanceListener;
-#endif
   Mso::CntPtr<Mso::React::IDispatchQueue2> m_uiQueue;
   std::deque<JSCallEntry> m_jsCallQueue;
 

@@ -2,6 +2,51 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Wed, 05 Oct 2022 05:13:45 GMT",
+      "tag": "react-native-platform-override_v1.7.0",
+      "version": "1.7.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-platform-override",
+            "commit": "d9bc366f9bfb47fd8107285242f82a6df7c5cd59",
+            "comment": "integrate 7/29/22"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-platform-override",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.6",
+            "commit": "c6fb7f909fc9f7d1a0709f86023e6d3edd0c83eb"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-platform-override",
+            "comment": "Bump @react-native-windows/package-utils to v0.0.0-canary.32",
+            "commit": "c6fb7f909fc9f7d1a0709f86023e6d3edd0c83eb"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-platform-override",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.14",
+            "commit": "c6fb7f909fc9f7d1a0709f86023e6d3edd0c83eb"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-platform-override",
+            "comment": "Bump @rnw-scripts/jest-unittest-config to v1.3.0",
+            "commit": "c6fb7f909fc9f7d1a0709f86023e6d3edd0c83eb"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-platform-override",
+            "comment": "Bump @rnw-scripts/just-task to v2.2.6",
+            "commit": "c6fb7f909fc9f7d1a0709f86023e6d3edd0c83eb"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 24 Sep 2022 05:11:51 GMT",
       "tag": "react-native-platform-override_v1.6.14",
       "version": "1.6.14",

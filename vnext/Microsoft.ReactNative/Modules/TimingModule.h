@@ -3,15 +3,10 @@
 
 #pragma once
 
-#include <CppWinRTIncludes.h>
-#include <cxxreact/CxxModule.h>
-#include <cxxreact/MessageQueueThread.h>
+#include "../../codegen/NativeTimingSpec.g.h"
 
-#include <folly/dynamic.h>
-#include <memory>
-#include <vector>
+#include <ReactCoreInjection.h>
 
-#include <winrt/Windows.Foundation.h>
 namespace Microsoft::ReactNative {
 
 typedef winrt::Windows::Foundation::DateTime TDateTime;
@@ -56,43 +51,36 @@ class TimerQueue {
   std::vector<Timer> m_timerVector;
 };
 
-class Timing : public std::enable_shared_from_this<Timing> {
- public:
-  Timing(TimingModule *parent);
-  void Disconnect();
+REACT_MODULE(Timing)
+struct Timing : public std::enable_shared_from_this<Timing> {
+  using ModuleSpec = ReactNativeSpecs::TimingSpec;
 
-  void createTimer(int64_t id, double duration, double jsSchedulingTime, bool repeat);
-  void deleteTimer(int64_t id);
-  void setSendIdleEvents(bool sendIdleEvents);
+ public:
+  REACT_INIT(Initialize)
+  void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
+
+  REACT_METHOD(createTimer)
+  void createTimer(double id, double duration, double jsSchedulingTime, bool repeat) noexcept;
+
+  REACT_METHOD(deleteTimer)
+  void deleteTimer(double id) noexcept;
+  REACT_METHOD(setSendIdleEvents)
+  void setSendIdleEvents(bool sendIdleEvents) noexcept;
 
  private:
-  std::weak_ptr<facebook::react::Instance> getInstance() noexcept;
+  void createTimerOnQueue(int64_t id, double duration, double jsSchedulingTime, bool repeat) noexcept;
+  void deleteTimerOnQueue(int64_t id) noexcept;
   void OnTick();
   winrt::dispatching::DispatcherQueueTimer EnsureDispatcherTimer();
   void StartRendering();
   void StartDispatcherTimer();
   void StopTicks();
 
- private:
-  TimingModule *m_parent;
+  React::ReactContext m_context;
   TimerQueue m_timerQueue;
   xaml::Media::CompositionTarget::Rendering_revoker m_rendering;
   winrt::dispatching::DispatcherQueueTimer m_dispatcherQueueTimer{nullptr};
   bool m_usingRendering{false};
-};
-
-class TimingModule : public facebook::xplat::module::CxxModule {
- public:
-  TimingModule();
-  ~TimingModule();
-  std::string getName();
-  virtual auto getConstants() -> std::map<std::string, folly::dynamic>;
-  virtual auto getMethods() -> std::vector<Method>;
-
-  static const char *name;
-
- private:
-  std::shared_ptr<Timing> m_timing;
 };
 
 } // namespace Microsoft::ReactNative

@@ -165,6 +165,24 @@ void ViewManagerBase::GetExportedCustomBubblingEventTypeConstants(
       // Keyboard events
       L"KeyUp",
       L"KeyDown",
+
+      // Pointer events
+      L"PointerCancel",
+      L"PointerCancelCapture",
+      L"PointerDown",
+      L"PointerDownCapture",
+      L"PointerEnter",
+      L"PointerEnterCapture",
+      L"PointerLeave",
+      L"PointerLeaveCapture",
+      L"PointerMove",
+      L"PointerMoveCapture",
+      L"PointerUp",
+      L"PointerUpCapture",
+      L"PointerOut",
+      L"PointerOutCapture",
+      L"PointerOver",
+      L"PointerOverCapture",
   };
 
   folly::dynamic bubblingEvents = folly::dynamic::object();
@@ -358,25 +376,12 @@ void ViewManagerBase::SetLayoutProps(
   }
   auto fe = element.as<xaml::FrameworkElement>();
 
-  const bool layoutHasChanged = left != ViewPanel::GetLeft(element) || top != ViewPanel::GetTop(element) ||
-      width != fe.Width() || height != fe.Height();
-
   // Set Position & Size Properties
   ViewPanel::SetLeft(element, left);
   ViewPanel::SetTop(element, top);
 
   fe.Width(width);
   fe.Height(height);
-
-  // Fire Events
-  if (layoutHasChanged && nodeToUpdate.m_onLayoutRegistered) {
-    int64_t tag = GetTag(viewToUpdate);
-    React::JSValueObject layout{{"x", left}, {"y", top}, {"height", height}, {"width", width}};
-
-    React::JSValueObject eventData{{"target", tag}, {"layout", std::move(layout)}};
-
-    m_batchingEventEmitter->DispatchCoalescingEvent(tag, L"topLayout", MakeJSValueWriter(std::move(eventData)));
-  }
 }
 
 YGMeasureFunc ViewManagerBase::GetYogaCustomMeasureFunc() const {
@@ -412,6 +417,13 @@ void ViewManagerBase::DispatchEvent(
     winrt::hstring &&eventName,
     const React::JSValueArgWriter &eventDataWriter) const noexcept {
   m_batchingEventEmitter->DispatchEvent(viewTag, std::move(eventName), eventDataWriter);
+}
+
+void ViewManagerBase::DispatchCoalescingEvent(
+    int64_t viewTag,
+    winrt::hstring &&eventName,
+    const React::JSValueArgWriter &eventDataWriter) const noexcept {
+  m_batchingEventEmitter->DispatchCoalescingEvent(viewTag, std::move(eventName), eventDataWriter);
 }
 
 } // namespace Microsoft::ReactNative

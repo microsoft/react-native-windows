@@ -83,18 +83,18 @@ struct ActionSheetManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "showActionSheetWithOptions",
-          "    REACT_METHOD(showActionSheetWithOptions) void showActionSheetWithOptions(ActionSheetManagerSpec_showActionSheetWithOptions_options && options, std::function<void(double)> const & callback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(showActionSheetWithOptions) static void showActionSheetWithOptions(ActionSheetManagerSpec_showActionSheetWithOptions_options && options, std::function<void(double)> const & callback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(showActionSheetWithOptions) void showActionSheetWithOptions(ActionSheetManagerSpec_showActionSheetWithOptions_options && options, std::function<void(double)> const & callback) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(showActionSheetWithOptions) static void showActionSheetWithOptions(ActionSheetManagerSpec_showActionSheetWithOptions_options && options, std::function<void(double)> const & callback) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "showShareActionSheetWithOptions",
-          "    REACT_METHOD(showShareActionSheetWithOptions) void showShareActionSheetWithOptions(ActionSheetManagerSpec_showShareActionSheetWithOptions_options && options, std::function<void(ActionSheetManagerSpec_showShareActionSheetWithOptions_failureCallback_error const &)> const & failureCallback, std::function<void(bool, std::optional<std::string>)> const & successCallback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(showShareActionSheetWithOptions) static void showShareActionSheetWithOptions(ActionSheetManagerSpec_showShareActionSheetWithOptions_options && options, std::function<void(ActionSheetManagerSpec_showShareActionSheetWithOptions_failureCallback_error const &)> const & failureCallback, std::function<void(bool, std::optional<std::string>)> const & successCallback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(showShareActionSheetWithOptions) void showShareActionSheetWithOptions(ActionSheetManagerSpec_showShareActionSheetWithOptions_options && options, std::function<void(ActionSheetManagerSpec_showShareActionSheetWithOptions_failureCallback_error const &)> const & failureCallback, std::function<void(bool, std::optional<std::string>)> const & successCallback) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(showShareActionSheetWithOptions) static void showShareActionSheetWithOptions(ActionSheetManagerSpec_showShareActionSheetWithOptions_options && options, std::function<void(ActionSheetManagerSpec_showShareActionSheetWithOptions_failureCallback_error const &)> const & failureCallback, std::function<void(bool, std::optional<std::string>)> const & successCallback) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "dismissActionSheet",
-          "    REACT_METHOD(dismissActionSheet) void dismissActionSheet() noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(dismissActionSheet) static void dismissActionSheet() noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(dismissActionSheet) void dismissActionSheet() noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(dismissActionSheet) static void dismissActionSheet() noexcept { /* implementation */ }\n");
   }
 };
 

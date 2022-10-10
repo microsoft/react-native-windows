@@ -1,8 +1,85 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 27 Sep 2022 05:11:30 GMT and should not be manually modified.
+This log was last generated on Sat, 08 Oct 2022 05:11:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.561
+
+Sat, 08 Oct 2022 05:11:18 GMT
+
+### Changes
+
+- Set Origin HTTP header during CORS (julio.rocha@microsoft.com)
+- Add Snapshots (34109996+chiaramooney@users.noreply.github.com)
+- Set User-Agent header in Origin Policy filter (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.560
+
+Fri, 07 Oct 2022 05:11:46 GMT
+
+### Changes
+
+- Explicitly measure relative to the root XAML element (erozell@outlook.com)
+- Refactor the onLayout event for view flattening (erozell@outlook.com)
+- Prevent crash in XAML Islands Flyout (erozell@outlook.com)
+- Make appearance module use codegen spec file and be a turbomodule (30809111+acoates-ms@users.noreply.github.com)
+- Fabric: TextInput caret is incorrect size (30809111+acoates-ms@users.noreply.github.com)
+- Fix bad fix for size_t -> int truncation from RN merge (30809111+acoates-ms@users.noreply.github.com)
+- Move timing native module to TurboModule (30809111+acoates-ms@users.noreply.github.com)
+- Adds QuirkSetting to use YGExperimentalFeatureWebFlexBasis (erozell@outlook.com)
+- Remove extra paren in codegen output (30809111+acoates-ms@users.noreply.github.com)
+- Fabric: ImageRequest should kick off from ImageShadowNode instead of ImageComponentView (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.138
+- Bump @react-native-windows/codegen to v0.0.0-canary.38
+
+## 0.0.0-canary.559
+
+Wed, 05 Oct 2022 05:13:45 GMT
+
+### Changes
+
+- integrate 7/29/22 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.137
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.51
+- Bump @react-native-windows/codegen to v0.0.0-canary.37
+- Bump @rnw-scripts/eslint-config to v1.1.14
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.0
+- Bump @rnw-scripts/just-task to v2.2.6
+- Bump react-native-platform-override to v1.7.0
+
+## 0.0.0-canary.558
+
+Sat, 01 Oct 2022 05:11:34 GMT
+
+### Changes
+
+- Fabric: simplify border code, and fix some border issues (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.557
+
+Fri, 30 Sep 2022 05:11:35 GMT
+
+### Changes
+
+- Fabric: Stop ScrollView from scrolling past content (30809111+acoates-ms@users.noreply.github.com)
+- Fabric: fix zorder issues (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.556
+
+Thu, 29 Sep 2022 05:11:44 GMT
+
+### Changes
+
+- Changes to support logbox/redbox in fabric (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.555
+
+Wed, 28 Sep 2022 05:11:57 GMT
+
+### Changes
+
+- Deletes irrelevant TODO from NativeUIManager (erozell@outlook.com)
 
 ## 0.0.0-canary.554
 

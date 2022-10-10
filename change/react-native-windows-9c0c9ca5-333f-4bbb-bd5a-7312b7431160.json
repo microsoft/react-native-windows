@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Always synchronize focusable and accessible props",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}

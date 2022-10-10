@@ -11,12 +11,9 @@
 
 #include <IReactContext.h>
 
-#pragma warning(push)
-#pragma warning(disable : 4244 4305)
-#include <react/renderer/components/image/ImageProps.h>
-#pragma warning(pop)
 #include <react/renderer/components/image/ImageEventEmitter.h>
 
+#include <Fabric/FabricUIManagerModule.h>
 #include <Utils/ImageUtils.h>
 #include <shcore.h>
 #include <winrt/Windows.UI.Composition.h>
@@ -28,6 +25,26 @@ extern "C" HRESULT WINAPI WICCreateImagingFactory_Proxy(UINT SDKVersion, IWICIma
 
 namespace Microsoft::ReactNative {
 
+ImageComponentView::WindowsImageResponseObserver::WindowsImageResponseObserver(
+    std::shared_ptr<ImageComponentView> image) {
+  m_image = image;
+}
+
+void ImageComponentView::WindowsImageResponseObserver::didReceiveProgress(float progress) const {
+  // TODO progress?
+}
+
+void ImageComponentView::WindowsImageResponseObserver::didReceiveImage(
+    facebook::react::ImageResponse const &imageResponse) const {
+  auto sharedwicbmp = std::static_pointer_cast<winrt::com_ptr<IWICBitmap>>(imageResponse.getImage());
+  m_image->m_context.UIDispatcher().Post(
+      [wicbmp = *sharedwicbmp, image = m_image]() { image->didReceiveImage(wicbmp); });
+}
+
+void ImageComponentView::WindowsImageResponseObserver::didReceiveFailure() const {
+  m_image->didReceiveFailureFromObserver();
+}
+
 ImageComponentView::ImageComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
@@ -35,17 +52,6 @@ ImageComponentView::ImageComponentView(
     : Super(compContext, tag), m_context(reactContext) {
   static auto const defaultProps = std::make_shared<facebook::react::ImageProps const>();
   m_props = defaultProps;
-
-  /*
-    m_onLoadEndToken = m_element->OnLoadEnd([=](const auto &, const bool &succeeded) {
-      if (succeeded) {
-        std::static_pointer_cast<const facebook::react::ImageEventEmitter>(m_eventEmitter)->onLoad();
-      } else {
-        std::static_pointer_cast<const facebook::react::ImageEventEmitter>(m_eventEmitter)->onError();
-      }
-      std::static_pointer_cast<const facebook::react::ImageEventEmitter>(m_eventEmitter)->onLoadEnd();
-    });
-    */
 }
 
 std::vector<facebook::react::ComponentDescriptorProvider>
@@ -61,89 +67,38 @@ void ImageComponentView::unmountChildComponentView(const IComponentView &childCo
   assert(false);
 }
 
-void ImageComponentView::beginDownloadImage() noexcept {
-  ReactImageSource source;
-  source.uri = m_url;
-  source.height = m_imgHeight;
-  source.width = m_imgWidth;
-  source.sourceType = ImageSourceType::Download;
-  m_state = ImageState::Loading;
-  auto inputStreamTask = GetImageStreamAsync(source);
-  inputStreamTask.Completed([this](auto asyncOp, auto status) {
-    switch (status) {
-      case winrt::Windows::Foundation::AsyncStatus::Completed: {
-        if (m_state == ImageState::Loading) {
-          m_state = ImageState::Loaded;
-          generateBitmap(asyncOp.GetResults());
-        }
-        break;
-      }
-      case winrt::Windows::Foundation::AsyncStatus::Canceled: {
-        m_state = ImageState::Error;
-        break;
-      }
-      case winrt::Windows::Foundation::AsyncStatus::Error: {
-        m_state = ImageState::Error;
-        break;
-      }
-      case winrt::Windows::Foundation::AsyncStatus::Started: {
-      }
-    }
-  });
+void ImageComponentView::ImageLoadStart() noexcept {
+  auto imageEventEmitter = std::static_pointer_cast<facebook::react::ImageEventEmitter const>(m_eventEmitter);
+  if (imageEventEmitter) {
+    imageEventEmitter->onLoadStart();
+  }
 }
 
-winrt::com_ptr<IWICBitmapSource> wicBitmapSourceFromStream(
-    const winrt::Windows::Storage::Streams::IRandomAccessStream &results) noexcept {
-  winrt::com_ptr<IWICBitmapDecoder> bitmapDecoder;
-  winrt::com_ptr<IWICImagingFactory> imagingFactory;
-  winrt::check_hresult(WICCreateImagingFactory_Proxy(WINCODEC_SDK_VERSION, imagingFactory.put()));
+void ImageComponentView::didReceiveImage(const winrt::com_ptr<IWICBitmap> &wicbmp) noexcept {
+  // TODO check for recycled?
 
-  if (!results) {
-    return nullptr;
+  auto imageEventEmitter = std::static_pointer_cast<facebook::react::ImageEventEmitter const>(m_eventEmitter);
+  if (imageEventEmitter) {
+    imageEventEmitter->onLoad();
+    imageEventEmitter->onLoadEnd();
   }
 
-  winrt::com_ptr<IStream> istream;
-  winrt::check_hresult(
-      CreateStreamOverRandomAccessStream(results.as<IUnknown>().get(), __uuidof(IStream), istream.put_void()));
+  // TODO - handle m_props.tintColor, imageProps.resizeMode, imageProps.capInsets, imageProps.blurRadius
 
-  if (imagingFactory->CreateDecoderFromStream(
-          istream.get(), nullptr, WICDecodeMetadataCacheOnDemand, bitmapDecoder.put()) < 0) {
-    return nullptr;
-  }
-
-  winrt::com_ptr<IWICBitmapFrameDecode> decodedFrame;
-  winrt::check_hresult(bitmapDecoder->GetFrame(0, decodedFrame.put()));
-  return decodedFrame;
-}
-
-void ImageComponentView::generateBitmap(const winrt::Windows::Storage::Streams::IRandomAccessStream &results) noexcept {
-  winrt::com_ptr<IWICBitmapSource> decodedFrame = wicBitmapSourceFromStream(results);
-
-  if (!decodedFrame) {
-    m_state = ImageState::Error;
-    return;
-  }
-
-  winrt::com_ptr<IWICImagingFactory> imagingFactory;
-  winrt::check_hresult(WICCreateImagingFactory_Proxy(WINCODEC_SDK_VERSION, imagingFactory.put()));
-  winrt::com_ptr<IWICFormatConverter> converter;
-  winrt::check_hresult(imagingFactory->CreateFormatConverter(converter.put()));
-
-  winrt::check_hresult(converter->Initialize(
-      decodedFrame.get(),
-      GUID_WICPixelFormat32bppPBGRA,
-      WICBitmapDitherTypeNone,
-      nullptr,
-      0.0f,
-      WICBitmapPaletteTypeMedianCut));
-
-  winrt::check_hresult(imagingFactory->CreateBitmapFromSource(converter.get(), WICBitmapCacheOnLoad, m_wicbmp.put()));
-
+#ifdef DEBUG
   auto uiDispatcher = m_context.UIDispatcher();
-  if (uiDispatcher.HasThreadAccess()) {
-    ensureDrawingSurface();
-  } else {
-    uiDispatcher.Post([this]() { ensureDrawingSurface(); }); // TODO check capture ref
+  assert(uiDispatcher.HasThreadAccess());
+#endif
+
+  m_wicbmp = wicbmp;
+  ensureDrawingSurface();
+}
+
+void ImageComponentView::didReceiveFailureFromObserver() noexcept {
+  auto imageEventEmitter = std::static_pointer_cast<facebook::react::ImageEventEmitter const>(m_eventEmitter);
+  if (imageEventEmitter) {
+    imageEventEmitter->onError();
+    imageEventEmitter->onLoadEnd();
   }
 }
 
@@ -165,38 +120,50 @@ void ImageComponentView::updateProps(
     m_visual.Opacity(newImageProps.opacity);
   }
 
-  if (oldImageProps.sources != newImageProps.sources) {
-    if (newImageProps.sources.empty()) {
-      // TODO clear image
-    } else {
-      m_reloadImage = true;
-    }
-  }
-
-  /*
-    if (oldImageProps.blurRadius != newImageProps.blurRadius) {
-      m_element->BlurRadius(newImageProps.blurRadius);
-    }
-
-    if (oldImageProps.tintColor != newImageProps.tintColor) {
-      if (newImageProps.tintColor) {
-        m_element->TintColor(newImageProps.tintColor.AsWindowsColor());
-      } else {
-        m_element->TintColor(winrt::Colors::Transparent());
-      }
-    }
-
-    if (oldImageProps.resizeMode != newImageProps.resizeMode) {
-      m_element->ResizeMode(newImageProps.resizeMode);
-    }
-    */
-
   m_props = std::static_pointer_cast<facebook::react::ImageProps const>(props);
 }
 
 void ImageComponentView::updateState(
     facebook::react::State::Shared const &state,
-    facebook::react::State::Shared const &oldState) noexcept {}
+    facebook::react::State::Shared const &oldState) noexcept {
+  auto oldImageState = std::static_pointer_cast<facebook::react::ImageShadowNode::ConcreteState const>(m_state);
+  auto newImageState = std::static_pointer_cast<facebook::react::ImageShadowNode::ConcreteState const>(state);
+
+  if (!m_imageResponseObserver) {
+    // Should ViewComponents enable_shared_from_this? then we dont need this dance to get a shared_ptr
+    std::shared_ptr<FabricUIManager> fabricuiManager =
+        ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties());
+    auto componentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(m_tag);
+
+    m_imageResponseObserver = std::make_shared<WindowsImageResponseObserver>(
+        std::static_pointer_cast<ImageComponentView>(componentViewDescriptor.view));
+  }
+
+  setStateAndResubscribeImageResponseObserver(newImageState);
+  bool havePreviousData = oldImageState && oldImageState->getData().getImageSource() != facebook::react::ImageSource{};
+
+  if (!havePreviousData ||
+      (newImageState && newImageState->getData().getImageSource() != oldImageState->getData().getImageSource())) {
+    // Loading actually starts a little before this, but this is the first time we know
+    // the image is loading and can fire an event from this component
+    std::static_pointer_cast<facebook::react::ImageEventEmitter const>(m_eventEmitter)->onLoadStart();
+  }
+}
+
+void ImageComponentView::setStateAndResubscribeImageResponseObserver(
+    facebook::react::ImageShadowNode::ConcreteState::Shared const &state) noexcept {
+  if (m_state) {
+    auto &observerCoordinator = m_state->getData().getImageRequest().getObserverCoordinator();
+    observerCoordinator.removeObserver(*m_imageResponseObserver);
+  }
+
+  m_state = state;
+
+  if (m_state) {
+    auto &observerCoordinator = m_state->getData().getImageRequest().getObserverCoordinator();
+    observerCoordinator.addObserver(*m_imageResponseObserver);
+  }
+}
 
 void ImageComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
@@ -221,24 +188,7 @@ void ImageComponentView::updateLayoutMetrics(
   });
 }
 
-void ImageComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
-  if (m_reloadImage) {
-    const auto &props = *std::static_pointer_cast<const facebook::react::ImageProps>(m_props);
-    m_url = props.sources[0].uri;
-    m_imgWidth = static_cast<unsigned int>(std::max(props.sources[0].size.width, m_layoutMetrics.frame.size.width));
-    m_imgHeight = static_cast<unsigned int>(std::max(props.sources[0].size.height, m_layoutMetrics.frame.size.height));
-    beginDownloadImage();
-  }
-
-  /*
-  if (m_needsOnLoadStart) {
-    std::static_pointer_cast<const facebook::react::ImageEventEmitter>(m_eventEmitter)->onLoadStart();
-    m_needsOnLoadStart = false;
-  }
-  */
-
-  ensureDrawingSurface();
-}
+void ImageComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {}
 
 void ImageComponentView::OnRenderingDeviceLost() noexcept {
   // Draw the text again
@@ -248,9 +198,12 @@ void ImageComponentView::OnRenderingDeviceLost() noexcept {
 void ImageComponentView::ensureDrawingSurface() noexcept {
   assert(m_context.UIDispatcher().HasThreadAccess());
 
+  UINT width, height;
+  winrt::check_hresult(m_wicbmp->GetSize(&width, &height));
+
   if (!m_drawingSurface && m_wicbmp) {
     m_drawingSurface = m_compContext.CreateDrawingSurface(
-        {static_cast<float>(m_imgWidth), static_cast<float>(m_imgHeight)},
+        {static_cast<float>(width), static_cast<float>(height)},
         winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
         winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
 
@@ -306,11 +259,14 @@ void ImageComponentView::DrawImage() noexcept {
       d2dDeviceContext->Clear(m_props->backgroundColor.AsD2DColor());
     }
 
+    UINT width, height;
+    winrt::check_hresult(m_wicbmp->GetSize(&width, &height));
+
     D2D1_RECT_F rect = D2D1::RectF(
         static_cast<float>(offset.x / m_layoutMetrics.pointScaleFactor),
         static_cast<float>(offset.y / m_layoutMetrics.pointScaleFactor),
-        static_cast<float>((offset.x + m_imgWidth) / m_layoutMetrics.pointScaleFactor),
-        static_cast<float>((offset.y + m_imgHeight) / m_layoutMetrics.pointScaleFactor));
+        static_cast<float>((offset.x + width) / m_layoutMetrics.pointScaleFactor),
+        static_cast<float>((offset.y + height) / m_layoutMetrics.pointScaleFactor));
 
     const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
     float oldDpiX, oldDpiY;

@@ -2,6 +2,123 @@
   "name": "debug-test",
   "entries": [
     {
+      "date": "Sat, 08 Oct 2022 05:11:18 GMT",
+      "tag": "debug-test_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "debug-test",
+            "comment": "Bump @react-native-windows/automation to v0.2.2",
+            "commit": "635a86b1f8c85de006f8faa9f5d881b13f667a78"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 07 Oct 2022 05:11:47 GMT",
+      "tag": "debug-test_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "debug-test",
+            "comment": "Bump @react-native-windows/automation to v0.2.1",
+            "commit": "07e0f2dd9d862aa01dbd77aecd6d6163ca91223a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 05 Oct 2022 05:13:47 GMT",
+      "tag": "debug-test_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "debug-test",
+            "comment": "Bump @react-native-windows/automation to v0.2.0",
+            "commit": "c6fb7f909fc9f7d1a0709f86023e6d3edd0c83eb"
+          },
+          {
+            "author": "beachball",
+            "package": "debug-test",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.6",
+            "commit": "c6fb7f909fc9f7d1a0709f86023e6d3edd0c83eb"
+          },
+          {
+            "author": "beachball",
+            "package": "debug-test",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.14",
+            "commit": "c6fb7f909fc9f7d1a0709f86023e6d3edd0c83eb"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 01 Oct 2022 05:11:34 GMT",
+      "tag": "debug-test_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "debug-test",
+            "comment": "Bump @react-native-windows/automation to v0.1.143",
+            "commit": "d6dd4441bf2dd74e8ac5db504d5ac734a51fd853"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 30 Sep 2022 05:11:35 GMT",
+      "tag": "debug-test_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "debug-test",
+            "comment": "Bump @react-native-windows/automation to v0.1.142",
+            "commit": "663554a0fde5ed72af727aba939473560c54bd9b"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 29 Sep 2022 05:11:44 GMT",
+      "tag": "debug-test_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "debug-test",
+            "comment": "Bump @react-native-windows/automation to v0.1.141",
+            "commit": "45338c859f2e2d999ab57cd1b612a14df63f66d3"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 28 Sep 2022 05:11:57 GMT",
+      "tag": "debug-test_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "debug-test",
+            "comment": "Bump @react-native-windows/automation to v0.1.140",
+            "commit": "2241a6a521187e268cae76f48b0d8685c2989735"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 27 Sep 2022 05:11:31 GMT",
       "tag": "debug-test_v0.0.0",
       "version": "0.0.0",

@@ -128,8 +128,9 @@ void WindowsTextInputShadowNode::updateStateIfNeeded() {
 
   defaultTextAttributes.apply(getConcreteProps().textAttributes);
 
-  auto newEventCount =
-      (state.reactTreeAttributedString == reactTreeAttributedString ? 0 : getConcreteProps().mostRecentEventCount);
+  auto newEventCount = state.reactTreeAttributedString.isContentEqual(reactTreeAttributedString)
+      ? 0
+      : getConcreteProps().mostRecentEventCount;
   auto newAttributedString = getMostRecentAttributedString();
 
   // Even if we're here and updating state, it may be only to update the layout
