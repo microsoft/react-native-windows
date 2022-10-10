@@ -640,8 +640,6 @@ void OriginPolicyHttpFilter::ValidateResponse(HttpResponseMessage const &respons
 }
 
 ResponseOperation OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage const &request) const {
-  // TODO: Inject user agent?
-
   auto coRequest = request;
 
   HttpRequestMessage preflightRequest;
