@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 26 Sep 2022 15:10:18 GMT and should not be manually modified.
+This log was last generated on Mon, 10 Oct 2022 15:09:52 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.70.3
+
+Mon, 10 Oct 2022 15:09:52 GMT
+
+### Patches
+
+- Set Origin HTTP header during CORS (#10700) (julio.rocha@microsoft.com)
+- Set User-Agent header in Origin Policy filter (#10695) (julio.rocha@microsoft.com)
 
 ## 0.70.2
 
