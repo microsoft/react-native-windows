@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Skip setting XAML layout when tree is collapsed",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
