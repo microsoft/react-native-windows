@@ -949,26 +949,18 @@ void NativeUIManager::SetLayoutPropsRecursive(int64_t tag, bool isCollapsed) {
   }
 }
 
-winrt::Windows::Foundation::Rect GetRectOfElementInParentCoords(
-    xaml::FrameworkElement element,
-    xaml::UIElement parent) {
+std::optional<winrt::Point> GetRelativePosition(xaml::FrameworkElement element, xaml::UIElement parent) {
   if (parent == nullptr) {
     assert(false);
-    return winrt::Windows::Foundation::Rect();
+    return std::nullopt;
   }
 
-  winrt::Rect anchorRect;
   winrt::Point anchorTopLeft = winrt::Point(0, 0);
 
   winrt::GeneralTransform transform = element.TransformToVisual(parent);
   winrt::Point anchorTopLeftConverted = transform.TransformPoint(anchorTopLeft);
 
-  anchorRect.X = anchorTopLeftConverted.X;
-  anchorRect.Y = anchorTopLeftConverted.Y;
-  anchorRect.Width = (float)element.ActualWidth();
-  anchorRect.Height = (float)element.ActualHeight();
-
-  return anchorRect;
+  return anchorTopLeftConverted;
 }
 
 void NativeUIManager::measure(
@@ -1015,15 +1007,21 @@ void NativeUIManager::measure(
     }
   }
 
-  winrt::Rect rectInParentCoords = GetRectOfElementInParentCoords(feView, feRootView);
+  auto x = 0.f;
+  auto y = 0.f;
+  if (const auto relativePosition = GetRelativePosition(feView, feRootView)) {
+    x = relativePosition->X;
+    y = relativePosition->Y;
+  }
 
   // TODO: The first two params are for the local position. It's unclear what
   // this is exactly, but it is not used anyway.
   //  Either codify this non-use or determine if and how we can send the needed
   //  data.
-  m_context.JSDispatcher().Post([callback = std::move(callback), react = rectInParentCoords]() {
-    callback(0, 0, react.Width, react.Height, react.X, react.Y);
-  });
+  m_context.JSDispatcher().Post(
+      [callback = std::move(callback), x, y, w = node.m_layout.Width, h = node.m_layout.Height]() {
+        callback(0, 0, w, h, x, y);
+      });
 }
 
 void NativeUIManager::measureInWindow(
@@ -1040,7 +1038,7 @@ void NativeUIManager::measureInWindow(
     auto positionInWindow = windowTransform.TransformPoint({0, 0});
 
     m_context.JSDispatcher().Post(
-        [callback = std::move(callback), pos = positionInWindow, w = view.ActualWidth(), h = view.ActualHeight()]() {
+        [callback = std::move(callback), pos = positionInWindow, w = node.m_layout.Width, h = node.m_layout.Height]() {
           callback(pos.X, pos.Y, w, h);
         });
     return;
@@ -1062,8 +1060,8 @@ void NativeUIManager::measureLayout(
     const auto ancenstorElement = ancestor.GetView().as<xaml::FrameworkElement>();
 
     const auto ancestorTransform = targetElement.TransformToVisual(ancenstorElement);
-    const auto width = static_cast<float>(targetElement.ActualWidth());
-    const auto height = static_cast<float>(targetElement.ActualHeight());
+    const auto width = static_cast<float>(target.m_layout.Width);
+    const auto height = static_cast<float>(target.m_layout.Height);
     const auto transformedBounds = ancestorTransform.TransformBounds(winrt::Rect(0, 0, width, height));
 
     m_context.JSDispatcher().Post([callback = std::move(callback), rect = transformedBounds]() {
@@ -1116,15 +1114,21 @@ void NativeUIManager::findSubviewIn(
     }
   }
 
-  if (foundElement == nullptr) {
+  const auto foundNode = static_cast<ShadowNodeBase *>(m_host->FindShadowNodeForTag(foundTag));
+
+  const auto position = GetRelativePosition(foundElement, rootUIView);
+  if (!foundNode || !position) {
     m_context.JSDispatcher().Post([callback = std::move(callback)]() { callback(0, 0, 0, 0, 0); });
     return;
   }
 
   m_context.JSDispatcher().Post(
-      [callback = std::move(callback), foundTag, box = GetRectOfElementInParentCoords(foundElement, rootUIView)]() {
-        callback(static_cast<double>(foundTag), box.X, box.Y, box.Width, box.Height);
-      });
+      [callback = std::move(callback),
+       foundTag,
+       x = position->X,
+       y = position->Y,
+       w = foundNode->m_layout.Width,
+       h = foundNode->m_layout.Height]() { callback(static_cast<double>(foundTag), x, y, w, h); });
 }
 
 void NativeUIManager::focus(int64_t reactTag) {
