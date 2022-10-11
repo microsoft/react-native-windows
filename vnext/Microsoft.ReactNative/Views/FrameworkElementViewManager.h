@@ -18,7 +18,6 @@ class REACTWINDOWS_EXPORT FrameworkElementViewManager : public ViewManagerBase {
 
   // Helper functions related to setting/updating TransformMatrix
   void RefreshTransformMatrix(ShadowNodeBase *shadowNode);
-  
   void StartTransformAnimation(xaml::UIElement uielement, comp::CompositionPropertySet transformPS);
 
   virtual void TransferProperties(const XamlView &oldView, const XamlView &newView) override;
@@ -35,12 +34,12 @@ class REACTWINDOWS_EXPORT FrameworkElementViewManager : public ViewManagerBase {
       ShadowNodeBase *shadowNode,
       winrt::Windows::Foundation::Numerics::float4x4 transformMatrix);
 
-  void ApplyAccessability(
+  void ApplyAccessibility(
       winrt::Windows::UI::Xaml::FrameworkElement const &element,
       winrt::Windows::UI::Xaml::Automation::Peers::AccessibilityView const &value);
 
 
-  void ClearAccessability(winrt::Windows::UI::Xaml::FrameworkElement const &element);
+  void ClearAccessibility(winrt::Windows::UI::Xaml::FrameworkElement const &element);
 
 };
 
