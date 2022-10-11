@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Adds view flattening to Paper UIManager",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
