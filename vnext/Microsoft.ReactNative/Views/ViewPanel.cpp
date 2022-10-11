@@ -109,11 +109,13 @@ winrt::AutomationPeer ViewPanel::OnCreateAutomationPeer() {
 }
 
 /*static*/ void ViewPanel::SetTop(xaml::UIElement const &element, double value) {
+  const auto oldValue = GetTop(element);
   element.SetValue(TopProperty(), winrt::box_value<double>(value));
   InvalidateForArrange(element);
 }
 
 /*static*/ void ViewPanel::SetLeft(xaml::UIElement const &element, double value) {
+  const auto oldValue = GetLeft(element);
   element.SetValue(LeftProperty(), winrt::box_value<double>(value));
   InvalidateForArrange(element);
 }

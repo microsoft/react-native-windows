@@ -89,6 +89,11 @@ YGSize DefaultYogaSelfMeasureFunc(
   return desiredSize;
 }
 
+static inline bool YogaDoubleEquals(double x, double y) {
+  // Epsilon value of 0.0001 is taken from the YGDoubleEqual method in Yoga.
+  return std::fabs(x - y) < 0.0001;
+};
+
 ViewManagerBase::ViewManagerBase(const Mso::React::IReactContext &context)
     : m_context(&context),
       m_batchingEventEmitter{std::make_shared<React::BatchingEventEmitter>(Mso::CntPtr(&context))} {}
@@ -377,8 +382,12 @@ void ViewManagerBase::SetLayoutProps(
   auto fe = element.as<xaml::FrameworkElement>();
 
   // Set Position & Size Properties
-  ViewPanel::SetLeft(element, left);
-  ViewPanel::SetTop(element, top);
+  if (!YogaDoubleEquals(ViewPanel::GetLeft(element), left)) {
+    ViewPanel::SetLeft(element, left);
+  }
+  if (!YogaDoubleEquals(ViewPanel::GetTop(element), top)) {
+    ViewPanel::SetTop(element, top);
+  }
 
   fe.Width(width);
   fe.Height(height);
