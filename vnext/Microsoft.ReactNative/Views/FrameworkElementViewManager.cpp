@@ -714,33 +714,33 @@ void FrameworkElementViewManager::RefreshTransformMatrix(ShadowNodeBase *shadowN
 void FrameworkElementViewManager::ApplyAccessibility(winrt::Windows::UI::Xaml::FrameworkElement const& element,
   winrt::Windows::UI::Xaml::Automation::Peers::AccessibilityView const& value) {
 
-  xaml::Automation::AutomationProperties::SetAccessibilityView(element, value);
-  
-  int childrenCount = winrt::VisualTreeHelper::GetChildrenCount(element);
+ xaml::Automation::AutomationProperties::SetAccessibilityView(element, value);
 
-  //iterate through all of the children. 
-  for (int i = 0; i < childrenCount; i++){
-    auto child = winrt::VisualTreeHelper::GetChild(element, i);
+  auto children = element.GetChildrenInTabFocusOrder();
+  if (children != nullptr) {
+    for (auto const &child : children) {
+      xaml::Automation::AutomationProperties::SetAccessibilityView(child, value);
 
-    if (auto FEchild = child.try_as<xaml::FrameworkElement>()) {
-      //recursively apply accessibility 
-      ApplyAccessibility(FEchild, value);
+      // maybe recursively ?
+      if (auto childElement = child.try_as<winrt::Windows::UI::Xaml::FrameworkElement>()) {
+        ApplyAccessibility(childElement, value);
+      }
     }
   }
 }
 
 void FrameworkElementViewManager::ClearAccessibility(winrt::Windows::UI::Xaml::FrameworkElement const& element) {
+
   element.ClearValue(xaml::Automation::AutomationProperties::AccessibilityViewProperty());
+  auto children = element.GetChildrenInTabFocusOrder();
+  if (children != nullptr) {
+    for (auto const &child : children) {
+      child.ClearValue(xaml::Automation::AutomationProperties::AccessibilityViewProperty());
 
-  int childrenCount = winrt::VisualTreeHelper::GetChildrenCount(element);
-
-  // iterate through all of the children.
-  for (int i = 0; i < childrenCount; i++) {
-    auto child = winrt::VisualTreeHelper::GetChild(element, i);
-
-    if (auto FEchild = child.try_as<xaml::FrameworkElement>()) {
-      // recursively apply accessibility
-      ClearAccessibility(FEchild);
+      // maybe recursively ?
+      if (auto childElement = child.try_as<winrt::Windows::UI::Xaml::FrameworkElement>()) {
+        ClearAccessibility(childElement);
+      }
     }
   }
 }
