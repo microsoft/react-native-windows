@@ -7,6 +7,7 @@ module.exports = {
       // Also not clean
       rules: {
         '@typescript-eslint/no-unused-vars': 'off',
+        '@typescript-eslint/no-unnecessary-condition': 'off'
       },
     },
   ],
