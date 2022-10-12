@@ -37,35 +37,16 @@ export default class Bootstrap extends React.Component<
   render() {
     return (
       <View
-        //importantForAccessibility="no-hide-descendants"
+        importantForAccessibility="no-hide-descendants"
         style={styles.container}>
         <View
           importantForAccessibility="no-hide-descendants"
-          style={styles.item}
           accessibilityLabel="FIRST ITEM"
           focusable>
           <Text style={styles.text}>Welcome to React Native! (FIRST ITEM)</Text>
         </View>
         <TouchableHighlight
-          style={styles.item}
           importantForAccessibility="no-hide-descendants"
-          accessibilityLabel="counter"
-          accessible={true}
-          accessibilityRole="button"
-          accessibilityValue={{text: `${this.state.counterValue}`}}
-          onPress={() => {
-            this.setState({counterValue: this.state.counterValue + 1});
-          }}>
-          <Text style={styles.text}>
-            Testing acessibilityValue:text, Click to increase:{' '}
-            {this.state.counterValue}
-          </Text>
-        </TouchableHighlight>
-        <TouchableHighlight
-          importantForAccessibility="no-hide-descendants"
-          style={styles.item}
-          accessibilityLabel="button imitating slider control"
-          accessible={true}
           accessibilityRole="adjustable"
           accessibilityValue={{
             min: 0,
@@ -80,39 +61,6 @@ export default class Bootstrap extends React.Component<
             {this.state.sliderValue}
           </Text>
         </TouchableHighlight>
-        <TouchableWithoutFeedback
-          importantForAccessibility="no-hide-descendants"
-          style={styles.item}
-          accessibilityLabel="TEST Announce For Accessibility"
-          onPress={() => {
-            AccessibilityInfo.announceForAccessibility('Testing Testing 1 2 3');
-          }}
-          {...{
-            // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
-            focusable: true,
-          }}>
-          <Text style={styles.text}>
-            TEST announceForAccessibility with TouchableWithoutFeedback
-          </Text>
-        </TouchableWithoutFeedback>
-        <TouchableOpacity
-          importantForAccessibility="no-hide-descendants"
-          style={styles.item}
-          accessibilityLabel="TEST Set Accessibility Focus"
-          onPress={() => {
-            const reactTag = findNodeHandle(this.myElement.current);
-            if (reactTag) {
-              AccessibilityInfo.setAccessibilityFocus(reactTag);
-            }
-          }}
-          {...{
-            // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
-            focusable: true,
-          }}>
-          <Text style={styles.text}>
-            TEST setAccessibilityFocus with touchableopacity
-          </Text>
-        </TouchableOpacity>
         <TextInput
           importantForAccessibility="no-hide-descendants"
           ref={this.myElement}

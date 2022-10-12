@@ -138,6 +138,7 @@ void FrameworkElementViewManager::GetNativeProps(const winrt::Microsoft::ReactNa
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"tooltip", L"string");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"accessibilityActions", L"array");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"accessibilityLiveRegion", L"string");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"importantForAccessibility", L"string");
   writer.WritePropertyName(L"accessibilityValue");
   GetAccessibilityValueProps(writer);
 }
@@ -290,15 +291,21 @@ bool FrameworkElementViewManager::UpdateProperty(
         element.ClearValue(xaml::Automation::AutomationProperties::AccessibilityViewProperty());
       }
     } else if (propertyName == "importantForAccessibility") {
-      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
-        if (propertyValue.AsBoolean()) {
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
+        auto value = propertyValue.AsString();
+
+        if (value == "no-hide-descendants") {
+          ApplyAccessibility(element, winrt::AccessibilityView::Raw);
+        }
+      }
+     /*
           ApplyAccessibility(element, winrt::AccessibilityView::Content);
         } else {
           ApplyAccessibility(element, winrt::AccessibilityView::Raw);
         }
       } else if (propertyValue.IsNull()) {
         ClearAccessibility(element);
-      }
+      }*/
     } else if (propertyName == "accessibilityLiveRegion") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
         auto value = propertyValue.AsString();
