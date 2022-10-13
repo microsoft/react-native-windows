@@ -72,14 +72,16 @@ class TextShadowNode final : public ShadowNodeBase {
       auto run = childNode.GetView().try_as<winrt::Run>();
       if (run != nullptr) {
         m_firstChildNode = &child;
-        auto textBlock = this->GetView().as<xaml::Controls::TextBlock>();
-        textBlock.Text(run.Text());
+        auto textBlock = this->GetView().as<xaml::Controls::RichTextBlock>();
+        auto paragraph = new Paragraph();
+        paragraph.Inlines.Add(run);
+        textBlock.Blocks = paragraph;
         addInline = false;
       }
     } else if (m_firstChildNode != nullptr) {
       assert(m_children.size() == 2);
-      auto textBlock = this->GetView().as<xaml::Controls::TextBlock>();
-      textBlock.ClearValue(xaml::Controls::TextBlock::TextProperty());
+      auto textBlock = this->GetView().as<xaml::Controls::RichTextBlock>();
+      textBlock.Blocks().Clear();
       Super::AddView(*m_firstChildNode, 0);
       m_firstChildNode = nullptr;
     }
@@ -93,8 +95,8 @@ class TextShadowNode final : public ShadowNodeBase {
 
   void removeAllChildren() override {
     if (m_firstChildNode) {
-      auto textBlock = this->GetView().as<xaml::Controls::TextBlock>();
-      textBlock.ClearValue(xaml::Controls::TextBlock::TextProperty());
+      auto textBlock = this->GetView().as<xaml::Controls::RichTextBlock>();
+      textBlock.Blocks().Clear();
       m_firstChildNode = nullptr;
     } else {
       Super::removeAllChildren();
@@ -105,8 +107,8 @@ class TextShadowNode final : public ShadowNodeBase {
   void RemoveChildAt(int64_t indexToRemove) override {
     if (m_firstChildNode) {
       assert(indexToRemove == 0);
-      auto textBlock = this->GetView().as<xaml::Controls::TextBlock>();
-      textBlock.ClearValue(xaml::Controls::TextBlock::TextProperty());
+      auto textBlock = this->GetView().as<xaml::Controls::RichTextBlock>();
+      textBlock.Blocks().Clear();
       m_firstChildNode = nullptr;
     } else {
       Super::RemoveChildAt(indexToRemove);
