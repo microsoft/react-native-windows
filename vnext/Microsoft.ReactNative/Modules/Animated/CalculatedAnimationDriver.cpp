@@ -9,7 +9,7 @@
 namespace Microsoft::ReactNative {
 
 std::tuple<comp::CompositionAnimation, comp::CompositionScopedBatch> CalculatedAnimationDriver::MakeAnimation(
-    const folly::dynamic & /*config*/) {
+    const winrt::Microsoft::ReactNative::JSValueObject & /*config*/) {
   const auto [scopedBatch, animation, easingFunction] = []() {
     const auto compositor = Microsoft::ReactNative::GetCompositor();
     return std::make_tuple(

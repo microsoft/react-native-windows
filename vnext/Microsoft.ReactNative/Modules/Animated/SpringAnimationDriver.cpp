@@ -12,21 +12,20 @@ SpringAnimationDriver::SpringAnimationDriver(
     int64_t id,
     int64_t animatedValueTag,
     const Callback &endCallback,
-    const folly::dynamic &config,
+    const winrt::Microsoft::ReactNative::JSValueObject &config,
     const std::shared_ptr<NativeAnimatedNodeManager> &manager,
-    const folly::dynamic &dynamicToValues)
+    const winrt::Microsoft::ReactNative::JSValueArray &dynamicToValues)
     : CalculatedAnimationDriver(id, animatedValueTag, endCallback, config, manager),
-      m_dynamicToValues(dynamicToValues) {
-  m_springStiffness = config.find(s_springStiffnessParameterName).dereference().second.asDouble();
-  m_springDamping = config.find(s_springDampingParameterName).dereference().second.asDouble();
-  m_springMass = config.find(s_springMassParameterName).dereference().second.asDouble();
-  m_initialVelocity = config.find(s_initialVelocityParameterName).dereference().second.asDouble();
-  m_endValue = config.find(s_endValueParameterName).dereference().second.asDouble();
-  m_restSpeedThreshold = config.find(s_restSpeedThresholdParameterName).dereference().second.asDouble();
-  m_displacementFromRestThreshold =
-      config.find(s_displacementFromRestThresholdParameterName).dereference().second.asDouble();
-  m_overshootClampingEnabled = config.find(s_overshootClampingEnabledParameterName).dereference().second.asBool();
-  m_iterations = static_cast<int>(config.find(s_iterationsParameterName).dereference().second.asDouble());
+      m_dynamicToValues(dynamicToValues.Copy()) {
+  m_springStiffness = config[s_springStiffnessParameterName].AsDouble();
+  m_springDamping = config[s_springDampingParameterName].AsDouble();
+  m_springMass = config[s_springMassParameterName].AsDouble();
+  m_initialVelocity = config[s_initialVelocityParameterName].AsDouble();
+  m_endValue = config[s_endValueParameterName].AsDouble();
+  m_restSpeedThreshold = config[s_restSpeedThresholdParameterName].AsDouble();
+  m_displacementFromRestThreshold = config[s_displacementFromRestThresholdParameterName].AsDouble();
+  m_overshootClampingEnabled = config[s_overshootClampingEnabledParameterName].AsBoolean();
+  m_iterations = static_cast<int>(config[s_iterationsParameterName].AsDouble());
 }
 
 bool SpringAnimationDriver::IsAnimationDone(
@@ -42,7 +41,7 @@ std::tuple<float, double> SpringAnimationDriver::GetValueAndVelocityForTime(doub
   const auto toValue = [this, time]() {
     const auto frameFromTime = static_cast<int>(time * 60.0);
     if (frameFromTime < static_cast<int>(m_dynamicToValues.size())) {
-      return m_startValue + (m_dynamicToValues[frameFromTime].asDouble() * (m_endValue - m_startValue));
+      return m_startValue + (m_dynamicToValues[frameFromTime].AsDouble() * (m_endValue - m_startValue));
     }
     return m_endValue;
   }();

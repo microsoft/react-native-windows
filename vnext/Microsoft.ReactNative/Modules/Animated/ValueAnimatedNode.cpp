@@ -9,16 +9,14 @@
 namespace Microsoft::ReactNative {
 ValueAnimatedNode::ValueAnimatedNode(
     int64_t tag,
-    const folly::dynamic &config,
+    const winrt::Microsoft::ReactNative::JSValueObject &config,
     const std::shared_ptr<NativeAnimatedNodeManager> &manager)
     : AnimatedNode(tag, manager) {
   // TODO: Islands - need to get the XamlView associated with this animation in order to
   // use the compositor Microsoft::ReactNative::GetCompositor(xamlView)
   m_propertySet = Microsoft::ReactNative::GetCompositor().CreatePropertySet();
-  m_propertySet.InsertScalar(
-      s_valueName, static_cast<float>(config.find(s_jsValueName).dereference().second.asDouble()));
-  m_propertySet.InsertScalar(
-      s_offsetName, static_cast<float>(config.find(s_jsOffsetName).dereference().second.asDouble()));
+  m_propertySet.InsertScalar(s_valueName, static_cast<float>(config[s_jsValueName].AsDouble()));
+  m_propertySet.InsertScalar(s_offsetName, static_cast<float>(config[s_jsOffsetName].AsDouble()));
 }
 
 ValueAnimatedNode::ValueAnimatedNode(int64_t tag, const std::shared_ptr<NativeAnimatedNodeManager> &manager)

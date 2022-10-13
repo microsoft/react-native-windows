@@ -16,6 +16,8 @@
 #include "TransformAnimatedNode.h"
 #include "ValueAnimatedNode.h"
 
+#include "codegen/NativeAnimatedModuleSpec.g.h"
+
 namespace Microsoft::ReactNative {
 /// <summary>
 /// This is the main class that coordinates how native animated JS
@@ -27,7 +29,7 @@ namespace Microsoft::ReactNative {
 ///
 /// </summary>
 
-typedef std::function<void(std::vector<folly::dynamic>)> Callback;
+typedef std::function<void(bool)> EndCallback;
 
 class AnimatedNode;
 class StyleAnimatedNode;
@@ -41,10 +43,10 @@ class NativeAnimatedNodeManager {
  public:
   void CreateAnimatedNode(
       int64_t tag,
-      const folly::dynamic &config,
-      const Mso::CntPtr<Mso::React::IReactContext> &context,
+      const winrt::Microsoft::ReactNative::JSValueObject &config,
+      const winrt::Microsoft::ReactNative::ReactContext &context,
       const std::shared_ptr<NativeAnimatedNodeManager> &manager);
-  void GetValue(int64_t animatedNodeTag, const Callback &endCallback);
+  void GetValue(int64_t animatedNodeTag, std::function<void(double)> const &endCallback);
   void ConnectAnimatedNodeToView(int64_t propsNodeTag, int64_t viewTag);
   void DisconnectAnimatedNodeToView(int64_t propsNodeTag, int64_t viewTag);
   void ConnectAnimatedNode(int64_t parentNodeTag, int64_t childNodeTag);
@@ -58,15 +60,15 @@ class NativeAnimatedNodeManager {
       int64_t animationId,
       int64_t animatedNodeTag,
       int64_t animatedToValueTag,
-      const folly::dynamic &animationConfig,
-      const Callback &endCallback,
+      const winrt::Microsoft::ReactNative::JSValueObject &animationConfig,
+      const EndCallback &endCallback,
       const std::shared_ptr<NativeAnimatedNodeManager> &manager,
       bool track = true);
   void StartAnimatingNode(
       int64_t animationId,
       int64_t animatedNodeTag,
-      const folly::dynamic &animationConfig,
-      const Callback &endCallback,
+      const winrt::Microsoft::ReactNative::JSValueObject &animationConfig,
+      const EndCallback &endCallback,
       const std::shared_ptr<NativeAnimatedNodeManager> &manager);
   void DropAnimatedNode(int64_t tag);
   void SetAnimatedNodeValue(int64_t tag, double value);
@@ -76,11 +78,11 @@ class NativeAnimatedNodeManager {
   void AddAnimatedEventToView(
       int64_t viewTag,
       const std::string &eventName,
-      const folly::dynamic &eventMapping,
+      const ReactNativeSpecs::AnimatedModuleSpec_EventMapping &eventMapping,
       const std::shared_ptr<NativeAnimatedNodeManager> &manager);
   void RemoveAnimatedEventFromView(int64_t viewTag, const std::string &eventName, int64_t animatedValueTag);
   void ProcessDelayedPropsNodes();
-  void AddDelayedPropsNode(int64_t propsNodeTag, const Mso::CntPtr<Mso::React::IReactContext> &context);
+  void AddDelayedPropsNode(int64_t propsNodeTag, const winrt::Microsoft::ReactNative::ReactContext &context);
 
   AnimatedNode *GetAnimatedNode(int64_t tag);
   ValueAnimatedNode *GetValueAnimatedNode(int64_t tag);

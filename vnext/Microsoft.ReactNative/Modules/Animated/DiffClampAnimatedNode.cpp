@@ -9,12 +9,12 @@
 namespace Microsoft::ReactNative {
 DiffClampAnimatedNode::DiffClampAnimatedNode(
     int64_t tag,
-    const folly::dynamic &config,
+    const winrt::Microsoft::ReactNative::JSValueObject &config,
     const std::shared_ptr<NativeAnimatedNodeManager> &manager)
     : ValueAnimatedNode(tag, manager) {
-  m_inputNodeTag = static_cast<int64_t>(config.find(s_inputName).dereference().second.asDouble());
-  m_min = config.find(s_minName).dereference().second.asDouble();
-  m_max = config.find(s_maxName).dereference().second.asDouble();
+  m_inputNodeTag = static_cast<int64_t>(config[s_inputName].AsDouble());
+  m_min = config[s_minName].AsDouble();
+  m_max = config[s_maxName].AsDouble();
 
   m_propertySet.StartAnimation(s_valueName, [node = m_inputNodeTag, min = m_min, max = m_max, manager]() {
     const auto anim = Microsoft::ReactNative::GetCompositor().CreateExpressionAnimation();
