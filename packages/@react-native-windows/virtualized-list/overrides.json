@@ -49,15 +49,8 @@
       "baseHash": "59faca4e3bbd7b761fe49073749e3c75665b4068"
     },
     {
-      "type": "copy",
-      "file": "src/VirtualizedListProps.js",
-      "baseFile": "Libraries/Lists/VirtualizedListProps.js",
-      "baseHash": "0012b8b4ee449a771c9e877c5ad023f3a4316b0d",
-      "issue": 10694
-    },
-    {
       "type": "patch",
-      "file": "src/VirtualizedListProps.windows.js",
+      "file": "src/VirtualizedListProps.js",
       "baseFile": "Libraries/Lists/VirtualizedListProps.js",
       "baseHash": "0012b8b4ee449a771c9e877c5ad023f3a4316b0d",
       "issue": 10694
