@@ -39,6 +39,7 @@ export class Metro {
       this.metroProcess.stdout!.addListener('data', Metro.logMetroOutput);
 
       // trying to sync with Metro being ready to serve packages
+      /*
       const findReadyMessage = (data: any) => {
         const s = data.toString();
         if (s.includes('Welcome to Metro!')) {
@@ -47,8 +48,7 @@ export class Metro {
           resolve();
         }
       };
-
-      this.metroProcess.stdout!.addListener('data', findReadyMessage);
+      this.metroProcess.stdout!.addListener('data', findReadyMessage);*/
     });
   }
 
