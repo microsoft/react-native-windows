@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20220729-2025-a21a1f845",
+  "baseVersion": "0.0.0-20220812-2104-23429330a",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "80da3e01a99821e4813d04b0a8226c74f9c89217"
+      "baseHash": "e7e5f1d81cb946157ecfb9392585958b5fac442d"
     },
     {
       "type": "derived",
@@ -118,7 +118,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/LayoutableShadowNode.cpp",
       "baseFile": "ReactCommon/react/renderer/core/LayoutableShadowNode.cpp",
-      "baseHash": "9c4ba7b81ea2b68089ac0b9d99eb3cad4d42ad05"
+      "baseHash": "148bb40356833ede07ee3fd713069b213d60eb0b"
     },
     {
       "type": "patch",
@@ -131,7 +131,7 @@
       "type": "copy",
       "directory": "ReactCopies/IntegrationTests",
       "baseDirectory": "IntegrationTests",
-      "baseHash": "f15ff3d921e0a1a0de946642cbf8e7f6e675a2fc",
+      "baseHash": "243c082ddf2880ca3c5d9ef10099cae6d8357737",
       "issue": 4054
     },
     {
@@ -159,7 +159,7 @@
       "type": "derived",
       "file": "src/index.windows.js",
       "baseFile": "index.js",
-      "baseHash": "5ec87ef7736ad3b7d03f627ff5ac6475ce0bc6bf"
+      "baseHash": "876181982a1e0c4214571656e2185e1e7015b01c"
     },
     {
       "type": "platform",
@@ -239,7 +239,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Button.windows.js",
       "baseFile": "Libraries/Components/Button.js",
-      "baseHash": "d614f54b5d5554eb7e2b16f8b05db0dc17cced69"
+      "baseHash": "fe364c49ba5f393323b41202bc80bf58834ef259"
     },
     {
       "type": "copy",
@@ -419,7 +419,7 @@
       "type": "copy",
       "file": "src/Libraries/Lists/__tests__/FlatList-test.js",
       "baseFile": "Libraries/Lists/__tests__/FlatList-test.js",
-      "baseHash": "524bd967f806a01272162bdec906780acdea064c",
+      "baseHash": "7a706826e19aad7b31fb1f918443a37ee95121b6",
       "issue": 0
     },
     {
@@ -433,13 +433,13 @@
       "type": "copy",
       "file": "src/Libraries/Lists/__tests__/ViewabilityHelper-test.js",
       "baseFile": "Libraries/Lists/__tests__/ViewabilityHelper-test.js",
-      "baseHash": "ab22d57f3ed7af8382dc2fac72eaca53073d9a41"
+      "baseHash": "292b601620f14a4e6fa74483e139aa9fb9499620"
     },
     {
       "type": "copy",
       "file": "src/Libraries/Lists/__tests__/VirtualizedList-test.js",
       "baseFile": "Libraries/Lists/__tests__/VirtualizedList-test.js",
-      "baseHash": "ee51a288629bcc3f043204a4cc99a3567bc7f736",
+      "baseHash": "3ee0fac81b66838d1d54ae3f0deb25209d991cd5",
       "issue": 0
     },
     {
@@ -453,12 +453,19 @@
       "type": "copy",
       "file": "src/Libraries/Lists/__tests__/VirtualizeUtils-test.js",
       "baseFile": "Libraries/Lists/__tests__/VirtualizeUtils-test.js",
-      "baseHash": "6495ce722e6a7d44bb1527bf56b426a2c446ff9d",
+      "baseHash": "20491aae8e327dcb678e6ac4ab9a310d019d9e5a",
       "issue": 0
     },
     {
       "type": "platform",
       "file": "src/Libraries/Lists/VirtualizedList.windows.js"
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/Lists/VirtualizedListProps.windows.js",
+      "baseFile": "Libraries/Lists/VirtualizedListProps.js",
+      "baseHash": "0012b8b4ee449a771c9e877c5ad023f3a4316b0d",
+      "issue": 10694
     },
     {
       "type": "derived",

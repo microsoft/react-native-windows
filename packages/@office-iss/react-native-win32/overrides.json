@@ -7,19 +7,19 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20220729-2025-a21a1f845",
+  "baseVersion": "0.0.0-20220812-2104-23429330a",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "80da3e01a99821e4813d04b0a8226c74f9c89217"
+      "baseHash": "e7e5f1d81cb946157ecfb9392585958b5fac442d"
     },
     {
       "type": "derived",
       "file": "src/index.win32.js",
       "baseFile": "index.js",
-      "baseHash": "5ec87ef7736ad3b7d03f627ff5ac6475ce0bc6bf"
+      "baseHash": "876181982a1e0c4214571656e2185e1e7015b01c"
     },
     {
       "type": "patch",
@@ -284,7 +284,7 @@
       "type": "copy",
       "file": "src/Libraries/Lists/__tests__/FlatList-test.js",
       "baseFile": "Libraries/Lists/__tests__/FlatList-test.js",
-      "baseHash": "524bd967f806a01272162bdec906780acdea064c",
+      "baseHash": "7a706826e19aad7b31fb1f918443a37ee95121b6",
       "issue": 0
     },
     {
@@ -298,13 +298,13 @@
       "type": "copy",
       "file": "src/Libraries/Lists/__tests__/ViewabilityHelper-test.js",
       "baseFile": "Libraries/Lists/__tests__/ViewabilityHelper-test.js",
-      "baseHash": "ab22d57f3ed7af8382dc2fac72eaca53073d9a41"
+      "baseHash": "292b601620f14a4e6fa74483e139aa9fb9499620"
     },
     {
       "type": "copy",
       "file": "src/Libraries/Lists/__tests__/VirtualizedList-test.js",
       "baseFile": "Libraries/Lists/__tests__/VirtualizedList-test.js",
-      "baseHash": "ee51a288629bcc3f043204a4cc99a3567bc7f736",
+      "baseHash": "3ee0fac81b66838d1d54ae3f0deb25209d991cd5",
       "issue": 0
     },
     {
@@ -318,7 +318,7 @@
       "type": "copy",
       "file": "src/Libraries/Lists/__tests__/VirtualizeUtils-test.js",
       "baseFile": "Libraries/Lists/__tests__/VirtualizeUtils-test.js",
-      "baseHash": "6495ce722e6a7d44bb1527bf56b426a2c446ff9d",
+      "baseHash": "20491aae8e327dcb678e6ac4ab9a310d019d9e5a",
       "issue": 0
     },
     {
@@ -435,7 +435,7 @@
       "type": "derived",
       "file": "src/Libraries/Text/TextNativeComponent.win32.js",
       "baseFile": "Libraries/Text/TextNativeComponent.js",
-      "baseHash": "27d6b7e72f84abed594050d86808190add804b87",
+      "baseHash": "6b84be7210b455af81ac8730be4b83cb3b9a7b15",
       "issue": 7074
     },
     {

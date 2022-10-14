@@ -14,6 +14,10 @@
 ; Ignore "BUCK" generated dirs
 <PROJECT_ROOT>/\.buckd/
 
+; Ignore "BUCK" generated dirs
+<PROJECT_ROOT>/packages/@react-native-windows/virtualized-list/src/VirtualizedListProps.js
+src/VirtualizedListProps.js
+
 ; Flow doesn't support platforms
 .*/Libraries/Utilities/LoadingView.js
 
@@ -50,7 +54,7 @@ suppress_type=$FlowFixMeProps
 suppress_type=$FlowFixMeState
 suppress_type=$FlowFixMeEmpty
 
-experimental.env_mode=resolved
+inference_mode=constrain_writes
 
 [lints]
 sketchy-null-number=warn
@@ -72,4 +76,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.183.1
+^0.184.0
