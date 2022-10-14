@@ -208,20 +208,34 @@ export function generate(
     methodonly,
   });
 
-  const generatorPropsH =
-    require(path.resolve(rncodegenPath, 'lib/generators/components/GeneratePropsH')).generate;
-  const generatorPropsCPP =
-    require(path.resolve(rncodegenPath, 'lib/generators/components/GeneratePropsCPP')).generate;
-  const generatorShadowNodeH =
-    require(path.resolve(rncodegenPath, 'lib/generators/components/GenerateShadowNodeH')).generate;
-  const generatorShadowNodeCPP =
-    require(path.resolve(rncodegenPath, 'lib/generators/components/GenerateShadowNodeCPP')).generate;
-  const generatorComponentDescriptorH =
-    require(path.resolve(rncodegenPath, 'lib/generators/components/GenerateComponentDescriptorH')).generate;
-  const generatorEventEmitterH =
-    require(path.resolve(rncodegenPath, 'lib/generators/components/GenerateEventEmitterH')).generate;
-  const generatorEventEmitterCPP =
-    require(path.resolve(rncodegenPath, 'lib/generators/components/GenerateEventEmitterCpp')).generate;
+  const generatorPropsH = require(path.resolve(
+    rncodegenPath,
+    'lib/generators/components/GeneratePropsH',
+  )).generate;
+  const generatorPropsCPP = require(path.resolve(
+    rncodegenPath,
+    'lib/generators/components/GeneratePropsCPP',
+  )).generate;
+  const generatorShadowNodeH = require(path.resolve(
+    rncodegenPath,
+    'lib/generators/components/GenerateShadowNodeH',
+  )).generate;
+  const generatorShadowNodeCPP = require(path.resolve(
+    rncodegenPath,
+    'lib/generators/components/GenerateShadowNodeCPP',
+  )).generate;
+  const generatorComponentDescriptorH = require(path.resolve(
+    rncodegenPath,
+    'lib/generators/components/GenerateComponentDescriptorH',
+  )).generate;
+  const generatorEventEmitterH = require(path.resolve(
+    rncodegenPath,
+    'lib/generators/components/GenerateEventEmitterH',
+  )).generate;
+  const generatorEventEmitterCPP = require(path.resolve(
+    rncodegenPath,
+    'lib/generators/components/GenerateEventEmitterCpp',
+  )).generate;
 
   normalizeFileMap(
     generateNM2(libraryName, schema, moduleSpecName),
