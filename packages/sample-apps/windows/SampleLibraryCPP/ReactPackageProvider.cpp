@@ -12,6 +12,8 @@
 #include "SampleModuleCpp.h"
 
 #include "MyModule.h"
+#include "MyJsiModule.h"
+#include "TurboModuleProvider.h"
 
 using namespace winrt::Microsoft::ReactNative;
 
@@ -20,7 +22,8 @@ namespace winrt::SampleLibraryCpp::implementation {
 void ReactPackageProvider::CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept {
   AddAttributedModules(packageBuilder, true);
 
-  packageBuilder.AddModule(L"MyModule", MakeTurboModuleProvider<::SampleLibraryCpp::MyModule>());
+  winrt::Microsoft::ReactNative::AddTurboModuleProvider<::SampleLibraryCpp::MyJsiModuleCxx>(packageBuilder, L"MyJsiModule");
+
   packageBuilder.AddViewManager(
       L"CustomUserControlViewManagerCpp", []() { return winrt::make<CustomUserControlViewManagerCpp>(); });
   packageBuilder.AddViewManager(L"CircleViewManagerCpp", []() { return winrt::make<CircleViewManagerCpp>(); });

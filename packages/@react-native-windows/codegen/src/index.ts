@@ -208,26 +208,38 @@ export function generate(
     methodonly,
   });
 
+  const generateJsiModuleH = require(path.resolve(rncodegenPath, 'lib/generators/modules/GenerateModuleH')).generate;
+  const generateJsiModuleCpp = require(path.resolve(rncodegenPath, 'lib/generators/modules/GenerateModuleCpp')).generate;
   const generatorPropsH =
-    require('react-native-tscodegen/lib/rncodegen/src/generators/components/GeneratePropsH').generate;
+    require(path.resolve(rncodegenPath, 'lib/generators/components/GeneratePropsH')).generate;
   const generatorPropsCPP =
-    require('react-native-tscodegen/lib/rncodegen/src/generators/components/GeneratePropsCPP').generate;
+    require(path.resolve(rncodegenPath, 'lib/generators/components/GeneratePropsCPP')).generate;
   const generatorShadowNodeH =
-    require('react-native-tscodegen/lib/rncodegen/src/generators/components/GenerateShadowNodeH').generate;
+    require(path.resolve(rncodegenPath, 'lib/generators/components/GenerateShadowNodeH')).generate;
   const generatorShadowNodeCPP =
-    require('react-native-tscodegen/lib/rncodegen/src/generators/components/GenerateShadowNodeCPP').generate;
+    require(path.resolve(rncodegenPath, 'lib/generators/components/GenerateShadowNodeCPP')).generate;
   const generatorComponentDescriptorH =
-    require('react-native-tscodegen/lib/rncodegen/src/generators/components/GenerateComponentDescriptorH').generate;
+    require(path.resolve(rncodegenPath, 'lib/generators/components/GenerateComponentDescriptorH')).generate;
   const generatorEventEmitterH =
-    require('react-native-tscodegen/lib/rncodegen/src/generators/components/GenerateEventEmitterH').generate;
+    require(path.resolve(rncodegenPath, 'lib/generators/components/GenerateEventEmitterH')).generate;
   const generatorEventEmitterCPP =
-    require('react-native-tscodegen/lib/rncodegen/src/generators/components/GenerateEventEmitterCpp').generate;
+    require(path.resolve(rncodegenPath, 'lib/generators/components/GenerateEventEmitterCpp')).generate;
 
-  normalizeFileMap(
-    generateNM2(libraryName, schema, moduleSpecName),
-    outputDirectory,
-    generatedFiles,
-  );
+  const moduleGenerators = [
+    generateNM2,
+    generateJsiModuleH,
+    generateJsiModuleCpp,
+  ];
+
+
+  moduleGenerators.forEach(generator => {
+    const generated: Map<string, string> = generator(
+      libraryName,
+      schema,
+      moduleSpecName,
+    );
+    normalizeFileMap(generated, outputDirectory, generatedFiles);
+  });
 
   if (ts) {
     normalizeFileMap(

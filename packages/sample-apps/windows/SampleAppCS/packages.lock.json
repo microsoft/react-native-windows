@@ -186,7 +186,8 @@
         "dependencies": {
           "Microsoft.ReactNative": "[1.0.0, )",
           "Microsoft.UI.Xaml": "[2.7.0, )",
-          "Microsoft.Windows.CppWinRT": "[2.0.211028.7, )"
+          "Microsoft.Windows.CppWinRT": "[2.0.211028.7, )",
+          "boost": "[1.76.0, )"
         }
       },
       "samplelibrarycs": {
