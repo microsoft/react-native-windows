@@ -61,7 +61,9 @@ namespace Microsoft.ReactNative.Managed.CodeGen
     public static readonly SyntaxToken GetNextObjectPropertyMethodName = Identifier("GetNextObjectProperty");
     public static readonly SyntaxToken ObjectEnumMemberName = Identifier("Object");
     public static readonly SyntaxToken RegisterCodeGeneratorGenericExtensionMethod = Identifier("RegisterCodeGeneratorGenericExtensionMethod");
-    
+    public static readonly SyntaxToken WritePropertiesMethodName = Identifier("WriteProperties");
+
+    public static readonly SyntaxToken ConstantsLocalName = Identifier("constants");
     public static readonly SyntaxToken ProviderLocalName = Identifier("provider");
     public static readonly SyntaxToken WriterLocalName = Identifier("writer");
     public static readonly SyntaxToken ReaderLocalName = Identifier("reader");
@@ -76,7 +78,31 @@ namespace Microsoft.ReactNative.Managed.CodeGen
 
     public static readonly SyntaxToken ContinueWith = Identifier("ContinueWith");
     public static readonly SyntaxToken TaskLocalName = Identifier("task");
-  }
 
- 
+    public static readonly SyntaxToken Arg0LocalName = Identifier("arg0");
+    public static readonly SyntaxToken Arg1LocalName = Identifier("arg1");
+    public static readonly SyntaxToken Arg2LocalName = Identifier("arg2");
+    public static readonly SyntaxToken Arg3LocalName = Identifier("arg3");
+    public static readonly SyntaxToken Arg4LocalName = Identifier("arg4");
+    public static readonly SyntaxToken Arg5LocalName = Identifier("arg5");
+    public static readonly SyntaxToken Arg6LocalName = Identifier("arg6");
+
+    public static readonly SyntaxToken[] ArgLocalNames = new SyntaxToken[] {
+      Arg0LocalName, Arg1LocalName, Arg2LocalName, Arg3LocalName,
+      Arg4LocalName, Arg5LocalName, Arg6LocalName,
+    };
+
+    public static readonly SyntaxToken Value0LocalName = Identifier("value0");
+    public static readonly SyntaxToken Value1LocalName = Identifier("value1");
+    public static readonly SyntaxToken Value2LocalName = Identifier("value2");
+    public static readonly SyntaxToken Value3LocalName = Identifier("value3");
+    public static readonly SyntaxToken Value4LocalName = Identifier("value4");
+    public static readonly SyntaxToken Value5LocalName = Identifier("value5");
+    public static readonly SyntaxToken Value6LocalName = Identifier("value6");
+
+    public static readonly SyntaxToken[] ValueLocalNames = new SyntaxToken[] {
+      Value0LocalName, Value1LocalName, Value2LocalName, Value3LocalName,
+      Value4LocalName, Value5LocalName, Value6LocalName,
+    };
+  }
 }

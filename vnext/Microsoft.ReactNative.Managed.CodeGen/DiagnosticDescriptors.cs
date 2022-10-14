@@ -123,7 +123,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
       id: Invariant($"{ReactNativeNames.ErrorCodePrefix}1012"),
       category: ReactNativeNames.ErrorCategory,
       title: "ReactModule ConstantProviders must have one parameter of type ReactContext",
-      messageFormat: "ConstantProviders of ReactModules must have one parameter of type '{0}'. Encountered '{1}' arguments on constantProvider '{2}' of module '{3}'.",
+      messageFormat: "ConstantProviders of ReactModules must have one parameter of type '{0}'. Encountered '{1}' parameters on constantProvider '{2}' of module '{3}'.",
       defaultSeverity: DiagnosticSeverity.Error,
       isEnabledByDefault: true);
 
@@ -148,6 +148,38 @@ namespace Microsoft.ReactNative.Managed.CodeGen
       category: ReactNativeNames.ErrorCategory,
       title: "ReactModule Methods should not return ",
       messageFormat: "Methods of ReactModules should not return a Task when they are synchronous. Change the attribute from '[ReactSyncMethod]' to '[ReactMethod]' for method '{0}' of module '{1}'.",
+      defaultSeverity: DiagnosticSeverity.Error,
+      isEnabledByDefault: true);
+
+    public static readonly DiagnosticDescriptor GetConstantsMustBePublicOrInternal = new DiagnosticDescriptor(
+      id: Invariant($"{ReactNativeNames.ErrorCodePrefix}1016"),
+      category: ReactNativeNames.ErrorCategory,
+      title: "ReactModule GetConstants method must be public or internal",
+      messageFormat: "GetConstants of ReactModules must be public or internal. Visibility of GetConstants '{0}' of module '{1}' is '{2}'.",
+      defaultSeverity: DiagnosticSeverity.Error,
+      isEnabledByDefault: true);
+
+    public static readonly DiagnosticDescriptor GetConstantsMustNotReturnVoid = new DiagnosticDescriptor(
+      id: Invariant($"{ReactNativeNames.ErrorCodePrefix}1017"),
+      category: ReactNativeNames.ErrorCategory,
+      title: "ReactModule GetConstants must not return void",
+      messageFormat: "GetConstants of ReactModules must not return void. Encountered type '{0}' as return type of GetConstants '{1}' of module '{2}'.",
+      defaultSeverity: DiagnosticSeverity.Error,
+      isEnabledByDefault: true);
+
+    public static readonly DiagnosticDescriptor GetConstantsMustReturnStructOrClass = new DiagnosticDescriptor(
+      id: Invariant($"{ReactNativeNames.ErrorCodePrefix}1018"),
+      category: ReactNativeNames.ErrorCategory,
+      title: "ReactModule GetConstants must return struct or class instance",
+      messageFormat: "GetConstants of ReactModules must return struct or class instance. Encountered type '{0}' as return type of GetConstants '{1}' of module '{2}'.",
+      defaultSeverity: DiagnosticSeverity.Error,
+      isEnabledByDefault: true);
+
+    public static readonly DiagnosticDescriptor GetConstantsMustNotHaveParameters = new DiagnosticDescriptor(
+      id: Invariant($"{ReactNativeNames.ErrorCodePrefix}1019"),
+      category: ReactNativeNames.ErrorCategory,
+      title: "ReactModule GetConstants must not have parameters",
+      messageFormat: "GetConstants of ReactModules must not have parameters. Encountered '{0}' parameters on GetConstants '{1}' of module '{2}'.",
       defaultSeverity: DiagnosticSeverity.Error,
       isEnabledByDefault: true);
   };
