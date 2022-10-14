@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Conditionally include HBC version header",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}
