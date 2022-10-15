@@ -2,6 +2,27 @@
   "name": "@react-native-windows/package-utils",
   "entries": [
     {
+      "date": "Sat, 15 Oct 2022 05:12:00 GMT",
+      "tag": "@react-native-windows/package-utils_v0.0.0-canary.33",
+      "version": "0.0.0-canary.33",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.0.0-canary.36",
+            "commit": "c67e48d281b09d087c891e3c0f8002e01505ce34"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.7",
+            "commit": "c67e48d281b09d087c891e3c0f8002e01505ce34"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 05 Oct 2022 05:13:47 GMT",
       "tag": "@react-native-windows/package-utils_v0.0.0-canary.32",
       "version": "0.0.0-canary.32",

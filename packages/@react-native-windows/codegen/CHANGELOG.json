@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Sat, 15 Oct 2022 05:12:00 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.39",
+      "version": "0.0.0-canary.39",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.7",
+            "commit": "c67e48d281b09d087c891e3c0f8002e01505ce34"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 07 Oct 2022 05:11:46 GMT",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.38",
       "version": "0.0.0-canary.38",

@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/virtualized-list",
-  "version": "0.0.0-canary.51",
+  "version": "0.0.0-canary.52",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -26,7 +26,7 @@
     "prettier": "^2.4.1",
     "react": "18.2.0",
     "react-native": "0.0.0-20220812-2104-23429330a",
-    "react-native-platform-override": "^1.7.0"
+    "react-native-platform-override": "^1.7.1"
   },
   "peerDependencies": {
     "react": "18.0.0",

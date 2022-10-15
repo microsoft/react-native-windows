@@ -1,8 +1,18 @@
 # Change Log - react-native-platform-override
 
-This log was last generated on Wed, 05 Oct 2022 05:13:45 GMT and should not be manually modified.
+This log was last generated on Sat, 15 Oct 2022 05:11:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.7.1
+
+Sat, 15 Oct 2022 05:11:59 GMT
+
+### Patches
+
+- Integrate 8/12 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.7
+- Bump @react-native-windows/package-utils to v0.0.0-canary.33
 
 ## 1.7.0
 
