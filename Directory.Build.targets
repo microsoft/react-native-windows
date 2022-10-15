@@ -29,7 +29,7 @@
     <Message Text="Checking if yarn is 'up to date' by running a 'dry-run' version of `yarn install` and checking the exit code" />
     <Exec
       ContinueOnError="True"
-      Command="yarn install --offline --cache-folder $(IntDir)\JsUpToDateCheck\Cache"
+      Command="yarn check --offline --mutex file:.yarn-mutex"
       WorkingDirectory="$(MSBuildThisFileDirectory)"
       >
       <Output TaskParameter="ExitCode" ItemName="_YarnExitCode"/>
