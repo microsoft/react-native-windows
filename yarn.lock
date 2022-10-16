@@ -1849,7 +1849,7 @@
     hermes-profile-transformer "^0.0.6"
     ip "^1.1.5"
 
-"@react-native-community/cli-platform-android@^9.0.0-alpha.10", "@react-native-community/cli-platform-android@^9.0.0-alpha.5", "@react-native-community/cli-platform-android@^9.1.0":
+"@react-native-community/cli-platform-android@^9.0.0-alpha.10", "@react-native-community/cli-platform-android@^9.1.0":
   version "9.1.0"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-android/-/cli-platform-android-9.1.0.tgz#3f80c202196c3874b86395b7f3f5fc13093d2d9e"
   integrity sha512-OZ/Krq0wH6T7LuAvwFdJYe47RrHG8IOcoab47H4QQdYGTmJgTS3SlVkr6gn79pZyBGyp7xVizD30QJrIIyDjnw==
@@ -1862,7 +1862,7 @@
     logkitty "^0.7.1"
     slash "^3.0.0"
 
-"@react-native-community/cli-platform-ios@^9.0.0-alpha.10", "@react-native-community/cli-platform-ios@^9.0.0-alpha.5", "@react-native-community/cli-platform-ios@^9.1.2":
+"@react-native-community/cli-platform-ios@^9.0.0-alpha.10", "@react-native-community/cli-platform-ios@^9.1.2":
   version "9.1.2"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-ios/-/cli-platform-ios-9.1.2.tgz#fd59b2aadee8d54317f204b3c640767dca5e6225"
   integrity sha512-XpgA9ymm76yjvtYPByqFF1LP7eM/lH5K3zpkZkV9MJLStOIo3mrzN2ywRDZ/xVOheh5LafS4YMmrjIajf11oIQ==
@@ -1933,7 +1933,7 @@
   dependencies:
     joi "^17.2.1"
 
-"@react-native-community/cli@^9.0.0-alpha.11", "@react-native-community/cli@^9.0.0-alpha.5":
+"@react-native-community/cli@^9.0.0-alpha.11":
   version "9.1.3"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli/-/cli-9.1.3.tgz#abe5e406214edb2ca828c51fbdaed7baf776298c"
   integrity sha512-dfiBxNvqSwxkMduH0eAEJNS+LBbwxm1rOlTO7bN+FZvUwZNCCgIYrixfRo+ifqDUv8N5AbpQB5umnLbs0AjPaA==
@@ -9575,15 +9575,15 @@ react-native-xaml@^0.0.68:
     "@types/react-native" "*"
     typescript "^4.4.3"
 
-react-native@0.0.0-20220729-2025-a21a1f845, react-native@0.0.0-20220812-2104-23429330a:
-  version "0.0.0-20220729-2025-a21a1f845"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-20220729-2025-a21a1f845.tgz#c4a30d89539ad08ad05bf48d9e7ef1cbf90b942b"
-  integrity sha512-c2HoD2zY92qo/4JE4dv+iEQM4PzosrwXeocDcKALuV63e3BGAgj83y4GRy9S/T6r+cGi3JFvuLB6xsWWluaOyg==
+react-native@0.0.0-20220812-2104-23429330a:
+  version "0.0.0-20220812-2104-23429330a"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-20220812-2104-23429330a.tgz#c213951881a916729d761123db7c36851fa9bd30"
+  integrity sha512-6KPlxs/RDEXBhHWM8k9UDixonkjBOlHLpzYZrLyLsBa7sA5OxWXBDSBZm1hPqpWNkw++diSqORU6QJetgxCgEA==
   dependencies:
     "@jest/create-cache-key-function" "^27.0.1"
-    "@react-native-community/cli" "^9.0.0-alpha.5"
-    "@react-native-community/cli-platform-android" "^9.0.0-alpha.5"
-    "@react-native-community/cli-platform-ios" "^9.0.0-alpha.5"
+    "@react-native-community/cli" "^9.0.0-alpha.11"
+    "@react-native-community/cli-platform-android" "^9.0.0-alpha.10"
+    "@react-native-community/cli-platform-ios" "^9.0.0-alpha.10"
     "@react-native/assets" "1.0.0"
     "@react-native/normalize-color" "2.0.0"
     "@react-native/polyfills" "2.0.0"
@@ -9607,7 +9607,7 @@ react-native@0.0.0-20220729-2025-a21a1f845, react-native@0.0.0-20220812-2104-234
     react-refresh "^0.4.0"
     react-shallow-renderer "^16.15.0"
     regenerator-runtime "^0.13.2"
-    scheduler "^0.22.0"
+    scheduler "^0.23.0"
     stacktrace-parser "^0.1.3"
     use-sync-external-store "^1.0.0"
     whatwg-fetch "^3.0.0"
@@ -9635,7 +9635,7 @@ react-test-renderer@18.2.0:
     react-shallow-renderer "^16.15.0"
     scheduler "^0.23.0"
 
-react@18.2.0, react@^18.1.0:
+react@18.2.0, react@^18.2.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react/-/react-18.2.0.tgz#555bd98592883255fa00de14f1151a917b5d77d5"
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
@@ -10115,13 +10115,6 @@ saxes@^5.0.1:
   integrity sha512-5LBh1Tls8c9xgGjw3QrMwETmTMVk0oFgvrFSvWx62llR2hcEInrKNZ2GZCCuuy2lvWrdl5jhbpeqc5hRYKFOcw==
   dependencies:
     xmlchars "^2.2.0"
-
-scheduler@^0.22.0:
-  version "0.22.0"
-  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.22.0.tgz#83a5d63594edf074add9a7198b1bae76c3db01b8"
-  integrity sha512-6QAm1BgQI88NPYymgGQLCZgvep4FyePDWFpXVK+zNSUgHwlqpJy8VEh8Et0KxTACS4VWwMousBElAZOH9nkkoQ==
-  dependencies:
-    loose-envify "^1.1.0"
 
 scheduler@^0.23.0:
   version "0.23.0"
