@@ -11,9 +11,9 @@
 #include "TestEventService.h"
 #include "TestReactNativeHostHolder.h"
 
-#include "codegen/msrnIntegationTestsJSI.h"
+#include "codegen/msrnIntegrationTestsJSI.h"
 
-#include "codegen/msrnIntegationTestsJSI-generated.cpp"
+#include "codegen/msrnIntegrationTestsJSI-generated.cpp"
 
 using namespace facebook;
 using namespace winrt;
