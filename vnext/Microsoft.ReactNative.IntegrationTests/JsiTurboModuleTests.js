@@ -1,5 +1,12 @@
-import * as TurboModuleRegistry from '../Libraries/TurboModule/TurboModuleRegistry';
-const mySimpleTurboModule = TurboModuleRegistry.getEnforcing('MySimpleTurboModule');
+/**
+ * Copyright (c) Microsoft Corporation.
+ * Licensed under the MIT License.
+ *
+ * @flow
+ * @format
+ */
+
+import {default as mySimpleTurboModule} from './NativeMySimpleTurboModuleCxx';
 
 // The logging of the TurboModule functions is verified against the test action sequence.
 
