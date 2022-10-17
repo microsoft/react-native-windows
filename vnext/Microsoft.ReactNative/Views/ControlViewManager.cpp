@@ -91,7 +91,6 @@ bool ControlViewManager::UpdateProperty(
       }
     } else {
       if (propertyName == "accessible") {
-
         if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
           IsAccessible(propertyValue.AsBoolean());
         }
@@ -104,7 +103,6 @@ bool ControlViewManager::UpdateProperty(
           }
         }
       }
-
       ret = Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
     }
   }
