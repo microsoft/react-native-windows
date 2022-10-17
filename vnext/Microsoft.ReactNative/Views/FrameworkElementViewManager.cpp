@@ -296,13 +296,8 @@ bool FrameworkElementViewManager::UpdateProperty(
 
         if (value == "no-hide-descendants") {
           ApplyAccessibility(element, winrt::AccessibilityView::Raw);
-        } else if (value == "no"){
-          xaml::Automation::AutomationProperties::SetAccessibilityView(element, winrt::AccessibilityView::Raw);
-        } else if (value == "yes"){
-          xaml::Automation::AutomationProperties::SetAccessibilityView(element, winrt::AccessibilityView::Content);
-        }//if auto, we just leave accessibilityview as-is
+        }
       } else if (propertyValue.IsNull()) {
-        //for perf, we might want to add logic to deduce when clearing AccessibilityView is enough
         ClearAccessibility(element);
       }
     } else if (propertyName == "accessibilityLiveRegion") {
