@@ -16,6 +16,7 @@ import {
   TouchableHighlight,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  Switch,
 } from 'react-native';
 import {ViewWindows} from 'react-native-windows';
 
@@ -37,12 +38,12 @@ export default class Bootstrap extends React.Component<
   render() {
     return (
       <View
-        importantForAccessibility="no-hide-descendants"
+        accessibilityHint="topmost view"
+        //importantForAccessibility="no-hide-descendants"
         style={styles.container}>
         <View
           importantForAccessibility="no-hide-descendants"
-          accessibilityLabel="FIRST ITEM"
-          focusable>
+          accessibilityLabel="FIRST ITEM">
           <Text style={styles.text}>Welcome to React Native! (FIRST ITEM)</Text>
         </View>
         <TouchableHighlight
@@ -63,8 +64,10 @@ export default class Bootstrap extends React.Component<
         </TouchableHighlight>
         <TextInput
           importantForAccessibility="no-hide-descendants"
+          //accessible={false}
           ref={this.myElement}
         />
+        <Switch importantForAccessibility="no-hide-descendants" />
       </View>
     );
   }

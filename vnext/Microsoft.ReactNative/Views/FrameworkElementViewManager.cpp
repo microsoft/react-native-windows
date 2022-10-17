@@ -288,7 +288,7 @@ bool FrameworkElementViewManager::UpdateProperty(
           xaml::Automation::AutomationProperties::SetAccessibilityView(element, winrt::AccessibilityView::Raw);
         }
       } else if (propertyValue.IsNull()) {
-        element.ClearValue(xaml::Automation::AutomationProperties::AccessibilityViewProperty());
+        element.ClearValue(xaml::Automation::AutomationProperties::AccessibilityViewProperty()); //is this getting hit? I'll need to rework logic so that accessible and importantForAccessibility don't clash
       }
     } else if (propertyName == "importantForAccessibility") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
@@ -296,16 +296,15 @@ bool FrameworkElementViewManager::UpdateProperty(
 
         if (value == "no-hide-descendants") {
           ApplyAccessibility(element, winrt::AccessibilityView::Raw);
-        }
-      }
-     /*
-          ApplyAccessibility(element, winrt::AccessibilityView::Content);
-        } else {
-          ApplyAccessibility(element, winrt::AccessibilityView::Raw);
-        }
+        } else if (value == "no"){
+          xaml::Automation::AutomationProperties::SetAccessibilityView(element, winrt::AccessibilityView::Raw);
+        } else if (value == "yes"){
+          xaml::Automation::AutomationProperties::SetAccessibilityView(element, winrt::AccessibilityView::Content);
+        }//if auto, we just leave accessibilityview as-is
       } else if (propertyValue.IsNull()) {
+        //for perf, we might want to add logic to deduce when clearing AccessibilityView is enough
         ClearAccessibility(element);
-      }*/
+      }
     } else if (propertyName == "accessibilityLiveRegion") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
         auto value = propertyValue.AsString();
@@ -721,33 +720,33 @@ void FrameworkElementViewManager::RefreshTransformMatrix(ShadowNodeBase *shadowN
 void FrameworkElementViewManager::ApplyAccessibility(winrt::Windows::UI::Xaml::FrameworkElement const& element,
   winrt::Windows::UI::Xaml::Automation::Peers::AccessibilityView const& value) {
 
- xaml::Automation::AutomationProperties::SetAccessibilityView(element, value);
+  xaml::Automation::AutomationProperties::SetAccessibilityView(element, value);
+  
+  int childrenCount = winrt::VisualTreeHelper::GetChildrenCount(element);
 
-  auto children = element.GetChildrenInTabFocusOrder();
-  if (children != nullptr) {
-    for (auto const &child : children) {
-      xaml::Automation::AutomationProperties::SetAccessibilityView(child, value);
+  //iterate through all of the children. 
+  for (int i = 0; i < childrenCount; i++){
+    auto child = winrt::VisualTreeHelper::GetChild(element, i);
 
-      // maybe recursively ?
-      if (auto childElement = child.try_as<winrt::Windows::UI::Xaml::FrameworkElement>()) {
-        ApplyAccessibility(childElement, value);
-      }
+    if (auto FEchild = child.try_as<xaml::FrameworkElement>()) {
+      //recursively apply accessibility 
+      ApplyAccessibility(FEchild, value);
     }
   }
 }
 
 void FrameworkElementViewManager::ClearAccessibility(winrt::Windows::UI::Xaml::FrameworkElement const& element) {
-
   element.ClearValue(xaml::Automation::AutomationProperties::AccessibilityViewProperty());
-  auto children = element.GetChildrenInTabFocusOrder();
-  if (children != nullptr) {
-    for (auto const &child : children) {
-      child.ClearValue(xaml::Automation::AutomationProperties::AccessibilityViewProperty());
 
-      // maybe recursively ?
-      if (auto childElement = child.try_as<winrt::Windows::UI::Xaml::FrameworkElement>()) {
-        ClearAccessibility(childElement);
-      }
+  int childrenCount = winrt::VisualTreeHelper::GetChildrenCount(element);
+
+  // iterate through all of the children.
+  for (int i = 0; i < childrenCount; i++) {
+    auto child = winrt::VisualTreeHelper::GetChild(element, i);
+
+    if (auto FEchild = child.try_as<xaml::FrameworkElement>()) {
+      // recursively clear accessibility
+      ClearAccessibility(FEchild);
     }
   }
 }

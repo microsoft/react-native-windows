@@ -30,6 +30,7 @@ void ControlViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJS
   Super::GetNativeProps(writer);
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"tabIndex", L"number");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"focusable", L"boolean");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"importantForAccessibility", L"string");
 }
 void ControlViewManager::TransferProperties(const XamlView &oldView, const XamlView &newView) {
   TransferProperty(oldView, newView, xaml::Controls::Control::FontSizeProperty());
@@ -90,10 +91,20 @@ bool ControlViewManager::UpdateProperty(
       }
     } else {
       if (propertyName == "accessible") {
+
         if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
           IsAccessible(propertyValue.AsBoolean());
         }
+      } else if (propertyName == "importantForAccessibility") {
+        if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
+          auto value = propertyValue.AsString();
+
+          if (value == "no-hide-descendants") {
+            IsAccessible(false);
+          }
+        }
       }
+
       ret = Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
     }
   }
