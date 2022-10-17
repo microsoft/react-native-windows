@@ -30,7 +30,7 @@
     <ENABLE_ETW_TRACING Condition="'$(ENABLE_ETW_TRACING)' == ''">true</ENABLE_ETW_TRACING>
 
     <!-- Enables routing Systrace events from JavaScript code to our ETW provider -->
-    <ENABLE_JS_SYSTRACE_TO_ETW Condition="'$(ENABLE_JS_SYSTRACE_TO_ETW)' == ''">true</ENABLE_JS_SYSTRACE_TO_ETW>
+    <ENABLE_JS_SYSTRACE_TO_ETW Condition="'$(ENABLE_JS_SYSTRACE_TO_ETW)' == ''">false</ENABLE_JS_SYSTRACE_TO_ETW>
   </PropertyGroup>
 
   <PropertyGroup Label="ExternalDependencies">
