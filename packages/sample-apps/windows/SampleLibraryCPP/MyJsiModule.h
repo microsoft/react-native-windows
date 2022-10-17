@@ -3,8 +3,8 @@
 
 #pragma once
 
-#include "DebugHelpers.h"
 #include "..\..\codegen\SampleAppJSI.h"
+#include "DebugHelpers.h"
 
 namespace SampleLibraryCpp {
 
@@ -24,7 +24,8 @@ class MyJsiModuleCxx : public facebook::react::NativeMyJsiModuleCxxSpecJSI {
   facebook::jsi::String getString(facebook::jsi::Runtime &rt, facebook::jsi::String arg) override;
   facebook::jsi::Array getArray(facebook::jsi::Runtime &rt, facebook::jsi::Array arg) override;
   facebook::jsi::Object getObject(facebook::jsi::Runtime &rt, facebook::jsi::Object arg) override;
-  facebook::jsi::Object getValue(facebook::jsi::Runtime &rt, double x, facebook::jsi::String y, facebook::jsi::Object z) override;
+  facebook::jsi::Object getValue(facebook::jsi::Runtime &rt, double x, facebook::jsi::String y, facebook::jsi::Object z)
+      override;
   void getValueWithCallback(facebook::jsi::Runtime &rt, facebook::jsi::Function callback) override;
   facebook::jsi::Value getValueWithPromise(facebook::jsi::Runtime &rt, bool error) override;
 };
