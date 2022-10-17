@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Enable ability to codegen JSI C++ TurboModule specs",
+  "packageName": "@react-native-windows/cli",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
