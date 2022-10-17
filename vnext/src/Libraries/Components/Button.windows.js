@@ -147,6 +147,11 @@ type ButtonProps = $ReadOnly<{|
   accessibilityActions?: ?$ReadOnlyArray<AccessibilityActionInfo>,
   onAccessibilityAction?: ?(event: AccessibilityActionEvent) => mixed,
   accessibilityState?: ?AccessibilityState,
+
+  /**
+   * [Android] Controlling if a view fires accessibility events and if it is reported to accessibility services.
+   */
+  importantForAccessibility?: ?('auto' | 'yes' | 'no' | 'no-hide-descendants'),
   accessibilityHint?: ?string,
   accessibilityLanguage?: ?Stringish,
 
@@ -285,6 +290,7 @@ class Button extends React.Component<
   render(): React.Node {
     const {
       accessibilityLabel,
+      importantForAccessibility,
       color,
       onPress,
       touchSoundDisabled,
