@@ -2,6 +2,60 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 15 Oct 2022 05:12:00 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.564",
+      "version": "0.0.0-canary.564",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c67e48d281b09d087c891e3c0f8002e01505ce34",
+            "comment": "Integrate 8/12"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.139",
+            "commit": "c67e48d281b09d087c891e3c0f8002e01505ce34"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.52",
+            "commit": "c67e48d281b09d087c891e3c0f8002e01505ce34"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.39",
+            "commit": "c67e48d281b09d087c891e3c0f8002e01505ce34"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.7.1",
+            "commit": "c67e48d281b09d087c891e3c0f8002e01505ce34"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 14 Oct 2022 05:14:55 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.563",
+      "version": "0.0.0-canary.563",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "9b33ee7e69645d3eba7edb90d4d945128970e12f",
+            "comment": "Conditionally include HBC version header"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 11 Oct 2022 05:11:41 GMT",
       "tag": "react-native-windows_v0.0.0-canary.562",
       "version": "0.0.0-canary.562",
