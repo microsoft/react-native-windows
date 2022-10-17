@@ -632,4 +632,19 @@ exports.examples = [
       );
     },
   },
+  {
+    title: 'Accessibility',
+    render(): React.Node {
+
+      return (
+        <View 
+          accessibilityLabel='A View with accessibility values' 
+          accessibilityHint='Accessibility Hint'
+          accessibilityRole='View'
+          importantForAccessibility='no-hide-descendants'>
+            <Text>A View with accessibility values.</Text>
+        </View>
+      );
+    },
+  },
 ];
