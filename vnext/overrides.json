@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20220812-2104-23429330a",
+  "baseVersion": "0.0.0-20220826-2018-9ac437f25",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "e7e5f1d81cb946157ecfb9392585958b5fac442d"
+      "baseHash": "96ff12c38ea31691ca99dd8848e38217ffbd1417"
     },
     {
       "type": "derived",
@@ -38,13 +38,13 @@
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputState.cpp",
       "baseFile": "ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputState.cpp",
-      "baseHash": "ab386b821cfe714d9aaaa394d82785227762ab6b"
+      "baseHash": "bc236a623b51fc05c2d9e7487071ed68c85a1f88"
     },
     {
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputState.h",
       "baseFile": "ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputState.h",
-      "baseHash": "86ac95fb195394bc314b2481907026d2568a0c45"
+      "baseHash": "c945b4b95344c40d5505dec2debd8e9ceda09015"
     },
     {
       "type": "derived",
@@ -77,7 +77,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/decorator.h",
       "baseFile": "ReactCommon/jsi/jsi/decorator.h",
-      "baseHash": "8e7642194d662f6b93203cb151b8ad3e24e11bc6",
+      "baseHash": "b722ac2e112077dab320e48bb16dc7203faeebf2",
       "issue": 9791
     },
     {
@@ -91,14 +91,14 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/jsi.cpp",
       "baseFile": "ReactCommon/jsi/jsi/jsi.cpp",
-      "baseHash": "45901861cb39be3f58fac072a6145a39d0a34cb8",
+      "baseHash": "dcb4926c7ad2cdfea5306f16b35dac269e0b382c",
       "issue": 9791
     },
     {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/jsi.h",
       "baseFile": "ReactCommon/jsi/jsi/jsi.h",
-      "baseHash": "9022689490930d324d3915d1e3cc3c3541005988",
+      "baseHash": "7aa352254a0cd52964a3370c78b7557508393603",
       "issue": 9791
     },
     {
@@ -131,7 +131,7 @@
       "type": "copy",
       "directory": "ReactCopies/IntegrationTests",
       "baseDirectory": "IntegrationTests",
-      "baseHash": "243c082ddf2880ca3c5d9ef10099cae6d8357737",
+      "baseHash": "c5aa96ea81e29f4e9e6feccf1bed0cb3f0cf1270",
       "issue": 4054
     },
     {
@@ -225,7 +225,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.windows.js",
       "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.js",
-      "baseHash": "318fa0b04d231c747d95bc4fb34a9a4152009786",
+      "baseHash": "86911d26a839aa1ebe91b6abc0fe910e09ba62e5",
       "issue": 4578
     },
     {
@@ -239,13 +239,13 @@
       "type": "patch",
       "file": "src/Libraries/Components/Button.windows.js",
       "baseFile": "Libraries/Components/Button.js",
-      "baseHash": "fe364c49ba5f393323b41202bc80bf58834ef259"
+      "baseHash": "ec7b9eddd8393c6a588cc229120bc994255053ec"
     },
     {
       "type": "copy",
       "file": "src/Libraries/Components/DatePicker/DatePickerIOS.windows.js",
       "baseFile": "Libraries/Components/DatePicker/DatePickerIOS.android.js",
-      "baseHash": "3c5bb9a7284f3a0a19d309bdf54701b865f9c56b"
+      "baseHash": "d4d3f2157abce118c9b9ad63ab2cad0cfa1979a0"
     },
     {
       "type": "derived",
@@ -319,7 +319,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "44fadc4a6bc51291e44f6bb8d7f38563e63bcbff"
+      "baseHash": "9cff22dbd054762b03f9e40ce45b03cca67a62f5"
     },
     {
       "type": "patch",
@@ -385,7 +385,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewPropTypes.windows.js",
       "baseFile": "Libraries/Components/View/ViewPropTypes.js",
-      "baseHash": "52170daa86f15afc549b4f284371e4c4154aa3dd"
+      "baseHash": "40cda23c445a8edaa16e6d7b924963da70bc374c"
     },
     {
       "type": "platform",
@@ -523,7 +523,7 @@
       "type": "patch",
       "file": "src/Libraries/StyleSheet/processTransform.windows.js",
       "baseFile": "Libraries/StyleSheet/processTransform.js",
-      "baseHash": "038d42bba39060567bbe906f905ad798cb35293a",
+      "baseHash": "2b5505372781ddd1d526b6badc7aed53b85e9545",
       "issue": 9797
     },
     {
