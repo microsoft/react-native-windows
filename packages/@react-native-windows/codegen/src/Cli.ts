@@ -18,17 +18,27 @@ const argv = yargs.options({
     array: true,
     describe: 'glob patterns for files which contains specs',
   },
-  ts: {
+  modulesTypeScriptTypes: {
     type: 'boolean',
     describe: 'generate turbo module definition files in TypeScript',
     default: false,
   },
-  methodonly: {
+  modulesCxx: {
+    type: 'boolean',
+    describe: 'generate C++ JSI turbo module spec files',
+    default: false,
+  },
+  modulesWindows: {
+    type: 'boolean',
+    describe: 'generate turbo module spec files for REACT_MODULE',
+    default: false,
+  },
+  methodOnly: {
     type: 'boolean',
     describe: 'generate only method metadata in C++ turbo module spec',
     default: false,
   },
-  outdir: {
+  outputDirectory: {
     type: 'string',
     describe: 'output directory',
     default: 'codegen',

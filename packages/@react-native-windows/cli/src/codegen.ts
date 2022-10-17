@@ -103,6 +103,8 @@ export class CodeGenWindows {
       ? path.join(this.root, pkgJson.codegenConfig.jsSrcsDir)
       : this.root;
 
+    let generators = pkgJson.codegenConfig.windows.generators ?? ['modulesWindows'];
+
     const jsRootPathRelative = path.relative(process.cwd(), jsRootDir);
     const options = {
       files: [
@@ -110,11 +112,13 @@ export class CodeGenWindows {
           jsRootPathRelative ? '/' : ''
         }**/*Native*.[jt]s`,
       ],
-      namespace: projectNamespace,
       libraryName: projectName,
-      outdir: path.join(this.root, 'codegen'),
-      methodonly: false,
-      ts: false,
+      methodOnly: false,
+      modulesCxx: generators.indexOf('modulesCxx') !== -1,
+      modulesTypeScriptTypes: generators.indexOf('modulesTypeScriptTypes') !== -1,
+      modulesWindows: generators.indexOf('modulesWindows') !== -1,
+      namespace: projectNamespace,
+      outputDirectory: path.join(this.root, 'codegen'),
       test: !!this.options.check,
     };
 
