@@ -271,8 +271,8 @@ export function generate(
     componentGenerators.forEach(generator => {
       const generated: Map<string, string> = generator(
         libraryName,
-        moduleSpecName,
         schema,
+        moduleSpecName,
       );
       normalizeFileMap(generated, componentOutputdir, generatedFiles);
     });
