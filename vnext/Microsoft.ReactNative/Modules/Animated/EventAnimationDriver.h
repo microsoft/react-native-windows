@@ -11,7 +11,7 @@ class ValueAnimatedNode;
 class EventAnimationDriver {
  public:
   EventAnimationDriver(
-      const folly::dynamic &eventPath,
+      const std::vector<std::string> &eventPath,
       int64_t animatedValueTag,
       const std::shared_ptr<NativeAnimatedNodeManager> &manager);
   ValueAnimatedNode *AnimatedValue();

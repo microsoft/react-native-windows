@@ -41,6 +41,7 @@
 #ifndef CORE_ABI
 #include "Modules/AccessibilityInfoModule.h"
 #include "Modules/AlertModule.h"
+#include "Modules/Animated/NativeAnimatedModule.h"
 #include "Modules/AppStateModule.h"
 #include "Modules/AppThemeModuleUwp.h"
 #include "Modules/ClipboardModule.h"
@@ -349,6 +350,10 @@ void ReactInstanceWin::LoadModules(
 
   registerTurboModule(
       L"ImageLoader", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::ImageLoader>());
+
+  registerTurboModule(
+      L"NativeAnimatedModule",
+      winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::NativeAnimatedModule>());
 #endif
 
   registerTurboModule(
