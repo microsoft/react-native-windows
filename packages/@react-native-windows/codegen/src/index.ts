@@ -212,22 +212,42 @@ export function generate(
     namespace,
   });
 
-  const generateJsiModuleH = require(path.resolve(rncodegenPath, 'lib/generators/modules/GenerateModuleH')).generate;
-  const generateJsiModuleCpp = require(path.resolve(rncodegenPath, 'lib/generators/modules/GenerateModuleCpp')).generate;
-  const generatorPropsH =
-    require(path.resolve(rncodegenPath, 'lib/generators/components/GeneratePropsH')).generate;
-  const generatorPropsCPP =
-    require(path.resolve(rncodegenPath, 'lib/generators/components/GeneratePropsCPP')).generate;
-  const generatorShadowNodeH =
-    require(path.resolve(rncodegenPath, 'lib/generators/components/GenerateShadowNodeH')).generate;
-  const generatorShadowNodeCPP =
-    require(path.resolve(rncodegenPath, 'lib/generators/components/GenerateShadowNodeCPP')).generate;
-  const generatorComponentDescriptorH =
-    require(path.resolve(rncodegenPath, 'lib/generators/components/GenerateComponentDescriptorH')).generate;
-  const generatorEventEmitterH =
-    require(path.resolve(rncodegenPath, 'lib/generators/components/GenerateEventEmitterH')).generate;
-  const generatorEventEmitterCPP =
-    require(path.resolve(rncodegenPath, 'lib/generators/components/GenerateEventEmitterCpp')).generate;
+  const generateJsiModuleH = require(path.resolve(
+    rncodegenPath,
+    'lib/generators/modules/GenerateModuleH',
+  )).generate;
+  const generateJsiModuleCpp = require(path.resolve(
+    rncodegenPath,
+    'lib/generators/modules/GenerateModuleCpp',
+  )).generate;
+  const generatorPropsH = require(path.resolve(
+    rncodegenPath,
+    'lib/generators/components/GeneratePropsH',
+  )).generate;
+  const generatorPropsCPP = require(path.resolve(
+    rncodegenPath,
+    'lib/generators/components/GeneratePropsCPP',
+  )).generate;
+  const generatorShadowNodeH = require(path.resolve(
+    rncodegenPath,
+    'lib/generators/components/GenerateShadowNodeH',
+  )).generate;
+  const generatorShadowNodeCPP = require(path.resolve(
+    rncodegenPath,
+    'lib/generators/components/GenerateShadowNodeCPP',
+  )).generate;
+  const generatorComponentDescriptorH = require(path.resolve(
+    rncodegenPath,
+    'lib/generators/components/GenerateComponentDescriptorH',
+  )).generate;
+  const generatorEventEmitterH = require(path.resolve(
+    rncodegenPath,
+    'lib/generators/components/GenerateEventEmitterH',
+  )).generate;
+  const generatorEventEmitterCPP = require(path.resolve(
+    rncodegenPath,
+    'lib/generators/components/GenerateEventEmitterCpp',
+  )).generate;
 
   const moduleGenerators = [];
 
@@ -308,7 +328,14 @@ export function runCodeGen(options: CodeGenOptions): boolean {
 
   const libraryName = options.libraryName;
   const moduleSpecName = 'moduleSpecName';
-  const {methodOnly, modulesCxx, modulesTypeScriptTypes, modulesWindows, namespace, outputDirectory} = options;
+  const {
+    methodOnly,
+    modulesCxx,
+    modulesTypeScriptTypes,
+    modulesWindows,
+    namespace,
+    outputDirectory,
+  } = options;
   return generate(
     {
       libraryName,
