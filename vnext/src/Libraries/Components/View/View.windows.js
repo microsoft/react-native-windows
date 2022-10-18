@@ -92,9 +92,9 @@ const View: React.AbstractComponent<
       }
       return child;
     });
-    if (updatedChildren.length == 1){
+    if (updatedChildren.length == 1) {
       return updatedChildren[0];
-    }else{
+    } else {
       return updatedChildren;
     }
   };
