@@ -65,7 +65,7 @@ struct WindowData {
 
   bool m_useWebDebugger{false};
   bool m_fastRefreshEnabled{true};
-  bool m_useDirectDebugger{false};
+  bool m_useDirectDebugger{true};
   bool m_breakOnNextLine{false};
   uint16_t m_debuggerPort{defaultDebuggerPort};
   xaml::ElementTheme m_theme{xaml::ElementTheme::Default};
