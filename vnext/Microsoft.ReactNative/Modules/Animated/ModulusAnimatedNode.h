@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #pragma once
-#include <folly/dynamic.h>
+#include <JSValue.h>
 #include "ValueAnimatedNode.h"
 
 namespace Microsoft::ReactNative {
@@ -10,7 +10,7 @@ class ModulusAnimatedNode final : public ValueAnimatedNode {
  public:
   ModulusAnimatedNode(
       int64_t tag,
-      const folly::dynamic &config,
+      const winrt::Microsoft::ReactNative::JSValueObject &config,
       const std::shared_ptr<NativeAnimatedNodeManager> &manager);
 
  private:

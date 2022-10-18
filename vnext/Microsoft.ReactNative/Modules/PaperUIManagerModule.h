@@ -29,6 +29,7 @@ struct UIManagerSettings {
 };
 
 std::weak_ptr<NativeUIManager> GetNativeUIManager(const Mso::React::IReactContext &context);
+std::weak_ptr<NativeUIManager> GetNativeUIManager(const winrt::Microsoft::ReactNative::ReactContext &context);
 
 REACT_MODULE(UIManager)
 struct UIManager final {
