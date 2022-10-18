@@ -73,7 +73,7 @@ class AsyncEventBeat final : public facebook::react::EventBeat {
     isRequested_ = false;
     m_isBeatCallbackScheduled = true;
 
-    m_runtimeExecutor([this, ownerBox = ownerBox_, f = m_frame](jsi::Runtime &runtime) {
+    m_runtimeExecutor([this, ownerBox = ownerBox_](jsi::Runtime &runtime) {
       auto owner = ownerBox->owner.lock();
       if (!owner) {
         return;
@@ -90,7 +90,7 @@ class AsyncEventBeat final : public facebook::react::EventBeat {
     bool alreadyRequested = isRequested_;
     EventBeat::request();
     if (!alreadyRequested) {
-      m_context.UIDispatcher().Post([this, ownerBox = ownerBox_, f = m_frame]() {
+      m_context.UIDispatcher().Post([this, ownerBox = ownerBox_]() {
         auto owner = ownerBox->owner.lock();
         if (!owner) {
           return;
