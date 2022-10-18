@@ -9,7 +9,6 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Microsoft.ReactNative</RootNamespace>
     <CppWinRTNamespaceMergeDepth>2</CppWinRTNamespaceMergeDepth>
-    <UseV8 Condition="'$(UseV8)' == ''">false</UseV8>
     <V8AppPlatform>uwp</V8AppPlatform>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -163,7 +162,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn" Version="1.8.1.4" />
     <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" />
-    <PackageReference Include="$(V8PackageName)" Version="$(V8PackageVersion)" Condition="'$(UseV8)' == 'true'" />
+    <PackageReference Include="$(V8PackageName)" Version="$(V8Version)" Condition="'$(UseV8)' == 'true'" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>

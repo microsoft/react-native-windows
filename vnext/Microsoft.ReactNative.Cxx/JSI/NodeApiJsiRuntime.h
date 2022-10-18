@@ -5,12 +5,13 @@
 #ifndef MICROSOFT_REACTNATIVE_JSI_NODEAPIJSIRUNTIME
 #define MICROSOFT_REACTNATIVE_JSI_NODEAPIJSIRUNTIME
 
+// Standard Library
+#include <cstdint>
+#include <memory>
+
 // JSI
 #include <js_native_ext_api.h>
 #include <jsi/jsi.h>
-
-// Standard Library
-#include <memory>
 
 namespace Microsoft::JSI {
 
