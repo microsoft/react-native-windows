@@ -39,7 +39,6 @@ struct CompositionHwndHost : CompositionHwndHostT<CompositionHwndHost> {
   winrt::Windows::UI::Composition::Desktop::DesktopWindowTarget Target() const noexcept;
   winrt::Windows::UI::Composition::Compositor Compositor() const noexcept;
 
-  void EnsureTarget() noexcept;
   void CreateDesktopWindowTarget(HWND window);
   void CreateCompositionRoot();
   void UpdateSize() noexcept;

@@ -57,82 +57,53 @@ FabricUIManager::FabricUIManager() {}
 
 FabricUIManager::~FabricUIManager() {}
 
-// Equiv of AsyncEventBeat (ReactAndroid\src\main\java\com\facebook\react\fabric\jni\AsyncEventBeat.h)
-class AsyncEventBeat final : public facebook::react::EventBeat { //, public facebook::react::EventBeatManagerObserver {
+class AsyncEventBeat final : public facebook::react::EventBeat {
  public:
   AsyncEventBeat(
       facebook::react::EventBeat::SharedOwnerBox const &ownerBox,
-      // EventBeatManager *eventBeatManager,
       const winrt::Microsoft::ReactNative::ReactContext &context,
-      facebook::react::RuntimeExecutor runtimeExecutor,
-      std::weak_ptr<FabricUIManager> uiManager,
-      bool async)
-      : EventBeat(ownerBox),
-        m_async(async),
-        m_context(context),
-        // eventBeatManager_(eventBeatManager),
-        runtimeExecutor_(runtimeExecutor),
-        uiManager_(uiManager) {
-    // eventBeatManager->addObserver(*this);
-    winrt::Microsoft::ReactNative::ReactPropertyBag propBag(m_context.Properties());
-    auto coreDisp = propBag.Get(
-        winrt::Microsoft::ReactNative::ReactPropertyId<winrt::Windows::UI::Composition::Desktop::DesktopWindowTarget>(
-            L"CompCoreDispatcher"));
+      facebook::react::RuntimeExecutor runtimeExecutor)
+      : EventBeat(ownerBox), m_context(context), m_runtimeExecutor(runtimeExecutor) {}
 
-    // TODO - look into what mechanism this should actually be
-    if (coreDisp) {
-      m_timer = coreDisp.DispatcherQueue().CreateTimer();
-      m_timer.Interval(winrt::Windows::Foundation::TimeSpan(1000));
-      m_timerToken = m_timer.Tick(winrt::auto_revoke, [this](const auto &, const auto &) { tick(); });
-      m_timer.Start();
-
-    } else {
-      winrt::Microsoft::ReactNative::ReactPropertyBag propBag(m_context.Properties());
-      propBag.Set(
-          winrt::Microsoft::ReactNative::ReactPropertyId<winrt::Microsoft::ReactNative::ReactDispatcherCallback>(
-              m_async ? L"AsyncEventBeatCallback" : L"SyncEventBeatCallback"),
-          winrt::Microsoft::ReactNative::ReactDispatcherCallback{[this]() { tick(); }});
+  void induce() const override {
+    if (!isRequested_ || m_isBeatCallbackScheduled) {
+      isRequested_ = false;
+      return;
     }
-  }
+    isRequested_ = false;
+    m_isBeatCallbackScheduled = true;
 
-  ~AsyncEventBeat() {
-    // eventBeatManager_->removeObserver(*this);
-  }
-
-  void tick() const /* override */ {
-    runtimeExecutor_([this, ownerBox = ownerBox_](facebook::jsi::Runtime &runtime) {
+    m_runtimeExecutor([this, ownerBox = ownerBox_, f = m_frame](jsi::Runtime &runtime) {
       auto owner = ownerBox->owner.lock();
       if (!owner) {
         return;
       }
 
-      this->beat(runtime);
+      m_isBeatCallbackScheduled = false;
+      if (beatCallback_) {
+        beatCallback_(runtime);
+      }
     });
-  }
-
-  void induce() const override {
-    tick();
   }
 
   void request() const override {
     bool alreadyRequested = isRequested_;
     EventBeat::request();
     if (!alreadyRequested) {
-      if (auto uiManager = uiManager_.lock()) {
-        // Notifies that an event will be dispatched (e.g. LayoutEvent)
-        // uiManager->onRequestEventBeat();
-      }
+      m_context.UIDispatcher().Post([this, ownerBox = ownerBox_, f = m_frame]() {
+        auto owner = ownerBox->owner.lock();
+        if (!owner) {
+          return;
+        }
+        induce();
+      });
     }
   }
 
  private:
-  // EventBeatManager *eventBeatManager_;
-  winrt::Windows::System::DispatcherQueueTimer m_timer{nullptr};
-  winrt::Windows::System::DispatcherQueueTimer::Tick_revoker m_timerToken;
-  bool m_async;
+  mutable std::atomic<bool> m_isBeatCallbackScheduled{false};
   winrt::Microsoft::ReactNative::ReactContext m_context;
-  facebook::react::RuntimeExecutor runtimeExecutor_;
-  std::weak_ptr<FabricUIManager> uiManager_;
+  facebook::react::RuntimeExecutor m_runtimeExecutor;
 };
 
 std::shared_ptr<facebook::react::ComponentDescriptorProviderRegistry const> sharedProviderRegistry() {
@@ -175,19 +146,14 @@ void FabricUIManager::installFabricUIManager() noexcept {
 
   auto runtimeExecutor = SchedulerSettings::GetRuntimeExecutor(m_context.Properties());
 
-  // TODO: T31905686 Create synchronous Event Beat
   facebook::react::EventBeat::Factory synchronousBeatFactory =
-      [/*eventBeatManager,*/ runtimeExecutor, localUIManager = weak_from_this(), context = m_context](
-          facebook::react::EventBeat::SharedOwnerBox const &ownerBox) {
-        return std::make_unique<AsyncEventBeat>(
-            ownerBox, /* eventBeatManager, */ context, runtimeExecutor, localUIManager, false);
+      [runtimeExecutor, context = m_context](facebook::react::EventBeat::SharedOwnerBox const &ownerBox) {
+        return std::make_unique<AsyncEventBeat>(ownerBox, context, runtimeExecutor);
       };
 
   facebook::react::EventBeat::Factory asynchronousBeatFactory =
-      [/*eventBeatManager,*/ runtimeExecutor, localUIManager = weak_from_this(), context = m_context](
-          facebook::react::EventBeat::SharedOwnerBox const &ownerBox) {
-        return std::make_unique<AsyncEventBeat>(
-            ownerBox, /* eventBeatManager, */ context, runtimeExecutor, localUIManager, true);
+      [runtimeExecutor, context = m_context](facebook::react::EventBeat::SharedOwnerBox const &ownerBox) {
+        return std::make_unique<AsyncEventBeat>(ownerBox, context, runtimeExecutor);
       };
 
   contextContainer->insert("ReactNativeConfig", config);
