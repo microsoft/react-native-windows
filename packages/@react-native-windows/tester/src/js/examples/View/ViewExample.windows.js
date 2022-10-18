@@ -641,9 +641,40 @@ exports.examples = [
           accessibilityLabel='A View with accessibility values' 
           accessibilityHint='Accessibility Hint'
           accessibilityRole='View'
-          importantForAccessibility='no-hide-descendants'>
+          accessibilityValue={0}
+          accessibilityActions={[{name: 'view'}]}
+          testID="accessibility"
+          accessible
+          focusable>
             <Text>A View with accessibility values.</Text>
+            <View importantForAccessibility='no-hide-descendants'>
+              <Text>This element should be hidden from accessibility.</Text>
+            </View>
         </View>
+      );
+    },
+  },
+  {
+    title: 'Advanced Border',
+    render(): React.Node {
+
+      return (
+        <View 
+        style={{
+          height: 200,
+          width: 200,
+          backgroundColor: 'grey',
+          borderColor: 'orange',
+          borderBottomWidth: 5,
+          borderLeftWidth: 10,
+          borderRightWidth: 15,
+          borderTopWidth: 20,
+          borderBottomEndRadius: 1,
+          borderTopEndRadius: 2,
+          borderTopStartRadius: 3,
+          borderBottomStartRadius: 4,
+        }}
+        testID="advanced-border"/>
       );
     },
   },
