@@ -6,4 +6,7 @@
   <PropertyGroup Condition="'$(SolutionName)'=='ReactWindows-Desktop'">
     <UseFabric>false</UseFabric>
   </PropertyGroup>
+  <PropertyGroup>
+    <ExperimentalFeaturesSet>true</ExperimentalFeaturesSet>
+  </PropertyGroup>
 </Project>

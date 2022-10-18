@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <Import Project="$(SolutionDir)\ExperimentalFeatures.props" Condition="Exists('$(SolutionDir)\ExperimentalFeatures.props')" />
+  <Target Name="EnsureExperimentalFeaturesSetTarget" BeforeTargets="PrepareForBuild" Condition="Exists('$(SolutionDir)\ExperimentalFeatures.props') And '$(ExperimentalFeaturesSet)' != 'true'">
+    <Warning Text="Property 'ExperimentalFeaturesSet' not set. Please specify &lt;ExperimentalFeaturesSet&gt;true&lt;/ExperimentalFeaturesSet>&gt; in '$(SolutionDir)\ExperimentalFeatures.props' to prevent the MSB4011 warnings." />
+  </Target>
+
+  <ImportGroup Condition="'$(ExperimentalFeaturesSet)' != 'true'">
+    <Import Project="$(SolutionDir)\ExperimentalFeatures.props" Condition="Exists('$(SolutionDir)\ExperimentalFeatures.props')" />
+  </ImportGroup>
 
   <PropertyGroup>
     <JsEnginePropsDefined>true</JsEnginePropsDefined>
