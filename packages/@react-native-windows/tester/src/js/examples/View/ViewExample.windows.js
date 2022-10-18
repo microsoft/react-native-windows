@@ -635,18 +635,37 @@ exports.examples = [
   {
     title: 'Accessibility',
     render(): React.Node {
-
+      const [tap, setTap] = React.useState(0);
       return (
         <View 
           accessibilityLabel='A View with accessibility values' 
           accessibilityHint='Accessibility Hint'
           accessibilityRole='View'
           accessibilityValue={0}
-          accessibilityActions={[{name: 'view'}]}
+          accessibilityActions={[
+            { name: 'cut', label: 'cut' },
+            { name: 'copy', label: 'copy' },
+            { name: 'paste', label: 'paste' }
+          ]}
           testID="accessibility"
           accessible
-          focusable>
+          focusable
+          onAccessibilityAction={(event) => {
+            switch(event.nativeEvent.actionName) {
+              case 'cut':
+                Alert.alert('Alert', 'cut action success');
+                break;
+              case 'copy':
+                Alert.alert('Alert', 'copy action success');
+                break;
+              case 'paste':
+                Alert.alert('Alert', 'paste action success');
+                break;
+            }
+          }}
+          onAccessibilityTap={()=>{setTap(tap++)}}>
             <Text>A View with accessibility values.</Text>
+            <Text>Current Number of Accessibility Taps: {tap}</Text>
             <View importantForAccessibility='no-hide-descendants'>
               <Text>This element should be hidden from accessibility.</Text>
             </View>
@@ -657,12 +676,11 @@ exports.examples = [
   {
     title: 'Advanced Border',
     render(): React.Node {
-
       return (
         <View 
         style={{
-          height: 200,
-          width: 200,
+          height: 50,
+          width: 50,
           backgroundColor: 'grey',
           borderColor: 'orange',
           borderBottomWidth: 5,
@@ -675,6 +693,36 @@ exports.examples = [
           borderBottomStartRadius: 4,
         }}
         testID="advanced-border"/>
+      );
+    },
+  },
+  {
+    title: 'HitSlop',
+    render(): React.Node {
+      const [color, setColor] = React.useState('grey');
+      return (
+        <View 
+        style={{
+          height: 200,
+          width: 200,
+          backgroundColor: color,
+        }}
+        hitSlop={{top: 100, bottom: 100, left: 0, right: 100}}
+        onTouchStart={()=>{setColor('red')}}
+        onTouchEnd={()=>{setColor('grey')}}
+        testID="hitslop"/>
+      );
+    },
+  },
+  {
+    title: 'NativeID',
+    render(): React.Node {
+      return (
+        <View 
+        nativeID="native-id-view"
+        testID="nativeid">
+          <Text>A View with a nativeID "native-id-view"</Text>
+        </View>
       );
     },
   },
