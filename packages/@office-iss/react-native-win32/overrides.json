@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20220812-2104-23429330a",
+  "baseVersion": "0.0.0-20220826-2018-9ac437f25",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "e7e5f1d81cb946157ecfb9392585958b5fac442d"
+      "baseHash": "96ff12c38ea31691ca99dd8848e38217ffbd1417"
     },
     {
       "type": "derived",
@@ -31,7 +31,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.win32.js",
       "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.js",
-      "baseHash": "318fa0b04d231c747d95bc4fb34a9a4152009786",
+      "baseHash": "86911d26a839aa1ebe91b6abc0fe910e09ba62e5",
       "issue": 4578
     },
     {
@@ -53,7 +53,7 @@
       "type": "copy",
       "file": "src/Libraries/Components/DatePicker/DatePickerIOS.win32.js",
       "baseFile": "Libraries/Components/DatePicker/DatePickerIOS.android.js",
-      "baseHash": "3c5bb9a7284f3a0a19d309bdf54701b865f9c56b",
+      "baseHash": "d4d3f2157abce118c9b9ad63ab2cad0cfa1979a0",
       "issue": 4378
     },
     {
@@ -117,7 +117,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.tsx",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "44fadc4a6bc51291e44f6bb8d7f38563e63bcbff"
+      "baseHash": "9cff22dbd054762b03f9e40ce45b03cca67a62f5"
     },
     {
       "type": "patch",
@@ -183,7 +183,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewPropTypes.win32.js",
       "baseFile": "Libraries/Components/View/ViewPropTypes.js",
-      "baseHash": "52170daa86f15afc549b4f284371e4c4154aa3dd",
+      "baseHash": "40cda23c445a8edaa16e6d7b924963da70bc374c",
       "issue": 6240
     },
     {
@@ -259,7 +259,7 @@
       "type": "patch",
       "file": "src/Libraries/Inspector/Inspector.win32.js",
       "baseFile": "Libraries/Inspector/Inspector.js",
-      "baseHash": "a335353c8e7299f8de2601104e2056eeb16ea041"
+      "baseHash": "f3f862f878ce5252067ecb9f86b3a6057493b8dc"
     },
     {
       "type": "patch",
@@ -429,7 +429,7 @@
       "type": "patch",
       "file": "src/Libraries/StyleSheet/StyleSheet.win32.js",
       "baseFile": "Libraries/StyleSheet/StyleSheet.js",
-      "baseHash": "975f5840fa52fd7e66e136d0ff1ae805be119419"
+      "baseHash": "3e851444e5a21392bcd1a84418729feedd25a527"
     },
     {
       "type": "derived",

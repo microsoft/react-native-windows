@@ -21,6 +21,7 @@ import {PlatformColor} from '../StyleSheet/PlatformColorValueTypes';
 // Windows]
 import View from './View/View';
 import invariant from 'invariant';
+import type {Button as ButtonType} from './Button.flow';
 
 import type {
   AccessibilityState,
@@ -549,4 +550,4 @@ const styles = StyleSheet.create({
   // Windows]
 });
 
-module.exports = Button;
+module.exports = (Button: ButtonType);
