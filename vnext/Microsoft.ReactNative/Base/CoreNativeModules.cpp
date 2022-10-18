@@ -7,7 +7,6 @@
 // Modules
 #include <AppModelHelpers.h>
 #include <AsyncStorageModule.h>
-#include <Modules/Animated/NativeAnimatedModule.h>
 #include <Modules/AsyncStorageModuleWin32.h>
 #include <Modules/ClipboardModule.h>
 #include <Modules/NativeUIManager.h>
@@ -57,13 +56,6 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
         [props = context->Properties()]() { return Microsoft::React::CreateFileReaderModule(props); },
         batchingUIMessageQueue);
   }
-
-  // Note: `context` is moved to remove the reference from the current scope.
-  // This should either be the last usage of `context`, or the std::move call should happen later in this method.
-  modules.emplace_back(
-      NativeAnimatedModule::name,
-      [context = std::move(context)]() mutable { return std::make_unique<NativeAnimatedModule>(std::move(context)); },
-      batchingUIMessageQueue);
 
   // AsyncStorageModule doesn't work without package identity (it indirectly depends on
   // Windows.Storage.StorageFile), so check for package identity before adding it.

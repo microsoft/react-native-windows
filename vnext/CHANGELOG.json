@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 18 Oct 2022 05:12:09 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.565",
+      "version": "0.0.0-canary.565",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d1c755a0b1d8c74450bfb6aada2d2734ea4a59e2",
+            "comment": "Use newer react-native-codegen generators"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "716020aff17e747f894362f47a4eb94b54725ec3",
+            "comment": "Convert NativeAnimatedModule to TurboModule"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.140",
+            "commit": "716020aff17e747f894362f47a4eb94b54725ec3"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.40",
+            "commit": "716020aff17e747f894362f47a4eb94b54725ec3"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 15 Oct 2022 05:12:00 GMT",
       "tag": "react-native-windows_v0.0.0-canary.564",
       "version": "0.0.0-canary.564",

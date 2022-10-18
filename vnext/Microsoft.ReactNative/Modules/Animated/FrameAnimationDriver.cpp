@@ -11,17 +11,17 @@ FrameAnimationDriver::FrameAnimationDriver(
     int64_t id,
     int64_t animatedValueTag,
     const Callback &endCallback,
-    const folly::dynamic &config,
+    const winrt::Microsoft::ReactNative::JSValueObject &config,
     const std::shared_ptr<NativeAnimatedNodeManager> &manager)
     : AnimationDriver(id, animatedValueTag, endCallback, config, manager) {
-  for (const auto &frame : config.find("frames").dereference().second) {
-    m_frames.push_back(frame.asDouble());
+  for (const auto &frame : config["frames"].AsArray()) {
+    m_frames.push_back(frame.AsDouble());
   }
-  m_toValue = config.find("toValue").dereference().second.asDouble();
+  m_toValue = config["toValue"].AsDouble();
 }
 
 std::tuple<comp::CompositionAnimation, comp::CompositionScopedBatch> FrameAnimationDriver::MakeAnimation(
-    const folly::dynamic & /*config*/) {
+    const winrt::Microsoft::ReactNative::JSValueObject & /*config*/) {
   const auto [scopedBatch, animation] = []() {
     const auto compositor = Microsoft::ReactNative::GetCompositor();
     return std::make_tuple(

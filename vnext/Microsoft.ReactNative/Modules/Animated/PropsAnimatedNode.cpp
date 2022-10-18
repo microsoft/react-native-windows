@@ -15,12 +15,12 @@
 namespace Microsoft::ReactNative {
 PropsAnimatedNode::PropsAnimatedNode(
     int64_t tag,
-    const folly::dynamic &config,
-    const Mso::CntPtr<Mso::React::IReactContext> &context,
+    const winrt::Microsoft::ReactNative::JSValueObject &config,
+    const winrt::Microsoft::ReactNative::ReactContext &context,
     const std::shared_ptr<NativeAnimatedNodeManager> &manager)
     : AnimatedNode(tag, manager), m_context(context) {
-  for (const auto &entry : config.find("props").dereference().second.items()) {
-    m_propMapping.insert({entry.first.getString(), static_cast<int64_t>(entry.second.asDouble())});
+  for (const auto &entry : config["props"].AsObject()) {
+    m_propMapping.insert({entry.first, static_cast<int64_t>(entry.second.AsDouble())});
   }
   auto compositor = Microsoft::ReactNative::GetCompositor();
   m_subchannelPropertySet = compositor.CreatePropertySet();
@@ -267,7 +267,7 @@ void PropsAnimatedNode::MakeAnimation(int64_t valueNodeTag, FacadeType facadeTyp
 }
 
 Microsoft::ReactNative::ShadowNodeBase *PropsAnimatedNode::GetShadowNodeBase() {
-  if (const auto uiManager = Microsoft::ReactNative::GetNativeUIManager(*m_context).lock()) {
+  if (const auto uiManager = Microsoft::ReactNative::GetNativeUIManager(m_context).lock()) {
     if (const auto nativeUIManagerHost = uiManager->getHost()) {
       return static_cast<Microsoft::ReactNative::ShadowNodeBase *>(
           nativeUIManagerHost->FindShadowNodeForTag(m_connectedViewTag));
