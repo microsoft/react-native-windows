@@ -253,11 +253,6 @@ const APIs: Array<RNTesterModuleInfo> = [
     module: require('../examples/Keyboard/KeyboardExample').default,
   },
   {
-    key: 'W3C PointerEvents',
-    category: 'Experimental',
-    module: require('../examples/Experimental/W3CPointerEventsExample').default,
-  },
-  {
     key: 'KeyboardExample',
     module: require('../examples-win/Keyboard/KeyboardExample'),
   },

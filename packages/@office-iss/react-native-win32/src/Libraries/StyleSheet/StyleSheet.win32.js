@@ -349,7 +349,12 @@ module.exports = {
       return;
     }
 
-    if (__DEV__ && typeof value.process === 'function') {
+    if (
+      __DEV__ &&
+      typeof value.process === 'function' &&
+      typeof ReactNativeStyleAttributes[property]?.process === 'function' &&
+      value.process !== ReactNativeStyleAttributes[property]?.process
+    ) {
       console.warn(`Overwriting ${property} style attribute preprocessor`);
     }
 

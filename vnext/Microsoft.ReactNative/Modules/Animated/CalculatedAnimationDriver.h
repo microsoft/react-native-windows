@@ -13,7 +13,7 @@ class CalculatedAnimationDriver : public AnimationDriver {
   using AnimationDriver::AnimationDriver;
 
   std::tuple<comp::CompositionAnimation, comp::CompositionScopedBatch> MakeAnimation(
-      const folly::dynamic &config) override;
+      const winrt::Microsoft::ReactNative::JSValueObject &config) override;
 
  protected:
   virtual std::tuple<float, double> GetValueAndVelocityForTime(double time) = 0;

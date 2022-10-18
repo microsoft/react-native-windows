@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #pragma once
-#include <folly/dynamic.h>
 #include "ValueAnimatedNode.h"
 
 namespace Microsoft::ReactNative {
@@ -11,7 +10,7 @@ class InterpolationAnimatedNode final : public ValueAnimatedNode {
  public:
   InterpolationAnimatedNode(
       int64_t tag,
-      const folly::dynamic &config,
+      const winrt::Microsoft::ReactNative::JSValueObject &config,
       const std::shared_ptr<NativeAnimatedNodeManager> &manager);
 
   virtual void Update() override;

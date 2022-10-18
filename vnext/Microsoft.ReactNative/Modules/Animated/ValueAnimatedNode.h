@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 #pragma once
+#include <JSValue.h>
 #include <UI.Composition.h>
-#include <folly/dynamic.h>
+#include <unordered_set>
 #include "AnimatedNode.h"
 
 namespace winrt {
@@ -15,7 +16,7 @@ class ValueAnimatedNode : public AnimatedNode {
  public:
   ValueAnimatedNode(
       int64_t tag,
-      const folly::dynamic &config,
+      const winrt::Microsoft::ReactNative::JSValueObject &config,
       const std::shared_ptr<NativeAnimatedNodeManager> &manager);
   ValueAnimatedNode(int64_t tag, const std::shared_ptr<NativeAnimatedNodeManager> &manager);
   double Value();
