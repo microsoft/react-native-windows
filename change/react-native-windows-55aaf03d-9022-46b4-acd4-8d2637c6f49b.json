@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "V8 package update",
+  "packageName": "react-native-windows",
+  "email": "tudor.mihai@microsoft.com",
+  "dependentChangeType": "patch"
+}
