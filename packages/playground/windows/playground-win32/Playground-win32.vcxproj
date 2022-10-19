@@ -13,6 +13,7 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>16.0</MinimumVisualStudioVersion>
     <AppxPackage>false</AppxPackage>
+    <V8AppPlatform>win32</V8AppPlatform>
   </PropertyGroup>
   <PropertyGroup Label="FromWinUI3_VSIX" Condition="'$(UseWinUI3)'=='true'">
     <AppContainerApplication>false</AppContainerApplication>
