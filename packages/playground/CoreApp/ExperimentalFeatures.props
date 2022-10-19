@@ -6,6 +6,6 @@
     <UseFabric>true</UseFabric>
     <UseWinUI3>false</UseWinUI3>
 
-    <ExperimentalFeaturesSet>true</ExperimentalFeaturesSet>
+    <ReactExperimentalFeaturesSet>true</ReactExperimentalFeaturesSet>
   </PropertyGroup>
 </Project>

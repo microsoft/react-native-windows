@@ -7,6 +7,6 @@
     <UseFabric>false</UseFabric>
   </PropertyGroup>
   <PropertyGroup>
-    <ExperimentalFeaturesSet>true</ExperimentalFeaturesSet>
+    <ReactExperimentalFeaturesSet>true</ReactExperimentalFeaturesSet>
   </PropertyGroup>
 </Project>

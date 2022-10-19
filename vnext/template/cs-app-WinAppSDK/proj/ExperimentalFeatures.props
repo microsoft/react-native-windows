@@ -18,7 +18,7 @@
     -->
     <UseHermes>false</UseHermes>
 
-    <ExperimentalFeaturesSet>true</ExperimentalFeaturesSet>
+    <ReactExperimentalFeaturesSet>true</ReactExperimentalFeaturesSet>
   </PropertyGroup>
 
 </Project>

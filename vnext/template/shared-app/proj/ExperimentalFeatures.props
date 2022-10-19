@@ -33,7 +33,7 @@
     -->
     <UseExperimentalNuget>{{useExperimentalNuget}}</UseExperimentalNuget>
 
-    <ExperimentalFeaturesSet>true</ExperimentalFeaturesSet>
+    <ReactExperimentalFeaturesSet>true</ReactExperimentalFeaturesSet>
   
   </PropertyGroup>
 
