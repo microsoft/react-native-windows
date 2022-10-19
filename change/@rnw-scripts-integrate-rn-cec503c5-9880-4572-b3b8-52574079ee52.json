@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Change integrate-rn to update resolution entries",
+  "packageName": "@rnw-scripts/integrate-rn",
+  "email": "vmoroz@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
