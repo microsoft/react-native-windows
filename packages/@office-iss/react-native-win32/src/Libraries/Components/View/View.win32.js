@@ -259,12 +259,12 @@ const View: React.AbstractComponent<
               accessible={
                 importantForAccessibility === 'no-hide-descendants'
                   ? false
-                  : props.accessible
+                  : otherProps.accessible
               }
               children={
                 importantForAccessibility === 'no-hide-descendants'
                   ? childrenWithImportantForAccessibility(props.children)
-                  : props.children
+                  : otherProps.children
               }
               // Windows]
             />

@@ -1,8 +1,16 @@
 # Change Log - debug-test
 
-This log was last generated on Tue, 18 Oct 2022 05:12:09 GMT and should not be manually modified.
+This log was last generated on Wed, 19 Oct 2022 05:12:35 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Wed, 19 Oct 2022 05:12:35 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation to v0.2.7
 
 ## 0.0.0
 
