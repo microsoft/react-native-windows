@@ -38,23 +38,23 @@ namespace {
 struct MySimpleTurboModule : react::NativeMySimpleTurboModuleCxxCxxSpecJSI {
   MySimpleTurboModule(std::shared_ptr<react::CallInvoker> jsInvoker);
 
-  void logAction(jsi::Runtime &rt, const jsi::String &actionName, const jsi::Value &value) override;
+  void logAction(jsi::Runtime &rt, const jsi::String actionName, jsi::Value value) override;
   void voidFunc(jsi::Runtime &rt) override;
   bool getBool(jsi::Runtime &rt, bool arg) override;
   double getNumber(jsi::Runtime &rt, double arg) override;
-  jsi::String getString(jsi::Runtime &rt, const jsi::String &arg) override;
-  jsi::Array getArray(jsi::Runtime &rt, const jsi::Array &arg) override;
-  jsi::Object getObject(jsi::Runtime &rt, const jsi::Object &arg) override;
-  jsi::Object getValue(jsi::Runtime &rt, double x, const jsi::String &y, const jsi::Object &z) override;
-  void getValueWithCallback(jsi::Runtime &rt, const jsi::Function &callback) override;
+  jsi::String getString(jsi::Runtime &rt, jsi::String arg) override;
+  jsi::Array getArray(jsi::Runtime &rt, jsi::Array arg) override;
+  jsi::Object getObject(jsi::Runtime &rt, jsi::Object arg) override;
+  jsi::Object getValue(jsi::Runtime &rt, double x, jsi::String y, jsi::Object z) override;
+  void getValueWithCallback(jsi::Runtime &rt, jsi::Function callback) override;
   jsi::Value getValueWithPromise(jsi::Runtime &rt, bool error) override;
   jsi::Object getConstants(jsi::Runtime &rt) override;
 };
 
 MySimpleTurboModule::MySimpleTurboModule(std::shared_ptr<react::CallInvoker> jsInvoker)
-    : MySimpleTurboModuleSpec(std::move(jsInvoker)) {}
+    : NativeMySimpleTurboModuleCxxCxxSpecJSI(std::move(jsInvoker)) {}
 
-void MySimpleTurboModule::logAction(jsi::Runtime &rt, const jsi::String &actionName, const jsi::Value &value) {
+void MySimpleTurboModule::logAction(jsi::Runtime &rt, jsi::String actionName, jsi::Value value) {
   JSValue jsValue{};
   if (value.isBool()) {
     jsValue = JSValue(value.getBool());
@@ -80,22 +80,22 @@ double MySimpleTurboModule::getNumber(jsi::Runtime & /*rt*/, double arg) {
   return arg;
 }
 
-jsi::String MySimpleTurboModule::getString(jsi::Runtime &rt, const jsi::String &arg) {
+jsi::String MySimpleTurboModule::getString(jsi::Runtime &rt, jsi::String arg) {
   TestEventService::LogEvent("getString called", arg.utf8(rt));
   return jsi::String::createFromUtf8(rt, arg.utf8(rt));
 }
 
-jsi::Array MySimpleTurboModule::getArray(jsi::Runtime &rt, const jsi::Array &arg) {
+jsi::Array MySimpleTurboModule::getArray(jsi::Runtime &rt, jsi::Array arg) {
   TestEventService::LogEvent("getArray called", arg.length(rt));
   return react::deepCopyJSIArray(rt, arg);
 }
 
-jsi::Object MySimpleTurboModule::getObject(jsi::Runtime &rt, const jsi::Object &arg) {
+jsi::Object MySimpleTurboModule::getObject(jsi::Runtime &rt, jsi::Object arg) {
   TestEventService::LogEvent("getObject called", "OK");
   return react::deepCopyJSIObject(rt, arg);
 }
 
-jsi::Object MySimpleTurboModule::getValue(jsi::Runtime &rt, double x, const jsi::String &y, const jsi::Object &z) {
+jsi::Object MySimpleTurboModule::getValue(jsi::Runtime &rt, double x, jsi::String y, jsi::Object z) {
   TestEventService::LogEvent("getValue called", "OK");
   // Note: return type isn't type-safe.
   jsi::Object result(rt);
@@ -105,7 +105,7 @@ jsi::Object MySimpleTurboModule::getValue(jsi::Runtime &rt, double x, const jsi:
   return result;
 }
 
-void MySimpleTurboModule::getValueWithCallback(jsi::Runtime &rt, const jsi::Function &callback) {
+void MySimpleTurboModule::getValueWithCallback(jsi::Runtime &rt, jsi::Function callback) {
   TestEventService::LogEvent("getValueWithCallback called", "OK");
   callback.call(rt, jsi::String::createFromUtf8(rt, "value from callback!"));
 }

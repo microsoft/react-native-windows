@@ -28,7 +28,7 @@ struct MyTrivialTurboModule : react::NativeMyTrivialTurboModuleCxxSpecJSI {
 };
 
 MyTrivialTurboModule::MyTrivialTurboModule(std::shared_ptr<react::CallInvoker> jsInvoker)
-    : MyTrivialTurboModuleSpec(std::move(jsInvoker)) {}
+    : NativeMyTrivialTurboModuleCxxSpecJSI(std::move(jsInvoker)) {}
 
 void MyTrivialTurboModule::startFromJS(jsi::Runtime & /*rt*/) {
   TestEventService::LogEvent("startFromJS called", nullptr);
@@ -40,8 +40,6 @@ struct MyTrivialTurboModulePackageProvider
     AddTurboModuleProvider<MyTrivialTurboModule>(packageBuilder, L"MyTrivialTurboModule");
   }
 };
-
-} // namespace
 
 TEST_CLASS (JsiSimpleTurboModuleTests) {
   TEST_METHOD(TestInstanceReload) {
