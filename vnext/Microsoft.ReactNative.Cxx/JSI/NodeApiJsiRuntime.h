@@ -6,7 +6,6 @@
 #define MICROSOFT_REACTNATIVE_JSI_NODEAPIJSIRUNTIME
 
 // Standard Library
-#include <cstdint>
 #include <memory>
 
 // JSI
