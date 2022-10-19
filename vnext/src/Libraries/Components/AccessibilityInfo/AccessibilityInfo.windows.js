@@ -9,7 +9,7 @@
  */
 
 import RCTDeviceEventEmitter from '../../EventEmitter/RCTDeviceEventEmitter';
-import {sendAccessibilityEvent} from '../../Renderer/shims/ReactNative';
+import {sendAccessibilityEvent} from '../../ReactNative/RendererProxy';
 import type {HostComponent} from '../../Renderer/shims/ReactNativeTypes';
 import Platform from '../../Utilities/Platform';
 import type {EventSubscription} from '../../vendor/emitter/EventEmitter';
@@ -17,7 +17,7 @@ import NativeAccessibilityInfo from './NativeAccessibilityInfo';
 import NativeAccessibilityManagerIOS from './NativeAccessibilityManager';
 import legacySendAccessibilityEvent from './legacySendAccessibilityEvent';
 import type {ElementRef} from 'react';
-import type {AccessibilityInfo as AccessibilityInfoType} from './AccessibilityInfo.flow';
+import type {AccessibilityInfoType} from './AccessibilityInfo.flow';
 
 // Events that are only supported on Android.
 type AccessibilityEventDefinitionsAndroid = {
@@ -336,7 +336,8 @@ const AccessibilityInfo: AccessibilityInfoType = {
     const deviceEventName = EventNames.get(eventName);
     return deviceEventName == null
       ? {remove(): void {}}
-      : RCTDeviceEventEmitter.addListener(deviceEventName, handler);
+      : // $FlowFixMe[incompatible-call]
+        RCTDeviceEventEmitter.addListener(deviceEventName, handler);
   },
 
   /**

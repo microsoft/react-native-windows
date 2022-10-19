@@ -265,16 +265,20 @@ const APIs: Array<RNTesterModuleInfo> = [
     key: 'WebSocketExample',
     category: 'Basic',
     module: require('../examples/WebSocket/WebSocketExample'),
+  },
+  {
+    key: 'XHRExample',
+    category: 'Basic',
+    module: require('../examples/XHR/XHRExample'),
+  },
+  {
   }*/,
-];
-
-if (global.__turboModuleProxy) {
-  APIs.push({
+  {
     key: 'TurboModuleExample',
     category: 'Basic',
     module: require('../examples/TurboModule/TurboModuleExample'),
-  });
-}
+  },
+];
 
 if (ReactNativeFeatureFlags.shouldEmitW3CPointerEvents()) {
   APIs.push({

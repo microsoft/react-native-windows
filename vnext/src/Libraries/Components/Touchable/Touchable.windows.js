@@ -14,6 +14,7 @@ import Platform from '../../Utilities/Platform';
 import Position from './Position';
 import UIManager from '../../ReactNative/UIManager';
 import SoundManager from '../Sound/SoundManager';
+import type {TouchableType} from './Touchable.flow';
 
 import {PressabilityDebugView} from '../../Pressability/PressabilityDebug';
 
@@ -932,7 +933,7 @@ const TouchableMixin = {
     }
   },
 
-  withoutDefaultFocusAndBlur: ({}: $TEMPORARY$object<{||}>),
+  withoutDefaultFocusAndBlur: ({}: {...}),
 };
 
 /**
@@ -949,7 +950,7 @@ const {
 TouchableMixin.withoutDefaultFocusAndBlur =
   TouchableMixinWithoutDefaultFocusAndBlur;
 
-const Touchable = {
+const Touchable: TouchableType = {
   Mixin: TouchableMixin,
   /**
    * Renders a debugging overlay to visualize touch target with hitSlop (might not work on Android).

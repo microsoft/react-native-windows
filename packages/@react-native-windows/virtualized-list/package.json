@@ -22,15 +22,15 @@
     "@rnw-scripts/just-task": "2.2.6",
     "eslint": "^8.19.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "flow-bin": "^0.185.1",
+    "flow-bin": "^0.186.0",
     "prettier": "^2.4.1",
     "react": "18.2.0",
-    "react-native": "0.0.0-20220826-2018-9ac437f25",
+    "react-native": "0.0.0-20220912-2028-b0aba1b6f",
     "react-native-platform-override": "^1.7.1"
   },
   "peerDependencies": {
     "react": "18.0.0",
-    "react-native": "0.0.0-20220826-2018-9ac437f25"
+    "react-native": "0.0.0-20220912-2028-b0aba1b6f"
   },
   "beachball": {
     "defaultNpmTag": "canary",

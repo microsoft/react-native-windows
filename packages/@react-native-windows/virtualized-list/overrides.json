@@ -3,13 +3,13 @@
     ".flowconfig",
     "src/**"
   ],
-  "baseVersion": "0.0.0-20220826-2018-9ac437f25",
+  "baseVersion": "0.0.0-20220912-2028-b0aba1b6f",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "96ff12c38ea31691ca99dd8848e38217ffbd1417"
+      "baseHash": "21218e40e026cea75af0c938f02d40d123ab6443"
     },
     {
       "type": "copy",
@@ -21,7 +21,7 @@
       "type": "copy",
       "file": "src/FillRateHelper.js",
       "baseFile": "Libraries/Lists/FillRateHelper.js",
-      "baseHash": "ebd580af40c890e8c56fec941e13226d52943cff"
+      "baseHash": "1fd0fcae193a0f4bc71a0b1048b5e2da3a804b15"
     },
     {
       "type": "copy",
@@ -33,7 +33,7 @@
       "type": "patch",
       "file": "src/VirtualizedList.js",
       "baseFile": "Libraries/Lists/VirtualizedList.js",
-      "baseHash": "abd30d86d7c2a0be876da835e1f183fc1bfe67ec",
+      "baseHash": "9d6d72cfad9144d1b5f8f8706ffec54cd3bf7000",
       "issue": 8120
     },
     {
@@ -59,7 +59,7 @@
       "type": "copy",
       "file": "src/VirtualizeUtils.js",
       "baseFile": "Libraries/Lists/VirtualizeUtils.js",
-      "baseHash": "4117e0f5e48f246db6c3042a68b0109454bd455b"
+      "baseHash": "b7627950bf0339f46f7d3620480f56d7bb76786e"
     }
   ]
 }
