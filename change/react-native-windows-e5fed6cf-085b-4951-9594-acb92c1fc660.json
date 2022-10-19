@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Mitigate MSB4011 warning for importing ExperimentalFeatures.props",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
