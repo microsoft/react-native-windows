@@ -181,9 +181,9 @@
     semver "^6.3.0"
 
 "@babel/generator@^7.14.0", "@babel/generator@^7.18.2", "@babel/generator@^7.19.3", "@babel/generator@^7.19.4":
-  version "7.19.5"
-  resolved "https://registry.yarnpkg.com/@babel/generator/-/generator-7.19.5.tgz#da3f4b301c8086717eee9cab14da91b1fa5dcca7"
-  integrity sha512-DxbNz9Lz4aMZ99qPpO1raTbcrI1ZeYh+9NR9qhfkQIbFtVEqotHojEBxHzmxhVONkGt6VyrqVQcgpefMy9pqcg==
+  version "7.19.6"
+  resolved "https://registry.yarnpkg.com/@babel/generator/-/generator-7.19.6.tgz#9e481a3fe9ca6261c972645ae3904ec0f9b34a1d"
+  integrity sha512-oHGRUQeoX1QrKeJIKVe0hwjGqNnVYsM5Nep5zo0uE0m42sLH+Fsd2pStJ5sRM1bNyTUUoz0pe2lTeMJrb/taTA==
   dependencies:
     "@babel/types" "^7.19.4"
     "@jridgewell/gen-mapping" "^0.3.2"
