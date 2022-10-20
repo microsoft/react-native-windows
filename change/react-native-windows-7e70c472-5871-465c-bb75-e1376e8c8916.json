@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Simplifies and fixes various View prop handlers",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
