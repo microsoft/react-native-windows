@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix missing headers for MSVC 14.34",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
