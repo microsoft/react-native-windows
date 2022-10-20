@@ -194,25 +194,30 @@ const View: React.AbstractComponent<
       otherProps.onKeyUpCapture && otherProps.onKeyUpCapture(event);
     };
 
-    // [Windows
-    const childrenWithImportantForAccessibility = children => {
-      return React.Children.map(children, child => {
-        if (React.isValidElement(child)) {
-          if (child.props.children) {
-            return React.cloneElement(child, {
-              accessible: false,
-              children: childrenWithImportantForAccessibility(
-                child.props.children,
-              ),
-            });
-          } else {
-            return React.cloneElement(child, {accessible: false});
-          }
+  // [Windows
+  const childrenWithImportantForAccessibility = children => {
+    const updatedChildren = React.Children.map(children, child => {
+      if (React.isValidElement(child)) {
+        if (child.props.children) {
+          return React.cloneElement(child, {
+            accessible: false,
+            children: childrenWithImportantForAccessibility(
+              child.props.children,
+            ),
+          });
+        } else {
+          return React.cloneElement(child, {accessible: false});
         }
-        return child;
-      });
-    };
-    // Windows]
+      }
+      return child;
+    });
+    if (updatedChildren.length == 1) {
+      return updatedChildren[0];
+    } else {
+      return updatedChildren;
+    }
+  };
+  // Windows]
 
     return (
       // [Windows

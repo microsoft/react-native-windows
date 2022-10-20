@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-canary.566",
+  "version": "0.0.0-canary.567",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -23,10 +23,17 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "@jest/create-cache-key-function": "^27.0.1",
+<<<<<<< HEAD
     "@react-native-community/cli": "^9.0.0",
     "@react-native-community/cli-platform-android": "^9.0.0",
     "@react-native-community/cli-platform-ios": "^9.0.0",
     "@react-native-windows/cli": "0.0.0-canary.140",
+=======
+    "@react-native-community/cli": "^9.0.0-alpha.11",
+    "@react-native-community/cli-platform-android": "^9.0.0-alpha.10",
+    "@react-native-community/cli-platform-ios": "^9.0.0-alpha.10",
+    "@react-native-windows/cli": "0.0.0-canary.141",
+>>>>>>> ba17406ba5e7b6cb1797a21a87b700b80607139e
     "@react-native-windows/virtualized-list": "0.0.0-canary.53",
     "@react-native/assets": "1.0.0",
     "@react-native/normalize-color": "2.0.0",

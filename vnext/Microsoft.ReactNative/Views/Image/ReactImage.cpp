@@ -218,14 +218,16 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
   auto weak_this{get_weak()};
 
   try {
-    memoryStream = co_await GetImageMemoryStreamAsync(source);
+    if (fromStream) {
+      memoryStream = co_await GetImageMemoryStreamAsync(source);
 
-    // Fire failed load event if we're not loading from URI and the memory stream is null.
-    if (fromStream && !memoryStream) {
-      if (auto strong_this{weak_this.get()}) {
-        strong_this->m_onLoadEndEvent(*strong_this, false);
+      // Fire failed load event if we're not loading from URI and the memory stream is null.
+      if (!memoryStream) {
+        if (auto strong_this{weak_this.get()}) {
+          strong_this->m_onLoadEndEvent(*strong_this, false);
+        }
+        co_return;
       }
-      co_return;
     }
   } catch (winrt::hresult_error const &) {
     const auto strong_this{weak_this.get()};
