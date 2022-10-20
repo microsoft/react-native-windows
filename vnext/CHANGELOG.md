@@ -1,8 +1,49 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 23 Aug 2022 23:36:52 GMT and should not be manually modified.
+This log was last generated on Mon, 10 Oct 2022 15:09:52 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.70.3
+
+Mon, 10 Oct 2022 15:09:52 GMT
+
+### Patches
+
+- Set Origin HTTP header during CORS (#10700) (julio.rocha@microsoft.com)
+- Set User-Agent header in Origin Policy filter (#10695) (julio.rocha@microsoft.com)
+
+## 0.70.2
+
+Mon, 26 Sep 2022 15:10:18 GMT
+
+### Patches
+
+- Export OriginPolicy.h to NuGet package (#10615) (julio.rocha@microsoft.com)
+- Consolidate JavaScript HTTP module specifications (julio.rocha@microsoft.com)
+- Move required PackageRestore properties into shared property sheets (jthysell@microsoft.com)
+
+## 0.70.1
+
+Mon, 19 Sep 2022 15:10:15 GMT
+
+### Patches
+
+- Implement HTTP redirection (#10534) (julio.rocha@microsoft.com)
+- Fixes bug introduced by pointerEvents change (ericroz@fb.com)
+
+## 0.70.0
+
+Mon, 12 Sep 2022 17:54:21 GMT
+
+### Patches
+
+- Integrate 70 Stable (34109996+chiaramooney@users.noreply.github.com)
+- Use LongLivedObjects for TurboModule callbacks (vmorozov@microsoft.com)
+- Fix crash creating InstanceSettings on Windows 8.1 (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.70.0
+- Bump @react-native-windows/virtualized-list to v0.70.0
+- Bump @react-native-windows/codegen to v0.70.0
 
 ## 0.70.0-preview.2
 

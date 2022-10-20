@@ -43,7 +43,6 @@
 #include <winrt/Windows.Storage.Streams.h>
 #include <winrt/Windows.UI.ViewManagement.Core.h>
 #include <winrt/Windows.UI.ViewManagement.h>
-#include <winrt/Windows.Web.Http.Filters.h>
 #include <winrt/Windows.Web.Http.Headers.h>
 
 #include "Base/CxxReactIncludes.h"

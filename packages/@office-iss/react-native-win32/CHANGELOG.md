@@ -1,8 +1,35 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Tue, 23 Aug 2022 23:36:52 GMT and should not be manually modified.
+This log was last generated on Mon, 26 Sep 2022 15:10:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.70.2
+
+Mon, 26 Sep 2022 15:10:18 GMT
+
+### Patches
+
+- Consolidate JavaScript HTTP module specifications (julio.rocha@microsoft.com)
+
+## 0.70.1
+
+Mon, 19 Sep 2022 15:10:14 GMT
+
+### Patches
+
+- Add Dimensions.win32 implementation to support text scale factor (patboyd@microsoft.com)
+- Add `accessibilityAccessKey` prop to ViewWin32 (#10527) (ruaraki@microsoft.com)
+
+## 0.70.0
+
+Mon, 12 Sep 2022 17:54:20 GMT
+
+### Patches
+
+- Add Toggle action to accessibilityActionName (krsiler@microsoft.com)
+- Integrate 70 Stable (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.70.0
 
 ## 0.70.0-preview.2
 
