@@ -402,46 +402,8 @@ bool ViewViewManager::UpdateProperty(
   auto pPanel = pViewShadowNode->GetPanel().as<winrt::Microsoft::ReactNative::ViewPanel>();
   bool ret = true;
   if (pPanel != nullptr) {
-    if (TryUpdateBackgroundBrush(pPanel, propertyName, propertyValue)) {
-    } else if (TryUpdateBorderProperties(nodeToUpdate, pPanel, propertyName, propertyValue)) {
-    } else if (TryUpdateCornerRadiusOnNode(nodeToUpdate, pPanel, propertyName, propertyValue)) {
-      // Do not clamp until a size has been set for the View
-      auto maxCornerRadius = std::numeric_limits<double>::max();
-      // The Width and Height properties are not always set on ViewPanel. In
-      // cases where it is embedded in a Control or outer Border, the values
-      // dimensions are set on those wrapper elements. We cannot depend on the
-      // default behavior of `UpdateCornerRadiusOnElement` to check for the
-      // clamp dimension from only the ViewPanel.
-      const xaml::FrameworkElement sizingElement = pViewShadowNode->IsControl() ? pViewShadowNode->GetControl()
-          : pViewShadowNode->HasOuterBorder() ? pPanel.GetOuterBorder().as<xaml::FrameworkElement>()
-                                              : pPanel;
-      if (sizingElement.ReadLocalValue(xaml::FrameworkElement::WidthProperty()) !=
-              xaml::DependencyProperty::UnsetValue() &&
-          sizingElement.ReadLocalValue(xaml::FrameworkElement::HeightProperty()) !=
-              xaml::DependencyProperty::UnsetValue()) {
-        maxCornerRadius = std::min(sizingElement.Width(), sizingElement.Height()) / 2;
-      }
-      UpdateCornerRadiusOnElement(nodeToUpdate, pPanel, maxCornerRadius);
-    } else if (TryUpdateMouseEvents(nodeToUpdate, propertyName, propertyValue)) {
-    } else if (propertyName == "onClick") {
-      pViewShadowNode->OnClick(propertyValue.AsBoolean());
-    } else if (propertyName == "focusable") {
-      pViewShadowNode->IsFocusable(propertyValue.AsBoolean());
-    } else if (propertyName == "enableFocusRing") {
-      pViewShadowNode->EnableFocusRing(propertyValue.AsBoolean());
-    } else if (propertyName == "tabIndex") {
-      auto resetTabIndex = true;
-      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64 ||
-          propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double) {
-        const auto tabIndex = propertyValue.AsInt64();
-        if (tabIndex == static_cast<int32_t>(tabIndex)) {
-          pViewShadowNode->TabIndex(static_cast<int32_t>(tabIndex));
-          resetTabIndex = false;
-        }
-      }
-      if (resetTabIndex) {
-        pViewShadowNode->TabIndex(std::numeric_limits<std::int32_t>::max());
-      }
+    if (UpdateViewPanelProperty(pViewShadowNode, pPanel, propertyName, propertyValue)) {
+    } else if (UpdatePropertyCore(pViewShadowNode, propertyName, propertyValue)) {
     } else {
       if (propertyName == "accessible") {
         pViewShadowNode->IsAccessible(propertyValue.AsBoolean());
@@ -451,6 +413,69 @@ bool ViewViewManager::UpdateProperty(
   }
 
   return ret;
+}
+
+bool ViewViewManager::UpdateViewPanelProperty(
+    ViewShadowNode *node,
+    winrt::Microsoft::ReactNative::ViewPanel &panel,
+    const std::string &propertyName,
+    const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
+  if (TryUpdateBackgroundBrush(panel, propertyName, propertyValue)) {
+  } else if (TryUpdateBorderProperties(node, panel, propertyName, propertyValue)) {
+  } else if (TryUpdateCornerRadiusOnNode(node, panel, propertyName, propertyValue)) {
+    // Do not clamp until a size has been set for the View
+    auto maxCornerRadius = std::numeric_limits<double>::max();
+    // The Width and Height properties are not always set on ViewPanel. In
+    // cases where it is embedded in a Control or outer Border, the values
+    // dimensions are set on those wrapper elements. We cannot depend on the
+    // default behavior of `UpdateCornerRadiusOnElement` to check for the
+    // clamp dimension from only the ViewPanel.
+    const xaml::FrameworkElement sizingElement = node->IsControl() ? node->GetControl()
+        : node->HasOuterBorder()                                   ? panel.GetOuterBorder().as<xaml::FrameworkElement>()
+                                                                   : panel;
+    if (sizingElement.ReadLocalValue(xaml::FrameworkElement::WidthProperty()) !=
+            xaml::DependencyProperty::UnsetValue() &&
+        sizingElement.ReadLocalValue(xaml::FrameworkElement::HeightProperty()) !=
+            xaml::DependencyProperty::UnsetValue()) {
+      maxCornerRadius = std::min(sizingElement.Width(), sizingElement.Height()) / 2;
+    }
+    UpdateCornerRadiusOnElement(node, panel, maxCornerRadius);
+  } else {
+    return false;
+  }
+
+  return true;
+}
+
+bool ViewViewManager::UpdatePropertyCore(
+    ViewShadowNode *node,
+    const std::string &propertyName,
+    const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
+  if (TryUpdateMouseEvents(node, propertyName, propertyValue)) {
+  } else if (propertyName == "onClick") {
+    node->OnClick(propertyValue.AsBoolean());
+  } else if (propertyName == "focusable") {
+    node->IsFocusable(propertyValue.AsBoolean());
+  } else if (propertyName == "enableFocusRing") {
+    node->EnableFocusRing(propertyValue.AsBoolean());
+  } else if (propertyName == "tabIndex") {
+    auto resetTabIndex = true;
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64 ||
+        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double) {
+      const auto tabIndex = propertyValue.AsInt64();
+      if (tabIndex == static_cast<int32_t>(tabIndex)) {
+        node->TabIndex(static_cast<int32_t>(tabIndex));
+        resetTabIndex = false;
+      }
+    }
+    if (resetTabIndex) {
+      node->TabIndex(std::numeric_limits<std::int32_t>::max());
+    }
+  } else {
+    return false;
+  }
+
+  return true;
 }
 
 void ViewViewManager::OnPropertiesUpdated(ShadowNodeBase *node) {
