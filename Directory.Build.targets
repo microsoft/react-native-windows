@@ -1,59 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
 
-  <!-- This target is used to compute the inputs and outputs for incrementally running the Yarn up to date check.-->
+  <!-- This target is used to compute the inputs and outputs for running the `yarn install`. -->
   <Target
-    Name="EnsureJavaScriptCodeUpToDateInputAndOutputs"
+    Name="ReactNativeYarnInstallInputAndOutputs"
     >
     <ItemGroup>
-      <_EnsureJavaScriptCodeUpToDateInputFiles Include="$(MSBuildThisFileDirectory)yarn.lock" />
-      <_EnsureJavaScriptCodeUpToDateInputFiles Include="$(MSBuildThisFileDirectory)\**\package.json" Exclude="$(MSBuildThisFileDirectory)\node_modules\**" />
-      <_EnsureJavaScriptCodeUpToDateOutputFiles Include="@(_EnsureJavaScriptCodeUpToDateInputFiles->'$(IntDir)\JsUpToDateCheck\%(RecursiveDir)%(Filename)%(Extension).dummy')" />
+      <_ReactNativeYarnInstallInputFiles Include="$(MSBuildThisFileDirectory)yarn.lock" />
+      <_ReactNativeYarnInstallInputFiles Include="$(MSBuildThisFileDirectory)**\package.json" Exclude="$(MSBuildThisFileDirectory)node_modules\**" />
+      <_ReactNativeYarnInstallOutputFiles Include="@(_ReactNativeYarnInstallInputFiles->'$(ReactNativeYarnIntDir)%(RecursiveDir)%(Filename)%(Extension).dummy')" />
     </ItemGroup>
   </Target>
 
   <!--
-    This target checks if Yarn install needs to run or not.
-    This is a common cause of failed builds for developers not used to running it after syncing...
-    This check does not run during design time build and in our CI validation runs (detected via AGENT_NAME).
+    This target runs `yarn install` and then `yarn build` as a post install step in `package.json`.
+    This is to address build failures by not running `yarn install` after syncing.
+    We do not run `yarn install` during design time build and in our CI validation runs (detected via AGENT_NAME).
   -->
   <Target
-    Name="EnsureJavaScriptCodeUpToDate"
+    Name="ReactNativeYarnInstall"
     BeforeTargets="BeforeBuild"
-    DependsOnTargets="EnsureJavaScriptCodeUpToDateInputAndOutputs"
-    Inputs="@(_EnsureJavaScriptCodeUpToDateInputFiles)"
-    Outputs="@(_EnsureJavaScriptCodeUpToDateOutputFiles)"
+    DependsOnTargets="ReactNativeYarnInstallInputAndOutputs"
+    Inputs="@(_ReactNativeYarnInstallInputFiles)"
+    Outputs="@(_ReactNativeYarnInstallOutputFiles)"
     Condition="'$(DesignTimeBuild)'=='' AND '$(AGENT_NAME)' == ''"
     >
 
-    <Message Text="Checking if yarn is 'up to date' by running a 'dry-run' version of `yarn install` and checking the exit code" />
+    <Message Text="Running yarn install to fetch latest packages." Importance="High" />
+    <Message Text="yarn install --frozen-lockfile --mutex file:.yarn-mutex" Importance="High" />
     <Exec
       ContinueOnError="True"
-      Command="yarn check --offline --mutex file:.yarn-mutex"
+      Command="yarn install --frozen-lockfile --mutex file:.yarn-mutex"
       WorkingDirectory="$(MSBuildThisFileDirectory)"
       >
-      <Output TaskParameter="ExitCode" ItemName="_YarnExitCode"/>
+      <Output TaskParameter="ExitCode" ItemName="_ReactNativeYarnExitCode"/>
     </Exec>
+    
+    <Message Text="yarn install: Succeeded" Condition="'%(_ReactNativeYarnExitCode.Identity)' == '0'" Importance="High" />
+    <Message Text="yarn install: Failed" Condition="'%(_ReactNativeYarnExitCode.Identity)' != '0'" Importance="High" />
 
-    <!-- Fail the build if yarn needs to install packages. -->
+    <!-- Fail the build if yarn needs to update yarn.lock file. -->
     <Error
-      Condition="'%(_YarnExitCode.Identity)' != '0'"
-      Text="Yarn packages are out of date. Please run `yarn install &amp;&amp; yarn build` in the root of the repo to ensure the generated files are up to date"
+      Condition="'%(_ReactNativeYarnExitCode.Identity)' != '0'"
+      Text="Yarn packages are out of date. Please run `yarn install` in the root of the repo to ensure the generated files are up to date"
     />
 
     <!--
       Copy the yarn.lock file to prevent this task from running over and over again, and only rerun the check with yarn.lock or any package.json changes.
       This will likely miss a few corner cases with local changes to package.json but should catch the most important case after syncing
     -->
+    <MakeDir Directories="$(ReactNativeYarnIntDir)" />
     <Copy
-      Condition="'%(_YarnExitCode.Identity)' == '0'"
-      SourceFiles="@(_EnsureJavaScriptCodeUpToDateInputFiles)"
-      DestinationFiles="@(_EnsureJavaScriptCodeUpToDateOutputFiles)"
+      Condition="'%(_ReactNativeYarnExitCode.Identity)' == '0'"
+      SourceFiles="@(_ReactNativeYarnInstallInputFiles)"
+      DestinationFiles="@(_ReactNativeYarnInstallOutputFiles)"
       SkipUnchangedFiles="true"
       Retries="5"
       RetryDelayMilliseconds="100" />
     <!-- We have to touch the outputs to ensure up to date incrementaility works-->
-    <Touch Files="@(_EnsureJavaScriptCodeUpToDateOutputFiles)" />
+    <Touch Files="@(_ReactNativeYarnInstallOutputFiles)" />
 
   </Target>
 
