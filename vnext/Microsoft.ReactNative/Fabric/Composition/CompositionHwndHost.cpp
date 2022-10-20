@@ -54,8 +54,6 @@ void CompositionHwndHost::Initialize(uint64_t hwnd) noexcept {
   CreateDesktopWindowTarget(m_hwnd);
   CreateCompositionRoot();
 
-  EnsureTarget();
-
   m_compRootView.InitialProps(std::move(m_initialPropsWriter));
   m_compRootView.ComponentName(std::move(m_componentName));
   m_compRootView.ReactNativeHost(std::move(m_reactNativeHost));
@@ -135,7 +133,6 @@ void CompositionHwndHost::ReactNativeHost(ReactNative::ReactNativeHost const &va
   } else {
     m_reactNativeHost = value;
   }
-  EnsureTarget();
 }
 
 winrt::Windows::UI::Composition::Compositor CompositionHwndHost::Compositor() const noexcept {
@@ -145,18 +142,6 @@ winrt::Windows::UI::Composition::Compositor CompositionHwndHost::Compositor() co
 
   return winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::InnerCompositor(
       compositionContext);
-}
-
-void CompositionHwndHost::EnsureTarget() noexcept {
-  if (!ReactNativeHost() || !m_hwnd) {
-    return;
-  }
-
-  winrt::Microsoft::ReactNative::ReactPropertyBag propBag(ReactNativeHost().InstanceSettings().Properties());
-  propBag.Set(
-      winrt::Microsoft::ReactNative::ReactPropertyId<winrt::Windows::UI::Composition::Desktop::DesktopWindowTarget>(
-          L"CompCoreDispatcher"),
-      Target());
 }
 
 winrt::hstring CompositionHwndHost::ComponentName() noexcept {
