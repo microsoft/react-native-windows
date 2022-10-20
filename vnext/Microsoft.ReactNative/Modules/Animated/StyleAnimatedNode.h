@@ -11,7 +11,7 @@ class StyleAnimatedNode final : public AnimatedNode {
  public:
   StyleAnimatedNode(
       int64_t tag,
-      const folly::dynamic &config,
+      const winrt::Microsoft::ReactNative::JSValueObject &config,
       const std::shared_ptr<NativeAnimatedNodeManager> &manager);
   void CollectViewUpdates(const folly::dynamic &propsMap);
 

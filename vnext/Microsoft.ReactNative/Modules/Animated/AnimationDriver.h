@@ -2,12 +2,11 @@
 // Licensed under the MIT License.
 
 #pragma once
-#include <folly/dynamic.h>
 #include "NativeAnimatedNodeManager.h"
 #include "ValueAnimatedNode.h"
 
 namespace Microsoft::ReactNative {
-typedef std::function<void(std::vector<folly::dynamic>)> Callback;
+typedef std::function<void(bool)> Callback;
 
 class ValueAnimatedNode;
 class AnimationDriver : public std::enable_shared_from_this<AnimationDriver> {
@@ -16,14 +15,14 @@ class AnimationDriver : public std::enable_shared_from_this<AnimationDriver> {
       int64_t id,
       int64_t animatedValueTag,
       const Callback &endCallback,
-      const folly::dynamic &config,
+      const winrt::Microsoft::ReactNative::JSValueObject &config,
       const std::shared_ptr<NativeAnimatedNodeManager> &manager);
   virtual ~AnimationDriver();
   void StartAnimation();
   void StopAnimation(bool ignoreCompletedHandlers = false);
 
   virtual std::tuple<comp::CompositionAnimation, comp::CompositionScopedBatch> MakeAnimation(
-      const folly::dynamic & /*config*/) {
+      const winrt::Microsoft::ReactNative::JSValueObject & /*config*/) {
     return std::make_tuple(nullptr, nullptr);
   };
 
@@ -35,11 +34,11 @@ class AnimationDriver : public std::enable_shared_from_this<AnimationDriver> {
     return m_animatedValueTag;
   }
 
-  inline Callback EndCallback() {
+  inline Callback EndCallback() noexcept {
     return m_endCallback;
   }
 
-  inline folly::dynamic AnimationConfig() {
+  inline const winrt::Microsoft::ReactNative::JSValueObject &AnimationConfig() const noexcept {
     return m_config;
   }
 
@@ -65,7 +64,7 @@ class AnimationDriver : public std::enable_shared_from_this<AnimationDriver> {
   int64_t m_id{0};
   int64_t m_animatedValueTag{};
   int64_t m_iterations{0};
-  folly::dynamic m_config{};
+  winrt::Microsoft::ReactNative::JSValueObject m_config{};
   std::weak_ptr<NativeAnimatedNodeManager> m_manager{};
 
   comp::CompositionAnimation m_animation{nullptr};

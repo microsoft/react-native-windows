@@ -5,234 +5,244 @@
 
 #include "NativeAnimatedModule.h"
 
-#include <IReactDispatcher.h>
-#include <cxxreact/Instance.h>
-#include <cxxreact/JsArgumentHelpers.h>
+#include <DynamicWriter.h>
+#include <ReactCoreInjection.h>
 
 namespace Microsoft::ReactNative {
-const char *NativeAnimatedModule::name{"NativeAnimatedModule"};
 
-NativeAnimatedModule::NativeAnimatedModule(Mso::CntPtr<Mso::React::IReactContext> &&context)
-    : m_context(std::move(context)) {
-  m_nodesManager = std::make_shared<NativeAnimatedNodeManager>(NativeAnimatedNodeManager());
+void NativeAnimatedModule::Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
+  m_context = reactContext;
 }
 
-NativeAnimatedModule::~NativeAnimatedModule() {
-  auto uiDispatcher =
-      winrt::Microsoft::ReactNative::implementation::ReactDispatcher::GetUIDispatcher(m_context->Properties());
-
-  // To make sure that we destroy UI components in UI thread.
-  if (!uiDispatcher.HasThreadAccess()) {
-    uiDispatcher.Post([manager = std::move(m_nodesManager)]() {});
-  }
+void NativeAnimatedModule::startOperationBatch() noexcept {
+  // NYI #6161
 }
 
-std::vector<facebook::xplat::module::CxxModule::Method> NativeAnimatedModule::getMethods() {
-  return {
-      Method(
-          "startOperationBatch",
-          [](folly::dynamic /*args*/) {
-            // NYI #6161
-          }),
-
-      Method(
-          "finishOperationBatch",
-          [](folly::dynamic /*args*/) {
-            // NYI #6161
-          }),
-      Method(
-          "createAnimatedNode",
-          [this](folly::dynamic args) {
-            const auto tag = facebook::xplat::jsArgAsInt(args, 0);
-            const auto config = facebook::xplat::jsArgAsObject(args, 1);
-            NativeAnimatedModule::CreateAnimatedNode(tag, config);
-          }),
-      Method(
-          "getValue",
-          [this](folly::dynamic args, Callback saveValueCallback) {
-            const auto animatedNodeTag = facebook::xplat::jsArgAsInt(args, 0);
-            NativeAnimatedModule::GetValue(animatedNodeTag, saveValueCallback);
-          }),
-      Method(
-          "connectAnimatedNodeToView",
-          [this](folly::dynamic args) {
-            const auto tag = facebook::xplat::jsArgAsInt(args, 0);
-            const auto viewTag = facebook::xplat::jsArgAsInt(args, 1);
-            NativeAnimatedModule::ConnectAnimatedNodeToView(tag, viewTag);
-          }),
-      Method(
-          "disconnectAnimatedNodeFromView",
-          [this](folly::dynamic args) {
-            const auto tag = facebook::xplat::jsArgAsInt(args, 0);
-            const auto viewTag = facebook::xplat::jsArgAsInt(args, 1);
-            NativeAnimatedModule::DisconnectAnimatedNodeFromView(tag, viewTag);
-          }),
-      Method(
-          "connectAnimatedNodes",
-          [this](folly::dynamic args) {
-            const auto parentTag = facebook::xplat::jsArgAsInt(args, 0);
-            const auto childTag = facebook::xplat::jsArgAsInt(args, 1);
-            NativeAnimatedModule::ConnectAnimatedNodes(parentTag, childTag);
-          }),
-      Method(
-          "disconnectAnimatedNodes",
-          [this](folly::dynamic args) {
-            const auto parentTag = facebook::xplat::jsArgAsInt(args, 0);
-            const auto childTag = facebook::xplat::jsArgAsInt(args, 1);
-            NativeAnimatedModule::DisconnectAnimatedNodes(parentTag, childTag);
-          }),
-      Method(
-          "stopAnimation",
-          [this](folly::dynamic args) {
-            const auto animationId = facebook::xplat::jsArgAsInt(args, 0);
-            NativeAnimatedModule::StopAnimation(animationId);
-          }),
-      Method(
-          "startAnimatingNode",
-          [this](folly::dynamic args, Callback endCallback) {
-            const auto animationId = facebook::xplat::jsArgAsInt(args, 0);
-            const auto animatedNodeTag = facebook::xplat::jsArgAsInt(args, 1);
-            const auto animationConfig = facebook::xplat::jsArgAsObject(args, 2);
-            NativeAnimatedModule::StartAnimatingNode(animationId, animatedNodeTag, animationConfig, endCallback);
-          }),
-      Method(
-          "dropAnimatedNode",
-          [this](folly::dynamic args) {
-            const auto tag = facebook::xplat::jsArgAsInt(args, 0);
-            NativeAnimatedModule::DropAnimatedNode(tag);
-          }),
-      Method(
-          "setAnimatedNodeValue",
-          [this](folly::dynamic args) {
-            const auto tag = facebook::xplat::jsArgAsInt(args, 0);
-            const auto value = facebook::xplat::jsArgAsDouble(args, 1);
-            NativeAnimatedModule::SetAnimatedNodeValue(tag, value);
-          }),
-      Method(
-          "setAnimatedNodeOffset",
-          [this](folly::dynamic args) {
-            const auto tag = facebook::xplat::jsArgAsInt(args, 0);
-            const auto value = facebook::xplat::jsArgAsDouble(args, 1);
-            NativeAnimatedModule::SetAnimatedNodeOffset(tag, value);
-          }),
-      Method(
-          "flattenAnimatedNodeOffset",
-          [this](folly::dynamic args) {
-            const auto tag = facebook::xplat::jsArgAsInt(args, 0);
-            NativeAnimatedModule::FlattenAnimatedNodeOffset(tag);
-          }),
-      Method(
-          "extractAnimatedNodeOffset",
-          [this](folly::dynamic args) {
-            const auto tag = facebook::xplat::jsArgAsInt(args, 0);
-            NativeAnimatedModule::ExtractAnimatedNodeOffset(tag);
-          }),
-      Method(
-          "addAnimatedEventToView",
-          [this](folly::dynamic args) {
-            const auto viewTag = facebook::xplat::jsArgAsInt(args, 0);
-            const auto eventName = facebook::xplat::jsArgAsString(args, 1);
-            const auto eventMapping = facebook::xplat::jsArgAsObject(args, 2);
-            NativeAnimatedModule::AddAnimatedEventToView(viewTag, eventName, eventMapping);
-          }),
-      Method(
-          "removeAnimatedEventFromView",
-          [this](folly::dynamic args) {
-            const auto viewTag = facebook::xplat::jsArgAsInt(args, 0);
-            const auto eventName = facebook::xplat::jsArgAsString(args, 1);
-            const auto animatedValueTag = facebook::xplat::jsArgAsInt(args, 2);
-            NativeAnimatedModule::RemoveAnimatedEventFromView(viewTag, eventName, animatedValueTag);
-          }),
-      Method(
-          "startListeningToAnimatedNodeValue",
-          [this](folly::dynamic args) {
-            const auto viewTag = facebook::xplat::jsArgAsInt(args, 0);
-            NativeAnimatedModule::StartListeningToAnimatedNodeValue(viewTag);
-          }),
-      Method(
-          "stopListeningToAnimatedNodeValue",
-          [this](folly::dynamic args) {
-            const auto viewTag = facebook::xplat::jsArgAsInt(args, 0);
-            NativeAnimatedModule::StopListeningToAnimatedNodeValue(viewTag);
-          }),
-  };
+void NativeAnimatedModule::finishOperationBatch() noexcept {
+  // NYI #6161
 }
 
-void NativeAnimatedModule::CreateAnimatedNode(int64_t tag, const folly::dynamic &config) {
-  m_nodesManager->CreateAnimatedNode(tag, config, m_context, m_nodesManager);
+void NativeAnimatedModule::createAnimatedNode(double tag, ::React::JSValue &&config) noexcept {
+  winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::PostToUIBatchingQueue(
+      m_context.Handle(),
+      [wkThis = std::weak_ptr(this->shared_from_this()),
+       config = config.MoveObject(),
+       tag = static_cast<int64_t>(tag)]() {
+        if (auto pThis = wkThis.lock()) {
+          pThis->m_nodesManager->CreateAnimatedNode(tag, config, pThis->m_context, pThis->m_nodesManager);
+        }
+      });
 }
 
-void NativeAnimatedModule::GetValue(int64_t animatedNodeTag, const Callback &saveValueCallback) {
-  m_nodesManager->GetValue(animatedNodeTag, saveValueCallback);
+// void NativeAnimatedModule::updateAnimatedNodeConfig(double tag, ::React::JSValue && config) noexcept {
+//  NYI
+//}
+
+void NativeAnimatedModule::getValue(double tag, std::function<void(double)> const &saveValueCallback) noexcept {
+  winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::PostToUIBatchingQueue(
+      m_context.Handle(),
+      [wkThis = std::weak_ptr(this->shared_from_this()),
+       tag = static_cast<int64_t>(tag),
+       callback = std::move(saveValueCallback)]() {
+        if (auto pThis = wkThis.lock()) {
+          pThis->m_nodesManager->GetValue(
+              tag, [context = pThis->m_context, callback = std::move(callback)](double value) {
+                context.JSDispatcher().Post([callback = std::move(callback), value]() { callback(value); });
+              });
+        }
+      });
 }
 
-void NativeAnimatedModule::ConnectAnimatedNodeToView(int64_t animatedNodeTag, int64_t viewTag) {
-  m_nodesManager->ConnectAnimatedNodeToView(animatedNodeTag, viewTag);
+void NativeAnimatedModule::startListeningToAnimatedNodeValue(double tag) noexcept {
+  // NYI
 }
 
-void NativeAnimatedModule::DisconnectAnimatedNodeFromView(int64_t animatedNodeTag, int64_t viewTag) {
-  m_nodesManager->DisconnectAnimatedNodeToView(animatedNodeTag, viewTag);
+void NativeAnimatedModule::stopListeningToAnimatedNodeValue(double tag) noexcept {
+  // NYI
 }
 
-void NativeAnimatedModule::ConnectAnimatedNodes(int64_t parentNodeTag, int64_t childNodeTag) {
-  m_nodesManager->ConnectAnimatedNode(parentNodeTag, childNodeTag);
+void NativeAnimatedModule::connectAnimatedNodes(double parentTag, double childTag) noexcept {
+  winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::PostToUIBatchingQueue(
+      m_context.Handle(),
+      [wkThis = std::weak_ptr(this->shared_from_this()),
+       parentTag = static_cast<int64_t>(parentTag),
+       childTag = static_cast<int64_t>(childTag)]() {
+        if (auto pThis = wkThis.lock()) {
+          pThis->m_nodesManager->ConnectAnimatedNode(parentTag, childTag);
+        }
+      });
 }
 
-void NativeAnimatedModule::DisconnectAnimatedNodes(int64_t parentNodeTag, int64_t childNodeTag) {
-  m_nodesManager->DisconnectAnimatedNode(parentNodeTag, childNodeTag);
+void NativeAnimatedModule::disconnectAnimatedNodes(double parentTag, double childTag) noexcept {
+  winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::PostToUIBatchingQueue(
+      m_context.Handle(),
+      [wkThis = std::weak_ptr(this->shared_from_this()),
+       parentTag = static_cast<int64_t>(parentTag),
+       childTag = static_cast<int64_t>(childTag)]() {
+        if (auto pThis = wkThis.lock()) {
+          pThis->m_nodesManager->DisconnectAnimatedNode(parentTag, childTag);
+        }
+      });
 }
 
-void NativeAnimatedModule::StartAnimatingNode(
-    int64_t animationId,
-    int64_t animatedNodeTag,
-    const folly::dynamic &animationConfig,
-    const Callback &endCallback) {
-  m_nodesManager->StartAnimatingNode(animationId, animatedNodeTag, animationConfig, endCallback, m_nodesManager);
+void NativeAnimatedModule::startAnimatingNode(
+    double animationId,
+    double nodeTag,
+    ::React::JSValue &&config,
+    std::function<void(ReactNativeSpecs::AnimatedModuleSpec_EndResult const &)> const &endCallback) noexcept {
+  winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::PostToUIBatchingQueue(
+      m_context.Handle(),
+      [wkThis = std::weak_ptr(this->shared_from_this()),
+       animationId = static_cast<int64_t>(animationId),
+       nodeTag = static_cast<int64_t>(nodeTag),
+       animationConfig = std::move(config),
+       endCallback = std::move(endCallback)]() {
+        if (auto pThis = wkThis.lock()) {
+          pThis->m_nodesManager->StartAnimatingNode(
+              animationId,
+              nodeTag,
+              animationConfig.AsObject(),
+              [context = pThis->m_context, endCallback = std::move(endCallback)](bool finished) {
+                context.JSDispatcher().Post([finished, endCallback = std::move(endCallback)]() {
+                  ReactNativeSpecs::AnimatedModuleSpec_EndResult result;
+                  result.finished = finished;
+                  endCallback(std::move(result));
+                });
+              },
+              pThis->m_nodesManager);
+        }
+      });
 }
 
-void NativeAnimatedModule::StopAnimation(int64_t animationId) {
-  m_nodesManager->StopAnimation(animationId);
+void NativeAnimatedModule::stopAnimation(double animationId) noexcept {
+  winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::PostToUIBatchingQueue(
+      m_context.Handle(),
+      [wkThis = std::weak_ptr(this->shared_from_this()), animationId = static_cast<int64_t>(animationId)]() {
+        if (auto pThis = wkThis.lock()) {
+          pThis->m_nodesManager->StopAnimation(animationId);
+        }
+      });
 }
 
-void NativeAnimatedModule::DropAnimatedNode(int64_t tag) {
-  m_nodesManager->DropAnimatedNode(tag);
+void NativeAnimatedModule::setAnimatedNodeValue(double nodeTag, double value) noexcept {
+  winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::PostToUIBatchingQueue(
+      m_context.Handle(),
+      [wkThis = std::weak_ptr(this->shared_from_this()), nodeTag = static_cast<int64_t>(nodeTag), value]() {
+        if (auto pThis = wkThis.lock()) {
+          pThis->m_nodesManager->SetAnimatedNodeValue(nodeTag, value);
+        }
+      });
 }
 
-void NativeAnimatedModule::SetAnimatedNodeValue(int64_t tag, double value) {
-  m_nodesManager->SetAnimatedNodeValue(tag, value);
+void NativeAnimatedModule::setAnimatedNodeOffset(double nodeTag, double offset) noexcept {
+  winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::PostToUIBatchingQueue(
+      m_context.Handle(),
+      [wkThis = std::weak_ptr(this->shared_from_this()), nodeTag = static_cast<int64_t>(nodeTag), offset]() {
+        if (auto pThis = wkThis.lock()) {
+          pThis->m_nodesManager->SetAnimatedNodeOffset(nodeTag, offset);
+        }
+      });
 }
 
-void NativeAnimatedModule::SetAnimatedNodeOffset(int64_t tag, double offset) {
-  m_nodesManager->SetAnimatedNodeOffset(tag, offset);
+void NativeAnimatedModule::flattenAnimatedNodeOffset(double nodeTag) noexcept {
+  winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::PostToUIBatchingQueue(
+      m_context.Handle(),
+      [wkThis = std::weak_ptr(this->shared_from_this()), nodeTag = static_cast<int64_t>(nodeTag)]() {
+        if (auto pThis = wkThis.lock()) {
+          pThis->m_nodesManager->FlattenAnimatedNodeOffset(nodeTag);
+        }
+      });
 }
 
-void NativeAnimatedModule::FlattenAnimatedNodeOffset(int64_t tag) {
-  m_nodesManager->FlattenAnimatedNodeOffset(tag);
+void NativeAnimatedModule::extractAnimatedNodeOffset(double nodeTag) noexcept {
+  winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::PostToUIBatchingQueue(
+      m_context.Handle(),
+      [wkThis = std::weak_ptr(this->shared_from_this()), nodeTag = static_cast<int64_t>(nodeTag)]() {
+        if (auto pThis = wkThis.lock()) {
+          pThis->m_nodesManager->ExtractAnimatedNodeOffset(nodeTag);
+        }
+      });
 }
 
-void NativeAnimatedModule::ExtractAnimatedNodeOffset(int64_t tag) {
-  m_nodesManager->ExtractAnimatedNodeOffset(tag);
+void NativeAnimatedModule::connectAnimatedNodeToView(double nodeTag, double viewTag) noexcept {
+  winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::PostToUIBatchingQueue(
+      m_context.Handle(),
+      [wkThis = std::weak_ptr(this->shared_from_this()),
+       nodeTag = static_cast<int64_t>(nodeTag),
+       viewTag = static_cast<int64_t>(viewTag)]() {
+        if (auto pThis = wkThis.lock()) {
+          pThis->m_nodesManager->ConnectAnimatedNodeToView(nodeTag, viewTag);
+        }
+      });
 }
 
-void NativeAnimatedModule::AddAnimatedEventToView(
-    int64_t tag,
-    const std::string &eventName,
-    const folly::dynamic &eventMapping) {
-  m_nodesManager->AddAnimatedEventToView(tag, eventName, eventMapping, m_nodesManager);
+void NativeAnimatedModule::disconnectAnimatedNodeFromView(double nodeTag, double viewTag) noexcept {
+  winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::PostToUIBatchingQueue(
+      m_context.Handle(),
+      [wkThis = std::weak_ptr(this->shared_from_this()),
+       nodeTag = static_cast<int64_t>(nodeTag),
+       viewTag = static_cast<int64_t>(viewTag)]() {
+        if (auto pThis = wkThis.lock()) {
+          pThis->m_nodesManager->DisconnectAnimatedNodeToView(nodeTag, viewTag);
+        }
+      });
 }
 
-void NativeAnimatedModule::RemoveAnimatedEventFromView(
-    int64_t tag,
-    const std::string &eventName,
-    int64_t animatedValueTag) {
-  m_nodesManager->RemoveAnimatedEventFromView(tag, eventName, animatedValueTag);
+void NativeAnimatedModule::restoreDefaultValues(double nodeTag) noexcept {
+  // NYI
 }
 
-void NativeAnimatedModule::StartListeningToAnimatedNodeValue(int64_t /*tag*/) {
-  // NotImplemented
+void NativeAnimatedModule::dropAnimatedNode(double tag) noexcept {
+  winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::PostToUIBatchingQueue(
+      m_context.Handle(), [wkThis = std::weak_ptr(this->shared_from_this()), tag = static_cast<int64_t>(tag)]() {
+        if (auto pThis = wkThis.lock()) {
+          pThis->m_nodesManager->DropAnimatedNode(tag);
+        }
+      });
 }
 
-void NativeAnimatedModule::StopListeningToAnimatedNodeValue(int64_t /*tag*/) {
-  // NotImplemented
+void NativeAnimatedModule::addAnimatedEventToView(
+    double viewTag,
+    std::string eventName,
+    ReactNativeSpecs::AnimatedModuleSpec_EventMapping &&eventMapping) noexcept {
+  winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::PostToUIBatchingQueue(
+      m_context.Handle(),
+      [wkThis = std::weak_ptr(this->shared_from_this()),
+       viewTag = static_cast<int64_t>(viewTag),
+       eventName = std::move(eventName),
+       eventMapping = std::move(eventMapping)]() {
+        if (auto pThis = wkThis.lock()) {
+          pThis->m_nodesManager->AddAnimatedEventToView(viewTag, eventName, eventMapping, pThis->m_nodesManager);
+        }
+      });
 }
+
+void NativeAnimatedModule::removeAnimatedEventFromView(
+    double viewTag,
+    std::string eventName,
+    double animatedNodeTag) noexcept {
+  winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::PostToUIBatchingQueue(
+      m_context.Handle(),
+      [wkThis = std::weak_ptr(this->shared_from_this()),
+       viewTag = static_cast<int64_t>(viewTag),
+       eventName = std::move(eventName),
+       animatedNodeTag = static_cast<int64_t>(animatedNodeTag)]() {
+        if (auto pThis = wkThis.lock()) {
+          pThis->m_nodesManager->RemoveAnimatedEventFromView(viewTag, eventName, animatedNodeTag);
+        }
+      });
+}
+
+void NativeAnimatedModule::addListener(std::string eventName) noexcept {
+  // no-op
+}
+
+void NativeAnimatedModule::removeListeners(double count) noexcept {
+  // no-op
+}
+
+void NativeAnimatedModule::queueAndExecuteBatchedOperations(::React::JSValueArray &&operationsAndArgs) noexcept {
+  assert(false); // JS currently only calls this on Android
+}
+
 } // namespace Microsoft::ReactNative

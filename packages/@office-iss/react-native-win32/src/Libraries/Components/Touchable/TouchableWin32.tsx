@@ -499,7 +499,7 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
    * This is also where press callbacks are invoked from
    */
   // Existing high cyclomatic complexity
-  // eslint-disable-next-line complexity
+   
   private readonly _performSideEffectsForTransition = (currState: IState, nextState: IState, signal: ISignal, e: IPressEvent) => {
     const currIsHighlight = this._isHighlight(currState);
     const newIsHighlight = this._isHighlight(nextState);

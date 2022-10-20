@@ -11,12 +11,12 @@ DecayAnimationDriver::DecayAnimationDriver(
     int64_t id,
     int64_t animatedValueTag,
     const Callback &endCallback,
-    const folly::dynamic &config,
+    const winrt::Microsoft::ReactNative::JSValueObject &config,
     const std::shared_ptr<NativeAnimatedNodeManager> &manager)
     : CalculatedAnimationDriver(id, animatedValueTag, endCallback, config, manager) {
-  m_deceleration = config.find(s_decelerationName).dereference().second.asDouble();
+  m_deceleration = config[s_decelerationName].AsDouble();
   assert(m_deceleration > 0);
-  m_velocity = config.find(s_velocityName).dereference().second.asDouble();
+  m_velocity = config[s_velocityName].AsDouble();
 }
 
 std::tuple<float, double> DecayAnimationDriver::GetValueAndVelocityForTime(double time) {

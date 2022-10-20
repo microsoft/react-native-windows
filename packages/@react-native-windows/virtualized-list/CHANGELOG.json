@@ -2,6 +2,42 @@
   "name": "@react-native-windows/virtualized-list",
   "entries": [
     {
+      "date": "Wed, 19 Oct 2022 05:12:35 GMT",
+      "tag": "@react-native-windows/virtualized-list_v0.0.0-canary.53",
+      "version": "0.0.0-canary.53",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@react-native-windows/virtualized-list",
+            "commit": "0eb177c4044f544da305491d2bc05251e3b70496",
+            "comment": "integration 8/26/22"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 15 Oct 2022 05:11:59 GMT",
+      "tag": "@react-native-windows/virtualized-list_v0.0.0-canary.52",
+      "version": "0.0.0-canary.52",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/virtualized-list",
+            "commit": "c67e48d281b09d087c891e3c0f8002e01505ce34",
+            "comment": "Integrate 8/12"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/virtualized-list",
+            "comment": "Bump react-native-platform-override to v1.7.1",
+            "commit": "c67e48d281b09d087c891e3c0f8002e01505ce34"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 05 Oct 2022 05:13:43 GMT",
       "tag": "@react-native-windows/virtualized-list_v0.0.0-canary.51",
       "version": "0.0.0-canary.51",
