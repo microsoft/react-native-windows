@@ -15,6 +15,13 @@
       "issue": 6341
     },
     {
+      "type": "derived",
+      "file": "src/js/examples-win/Button/ButtonExample.windows.js",
+      "baseFile": "packages/rn-tester/js/examples/Button/ButtonExample.js",
+      "baseHash": "69226803b11aa967c06bb038a055268794177f2b",
+      "issue": 0
+    },
+    {
       "type": "patch",
       "file": "src/js/examples/Pressable/PressableExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Pressable/PressableExample.js",
