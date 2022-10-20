@@ -424,32 +424,32 @@ bool ViewViewManager::UpdateProperty(
       UpdateCornerRadiusOnElement(nodeToUpdate, pPanel, maxCornerRadius);
     } else if (TryUpdateMouseEvents(nodeToUpdate, propertyName, propertyValue)) {
     } else if (propertyName == "onClick") {
-      pViewShadowNode->OnClick(!propertyValue.IsNull() && propertyValue.AsBoolean());
+      pViewShadowNode->OnClick(propertyValue.AsBoolean());
     } else if (propertyName == "overflow") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
         bool clipChildren = propertyValue.AsString() == "hidden";
         pPanel.ClipChildren(clipChildren);
       }
     } else if (propertyName == "focusable") {
-      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)
-        pViewShadowNode->IsFocusable(propertyValue.AsBoolean());
+      pViewShadowNode->IsFocusable(propertyValue.AsBoolean());
     } else if (propertyName == "enableFocusRing") {
-      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)
-        pViewShadowNode->EnableFocusRing(propertyValue.AsBoolean());
-      else if (propertyValue.IsNull())
-        pViewShadowNode->EnableFocusRing(false);
+      pViewShadowNode->EnableFocusRing(propertyValue.AsBoolean());
     } else if (propertyName == "tabIndex") {
-      auto tabIndex = propertyValue.AsInt64();
-      if (tabIndex == static_cast<int32_t>(tabIndex)) {
-        pViewShadowNode->TabIndex(static_cast<int32_t>(tabIndex));
-      } else if (propertyValue.IsNull()) {
+      auto resetTabIndex = true;
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64 ||
+          propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double) {
+        const auto tabIndex = propertyValue.AsInt64();
+        if (tabIndex == static_cast<int32_t>(tabIndex)) {
+          pViewShadowNode->TabIndex(static_cast<int32_t>(tabIndex));
+          resetTabIndex = false;
+        }
+      }
+      if (resetTabIndex) {
         pViewShadowNode->TabIndex(std::numeric_limits<std::int32_t>::max());
       }
     } else {
       if (propertyName == "accessible") {
-        if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
-          pViewShadowNode->IsAccessible(propertyValue.AsBoolean());
-        }
+        pViewShadowNode->IsAccessible(propertyValue.AsBoolean());
       }
       ret = Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
     }
