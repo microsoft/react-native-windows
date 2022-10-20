@@ -7,19 +7,19 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20220729-2025-a21a1f845",
+  "baseVersion": "0.0.0-20220826-2018-9ac437f25",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "80da3e01a99821e4813d04b0a8226c74f9c89217"
+      "baseHash": "96ff12c38ea31691ca99dd8848e38217ffbd1417"
     },
     {
       "type": "derived",
       "file": "src/index.win32.js",
       "baseFile": "index.js",
-      "baseHash": "5ec87ef7736ad3b7d03f627ff5ac6475ce0bc6bf"
+      "baseHash": "876181982a1e0c4214571656e2185e1e7015b01c"
     },
     {
       "type": "patch",
@@ -31,7 +31,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.win32.js",
       "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.js",
-      "baseHash": "318fa0b04d231c747d95bc4fb34a9a4152009786",
+      "baseHash": "86911d26a839aa1ebe91b6abc0fe910e09ba62e5",
       "issue": 4578
     },
     {
@@ -53,7 +53,7 @@
       "type": "copy",
       "file": "src/Libraries/Components/DatePicker/DatePickerIOS.win32.js",
       "baseFile": "Libraries/Components/DatePicker/DatePickerIOS.android.js",
-      "baseHash": "3c5bb9a7284f3a0a19d309bdf54701b865f9c56b",
+      "baseHash": "d4d3f2157abce118c9b9ad63ab2cad0cfa1979a0",
       "issue": 4378
     },
     {
@@ -117,7 +117,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.tsx",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "44fadc4a6bc51291e44f6bb8d7f38563e63bcbff"
+      "baseHash": "9cff22dbd054762b03f9e40ce45b03cca67a62f5"
     },
     {
       "type": "patch",
@@ -183,7 +183,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewPropTypes.win32.js",
       "baseFile": "Libraries/Components/View/ViewPropTypes.js",
-      "baseHash": "52170daa86f15afc549b4f284371e4c4154aa3dd",
+      "baseHash": "40cda23c445a8edaa16e6d7b924963da70bc374c",
       "issue": 6240
     },
     {
@@ -259,7 +259,7 @@
       "type": "patch",
       "file": "src/Libraries/Inspector/Inspector.win32.js",
       "baseFile": "Libraries/Inspector/Inspector.js",
-      "baseHash": "a335353c8e7299f8de2601104e2056eeb16ea041"
+      "baseHash": "f3f862f878ce5252067ecb9f86b3a6057493b8dc"
     },
     {
       "type": "patch",
@@ -284,7 +284,7 @@
       "type": "copy",
       "file": "src/Libraries/Lists/__tests__/FlatList-test.js",
       "baseFile": "Libraries/Lists/__tests__/FlatList-test.js",
-      "baseHash": "524bd967f806a01272162bdec906780acdea064c",
+      "baseHash": "7a706826e19aad7b31fb1f918443a37ee95121b6",
       "issue": 0
     },
     {
@@ -298,13 +298,13 @@
       "type": "copy",
       "file": "src/Libraries/Lists/__tests__/ViewabilityHelper-test.js",
       "baseFile": "Libraries/Lists/__tests__/ViewabilityHelper-test.js",
-      "baseHash": "ab22d57f3ed7af8382dc2fac72eaca53073d9a41"
+      "baseHash": "292b601620f14a4e6fa74483e139aa9fb9499620"
     },
     {
       "type": "copy",
       "file": "src/Libraries/Lists/__tests__/VirtualizedList-test.js",
       "baseFile": "Libraries/Lists/__tests__/VirtualizedList-test.js",
-      "baseHash": "ee51a288629bcc3f043204a4cc99a3567bc7f736",
+      "baseHash": "3ee0fac81b66838d1d54ae3f0deb25209d991cd5",
       "issue": 0
     },
     {
@@ -318,7 +318,7 @@
       "type": "copy",
       "file": "src/Libraries/Lists/__tests__/VirtualizeUtils-test.js",
       "baseFile": "Libraries/Lists/__tests__/VirtualizeUtils-test.js",
-      "baseHash": "6495ce722e6a7d44bb1527bf56b426a2c446ff9d",
+      "baseHash": "20491aae8e327dcb678e6ac4ab9a310d019d9e5a",
       "issue": 0
     },
     {
@@ -429,13 +429,13 @@
       "type": "patch",
       "file": "src/Libraries/StyleSheet/StyleSheet.win32.js",
       "baseFile": "Libraries/StyleSheet/StyleSheet.js",
-      "baseHash": "975f5840fa52fd7e66e136d0ff1ae805be119419"
+      "baseHash": "3e851444e5a21392bcd1a84418729feedd25a527"
     },
     {
       "type": "derived",
       "file": "src/Libraries/Text/TextNativeComponent.win32.js",
       "baseFile": "Libraries/Text/TextNativeComponent.js",
-      "baseHash": "27d6b7e72f84abed594050d86808190add804b87",
+      "baseHash": "6b84be7210b455af81ac8730be4b83cb3b9a7b15",
       "issue": 7074
     },
     {

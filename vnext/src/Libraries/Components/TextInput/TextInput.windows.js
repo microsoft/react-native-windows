@@ -464,6 +464,13 @@ type AndroidProps = $ReadOnly<{|
   returnKeyLabel?: ?string,
 
   /**
+   * Sets the number of rows for a `TextInput`. Use it with multiline set to
+   * `true` to be able to fill the lines.
+   * @platform android
+   */
+  rows?: ?number,
+
+  /**
    * When `false`, it will prevent the soft keyboard from showing when the field is focused.
    * Defaults to `true`.
    */
@@ -746,6 +753,13 @@ export type Props = $ReadOnly<{|
    * The text color of the placeholder string.
    */
   placeholderTextColor?: ?ColorValue,
+
+  /** `readOnly` works like the `readonly` attribute in HTML.
+   *  If `true`, text is not editable. The default value is `false`.
+   *  See https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/readonly
+   *  for more details.
+   */
+  readOnly?: ?boolean,
 
   /**
    * Determines how the return key should look. On Android you can also use
@@ -1440,6 +1454,7 @@ function InternalTextInput(props: Props): React.Node {
         disableFullscreenUI={props.disableFullscreenUI}
         focusable={focusable}
         mostRecentEventCount={mostRecentEventCount}
+        numberOfLines={props.rows ?? props.numberOfLines}
         onBlur={_onBlur}
         onChange={_onChange}
         onFocus={_onFocus}
@@ -1497,6 +1512,8 @@ const ExportedForwardRef: React.AbstractComponent<
     allowFontScaling = true,
     rejectResponderTermination = true,
     underlineColorAndroid = 'transparent',
+    readOnly,
+    editable,
     ...restProps
   },
   forwardedRef: ReactRefSetter<
@@ -1508,6 +1525,7 @@ const ExportedForwardRef: React.AbstractComponent<
       allowFontScaling={allowFontScaling}
       rejectResponderTermination={rejectResponderTermination}
       underlineColorAndroid={underlineColorAndroid}
+      editable={readOnly !== undefined ? !readOnly : editable}
       {...restProps}
       forwardedRef={forwardedRef}
     />

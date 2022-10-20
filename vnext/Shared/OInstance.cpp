@@ -47,7 +47,9 @@
 #include <safeint.h>
 #include "PackagerConnection.h"
 
+#if defined(USE_HERMES) && defined(ENABLE_DEVSERVER_HBCBUNDLES)
 #include <hermes/BytecodeVersion.h>
+#endif
 #include "HermesRuntimeHolder.h"
 
 #if defined(USE_V8)

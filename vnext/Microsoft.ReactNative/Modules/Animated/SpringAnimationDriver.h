@@ -3,7 +3,6 @@
 // Licensed under the MIT License.
 
 #pragma once
-#include <folly/dynamic.h>
 #include "AnimatedNode.h"
 #include "CalculatedAnimationDriver.h"
 
@@ -14,9 +13,10 @@ class SpringAnimationDriver : public CalculatedAnimationDriver {
       int64_t id,
       int64_t animatedValueTag,
       const Callback &endCallback,
-      const folly::dynamic &config,
+      const winrt::Microsoft::ReactNative::JSValueObject &config,
       const std::shared_ptr<NativeAnimatedNodeManager> &manager,
-      const folly::dynamic &dynamicToValues = folly::dynamic::array());
+      const winrt::Microsoft::ReactNative::JSValueArray &dynamicToValues =
+          winrt::Microsoft::ReactNative::JSValueArray());
 
   double ToValue() override;
 
@@ -37,7 +37,7 @@ class SpringAnimationDriver : public CalculatedAnimationDriver {
   double m_displacementFromRestThreshold{0};
   bool m_overshootClampingEnabled{0};
   int m_iterations{0};
-  folly::dynamic m_dynamicToValues{};
+  winrt::Microsoft::ReactNative::JSValueArray m_dynamicToValues{};
 
   static constexpr std::string_view s_springStiffnessParameterName{"stiffness"};
   static constexpr std::string_view s_springDampingParameterName{"damping"};

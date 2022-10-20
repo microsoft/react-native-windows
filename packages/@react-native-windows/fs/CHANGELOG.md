@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/fs
 
-This log was last generated on Wed, 05 Oct 2022 05:13:47 GMT and should not be manually modified.
+This log was last generated on Sat, 15 Oct 2022 05:11:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.7
+
+Sat, 15 Oct 2022 05:11:59 GMT
+
+### Changes
+
+- Integrate 8/12 (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.0.0-canary.6
 

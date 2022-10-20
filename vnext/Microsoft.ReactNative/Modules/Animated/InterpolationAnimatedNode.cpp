@@ -10,18 +10,18 @@
 namespace Microsoft::ReactNative {
 InterpolationAnimatedNode::InterpolationAnimatedNode(
     int64_t tag,
-    const folly::dynamic &config,
+    const winrt::Microsoft::ReactNative::JSValueObject &config,
     const std::shared_ptr<NativeAnimatedNodeManager> &manager)
     : ValueAnimatedNode(tag, manager) {
-  for (const auto &rangeValue : config.find(s_inputRangeName).dereference().second) {
-    m_inputRanges.push_back(rangeValue.asDouble());
+  for (const auto &rangeValue : config[s_inputRangeName].AsArray()) {
+    m_inputRanges.push_back(rangeValue.AsDouble());
   }
-  for (const auto &rangeValue : config.find(s_outputRangeName).dereference().second) {
-    m_outputRanges.push_back(rangeValue.asDouble());
+  for (const auto &rangeValue : config[s_outputRangeName].AsArray()) {
+    m_outputRanges.push_back(rangeValue.AsDouble());
   }
 
-  m_extrapolateLeft = config.find(s_extrapolateLeftName).dereference().second.asString();
-  m_extrapolateRight = config.find(s_extrapolateRightName).dereference().second.asString();
+  m_extrapolateLeft = config[s_extrapolateLeftName].AsString();
+  m_extrapolateRight = config[s_extrapolateRightName].AsString();
 }
 
 void InterpolationAnimatedNode::Update() {}

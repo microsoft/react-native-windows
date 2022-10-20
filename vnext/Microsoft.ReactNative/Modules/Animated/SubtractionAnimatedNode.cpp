@@ -9,14 +9,14 @@
 namespace Microsoft::ReactNative {
 SubtractionAnimatedNode::SubtractionAnimatedNode(
     int64_t tag,
-    const folly::dynamic &config,
+    const winrt::Microsoft::ReactNative::JSValueObject &config,
     const std::shared_ptr<NativeAnimatedNodeManager> &manager)
     : ValueAnimatedNode(tag, manager) {
-  for (const auto &inputNode : config.find(s_inputName).dereference().second) {
+  for (const auto &inputNode : config[s_inputName].AsArray()) {
     if (m_firstInput == s_firstInputUnset) {
-      m_firstInput = static_cast<int64_t>(inputNode.asDouble());
+      m_firstInput = static_cast<int64_t>(inputNode.AsDouble());
     } else {
-      m_inputNodes.insert(static_cast<int64_t>(inputNode.asDouble()));
+      m_inputNodes.insert(static_cast<int64_t>(inputNode.AsDouble()));
     }
   }
 
