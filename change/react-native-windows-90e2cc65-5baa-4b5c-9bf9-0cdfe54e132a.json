@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Try to update WindowsAppSDK to 19041",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
