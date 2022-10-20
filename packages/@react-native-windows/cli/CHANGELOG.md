@@ -1,8 +1,24 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Sat, 15 Oct 2022 05:11:59 GMT and should not be manually modified.
+This log was last generated on Thu, 20 Oct 2022 05:17:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.141
+
+Thu, 20 Oct 2022 05:17:11 GMT
+
+### Changes
+
+- Mitigate MSB4011 warning for importing ExperimentalFeatures.props (jthysell@microsoft.com)
+
+## 0.0.0-canary.140
+
+Tue, 18 Oct 2022 05:12:09 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.40
 
 ## 0.0.0-canary.139
 

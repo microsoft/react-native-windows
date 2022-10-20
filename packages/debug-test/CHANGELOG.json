@@ -2,6 +2,51 @@
   "name": "debug-test",
   "entries": [
     {
+      "date": "Thu, 20 Oct 2022 05:17:11 GMT",
+      "tag": "debug-test_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "debug-test",
+            "comment": "Bump @react-native-windows/automation to v0.2.8",
+            "commit": "492918196886cddef131fd1ec446a97c0c428693"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 19 Oct 2022 05:12:35 GMT",
+      "tag": "debug-test_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "debug-test",
+            "comment": "Bump @react-native-windows/automation to v0.2.7",
+            "commit": "db9df2cef0331eea512f1e71a62db849afd8fdc1"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 18 Oct 2022 05:12:09 GMT",
+      "tag": "debug-test_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "debug-test",
+            "comment": "Bump @react-native-windows/automation to v0.2.6",
+            "commit": "716020aff17e747f894362f47a4eb94b54725ec3"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 15 Oct 2022 05:12:00 GMT",
       "tag": "debug-test_v0.0.0",
       "version": "0.0.0",

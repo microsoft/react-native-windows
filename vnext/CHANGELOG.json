@@ -2,6 +2,87 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 20 Oct 2022 05:17:11 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.567",
+      "version": "0.0.0-canary.567",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7c2c625cd2a80136e60f4e90c1d0de57d13e2865",
+            "comment": "Fabric: Stop using timers to run eventbeat"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "492918196886cddef131fd1ec446a97c0c428693",
+            "comment": "Mitigate MSB4011 warning for importing ExperimentalFeatures.props"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.141",
+            "commit": "492918196886cddef131fd1ec446a97c0c428693"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 19 Oct 2022 05:12:35 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.566",
+      "version": "0.0.0-canary.566",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "0eb177c4044f544da305491d2bc05251e3b70496",
+            "comment": "integration 8/26/22"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.53",
+            "commit": "db9df2cef0331eea512f1e71a62db849afd8fdc1"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 18 Oct 2022 05:12:09 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.565",
+      "version": "0.0.0-canary.565",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d1c755a0b1d8c74450bfb6aada2d2734ea4a59e2",
+            "comment": "Use newer react-native-codegen generators"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "716020aff17e747f894362f47a4eb94b54725ec3",
+            "comment": "Convert NativeAnimatedModule to TurboModule"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.140",
+            "commit": "716020aff17e747f894362f47a4eb94b54725ec3"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.40",
+            "commit": "716020aff17e747f894362f47a4eb94b54725ec3"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 15 Oct 2022 05:12:00 GMT",
       "tag": "react-native-windows_v0.0.0-canary.564",
       "version": "0.0.0-canary.564",

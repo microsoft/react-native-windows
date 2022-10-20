@@ -12,20 +12,19 @@ AnimationDriver::AnimationDriver(
     int64_t id,
     int64_t animatedValueTag,
     const Callback &endCallback,
-    const folly::dynamic &config,
+    const winrt::Microsoft::ReactNative::JSValueObject &config,
     const std::shared_ptr<NativeAnimatedNodeManager> &manager)
-    : m_id(id), m_animatedValueTag(animatedValueTag), m_config(config), m_endCallback(endCallback), m_manager(manager) {
-  m_iterations = [iterations = config.find("iterations"), end = config.items().end()]() {
-    if (iterations != end) {
-      return static_cast<int64_t>(iterations.dereference().second.asDouble());
-    }
-    return static_cast<int64_t>(1);
-  }();
+    : m_id(id),
+      m_animatedValueTag(animatedValueTag),
+      m_config(config.Copy()),
+      m_endCallback(endCallback),
+      m_manager(manager) {
+  m_iterations = config.find("iterations") == config.end() ? 1 : config["iterations"].AsInt64();
 }
 
 void AnimationDriver::DoCallback(bool value) {
   if (m_endCallback) {
-    m_endCallback(std::vector<folly::dynamic>{folly::dynamic::object("finished", value)});
+    m_endCallback(value);
   }
 #ifdef DEBUG
   m_debug_callbackAttempts++;

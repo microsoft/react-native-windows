@@ -39,9 +39,8 @@ const placementValues: string[] = [
 ];
 
 class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
-  // eslint-disable-next-line @typescript-eslint/prefer-readonly
   private _anchor: any;
-  // eslint-disable-next-line @typescript-eslint/prefer-readonly
+
   private _anchorTwo: any;
 
   public state: IFlyoutExampleState = {
