@@ -47,6 +47,17 @@ class ViewViewManager : public FrameworkElementViewManager {
 
  private:
   xaml::Media::SolidColorBrush m_transparentBrush{nullptr};
+
+  bool UpdateViewPanelProperty(
+      ViewShadowNode *node,
+      winrt::Microsoft::ReactNative::ViewPanel &panel,
+      const std::string &propertyName,
+      const winrt::Microsoft::ReactNative::JSValue &propertyValue);
+
+  bool UpdatePropertyCore(
+      ViewShadowNode *node,
+      const std::string &propertyName,
+      const winrt::Microsoft::ReactNative::JSValue &propertyValue);
 };
 
 } // namespace Microsoft::ReactNative
