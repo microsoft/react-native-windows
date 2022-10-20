@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Isolates the prop changes specific to ViewPanel",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
