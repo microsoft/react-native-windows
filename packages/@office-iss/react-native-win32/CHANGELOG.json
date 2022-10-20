@@ -2,6 +2,27 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 19 Oct 2022 05:12:34 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.164",
+      "version": "0.0.0-canary.164",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "0eb177c4044f544da305491d2bc05251e3b70496",
+            "comment": "integration 8/26/22"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.53",
+            "commit": "db9df2cef0331eea512f1e71a62db849afd8fdc1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 15 Oct 2022 05:11:58 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.163",
       "version": "0.0.0-canary.163",

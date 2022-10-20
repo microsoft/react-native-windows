@@ -1,8 +1,27 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 18 Oct 2022 05:12:09 GMT and should not be manually modified.
+This log was last generated on Thu, 20 Oct 2022 05:17:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.567
+
+Thu, 20 Oct 2022 05:17:11 GMT
+
+### Changes
+
+- Fabric: Stop using timers to run eventbeat (30809111+acoates-ms@users.noreply.github.com)
+- Mitigate MSB4011 warning for importing ExperimentalFeatures.props (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.141
+
+## 0.0.0-canary.566
+
+Wed, 19 Oct 2022 05:12:35 GMT
+
+### Changes
+
+- integration 8/26/22 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.53
 
 ## 0.0.0-canary.565
 
