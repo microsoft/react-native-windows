@@ -17,8 +17,5 @@ steps:
     parameters:
       agentImage: ${{ parameters.agentImage }}
 
-  - script: yarn check
-    displayName: yarn check
-
   - script: yarn build
     displayName: yarn build

@@ -11,7 +11,7 @@
     "doc": "doxysaurus --config vnext/doxysaurus.json",
     "format": "format-files -i -style=file -assume-filename=../.clang-format",
     "format:verify": "format-files -i -style=file -verify",
-    "postinstall": "yarn check && yarn build",
+    "postinstall": "yarn build",
     "test": "lage test --verbose",
     "validate-overrides": "react-native-platform-override validate"
   },
@@ -46,17 +46,11 @@
     "lodash": "^4.17.15"
   },
   "resolutions": {
-    "eslint": "^8.25.0",
     "kind-of": "6.0.3",
     "glob-parent": "^5.1.2",
-    "marked": "^4.0.14",
     "node-notifier": "^9.0.0",
-    "react": "^18.2.0",
-    "react-native": "0.0.0-20220826-2018-9ac437f25",
-    "react-native-windows": "^0.0.0-canary.564",
     "set-value": "^4.0.1",
     "strip-ansi": "^6.0.1",
-    "@opentelemetry/api": "^1.0.4",
     "**/parse-url/normalize-url": "^4.5.1",
     "**/@react-native/repo-config/jest-junit": "^13.0.0",
     "**/@react-native/repo-config/ws": "^6.2.2",
