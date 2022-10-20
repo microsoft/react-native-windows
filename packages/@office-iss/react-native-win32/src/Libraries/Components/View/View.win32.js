@@ -263,7 +263,7 @@ const View: React.AbstractComponent<
               }
               children={
                 importantForAccessibility === 'no-hide-descendants'
-                  ? childrenWithImportantForAccessibility(props.children)
+                  ? childrenWithImportantForAccessibility(otherProps.children)
                   : otherProps.children
               }
               // Windows]
