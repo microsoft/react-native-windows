@@ -1906,7 +1906,6 @@ exports[`clamps render area when items removed for initialScrollIndex > 0 and sc
       }
     />
     <View
-      onFocusCapture={[Function]}
       style={null}
     >
       <MockCellItem
@@ -1914,7 +1913,6 @@ exports[`clamps render area when items removed for initialScrollIndex > 0 and sc
       />
     </View>
     <View
-      onFocusCapture={[Function]}
       style={null}
     >
       <MockCellItem
@@ -1922,7 +1920,6 @@ exports[`clamps render area when items removed for initialScrollIndex > 0 and sc
       />
     </View>
     <View
-      onFocusCapture={[Function]}
       style={null}
     >
       <MockCellItem
@@ -1930,7 +1927,6 @@ exports[`clamps render area when items removed for initialScrollIndex > 0 and sc
       />
     </View>
     <View
-      onFocusCapture={[Function]}
       style={null}
     >
       <MockCellItem
@@ -1938,7 +1934,6 @@ exports[`clamps render area when items removed for initialScrollIndex > 0 and sc
       />
     </View>
     <View
-      onFocusCapture={[Function]}
       style={null}
     >
       <MockCellItem
@@ -1946,7 +1941,6 @@ exports[`clamps render area when items removed for initialScrollIndex > 0 and sc
       />
     </View>
     <View
-      onFocusCapture={[Function]}
       style={null}
     >
       <MockCellItem
@@ -1954,7 +1948,6 @@ exports[`clamps render area when items removed for initialScrollIndex > 0 and sc
       />
     </View>
     <View
-      onFocusCapture={[Function]}
       style={null}
     >
       <MockCellItem
@@ -1962,7 +1955,6 @@ exports[`clamps render area when items removed for initialScrollIndex > 0 and sc
       />
     </View>
     <View
-      onFocusCapture={[Function]}
       style={null}
     >
       <MockCellItem
@@ -1970,7 +1962,6 @@ exports[`clamps render area when items removed for initialScrollIndex > 0 and sc
       />
     </View>
     <View
-      onFocusCapture={[Function]}
       style={null}
     >
       <MockCellItem
@@ -1978,7 +1969,6 @@ exports[`clamps render area when items removed for initialScrollIndex > 0 and sc
       />
     </View>
     <View
-      onFocusCapture={[Function]}
       style={null}
     >
       <MockCellItem
@@ -1986,7 +1976,6 @@ exports[`clamps render area when items removed for initialScrollIndex > 0 and sc
       />
     </View>
     <View
-      onFocusCapture={[Function]}
       style={null}
     >
       <MockCellItem
@@ -2467,7 +2456,6 @@ exports[`does not move render area when initialScrollIndex is > 0 and offset not
       }
     />
     <View
-      onFocusCapture={[Function]}
       style={null}
     >
       <MockCellItem
@@ -2475,7 +2463,6 @@ exports[`does not move render area when initialScrollIndex is > 0 and offset not
       />
     </View>
     <View
-      onFocusCapture={[Function]}
       style={null}
     >
       <MockCellItem
@@ -2483,7 +2470,6 @@ exports[`does not move render area when initialScrollIndex is > 0 and offset not
       />
     </View>
     <View
-      onFocusCapture={[Function]}
       style={null}
     >
       <MockCellItem
@@ -2491,7 +2477,6 @@ exports[`does not move render area when initialScrollIndex is > 0 and offset not
       />
     </View>
     <View
-      onFocusCapture={[Function]}
       style={null}
     >
       <MockCellItem
@@ -2499,7 +2484,6 @@ exports[`does not move render area when initialScrollIndex is > 0 and offset not
       />
     </View>
     <View
-      onFocusCapture={[Function]}
       style={null}
     >
       <MockCellItem
