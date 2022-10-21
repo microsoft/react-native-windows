@@ -99,6 +99,23 @@ struct JsiRuntime : JsiRuntimeT<JsiRuntime> {
   hstring SymbolToString(JsiSymbolRef symbol);
   void SymbolToUtf8(JsiSymbolRef symbol, JsiByteArrayUser const &useUtf8String);
 
+  // new
+
+  JsiBigIntRef CreateBigIntFromInt64(int64_t value);
+  JsiBigIntRef CreateBigIntFromUint64(uint64_t value);
+  bool BigintIsInt64(JsiBigIntRef obj);
+  bool BigintIsUint64(JsiBigIntRef obj);
+  uint64_t Truncate(JsiBigIntRef obj);
+  JsiStringRef BigintToString(JsiBigIntRef obj, int radix);
+
+  bool HasNativeState(JsiObjectRef obj);
+  JsiObjectRef GetNativeState(JsiObjectRef obj);
+  void SetNativeState(JsiObjectRef obj, JsiObjectRef state);
+
+  JsiObjectRef CreateArrayBuffer(JsiObjectRef buffer);
+
+  // end
+
   JsiStringRef CreateString(hstring const &value);
   JsiStringRef CreateStringFromAscii(array_view<uint8_t const> utf8);
   JsiStringRef CreateStringFromUtf8(array_view<uint8_t const> utf8);

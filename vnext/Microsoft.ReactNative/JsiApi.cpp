@@ -139,6 +139,9 @@ struct RuntimeAccessor : facebook::jsi::Runtime {
 
   using facebook::jsi::Runtime::make;
 
+  using facebook::jsi::Runtime::bigintIsInt64;
+  using facebook::jsi::Runtime::bigintIsUint64;
+  using facebook::jsi::Runtime::bigintToString;
   using facebook::jsi::Runtime::call;
   using facebook::jsi::Runtime::callAsConstructor;
   using facebook::jsi::Runtime::cloneBigInt;
@@ -148,6 +151,9 @@ struct RuntimeAccessor : facebook::jsi::Runtime {
   using facebook::jsi::Runtime::cloneSymbol;
   using facebook::jsi::Runtime::compare;
   using facebook::jsi::Runtime::createArray;
+  using facebook::jsi::Runtime::createArrayBuffer;
+  using facebook::jsi::Runtime::createBigIntFromInt64;
+  using facebook::jsi::Runtime::createBigIntFromUint64;
   using facebook::jsi::Runtime::createFunctionFromHostFunction;
   using facebook::jsi::Runtime::createObject;
   using facebook::jsi::Runtime::createPropNameIDFromAscii;
@@ -159,8 +165,10 @@ struct RuntimeAccessor : facebook::jsi::Runtime {
   using facebook::jsi::Runtime::createWeakObject;
   using facebook::jsi::Runtime::data;
   using facebook::jsi::Runtime::getHostObject;
+  using facebook::jsi::Runtime::getNativeState;
   using facebook::jsi::Runtime::getProperty;
   using facebook::jsi::Runtime::getPropertyNames;
+  using facebook::jsi::Runtime::hasNativeState;
   using facebook::jsi::Runtime::hasProperty;
   using facebook::jsi::Runtime::instanceOf;
   using facebook::jsi::Runtime::isArray;
@@ -171,11 +179,13 @@ struct RuntimeAccessor : facebook::jsi::Runtime {
   using facebook::jsi::Runtime::lockWeakObject;
   using facebook::jsi::Runtime::popScope;
   using facebook::jsi::Runtime::pushScope;
+  using facebook::jsi::Runtime::setNativeState;
   using facebook::jsi::Runtime::setPropertyValue;
   using facebook::jsi::Runtime::setValueAtIndexImpl;
   using facebook::jsi::Runtime::size;
   using facebook::jsi::Runtime::strictEquals;
   using facebook::jsi::Runtime::symbolToString;
+  using facebook::jsi::Runtime::truncate;
   using facebook::jsi::Runtime::utf8;
 
   template <class TDataHolder>
@@ -194,6 +204,18 @@ struct RuntimeAccessor : facebook::jsi::Runtime {
   static facebook::jsi::BigInt const &AsBigInt(facebook::jsi::Runtime::PointerValue const **ptr) noexcept {
     return *reinterpret_cast<facebook::jsi::BigInt const *>(ptr);
   }
+
+  // new
+
+  static uint64_t const &asUint64(facebook::jsi::Runtime::PointerValue *pointerValue) noexcept {
+    return {reinterpret_cast<uint64_t>(pointerValue)};
+  }
+
+  static int64_t const &asInt64(facebook::jsi::Runtime::PointerValue *pointerValue) noexcept {
+    return {reinterpret_cast<int64_t>(pointerValue)};
+  }
+
+  // end
 
   static uint64_t const &AsUint64(facebook::jsi::Runtime::PointerValue *pointerValue) noexcept {
     return {reinterpret_cast<uint64_t>(pointerValue)};
@@ -845,6 +867,76 @@ JsiObjectRef JsiRuntime::CreateArray(uint32_t size) try {
 } catch (JSI_SET_ERROR) {
   throw;
 }
+// new
+JsiBigIntRef JsiRuntime::CreateBigIntFromInt64(int64_t val) try {
+  return PointerAccessor::MakeJsiBigIntData(m_runtimeAccessor->createBigIntFromInt64(val));
+} catch (JSI_SET_ERROR) {
+  throw;
+}
+
+JsiBigIntRef JsiRuntime::CreateBigIntFromUint64(uint64_t val) try {
+  return PointerAccessor::MakeJsiBigIntData(m_runtimeAccessor->createBigIntFromUint64(val));
+} catch (JSI_SET_ERROR) {
+  throw;
+}
+
+bool JsiRuntime::BigintIsInt64(JsiBigIntRef obj) try {
+  auto objPtr = RuntimeAccessor::AsPointerValue(obj);
+  return m_runtimeAccessor->bigintIsInt64(RuntimeAccessor::AsBigInt(&objPtr));
+} catch (JSI_SET_ERROR) {
+  throw;
+}
+
+bool JsiRuntime::BigintIsUint64(JsiBigIntRef obj) try {
+  auto objPtr = RuntimeAccessor::AsPointerValue(obj);
+  return m_runtimeAccessor->bigintIsUint64(RuntimeAccessor::AsBigInt(&objPtr));
+} catch (JSI_SET_ERROR) {
+  throw;
+}
+
+uint64_t JsiRuntime::Truncate(JsiBigIntRef bigInt) try {
+  auto objPtr = RuntimeAccessor::AsPointerValue(bigInt);
+  return m_runtimeAccessor->truncate(RuntimeAccessor::AsBigInt(&objPtr));
+} catch (JSI_SET_ERROR) {
+  throw;
+}
+
+JsiStringRef JsiRuntime::BigintToString(JsiBigIntRef bigInt, int val) try {
+  auto objPtr = RuntimeAccessor::AsPointerValue(bigInt);
+  return PointerAccessor::MakeJsiStringData(m_runtimeAccessor->bigintToString(RuntimeAccessor::AsBigInt(&objPtr), val));
+} catch (JSI_SET_ERROR) {
+  throw;
+}
+
+bool JsiRuntime::HasNativeState(JsiObjectRef obj) try {
+  auto objPtr = RuntimeAccessor::AsPointerValue(obj);
+  return m_runtimeAccessor->hasNativeState(RuntimeAccessor::AsObject(&objPtr));
+} catch (JSI_SET_ERROR) {
+  throw;
+}
+
+JsiObjectRef JsiRuntime::GetNativeState(JsiObjectRef obj) try {
+  // TODO: implement
+  VerifyElseCrash(false);
+} catch (JSI_SET_ERROR) {
+  throw;
+}
+
+void JsiRuntime::SetNativeState(JsiObjectRef obj, JsiObjectRef state) try {
+  // TODO: implement
+  VerifyElseCrash(false);
+} catch (JSI_SET_ERROR) {
+  throw;
+}
+
+JsiObjectRef JsiRuntime::CreateArrayBuffer(JsiObjectRef buffer) try {
+  auto bufferPtr = RuntimeAccessor::AsPointerValue(buffer);
+  VerifyElseCrash(false);
+} catch (JSI_SET_ERROR) {
+  throw;
+}
+
+// end
 
 uint32_t JsiRuntime::GetArraySize(JsiObjectRef arr) try {
   auto arrPtr = RuntimeAccessor::AsPointerValue(arr);

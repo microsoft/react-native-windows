@@ -75,34 +75,6 @@
     },
     {
       "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/decorator.h",
-      "baseFile": "ReactCommon/jsi/jsi/decorator.h",
-      "baseHash": "b722ac2e112077dab320e48bb16dc7203faeebf2",
-      "issue": 9791
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/jsi-inl.h",
-      "baseFile": "ReactCommon/jsi/jsi/jsi-inl.h",
-      "baseHash": "d2ed6788f396708a31c1f2a5ceb36b81e273121e",
-      "issue": 9791
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/jsi.cpp",
-      "baseFile": "ReactCommon/jsi/jsi/jsi.cpp",
-      "baseHash": "dcb4926c7ad2cdfea5306f16b35dac269e0b382c",
-      "issue": 9791
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/jsi.h",
-      "baseFile": "ReactCommon/jsi/jsi/jsi.h",
-      "baseHash": "7aa352254a0cd52964a3370c78b7557508393603",
-      "issue": 9791
-    },
-    {
-      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/test/testlib.cpp",
       "baseFile": "ReactCommon/jsi/jsi/test/testlib.cpp",
       "baseHash": "95a6fd14e80719f9796942ffe59dd850a56d544c",
