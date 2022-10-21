@@ -373,6 +373,7 @@
     <ClInclude Include="Views\Text\TextVisitors.h" />
     <ClInclude Include="Views\TouchEventHandler.h" />
     <ClInclude Include="Views\ViewControl.h" />
+    <ClInclude Include="Views\ViewGrid.h" />
     <ClInclude Include="Views\ViewManager.h" />
     <ClInclude Include="Views\ViewManagerBase.h" />
     <ClInclude Include="Views\ViewPanel.h" />
@@ -591,6 +592,7 @@
     <ClCompile Include="Views\Text\TextVisitor.cpp" />
     <ClCompile Include="Views\TouchEventHandler.cpp" />
     <ClCompile Include="Views\ViewControl.cpp" />
+    <ClCompile Include="Views\ViewGrid.cpp" />
     <ClCompile Include="Views\ViewManagerBase.cpp" />
     <ClCompile Include="Views\ViewPanel.cpp" />
     <ClCompile Include="Views\ViewViewManager.cpp" />

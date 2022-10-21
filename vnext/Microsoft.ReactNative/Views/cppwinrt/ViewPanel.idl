@@ -45,6 +45,14 @@ namespace Microsoft.ReactNative
 
   [default_interface]
   [webhosthidden]
+  runtimeclass ViewGrid : XAML_NAMESPACE.Controls.Grid
+  {
+    // Constructors
+    ViewGrid();
+  }
+
+  [default_interface]
+  [webhosthidden]
   runtimeclass ViewControl : XAML_NAMESPACE.Controls.ContentControl
   {
     ViewControl();

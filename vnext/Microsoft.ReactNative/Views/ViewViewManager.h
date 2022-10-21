@@ -4,6 +4,7 @@
 #pragma once
 
 #include <Views/FrameworkElementViewManager.h>
+#include <Views/ViewGrid.h>
 #include <Views/ViewPanel.h>
 
 namespace Microsoft::ReactNative {
@@ -40,7 +41,7 @@ class ViewViewManager : public FrameworkElementViewManager {
   void OnPropertiesUpdated(ShadowNodeBase *node) override;
 
   XamlView CreateViewCore(int64_t tag, const winrt::Microsoft::ReactNative::JSValueObject &) override;
-  void TryUpdateView(ViewShadowNode *viewShadowNode, winrt::Microsoft::ReactNative::ViewPanel &pPanel, bool useControl);
+  void TryUpdateView(ViewShadowNode *viewShadowNode, xaml::Controls::Panel &pPanel, bool useControl);
   void SyncFocusableAndAccessible(ViewShadowNode *viewShadowNode, bool useControl);
 
   xaml::Media::SolidColorBrush EnsureTransparentBrush();
@@ -51,6 +52,12 @@ class ViewViewManager : public FrameworkElementViewManager {
   bool UpdateViewPanelProperty(
       ViewShadowNode *node,
       winrt::Microsoft::ReactNative::ViewPanel &panel,
+      const std::string &propertyName,
+      const winrt::Microsoft::ReactNative::JSValue &propertyValue);
+
+  bool UpdateViewGridProperty(
+      ViewShadowNode *node,
+      winrt::Microsoft::ReactNative::ViewGrid &grid,
       const std::string &propertyName,
       const winrt::Microsoft::ReactNative::JSValue &propertyValue);
 

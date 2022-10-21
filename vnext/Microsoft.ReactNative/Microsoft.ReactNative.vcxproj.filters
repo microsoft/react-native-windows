@@ -336,6 +336,10 @@
     <ClCompile Include="Views\FrameworkElementTransferProperties.cpp" />
     <ClCompile Include="Views\ReactViewInstance.cpp" />
     <ClCompile Include="CoreApp.cpp" />
+    <ClCompile Include="Utils\ImageUtils.cpp" />
+    <ClCompile Include="Views\ViewGrid.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABICxxModule.h" />
@@ -732,6 +736,9 @@
     <ClInclude Include="ReactPointerEventArgs.h" />
     <ClInclude Include="Views\FrameworkElementTransferProperties.h" />
     <ClInclude Include="Views\ReactViewInstance.h" />
+    <ClInclude Include="Views\ViewGrid.h">
+      <Filter>Views</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="IJSValueReader.idl" />
@@ -771,6 +778,11 @@
     <Midl Include="DesktopWindowMessage.idl" />
     <Midl Include="ReactPointerEventArgs.idl" />
     <Midl Include="ReactCoreInjection.idl" />
+    <Midl Include="CompositionHwndHost.idl" />
+    <Midl Include="CompositionContext.idl" />
+    <Midl Include="CompositionSwitcher.idl" />
+    <Midl Include="CompositionUIService.idl" />
+    <Midl Include="CompositionRootView.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="microsoft.reactnative.def" />

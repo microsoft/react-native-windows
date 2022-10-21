@@ -24,15 +24,15 @@ export default class Bootstrap extends React.Component<
   constructor(props: {}) {
     super(props);
     this.state = {
-      focusable: true,
-      accessible: true,
-      pressable: true,
-      hasStyle: true,
-      hasBorder: true,
-      radius: true,
-      alignSelfCenter: true,
-      largeBorder: true,
-      largePadding: true,
+      focusable: false,
+      accessible: false,
+      pressable: false,
+      hasStyle: false,
+      hasBorder: false,
+      radius: false,
+      alignSelfCenter: false,
+      largeBorder: false,
+      largePadding: false,
     };
   }
 
