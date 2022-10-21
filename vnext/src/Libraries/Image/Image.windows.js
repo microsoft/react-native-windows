@@ -186,7 +186,7 @@ const BaseImage = (props: ImagePropsType, forwardedRef) => {
                 <ImageViewNativeComponent
                   accessibilityState={_accessibilityState}
                   accessibilityLabel={accessibilityLabel}
-                  {...props}
+                  {...restProps}
                   ref={forwardedRef}
                   style={style}
                   resizeMode={resizeMode}

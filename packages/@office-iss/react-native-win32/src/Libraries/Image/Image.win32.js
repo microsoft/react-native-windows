@@ -203,7 +203,7 @@ const BaseImage = (props: ImagePropsType, forwardedRef) => {
             {analyticTag => {
               return (
                 <ImageViewNativeComponent
-                  {...props}
+                  {...restProps}
                   accessibilityState={_accessibilityState}
                   accessibilityLabel={accessibilityLabel}
                   ref={forwardedRef}

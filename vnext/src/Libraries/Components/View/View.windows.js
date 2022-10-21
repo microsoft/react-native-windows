@@ -8,7 +8,7 @@
  * @flow strict-local
  */
 
-import ViewProps from './ViewPropTypes';
+import type {ViewProps} from './ViewPropTypes';
 
 import ViewNativeComponent from './ViewNativeComponent';
 import TextAncestor from '../../Text/TextAncestor';

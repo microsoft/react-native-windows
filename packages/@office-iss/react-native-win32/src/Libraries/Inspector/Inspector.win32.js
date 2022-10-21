@@ -16,6 +16,7 @@ const InspectorPanel = require('./InspectorPanel');
 const Platform = require('../Utilities/Platform');
 const PressabilityDebug = require('../Pressability/PressabilityDebug');
 const React = require('react');
+const ReactNative = require('../Renderer/shims/ReactNative');
 const {findNodeHandle} = require('../ReactNative/RendererProxy');
 const StyleSheet = require('../StyleSheet/StyleSheet');
 const View = require('../Components/View/View');
@@ -31,6 +32,8 @@ const hook = window.__REACT_DEVTOOLS_GLOBAL_HOOK__;
 // Flipper doesn't inject these values when initializing DevTools.
 hook.resolveRNStyle = require('../StyleSheet/flattenStyle');
 hook.nativeStyleEditorValidAttributes = Object.keys(ReactNativeStyleAttributes);
+
+const UIManager = require('../ReactNative/UIManager'); // [Win32]
 
 class Inspector extends React.Component<
   {
