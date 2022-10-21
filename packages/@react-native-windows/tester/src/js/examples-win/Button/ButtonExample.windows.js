@@ -228,7 +228,7 @@
         <RNTesterThemeContext.Consumer>
           {theme => {
             return (
-              <View>
+              <View testID='accessible_focusable_button'>
                 <Button
                   onPress={() => onButtonPress('submitted')}
                   testID="accessibility_props"
