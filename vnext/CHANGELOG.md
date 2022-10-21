@@ -1,8 +1,66 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 08 Oct 2022 05:11:18 GMT and should not be manually modified.
+This log was last generated on Thu, 20 Oct 2022 05:17:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.567
+
+Thu, 20 Oct 2022 05:17:11 GMT
+
+### Changes
+
+- Fabric: Stop using timers to run eventbeat (30809111+acoates-ms@users.noreply.github.com)
+- Mitigate MSB4011 warning for importing ExperimentalFeatures.props (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.141
+
+## 0.0.0-canary.566
+
+Wed, 19 Oct 2022 05:12:35 GMT
+
+### Changes
+
+- integration 8/26/22 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.53
+
+## 0.0.0-canary.565
+
+Tue, 18 Oct 2022 05:12:09 GMT
+
+### Changes
+
+- Use newer react-native-codegen generators (30809111+acoates-ms@users.noreply.github.com)
+- Convert NativeAnimatedModule to TurboModule (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.140
+- Bump @react-native-windows/codegen to v0.0.0-canary.40
+
+## 0.0.0-canary.564
+
+Sat, 15 Oct 2022 05:12:00 GMT
+
+### Changes
+
+- Integrate 8/12 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.139
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.52
+- Bump @react-native-windows/codegen to v0.0.0-canary.39
+- Bump react-native-platform-override to v1.7.1
+
+## 0.0.0-canary.563
+
+Fri, 14 Oct 2022 05:14:55 GMT
+
+### Changes
+
+- Conditionally include HBC version header (erozell@outlook.com)
+
+## 0.0.0-canary.562
+
+Tue, 11 Oct 2022 05:11:41 GMT
+
+### Changes
+
+- Always synchronize focusable and accessible props (erozell@outlook.com)
 
 ## 0.0.0-canary.561
 

@@ -8,12 +8,12 @@
 
 namespace Microsoft::ReactNative {
 EventAnimationDriver::EventAnimationDriver(
-    const folly::dynamic &eventPath,
+    const std::vector<std::string> &eventPath,
     int64_t animatedValueTag,
     const std::shared_ptr<NativeAnimatedNodeManager> &manager)
     : m_animatedValueTag(animatedValueTag), m_manager(manager) {
   for (const auto &path : eventPath) {
-    m_eventPath.push_back(path.getString());
+    m_eventPath.push_back(path);
   }
 }
 

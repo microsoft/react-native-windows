@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/package-utils
 
-This log was last generated on Wed, 05 Oct 2022 05:13:47 GMT and should not be manually modified.
+This log was last generated on Sat, 15 Oct 2022 05:12:00 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.33
+
+Sat, 15 Oct 2022 05:12:00 GMT
+
+### Changes
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.36
+- Bump @react-native-windows/fs to v0.0.0-canary.7
 
 ## 0.0.0-canary.32
 

@@ -5,3 +5,4 @@ steps:
       alertWarningLevel: Medium
       scanType: 'Register'
       failOnAlert: $(FailCGOnAlert)
+      ignoreDirectories: 'node_modules\resolve\test\resolver\malformed_package_json'

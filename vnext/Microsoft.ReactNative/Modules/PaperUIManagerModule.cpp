@@ -80,6 +80,11 @@ std::weak_ptr<NativeUIManager> GetNativeUIManager(const Mso::React::IReactContex
   return v ? v.Value() : std::weak_ptr<NativeUIManager>{};
 }
 
+std::weak_ptr<NativeUIManager> GetNativeUIManager(const winrt::Microsoft::ReactNative::ReactContext &context) {
+  auto v = context.Properties().Get(NativeUIManagerProperty());
+  return v ? v.Value() : std::weak_ptr<NativeUIManager>{};
+}
+
 class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, public INativeUIManagerHost {
  public:
   UIManagerModule() {}

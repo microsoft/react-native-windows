@@ -9,13 +9,13 @@
 namespace Microsoft::ReactNative {
 TrackingAnimatedNode::TrackingAnimatedNode(
     int64_t tag,
-    const folly::dynamic &config,
+    const winrt::Microsoft::ReactNative::JSValueObject &config,
     const std::shared_ptr<NativeAnimatedNodeManager> &manager)
     : AnimatedNode(tag, manager) {
-  m_animationId = static_cast<int64_t>(config.find(s_animationIdName).dereference().second.asDouble());
-  m_toValueId = static_cast<int64_t>(config.find(s_toValueIdName).dereference().second.asDouble());
-  m_valueId = static_cast<int64_t>(config.find(s_valueIdName).dereference().second.asDouble());
-  m_animationConfig = std::move(config.find(s_animationConfigName).dereference().second);
+  m_animationId = static_cast<int64_t>(config[s_animationIdName].AsDouble());
+  m_toValueId = static_cast<int64_t>(config[s_toValueIdName].AsDouble());
+  m_valueId = static_cast<int64_t>(config[s_valueIdName].AsDouble());
+  m_animationConfig = std::move(config[s_animationConfigName].AsObject().Copy());
 
   StartAnimation();
 }
@@ -31,7 +31,7 @@ void TrackingAnimatedNode::StartAnimation() {
       // animationId key in the active animations map in the animation manager.
       strongManager->StopAnimation(m_animationId, true);
       toValueNode->AddActiveTrackingNode(m_tag);
-      m_animationConfig.insert(static_cast<folly::StringPiece>(s_toValueIdName), toValueNode->Value());
+      m_animationConfig[s_toValueIdName] = toValueNode->Value();
       strongManager->StartTrackingAnimatedNode(
           m_animationId, m_valueId, m_toValueId, m_animationConfig, nullptr, strongManager);
     }

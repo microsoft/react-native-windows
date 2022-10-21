@@ -2,6 +2,33 @@
   "name": "@rnw-scripts/promote-release",
   "entries": [
     {
+      "date": "Sat, 15 Oct 2022 05:12:00 GMT",
+      "tag": "@rnw-scripts/promote-release_v2.1.1",
+      "version": "2.1.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/promote-release",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.0.0-canary.36",
+            "commit": "c67e48d281b09d087c891e3c0f8002e01505ce34"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/promote-release",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.7",
+            "commit": "c67e48d281b09d087c891e3c0f8002e01505ce34"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/promote-release",
+            "comment": "Bump @react-native-windows/package-utils to v0.0.0-canary.33",
+            "commit": "c67e48d281b09d087c891e3c0f8002e01505ce34"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 05 Oct 2022 05:13:45 GMT",
       "tag": "@rnw-scripts/promote-release_v2.1.0",
       "version": "2.1.0",
