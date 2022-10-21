@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 20 Oct 2022 05:17:11 GMT and should not be manually modified.
+This log was last generated on Fri, 21 Oct 2022 05:12:38 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.568
+
+Fri, 21 Oct 2022 05:12:38 GMT
+
+### Changes
+
+- Fix missing headers for MSVC 14.34 (julio.rocha@microsoft.com)
+- Fixes issue for loading images in Clang builds (erozell@outlook.com)
+- Simplifies and fixes various View prop handlers (erozell@outlook.com)
+- Save State (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.0.0-canary.567
 
