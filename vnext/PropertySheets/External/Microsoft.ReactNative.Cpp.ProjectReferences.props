@@ -4,6 +4,9 @@
   Licensed under the MIT License.
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <RNExternalReferences>true</RNExternalReferences>
+  </PropertyGroup>
   <!-- To avoid having these references show in in Visual Studio which ignores conditions on items we have to put the source references in source. -->
   <ImportGroup Label="Shared">
     <Import Project="$(ReactNativeWindowsDir)\Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems" 
