@@ -200,6 +200,70 @@
        );
      },
    },
+   {
+    title: 'Button with Accessibility Props',
+    render: function (): React.Node {
+      return (
+        <RNTesterThemeContext.Consumer>
+          {theme => {
+            return (
+              <Button
+                onPress={() => onButtonPress('submitted')}
+                testID="accessibility_props"
+                title="Submit Application"
+                accessibilityLabel="Press to submit your application!"
+                accessibilityRole="Button"
+                accessibilityHint="Submit Button"
+              />
+            );
+          }}
+        </RNTesterThemeContext.Consumer>
+      );
+    },
+  },
+  {
+    title: 'Button with Accessible and Focusable Prop',
+    render: function (): React.Node {
+      return (
+        <RNTesterThemeContext.Consumer>
+          {theme => {
+            return (
+              <View>
+                <Button
+                  onPress={() => onButtonPress('submitted')}
+                  testID="accessibility_props"
+                  title="Default Button"
+                  accessibilityLabel="Press to submit your application!"
+                />
+                <Button
+                  onPress={() => onButtonPress('submitted')}
+                  testID="accessibility_props"
+                  title="Button with accessible=false"
+                  accessibilityLabel="Press to submit your application!"
+                  accessible={false}
+                />
+                <Button
+                  onPress={() => onButtonPress('submitted')}
+                  testID="accessibility_props"
+                  title="Button with focusable=false"
+                  accessibilityLabel="Press to submit your application!"
+                  focusable={false}
+                />
+                <Button
+                  onPress={() => onButtonPress('submitted')}
+                  testID="accessibility_props"
+                  title="Button with accessible=false and focusable=false"
+                  accessibilityLabel="Press to submit your application!"
+                  accessible={false}
+                  focusable={false}
+                />
+              </View>
+            );
+          }}
+        </RNTesterThemeContext.Consumer>
+      );
+    },
+  },
  ];
  
  const styles = StyleSheet.create({
