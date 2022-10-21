@@ -106,6 +106,9 @@ void ABIViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSValu
         case ViewManagerPropertyType::Function:
           writer.WriteString(L"function");
           break;
+        case ViewManagerPropertyType::ImageSource:
+          writer.WriteString(L"ImageSource");
+        break;
       }
     }
   }
