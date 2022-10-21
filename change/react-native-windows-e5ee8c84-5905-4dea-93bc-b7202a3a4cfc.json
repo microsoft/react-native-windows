@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "replace no-hide-descendants js implementation with a native one",
+  "packageName": "react-native-windows",
+  "email": "agnel@microsoft.com",
+  "dependentChangeType": "patch"
+}
