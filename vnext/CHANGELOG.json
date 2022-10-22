@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 21 Oct 2022 05:12:38 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.568",
+      "version": "0.0.0-canary.568",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b03ca4afb3b2d4d3789170b36e37a880b9c2de19",
+            "comment": "Fix missing headers for MSVC 14.34"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "171e65fd65e98d45fe715304bbaf259b04b47893",
+            "comment": "Fixes issue for loading images in Clang builds"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "bd03063682b9dfc82eb579a4eb1e9e68d13c57d2",
+            "comment": "Simplifies and fixes various View prop handlers"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ba17406ba5e7b6cb1797a21a87b700b80607139e",
+            "comment": "Save State"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 20 Oct 2022 05:17:11 GMT",
       "tag": "react-native-windows_v0.0.0-canary.567",
       "version": "0.0.0-canary.567",
