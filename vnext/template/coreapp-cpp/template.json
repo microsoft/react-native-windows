@@ -1,0 +1,13 @@
+{
+  "options": {
+    "projectType": "app",
+    "language": "cpp",
+    "experimentalNuGetDependency": true
+  },
+  "nugetPackages": [
+    {
+      "id": "Microsoft.Windows.CppWinRT",
+      "version": "2.0.211028.7"
+    }
+  ]
+}

@@ -37,8 +37,8 @@ import {projectConfigWindows} from './config/projectConfig';
  */
 export interface GenerateOptions {
   overwrite: boolean;
-  language: 'cpp' | 'cs';
-  projectType: 'app' | 'lib';
+  language?: 'cpp' | 'cs';
+  projectType?: 'app' | 'lib';
   experimentalNuGetDependency: boolean;
   nuGetTestVersion?: string;
   nuGetTestFeed?: string;
@@ -47,6 +47,7 @@ export interface GenerateOptions {
   useDevMode: boolean;
   verbose: boolean;
   telemetry: boolean;
+  template?: string;
 }
 
 /**

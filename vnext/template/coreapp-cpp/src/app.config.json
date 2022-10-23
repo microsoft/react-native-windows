@@ -1,0 +1,4 @@
+{
+  "componentName": "{{ mainComponentName }}",
+  "jsBundleFile": "index" // debug mode
+}

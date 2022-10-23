@@ -72,7 +72,7 @@ export const windowsInitOptions = initOptions({
     type: 'string',
     describe: 'The language the project is written in.',
     choices: ['cs', 'cpp'],
-    default: 'cpp',
+    default: undefined,
   },
   overwrite: {
     type: 'boolean',
@@ -83,14 +83,14 @@ export const windowsInitOptions = initOptions({
     type: 'string',
     describe: 'The type of project to initialize (supported on 0.64+)',
     choices: ['app', 'lib'],
-    default: 'app',
+    default: undefined,
   },
   experimentalNuGetDependency: {
     type: 'boolean',
     describe:
       '[Experimental] change to start consuming a NuGet containing a pre-built dll version of Microsoft.ReactNative',
     hidden: true,
-    default: false,
+    default: undefined,
   },
   useHermes: {
     type: 'boolean',
@@ -123,6 +123,13 @@ export const windowsInitOptions = initOptions({
     hidden: true,
     default: undefined, // This must be undefined because we define the conflicts field below. Defining a default here will break the version option
     conflicts: 'version',
+  },
+  template: {
+    type: 'string',
+    describe: '[Experimental] Specify a project template to use',
+    hidden: true,
+    default: undefined,
+    conflicts: ['language', 'projectType', 'experimentalNuGetDependency'],
   },
 });
 
@@ -360,6 +367,7 @@ function optionSanitizer(key: keyof WindowsInitOptions, value: any): any {
     case 'useHermes':
     case 'useWinUI3':
     case 'useDevMode':
+    case 'template':
       return value === undefined ? false : value;
   }
 }
@@ -507,7 +515,10 @@ export async function reactNativeWindowsInit(args?: string[]) {
     const useDevMode = !!(options.useDevMode as unknown); // TS assumes the type is undefined
     let version = options.version;
 
-    if (options.useWinUI3 && options.experimentalNuGetDependency) {
+    if (
+      options.useWinUI3 &&
+      !!(options.experimentalNuGetDependency as unknown)
+    ) {
       throw new CodedError(
         'IncompatibleOptions',
         "Error: Incompatible options specified. Options '--useWinUI3' and '--experimentalNuGetDependency' are incompatible",
@@ -615,17 +626,19 @@ export async function reactNativeWindowsInit(args?: string[]) {
     await Telemetry.populateNpmPackageVersions();
 
     await generateWindows(process.cwd(), name, ns, {
-      language: options.language as 'cs' | 'cpp',
+      language: ((options.language as unknown) || 'cpp') as 'cs' | 'cpp',
       overwrite: options.overwrite,
       verbose: options.verbose,
-      projectType: options.projectType as 'lib' | 'app',
-      experimentalNuGetDependency: options.experimentalNuGetDependency,
+      projectType: ((options.projectType as unknown) || 'app') as 'lib' | 'app',
+      experimentalNuGetDependency:
+        !!(options.experimentalNuGetDependency as unknown) || false,
       useWinUI3: options.useWinUI3,
       useHermes: options.useHermes,
       useDevMode: useDevMode,
       nuGetTestVersion: options.nuGetTestVersion,
       nuGetTestFeed: options.nuGetTestFeed,
       telemetry: options.telemetry,
+      template: options.template,
     });
 
     // Now that the project has been generated, add project info

@@ -82,6 +82,32 @@ export async function copyProjectTemplateAndReplace(
     );
   }
 
+  let templateJson: any;
+  if (options.template) {
+    const templatePath = path.join(srcRootPath, options.template);
+    if (fs.existsSync(templatePath)) {
+      console.log(`Found template ${options.template}`);
+      templateJson = require(path.join(templatePath, 'template.json'));
+      if (templateJson.options) {
+        Object.assign(options, templateJson.options);
+      }
+    } else {
+      throw new CodedError('InvalidConfig', `No such template found`, {
+        detail: {templateName: options.template},
+      });
+    }
+  }
+
+  if (!options.language) {
+    options.language = 'cpp';
+  }
+  if (!options.projectType) {
+    options.projectType = 'app';
+  }
+  if (!options.experimentalNuGetDependency) {
+    options.experimentalNuGetDependency = false;
+  }
+
   const projectType = options.projectType;
   const language = options.language;
 
@@ -152,8 +178,14 @@ export async function copyProjectTemplateAndReplace(
   }
 
   const projDir = 'proj';
-  const srcPath = path.join(srcRootPath, `${language}-${realProjectType}`);
-  const sharedPath = path.join(srcRootPath, `shared-${projectType}`);
+  const srcPath = path.join(
+    srcRootPath,
+    options.template || `${language}-${realProjectType}`,
+  );
+  const sharedPath = path.join(
+    srcRootPath,
+    options.template || `shared-${projectType}`,
+  );
   const projectGuid = existingProjectGuid || uuid.v4();
   const rnwVersion = require(resolveRnwPath('package.json')).version;
   const nugetVersion = options.nuGetTestVersion || rnwVersion;
@@ -177,6 +209,10 @@ export async function copyProjectTemplateAndReplace(
       version: '2.0.211028.7',
     },
   ];
+
+  const nugetPackages: NugetPackage =
+    templateJson?.nugetPackages ||
+    (options.language === 'cpp' ? cppNugetPackages : csNugetPackages);
 
   const templateVars: Record<string, any> = {
     useMustache: true,
@@ -208,10 +244,11 @@ export async function copyProjectTemplateAndReplace(
     // cpp template variables
     useWinUI3: options.useWinUI3,
     useHermes: options.useHermes,
-    cppNugetPackages: cppNugetPackages,
+
+    // nuget packages
+    nugetPackages: nugetPackages,
 
     // cs template variables
-    csNugetPackages: csNugetPackages,
 
     // autolinking template variables
     autolinkPropertiesForProps: '',
