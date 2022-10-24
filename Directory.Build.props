@@ -22,9 +22,7 @@
     <BaseOutDir Condition="'$(Platform)' == 'Win32'">$(RootOutDir)\x86\$(Configuration)</BaseOutDir>
     <BaseOutDir Condition="'$(Platform)' != 'Win32'">$(RootOutDir)\$(Platform)\$(Configuration)</BaseOutDir>
 
-    <ReactNativeRootIntDir>$(ReactNativeWindowsDir)build\</ReactNativeRootIntDir>
-    <ReactNativeRootOutDir>$(ReactNativeWindowsDir)target\</ReactNativeRootOutDir>   
-    <ReactNativeYarnIntDir>$(ReactNativeRootIntDir)yarn_install\</ReactNativeYarnIntDir>
+    <ReactNativeYarnIntDir>$(RootIntDir)\yarn_install\</ReactNativeYarnIntDir>
   </PropertyGroup>
 
   <PropertyGroup Label="NuGet">
