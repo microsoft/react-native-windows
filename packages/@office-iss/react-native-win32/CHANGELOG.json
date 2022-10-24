@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 24 Oct 2022 15:08:15 GMT",
+      "tag": "@office-iss/react-native-win32_v0.68.7",
+      "version": "0.68.7",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "aa91e7bf33f272ec2a181796027fdc842b1c584f",
+            "comment": "Bump RN types to 0.68"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 26 Sep 2022 15:08:21 GMT",
       "tag": "@office-iss/react-native-win32_v0.68.6",
       "version": "0.68.6",

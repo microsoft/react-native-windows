@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 10 Oct 2022 15:07:51 GMT and should not be manually modified.
+This log was last generated on Mon, 24 Oct 2022 15:08:15 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.68.20
+
+Mon, 24 Oct 2022 15:08:15 GMT
+
+### Patches
+
+- Bump RN types to 0.68 (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.68.19
 

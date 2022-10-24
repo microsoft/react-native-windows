@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 26 Sep 2022 15:08:21 GMT and should not be manually modified.
+This log was last generated on Mon, 24 Oct 2022 15:08:15 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.68.7
+
+Mon, 24 Oct 2022 15:08:15 GMT
+
+### Patches
+
+- Bump RN types to 0.68 (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.68.6
 
