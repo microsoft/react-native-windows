@@ -108,6 +108,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{CF71BDBF-544C-4EBC-85F6-6911A0E2F5B8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.ReactNative.Managed.CodeGen.UnitTests", "Microsoft.ReactNative.Managed.CodeGen.UnitTests\Microsoft.ReactNative.Managed.CodeGen.UnitTests.csproj", "{0F4DBB0D-659A-4330-845F-E77204F90B12}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F7D32BD0-2749-483E-9A0D-1635EF7E3136} = {F7D32BD0-2749-483E-9A0D-1635EF7E3136}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.ReactNative.Managed.CodeGen", "Microsoft.ReactNative.Managed.CodeGen\Microsoft.ReactNative.Managed.CodeGen.csproj", "{ADED4FBE-887D-4271-AF24-F0823BCE7961}"
 EndProject
