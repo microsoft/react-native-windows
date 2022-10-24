@@ -447,7 +447,7 @@ Object {
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
           "children": Array [
             Object {
-              "Background": "#E4000000",
+              "Background": "#FF000000",
               "BorderBrush": "#00000000",
               "BorderThickness": "0,0,0,0",
               "Clip": null,
@@ -504,7 +504,7 @@ Object {
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
           "children": Array [
             Object {
-              "Background": "#E4000000",
+              "Background": "#FF000000",
               "BorderBrush": "#00000000",
               "BorderThickness": "0,0,0,0",
               "Clip": null,
@@ -561,7 +561,7 @@ Object {
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
           "children": Array [
             Object {
-              "Background": "#E4000000",
+              "Background": "#FF000000",
               "BorderBrush": "#00000000",
               "BorderThickness": "0,0,0,0",
               "Clip": null,
@@ -618,7 +618,7 @@ Object {
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
           "children": Array [
             Object {
-              "Background": "#E4000000",
+              "Background": "#FF000000",
               "BorderBrush": "#00000000",
               "BorderThickness": "0,0,0,0",
               "Clip": null,
@@ -675,7 +675,7 @@ Object {
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
           "children": Array [
             Object {
-              "Background": "#E4000000",
+              "Background": "#FF000000",
               "BorderBrush": "#00000000",
               "BorderThickness": "0,0,0,0",
               "Clip": null,
@@ -732,7 +732,7 @@ Object {
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
           "children": Array [
             Object {
-              "Background": "#E4000000",
+              "Background": "#FF000000",
               "BorderBrush": "#00000000",
               "BorderThickness": "0,0,0,0",
               "Clip": null,
@@ -789,7 +789,7 @@ Object {
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
           "children": Array [
             Object {
-              "Background": "#E4000000",
+              "Background": "#FF000000",
               "BorderBrush": "#00000000",
               "BorderThickness": "0,0,0,0",
               "Clip": null,
@@ -846,7 +846,7 @@ Object {
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
           "children": Array [
             Object {
-              "Background": "#E4000000",
+              "Background": "#FF000000",
               "BorderBrush": "#00000000",
               "BorderThickness": "0,0,0,0",
               "Clip": null,
@@ -903,7 +903,7 @@ Object {
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
           "children": Array [
             Object {
-              "Background": "#E4000000",
+              "Background": "#FF000000",
               "BorderBrush": "#00000000",
               "BorderThickness": "0,0,0,0",
               "Clip": null,
@@ -960,7 +960,7 @@ Object {
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
           "children": Array [
             Object {
-              "Background": "#E4000000",
+              "Background": "#FF000000",
               "BorderBrush": "#00000000",
               "BorderThickness": "0,0,0,0",
               "Clip": null,
@@ -1017,7 +1017,7 @@ Object {
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
           "children": Array [
             Object {
-              "Background": "#E4000000",
+              "Background": "#FF000000",
               "BorderBrush": "#00000000",
               "BorderThickness": "0,0,0,0",
               "Clip": null,
