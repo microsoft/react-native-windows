@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 10 Oct 2022 15:09:52 GMT and should not be manually modified.
+This log was last generated on Mon, 24 Oct 2022 15:10:06 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.70.4
+
+Mon, 24 Oct 2022 15:10:06 GMT
+
+### Patches
+
+- V8 package update (tudor.mihai@microsoft.com)
+- Save State (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.70.3
 

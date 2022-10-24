@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 24 Oct 2022 15:10:06 GMT",
+      "tag": "react-native-windows_v0.70.4",
+      "version": "0.70.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "tudor.mihai@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "8dc4f1abdf42f48ffc394ed251462af10bb57500",
+            "comment": "V8 package update"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "9df637356ea4534eb9bf49cd0bccfe818637c247",
+            "comment": "Save State"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 10 Oct 2022 15:09:52 GMT",
       "tag": "react-native-windows_v0.70.3",
       "version": "0.70.3",
