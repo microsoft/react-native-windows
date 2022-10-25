@@ -9683,9 +9683,9 @@ react-native-codegen@^0.71.0:
     nullthrows "^1.1.1"
 
 react-native-gradle-plugin@^0.71.0:
-  version "0.71.4"
-  resolved "https://registry.yarnpkg.com/react-native-gradle-plugin/-/react-native-gradle-plugin-0.71.4.tgz#dd000c1539e0ce465237637d3e16fe619cd84467"
-  integrity sha512-5izzWXIlr5DL5+cx3a6oSA4cgSCw9Kv7WQjHqLxV2I1fSfzjzEdYTaDfrNjdcy71BHeeUB6BEyl70yXpjkCkdA==
+  version "0.71.5"
+  resolved "https://registry.yarnpkg.com/react-native-gradle-plugin/-/react-native-gradle-plugin-0.71.5.tgz#1b96874309c63d18f47e27f03e7a465b4ed37fec"
+  integrity sha512-I07zjTGBh3CB2wiEHK+t+5aiFB4Yc+Vcr7GgraYEXPr28/wxhelBTOo3uestpu8V6UtnzJRaYF3ucd31jESRzA==
 
 react-native-tscodegen@0.68.4:
   version "0.68.4"
