@@ -20,7 +20,7 @@ const Components: Array<RNTesterModuleInfo> = [
   {
     key: 'ButtonExample',
     category: 'UI',
-    module: require('../examples/Button/ButtonExample'),
+    module: require('../examples-win/Button/ButtonExample'),
   },
   {
     key: 'FlatListExampleIndex',

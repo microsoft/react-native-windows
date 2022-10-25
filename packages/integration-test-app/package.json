@@ -10,14 +10,14 @@
     "integration-test": "jest --config jest.integration.config.js --runInBand --verbose"
   },
   "dependencies": {
-    "@react-native-windows/automation-channel": "^0.3.2",
+    "@react-native-windows/automation-channel": "^0.3.3",
     "@react-native-windows/fs": "^0.0.0-canary.7",
     "@typescript-eslint/eslint-plugin": "^5.21.0",
     "@typescript-eslint/parser": "^5.21.0",
     "chai": "^4.2.0",
     "react": "18.2.0",
     "react-native": "0.0.0-20220912-2028-b0aba1b6f",
-    "react-native-windows": "^0.0.0-canary.568"
+    "react-native-windows": "^0.0.0-canary.569"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",

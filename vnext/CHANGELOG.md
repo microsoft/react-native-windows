@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 21 Oct 2022 05:12:38 GMT and should not be manually modified.
+This log was last generated on Tue, 25 Oct 2022 05:11:24 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.569
+
+Tue, 25 Oct 2022 05:11:24 GMT
+
+### Changes
+
+- Run yarn install --frozen-lockfile (vmoroz@users.noreply.github.com)
 
 ## 0.0.0-canary.568
 
