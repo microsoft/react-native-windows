@@ -7,19 +7,19 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20220826-2018-9ac437f25",
+  "baseVersion": "0.0.0-20220912-2028-b0aba1b6f",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "96ff12c38ea31691ca99dd8848e38217ffbd1417"
+      "baseHash": "21218e40e026cea75af0c938f02d40d123ab6443"
     },
     {
       "type": "derived",
       "file": "src/index.win32.js",
       "baseFile": "index.js",
-      "baseHash": "876181982a1e0c4214571656e2185e1e7015b01c"
+      "baseHash": "2f57efec7650cac8b2ce3803ab82b6d2d9ed4f3a"
     },
     {
       "type": "patch",
@@ -31,7 +31,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.win32.js",
       "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.js",
-      "baseHash": "86911d26a839aa1ebe91b6abc0fe910e09ba62e5",
+      "baseHash": "228f342b9d511b97c23683ecfcf2dd22481cae12",
       "issue": 4578
     },
     {
@@ -71,7 +71,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Pressable/Pressable.win32.js",
       "baseFile": "Libraries/Components/Pressable/Pressable.js",
-      "baseHash": "d1aed2015a28ce41216f8f345a9e1fdabb082935",
+      "baseHash": "55a110d432ae3bb3f5b504f69d633bebadc47eba",
       "issue": 6240
     },
     {
@@ -91,7 +91,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/SafeAreaView/SafeAreaView.win32.js",
       "baseFile": "Libraries/Components/SafeAreaView/SafeAreaView.js",
-      "baseHash": "af7999060b4757bea13165789b02692a84cae2cb"
+      "baseHash": "8809c33e8c2ac10e1497627bf8e9b02896ddb698"
     },
     {
       "type": "platform",
@@ -117,13 +117,13 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.tsx",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "9cff22dbd054762b03f9e40ce45b03cca67a62f5"
+      "baseHash": "08c820b6754e0047ff35e275b4a797a3433bfaca"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInputState.win32.js",
       "baseFile": "Libraries/Components/TextInput/TextInputState.js",
-      "baseHash": "a5802e5d8b960912293d0069a99bbf346c8ecc4c"
+      "baseHash": "c4e7bbf256c8f069f7c28858d8a8256889f78118"
     },
     {
       "type": "copy",
@@ -140,7 +140,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/Touchable.win32.js",
       "baseFile": "Libraries/Components/Touchable/Touchable.js",
-      "baseHash": "c1e6ce77fc27bfc4b39a87e6519bda6d55ded8f1",
+      "baseHash": "556404af25b3c6027345c49ba4473ba8d8258510",
       "issue": 0
     },
     {
@@ -177,13 +177,13 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/View.win32.js",
       "baseFile": "Libraries/Components/View/View.js",
-      "baseHash": "796bee7ec95c53add95a9897d2a68b0f78489690"
+      "baseHash": "c4a11977cb1ed1686206a4c1c8e071f5253cb082"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewPropTypes.win32.js",
       "baseFile": "Libraries/Components/View/ViewPropTypes.js",
-      "baseHash": "40cda23c445a8edaa16e6d7b924963da70bc374c",
+      "baseHash": "23706c5619372c7aff58a269654ecbd110c8203e",
       "issue": 6240
     },
     {
@@ -205,7 +205,7 @@
       "type": "derived",
       "file": "src/Libraries/Image/Image.win32.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseHash": "bb18293e3169fc7a32dd85e1c53835dcbddb33fe",
+      "baseHash": "c8894e63451e992179c478c3bdf719cd356993ae",
       "issue": 4320
     },
     {
@@ -259,7 +259,7 @@
       "type": "patch",
       "file": "src/Libraries/Inspector/Inspector.win32.js",
       "baseFile": "Libraries/Inspector/Inspector.js",
-      "baseHash": "f3f862f878ce5252067ecb9f86b3a6057493b8dc"
+      "baseHash": "1520c032d52009981c1710077e3100983b2778d7"
     },
     {
       "type": "patch",
@@ -304,7 +304,7 @@
       "type": "copy",
       "file": "src/Libraries/Lists/__tests__/VirtualizedList-test.js",
       "baseFile": "Libraries/Lists/__tests__/VirtualizedList-test.js",
-      "baseHash": "3ee0fac81b66838d1d54ae3f0deb25209d991cd5",
+      "baseHash": "bcad2a862a1b049e62b4b4316ed511ec91a52474",
       "issue": 0
     },
     {
@@ -482,7 +482,7 @@
       "type": "derived",
       "file": "src/Libraries/Utilities/Platform.win32.js",
       "baseFile": "Libraries/Utilities/Platform.android.js",
-      "baseHash": "326b48cca04b77fdf7cf8edd1eeba8516ef29f17"
+      "baseHash": "cbc7b53f6376082902e412b1da4592cbe7fb043f"
     },
     {
       "type": "platform",
