@@ -33,4 +33,12 @@ describe('ButtonTests', () => {
     const dump = await dumpVisualTree('accessibilityState_button');
     expect(dump).toMatchSnapshot();
   });
+  test('Buttons can have accessibility props', async () => {
+    const dump = await dumpVisualTree('accessibility_props');
+    expect(dump).toMatchSnapshot();
+  });
+  test('Buttons can have their accessibility and keyboard focus disabled', async () => {
+    const dump = await dumpVisualTree('accessible_focusable_button');
+    expect(dump).toMatchSnapshot();
+  });
 });

@@ -77,7 +77,7 @@ const View: React.AbstractComponent<
 
   // [Windows
   const childrenWithImportantForAccessibility = children => {
-    return React.Children.map(children, child => {
+    const updatedChildren = React.Children.map(children, child => {
       if (React.isValidElement(child)) {
         if (child.props.children) {
           return React.cloneElement(child, {
@@ -92,6 +92,11 @@ const View: React.AbstractComponent<
       }
       return child;
     });
+    if (updatedChildren.length == 1) {
+      return updatedChildren[0];
+    } else {
+      return updatedChildren;
+    }
   };
   // Windows]
 
