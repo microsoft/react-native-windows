@@ -159,7 +159,7 @@
   </ItemGroup>
   <ItemGroup>
     {{#cppNugetPackages}}
-    <PackageReference Include="{{ id }}" Version="{{ version }}" />
+    <PackageReference Include="{{ id }}" Version="{{ version }}"{{^privateAssets}} PrivateAssets="all"{{/privateAssets}} />
     {{/cppNugetPackages}}
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

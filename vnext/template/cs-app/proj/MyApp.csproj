@@ -145,6 +145,9 @@
     {{#csNugetPackages}}
     <PackageReference Include="{{ id }}">
       <Version>{{ version }}</Version>
+      {{^privateAssets}}
+      <PrivateAssets>all</PrivateAssets>
+      {{/privateAssets}}
     </PackageReference>
     {{/csNugetPackages}}
   </ItemGroup>
