@@ -33,6 +33,10 @@
     <SDKReference Include="Microsoft.VCLibs, Version=14.0" />
   </ItemGroup>
   <ItemGroup>
+    <FrameworkReference Update="Microsoft.Windows.SDK.NET.Ref" RuntimeFrameworkVersion="10.0.19041.26" />
+    <FrameworkReference Update="Microsoft.Windows.SDK.NET.Ref" TargetingPackVersion="10.0.19041.26" />
+  </ItemGroup>
+  <ItemGroup>
     {{#csNugetPackages}}
     <PackageReference Include="{{ id }}">
       <Version>{{ version }}</Version>
