@@ -37,7 +37,7 @@ namespace Microsoft.ReactNative.Managed
 
     public ReactNotificationId(ReactPropertyNamespace ns, string localName)
   : this(new ReactPropertyName(ns, localName)) { }
-
+      : this(new ReactPropertyName(ns, localName)) { }
     public ReactNotificationId(IReactPropertyNamespace ns, string localName)
       : this(new ReactPropertyName(ns, localName)) { }
   }
