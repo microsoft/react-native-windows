@@ -22,7 +22,12 @@ import {ViewWindows} from 'react-native-windows';
 
 export default class Bootstrap extends React.Component<
   {},
-  {displayText: string; counterValue: number; sliderValue: number}
+  {
+    displayText: string;
+    counterValue: number;
+    sliderValue: number;
+    switch: boolean;
+  }
 > {
   constructor(props: {}) {
     super(props);
@@ -30,6 +35,7 @@ export default class Bootstrap extends React.Component<
       displayText: 'Starting text. (THIRD ITEM)',
       counterValue: 0,
       sliderValue: 0,
+      switch: false,
     };
   }
 
@@ -38,16 +44,17 @@ export default class Bootstrap extends React.Component<
   render() {
     return (
       <View
+        importantForAccessibility="no-hide-descendants"
         accessibilityHint="topmost view"
         //importantForAccessibility="no-hide-descendants"
         style={styles.container}>
         <View
-          importantForAccessibility="no-hide-descendants"
+          //importantForAccessibility="no-hide-descendants"
           accessibilityLabel="FIRST ITEM">
           <Text style={styles.text}>Welcome to React Native! (FIRST ITEM)</Text>
         </View>
         <TouchableHighlight
-          importantForAccessibility="no-hide-descendants"
+          //importantForAccessibility="no-hide-descendants"
           accessibilityRole="adjustable"
           accessibilityValue={{
             min: 0,
@@ -63,11 +70,10 @@ export default class Bootstrap extends React.Component<
           </Text>
         </TouchableHighlight>
         <TextInput
-          importantForAccessibility="no-hide-descendants"
+          //importantForAccessibility="no-hide-descendants"
           //accessible={false}
           ref={this.myElement}
         />
-        <Switch importantForAccessibility="no-hide-descendants" />
       </View>
     );
   }
