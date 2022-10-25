@@ -18,10 +18,10 @@ parameters:
   default:
     Medium:
       name: rnw-pool-4-microsoft
-      demands: ImageOverride -equals rnw-img-test # temp, revert to rnw-img-node16
+      demands: ImageOverride -equals rnw-img-vs2022
     Large:
       name: rnw-pool-8-microsoft
-      demands: ImageOverride -equals rnw-img-test # temp, revert to rnw-img-node16
+      demands: ImageOverride -equals rnw-img-vs2022
 
 variables:
   - template: variables/windows.yml
