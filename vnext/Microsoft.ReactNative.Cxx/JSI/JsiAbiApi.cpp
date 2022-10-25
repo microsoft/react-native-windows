@@ -320,8 +320,6 @@ PropNameID JsiAbiRuntime::createPropNameIDFromSymbol(const Symbol &sym) try {
   throw;
 }
 
-// new
-
 BigInt JsiAbiRuntime::createBigIntFromInt64(int64_t val) try {
   return MakeBigInt(m_runtime.CreateBigIntFromInt64(val));
 } catch (hresult_error const &) {
@@ -397,8 +395,6 @@ ArrayBuffer JsiAbiRuntime::createArrayBuffer(std::shared_ptr<MutableBuffer> buff
   RethrowJsiError();
   throw;
 }
-
-// end
 
 std::string JsiAbiRuntime::utf8(const PropNameID &propertyId) try {
   std::string dataResult;

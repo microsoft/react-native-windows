@@ -18,8 +18,7 @@
       "type": "derived",
       "file": "src/js/examples-win/Button/ButtonExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Button/ButtonExample.js",
-      "baseHash": "69226803b11aa967c06bb038a055268794177f2b",
-      "issue": 0
+      "baseHash": "36c55afe75ac9c6efdec22e5ceb1f114a84ebd45"
     },
     {
       "type": "patch",

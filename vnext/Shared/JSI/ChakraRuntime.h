@@ -68,8 +68,6 @@ class ChakraRuntime : public facebook::jsi::Runtime, public ChakraApi, ChakraApi
   std::string utf8(const facebook::jsi::PropNameID &id) override;
   bool compare(const facebook::jsi::PropNameID &lhs, const facebook::jsi::PropNameID &rhs) override;
 
-   // new
-
   facebook::jsi::BigInt createBigIntFromInt64(int64_t value) override;
   facebook::jsi::BigInt createBigIntFromUint64(uint64_t value) override;
   bool bigintIsInt64(const facebook::jsi::BigInt &) override;
@@ -82,8 +80,6 @@ class ChakraRuntime : public facebook::jsi::Runtime, public ChakraApi, ChakraApi
   void setNativeState(const facebook::jsi::Object &, std::shared_ptr<facebook::jsi::NativeState> state) override;
 
   facebook::jsi::ArrayBuffer createArrayBuffer(std::shared_ptr<facebook::jsi::MutableBuffer> buffer) override;
-
-  // end
 
   std::string symbolToString(const facebook::jsi::Symbol &s) override;
 

@@ -744,8 +744,6 @@ PropNameID NapiJsiRuntime::createPropNameIDFromSymbol(const Symbol &sym) {
   return MakePointer<PropNameID>(propSym);
 }
 
-// new
-
 facebook::jsi::BigInt NapiJsiRuntime::createBigIntFromInt64(int64_t val) {
   EnvScope scope{m_env};
   throw JSINativeException("Not implemented");
@@ -796,8 +794,6 @@ facebook::jsi::ArrayBuffer NapiJsiRuntime::createArrayBuffer(std::shared_ptr<fac
   EnvScope scope{m_env};
   throw JSINativeException("Not implemented");
 }
-
-// end
 
 string NapiJsiRuntime::utf8(const PropNameID &id) {
   EnvScope scope{m_env};

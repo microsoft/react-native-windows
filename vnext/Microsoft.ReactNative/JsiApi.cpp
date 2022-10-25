@@ -205,8 +205,6 @@ struct RuntimeAccessor : facebook::jsi::Runtime {
     return *reinterpret_cast<facebook::jsi::BigInt const *>(ptr);
   }
 
-  // new
-
   static uint64_t const &asUint64(facebook::jsi::Runtime::PointerValue *pointerValue) noexcept {
     return {reinterpret_cast<uint64_t>(pointerValue)};
   }
@@ -214,8 +212,6 @@ struct RuntimeAccessor : facebook::jsi::Runtime {
   static int64_t const &asInt64(facebook::jsi::Runtime::PointerValue *pointerValue) noexcept {
     return {reinterpret_cast<int64_t>(pointerValue)};
   }
-
-  // end
 
   static uint64_t const &AsUint64(facebook::jsi::Runtime::PointerValue *pointerValue) noexcept {
     return {reinterpret_cast<uint64_t>(pointerValue)};
@@ -867,7 +863,7 @@ JsiObjectRef JsiRuntime::CreateArray(uint32_t size) try {
 } catch (JSI_SET_ERROR) {
   throw;
 }
-// new
+
 JsiBigIntRef JsiRuntime::CreateBigIntFromInt64(int64_t val) try {
   return PointerAccessor::MakeJsiBigIntData(m_runtimeAccessor->createBigIntFromInt64(val));
 } catch (JSI_SET_ERROR) {
@@ -935,8 +931,6 @@ JsiObjectRef JsiRuntime::CreateArrayBuffer(JsiObjectRef buffer) try {
 } catch (JSI_SET_ERROR) {
   throw;
 }
-
-// end
 
 uint32_t JsiRuntime::GetArraySize(JsiObjectRef arr) try {
   auto arrPtr = RuntimeAccessor::AsPointerValue(arr);
