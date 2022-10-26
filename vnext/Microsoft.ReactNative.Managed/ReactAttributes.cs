@@ -43,6 +43,11 @@ namespace Microsoft.ReactNative.Managed
   }
 
   [AttributeUsage(AttributeTargets.Method)]
+  public class ReactGetConstantsAttribute : Attribute
+  {
+  }
+
+  [AttributeUsage(AttributeTargets.Method)]
   public class ReactMethodAttribute : Attribute
   {
     public ReactMethodAttribute(string methodName = null)
@@ -88,5 +93,16 @@ namespace Microsoft.ReactNative.Managed
     public string FunctionName { get; set; }
 
     public string ModuleName { get; set; }
+  }
+
+  [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
+  public class ReactPropertyAttribute : Attribute
+  {
+    public ReactPropertyAttribute(string propertyName = null)
+    {
+      PropertyName = propertyName;
+    }
+
+    public string PropertyName { get; set; }
   }
 }

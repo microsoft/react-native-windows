@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 25 Oct 2022 05:11:24 GMT and should not be manually modified.
+This log was last generated on Wed, 26 Oct 2022 05:11:35 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.570
+
+Wed, 26 Oct 2022 05:11:35 GMT
+
+### Changes
+
+- intergration 9/12/22 (tatianakapos@microsoft.com)
+- Fix C# modules with multi-parameter callback methods (vmoroz@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.142
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.54
 
 ## 0.0.0-canary.569
 

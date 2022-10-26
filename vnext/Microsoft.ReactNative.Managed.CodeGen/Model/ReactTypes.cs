@@ -38,10 +38,11 @@ namespace Microsoft.ReactNative.Managed.CodeGen.Model
         public INamedTypeSymbol JSValueReader { get; }
         public INamedTypeSymbol JSValueWriterGenerator { get; }
         public INamedTypeSymbol JSValueReaderGenerator { get; }
-        public INamedTypeSymbol JSValueWriterCodeGen { get; }
-        public INamedTypeSymbol JSValueReaderCodeGen { get; }
+        public INamedTypeSymbol JSValueWriterOf { get; }
+        public INamedTypeSymbol JSValueReaderOf { get; }
         public INamedTypeSymbol IReactPromise { get; }
         public INamedTypeSymbol ReactPromise { get; }
+        public INamedTypeSymbol ReactPromiseOfVoid { get; }
         public INamedTypeSymbol MethodReturnType { get; }
         public INamedTypeSymbol MethodResultCallback { get; }
         public INamedTypeSymbol ReactConstantProvider { get; }
@@ -49,10 +50,12 @@ namespace Microsoft.ReactNative.Managed.CodeGen.Model
         public INamedTypeSymbol ReactInitializerAttribute { get; }
         public INamedTypeSymbol ReactConstantAttribute { get; }
         public INamedTypeSymbol ReactConstantProviderAttribute { get; }
+        public INamedTypeSymbol ReactGetConstantsAttribute { get; }
         public INamedTypeSymbol ReactMethodAttribute { get; }
         public INamedTypeSymbol ReactSyncMethodAttribute { get; }
         public INamedTypeSymbol ReactEventAttribute { get; }
         public INamedTypeSymbol ReactFunctionAttribute { get; }
+        public INamedTypeSymbol ReactPropertyAttribute { get; }
         public INamedTypeSymbol ReactTaskExtensions { get; }
 
         private readonly ICollection<Diagnostic> m_diagnostics = new List<Diagnostic>();
@@ -78,22 +81,25 @@ namespace Microsoft.ReactNative.Managed.CodeGen.Model
             ReactConstantProvider = FindReactNativeManagedType(compilation, "ReactConstantProvider");
             IReactPromise = FindReactNativeManagedType(compilation, "IReactPromise`1");
             ReactPromise = FindReactNativeManagedType(compilation, "ReactPromise`1");
+            ReactPromiseOfVoid = FindReactNativeManagedType(compilation, "ReactPromise");
             JSValue = FindReactNativeManagedType(compilation, "JSValue");
             JSValueWriter = FindReactNativeManagedType(compilation, "JSValueWriter");
             JSValueReader = FindReactNativeManagedType(compilation, "JSValueReader");
             JSValueWriterGenerator = FindReactNativeManagedType(compilation, "JSValueWriterGenerator");
             JSValueReaderGenerator = FindReactNativeManagedType(compilation, "JSValueReaderGenerator");
-            JSValueWriterCodeGen = FindReactNativeManagedType(compilation, "JSValueWriterCodeGen`1");
-            JSValueReaderCodeGen = FindReactNativeManagedType(compilation, "JSValueReaderCodeGen`1");
+            JSValueWriterOf = FindReactNativeManagedType(compilation, "JSValueWriterOf`1");
+            JSValueReaderOf = FindReactNativeManagedType(compilation, "JSValueReaderOf`1");
 
             ReactModuleAttribute = FindReactNativeManagedType(compilation, "ReactModuleAttribute");
             ReactInitializerAttribute = FindReactNativeManagedType(compilation, "ReactInitializerAttribute");
             ReactConstantAttribute = FindReactNativeManagedType(compilation, "ReactConstantAttribute");
             ReactConstantProviderAttribute = FindReactNativeManagedType(compilation, "ReactConstantProviderAttribute");
+            ReactGetConstantsAttribute = FindReactNativeManagedType(compilation, "ReactGetConstantsAttribute");
             ReactMethodAttribute = FindReactNativeManagedType(compilation, "ReactMethodAttribute");
             ReactSyncMethodAttribute = FindReactNativeManagedType(compilation, "ReactSyncMethodAttribute");
             ReactEventAttribute = FindReactNativeManagedType(compilation, "ReactEventAttribute");
             ReactFunctionAttribute = FindReactNativeManagedType(compilation, "ReactFunctionAttribute");
+            ReactPropertyAttribute = FindReactNativeManagedType(compilation, "ReactPropertyAttribute");
             ReactTaskExtensions = FindReactNativeManagedType(compilation, "ReactTaskExtensions");
         }
 

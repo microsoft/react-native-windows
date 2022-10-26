@@ -1,9 +1,8 @@
-import { NativeModules } from 'react-native';
+import { TurboModuleRegistry } from 'react-native';
+const testExecuteJsiModule = TurboModuleRegistry.getEnforcing('TestExecuteJsiModule');
 
-const { TestExecuteJsiModule } = NativeModules;
-
-TestExecuteJsiModule.testSimpleExecuteJsi();
-TestExecuteJsiModule.testHostFunction();
-TestExecuteJsiModule.testHostObject();
-TestExecuteJsiModule.testSameJsiRuntime();
-TestExecuteJsiModule.testExecuteJsiPromise();
+testExecuteJsiModule.testSimpleExecuteJsi();
+testExecuteJsiModule.testHostFunction();
+testExecuteJsiModule.testHostObject();
+testExecuteJsiModule.testSameJsiRuntime();
+testExecuteJsiModule.testExecuteJsiPromise();
