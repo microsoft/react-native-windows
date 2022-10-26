@@ -29,8 +29,8 @@
 namespace Microsoft::ReactNative {
 void NativeAnimatedNodeManager::CreateAnimatedNode(
     int64_t tag,
-    const folly::dynamic &config,
-    const Mso::CntPtr<Mso::React::IReactContext> &context,
+    const ::React::JSValueObject &config,
+    const winrt::Microsoft::ReactNative::ReactContext &context,
     const std::shared_ptr<NativeAnimatedNodeManager> &manager) {
   if (m_transformNodes.count(tag) > 0 || m_propsNodes.count(tag) > 0 || m_styleNodes.count(tag) > 0 ||
       m_valueNodes.count(tag) > 0) {
@@ -38,7 +38,7 @@ void NativeAnimatedNodeManager::CreateAnimatedNode(
     return;
   }
 
-  switch (const auto type = AnimatedNodeTypeFromString(config.find("type").dereference().second.getString())) {
+  switch (const auto type = AnimatedNodeTypeFromString(config["type"].AsString())) {
     case AnimatedNodeType::Style: {
       m_styleNodes.emplace(tag, std::make_unique<StyleAnimatedNode>(tag, config, manager));
       break;
@@ -94,9 +94,11 @@ void NativeAnimatedNodeManager::CreateAnimatedNode(
   }
 }
 
-void NativeAnimatedNodeManager::GetValue(int64_t animatedNodeTag, const Callback &saveValueCallback) {
+void NativeAnimatedNodeManager::GetValue(
+    int64_t animatedNodeTag,
+    std::function<void(double)> const &saveValueCallback) {
   if (const auto valueNode = m_valueNodes.at(animatedNodeTag).get()) {
-    saveValueCallback(std::vector<folly::dynamic>{folly::dynamic(valueNode->Value())});
+    saveValueCallback(valueNode->Value());
   }
 }
 
@@ -167,7 +169,7 @@ void NativeAnimatedNodeManager::RestartTrackingAnimatedNode(
   if (m_activeAnimations.count(animationId)) {
     if (const auto animation = m_activeAnimations.at(animationId).get()) {
       auto const animatedValueTag = animation->AnimatedValueTag();
-      auto const animationConfig = animation->AnimationConfig();
+      auto const &animationConfig = animation->AnimationConfig();
       auto const endCallback = animation->EndCallback();
       animation->StopAnimation(true);
       m_activeAnimations.erase(animationId);
@@ -187,40 +189,35 @@ void NativeAnimatedNodeManager::StartTrackingAnimatedNode(
     int64_t animationId,
     int64_t animatedNodeTag,
     int64_t animatedToValueTag,
-    const folly::dynamic &animationConfig,
-    const Callback &endCallback,
+    const winrt::Microsoft::ReactNative::JSValueObject &animationConfig,
+    const EndCallback &endCallback,
     const std::shared_ptr<NativeAnimatedNodeManager> &manager,
     bool track) {
-  auto updatedAnimationConfig = animationConfig;
+  auto updatedAnimationConfig = animationConfig.Copy();
   for (auto &item : m_activeAnimations) {
     if (item.second->AnimatedValueTag() == animatedToValueTag) {
-      updatedAnimationConfig.insert(static_cast<folly::StringPiece>(s_toValueIdName), item.second->ToValue());
+      updatedAnimationConfig[s_toValueIdName] = item.second->ToValue();
 
-      switch (AnimationTypeFromString(animationConfig.find("type").dereference().second.getString())) {
-        case AnimationType::Frames:
+      switch (AnimationTypeFromString(animationConfig["type"].AsString())) {
+        case AnimationType::Frames: {
+          winrt::Microsoft::ReactNative::JSValueArray frames;
+          for (auto const &frame : animationConfig["frames"].AsArray()) {
+            frames.push_back(0.0);
+          }
+          for (auto const &frame : item.second->Frames()) {
+            frames.push_back(frame);
+          }
           updatedAnimationConfig.insert(
-              static_cast<folly::StringPiece>(s_framesName), [animationConfig, activeFrames = item.second->Frames()]() {
-                auto frames = folly::dynamic::array();
-                for (auto const &frame : animationConfig.find("frames").dereference().second) {
-                  (void)frame;
-                  frames.push_back(0.0);
-                }
-                for (auto const &frame : activeFrames) {
-                  frames.push_back(frame);
-                }
-                return frames;
-              }());
-          break;
-        case AnimationType::Spring:
+              std::make_pair(s_framesName, winrt::Microsoft::ReactNative::JSValue(std::move(frames))));
+        } break;
+        case AnimationType::Spring: {
+          winrt::Microsoft::ReactNative::JSValueArray frames;
+          for (auto const &frame : item.second->Frames()) {
+            frames.push_back(frame);
+          }
           updatedAnimationConfig.insert(
-              static_cast<folly::StringPiece>(s_dynamicToValuesName), [activeFrames = item.second->Frames()]() {
-                auto dynamicToValues = folly::dynamic::array();
-                for (auto const &frame : activeFrames) {
-                  dynamicToValues.push_back(frame);
-                }
-                return dynamicToValues;
-              }());
-          break;
+              std::make_pair(s_dynamicToValuesName, winrt::Microsoft::ReactNative::JSValue(std::move(frames))));
+        } break;
           // Animated.Decay does not have a to value,
           // so they cannot track other nodes. So we'll never
           // have a decay tracking node.
@@ -242,10 +239,10 @@ void NativeAnimatedNodeManager::StartTrackingAnimatedNode(
 void NativeAnimatedNodeManager::StartAnimatingNode(
     int64_t animationId,
     int64_t animatedNodeTag,
-    const folly::dynamic &animationConfig,
-    const Callback &endCallback,
+    const winrt::Microsoft::ReactNative::JSValueObject &animationConfig,
+    const EndCallback &endCallback,
     const std::shared_ptr<NativeAnimatedNodeManager> &manager) {
-  switch (AnimationTypeFromString(animationConfig.find("type").dereference().second.getString())) {
+  switch (AnimationTypeFromString(animationConfig["type"].AsString())) {
     case AnimationType::Decay:
       m_activeAnimations.emplace(
           animationId,
@@ -257,14 +254,15 @@ void NativeAnimatedNodeManager::StartAnimatingNode(
           std::make_shared<FrameAnimationDriver>(animationId, animatedNodeTag, endCallback, animationConfig, manager));
       break;
     case AnimationType::Spring: {
-      folly::dynamic dynamicValues = [animationConfig]() {
-        const auto dynamicValues = animationConfig.count(s_dynamicToValuesName);
-        return dynamicValues ? animationConfig.at(s_dynamicToValuesName) : folly::dynamic::array();
-      }();
       m_activeAnimations.emplace(
           animationId,
           std::make_shared<SpringAnimationDriver>(
-              animationId, animatedNodeTag, endCallback, animationConfig, manager, dynamicValues));
+              animationId,
+              animatedNodeTag,
+              endCallback,
+              animationConfig,
+              manager,
+              animationConfig[s_dynamicToValuesName].AsArray()));
       break;
     }
     default:
@@ -321,10 +319,10 @@ void NativeAnimatedNodeManager::ExtractAnimatedNodeOffset(int64_t tag) {
 void NativeAnimatedNodeManager::AddAnimatedEventToView(
     int64_t viewTag,
     const std::string &eventName,
-    const folly::dynamic &eventMapping,
+    const ReactNativeSpecs::AnimatedModuleSpec_EventMapping &eventMapping,
     const std::shared_ptr<NativeAnimatedNodeManager> &manager) {
-  const auto valueNodeTag = static_cast<int64_t>(eventMapping.find("animatedValueTag").dereference().second.asDouble());
-  const auto pathList = eventMapping.find("nativeEventPath").dereference().second;
+  const auto valueNodeTag = eventMapping.animatedValueTag ? static_cast<int64_t>(*eventMapping.animatedValueTag) : 0;
+  const auto pathList = eventMapping.nativeEventPath;
 
   const auto key = std::make_tuple(viewTag, eventName);
   if (m_eventDrivers.count(key)) {
@@ -375,10 +373,10 @@ void NativeAnimatedNodeManager::ProcessDelayedPropsNodes() {
 
 void NativeAnimatedNodeManager::AddDelayedPropsNode(
     int64_t propsNodeTag,
-    const Mso::CntPtr<Mso::React::IReactContext> &context) {
+    const winrt::Microsoft::ReactNative::ReactContext &context) {
   m_delayedPropsNodes.push_back(propsNodeTag);
   if (m_delayedPropsNodes.size() <= 1) {
-    if (const auto uiManger = Microsoft::ReactNative::GetNativeUIManager(*context).lock()) {
+    if (const auto uiManger = Microsoft::ReactNative::GetNativeUIManager(context).lock()) {
       uiManger->AddBatchCompletedCallback([this]() { ProcessDelayedPropsNodes(); });
     }
   }

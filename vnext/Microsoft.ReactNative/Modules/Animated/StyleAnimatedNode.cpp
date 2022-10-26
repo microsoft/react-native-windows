@@ -9,11 +9,11 @@
 namespace Microsoft::ReactNative {
 StyleAnimatedNode::StyleAnimatedNode(
     int64_t tag,
-    const folly::dynamic &config,
+    const winrt::Microsoft::ReactNative::JSValueObject &config,
     const std::shared_ptr<NativeAnimatedNodeManager> &manager)
     : AnimatedNode(tag, manager) {
-  for (const auto &entry : config.find(s_styleName).dereference().second.items()) {
-    m_propMapping.insert({entry.first.getString(), static_cast<int64_t>(entry.second.asDouble())});
+  for (const auto &entry : config[s_styleName].AsObject()) {
+    m_propMapping.insert({entry.first, static_cast<int64_t>(entry.second.AsDouble())});
   }
 }
 

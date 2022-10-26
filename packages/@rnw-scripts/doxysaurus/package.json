@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/doxysaurus",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -19,7 +19,7 @@
     "doxysaurus": "./bin.js"
   },
   "dependencies": {
-    "@react-native-windows/fs": "^0.0.0-canary.6",
+    "@react-native-windows/fs": "^0.0.0-canary.7",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
     "chalk": "^4.1.0",

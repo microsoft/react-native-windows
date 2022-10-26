@@ -2,6 +2,21 @@
   "name": "@react-native-windows/fs",
   "entries": [
     {
+      "date": "Sat, 15 Oct 2022 05:11:59 GMT",
+      "tag": "@react-native-windows/fs_v0.0.0-canary.7",
+      "version": "0.0.0-canary.7",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/fs",
+            "commit": "c67e48d281b09d087c891e3c0f8002e01505ce34",
+            "comment": "Integrate 8/12"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 05 Oct 2022 05:13:47 GMT",
       "tag": "@react-native-windows/fs_v0.0.0-canary.6",
       "version": "0.0.0-canary.6",

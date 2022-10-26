@@ -5,6 +5,7 @@
 
 #include <react/renderer/attributedstring/AttributedString.h>
 #include <react/renderer/attributedstring/ParagraphAttributes.h>
+#include <react/renderer/mapbuffer/MapBuffer.h>
 #include <react/renderer/textlayoutmanager/TextLayoutManager.h>
 
 namespace facebook::react {
@@ -81,6 +82,7 @@ class WindowsTextInputState final {
   WindowsTextInputState() = default;
   WindowsTextInputState(WindowsTextInputState const &previousState, folly::dynamic const &data);
   folly::dynamic getDynamic() const;
+  MapBuffer getMapBuffer() const;
 };
 
 } // namespace facebook::react

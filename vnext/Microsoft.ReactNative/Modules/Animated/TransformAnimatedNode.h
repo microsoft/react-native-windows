@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #pragma once
-#include <folly/dynamic.h>
+#include <JSValue.h>
 #include "AnimatedNode.h"
 #include "FacadeType.h"
 
@@ -18,7 +18,7 @@ class TransformAnimatedNode final : public AnimatedNode {
  public:
   TransformAnimatedNode(
       int64_t tag,
-      const folly::dynamic &config,
+      const winrt::Microsoft::ReactNative::JSValueObject &config,
       const std::shared_ptr<NativeAnimatedNodeManager> &manager);
   std::unordered_map<FacadeType, int64_t> GetMapping();
 

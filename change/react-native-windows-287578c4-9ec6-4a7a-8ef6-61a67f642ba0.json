@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "Conditionally include HBC version header",
+  "comment": "intergration 9/12/22",
   "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
+  "email": "tatianakapos@microsoft.com",
   "dependentChangeType": "patch"
 }

@@ -143,6 +143,23 @@ struct NapiJsiRuntime : facebook::jsi::Runtime {
   std::string utf8(const facebook::jsi::PropNameID &id) override;
   bool compare(const facebook::jsi::PropNameID &lhs, const facebook::jsi::PropNameID &rhs) override;
 
+  // new
+
+  facebook::jsi::BigInt createBigIntFromInt64(int64_t value) override;
+  facebook::jsi::BigInt createBigIntFromUint64(uint64_t value) override;
+  bool bigintIsInt64(const facebook::jsi::BigInt &) override;
+  bool bigintIsUint64(const facebook::jsi::BigInt &) override;
+  uint64_t truncate(const facebook::jsi::BigInt &) override;
+  facebook::jsi::String bigintToString(const facebook::jsi::BigInt &, int) override;
+
+  bool hasNativeState(const facebook::jsi::Object &) override;
+  std::shared_ptr<facebook::jsi::NativeState> getNativeState(const facebook::jsi::Object &) override;
+  void setNativeState(const facebook::jsi::Object &, std::shared_ptr<facebook::jsi::NativeState> state) override;
+
+  facebook::jsi::ArrayBuffer createArrayBuffer(std::shared_ptr<facebook::jsi::MutableBuffer> buffer);
+
+  // end
+
   std::string symbolToString(const facebook::jsi::Symbol &s) override;
 
   facebook::jsi::String createStringFromAscii(const char *str, size_t length) override;
@@ -725,6 +742,57 @@ PropNameID NapiJsiRuntime::createPropNameIDFromSymbol(const Symbol &sym) {
   EnvScope envScope{m_env};
   napi_ext_ref propSym = GetPropertyIdFromSymbol(GetNapiValue(sym));
   return MakePointer<PropNameID>(propSym);
+}
+
+facebook::jsi::BigInt NapiJsiRuntime::createBigIntFromInt64(int64_t val) {
+  EnvScope scope{m_env};
+  throw JSINativeException("Not implemented");
+}
+
+facebook::jsi::BigInt NapiJsiRuntime::createBigIntFromUint64(uint64_t val) {
+  EnvScope scope{m_env};
+  throw JSINativeException("Not implemented");
+  ;
+}
+
+bool NapiJsiRuntime::bigintIsInt64(const facebook::jsi::BigInt &) {
+  EnvScope scope{m_env};
+  throw JSINativeException("Not implemented");
+}
+
+bool NapiJsiRuntime::bigintIsUint64(const facebook::jsi::BigInt &) {
+  EnvScope scope{m_env};
+  throw JSINativeException("Not implemented");
+}
+
+uint64_t NapiJsiRuntime::truncate(const facebook::jsi::BigInt &) {
+  EnvScope scope{m_env};
+  throw JSINativeException("Not implemented");
+}
+
+String NapiJsiRuntime::bigintToString(const facebook::jsi::BigInt &, int) {
+  EnvScope scope{m_env};
+  throw JSINativeException("Not implemented");
+}
+
+bool NapiJsiRuntime::hasNativeState(const facebook::jsi::Object &) {
+  EnvScope scope{m_env};
+  throw JSINativeException("Not implemented");
+}
+
+std::shared_ptr<facebook::jsi::NativeState> NapiJsiRuntime::getNativeState(const facebook::jsi::Object &) {
+  EnvScope scope{m_env};
+  throw JSINativeException("Not implemented");
+}
+
+void NapiJsiRuntime::setNativeState(const Object &, std::shared_ptr<facebook::jsi::NativeState> state) {
+  EnvScope scope{m_env};
+  throw JSINativeException("Not implemented");
+}
+
+facebook::jsi::ArrayBuffer NapiJsiRuntime::createArrayBuffer(std::shared_ptr<facebook::jsi::MutableBuffer> buffer) {
+  EnvScope scope{m_env};
+  throw JSINativeException("Not implemented");
 }
 
 string NapiJsiRuntime::utf8(const PropNameID &id) {

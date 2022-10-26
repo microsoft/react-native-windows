@@ -30,7 +30,7 @@ const TextInputSharedExamples = require('./TextInputSharedExamples.js');
 import type {RNTesterModuleExample} from '../../types/RNTesterTypes';
 
 class WithLabel extends React.Component<$FlowFixMeProps> {
-  render() {
+  render(): React.Node {
     return (
       <View style={styles.labelContainer}>
         <View style={styles.label}>
@@ -51,7 +51,7 @@ class TextInputAccessoryViewChangeTextExample extends React.Component<
     this.state = {text: 'Placeholder Text'};
   }
 
-  render() {
+  render(): React.Node {
     const inputAccessoryViewID = 'inputAccessoryView1';
     return (
       <View>
@@ -91,7 +91,7 @@ class TextInputAccessoryViewChangeKeyboardExample extends React.Component<
     });
   };
 
-  render() {
+  render(): React.Node {
     const inputAccessoryViewID = 'inputAccessoryView2';
     return (
       <View>
@@ -127,7 +127,7 @@ class TextInputAccessoryViewDefaultDoneButtonExample extends React.Component<
     this.state = {text: ''};
   }
 
-  render() {
+  render(): React.Node {
     return (
       <TextInput
         style={styles.default}
@@ -145,7 +145,7 @@ class RewriteExampleKana extends React.Component<$FlowFixMeProps, any> {
     super(props);
     this.state = {text: ''};
   }
-  render() {
+  render(): React.Node {
     return (
       <View style={styles.rewriteContainer}>
         <TextInput
@@ -170,7 +170,7 @@ class SecureEntryExample extends React.Component<$FlowFixMeProps, any> {
       isSecureTextEntry: true,
     };
   }
-  render() {
+  render(): React.Node {
     return (
       <View>
         <TextInput
@@ -230,7 +230,7 @@ class AutogrowingTextInputExample extends React.Component<
     });
   }
 
-  render() {
+  render(): React.Node {
     const {style, multiline, ...props} = this.props;
     return (
       <View>
@@ -622,6 +622,35 @@ exports.examples = ([
     },
   },
   {
+    title: 'Editable and Read only',
+    render: function (): React.Node {
+      return (
+        <View>
+          <TextInput
+            placeholder="editable text input using editable prop"
+            style={styles.default}
+            editable
+          />
+          <TextInput
+            placeholder="uneditable text input using editable prop"
+            style={styles.default}
+            editable={false}
+          />
+          <TextInput
+            placeholder="editable text input using readOnly prop"
+            style={styles.default}
+            readOnly={false}
+          />
+          <TextInput
+            placeholder="uneditable text input using readOnly prop"
+            style={styles.default}
+            readOnly
+          />
+        </View>
+      );
+    },
+  },
+  {
     title: 'TextInput Intrinsic Size',
     render: function (): React.Node {
       return (
@@ -764,6 +793,21 @@ exports.examples = ([
               defaultValue="9402512345"
               style={styles.default}
             />
+          </WithLabel>
+        </View>
+      );
+    },
+  },
+  {
+    title: 'Text Auto Complete',
+    render: function (): React.Node {
+      return (
+        <View>
+          <WithLabel label="country">
+            <TextInput autoComplete="country" style={styles.default} />
+          </WithLabel>
+          <WithLabel label="one-time-code">
+            <TextInput autoComplete="one-time-code" style={styles.default} />
           </WithLabel>
         </View>
       );

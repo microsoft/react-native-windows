@@ -185,6 +185,11 @@ const APIs: Array<RNTesterModuleInfo> = [
     module: require('../examples/Dimensions/DimensionsExample'),
   },
   {
+    key: 'Keyboard',
+    category: 'Basic',
+    module: require('../examples/Keyboard/KeyboardExample').default,
+  },
+  {
     key: 'LayoutEventsExample',
     category: 'UI',
     module: require('../examples/Layout/LayoutEventsExample'),
@@ -274,15 +279,12 @@ const APIs: Array<RNTesterModuleInfo> = [
     category: 'Basic',
     module: require('../examples/XHR/XHRExample'),
   },
-];
-
-if (global.__turboModuleProxy) {
-  APIs.push({
+  {
     key: 'TurboModuleExample',
     category: 'Basic',
     module: require('../examples/TurboModule/TurboModuleExample'),
-  });
-}
+  },
+];
 
 if (ReactNativeFeatureFlags.shouldEmitW3CPointerEvents()) {
   APIs.push({

@@ -3,37 +3,37 @@
     ".flowconfig",
     "src/**"
   ],
-  "baseVersion": "0.0.0-20220729-2025-a21a1f845",
+  "baseVersion": "0.0.0-20220912-2028-b0aba1b6f",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "80da3e01a99821e4813d04b0a8226c74f9c89217"
+      "baseHash": "21218e40e026cea75af0c938f02d40d123ab6443"
     },
     {
       "type": "copy",
       "file": "src/CellRenderMask.js",
       "baseFile": "Libraries/Lists/CellRenderMask.js",
-      "baseHash": "3f2e3de5df1fba036370e201b56c5f38e7050b11"
+      "baseHash": "8513896105a0790d381ae0fed40eaf010bde0dbf"
     },
     {
       "type": "copy",
       "file": "src/FillRateHelper.js",
       "baseFile": "Libraries/Lists/FillRateHelper.js",
-      "baseHash": "41260657a4e4e522e61a1e7063bdc4016f9f60ca"
+      "baseHash": "1fd0fcae193a0f4bc71a0b1048b5e2da3a804b15"
     },
     {
       "type": "copy",
       "file": "src/ViewabilityHelper.js",
       "baseFile": "Libraries/Lists/ViewabilityHelper.js",
-      "baseHash": "25d41013afe88fa728eac9e529433a752086eadd"
+      "baseHash": "7ed44c39f484c68223cc2048d8134d7d7944da9e"
     },
     {
       "type": "patch",
       "file": "src/VirtualizedList.js",
       "baseFile": "Libraries/Lists/VirtualizedList.js",
-      "baseHash": "3c1d8b5839b175b0bfc9dffdd589b4d0e5cc195c",
+      "baseHash": "9d6d72cfad9144d1b5f8f8706ffec54cd3bf7000",
       "issue": 8120
     },
     {
@@ -46,13 +46,20 @@
       "type": "copy",
       "file": "src/VirtualizedListInjection.js",
       "baseFile": "Libraries/Lists/VirtualizedListInjection.js",
-      "baseHash": "cf72dddea1b22afc7c1cff339897cd88c00b4943"
+      "baseHash": "59faca4e3bbd7b761fe49073749e3c75665b4068"
+    },
+    {
+      "type": "patch",
+      "file": "src/VirtualizedListProps.js",
+      "baseFile": "Libraries/Lists/VirtualizedListProps.js",
+      "baseHash": "0012b8b4ee449a771c9e877c5ad023f3a4316b0d",
+      "issue": 10694
     },
     {
       "type": "copy",
       "file": "src/VirtualizeUtils.js",
       "baseFile": "Libraries/Lists/VirtualizeUtils.js",
-      "baseHash": "4d01165c6c549549a459e6049b02d0ff0c8f0c18"
+      "baseHash": "b7627950bf0339f46f7d3620480f56d7bb76786e"
     }
   ]
 }

@@ -1,8 +1,17 @@
 # Change Log - @rnw-scripts/doxysaurus
 
-This log was last generated on Wed, 05 Oct 2022 05:13:44 GMT and should not be manually modified.
+This log was last generated on Sat, 15 Oct 2022 05:11:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.2.1
+
+Sat, 15 Oct 2022 05:11:59 GMT
+
+### Patches
+
+- Integrate 8/12 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.7
 
 ## 0.2.0
 

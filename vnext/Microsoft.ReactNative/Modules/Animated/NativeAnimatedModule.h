@@ -3,8 +3,8 @@
 
 #pragma once
 
-#include <cxxreact/CxxModule.h>
-#include <folly/dynamic.h>
+#include "codegen/NativeAnimatedModuleSpec.g.h"
+
 #include "NativeAnimatedNodeManager.h"
 
 /// <summary>
@@ -53,46 +53,96 @@
 /// <see cref="NativeAnimatedNodeManager"/>.
 /// </remarks>
 namespace Microsoft::ReactNative {
-class NativeAnimatedModule final : public facebook::xplat::module::CxxModule {
- public:
-  NativeAnimatedModule(Mso::CntPtr<Mso::React::IReactContext> &&context);
-  virtual ~NativeAnimatedModule();
 
-  // CxxModule
-  std::string getName() override {
-    return name;
-  };
-  std::map<std::string, folly::dynamic> getConstants() override {
-    return {};
-  };
-  auto getMethods() -> std::vector<Method> override;
+REACT_MODULE(NativeAnimatedModule)
+struct NativeAnimatedModule : std::enable_shared_from_this<NativeAnimatedModule> {
+  // Commented out due to missing implementation of updateAnimatedNodeConfig
+  // using ModuleSpec = ReactNativeSpecs::AnimatedModuleSpec;
 
-  void CreateAnimatedNode(int64_t tag, const folly::dynamic &config);
-  void GetValue(int64_t tag, const Callback &endCallback);
-  void ConnectAnimatedNodeToView(int64_t animatedNodeTag, int64_t viewTag);
-  void DisconnectAnimatedNodeFromView(int64_t animatedNodeTag, int64_t viewTag);
-  void ConnectAnimatedNodes(int64_t parentNodeTag, int64_t childNodeTag);
-  void DisconnectAnimatedNodes(int64_t parentNodeTag, int64_t childNodeTag);
-  void StartAnimatingNode(
-      int64_t animationId,
-      int64_t animatedNodeTag,
-      const folly::dynamic &animationConfig,
-      const Callback &endCallback);
-  void StopAnimation(int64_t animationId);
-  void DropAnimatedNode(int64_t tag);
-  void SetAnimatedNodeValue(int64_t tag, double value);
-  void SetAnimatedNodeOffset(int64_t tag, double offset);
-  void FlattenAnimatedNodeOffset(int64_t tag);
-  void ExtractAnimatedNodeOffset(int64_t tag);
-  void AddAnimatedEventToView(int64_t tag, const std::string &eventName, const folly::dynamic &eventMapping);
-  void RemoveAnimatedEventFromView(int64_t tag, const std::string &eventName, int64_t animatedValueTag);
-  void StartListeningToAnimatedNodeValue(int64_t tag);
-  void StopListeningToAnimatedNodeValue(int64_t tag);
+  REACT_INIT(Initialize)
+  void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
-  static const char *name;
+  REACT_METHOD(startOperationBatch)
+  void startOperationBatch() noexcept;
+
+  REACT_METHOD(finishOperationBatch)
+  void finishOperationBatch() noexcept;
+
+  REACT_METHOD(createAnimatedNode)
+  void createAnimatedNode(double tag, ::React::JSValue &&config) noexcept;
+
+  // REACT_METHOD(updateAnimatedNodeConfig)
+  // void updateAnimatedNodeConfig(double tag, ::React::JSValue && config) noexcept;
+
+  REACT_METHOD(getValue)
+  void getValue(double tag, std::function<void(double)> const &saveValueCallback) noexcept;
+
+  REACT_METHOD(startListeningToAnimatedNodeValue)
+  void startListeningToAnimatedNodeValue(double tag) noexcept;
+
+  REACT_METHOD(stopListeningToAnimatedNodeValue)
+  void stopListeningToAnimatedNodeValue(double tag) noexcept;
+
+  REACT_METHOD(connectAnimatedNodes)
+  void connectAnimatedNodes(double parentTag, double childTag) noexcept;
+
+  REACT_METHOD(disconnectAnimatedNodes)
+  void disconnectAnimatedNodes(double parentTag, double childTag) noexcept;
+
+  REACT_METHOD(startAnimatingNode)
+  void startAnimatingNode(
+      double animationId,
+      double nodeTag,
+      ::React::JSValue &&config,
+      std::function<void(ReactNativeSpecs::AnimatedModuleSpec_EndResult const &)> const &endCallback) noexcept;
+
+  REACT_METHOD(stopAnimation)
+  void stopAnimation(double animationId) noexcept;
+
+  REACT_METHOD(setAnimatedNodeValue)
+  void setAnimatedNodeValue(double nodeTag, double value) noexcept;
+
+  REACT_METHOD(setAnimatedNodeOffset)
+  void setAnimatedNodeOffset(double nodeTag, double offset) noexcept;
+
+  REACT_METHOD(flattenAnimatedNodeOffset)
+  void flattenAnimatedNodeOffset(double nodeTag) noexcept;
+
+  REACT_METHOD(extractAnimatedNodeOffset)
+  void extractAnimatedNodeOffset(double nodeTag) noexcept;
+
+  REACT_METHOD(connectAnimatedNodeToView)
+  void connectAnimatedNodeToView(double nodeTag, double viewTag) noexcept;
+
+  REACT_METHOD(disconnectAnimatedNodeFromView)
+  void disconnectAnimatedNodeFromView(double nodeTag, double viewTag) noexcept;
+
+  REACT_METHOD(restoreDefaultValues)
+  void restoreDefaultValues(double nodeTag) noexcept;
+
+  REACT_METHOD(dropAnimatedNode)
+  void dropAnimatedNode(double tag) noexcept;
+
+  REACT_METHOD(addAnimatedEventToView)
+  void addAnimatedEventToView(
+      double viewTag,
+      std::string eventName,
+      ReactNativeSpecs::AnimatedModuleSpec_EventMapping &&eventMapping) noexcept;
+
+  REACT_METHOD(removeAnimatedEventFromView)
+  void removeAnimatedEventFromView(double viewTag, std::string eventName, double animatedNodeTag) noexcept;
+
+  REACT_METHOD(addListener)
+  void addListener(std::string eventName) noexcept;
+
+  REACT_METHOD(removeListeners)
+  void removeListeners(double count) noexcept;
+
+  REACT_METHOD(queueAndExecuteBatchedOperations)
+  void queueAndExecuteBatchedOperations(::React::JSValueArray &&operationsAndArgs) noexcept;
 
  private:
-  std::shared_ptr<NativeAnimatedNodeManager> m_nodesManager{};
-  Mso::CntPtr<Mso::React::IReactContext> m_context;
+  std::shared_ptr<NativeAnimatedNodeManager> m_nodesManager{std::make_shared<NativeAnimatedNodeManager>()};
+  winrt::Microsoft::ReactNative::ReactContext m_context;
 };
 } // namespace Microsoft::ReactNative

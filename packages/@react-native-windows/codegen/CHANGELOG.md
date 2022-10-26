@@ -1,8 +1,24 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Fri, 07 Oct 2022 05:11:46 GMT and should not be manually modified.
+This log was last generated on Tue, 18 Oct 2022 05:12:09 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.40
+
+Tue, 18 Oct 2022 05:12:09 GMT
+
+### Changes
+
+- Use newer react-native-codegen generators (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.39
+
+Sat, 15 Oct 2022 05:12:00 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.7
 
 ## 0.0.0-canary.38
 

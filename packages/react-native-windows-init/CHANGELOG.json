@@ -2,6 +2,63 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Thu, 20 Oct 2022 05:17:11 GMT",
+      "tag": "react-native-windows-init_v1.2.4",
+      "version": "1.2.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.141",
+            "commit": "492918196886cddef131fd1ec446a97c0c428693"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 18 Oct 2022 05:12:09 GMT",
+      "tag": "react-native-windows-init_v1.2.3",
+      "version": "1.2.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.140",
+            "commit": "716020aff17e747f894362f47a4eb94b54725ec3"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 15 Oct 2022 05:12:00 GMT",
+      "tag": "react-native-windows-init_v1.2.2",
+      "version": "1.2.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.7",
+            "commit": "c67e48d281b09d087c891e3c0f8002e01505ce34"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.47",
+            "commit": "c67e48d281b09d087c891e3c0f8002e01505ce34"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.139",
+            "commit": "c67e48d281b09d087c891e3c0f8002e01505ce34"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 07 Oct 2022 05:11:47 GMT",
       "tag": "react-native-windows-init_v1.2.1",
       "version": "1.2.1",
