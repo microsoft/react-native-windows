@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix C# modules with multi-parameter callback methods",
-  "packageName": "react-native-windows",
-  "email": "vmoroz@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

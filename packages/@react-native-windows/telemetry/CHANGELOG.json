@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Wed, 26 Oct 2022 05:11:35 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.48",
+      "version": "0.0.0-canary.48",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmoroz@users.noreply.github.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "e7b60c3fdef68a97b08a76c8bfd436b45bc5e7f3",
+            "comment": "Update Hermes package version"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 15 Oct 2022 05:11:59 GMT",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.47",
       "version": "0.0.0-canary.47",

@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 26 Oct 2022 05:11:35 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.570",
+      "version": "0.0.0-canary.570",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e7b60c3fdef68a97b08a76c8bfd436b45bc5e7f3",
+            "comment": "intergration 9/12/22"
+          },
+          {
+            "author": "vmoroz@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "814ddb23983887f76c7c01fd2e15d59be7b0811d",
+            "comment": "Fix C# modules with multi-parameter callback methods"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.142",
+            "commit": "814ddb23983887f76c7c01fd2e15d59be7b0811d"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.54",
+            "commit": "814ddb23983887f76c7c01fd2e15d59be7b0811d"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 25 Oct 2022 05:11:24 GMT",
       "tag": "react-native-windows_v0.0.0-canary.569",
       "version": "0.0.0-canary.569",
