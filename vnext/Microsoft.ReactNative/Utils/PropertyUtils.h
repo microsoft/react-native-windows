@@ -556,9 +556,9 @@ inline bool TryUpdateMouseEvents(
     const std::string &propertyName,
     const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
   if (propertyName == "onMouseEnter")
-    node->m_onMouseEnterRegistered = !propertyValue.IsNull() && propertyValue.AsBoolean();
+    node->m_onMouseEnterRegistered = propertyValue.AsBoolean();
   else if (propertyName == "onMouseLeave")
-    node->m_onMouseLeaveRegistered = !propertyValue.IsNull() && propertyValue.AsBoolean();
+    node->m_onMouseLeaveRegistered = propertyValue.AsBoolean();
   else
     return false;
 

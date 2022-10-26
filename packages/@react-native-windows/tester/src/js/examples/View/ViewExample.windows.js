@@ -712,6 +712,18 @@ exports.examples = [
     },
   },
   {
+    title: 'View with aria-label="label"',
+    render(): React.Node {
+      return (
+        <View
+          aria-label="Blue background View with Text"
+          style={{backgroundColor: '#527FE4', padding: 5}}>
+          <Text style={{fontSize: 11}}>Blue background</Text>
+        </View>
+      );
+    },
+  },
+  {
     title: 'Accessibility',
     render(): React.Node {
       return <AccessibilityExample />;
@@ -754,7 +766,6 @@ exports.examples = [
         <View nativeID="native-id-view" testID="nativeid">
           <Text>A View with a nativeID "native-id-view"</Text>
         </View>
-      );
-    },
+    }
   },
 ];

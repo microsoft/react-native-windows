@@ -13,6 +13,7 @@ import * as React from 'react';
 import View from '../View/View';
 
 import type {ViewProps} from '../View/ViewPropTypes';
+import type {SafeAreaViewType} from './SafeAreaView.flow';
 
 let exported: React.AbstractComponent<ViewProps, React.ElementRef<typeof View>>;
 
@@ -32,4 +33,4 @@ if (Platform.OS === 'android' || Platform.OS === 'win32') {
   exported = require('./RCTSafeAreaViewNativeComponent').default;
 }
 
-export default exported;
+export default (exported: SafeAreaViewType);

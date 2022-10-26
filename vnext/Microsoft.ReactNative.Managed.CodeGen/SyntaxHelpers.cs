@@ -4,6 +4,7 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -99,6 +100,11 @@ namespace Microsoft.ReactNative.Managed.CodeGen
     }
 
     internal static ExpressionSyntax InvocationExpression(ExpressionSyntax method, params ExpressionSyntax[] arguments)
+    {
+      return InvocationExpression(method, arguments.AsEnumerable());
+    }
+
+    internal static ExpressionSyntax InvocationExpression(ExpressionSyntax method, IEnumerable<ExpressionSyntax> arguments)
     {
       return InvocationExpression(method, arguments.Select(arg => SyntaxFactory.Argument(arg)));
     }

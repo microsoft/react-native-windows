@@ -20,7 +20,7 @@ const Components: Array<RNTesterModuleInfo> = [
   {
     key: 'ButtonExample',
     category: 'UI',
-    module: require('../examples/Button/ButtonExample'),
+    module: require('../examples-win/Button/ButtonExample'),
   },
   {
     key: 'FlatListExampleIndex',
@@ -336,16 +336,13 @@ const APIs: Array<RNTesterModuleInfo> = [
     key: 'XHRExample',
     category: 'Basic',
     module: require('../examples/XHR/XHRExample'),
-  },*/
-];
-
-if (global.__turboModuleProxy) {
-  APIs.push({
+  }, */
+  {
     key: 'TurboModuleExample',
     category: 'Basic',
     module: require('../examples/TurboModule/TurboModuleExample'),
-  });
-}
+  },
+];
 
 if (ReactNativeFeatureFlags.shouldEmitW3CPointerEvents()) {
   APIs.push({

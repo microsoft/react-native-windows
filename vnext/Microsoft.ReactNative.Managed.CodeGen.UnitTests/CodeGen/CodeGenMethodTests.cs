@@ -116,6 +116,12 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests.CodeGen
     }
 
     [TestMethod]
+    public void IntParamAndSingleThreeArgCallbackParamReturnVoid()
+    {
+      TestMethod("public void Method(int x, Action<int, string, double> cb1) { }", ReactMethod.MethodReturnStyle.Callback);
+    }
+
+    [TestMethod]
     public void DoubleArgCallbackParamReturnVoid()
     {
       TestMethod("public void Method(Action<int> cb1, Action<int> cb2) { }", ReactMethod.MethodReturnStyle.TwoCallbacks);
@@ -125,6 +131,13 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests.CodeGen
     public void IntParamAndDoubleArgCallbackParamReturnVoid()
     {
       TestMethod("public void Method(int x, Action<int> cb1, Action<int> cb2) { }", ReactMethod.MethodReturnStyle.TwoCallbacks);
+    }
+
+
+    [TestMethod]
+    public void IntParamAndDoubleMultipleArgCallbackParamReturnVoid()
+    {
+      TestMethod("public void Method(int x, Action<int, string, double> cb1, Action<int, string> cb2) { }", ReactMethod.MethodReturnStyle.TwoCallbacks);
     }
 
     [TestMethod]
@@ -159,8 +172,15 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests.CodeGen
 
     private void TestMethod(string methodDecl, ReactMethod.MethodReturnStyle returnStyle)
     {
-      TestMethod(methodDecl, returnStyle, isSynchronous: true);
-      TestMethod(methodDecl, returnStyle, isSynchronous: false);
+      if (returnStyle == ReactMethod.MethodReturnStyle.ReturnValue)
+      {
+        TestMethod(methodDecl, returnStyle, isSynchronous: true);
+        TestMethod(methodDecl, returnStyle, isSynchronous: false);
+      }
+      else
+      {
+        TestMethod(methodDecl, returnStyle, isSynchronous: false);
+      }
     }
 
     private void TestMethod(string methodDecl, ReactMethod.MethodReturnStyle returnStyle, bool isSynchronous)
@@ -171,21 +191,27 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests.CodeGen
         {
           var returnType = symbol.ReturnType;
           var parameters = new List<IParameterSymbol>(symbol.Parameters);
+          int resolveParameterCount = 0;
+          int rejectParameterCount = 0;
           switch (returnStyle)
           {
             case ReactMethod.MethodReturnStyle.Promise:
-            case ReactMethod.MethodReturnStyle.Callback:
               returnType = ((INamedTypeSymbol)parameters[parameters.Count - 1].Type).TypeArguments[0];
               parameters.RemoveAt(parameters.Count - 1);
               break;
+            case ReactMethod.MethodReturnStyle.Callback:
+              resolveParameterCount = ((INamedTypeSymbol)parameters[parameters.Count - 1].Type).TypeArguments.Count();
+              parameters.RemoveAt(parameters.Count - 1);
+              break;
             case ReactMethod.MethodReturnStyle.TwoCallbacks:
-              returnType = ((INamedTypeSymbol)parameters[parameters.Count - 2].Type).TypeArguments[0];
+              resolveParameterCount = ((INamedTypeSymbol)parameters[parameters.Count - 2].Type).TypeArguments.Count();
+              rejectParameterCount = ((INamedTypeSymbol)parameters[parameters.Count - 1].Type).TypeArguments.Count();
               parameters.RemoveRange(parameters.Count - 2, 2);
               break;
             case ReactMethod.MethodReturnStyle.Task:
-              var namedReturnType = ((INamedTypeSymbol) returnType);
+              var namedReturnType = ((INamedTypeSymbol)returnType);
               returnType = namedReturnType.TypeArguments.Any()
-                ? ((INamedTypeSymbol) returnType).TypeArguments[0]
+                ? ((INamedTypeSymbol)returnType).TypeArguments[0]
                 : codeGen.ReactTypes.SystemVoid;
               break;
           }
@@ -195,7 +221,9 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests.CodeGen
             isSynchronous: isSynchronous,
             returnStyle: returnStyle,
             effectiveReturnType: returnType,
-            effectiveParameters: parameters));
+            effectiveParameters: parameters,
+            resolveParameterCount: resolveParameterCount,
+            rejectParameterCount: rejectParameterCount));
         },
         lkgName: isSynchronous ? "Sync" : "Async");
     }

@@ -128,7 +128,11 @@ type ButtonProps = $ReadOnly<{|
     Text to display for blindness accessibility features.
    */
   accessibilityLabel?: ?string,
-
+  /**
+   * Alias for accessibilityLabel  https://reactnative.dev/docs/view#accessibilitylabel
+   * https://github.com/facebook/react-native/issues/34424
+   */
+  'aria-label'?: ?string,
   /**
     If `true`, disable all interactions for this component.
 
@@ -148,6 +152,17 @@ type ButtonProps = $ReadOnly<{|
   accessibilityActions?: ?$ReadOnlyArray<AccessibilityActionInfo>,
   onAccessibilityAction?: ?(event: AccessibilityActionEvent) => mixed,
   accessibilityState?: ?AccessibilityState,
+
+  /**
+   * alias for accessibilityState
+   *
+   * see https://reactnative.dev/docs/accessibility#accessibilitystate
+   */
+  'aria-busy'?: ?boolean,
+  'aria-checked'?: ?boolean,
+  'aria-disabled'?: ?boolean,
+  'aria-expanded'?: ?boolean,
+  'aria-selected'?: ?boolean,
 
   /**
    * [Android] Controlling if a view fires accessibility events and if it is reported to accessibility services.
@@ -291,6 +306,13 @@ class Button extends React.Component<
   render(): React.Node {
     const {
       accessibilityLabel,
+      accessibilityState,
+      'aria-busy': ariaBusy,
+      'aria-checked': ariaChecked,
+      'aria-disabled': ariaDisabled,
+      'aria-expanded': ariaExpanded,
+      'aria-label': ariaLabel,
+      'aria-selected': ariaSelected,
       importantForAccessibility,
       color,
       onPress,
@@ -320,15 +342,23 @@ class Button extends React.Component<
       }
     }
 
+    let _accessibilityState = {
+      busy: ariaBusy ?? accessibilityState?.busy,
+      checked: ariaChecked ?? accessibilityState?.checked,
+      disabled: ariaDisabled ?? accessibilityState?.disabled,
+      expanded: ariaExpanded ?? accessibilityState?.expanded,
+      selected: ariaSelected ?? accessibilityState?.selected,
+    };
+
     const disabled =
       this.props.disabled != null
         ? this.props.disabled
-        : this.props.accessibilityState?.disabled;
+        : _accessibilityState?.disabled;
 
-    const accessibilityState =
-      disabled !== this.props.accessibilityState?.disabled
-        ? {...this.props.accessibilityState, disabled}
-        : this.props.accessibilityState;
+    _accessibilityState =
+      disabled !== _accessibilityState?.disabled
+        ? {..._accessibilityState, disabled}
+        : _accessibilityState;
 
     if (disabled) {
       buttonStyles.push(styles.buttonDisabled);
@@ -341,6 +371,13 @@ class Button extends React.Component<
     );
     const formattedTitle =
       Platform.OS === 'android' ? title.toUpperCase() : title;
+
+    // If `no` is specified for `importantForAccessibility`, it will be changed to `no-hide-descendants` because the text inside should not be focused.
+    const _importantForAccessibility =
+      importantForAccessibility === 'no'
+        ? 'no-hide-descendants'
+        : importantForAccessibility;
+
     // [Windows - render a TouchableHighlight
     const Touchable = TouchableHighlight;
     //  Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
@@ -350,11 +387,11 @@ class Button extends React.Component<
       return (
         <Touchable
           accessible={accessible}
-          accessibilityLabel={accessibilityLabel}
+          accessibilityLabel={ariaLabel || accessibilityLabel}
           accessibilityHint={accessibilityHint}
           accessibilityLanguage={accessibilityLanguage}
           accessibilityRole="button"
-          accessibilityState={accessibilityState}
+          accessibilityState={_accessibilityState}
           hasTVPreferredFocus={hasTVPreferredFocus}
           nextFocusDown={nextFocusDown}
           nextFocusForward={nextFocusForward}

@@ -1,8 +1,38 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 20 Oct 2022 05:17:11 GMT and should not be manually modified.
+This log was last generated on Wed, 26 Oct 2022 05:11:35 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.570
+
+Wed, 26 Oct 2022 05:11:35 GMT
+
+### Changes
+
+- intergration 9/12/22 (tatianakapos@microsoft.com)
+- Fix C# modules with multi-parameter callback methods (vmoroz@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.142
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.54
+
+## 0.0.0-canary.569
+
+Tue, 25 Oct 2022 05:11:24 GMT
+
+### Changes
+
+- Run yarn install --frozen-lockfile (vmoroz@users.noreply.github.com)
+
+## 0.0.0-canary.568
+
+Fri, 21 Oct 2022 05:12:38 GMT
+
+### Changes
+
+- Fix missing headers for MSVC 14.34 (julio.rocha@microsoft.com)
+- Fixes issue for loading images in Clang builds (erozell@outlook.com)
+- Simplifies and fixes various View prop handlers (erozell@outlook.com)
+- Save State (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.0.0-canary.567
 
