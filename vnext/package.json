@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-canary.569",
+  "version": "0.0.0-canary.570",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -26,8 +26,8 @@
     "@react-native-community/cli": "^9.0.0-alpha.11",
     "@react-native-community/cli-platform-android": "^9.0.0-alpha.10",
     "@react-native-community/cli-platform-ios": "^9.0.0-alpha.10",
-    "@react-native-windows/cli": "0.0.0-canary.141",
-    "@react-native-windows/virtualized-list": "0.0.0-canary.53",
+    "@react-native-windows/cli": "0.0.0-canary.142",
+    "@react-native-windows/virtualized-list": "0.0.0-canary.54",
     "@react-native/assets": "1.0.0",
     "@react-native/normalize-color": "2.0.0",
     "@react-native/polyfills": "2.0.0",
@@ -44,7 +44,7 @@
     "mkdirp": "^0.5.1",
     "nullthrows": "^1.1.1",
     "pretty-format": "^26.5.2",
-    "promise": "^8.0.3",
+    "promise": "^8.2.0",
     "react-devtools-core": "4.24.0",
     "react-native-codegen": "^0.71.0",
     "react-native-gradle-plugin": "^0.71.0",
@@ -71,13 +71,13 @@
     "@types/react-native": "^0.66.17",
     "eslint": "^8.19.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "flow-bin": "^0.185.1",
+    "flow-bin": "^0.186.0",
     "jscodeshift": "^0.13.1",
     "just-scripts": "^1.3.3",
     "metro-config": "0.72.3",
     "prettier": "^2.4.1",
     "react": "18.2.0",
-    "react-native": "0.0.0-20220826-2018-9ac437f25",
+    "react-native": "0.0.0-20220912-2028-b0aba1b6f",
     "react-native-platform-override": "^1.7.1",
     "react-refresh": "^0.4.0",
     "react-shallow-renderer": "16.14.1",
@@ -85,7 +85,7 @@
   },
   "peerDependencies": {
     "react": "18.2.0",
-    "react-native": "0.0.0-20220826-2018-9ac437f25"
+    "react-native": "0.0.0-20220912-2028-b0aba1b6f"
   },
   "beachball": {
     "defaultNpmTag": "canary",

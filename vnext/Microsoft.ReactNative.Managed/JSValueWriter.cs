@@ -539,13 +539,14 @@ namespace Microsoft.ReactNative.Managed
     }
   }
 
-  static class JSValueWriterOf<T>
+  public static class JSValueWriterOf<T>
   {
-    public static WriteValueDelegate<T> WriteValue = JSValueWriter.GetWriteValueDelegate<T>();
-  }
-  
-  public static class JSValueWriterCodeGen<T>
-  {
-    public static WriteValueDelegate<T> WriteValue { get; set; }
+    private static WriteValueDelegate<T> s_writeValue = null;
+
+    public static WriteValueDelegate<T> WriteValue
+    {
+      get { return s_writeValue ?? (s_writeValue = JSValueWriter.GetWriteValueDelegate<T>()); }
+      set { s_writeValue = value; }
+    }
   }
 }

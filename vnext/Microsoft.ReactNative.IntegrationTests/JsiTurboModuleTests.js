@@ -1,4 +1,4 @@
-import * as TurboModuleRegistry from '../Libraries/TurboModule/TurboModuleRegistry';
+import { TurboModuleRegistry } from 'react-native';
 const mySimpleTurboModule = TurboModuleRegistry.getEnforcing('MySimpleTurboModule');
 
 // The logging of the TurboModule functions is verified against the test action sequence.

@@ -549,7 +549,7 @@ function getWinAppSDKPackages(nugetVersion: string): NugetPackage[] {
 
   winAppSDKPackages.push({
     id: 'Microsoft.WindowsAppSDK',
-    version: '1.0.0',
+    version: '1.1.4',
     privateAssets: false,
   });
 

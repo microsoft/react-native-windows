@@ -5641,10 +5641,10 @@ flatted@^3.1.0:
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.2.5.tgz#76c8584f4fc843db64702a6bd04ab7a8bd666da3"
   integrity sha512-WIWGi2L3DyTUvUrwRKgGi9TwxQMUEqPOPQBVi71R96jZXJdFskXEmf54BoZaS1kknGODoIGASGEzBUYdyMCBJg==
 
-flow-bin@^0.185.1:
-  version "0.185.2"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.185.2.tgz#b45a07d45cf641198e86e47848e35f64b0688c4c"
-  integrity sha512-Vphs8Z4Qo17dzlPKe/l8M85JvGn1Tf5NV6xESZLg8p9ktdIbNUYaxnq/WBQPoESiLrGdrC2v+rfezfh3tvxkvQ==
+flow-bin@^0.186.0:
+  version "0.186.0"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.186.0.tgz#b60b720dea977516db8e77fdd3911f66e86c6378"
+  integrity sha512-p5g03TsAipO6Wu22rpphRZQ9EYuhVWANN698MRLWRyP7ZtkEyCpFHDfmzRHM4Ym/tbCQCMdLJ9JX/GmuiDsB2w==
 
 flow-parser@0.*:
   version "0.176.2"
@@ -8659,6 +8659,11 @@ mkdirp@^0.5.1, mkdirp@^0.5.3:
   dependencies:
     minimist "^1.2.6"
 
+mock-fs@^5.1.4:
+  version "5.1.4"
+  resolved "https://registry.yarnpkg.com/mock-fs/-/mock-fs-5.1.4.tgz#d64dc37b2793613ca7148b510b1167b5b8afb6b8"
+  integrity sha512-sudhLjCjX37qWIcAlIv1OnAxB2wI4EmXByVuUjILh1rKGNGpGU8GNnzw+EAbrhdpBe0TL/KONbK1y3RXZk8SxQ==
+
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
@@ -9532,7 +9537,7 @@ promise-retry@^2.0.1:
     err-code "^2.0.2"
     retry "^0.12.0"
 
-promise@^8.0.3:
+promise@^8.2.0:
   version "8.2.0"
   resolved "https://registry.yarnpkg.com/promise/-/promise-8.2.0.tgz#a1f6280ab67457fbfc8aad2b198c9497e9e5c806"
   integrity sha512-+CMAlLHqwRYwBMXKCP+o8ns7DN+xHDUiI+0nArsiJ9y+kJVPLFxEaSw6Ha9s9H0tftxg2Yzl25wqj9G7m5wLZg==
@@ -9705,10 +9710,10 @@ react-native-xaml@^0.0.70:
     "@types/react-native" "*"
     typescript "^4.4.3"
 
-react-native@0.0.0-20220826-2018-9ac437f25:
-  version "0.0.0-20220826-2018-9ac437f25"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-20220826-2018-9ac437f25.tgz#108e7d3245911ae73e46c5ae068c06753bf46d29"
-  integrity sha512-LRapoqKRETF8hkCP86H/ZJ8jPU4ddNrtsnOC+vBwc2TGyNgxZQtzIMzlBHO24Z3NEO9ItCg62WtyxKcAILRtLw==
+react-native@0.0.0-20220912-2028-b0aba1b6f:
+  version "0.0.0-20220912-2028-b0aba1b6f"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-20220912-2028-b0aba1b6f.tgz#c5004eb9b20f30d3430aaa9061af502d673b74ca"
+  integrity sha512-F+WxY0+78WPRAGhVQluyy+TySlW122zY6RBvtjgrlznQnZ8Khmp7MbPrf4yPD5tXlAsFXqvSG97eEAYC/nwT2g==
   dependencies:
     "@jest/create-cache-key-function" "^27.0.1"
     "@react-native-community/cli" "^9.0.0"
@@ -9730,7 +9735,7 @@ react-native@0.0.0-20220826-2018-9ac437f25:
     mkdirp "^0.5.1"
     nullthrows "^1.1.1"
     pretty-format "^26.5.2"
-    promise "^8.0.3"
+    promise "^8.2.0"
     react-devtools-core "4.24.0"
     react-native-codegen "^0.71.0"
     react-native-gradle-plugin "^0.71.0"

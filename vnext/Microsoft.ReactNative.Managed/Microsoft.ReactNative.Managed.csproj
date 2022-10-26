@@ -100,6 +100,19 @@
     <Compile Include="ReactConstantProviderInfo.cs" />
     <Compile Include="ReactContext.cs" />
     <Compile Include="ReactContextGenerator.cs" />
+    <Compile Include="ReactError.cs" />
+    <Compile Include="ReactNotificationArgsOf.cs" />
+    <Compile Include="ReactNotificationHandlerOf.cs" />
+    <Compile Include="ReactNotificationService.cs" />
+    <Compile Include="ReactNotificationSubscriptionRevoker.cs" />
+    <Compile Include="ReactPropertyBag.cs" />
+    <Compile Include="ReactNotificationIdOf.cs" />
+    <Compile Include="ReactPropertyIdOf.cs" />
+    <Compile Include="ReactDispatcher.cs" />
+    <Compile Include="ReactNotificationSubscription.cs" />
+    <Compile Include="ReactSettingsSnapshot.cs" />
+    <Compile Include="ReactPropertyName.cs" />
+    <Compile Include="ReactPropertyNamespace.cs" />
     <Compile Include="ReactTaskExtensions.cs" />
     <Compile Include="ReactEnumerableExtensions.cs" />
     <Compile Include="ReactEventInfo.cs" />
@@ -126,7 +139,7 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.9</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
   <!--
     Visual Studio (but not MSBuild) will ignore Conditions applied directly to

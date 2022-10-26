@@ -254,7 +254,7 @@ namespace Microsoft.ReactNative.Managed
     // It does not implement GetHashCode() and must not be used as a key in a dictionary.
     public struct JSValue : IEquatable<JSValue>
     {
-        public static readonly JSValue Null = new JSValue();
+        public static readonly JSValue Null = default;
         public static readonly JSValue EmptyObject = new JSValueObject();
         public static readonly JSValue EmptyArray = new JSValueArray();
         public static readonly JSValue EmptyString = "";

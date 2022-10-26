@@ -28,11 +28,11 @@ xaml::Media::Brush SharedColor::AsWindowsBrush() const {
 
 SharedColor colorFromComponents(ColorComponents components) {
   float ratio = 255;
-  return SharedColor(ui::ColorHelper::FromArgb(
+  return {ui::ColorHelper::FromArgb(
       (int)round(components.alpha * ratio) & 0xff,
       (int)round(components.red * ratio) & 0xff,
       (int)round(components.green * ratio) & 0xff,
-      (int)round(components.blue * ratio) & 0xff));
+      (int)round(components.blue * ratio) & 0xff)};
 }
 
 ColorComponents colorComponentsFromColor(SharedColor const &sharedColor) {

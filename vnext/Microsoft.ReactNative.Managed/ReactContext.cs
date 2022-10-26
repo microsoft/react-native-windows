@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #if !USE_WINUI3
+using System.Reflection.Metadata;
 using Windows.UI.Xaml;
 #else
 using Microsoft.UI.Xaml;
@@ -11,12 +12,28 @@ namespace Microsoft.ReactNative.Managed
 {
   public struct ReactContext
   {
+    public IReactContext Handle { get; }
+
+    public bool IsValid => Handle != null;
+
+    public static explicit operator bool(ReactContext context) => context.IsValid;
+
+    public ReactPropertyBag Properties => new ReactPropertyBag(Handle.Properties);
+
+    public ReactNotificationService Notifications => new ReactNotificationService(Handle.Notifications);
+
+    public ReactDispatcher UIDispatcher => new ReactDispatcher(Handle.UIDispatcher);
+
+    public ReactDispatcher JSDispatcher => new ReactDispatcher(Handle.JSDispatcher);
+
+    public LoadingState LoadingState => Handle.LoadingState;
+
+    public ReactSettingsSnapshot SettingsSnapshot => new ReactSettingsSnapshot(Handle.SettingsSnapshot);
+
     public ReactContext(IReactContext handle)
     {
       Handle = handle;
     }
-
-    public IReactContext Handle { get; }
 
     public void DispatchEvent<T>(FrameworkElement view, string eventName, T arg)
     {

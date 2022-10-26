@@ -14,6 +14,7 @@ const ReactNative = require('react-native/Libraries/Renderer/shims/ReactNative')
 const RefreshControl = require('react-native/Libraries/Components/RefreshControl/RefreshControl');
 const ScrollView = require('react-native/Libraries/Components/ScrollView/ScrollView');
 const StyleSheet = require('react-native/Libraries/StyleSheet/StyleSheet');
+const {findNodeHandle} = require('react-native/Libraries/ReactNative/RendererProxy');
 const View = require('react-native/Libraries/Components/View/View');
 const ViewabilityHelper = require('./ViewabilityHelper');
 
@@ -326,7 +327,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
     if (this._scrollRef && this._scrollRef.getScrollableNode) {
       return this._scrollRef.getScrollableNode();
     } else {
-      return ReactNative.findNodeHandle(this._scrollRef);
+      return findNodeHandle(this._scrollRef);
     }
   }
 
@@ -1030,6 +1031,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
       );
       return (
         // $FlowFixMe[prop-missing] Invalid prop usage
+        // $FlowFixMe[incompatible-use]
         <ScrollView
           {...props}
           refreshControl={
@@ -1048,6 +1050,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
       );
     } else {
       // $FlowFixMe[prop-missing] Invalid prop usage
+      // $FlowFixMe[incompatible-use]
       return <ScrollView {...props} />;
     }
   };
