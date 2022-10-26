@@ -26,6 +26,7 @@ namespace Microsoft.ReactNative.Managed
     private IJSValueWriter m_writer;
     private MethodResultCallback m_resolve;
     private MethodResultCallback m_reject;
+    private object m_mutex = new object();
 
     public ReactPromise(IJSValueWriter writer, MethodResultCallback resolve, MethodResultCallback reject)
     {
@@ -41,7 +42,7 @@ namespace Microsoft.ReactNative.Managed
       MethodResultCallback resolve = null;
       IJSValueWriter writer = null;
 
-      lock (this)
+      lock (m_mutex)
       {
         if (m_resolve != null)
         {
@@ -66,7 +67,7 @@ namespace Microsoft.ReactNative.Managed
       MethodResultCallback reject = null;
       IJSValueWriter writer = null;
 
-      lock (this)
+      lock (m_mutex)
       {
         if (m_reject != null)
         {

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace Microsoft.ReactNative.Managed
 {
@@ -30,8 +29,9 @@ namespace Microsoft.ReactNative.Managed
       return (T)propertyValue;
     }
 
-    // Ensure that property is created by calling valueCreator if needed, and return value by property name.
-    // The TCreateValue must return either T or std::optional<T>. It must have no parameters.
+    // Ensure that property is created by calling valueCreator if needed,
+    // and return value by property name. The TCreateValue must return
+    // either T or std::optional<T>. It must have no parameters.
     public static T GetOrCreate<T>(IReactPropertyBag handle,
       ReactPropertyId<T> propertyId,
       Func<T> createValue)
@@ -63,14 +63,14 @@ namespace Microsoft.ReactNative.Managed
     }
 
     // Get property value by property name.
-
     public T Get<T>(ReactPropertyId<T> propertyId)
     {
       return Get(Handle, propertyId);
     }
 
-    // Ensure that property is created by calling valueCreator if needed, and return value by property name.
-    // The TCreateValue must return either T or std::optional<T>. It must have no parameters.
+    // Ensure that property is created by calling valueCreator if needed,
+    // and return value by property name. The TCreateValue must return
+    // either T or std::optional<T>. It must have no parameters.
     public T GetOrCreate<T>(ReactPropertyId<T> propertyId, Func<T> createValue)
     {
       return GetOrCreate(Handle, propertyId, createValue);
