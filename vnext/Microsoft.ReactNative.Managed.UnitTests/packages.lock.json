@@ -26,12 +26,6 @@
           "NETStandard.Library": "2.0.3"
         }
       },
-      "Microsoft.UI.Xaml": {
-        "type": "Direct",
-        "requested": "[2.7.0, )",
-        "resolved": "2.7.0",
-        "contentHash": "dB4im13tfmMgL/V3Ei+3kD2rUF+/lTxAmR4gjJ45l577eljHfdo/KUrxpq/3I1Vp6e5GCDG1evDaEGuDxypLMg=="
-      },
       "MSTest.TestAdapter": {
         "type": "Direct",
         "requested": "[2.2.10, )",
@@ -49,6 +43,11 @@
         "requested": "[13.0.1, )",
         "resolved": "13.0.1",
         "contentHash": "ppPFpBcvxdsfUonNcvITKqLl3bqxWbDCZIzDWHzjpdAHRFfZe0Dw9HmA0+za13IdyrgJwpkDTDA9fHaxOrt20A=="
+      },
+      "boost": {
+        "type": "Transitive",
+        "resolved": "1.76.0",
+        "contentHash": "p+w3YvNdXL8Cu9Fzrmexssu0tZbWxuf6ywsQqHjDlKFE5ojXHof1HIyMC3zDLfLnh80dIeFcEUAuR2Asg/XHRA=="
       },
       "Microsoft.Net.Native.Compiler": {
         "type": "Transitive",
@@ -81,6 +80,16 @@
         "resolved": "1.0.1",
         "contentHash": "rkn+fKobF/cbWfnnfBOQHKVKIOpxMZBvlSHkqDWgBpwGDcLRduvs3D9OLGeV6GWGvVwNlVi2CBbTjuPmtHvyNw=="
       },
+      "Microsoft.UI.Xaml": {
+        "type": "Transitive",
+        "resolved": "2.7.0",
+        "contentHash": "dB4im13tfmMgL/V3Ei+3kD2rUF+/lTxAmR4gjJ45l577eljHfdo/KUrxpq/3I1Vp6e5GCDG1evDaEGuDxypLMg=="
+      },
+      "Microsoft.Windows.SDK.BuildTools": {
+        "type": "Transitive",
+        "resolved": "10.0.22000.194",
+        "contentHash": "4L0P3zqut466SIqT3VBeLTNUQTxCBDOrTRymRuROCRJKazcK7ibLz9yAO1nKWRt50ttCj39oAa2Iuz9ZTDmLlg=="
+      },
       "NETStandard.Library": {
         "type": "Transitive",
         "resolved": "2.0.3",
@@ -88,6 +97,11 @@
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0"
         }
+      },
+      "ReactNative.Hermes.Windows": {
+        "type": "Transitive",
+        "resolved": "0.0.0-2209.12005-9f3ce7e5",
+        "contentHash": "/RxDNnNA6w42Kz7cEep5wc6j8cmE4jepbjm5ElWXYWPHg4xu5D0AIj6RQ+WW2DxUHaDhbm6pjtS7MJSWagdi+g=="
       },
       "runtime.win10-arm.Microsoft.Net.Native.Compiler": {
         "type": "Transitive",
@@ -284,6 +298,7 @@
       "folly": {
         "type": "Project",
         "dependencies": {
+          "boost": "[1.76.0, )",
           "fmt": "[1.0.0, )"
         }
       },
@@ -292,7 +307,11 @@
         "dependencies": {
           "Common": "[1.0.0, )",
           "Folly": "[1.0.0, )",
-          "ReactCommon": "[1.0.0, )"
+          "Microsoft.UI.Xaml": "[2.7.0, )",
+          "Microsoft.Windows.SDK.BuildTools": "[10.0.22000.194, )",
+          "ReactCommon": "[1.0.0, )",
+          "ReactNative.Hermes.Windows": "[0.0.0-2209.12005-9f3ce7e5, )",
+          "boost": "[1.76.0, )"
         }
       },
       "microsoft.reactnative.managed": {
@@ -305,7 +324,8 @@
       "reactcommon": {
         "type": "Project",
         "dependencies": {
-          "Folly": "[1.0.0, )"
+          "Folly": "[1.0.0, )",
+          "boost": "[1.76.0, )"
         }
       }
     },
