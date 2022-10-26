@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Align WindowsAppSDK Target Windows version with UWP",
+  "comment": "Update WindowsAppSDK versions to latest",
   "packageName": "react-native-windows",
   "email": "jthysell@microsoft.com",
   "dependentChangeType": "patch"
