@@ -766,6 +766,7 @@ exports.examples = [
         <View nativeID="native-id-view" testID="nativeid">
           <Text>A View with a nativeID "native-id-view"</Text>
         </View>
-    }
+      );
+    },
   },
 ];
