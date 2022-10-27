@@ -130,11 +130,11 @@ void Timing::PostRenderFrame() noexcept {
   assert(m_usePostForRendering);
   m_usingRendering = true;
   m_context.UIDispatcher().Post([wkThis = std::weak_ptr(this->shared_from_this())]() {
-      if (auto pThis = wkThis.lock()) {
-        pThis->m_usingRendering = false;
-        pThis->OnTick();
-      }
-    });
+    if (auto pThis = wkThis.lock()) {
+      pThis->m_usingRendering = false;
+      pThis->OnTick();
+    }
+  });
 }
 
 void Timing::StartRendering() {
