@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 26 Oct 2022 05:11:35 GMT and should not be manually modified.
+This log was last generated on Thu, 27 Oct 2022 05:11:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.571
+
+Thu, 27 Oct 2022 05:11:37 GMT
+
+### Changes
+
+- Allow customers to specify $(CppWinRTVersion) (jthysell@microsoft.com)
+- Update WindowsAppSDK versions to latest (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.143
 
 ## 0.0.0-canary.570
 
