@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  Copyright (c) Microsoft Corporation.
+  Licensed under the MIT License.
+
+  This file will be consumed by ALL WinAppSDK C# app projects (both inside
+  and outside of this repo) that build on top of Microsoft.ReactNative.
+  Do not make any changes here unless it applies to ALL such projects.
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\External\Microsoft.ReactNative.Common.targets" />
+  
+  <!-- Workaround for https://github.com/microsoft/WindowsAppSDK/issues/1856, can remove when we update to WinAppSDK >= 1.2.220930.4-preview2 -->
+  <Target Name="RemoveCollidingDepsJson" AfterTargets="GetPackagingOutputs" BeforeTargets="_ComputeAppxPackagePayload">
+        <!-- If conflicting build and publish deps.json files are present, use only the publish deps.json, 
+            and remove the corresponding build deps.json. -->
+        <ItemGroup Condition="'@(PackagingOutputs)'!=''" >
+            <_PublishDepsJson Include="@(PackagingOutputs->WithMetadataValue('OutputGroup', 'PublishItemsOutputGroupOutput'))"
+                Condition="'$([System.String]::Copy(%(FileName)%(Extension)).EndsWith('.deps.json'))" />
+            <_BuildDepsJson Include="@(PackagingOutputs->WithMetadataValue('OutputGroup', 'GetCopyToOutputDirectoryItemsOutputGroup'))"
+                Condition="'$([System.String]::Copy(%(FileName)%(Extension)).EndsWith('.deps.json'))" />
+            <PackagingOutputs Condition="'@(_PublishDepsJson)'!='' and '@(_BuildDepsJson)'!=''" Remove="@(_BuildDepsJson)"/>
+        </ItemGroup>
+    </Target>
+
+</Project>
