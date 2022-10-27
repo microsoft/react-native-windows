@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Implement Form Data requests",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
