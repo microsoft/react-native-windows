@@ -19,6 +19,7 @@ namespace Microsoft.ReactNative
     Map,
     Color,
     Function,
+    ImageSource,
   };
 
   [webhosthidden]
