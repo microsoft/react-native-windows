@@ -208,7 +208,7 @@ Object {
     Object {
       "Clip": null,
       "FlowDirection": "LeftToRight",
-      "Foreground": "#E4000000",
+      "Foreground": "#FF000000",
       "Height": 19,
       "HorizontalAlignment": "Stretch",
       "Left": 0,
@@ -234,7 +234,7 @@ Object {
   "Clip": null,
   "CornerRadius": "0,0,0,0",
   "FlowDirection": "LeftToRight",
-  "Foreground": "#E4000000",
+  "Foreground": "#FF000000",
   "Height": 57,
   "HorizontalAlignment": "Stretch",
   "Left": 0,
@@ -253,7 +253,7 @@ Object {
       "Clip": null,
       "CornerRadius": "0,0,0,0",
       "FlowDirection": "LeftToRight",
-      "Foreground": "#E4000000",
+      "Foreground": "#FF000000",
       "HorizontalAlignment": "Stretch",
       "Left": 0,
       "Margin": "0,0,0,0",
@@ -283,7 +283,7 @@ Object {
             Object {
               "Clip": null,
               "FlowDirection": "LeftToRight",
-              "Foreground": "#E4000000",
+              "Foreground": "#FF000000",
               "Height": 19,
               "HorizontalAlignment": "Stretch",
               "Left": 0,
@@ -299,7 +299,7 @@ Object {
             Object {
               "Clip": null,
               "FlowDirection": "LeftToRight",
-              "Foreground": "#E4000000",
+              "Foreground": "#FF000000",
               "Height": 19,
               "HorizontalAlignment": "Stretch",
               "Left": 0,
@@ -332,7 +332,7 @@ Object {
                 Object {
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
-                  "Foreground": "#E4000000",
+                  "Foreground": "#FF000000",
                   "Height": 19,
                   "HorizontalAlignment": "Stretch",
                   "Left": 0,
