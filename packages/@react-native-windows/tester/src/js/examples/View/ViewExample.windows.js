@@ -299,6 +299,85 @@ class DisplayNoneStyle extends React.Component<
     this.setState({index: this.state.index + 1});
   };
 }
+
+class AccessibilityExample extends React.Component<
+  $ReadOnly<{||}>,
+  {|tap: number|},
+> {
+  state: {tap: number} = {
+    tap: 0,
+  };
+
+  render(): React.Node {
+    return (
+      <View
+        accessibilityLabel="A View with accessibility values"
+        accessibilityHint="Accessibility Hint"
+        accessibilityRole="View"
+        accessibilityValue={0}
+        accessibilityActions={[
+          {name: 'cut', label: 'cut'},
+          {name: 'copy', label: 'copy'},
+          {name: 'paste', label: 'paste'},
+        ]}
+        testID="accessibility"
+        accessible
+        focusable
+        onAccessibilityAction={event => {
+          switch (event.nativeEvent.actionName) {
+            case 'cut':
+              Alert.alert('Alert', 'cut action success');
+              break;
+            case 'copy':
+              Alert.alert('Alert', 'copy action success');
+              break;
+            case 'paste':
+              Alert.alert('Alert', 'paste action success');
+              break;
+          }
+        }}
+        onAccessibilityTap={() => {
+          this.setState({tap: this.state.tap + 1});
+        }}>
+        <Text>A View with accessibility values.</Text>
+        <Text>Current Number of Accessibility Taps: {this.state.tap}</Text>
+        <View importantForAccessibility="no-hide-descendants">
+          <Text>This element should be hidden from accessibility.</Text>
+        </View>
+      </View>
+    );
+  }
+}
+
+class HitSlopExample extends React.Component<
+  $ReadOnly<{||}>,
+  {|color: string|},
+> {
+  state: {color: string} = {
+    color: 'grey',
+  };
+
+  render(): React.Node {
+    return (
+      <View
+        style={{
+          height: 200,
+          width: 200,
+          backgroundColor: this.state.color,
+        }}
+        hitSlop={{top: 100, bottom: 100, left: 0, right: 100}}
+        onTouchStart={() => {
+          this.setState({color: 'red'});
+        }}
+        onTouchEnd={() => {
+          this.setState({color: 'grey'});
+        }}
+        testID="hitslop"
+      />
+    );
+  }
+}
+
 exports.title = 'View';
 exports.documentationURL = 'https://reactnative.dev/docs/view';
 exports.category = 'Basic';
@@ -640,6 +719,52 @@ exports.examples = [
           aria-label="Blue background View with Text"
           style={{backgroundColor: '#527FE4', padding: 5}}>
           <Text style={{fontSize: 11}}>Blue background</Text>
+        </View>
+      );
+    },
+  },
+  {
+    title: 'Accessibility',
+    render(): React.Node {
+      return <AccessibilityExample />;
+    },
+  },
+  {
+    title: 'Advanced Border',
+    render(): React.Node {
+      return (
+        <View
+          style={{
+            height: 50,
+            width: 50,
+            backgroundColor: 'grey',
+            borderColor: 'orange',
+            borderBottomWidth: 5,
+            borderLeftWidth: 10,
+            borderRightWidth: 15,
+            borderTopWidth: 20,
+            borderBottomEndRadius: 1,
+            borderTopEndRadius: 2,
+            borderTopStartRadius: 3,
+            borderBottomStartRadius: 4,
+          }}
+          testID="advanced-border"
+        />
+      );
+    },
+  },
+  {
+    title: 'HitSlop',
+    render(): React.Node {
+      return <HitSlopExample />;
+    },
+  },
+  {
+    title: 'NativeID',
+    render(): React.Node {
+      return (
+        <View nativeID="native-id-view" testID="nativeid">
+          <Text>A View with a nativeID "native-id-view"</Text>
         </View>
       );
     },

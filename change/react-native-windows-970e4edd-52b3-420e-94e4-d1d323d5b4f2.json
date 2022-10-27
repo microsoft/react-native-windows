@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "Update WindowsAppSDK versions to latest",
+  "comment": "Adding support for ImageSource on windows",
   "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
+  "email": "helewxdong@gmail.com",
   "dependentChangeType": "patch"
 }
