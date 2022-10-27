@@ -2068,14 +2068,14 @@
     find-up "^5.0.0"
 
 "@rnx-kit/metro-config@^1.2.27":
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-config/-/metro-config-1.3.1.tgz#c31cc5411cdd579a470bad03c465a080069e42bd"
-  integrity sha512-HB4zApKYmaduyxgDVKpmjk5yuwFhSTUB2yrhCWsV98N27UK7v8Z3eI2gESKYkozuNXPUfcJKORdwjqwfiefNPg==
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-config/-/metro-config-1.3.2.tgz#59b02a53a3e1615420772921a4b4a7d098c2b5f3"
+  integrity sha512-SOdVsDJVe36PF9b+oDr0aCY4EIiIKTO7Rq2KfHdb7VbQXMsWgAtCqYExItCsxk3xdOTICXhnu7878cchqtVBiA==
   dependencies:
     "@rnx-kit/babel-preset-metro-react-native" "^1.0.17"
     "@rnx-kit/console" "^1.0.0"
     "@rnx-kit/tools-node" "^1.3.0"
-    "@rnx-kit/tools-workspaces" "^0.1.0"
+    "@rnx-kit/tools-workspaces" "^0.1.2"
 
 "@rnx-kit/metro-plugin-duplicates-checker@^1.2.15":
   version "1.2.16"
@@ -2107,10 +2107,10 @@
     pkg-dir "^5.0.0"
     pkg-up "^3.1.0"
 
-"@rnx-kit/tools-workspaces@^0.1.0":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/tools-workspaces/-/tools-workspaces-0.1.1.tgz#eec7bc4c6dd69706a6057b694362e80f20da30a9"
-  integrity sha512-zrNZR2qtzoyMSAuB8oOS4SmoIlsYXBjWokKoFLZQhgnSZnXNyHcXchP6e802HGlNaXumsy0UaMFGZKMvBahFxg==
+"@rnx-kit/tools-workspaces@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/tools-workspaces/-/tools-workspaces-0.1.2.tgz#33ae1eae0b80024eab33eca948e5ff2927a9e54f"
+  integrity sha512-K+8Sd5V8PP211U/mtk/Yz6fBSMJtEAUv7pOE9DGD+uKRuxMJ3z5rM/ovApS1McfTJE4Oichq1SSl+ckKZDKlRA==
   dependencies:
     fast-glob "^3.2.7"
     find-up "^5.0.0"
