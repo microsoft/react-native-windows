@@ -53,6 +53,15 @@ using winrt::Windows::Web::Http::Headers::HttpMediaTypeHeaderValue;
 
 namespace Microsoft::React::Networking {
 
+void AttachMultipartHeaders(IHttpContent content, const dynamic &headers) {
+  for (auto &header : headers.items()) {
+    auto &name = header.first.getString();
+    auto &value = header.second.getString();
+
+    content.Headers().Append(to_hstring(name), to_hstring(value));
+  }
+}
+
 #pragma region WinRTHttpResource
 
 WinRTHttpResource::WinRTHttpResource(IHttpClient &&client) noexcept : m_client{std::move(client)} {}
@@ -146,9 +155,28 @@ IAsyncOperation<HttpRequestMessage> WinRTHttpResource::CreateRequest(
       auto file = co_await StorageFile::GetFileFromApplicationUriAsync(Uri{to_hstring(data["uri"].asString())});
       auto stream = co_await file.OpenReadAsync();
       content = HttpStreamContent{std::move(stream)};
-    } else if (!data["form"].empty()) {
-      // #9535 - HTTP form data support
-      // winrt::Windows::Web::Http::HttpMultipartFormDataContent()
+    } else if (!data["formData"].empty()) {
+      winrt::Windows::Web::Http::HttpMultipartFormDataContent multiPartContent;
+      auto formData = data["formData"];
+
+      for (auto &formDataPart : formData) {
+        IHttpContent formContent{nullptr};
+        if (!formDataPart["string"].empty()) {
+          formContent = HttpStringContent{to_hstring(formDataPart["string"].asString())};
+        } else if (!formDataPart["uri"].empty()) {
+          auto filePath = to_hstring(formDataPart["uri"].asString());
+          auto file = co_await StorageFile::GetFileFromPathAsync(filePath);
+          auto stream = co_await file.OpenReadAsync();
+          formContent = HttpStreamContent{stream};
+        }
+
+        if (formContent) {
+          AttachMultipartHeaders(formContent, formDataPart["headers"]);
+          multiPartContent.Add(formContent, to_hstring(formDataPart["fieldName"].asString()));
+        }
+      } // foreach form data part
+
+      content = multiPartContent;
     }
   }
 
