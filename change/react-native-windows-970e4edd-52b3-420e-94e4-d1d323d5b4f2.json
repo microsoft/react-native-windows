@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Adding support for ImageSource on windows",
-  "packageName": "react-native-windows",
-  "email": "helewxdong@gmail.com",
-  "dependentChangeType": "patch"
-}
