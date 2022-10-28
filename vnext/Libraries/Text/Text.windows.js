@@ -55,8 +55,10 @@ const Text: React.AbstractComponent<
     // [Windows
     onBlur,
     onFocus,
-    onMouseEnter,
-    onMouseLeave,
+    onHoverIn,
+    onHoverOut,
+    delayHoverIn,
+    delayHoverOut,
     onKeyDown,
     onKeyUp,
     // Windows]
@@ -114,6 +116,16 @@ const Text: React.AbstractComponent<
               setHighlighted(false);
               onPressOut?.(event);
             },
+            // [Windows
+            delayHoverIn,
+            delayHoverOut,
+            onBlur,
+            onFocus,
+            onHoverIn,
+            onHoverOut,
+            onKeyDown,
+            onKeyUp,
+            // Windows]
             onResponderTerminationRequest_DEPRECATED:
               onResponderTerminationRequest,
             onStartShouldSetResponder_DEPRECATED: onStartShouldSetResponder,
@@ -128,6 +140,8 @@ const Text: React.AbstractComponent<
       onPressIn,
       onPressOut,
       // [Windows
+      delayHoverIn,
+      delayHoverOut,
       onBlur,
       onFocus,
       onMouseEnter,
@@ -173,12 +187,15 @@ const Text: React.AbstractComponent<
             },
             onClick: eventHandlers.onClick,
             // [Windows
+            delayHoverIn: eventHandlers.delayHoverIn,
+            delayHoverOut: eventHandlers.delayHoverOut,
             onBlur: eventHandlers.onBlur,
             onFocus: eventHandlers.onFocus,
-            onMouseEnter: eventHandlers.onMouseEnter,
-            onMouseLeave: eventHandlers.onMouseLeave,
+            onHoverIn: eventHandlers.onHoverIn,
+            onHoverOut: eventHandlers.onHoverOut,
             onKeyDown: eventHandlers.onKeyDown,
-            onKeyUp: eventHandlers.onKeyUp, // Windows]
+            onKeyUp: eventHandlers.onKeyUp,
+            // Windows]
             onResponderTerminationRequest:
               eventHandlers.onResponderTerminationRequest,
             onStartShouldSetResponder: eventHandlers.onStartShouldSetResponder,

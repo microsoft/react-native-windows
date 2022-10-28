@@ -63,8 +63,16 @@ type WindowsTextProps = $ReadOnly<{|
 
   onFocus?: ?(event: FocusEvent) => mixed,
   onBlur?: ?(event: FocusEvent) => mixed,
-  onMouseLeave?: ?(event: MouseEvent) => mixed,
-  onMouseEnter?: ?(event: MouseEvent) => mixed,
+  onHoverIn?: ?(event: MouseEvent) => mixed,
+  onHoverOut?: ?(event: MouseEvent) => mixed,
+  /**
+  * Duration to wait after hover in before calling `onHoverIn`.
+  */
+  delayHoverIn?: ?number,
+  /**
+  * Duration to wait after hover out before calling `onHoverOut`.
+  */
+  delayHoverOut?: ?number,
 |}>;
 // Windows]
 
