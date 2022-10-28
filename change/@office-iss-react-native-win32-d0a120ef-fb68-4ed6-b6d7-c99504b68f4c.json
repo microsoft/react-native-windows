@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add MouseEnter/Leave support for windows/win32 Text",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "email not defined",
+  "dependentChangeType": "patch"
+}
