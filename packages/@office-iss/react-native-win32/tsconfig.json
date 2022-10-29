@@ -4,6 +4,9 @@
     "types": ["react-native"],
     "baseUrl": ".",
     "outDir": ".",
+    "paths": {
+      "Utilities": ["./rntypes/types/Utilities.d.ts"],
+    },
 
     // Not clean
     "strict": false,

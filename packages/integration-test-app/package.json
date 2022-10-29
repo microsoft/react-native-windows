@@ -16,7 +16,7 @@
     "@typescript-eslint/parser": "^5.21.0",
     "chai": "^4.2.0",
     "react": "18.2.0",
-    "react-native": "0.0.0-20220912-2028-b0aba1b6f",
+    "react-native": "0.0.0-20220926-2026-8cdc9e7f0",
     "react-native-windows": "^0.0.0-canary.569"
   },
   "devDependencies": {
@@ -36,7 +36,6 @@
     "@types/jest": "^26.0.20",
     "@types/node": "^14.14.22",
     "@types/ora": "^3.2.0",
-    "@types/react-native": "^0.66.17",
     "@types/ws": "^7.4.0",
     "babel-jest": "^26.3.0",
     "eslint": "^8.19.0",
