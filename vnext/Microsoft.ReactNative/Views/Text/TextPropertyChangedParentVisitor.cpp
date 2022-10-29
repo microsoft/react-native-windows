@@ -40,13 +40,7 @@ void TextPropertyChangedParentVisitor::VisitText(ShadowNodeBase *node) {
       }
     }
 
-    // Update fast text content
-    if (!m_isNested && node->m_children.size() == 1) {
-      if (const auto childNode = GetShadowNode(node->m_children[0])) {
-        const auto run = static_cast<ShadowNodeBase *>(childNode)->GetView().as<winrt::Run>();
-        element.Text(run.Text());
-      }
-    }
+    TextViewManager::UpdateOptimizedText(node);
   }
 
   // Refresh text highlighters
