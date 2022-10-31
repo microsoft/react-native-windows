@@ -11,15 +11,17 @@ import fs from '@react-native-windows/fs';
 import path from 'path';
 import readlineSync from 'readline-sync';
 
-import NodeEnvironment = require('jest-environment-node');
+import NodeEnvironment from 'jest-environment-node';
 
 import * as webdriverio from 'webdriverio';
 import {BrowserObject, RemoteOptions} from 'webdriverio';
-import {Config} from '@jest/types';
+import {JestEnvironmentConfig} from '@jest/environment';
+import type {EnvironmentContext} from '@jest/environment';
 import {
   waitForConnection,
   AutomationClient,
 } from '@react-native-windows/automation-channel';
+//import {Context} from 'vm';
 
 export type EnvironmentOptions = {
   /**
@@ -54,9 +56,10 @@ export default class AutomationEnvironment extends NodeEnvironment {
   private browser: BrowserObject | undefined;
   private automationClient: AutomationClient | undefined;
 
-  constructor(config: Config.ProjectConfig) {
-    super(config);
-    const passedOptions: EnvironmentOptions = config.testEnvironmentOptions;
+  constructor(config: JestEnvironmentConfig, context: EnvironmentContext) {
+    super(config, context);
+    const passedOptions: EnvironmentOptions =
+      config.projectConfig.testEnvironmentOptions;
 
     if (!passedOptions.app) {
       throw new Error('"app" must be specified in testEnvironmentOptions');

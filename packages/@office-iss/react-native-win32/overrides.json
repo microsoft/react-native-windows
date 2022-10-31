@@ -7,19 +7,19 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20220912-2028-b0aba1b6f",
+  "baseVersion": "0.0.0-20220926-2026-8cdc9e7f0",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "21218e40e026cea75af0c938f02d40d123ab6443"
+      "baseHash": "546380e5169e3921da1413e7d217b3fa9c4acf46"
     },
     {
       "type": "derived",
       "file": "src/index.win32.js",
       "baseFile": "index.js",
-      "baseHash": "2f57efec7650cac8b2ce3803ab82b6d2d9ed4f3a"
+      "baseHash": "f0816560377ebcc92670b01c8f253cf80bbb3d54"
     },
     {
       "type": "patch",
@@ -117,7 +117,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.tsx",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "08c820b6754e0047ff35e275b4a797a3433bfaca"
+      "baseHash": "ad22c396e62ae28454499a3ff7c67d6606f96e0c"
     },
     {
       "type": "patch",
@@ -259,7 +259,7 @@
       "type": "patch",
       "file": "src/Libraries/Inspector/Inspector.win32.js",
       "baseFile": "Libraries/Inspector/Inspector.js",
-      "baseHash": "1520c032d52009981c1710077e3100983b2778d7"
+      "baseHash": "e564ab7eb7e1a62c141cb3b671c87e9230ed781a"
     },
     {
       "type": "patch",
@@ -277,48 +277,48 @@
       "type": "copy",
       "file": "src/Libraries/Lists/__tests__/FillRateHelper-test.js",
       "baseFile": "Libraries/Lists/__tests__/FillRateHelper-test.js",
-      "baseHash": "784563e3f8414828196288c01b833b7cdb05608f",
+      "baseHash": "4d2219bd468b8a5108cb7401455b5bd3827231c2",
       "issue": 0
     },
     {
       "type": "copy",
       "file": "src/Libraries/Lists/__tests__/FlatList-test.js",
       "baseFile": "Libraries/Lists/__tests__/FlatList-test.js",
-      "baseHash": "7a706826e19aad7b31fb1f918443a37ee95121b6",
+      "baseHash": "aa55f912b1ddf133b396175969f908fa9ed434ed",
       "issue": 0
     },
     {
       "type": "copy",
       "file": "src/Libraries/Lists/__tests__/SectionList-test.js",
       "baseFile": "Libraries/Lists/__tests__/SectionList-test.js",
-      "baseHash": "e277498e347542679adf37df904688002d641c37",
+      "baseHash": "d8ae1d2fe3797b9ce28db6df2bdff243f4e1c991",
       "issue": 0
     },
     {
       "type": "copy",
       "file": "src/Libraries/Lists/__tests__/ViewabilityHelper-test.js",
       "baseFile": "Libraries/Lists/__tests__/ViewabilityHelper-test.js",
-      "baseHash": "292b601620f14a4e6fa74483e139aa9fb9499620"
+      "baseHash": "4ed422fa7f184ff66f1c9beff83b3dcf62e18332"
     },
     {
       "type": "copy",
       "file": "src/Libraries/Lists/__tests__/VirtualizedList-test.js",
       "baseFile": "Libraries/Lists/__tests__/VirtualizedList-test.js",
-      "baseHash": "bcad2a862a1b049e62b4b4316ed511ec91a52474",
+      "baseHash": "83933892a87638b524c2818e42998ede04eda65b",
       "issue": 0
     },
     {
       "type": "copy",
       "file": "src/Libraries/Lists/__tests__/VirtualizedSectionList-test.js",
       "baseFile": "Libraries/Lists/__tests__/VirtualizedSectionList-test.js",
-      "baseHash": "09e687ceb59ca9b35b42a641d597f84c8ee7d078",
+      "baseHash": "c9eab944f38b778c7d9070134e148151fa03fb61",
       "issue": 0
     },
     {
       "type": "copy",
       "file": "src/Libraries/Lists/__tests__/VirtualizeUtils-test.js",
       "baseFile": "Libraries/Lists/__tests__/VirtualizeUtils-test.js",
-      "baseHash": "20491aae8e327dcb678e6ac4ab9a310d019d9e5a",
+      "baseHash": "7706e18fcfe8688eca1f746b4f54aae13a2967c0",
       "issue": 0
     },
     {
@@ -382,7 +382,7 @@
       "type": "patch",
       "file": "src/Libraries/Pressability/Pressability.win32.js",
       "baseFile": "Libraries/Pressability/Pressability.js",
-      "baseHash": "487a7a4e21fbf611503fc0093fc629fdde62e720",
+      "baseHash": "e95b2b23c722a18ac5e24489968d0f898a4ecd1a",
       "issue": 6240
     },
     {

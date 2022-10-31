@@ -22,7 +22,7 @@
     "@rnw-scripts/just-task": "2.2.6",
     "eslint": "^8.19.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "flow-bin": "^0.186.0",
+    "flow-bin": "^0.187.1",
     "prettier": "^2.4.1",
     "react": "18.2.0",
     "react-native": "0.0.0-20220926-2026-8cdc9e7f0",
@@ -30,7 +30,7 @@
   },
   "peerDependencies": {
     "react": "18.0.0",
-    "react-native": "0.0.0-20220912-2028-b0aba1b6f"
+    "react-native": "0.0.0-20220926-2026-8cdc9e7f0"
   },
   "beachball": {
     "defaultNpmTag": "canary",
