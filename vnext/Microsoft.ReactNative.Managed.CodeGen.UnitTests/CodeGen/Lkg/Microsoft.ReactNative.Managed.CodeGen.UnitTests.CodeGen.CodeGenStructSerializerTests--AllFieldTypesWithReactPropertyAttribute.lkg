@@ -1,0 +1,34 @@
+internal void CreateObjectSerializers()
+{
+    global::Microsoft.ReactNative.Managed.JSValueReaderOf<global::TestClass.MyStruct>.ReadValue = (global::Microsoft.ReactNative.IJSValueReader reader, out global::TestClass.MyStruct value) =>
+    {
+        value = new global::TestClass.MyStruct();
+        if (reader.ValueType == global::Microsoft.ReactNative.JSValueType.Object)
+        {
+            while (reader.GetNextObjectProperty(out string propertyName))
+            {
+                switch (propertyName)
+                {
+                    case "z1":
+                        value.Z1 = global::Microsoft.ReactNative.Managed.JSValueReader.ReadValue<int>(reader);
+                        break;
+                    case "y2":
+                        value.Y2 = global::Microsoft.ReactNative.Managed.JSValueReader.ReadValue<int>(reader);
+                        break;
+                    case "z2":
+                        value.Z2 = global::Microsoft.ReactNative.Managed.JSValueReader.ReadValue<int>(reader);
+                        break;
+                }
+            }
+        }
+    };
+    global::Microsoft.ReactNative.Managed.JSValueWriterOf<global::TestClass.MyStruct>.WriteValue = (writer, value) =>
+    {
+        writer.WriteObjectBegin();
+        global::Microsoft.ReactNative.Managed.JSValueWriter.WriteObjectProperty<int>(writer, "x1", value.X1);
+        global::Microsoft.ReactNative.Managed.JSValueWriter.WriteObjectProperty<int>(writer, "z1", value.Z1);
+        global::Microsoft.ReactNative.Managed.JSValueWriter.WriteObjectProperty<int>(writer, "x2", value.X2);
+        global::Microsoft.ReactNative.Managed.JSValueWriter.WriteObjectProperty<int>(writer, "z2", value.Z2);
+        writer.WriteObjectEnd();
+    };
+}

@@ -1,6 +1,6 @@
 internal void CreateObjectSerializers()
 {
-    global::Microsoft.ReactNative.Managed.JSValueReaderCodeGen<global::TestClass.MyClass>.ReadValue = (global::Microsoft.ReactNative.IJSValueReader reader, out global::TestClass.MyClass value) =>
+    global::Microsoft.ReactNative.Managed.JSValueReaderOf<global::TestClass.MyClass>.ReadValue = (global::Microsoft.ReactNative.IJSValueReader reader, out global::TestClass.MyClass value) =>
     {
         value = new global::TestClass.MyClass();
         if (reader.ValueType == global::Microsoft.ReactNative.JSValueType.Object)
@@ -15,10 +15,8 @@ internal void CreateObjectSerializers()
                 }
             }
         }
-    }
-
-    ;
-    global::Microsoft.ReactNative.Managed.JSValueWriterCodeGen<global::TestClass.MyClass>.WriteValue = (writer, value) =>
+    };
+    global::Microsoft.ReactNative.Managed.JSValueWriterOf<global::TestClass.MyClass>.WriteValue = (writer, value) =>
     {
         if (value != null)
         {
@@ -31,7 +29,5 @@ internal void CreateObjectSerializers()
         {
             writer.WriteNull();
         }
-    }
-
-    ;
+    };
 }

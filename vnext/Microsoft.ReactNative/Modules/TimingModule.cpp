@@ -9,6 +9,7 @@
 #include <InstanceManager.h>
 #include <UI.Xaml.Media.h>
 #include <Utils/ValueUtils.h>
+#include <XamlUtils.h>
 
 #include <unknwnbase.h>
 
@@ -72,6 +73,7 @@ bool TimerQueue::IsEmpty() {
 
 void Timing::Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
   m_context = reactContext;
+  m_usePostForRendering = !xaml::TryGetCurrentApplication();
 }
 
 void Timing::OnTick() {
@@ -94,6 +96,8 @@ void Timing::OnTick() {
 
   if (m_timerQueue.IsEmpty()) {
     StopTicks();
+  } else if (m_usePostForRendering && m_usingRendering && emittedAnimationFrame) {
+    PostRenderFrame(); // Repost
   } else if (!m_usingRendering || !emittedAnimationFrame) {
     // If we're using a rendering callback, check if any animation frame
     // requests were emitted in this tick. If not, start the dispatcher timer.
@@ -122,10 +126,25 @@ winrt::dispatching::DispatcherQueueTimer Timing::EnsureDispatcherTimer() {
   return m_dispatcherQueueTimer;
 }
 
+void Timing::PostRenderFrame() noexcept {
+  assert(m_usePostForRendering);
+  m_usingRendering = true;
+  m_context.UIDispatcher().Post([wkThis = std::weak_ptr(this->shared_from_this())]() {
+    if (auto pThis = wkThis.lock()) {
+      pThis->m_usingRendering = false;
+      pThis->OnTick();
+    }
+  });
+}
+
 void Timing::StartRendering() {
   if (m_dispatcherQueueTimer)
     m_dispatcherQueueTimer.Stop();
 
+  if (m_usePostForRendering) {
+    PostRenderFrame();
+    return;
+  }
   m_rendering.revoke();
   m_usingRendering = true;
   m_rendering = xaml::Media::CompositionTarget::Rendering(

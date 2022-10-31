@@ -1,4 +1,4 @@
-import * as TurboModuleRegistry from '../Libraries/TurboModule/TurboModuleRegistry';
+import { TurboModuleRegistry } from 'react-native';
 const CppTurboModule = TurboModuleRegistry.getEnforcing('CppTurboModule');
 
 // Convert function with one callback to Promise

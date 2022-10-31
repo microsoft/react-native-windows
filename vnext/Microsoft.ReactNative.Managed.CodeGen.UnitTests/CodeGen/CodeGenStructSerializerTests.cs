@@ -57,6 +57,37 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests.CodeGen
     }
 
     [TestMethod]
+    public void AllFieldTypesWithReactPropertyAttribute()
+    {
+      TestCodeGen<INamedTypeSymbol>(@"
+        public struct MyStruct
+        {
+          [ReactProperty(""x1"")]
+          public readonly int X1;
+
+          [ReactProperty(""y1"")]
+          public const int Y1 = 42;
+
+          [ReactProperty(""z1"")]
+          public int Z1;
+
+          [ReactProperty(""x2"")]
+          public int X2 => 42;
+
+          [ReactProperty(""y2"")]
+          public int Y2 { set {} }
+
+          [ReactProperty(""z2"")]
+          public int Z2 { get; set; }
+
+          private int B2;
+        }
+        ",
+        (codeGen, symbol) => { return codeGen.CreateObjectSerializers(new[] { symbol }); }
+      );
+    }
+
+    [TestMethod]
     public void NoStatics()
     {
       TestCodeGen<INamedTypeSymbol>(@"

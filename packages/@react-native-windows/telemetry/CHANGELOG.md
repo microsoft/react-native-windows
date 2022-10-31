@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Sat, 15 Oct 2022 05:11:59 GMT and should not be manually modified.
+This log was last generated on Wed, 26 Oct 2022 05:11:35 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.48
+
+Wed, 26 Oct 2022 05:11:35 GMT
+
+### Changes
+
+- Update Hermes package version (vmoroz@users.noreply.github.com)
 
 ## 0.0.0-canary.47
 

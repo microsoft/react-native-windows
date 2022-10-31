@@ -21,6 +21,7 @@
     <DocumentationFile>bin\$(Platform)\$(Configuration)\Microsoft.ReactNative.Managed.XML</DocumentationFile>
     <Deterministic>true</Deterministic>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+    <ProduceReferenceAssemblyInOutDir>true</ProduceReferenceAssemblyInOutDir>
     <NoWarn>;2008</NoWarn>
     <NoWarn>$(NoWarn);1591</NoWarn>
     <!-- Missing XML comment for publicly visible type or member -->
@@ -99,6 +100,19 @@
     <Compile Include="ReactConstantProviderInfo.cs" />
     <Compile Include="ReactContext.cs" />
     <Compile Include="ReactContextGenerator.cs" />
+    <Compile Include="ReactError.cs" />
+    <Compile Include="ReactNotificationArgsOf.cs" />
+    <Compile Include="ReactNotificationHandlerOf.cs" />
+    <Compile Include="ReactNotificationService.cs" />
+    <Compile Include="ReactNotificationSubscriptionRevoker.cs" />
+    <Compile Include="ReactPropertyBag.cs" />
+    <Compile Include="ReactNotificationIdOf.cs" />
+    <Compile Include="ReactPropertyIdOf.cs" />
+    <Compile Include="ReactDispatcher.cs" />
+    <Compile Include="ReactNotificationSubscription.cs" />
+    <Compile Include="ReactSettingsSnapshot.cs" />
+    <Compile Include="ReactPropertyName.cs" />
+    <Compile Include="ReactPropertyNamespace.cs" />
     <Compile Include="ReactTaskExtensions.cs" />
     <Compile Include="ReactEnumerableExtensions.cs" />
     <Compile Include="ReactEventInfo.cs" />
@@ -125,7 +139,7 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.9</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
   <!--
     Visual Studio (but not MSBuild) will ignore Conditions applied directly to
@@ -141,8 +155,8 @@
       </ItemGroup>
     </When>
   </Choose>
-  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '16.0' ">
-    <VisualStudioVersion>16.0</VisualStudioVersion>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '17.0' ">
+    <VisualStudioVersion>17.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <Target Name="Deploy" />
