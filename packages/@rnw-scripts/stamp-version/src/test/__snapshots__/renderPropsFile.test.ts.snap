@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`0.0.0-canary.100 1`] = `
-"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?>
+"<?xml version="1.0" encoding="utf-8"?>
 <!-- 
   Copyright (c) Microsoft Corporation.
   Licensed under the MIT License.
@@ -11,7 +11,7 @@ exports[`0.0.0-canary.100 1`] = `
   This file is stamped with the version of the published react-native-windows
   npm package.
 -->
-<Project xmlns=\\"http://schemas.microsoft.com/developer/msbuild/2003\\">
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ReactNativeWindowsVersion>0.0.0-canary.100</ReactNativeWindowsVersion>
     <ReactNativeWindowsMajor>0</ReactNativeWindowsMajor>
@@ -23,7 +23,7 @@ exports[`0.0.0-canary.100 1`] = `
 `;
 
 exports[`0.66.5 1`] = `
-"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?>
+"<?xml version="1.0" encoding="utf-8"?>
 <!-- 
   Copyright (c) Microsoft Corporation.
   Licensed under the MIT License.
@@ -33,7 +33,7 @@ exports[`0.66.5 1`] = `
   This file is stamped with the version of the published react-native-windows
   npm package.
 -->
-<Project xmlns=\\"http://schemas.microsoft.com/developer/msbuild/2003\\">
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ReactNativeWindowsVersion>0.66.5</ReactNativeWindowsVersion>
     <ReactNativeWindowsMajor>0</ReactNativeWindowsMajor>
@@ -45,7 +45,7 @@ exports[`0.66.5 1`] = `
 `;
 
 exports[`0.67.0-preview.1 1`] = `
-"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?>
+"<?xml version="1.0" encoding="utf-8"?>
 <!-- 
   Copyright (c) Microsoft Corporation.
   Licensed under the MIT License.
@@ -55,7 +55,7 @@ exports[`0.67.0-preview.1 1`] = `
   This file is stamped with the version of the published react-native-windows
   npm package.
 -->
-<Project xmlns=\\"http://schemas.microsoft.com/developer/msbuild/2003\\">
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ReactNativeWindowsVersion>0.67.0-preview.1</ReactNativeWindowsVersion>
     <ReactNativeWindowsMajor>0</ReactNativeWindowsMajor>
