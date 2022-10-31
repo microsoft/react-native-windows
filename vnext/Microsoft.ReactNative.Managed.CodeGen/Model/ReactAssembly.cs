@@ -12,11 +12,11 @@ namespace Microsoft.ReactNative.Managed.CodeGen.Model
 
     public ICollection<ReactModule> Modules { get; } = new List<ReactModule>();
 
-    public IDictionary<ITypeSymbol, IMethodSymbol> JSReaderFunctions { get; } = new Dictionary<ITypeSymbol, IMethodSymbol>();
+    public IDictionary<ITypeSymbol, IMethodSymbol> JSReaderFunctions { get; } = new Dictionary<ITypeSymbol, IMethodSymbol>(SymbolEqualityComparer.Default);
 
-    public IDictionary<ITypeSymbol, IMethodSymbol> JSWriterFunctions { get; } = new Dictionary<ITypeSymbol, IMethodSymbol>();
+    public IDictionary<ITypeSymbol, IMethodSymbol> JSWriterFunctions { get; } = new Dictionary<ITypeSymbol, IMethodSymbol>(SymbolEqualityComparer.Default);
 
-    public IDictionary<INamedTypeSymbol, TypeKind> SerializableTypes { get; } = new Dictionary<INamedTypeSymbol, TypeKind>();
+    public IDictionary<INamedTypeSymbol, TypeKind> SerializableTypes { get; } = new Dictionary<INamedTypeSymbol, TypeKind>(SymbolEqualityComparer.Default);
   }
 
 }

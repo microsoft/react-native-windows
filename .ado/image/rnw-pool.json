@@ -1,41 +1,71 @@
 {
     "imageType": "Managed",
-    "baseImage": "/MicrosoftWindowsServer/WindowsServer/2019-Datacenter/latest",
+    "baseImage": "/MicrosoftWindowsServer/WindowsServer/2022-Datacenter/latest",
     "artifacts": [
         {
-            "Name": "windows-EnableDeveloperMode"
+            "name": "windows-EnableDeveloperMode"
         },
         {
-            "Name": "windows-enable-long-paths"
+            "name": "windows-enable-long-paths"
         },
         {
-            "Name": "windows-gitinstall"
+            "name": "windows-gitinstall"
         },
         {
-            "Name": "windows-AzPipeline-ImageHelpers"
+            "name": "windows-AzPipeline-ImageHelpers"
         },
         {
-            "Name": "windows-AzPipeline-InitializeVM"
+            "name": "windows-AzPipeline-InitializeVM"
         },
         {
-            "Name": "windows-AzPipeline-Install-VS",
-            "Parameters": {
-                "ToolSetFileName": "2019-default.json"
+            "name": "windows-AzPipeline-powershellCore"
+        },
+        {
+            "name": "windows-AzPipeline-7zip"
+        },
+        {
+            "name": "windows-visualstudio-bootstrapper",
+            "parameters": {
+                "Workloads": "--add Microsoft.VisualStudio.Workload.ManagedDesktop --add Microsoft.VisualStudio.Workload.NativeDesktop --add Microsoft.VisualStudio.Workload.Universal --add Microsoft.Component.MSBuild --add Microsoft.VisualStudio.Component.VC.Tools.x86.x64 --add Microsoft.VisualStudio.ComponentGroup.UWP.Support --add Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Core --add Microsoft.VisualStudio.Component.Windows10SDK.19041 --add Microsoft.VisualStudio.ComponentGroup.UWP.VC --includeRecommended --includeOptional",
+                "SKU": "Enterprise",
+                "VSBootstrapperURL": "https://aka.ms/vs/17/release/vs_Enterprise.exe"
             }
         },
         {
-            "Name": "windows-AzPipeline-NodeLts"
+            "name": "Windows-NodeJS",
+            "parameters": {
+                "Version": "16.13.0"
+            }
         },
         {
-            "Name": "windows-chrome"
+            "name": "windows-npm-global",
+            "parameters": {
+                "packages": "yarn@1.22.17, midgard-yarn@1.23.34, verdaccio@5.2.0",
+                "addToPath": true
+            }
         },
         {
-            "Name": "windows-AzPipeline-WinAppDriver"
+            "name": "windows-chrome"
         },
         {
-            "Name": "windows-dotnetcore-sdk",
-            "Parameters": {
-                "DotNetCoreVersion": "3.1.401"
+            "name": "windows-AzPipeline-WinAppDriver"
+        },
+        {
+            "name": "windows-dotnetcore-sdk",
+            "parameters": {
+                "DotNetCoreVersion": "2.1.818"
+            }
+        },
+        {
+            "name": "windows-dotnetcore-sdk",
+            "parameters": {
+                "DotNetCoreVersion": "3.1.412"
+            }
+        },
+        {
+            "name": "windows-dotnetcore-sdk",
+            "parameters": {
+                "DotNetCoreVersion": "6.0.401"
             }
         }
     ],

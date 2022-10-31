@@ -339,7 +339,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
     private bool TryGetJSNameFromAttribute(ISymbol member, [NotNullWhen(returnValue: true)] out string? jsName)
     {
       jsName = null;
-      AttributeData attr = member.GetAttributes().FirstOrDefault(
+      AttributeData? attr = member.GetAttributes().FirstOrDefault(
         a => a.AttributeClass != null
           && a.AttributeClass.Equals(ReactTypes.ReactPropertyAttribute, SymbolEqualityComparer.Default));
       if (attr != null)

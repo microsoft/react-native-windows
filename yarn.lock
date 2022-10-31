@@ -9741,10 +9741,10 @@ react-native-tscodegen@0.68.4:
     nullthrows "1.1.1"
     typescript "^4.1.5"
 
-react-native-xaml@^0.0.68:
-  version "0.0.68"
-  resolved "https://registry.yarnpkg.com/react-native-xaml/-/react-native-xaml-0.0.68.tgz#f4690260e549f8394a02fad0458a1e0651b77a11"
-  integrity sha512-C28D4mhYe4tSESKb+S/FBUcUTD3LA7uZZdoN0H7JartTYVyNosx6hVcplsnC6a8dEDYm27bpcW4y/tdglC/aJA==
+react-native-xaml@^0.0.70:
+  version "0.0.70"
+  resolved "https://registry.yarnpkg.com/react-native-xaml/-/react-native-xaml-0.0.70.tgz#367b045e5944e6fb1a32e4e2ac40c91d1ab86e71"
+  integrity sha512-aM59oQKEyoDwctiK2MWjN7bEkLjeNsrq89V31csH4e8hFcUXebLNloovcIQ4BL+snfjXR++ow9UiD5ZgU1ivwA==
   dependencies:
     "@types/react" "*"
     "@types/react-native" "*"

@@ -21,9 +21,7 @@ internal void CreateObjectSerializers()
                 }
             }
         }
-    }
-
-    ;
+    };
     global::Microsoft.ReactNative.Managed.JSValueWriterOf<global::TestClass.MyStruct>.WriteValue = (writer, value) =>
     {
         writer.WriteObjectBegin();
@@ -32,7 +30,5 @@ internal void CreateObjectSerializers()
         global::Microsoft.ReactNative.Managed.JSValueWriter.WriteObjectProperty<int>(writer, "x2", value.X2);
         global::Microsoft.ReactNative.Managed.JSValueWriter.WriteObjectProperty<int>(writer, "z2", value.Z2);
         writer.WriteObjectEnd();
-    }
-
-    ;
+    };
 }

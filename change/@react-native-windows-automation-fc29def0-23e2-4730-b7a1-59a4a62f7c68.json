@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Upgrade to VS 2022",
+  "packageName": "@react-native-windows/automation",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}

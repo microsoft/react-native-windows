@@ -39,6 +39,7 @@ const bundleDir = 'Bundle';
 interface NugetPackage {
   id: string;
   version: string;
+  privateAssets: boolean;
 }
 
 function pascalCase(str: string) {
@@ -175,6 +176,7 @@ export async function copyProjectTemplateAndReplace(
     {
       id: 'Microsoft.Windows.CppWinRT',
       version: '2.0.211028.7',
+      privateAssets: true,
     },
   ];
 
@@ -463,6 +465,7 @@ function getUwpCsPackages(): NugetPackage[] {
     {
       id: 'Microsoft.NETCore.UniversalWindowsPlatform',
       version: '6.2.9',
+      privateAssets: false,
     },
   ];
 }
@@ -541,11 +544,13 @@ function getWinAppSDKPackages(nugetVersion: string): NugetPackage[] {
   winAppSDKPackages.push({
     id: 'Microsoft.ReactNative.WindowsAppSDK',
     version: nugetVersion,
+    privateAssets: false,
   });
 
   winAppSDKPackages.push({
     id: 'Microsoft.WindowsAppSDK',
-    version: '1.1.4',
+    version: '1.1.5',
+    privateAssets: false,
   });
 
   return winAppSDKPackages;
