@@ -2,6 +2,10 @@
   "extends": "@rnw-scripts/ts-config",
   "include": ["src"],
   "exclude": ["node_modules"],
+  "paths": {
+    "Utilities": ["./../../node_modules/react-native/types/Utilities.d.ts"],
+  },
+
   "compilerOptions": {
     // Not clean
     "isolatedModules": false

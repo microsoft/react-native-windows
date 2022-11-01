@@ -12,7 +12,6 @@ import path from 'path';
 import readlineSync from 'readline-sync';
 
 import NodeEnvironment from 'jest-environment-node';
-
 import * as webdriverio from 'webdriverio';
 import {BrowserObject, RemoteOptions} from 'webdriverio';
 import {JestEnvironmentConfig} from '@jest/environment';
@@ -21,7 +20,6 @@ import {
   waitForConnection,
   AutomationClient,
 } from '@react-native-windows/automation-channel';
-//import {Context} from 'vm';
 
 export type EnvironmentOptions = {
   /**
