@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Tue, 01 Nov 2022 05:13:34 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.49",
+      "version": "0.0.0-canary.49",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "5885ee4477e8a1d0fa992066abd1b405bef13b32",
+            "comment": "Upgrade to VS 2022"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 26 Oct 2022 05:11:35 GMT",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.48",
       "version": "0.0.0-canary.48",

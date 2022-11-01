@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Thu, 27 Oct 2022 05:11:36 GMT and should not be manually modified.
+This log was last generated on Tue, 01 Nov 2022 05:13:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.144
+
+Tue, 01 Nov 2022 05:13:34 GMT
+
+### Changes
+
+- Upgrade to VS 2022 (jthysell@microsoft.com)
+- Bump @react-native-windows/telemetry to v0.0.0-canary.49
 
 ## 0.0.0-canary.143
 

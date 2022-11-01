@@ -2,6 +2,27 @@
   "name": "@react-native-windows/automation",
   "entries": [
     {
+      "date": "Tue, 01 Nov 2022 05:13:34 GMT",
+      "tag": "@react-native-windows/automation_v0.2.14",
+      "version": "0.2.14",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/automation",
+            "commit": "5885ee4477e8a1d0fa992066abd1b405bef13b32",
+            "comment": "Upgrade to VS 2022"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.4.3",
+            "commit": "5885ee4477e8a1d0fa992066abd1b405bef13b32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 28 Oct 2022 05:11:30 GMT",
       "tag": "@react-native-windows/automation_v0.2.13",
       "version": "0.2.13",
