@@ -12,9 +12,7 @@ internal void CreateObjectSerializers()
                 }
             }
         }
-    }
-
-    ;
+    };
     global::Microsoft.ReactNative.Managed.JSValueWriterOf<global::TestClass.MyClass>.WriteValue = (writer, value) =>
     {
         if (value != null)
@@ -26,7 +24,5 @@ internal void CreateObjectSerializers()
         {
             writer.WriteNull();
         }
-    }
-
-    ;
+    };
 }

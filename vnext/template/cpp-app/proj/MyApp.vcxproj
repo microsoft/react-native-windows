@@ -10,7 +10,7 @@
     <ProjectName>{{ name }}</ProjectName>
     <RootNamespace>{{ namespace }}</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
-    <MinimumVisualStudioVersion>16.0</MinimumVisualStudioVersion>
+    <MinimumVisualStudioVersion>17.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
@@ -159,7 +159,7 @@
   </ItemGroup>
   <ItemGroup>
     {{#cppNugetPackages}}
-    <PackageReference Include="{{ id }}" Version="{{ version }}" />
+    <PackageReference Include="{{ id }}" Version="{{ version }}"{{^privateAssets}} PrivateAssets="all"{{/privateAssets}} />
     {{/cppNugetPackages}}
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -142,7 +142,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
       Contract.Assert(m_compilation != null, "Expected to have a compilation. Must call CompileAndCheckForErrors first");
 
       var assembly = new ReactAssembly();
-      var processedTypes = new HashSet<ITypeSymbol>();
+      var processedTypes = new HashSet<ITypeSymbol>(SymbolEqualityComparer.Default);
 
       foreach (var type in GetAllTypes())
       {
@@ -871,7 +871,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
       }
     }
 
-    private bool TryFindAttribute(ISymbol symbol, INamedTypeSymbol attributeType, out AttributeData attr)
+    private bool TryFindAttribute(ISymbol symbol, INamedTypeSymbol attributeType, [NotNullWhen(returnValue: true)] out AttributeData? attr)
     {
       attr = symbol.GetAttributes().FirstOrDefault(potentialMatch => potentialMatch.AttributeClass != null && potentialMatch.AttributeClass.Equals(attributeType, SymbolEqualityComparer.Default));
       return attr != null;

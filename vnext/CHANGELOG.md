@@ -1,8 +1,29 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 26 Oct 2022 05:11:35 GMT and should not be manually modified.
+This log was last generated on Fri, 28 Oct 2022 05:11:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.572
+
+Fri, 28 Oct 2022 05:11:29 GMT
+
+### Changes
+
+- Adds GetReactRootView method to XamlUIService (erozell@outlook.com)
+- Fix typo in TouchHandler.cpp which broke hardware back button events (jahiggin@microsoft.com)
+- Adding support for ImageSource on windows (helewxdong@gmail.com)
+- Do not use xaml rendering callback in non-xaml apps (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.571
+
+Thu, 27 Oct 2022 05:11:37 GMT
+
+### Changes
+
+- Allow customers to specify $(CppWinRTVersion) (jthysell@microsoft.com)
+- Update WindowsAppSDK versions to latest (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.143
 
 ## 0.0.0-canary.570
 

@@ -22,6 +22,8 @@ struct XamlUIService : XamlUIServiceT<XamlUIService> {
       hstring const &eventName,
       JSValueArgWriter const &eventDataArgWriter) noexcept;
 
+  winrt::Microsoft::ReactNative::ReactRootView GetReactRootView(xaml::FrameworkElement const &view) noexcept;
+
   static void SetXamlRoot(IReactPropertyBag const &properties, xaml::XamlRoot const &xamlRoot) noexcept;
   static void SetAccessibleRoot(
       IReactPropertyBag const &properties,

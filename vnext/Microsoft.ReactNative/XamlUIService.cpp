@@ -50,6 +50,21 @@ void XamlUIService::DispatchEvent(
   m_context->CallJSFunction("RCTEventEmitter", "receiveEvent", std::move(params));
 }
 
+winrt::Microsoft::ReactNative::ReactRootView XamlUIService::GetReactRootView(
+    xaml::FrameworkElement const &view) noexcept {
+  if (auto uiManager = ::Microsoft::ReactNative::GetNativeUIManager(*m_context).lock()) {
+    const auto reactTag = ::Microsoft::ReactNative::GetTag(view);
+    auto shadowNode = uiManager->getHost()->FindParentRootShadowNode(reactTag);
+    if (!shadowNode)
+      return nullptr;
+
+    return static_cast<::Microsoft::ReactNative::ShadowNodeBase *>(shadowNode)
+        ->GetView()
+        .as<winrt::Microsoft::ReactNative::ReactRootView>();
+  }
+  return nullptr;
+}
+
 /*static*/ ReactPropertyId<XamlUIService> XamlUIService::XamlUIServiceProperty() noexcept {
   static ReactPropertyId<XamlUIService> uiManagerProperty{L"ReactNative.UIManager", L"XamlUIManager"};
   return uiManagerProperty;
