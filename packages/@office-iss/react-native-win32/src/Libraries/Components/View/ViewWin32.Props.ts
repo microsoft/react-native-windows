@@ -180,7 +180,7 @@ export type BasePropsWin32 = {
    accessibilityItemType?: string;
 
    /**
-    * Defines the level of an element in a hierarchiacal structure or the heading level of a text element.
+    * Defines the level of an element in a hierarchical structure or the heading level of a text element.
     * Note: accessibilityRole="header" must be used if using this property to define a heading level.
     */
     accessibilityLevel?: number;
