@@ -218,7 +218,6 @@ export interface IViewWin32Props extends Omit<RN.ViewProps, ViewWin32OmitTypes>,
   *
   */
   accessibilityDescription?: string;
-  accessibilityLevel?: number;
   accessibilityPositionInSet?: number;
 
   accessibilitySetSize?: number;
