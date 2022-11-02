@@ -28,6 +28,10 @@ const styles = StyleSheet.create({
   listContainer: {
     height: 150,
   },
+  heading: {
+    fontSize: 16,
+    fontWeight: '600'
+  },
 });
 
 interface IFocusableComponentState {
@@ -126,6 +130,17 @@ class ButtonExample extends React.Component<{}, IFocusableComponentState & IExpa
     this.state.expanded ? this._collapse() : this._expand();
   };
 }
+
+const HeadingLevelExample: React.FunctionComponent = () => {
+  return (
+    <ViewWin32>
+      <TextWin32 accessible accessibilityRole="header" accessibilityLevel={1} style={styles.heading}>Paragraph Title</TextWin32>
+      <TextWin32>The above heading level should be heading level 1.</TextWin32>
+      <TextWin32 accessible accessibilityRole="header" style={styles.heading}>Second Paragraph Title</TextWin32>
+      <TextWin32>The above heading has no level set. It should default to heading level 2.</TextWin32>
+    </ViewWin32>
+  );
+};
 
 interface IMultiSelectionExampleState {
   selectedItems: number[];
@@ -476,6 +491,11 @@ export const examples = [
       title: 'Button Example',
       description: 'A button with some basic accessibility props and expand/collapse',
       render: () => <ButtonExample />,
+    },
+    {
+      title: 'Heading Level Example',
+      description: 'A couple text headings with heading level set',
+      render: () => <HeadingLevelExample />,
     },
     {
       title: 'MultiSelection Example',
