@@ -2,6 +2,51 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 24 Oct 2022 15:08:15 GMT",
+      "tag": "@office-iss/react-native-win32_v0.68.7",
+      "version": "0.68.7",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "aa91e7bf33f272ec2a181796027fdc842b1c584f",
+            "comment": "Bump RN types to 0.68"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 26 Sep 2022 15:08:21 GMT",
+      "tag": "@office-iss/react-native-win32_v0.68.6",
+      "version": "0.68.6",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "ed87b1767b8a150e225eb9ef9e2d1a75fbd15830",
+            "comment": "Consolidate JavaScript HTTP module specifications (#10628)"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 17 Sep 2022 02:23:36 GMT",
+      "tag": "@office-iss/react-native-win32_v0.68.5",
+      "version": "0.68.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "patboyd@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "3c214f08bba4a01f36e49eadb1dd749921150b94",
+            "comment": "Add Dimensions.win32 implementation to support text scale factor"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 14 Sep 2022 18:19:21 GMT",
       "tag": "@office-iss/react-native-win32_v0.68.4",
       "version": "0.68.4",

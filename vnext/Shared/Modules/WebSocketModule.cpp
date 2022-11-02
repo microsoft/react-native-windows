@@ -187,23 +187,23 @@ std::map<string, dynamic> WebSocketModule::getConstants() {
 }
 
 // clang-format off
-std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMethods()
-{
-  return
+  std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMethods()
   {
+    return
     {
-      "connect",
-      [weakState = weak_ptr<SharedState>(m_sharedState)](dynamic args) // const string& url, dynamic protocols, dynamic options, int64_t id
       {
-        IWebSocketResource::Protocols protocols;
-        dynamic protocolsDynamic = jsArgAsDynamic(args, 1);
-        if (!protocolsDynamic.empty())
+        "connect",
+        [weakState = weak_ptr<SharedState>(m_sharedState)](dynamic args) // const string& url, dynamic protocols, dynamic options, int64_t id
         {
-          for (const auto& protocol : protocolsDynamic)
+          IWebSocketResource::Protocols protocols;
+          dynamic protocolsDynamic = jsArgAsDynamic(args, 1);
+          if (!protocolsDynamic.empty())
           {
-            protocols.push_back(protocol.getString());
+            for (const auto& protocol : protocolsDynamic)
+            {
+              protocols.push_back(protocol.getString());
+            }
           }
-        }
 
         IWebSocketResource::Options options;
         dynamic optionsDynamic = jsArgAsDynamic(args, 2);
@@ -216,79 +216,79 @@ std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMeth
           }
         }
 
-        weak_ptr weakWs = GetOrCreateWebSocket(jsArgAsInt(args, 3), jsArgAsString(args, 0), weakState);
-        if (auto sharedWs = weakWs.lock())
-        {
-          sharedWs->Connect(jsArgAsString(args, 0), protocols, options);
-        }
-      }
-    },
-    {
-      "close",
-      [weakState = weak_ptr<SharedState>(m_sharedState)](dynamic args) // [int64_t code, string reason,] int64_t id
-      {
-        // See react-native\Libraries\WebSocket\WebSocket.js:_close
-        if (args.size() == 3) // WebSocketModule.close(statusCode, closeReason, this._socketId);
-        {
-          weak_ptr weakWs = GetOrCreateWebSocket(jsArgAsInt(args, 2), {}, weakState);
+          weak_ptr weakWs = GetOrCreateWebSocket(jsArgAsInt(args, 3), jsArgAsString(args, 0), weakState);
           if (auto sharedWs = weakWs.lock())
           {
-            sharedWs->Close(static_cast<IWebSocketResource::CloseCode>(jsArgAsInt(args, 0)), jsArgAsString(args, 1));
+            sharedWs->Connect(jsArgAsString(args, 0), protocols, options);
           }
         }
-        else if (args.size() == 1) // WebSocketModule.close(this._socketId);
+      },
+      {
+        "close",
+        [weakState = weak_ptr<SharedState>(m_sharedState)](dynamic args) // [int64_t code, string reason,] int64_t id
+        {
+          // See react-native\Libraries\WebSocket\WebSocket.js:_close
+          if (args.size() == 3) // WebSocketModule.close(statusCode, closeReason, this._socketId);
+          {
+            weak_ptr weakWs = GetOrCreateWebSocket(jsArgAsInt(args, 2), {}, weakState);
+            if (auto sharedWs = weakWs.lock())
+            {
+              sharedWs->Close(static_cast<IWebSocketResource::CloseCode>(jsArgAsInt(args, 0)), jsArgAsString(args, 1));
+            }
+          }
+          else if (args.size() == 1) // WebSocketModule.close(this._socketId);
+          {
+            weak_ptr weakWs = GetOrCreateWebSocket(jsArgAsInt(args, 0), {}, weakState);
+            if (auto sharedWs = weakWs.lock())
+            {
+              sharedWs->Close(IWebSocketResource::CloseCode::Normal, {});
+            }
+          }
+          else
+          {
+            auto state = weakState.lock();
+            if (state && state->Module) {
+              auto errorObj = dynamic::object("id", -1)("message", "Incorrect number of parameters");
+              SendEvent(state->Module->getInstance(), "websocketFailed", std::move(errorObj));
+            }
+          }
+        }
+      },
+      {
+        "send",
+        [weakState = weak_ptr<SharedState>(m_sharedState)](dynamic args) // const string& message, int64_t id
+        {
+          weak_ptr weakWs = GetOrCreateWebSocket(jsArgAsInt(args, 1), {}, weakState);
+          if (auto sharedWs = weakWs.lock())
+          {
+            sharedWs->Send(jsArgAsString(args, 0));
+          }
+        }
+      },
+      {
+        "sendBinary",
+        [weakState = weak_ptr<SharedState>(m_sharedState)](dynamic args) // const string& base64String, int64_t id
+        {
+          weak_ptr weakWs = GetOrCreateWebSocket(jsArgAsInt(args, 1), {}, weakState);
+          if (auto sharedWs = weakWs.lock())
+          {
+            sharedWs->SendBinary(jsArgAsString(args, 0));
+          }
+        }
+      },
+      {
+        "ping",
+        [weakState = weak_ptr<SharedState>(m_sharedState)](dynamic args) // int64_t id
         {
           weak_ptr weakWs = GetOrCreateWebSocket(jsArgAsInt(args, 0), {}, weakState);
           if (auto sharedWs = weakWs.lock())
           {
-            sharedWs->Close(IWebSocketResource::CloseCode::Normal, {});
-          }
-        }
-        else
-        {
-          auto state = weakState.lock();
-          if (state && state->Module) {
-            auto errorObj = dynamic::object("id", -1)("message", "Incorrect number of parameters");
-            SendEvent(state->Module->getInstance(), "websocketFailed", std::move(errorObj));
+            sharedWs->Ping();
           }
         }
       }
-    },
-    {
-      "send",
-      [weakState = weak_ptr<SharedState>(m_sharedState)](dynamic args) // const string& message, int64_t id
-      {
-        weak_ptr weakWs = GetOrCreateWebSocket(jsArgAsInt(args, 1), {}, weakState);
-        if (auto sharedWs = weakWs.lock())
-        {
-          sharedWs->Send(jsArgAsString(args, 0));
-        }
-      }
-    },
-    {
-      "sendBinary",
-      [weakState = weak_ptr<SharedState>(m_sharedState)](dynamic args) // const string& base64String, int64_t id
-      {
-        weak_ptr weakWs = GetOrCreateWebSocket(jsArgAsInt(args, 1), {}, weakState);
-        if (auto sharedWs = weakWs.lock())
-        {
-          sharedWs->SendBinary(jsArgAsString(args, 0));
-        }
-      }
-    },
-    {
-      "ping",
-      [weakState = weak_ptr<SharedState>(m_sharedState)](dynamic args) // int64_t id
-      {
-        weak_ptr weakWs = GetOrCreateWebSocket(jsArgAsInt(args, 0), {}, weakState);
-        if (auto sharedWs = weakWs.lock())
-        {
-          sharedWs->Ping();
-        }
-      }
-    }
-  };
-} // getMethods
+    };
+  } // getMethods
 // clang-format on
 
 #pragma endregion WebSocketModule
