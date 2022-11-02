@@ -426,6 +426,7 @@ export default class Pressability {
   |}>;
   _touchActivateTime: ?number;
   _touchState: TouchState = 'NOT_RESPONDER';
+  _isKeyDown: boolean = false;
 
   constructor(config: PressabilityConfig) {
     this.configure(config);
@@ -467,6 +468,7 @@ export default class Pressability {
         if (onBlur != null) {
           onBlur(event);
         }
+        this._isKeyDown = false;
       },
       onFocus: (event: FocusEvent): void => {
         const {onFocus} = this._config;
@@ -594,7 +596,8 @@ export default class Pressability {
           (event.nativeEvent.code === 'Space' ||
             event.nativeEvent.code === 'Enter' ||
             event.nativeEvent.code === 'GamepadA') &&
-          event.defaultPrevented != true
+          event.defaultPrevented != true &&
+          this._isKeyDown
         ) {
           const {onPressOut, onPress} = this._config;
           // $FlowFixMe: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of passing KeyEvents instead
@@ -602,6 +605,8 @@ export default class Pressability {
           // $FlowFixMe: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of passing KeyEvents instead
           onPress && onPress(event);
         }
+        // Native windows app clears the key pressed state when another key press interrupts the current
+        this._isKeyDown = false;
       },
       onKeyDown: (event: KeyEvent): void => {
         const {onKeyDown} = this._config;
@@ -614,6 +619,7 @@ export default class Pressability {
           event.defaultPrevented != true
         ) {
           const {onPressIn} = this._config;
+          this._isKeyDown = true;
           // $FlowFixMe: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of passing KeyEvents instead
           onPressIn && onPressIn(event);
         }
