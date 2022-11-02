@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Remove duplicate accessibilityLevel prop",
   "packageName": "@office-iss/react-native-win32",
   "email": "krsiler@microsoft.com",
