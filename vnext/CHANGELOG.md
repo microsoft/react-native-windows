@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 01 Nov 2022 05:13:34 GMT and should not be manually modified.
+This log was last generated on Wed, 02 Nov 2022 05:12:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.574
+
+Wed, 02 Nov 2022 05:12:37 GMT
+
+### Changes
+
+- Remove Microsoft.ReactNative.Managed.IntegrationTests from ARM64 build (jthysell@microsoft.com)
 
 ## 0.0.0-canary.573
 
