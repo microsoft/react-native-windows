@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 02 Nov 2022 05:12:37 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.574",
+      "version": "0.0.0-canary.574",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ccc3ca59e0dee3a4ef7a98366c7f4bc6a51d1497",
+            "comment": "Remove Microsoft.ReactNative.Managed.IntegrationTests from ARM64 build"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 01 Nov 2022 05:13:34 GMT",
       "tag": "react-native-windows_v0.0.0-canary.573",
       "version": "0.0.0-canary.573",

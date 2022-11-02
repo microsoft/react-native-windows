@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/automation",
-  "version": "0.2.14",
+  "version": "0.2.15",
   "description": "UI Automation Suite for React Native Windows Applications",
   "main": "lib-commonjs/index.js",
   "repository": "https://github.com/microsoft/react-native-windows",
@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@jest/environment": "^29.2.2",
-    "@react-native-windows/automation-channel": "^0.4.3",
+    "@react-native-windows/automation-channel": "^0.4.4",
     "@react-native-windows/fs": "^0.0.0-canary.7",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
