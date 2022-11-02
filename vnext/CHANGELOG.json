@@ -2,6 +2,84 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 24 Oct 2022 15:09:47 GMT",
+      "tag": "react-native-windows_v0.69.11",
+      "version": "0.69.11",
+      "comments": {
+        "patch": [
+          {
+            "author": "tudor.mihai@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ca97ad0efd5efc2f5f270f97a57e689ceb2f11c8",
+            "comment": "V8 package update"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 10 Oct 2022 15:09:34 GMT",
+      "tag": "react-native-windows_v0.69.10",
+      "version": "0.69.10",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a15ae45a5697972fac815baad0159cbd12718c86",
+            "comment": "Set Origin HTTP header during CORS (#10700)"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "242a5d8ce663f567efdc6e5127fd9a37c88ec647",
+            "comment": "Set User-Agent header in Origin Policy filter (#10695)"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 26 Sep 2022 15:09:58 GMT",
+      "tag": "react-native-windows_v0.69.9",
+      "version": "0.69.9",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "4f811090d62bdb02ab2a94cd28e33e0adbb0e196",
+            "comment": "Consolidate JavaScript HTTP module specifications (#10628)"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "61a16cd809b8ee02cc4098493bcde61eca518466",
+            "comment": "Move required PackageRestore properties into shared property sheets"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "c6f2e2314a34724f854b67eb2c4ca3e7a1a53720",
+            "comment": "Export OriginPolicy.h to NuGet package (#10615)"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 19 Sep 2022 15:09:55 GMT",
+      "tag": "react-native-windows_v0.69.8",
+      "version": "0.69.8",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3d88ad545acc09557354e1760e8addacd68912fc",
+            "comment": "Implement HTTP redirection (#10534)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 12 Sep 2022 18:49:09 GMT",
       "tag": "react-native-windows_v0.69.7",
       "version": "0.69.7",

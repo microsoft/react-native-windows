@@ -1,8 +1,43 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 12 Sep 2022 18:49:09 GMT and should not be manually modified.
+This log was last generated on Mon, 24 Oct 2022 15:09:47 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.69.11
+
+Mon, 24 Oct 2022 15:09:47 GMT
+
+### Patches
+
+- V8 package update (tudor.mihai@microsoft.com)
+
+## 0.69.10
+
+Mon, 10 Oct 2022 15:09:34 GMT
+
+### Patches
+
+- Set Origin HTTP header during CORS (#10700) (julio.rocha@microsoft.com)
+- Set User-Agent header in Origin Policy filter (#10695) (julio.rocha@microsoft.com)
+
+## 0.69.9
+
+Mon, 26 Sep 2022 15:09:58 GMT
+
+### Patches
+
+- Consolidate JavaScript HTTP module specifications (#10628) (julio.rocha@microsoft.com)
+- Move required PackageRestore properties into shared property sheets (jthysell@microsoft.com)
+- Export OriginPolicy.h to NuGet package (#10615) (julio.rocha@microsoft.com)
+
+## 0.69.8
+
+Mon, 19 Sep 2022 15:09:55 GMT
+
+### Patches
+
+- Implement HTTP redirection (#10534) (julio.rocha@microsoft.com)
 
 ## 0.69.7
 

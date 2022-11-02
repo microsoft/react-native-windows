@@ -125,8 +125,9 @@
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)README.md" />
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup Condition="'$(BuildMSRNCxx)' != 'false' and '$(RNExternalReferences)' != 'true'">
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\NodeApiJsiRuntime.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <ExcludedFromBuild Condition="'$(UseV8)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
   </ItemGroup>

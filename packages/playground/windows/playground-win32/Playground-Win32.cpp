@@ -69,6 +69,7 @@ struct WindowData {
   bool m_breakOnNextLine{false};
   uint16_t m_debuggerPort{defaultDebuggerPort};
   xaml::ElementTheme m_theme{xaml::ElementTheme::Default};
+  winrt::Microsoft::ReactNative::JSIEngine m_jsEngine{winrt::Microsoft::ReactNative::JSIEngine::Chakra};
 
   WindowData(const hosting::DesktopWindowXamlSource &desktopWindowXamlSource)
       : m_desktopWindowXamlSource(desktopWindowXamlSource) {}
@@ -118,6 +119,7 @@ struct WindowData {
           host.InstanceSettings().UseFastRefresh(m_fastRefreshEnabled);
           host.InstanceSettings().DebuggerPort(m_debuggerPort);
           host.InstanceSettings().UseDeveloperSupport(true);
+          host.InstanceSettings().JSIEngineOverride(m_jsEngine);
 
           auto rootElement = m_desktopWindowXamlSource.Content().as<controls::Panel>();
           winrt::Microsoft::ReactNative::XamlUIService::SetXamlRoot(
@@ -279,7 +281,7 @@ struct WindowData {
         SendMessageW(cmbEngines, (UINT)CB_ADDSTRING, (WPARAM)0, (LPARAM)TEXT("Chakra"));
         SendMessageW(cmbEngines, (UINT)CB_ADDSTRING, (WPARAM)0, (LPARAM)TEXT("Hermes"));
         SendMessageW(cmbEngines, (UINT)CB_ADDSTRING, (WPARAM)0, (LPARAM)TEXT("V8"));
-        // SendMessageW(cmbEngines, CB_SETCURSEL, (WPARAM) static_cast<int32_t>(self->m_jsEngine), (LPARAM)0);
+        ComboBox_SetCurSel(cmbEngines, static_cast<int32_t>(self->m_jsEngine));
 
         auto cmbTheme = GetDlgItem(hwnd, IDC_THEME);
         SendMessageW(cmbTheme, CB_ADDSTRING, 0, (LPARAM)L"Default");
@@ -319,9 +321,8 @@ struct WindowData {
               // (E.g. includes letters or symbols).
             }
 
-            // auto cmbEngines = GetDlgItem(hwnd, IDC_JSENGINE);
-            // int itemIndex = (int)SendMessageW(cmbEngines, (UINT)CB_GETCURSEL, (WPARAM)0, (LPARAM)0);
-            // self->m_jsEngine = static_cast<Microsoft::ReactNative::JSIEngine>(itemIndex);
+            auto cmbEngines = GetDlgItem(hwnd, IDC_JSENGINE);
+            self->m_jsEngine = static_cast<winrt::Microsoft::ReactNative::JSIEngine>(ComboBox_GetCurSel(cmbEngines));
           }
             [[fallthrough]];
           case IDCANCEL:
