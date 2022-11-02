@@ -138,6 +138,10 @@ const HeadingLevelExample: React.FunctionComponent = () => {
       <TextWin32>The above heading level should be heading level 1.</TextWin32>
       <TextWin32 accessible accessibilityRole="header" style={styles.heading}>Second Paragraph Title</TextWin32>
       <TextWin32>The above heading has no level set. It should default to heading level 2.</TextWin32>
+      <TextWin32 accessible accessibilityLevel={1} style={styles.heading}>Third Paragraph Title</TextWin32>
+      <TextWin32>The above heading does not use the "header" role but has a level set. Since the "header" role 
+        is not set, the heading level should be set to none and it will not be read as a header.
+      </TextWin32>
     </ViewWin32>
   );
 };
@@ -494,7 +498,7 @@ export const examples = [
     },
     {
       title: 'Heading Level Example',
-      description: 'A couple text headings with heading level set',
+      description: 'A few text headings with heading level set',
       render: () => <HeadingLevelExample />,
     },
     {
