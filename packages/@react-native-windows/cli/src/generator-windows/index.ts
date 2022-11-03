@@ -175,7 +175,7 @@ export async function copyProjectTemplateAndReplace(
   const cppNugetPackages: NugetPackage[] = [
     {
       id: 'Microsoft.Windows.CppWinRT',
-      version: '2.0.211028.7',
+      version: '$(CppWinRTVersion)',
       privateAssets: true,
     },
   ];
@@ -541,17 +541,5 @@ export async function installScriptsAndDependencies(options: {
 }
 function getWinAppSDKPackages(nugetVersion: string): NugetPackage[] {
   const winAppSDKPackages: NugetPackage[] = [];
-  winAppSDKPackages.push({
-    id: 'Microsoft.ReactNative.WindowsAppSDK',
-    version: nugetVersion,
-    privateAssets: false,
-  });
-
-  winAppSDKPackages.push({
-    id: 'Microsoft.WindowsAppSDK',
-    version: '1.1.5',
-    privateAssets: false,
-  });
-
   return winAppSDKPackages;
 }
