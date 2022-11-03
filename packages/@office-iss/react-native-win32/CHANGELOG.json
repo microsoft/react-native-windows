@@ -2,6 +2,35 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 03 Nov 2022 05:12:35 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.166",
+      "version": "0.0.0-canary.166",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "krsiler@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "f0db150fad63310a0bc01871a1c1497d994371f0",
+            "comment": "Add accessibilityLevel to BasePropsWin32"
+          },
+          {
+            "author": "krsiler@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "fbb579a8fcda1ead437ebfb9d0de87fc39cfc480",
+            "comment": "Remove duplicate accessibilityLevel prop"
+          }
+        ],
+        "none": [
+          {
+            "author": "krsiler@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "ab330f691477cad43c19b58ab8ce767a1c5baf58",
+            "comment": "Fix misspelling"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 26 Oct 2022 05:11:35 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.165",
       "version": "0.0.0-canary.165",

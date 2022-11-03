@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Thu, 03 Nov 2022 05:12:36 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.145",
+      "version": "0.0.0-canary.145",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "b6047904b0f82d33265f09520d093da988e8f29e",
+            "comment": "Align templates to not hardcode package versions"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 01 Nov 2022 05:13:34 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.144",
       "version": "0.0.0-canary.144",

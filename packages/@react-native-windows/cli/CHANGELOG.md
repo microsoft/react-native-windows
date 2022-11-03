@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Tue, 01 Nov 2022 05:13:34 GMT and should not be manually modified.
+This log was last generated on Thu, 03 Nov 2022 05:12:36 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.145
+
+Thu, 03 Nov 2022 05:12:36 GMT
+
+### Changes
+
+- Align templates to not hardcode package versions (jthysell@microsoft.com)
 
 ## 0.0.0-canary.144
 
