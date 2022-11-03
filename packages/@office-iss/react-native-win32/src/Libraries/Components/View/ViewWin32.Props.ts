@@ -178,6 +178,12 @@ export type BasePropsWin32 = {
     * ItemType is used to obtain information about items in a list, tree view, or data grid. For example, an item in a file directory view might be a "Document File" or a "Folder".
     */
    accessibilityItemType?: string;
+
+   /**
+    * Defines the level of an element in a hierarchical structure or the heading level of a text element.
+    * Note: accessibilityRole="header" must be used if using this property to define a heading level.
+    */
+    accessibilityLevel?: number;
 };
 
 export type ViewWin32OmitTypes = RN.ViewPropsAndroid &
@@ -212,7 +218,6 @@ export interface IViewWin32Props extends Omit<RN.ViewProps, ViewWin32OmitTypes>,
   *
   */
   accessibilityDescription?: string;
-  accessibilityLevel?: number;
   accessibilityPositionInSet?: number;
 
   accessibilitySetSize?: number;
