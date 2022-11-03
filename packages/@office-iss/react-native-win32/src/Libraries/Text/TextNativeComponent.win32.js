@@ -41,6 +41,7 @@ export const NativeText: HostComponent<NativeTextProps> =
       //work without being listed.  Any Text-specific events
       // would need to be listed here.
       focusable: true,
+      accessibilityLevel: true,
       // Windows]
     },
     directEventTypes: {
