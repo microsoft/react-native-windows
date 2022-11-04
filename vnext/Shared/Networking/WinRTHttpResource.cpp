@@ -159,7 +159,7 @@ IAsyncOperation<HttpRequestMessage> WinRTHttpResource::CreateRequest(
       winrt::Windows::Web::Http::HttpMultipartFormDataContent multiPartContent;
       auto formData = data["formData"];
 
-      for (auto &formDataPart : formData) {
+      for (auto const &formDataPart : formData) {
         IHttpContent formContent{nullptr};
         if (!formDataPart["string"].empty()) {
           formContent = HttpStringContent{to_hstring(formDataPart["string"].asString())};
@@ -344,10 +344,17 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
   auto props = winrt::multi_threaded_map<winrt::hstring, IInspectable>();
   props.Insert(L"RequestArgs", coArgs);
 
-  auto coRequest = co_await CreateRequest(std::move(coMethod), std::move(coUri), props);
-  if (!coRequest) {
-    co_return;
+  auto coRequestOp = CreateRequest(std::move(coMethod), std::move(coUri), props);
+  co_await lessthrow_await_adapter<IAsyncOperation<HttpRequestMessage>>{coRequestOp};
+  auto coRequestOpHR = coRequestOp.ErrorCode();
+  if (coRequestOpHR < 0) {
+    if (self->m_onError) {
+      self->m_onError(reqArgs->RequestId, Utilities::HResultToString(std::move(coRequestOpHR)), false);
+    }
+    co_return self->UntrackResponse(reqArgs->RequestId);
   }
+
+  auto coRequest = coRequestOp.GetResults();
 
   // If URI handler is available, it takes over request processing.
   if (auto uriHandler = self->m_uriHandler.lock()) {
