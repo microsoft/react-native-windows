@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fixes issue with zoom and horizontal scrolling",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}

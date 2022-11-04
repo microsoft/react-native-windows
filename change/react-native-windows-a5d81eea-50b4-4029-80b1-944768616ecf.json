@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Apply fast text optimization to multiple runs",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}

@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 03 Nov 2022 05:12:36 GMT and should not be manually modified.
+This log was last generated on Fri, 04 Nov 2022 05:12:36 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.576
+
+Fri, 04 Nov 2022 05:12:36 GMT
+
+### Changes
+
+- Simplify root node lookups (erozell@outlook.com)
+- Workaround for blur on XAML Islands (erozell@outlook.com)
+- Adds LayoutService interface to allow native layout updates (erozell@outlook.com)
+- Apply fast text optimization to multiple runs (erozell@outlook.com)
+- Fixes issue with zoom and horizontal scrolling (erozell@outlook.com)
 
 ## 0.0.0-canary.575
 

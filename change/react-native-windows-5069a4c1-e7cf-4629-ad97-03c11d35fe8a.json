@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Workaround for blur on XAML Islands",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}
