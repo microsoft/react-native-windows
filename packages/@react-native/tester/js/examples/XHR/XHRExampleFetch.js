@@ -28,10 +28,55 @@ class XHRExampleFetch extends React.Component<any, any> {
   }
 
   submit(uri: string) {
-    fetch(uri)
+    // fetch(uri)
+    //   .then(response => {
+    //     this.responseURL = response.url;
+    //     this.responseHeaders = response.headers;
+    //     return response.text();
+    //   })
+    //   .then(body => {
+    //     this.setState({responseText: body});
+    //   });
+
+    const formData = new FormData();
+
+    formData.append('user', {
+      string: JSON.stringify({name: 'Marcin', family: 'Nowak'}),
+      type: 'application/json',
+    });
+
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    };
+
+    // await fetch(
+    //   'https://example.com/api/user/b52a6886-d02f-4121-95e3-48e3c7420081',
+    //   {
+    //     body: formData,
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'multipart/form-data',
+    //       Authorization: 'Bearer ' + '123',
+    //     },
+    //   },
+    // );
+
+    fetch(
+      'https://example.com/api/user/b52a6886-d02f-4121-95e3-48e3c7420081',
+      {
+        body: formData,
+        method: 'POST',
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: 'Bearer ' + '123',
+        },
+      },)
       .then(response => {
         this.responseURL = response.url;
         this.responseHeaders = response.headers;
+
         return response.text();
       })
       .then(body => {
