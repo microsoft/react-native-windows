@@ -6,6 +6,14 @@ import "DynamicAutomationPeer.idl";
 
 namespace Microsoft.ReactNative
 {
+
+  runtimeclass ViewPanelAutomationPeer : XAML_NAMESPACE.Automation.Peers.FrameworkElementAutomationPeer
+  {
+    ViewPanelAutomationPeer(XAML_NAMESPACE.FrameworkElement owner);
+
+    Boolean HideChildren { get; set; };
+  }
+
   [default_interface]
   [webhosthidden]
   runtimeclass ViewPanel : XAML_NAMESPACE.Controls.Panel
@@ -27,6 +35,8 @@ namespace Microsoft.ReactNative
     XAML_NAMESPACE.Media.Brush BorderBrush { get; set; };
     XAML_NAMESPACE.CornerRadius CornerRadius { get; set; };
     Boolean ClipChildren { get; set; };
+    Boolean IsNarratorHidden { get; set; };
+    Boolean IsTabHidden { get; set; };
 
     // ViewPanel Properties
     static XAML_NAMESPACE.DependencyProperty ViewBackgroundProperty { get; };
@@ -43,6 +53,9 @@ namespace Microsoft.ReactNative
     static XAML_NAMESPACE.DependencyProperty LeftProperty { get; };
     static void SetLeft(XAML_NAMESPACE.UIElement element, Double value);
     static Double GetLeft(XAML_NAMESPACE.UIElement element);
+
+    static XAML_NAMESPACE.DependencyProperty IsNarratorHiddenProperty{ get; };
+    static XAML_NAMESPACE.DependencyProperty IsTabHiddenProperty{ get; };
   }
 
   [default_interface]
