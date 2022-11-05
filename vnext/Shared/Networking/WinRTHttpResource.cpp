@@ -69,8 +69,7 @@ void AttachMultipartHeaders(IHttpContent content, const dynamic &headers) {
     } else if (boost::iequals(name.c_str(), "Authorization")) {
       bool success = content.Headers().TryAppendWithoutValidation(to_hstring(name), to_hstring(value));
       if (!success) {
-        // TODO: Throw
-        auto e = "some exception";
+        throw hresult_error{E_INVALIDARG, L"Failed to append Authorization"};
       }
     } else {
       content.Headers().Append(to_hstring(name), to_hstring(value));
