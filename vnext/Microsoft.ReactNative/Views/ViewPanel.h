@@ -17,11 +17,12 @@ struct ViewPanel : ViewPanelT<ViewPanel> {
   // Constructors
   ViewPanel();
 
-  xaml::Automation::Peers::AutomationPeer OnCreateAutomationPeer();
-
   // Overrides
   virtual winrt::Windows::Foundation::Size MeasureOverride(winrt::Windows::Foundation::Size availableSize);
   virtual winrt::Windows::Foundation::Size ArrangeOverride(winrt::Windows::Foundation::Size finalSize);
+  virtual xaml::Automation::Peers::AutomationPeer OnCreateAutomationPeer();
+  virtual winrt::Windows::Foundation::Collections::IIterable<winrt::Windows::UI::Xaml::DependencyObject> GetChildrenInTabFocusOrder();
+  virtual void OnPropertyChanged(winrt::Windows::UI::Xaml::DependencyPropertyChangedEventArgs const& args);
 
   // Public Methods
   void InsertAt(uint32_t const index, xaml::UIElement const &value) const;
@@ -77,6 +78,22 @@ struct ViewPanel : ViewPanelT<ViewPanel> {
     return winrt::unbox_value<double>(element.GetValue(LeftProperty()));
   }
 
+  static winrt::Windows::UI::Xaml::DependencyProperty IsNarratorHiddenProperty();
+  bool GetIsNarratorHidden(){
+    return winrt::unbox_value<bool>(GetValue(IsNarratorHiddenProperty()));
+  }
+  void SetIsNarratorHidden(bool value){
+    SetValue(IsNarratorHiddenProperty(), winrt::box_value(value));
+  }
+
+  static winrt::Windows::UI::Xaml::DependencyProperty IsTabHiddenProperty();
+  bool GetIsTabHidden(){
+    return winrt::unbox_value<bool>(GetValue(IsTabHiddenProperty()));
+  }
+  void SetIsTabHidden(bool value){
+    SetValue(IsTabHiddenProperty(), winrt::box_value(value));
+  }
+
   static void InvalidateForArrange(const xaml::DependencyObject &element);
 
  private:
@@ -95,6 +112,7 @@ struct ViewPanel : ViewPanelT<ViewPanel> {
 
  private:
   static void VisualPropertyChanged(xaml::DependencyObject sender, xaml::DependencyPropertyChangedEventArgs e);
+  static void OnPropertyChanged(winrt::Windows::UI::Xaml::DependencyObject sender, winrt::Windows::UI::Xaml::DependencyPropertyChangedEventArgs e);
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation

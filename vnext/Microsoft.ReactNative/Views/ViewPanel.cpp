@@ -37,12 +37,63 @@ const winrt::TypeName viewPanelTypeName{winrt::hstring{L"ViewPanel"}, winrt::Typ
 
 ViewPanel::ViewPanel() : Super() {}
 
+winrt::DependencyProperty ViewPanel::IsNarratorHiddenProperty()
+{
+    static auto s_prop = winrt::DependencyProperty::Register(
+      L"IsNarratorHidden",
+      winrt::xaml_typename<bool>(),
+      viewPanelTypeName,
+      winrt::PropertyMetadata(winrt::box_value(false), ViewPanel::OnPropertyChanged));
+
+    return s_prop;
+}
+
+winrt::DependencyProperty ViewPanel::IsTabHiddenProperty()
+{
+    static auto s_prop = DependencyProperty::Register(
+      L"IsTabHidden",
+      winrt::xaml_typename<bool>(),
+      viewPanelTypeName,
+      winrt::PropertyMetadata(winrt::box_value(false), ViewPanel::OnPropertyChanged));
+
+    return s_prop;
+}
+
+/*static*/
+void ViewPanel::OnPropertyChanged(winrt::DependencyObject sender, winrt::DependencyPropertyChangedEventArgs e)
+{
+    // Forward call to instance
+    auto panel{sender.try_as<ViewPanel>()};
+    if (panel) {
+        panel->OnPropertyChanged(e);
+    }
+}
+
+void ViewPanel::OnPropertyChanged(winrt::DependencyPropertyChangedEventArgs const& args)
+{
+    winrt::DependencyProperty prop = args.Property();
+    if (prop == IsNarratorHiddenProperty()) {
+        if (m_automationPeer) {
+            m_automationPeer->HideChildren(winrt::unbox_value<bool>(args.NewValue()));
+        }
+    }
+}
+
 winrt::AutomationPeer ViewPanel::OnCreateAutomationPeer() {
   if (m_automationPeer == nullptr) {
         m_automationPeer = winrt::make_self<ViewPanelAutomationPeer>(*this);
         m_automationPeer->HideChildren(IsNarratorHidden());
     }
     return m_automationPeer.as<winrt::AutomationPeer>();
+}
+
+winrt::IIterable<winrt::DependencyObject> ViewPanel::GetChildrenInTabFocusOrder()
+{
+    if (IsTabHidden()) {
+        return winrt::single_threaded_vector<winrt::DependencyObject>();
+    } else {
+        return Super::GetChildrenInTabFocusOrder();
+    }
 }
 
 /*static*/ void ViewPanel::VisualPropertyChanged(
