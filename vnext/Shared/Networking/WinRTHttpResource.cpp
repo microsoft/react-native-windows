@@ -53,12 +53,38 @@ using winrt::Windows::Web::Http::Headers::HttpMediaTypeHeaderValue;
 
 namespace Microsoft::React::Networking {
 
+// May throw winrt::hresult_error
 void AttachMultipartHeaders(IHttpContent content, const dynamic &headers) {
+  HttpMediaTypeHeaderValue contentType{nullptr};
+  string contentEncoding;
+  string contentLength;
+
+  // Headers are generally case-insensitive
+  // https://www.ietf.org/rfc/rfc2616.txt section 4.2
+  //TODO: Consolidate with PerformRequest's header parsing.
   for (auto &header : headers.items()) {
     auto &name = header.first.getString();
     auto &value = header.second.getString();
 
-    content.Headers().Append(to_hstring(name), to_hstring(value));
+    if (boost::iequals(name.c_str(), "Content-Type")) {
+      contentType = HttpMediaTypeHeaderValue::Parse(to_hstring(value));
+    //} else if (boost::iequals(name.c_str(), "Content-Encoding")) {
+    //  contentEncoding = value;
+    //} else if (boost::iequals(name.c_str(), "Content-Length")) {
+    //  contentLength = value;
+    } else if (boost::iequals(name.c_str(), "Authorization")) {
+      bool success = content.Headers().TryAppendWithoutValidation(to_hstring(name), to_hstring(value));
+      if (!success) {
+        //TODO: Throw
+        auto e = "some exception";
+      }
+    } else {
+      content.Headers().Append(to_hstring(name), to_hstring(value));
+    }
+  }
+
+  if (contentType) {
+    content.Headers().ContentType(contentType);
   }
 }
 

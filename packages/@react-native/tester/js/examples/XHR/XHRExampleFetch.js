@@ -40,16 +40,16 @@ class XHRExampleFetch extends React.Component<any, any> {
 
     const formData = new FormData();
 
-    formData.append('user', {
-      string: JSON.stringify({name: 'Marcin', family: 'Nowak'}),
-      type: 'application/json',
-    });
+    // formData.append('user', {
+    //   string: JSON.stringify({name: 'Marcin', family: 'Nowak'}),
+    //   type: 'application/json',
+    // });
 
-    const config = {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    };
+    // const config = {
+    //   headers: {
+    //     'Content-Type': 'multipart/form-data',
+    //   },
+    // };
 
     // await fetch(
     //   'https://example.com/api/user/b52a6886-d02f-4121-95e3-48e3c7420081',
@@ -63,8 +63,58 @@ class XHRExampleFetch extends React.Component<any, any> {
     //   },
     // );
 
-    fetch(
-      'https://example.com/api/user/b52a6886-d02f-4121-95e3-48e3c7420081',
+    // fetch(
+    //   'https://example.com/api/user/b52a6886-d02f-4121-95e3-48e3c7420081',
+    //   {
+    //     body: formData,
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'multipart/form-data',
+    //       Authorization: 'Bearer ' + '123',
+    //     },
+    //   },)
+    //   .then(response => {
+    //     this.responseURL = response.url;
+    //     this.responseHeaders = response.headers;
+
+    //     return response.text();
+    //   })
+    //   .then(body => {
+    //     this.setState({responseText: body});
+    //   });
+
+    //curl.exe
+      // -X POST
+      // https://tryphp.w3schools.com/demo/demo_form_validation_complete.php
+      // -F name=Name
+      // -F email=me@mail.com
+      // -F website=http://web.com
+      // -F comment=Hello
+      // -F gender=Other
+
+      formData.append('name', {
+        string: 'Name',
+        type: 'application/text',
+      });
+      formData.append('email', {
+        string: 'me@mail.com',
+        type: 'application/text',
+      });
+      formData.append('website', {
+        string: 'http://aweb.com',
+        type: 'application/text',
+      });
+      formData.append('comment', {
+        string: 'Hello',
+        type: 'application/text',
+      });
+      formData.append('gender', {
+        string: 'Other',
+        type: 'application/text',
+      });
+
+      fetch(
+      'https://tryphp.w3schools.com/demo/demo_form_validation_complete.php',
       {
         body: formData,
         method: 'POST',
