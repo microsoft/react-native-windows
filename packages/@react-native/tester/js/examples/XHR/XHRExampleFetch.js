@@ -118,10 +118,7 @@ class XHRExampleFetch extends React.Component<any, any> {
       {
         body: formData,
         method: 'POST',
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: 'Bearer ' + '123',
-        },
+        headers: {},
       },)
       .then(response => {
         this.responseURL = response.url;
