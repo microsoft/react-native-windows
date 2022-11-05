@@ -78,20 +78,12 @@ struct ViewPanel : ViewPanelT<ViewPanel> {
     return winrt::unbox_value<double>(element.GetValue(LeftProperty()));
   }
 
-  static winrt::Windows::UI::Xaml::DependencyProperty IsNarratorHiddenProperty();
-  bool GetIsNarratorHidden(){
-    return winrt::unbox_value<bool>(GetValue(IsNarratorHiddenProperty()));
+  static winrt::Windows::UI::Xaml::DependencyProperty IsAccessibilityHiddenProperty();
+  bool GetIsAccessibilityHidden(){
+    return winrt::unbox_value<bool>(GetValue(IsAccessibilityHiddenProperty()));
   }
-  void SetIsNarratorHidden(bool value){
-    SetValue(IsNarratorHiddenProperty(), winrt::box_value(value));
-  }
-
-  static winrt::Windows::UI::Xaml::DependencyProperty IsTabHiddenProperty();
-  bool GetIsTabHidden(){
-    return winrt::unbox_value<bool>(GetValue(IsTabHiddenProperty()));
-  }
-  void SetIsTabHidden(bool value){
-    SetValue(IsTabHiddenProperty(), winrt::box_value(value));
+  void SetIsAccessibilityHidden(bool value){
+    SetValue(IsAccessibilityHiddenProperty(), winrt::box_value(value));
   }
 
   static void InvalidateForArrange(const xaml::DependencyObject &element);

@@ -64,12 +64,10 @@ void ViewPanelViewManager::UpdateProperties(winrt::FrameworkElement const& view,
               if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
                 auto value = propertyValue.AsString();
                 if (value == "no-hide-descendants") {
-                  element.IsNarratorHidden(propertyValue.To<bool>());
-                  element.IsTabHidden(propertyValue.To<bool>());
+                  element.IsAccessibilityHidden(propertyValue.To<bool>());
                 }
               } else if (propertyValue.IsNull()) {
-                element.ClearValue(winrt::Microsoft::ReactNative::ViewPanel::IsNarratorHiddenProperty()); 
-                element.ClearValue(winrt::Microsoft::ReactNative::ViewPanel::IsTabHiddenProperty());
+                element.ClearValue(winrt::Microsoft::ReactNative::ViewPanel::IsAccessibilityHiddenProperty()); 
               }
             }
         }
