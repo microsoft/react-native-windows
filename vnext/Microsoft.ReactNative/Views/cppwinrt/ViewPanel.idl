@@ -6,7 +6,6 @@ import "DynamicAutomationPeer.idl";
 
 namespace Microsoft.ReactNative
 {
-
   runtimeclass ViewPanelAutomationPeer : XAML_NAMESPACE.Automation.Peers.FrameworkElementAutomationPeer
   {
     ViewPanelAutomationPeer(XAML_NAMESPACE.FrameworkElement owner);
@@ -36,7 +35,6 @@ namespace Microsoft.ReactNative
     XAML_NAMESPACE.CornerRadius CornerRadius { get; set; };
     Boolean ClipChildren { get; set; };
     Boolean IsAccessibilityHidden { get; set; };
-
 
     // ViewPanel Properties
     static XAML_NAMESPACE.DependencyProperty ViewBackgroundProperty { get; };
