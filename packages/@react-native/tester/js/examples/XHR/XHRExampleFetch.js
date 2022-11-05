@@ -114,12 +114,12 @@ class XHRExampleFetch extends React.Component<any, any> {
       });
 
       fetch(
-      'https://tryphp.w3schools.com/demo/demo_form_validation_complete.php',
-      {
-        body: formData,
-        method: 'POST',
-        headers: {},
-      },)
+        'https://tryphp.w3schools.com/demo/demo_form_validation_complete.php',
+        {
+          body: formData,
+          method: 'POST',
+          headers: {},
+        },)
       .then(response => {
         this.responseURL = response.url;
         this.responseHeaders = response.headers;
