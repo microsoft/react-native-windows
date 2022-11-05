@@ -116,20 +116,23 @@ IAsyncOperation<HttpRequestMessage> WinRTHttpResource::CreateRequest(
   // Headers are generally case-insensitive
   // https://www.ietf.org/rfc/rfc2616.txt section 4.2
   for (auto &header : reqArgs->Headers) {
-    if (boost::iequals(header.first.c_str(), "Content-Type")) {
-      bool success = HttpMediaTypeHeaderValue::TryParse(to_hstring(header.second), contentType);
+    auto &name = header.first;
+    auto &value = header.second;
+
+    if (boost::iequals(name.c_str(), "Content-Type")) {
+      bool success = HttpMediaTypeHeaderValue::TryParse(to_hstring(value), contentType);
       if (!success) {
         if (self->m_onError) {
           self->m_onError(reqArgs->RequestId, "Failed to parse Content-Type", false);
         }
         co_return nullptr;
       }
-    } else if (boost::iequals(header.first.c_str(), "Content-Encoding")) {
-      contentEncoding = header.second;
-    } else if (boost::iequals(header.first.c_str(), "Content-Length")) {
-      contentLength = header.second;
-    } else if (boost::iequals(header.first.c_str(), "Authorization")) {
-      bool success = request.Headers().TryAppendWithoutValidation(to_hstring(header.first), to_hstring(header.second));
+    } else if (boost::iequals(name.c_str(), "Content-Encoding")) {
+      contentEncoding = value;
+    } else if (boost::iequals(name.c_str(), "Content-Length")) {
+      contentLength = value;
+    } else if (boost::iequals(name.c_str(), "Authorization")) {
+      bool success = request.Headers().TryAppendWithoutValidation(to_hstring(name), to_hstring(value));
       if (!success) {
         if (self->m_onError) {
           self->m_onError(reqArgs->RequestId, "Failed to append Authorization", false);
@@ -138,7 +141,7 @@ IAsyncOperation<HttpRequestMessage> WinRTHttpResource::CreateRequest(
       }
     } else {
       try {
-        request.Headers().Append(to_hstring(header.first), to_hstring(header.second));
+        request.Headers().Append(to_hstring(name), to_hstring(value));
       } catch (hresult_error const &e) {
         if (self->m_onError) {
           self->m_onError(reqArgs->RequestId, Utilities::HResultToString(e), false);
