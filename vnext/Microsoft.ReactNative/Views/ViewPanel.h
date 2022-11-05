@@ -91,6 +91,8 @@ struct ViewPanel : ViewPanelT<ViewPanel> {
   xaml::Controls::Border m_border{nullptr};
   bool m_hasOuterBorder{false};
 
+  winrt::com_ptr<ViewPanelAutomationPeer> m_automationPeer = nullptr;
+
  private:
   static void VisualPropertyChanged(xaml::DependencyObject sender, xaml::DependencyPropertyChangedEventArgs e);
 };

@@ -38,8 +38,11 @@ const winrt::TypeName viewPanelTypeName{winrt::hstring{L"ViewPanel"}, winrt::Typ
 ViewPanel::ViewPanel() : Super() {}
 
 winrt::AutomationPeer ViewPanel::OnCreateAutomationPeer() {
-  // The parent ViewControl handles the peer needs
-  return nullptr;
+  if (m_automationPeer == nullptr) {
+        m_automationPeer = winrt::make_self<ViewPanelAutomationPeer>(*this);
+        m_automationPeer->HideChildren(IsNarratorHidden());
+    }
+    return m_automationPeer.as<winrt::AutomationPeer>();
 }
 
 /*static*/ void ViewPanel::VisualPropertyChanged(
