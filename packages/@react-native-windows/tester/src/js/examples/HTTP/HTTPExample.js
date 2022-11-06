@@ -14,7 +14,8 @@ const XHRExampleFetch = require('../XHR/XHRExampleFetch');
 exports.framework = 'React';
 exports.title = 'HTTP';
 exports.category = 'Basic';
-exports.description = ('Example that demonstrates direct and indirect HTTP native module usage.': string);
+exports.description =
+  ('Example that demonstrates direct and indirect HTTP native module usage.': string);
 exports.examples = [
   {
     title: 'multipart/form-data POST',

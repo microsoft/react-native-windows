@@ -9,7 +9,7 @@
 
 const React = require('react');
 
-const {StyleSheet, Text, TextInput, View, Platform} = require('react-native');
+const {StyleSheet, Text, TextInput, View} = require('react-native');
 
 /**
  * See https://www.w3schools.com/php/php_form_validation.asp
@@ -28,7 +28,6 @@ class HTTPExampleMultiPartFormData extends React.Component<any, any> {
   }
 
   submit(uri: string) {
-
     const formData = new FormData();
 
     formData.append('name', {
@@ -52,24 +51,22 @@ class HTTPExampleMultiPartFormData extends React.Component<any, any> {
       type: 'application/text',
     });
 
-    fetch(
-      uri,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-        body: formData,
-      },)
-    .then(response => {
-      this.responseURL = response.url;
-      this.responseHeaders = response.headers;
-
-      return response.text();
+    fetch(uri, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      body: formData,
     })
-    .then(body => {
-      this.setState({responseText: body});
-    });
+      .then(response => {
+        this.responseURL = response.url;
+        this.responseHeaders = response.headers;
+
+        return response.text();
+      })
+      .then(body => {
+        this.setState({responseText: body});
+      });
   }
 
   _renderHeaders(): null | Array<React.Node> {
