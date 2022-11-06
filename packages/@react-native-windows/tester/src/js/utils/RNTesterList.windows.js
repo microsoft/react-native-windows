@@ -13,6 +13,10 @@ import ReactNativeFeatureFlags from 'react-native/Libraries/ReactNative/ReactNat
 
 const Components: Array<RNTesterModuleInfo> = [
   {
+    key: 'HTTPExample',
+    module: require('../examples/HTTP/HTTPExample'),
+  },
+  {
     key: 'XHRExample',
     module: require('../examples/XHR/XHRExample'),
   },
