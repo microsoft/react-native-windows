@@ -92,6 +92,9 @@ class XHRExampleFetch extends React.Component<any, any> {
       // -F comment=Hello
       // -F gender=Other
 
+      const miblob = new Blob(['<q id="a"><span id="b">hey!</span></q>'], { type: "text/xml" });
+
+      formData.append("webmasterfile", miblob);
       formData.append('name', {
         string: 'Name',
         type: 'application/text',

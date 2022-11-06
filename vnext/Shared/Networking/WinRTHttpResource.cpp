@@ -184,9 +184,9 @@ IAsyncOperation<HttpRequestMessage> WinRTHttpResource::CreateRequest(
       // #6046 -  Overwriting WinRT's HttpMultipartFormDataContent implicit Content-Type clears the generated boundary
       contentType = nullptr;
 
-      for (auto const &formDataPart : formData) {
+      for (auto &formDataPart : formData) {
         IHttpContent formContent{nullptr};
-        if (!formDataPart["string"].empty()) {
+        if (!formDataPart["string"].isNull()) {
           formContent = HttpStringContent{to_hstring(formDataPart["string"].asString())};
         } else if (!formDataPart["uri"].empty()) {
           auto filePath = to_hstring(formDataPart["uri"].asString());
