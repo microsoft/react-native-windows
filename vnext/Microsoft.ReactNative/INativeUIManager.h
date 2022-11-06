@@ -29,7 +29,6 @@ struct INativeUIManagerHost {
   virtual std::unordered_set<int64_t> &GetAllRootTags() = 0;
   virtual ShadowNode &GetShadowNodeForTag(int64_t tag) = 0;
   virtual ShadowNode *FindShadowNodeForTag(int64_t tag) = 0;
-  virtual ShadowNode *FindParentRootShadowNode(int64_t tag) = 0;
 };
 
 struct INativeUIManager {
@@ -50,6 +49,7 @@ struct INativeUIManager {
   virtual void UpdateView(ShadowNode &shadowNode, winrt::Microsoft::ReactNative::JSValueObject &props) = 0;
   virtual void onBatchComplete() = 0;
   virtual void ensureInBatch() = 0;
+  virtual bool isInBatch() = 0;
   virtual void measure(
       ShadowNode &shadowNode,
       ShadowNode &shadowRoot,

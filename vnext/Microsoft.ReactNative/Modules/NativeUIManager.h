@@ -56,6 +56,7 @@ class NativeUIManager final : public INativeUIManager {
   void UpdateView(ShadowNode &shadowNode, winrt::Microsoft::ReactNative::JSValueObject &props) override;
   void onBatchComplete() override;
   void ensureInBatch() override;
+  bool isInBatch() override;
   void measure(
       ShadowNode &shadowNode,
       ShadowNode &shadowRoot,
@@ -100,8 +101,10 @@ class NativeUIManager final : public INativeUIManager {
 
   int64_t AddMeasuredRootView(facebook::react::IReactRootView *rootView);
 
- private:
   void DoLayout();
+  void ApplyLayout(int64_t tag, float width = YGUndefined, float height = YGUndefined);
+
+ private:
   void SetLayoutPropsRecursive(int64_t tag);
   YGNodeRef GetYogaNode(int64_t tag) const;
 

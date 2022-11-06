@@ -47,6 +47,7 @@ export default class Bootstrap extends React.Component<{}, any> {
   };
 
   render() {
+    let textInputRef: TextInput | null;
     return (
       <View style={styles.container}>
         <TextInput
@@ -88,6 +89,12 @@ export default class Bootstrap extends React.Component<{}, any> {
           style={styles.input}
           autoCapitalize="characters"
           placeholder={'autoCapitalize characters'}
+        />
+        <TextInput
+          ref={ref => (textInputRef = ref)}
+          onFocus={() => setTimeout(() => textInputRef?.blur(), 5000)}
+          placeholder={'blurs after 5 seconds'}
+          style={styles.input}
         />
         <TextInput
           style={styles.input}
