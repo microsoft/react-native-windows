@@ -68,6 +68,34 @@ constexpr char responseTypeBlob[] = "blob";
 } // namespace
 namespace Microsoft::React::Networking {
 
+// May throw winrt::hresult_error
+void AttachMultipartHeaders(IHttpContent content, const dynamic &headers) {
+  HttpMediaTypeHeaderValue contentType{nullptr};
+
+  // Headers are generally case-insensitive
+  // https://www.ietf.org/rfc/rfc2616.txt section 4.2
+  // TODO: Consolidate with PerformRequest's header parsing.
+  for (auto &header : headers.items()) {
+    auto &name = header.first.getString();
+    auto &value = header.second.getString();
+
+    if (boost::iequals(name.c_str(), "Content-Type")) {
+      contentType = HttpMediaTypeHeaderValue::Parse(to_hstring(value));
+    } else if (boost::iequals(name.c_str(), "Authorization")) {
+      bool success = content.Headers().TryAppendWithoutValidation(to_hstring(name), to_hstring(value));
+      if (!success) {
+        throw hresult_error{E_INVALIDARG, L"Failed to append Authorization"};
+      }
+    } else {
+      content.Headers().Append(to_hstring(name), to_hstring(value));
+    }
+  }
+
+  if (contentType) {
+    content.Headers().ContentType(contentType);
+  }
+}
+
 #pragma region WinRTHttpResource
 
 WinRTHttpResource::WinRTHttpResource(IHttpClient &&client) noexcept : m_client{std::move(client)} {}
@@ -96,20 +124,23 @@ IAsyncOperation<HttpRequestMessage> WinRTHttpResource::CreateRequest(
   // Headers are generally case-insensitive
   // https://www.ietf.org/rfc/rfc2616.txt section 4.2
   for (auto &header : reqArgs->Headers) {
-    if (boost::iequals(header.first.c_str(), "Content-Type")) {
-      bool success = HttpMediaTypeHeaderValue::TryParse(to_hstring(header.second), contentType);
+    auto &name = header.first;
+    auto &value = header.second;
+
+    if (boost::iequals(name.c_str(), "Content-Type")) {
+      bool success = HttpMediaTypeHeaderValue::TryParse(to_hstring(value), contentType);
       if (!success) {
         if (self->m_onError) {
           self->m_onError(reqArgs->RequestId, "Failed to parse Content-Type", false);
         }
         co_return nullptr;
       }
-    } else if (boost::iequals(header.first.c_str(), "Content-Encoding")) {
-      contentEncoding = header.second;
-    } else if (boost::iequals(header.first.c_str(), "Content-Length")) {
-      contentLength = header.second;
-    } else if (boost::iequals(header.first.c_str(), "Authorization")) {
-      bool success = request.Headers().TryAppendWithoutValidation(to_hstring(header.first), to_hstring(header.second));
+    } else if (boost::iequals(name.c_str(), "Content-Encoding")) {
+      contentEncoding = value;
+    } else if (boost::iequals(name.c_str(), "Content-Length")) {
+      contentLength = value;
+    } else if (boost::iequals(name.c_str(), "Authorization")) {
+      bool success = request.Headers().TryAppendWithoutValidation(to_hstring(name), to_hstring(value));
       if (!success) {
         if (self->m_onError) {
           self->m_onError(reqArgs->RequestId, "Failed to append Authorization", false);
@@ -118,7 +149,7 @@ IAsyncOperation<HttpRequestMessage> WinRTHttpResource::CreateRequest(
       }
     } else {
       try {
-        request.Headers().Append(to_hstring(header.first), to_hstring(header.second));
+        request.Headers().Append(to_hstring(name), to_hstring(value));
       } catch (hresult_error const &e) {
         if (self->m_onError) {
           self->m_onError(reqArgs->RequestId, Utilities::HResultToString(e), false);
@@ -161,9 +192,31 @@ IAsyncOperation<HttpRequestMessage> WinRTHttpResource::CreateRequest(
       auto file = co_await StorageFile::GetFileFromApplicationUriAsync(Uri{to_hstring(data["uri"].asString())});
       auto stream = co_await file.OpenReadAsync();
       content = HttpStreamContent{std::move(stream)};
-    } else if (!data["form"].empty()) {
-      // #9535 - HTTP form data support
-      // winrt::Windows::Web::Http::HttpMultipartFormDataContent()
+    } else if (!data["formData"].empty()) {
+      winrt::Windows::Web::Http::HttpMultipartFormDataContent multiPartContent;
+      auto formData = data["formData"];
+
+      // #6046 -  Overwriting WinRT's HttpMultipartFormDataContent implicit Content-Type clears the generated boundary
+      contentType = nullptr;
+
+      for (auto &formDataPart : formData) {
+        IHttpContent formContent{nullptr};
+        if (!formDataPart["string"].isNull()) {
+          formContent = HttpStringContent{to_hstring(formDataPart["string"].asString())};
+        } else if (!formDataPart["uri"].empty()) {
+          auto filePath = to_hstring(formDataPart["uri"].asString());
+          auto file = co_await StorageFile::GetFileFromPathAsync(filePath);
+          auto stream = co_await file.OpenReadAsync();
+          formContent = HttpStreamContent{stream};
+        }
+
+        if (formContent) {
+          AttachMultipartHeaders(formContent, formDataPart["headers"]);
+          multiPartContent.Add(formContent, to_hstring(formDataPart["fieldName"].asString()));
+        }
+      } // foreach form data part
+
+      content = multiPartContent;
     }
   }
 
@@ -347,10 +400,17 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
   auto props = winrt::multi_threaded_map<winrt::hstring, IInspectable>();
   props.Insert(L"RequestArgs", coArgs);
 
-  auto coRequest = co_await CreateRequest(std::move(coMethod), std::move(coUri), props);
-  if (!coRequest) {
-    co_return;
+  auto coRequestOp = CreateRequest(std::move(coMethod), std::move(coUri), props);
+  co_await lessthrow_await_adapter<IAsyncOperation<HttpRequestMessage>>{coRequestOp};
+  auto coRequestOpHR = coRequestOp.ErrorCode();
+  if (coRequestOpHR < 0) {
+    if (self->m_onError) {
+      self->m_onError(reqArgs->RequestId, Utilities::HResultToString(std::move(coRequestOpHR)), false);
+    }
+    co_return self->UntrackResponse(reqArgs->RequestId);
   }
+
+  auto coRequest = coRequestOp.GetResults();
 
   // If URI handler is available, it takes over request processing.
   if (auto uriHandler = self->m_uriHandler.lock()) {
