@@ -15,6 +15,20 @@
       "issue": 6341
     },
     {
+      "type": "derived",
+      "file": "src/js/examples-win/Button/ButtonExample.windows.js",
+      "baseFile": "packages/rn-tester/js/examples/Button/ButtonExample.js",
+      "baseHash": "36c55afe75ac9c6efdec22e5ceb1f114a84ebd45"
+    },
+    {
+      "type": "platform",
+      "file": "src/js/examples/HTTP/HTTPExample.js"
+    },
+    {
+      "type": "platform",
+      "file": "src/js/examples/HTTP/HTTPExampleMultiPartFormData.js"
+    },
+    {
       "type": "patch",
       "file": "src/js/examples/Pressable/PressableExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Pressable/PressableExample.js",
