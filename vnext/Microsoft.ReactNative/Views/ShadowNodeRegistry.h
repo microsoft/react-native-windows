@@ -30,6 +30,8 @@ struct ShadowNodeRegistry {
 
   std::unordered_set<int64_t> &getAllRoots();
 
+  ShadowNode *getParentRootShadowNode(int64_t nodeTag);
+
   void ForAllNodes(const Mso::FunctorRef<void(int64_t, shadow_ptr const &) noexcept> &fnDo) noexcept;
 
  private:
