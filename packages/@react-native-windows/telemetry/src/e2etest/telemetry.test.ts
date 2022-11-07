@@ -90,7 +90,7 @@ export class TelemetryTest extends Telemetry {
   }
 }
 
-test('setup() verify session id is valid and a common property', async done => {
+test('setup() verify session id is valid and a common property', async () => {
   await TelemetryTest.startTest();
 
   const sessionId = TelemetryTest.getSessionId();
@@ -99,10 +99,10 @@ test('setup() verify session id is valid and a common property', async done => {
   expect(sessionId!).toBe(basePropUtils.getSessionId());
   expect(TelemetryTest.getCommonProperty('sessionId')).toBe(sessionId!);
 
-  TelemetryTest.endTest(done);
+  TelemetryTest.endTest();
 });
 
-test('setup() verify static common property values with async sources', async done => {
+test('setup() verify static common property values with async sources', async () => {
   await TelemetryTest.startTest();
 
   const props: Record<string, () => Promise<string | undefined>> = {
@@ -118,10 +118,10 @@ test('setup() verify static common property values with async sources', async do
     }
   }
 
-  TelemetryTest.endTest(done);
+  TelemetryTest.endTest();
 });
 
-test('setup() verify static common property values with sync sources', async done => {
+test('setup() verify static common property values with sync sources', async () => {
   await TelemetryTest.startTest();
 
   const props: Record<string, () => string | undefined> = {
@@ -144,10 +144,10 @@ test('setup() verify static common property values with sync sources', async don
     }
   }
 
-  TelemetryTest.endTest(done);
+  TelemetryTest.endTest();
 });
 
-test('setup() verify other common property values are defined', async done => {
+test('setup() verify other common property values are defined', async () => {
   await TelemetryTest.startTest();
 
   const props: string[] = ['deviceDiskFreeSpace'];
@@ -157,10 +157,10 @@ test('setup() verify other common property values are defined', async done => {
     expect(value).toBeDefined();
   }
 
-  TelemetryTest.endTest(done);
+  TelemetryTest.endTest();
 });
 
-test('setup() verify tool versions are populated', async done => {
+test('setup() verify tool versions are populated', async () => {
   await TelemetryTest.startTest();
 
   const props: Record<string, () => Promise<string | null>> = {
@@ -177,10 +177,10 @@ test('setup() verify tool versions are populated', async done => {
     }
   }
 
-  TelemetryTest.endTest(done);
+  TelemetryTest.endTest();
 });
 
-test('tryUpdateVersionsProp() returns true for adding a new version', async done => {
+test('tryUpdateVersionsProp() returns true for adding a new version', async () => {
   await TelemetryTest.startTest();
 
   const name = 'test';
@@ -190,10 +190,10 @@ test('tryUpdateVersionsProp() returns true for adding a new version', async done
   ).toBe(true);
   expect(TelemetryTest.getVersion(name)).toBe(version);
 
-  TelemetryTest.endTest(done);
+  TelemetryTest.endTest();
 });
 
-test('tryUpdateVersionsProp() returns false for adding an existing version with refresh is false', async done => {
+test('tryUpdateVersionsProp() returns false for adding an existing version with refresh is false', async () => {
   await TelemetryTest.startTest();
 
   const name = 'test';
@@ -213,10 +213,10 @@ test('tryUpdateVersionsProp() returns false for adding an existing version with 
 
   expect(getValueCalled).toBe(false);
 
-  TelemetryTest.endTest(done);
+  TelemetryTest.endTest();
 });
 
-test('tryUpdateVersionsProp() returns true for adding an existing version with refresh is true', async done => {
+test('tryUpdateVersionsProp() returns true for adding an existing version with refresh is true', async () => {
   await TelemetryTest.startTest();
 
   const name = 'test';
@@ -240,7 +240,7 @@ test('tryUpdateVersionsProp() returns true for adding an existing version with r
 
   expect(getValueCalled).toBe(true);
 
-  TelemetryTest.endTest(done);
+  TelemetryTest.endTest();
 });
 
 /** Returns the CommandStartInfo for our fake 'test-command'. */
@@ -440,7 +440,7 @@ function verifyTestCommandTelemetryProcessor(
   };
 }
 
-test('Telemetry run test command end to end, verify event fires', async done => {
+test('Telemetry run test command end to end, verify event fires', async () => {
   await TelemetryTest.startTest();
 
   // AI eats errors thrown in telemetry processors
@@ -454,7 +454,6 @@ test('Telemetry run test command end to end, verify event fires', async done => 
   TelemetryTest.endTest(() => {
     // Check if any errors were thrown
     expect(caughtErrors).toHaveLength(0);
-    done();
   });
 });
 
@@ -465,7 +464,7 @@ const testTelemetryOptions = [
 
 test.each(testTelemetryOptions)(
   'Telemetry run test command end to end with CodedError, verify events fire %s',
-  async (options, done: any) => {
+  async (options) => {
     await TelemetryTest.startTest(options);
 
     const expectedError = new errorUtils.CodedError(
@@ -488,14 +487,13 @@ test.each(testTelemetryOptions)(
     TelemetryTest.endTest(() => {
       // Check if any errors were thrown
       expect(caughtErrors).toHaveLength(0);
-      done();
     });
   },
 );
 
 test.each(testTelemetryOptions)(
   'Telemetry run test command end to end with CodedError (with error in message), verify events fire %s',
-  async (options, done: any) => {
+  async (options) => {
     await TelemetryTest.startTest(options);
 
     const expectedError = new errorUtils.CodedError(
@@ -518,14 +516,13 @@ test.each(testTelemetryOptions)(
     TelemetryTest.endTest(() => {
       // Check if any errors were thrown
       expect(caughtErrors).toHaveLength(0);
-      done();
     });
   },
 );
 
 test.each(testTelemetryOptions)(
   'Telemetry run test command end to end with CodedError (with data), verify events fire %s',
-  async (options, done: any) => {
+  async (options) => {
     await TelemetryTest.startTest(options);
 
     const expectedError = new errorUtils.CodedError(
@@ -549,14 +546,13 @@ test.each(testTelemetryOptions)(
     TelemetryTest.endTest(() => {
       // Check if any errors were thrown
       expect(caughtErrors).toHaveLength(0);
-      done();
     });
   },
 );
 
 test.each(testTelemetryOptions)(
   'Telemetry run test command end to end with Error, verify events fire %s',
-  async (options, done: any) => {
+  async (options) => {
     await TelemetryTest.startTest(options);
 
     const expectedError = new Error('error FOO2020: test error');
@@ -576,14 +572,13 @@ test.each(testTelemetryOptions)(
     TelemetryTest.endTest(() => {
       // Check if any errors were thrown
       expect(caughtErrors).toHaveLength(0);
-      done();
     });
   },
 );
 
 test.each(testTelemetryOptions)(
   'Telemetry run test command end to end with Error (no message), verify events fire %s',
-  async (options, done: any) => {
+  async (options) => {
     await TelemetryTest.startTest(options);
 
     const expectedError = new Error();
@@ -603,7 +598,6 @@ test.each(testTelemetryOptions)(
     TelemetryTest.endTest(() => {
       // Check if any errors were thrown
       expect(caughtErrors).toHaveLength(0);
-      done();
     });
   },
 );
@@ -650,11 +644,15 @@ function getVerifyStackTelemetryProcessor(
 
         const filename = path.relative(process.cwd(), __filename);
         expect(stack[0].method).toEqual('b');
-        expect(stack[1].method).toEqual('a');
+        expect(stack[1].method).toEqual('b');
+        expect(stack[2].method).toEqual('a');
         expect(stack[0].fileName).toEqual(
           `[project_dir]\\???.ts(${filename.length})`,
         );
         expect(stack[1].fileName).toEqual(
+          `[project_dir]\\???.ts(${filename.length})`,
+        );
+        expect(stack[2].fileName).toEqual(
           `[project_dir]\\???.ts(${filename.length})`,
         );
       }
@@ -670,7 +668,7 @@ function getVerifyStackTelemetryProcessor(
 
 test.each(testTelemetryOptions)(
   'Telemetry run test command end to end with Error, verify sanitized message and stack %s',
-  async (options, done: any) => {
+  async (options) => {
     await TelemetryTest.startTest(options);
 
     const expectedError = new Error('hello world');
@@ -689,14 +687,13 @@ test.each(testTelemetryOptions)(
     TelemetryTest.endTest(() => {
       // Check if any errors were thrown
       expect(caughtErrors).toHaveLength(0);
-      done();
     });
   },
 );
 
 test.each(testTelemetryOptions)(
   'Telemetry run test command end to end with Error, verify sanitized message with path and stack %s',
-  async (options, done: any) => {
+  async (options) => {
     await TelemetryTest.startTest(options);
 
     const expectedError = new Error(`hello ${process.cwd()}`);
@@ -715,7 +712,6 @@ test.each(testTelemetryOptions)(
     TelemetryTest.endTest(() => {
       // Check if any errors were thrown
       expect(caughtErrors).toHaveLength(0);
-      done();
     });
   },
 );

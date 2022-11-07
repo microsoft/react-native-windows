@@ -86,7 +86,7 @@ test('autolink fixup sln', () => {
   }).toThrow();
 });
 
-test('autolink fixup proj', async done => {
+test('autolink fixup proj', async () => {
   const autolink = new AutolinkTest(
     {windows: {folder: __dirname, sourceDir: '.', solutionFile: 'foo.sln'}},
     {},
@@ -110,7 +110,6 @@ test('autolink fixup proj', async done => {
   expect(projectConfig).not.toBeUndefined();
   expect(projectConfig.projectName).toEqual('WithWinUI3');
   autolink.validateRequiredProjectProperties();
-  done();
 });
 
 test('empty cpp autolink dependencies', () => {
@@ -262,7 +261,7 @@ test('one valid cs autolink dependency', () => {
   );
 });
 
-test('ensureXAMLDialect - useWinUI3=true in react-native.config.js, useWinUI3=false in ExperimentalFeatures.props', async done => {
+test('ensureXAMLDialect - useWinUI3=true in react-native.config.js, useWinUI3=false in ExperimentalFeatures.props', async () => {
   const folder = path.resolve('src/e2etest/projects/WithWinUI3');
 
   // Create project with UseWinUI3 == false in ExperimentalFeatures.props
@@ -301,11 +300,9 @@ test('ensureXAMLDialect - useWinUI3=true in react-native.config.js, useWinUI3=fa
   expect(al.packagesConfig).toContain('Microsoft.WindowsAppSDK');
   expect(al.packagesConfig).toContain('<package id="SuperPkg" version="42"/>');
   expect(al.packagesConfig).not.toContain('Microsoft.UI.Xaml');
-
-  done();
 });
 
-test('ensureXAMLDialect - useWinUI3=false in react-native.config.js, useWinUI3=true in ExperimentalFeatures.props', async done => {
+test('ensureXAMLDialect - useWinUI3=false in react-native.config.js, useWinUI3=true in ExperimentalFeatures.props', async () => {
   const folder = path.resolve('src/e2etest/projects/WithWinUI3');
   const rnc = require(path.join(folder, 'react-native.config.js'));
 
@@ -338,11 +335,9 @@ test('ensureXAMLDialect - useWinUI3=false in react-native.config.js, useWinUI3=t
   expect(al.packagesConfig).not.toContain('Microsoft.WindowsAppSDK');
   expect(al.packagesConfig).toContain('<package id="SuperPkg" version="42"/>');
   expect(al.packagesConfig).toContain('Microsoft.UI.Xaml');
-
-  done();
 });
 
-test('ensureXAMLDialect - useWinUI3 not in react-native.config.js, useWinUI3=true in ExperimentalFeatures.props', async done => {
+test('ensureXAMLDialect - useWinUI3 not in react-native.config.js, useWinUI3=true in ExperimentalFeatures.props', async () => {
   const folder = path.resolve('src/e2etest/projects/WithWinUI3');
   const rnc = require(path.join(folder, 'react-native.config.js'));
 
@@ -375,11 +370,9 @@ test('ensureXAMLDialect - useWinUI3 not in react-native.config.js, useWinUI3=tru
   expect(al.packagesConfig).toContain('Microsoft.WindowsAppSDK');
   expect(al.packagesConfig).toContain('<package id="SuperPkg" version="42"/>');
   expect(al.packagesConfig).not.toContain('Microsoft.UI.Xaml');
-
-  done();
 });
 
-test('ensureXAMLDialect - useWinUI3 not in react-native.config.js, useWinUI3=false in ExperimentalFeatures.props', async done => {
+test('ensureXAMLDialect - useWinUI3 not in react-native.config.js, useWinUI3=false in ExperimentalFeatures.props', async () => {
   const folder = path.resolve('src/e2etest/projects/WithWinUI3');
   const rnc = require(path.join(folder, 'react-native.config.js'));
 
@@ -411,8 +404,6 @@ test('ensureXAMLDialect - useWinUI3 not in react-native.config.js, useWinUI3=fal
   expect(al.packagesConfig).not.toContain('Microsoft.WindowsAppSDK');
   expect(al.packagesConfig).toContain('<package id="SuperPkg" version="42"/>');
   expect(al.packagesConfig).toContain('Microsoft.UI.Xaml');
-
-  done();
 });
 
 test('Indirect autolink dependency', () => {
