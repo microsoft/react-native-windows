@@ -2,6 +2,27 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 07 Nov 2022 16:10:04 GMT",
+      "tag": "@office-iss/react-native-win32_v0.68.8",
+      "version": "0.68.8",
+      "comments": {
+        "patch": [
+          {
+            "author": "krsiler@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "eb28a75a26d828cd694ec8b46e9988aa98fb1077",
+            "comment": "Add accessibilityLevel to BasePropsWin32"
+          },
+          {
+            "author": "krsiler@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "eb28a75a26d828cd694ec8b46e9988aa98fb1077",
+            "comment": "Remove duplicate accessibilityLevel prop"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Oct 2022 15:08:15 GMT",
       "tag": "@office-iss/react-native-win32_v0.68.7",
       "version": "0.68.7",
