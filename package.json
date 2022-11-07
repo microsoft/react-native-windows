@@ -39,6 +39,7 @@
     "@react-native-community/cli-server-api": "7.0.0",
     "kind-of": "6.0.3",
     "glob-parent": "^5.1.2",
+    "loader-utils": "2.0.3",
     "node-notifier": "^9.0.0",
     "set-value": "^4.0.1",
     "strip-ansi": "^6.0.1",
@@ -55,6 +56,7 @@
     "@react-native-community/cli-server-api": "https://github.com/react-native-community/cli/issues/1564",
     "**/clang-format/async": "CVE-2021-43138 in older async, but updating clang-format will require formatting changes",
     "**/@react-native-community/cli-tools/shell-quote": "CVE-2021-42740",
+    "loader-utils": "CVE-2022-37601",
     "z-schema": "CVE-2021-3765 in validator. z-schema is used by rush which is a dependency of lage so should not be executed in this repo"
   }
 }
