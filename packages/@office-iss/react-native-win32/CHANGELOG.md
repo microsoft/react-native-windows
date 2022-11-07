@@ -1,8 +1,17 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 26 Sep 2022 15:10:18 GMT and should not be manually modified.
+This log was last generated on Mon, 07 Nov 2022 16:12:33 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.70.3
+
+Mon, 07 Nov 2022 16:12:33 GMT
+
+### Patches
+
+- Add accessibilityLevel to BasePropsWin32 (krsiler@microsoft.com)
+- Remove duplicate accessibilityLevel prop (krsiler@microsoft.com)
 
 ## 0.70.2
 
