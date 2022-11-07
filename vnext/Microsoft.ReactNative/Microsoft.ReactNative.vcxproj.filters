@@ -752,6 +752,7 @@
     <Midl Include="RedBoxHandler.idl" />
     <Midl Include="QuirkSettings.idl" />
     <Midl Include="XamlHelper.idl" />
+    <Midl Include="LayoutService.idl" />
     <Midl Include="XamlUIService.idl" />
     <Midl Include="Views\cppwinrt\AccessibilityAction.idl">
       <Filter>Views\cppwinrt</Filter>

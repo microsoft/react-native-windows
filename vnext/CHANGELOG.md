@@ -1,8 +1,55 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 28 Oct 2022 05:11:29 GMT and should not be manually modified.
+This log was last generated on Mon, 07 Nov 2022 06:12:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.577
+
+Mon, 07 Nov 2022 06:12:29 GMT
+
+### Changes
+
+- Implement Form Data requests (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.576
+
+Fri, 04 Nov 2022 05:12:36 GMT
+
+### Changes
+
+- Simplify root node lookups (erozell@outlook.com)
+- Workaround for blur on XAML Islands (erozell@outlook.com)
+- Adds LayoutService interface to allow native layout updates (erozell@outlook.com)
+- Apply fast text optimization to multiple runs (erozell@outlook.com)
+- Fixes issue with zoom and horizontal scrolling (erozell@outlook.com)
+
+## 0.0.0-canary.575
+
+Thu, 03 Nov 2022 05:12:36 GMT
+
+### Changes
+
+- Align templates to not hardcode package versions (jthysell@microsoft.com)
+- renamed isPressed to isKeyDown (helewxdong@gmail.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.145
+
+## 0.0.0-canary.574
+
+Wed, 02 Nov 2022 05:12:37 GMT
+
+### Changes
+
+- Remove Microsoft.ReactNative.Managed.IntegrationTests from ARM64 build (jthysell@microsoft.com)
+
+## 0.0.0-canary.573
+
+Tue, 01 Nov 2022 05:13:34 GMT
+
+### Changes
+
+- Upgrade to VS 2022 (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.144
 
 ## 0.0.0-canary.572
 

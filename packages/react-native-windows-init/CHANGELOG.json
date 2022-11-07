@@ -2,6 +2,42 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Thu, 03 Nov 2022 05:12:36 GMT",
+      "tag": "react-native-windows-init_v1.2.8",
+      "version": "1.2.8",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.145",
+            "commit": "ab330f691477cad43c19b58ab8ce767a1c5baf58"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 01 Nov 2022 05:13:34 GMT",
+      "tag": "react-native-windows-init_v1.2.7",
+      "version": "1.2.7",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.49",
+            "commit": "5885ee4477e8a1d0fa992066abd1b405bef13b32"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.144",
+            "commit": "5885ee4477e8a1d0fa992066abd1b405bef13b32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 27 Oct 2022 05:11:37 GMT",
       "tag": "react-native-windows-init_v1.2.6",
       "version": "1.2.6",

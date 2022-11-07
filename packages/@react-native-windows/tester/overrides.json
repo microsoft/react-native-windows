@@ -28,6 +28,14 @@
       "issue": 0
     },
     {
+      "type": "platform",
+      "file": "src/js/examples/HTTP/HTTPExample.js"
+    },
+    {
+      "type": "platform",
+      "file": "src/js/examples/HTTP/HTTPExampleMultiPartFormData.js"
+    },
+    {
       "type": "patch",
       "file": "src/js/examples/Pressable/PressableExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Pressable/PressableExample.js",
