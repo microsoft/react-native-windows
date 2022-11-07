@@ -105,7 +105,7 @@ const Components: Array<RNTesterModuleInfo> = [
   {
     key: 'SwitchExample',
     category: 'UI',
-    module: require('../examples/Switch/SwitchExample'),
+    module: require('../examples-win/Switch/SwitchExample'),
   },
   {
     key: 'TextExample',
