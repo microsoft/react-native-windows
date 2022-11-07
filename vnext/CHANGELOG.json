@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 07 Nov 2022 06:12:29 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.577",
+      "version": "0.0.0-canary.577",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "13727e7f9ab0b1d6e635cc8ad83bc0fa93ba7f2a",
+            "comment": "Implement Form Data requests"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 04 Nov 2022 05:12:36 GMT",
       "tag": "react-native-windows_v0.0.0-canary.576",
       "version": "0.0.0-canary.576",
