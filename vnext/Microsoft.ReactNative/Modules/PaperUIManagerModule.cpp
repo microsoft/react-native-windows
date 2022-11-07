@@ -205,7 +205,20 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
       std::function<void(double left, double top, double width, double height, double pageX, double pageY)>
           &&callback) noexcept {
     if (auto node = m_nodeRegistry.findNode(reactTag)) {
-      auto &rootNode = m_nodeRegistry.getNode(node->m_rootTag);
+      int64_t rootTag = reactTag;
+      while (true) {
+        if (auto currNode = m_nodeRegistry.findNode(rootTag)) {
+          if (currNode->m_parent == -1) {
+            break;
+          }
+          rootTag = currNode->m_parent;
+        } else {
+          callback(0, 0, 0, 0, 0, 0);
+          return;
+        }
+      }
+      auto &rootNode = m_nodeRegistry.getNode(rootTag);
+
       m_nativeUIManager->measure(*node, rootNode, std::move(callback));
     }
   }
@@ -369,6 +382,10 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
 
   ShadowNode *FindShadowNodeForTag(int64_t tag) {
     return m_nodeRegistry.findNode(tag);
+  }
+
+  ShadowNode *FindParentRootShadowNode(int64_t tag) {
+    return m_nodeRegistry.getParentRootShadowNode(tag);
   }
 
   ShadowNode &GetShadowNodeForTag(int64_t tag) {
