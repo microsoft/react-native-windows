@@ -6,7 +6,7 @@ module.exports = {
     '^.+\\.(bmp|gif|jpg|jpeg|mp4|png|psd|svg|webp)$':
       '<rootDir>/jest/assetFileTransformer.js',
   },
-  transformIgnorePatterns: [],
+  transformIgnorePatterns: ['jest-runner'],
   setupFiles: ['./jest/setup.js'],
   fakeTimers: {
     enableGlobally: true,
