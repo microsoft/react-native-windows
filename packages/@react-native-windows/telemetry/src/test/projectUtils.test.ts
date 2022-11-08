@@ -61,6 +61,9 @@ test('usesTypeScript() is true with tsconfig.json present', async () => {
 });
 
 test('configToProjectInfo() works with playground project info', async () => {
+  // This test can take a little while - setting timeout to 20sec instead of 5
+  jest.setTimeout(20000); 
+
   const playgroundRoot = path.resolve(__dirname, '../../../../playground');
   const config = JSON.parse(
     execSync('npx react-native config', {
