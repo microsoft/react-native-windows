@@ -69,7 +69,6 @@
     "@types/node": "^14.14.22",
     "@types/prop-types": "15.7.1",
     "@types/react": "^18.0.18",
-    "@types/react-native": "^0.66.17",
     "eslint": "^8.19.0",
     "flow-bin": "^0.187.1",
     "jscodeshift": "^0.13.1",
