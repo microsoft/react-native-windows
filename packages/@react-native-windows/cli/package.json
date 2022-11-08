@@ -23,7 +23,7 @@
     "@react-native-windows/telemetry": "^0.0.0-canary.49",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
-    "@xmldom/xmldom": "^0.7.5",
+    "@xmldom/xmldom": "^0.7.7",
     "chalk": "^4.1.0",
     "cli-spinners": "^2.2.0",
     "envinfo": "^7.5.0",
