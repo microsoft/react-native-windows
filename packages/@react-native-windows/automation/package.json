@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@jest/create-cache-key-function": "^29.0.3",
+    "@jest/environment": "^29.3.0",
     "@jest/types": "^29.2.1",
     "@rnw-scripts/eslint-config": "1.1.14",
     "@rnw-scripts/just-task": "2.2.6",

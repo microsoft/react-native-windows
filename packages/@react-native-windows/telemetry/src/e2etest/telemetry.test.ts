@@ -464,7 +464,7 @@ const testTelemetryOptions = [
 
 test.each(testTelemetryOptions)(
   'Telemetry run test command end to end with CodedError, verify events fire %s',
-  async (options) => {
+  async options => {
     await TelemetryTest.startTest(options);
 
     const expectedError = new errorUtils.CodedError(
@@ -493,7 +493,7 @@ test.each(testTelemetryOptions)(
 
 test.each(testTelemetryOptions)(
   'Telemetry run test command end to end with CodedError (with error in message), verify events fire %s',
-  async (options) => {
+  async options => {
     await TelemetryTest.startTest(options);
 
     const expectedError = new errorUtils.CodedError(
@@ -522,7 +522,7 @@ test.each(testTelemetryOptions)(
 
 test.each(testTelemetryOptions)(
   'Telemetry run test command end to end with CodedError (with data), verify events fire %s',
-  async (options) => {
+  async options => {
     await TelemetryTest.startTest(options);
 
     const expectedError = new errorUtils.CodedError(
@@ -552,7 +552,7 @@ test.each(testTelemetryOptions)(
 
 test.each(testTelemetryOptions)(
   'Telemetry run test command end to end with Error, verify events fire %s',
-  async (options) => {
+  async options => {
     await TelemetryTest.startTest(options);
 
     const expectedError = new Error('error FOO2020: test error');
@@ -578,7 +578,7 @@ test.each(testTelemetryOptions)(
 
 test.each(testTelemetryOptions)(
   'Telemetry run test command end to end with Error (no message), verify events fire %s',
-  async (options) => {
+  async options => {
     await TelemetryTest.startTest(options);
 
     const expectedError = new Error();
@@ -668,7 +668,7 @@ function getVerifyStackTelemetryProcessor(
 
 test.each(testTelemetryOptions)(
   'Telemetry run test command end to end with Error, verify sanitized message and stack %s',
-  async (options) => {
+  async options => {
     await TelemetryTest.startTest(options);
 
     const expectedError = new Error('hello world');
@@ -693,7 +693,7 @@ test.each(testTelemetryOptions)(
 
 test.each(testTelemetryOptions)(
   'Telemetry run test command end to end with Error, verify sanitized message with path and stack %s',
-  async (options) => {
+  async options => {
     await TelemetryTest.startTest(options);
 
     const expectedError = new Error(`hello ${process.cwd()}`);
