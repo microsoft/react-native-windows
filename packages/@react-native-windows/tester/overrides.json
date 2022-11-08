@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.0.0-20220812-2104-23429330a",
+  "baseVersion": "0.0.0-20220912-2028-b0aba1b6f",
   "overrides": [
     {
       "type": "patch",
@@ -15,24 +15,38 @@
       "issue": 6341
     },
     {
+      "type": "derived",
+      "file": "src/js/examples-win/Button/ButtonExample.windows.js",
+      "baseFile": "packages/rn-tester/js/examples/Button/ButtonExample.js",
+      "baseHash": "36c55afe75ac9c6efdec22e5ceb1f114a84ebd45"
+    },
+    {
+      "type": "platform",
+      "file": "src/js/examples/HTTP/HTTPExample.js"
+    },
+    {
+      "type": "platform",
+      "file": "src/js/examples/HTTP/HTTPExampleMultiPartFormData.js"
+    },
+    {
       "type": "patch",
       "file": "src/js/examples/Pressable/PressableExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Pressable/PressableExample.js",
-      "baseHash": "f9a058755fb699e120836dfc58c3f024a6880a63",
+      "baseHash": "2fd05e8c48baa3ea8733cd4dbedddac5136b13ca",
       "issue": 6240
     },
     {
       "type": "patch",
       "file": "src/js/examples/TextInput/TextInputExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputExample.android.js",
-      "baseHash": "75b31e8bd6e2f4eeb8f0fd4f9b35085350cfe364",
+      "baseHash": "2f5fadc6a4d691e56e2c87a05c61c525311333c8",
       "issue": 5688
     },
     {
       "type": "patch",
       "file": "src/js/examples/View/ViewExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/View/ViewExample.js",
-      "baseHash": "3d597b0e6b09330431e0a90a9e3951f523cbcc2f"
+      "baseHash": "43e3b91beccd0f5e811bcf70c2979c9258e8cd2d"
     },
     {
       "type": "copy",
@@ -45,7 +59,7 @@
       "type": "derived",
       "file": "src/js/utils/RNTesterList.windows.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "0bcb52a13939a872073e54ee4274ddf561d7a0af"
+      "baseHash": "e3e46179f01995a76b39dc46feae58cbd868633e"
     }
   ]
 }

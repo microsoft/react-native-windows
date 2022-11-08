@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Tue, 18 Oct 2022 05:12:09 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.40",
+      "version": "0.0.0-canary.40",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "d1c755a0b1d8c74450bfb6aada2d2734ea4a59e2",
+            "comment": "Use newer react-native-codegen generators"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 15 Oct 2022 05:12:00 GMT",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.39",
       "version": "0.0.0-canary.39",

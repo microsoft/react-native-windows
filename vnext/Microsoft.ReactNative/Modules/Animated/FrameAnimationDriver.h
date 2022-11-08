@@ -13,11 +13,11 @@ class FrameAnimationDriver : public AnimationDriver {
       int64_t id,
       int64_t animatedValueTag,
       const Callback &endCallback,
-      const folly::dynamic &config,
+      const winrt::Microsoft::ReactNative::JSValueObject &config,
       const std::shared_ptr<NativeAnimatedNodeManager> &manager);
 
   std::tuple<comp::CompositionAnimation, comp::CompositionScopedBatch> MakeAnimation(
-      const folly::dynamic &config) override;
+      const winrt::Microsoft::ReactNative::JSValueObject &config) override;
 
   double ToValue() override;
 

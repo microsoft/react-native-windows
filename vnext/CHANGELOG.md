@@ -1,8 +1,145 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 15 Oct 2022 05:12:00 GMT and should not be manually modified.
+This log was last generated on Tue, 08 Nov 2022 06:12:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.578
+
+Tue, 08 Nov 2022 06:12:54 GMT
+
+### Changes
+
+- Simplify root node lookups (erozell@outlook.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.146
+
+## 0.0.0-canary.577
+
+Mon, 07 Nov 2022 06:12:29 GMT
+
+### Changes
+
+- Implement Form Data requests (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.576
+
+Fri, 04 Nov 2022 05:12:36 GMT
+
+### Changes
+
+- Simplify root node lookups (erozell@outlook.com)
+- Workaround for blur on XAML Islands (erozell@outlook.com)
+- Adds LayoutService interface to allow native layout updates (erozell@outlook.com)
+- Apply fast text optimization to multiple runs (erozell@outlook.com)
+- Fixes issue with zoom and horizontal scrolling (erozell@outlook.com)
+
+## 0.0.0-canary.575
+
+Thu, 03 Nov 2022 05:12:36 GMT
+
+### Changes
+
+- Align templates to not hardcode package versions (jthysell@microsoft.com)
+- renamed isPressed to isKeyDown (helewxdong@gmail.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.145
+
+## 0.0.0-canary.574
+
+Wed, 02 Nov 2022 05:12:37 GMT
+
+### Changes
+
+- Remove Microsoft.ReactNative.Managed.IntegrationTests from ARM64 build (jthysell@microsoft.com)
+
+## 0.0.0-canary.573
+
+Tue, 01 Nov 2022 05:13:34 GMT
+
+### Changes
+
+- Upgrade to VS 2022 (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.144
+
+## 0.0.0-canary.572
+
+Fri, 28 Oct 2022 05:11:29 GMT
+
+### Changes
+
+- Adds GetReactRootView method to XamlUIService (erozell@outlook.com)
+- Fix typo in TouchHandler.cpp which broke hardware back button events (jahiggin@microsoft.com)
+- Adding support for ImageSource on windows (helewxdong@gmail.com)
+- Do not use xaml rendering callback in non-xaml apps (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.571
+
+Thu, 27 Oct 2022 05:11:37 GMT
+
+### Changes
+
+- Allow customers to specify $(CppWinRTVersion) (jthysell@microsoft.com)
+- Update WindowsAppSDK versions to latest (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.143
+
+## 0.0.0-canary.570
+
+Wed, 26 Oct 2022 05:11:35 GMT
+
+### Changes
+
+- intergration 9/12/22 (tatianakapos@microsoft.com)
+- Fix C# modules with multi-parameter callback methods (vmoroz@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.142
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.54
+
+## 0.0.0-canary.569
+
+Tue, 25 Oct 2022 05:11:24 GMT
+
+### Changes
+
+- Run yarn install --frozen-lockfile (vmoroz@users.noreply.github.com)
+
+## 0.0.0-canary.568
+
+Fri, 21 Oct 2022 05:12:38 GMT
+
+### Changes
+
+- Fix missing headers for MSVC 14.34 (julio.rocha@microsoft.com)
+- Fixes issue for loading images in Clang builds (erozell@outlook.com)
+- Simplifies and fixes various View prop handlers (erozell@outlook.com)
+- Save State (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.567
+
+Thu, 20 Oct 2022 05:17:11 GMT
+
+### Changes
+
+- Fabric: Stop using timers to run eventbeat (30809111+acoates-ms@users.noreply.github.com)
+- Mitigate MSB4011 warning for importing ExperimentalFeatures.props (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.141
+
+## 0.0.0-canary.566
+
+Wed, 19 Oct 2022 05:12:35 GMT
+
+### Changes
+
+- integration 8/26/22 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.53
+
+## 0.0.0-canary.565
+
+Tue, 18 Oct 2022 05:12:09 GMT
+
+### Changes
+
+- Use newer react-native-codegen generators (30809111+acoates-ms@users.noreply.github.com)
+- Convert NativeAnimatedModule to TurboModule (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.140
+- Bump @react-native-windows/codegen to v0.0.0-canary.40
 
 ## 0.0.0-canary.564
 

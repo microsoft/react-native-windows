@@ -16,5 +16,10 @@ namespace Microsoft.ReactNative.Managed
     {
       Writer.WriteObjectProperty(constantName, value);
     }
+
+    public void WriteProperties<T>(T value)
+    {
+      Writer.WriteObjectProperties(value);
+    }
   }
 }

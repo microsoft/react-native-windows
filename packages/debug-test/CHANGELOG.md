@@ -1,8 +1,120 @@
 # Change Log - debug-test
 
-This log was last generated on Sat, 15 Oct 2022 05:12:00 GMT and should not be manually modified.
+This log was last generated on Tue, 08 Nov 2022 06:12:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Tue, 08 Nov 2022 06:12:54 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation to v0.2.19
+
+## 0.0.0
+
+Mon, 07 Nov 2022 06:12:29 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation to v0.2.18
+
+## 0.0.0
+
+Fri, 04 Nov 2022 05:12:37 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation to v0.2.17
+
+## 0.0.0
+
+Thu, 03 Nov 2022 05:12:36 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation to v0.2.16
+
+## 0.0.0
+
+Wed, 02 Nov 2022 05:12:37 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation to v0.2.15
+
+## 0.0.0
+
+Tue, 01 Nov 2022 05:13:34 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation to v0.2.14
+
+## 0.0.0
+
+Fri, 28 Oct 2022 05:11:30 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation to v0.2.13
+
+## 0.0.0
+
+Thu, 27 Oct 2022 05:11:37 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation to v0.2.12
+
+## 0.0.0
+
+Wed, 26 Oct 2022 05:11:35 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation to v0.2.11
+
+## 0.0.0
+
+Tue, 25 Oct 2022 05:11:24 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation to v0.2.10
+
+## 0.0.0
+
+Fri, 21 Oct 2022 05:12:39 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation to v0.2.9
+
+## 0.0.0
+
+Thu, 20 Oct 2022 05:17:11 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation to v0.2.8
+
+## 0.0.0
+
+Wed, 19 Oct 2022 05:12:35 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation to v0.2.7
+
+## 0.0.0
+
+Tue, 18 Oct 2022 05:12:09 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation to v0.2.6
 
 ## 0.0.0
 

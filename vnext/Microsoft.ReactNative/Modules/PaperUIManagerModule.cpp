@@ -80,6 +80,11 @@ std::weak_ptr<NativeUIManager> GetNativeUIManager(const Mso::React::IReactContex
   return v ? v.Value() : std::weak_ptr<NativeUIManager>{};
 }
 
+std::weak_ptr<NativeUIManager> GetNativeUIManager(const winrt::Microsoft::ReactNative::ReactContext &context) {
+  auto v = context.Properties().Get(NativeUIManagerProperty());
+  return v ? v.Value() : std::weak_ptr<NativeUIManager>{};
+}
+
 class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, public INativeUIManagerHost {
  public:
   UIManagerModule() {}
@@ -200,20 +205,7 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
       std::function<void(double left, double top, double width, double height, double pageX, double pageY)>
           &&callback) noexcept {
     if (auto node = m_nodeRegistry.findNode(reactTag)) {
-      int64_t rootTag = reactTag;
-      while (true) {
-        if (auto currNode = m_nodeRegistry.findNode(rootTag)) {
-          if (currNode->m_parent == -1) {
-            break;
-          }
-          rootTag = currNode->m_parent;
-        } else {
-          callback(0, 0, 0, 0, 0, 0);
-          return;
-        }
-      }
-      auto &rootNode = m_nodeRegistry.getNode(rootTag);
-
+      auto &rootNode = m_nodeRegistry.getNode(node->m_rootTag);
       m_nativeUIManager->measure(*node, rootNode, std::move(callback));
     }
   }
@@ -377,10 +369,6 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
 
   ShadowNode *FindShadowNodeForTag(int64_t tag) {
     return m_nodeRegistry.findNode(tag);
-  }
-
-  ShadowNode *FindParentRootShadowNode(int64_t tag) {
-    return m_nodeRegistry.getParentRootShadowNode(tag);
   }
 
   ShadowNode &GetShadowNodeForTag(int64_t tag) {

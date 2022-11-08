@@ -10,7 +10,7 @@ class SubtractionAnimatedNode final : public ValueAnimatedNode {
  public:
   SubtractionAnimatedNode(
       int64_t tag,
-      const folly::dynamic &config,
+      const winrt::Microsoft::ReactNative::JSValueObject &config,
       const std::shared_ptr<NativeAnimatedNodeManager> &manager);
 
  private:

@@ -9,12 +9,24 @@
 
 'use strict';
 
+let flowParser, typeScriptParser, RNCodegen;
+
+try {
+  flowParser = require('react-native-codegen/src/parsers/flow');
+  typeScriptParser = require('react-native-codegen/src/parsers/typescript');
+  RNCodegen = require('react-native-codegen/src/generators/RNCodegen');
+} catch (e) {
+  // Fallback to lib when source doesn't exit (e.g. when installed as a dev dependency)
+  flowParser = require('react-native-codegen/lib/parsers/flow');
+  typeScriptParser = require('react-native-codegen/lib/parsers/typescript');
+  RNCodegen = require('react-native-codegen/lib/generators/RNCodegen');
+}
+
 // [Win - changes to use local react-native-codegen from tscodegen, which has the flow types removed
-const flow = require('../../../node_modules/react-native-tscodegen/lib/rncodegen/src/parsers/flow');
-const RNCodegen = {
+flowParser = require('../../../node_modules/react-native-tscodegen/lib/rncodegen/src/parsers/flow');
+RNCodegen = {
   generateViewConfig: ({libraryName, schema}) => {
     // schemaValidator.validate(schema);
-
     const result = require('./GenerateViewConfigJs')
       .generate(libraryName, schema)
       .values()
@@ -28,12 +40,30 @@ const RNCodegen = {
   },
 };
 // Win]
+
 const {basename} = require('path');
 
-function generateViewConfig(filename, code) {
-  const schema = flow.parseString(code);
+function parse(filename, code) {
+  if (filename.endsWith('js')) {
+    return flowParser.parseString(code);
+  }
 
-  const libraryName = basename(filename).replace(/NativeComponent\.js$/, '');
+  if (filename.endsWith('ts')) {
+    return typeScriptParser.parseString(code);
+  }
+
+  throw new Error(
+    `Unable to parse file '${filename}'. Unsupported filename extension.`,
+  );
+}
+
+function generateViewConfig(filename, code) {
+  const schema = parse(filename, code);
+
+  const libraryName = basename(filename).replace(
+    /NativeComponent\.(js|ts)$/,
+    '',
+  );
   return RNCodegen.generateViewConfig({
     schema,
     libraryName,

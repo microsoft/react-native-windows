@@ -1,0 +1,41 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+import "IReactContext.idl";
+
+#include "NamespaceRedirect.h"
+#include "DocString.h"
+
+namespace Microsoft.ReactNative
+{
+  [default_interface]
+  [webhosthidden]
+  DOC_STRING("Provides access to Yoga layout functionality.")
+  runtimeclass LayoutService {
+    DOC_STRING("Use this method to get access to the @LayoutService associated with the @IReactContext.")
+    static LayoutService FromContext(IReactContext context);
+
+    DOC_STRING(
+      "Recursively applies layout to all root nodes. This method will trigger "
+      "a Yoga layout operation on roots attached to the React instance and "
+      "apply the layout results to all descendant nodes.")
+    void ApplyLayoutForAllNodes();
+
+    DOC_STRING(
+      "Recursively applies layout from the given React node with the supplied "
+      "size constraints. This method will trigger a Yoga layout operation on the "
+      "given node and its descendants and apply the layout results to these nodes.")
+    void ApplyLayout(Int64 reactTag, Single width, Single height);
+
+    DOC_STRING(
+        "Determines whether the UIManager is currently processing a batch of node updates."
+        "This is useful for optimizing layout and ensuring that applying layout to a particular "
+        "node will not cause tearing in the rendered UI.")
+    Boolean IsInBatch {
+      get;
+    };
+
+    DOC_STRING("Mark a particular React node as dirty for Yoga layout.")
+    void MarkDirty(Int64 reactTag);
+  }
+} // namespace ReactNative

@@ -12,6 +12,7 @@
 #include <appModel.h>
 #include <comUtil/qiCast.h>
 #ifndef CORE_ABI
+#include <LayoutService.h>
 #include <XamlUIService.h>
 #endif
 #include "ReactErrorProvider.h"
@@ -41,6 +42,7 @@
 #ifndef CORE_ABI
 #include "Modules/AccessibilityInfoModule.h"
 #include "Modules/AlertModule.h"
+#include "Modules/Animated/NativeAnimatedModule.h"
 #include "Modules/AppStateModule.h"
 #include "Modules/AppThemeModuleUwp.h"
 #include "Modules/ClipboardModule.h"
@@ -349,6 +351,10 @@ void ReactInstanceWin::LoadModules(
 
   registerTurboModule(
       L"ImageLoader", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::ImageLoader>());
+
+  registerTurboModule(
+      L"NativeAnimatedModule",
+      winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::NativeAnimatedModule>());
 #endif
 
   registerTurboModule(
@@ -757,6 +763,10 @@ void ReactInstanceWin::InitUIManager() noexcept {
   m_reactContext->Properties().Set(
       implementation::XamlUIService::XamlUIServiceProperty().Handle(),
       winrt::make<implementation::XamlUIService>(m_reactContext));
+
+  m_reactContext->Properties().Set(
+      implementation::LayoutService::LayoutServiceProperty().Handle(),
+      winrt::make<implementation::LayoutService>(m_reactContext));
 }
 #endif
 

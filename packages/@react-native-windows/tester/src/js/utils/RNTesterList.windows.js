@@ -13,6 +13,14 @@ import ReactNativeFeatureFlags from 'react-native/Libraries/ReactNative/ReactNat
 
 const Components: Array<RNTesterModuleInfo> = [
   {
+    key: 'HTTPExample',
+    module: require('../examples/HTTP/HTTPExample'),
+  },
+  {
+    key: 'XHRExample',
+    module: require('../examples/XHR/XHRExample'),
+  },
+  {
     key: 'ActivityIndicatorExample',
     category: 'UI',
     module: require('../examples/ActivityIndicator/ActivityIndicatorExample'),
@@ -20,7 +28,7 @@ const Components: Array<RNTesterModuleInfo> = [
   {
     key: 'ButtonExample',
     category: 'UI',
-    module: require('../examples/Button/ButtonExample'),
+    module: require('../examples-win/Button/ButtonExample'),
   },
   {
     key: 'FlatListExampleIndex',
@@ -253,11 +261,6 @@ const APIs: Array<RNTesterModuleInfo> = [
     module: require('../examples/Keyboard/KeyboardExample').default,
   },
   {
-    key: 'W3C PointerEvents',
-    category: 'Experimental',
-    module: require('../examples/Experimental/W3CPointerEventsExample').default,
-  },
-  {
     key: 'KeyboardExample',
     module: require('../examples-win/Keyboard/KeyboardExample'),
   },
@@ -341,16 +344,13 @@ const APIs: Array<RNTesterModuleInfo> = [
     key: 'XHRExample',
     category: 'Basic',
     module: require('../examples/XHR/XHRExample'),
-  },*/
-];
-
-if (global.__turboModuleProxy) {
-  APIs.push({
+  }, */
+  {
     key: 'TurboModuleExample',
     category: 'Basic',
     module: require('../examples/TurboModule/TurboModuleExample'),
-  });
-}
+  },
+];
 
 if (ReactNativeFeatureFlags.shouldEmitW3CPointerEvents()) {
   APIs.push({

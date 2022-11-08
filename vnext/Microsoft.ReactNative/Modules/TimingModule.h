@@ -73,6 +73,7 @@ struct Timing : public std::enable_shared_from_this<Timing> {
   void OnTick();
   winrt::dispatching::DispatcherQueueTimer EnsureDispatcherTimer();
   void StartRendering();
+  void PostRenderFrame() noexcept;
   void StartDispatcherTimer();
   void StopTicks();
 
@@ -81,6 +82,7 @@ struct Timing : public std::enable_shared_from_this<Timing> {
   xaml::Media::CompositionTarget::Rendering_revoker m_rendering;
   winrt::dispatching::DispatcherQueueTimer m_dispatcherQueueTimer{nullptr};
   bool m_usingRendering{false};
+  bool m_usePostForRendering{false};
 };
 
 } // namespace Microsoft::ReactNative

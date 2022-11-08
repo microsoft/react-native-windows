@@ -25,7 +25,7 @@
     <CppWinRTEnableReferenceProjection>true</CppWinRTEnableReferenceProjection>
     <ProjectGuid>{44DCED9B-9C4C-48FE-8545-0930192BBC16}</ProjectGuid>
     <ProjectName>React.Windows.Desktop.ABITests</ProjectName>
-    <VCProjectVersion>16.0</VCProjectVersion>
+    <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>ReactWindowsDesktopABITests</RootNamespace>
     <ProjectSubType>NativeUnitTestProject</ProjectSubType>
@@ -164,7 +164,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn" Version="1.8.1" />
-    <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" />
+    <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" PrivateAssets="all" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>

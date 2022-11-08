@@ -29,4 +29,28 @@ describe('PressableTests', () => {
     const dump = await dumpVisualTree('pressable_hit_slop_button');
     expect(dump).toMatchSnapshot();
   });
+  test('Pressables can have customized borders and corners', async () => {
+    const dump = await dumpVisualTree('advanced_borders_pressable');
+    expect(dump).toMatchSnapshot();
+  });
+  test('Pressables can have ranging opacity', async () => {
+    const dump = await dumpVisualTree('opacity_pressable');
+    expect(dump).toMatchSnapshot();
+  });
+  test('Pressables can have their accessibility and keyboard focus removed', async () => {
+    const dump = await dumpVisualTree('accessible_pressable');
+    expect(dump).toMatchSnapshot();
+  });
+  test('Pressables can have tooltips', async () => {
+    const dump = await dumpVisualTree('tooltip_pressable');
+    expect(dump).toMatchSnapshot();
+  });
+  test('Pressables can hide their children from accessibility focus', async () => {
+    const dump = await dumpVisualTree('no_hide_pressable');
+    expect(dump).toMatchSnapshot();
+  });
+  test('Pressables can hide their backface', async () => {
+    const dump = await dumpVisualTree('backface_pressable');
+    expect(dump).toMatchSnapshot();
+  });
 });

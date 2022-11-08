@@ -4,6 +4,7 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.ContractsLight;
 using System.Linq;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
@@ -123,7 +124,6 @@ namespace Microsoft.ReactNative.Managed.CodeGen
 
     internal MemberDeclarationSyntax CreateObjectSerializers(IEnumerable<INamedTypeSymbol> symbols)
     {
-
       var registrationCalls = new List<StatementSyntax>();
 
       foreach (var symbol in symbols)
@@ -152,6 +152,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
           }
 
           string name;
+          string jsonPropertyName;
           ISymbol type;
           bool emitRead;
           bool emitWrite;
@@ -160,6 +161,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
             if (member is IFieldSymbol field)
             {
               name = field.Name;
+              jsonPropertyName = TryGetJSNameFromAttribute(field, out var jsName) ? jsName : name;
               type = field.Type;
               emitRead = !field.IsConst && !field.IsReadOnly;
               emitWrite = true;
@@ -168,6 +170,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
               (member is IPropertySymbol property)
             {
               name = property.Name;
+              jsonPropertyName = TryGetJSNameFromAttribute(property, out var jsName) ? jsName : name;
               type = property.Type;
               emitRead = !property.IsReadOnly;
               emitWrite = !property.IsWriteOnly;
@@ -179,7 +182,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
 
             if (emitRead)
             {
-              readOperations.Add(ReadSwitch(name, type));
+              readOperations.Add(ReadSwitch(name, jsonPropertyName, type));
             }
 
             if (emitWrite)
@@ -192,7 +195,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
                       ReactTypes.JSValueWriter.ToTypeSyntax(),
                       GenericName(ReactNativeNames.WriteObjectPropertyMethodName, type.ToTypeSyntax())),
                     IdentifierName(ReactNativeNames.WriterLocalName),
-                    LiteralExpression(name),
+                    LiteralExpression(jsonPropertyName),
                     MemberAccessExpression(ReactNativeNames.ValueLocalName, Identifier(name)))
                 )
               );
@@ -281,11 +284,21 @@ namespace Microsoft.ReactNative.Managed.CodeGen
         //     writer.WriteNull();
         //   }
         // }
-        registrationCalls.Add(
-          CodeGenWrite(
-            symbol,
-            statements: new[]
-            {
+        if (symbol.TypeKind == TypeKind.Struct)
+        {
+          registrationCalls.Add(
+            CodeGenWrite(
+              symbol,
+              statements: writeOperations.ToArray())
+          );
+        }
+        else
+        {
+          registrationCalls.Add(
+            CodeGenWrite(
+              symbol,
+              statements: new[]
+              {
               IfStatement(
                 BinaryExpression(
                   SyntaxKind.NotEqualsExpression,
@@ -302,8 +315,9 @@ namespace Microsoft.ReactNative.Managed.CodeGen
                   )
                 )
               )
-            })
-        );
+              })
+          );
+        }
       }
 
       return MethodDeclaration(
@@ -322,11 +336,36 @@ namespace Microsoft.ReactNative.Managed.CodeGen
              symbol.DeclaredAccessibility == Accessibility.Internal;
     }
 
-    private SwitchSectionSyntax ReadSwitch(string fieldName, ISymbol fieldType)
+    private bool TryGetJSNameFromAttribute(ISymbol member, [NotNullWhen(returnValue: true)] out string? jsName)
+    {
+      jsName = null;
+      AttributeData? attr = member.GetAttributes().FirstOrDefault(
+        a => a.AttributeClass != null
+          && a.AttributeClass.Equals(ReactTypes.ReactPropertyAttribute, SymbolEqualityComparer.Default));
+      if (attr != null)
+      {
+        if (attr.ConstructorArguments.Length > 0)
+        {
+          jsName = attr.ConstructorArguments[0].Value as string;
+        }
+
+        foreach (var namedArgument in attr.NamedArguments)
+        {
+          if (namedArgument.Key == nameof(ReactPropertyAttribute.PropertyName))
+          {
+            jsName = namedArgument.Value.Value as string;
+          }
+        }
+      }
+
+      return jsName != null;
+    }
+
+    private SwitchSectionSyntax ReadSwitch(string fieldName, string jsonPropertyName, ISymbol fieldType)
     {
       return SwitchSection(
         new SyntaxList<SwitchLabelSyntax>(
-          CaseSwitchLabel(LiteralExpression(fieldName))
+          CaseSwitchLabel(LiteralExpression(jsonPropertyName))
         ),
         new SyntaxList<StatementSyntax>(
           new StatementSyntax[]
@@ -360,13 +399,13 @@ namespace Microsoft.ReactNative.Managed.CodeGen
     {
       Contract.Requires(expression != null ^ statements != null, "Only one of the args can be null.");
       // Generates:
-      //   JSValueReaderCodeGen<SymbolType>.ReadValue = (reader, out value) => value = ...readExpression...;
+      //   JSValueReaderOf<SymbolType>.ReadValue = (reader, out value) => value = ...readExpression...;
       return
         ExpressionStatement(
           AssignmentExpression(
             SyntaxKind.SimpleAssignmentExpression,
             MemberAccessExpression(
-              ReactTypes.JSValueReaderCodeGen.Construct(symbol),
+              ReactTypes.JSValueReaderOf.Construct(symbol),
               ReactNativeNames.ReadValueMethodName),
             ParenthesizedLambdaExpression(
               parameterList: ParameterList(
@@ -399,13 +438,13 @@ namespace Microsoft.ReactNative.Managed.CodeGen
       Contract.Requires(expression != null ^ statements != null, "Only one of the args can be null.");
 
       // Generates:
-      //   JSValueWriterCodeGen<SymbolType>.WriteValue = (writer, value) =>  ...writeExpression...;
+      //   JSValueWriterOf<SymbolType>.WriteValue = (writer, value) =>  ...writeExpression...;
       return
         ExpressionStatement(
           AssignmentExpression(
             SyntaxKind.SimpleAssignmentExpression,
             MemberAccessExpression(
-              ReactTypes.JSValueWriterCodeGen.Construct(symbol),
+              ReactTypes.JSValueWriterOf.Construct(symbol),
               ReactNativeNames.WriteValueMethodName),
             ParenthesizedLambdaExpression(
               parameterList: ParameterList(
@@ -443,7 +482,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
             AssignmentExpression(
               SyntaxKind.SimpleAssignmentExpression,
               MemberAccessExpression(
-                ReactTypes.JSValueReaderCodeGen.Construct(type),
+                ReactTypes.JSValueReaderOf.Construct(type),
                 ReactNativeNames.ReadValueMethodName),
               MemberAccessExpression(
                 method.ContainingType,
@@ -485,7 +524,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
             AssignmentExpression(
               SyntaxKind.SimpleAssignmentExpression,
               MemberAccessExpression(
-                ReactTypes.JSValueWriterCodeGen.Construct(type),
+                ReactTypes.JSValueWriterOf.Construct(type),
                 ReactNativeNames.WriteValueMethodName),
               MemberAccessExpression(
                 method.ContainingType,

@@ -6,24 +6,16 @@ internal void CreateModules(global::Microsoft.ReactNative.IReactPackageBuilder p
         moduleBuilder.AddConstantProvider((global::Microsoft.ReactNative.IJSValueWriter writer) =>
         {
             global::Microsoft.ReactNative.Managed.JSValueWriter.WriteObjectProperty(writer, "MyConstant1", module.MyConstant1);
-        }
-
-        );
+        });
         return module;
-    }
-
-    );
+    });
     packageBuilder.AddModule("MyModule2", (global::Microsoft.ReactNative.IReactModuleBuilder moduleBuilder) =>
     {
         global::TestClass.MyModule2 module = new global::TestClass.MyModule2();
         moduleBuilder.AddConstantProvider((global::Microsoft.ReactNative.IJSValueWriter writer) =>
         {
             global::Microsoft.ReactNative.Managed.JSValueWriter.WriteObjectProperty(writer, "MyConstant2", module.MyConstant2);
-        }
-
-        );
+        });
         return module;
-    }
-
-    );
+    });
 }

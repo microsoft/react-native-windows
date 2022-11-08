@@ -34,7 +34,7 @@ param (
 
 	[switch] $List,
 
-	[System.IO.FileInfo] $VsTest =	"${env:ProgramFiles(x86)}\Microsoft Visual Studio\2019\Enterprise\" +
+	[System.IO.FileInfo] $VsTest =	"${env:ProgramFiles}\Microsoft Visual Studio\2022\Enterprise\" +
 						"Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe",
 
 	[System.IO.DirectoryInfo] $ReactNativeLocation = "$($PSScriptRoot | Split-Path)",

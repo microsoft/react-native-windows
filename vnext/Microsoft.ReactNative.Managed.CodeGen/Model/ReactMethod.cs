@@ -19,17 +19,26 @@ namespace Microsoft.ReactNative.Managed.CodeGen.Model
 
     public ITypeSymbol EffectiveReturnType { get; }
 
+    public int ResolveParameterCount { get; }
+
+    public int RejectParameterCount { get; }
+
     public IReadOnlyList<IParameterSymbol> EffectiveParameters { get; }
 
-    public ReactMethod(IMethodSymbol method, string name, MethodReturnStyle returnStyle, ITypeSymbol effectiveReturnType, IReadOnlyList<IParameterSymbol> effectiveParameters, bool isSynchronous)
+    public ReactMethod(IMethodSymbol method, string name, MethodReturnStyle returnStyle,
+      ITypeSymbol effectiveReturnType, IReadOnlyList<IParameterSymbol> effectiveParameters,
+      bool isSynchronous, int resolveParameterCount, int rejectParameterCount)
     {
-      Contract.Requires(!(IsSynchronous && returnStyle == MethodReturnStyle.Task), "Task style methods are required to be asynchronous");
+      Contract.Requires(!(IsSynchronous && returnStyle == MethodReturnStyle.Task),
+        "Task style methods are required to be asynchronous");
       Method = method;
       Name = name;
       ReturnStyle = returnStyle;
       EffectiveReturnType = effectiveReturnType;
       EffectiveParameters = effectiveParameters;
       IsSynchronous = isSynchronous;
+      ResolveParameterCount = resolveParameterCount;
+      RejectParameterCount = rejectParameterCount;
     }
 
     public enum MethodReturnStyle

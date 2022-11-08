@@ -74,7 +74,7 @@
     <!-- Write the response file -->
     <WriteLinesToFile File="$(_ReactNativeCodeGenResponseFile)" Lines="@(_ReactNativeCodeGenResponseFileLines)" Overwrite="true" WriteOnlyWhenDifferent="true" Encoding="Unicode"/>
 
-    <!-- Execute teh code generation /> -->
+    <!-- Execute the code generation /> -->
     <Exec Command="$(_ReactNativeCodeGenToolExecutable) @$(_ReactNativeCodeGenResponseFile)" />
 
     <ItemGroup>

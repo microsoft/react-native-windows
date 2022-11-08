@@ -191,7 +191,8 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests.Analysis
       var method = module.Methods.First();
       Assert.AreEqual("Test", method.Name);
       Assert.AreEqual(0, method.EffectiveParameters.Count);
-      Assert.AreEqual("int", method.EffectiveReturnType.ToDisplayString(SymbolDisplayFormat.CSharpShortErrorMessageFormat));
+      Assert.AreEqual("void", method.EffectiveReturnType.ToDisplayString(SymbolDisplayFormat.CSharpShortErrorMessageFormat));
+      Assert.AreEqual(1, method.ResolveParameterCount);
       Assert.AreEqual(ReactMethod.MethodReturnStyle.Callback, method.ReturnStyle);
     }
 
@@ -212,7 +213,30 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests.Analysis
       var method = module.Methods.First();
       Assert.AreEqual("Test", method.Name);
       Assert.AreEqual(2, method.EffectiveParameters.Count);
-      Assert.AreEqual("int", method.EffectiveReturnType.ToDisplayString(SymbolDisplayFormat.CSharpShortErrorMessageFormat));
+      Assert.AreEqual("void", method.EffectiveReturnType.ToDisplayString(SymbolDisplayFormat.CSharpShortErrorMessageFormat));
+      Assert.AreEqual(1, method.ResolveParameterCount);
+      Assert.AreEqual(ReactMethod.MethodReturnStyle.Callback, method.ReturnStyle);
+    }
+
+    [TestMethod]
+    public void SingleCallbackMethodThreeCallbackArgs()
+    {
+      var (codeAnalyzer, type) = AnalyzeModuleFile(@"
+        [ReactMethod]
+        public string Test(int z, string a0, Action<int, string, int> callback)
+        {
+          return string.Empty;
+        }
+        ");
+      var result = codeAnalyzer.TryExtractModule(type, out var module);
+      Assert.IsTrue(result);
+
+      Assert.AreEqual(1, module.Methods.Count);
+      var method = module.Methods.First();
+      Assert.AreEqual("Test", method.Name);
+      Assert.AreEqual(2, method.EffectiveParameters.Count);
+      Assert.AreEqual("void", method.EffectiveReturnType.ToDisplayString(SymbolDisplayFormat.CSharpShortErrorMessageFormat));
+      Assert.AreEqual(3, method.ResolveParameterCount);
       Assert.AreEqual(ReactMethod.MethodReturnStyle.Callback, method.ReturnStyle);
     }
 
@@ -232,7 +256,9 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests.Analysis
       var method = module.Methods.First();
       Assert.AreEqual("Test", method.Name);
       Assert.AreEqual(0, method.EffectiveParameters.Count);
-      Assert.AreEqual("int", method.EffectiveReturnType.ToDisplayString(SymbolDisplayFormat.CSharpShortErrorMessageFormat));
+      Assert.AreEqual("void", method.EffectiveReturnType.ToDisplayString(SymbolDisplayFormat.CSharpShortErrorMessageFormat));
+      Assert.AreEqual(1, method.ResolveParameterCount);
+      Assert.AreEqual(1, method.RejectParameterCount);
       Assert.AreEqual(ReactMethod.MethodReturnStyle.TwoCallbacks, method.ReturnStyle);
     }
 
@@ -253,7 +279,32 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests.Analysis
       var method = module.Methods.First();
       Assert.AreEqual("Test", method.Name);
       Assert.AreEqual(2, method.EffectiveParameters.Count);
-      Assert.AreEqual("int", method.EffectiveReturnType.ToDisplayString(SymbolDisplayFormat.CSharpShortErrorMessageFormat));
+      Assert.AreEqual("void", method.EffectiveReturnType.ToDisplayString(SymbolDisplayFormat.CSharpShortErrorMessageFormat));
+      Assert.AreEqual(1, method.ResolveParameterCount);
+      Assert.AreEqual(1, method.RejectParameterCount);
+      Assert.AreEqual(ReactMethod.MethodReturnStyle.TwoCallbacks, method.ReturnStyle);
+    }
+
+    [TestMethod]
+    public void DoubleCallbackMethodMoreCallbackArgs()
+    {
+      var (codeAnalyzer, type) = AnalyzeModuleFile(@"
+        [ReactMethod]
+        public string Test(int z, string a0, Action<int, string> callback, Action<string, int, int> reject)
+        {
+          return string.Empty;
+        }
+        ");
+      var result = codeAnalyzer.TryExtractModule(type, out var module);
+      Assert.IsTrue(result);
+
+      Assert.AreEqual(1, module.Methods.Count);
+      var method = module.Methods.First();
+      Assert.AreEqual("Test", method.Name);
+      Assert.AreEqual(2, method.EffectiveParameters.Count);
+      Assert.AreEqual("void", method.EffectiveReturnType.ToDisplayString(SymbolDisplayFormat.CSharpShortErrorMessageFormat));
+      Assert.AreEqual(2, method.ResolveParameterCount);
+      Assert.AreEqual(3, method.RejectParameterCount);
       Assert.AreEqual(ReactMethod.MethodReturnStyle.TwoCallbacks, method.ReturnStyle);
     }
 

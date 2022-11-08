@@ -49,4 +49,16 @@ describe('ViewTests', () => {
     const dump = await dumpVisualTree('backface-visibility-2');
     expect(dump).toMatchSnapshot();
   });
+  test('Views can have accessibility customization', async () => {
+    const dump = await dumpVisualTree('accessibility');
+    expect(dump).toMatchSnapshot();
+  });
+  test('Views can have unique border width and radius per edge/corner', async () => {
+    const dump = await dumpVisualTree('advanced-border');
+    expect(dump).toMatchSnapshot();
+  });
+  test('Views can have a custom nativeID', async () => {
+    const dump = await dumpVisualTree('nativeid');
+    expect(dump).toMatchSnapshot();
+  });
 });

@@ -24,6 +24,7 @@ import type {EdgeInsetsOrSizeProp} from '../../StyleSheet/EdgeInsetsPropType';
 import type {Node} from 'react';
 import type {ViewStyleProp} from '../../StyleSheet/StyleSheet';
 import type {
+  Role,
   AccessibilityRole,
   AccessibilityState,
   AccessibilityValue,
@@ -99,6 +100,10 @@ type PointerEventProps = $ReadOnly<{|
   onPointerDownCapture?: ?(e: PointerEvent) => void,
   onPointerUp?: ?(e: PointerEvent) => void,
   onPointerUpCapture?: ?(e: PointerEvent) => void,
+  onPointerOver?: ?(e: PointerEvent) => void,
+  onPointerOverCapture?: ?(e: PointerEvent) => void,
+  onPointerOut?: ?(e: PointerEvent) => void,
+  onPointerOutCapture?: ?(e: PointerEvent) => void,
 |}>;
 
 type FocusEventProps = $ReadOnly<{|
@@ -290,6 +295,16 @@ type AndroidViewProps = $ReadOnly<{|
   accessibilityLiveRegion?: ?('none' | 'polite' | 'assertive'),
 
   /**
+   * Indicates to accessibility services whether the user should be notified
+   * when this view changes. Works for Android API >= 19 only.
+   *
+   * @platform android
+   *
+   * See https://reactnative.dev/docs/view#accessibilityliveregion
+   */
+  'aria-live'?: ?('polite' | 'assertive' | 'off'),
+
+  /**
    * Controls how view is important for accessibility which is if it
    * fires accessibility events and if it is reported to accessibility services
    * that query the screen. Works for Android only.
@@ -350,6 +365,19 @@ type AndroidViewProps = $ReadOnly<{|
   focusable?: boolean,
 
   /**
+   * Indicates whether this `View` should be focusable with a non-touch input device, eg. receive focus with a hardware keyboard.
+   * See https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/tabindex
+   * for more details.
+   *
+   * Supports the following values:
+   * -  0 (View is focusable)
+   * - -1 (View is not focusable)
+   *
+   * @platform android
+   */
+  tabIndex?: 0 | -1,
+
+  /**
    * The action to perform when this `View` is clicked on by a non-touch click, eg. enter key on a hardware keyboard.
    *
    * @platform android
@@ -375,6 +403,15 @@ type IOSViewProps = $ReadOnly<{|
    * See https://reactnative.dev/docs/view#accessibilityviewismodal
    */
   accessibilityViewIsModal?: ?boolean,
+
+  /**
+   * The aria-modal attribute indicates content contained within a modal with aria-modal="true"
+   * should be accessible to the user.
+   * Default is `false`.
+   *
+   *  @platform ios
+   */
+  'aria-modal'?: ?boolean,
 
   /**
    * A value indicating whether the accessibility elements contained within
@@ -485,6 +522,12 @@ export type ViewProps = $ReadOnly<{|
   accessibilityHint?: ?Stringish,
 
   /**
+   * Alias for accessibilityLabel  https://reactnative.dev/docs/view#accessibilitylabel
+   * https://github.com/facebook/react-native/issues/34424
+   */
+  'aria-label'?: ?Stringish,
+
+  /**
    * Indicates to the accessibility services that the UI component is in
    * a specific language. The provided string should be formatted following
    * the BCP 47 specification (https://www.rfc-editor.org/info/bcp47).
@@ -499,10 +542,24 @@ export type ViewProps = $ReadOnly<{|
   accessibilityRole?: ?AccessibilityRole,
 
   /**
+   * Alias for accessibilityRole
+   */
+  role?: ?Role,
+
+  /**
    * Indicates to accessibility services that UI Component is in a specific State.
    */
   accessibilityState?: ?AccessibilityState,
   accessibilityValue?: ?AccessibilityValue,
+
+  /**
+   * alias for accessibilityState
+   * It represents textual description of a component's value, or for range-based components, such as sliders and progress bars.
+   */
+  'aria-valuemax'?: ?AccessibilityValue['max'],
+  'aria-valuemin'?: ?AccessibilityValue['min'],
+  'aria-valuenow'?: ?AccessibilityValue['now'],
+  'aria-valuetext'?: ?AccessibilityValue['text'],
 
   /**
    * Provides an array of custom actions available for accessibility.
@@ -518,6 +575,23 @@ export type ViewProps = $ReadOnly<{|
   accessibilityLabelledBy?: ?string | ?Array<string>,
 
   /**
+   * alias for accessibilityState
+   *
+   * see https://reactnative.dev/docs/accessibility#accessibilitystate
+   */
+  'aria-busy'?: ?boolean,
+  'aria-checked'?: ?boolean,
+  'aria-disabled'?: ?boolean,
+  'aria-expanded'?: ?boolean,
+  'aria-selected'?: ?boolean,
+  /** A value indicating whether the accessibility elements contained within
+   * this accessibility element are hidden.
+   *
+   * See https://reactnative.dev/docs/view#aria-hidden
+   */
+  'aria-hidden'?: ?boolean,
+
+  /**
    * Views that are only used to layout their children or otherwise don't draw
    * anything may be automatically removed from the native hierarchy as an
    * optimization. Set this property to `false` to disable this optimization and
@@ -529,6 +603,15 @@ export type ViewProps = $ReadOnly<{|
    * See https://reactnative.dev/docs/view#collapsable
    */
   collapsable?: ?boolean,
+
+  /**
+   * Used to locate this view from native classes.
+   *
+   * > This disables the 'layout-only view removal' optimization for this view!
+   *
+   * See https://reactnative.dev/docs/view#id
+   */
+  id?: string,
 
   /**
    * Used to locate this view in end-to-end tests.

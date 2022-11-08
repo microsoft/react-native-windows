@@ -427,7 +427,7 @@ bool TouchEventHandler::DispatchBackEvent() {
     return false;
 
   BatchingEmitter().EmitJSEvent(
-      L"RCTDeviceEventEmitter", L"emit", winrt::Microsoft::ReactNative::MakeJSValueArgWriter(L"hardwardBackPress"));
+      L"RCTDeviceEventEmitter", L"emit", winrt::Microsoft::ReactNative::MakeJSValueArgWriter(L"hardwareBackPress"));
 
   return true;
 }

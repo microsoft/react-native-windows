@@ -39,8 +39,7 @@ class TextShadowNode final : public ShadowNodeBase {
   friend TextViewManager;
 
  private:
-  ShadowNode *m_firstChildNode;
-
+  bool m_isTextOptimized{true};
   bool m_hasDescendantTextHighlighter{false};
   bool m_hasDescendantPressable{false};
   std::optional<winrt::Windows::UI::Color> m_backgroundColor{};
@@ -49,9 +48,6 @@ class TextShadowNode final : public ShadowNodeBase {
   winrt::event_revoker<xaml::Controls::ITextBlock> m_selectionChangedRevoker;
 
  public:
-  TextShadowNode() {
-    m_firstChildNode = nullptr;
-  };
   bool ImplementsPadding() override {
     return true;
   }
@@ -66,25 +62,23 @@ class TextShadowNode final : public ShadowNodeBase {
       m_hasDescendantPressable |= textChildNode.hasDescendantPressable;
     }
 
-    auto addInline = true;
-    // Only convert to fast text when exactly one child is attached to the root Text node
-    if (index == 0 && m_children.size() == 1) {
-      auto run = childNode.GetView().try_as<winrt::Run>();
-      if (run != nullptr) {
-        m_firstChildNode = &child;
-        auto textBlock = this->GetView().as<xaml::Controls::TextBlock>();
-        textBlock.Text(run.Text());
-        addInline = false;
+    const auto wasOptimized = m_isTextOptimized;
+    m_isTextOptimized = IsRawTextShadowNode(&childNode) && m_isTextOptimized;
+    if (m_isTextOptimized) {
+      // Re-build optimized text from children
+      UpdateOptimizedText();
+    } else if (wasOptimized) {
+      // Remove optimized text and re-construct as Inline tree
+      UpdateOptimizedText();
+      if (const auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
+        for (size_t i = 0; i < m_children.size(); ++i) {
+          if (const auto childNode =
+                  static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(m_children[i]))) {
+            Super::AddView(*childNode, i);
+          }
+        }
       }
-    } else if (m_firstChildNode != nullptr) {
-      assert(m_children.size() == 2);
-      auto textBlock = this->GetView().as<xaml::Controls::TextBlock>();
-      textBlock.ClearValue(xaml::Controls::TextBlock::TextProperty());
-      Super::AddView(*m_firstChildNode, 0);
-      m_firstChildNode = nullptr;
-    }
-
-    if (addInline) {
+    } else {
       Super::AddView(child, index);
     }
 
@@ -92,10 +86,9 @@ class TextShadowNode final : public ShadowNodeBase {
   }
 
   void removeAllChildren() override {
-    if (m_firstChildNode) {
+    if (m_isTextOptimized) {
       auto textBlock = this->GetView().as<xaml::Controls::TextBlock>();
       textBlock.ClearValue(xaml::Controls::TextBlock::TextProperty());
-      m_firstChildNode = nullptr;
     } else {
       Super::removeAllChildren();
     }
@@ -103,15 +96,31 @@ class TextShadowNode final : public ShadowNodeBase {
   }
 
   void RemoveChildAt(int64_t indexToRemove) override {
-    if (m_firstChildNode) {
-      assert(indexToRemove == 0);
-      auto textBlock = this->GetView().as<xaml::Controls::TextBlock>();
-      textBlock.ClearValue(xaml::Controls::TextBlock::TextProperty());
-      m_firstChildNode = nullptr;
+    if (m_isTextOptimized) {
+      UpdateOptimizedText();
     } else {
       Super::RemoveChildAt(indexToRemove);
     }
     RecalculateTextHighlighters();
+  }
+
+  void UpdateOptimizedText() {
+    if (m_children.size() > 0 && m_isTextOptimized) {
+      if (const auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
+        winrt::hstring text = L"";
+        for (const auto childTag : m_children) {
+          if (const auto childNode =
+                  static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(childTag))) {
+            text = text + childNode->GetView().as<winrt::Run>().Text();
+          }
+        }
+        auto textBlock = this->GetView().as<xaml::Controls::TextBlock>();
+        textBlock.Text(text);
+      }
+    } else {
+      auto textBlock = this->GetView().as<xaml::Controls::TextBlock>();
+      textBlock.ClearValue(xaml::Controls::TextBlock::TextProperty());
+    }
   }
 
   void RecalculateTextHighlighters() {
@@ -386,6 +395,13 @@ void TextViewManager::OnPointerEvent(
       textNode->m_hasDescendantTextHighlighter = true;
     }
     textNode->RecalculateTextHighlighters();
+  }
+}
+
+/*static*/ void TextViewManager::UpdateOptimizedText(ShadowNodeBase *node) {
+  if (IsTextShadowNode(node)) {
+    const auto textNode = static_cast<TextShadowNode *>(node);
+    textNode->UpdateOptimizedText();
   }
 }
 

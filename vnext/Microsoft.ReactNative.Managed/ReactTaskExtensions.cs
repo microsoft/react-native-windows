@@ -32,8 +32,7 @@ namespace Microsoft.ReactNative.Managed
         {
           if (reject != null)
           {
-            var exception = t.Exception.Flatten();
-            WriteReject(writer, exception);
+            WriteReject(writer, t.Exception);
             reject(writer);
           }
         }
@@ -64,12 +63,24 @@ namespace Microsoft.ReactNative.Managed
         {
           if (reject != null)
           {
-            var exception = t.Exception.Flatten();
-            WriteReject(writer, exception);
+            WriteReject(writer, t.Exception);
             reject(writer);
           }
         }
       });
+    }
+
+    private static void WriteReject(IJSValueWriter writer, AggregateException exception)
+    {
+      var innerExceptions = exception.InnerExceptions;
+      if (innerExceptions.Count == 1)
+      {
+        WriteReject(writer, innerExceptions[0]);
+      }
+      else
+      {
+        WriteReject(writer, exception.Flatten());
+      }
     }
 
     private static void WriteReject(IJSValueWriter writer, Exception exception)

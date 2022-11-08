@@ -20,6 +20,8 @@ namespace Microsoft.ReactNative.Managed.CodeGen.Model
 
     public ICollection<ReactConstantProvider> ConstantProviders { get; } = new List<ReactConstantProvider>();
 
+    public ICollection<ReactGetConstants> GetConstants { get; } = new List<ReactGetConstants>();
+
     public ICollection<ReactMethod> Methods { get; } = new List<ReactMethod>();
 
     public ICollection<ReactFunction> Functions { get; } = new List<ReactFunction>();

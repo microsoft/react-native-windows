@@ -4,6 +4,7 @@
 #pragma once
 #include <IReactInstance.h>
 #include <React.h>
+#include <ReactContext.h>
 #include <folly/dynamic.h>
 #include "AnimatedNode.h"
 
@@ -18,8 +19,8 @@ class PropsAnimatedNode final : public AnimatedNode {
  public:
   PropsAnimatedNode(
       int64_t tag,
-      const folly::dynamic &config,
-      const Mso::CntPtr<Mso::React::IReactContext> &context,
+      const winrt::Microsoft::ReactNative::JSValueObject &config,
+      const winrt::Microsoft::ReactNative::ReactContext &context,
       const std::shared_ptr<NativeAnimatedNodeManager> &manager);
   void ConnectToView(int64_t viewTag);
   void DisconnectFromView(int64_t viewTag);
@@ -34,7 +35,7 @@ class PropsAnimatedNode final : public AnimatedNode {
   Microsoft::ReactNative::ShadowNodeBase *GetShadowNodeBase();
   xaml::UIElement GetUIElement();
 
-  Mso::CntPtr<Mso::React::IReactContext> m_context{};
+  winrt::Microsoft::ReactNative::ReactContext m_context;
   std::map<std::string, int64_t> m_propMapping{};
   folly::dynamic m_propMap{};
 

@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <hermes/hermes.h>
+#include <hermes/hermes_win.h>
 
 //! We do not package hermes.dll for projects that do not require it. We cannot
 //! use pure delay-loading to achieve this, since WACK will detect the
