@@ -40,7 +40,7 @@
     "@types/semver": "^7.3.3",
     "babel-jest": "^29.3.0",
     "eslint": "^8.19.0",
-    "jest": "^29.3.0",
+    "jest": "^29.0.3",
     "lookpath": "^1.2.1",
     "prettier": "^2.4.1",
     "semver": "^7.3.5",

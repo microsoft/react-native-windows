@@ -166,6 +166,10 @@
       "file": "src/IntegrationTests/XHRTest.js"
     },
     {
+      "type": "platform",
+      "file": "src/Libraries/__tests__/ViewWindows-test.js"
+    },
+    {
       "type": "copy",
       "file": "src/Libraries/.npmignore",
       "baseFile": "Libraries/.npmignore",

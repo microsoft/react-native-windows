@@ -22,6 +22,10 @@
       "baseHash": "f0816560377ebcc92670b01c8f253cf80bbb3d54"
     },
     {
+      "type": "platform",
+      "file": "src/Libraries/__tests__/ButtonWin32-test.js"
+    },
+    {
       "type": "patch",
       "file": "src/Libraries/Alert/Alert.win32.js",
       "baseFile": "Libraries/Alert/Alert.js",
