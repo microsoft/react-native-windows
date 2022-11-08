@@ -65,6 +65,20 @@ jobs:
         parameters:
           complianceWarnOnly: ${{ parameters.complianceWarnOnly }}
 
+      # AntiMalware Scanner Task ()
+      - task: securedevelopmentteam.vss-secure-development-tools.build-task-antimalware.AntiMalware@4
+        displayName: '🛡️ Guardian: AntiMalware Scanner'
+        inputs:
+          InputType: 'Basic'
+          ScanType: 'CustomScan'
+          FileDirPath: $(Build.SourcesDirectory)
+          EnableServices: true
+          SupportLogOnError: false
+          TreatSignatureUpdateFailureAs: 'Warning'
+          SignatureFreshness: 'OneDay'
+          TreatStaleSignatureAs: 'Error'
+        continueOnError: ${{ parameters.complianceWarnOnly }}
+
       - task: NuGetAuthenticate@1
     
       # AgentES Task (https://aka.ms/UES)
