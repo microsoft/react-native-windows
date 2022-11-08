@@ -15,7 +15,7 @@ const screenshotDir = './errorShots';
 fs.mkdirSync(screenshotDir, {recursive: true});
 
 // Register to screenshot on each test failure
-global.jasmine.getEnv().addReporter({
+global.jasmine.addReporter({
   specDone: async result => {
     if (result.status === 'failed') {
       const friendlySpecName = sanitizeFilename(
