@@ -54,13 +54,13 @@ winrt::Microsoft::ReactNative::ReactRootView XamlUIService::GetReactRootView(
     xaml::FrameworkElement const &view) noexcept {
   if (auto uiManager = ::Microsoft::ReactNative::GetNativeUIManager(*m_context).lock()) {
     const auto reactTag = ::Microsoft::ReactNative::GetTag(view);
-    auto shadowNode = uiManager->getHost()->FindParentRootShadowNode(reactTag);
-    if (!shadowNode)
-      return nullptr;
-
-    return static_cast<::Microsoft::ReactNative::ShadowNodeBase *>(shadowNode)
-        ->GetView()
-        .as<winrt::Microsoft::ReactNative::ReactRootView>();
+    if (auto shadowNode = static_cast<::Microsoft::ReactNative::ShadowNodeBase *>(
+            uiManager->getHost()->FindShadowNodeForTag(reactTag))) {
+      if (auto rootNode = static_cast<::Microsoft::ReactNative::ShadowNodeBase *>(
+              uiManager->getHost()->FindShadowNodeForTag(shadowNode->m_rootTag))) {
+        return rootNode->GetView().as<winrt::Microsoft::ReactNative::ReactRootView>();
+      }
+    }
   }
   return nullptr;
 }

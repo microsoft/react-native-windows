@@ -2,6 +2,27 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Tue, 08 Nov 2022 06:12:54 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.146",
+      "version": "0.0.0-canary.146",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "ab44fb4aadf071b05e8f927d6d6432b95f2b4ccb",
+            "comment": "CG 11/7/22: Update `@xmldom/xmldom`"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.50",
+            "commit": "2ca512af4321542ba0eeceaaa48cd2f3a98d3b3c"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 03 Nov 2022 05:12:36 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.145",
       "version": "0.0.0-canary.145",
