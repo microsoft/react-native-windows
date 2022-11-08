@@ -6,6 +6,21 @@ parameters:
   default: false
 
 steps:
+  # Anti-Malware Scan Task (https://aka.ms/gdn-azdo-antimalware)
+  # Runs an Anti-Malware Scan on Windows agents, using Windows Defender.
+  - task: securedevelopmentteam.vss-secure-development-tools.build-task-antimalware.AntiMalware@4
+    displayName: '⚖️ Run Anti-Malware Scan'
+    inputs:
+      InputType: 'Basic'
+      ScanType: 'CustomScan'
+      FileDirPath: $(Build.SourcesDirectory)
+      EnableServices: true
+      SupportLogOnError: false
+      TreatSignatureUpdateFailureAs: 'Warning'
+      SignatureFreshness: 'OneDay'
+      TreatStaleSignatureAs: 'Error'
+    continueOnError: ${{ parameters.complianceWarnOnly }}
+        
   # PoliCheck Build Task (https://aka.ms/gdn-azdo-policheck)
   # Scans the text of source code, comments, and content for terminology that could be sensitive for legal, cultural, or geopolitical reasons.
   - task: securedevelopmentteam.vss-secure-development-tools.build-task-policheck.PoliCheck@2
@@ -40,6 +55,7 @@ steps:
     displayName: "⚖️ Compliance Pre-Build Analysis"
     inputs:
       AllTools: false
+      AntiMalware: true
       CredScan: true
       PoliCheck: true
       PoliCheckBreakOn: Severity4Above
