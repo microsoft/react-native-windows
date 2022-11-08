@@ -293,7 +293,7 @@ class AccessibilitySwitchExample extends React.Component<
             accessibilityLabel="This is a Switch"
             accessibilityValue={this.state.switchValue}
             accessibilityHint="Switch"
-            nativeID='accessibility-switch'
+            nativeID="accessibility-switch"
             onValueChange={value => this.setState({switchValue: value})}
             value={this.state.switchValue}
           />
@@ -384,11 +384,11 @@ exports.examples = [
     },
   },
   {
-    title: "Switches can have customized accessibility",
+    title: 'Switches can have customized accessibility',
     render(): React.Element<any> {
-      return <AccessibilitySwitchExample />
-    }
-  }
+      return <AccessibilitySwitchExample />;
+    },
+  },
 ];
 
 if (Platform.OS === 'ios') {
