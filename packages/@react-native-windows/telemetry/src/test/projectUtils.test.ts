@@ -61,7 +61,6 @@ test('usesTypeScript() is true with tsconfig.json present', async () => {
 });
 
 test('configToProjectInfo() works with playground project info', async () => {
-
   const playgroundRoot = path.resolve(__dirname, '../../../../playground');
   const config = JSON.parse(
     execSync('npx react-native config', {

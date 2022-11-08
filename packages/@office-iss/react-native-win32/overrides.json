@@ -268,64 +268,6 @@
       "baseHash": "539abffc3ea412fe8695babf58461f063068b4da"
     },
     {
-      "type": "copy",
-      "file": "src/Libraries/Lists/__tests__/CellRenderMask-test.js",
-      "baseFile": "Libraries/Lists/__tests__/CellRenderMask-test.js",
-      "baseHash": "ac27afe639dc574d8d3e78eb12912b3dbc0333bb"
-    },
-    {
-      "type": "copy",
-      "file": "src/Libraries/Lists/__tests__/FillRateHelper-test.js",
-      "baseFile": "Libraries/Lists/__tests__/FillRateHelper-test.js",
-      "baseHash": "4d2219bd468b8a5108cb7401455b5bd3827231c2",
-      "issue": 0
-    },
-    {
-      "type": "copy",
-      "file": "src/Libraries/Lists/__tests__/FlatList-test.js",
-      "baseFile": "Libraries/Lists/__tests__/FlatList-test.js",
-      "baseHash": "aa55f912b1ddf133b396175969f908fa9ed434ed",
-      "issue": 0
-    },
-    {
-      "type": "copy",
-      "file": "src/Libraries/Lists/__tests__/SectionList-test.js",
-      "baseFile": "Libraries/Lists/__tests__/SectionList-test.js",
-      "baseHash": "d8ae1d2fe3797b9ce28db6df2bdff243f4e1c991",
-      "issue": 0
-    },
-    {
-      "type": "copy",
-      "file": "src/Libraries/Lists/__tests__/ViewabilityHelper-test.js",
-      "baseFile": "Libraries/Lists/__tests__/ViewabilityHelper-test.js",
-      "baseHash": "4ed422fa7f184ff66f1c9beff83b3dcf62e18332"
-    },
-    {
-      "type": "copy",
-      "file": "src/Libraries/Lists/__tests__/VirtualizedList-test.js",
-      "baseFile": "Libraries/Lists/__tests__/VirtualizedList-test.js",
-      "baseHash": "83933892a87638b524c2818e42998ede04eda65b",
-      "issue": 0
-    },
-    {
-      "type": "copy",
-      "file": "src/Libraries/Lists/__tests__/VirtualizedSectionList-test.js",
-      "baseFile": "Libraries/Lists/__tests__/VirtualizedSectionList-test.js",
-      "baseHash": "c9eab944f38b778c7d9070134e148151fa03fb61",
-      "issue": 0
-    },
-    {
-      "type": "copy",
-      "file": "src/Libraries/Lists/__tests__/VirtualizeUtils-test.js",
-      "baseFile": "Libraries/Lists/__tests__/VirtualizeUtils-test.js",
-      "baseHash": "7706e18fcfe8688eca1f746b4f54aae13a2967c0",
-      "issue": 0
-    },
-    {
-      "type": "platform",
-      "file": "src/Libraries/Lists/VirtualizedList.win32.js"
-    },
-    {
       "type": "patch",
       "file": "src/Libraries/LogBox/UI/LogBoxInspectorHeader.win32.js",
       "baseFile": "Libraries/LogBox/UI/LogBoxInspectorHeader.js",

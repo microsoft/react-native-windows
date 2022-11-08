@@ -3,6 +3,9 @@
   "include": ["."],
   "exclude": ["node_modules"],
   "compilerOptions": {
-    "noEmit": true
-  }
+    "noEmit": true,
+    "paths": {
+      "Utilities": ["../../node_modules/react-native/types/Utilities.d.ts"],
+    },
+  },
 }
