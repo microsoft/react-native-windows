@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 08 Nov 2022 06:12:54 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.578",
+      "version": "0.0.0-canary.578",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "39e908c1ae54dd4434611e528e8f5c65fd83ad1d",
+            "comment": "Simplify root node lookups"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.146",
+            "commit": "2ca512af4321542ba0eeceaaa48cd2f3a98d3b3c"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 07 Nov 2022 06:12:29 GMT",
       "tag": "react-native-windows_v0.0.0-canary.577",
       "version": "0.0.0-canary.577",
