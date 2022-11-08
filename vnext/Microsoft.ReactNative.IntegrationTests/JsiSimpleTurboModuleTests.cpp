@@ -11,9 +11,11 @@
 #include "TestEventService.h"
 #include "TestReactNativeHostHolder.h"
 
-#include "codegen/msrnIntegrationTestsJSI.h"
-
+#pragma pack(push)
+#pragma warning(disable : 4100)
 #include "codegen/msrnIntegrationTestsJSI-generated.cpp"
+#include "codegen/msrnIntegrationTestsJSI.h"
+#pragma pack(pop)
 
 using namespace facebook;
 using namespace winrt;

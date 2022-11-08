@@ -3242,67 +3242,6 @@ private:
   Delegate delegate_;
 };
 
-class JSI_EXPORT NativeJSDevSupportCxxSpecJSI : public TurboModule {
-protected:
-  NativeJSDevSupportCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
-
-public:
-  virtual jsi::Object getConstants(jsi::Runtime &rt) = 0;
-  virtual void onSuccess(jsi::Runtime &rt, jsi::String data) = 0;
-  virtual void onFailure(jsi::Runtime &rt, double errorCode, jsi::String error) = 0;
-
-};
-
-template <typename T>
-class JSI_EXPORT NativeJSDevSupportCxxSpec : public TurboModule {
-public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
-  }
-
-protected:
-  NativeJSDevSupportCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("JSDevSupport", jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
-
-private:
-  class Delegate : public NativeJSDevSupportCxxSpecJSI {
-  public:
-    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativeJSDevSupportCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
-
-    jsi::Object getConstants(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::getConstants) == 1,
-          "Expected getConstants(...) to have 1 parameters");
-
-      return bridging::callFromJs<jsi::Object>(
-          rt, &T::getConstants, jsInvoker_, instance_);
-    }
-    void onSuccess(jsi::Runtime &rt, jsi::String data) override {
-      static_assert(
-          bridging::getParameterCount(&T::onSuccess) == 2,
-          "Expected onSuccess(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::onSuccess, jsInvoker_, instance_, std::move(data));
-    }
-    void onFailure(jsi::Runtime &rt, double errorCode, jsi::String error) override {
-      static_assert(
-          bridging::getParameterCount(&T::onFailure) == 3,
-          "Expected onFailure(...) to have 3 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::onFailure, jsInvoker_, instance_, std::move(errorCode), std::move(error));
-    }
-
-  private:
-    T *instance_;
-  };
-
-  Delegate delegate_;
-};
-
 class JSI_EXPORT NativePlatformConstantsAndroidCxxSpecJSI : public TurboModule {
 protected:
   NativePlatformConstantsAndroidCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
@@ -3705,6 +3644,7 @@ public:
   virtual void getCurrentGrayscaleState(jsi::Runtime &rt, jsi::Function onSuccess, jsi::Function onError) = 0;
   virtual void getCurrentInvertColorsState(jsi::Runtime &rt, jsi::Function onSuccess, jsi::Function onError) = 0;
   virtual void getCurrentReduceMotionState(jsi::Runtime &rt, jsi::Function onSuccess, jsi::Function onError) = 0;
+  virtual void getCurrentPrefersCrossFadeTransitionsState(jsi::Runtime &rt, jsi::Function onSuccess, jsi::Function onError) = 0;
   virtual void getCurrentReduceTransparencyState(jsi::Runtime &rt, jsi::Function onSuccess, jsi::Function onError) = 0;
   virtual void getCurrentVoiceOverState(jsi::Runtime &rt, jsi::Function onSuccess, jsi::Function onError) = 0;
   virtual void setAccessibilityContentSizeMultipliers(jsi::Runtime &rt, jsi::Object JSMultipliers) = 0;
@@ -3763,6 +3703,14 @@ private:
 
       return bridging::callFromJs<void>(
           rt, &T::getCurrentReduceMotionState, jsInvoker_, instance_, std::move(onSuccess), std::move(onError));
+    }
+    void getCurrentPrefersCrossFadeTransitionsState(jsi::Runtime &rt, jsi::Function onSuccess, jsi::Function onError) override {
+      static_assert(
+          bridging::getParameterCount(&T::getCurrentPrefersCrossFadeTransitionsState) == 3,
+          "Expected getCurrentPrefersCrossFadeTransitionsState(...) to have 3 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::getCurrentPrefersCrossFadeTransitionsState, jsInvoker_, instance_, std::move(onSuccess), std::move(onError));
     }
     void getCurrentReduceTransparencyState(jsi::Runtime &rt, jsi::Function onSuccess, jsi::Function onError) override {
       static_assert(

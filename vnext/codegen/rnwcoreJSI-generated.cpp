@@ -1188,24 +1188,6 @@ NativeDevSplitBundleLoaderCxxSpecJSI::NativeDevSplitBundleLoaderCxxSpecJSI(std::
   : TurboModule("DevSplitBundleLoader", jsInvoker) {
   methodMap_["loadBundle"] = MethodMetadata {1, __hostFunction_NativeDevSplitBundleLoaderCxxSpecJSI_loadBundle};
 }
-static jsi::Value __hostFunction_NativeJSDevSupportCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeJSDevSupportCxxSpecJSI *>(&turboModule)->getConstants(rt);
-}
-static jsi::Value __hostFunction_NativeJSDevSupportCxxSpecJSI_onSuccess(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeJSDevSupportCxxSpecJSI *>(&turboModule)->onSuccess(rt, args[0].asString(rt));
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeJSDevSupportCxxSpecJSI_onFailure(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeJSDevSupportCxxSpecJSI *>(&turboModule)->onFailure(rt, args[0].asNumber(), args[1].asString(rt));
-  return jsi::Value::undefined();
-}
-
-NativeJSDevSupportCxxSpecJSI::NativeJSDevSupportCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("JSDevSupport", jsInvoker) {
-  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeJSDevSupportCxxSpecJSI_getConstants};
-  methodMap_["onSuccess"] = MethodMetadata {1, __hostFunction_NativeJSDevSupportCxxSpecJSI_onSuccess};
-  methodMap_["onFailure"] = MethodMetadata {2, __hostFunction_NativeJSDevSupportCxxSpecJSI_onFailure};
-}
 static jsi::Value __hostFunction_NativePlatformConstantsAndroidCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativePlatformConstantsAndroidCxxSpecJSI *>(&turboModule)->getConstants(rt);
 }
@@ -1346,6 +1328,10 @@ static jsi::Value __hostFunction_NativeAccessibilityManagerCxxSpecJSI_getCurrent
   static_cast<NativeAccessibilityManagerCxxSpecJSI *>(&turboModule)->getCurrentReduceMotionState(rt, args[0].asObject(rt).asFunction(rt), args[1].asObject(rt).asFunction(rt));
   return jsi::Value::undefined();
 }
+static jsi::Value __hostFunction_NativeAccessibilityManagerCxxSpecJSI_getCurrentPrefersCrossFadeTransitionsState(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeAccessibilityManagerCxxSpecJSI *>(&turboModule)->getCurrentPrefersCrossFadeTransitionsState(rt, args[0].asObject(rt).asFunction(rt), args[1].asObject(rt).asFunction(rt));
+  return jsi::Value::undefined();
+}
 static jsi::Value __hostFunction_NativeAccessibilityManagerCxxSpecJSI_getCurrentReduceTransparencyState(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeAccessibilityManagerCxxSpecJSI *>(&turboModule)->getCurrentReduceTransparencyState(rt, args[0].asObject(rt).asFunction(rt), args[1].asObject(rt).asFunction(rt));
   return jsi::Value::undefined();
@@ -1377,6 +1363,7 @@ NativeAccessibilityManagerCxxSpecJSI::NativeAccessibilityManagerCxxSpecJSI(std::
   methodMap_["getCurrentGrayscaleState"] = MethodMetadata {2, __hostFunction_NativeAccessibilityManagerCxxSpecJSI_getCurrentGrayscaleState};
   methodMap_["getCurrentInvertColorsState"] = MethodMetadata {2, __hostFunction_NativeAccessibilityManagerCxxSpecJSI_getCurrentInvertColorsState};
   methodMap_["getCurrentReduceMotionState"] = MethodMetadata {2, __hostFunction_NativeAccessibilityManagerCxxSpecJSI_getCurrentReduceMotionState};
+  methodMap_["getCurrentPrefersCrossFadeTransitionsState"] = MethodMetadata {2, __hostFunction_NativeAccessibilityManagerCxxSpecJSI_getCurrentPrefersCrossFadeTransitionsState};
   methodMap_["getCurrentReduceTransparencyState"] = MethodMetadata {2, __hostFunction_NativeAccessibilityManagerCxxSpecJSI_getCurrentReduceTransparencyState};
   methodMap_["getCurrentVoiceOverState"] = MethodMetadata {2, __hostFunction_NativeAccessibilityManagerCxxSpecJSI_getCurrentVoiceOverState};
   methodMap_["setAccessibilityContentSizeMultipliers"] = MethodMetadata {1, __hostFunction_NativeAccessibilityManagerCxxSpecJSI_setAccessibilityContentSizeMultipliers};

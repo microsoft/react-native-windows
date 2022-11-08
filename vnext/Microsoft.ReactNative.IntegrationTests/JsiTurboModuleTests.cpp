@@ -24,7 +24,10 @@
 #include "TestEventService.h"
 #include "TestReactNativeHostHolder.h"
 
+#pragma pack(push)
+#pragma warning(disable : 4100)
 #include "codegen/msrnIntegrationTestsJSI.h"
+#pragma pack(pop)
 
 using namespace facebook;
 using namespace winrt;
