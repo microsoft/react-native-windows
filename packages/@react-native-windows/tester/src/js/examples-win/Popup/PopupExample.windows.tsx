@@ -130,6 +130,56 @@ class PopupPlacementExample extends React.Component<
   };
 }
 
+class PopupAccessibilityExample extends React.Component<
+  {},
+  IPopupPlacementExampleState
+> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      showPopup: false,
+    };
+  }
+
+  public render() {
+    return (
+      <View style={{width: 500, height: 500}} testID="popup-accessibility">
+        <Button onPress={this._togglePopup} title={'Toggle popup'} />
+        {this.state.showPopup && (
+          <Popup
+            style={{position: 'absolute', left: 0, right: 0, top: 0, bottom: 0}}
+            isOpen={this.state.showPopup}
+            onDismiss={this._onPopupDismissed}
+            isLightDismissEnabled={false}
+            accessibilityHint="Popup"
+            accessibilityLabel="This is a Popup"
+            nativeID="popup-accessibility">
+            <View style={{backgroundColor: 'lightgray', flex: 1}}>
+              <Text>This is a popup</Text>
+              <Button onPress={this._togglePopup} title="Toggle popup" />
+              <Button onPress={this._noop} title="This is a button" />
+            </View>
+          </Popup>
+        )}
+      </View>
+    );
+  }
+
+  _togglePopup = () => {
+    this.setState(state => ({
+      showPopup: !state.showPopup,
+    }));
+  };
+
+  _onPopupDismissed = () => {
+    this.setState({showPopup: false});
+  };
+
+  _noop = () => {
+    return;
+  };
+}
+
 export const displayName = (_undefined?: string) => {};
 export const title = 'Popup';
 export const category = 'UI';
@@ -146,6 +196,12 @@ export const examples = [
     title: 'Popup centered on screen',
     render: function (): JSX.Element {
       return <PopupPlacementExample />;
+    },
+  },
+  {
+    title: 'Popup with Accessibility Customization',
+    render: function (): JSX.Element {
+      return <PopupAccessibilityExample />;
     },
   },
 ];
