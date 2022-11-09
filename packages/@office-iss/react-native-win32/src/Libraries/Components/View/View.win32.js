@@ -10,9 +10,9 @@
 
 import type {ViewProps} from './ViewPropTypes';
 
-import ViewNativeComponent from './ViewNativeComponent';
-import TextAncestor from '../../Text/TextAncestor';
 import flattenStyle from '../../StyleSheet/flattenStyle';
+import TextAncestor from '../../Text/TextAncestor';
+import ViewNativeComponent from './ViewNativeComponent';
 import * as React from 'react';
 import invariant from 'invariant'; // [Windows]
 // [Windows
@@ -60,7 +60,6 @@ const View: React.AbstractComponent<
       'aria-disabled': ariaDisabled,
       'aria-expanded': ariaExpanded,
       'aria-selected': ariaSelected,
-      ...restProps
     } = otherProps;
 
     const _accessibilityState = {

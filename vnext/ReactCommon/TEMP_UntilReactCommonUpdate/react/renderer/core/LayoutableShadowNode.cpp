@@ -27,7 +27,7 @@ static LayoutableSmallVector<Rect> calculateTransformedFrames(
   auto transformedFrames = LayoutableSmallVector<Rect>{size};
   auto transformation = Transform::Identity();
 
-  for (size_t i = size; i > 0; --i) { // use size_t instead of int, and modify loop to avoid underflow, make PR upstream (Note changes to all uses of i in loop)
+  for (auto i = size; i > 0; --i) {
     auto currentShadowNode =
         traitCast<LayoutableShadowNode const *>(shadowNodeList.at(i - 1));
     auto currentFrame = currentShadowNode->getLayoutMetrics().frame;

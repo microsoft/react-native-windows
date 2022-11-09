@@ -58,7 +58,7 @@ function parse(filename, code) {
 }
 
 function generateViewConfig(filename, code) {
-  const schema = parse(filename, code);
+  const schema = parseFile(filename, code);
 
   const libraryName = basename(filename).replace(
     /NativeComponent\.(js|ts)$/,

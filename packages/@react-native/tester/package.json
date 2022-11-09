@@ -5,7 +5,6 @@
   "license": "MIT",
   "description": "React Native tester app.",
   "homepage": "https://github.com/facebook/react-native/tree/HEAD/packages/rn-tester",
-  "private": true,
   "repository": {
     "type": "git",
     "url": "git@github.com:facebook/react-native.git",
@@ -30,7 +29,7 @@
   },
   "devDependencies": {
     "connect": "^3.6.5",
-    "ws": "^6.1.4"
+    "ws": "^6.2.2"
   },
   "codegenConfig": {
     "name": "AppSpecs",

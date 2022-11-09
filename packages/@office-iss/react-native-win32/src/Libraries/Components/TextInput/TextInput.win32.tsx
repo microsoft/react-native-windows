@@ -23,7 +23,7 @@
  * 3. Any base/default styling work
  */
 
-import React from 'react'
+
 import {
   findNodeHandle,
   requireNativeComponent,
@@ -36,6 +36,7 @@ import {
   IChangeEvent,
   IFocusEvent,
 } from './TextInput.Types.win32';
+import React from 'react'
 
 const TextAncestor = require('../../Text/TextAncestor');
 const TextInputState = require('./TextInputState');

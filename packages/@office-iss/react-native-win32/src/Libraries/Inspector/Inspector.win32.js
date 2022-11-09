@@ -10,21 +10,17 @@
 
 'use strict';
 
-// const Dimensions = require('../Utilities/Dimensions'); [Win32]
-const InspectorOverlay = require('./InspectorOverlay');
-const InspectorPanel = require('./InspectorPanel');
-const Platform = require('../Utilities/Platform');
 const PressabilityDebug = require('../Pressability/PressabilityDebug');
-const React = require('react');
 const ReactNative = require('../Renderer/shims/ReactNative');
 const {findNodeHandle} = require('../ReactNative/RendererProxy');
 const StyleSheet = require('../StyleSheet/StyleSheet');
+//const Dimensions = require('../Utilities/Dimensions');
+const Platform = require('../Utilities/Platform');
 const View = require('../Components/View/View');
-const ReactNativeStyleAttributes = require('../Components/View/ReactNativeStyleAttributes');
 const getInspectorDataForViewAtPoint = require('./getInspectorDataForViewAtPoint');
-
-import type {TouchedViewDataAtPoint} from '../Renderer/shims/ReactNativeTypes';
-import type {HostRef} from './getInspectorDataForViewAtPoint';
+const InspectorOverlay = require('./InspectorOverlay');
+const InspectorPanel = require('./InspectorPanel');
+const React = require('react');
 
 const hook = window.__REACT_DEVTOOLS_GLOBAL_HOOK__;
 
