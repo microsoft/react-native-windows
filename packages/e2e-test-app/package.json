@@ -9,6 +9,7 @@
     "watch": "rnw-scripts watch",
     "windows": "react-native run-windows",
     "e2etest": "jest",
+    "e2etest:updateSnapshots": "jest -u",
     "e2etest:debug": "jest --config ./jest.debug.config.js"
   },
   "dependencies": {
