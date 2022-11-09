@@ -310,7 +310,7 @@ struct AsyncDeleter {
     try {
       // Ideally we want to show here how to use dispatch queues, but we cannot add DispatchQueue liblet dependency
       // here.
-#pragma warning(suppress : 4834, 4858) // discarding return value of function with 'nodiscard' attribute
+#pragma warning(suppress : 4834 4858) // discarding return value of function with 'nodiscard' attribute
       std::async(std::launch::async, [obj]() noexcept { TObject::RefCountPolicy::template Delete(obj); });
     } catch (...) {
       VerifyElseCrashTag(false, 0x01003707 /* tag_bad2h */);
