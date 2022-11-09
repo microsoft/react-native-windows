@@ -3,7 +3,10 @@
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": ".",
-    "rootDir": "src"
+    "rootDir": "src",
+    "paths": {
+      "Utilities": ["./rntypes/types/Utilities.d.ts"],
+    },
   },
   "include": ["src"],
   "exclude": ["node_modules"]
