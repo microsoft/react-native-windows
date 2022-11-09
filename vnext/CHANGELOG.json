@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 09 Nov 2022 06:12:57 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.578",
+      "version": "0.0.0-canary.578",
+      "comments": {
+        "none": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "fff5d061ae6f75bd73280ea46650160cbd24d51e",
+            "comment": "Supress warning in test code when discarding a std::async object"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 08 Nov 2022 06:12:54 GMT",
       "tag": "react-native-windows_v0.0.0-canary.578",
       "version": "0.0.0-canary.578",

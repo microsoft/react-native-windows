@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Supress warning in test code when discarding a std::async object",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "none"
-}
