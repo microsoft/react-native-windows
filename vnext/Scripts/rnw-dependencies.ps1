@@ -12,6 +12,8 @@ param(
     [switch]$Enterprise = $false
 )
 
+$Verbose = $PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent;
+
 enum CheckId {
     All
     AzureFunctions
@@ -72,8 +74,13 @@ $vsWorkloads = @('Microsoft.VisualStudio.Workload.ManagedDesktop',
     'Microsoft.VisualStudio.Workload.NativeDesktop',
     'Microsoft.VisualStudio.Workload.Universal');
 
+$vsAll = ($vsComponents + $vsWorkloads)
+
 # The minimum VS version to check for
-$vsver = "17.0"
+$vsver = "17.3"
+
+# The exact .NET SDK version to check for
+$dotnetver = "6.0"
 
 $v = [System.Environment]::OSVersion.Version;
 if ($env:Agent_BuildDirectory) {
@@ -86,22 +93,56 @@ if ($env:Agent_BuildDirectory) {
     }
 }
 
+function CheckVS-WithVSWhere {
+    param(
+        [string]$VsWhere,
+        [switch]$CheckPreRelease = $false
+    )
+
+    [string]$prereleaseArg = "";
+
+    if ($CheckPreRelease) {
+        $prereleaseArg = "-prerelease";
+    }
+
+    # Checking for VS + all required components
+    [String[]]$output = & $VsWhere -version $vsver -requires $vsAll -property productPath $prereleaseArg
+    if ($output.Count -gt 0) {
+        Write-Verbose "Visual Studio install(s) found, with required components, at:";
+        $output | ForEach ($_) { if (Test-Path $_) { Write-Verbose "  $_" } }
+        return $true;
+    }
+
+    # Check for VS without required components
+    [String[]]$output = & $VsWhere -version $vsver -property productPath $prereleaseArg
+    if ($output.Count -gt 0) {
+        Write-Verbose "Visual Studio install(s) found, but without required components, at:";
+        $output | ForEach ($_) {  if (Test-Path $_) { Write-Verbose "  $_" } }
+    } else {
+        Write-Verbose "No Visual Studio installs found.";
+    }
+
+    return $false;
+}
+
 function CheckVS {
+    Write-Verbose "Looking for Visual Studio Installer..."
     $vsWhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
     if (!(Test-Path $vsWhere)) {
+        Write-Verbose "Visual Studio Installer not found."
         return $false;
     }
 
-    [String[]]$output = & $vsWhere -version $vsver -requires $vsComponents -property productPath
+    Write-Verbose "Visual Studio Installer found."
 
-    if (($output.Count -eq 0) -or (!(Test-Path $output[0]))) {
-        Write-Debug "No Retail versions of Visual Studio found, trying pre-release..."
-        [String[]]$output = & $vsWhere -version $vsver -requires $vsComponents -property productPath -prerelease
+    [bool]$result = CheckVS-WithVSWhere -VsWhere $vsWhere
+
+    if (!$result) {
+        Write-Verbose "Retrying, but also including pre-releases versions..."
+        [bool]$result = CheckVS-WithVSWhere -VsWhere $vsWhere -CheckPreRelease $true
     }
-    if ($output.Count -gt 1) {
-        Write-Debug "More than one version of Visual Studio found, using the first one at $($output[0])"
-    }
-    return ($output.Count -ne 0) -and (Test-Path $output[0]);
+
+    return $result;
 }
 
 function InstallVS {
@@ -126,7 +167,7 @@ function InstallVS {
 
     $vsInstaller = "$installerPath\vs_installer.exe"
 
-    $addWorkloads = ($vsWorkloads + $vsComponents) | % { '--add', $_ };
+    $addWorkloads = $vsAll | % { '--add', $_ };
     $p = Start-Process -PassThru -Wait  -FilePath $vsInstaller -ArgumentList ("modify --channelId $channelId --productId $productId $addWorkloads --quiet --includeRecommended" -split ' ')
     return $p.ExitCode
 }
@@ -144,7 +185,7 @@ function CheckWinAppDriver {
     $WADPath = "${env:ProgramFiles(x86)}\Windows Application Driver\WinAppDriver.exe";
     if (Test-Path $WADPath) {
         $version = [Version]([System.Diagnostics.FileVersionInfo]::GetVersionInfo($WADPath).FileVersion);
-        Write-Debug "WinAppDriver version found: $version"
+        Write-Verbose "WinAppDriver version found: $version"
         return $version.CompareTo([Version]"1.2.1") -ge 0;
     }
     return $false;
@@ -230,18 +271,20 @@ $requirements = @(
         Name = "Free space on $drive`: > $requiredFreeSpaceGB GB";
         Tags = @('appDev');
         Valid = { $drive.Free/1GB -gt $requiredFreeSpaceGB; }
+        HasVerboseOutput = $true;
         Optional = $true; # this requirement is fuzzy
     },
     @{
         Id=[CheckId]::InstalledMemory;
         Name = "Installed memory >= 16 GB";
         Tags = @('appDev');
-        Valid = { (Get-CimInstance -ClassName win32_computersystem).TotalPhysicalMemory -ge 15GB; }
+        Valid = { (Get-CimInstance -ClassName win32_computersystem).TotalPhysicalMemory -gt 15GB; }
+        HasVerboseOutput = $true;
         Optional = $true;
     },
     @{
         Id=[CheckId]::WindowsVersion;
-        Name = 'Windows version > 10.0.16299.0';
+        Name = 'Windows version >= 10.0.16299.0';
         Tags = @('appDev');
         Valid = { ($v.Major -eq 10 -and $v.Minor -eq 0 -and $v.Build -ge 16299); }
     },
@@ -271,21 +314,22 @@ $requirements = @(
     },
     @{
         Id=[CheckId]::git;
-        Name = 'git';
-        Tags = @('appDev');
+        Name = 'Git';
+        Tags = @('rnwDev');
         Valid = { try { (Get-Command git.exe -ErrorAction Stop) -ne $null } catch { $false }; }
         Install = { choco install -y git };
     },
     @{
         Id=[CheckId]::VSUWP;
-        Name = 'Compilers, build tools, SDKs and Visual Studio';
+        Name = "Visual Studio 2022 (>= $vsver) & req. components";
         Tags = @('appDev', 'vs2022');
         Valid = { CheckVS; }
         Install = { InstallVS };
+        HasVerboseOutput = $true;
     },
     @{
         Id=[CheckId]::Node;
-        Name = 'NodeJS LTS';
+        Name = 'Node.js (LTS, >= 14.0)';
         Tags = @('appDev');
         Valid = { CheckNode; }
         Install = { choco install -y nodejs-lts };
@@ -308,7 +352,7 @@ $requirements = @(
     },
     @{
         Id=[CheckId]::WinAppDriver;
-        Name = 'WinAppDriver';
+        Name = 'WinAppDriver (>= 1.2.1)';
         Tags = @('rnwDev');
         Valid = { CheckWinAppDriver; }
         Install = {
@@ -378,14 +422,14 @@ $requirements = @(
     },
     @{
         ID=[CheckId]::DotNetCore;
-        Name = ".NET 6"
+        Name = ".NET SDK (LTS, = $dotnetver)"
         Tags = @('appDev');
         Valid = { try {
-            $x = dotnet --info | Where-Object { $_ -like  '*Microsoft.NETCore.App 6.0.*'};
+            $x = dotnet --list-sdks | Where-Object { $_ -like  "$dotnetver.*"};
             ($x -ne $null) -and ($x.Length -ge 1)
         } catch { $false }; }
         Install = {
-            & choco install -y dotnet-6.0-sdk
+            & choco install -y dotnet-$dotnetver-sdk
         }
     }
 );
@@ -442,14 +486,22 @@ if (Test-Path $MarkerFile) {
 
 foreach ($req in $filteredRequirements)
 {
-    Write-Host -NoNewline "Checking $($req.Name)    ";
+    Write-Host -NoNewline "Checking $($req.Name) ";
+    $resultPad = 60 - $req.Name.Length;
+
+    if ($req.HasVerboseOutput -and -$Verbose) {
+        # This makes sure the berbose output is one line lower
+        Write-Host "";
+        $resultPad = 70;
+    }
+
     $valid = Invoke-Command $req.Valid;
     if (!$valid) {
         if ($req.Optional) {
-            Write-Host -ForegroundColor Yellow " Failed (warn)".PadLeft(50 - $req.Name.Length);
+            Write-Host -ForegroundColor Yellow " Failed (warn)".PadLeft($resultPad);
         }
         else {
-            Write-Host -ForegroundColor Red " Failed".PadLeft(50 - $req.Name.Length);
+            Write-Host -ForegroundColor Red " Failed".PadLeft($resultPad);
         }
         if ($req.Install) {
             if ($Install -or (!$NoPrompt -and (Read-Host "Do you want to install? [y/N]").ToUpperInvariant() -eq 'Y')) {
@@ -464,7 +516,7 @@ foreach ($req in $filteredRequirements)
             $NeedsRerun += !($req.Optional);
         }
     } else {
-        Write-Host -ForegroundColor Green " OK".PadLeft(50 - $req.Name.Length);
+        Write-Host -ForegroundColor Green " OK".PadLeft($resultPad);
     }
 }
 
@@ -474,10 +526,14 @@ if ($Installed -ne 0) {
 }
 
 if ($NeedsRerun -ne 0) {
-    Write-Error "Some dependencies are not met. Re-run with -Install to install them.";
-    throw;
+    if ($Verbose) {
+        Write-Warning "Some dependencies are not met. Re-run with -Install to install them.";
+    } else {
+        Write-Warning "Some dependencies are not met. Re-run with -Verbose for details, or use -Install to install them.";
+    }
+    exit 1;
 } else {
-    Write-Output "All mandatory requirements met";
+    Write-Output "All mandatory requirements met.";
     $Tags | Out-File $MarkerFile
     return;
 }
