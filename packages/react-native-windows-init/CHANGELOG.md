@@ -1,8 +1,21 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Tue, 08 Nov 2022 06:12:54 GMT and should not be manually modified.
+This log was last generated on Thu, 10 Nov 2022 06:17:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.3.0
+
+Thu, 10 Nov 2022 06:17:11 GMT
+
+### Minor changes
+
+- integration 9/26/22 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.8
+- Bump @react-native-windows/telemetry to v0.0.0-canary.51
+- Bump @react-native-windows/cli to v0.0.0-canary.147
+- Bump @rnw-scripts/jest-unittest-config to v1.4.0
+- Bump @rnw-scripts/just-task to v2.3.0
 
 ## 1.2.9
 

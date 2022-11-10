@@ -1,8 +1,17 @@
 # Change Log - debug-test
 
-This log was last generated on Tue, 08 Nov 2022 06:12:54 GMT and should not be manually modified.
+This log was last generated on Thu, 10 Nov 2022 06:17:12 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Thu, 10 Nov 2022 06:17:12 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation to v0.3.0
+- Bump @react-native-windows/fs to v0.0.0-canary.8
 
 ## 0.0.0
 

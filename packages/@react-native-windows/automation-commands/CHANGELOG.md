@@ -1,8 +1,18 @@
 # Change Log - @react-native-windows/automation-commands
 
-This log was last generated on Tue, 08 Nov 2022 06:12:54 GMT and should not be manually modified.
+This log was last generated on Thu, 10 Nov 2022 06:17:09 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.20
+
+Thu, 10 Nov 2022 06:17:09 GMT
+
+### Patches
+
+- integration 9/26/22 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/automation-channel to v0.5.0
+- Bump @rnw-scripts/just-task to v2.3.0
 
 ## 0.1.19
 

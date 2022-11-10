@@ -2,6 +2,33 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 10 Nov 2022 06:17:11 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.167",
+      "version": "0.0.0-canary.167",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "ca86014a9c1bc80611fb68051fc67e51339c5bfd",
+            "comment": "integration 9/26/22"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.0",
+            "commit": "406d486eb138d4d9e324124e1b65120794424da1"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump react-native-platform-override to v1.8.0",
+            "commit": "406d486eb138d4d9e324124e1b65120794424da1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 03 Nov 2022 05:12:35 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.166",
       "version": "0.0.0-canary.166",
