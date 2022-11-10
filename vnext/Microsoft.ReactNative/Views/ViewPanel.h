@@ -66,6 +66,14 @@ struct ViewPanel : ViewPanelT<ViewPanel> {
   static xaml::DependencyProperty ClipChildrenProperty();
 
   // Attached Properties
+  static xaml::DependencyProperty IsAccessibilityHiddenProperty();
+  bool IsAccessibilityHidden() {
+    return winrt::unbox_value<bool>(GetValue(IsAccessibilityHiddenProperty()));
+  }
+  void IsAccessibilityHidden(bool value) {
+    SetValue(IsAccessibilityHiddenProperty(), winrt::box_value(value));
+  }
+
   static xaml::DependencyProperty TopProperty();
   static void SetTop(xaml::UIElement const &element, double value);
   static double GetTop(xaml::UIElement const &element) {
@@ -76,14 +84,6 @@ struct ViewPanel : ViewPanelT<ViewPanel> {
   static void SetLeft(xaml::UIElement const &element, double value);
   static double GetLeft(xaml::UIElement const &element) {
     return winrt::unbox_value<double>(element.GetValue(LeftProperty()));
-  }
-
-  static winrt::Windows::UI::Xaml::DependencyProperty IsAccessibilityHiddenProperty();
-  bool GetIsAccessibilityHidden(){
-    return winrt::unbox_value<bool>(GetValue(IsAccessibilityHiddenProperty()));
-  }
-  void SetIsAccessibilityHidden(bool value){
-    SetValue(IsAccessibilityHiddenProperty(), winrt::box_value(value));
   }
 
   static void InvalidateForArrange(const xaml::DependencyObject &element);

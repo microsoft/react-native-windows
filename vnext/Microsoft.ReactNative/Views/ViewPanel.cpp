@@ -78,7 +78,7 @@ winrt::AutomationPeer ViewPanel::OnCreateAutomationPeer() {
 
 winrt::IIterable<winrt::DependencyObject> ViewPanel::GetChildrenInTabFocusOrder()
 {
-    if (IsAccessibilityHidden)) {
+    if (IsAccessibilityHidden()) {
         return winrt::single_threaded_vector<winrt::DependencyObject>();
     } else {
         return Super::GetChildrenInTabFocusOrder();
