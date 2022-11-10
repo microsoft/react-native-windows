@@ -54,11 +54,29 @@ void NativeAnimatedModule::getValue(double tag, std::function<void(double)> cons
 }
 
 void NativeAnimatedModule::startListeningToAnimatedNodeValue(double tag) noexcept {
-  // NYI
+  winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::PostToUIBatchingQueue(
+      m_context.Handle(), [wkThis = std::weak_ptr(this->shared_from_this()), nodeTag = static_cast<int64_t>(tag)]() {
+        if (auto pThis = wkThis.lock()) {
+          pThis->m_nodesManager->StartListeningToAnimatedNodeValue(
+              nodeTag, [context = pThis->m_context, nodeTag](double value) {
+                // This event could be coalesced, however it doesn't appear to be
+                // coalesced on Android or iOS, so leaving it without coalescing.
+                context.EmitJSEvent(
+                    L"RCTDeviceEventEmitter",
+                    L"onAnimatedValueUpdate",
+                    ::React::JSValueObject{{"tag", nodeTag}, {"value", value}});
+              });
+        }
+      });
 }
 
 void NativeAnimatedModule::stopListeningToAnimatedNodeValue(double tag) noexcept {
-  // NYI
+  winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::PostToUIBatchingQueue(
+      m_context.Handle(), [wkThis = std::weak_ptr(this->shared_from_this()), nodeTag = static_cast<int64_t>(tag)]() {
+        if (auto pThis = wkThis.lock()) {
+          pThis->m_nodesManager->StopListeningToAnimatedNodeValue(nodeTag);
+        }
+      });
 }
 
 void NativeAnimatedModule::connectAnimatedNodes(double parentTag, double childTag) noexcept {
@@ -183,13 +201,20 @@ void NativeAnimatedModule::disconnectAnimatedNodeFromView(double nodeTag, double
        nodeTag = static_cast<int64_t>(nodeTag),
        viewTag = static_cast<int64_t>(viewTag)]() {
         if (auto pThis = wkThis.lock()) {
+          pThis->m_nodesManager->RestoreDefaultValues(viewTag);
           pThis->m_nodesManager->DisconnectAnimatedNodeToView(nodeTag, viewTag);
         }
       });
 }
 
 void NativeAnimatedModule::restoreDefaultValues(double nodeTag) noexcept {
-  // NYI
+  winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::PostToUIBatchingQueue(
+      m_context.Handle(),
+      [wkThis = std::weak_ptr(this->shared_from_this()), nodeTag = static_cast<int64_t>(nodeTag)]() {
+        if (auto pThis = wkThis.lock()) {
+          pThis->m_nodesManager->RestoreDefaultValues(nodeTag);
+        }
+      });
 }
 
 void NativeAnimatedModule::dropAnimatedNode(double tag) noexcept {

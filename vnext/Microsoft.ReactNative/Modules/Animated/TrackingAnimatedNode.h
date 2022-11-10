@@ -13,11 +13,10 @@ class TrackingAnimatedNode final : public AnimatedNode {
       const winrt::Microsoft::ReactNative::JSValueObject &config,
       const std::shared_ptr<NativeAnimatedNodeManager> &manager);
 
-  void Update() override;
-
- private:
+  virtual void Update() override;
   void StartAnimation();
 
+ private:
   int64_t m_animationId{};
   int64_t m_toValueId{};
   int64_t m_valueId{};
