@@ -111,6 +111,9 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="GridItemView.h">
+      <DependentUpon>GridItemView.idl</DependentUpon>
+    </ClInclude>
     <ClInclude Include="GridItemViewManager.h" />
     <ClInclude Include="GridViewManager.h" />
     <ClInclude Include="ReactPackageProvider.h">
@@ -119,6 +122,9 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GridItemView.cpp">
+      <DependentUpon>GridItemView.idl</DependentUpon>
+    </ClCompile>
     <ClCompile Include="GridItemViewManager.cpp" />
     <ClCompile Include="GridViewManager.cpp" />
     <ClCompile Include="pch.cpp">
@@ -130,6 +136,7 @@
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Midl Include="GridItemView.idl" />
     <Midl Include="ReactPackageProvider.idl" />
   </ItemGroup>
   <ItemGroup>

@@ -9,6 +9,7 @@ namespace winrt::PlaygroundNativeModules {
 
 class GridItemViewManager : public winrt::implements<GridItemViewManager,
                                                      React::IViewManager,
+                                                     React::IViewManagerWithReactContext,
                                                      React::IViewManagerWithChildren,
                                                      React::IViewManagerWithNativeProperties,
                                                      React::IViewManagerRequiresNativeLayout> {
@@ -17,6 +18,10 @@ class GridItemViewManager : public winrt::implements<GridItemViewManager,
   winrt::hstring Name() noexcept;
 
   xaml::FrameworkElement CreateView() noexcept;
+
+  // IViewManagerWithReactContext
+  React::IReactContext ReactContext() noexcept;
+  void ReactContext(React::IReactContext reactContext) noexcept;
 
   // IViewManagerWithChildren
   void AddView(
@@ -43,6 +48,9 @@ class GridItemViewManager : public winrt::implements<GridItemViewManager,
   bool RequiresNativeLayout() const noexcept {
     return true;
   }
+
+ private:
+  winrt::Microsoft::ReactNative::ReactContext m_reactContext{nullptr};
 };
 
 } // namespace facebook::archon

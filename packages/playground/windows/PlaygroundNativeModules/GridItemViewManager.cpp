@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
+#include "GridItemView.h"
 #include "GridItemViewManager.h"
+#include "JSValue.h"
 #include "JSValueXaml.h"
 
 namespace winrt {
@@ -16,7 +18,15 @@ winrt::hstring GridItemViewManager::Name() noexcept {
 }
 
 xaml::FrameworkElement GridItemViewManager::CreateView() noexcept {
-  return xaml::Controls::Grid();
+  return winrt::PlaygroundNativeModules::GridItemView(m_reactContext.Handle());
+}
+
+React::IReactContext GridItemViewManager::ReactContext() noexcept {
+  return m_reactContext.Handle();
+}
+
+void GridItemViewManager::ReactContext(React::IReactContext reactContext) noexcept {
+  m_reactContext = reactContext;
 }
 
 void GridItemViewManager::AddView(
@@ -24,7 +34,11 @@ void GridItemViewManager::AddView(
     xaml::UIElement const &child,
     int64_t index) noexcept {
   if (auto const &grid = parent.try_as<xaml::Controls::Grid>()) {
-    grid.Children().InsertAt(static_cast<uint32_t>(index), child);
+    if (grid.Children().Size() > 0 || index != 0) {
+      m_reactContext.CallJSFunction(L"RCTLog", L"logToConsole", "warn", "GridItem only supports one child.");  
+    } else {
+      grid.Children().InsertAt(static_cast<uint32_t>(index), child);
+    }
   }
 }
 
@@ -36,7 +50,9 @@ void GridItemViewManager::RemoveAllChildren(xaml::FrameworkElement const &parent
 
 void GridItemViewManager::RemoveChildAt(xaml::FrameworkElement const &parent, int64_t index) noexcept {
   if (auto const &grid = parent.try_as<xaml::Controls::Grid>()) {
-    grid.Children().RemoveAt(static_cast<uint32_t>(index));
+    if (index == 0) {
+      grid.Children().RemoveAt(static_cast<uint32_t>(index));
+    }
   }
 }
 
