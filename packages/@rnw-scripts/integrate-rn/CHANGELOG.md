@@ -1,8 +1,22 @@
 # Change Log - @rnw-scripts/integrate-rn
 
-This log was last generated on Sat, 15 Oct 2022 05:12:00 GMT and should not be manually modified.
+This log was last generated on Thu, 10 Nov 2022 06:17:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.3.0
+
+Thu, 10 Nov 2022 06:17:10 GMT
+
+### Minor changes
+
+- integration 9/26/22 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.37
+- Bump @react-native-windows/fs to v0.0.0-canary.8
+- Bump @react-native-windows/package-utils to v0.0.0-canary.34
+- Bump react-native-platform-override to v1.8.0
+- Bump @rnw-scripts/jest-unittest-config to v1.4.0
+- Bump @rnw-scripts/just-task to v2.3.0
 
 ## 1.2.1
 

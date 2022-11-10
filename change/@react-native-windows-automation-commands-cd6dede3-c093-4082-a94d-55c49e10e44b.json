@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "integration 9/26/22",
-  "packageName": "@react-native-windows/automation-commands",
-  "email": "tatianakapos@microsoft.com",
-  "dependentChangeType": "patch"
-}

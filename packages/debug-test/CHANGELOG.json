@@ -2,6 +2,27 @@
   "name": "debug-test",
   "entries": [
     {
+      "date": "Thu, 10 Nov 2022 06:17:12 GMT",
+      "tag": "debug-test_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "debug-test",
+            "comment": "Bump @react-native-windows/automation to v0.3.0",
+            "commit": "406d486eb138d4d9e324124e1b65120794424da1"
+          },
+          {
+            "author": "beachball",
+            "package": "debug-test",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.8",
+            "commit": "406d486eb138d4d9e324124e1b65120794424da1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 08 Nov 2022 06:12:54 GMT",
       "tag": "debug-test_v0.0.0",
       "version": "0.0.0",

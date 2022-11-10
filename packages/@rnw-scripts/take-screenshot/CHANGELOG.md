@@ -1,8 +1,17 @@
 # Change Log - @rnw-scripts/take-screenshot
 
-This log was last generated on Sat, 15 Oct 2022 05:12:00 GMT and should not be manually modified.
+This log was last generated on Thu, 10 Nov 2022 06:17:12 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.2
+
+Thu, 10 Nov 2022 06:17:12 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.8
+- Bump @rnw-scripts/just-task to v2.3.0
 
 ## 1.1.1
 
