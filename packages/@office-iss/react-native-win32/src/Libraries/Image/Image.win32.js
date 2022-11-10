@@ -8,6 +8,7 @@
  * @format
  */
 
+ import type {RootTag} from '../Types/RootTagTypes';
 import TextAncestor from '../Text/TextAncestor'; // [Windows]
 import invariant from 'invariant'; // [Windows]
 
@@ -204,8 +205,8 @@ const BaseImage = (props: ImagePropsType, forwardedRef) => {
                 <ImageViewNativeComponent
                   {...restProps}
                   accessibilityState={_accessibilityState}
-                  accessibilityLabel={accessibilityLabel}
                   accessible={props.alt !== undefined ? true : props.accessible}
+                  accessibilityLabel={accessibilityLabel}
                   ref={forwardedRef}
                   style={style}
                   resizeMode={resizeMode}

@@ -12,6 +12,7 @@ import type {HostComponent} from '../Renderer/shims/ReactNativeTypes';
 import type {
   BlurEvent,
   FocusEvent,
+  KeyEvent,
   MouseEvent,
   PressEvent,
 } from '../Types/CoreEventTypes';

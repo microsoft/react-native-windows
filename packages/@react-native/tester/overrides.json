@@ -23,7 +23,7 @@
       "issue": 4054
     },
     {
-      "type": "patch",
+      "type": "copy",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
       "baseHash": "4d629b95f56686e8e1d066b78a3f140972885f49",

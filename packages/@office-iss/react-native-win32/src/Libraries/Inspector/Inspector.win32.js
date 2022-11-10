@@ -10,6 +10,9 @@
 
 'use strict';
 
+import type {TouchedViewDataAtPoint} from '../Renderer/shims/ReactNativeTypes';
+import type {HostRef} from './getInspectorDataForViewAtPoint';
+const ReactNativeStyleAttributes = require('../Components/View/ReactNativeStyleAttributes');
 const PressabilityDebug = require('../Pressability/PressabilityDebug');
 const ReactNative = require('../Renderer/shims/ReactNative');
 const {findNodeHandle} = require('../ReactNative/RendererProxy');

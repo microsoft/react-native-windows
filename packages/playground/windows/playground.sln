@@ -27,11 +27,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Common", "..\..\..\vnext\Co
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReactNative", "ReactNative", "{5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microsoft.ReactNative.Shared", "..\..\..\vnext\Shared\Shared.vcxitems", "{2049DBE9-8D13-42C9-AE4B-413AE38FFFD0}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Mso", "..\..\..\vnext\Mso\Mso.vcxitems", "{84E05BFA-CBAF-4F0D-BFB6-4CE85742A57E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ReactNativePicker", "..\..\..\node_modules\@react-native-picker\picker\windows\ReactNativePicker\ReactNativePicker.vcxproj", "{BEDCC600-4541-41F2-AA46-9E058202B6AD}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microsoft.ReactNative.Shared", "..\..\..\node_modules\react-native-windows\Shared\Shared.vcxitems", "{2049DBE9-8D13-42C9-AE4B-413AE38FFFD0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -137,22 +137,6 @@ Global
 		{FCA38F3C-7C73-4C47-BE4E-32F77FA8538D}.Release|x64.Build.0 = Release|x64
 		{FCA38F3C-7C73-4C47-BE4E-32F77FA8538D}.Release|x86.ActiveCfg = Release|Win32
 		{FCA38F3C-7C73-4C47-BE4E-32F77FA8538D}.Release|x86.Build.0 = Release|Win32
-		{2049DBE9-8D13-42C9-AE4B-413AE38FFFD0}.Debug|ARM.ActiveCfg = Debug|Win32
-		{2049DBE9-8D13-42C9-AE4B-413AE38FFFD0}.Debug|ARM.Build.0 = Debug|Win32
-		{2049DBE9-8D13-42C9-AE4B-413AE38FFFD0}.Debug|ARM64.ActiveCfg = Debug|Win32
-		{2049DBE9-8D13-42C9-AE4B-413AE38FFFD0}.Debug|ARM64.Build.0 = Debug|Win32
-		{2049DBE9-8D13-42C9-AE4B-413AE38FFFD0}.Debug|x64.ActiveCfg = Debug|Win32
-		{2049DBE9-8D13-42C9-AE4B-413AE38FFFD0}.Debug|x64.Build.0 = Debug|Win32
-		{2049DBE9-8D13-42C9-AE4B-413AE38FFFD0}.Debug|x86.ActiveCfg = Debug|Win32
-		{2049DBE9-8D13-42C9-AE4B-413AE38FFFD0}.Debug|x86.Build.0 = Debug|Win32
-		{2049DBE9-8D13-42C9-AE4B-413AE38FFFD0}.Release|ARM.ActiveCfg = Debug|Win32
-		{2049DBE9-8D13-42C9-AE4B-413AE38FFFD0}.Release|ARM.Build.0 = Debug|Win32
-		{2049DBE9-8D13-42C9-AE4B-413AE38FFFD0}.Release|ARM64.ActiveCfg = Debug|Win32
-		{2049DBE9-8D13-42C9-AE4B-413AE38FFFD0}.Release|ARM64.Build.0 = Debug|Win32
-		{2049DBE9-8D13-42C9-AE4B-413AE38FFFD0}.Release|x64.ActiveCfg = Debug|Win32
-		{2049DBE9-8D13-42C9-AE4B-413AE38FFFD0}.Release|x64.Build.0 = Debug|Win32
-		{2049DBE9-8D13-42C9-AE4B-413AE38FFFD0}.Release|x86.ActiveCfg = Debug|Win32
-		{2049DBE9-8D13-42C9-AE4B-413AE38FFFD0}.Release|x86.Build.0 = Debug|Win32
 		{BEDCC600-4541-41F2-AA46-9E058202B6AD}.Debug|ARM.ActiveCfg = Debug|ARM
 		{BEDCC600-4541-41F2-AA46-9E058202B6AD}.Debug|ARM.Build.0 = Debug|ARM
 		{BEDCC600-4541-41F2-AA46-9E058202B6AD}.Debug|ARM64.ActiveCfg = Debug|ARM64
@@ -183,13 +167,14 @@ Global
 		{F7D32BD0-2749-483E-9A0D-1635EF7E3136} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}
 		{DA8B35B3-DA00-4B02-BDE6-6A397B3FD46B} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}
 		{FCA38F3C-7C73-4C47-BE4E-32F77FA8538D} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}
-		{2049DBE9-8D13-42C9-AE4B-413AE38FFFD0} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}
 		{84E05BFA-CBAF-4F0D-BFB6-4CE85742A57E} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}
+		{2049DBE9-8D13-42C9-AE4B-413AE38FFFD0} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D43FAD39-F619-437D-BB40-04A3982ACB6A}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\..\..\node_modules\react-native-windows\Shared\Shared.vcxitems*{2049dbe9-8d13-42c9-ae4b-413ae38fffd0}*SharedItemsImports = 9
 		..\..\..\vnext\Mso\Mso.vcxitems*{84e05bfa-cbaf-4f0d-bfb6-4ce85742a57e}*SharedItemsImports = 9
 		..\..\..\vnext\Chakra\Chakra.vcxitems*{c38970c0-5fbf-4d69-90d8-cbac225ae895}*SharedItemsImports = 9
 		..\..\..\vnext\Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems*{da8b35b3-da00-4b02-bde6-6a397b3fd46b}*SharedItemsImports = 9
