@@ -61,7 +61,7 @@ $vsComponents = @('Microsoft.Component.MSBuild',
     'Microsoft.VisualStudio.Component.VC.Tools.x86.x64',
     'Microsoft.VisualStudio.ComponentGroup.UWP.Support',
     'Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Core',
-    'Microsoft.VisualStudio.Component.Windows10SDK.19041');
+    'Microsoft.VisualStudio.Component.Windows10SDK.22000');
 
 # UWP.VC is not needed to build the projects with msbuild, but the VS IDE requires it.
 if (!($tagsToInclude.Contains('buildLab'))) {

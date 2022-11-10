@@ -16,8 +16,8 @@
     <SDKReference Include="Microsoft.VCLibs, Version=14.0" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetPlatformVersion)'=='10.0.22000.0'">
-    <FrameworkReference Update="Microsoft.Windows.SDK.NET.Ref" RuntimeFrameworkVersion="10.0.19041.27" />
-    <FrameworkReference Update="Microsoft.Windows.SDK.NET.Ref" TargetingPackVersion="10.0.19041.27" />
+    <FrameworkReference Update="Microsoft.Windows.SDK.NET.Ref" RuntimeFrameworkVersion="10.0.22000.27" />
+    <FrameworkReference Update="Microsoft.Windows.SDK.NET.Ref" TargetingPackVersion="10.0.22000.27" />
   </ItemGroup>
 
   <ItemGroup>
