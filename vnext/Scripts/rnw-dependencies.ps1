@@ -426,15 +426,6 @@ $requirements = @(
         HasVerboseOutput = $true;
     },
     @{
-        Id=[CheckId]::Chrome;
-        Name = 'Chrome';
-        Tags = @('appDev'); # For now this is still required. Edge has been added, but only when it is already running...
-        Valid = { try { ((Get-Item (Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\chrome.exe' -ErrorAction Stop).'(Default)').VersionInfo).ProductMajorPart
-        } catch { $false } ; }
-        Install = { choco install -y GoogleChrome };
-        Optional = $true;
-    },
-    @{
         Id=[CheckId]::Yarn;
         Name = 'Yarn';
         Tags = @('appDev');
