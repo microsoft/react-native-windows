@@ -48,8 +48,7 @@ void GridViewManager::ReplaceChild(
   }
 }
 
-winrt::IMapView<winrt::hstring, React::ViewManagerPropertyType>
-GridViewManager::NativeProps() noexcept {
+winrt::IMapView<winrt::hstring, React::ViewManagerPropertyType> GridViewManager::NativeProps() noexcept {
   auto nativeProps = winrt::single_threaded_map<winrt::hstring, React::ViewManagerPropertyType>();
   nativeProps.Insert(L"rows", React::ViewManagerPropertyType::Array);
   nativeProps.Insert(L"columns", React::ViewManagerPropertyType::Array);
@@ -105,5 +104,4 @@ void GridViewManager::UpdateProperties(
   }
 }
 
-
-} // namespace facebook::archon
+} // namespace winrt::PlaygroundNativeModules

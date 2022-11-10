@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include "GridItemView.h"
 #include "GridItemViewManager.h"
+#include "GridItemView.h"
 #include "JSValue.h"
 #include "JSValueXaml.h"
 
 namespace winrt {
-  using namespace Windows::Foundation::Collections;
+using namespace Windows::Foundation::Collections;
 } // namespace winrt
 
 namespace winrt::PlaygroundNativeModules {
@@ -35,7 +35,7 @@ void GridItemViewManager::AddView(
     int64_t index) noexcept {
   if (auto const &grid = parent.try_as<xaml::Controls::Grid>()) {
     if (grid.Children().Size() > 0 || index != 0) {
-      m_reactContext.CallJSFunction(L"RCTLog", L"logToConsole", "warn", "GridItem only supports one child.");  
+      m_reactContext.CallJSFunction(L"RCTLog", L"logToConsole", "warn", "GridItem only supports one child.");
     } else {
       grid.Children().InsertAt(static_cast<uint32_t>(index), child);
     }

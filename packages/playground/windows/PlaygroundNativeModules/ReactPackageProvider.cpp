@@ -3,8 +3,8 @@
 #if __has_include("ReactPackageProvider.g.cpp")
 #include "ReactPackageProvider.g.cpp"
 #endif
-#include "GridViewManager.h"
 #include "GridItemViewManager.h"
+#include "GridViewManager.h"
 
 using namespace winrt::Microsoft::ReactNative;
 

@@ -20,8 +20,7 @@ winrt::Size GridItemView::ArrangeOverride(winrt::Size availableSize) {
     if (const auto child = Children().GetAt(0).try_as<xaml::FrameworkElement>()) {
       const auto reactTag = React::XamlHelper::GetReactTag(child);
       if (reactTag != -1) {
-        React::LayoutService::FromContext(m_reactContext)
-            .ApplyLayout(reactTag, desiredSize.Width, desiredSize.Height);
+        React::LayoutService::FromContext(m_reactContext).ApplyLayout(reactTag, desiredSize.Width, desiredSize.Height);
       }
     }
   }

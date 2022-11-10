@@ -10,14 +10,16 @@
 namespace winrt::PlaygroundNativeModules::implementation {
 
 class GridItemView : public GridItemViewT<GridItemView> {
- using Super = GridItemViewT<GridItemView>;
+  using Super = GridItemViewT<GridItemView>;
+
  public:
   GridItemView(Microsoft::ReactNative::IReactContext const &reactContext) : m_reactContext{reactContext} {}
   virtual winrt::Windows::Foundation::Size ArrangeOverride(winrt::Windows::Foundation::Size availableSize);
+
  private:
   Microsoft::ReactNative::IReactContext m_reactContext{nullptr};
 };
-} // namespace winrt::ReactNativePicker::implementation
+} // namespace winrt::PlaygroundNativeModules::implementation
 
 namespace winrt::PlaygroundNativeModules::factory_implementation {
 struct GridItemView : GridItemViewT<GridItemView, implementation::GridItemView> {};
