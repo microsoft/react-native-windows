@@ -8,7 +8,7 @@
  * @format
  */
 
- import type {RootTag} from '../Types/RootTagTypes';
+import type {RootTag} from '../Types/RootTagTypes';
 import TextAncestor from '../Text/TextAncestor'; // [Windows]
 import invariant from 'invariant'; // [Windows]
 
