@@ -29,7 +29,7 @@ export async function buildSolution(
   if (!allVersions.some(v => v.gte(minVersion))) {
     throw new CodedError(
       'MinSDKVersionNotMet',
-      'Must have a minimum Windows SDK version 10.0.19041.0 installed',
+      'Must have a minimum Windows SDK version 10.0.22000.0 installed',
     );
   }
 

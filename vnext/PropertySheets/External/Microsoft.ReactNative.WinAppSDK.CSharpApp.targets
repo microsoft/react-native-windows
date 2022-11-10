@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 
+<!--
   Copyright (c) Microsoft Corporation.
   Licensed under the MIT License.
 
@@ -15,11 +15,11 @@
   <ItemGroup>
     <SDKReference Include="Microsoft.VCLibs, Version=14.0" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetPlatformVersion)'=='10.0.19041.0'">
+  <ItemGroup Condition="'$(TargetPlatformVersion)'=='10.0.22000.0'">
     <FrameworkReference Update="Microsoft.Windows.SDK.NET.Ref" RuntimeFrameworkVersion="10.0.19041.27" />
     <FrameworkReference Update="Microsoft.Windows.SDK.NET.Ref" TargetingPackVersion="10.0.19041.27" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <!-- WinUI package name and version are set by WinUI.props -->
     <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" Condition="'$(OverrideWinUIPackage)'!='true'" />
@@ -33,10 +33,10 @@
   <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnablePreviewMsixTooling)'=='true'">
     <ProjectCapability Include="Msix"/>
   </ItemGroup>
-  
+
   <!-- Workaround for https://github.com/microsoft/WindowsAppSDK/issues/1856, can remove when we update to WinAppSDK >= 1.2.220930.4-preview2 -->
   <Target Name="RemoveCollidingDepsJson" AfterTargets="GetPackagingOutputs" BeforeTargets="_ComputeAppxPackagePayload">
-		<!-- If conflicting build and publish deps.json files are present, use only the publish deps.json, 
+		<!-- If conflicting build and publish deps.json files are present, use only the publish deps.json,
             and remove the corresponding build deps.json. -->
 		<ItemGroup Condition="'@(PackagingOutputs)'!=''" >
 			<_PublishDepsJson Include="@(PackagingOutputs->WithMetadataValue('OutputGroup', 'PublishItemsOutputGroupOutput'))"
