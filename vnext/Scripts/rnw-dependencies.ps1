@@ -25,7 +25,6 @@ enum CheckId {
     git
     InstalledMemory
     LongPath
-    MSBuild64LongPath
     MSBuildLogViewer
     Node
     RNWClone
@@ -74,23 +73,51 @@ $vsWorkloads = @('Microsoft.VisualStudio.Workload.ManagedDesktop',
     'Microsoft.VisualStudio.Workload.NativeDesktop',
     'Microsoft.VisualStudio.Workload.Universal');
 
-$vsAll = ($vsComponents + $vsWorkloads)
+$vsAll = ($vsComponents + $vsWorkloads);
 
 # The minimum VS version to check for
-$vsver = "17.3"
+$vsver = "17.3";
 
 # The exact .NET SDK version to check for
-$dotnetver = "6.0"
+$dotnetver = "6.0";
 
 $v = [System.Environment]::OSVersion.Version;
 if ($env:Agent_BuildDirectory) {
-    $drive = (Resolve-Path $env:Agent_BuildDirectory).Drive
+    $drive = (Resolve-Path $env:Agent_BuildDirectory).Drive;
 } else {
     if ($PSCommandPath) {
-        $drive = (Resolve-Path $PSCommandPath).Drive
+        $drive = (Resolve-Path $PSCommandPath).Drive;
     } else {
-        $drive = (Resolve-Path $env:SystemDrive).Drive
+        $drive = (Resolve-Path $env:SystemDrive).Drive;
     }
+}
+
+function Get-VSWhere {
+    Write-Verbose "Looking for Visual Studio Installer...";
+    $vsWhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe";
+    if (!(Test-Path $vsWhere)) {
+        Write-Verbose "Visual Studio Installer not found.";
+        return $null;
+    }
+
+    Write-Verbose "Visual Studio Installer found.";
+    return $vsWhere;
+}
+
+function Get-VSPathPropertyForEachInstall {
+    param(
+        [string]$VsWhere,
+        [string]$PathProperty,
+        [string[]]$ExtraArgs =@()
+    )
+
+    [String[]]$output = & $VsWhere -version $vsver -property $PathProperty $ExtraArgs;
+    if ($output -ne $null) {
+        [String[]]$paths = ($output | Where-Object { (Test-Path $_) });
+        return $paths;
+    }
+    
+    return $null;
 }
 
 function CheckVS-WithVSWhere {
@@ -99,168 +126,231 @@ function CheckVS-WithVSWhere {
         [switch]$CheckPreRelease = $false
     )
 
-    [string]$prereleaseArg = "";
+    [string[]] $requireArgs = @("-requires");
+    $requireArgs += $vsAll;
 
+    [string[]] $prereleaseArgs = @();
     if ($CheckPreRelease) {
-        $prereleaseArg = "-prerelease";
+        $prereleaseArgs += "-prerelease";
     }
 
     # Checking for VS + all required components
-    [String[]]$output = & $VsWhere -version $vsver -requires $vsAll -property productPath $prereleaseArg
-    if ($output.Count -gt 0) {
+    [String[]]$productPaths = Get-VSPathPropertyForEachInstall -VsWhere $VsWhere -PathProperty 'productPath' -ExtraArgs ($requireArgs + $prereleaseArgs);
+    if ($productPaths.Count -gt 0) {
         Write-Verbose "Visual Studio install(s) found, with required components, at:";
-        $output | ForEach ($_) { if (Test-Path $_) { Write-Verbose "  $_" } }
+        $productPaths | ForEach { Write-Verbose "  $_" };
         return $true;
     }
 
     # Check for VS without required components
-    [String[]]$output = & $VsWhere -version $vsver -property productPath $prereleaseArg
-    if ($output.Count -gt 0) {
+    [String[]]$productPaths = Get-VSPathPropertyForEachInstall -VsWhere $VsWhere -PathProperty 'productPath' -ExtraArgs $prereleaseArgs;
+    if ($productPaths.Count -gt 0) {
         Write-Verbose "Visual Studio install(s) found, but without required components, at:";
-        $output | ForEach ($_) {  if (Test-Path $_) { Write-Verbose "  $_" } }
-    } else {
-        Write-Verbose "No Visual Studio installs found.";
+        $productPaths | ForEach { Write-Verbose "  $_" };
+        return $false;
     }
+
+    Write-Verbose "No Visual Studio installs found.";
 
     return $false;
 }
 
 function CheckVS {
-    Write-Verbose "Looking for Visual Studio Installer..."
-    $vsWhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
-    if (!(Test-Path $vsWhere)) {
-        Write-Verbose "Visual Studio Installer not found."
+    $vsWhere = Get-VSWhere;
+    if ($vsWhere -eq $null) {
         return $false;
     }
 
-    Write-Verbose "Visual Studio Installer found."
-
-    [bool]$result = CheckVS-WithVSWhere -VsWhere $vsWhere
+    Write-Verbose "Looking for Visual Studio install(s)...";
+    [bool]$result = CheckVS-WithVSWhere -VsWhere $vsWhere;
 
     if (!$result) {
-        Write-Verbose "Retrying, but also including pre-releases versions..."
-        [bool]$result = CheckVS-WithVSWhere -VsWhere $vsWhere -CheckPreRelease $true
+        Write-Verbose "Retrying, but also including pre-releases versions...";
+        [bool]$result = CheckVS-WithVSWhere -VsWhere $vsWhere -CheckPreRelease $true;
     }
 
     return $result;
 }
 
 function InstallVS {
-    $installerPath = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer";
-    $vsWhere = "$installerPath\vswhere.exe"
-    if (Test-Path $vsWhere) {
-        $channelId = & $vsWhere -version $vsver -property channelId
-        $productId = & $vsWhere -version $vsver -property productId
+    $vsWhere = Get-VSWhere;
+
+    if ($vsWhere -ne $null) {
+        $channelId = & $vsWhere -version $vsver -property channelId;
+        $productId = & $vsWhere -version $vsver -property productId;
     }
 
-    if (!(Test-Path $vsWhere) -or ($channelId -eq $null) -or ($productId -eq $null)) {
+    if (($vsWhere -eq $null) -or ($channelId -eq $null) -or ($productId -eq $null)) {
         # No VSWhere / VS_Installer
         if ($Enterprise) {
             # The CI machines need the enterprise version of VS as that is what is hardcoded in all the scripts
-            & choco install -y visualstudio2022enterprise
+            & choco install -y visualstudio2022enterprise;
         } else {
-            & choco install -y visualstudio2022community
+            & choco install -y visualstudio2022community;
         }
-        $channelId = & $vsWhere -version $vsver -property channelId
-        $productId = & $vsWhere -version $vsver -property productId
+
+        $vsWhere = Get-VSWhere;
+
+        $channelId = & $vsWhere -version $vsver -property channelId;
+        $productId = & $vsWhere -version $vsver -property productId;
     }
 
-    $vsInstaller = "$installerPath\vs_installer.exe"
+    $vsInstaller = Join-Path -Path (Split-Path -Parent $vsWhere) -ChildPath "vs_installer.exe";
 
     $addWorkloads = $vsAll | % { '--add', $_ };
-    $p = Start-Process -PassThru -Wait  -FilePath $vsInstaller -ArgumentList ("modify --channelId $channelId --productId $productId $addWorkloads --quiet --includeRecommended" -split ' ')
-    return $p.ExitCode
+    $p = Start-Process -PassThru -Wait  -FilePath $vsInstaller -ArgumentList ("modify --channelId $channelId --productId $productId $addWorkloads --quiet --includeRecommended" -split ' ');
+    return $p.ExitCode;
 }
 
 function CheckNode {
     try {
-        $v = (Get-Command node -ErrorAction Stop).Version.Major
+        $nodeVersion = (Get-Command node -ErrorAction Stop).Version;
+        Write-Verbose "Node version found: $nodeVersion";
+        $v = $nodeVersion.Major;
         return ($v -ge 14) -and (($v % 2) -eq 0);
-    } catch {
-        return $false;
-    }
+    } catch { Write-Debug $_ }
+
+    Write-Verbose "Node not found.";
+    return $false;
+}
+
+function CheckYarn {
+    try {
+        $yarn = (Get-Command yarn -ErrorAction Stop);
+        if ($yarn -ne $null) {
+            $yarnVersion = & yarn -v;
+            Write-Verbose "Yarn version found: $yarnVersion";
+            return $true;
+        }
+    } catch { Write-Debug $_ }
+
+    Write-Verbose "Yarn not found.";
+    return $false;
 }
 
 function CheckWinAppDriver {
     $WADPath = "${env:ProgramFiles(x86)}\Windows Application Driver\WinAppDriver.exe";
     if (Test-Path $WADPath) {
         $version = [Version]([System.Diagnostics.FileVersionInfo]::GetVersionInfo($WADPath).FileVersion);
-        Write-Verbose "WinAppDriver version found: $version"
+        Write-Verbose "WinAppDriver version found: $version";
         return $version.CompareTo([Version]"1.2.1") -ge 0;
     }
+
+    Write-Verbose "WinAppDriver not found.";
     return $false;
 }
 
 function EnableDevmode {
-    $RegistryKeyPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock"
+    $RegistryKeyPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock";
 
     if (-not(Test-Path -Path $RegistryKeyPath)) {
-        New-Item -Path $RegistryKeyPath -ItemType Directory -Force
+        New-Item -Path $RegistryKeyPath -ItemType Directory -Force;
     }
 
-    $value = get-ItemProperty -Path $RegistryKeyPath -Name AllowDevelopmentWithoutDevLicense -ErrorAction SilentlyContinue
+    $value = get-ItemProperty -Path $RegistryKeyPath -Name AllowDevelopmentWithoutDevLicense -ErrorAction SilentlyContinue;
     if (($value -eq $null) -or ($value.AllowDevelopmentWithoutDevLicense -ne 1)) {
-        Set-ItemProperty -Path $RegistryKeyPath -Name AllowDevelopmentWithoutDevLicense -Value 1 -ErrorAction Stop
+        Set-ItemProperty -Path $RegistryKeyPath -Name AllowDevelopmentWithoutDevLicense -Value 1 -ErrorAction Stop;
     }
 }
 
-function GetChocoPkgVersion{
-    params([string]$packageId)
+function GetChocoPkgVersion {
+    param([string]$packageId)
     [version]$version = (& choco list --local-only $packageId -r -e).Substring($packageId.Length + 1);
     return $version;
 }
 
-function GetMsBuild64BitConfigFile{
-    $vsWhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
-    $msbExeConfigPath=& $vsWhere -latest -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\amd64\MSBuild.exe.config
-    return $msbExeConfigPath;
-}
-
 function CheckCppWinRT_VSIX {
-    try {
-        $vsWhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
-        if (!(Test-Path $vsWhere)) {
-            return $false;
-        }
-        [String[]]$vsPath = & $vsWhere -version $vsver -property installationPath;
+    $vsWhere = Get-VSWhere;
+    if ($vsWhere -eq $null) {
+        return $false;
+    }
 
-        if (($vsPath.Count -eq 0) -or (!(Test-Path $vsPath[0]))) {
-            Write-Debug "No Retail versions of Visual Studio found, trying pre-release..."
-            [String[]]$vsPath = & $vsWhere -version $vsver -property installationPath -prerelease
-        }
+    [string]$vsPath = $null;
 
-        if ($vsPath.Count -gt 1) {
-            Write-Debug "More than one version of Visual Studio found, using the first one at $($vsPath[0])"
+    Write-Verbose "Looking for Visual Studio install(s)..."
+    [String[]]$vsPaths = Get-VSPathPropertyForEachInstall -VsWhere $VsWhere -PathProperty 'installationPath';
+    if ($vsPaths.Count -gt 0) {
+        Write-Verbose "Visual Studio install(s) found at:";
+        $vsPaths | ForEach { Write-Verbose "  $_" }
+        $vsPath = $vsPaths[0];
+    }
+
+    if ($vsPath -eq $null) {
+        Write-Verbose "Retrying, but also including pre-releases versions..."
+
+        [String[]]$vsPaths = Get-VSPropertyForEachInstall -VsWhere $VsWhere -Property 'installationPath' -ExtraArgs @('-prerelease');
+        if ($vsPaths.Count -gt 0) {
+            Write-Verbose "Visual Studio install(s) found at:";
+            $vsPaths | ForEach { Write-Verbose "  $_" }
+            $vsPath = $vsPaths[0];
         }
-        $natvis = Get-ChildItem "$($vsPath[0])\Common7\IDE\Extensions\cppwinrt.natvis" -Recurse;
-        return $null -ne $natvis;
-    } catch { return $false };
+    }
+
+    if ($vsPath -ne $null) {
+        $natvis = Get-ChildItem (Join-Path -Path $vsPath -ChildPath "Common7\IDE\Extensions\cppwinrt.natvis") -Recurse;
+        if ($natvis -ne $null) {
+            Write-Verbose "Found CppWinRT VISX at:";
+            Write-Verbose "  $(Split-Path $natvis)";
+            return $true;
+        }
+    }
+
+    Write-Verbose "CppWinRT VISX not found.";
+    return $false;
 }
 
 function InstallCppWinRT_VSIX {
     $url = "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/CppWinRTTeam/vsextensions/cppwinrt101804264/2.0.210304.5/vspackage";
-    Write-Debug "Downloading CppWinRT VSIX from $url"
-    Invoke-WebRequest -UseBasicParsing $url -OutFile $env:TEMP\Microsoft.Windows.CppWinRT.vsix
+    Write-Verbose "Downloading CppWinRT VSIX from $url";
+    Invoke-WebRequest -UseBasicParsing $url -OutFile $env:TEMP\Microsoft.Windows.CppWinRT.vsix;
     
-    $vsWhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
-    if (!(Test-Path $vsWhere)) {
-        return $false;
-    }
-    [String[]]$productPath = & $vsWhere -version $vsver -property productPath
-
-    if (($productPath.Count -eq 0) -or (!(Test-Path $productPath[0]))) {
-        Write-Debug "No Retail versions of Visual Studio found, trying pre-release..."
-        [String[]]$productPath = & $vsWhere -version $vsver -property productPath -prerelease
+    $vsWhere = Get-VSWhere;
+    if ($vsWhere -eq $null) {
+        return;
     }
 
-    if ($productPath.Count -gt 1) {
-        Write-Debug "More than one version of Visual Studio found, using the first one at $($productPath[0])"
+    [string]$productPath = $null;
+
+    Write-Verbose "Looking for Visual Studio install(s)...";
+    [String[]]$productPaths = Get-VSPathPropertyForEachInstall -VsWhere $VsWhere -PathProperty 'productPath';
+    if ($productPaths.Count -gt 0) {
+        Write-Verbose "Visual Studio install(s) found at:";
+        $productPaths | ForEach { Write-Verbose "  $_" };
+        $productPath = $productPaths[0];
     }
 
+    if ($productPath -eq $null) {
+        Write-Verbose "Retrying, but also including pre-releases versions...";
+        [String[]]$productPaths = Get-VSPathPropertyForEachInstall -VsWhere $VsWhere -PathProperty 'productPath' -ExtraArgs @('-prerelease');
+        if ($productPaths.Count -gt 0) {
+            Write-Verbose "Visual Studio install(s) found at:";
+            $productPaths | ForEach { Write-Verbose "  $_" };
+            $productPath = $productPaths[0];
+        }
+    }
 
-    $VSIXInstaller_exe = Join-Path (Split-Path $productPath[0]) "VSIXInstaller.exe"
-    $process = Start-Process $VSIXInstaller_exe -PassThru -Wait -ArgumentList "/a /q $env:TEMP\Microsoft.Windows.CppWinRT.vsix"
+    $VSIXInstaller_exe = Join-Path (Split-Path $productPath) "VSIXInstaller.exe";
+    $process = Start-Process $VSIXInstaller_exe -PassThru -Wait -ArgumentList "/a /q $env:TEMP\Microsoft.Windows.CppWinRT.vsix";
     $process.WaitForExit();
+}
+
+function CheckDotNetCore {
+    try {
+        $dotnet = (Get-Command dotnet.exe -ErrorAction Stop);
+        if ($dotnet -ne $null) {
+            Write-Verbose ".NET found, searching for SDKs...";
+            [string[]]$sdks = & dotnet --list-sdks;
+            if ($sdks -ne $null) {
+                Write-Verbose ".NET SDKs found:";
+                $sdks | ForEach { Write-Verbose "  $_" };
+                $validSDKs = $sdks | Where-Object { $_ -like  "$dotnetver.*"};
+                return ($validSDKs -ne $null) -and ($validSDKs.Length -ge 1);
+            }
+        }
+    } catch { Write-Debug $_ }
+
+    Write-Verbose ".NET not found.";
+    return $false;
 }
 
 $requiredFreeSpaceGB = 15;
@@ -333,6 +423,7 @@ $requirements = @(
         Tags = @('appDev');
         Valid = { CheckNode; }
         Install = { choco install -y nodejs-lts };
+        HasVerboseOutput = $true;
     },
     @{
         Id=[CheckId]::Chrome;
@@ -347,8 +438,9 @@ $requirements = @(
         Id=[CheckId]::Yarn;
         Name = 'Yarn';
         Tags = @('appDev');
-        Valid = { try { (Get-Command yarn -ErrorAction Stop) -ne $null } catch { $false }; }
+        Valid = { CheckYarn }
         Install = { choco install -y yarn };
+        HasVerboseOutput = $true;
     },
     @{
         Id=[CheckId]::WinAppDriver;
@@ -358,16 +450,18 @@ $requirements = @(
         Install = {
             $ProgressPreference = 'Ignore';
             $url = "https://github.com/microsoft/WinAppDriver/releases/download/v1.2.1/WindowsApplicationDriver_1.2.1.msi";
+            Write-Verbose "Downloading WinAppDriver from $url";
             Invoke-WebRequest -UseBasicParsing $url -OutFile $env:TEMP\WindowsApplicationDriver.msi
             & $env:TEMP\WindowsApplicationDriver.msi /q
         };
+        HasVerboseOutput = $true;
         Optional = $true;
     },
     @{
         Id=[CheckId]::MSBuildLogViewer;
         Name = "MSBuild Structured Log Viewer";
         Tags = @('rnwDev');
-        Valid = { (cmd "/c assoc .binlog 2>nul" )  -ne $null; }
+        Valid = { ( cmd "/c assoc .binlog 2>nul" ) -ne $null; }
         Install = {
             choco install -y msbuild-structured-log-viewer;
             $slv = gci ${env:LocalAppData}\MSBuildStructuredLogViewer\StructuredLogViewer.exe -Recurse | select FullName | Sort-Object -Property FullName -Descending | Select-Object -First 1
@@ -377,60 +471,40 @@ $requirements = @(
          Optional = $true;
     },
     @{
-        # The 64-bit version of MsBuild does not support long paths. A temp fix for v16 is: https://github.com/microsoft/msbuild/issues/5331
-        Id=[CheckId]::MSBuild64LongPath
-        Name = "MSBuild 64-bit Long Path Support"
-        Tags = @('buildLab');
-        Valid = { try {
-            [System.IO.File]::ReadAllText( (GetMsBuild64BitConfigFile) ).Contains("Switch.System.Security.Cryptography.UseLegacyFipsThrow=false;Switch.System.IO.UseLegacyPathHandling=false;Switch.System.IO.BlockLongPaths=false")
-            } catch { $false }; }
-        Install = {
-            [ xml ]$msbExeConfig = Get-Content -Path (GetMsBuild64BitConfigFile)
-            $msbExeConfig.configuration.runtime.AppContextSwitchOverrides.SetAttribute("value", "Switch.System.Security.Cryptography.UseLegacyFipsThrow=false;Switch.System.IO.UseLegacyPathHandling=false;Switch.System.IO.BlockLongPaths=false")
-            $msbExeConfig.Save( (GetMsBuild64BitConfigFile) )
-        };
-        Optional = $true
-    },
-    @{
         # Install the Windows ADK (Assessment and Deployment Kit) to install the wpt (Windows Performance Toolkit) so we can use wpr (Windows Performance Recorder) for performance analysis
         Id=[CheckId]::WindowsADK;
         Name = 'Windows ADK';
         Tags = @('buildLab');
-        Valid = { (Test-Path "${env:ProgramFiles(x86)}\Windows Kits\10\Windows Performance Toolkit\wpr.exe"); }
+        Valid = { (Test-Path "${env:ProgramFiles(x86)}\Windows Kits\10\Windows Performance Toolkit\wpr.exe"); };
         Install = { choco install -y windows-adk };
-        Optional = $true
+        Optional = $true;
     },
     @{
         Id=[CheckId]::RNWClone;
-        Name = "React-Native-Windows clone"
-        Tags = @('clone')
+        Name = "React-Native-Windows clone";
+        Tags = @('clone');
         Valid = { try {
             Test-Path -Path react-native-windows
             } catch { $false }; }
-        Install = {
-            & "${env:ProgramFiles}\Git\cmd\git.exe" clone https://github.com/microsoft/react-native-windows.git
-        };
-        Optional = $true
+        Install = { & "${env:ProgramFiles}\Git\cmd\git.exe" clone https://github.com/microsoft/react-native-windows.git };
+        Optional = $true;
     },
     @{
         Id=[CheckId]::CppWinRTVSIX;
         Name = "C++/WinRT VSIX package";
         Tags = @('rnwDev');
-        Valid = { CheckCppWinRT_VSIX; }
+        Valid = { CheckCppWinRT_VSIX; };
         Install = { InstallCppWinRT_VSIX };
-        Optional = $true
+        HasVerboseOutput = $true;
+        Optional = $true;
     },
     @{
         ID=[CheckId]::DotNetCore;
-        Name = ".NET SDK (LTS, = $dotnetver)"
+        Name = ".NET SDK (LTS, = $dotnetver)";
         Tags = @('appDev');
-        Valid = { try {
-            $x = dotnet --list-sdks | Where-Object { $_ -like  "$dotnetver.*"};
-            ($x -ne $null) -and ($x.Length -ge 1)
-        } catch { $false }; }
-        Install = {
-            & choco install -y dotnet-$dotnetver-sdk
-        }
+        Valid = { CheckDotNetCore; };
+        Install = { & choco install -y dotnet-$dotnetver-sdk };
+        HasVerboseOutput = $true;
     }
 );
 
@@ -445,7 +519,7 @@ if (!($NoPrompt) -and !(IsElevated)) {
 
 $NeedsRerun = 0;
 $Installed = 0;
-$filteredRequirements = New-Object System.Collections.Generic.List[object]
+$filteredRequirements = New-Object System.Collections.Generic.List[object];
 foreach ($req in $requirements)
 {
     if ($Check -eq [CheckId]::All -or $req.Id -eq $Check)
@@ -481,7 +555,7 @@ if ($ListChecks) {
 }
 
 if (Test-Path $MarkerFile) {
-    Remove-Item $MarkerFile
+    Remove-Item $MarkerFile;
 }
 
 foreach ($req in $filteredRequirements)
@@ -495,7 +569,13 @@ foreach ($req in $filteredRequirements)
         $resultPad = 70;
     }
 
-    $valid = Invoke-Command $req.Valid;
+    $valid = $false;
+    try {
+        $valid = Invoke-Command $req.Valid;
+    } catch {
+        Write-Debug $_
+    }
+
     if (!$valid) {
         if ($req.Optional) {
             Write-Host -ForegroundColor Yellow " Failed (warn)".PadLeft($resultPad);
@@ -522,7 +602,7 @@ foreach ($req in $filteredRequirements)
 
 
 if ($Installed -ne 0) {
-    Write-Output "Installed $Installed dependencies. You may need to close this window for changes to take effect."
+    Write-Output "Installed $Installed dependencies. You may need to close this window for changes to take effect.";
 }
 
 if ($NeedsRerun -ne 0) {
@@ -534,7 +614,6 @@ if ($NeedsRerun -ne 0) {
     exit 1;
 } else {
     Write-Output "All mandatory requirements met.";
-    $Tags | Out-File $MarkerFile
-    return;
+    $Tags | Out-File $MarkerFile;
+    exit 0;
 }
-
