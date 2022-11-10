@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`LegacyImageTest ImageRTLTest 1`] = `
-Object {
+{
   "AutomationId": "image-container",
   "Background": "#FFFFFF00",
   "BorderBrush": null,
@@ -19,8 +19,8 @@ Object {
   "Visibility": "Visible",
   "Width": 500,
   "XamlType": "Windows.UI.Xaml.Controls.Border",
-  "children": Array [
-    Object {
+  "children": [
+    {
       "Background": null,
       "BorderBrush": "#00000000",
       "BorderThickness": "0,0,0,0",
@@ -34,8 +34,8 @@ Object {
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
       "XamlType": "Microsoft.ReactNative.ViewPanel",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Left": 0,
           "Top": 0,
           "XamlType": "Windows.UI.Xaml.DependencyObject",
@@ -47,7 +47,7 @@ Object {
 `;
 
 exports[`LegacyImageTest ImageWithBorderTest 1`] = `
-Object {
+{
   "AutomationId": "image-container",
   "Background": "#FFFFFF00",
   "BorderBrush": "#5500FF00",
@@ -65,8 +65,8 @@ Object {
   "Visibility": "Visible",
   "Width": 500,
   "XamlType": "Windows.UI.Xaml.Controls.Border",
-  "children": Array [
-    Object {
+  "children": [
+    {
       "Background": null,
       "BorderBrush": "#5500FF00",
       "BorderThickness": "10,10,10,10",
@@ -80,8 +80,8 @@ Object {
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
       "XamlType": "Microsoft.ReactNative.ViewPanel",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Left": 10,
           "Top": 10,
           "XamlType": "Windows.UI.Xaml.DependencyObject",
@@ -93,7 +93,7 @@ Object {
 `;
 
 exports[`LegacyImageTest ImageWithoutBorderTest 1`] = `
-Object {
+{
   "AutomationId": "image-container",
   "Background": "#FFFFFF00",
   "BorderBrush": "#00000000",
@@ -110,8 +110,8 @@ Object {
   "Visibility": "Visible",
   "Width": 500,
   "XamlType": "Microsoft.ReactNative.ViewPanel",
-  "children": Array [
-    Object {
+  "children": [
+    {
       "Left": 0,
       "Top": 0,
       "XamlType": "Windows.UI.Xaml.DependencyObject",
@@ -121,7 +121,7 @@ Object {
 `;
 
 exports[`LegacyImageTest ImageWithoutBorderTestOneMoreClick 1`] = `
-Object {
+{
   "AutomationId": "image-container",
   "Background": "#FFFFFF00",
   "BorderBrush": null,
@@ -139,8 +139,8 @@ Object {
   "Visibility": "Visible",
   "Width": 500,
   "XamlType": "Windows.UI.Xaml.Controls.Border",
-  "children": Array [
-    Object {
+  "children": [
+    {
       "Background": null,
       "BorderBrush": "#00000000",
       "BorderThickness": "0,0,0,0",
@@ -154,8 +154,8 @@ Object {
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
       "XamlType": "Microsoft.ReactNative.ViewPanel",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Left": 0,
           "Top": 0,
           "XamlType": "Windows.UI.Xaml.DependencyObject",

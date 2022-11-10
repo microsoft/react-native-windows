@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ButtonWin32 renders native component 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    Object {
+      "disabled": undefined,
+      "selected": false,
+    }
+  }
+  accessible={true}
+  focusable={true}
+  onBlur={[Function]}
+  onFocus={[Function]}
+  onTouchEnd={[Function]}
+>
+  <Text
+    textStyle="None"
+  />
+</View>
+`;

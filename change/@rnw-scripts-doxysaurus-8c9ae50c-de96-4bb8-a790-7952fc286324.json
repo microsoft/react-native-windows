@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "integration 9/26/22",
+  "packageName": "@rnw-scripts/doxysaurus",
+  "email": "tatianakapos@microsoft.com",
+  "dependentChangeType": "patch"
+}

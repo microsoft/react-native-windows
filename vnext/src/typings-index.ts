@@ -16,7 +16,7 @@
 // Importing from a copy of react-native types instead of from react-native
 // to allow custom typescript resolvers to redirect react-native to react-native-windows
 // when building bundles for the windows platform
-export * from './rntypes/index';
+export * from './rntypes/types/index';
 export * from './Libraries/Components/Flyout/FlyoutProps';
 export * from './Libraries/Components/Flyout/Flyout';
 export * from './Libraries/Components/Glyph/Glyph';

@@ -13,6 +13,14 @@ import ReactNativeFeatureFlags from 'react-native/Libraries/ReactNative/ReactNat
 
 const Components: Array<RNTesterModuleInfo> = [
   {
+    key: 'HTTPExample',
+    module: require('../examples/HTTP/HTTPExample'),
+  },
+  {
+    key: 'XHRExample',
+    module: require('../examples/XHR/XHRExample'),
+  },
+  {
     key: 'ActivityIndicatorExample',
     category: 'UI',
     module: require('../examples/ActivityIndicator/ActivityIndicatorExample'),
@@ -105,7 +113,7 @@ const Components: Array<RNTesterModuleInfo> = [
   {
     key: 'SwitchExample',
     category: 'UI',
-    module: require('../examples/Switch/SwitchExample'),
+    module: require('../examples-win/Switch/SwitchExample'),
   },
   {
     key: 'TextExample',
