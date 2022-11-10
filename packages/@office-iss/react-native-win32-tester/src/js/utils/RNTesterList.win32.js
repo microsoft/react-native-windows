@@ -142,7 +142,7 @@ const Components: Array<RNTesterModuleInfo> = [
   {
     key: 'ComponentWithState',
     category: 'UI',
-    module: require('../examples/NewArchitecture/ComponentWithState'),
+    module: require('../examples-win32/NewArchitecture/ComponentWithState'),
   },
 ];
 
