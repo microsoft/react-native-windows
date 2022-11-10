@@ -3,6 +3,8 @@
 #include "pch.h"
 #include "AutolinkedNativeModules.g.h"
 
+#include <winrt/PlaygroundNativeModules.h>
+
 // Includes from @react-native-picker/picker
 #include <winrt/ReactNativePicker.h>
 
@@ -10,9 +12,10 @@ namespace winrt::Microsoft::ReactNative
 {
 
 void RegisterAutolinkedNativeModulePackages(winrt::Windows::Foundation::Collections::IVector<winrt::Microsoft::ReactNative::IReactPackageProvider> const& packageProviders)
-{ 
+{
     // IReactPackageProviders from @react-native-picker/picker
     packageProviders.Append(winrt::ReactNativePicker::ReactPackageProvider());
+    packageProviders.Append(winrt::PlaygroundNativeModules::ReactPackageProvider());
 }
 
 }
