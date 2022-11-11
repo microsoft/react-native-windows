@@ -33,6 +33,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ReactNativePicker", "..\..\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microsoft.ReactNative.Shared", "..\..\..\node_modules\react-native-windows\Shared\Shared.vcxitems", "{2049DBE9-8D13-42C9-AE4B-413AE38FFFD0}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PlaygroundNativeModules", "PlaygroundNativeModules\PlaygroundNativeModules.vcxproj", "{FBC281F9-E7FA-4D3F-9A15-F7507A803007}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -155,6 +157,28 @@ Global
 		{BEDCC600-4541-41F2-AA46-9E058202B6AD}.Release|x86.ActiveCfg = Release|Win32
 		{BEDCC600-4541-41F2-AA46-9E058202B6AD}.Release|x86.Build.0 = Release|Win32
 		{BEDCC600-4541-41F2-AA46-9E058202B6AD}.Release|x86.Deploy.0 = Release|Win32
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Debug|ARM.ActiveCfg = Debug|ARM
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Debug|ARM.Build.0 = Debug|ARM
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Debug|ARM64.Build.0 = Debug|ARM64
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Debug|ARM64.Deploy.0 = Debug|ARM64
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Debug|x64.ActiveCfg = Debug|x64
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Debug|x64.Build.0 = Debug|x64
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Debug|x64.Deploy.0 = Debug|x64
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Debug|x86.ActiveCfg = Debug|Win32
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Debug|x86.Build.0 = Debug|Win32
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Debug|x86.Deploy.0 = Debug|Win32
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Release|ARM.ActiveCfg = Release|ARM
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Release|ARM.Build.0 = Release|ARM
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Release|ARM64.ActiveCfg = Release|ARM64
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Release|ARM64.Build.0 = Release|ARM64
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Release|ARM64.Deploy.0 = Release|ARM64
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Release|x64.ActiveCfg = Release|x64
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Release|x64.Build.0 = Release|x64
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Release|x64.Deploy.0 = Release|x64
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Release|x86.ActiveCfg = Release|Win32
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Release|x86.Build.0 = Release|Win32
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Release|x86.Deploy.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

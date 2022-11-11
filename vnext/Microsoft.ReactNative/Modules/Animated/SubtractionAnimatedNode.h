@@ -13,6 +13,8 @@ class SubtractionAnimatedNode final : public ValueAnimatedNode {
       const winrt::Microsoft::ReactNative::JSValueObject &config,
       const std::shared_ptr<NativeAnimatedNodeManager> &manager);
 
+  virtual void Update() override;
+
  private:
   int64_t m_firstInput{s_firstInputUnset};
   std::unordered_set<int64_t> m_inputNodes{};
