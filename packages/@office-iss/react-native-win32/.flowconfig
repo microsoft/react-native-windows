@@ -100,6 +100,8 @@ suppress_type=$FlowFixMeProps
 suppress_type=$FlowFixMeState
 suppress_type=$FlowFixMeEmpty
 
+suppress_comment= \\(.\\|\n\\)*\\$FlowNotNull
+
 inference_mode=constrain_writes
 
 [lints]
