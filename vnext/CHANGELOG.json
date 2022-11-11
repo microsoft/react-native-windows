@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 11 Nov 2022 06:15:10 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.580",
+      "version": "0.0.0-canary.580",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "80be786904d6a66c957585f4846e35d42d1512f6",
+            "comment": "Adds Rendering driver option to NativeAnimated"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 10 Nov 2022 06:17:11 GMT",
       "tag": "react-native-windows_v0.0.0-canary.579",
       "version": "0.0.0-canary.579",
