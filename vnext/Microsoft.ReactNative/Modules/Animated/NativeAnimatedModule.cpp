@@ -12,6 +12,7 @@ namespace Microsoft::ReactNative {
 
 void NativeAnimatedModule::Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
   m_context = reactContext;
+  m_nodesManager = std::make_shared<NativeAnimatedNodeManager>(reactContext);
 }
 
 void NativeAnimatedModule::startOperationBatch() noexcept {

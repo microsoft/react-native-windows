@@ -22,8 +22,8 @@ FrameAnimationDriver::FrameAnimationDriver(
 
 std::tuple<comp::CompositionAnimation, comp::CompositionScopedBatch> FrameAnimationDriver::MakeAnimation(
     const winrt::Microsoft::ReactNative::JSValueObject & /*config*/) {
-  const auto [scopedBatch, animation] = []() {
-    const auto compositor = Microsoft::ReactNative::GetCompositor();
+  const auto [scopedBatch, animation] = [manager = m_manager.lock()]() {
+    const auto compositor = manager->Compositor();
     return std::make_tuple(
         compositor.CreateScopedBatch(
             IsRS5OrHigher() ? comp::CompositionBatchTypes::AllAnimations : comp::CompositionBatchTypes::Animation),

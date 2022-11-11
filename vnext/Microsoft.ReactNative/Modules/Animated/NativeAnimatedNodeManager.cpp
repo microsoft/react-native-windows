@@ -26,7 +26,35 @@
 #include <Modules/PaperUIManagerModule.h>
 #include <Windows.Foundation.h>
 
+#ifdef USE_FABRIC
+#include <Fabric/Composition/CompositionContextHelper.h>
+#include <Fabric/Composition/CompositionUIService.h>
+#endif
+
 namespace Microsoft::ReactNative {
+
+NativeAnimatedNodeManager::NativeAnimatedNodeManager(winrt::Microsoft::ReactNative::ReactContext const &reactContext)
+    : m_context(reactContext) {}
+
+const winrt::Microsoft::ReactNative::ReactContext &NativeAnimatedNodeManager::ReactContext() const noexcept {
+  return m_context;
+}
+
+comp::Compositor NativeAnimatedNodeManager::Compositor() const noexcept {
+#ifdef USE_FABRIC
+  auto compositionContext =
+      winrt::Microsoft::ReactNative::Composition::implementation::CompositionUIService::GetCompositionContext(
+          m_context.Properties().Handle());
+  if (compositionContext) {
+    return winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::InnerCompositor(
+        compositionContext);
+  }
+#endif
+  // TODO: Islands - need to get the XamlView associated with this animation in order to
+  // use the compositor Microsoft::ReactNative::GetCompositor(xamlView)
+  return Microsoft::ReactNative::GetCompositor();
+}
+
 void NativeAnimatedNodeManager::CreateAnimatedNode(
     int64_t tag,
     const ::React::JSValueObject &config,

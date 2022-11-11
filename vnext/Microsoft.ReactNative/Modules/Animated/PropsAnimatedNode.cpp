@@ -12,6 +12,12 @@
 #include "PropsAnimatedNode.h"
 #include "StyleAnimatedNode.h"
 
+#ifdef USE_FABRIC
+#include <Fabric/Composition/CompositionContextHelper.h>
+#include <Fabric/Composition/CompositionUIService.h>
+#include <Fabric/FabricUIManagerModule.h>
+#endif
+
 namespace Microsoft::ReactNative {
 PropsAnimatedNode::PropsAnimatedNode(
     int64_t tag,
@@ -22,7 +28,7 @@ PropsAnimatedNode::PropsAnimatedNode(
   for (const auto &entry : config["props"].AsObject()) {
     m_propMapping.insert({entry.first, static_cast<int64_t>(entry.second.AsDouble())});
   }
-  auto compositor = Microsoft::ReactNative::GetCompositor();
+  auto compositor = manager->Compositor();
   m_subchannelPropertySet = compositor.CreatePropertySet();
   m_subchannelPropertySet.InsertScalar(L"TranslationX", 0.0f);
   m_subchannelPropertySet.InsertScalar(L"TranslationY", 0.0f);
@@ -118,39 +124,49 @@ static void EnsureUIElementDirtyForRender(xaml::UIElement uiElement) {
 
 void PropsAnimatedNode::StartAnimations() {
   if (m_expressionAnimations.size()) {
-    if (const auto uiElement = GetUIElement()) {
+    AnimationView view = GetAnimationView();
+    if (view) {
       // Work around for https://github.com/microsoft/microsoft-ui-xaml/issues/2511
-      EnsureUIElementDirtyForRender(uiElement);
+      if (view.m_element) {
+        EnsureUIElementDirtyForRender(view.m_element);
+      }
       for (const auto &anim : m_expressionAnimations) {
         if (anim.second.Target() == L"Translation.X") {
           m_subchannelPropertySet.StartAnimation(L"TranslationX", anim.second);
-          uiElement.StartAnimation(m_translationCombined);
+          StartAnimation(view, m_translationCombined);
         } else if (anim.second.Target() == L"Translation.Y") {
           m_subchannelPropertySet.StartAnimation(L"TranslationY", anim.second);
-          uiElement.StartAnimation(m_translationCombined);
+          StartAnimation(view, m_translationCombined);
         } else if (anim.second.Target() == L"Scale.X") {
           m_subchannelPropertySet.StartAnimation(L"ScaleX", anim.second);
-          uiElement.StartAnimation(m_scaleCombined);
+          StartAnimation(view, m_scaleCombined);
         } else if (anim.second.Target() == L"Scale.Y") {
           m_subchannelPropertySet.StartAnimation(L"ScaleY", anim.second);
-          uiElement.StartAnimation(m_scaleCombined);
+          StartAnimation(view, m_scaleCombined);
         } else if (anim.second.Target() == L"Rotation") {
-          uiElement.RotationAxis(m_rotationAxis);
-          uiElement.StartAnimation(anim.second);
+          if (view.m_element) {
+            view.m_element.RotationAxis(m_rotationAxis);
+          } else {
+             auto visual = winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::InnerVisual(
+            view.m_componentView->Visual());
+            visual.RotationAxis(m_rotationAxis);
+          }
+          StartAnimation(view, anim.second);
         } else {
-          uiElement.StartAnimation(anim.second);
+          StartAnimation(view, anim.second);
         }
       }
       if (m_needsCenterPointAnimation) {
         if (!m_centerPointAnimation) {
-          m_centerPointAnimation = Microsoft::ReactNative::GetCompositor().CreateExpressionAnimation();
-          m_centerPointAnimation.Target(L"CenterPoint");
-          m_centerPointAnimation.SetReferenceParameter(
-              L"centerPointPropertySet", GetShadowNodeBase()->EnsureTransformPS());
-          m_centerPointAnimation.Expression(L"centerPointPropertySet.center");
+          if (const auto manager = m_manager.lock()) {
+            m_centerPointAnimation = manager->Compositor().CreateExpressionAnimation();
+            m_centerPointAnimation.Target(L"CenterPoint");
+            m_centerPointAnimation.SetReferenceParameter(L"centerPointPropertySet", EnsureCenterPointPropertySet(view));
+            m_centerPointAnimation.Expression(L"centerPointPropertySet.center");
+          }
         }
 
-        uiElement.StartAnimation(m_centerPointAnimation);
+        StartAnimation(view, m_centerPointAnimation);
       }
     } else {
       if (const auto manager = m_manager.lock()) {
@@ -196,7 +212,7 @@ void PropsAnimatedNode::ResumeSuspendedAnimations(int64_t valueTag) {
 void PropsAnimatedNode::MakeAnimation(int64_t valueNodeTag, FacadeType facadeType) {
   if (const auto manager = m_manager.lock()) {
     if (const auto valueNode = manager->GetValueAnimatedNode(valueNodeTag)) {
-      const auto animation = Microsoft::ReactNative::GetCompositor().CreateExpressionAnimation();
+      const auto animation = manager->Compositor().CreateExpressionAnimation();
       animation.SetReferenceParameter(L"ValuePropSet", valueNode->PropertySet());
       animation.Expression(
           static_cast<winrt::hstring>(L"ValuePropSet.") + ValueAnimatedNode::s_valueName + L" + ValuePropSet." +
@@ -286,4 +302,61 @@ xaml::UIElement PropsAnimatedNode::GetUIElement() {
   }
   return nullptr;
 }
+
+PropsAnimatedNode::AnimationView PropsAnimatedNode::GetAnimationView() {
+#ifdef USE_FABRIC
+  if (auto fabricuiManager = FabricUIManager::FromProperties(m_context.Properties())) {
+    auto componentView = fabricuiManager->GetViewRegistry().findComponentViewWithTag(
+        static_cast<facebook::react::Tag>(m_connectedViewTag));
+    if (componentView) {
+      return {nullptr, std::static_pointer_cast<CompositionBaseComponentView>(componentView)};
+    }
+  }
+#endif
+  if (IsRS5OrHigher()) {
+    if (const auto shadowNodeBase = GetShadowNodeBase()) {
+      if (const auto shadowNodeView = shadowNodeBase->GetView()) {
+        return {shadowNodeView.as<xaml::UIElement>(), nullptr};
+      }
+    }
+  }
+
+  return {nullptr, nullptr};
+}
+
+void PropsAnimatedNode::StartAnimation(
+    const AnimationView &view,
+    const comp::CompositionAnimation &animation) noexcept {
+  if (view.m_element) {
+    view.m_element.StartAnimation(animation);
+  } else if (view.m_componentView) {
+    auto visual = winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::InnerVisual(
+        view.m_componentView->Visual());
+    if (visual) {
+      auto targetProp = animation.Target();
+      if (targetProp == L"Rotation") {
+        targetProp = L"RotationAngleInDegrees";
+      } else if (targetProp == L"Transform") {
+        view.m_componentView->EnsureCenterPointPropertySet().StartAnimation(L"transform", animation);
+        return;
+      } else if (targetProp == L"Translation") {
+        view.m_componentView->EnsureTransformMatrixFacade();
+        view.m_componentView->EnsureCenterPointPropertySet().StartAnimation(L"translation", animation);
+
+        return;
+      }
+      visual.StartAnimation(targetProp, animation);
+    }
+  }
+}
+
+comp::CompositionPropertySet PropsAnimatedNode::EnsureCenterPointPropertySet(const AnimationView &view) noexcept {
+  if (view.m_element) {
+    return GetShadowNodeBase()->EnsureTransformPS();
+  } else if (view.m_componentView) {
+    return view.m_componentView->EnsureCenterPointPropertySet();
+  }
+  return nullptr;
+}
+
 } // namespace Microsoft::ReactNative

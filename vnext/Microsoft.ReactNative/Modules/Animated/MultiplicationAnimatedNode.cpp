@@ -17,7 +17,7 @@ MultiplicationAnimatedNode::MultiplicationAnimatedNode(
   }
 
   m_propertySet.StartAnimation(s_valueName, [nodes = m_inputNodes, manager]() {
-    const auto anim = Microsoft::ReactNative::GetCompositor().CreateExpressionAnimation();
+    const auto anim = manager->Compositor().CreateExpressionAnimation();
 
     anim.Expression([nodes, manager, anim]() {
       winrt::hstring expr = L"1";
