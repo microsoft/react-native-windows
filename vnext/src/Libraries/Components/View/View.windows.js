@@ -10,9 +10,9 @@
 
 import type {ViewProps} from './ViewPropTypes';
 
-import ViewNativeComponent from './ViewNativeComponent';
-import TextAncestor from '../../Text/TextAncestor';
 import flattenStyle from '../../StyleSheet/flattenStyle';
+import TextAncestor from '../../Text/TextAncestor';
+import ViewNativeComponent from './ViewNativeComponent';
 import * as React from 'react';
 import invariant from 'invariant'; // [Windows]
 // [Windows
@@ -60,7 +60,6 @@ const View: React.AbstractComponent<
       'aria-disabled': ariaDisabled,
       'aria-expanded': ariaExpanded,
       'aria-selected': ariaSelected,
-      ...restProps
     } = otherProps;
 
     const _accessibilityState = {
@@ -152,6 +151,7 @@ const View: React.AbstractComponent<
 
     const _keyDown = (event: KeyEvent) => {
       if (otherProps.keyDownEvents && event.isPropagationStopped() !== true) {
+        // $FlowFixMe - keyDownEvents was already checked to not be undefined
         for (const el of otherProps.keyDownEvents) {
           if (event.nativeEvent.code == el.code && el.handledEventPhase == 3) {
             event.stopPropagation();
@@ -163,6 +163,7 @@ const View: React.AbstractComponent<
 
     const _keyUp = (event: KeyEvent) => {
       if (otherProps.keyUpEvents && event.isPropagationStopped() !== true) {
+        // $FlowFixMe - keyDownEvents was already checked to not be undefined
         for (const el of otherProps.keyUpEvents) {
           if (event.nativeEvent.code == el.code && el.handledEventPhase == 3) {
             event.stopPropagation();
@@ -174,6 +175,7 @@ const View: React.AbstractComponent<
 
     const _keyDownCapture = (event: KeyEvent) => {
       if (otherProps.keyDownEvents && event.isPropagationStopped() !== true) {
+        // $FlowFixMe - keyDownEvents was already checked to not be undefined
         for (const el of otherProps.keyDownEvents) {
           if (event.nativeEvent.code == el.code && el.handledEventPhase == 1) {
             event.stopPropagation();
@@ -185,6 +187,7 @@ const View: React.AbstractComponent<
 
     const _keyUpCapture = (event: KeyEvent) => {
       if (otherProps.keyUpEvents && event.isPropagationStopped() !== true) {
+        // $FlowFixMe - keyDownEvents was already checked to not be undefined
         for (const el of otherProps.keyUpEvents) {
           if (event.nativeEvent.code == el.code && el.handledEventPhase == 1) {
             event.stopPropagation();

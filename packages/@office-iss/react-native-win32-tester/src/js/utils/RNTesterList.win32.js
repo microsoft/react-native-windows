@@ -139,6 +139,11 @@ const Components: Array<RNTesterModuleInfo> = [
     key: 'ViewWin32Test',
     module: require('@office-iss/react-native-win32/Libraries/Components/View/Tests/ViewWin32Test'),
   },
+  /*{
+    key: 'ComponentWithState',
+    category: 'UI',
+    module: require('../examples-win32/NewArchitecture/ComponentWithState'),
+  },*/
 ];
 
 const APIs: Array<RNTesterModuleInfo> = [

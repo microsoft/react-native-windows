@@ -9,8 +9,14 @@
 
 'use strict';
 
-import * as React from 'react';
-import Platform from '../Utilities/Platform';
+import type {PressEvent} from '../Types/CoreEventTypes';
+import type {Button as ButtonType} from './Button.flow';
+import type {
+  AccessibilityActionEvent,
+  AccessibilityActionInfo,
+  AccessibilityState,
+} from './View/ViewAccessibility';
+
 import StyleSheet, {type ColorValue} from '../StyleSheet/StyleSheet';
 import Text from '../Text/Text';
 // [Windows
@@ -18,17 +24,11 @@ import Text from '../Text/Text';
 // import TouchableOpacity from './Touchable/TouchableOpacity';
 import TouchableHighlight from './Touchable/TouchableHighlight';
 import {PlatformColor} from '../StyleSheet/PlatformColorValueTypes';
+import Platform from '../Utilities/Platform';
 // Windows]
 import View from './View/View';
 import invariant from 'invariant';
-import type {Button as ButtonType} from './Button.flow';
-
-import type {
-  AccessibilityState,
-  AccessibilityActionEvent,
-  AccessibilityActionInfo,
-} from './View/ViewAccessibility';
-import type {PressEvent} from '../Types/CoreEventTypes';
+import * as React from 'react';
 
 type ButtonProps = $ReadOnly<{|
   /**

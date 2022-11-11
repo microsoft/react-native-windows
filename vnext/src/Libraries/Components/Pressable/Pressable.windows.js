@@ -8,21 +8,6 @@
  * @format
  */
 
-import * as React from 'react';
-import {useMemo, useState, useRef, useImperativeHandle} from 'react';
-import useAndroidRippleForView, {
-  type RippleConfig,
-} from './useAndroidRippleForView';
-import type {
-  AccessibilityActionEvent,
-  AccessibilityActionInfo,
-  AccessibilityRole,
-  AccessibilityState,
-  AccessibilityValue,
-} from '../View/ViewAccessibility';
-import {PressabilityDebugView} from '../../Pressability/PressabilityDebug';
-import usePressability from '../../Pressability/usePressability';
-import {type RectOrSize} from '../../StyleSheet/Rect';
 import type {
   LayoutEvent,
   MouseEvent,
@@ -32,8 +17,24 @@ import type {
   FocusEvent,
   KeyEvent, // Windows]
 } from '../../Types/CoreEventTypes';
-import type {HandledKeyboardEvent} from '../../Components/View/ViewPropTypes';
+import type {
+  AccessibilityActionEvent,
+  AccessibilityActionInfo,
+  AccessibilityRole,
+  AccessibilityState,
+  AccessibilityValue,
+} from '../View/ViewAccessibility';
+
+import {PressabilityDebugView} from '../../Pressability/PressabilityDebug';
+import usePressability from '../../Pressability/usePressability';
+import {type RectOrSize} from '../../StyleSheet/Rect';
 import View from '../View/View';
+import useAndroidRippleForView, {
+  type RippleConfig,
+} from './useAndroidRippleForView';
+import * as React from 'react';
+import {useImperativeHandle, useMemo, useRef, useState} from 'react';
+import type {HandledKeyboardEvent} from '../../Components/View/ViewPropTypes';
 import TextInputState from '../TextInput/TextInputState';
 
 type ViewStyleProp = $ElementType<React.ElementConfig<typeof View>, 'style'>;

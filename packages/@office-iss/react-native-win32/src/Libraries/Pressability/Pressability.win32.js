@@ -8,12 +8,7 @@
  * @format
  */
 
-import invariant from 'invariant';
-import * as React from 'react';
-import SoundManager from '../Components/Sound/SoundManager';
-import UIManager from '../ReactNative/UIManager';
 import type {HostComponent} from '../Renderer/shims/ReactNativeTypes';
-import {normalizeRect, type RectOrSize} from '../StyleSheet/Rect';
 import type {
   BlurEvent,
   FocusEvent,
@@ -21,12 +16,18 @@ import type {
   MouseEvent,
   PressEvent,
 } from '../Types/CoreEventTypes';
+
+import SoundManager from '../Components/Sound/SoundManager';
+import ReactNativeFeatureFlags from '../ReactNative/ReactNativeFeatureFlags';
+import UIManager from '../ReactNative/UIManager';
+import {type RectOrSize, normalizeRect} from '../StyleSheet/Rect';
+import {type PointerEvent} from '../Types/CoreEventTypes';
 import Platform from '../Utilities/Platform';
 import {isHoverEnabled} from './HoverState';
 import PressabilityPerformanceEventEmitter from './PressabilityPerformanceEventEmitter.js';
 import {type PressabilityTouchSignal as TouchSignal} from './PressabilityTypes.js';
-import ReactNativeFeatureFlags from '../ReactNative/ReactNativeFeatureFlags';
-import {type PointerEvent} from '../Types/CoreEventTypes';
+import invariant from 'invariant';
+import * as React from 'react';
 
 export type PressabilityConfig = $ReadOnly<{|
   /**

@@ -8,10 +8,6 @@
  * @format
  */
 
-import Pressability, {
-  type PressabilityConfig,
-} from '../../Pressability/Pressability';
-import {PressabilityDebugView} from '../../Pressability/PressabilityDebug';
 import type {
   AccessibilityActionEvent,
   AccessibilityActionInfo,
@@ -27,7 +23,12 @@ import type {
   MouseEvent, // [Windows]
   PressEvent,
 } from '../../Types/CoreEventTypes';
+
 import View from '../../Components/View/View';
+import Pressability, {
+  type PressabilityConfig,
+} from '../../Pressability/Pressability';
+import {PressabilityDebugView} from '../../Pressability/PressabilityDebug';
 import * as React from 'react';
 
 type Props = $ReadOnly<{|

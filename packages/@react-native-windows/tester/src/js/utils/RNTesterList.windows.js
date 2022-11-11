@@ -182,6 +182,11 @@ const Components: Array<RNTesterModuleInfo> = [
     key: 'LegacyTextHitTestTest',
     module: require('../examples-win/LegacyTests/TextHitTestPage'),
   },
+  /*{
+    key: 'ComponentWithState',
+    category: 'UI',
+    module: require('../examples-win/NewArchitecture/ComponentWithState'),
+  },*/
 ];
 
 const APIs: Array<RNTesterModuleInfo> = [

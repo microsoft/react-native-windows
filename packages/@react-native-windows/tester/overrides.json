@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.0.0-20220926-2026-8cdc9e7f0",
+  "baseVersion": "0.0.0-20221010-2132-1fc27c4cb",
   "overrides": [
     {
       "type": "patch",
@@ -21,11 +21,17 @@
       "baseHash": "36c55afe75ac9c6efdec22e5ceb1f114a84ebd45"
     },
     {
+      "type": "patch",
+      "file": "src/js/examples-win/NewArchitecture/ComponentWithState.windows.js",
+      "baseFile": "packages/rn-tester/js/examples/NewArchitecture/ComponentWithState.js",
+      "baseHash": "5eebd768304baac0e80b34cc073c02ac44890e85",
+      "issue": 0
+    },
+    {
       "type": "derived",
       "file": "src/js/examples-win/Switch/SwitchExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Switch/SwitchExample.js",
-      "baseHash": "ba4cd945121522ef59ed862bb6104d8767e66e5e",
-      "issue": 0
+      "baseHash": "ba4cd945121522ef59ed862bb6104d8767e66e5e"
     },
     {
       "type": "platform",
@@ -66,7 +72,7 @@
       "type": "derived",
       "file": "src/js/utils/RNTesterList.windows.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "e3e46179f01995a76b39dc46feae58cbd868633e"
+      "baseHash": "066da127da0eb3a5ac600ff13292e4dc7e65940a"
     }
   ]
 }

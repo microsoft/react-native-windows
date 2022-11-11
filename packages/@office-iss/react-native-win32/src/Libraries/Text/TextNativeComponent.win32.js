@@ -1,10 +1,20 @@
-import UIManager from '../ReactNative/UIManager';
-import {type HostComponent} from '../Renderer/shims/ReactNativeTypes';
-import createReactNativeComponentClass from '../Renderer/shims/createReactNativeComponentClass';
-import {type ProcessedColorValue} from '../StyleSheet/processColor';
-import {type TextProps} from './TextProps';
-import {type PressEvent} from '../Types/CoreEventTypes';
+/**
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @flow
+ * @format
+ */
+
 import {createViewConfig} from '../NativeComponent/ViewConfig';
+import UIManager from '../ReactNative/UIManager';
+import createReactNativeComponentClass from '../Renderer/shims/createReactNativeComponentClass';
+import {type HostComponent} from '../Renderer/shims/ReactNativeTypes';
+import {type ProcessedColorValue} from '../StyleSheet/processColor';
+import {type PressEvent} from '../Types/CoreEventTypes';
+import {type TextProps} from './TextProps';
 
 type NativeTextProps = $ReadOnly<{
   ...TextProps,
@@ -36,10 +46,10 @@ const textViewConfig = {
     dataDetectorType: true,
     android_hyphenationFrequency: true,
     // [Windows
-      // Listed for the property to be honored even though
-      // the property tooltip and the events from ViewWin32
-      //work without being listed.  Any Text-specific events
-      // would need to be listed here.
+    // Listed for the property to be honored even though
+    // the property tooltip and the events from ViewWin32
+    //work without being listed.  Any Text-specific events
+    // would need to be listed here.
     focusable: true,
     accessibilityLevel: true,
     // Windows]
