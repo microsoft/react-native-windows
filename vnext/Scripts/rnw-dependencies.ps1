@@ -182,6 +182,9 @@ function InstallVS {
 
     if (($vsWhere -eq $null) -or ($channelId -eq $null) -or ($productId -eq $null)) {
         # No VSWhere / VS_Installer
+
+        EnsureChocoForInstall;
+        
         if ($Enterprise) {
             # The CI machines need the enterprise version of VS as that is what is hardcoded in all the scripts
             & choco install -y visualstudio2022enterprise;
@@ -400,7 +403,6 @@ $requirements = @(
         Tags = @('appDev', 'vs2022');
         Valid = { CheckVS; }
         Install = { InstallVS };
-        InstallsWithChoco = $true;
         HasVerboseOutput = $true;
     },
     @{
