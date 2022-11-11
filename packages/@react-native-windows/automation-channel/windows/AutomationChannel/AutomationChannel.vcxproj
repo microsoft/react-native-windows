@@ -9,7 +9,7 @@
     <ProjectName>AutomationChannel</ProjectName>
     <RootNamespace>AutomationChannel</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
-    <MinimumVisualStudioVersion>16.0</MinimumVisualStudioVersion>
+    <MinimumVisualStudioVersion>17.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
@@ -139,7 +139,7 @@
     <None Include="PropertySheet.props" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" />
+    <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" PrivateAssets="all" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ReactNativeWindowsTargets">

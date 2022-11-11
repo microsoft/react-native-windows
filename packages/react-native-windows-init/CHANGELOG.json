@@ -2,6 +2,108 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Thu, 10 Nov 2022 06:17:11 GMT",
+      "tag": "react-native-windows-init_v1.3.0",
+      "version": "1.3.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows-init",
+            "commit": "ca86014a9c1bc80611fb68051fc67e51339c5bfd",
+            "comment": "integration 9/26/22"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.8",
+            "commit": "406d486eb138d4d9e324124e1b65120794424da1"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.51",
+            "commit": "406d486eb138d4d9e324124e1b65120794424da1"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.147",
+            "commit": "406d486eb138d4d9e324124e1b65120794424da1"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @rnw-scripts/jest-unittest-config to v1.4.0",
+            "commit": "406d486eb138d4d9e324124e1b65120794424da1"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.0",
+            "commit": "406d486eb138d4d9e324124e1b65120794424da1"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 08 Nov 2022 06:12:54 GMT",
+      "tag": "react-native-windows-init_v1.2.9",
+      "version": "1.2.9",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.50",
+            "commit": "2ca512af4321542ba0eeceaaa48cd2f3a98d3b3c"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.146",
+            "commit": "2ca512af4321542ba0eeceaaa48cd2f3a98d3b3c"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 03 Nov 2022 05:12:36 GMT",
+      "tag": "react-native-windows-init_v1.2.8",
+      "version": "1.2.8",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.145",
+            "commit": "ab330f691477cad43c19b58ab8ce767a1c5baf58"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 01 Nov 2022 05:13:34 GMT",
+      "tag": "react-native-windows-init_v1.2.7",
+      "version": "1.2.7",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.49",
+            "commit": "5885ee4477e8a1d0fa992066abd1b405bef13b32"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.144",
+            "commit": "5885ee4477e8a1d0fa992066abd1b405bef13b32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 27 Oct 2022 05:11:37 GMT",
       "tag": "react-native-windows-init_v1.2.6",
       "version": "1.2.6",

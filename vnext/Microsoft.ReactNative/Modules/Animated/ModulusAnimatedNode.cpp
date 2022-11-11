@@ -11,18 +11,30 @@ ModulusAnimatedNode::ModulusAnimatedNode(
     int64_t tag,
     const winrt::Microsoft::ReactNative::JSValueObject &config,
     const std::shared_ptr<NativeAnimatedNodeManager> &manager)
-    : ValueAnimatedNode(tag, manager) {
-  m_inputNodeTag = static_cast<int64_t>(config[s_inputName].AsDouble());
-  m_modulus = static_cast<int64_t>(config[s_modulusName].AsDouble());
+    : ValueAnimatedNode(tag, config, manager) {
+  m_inputNodeTag = config[s_inputName].AsInt64();
+  assert(HasCompatibleAnimationDriver(m_inputNodeTag));
+  m_modulus = config[s_modulusName].AsInt64();
 
-  m_propertySet.StartAnimation(s_valueName, [node = m_inputNodeTag, mod = m_modulus, manager]() {
-    const auto anim = manager->Compositor().CreateExpressionAnimation();
-    anim.SetReferenceParameter(s_inputParameterName, manager->GetValueAnimatedNode(node)->PropertySet());
-    anim.SetScalarParameter(s_modName, static_cast<float>(mod));
-    anim.Expression(
-        static_cast<winrt::hstring>(L"(") + s_inputParameterName + L"." + s_valueName + L" + " + s_inputParameterName +
-        L"." + s_offsetName + L") % " + s_modName);
-    return anim;
-  }());
+  if (m_useComposition) {
+    m_propertySet.StartAnimation(s_valueName, [node = m_inputNodeTag, mod = m_modulus, manager]() {
+      const auto anim = manager->Compositor().CreateExpressionAnimation();
+      anim.SetReferenceParameter(s_inputParameterName, manager->GetValueAnimatedNode(node)->PropertySet());
+      anim.SetScalarParameter(s_modName, static_cast<float>(mod));
+      anim.Expression(
+          static_cast<winrt::hstring>(L"(") + s_inputParameterName + L"." + s_valueName + L" + " + s_inputParameterName +
+          L"." + s_offsetName + L") % " + s_modName);
+      return anim;
+    }());
+  }
+}
+
+void ModulusAnimatedNode::Update() {
+  assert(!m_useComposition);
+  if (const auto manager = m_manager.lock()) {
+    if (const auto node = manager->GetValueAnimatedNode(m_inputNodeTag)) {
+      RawValue(std::fmod(node->Value(), m_modulus));
+    }
+  }
 }
 } // namespace Microsoft::ReactNative

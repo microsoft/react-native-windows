@@ -4,12 +4,18 @@
 #include "pch.h"
 
 #include "AnimatedNode.h"
+#include "AnimatedPlatformConfig.h"
 #include "NativeAnimatedNodeManager.h"
 
 namespace Microsoft::ReactNative {
 
-AnimatedNode::AnimatedNode(int64_t tag, const std::shared_ptr<NativeAnimatedNodeManager> &manager)
-    : m_tag(tag), m_manager(manager) {}
+AnimatedNode::AnimatedNode(
+    int64_t tag,
+    const winrt::Microsoft::ReactNative::JSValueObject &config,
+    const std::shared_ptr<NativeAnimatedNodeManager> &manager)
+    : m_tag(tag), m_manager(manager) {
+  m_useComposition = AnimatedPlatformConfig::ShouldUseComposition(config);
+}
 
 int64_t AnimatedNode::Tag() {
   return m_tag;
@@ -35,5 +41,14 @@ AnimatedNode *AnimatedNode::GetChildNode(int64_t tag) {
   }
 
   return static_cast<AnimatedNode *>(nullptr);
+}
+
+bool AnimatedNode::HasCompatibleAnimationDriver(int64_t tag) {
+#if DEBUG
+  if (const auto manager = m_manager.lock()) {
+    return manager->GetAnimatedNode(tag)->UseComposition() == m_useComposition;
+  }
+#endif
+  return true;
 }
 } // namespace Microsoft::ReactNative

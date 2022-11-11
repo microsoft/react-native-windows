@@ -16,7 +16,7 @@
 // Importing from a copy of react-native types instead of from react-native
 // to allow custom typescript resolvers to redirect react-native to react-native-win32
 // when building bundles for the win32 platform
-export * from './rntypes/index';
+export * from './rntypes/types/index';
 export type { 
       AccessibilityActionInfo,
       AccessibilityActionName,

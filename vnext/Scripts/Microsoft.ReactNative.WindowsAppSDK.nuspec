@@ -15,16 +15,16 @@
       <group targetFramework=".NETCoreApp3.0" />
       <group targetFramework="UAP10.0" />
       <group targetFramework=".NETFramework4.6" />
-      <group targetFramework="net5.0" />
+      <group targetFramework="net6.0" />
     </dependencies>
   </metadata>
   <files>
-    <!-- Support netcore3, uap, net46+, net5, c++ -->
+    <!-- Support netcore3, uap, net46+, net6, c++ -->
     <!-- Use the contents in the target folder since those are built with UseWinUI3, as opposed to the content in $nugetroot$ which -->
     <file src="$nugetroot$\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative\Microsoft.ReactNative.winmd" target="lib\netcoreapp3.0\Microsoft.ReactNative.winmd" />
     <file src="$nugetroot$\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative\Microsoft.ReactNative.winmd" target="lib\uap10.0\Microsoft.ReactNative.winmd" />
     <file src="$nugetroot$\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative\Microsoft.ReactNative.winmd" target="lib\net46\Microsoft.ReactNative.winmd" />
     <file src="$nugetroot$\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative\Microsoft.ReactNative.dll" target="runtimes\win10-x64\native\Microsoft.ReactNative.dll" />
-    <file src="$nugetroot$\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative.WindowsAppSDK\Microsoft.ReactNative.WindowsAppSDK.dll" target="lib\net5.0\Microsoft.ReactNative.WindowsAppSDK.dll" />
+    <file src="$nugetroot$\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative.WindowsAppSDK\Microsoft.ReactNative.WindowsAppSDK.dll" target="lib\net6.0\Microsoft.ReactNative.WindowsAppSDK.dll" />
   </files>
 </package>

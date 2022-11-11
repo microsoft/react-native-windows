@@ -10,6 +10,7 @@ namespace Microsoft::ReactNative {
 
 std::tuple<comp::CompositionAnimation, comp::CompositionScopedBatch> CalculatedAnimationDriver::MakeAnimation(
     const winrt::Microsoft::ReactNative::JSValueObject & /*config*/) {
+  assert(m_useComposition);
   const auto [scopedBatch, animation, easingFunction] = [manager = m_manager.lock()]() {
     const auto compositor = manager->Compositor();
     return std::make_tuple(
@@ -18,7 +19,7 @@ std::tuple<comp::CompositionAnimation, comp::CompositionScopedBatch> CalculatedA
         compositor.CreateLinearEasingFunction());
   }();
 
-  m_startValue = GetAnimatedValue()->RawValue();
+  m_originalValue = GetAnimatedValue()->RawValue();
   std::vector<float> keyFrames = [this]() {
     std::vector<float> keyFrames;
     bool done = false;
@@ -39,7 +40,7 @@ std::tuple<comp::CompositionAnimation, comp::CompositionScopedBatch> CalculatedA
   std::chrono::milliseconds duration(static_cast<int>(keyFrames.size() / 60.0f * 1000.0f));
   animation.Duration(duration);
   auto normalizedProgress = 0.0f;
-  auto fromValue = static_cast<float>(m_startValue);
+  auto fromValue = static_cast<float>(m_originalValue.value());
   animation.InsertKeyFrame(normalizedProgress, fromValue, easingFunction);
   for (const auto keyFrame : keyFrames) {
     normalizedProgress = std::min(normalizedProgress + 1.0f / keyFrames.size(), 1.0f);

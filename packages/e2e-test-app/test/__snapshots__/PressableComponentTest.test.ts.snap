@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`PressableTests Pressables can change text on press/rest, state rest 1`] = `
-Object {
+{
   "AutomationId": "pressable_press_console",
   "Clip": null,
   "FlowDirection": "LeftToRight",
-  "Foreground": "#E4000000",
+  "Foreground": "#FF000000",
   "Height": 19,
   "HorizontalAlignment": "Stretch",
   "Left": 21,
@@ -21,7 +21,7 @@ Object {
 `;
 
 exports[`PressableTests Pressables can have customized borders and corners 1`] = `
-Object {
+{
   "AutomationId": "advanced_borders_pressable",
   "Background": null,
   "BorderBrush": "#00000000",
@@ -38,15 +38,15 @@ Object {
   "Visibility": "Visible",
   "Width": 718,
   "XamlType": "Microsoft.ReactNative.ViewPanel",
-  "children": Array [
-    Object {
+  "children": [
+    {
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
       "Clip": null,
       "CornerRadius": "0,0,0,0",
       "FlowDirection": "LeftToRight",
-      "Foreground": "#E4000000",
+      "Foreground": "#FF000000",
       "Height": 50,
       "HorizontalAlignment": "Stretch",
       "Left": 0,
@@ -57,15 +57,15 @@ Object {
       "Visibility": "Visible",
       "Width": 50,
       "XamlType": "Microsoft.ReactNative.ViewControl",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
           "Clip": null,
           "CornerRadius": "0,0,0,0",
           "FlowDirection": "LeftToRight",
-          "Foreground": "#E4000000",
+          "Foreground": "#FF000000",
           "HorizontalAlignment": "Stretch",
           "Left": 0,
           "Margin": "0,0,0,0",
@@ -74,8 +74,8 @@ Object {
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
-          "children": Array [
-            Object {
+          "children": [
+            {
               "Background": "#FF808080",
               "BorderBrush": "#FF0000FF",
               "BorderThickness": "10,20,15,5",
@@ -90,8 +90,8 @@ Object {
               "VerticalAlignment": "Stretch",
               "Visibility": "Visible",
               "XamlType": "Windows.UI.Xaml.Controls.Border",
-              "children": Array [
-                Object {
+              "children": [
+                {
                   "Background": null,
                   "BorderBrush": "#FF0000FF",
                   "BorderThickness": "10,20,15,5",
@@ -119,7 +119,7 @@ Object {
 `;
 
 exports[`PressableTests Pressables can have delayed event handlers 1`] = `
-Object {
+{
   "AutomationId": "pressable_delay_events_button",
   "Background": null,
   "BorderBrush": null,
@@ -127,7 +127,7 @@ Object {
   "Clip": null,
   "CornerRadius": "0,0,0,0",
   "FlowDirection": "LeftToRight",
-  "Foreground": "#E4000000",
+  "Foreground": "#FF000000",
   "Height": 19,
   "HorizontalAlignment": "Stretch",
   "Left": 331,
@@ -138,15 +138,15 @@ Object {
   "Visibility": "Visible",
   "Width": 56,
   "XamlType": "Microsoft.ReactNative.ViewControl",
-  "children": Array [
-    Object {
+  "children": [
+    {
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
       "Clip": null,
       "CornerRadius": "0,0,0,0",
       "FlowDirection": "LeftToRight",
-      "Foreground": "#E4000000",
+      "Foreground": "#FF000000",
       "HorizontalAlignment": "Stretch",
       "Left": 0,
       "Margin": "0,0,0,0",
@@ -155,8 +155,8 @@ Object {
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
       "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Background": "#00FFFFFF",
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -171,8 +171,8 @@ Object {
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
           "XamlType": "Windows.UI.Xaml.Controls.Border",
-          "children": Array [
-            Object {
+          "children": [
+            {
               "Background": null,
               "BorderBrush": "#00000000",
               "BorderThickness": "0,0,0,0",
@@ -188,8 +188,8 @@ Object {
               "Visibility": "Visible",
               "Width": 56,
               "XamlType": "Microsoft.ReactNative.ViewPanel",
-              "children": Array [
-                Object {
+              "children": [
+                {
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "Foreground": "#FF007AFF",
@@ -216,7 +216,7 @@ Object {
 `;
 
 exports[`PressableTests Pressables can have event handlers 1`] = `
-Object {
+{
   "AutomationId": "pressable_feedback_events_button",
   "Background": null,
   "BorderBrush": null,
@@ -224,7 +224,7 @@ Object {
   "Clip": null,
   "CornerRadius": "0,0,0,0",
   "FlowDirection": "LeftToRight",
-  "Foreground": "#E4000000",
+  "Foreground": "#FF000000",
   "Height": 19,
   "HorizontalAlignment": "Stretch",
   "Left": 331,
@@ -235,15 +235,15 @@ Object {
   "Visibility": "Visible",
   "Width": 56,
   "XamlType": "Microsoft.ReactNative.ViewControl",
-  "children": Array [
-    Object {
+  "children": [
+    {
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
       "Clip": null,
       "CornerRadius": "0,0,0,0",
       "FlowDirection": "LeftToRight",
-      "Foreground": "#E4000000",
+      "Foreground": "#FF000000",
       "HorizontalAlignment": "Stretch",
       "Left": 0,
       "Margin": "0,0,0,0",
@@ -252,8 +252,8 @@ Object {
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
       "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Background": "#00FFFFFF",
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -268,8 +268,8 @@ Object {
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
           "XamlType": "Windows.UI.Xaml.Controls.Border",
-          "children": Array [
-            Object {
+          "children": [
+            {
               "Background": null,
               "BorderBrush": "#00000000",
               "BorderThickness": "0,0,0,0",
@@ -285,8 +285,8 @@ Object {
               "Visibility": "Visible",
               "Width": 56,
               "XamlType": "Microsoft.ReactNative.ViewPanel",
-              "children": Array [
-                Object {
+              "children": [
+                {
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "Foreground": "#FF007AFF",
@@ -313,7 +313,7 @@ Object {
 `;
 
 exports[`PressableTests Pressables can have hit slop functionality 1`] = `
-Object {
+{
   "AutomationId": "pressable_hit_slop_button",
   "Background": null,
   "BorderBrush": null,
@@ -321,7 +321,7 @@ Object {
   "Clip": null,
   "CornerRadius": "0,0,0,0",
   "FlowDirection": "LeftToRight",
-  "Foreground": "#E4000000",
+  "Foreground": "#FF000000",
   "Height": 19,
   "HorizontalAlignment": "Stretch",
   "Left": 286,
@@ -332,15 +332,15 @@ Object {
   "Visibility": "Visible",
   "Width": 146,
   "XamlType": "Microsoft.ReactNative.ViewControl",
-  "children": Array [
-    Object {
+  "children": [
+    {
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
       "Clip": null,
       "CornerRadius": "0,0,0,0",
       "FlowDirection": "LeftToRight",
-      "Foreground": "#E4000000",
+      "Foreground": "#FF000000",
       "HorizontalAlignment": "Stretch",
       "Left": 0,
       "Margin": "0,0,0,0",
@@ -349,8 +349,8 @@ Object {
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
       "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Background": "#FFFF0000",
           "BorderBrush": "#00000000",
           "BorderThickness": "0,0,0,0",
@@ -366,8 +366,8 @@ Object {
           "Visibility": "Visible",
           "Width": 146,
           "XamlType": "Microsoft.ReactNative.ViewPanel",
-          "children": Array [
-            Object {
+          "children": [
+            {
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Foreground": "#FFFFFFFF",
@@ -392,7 +392,7 @@ Object {
 `;
 
 exports[`PressableTests Pressables can have ranging opacity 1`] = `
-Object {
+{
   "AutomationId": "opacity_pressable",
   "Background": null,
   "BorderBrush": "#00000000",
@@ -409,15 +409,15 @@ Object {
   "Visibility": "Visible",
   "Width": 718,
   "XamlType": "Microsoft.ReactNative.ViewPanel",
-  "children": Array [
-    Object {
+  "children": [
+    {
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
       "Clip": null,
       "CornerRadius": "0,0,0,0",
       "FlowDirection": "LeftToRight",
-      "Foreground": "#E4000000",
+      "Foreground": "#FF000000",
       "Height": 50,
       "HorizontalAlignment": "Stretch",
       "Left": 0,
@@ -428,15 +428,15 @@ Object {
       "Visibility": "Visible",
       "Width": 50,
       "XamlType": "Microsoft.ReactNative.ViewControl",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
           "Clip": null,
           "CornerRadius": "0,0,0,0",
           "FlowDirection": "LeftToRight",
-          "Foreground": "#E4000000",
+          "Foreground": "#FF000000",
           "HorizontalAlignment": "Stretch",
           "Left": 0,
           "Margin": "0,0,0,0",
@@ -445,8 +445,8 @@ Object {
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
-          "children": Array [
-            Object {
+          "children": [
+            {
               "Background": "#FF000000",
               "BorderBrush": "#00000000",
               "BorderThickness": "0,0,0,0",
@@ -467,14 +467,14 @@ Object {
         },
       ],
     },
-    Object {
+    {
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
       "Clip": null,
       "CornerRadius": "0,0,0,0",
       "FlowDirection": "LeftToRight",
-      "Foreground": "#E4000000",
+      "Foreground": "#FF000000",
       "Height": 50,
       "HorizontalAlignment": "Stretch",
       "Left": 0,
@@ -485,15 +485,15 @@ Object {
       "Visibility": "Visible",
       "Width": 50,
       "XamlType": "Microsoft.ReactNative.ViewControl",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
           "Clip": null,
           "CornerRadius": "0,0,0,0",
           "FlowDirection": "LeftToRight",
-          "Foreground": "#E4000000",
+          "Foreground": "#FF000000",
           "HorizontalAlignment": "Stretch",
           "Left": 0,
           "Margin": "0,0,0,0",
@@ -502,8 +502,8 @@ Object {
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
-          "children": Array [
-            Object {
+          "children": [
+            {
               "Background": "#FF000000",
               "BorderBrush": "#00000000",
               "BorderThickness": "0,0,0,0",
@@ -524,14 +524,14 @@ Object {
         },
       ],
     },
-    Object {
+    {
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
       "Clip": null,
       "CornerRadius": "0,0,0,0",
       "FlowDirection": "LeftToRight",
-      "Foreground": "#E4000000",
+      "Foreground": "#FF000000",
       "Height": 50,
       "HorizontalAlignment": "Stretch",
       "Left": 0,
@@ -542,15 +542,15 @@ Object {
       "Visibility": "Visible",
       "Width": 50,
       "XamlType": "Microsoft.ReactNative.ViewControl",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
           "Clip": null,
           "CornerRadius": "0,0,0,0",
           "FlowDirection": "LeftToRight",
-          "Foreground": "#E4000000",
+          "Foreground": "#FF000000",
           "HorizontalAlignment": "Stretch",
           "Left": 0,
           "Margin": "0,0,0,0",
@@ -559,8 +559,8 @@ Object {
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
-          "children": Array [
-            Object {
+          "children": [
+            {
               "Background": "#FF000000",
               "BorderBrush": "#00000000",
               "BorderThickness": "0,0,0,0",
@@ -581,14 +581,14 @@ Object {
         },
       ],
     },
-    Object {
+    {
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
       "Clip": null,
       "CornerRadius": "0,0,0,0",
       "FlowDirection": "LeftToRight",
-      "Foreground": "#E4000000",
+      "Foreground": "#FF000000",
       "Height": 50,
       "HorizontalAlignment": "Stretch",
       "Left": 0,
@@ -599,15 +599,15 @@ Object {
       "Visibility": "Visible",
       "Width": 50,
       "XamlType": "Microsoft.ReactNative.ViewControl",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
           "Clip": null,
           "CornerRadius": "0,0,0,0",
           "FlowDirection": "LeftToRight",
-          "Foreground": "#E4000000",
+          "Foreground": "#FF000000",
           "HorizontalAlignment": "Stretch",
           "Left": 0,
           "Margin": "0,0,0,0",
@@ -616,8 +616,8 @@ Object {
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
-          "children": Array [
-            Object {
+          "children": [
+            {
               "Background": "#FF000000",
               "BorderBrush": "#00000000",
               "BorderThickness": "0,0,0,0",
@@ -638,14 +638,14 @@ Object {
         },
       ],
     },
-    Object {
+    {
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
       "Clip": null,
       "CornerRadius": "0,0,0,0",
       "FlowDirection": "LeftToRight",
-      "Foreground": "#E4000000",
+      "Foreground": "#FF000000",
       "Height": 50,
       "HorizontalAlignment": "Stretch",
       "Left": 0,
@@ -656,15 +656,15 @@ Object {
       "Visibility": "Visible",
       "Width": 50,
       "XamlType": "Microsoft.ReactNative.ViewControl",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
           "Clip": null,
           "CornerRadius": "0,0,0,0",
           "FlowDirection": "LeftToRight",
-          "Foreground": "#E4000000",
+          "Foreground": "#FF000000",
           "HorizontalAlignment": "Stretch",
           "Left": 0,
           "Margin": "0,0,0,0",
@@ -673,8 +673,8 @@ Object {
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
-          "children": Array [
-            Object {
+          "children": [
+            {
               "Background": "#FF000000",
               "BorderBrush": "#00000000",
               "BorderThickness": "0,0,0,0",
@@ -695,14 +695,14 @@ Object {
         },
       ],
     },
-    Object {
+    {
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
       "Clip": null,
       "CornerRadius": "0,0,0,0",
       "FlowDirection": "LeftToRight",
-      "Foreground": "#E4000000",
+      "Foreground": "#FF000000",
       "Height": 50,
       "HorizontalAlignment": "Stretch",
       "Left": 0,
@@ -713,15 +713,15 @@ Object {
       "Visibility": "Visible",
       "Width": 50,
       "XamlType": "Microsoft.ReactNative.ViewControl",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
           "Clip": null,
           "CornerRadius": "0,0,0,0",
           "FlowDirection": "LeftToRight",
-          "Foreground": "#E4000000",
+          "Foreground": "#FF000000",
           "HorizontalAlignment": "Stretch",
           "Left": 0,
           "Margin": "0,0,0,0",
@@ -730,8 +730,8 @@ Object {
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
-          "children": Array [
-            Object {
+          "children": [
+            {
               "Background": "#FF000000",
               "BorderBrush": "#00000000",
               "BorderThickness": "0,0,0,0",
@@ -752,14 +752,14 @@ Object {
         },
       ],
     },
-    Object {
+    {
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
       "Clip": null,
       "CornerRadius": "0,0,0,0",
       "FlowDirection": "LeftToRight",
-      "Foreground": "#E4000000",
+      "Foreground": "#FF000000",
       "Height": 50,
       "HorizontalAlignment": "Stretch",
       "Left": 0,
@@ -770,15 +770,15 @@ Object {
       "Visibility": "Visible",
       "Width": 50,
       "XamlType": "Microsoft.ReactNative.ViewControl",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
           "Clip": null,
           "CornerRadius": "0,0,0,0",
           "FlowDirection": "LeftToRight",
-          "Foreground": "#E4000000",
+          "Foreground": "#FF000000",
           "HorizontalAlignment": "Stretch",
           "Left": 0,
           "Margin": "0,0,0,0",
@@ -787,8 +787,8 @@ Object {
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
-          "children": Array [
-            Object {
+          "children": [
+            {
               "Background": "#FF000000",
               "BorderBrush": "#00000000",
               "BorderThickness": "0,0,0,0",
@@ -809,14 +809,14 @@ Object {
         },
       ],
     },
-    Object {
+    {
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
       "Clip": null,
       "CornerRadius": "0,0,0,0",
       "FlowDirection": "LeftToRight",
-      "Foreground": "#E4000000",
+      "Foreground": "#FF000000",
       "Height": 50,
       "HorizontalAlignment": "Stretch",
       "Left": 0,
@@ -827,15 +827,15 @@ Object {
       "Visibility": "Visible",
       "Width": 50,
       "XamlType": "Microsoft.ReactNative.ViewControl",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
           "Clip": null,
           "CornerRadius": "0,0,0,0",
           "FlowDirection": "LeftToRight",
-          "Foreground": "#E4000000",
+          "Foreground": "#FF000000",
           "HorizontalAlignment": "Stretch",
           "Left": 0,
           "Margin": "0,0,0,0",
@@ -844,8 +844,8 @@ Object {
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
-          "children": Array [
-            Object {
+          "children": [
+            {
               "Background": "#FF000000",
               "BorderBrush": "#00000000",
               "BorderThickness": "0,0,0,0",
@@ -866,14 +866,14 @@ Object {
         },
       ],
     },
-    Object {
+    {
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
       "Clip": null,
       "CornerRadius": "0,0,0,0",
       "FlowDirection": "LeftToRight",
-      "Foreground": "#E4000000",
+      "Foreground": "#FF000000",
       "Height": 50,
       "HorizontalAlignment": "Stretch",
       "Left": 0,
@@ -884,15 +884,15 @@ Object {
       "Visibility": "Visible",
       "Width": 50,
       "XamlType": "Microsoft.ReactNative.ViewControl",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
           "Clip": null,
           "CornerRadius": "0,0,0,0",
           "FlowDirection": "LeftToRight",
-          "Foreground": "#E4000000",
+          "Foreground": "#FF000000",
           "HorizontalAlignment": "Stretch",
           "Left": 0,
           "Margin": "0,0,0,0",
@@ -901,8 +901,8 @@ Object {
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
-          "children": Array [
-            Object {
+          "children": [
+            {
               "Background": "#FF000000",
               "BorderBrush": "#00000000",
               "BorderThickness": "0,0,0,0",
@@ -923,14 +923,14 @@ Object {
         },
       ],
     },
-    Object {
+    {
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
       "Clip": null,
       "CornerRadius": "0,0,0,0",
       "FlowDirection": "LeftToRight",
-      "Foreground": "#E4000000",
+      "Foreground": "#FF000000",
       "Height": 50,
       "HorizontalAlignment": "Stretch",
       "Left": 0,
@@ -941,15 +941,15 @@ Object {
       "Visibility": "Visible",
       "Width": 50,
       "XamlType": "Microsoft.ReactNative.ViewControl",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
           "Clip": null,
           "CornerRadius": "0,0,0,0",
           "FlowDirection": "LeftToRight",
-          "Foreground": "#E4000000",
+          "Foreground": "#FF000000",
           "HorizontalAlignment": "Stretch",
           "Left": 0,
           "Margin": "0,0,0,0",
@@ -958,8 +958,8 @@ Object {
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
-          "children": Array [
-            Object {
+          "children": [
+            {
               "Background": "#FF000000",
               "BorderBrush": "#00000000",
               "BorderThickness": "0,0,0,0",
@@ -980,14 +980,14 @@ Object {
         },
       ],
     },
-    Object {
+    {
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
       "Clip": null,
       "CornerRadius": "0,0,0,0",
       "FlowDirection": "LeftToRight",
-      "Foreground": "#E4000000",
+      "Foreground": "#FF000000",
       "Height": 50,
       "HorizontalAlignment": "Stretch",
       "Left": 0,
@@ -998,15 +998,15 @@ Object {
       "Visibility": "Visible",
       "Width": 50,
       "XamlType": "Microsoft.ReactNative.ViewControl",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
           "Clip": null,
           "CornerRadius": "0,0,0,0",
           "FlowDirection": "LeftToRight",
-          "Foreground": "#E4000000",
+          "Foreground": "#FF000000",
           "HorizontalAlignment": "Stretch",
           "Left": 0,
           "Margin": "0,0,0,0",
@@ -1015,8 +1015,8 @@ Object {
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
-          "children": Array [
-            Object {
+          "children": [
+            {
               "Background": "#FF000000",
               "BorderBrush": "#00000000",
               "BorderThickness": "0,0,0,0",
@@ -1042,7 +1042,7 @@ Object {
 `;
 
 exports[`PressableTests Pressables can have their accessibility and keyboard focus removed 1`] = `
-Object {
+{
   "AutomationId": "accessible_pressable",
   "Background": null,
   "BorderBrush": "#00000000",
@@ -1059,15 +1059,15 @@ Object {
   "Visibility": "Visible",
   "Width": 718,
   "XamlType": "Microsoft.ReactNative.ViewPanel",
-  "children": Array [
-    Object {
+  "children": [
+    {
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
       "Clip": null,
       "CornerRadius": "0,0,0,0",
       "FlowDirection": "LeftToRight",
-      "Foreground": "#E4000000",
+      "Foreground": "#FF000000",
       "Height": 50,
       "HorizontalAlignment": "Stretch",
       "Left": 0,
@@ -1078,15 +1078,15 @@ Object {
       "Visibility": "Visible",
       "Width": 718,
       "XamlType": "Microsoft.ReactNative.ViewControl",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
           "Clip": null,
           "CornerRadius": "0,0,0,0",
           "FlowDirection": "LeftToRight",
-          "Foreground": "#E4000000",
+          "Foreground": "#FF000000",
           "HorizontalAlignment": "Stretch",
           "Left": 0,
           "Margin": "0,0,0,0",
@@ -1095,8 +1095,8 @@ Object {
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
-          "children": Array [
-            Object {
+          "children": [
+            {
               "Background": "#00FFFFFF",
               "BorderBrush": "#00000000",
               "BorderThickness": "0,0,0,0",
@@ -1112,11 +1112,11 @@ Object {
               "Visibility": "Visible",
               "Width": 718,
               "XamlType": "Microsoft.ReactNative.ViewPanel",
-              "children": Array [
-                Object {
+              "children": [
+                {
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
-                  "Foreground": "#E4000000",
+                  "Foreground": "#FF000000",
                   "Height": 19,
                   "HorizontalAlignment": "Stretch",
                   "Left": 0,
@@ -1135,14 +1135,14 @@ Object {
         },
       ],
     },
-    Object {
+    {
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
       "Clip": null,
       "CornerRadius": "0,0,0,0",
       "FlowDirection": "LeftToRight",
-      "Foreground": "#E4000000",
+      "Foreground": "#FF000000",
       "Height": 50,
       "HorizontalAlignment": "Stretch",
       "Left": 0,
@@ -1153,15 +1153,15 @@ Object {
       "Visibility": "Visible",
       "Width": 718,
       "XamlType": "Microsoft.ReactNative.ViewControl",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
           "Clip": null,
           "CornerRadius": "0,0,0,0",
           "FlowDirection": "LeftToRight",
-          "Foreground": "#E4000000",
+          "Foreground": "#FF000000",
           "HorizontalAlignment": "Stretch",
           "Left": 0,
           "Margin": "0,0,0,0",
@@ -1170,8 +1170,8 @@ Object {
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
-          "children": Array [
-            Object {
+          "children": [
+            {
               "Background": "#00FFFFFF",
               "BorderBrush": "#00000000",
               "BorderThickness": "0,0,0,0",
@@ -1187,11 +1187,11 @@ Object {
               "Visibility": "Visible",
               "Width": 718,
               "XamlType": "Microsoft.ReactNative.ViewPanel",
-              "children": Array [
-                Object {
+              "children": [
+                {
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
-                  "Foreground": "#E4000000",
+                  "Foreground": "#FF000000",
                   "Height": 19,
                   "HorizontalAlignment": "Stretch",
                   "Left": 0,
@@ -1210,7 +1210,7 @@ Object {
         },
       ],
     },
-    Object {
+    {
       "Background": "#00FFFFFF",
       "BorderBrush": "#00000000",
       "BorderThickness": "0,0,0,0",
@@ -1226,11 +1226,11 @@ Object {
       "Visibility": "Visible",
       "Width": 718,
       "XamlType": "Microsoft.ReactNative.ViewPanel",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Clip": null,
           "FlowDirection": "LeftToRight",
-          "Foreground": "#E4000000",
+          "Foreground": "#FF000000",
           "Height": 19,
           "HorizontalAlignment": "Stretch",
           "Left": 0,
@@ -1245,7 +1245,7 @@ Object {
         },
       ],
     },
-    Object {
+    {
       "Background": "#00FFFFFF",
       "BorderBrush": "#00000000",
       "BorderThickness": "0,0,0,0",
@@ -1261,11 +1261,11 @@ Object {
       "Visibility": "Visible",
       "Width": 718,
       "XamlType": "Microsoft.ReactNative.ViewPanel",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Clip": null,
           "FlowDirection": "LeftToRight",
-          "Foreground": "#E4000000",
+          "Foreground": "#FF000000",
           "Height": 19,
           "HorizontalAlignment": "Stretch",
           "Left": 0,
@@ -1285,7 +1285,7 @@ Object {
 `;
 
 exports[`PressableTests Pressables can have tooltips 1`] = `
-Object {
+{
   "AutomationId": "tooltip_pressable",
   "Background": null,
   "BorderBrush": "#00000000",
@@ -1302,15 +1302,15 @@ Object {
   "Visibility": "Visible",
   "Width": 718,
   "XamlType": "Microsoft.ReactNative.ViewPanel",
-  "children": Array [
-    Object {
+  "children": [
+    {
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
       "Clip": null,
       "CornerRadius": "0,0,0,0",
       "FlowDirection": "LeftToRight",
-      "Foreground": "#E4000000",
+      "Foreground": "#FF000000",
       "Height": 19,
       "HorizontalAlignment": "Stretch",
       "Left": 0,
@@ -1321,15 +1321,15 @@ Object {
       "Visibility": "Visible",
       "Width": 718,
       "XamlType": "Microsoft.ReactNative.ViewControl",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
           "Clip": null,
           "CornerRadius": "0,0,0,0",
           "FlowDirection": "LeftToRight",
-          "Foreground": "#E4000000",
+          "Foreground": "#FF000000",
           "HorizontalAlignment": "Stretch",
           "Left": 0,
           "Margin": "0,0,0,0",
@@ -1338,8 +1338,8 @@ Object {
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
-          "children": Array [
-            Object {
+          "children": [
+            {
               "Background": "#00FFFFFF",
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -1354,8 +1354,8 @@ Object {
               "VerticalAlignment": "Stretch",
               "Visibility": "Visible",
               "XamlType": "Windows.UI.Xaml.Controls.Border",
-              "children": Array [
-                Object {
+              "children": [
+                {
                   "Background": null,
                   "BorderBrush": "#00000000",
                   "BorderThickness": "0,0,0,0",
@@ -1371,17 +1371,17 @@ Object {
                   "Visibility": "Visible",
                   "Width": 718,
                   "XamlType": "Microsoft.ReactNative.ViewPanel",
-                  "children": Array [
-                    Object {
+                  "children": [
+                    {
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
-                      "Foreground": "#E4000000",
+                      "Foreground": "#FF000000",
                       "Height": 19,
                       "HorizontalAlignment": "Stretch",
                       "Left": 0,
                       "Margin": "0,0,0,0",
                       "Padding": "0,0,0,0",
-                      "Text": "Pressable with ToolTip \\"Pressable\\"",
+                      "Text": "Pressable with ToolTip "Pressable"",
                       "Top": 0,
                       "VerticalAlignment": "Stretch",
                       "Visibility": "Visible",
@@ -1401,7 +1401,7 @@ Object {
 `;
 
 exports[`PressableTests Pressables can hide their backface 1`] = `
-Object {
+{
   "AutomationId": "backface_pressable",
   "Background": null,
   "BorderBrush": "#00000000",
@@ -1418,11 +1418,11 @@ Object {
   "Visibility": "Visible",
   "Width": 718,
   "XamlType": "Microsoft.ReactNative.ViewPanel",
-  "children": Array [
-    Object {
+  "children": [
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
-      "Foreground": "#E4000000",
+      "Foreground": "#FF000000",
       "Height": 29,
       "HorizontalAlignment": "Stretch",
       "Left": 0,
@@ -1435,7 +1435,7 @@ Object {
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Background": null,
       "BorderBrush": "#00000000",
       "BorderThickness": "0,0,0,0",
@@ -1451,15 +1451,15 @@ Object {
       "Visibility": "Visible",
       "Width": 718,
       "XamlType": "Microsoft.ReactNative.ViewPanel",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
           "Clip": null,
           "CornerRadius": "0,0,0,0",
           "FlowDirection": "LeftToRight",
-          "Foreground": "#E4000000",
+          "Foreground": "#FF000000",
           "Height": 200,
           "HorizontalAlignment": "Stretch",
           "Left": 259,
@@ -1470,15 +1470,15 @@ Object {
           "Visibility": "Visible",
           "Width": 200,
           "XamlType": "Microsoft.ReactNative.ViewControl",
-          "children": Array [
-            Object {
+          "children": [
+            {
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
               "Clip": null,
               "CornerRadius": "0,0,0,0",
               "FlowDirection": "LeftToRight",
-              "Foreground": "#E4000000",
+              "Foreground": "#FF000000",
               "HorizontalAlignment": "Stretch",
               "Left": 0,
               "Margin": "0,0,0,0",
@@ -1487,8 +1487,8 @@ Object {
               "VerticalAlignment": "Stretch",
               "Visibility": "Visible",
               "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
-              "children": Array [
-                Object {
+              "children": [
+                {
                   "Background": "#FF0000FF",
                   "BorderBrush": "#00000000",
                   "BorderThickness": "0,0,0,0",
@@ -1504,11 +1504,11 @@ Object {
                   "Visibility": "Visible",
                   "Width": 200,
                   "XamlType": "Microsoft.ReactNative.ViewPanel",
-                  "children": Array [
-                    Object {
+                  "children": [
+                    {
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
-                      "Foreground": "#E4000000",
+                      "Foreground": "#FF000000",
                       "Height": 19,
                       "HorizontalAlignment": "Stretch",
                       "Left": 83,
@@ -1527,14 +1527,14 @@ Object {
             },
           ],
         },
-        Object {
+        {
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
           "Clip": null,
           "CornerRadius": "0,0,0,0",
           "FlowDirection": "LeftToRight",
-          "Foreground": "#E4000000",
+          "Foreground": "#FF000000",
           "Height": 200,
           "HorizontalAlignment": "Stretch",
           "Left": 259,
@@ -1545,15 +1545,15 @@ Object {
           "Visibility": "Visible",
           "Width": 200,
           "XamlType": "Microsoft.ReactNative.ViewControl",
-          "children": Array [
-            Object {
+          "children": [
+            {
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
               "Clip": null,
               "CornerRadius": "0,0,0,0",
               "FlowDirection": "LeftToRight",
-              "Foreground": "#E4000000",
+              "Foreground": "#FF000000",
               "HorizontalAlignment": "Stretch",
               "Left": 0,
               "Margin": "0,0,0,0",
@@ -1562,8 +1562,8 @@ Object {
               "VerticalAlignment": "Stretch",
               "Visibility": "Visible",
               "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
-              "children": Array [
-                Object {
+              "children": [
+                {
                   "Background": "#FFFF0000",
                   "BorderBrush": "#00000000",
                   "BorderThickness": "0,0,0,0",
@@ -1579,11 +1579,11 @@ Object {
                   "Visibility": "Visible",
                   "Width": 200,
                   "XamlType": "Microsoft.ReactNative.ViewPanel",
-                  "children": Array [
-                    Object {
+                  "children": [
+                    {
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
-                      "Foreground": "#E4000000",
+                      "Foreground": "#FF000000",
                       "Height": 19,
                       "HorizontalAlignment": "Stretch",
                       "Left": 8,
@@ -1604,10 +1604,10 @@ Object {
         },
       ],
     },
-    Object {
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
-      "Foreground": "#E4000000",
+      "Foreground": "#FF000000",
       "Height": 39,
       "HorizontalAlignment": "Stretch",
       "Left": 0,
@@ -1620,7 +1620,7 @@ Object {
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Background": null,
       "BorderBrush": "#00000000",
       "BorderThickness": "0,0,0,0",
@@ -1636,15 +1636,15 @@ Object {
       "Visibility": "Visible",
       "Width": 718,
       "XamlType": "Microsoft.ReactNative.ViewPanel",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
           "Clip": null,
           "CornerRadius": "0,0,0,0",
           "FlowDirection": "LeftToRight",
-          "Foreground": "#E4000000",
+          "Foreground": "#FF000000",
           "Height": 200,
           "HorizontalAlignment": "Stretch",
           "Left": 259,
@@ -1655,15 +1655,15 @@ Object {
           "Visibility": "Visible",
           "Width": 200,
           "XamlType": "Microsoft.ReactNative.ViewControl",
-          "children": Array [
-            Object {
+          "children": [
+            {
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
               "Clip": null,
               "CornerRadius": "0,0,0,0",
               "FlowDirection": "LeftToRight",
-              "Foreground": "#E4000000",
+              "Foreground": "#FF000000",
               "HorizontalAlignment": "Stretch",
               "Left": 0,
               "Margin": "0,0,0,0",
@@ -1672,8 +1672,8 @@ Object {
               "VerticalAlignment": "Stretch",
               "Visibility": "Visible",
               "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
-              "children": Array [
-                Object {
+              "children": [
+                {
                   "Background": "#FF0000FF",
                   "BorderBrush": "#00000000",
                   "BorderThickness": "0,0,0,0",
@@ -1689,11 +1689,11 @@ Object {
                   "Visibility": "Visible",
                   "Width": 200,
                   "XamlType": "Microsoft.ReactNative.ViewPanel",
-                  "children": Array [
-                    Object {
+                  "children": [
+                    {
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
-                      "Foreground": "#E4000000",
+                      "Foreground": "#FF000000",
                       "Height": 19,
                       "HorizontalAlignment": "Stretch",
                       "Left": 6,
@@ -1712,14 +1712,14 @@ Object {
             },
           ],
         },
-        Object {
+        {
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
           "Clip": null,
           "CornerRadius": "0,0,0,0",
           "FlowDirection": "LeftToRight",
-          "Foreground": "#E4000000",
+          "Foreground": "#FF000000",
           "Height": 200,
           "HorizontalAlignment": "Stretch",
           "Left": 259,
@@ -1730,15 +1730,15 @@ Object {
           "Visibility": "Visible",
           "Width": 200,
           "XamlType": "Microsoft.ReactNative.ViewControl",
-          "children": Array [
-            Object {
+          "children": [
+            {
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
               "Clip": null,
               "CornerRadius": "0,0,0,0",
               "FlowDirection": "LeftToRight",
-              "Foreground": "#E4000000",
+              "Foreground": "#FF000000",
               "HorizontalAlignment": "Stretch",
               "Left": 0,
               "Margin": "0,0,0,0",
@@ -1747,8 +1747,8 @@ Object {
               "VerticalAlignment": "Stretch",
               "Visibility": "Visible",
               "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
-              "children": Array [
-                Object {
+              "children": [
+                {
                   "Background": "#FFFF0000",
                   "BorderBrush": "#00000000",
                   "BorderThickness": "0,0,0,0",
@@ -1764,11 +1764,11 @@ Object {
                   "Visibility": "Visible",
                   "Width": 200,
                   "XamlType": "Microsoft.ReactNative.ViewPanel",
-                  "children": Array [
-                    Object {
+                  "children": [
+                    {
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
-                      "Foreground": "#E4000000",
+                      "Foreground": "#FF000000",
                       "Height": 19,
                       "HorizontalAlignment": "Stretch",
                       "Left": 85,
@@ -1794,7 +1794,7 @@ Object {
 `;
 
 exports[`PressableTests Pressables can hide their children from accessibility focus 1`] = `
-Object {
+{
   "AutomationId": "no_hide_pressable",
   "Background": null,
   "BorderBrush": "#00000000",
@@ -1811,15 +1811,15 @@ Object {
   "Visibility": "Visible",
   "Width": 718,
   "XamlType": "Microsoft.ReactNative.ViewPanel",
-  "children": Array [
-    Object {
+  "children": [
+    {
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
       "Clip": null,
       "CornerRadius": "0,0,0,0",
       "FlowDirection": "LeftToRight",
-      "Foreground": "#E4000000",
+      "Foreground": "#FF000000",
       "Height": 38,
       "HorizontalAlignment": "Stretch",
       "Left": 0,
@@ -1830,15 +1830,15 @@ Object {
       "Visibility": "Visible",
       "Width": 718,
       "XamlType": "Microsoft.ReactNative.ViewControl",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
           "Clip": null,
           "CornerRadius": "0,0,0,0",
           "FlowDirection": "LeftToRight",
-          "Foreground": "#E4000000",
+          "Foreground": "#FF000000",
           "HorizontalAlignment": "Stretch",
           "Left": 0,
           "Margin": "0,0,0,0",
@@ -1847,8 +1847,8 @@ Object {
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
-          "children": Array [
-            Object {
+          "children": [
+            {
               "Background": "#00FFFFFF",
               "BorderBrush": "#00000000",
               "BorderThickness": "0,0,0,0",
@@ -1864,11 +1864,11 @@ Object {
               "Visibility": "Visible",
               "Width": 718,
               "XamlType": "Microsoft.ReactNative.ViewPanel",
-              "children": Array [
-                Object {
+              "children": [
+                {
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
-                  "Foreground": "#E4000000",
+                  "Foreground": "#FF000000",
                   "Height": 19,
                   "HorizontalAlignment": "Stretch",
                   "Left": 0,
@@ -1881,14 +1881,14 @@ Object {
                   "Width": 718,
                   "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
                 },
-                Object {
+                {
                   "Background": null,
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
                   "Clip": null,
                   "CornerRadius": "0,0,0,0",
                   "FlowDirection": "LeftToRight",
-                  "Foreground": "#E4000000",
+                  "Foreground": "#FF000000",
                   "Height": 19,
                   "HorizontalAlignment": "Stretch",
                   "Left": 0,
@@ -1899,15 +1899,15 @@ Object {
                   "Visibility": "Visible",
                   "Width": 718,
                   "XamlType": "Microsoft.ReactNative.ViewControl",
-                  "children": Array [
-                    Object {
+                  "children": [
+                    {
                       "Background": null,
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
                       "Clip": null,
                       "CornerRadius": "0,0,0,0",
                       "FlowDirection": "LeftToRight",
-                      "Foreground": "#E4000000",
+                      "Foreground": "#FF000000",
                       "HorizontalAlignment": "Stretch",
                       "Left": 0,
                       "Margin": "0,0,0,0",
@@ -1916,8 +1916,8 @@ Object {
                       "VerticalAlignment": "Stretch",
                       "Visibility": "Visible",
                       "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
-                      "children": Array [
-                        Object {
+                      "children": [
+                        {
                           "Background": "#00FFFFFF",
                           "BorderBrush": "#00000000",
                           "BorderThickness": "0,0,0,0",
@@ -1933,11 +1933,11 @@ Object {
                           "Visibility": "Visible",
                           "Width": 718,
                           "XamlType": "Microsoft.ReactNative.ViewPanel",
-                          "children": Array [
-                            Object {
+                          "children": [
+                            {
                               "Clip": null,
                               "FlowDirection": "LeftToRight",
-                              "Foreground": "#E4000000",
+                              "Foreground": "#FF000000",
                               "Height": 19,
                               "HorizontalAlignment": "Stretch",
                               "Left": 0,

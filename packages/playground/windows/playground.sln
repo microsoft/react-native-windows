@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29215.179
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "playground", "playground\playground.vcxproj", "{6B6AA847-B32F-41AC-9D3B-48A8CDFA8ADE}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -32,6 +32,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Mso", "..\..\..\vnext\Mso\Mso.vcxitems", "{84E05BFA-CBAF-4F0D-BFB6-4CE85742A57E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ReactNativePicker", "..\..\..\node_modules\@react-native-picker\picker\windows\ReactNativePicker\ReactNativePicker.vcxproj", "{BEDCC600-4541-41F2-AA46-9E058202B6AD}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PlaygroundNativeModules", "PlaygroundNativeModules\PlaygroundNativeModules.vcxproj", "{FBC281F9-E7FA-4D3F-9A15-F7507A803007}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -165,6 +167,28 @@ Global
 		{BEDCC600-4541-41F2-AA46-9E058202B6AD}.Release|x86.ActiveCfg = Release|Win32
 		{BEDCC600-4541-41F2-AA46-9E058202B6AD}.Release|x86.Build.0 = Release|Win32
 		{BEDCC600-4541-41F2-AA46-9E058202B6AD}.Release|x86.Deploy.0 = Release|Win32
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Debug|ARM.ActiveCfg = Debug|ARM
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Debug|ARM.Build.0 = Debug|ARM
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Debug|ARM64.Build.0 = Debug|ARM64
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Debug|ARM64.Deploy.0 = Debug|ARM64
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Debug|x64.ActiveCfg = Debug|x64
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Debug|x64.Build.0 = Debug|x64
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Debug|x64.Deploy.0 = Debug|x64
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Debug|x86.ActiveCfg = Debug|Win32
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Debug|x86.Build.0 = Debug|Win32
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Debug|x86.Deploy.0 = Debug|Win32
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Release|ARM.ActiveCfg = Release|ARM
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Release|ARM.Build.0 = Release|ARM
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Release|ARM64.ActiveCfg = Release|ARM64
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Release|ARM64.Build.0 = Release|ARM64
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Release|ARM64.Deploy.0 = Release|ARM64
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Release|x64.ActiveCfg = Release|x64
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Release|x64.Build.0 = Release|x64
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Release|x64.Deploy.0 = Release|x64
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Release|x86.ActiveCfg = Release|Win32
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Release|x86.Build.0 = Release|Win32
+		{FBC281F9-E7FA-4D3F-9A15-F7507A803007}.Release|x86.Deploy.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

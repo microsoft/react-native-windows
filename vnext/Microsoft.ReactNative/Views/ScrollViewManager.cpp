@@ -90,8 +90,7 @@ void ScrollViewShadowNode::dispatchCommand(
     scrollViewer.ChangeView(x, y, nullptr, !animated /*disableAnimation*/);
   } else if (commandId == ScrollViewCommands::ScrollToEnd) {
     bool animated = commandArgs[0].AsBoolean();
-    bool horiz = scrollViewer.HorizontalScrollMode() == winrt::ScrollMode::Auto;
-    if (horiz)
+    if (m_isHorizontal)
       scrollViewer.ChangeView(scrollViewer.ScrollableWidth(), nullptr, nullptr, !animated /*disableAnimation*/);
     else
       scrollViewer.ChangeView(nullptr, scrollViewer.ScrollableHeight(), nullptr, !animated /*disableAnimation*/);
@@ -490,7 +489,6 @@ XamlView ScrollViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microso
   scrollViewer.VerticalSnapPointsAlignment(winrt::SnapPointsAlignment::Near);
   scrollViewer.VerticalSnapPointsType(winrt::SnapPointsType::Mandatory);
   scrollViewer.HorizontalSnapPointsType(winrt::SnapPointsType::Mandatory);
-  scrollViewer.HorizontalScrollMode(winrt::ScrollMode::Disabled);
 
   const auto snapPointManager = SnapPointManagingContentControl::Create();
   scrollViewer.Content(*snapPointManager);

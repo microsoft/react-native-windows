@@ -6,11 +6,7 @@ internal void CreateModules(global::Microsoft.ReactNative.IReactPackageBuilder p
         moduleBuilder.AddConstantProvider((global::Microsoft.ReactNative.IJSValueWriter writer) =>
         {
             global::Microsoft.ReactNative.Managed.JSValueWriter.WriteObjectProperty(writer, "MyConst", module.MyConstant);
-        }
-
-        );
+        });
         return module;
-    }
-
-    );
+    });
 }

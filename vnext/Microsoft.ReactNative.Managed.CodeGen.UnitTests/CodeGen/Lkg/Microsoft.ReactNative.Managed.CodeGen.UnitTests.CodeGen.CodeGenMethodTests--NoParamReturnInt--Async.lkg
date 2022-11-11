@@ -2,6 +2,4 @@ moduleBuilder.AddMethod("MyMethod", global::Microsoft.ReactNative.MethodReturnTy
 {
     int result = module.Method();
     resolve(global::Microsoft.ReactNative.Managed.JSValueWriter.WriteArgs(writer, result));
-}
-
-);
+});

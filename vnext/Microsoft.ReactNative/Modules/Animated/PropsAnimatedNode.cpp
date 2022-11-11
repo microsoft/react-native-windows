@@ -24,25 +24,29 @@ PropsAnimatedNode::PropsAnimatedNode(
     const winrt::Microsoft::ReactNative::JSValueObject &config,
     const winrt::Microsoft::ReactNative::ReactContext &context,
     const std::shared_ptr<NativeAnimatedNodeManager> &manager)
-    : AnimatedNode(tag, manager), m_context(context) {
+    : AnimatedNode(tag, config, manager), m_context(context) {
   for (const auto &entry : config["props"].AsObject()) {
-    m_propMapping.insert({entry.first, static_cast<int64_t>(entry.second.AsDouble())});
+    const auto inputTag = entry.second.AsInt64();
+    m_propMapping.insert({entry.first, inputTag});
   }
-  auto compositor = manager->Compositor();
-  m_subchannelPropertySet = compositor.CreatePropertySet();
-  m_subchannelPropertySet.InsertScalar(L"TranslationX", 0.0f);
-  m_subchannelPropertySet.InsertScalar(L"TranslationY", 0.0f);
-  m_subchannelPropertySet.InsertScalar(L"ScaleX", 1.0f);
-  m_subchannelPropertySet.InsertScalar(L"ScaleY", 1.0f);
 
-  m_translationCombined =
-      compositor.CreateExpressionAnimation(L"Vector3(subchannels.TranslationX, subchannels.TranslationY, 0.0)");
-  m_translationCombined.SetReferenceParameter(L"subchannels", m_subchannelPropertySet);
-  m_translationCombined.Target(L"Translation");
+  if (m_useComposition) {
+    auto compositor = manager->Compositor();
+    m_subchannelPropertySet = compositor.CreatePropertySet();
+    m_subchannelPropertySet.InsertScalar(L"TranslationX", 0.0f);
+    m_subchannelPropertySet.InsertScalar(L"TranslationY", 0.0f);
+    m_subchannelPropertySet.InsertScalar(L"ScaleX", 1.0f);
+    m_subchannelPropertySet.InsertScalar(L"ScaleY", 1.0f);
 
-  m_scaleCombined = compositor.CreateExpressionAnimation(L"Vector3(subchannels.ScaleX, subchannels.ScaleY, 1.0)");
-  m_scaleCombined.SetReferenceParameter(L"subchannels", m_subchannelPropertySet);
-  m_scaleCombined.Target(L"Scale");
+    m_translationCombined =
+        compositor.CreateExpressionAnimation(L"Vector3(subchannels.TranslationX, subchannels.TranslationY, 0.0)");
+    m_translationCombined.SetReferenceParameter(L"subchannels", m_subchannelPropertySet);
+    m_translationCombined.Target(L"Translation");
+
+    m_scaleCombined = compositor.CreateExpressionAnimation(L"Vector3(subchannels.ScaleX, subchannels.ScaleY, 1.0)");
+    m_scaleCombined.SetReferenceParameter(L"subchannels", m_subchannelPropertySet);
+    m_scaleCombined.Target(L"Scale");
+  }
 }
 
 void PropsAnimatedNode::ConnectToView(int64_t viewTag) {
@@ -52,7 +56,10 @@ void PropsAnimatedNode::ConnectToView(int64_t viewTag) {
     return;
   }
   m_connectedViewTag = viewTag;
-  UpdateView();
+
+  if (m_useComposition) {
+    UpdateView();
+  }
 }
 
 void PropsAnimatedNode::DisconnectFromView(int64_t viewTag) {
@@ -64,26 +71,36 @@ void PropsAnimatedNode::DisconnectFromView(int64_t viewTag) {
     return;
   }
 
-  std::vector<int64_t> keys{};
-  for (const auto &anim : m_expressionAnimations) {
-    keys.push_back(anim.first);
-  }
-  for (const auto &key : keys) {
-    DisposeCompletedAnimation(key);
-  }
-
-  if (m_centerPointAnimation) {
-    if (const auto target = GetUIElement()) {
-      target.StopAnimation(m_centerPointAnimation);
+  if (m_useComposition) {
+    std::vector<int64_t> keys{};
+    for (const auto &anim : m_expressionAnimations) {
+      keys.push_back(anim.first);
     }
-    m_centerPointAnimation = nullptr;
+    for (const auto &key : keys) {
+      DisposeCompletedAnimation(key);
+    }
+
+    if (m_centerPointAnimation) {
+      if (const auto target = GetUIElement()) {
+        target.StopAnimation(m_centerPointAnimation);
+      }
+      m_centerPointAnimation = nullptr;
+    }
+    m_needsCenterPointAnimation = false;
   }
 
   m_connectedViewTag = s_connectedViewTagUnset;
-  m_needsCenterPointAnimation = false;
 }
 
-void PropsAnimatedNode::RestoreDefaultValues() {}
+void PropsAnimatedNode::RestoreDefaultValues() {
+  if (!m_useComposition) {
+    for (const auto &entry : m_props) {
+      m_props[entry.first] = nullptr;
+    }
+
+    CommitProps();
+  }
+}
 
 void PropsAnimatedNode::UpdateView() {
   if (m_connectedViewTag == s_connectedViewTagUnset) {
@@ -93,19 +110,31 @@ void PropsAnimatedNode::UpdateView() {
   if (const auto manager = std::shared_ptr<NativeAnimatedNodeManager>(m_manager)) {
     for (const auto &entry : m_propMapping) {
       if (const auto &styleNode = manager->GetStyleAnimatedNode(entry.second)) {
-        for (const auto &styleEntry : styleNode->GetMapping()) {
-          MakeAnimation(styleEntry.second, styleEntry.first);
+        if (m_useComposition) {
+          for (const auto &styleEntry : styleNode->GetMapping()) {
+            MakeAnimation(styleEntry.second, styleEntry.first);
+          }
+        } else {
+          styleNode->CollectViewUpdates(m_props);
         }
       } else if (const auto &valueNode = manager->GetValueAnimatedNode(entry.second)) {
-        const auto &facade = StringToFacadeType(entry.first);
-        if (facade != FacadeType::None) {
-          MakeAnimation(entry.second, facade);
+        if (m_useComposition) {
+          const auto &facade = StringToFacadeType(entry.first);
+          if (facade != FacadeType::None) {
+            MakeAnimation(entry.second, facade);
+          }
+        } else {
+          m_props[entry.first] = valueNode->Value();
         }
       }
     }
   }
 
-  StartAnimations();
+  if (m_useComposition) {
+    StartAnimations();
+  } else {
+    CommitProps();
+  }
 }
 
 static void EnsureUIElementDirtyForRender(xaml::UIElement uiElement) {
@@ -123,6 +152,7 @@ static void EnsureUIElementDirtyForRender(xaml::UIElement uiElement) {
 }
 
 void PropsAnimatedNode::StartAnimations() {
+  assert(m_useComposition);
   if (m_expressionAnimations.size()) {
     AnimationView view = GetAnimationView();
     if (view) {
@@ -177,6 +207,7 @@ void PropsAnimatedNode::StartAnimations() {
 }
 
 void PropsAnimatedNode::DisposeCompletedAnimation(int64_t valueTag) {
+  assert(m_useComposition);
   /*
   if (m_expressionAnimations.count(valueTag)) {
     if (const auto target = GetUIElement()) {
@@ -196,6 +227,7 @@ void PropsAnimatedNode::DisposeCompletedAnimation(int64_t valueTag) {
 }
 
 void PropsAnimatedNode::ResumeSuspendedAnimations(int64_t valueTag) {
+  assert(m_useComposition);
   /*
   const auto iterator =
       std::find(m_suspendedExpressionAnimationTags.begin(), m_suspendedExpressionAnimationTags.end(), valueTag);
@@ -301,6 +333,14 @@ xaml::UIElement PropsAnimatedNode::GetUIElement() {
     }
   }
   return nullptr;
+}
+
+void PropsAnimatedNode::CommitProps() {
+  if (const auto node = GetShadowNodeBase()) {
+    if (!node->m_zombie) {
+      node->updateProperties(m_props);
+    }
+  }
 }
 
 PropsAnimatedNode::AnimationView PropsAnimatedNode::GetAnimationView() {

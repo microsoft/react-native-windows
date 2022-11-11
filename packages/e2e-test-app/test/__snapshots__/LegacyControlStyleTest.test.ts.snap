@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
-Object {
+{
   "AutomationId": "control-style-switch-view",
   "Background": null,
   "BorderBrush": "#00000000",
@@ -18,8 +18,8 @@ Object {
   "Visibility": "Visible",
   "Width": 800,
   "XamlType": "Microsoft.ReactNative.ViewPanel",
-  "children": Array [
-    Object {
+  "children": [
+    {
       "Background": "#33E1E1E1",
       "BorderBrush": "#55FF00FF",
       "BorderThickness": "1,1,1,1",
@@ -37,8 +37,8 @@ Object {
       "Visibility": "Visible",
       "Width": 51,
       "XamlType": "Windows.UI.Xaml.Controls.ToggleSwitch",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Background": "#33E1E1E1",
           "BorderBrush": "#55FF00FF",
           "BorderThickness": "1,1,1,1",
@@ -53,8 +53,8 @@ Object {
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
-          "children": Array [
-            Object {
+          "children": [
+            {
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -69,8 +69,8 @@ Object {
               "VerticalAlignment": "Top",
               "Visibility": "Visible",
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
-              "children": Array [
-                Object {
+              "children": [
+                {
                   "Background": "#00FFFFFF",
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
@@ -87,7 +87,7 @@ Object {
                   "Visibility": "Visible",
                   "XamlType": "Windows.UI.Xaml.Controls.Grid",
                 },
-                Object {
+                {
                   "Background": null,
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
@@ -105,7 +105,7 @@ Object {
                   "Visibility": "Visible",
                   "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
                 },
-                Object {
+                {
                   "Background": null,
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
@@ -123,7 +123,7 @@ Object {
                   "Visibility": "Visible",
                   "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
                 },
-                Object {
+                {
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "Height": 20,
@@ -137,7 +137,7 @@ Object {
                   "Width": 40,
                   "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
                 },
-                Object {
+                {
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "Height": 20,
@@ -151,7 +151,7 @@ Object {
                   "Width": 40,
                   "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
                 },
-                Object {
+                {
                   "Background": null,
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
@@ -169,8 +169,8 @@ Object {
                   "Visibility": "Visible",
                   "Width": 20,
                   "XamlType": "Windows.UI.Xaml.Controls.Grid",
-                  "children": Array [
-                    Object {
+                  "children": [
+                    {
                       "Background": "#FF0000FF",
                       "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
                       "BorderThickness": "0,0,0,0",
@@ -189,7 +189,7 @@ Object {
                       "Width": 12,
                       "XamlType": "Windows.UI.Xaml.Controls.Border",
                     },
-                    Object {
+                    {
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
                       "Height": 12,
@@ -205,7 +205,7 @@ Object {
                     },
                   ],
                 },
-                Object {
+                {
                   "Background": "#33000000",
                   "BorderBrush": "#00FFFFFF",
                   "BorderThickness": "1,1,1,1",
@@ -222,8 +222,8 @@ Object {
                   "VerticalAlignment": "Stretch",
                   "Visibility": "Visible",
                   "XamlType": "Windows.UI.Xaml.Controls.Primitives.Thumb",
-                  "children": Array [
-                    Object {
+                  "children": [
+                    {
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
                       "HorizontalAlignment": "Stretch",
@@ -242,7 +242,7 @@ Object {
         },
       ],
     },
-    Object {
+    {
       "Background": "#33E1E1E1",
       "BorderBrush": "#55FF00FF",
       "BorderThickness": "1,1,1,1",
@@ -261,8 +261,8 @@ Object {
       "Visibility": "Visible",
       "Width": 800,
       "XamlType": "Windows.UI.Xaml.Controls.TextBox",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -277,8 +277,8 @@ Object {
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
-          "children": Array [
-            Object {
+          "children": [
+            {
               "Background": "#33E1E1E1",
               "BorderBrush": "#55FF00FF",
               "BorderThickness": "1,1,1,1",
@@ -295,7 +295,7 @@ Object {
               "Visibility": "Visible",
               "XamlType": "Windows.UI.Xaml.Controls.Border",
             },
-            Object {
+            {
               "Background": "#00FFFFFF",
               "BorderBrush": "#00FFFFFF",
               "BorderThickness": "0,0,0,0",
@@ -312,8 +312,8 @@ Object {
               "VerticalAlignment": "Stretch",
               "Visibility": "Visible",
               "XamlType": "Windows.UI.Xaml.Controls.ScrollViewer",
-              "children": Array [
-                Object {
+              "children": [
+                {
                   "Background": null,
                   "BorderBrush": "#00FFFFFF",
                   "BorderThickness": "0,0,0,0",
@@ -329,8 +329,8 @@ Object {
                   "VerticalAlignment": "Stretch",
                   "Visibility": "Visible",
                   "XamlType": "Windows.UI.Xaml.Controls.Border",
-                  "children": Array [
-                    Object {
+                  "children": [
+                    {
                       "Background": "#00FFFFFF",
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -345,8 +345,8 @@ Object {
                       "VerticalAlignment": "Stretch",
                       "Visibility": "Visible",
                       "XamlType": "Windows.UI.Xaml.Controls.Grid",
-                      "children": Array [
-                        Object {
+                      "children": [
+                        {
                           "Background": null,
                           "BorderBrush": null,
                           "BorderThickness": "0,0,0,0",
@@ -363,8 +363,8 @@ Object {
                           "VerticalAlignment": "Stretch",
                           "Visibility": "Visible",
                           "XamlType": "Windows.UI.Xaml.Controls.ScrollContentPresenter",
-                          "children": Array [
-                            Object {
+                          "children": [
+                            {
                               "Clip": null,
                               "FlowDirection": "LeftToRight",
                               "HorizontalAlignment": "Stretch",
@@ -377,7 +377,7 @@ Object {
                             },
                           ],
                         },
-                        Object {
+                        {
                           "Background": null,
                           "BorderBrush": null,
                           "BorderThickness": "0,0,0,0",
@@ -399,7 +399,7 @@ Object {
                 },
               ],
             },
-            Object {
+            {
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Foreground": "#B3E1E1E1",
@@ -414,7 +414,7 @@ Object {
               "Visibility": "Visible",
               "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
             },
-            Object {
+            {
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -436,7 +436,7 @@ Object {
         },
       ],
     },
-    Object {
+    {
       "Background": "#33E1E1E1",
       "BorderBrush": "#55FF00FF",
       "BorderThickness": "1,1,1,1",
@@ -454,8 +454,8 @@ Object {
       "Visibility": "Visible",
       "Width": 800,
       "XamlType": "Windows.UI.Xaml.Controls.PasswordBox",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -470,8 +470,8 @@ Object {
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
-          "children": Array [
-            Object {
+          "children": [
+            {
               "Background": "#33E1E1E1",
               "BorderBrush": "#55FF00FF",
               "BorderThickness": "1,1,1,1",
@@ -488,7 +488,7 @@ Object {
               "Visibility": "Visible",
               "XamlType": "Windows.UI.Xaml.Controls.Border",
             },
-            Object {
+            {
               "Background": "#00FFFFFF",
               "BorderBrush": "#00FFFFFF",
               "BorderThickness": "0,0,0,0",
@@ -505,8 +505,8 @@ Object {
               "VerticalAlignment": "Stretch",
               "Visibility": "Visible",
               "XamlType": "Windows.UI.Xaml.Controls.ScrollViewer",
-              "children": Array [
-                Object {
+              "children": [
+                {
                   "Background": null,
                   "BorderBrush": "#00FFFFFF",
                   "BorderThickness": "0,0,0,0",
@@ -522,8 +522,8 @@ Object {
                   "VerticalAlignment": "Stretch",
                   "Visibility": "Visible",
                   "XamlType": "Windows.UI.Xaml.Controls.Border",
-                  "children": Array [
-                    Object {
+                  "children": [
+                    {
                       "Background": "#00FFFFFF",
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -538,8 +538,8 @@ Object {
                       "VerticalAlignment": "Stretch",
                       "Visibility": "Visible",
                       "XamlType": "Windows.UI.Xaml.Controls.Grid",
-                      "children": Array [
-                        Object {
+                      "children": [
+                        {
                           "Background": null,
                           "BorderBrush": null,
                           "BorderThickness": "0,0,0,0",
@@ -556,8 +556,8 @@ Object {
                           "VerticalAlignment": "Stretch",
                           "Visibility": "Visible",
                           "XamlType": "Windows.UI.Xaml.Controls.ScrollContentPresenter",
-                          "children": Array [
-                            Object {
+                          "children": [
+                            {
                               "Clip": null,
                               "FlowDirection": "LeftToRight",
                               "HorizontalAlignment": "Stretch",
@@ -570,7 +570,7 @@ Object {
                             },
                           ],
                         },
-                        Object {
+                        {
                           "Background": null,
                           "BorderBrush": null,
                           "BorderThickness": "0,0,0,0",
@@ -592,7 +592,7 @@ Object {
                 },
               ],
             },
-            Object {
+            {
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Foreground": "#B3E1E1E1",
@@ -607,7 +607,7 @@ Object {
               "Visibility": "Visible",
               "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
             },
-            Object {
+            {
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -634,7 +634,7 @@ Object {
 `;
 
 exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
-Object {
+{
   "AutomationId": "control-style-switch-view",
   "Background": null,
   "BorderBrush": "#00000000",
@@ -651,8 +651,8 @@ Object {
   "Visibility": "Visible",
   "Width": 800,
   "XamlType": "Microsoft.ReactNative.ViewPanel",
-  "children": Array [
-    Object {
+  "children": [
+    {
       "Background": "#33E1E1E1",
       "BorderBrush": "#55FF00FF",
       "BorderThickness": "1,1,1,1",
@@ -670,8 +670,8 @@ Object {
       "Visibility": "Visible",
       "Width": 51,
       "XamlType": "Windows.UI.Xaml.Controls.ToggleSwitch",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Background": "#33E1E1E1",
           "BorderBrush": "#55FF00FF",
           "BorderThickness": "1,1,1,1",
@@ -686,8 +686,8 @@ Object {
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
-          "children": Array [
-            Object {
+          "children": [
+            {
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -702,8 +702,8 @@ Object {
               "VerticalAlignment": "Top",
               "Visibility": "Visible",
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
-              "children": Array [
-                Object {
+              "children": [
+                {
                   "Background": "#00FFFFFF",
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
@@ -720,7 +720,7 @@ Object {
                   "Visibility": "Visible",
                   "XamlType": "Windows.UI.Xaml.Controls.Grid",
                 },
-                Object {
+                {
                   "Background": null,
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
@@ -738,7 +738,7 @@ Object {
                   "Visibility": "Visible",
                   "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
                 },
-                Object {
+                {
                   "Background": null,
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
@@ -756,7 +756,7 @@ Object {
                   "Visibility": "Visible",
                   "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
                 },
-                Object {
+                {
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "Height": 20,
@@ -770,7 +770,7 @@ Object {
                   "Width": 40,
                   "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
                 },
-                Object {
+                {
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "Height": 20,
@@ -784,7 +784,7 @@ Object {
                   "Width": 40,
                   "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
                 },
-                Object {
+                {
                   "Background": null,
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
@@ -802,8 +802,8 @@ Object {
                   "Visibility": "Visible",
                   "Width": 20,
                   "XamlType": "Windows.UI.Xaml.Controls.Grid",
-                  "children": Array [
-                    Object {
+                  "children": [
+                    {
                       "Background": "#FF0000FF",
                       "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
                       "BorderThickness": "0,0,0,0",
@@ -822,7 +822,7 @@ Object {
                       "Width": 12,
                       "XamlType": "Windows.UI.Xaml.Controls.Border",
                     },
-                    Object {
+                    {
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
                       "Height": 12,
@@ -838,7 +838,7 @@ Object {
                     },
                   ],
                 },
-                Object {
+                {
                   "Background": "#33000000",
                   "BorderBrush": "#00FFFFFF",
                   "BorderThickness": "1,1,1,1",
@@ -855,8 +855,8 @@ Object {
                   "VerticalAlignment": "Stretch",
                   "Visibility": "Visible",
                   "XamlType": "Windows.UI.Xaml.Controls.Primitives.Thumb",
-                  "children": Array [
-                    Object {
+                  "children": [
+                    {
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
                       "HorizontalAlignment": "Stretch",
@@ -875,7 +875,7 @@ Object {
         },
       ],
     },
-    Object {
+    {
       "Background": "#33E1E1E1",
       "BorderBrush": "#55FF00FF",
       "BorderThickness": "1,1,1,1",
@@ -894,8 +894,8 @@ Object {
       "Visibility": "Visible",
       "Width": 800,
       "XamlType": "Windows.UI.Xaml.Controls.TextBox",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -910,8 +910,8 @@ Object {
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
-          "children": Array [
-            Object {
+          "children": [
+            {
               "Background": "#33E1E1E1",
               "BorderBrush": "#55FF00FF",
               "BorderThickness": "1,1,1,1",
@@ -928,7 +928,7 @@ Object {
               "Visibility": "Visible",
               "XamlType": "Windows.UI.Xaml.Controls.Border",
             },
-            Object {
+            {
               "Background": "#00FFFFFF",
               "BorderBrush": "#00FFFFFF",
               "BorderThickness": "0,0,0,0",
@@ -945,8 +945,8 @@ Object {
               "VerticalAlignment": "Stretch",
               "Visibility": "Visible",
               "XamlType": "Windows.UI.Xaml.Controls.ScrollViewer",
-              "children": Array [
-                Object {
+              "children": [
+                {
                   "Background": null,
                   "BorderBrush": "#00FFFFFF",
                   "BorderThickness": "0,0,0,0",
@@ -962,8 +962,8 @@ Object {
                   "VerticalAlignment": "Stretch",
                   "Visibility": "Visible",
                   "XamlType": "Windows.UI.Xaml.Controls.Border",
-                  "children": Array [
-                    Object {
+                  "children": [
+                    {
                       "Background": "#00FFFFFF",
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -978,8 +978,8 @@ Object {
                       "VerticalAlignment": "Stretch",
                       "Visibility": "Visible",
                       "XamlType": "Windows.UI.Xaml.Controls.Grid",
-                      "children": Array [
-                        Object {
+                      "children": [
+                        {
                           "Background": null,
                           "BorderBrush": null,
                           "BorderThickness": "0,0,0,0",
@@ -996,8 +996,8 @@ Object {
                           "VerticalAlignment": "Stretch",
                           "Visibility": "Visible",
                           "XamlType": "Windows.UI.Xaml.Controls.ScrollContentPresenter",
-                          "children": Array [
-                            Object {
+                          "children": [
+                            {
                               "Clip": null,
                               "FlowDirection": "LeftToRight",
                               "HorizontalAlignment": "Stretch",
@@ -1010,7 +1010,7 @@ Object {
                             },
                           ],
                         },
-                        Object {
+                        {
                           "Background": null,
                           "BorderBrush": null,
                           "BorderThickness": "0,0,0,0",
@@ -1032,7 +1032,7 @@ Object {
                 },
               ],
             },
-            Object {
+            {
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Foreground": "#B3E1E1E1",
@@ -1047,7 +1047,7 @@ Object {
               "Visibility": "Visible",
               "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
             },
-            Object {
+            {
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -1069,7 +1069,7 @@ Object {
         },
       ],
     },
-    Object {
+    {
       "Background": "#33E1E1E1",
       "BorderBrush": "#55FF00FF",
       "BorderThickness": "1,1,1,1",
@@ -1087,8 +1087,8 @@ Object {
       "Visibility": "Visible",
       "Width": 800,
       "XamlType": "Windows.UI.Xaml.Controls.PasswordBox",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -1103,8 +1103,8 @@ Object {
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
-          "children": Array [
-            Object {
+          "children": [
+            {
               "Background": "#33E1E1E1",
               "BorderBrush": "#55FF00FF",
               "BorderThickness": "1,1,1,1",
@@ -1121,7 +1121,7 @@ Object {
               "Visibility": "Visible",
               "XamlType": "Windows.UI.Xaml.Controls.Border",
             },
-            Object {
+            {
               "Background": "#00FFFFFF",
               "BorderBrush": "#00FFFFFF",
               "BorderThickness": "0,0,0,0",
@@ -1138,8 +1138,8 @@ Object {
               "VerticalAlignment": "Stretch",
               "Visibility": "Visible",
               "XamlType": "Windows.UI.Xaml.Controls.ScrollViewer",
-              "children": Array [
-                Object {
+              "children": [
+                {
                   "Background": null,
                   "BorderBrush": "#00FFFFFF",
                   "BorderThickness": "0,0,0,0",
@@ -1155,8 +1155,8 @@ Object {
                   "VerticalAlignment": "Stretch",
                   "Visibility": "Visible",
                   "XamlType": "Windows.UI.Xaml.Controls.Border",
-                  "children": Array [
-                    Object {
+                  "children": [
+                    {
                       "Background": "#00FFFFFF",
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -1171,8 +1171,8 @@ Object {
                       "VerticalAlignment": "Stretch",
                       "Visibility": "Visible",
                       "XamlType": "Windows.UI.Xaml.Controls.Grid",
-                      "children": Array [
-                        Object {
+                      "children": [
+                        {
                           "Background": null,
                           "BorderBrush": null,
                           "BorderThickness": "0,0,0,0",
@@ -1189,8 +1189,8 @@ Object {
                           "VerticalAlignment": "Stretch",
                           "Visibility": "Visible",
                           "XamlType": "Windows.UI.Xaml.Controls.ScrollContentPresenter",
-                          "children": Array [
-                            Object {
+                          "children": [
+                            {
                               "Clip": null,
                               "FlowDirection": "LeftToRight",
                               "HorizontalAlignment": "Stretch",
@@ -1203,7 +1203,7 @@ Object {
                             },
                           ],
                         },
-                        Object {
+                        {
                           "Background": null,
                           "BorderBrush": null,
                           "BorderThickness": "0,0,0,0",
@@ -1225,7 +1225,7 @@ Object {
                 },
               ],
             },
-            Object {
+            {
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Foreground": "#B3E1E1E1",
@@ -1240,7 +1240,7 @@ Object {
               "Visibility": "Visible",
               "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
             },
-            Object {
+            {
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -1267,7 +1267,7 @@ Object {
 `;
 
 exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
-Object {
+{
   "AutomationId": "control-style-switch-view",
   "Background": null,
   "BorderBrush": "#00000000",
@@ -1284,8 +1284,8 @@ Object {
   "Visibility": "Visible",
   "Width": 800,
   "XamlType": "Microsoft.ReactNative.ViewPanel",
-  "children": Array [
-    Object {
+  "children": [
+    {
       "Background": "#33000000",
       "BorderBrush": "#5500FF00",
       "BorderThickness": "10,10,10,10",
@@ -1303,8 +1303,8 @@ Object {
       "Visibility": "Visible",
       "Width": 51,
       "XamlType": "Windows.UI.Xaml.Controls.ToggleSwitch",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Background": "#33000000",
           "BorderBrush": "#5500FF00",
           "BorderThickness": "10,10,10,10",
@@ -1319,8 +1319,8 @@ Object {
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
-          "children": Array [
-            Object {
+          "children": [
+            {
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -1335,8 +1335,8 @@ Object {
               "VerticalAlignment": "Top",
               "Visibility": "Visible",
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
-              "children": Array [
-                Object {
+              "children": [
+                {
                   "Background": "#00FFFFFF",
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
@@ -1353,7 +1353,7 @@ Object {
                   "Visibility": "Visible",
                   "XamlType": "Windows.UI.Xaml.Controls.Grid",
                 },
-                Object {
+                {
                   "Background": null,
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
@@ -1371,7 +1371,7 @@ Object {
                   "Visibility": "Visible",
                   "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
                 },
-                Object {
+                {
                   "Background": null,
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
@@ -1389,7 +1389,7 @@ Object {
                   "Visibility": "Visible",
                   "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
                 },
-                Object {
+                {
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "Height": 20,
@@ -1403,7 +1403,7 @@ Object {
                   "Width": 40,
                   "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
                 },
-                Object {
+                {
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "Height": 20,
@@ -1417,7 +1417,7 @@ Object {
                   "Width": 40,
                   "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
                 },
-                Object {
+                {
                   "Background": null,
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
@@ -1435,8 +1435,8 @@ Object {
                   "Visibility": "Visible",
                   "Width": 20,
                   "XamlType": "Windows.UI.Xaml.Controls.Grid",
-                  "children": Array [
-                    Object {
+                  "children": [
+                    {
                       "Background": "#FF0000FF",
                       "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
                       "BorderThickness": "0,0,0,0",
@@ -1455,7 +1455,7 @@ Object {
                       "Width": 12,
                       "XamlType": "Windows.UI.Xaml.Controls.Border",
                     },
-                    Object {
+                    {
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
                       "Height": 12,
@@ -1471,7 +1471,7 @@ Object {
                     },
                   ],
                 },
-                Object {
+                {
                   "Background": "#33000000",
                   "BorderBrush": "#00FFFFFF",
                   "BorderThickness": "1,1,1,1",
@@ -1488,8 +1488,8 @@ Object {
                   "VerticalAlignment": "Stretch",
                   "Visibility": "Visible",
                   "XamlType": "Windows.UI.Xaml.Controls.Primitives.Thumb",
-                  "children": Array [
-                    Object {
+                  "children": [
+                    {
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
                       "HorizontalAlignment": "Stretch",
@@ -1508,7 +1508,7 @@ Object {
         },
       ],
     },
-    Object {
+    {
       "Background": "#33000000",
       "BorderBrush": "#5500FF00",
       "BorderThickness": "10,10,10,10",
@@ -1527,8 +1527,8 @@ Object {
       "Visibility": "Visible",
       "Width": 800,
       "XamlType": "Windows.UI.Xaml.Controls.TextBox",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -1543,8 +1543,8 @@ Object {
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
-          "children": Array [
-            Object {
+          "children": [
+            {
               "Background": "#33000000",
               "BorderBrush": "#5500FF00",
               "BorderThickness": "10,10,10,10",
@@ -1561,7 +1561,7 @@ Object {
               "Visibility": "Visible",
               "XamlType": "Windows.UI.Xaml.Controls.Border",
             },
-            Object {
+            {
               "Background": "#00FFFFFF",
               "BorderBrush": "#00FFFFFF",
               "BorderThickness": "0,0,0,0",
@@ -1578,8 +1578,8 @@ Object {
               "VerticalAlignment": "Stretch",
               "Visibility": "Visible",
               "XamlType": "Windows.UI.Xaml.Controls.ScrollViewer",
-              "children": Array [
-                Object {
+              "children": [
+                {
                   "Background": null,
                   "BorderBrush": "#00FFFFFF",
                   "BorderThickness": "0,0,0,0",
@@ -1595,8 +1595,8 @@ Object {
                   "VerticalAlignment": "Stretch",
                   "Visibility": "Visible",
                   "XamlType": "Windows.UI.Xaml.Controls.Border",
-                  "children": Array [
-                    Object {
+                  "children": [
+                    {
                       "Background": "#00FFFFFF",
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -1611,8 +1611,8 @@ Object {
                       "VerticalAlignment": "Stretch",
                       "Visibility": "Visible",
                       "XamlType": "Windows.UI.Xaml.Controls.Grid",
-                      "children": Array [
-                        Object {
+                      "children": [
+                        {
                           "Background": null,
                           "BorderBrush": null,
                           "BorderThickness": "0,0,0,0",
@@ -1629,8 +1629,8 @@ Object {
                           "VerticalAlignment": "Stretch",
                           "Visibility": "Visible",
                           "XamlType": "Windows.UI.Xaml.Controls.ScrollContentPresenter",
-                          "children": Array [
-                            Object {
+                          "children": [
+                            {
                               "Clip": null,
                               "FlowDirection": "LeftToRight",
                               "HorizontalAlignment": "Stretch",
@@ -1643,7 +1643,7 @@ Object {
                             },
                           ],
                         },
-                        Object {
+                        {
                           "Background": null,
                           "BorderBrush": null,
                           "BorderThickness": "0,0,0,0",
@@ -1665,7 +1665,7 @@ Object {
                 },
               ],
             },
-            Object {
+            {
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Foreground": "#B3E1E1E1",
@@ -1680,7 +1680,7 @@ Object {
               "Visibility": "Visible",
               "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
             },
-            Object {
+            {
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -1702,7 +1702,7 @@ Object {
         },
       ],
     },
-    Object {
+    {
       "Background": "#33000000",
       "BorderBrush": "#5500FF00",
       "BorderThickness": "10,10,10,10",
@@ -1720,8 +1720,8 @@ Object {
       "Visibility": "Visible",
       "Width": 800,
       "XamlType": "Windows.UI.Xaml.Controls.PasswordBox",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -1736,8 +1736,8 @@ Object {
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
-          "children": Array [
-            Object {
+          "children": [
+            {
               "Background": "#33000000",
               "BorderBrush": "#5500FF00",
               "BorderThickness": "10,10,10,10",
@@ -1754,7 +1754,7 @@ Object {
               "Visibility": "Visible",
               "XamlType": "Windows.UI.Xaml.Controls.Border",
             },
-            Object {
+            {
               "Background": "#00FFFFFF",
               "BorderBrush": "#00FFFFFF",
               "BorderThickness": "0,0,0,0",
@@ -1771,8 +1771,8 @@ Object {
               "VerticalAlignment": "Stretch",
               "Visibility": "Visible",
               "XamlType": "Windows.UI.Xaml.Controls.ScrollViewer",
-              "children": Array [
-                Object {
+              "children": [
+                {
                   "Background": null,
                   "BorderBrush": "#00FFFFFF",
                   "BorderThickness": "0,0,0,0",
@@ -1788,8 +1788,8 @@ Object {
                   "VerticalAlignment": "Stretch",
                   "Visibility": "Visible",
                   "XamlType": "Windows.UI.Xaml.Controls.Border",
-                  "children": Array [
-                    Object {
+                  "children": [
+                    {
                       "Background": "#00FFFFFF",
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -1804,8 +1804,8 @@ Object {
                       "VerticalAlignment": "Stretch",
                       "Visibility": "Visible",
                       "XamlType": "Windows.UI.Xaml.Controls.Grid",
-                      "children": Array [
-                        Object {
+                      "children": [
+                        {
                           "Background": null,
                           "BorderBrush": null,
                           "BorderThickness": "0,0,0,0",
@@ -1822,8 +1822,8 @@ Object {
                           "VerticalAlignment": "Stretch",
                           "Visibility": "Visible",
                           "XamlType": "Windows.UI.Xaml.Controls.ScrollContentPresenter",
-                          "children": Array [
-                            Object {
+                          "children": [
+                            {
                               "Clip": null,
                               "FlowDirection": "LeftToRight",
                               "HorizontalAlignment": "Stretch",
@@ -1836,7 +1836,7 @@ Object {
                             },
                           ],
                         },
-                        Object {
+                        {
                           "Background": null,
                           "BorderBrush": null,
                           "BorderThickness": "0,0,0,0",
@@ -1858,7 +1858,7 @@ Object {
                 },
               ],
             },
-            Object {
+            {
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Foreground": "#B3E1E1E1",
@@ -1873,7 +1873,7 @@ Object {
               "Visibility": "Visible",
               "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
             },
-            Object {
+            {
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",

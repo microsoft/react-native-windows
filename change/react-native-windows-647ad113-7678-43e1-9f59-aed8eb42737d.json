@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix typo in TouchHandler.cpp which broke hardware back button events",
-  "packageName": "react-native-windows",
-  "email": "jahiggin@microsoft.com",
-  "dependentChangeType": "patch"
-}

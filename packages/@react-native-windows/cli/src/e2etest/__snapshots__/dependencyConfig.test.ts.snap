@@ -5,29 +5,29 @@ exports[`dependencyConfig - BlankLib (Ignore react-native.config.js) 1`] = `null
 exports[`dependencyConfig - BlankLib (Use react-native.config.js) 1`] = `null`;
 
 exports[`dependencyConfig - MissingProjectFilesLib (Ignore react-native.config.js) 1`] = `
-Object {
+{
   "folder": StringContaining "MissingProjectFilesLib",
-  "nugetPackages": Array [],
-  "projects": Array [],
+  "nugetPackages": [],
+  "projects": [],
   "solutionFile": null,
   "sourceDir": "windows",
 }
 `;
 
 exports[`dependencyConfig - MissingProjectFilesLib (Use react-native.config.js) 1`] = `
-Object {
+{
   "folder": StringContaining "MissingProjectFilesLib",
-  "nugetPackages": Array [],
-  "projects": Array [],
+  "nugetPackages": [],
+  "projects": [],
   "solutionFile": null,
   "sourceDir": "windows",
 }
 `;
 
 exports[`dependencyConfig - SimpleCSharpApp (Ignore react-native.config.js) 1`] = `
-Object {
+{
   "folder": StringContaining "SimpleCSharpApp",
-  "nugetPackages": Array [],
+  "nugetPackages": [],
   "projects": ArrayContaining [
     ObjectContaining {
       "projectFile": StringMatching /Error: \\.\\*\\\\\\.\\(\\?:cs\\|vcx\\)proj is type '\\\\w\\+'/,
@@ -39,9 +39,9 @@ Object {
 `;
 
 exports[`dependencyConfig - SimpleCSharpApp (Use react-native.config.js) 1`] = `
-Object {
+{
   "folder": StringContaining "SimpleCSharpApp",
-  "nugetPackages": Array [],
+  "nugetPackages": [],
   "projects": ArrayContaining [
     ObjectContaining {
       "projectFile": StringMatching /Error: \\.\\*\\\\\\.\\(\\?:cs\\|vcx\\)proj is type '\\\\w\\+'/,
@@ -53,25 +53,25 @@ Object {
 `;
 
 exports[`dependencyConfig - SimpleCSharpLib (Ignore react-native.config.js) 1`] = `
-Object {
+{
   "folder": StringContaining "SimpleCSharpLib",
-  "nugetPackages": Array [],
-  "projects": Array [
-    Object {
-      "cppHeaders": Array [
+  "nugetPackages": [],
+  "projects": [
+    {
+      "cppHeaders": [
         "winrt/SimpleCSharpLib.h",
       ],
-      "cppPackageProviders": Array [
+      "cppPackageProviders": [
         "SimpleCSharpLib::ReactPackageProvider",
       ],
-      "csNamespaces": Array [
+      "csNamespaces": [
         "SimpleCSharpLib",
       ],
-      "csPackageProviders": Array [
+      "csPackageProviders": [
         "SimpleCSharpLib.ReactPackageProvider",
       ],
       "directDependency": true,
-      "projectFile": "SimpleCSharpLib\\\\SimpleCSharpLib.csproj",
+      "projectFile": "SimpleCSharpLib\\SimpleCSharpLib.csproj",
       "projectGuid": "{416476D5-974A-4EE2-8145-4E331297247E}",
       "projectLang": "cs",
       "projectName": "SimpleCSharpLib",
@@ -83,25 +83,25 @@ Object {
 `;
 
 exports[`dependencyConfig - SimpleCSharpLib (Use react-native.config.js) 1`] = `
-Object {
+{
   "folder": StringContaining "SimpleCSharpLib",
-  "nugetPackages": Array [],
-  "projects": Array [
-    Object {
-      "cppHeaders": Array [
+  "nugetPackages": [],
+  "projects": [
+    {
+      "cppHeaders": [
         "winrt/SimpleCSharpLib.h",
       ],
-      "cppPackageProviders": Array [
+      "cppPackageProviders": [
         "SimpleCSharpLib::ReactPackageProvider",
       ],
-      "csNamespaces": Array [
+      "csNamespaces": [
         "SimpleCSharpLib",
       ],
-      "csPackageProviders": Array [
+      "csPackageProviders": [
         "SimpleCSharpLib.ReactPackageProvider",
       ],
       "directDependency": true,
-      "projectFile": "SimpleCSharpLib\\\\SimpleCSharpLib.csproj",
+      "projectFile": "SimpleCSharpLib\\SimpleCSharpLib.csproj",
       "projectGuid": "{416476D5-974A-4EE2-8145-4E331297247E}",
       "projectLang": "cs",
       "projectName": "SimpleCSharpLib",
@@ -113,9 +113,9 @@ Object {
 `;
 
 exports[`dependencyConfig - SimpleCppApp (Ignore react-native.config.js) 1`] = `
-Object {
+{
   "folder": StringContaining "SimpleCppApp",
-  "nugetPackages": Array [],
+  "nugetPackages": [],
   "projects": ArrayContaining [
     ObjectContaining {
       "projectFile": StringMatching /Error: \\.\\*\\\\\\.\\(\\?:cs\\|vcx\\)proj is type '\\\\w\\+'/,
@@ -127,9 +127,9 @@ Object {
 `;
 
 exports[`dependencyConfig - SimpleCppApp (Use react-native.config.js) 1`] = `
-Object {
+{
   "folder": StringContaining "SimpleCppApp",
-  "nugetPackages": Array [],
+  "nugetPackages": [],
   "projects": ArrayContaining [
     ObjectContaining {
       "projectFile": StringMatching /Error: \\.\\*\\\\\\.\\(\\?:cs\\|vcx\\)proj is type '\\\\w\\+'/,
@@ -141,25 +141,25 @@ Object {
 `;
 
 exports[`dependencyConfig - SimpleCppLib (Ignore react-native.config.js) 1`] = `
-Object {
+{
   "folder": StringContaining "SimpleCppLib",
-  "nugetPackages": Array [],
-  "projects": Array [
-    Object {
-      "cppHeaders": Array [
+  "nugetPackages": [],
+  "projects": [
+    {
+      "cppHeaders": [
         "winrt/SimpleCppLib.h",
       ],
-      "cppPackageProviders": Array [
+      "cppPackageProviders": [
         "SimpleCppLib::ReactPackageProvider",
       ],
-      "csNamespaces": Array [
+      "csNamespaces": [
         "SimpleCppLib",
       ],
-      "csPackageProviders": Array [
+      "csPackageProviders": [
         "SimpleCppLib.ReactPackageProvider",
       ],
       "directDependency": true,
-      "projectFile": "SimpleCppLib\\\\SimpleCppLib.vcxproj",
+      "projectFile": "SimpleCppLib\\SimpleCppLib.vcxproj",
       "projectGuid": "{416476d5-974a-4ee2-8145-4e331297247e}",
       "projectLang": "cpp",
       "projectName": "SimpleCppLib",
@@ -171,25 +171,25 @@ Object {
 `;
 
 exports[`dependencyConfig - SimpleCppLib (Use react-native.config.js) 1`] = `
-Object {
+{
   "folder": StringContaining "SimpleCppLib",
-  "nugetPackages": Array [],
-  "projects": Array [
-    Object {
-      "cppHeaders": Array [
+  "nugetPackages": [],
+  "projects": [
+    {
+      "cppHeaders": [
         "winrt/SimpleCppLib.h",
       ],
-      "cppPackageProviders": Array [
+      "cppPackageProviders": [
         "SimpleCppLib::ReactPackageProvider",
       ],
-      "csNamespaces": Array [
+      "csNamespaces": [
         "SimpleCppLib",
       ],
-      "csPackageProviders": Array [
+      "csPackageProviders": [
         "SimpleCppLib.ReactPackageProvider",
       ],
       "directDependency": true,
-      "projectFile": "SimpleCppLib\\\\SimpleCppLib.vcxproj",
+      "projectFile": "SimpleCppLib\\SimpleCppLib.vcxproj",
       "projectGuid": "{416476d5-974a-4ee2-8145-4e331297247e}",
       "projectLang": "cpp",
       "projectName": "SimpleCppLib",
@@ -201,42 +201,42 @@ Object {
 `;
 
 exports[`dependencyConfig - WithIndirectDependency (Ignore react-native.config.js) 1`] = `
-Object {
+{
   "folder": StringContaining "WithIndirectDependency",
-  "nugetPackages": Array [],
-  "projects": Array [],
+  "nugetPackages": [],
+  "projects": [],
   "solutionFile": "WithIndirectDependency.sln",
   "sourceDir": "windows",
 }
 `;
 
 exports[`dependencyConfig - WithIndirectDependency (Use react-native.config.js) 1`] = `
-Object {
+{
   "folder": StringContaining "WithIndirectDependency",
-  "nugetPackages": Array [],
-  "projects": Array [
-    Object {
-      "cppHeaders": Array [
+  "nugetPackages": [],
+  "projects": [
+    {
+      "cppHeaders": [
         "winrt/WithIndirectDependency.h",
       ],
-      "cppPackageProviders": Array [
+      "cppPackageProviders": [
         "WithIndirectDependency::ReactPackageProvider",
       ],
-      "csNamespaces": Array [
+      "csNamespaces": [
         "WithIndirectDependency",
       ],
-      "csPackageProviders": Array [
+      "csPackageProviders": [
         "WithIndirectDependency.ReactPackageProvider",
       ],
       "directDependency": true,
-      "projectFile": "WithIndirectDependency\\\\WithIndirectDependency.vcxproj",
+      "projectFile": "WithIndirectDependency\\WithIndirectDependency.vcxproj",
       "projectGuid": "{416476d5-974a-4ee2-8145-4e331297247e}",
       "projectLang": "cpp",
       "projectName": "WithIndirectDependency",
     },
-    Object {
+    {
       "directDependency": false,
-      "projectFile": "IndirectDependency\\\\IndirectDependency.vcxproj",
+      "projectFile": "IndirectDependency\\IndirectDependency.vcxproj",
       "projectGuid": "{416476d5-974a-4ee2-8145-4e331297247e}",
       "projectLang": "cpp",
       "projectName": "IndirectDependency",

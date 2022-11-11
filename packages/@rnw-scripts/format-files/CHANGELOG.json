@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/format-files",
   "entries": [
     {
+      "date": "Thu, 10 Nov 2022 06:17:12 GMT",
+      "tag": "@rnw-scripts/format-files_v1.1.1",
+      "version": "1.1.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/format-files",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.0",
+            "commit": "406d486eb138d4d9e324124e1b65120794424da1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 05 Oct 2022 05:13:44 GMT",
       "tag": "@rnw-scripts/format-files_v1.1.0",
       "version": "1.1.0",

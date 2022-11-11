@@ -66,4 +66,8 @@ describe('SwitchTests', () => {
     const dump = await dumpVisualTree('controlled-switch');
     expect(dump).toMatchSnapshot();
   });
+  test('Switches can have customized accessibility', async () => {
+    const dump = await dumpVisualTree('accessibility-switch');
+    expect(dump).toMatchSnapshot();
+  });
 });

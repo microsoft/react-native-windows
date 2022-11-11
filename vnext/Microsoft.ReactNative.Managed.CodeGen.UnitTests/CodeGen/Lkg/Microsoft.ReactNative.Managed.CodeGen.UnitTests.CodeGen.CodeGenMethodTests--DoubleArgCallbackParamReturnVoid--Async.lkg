@@ -1,6 +1,4 @@
 moduleBuilder.AddMethod("MyMethod", global::Microsoft.ReactNative.MethodReturnType.TwoCallbacks, (global::Microsoft.ReactNative.IJSValueReader reader, global::Microsoft.ReactNative.IJSValueWriter writer, global::Microsoft.ReactNative.MethodResultCallback resolve, global::Microsoft.ReactNative.MethodResultCallback reject) =>
 {
     module.Method((value0) => resolve(global::Microsoft.ReactNative.Managed.JSValueWriter.WriteArgs(writer, value0)), (value0) => reject(global::Microsoft.ReactNative.Managed.JSValueWriter.WriteArgs(writer, value0)));
-}
-
-);
+});

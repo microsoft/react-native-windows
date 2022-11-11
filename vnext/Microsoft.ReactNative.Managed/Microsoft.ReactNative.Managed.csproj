@@ -21,6 +21,7 @@
     <DocumentationFile>bin\$(Platform)\$(Configuration)\Microsoft.ReactNative.Managed.XML</DocumentationFile>
     <Deterministic>true</Deterministic>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+    <ProduceReferenceAssemblyInOutDir>true</ProduceReferenceAssemblyInOutDir>
     <NoWarn>;2008</NoWarn>
     <NoWarn>$(NoWarn);1591</NoWarn>
     <!-- Missing XML comment for publicly visible type or member -->
@@ -154,8 +155,8 @@
       </ItemGroup>
     </When>
   </Choose>
-  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '16.0' ">
-    <VisualStudioVersion>16.0</VisualStudioVersion>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '17.0' ">
+    <VisualStudioVersion>17.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <Target Name="Deploy" />

@@ -3,6 +3,7 @@
 
 #include "pch.h"
 
+#include "AnimationUtils.h"
 #include "FrameAnimationDriver.h"
 #include "Utils/Helpers.h"
 
@@ -22,6 +23,7 @@ FrameAnimationDriver::FrameAnimationDriver(
 
 std::tuple<comp::CompositionAnimation, comp::CompositionScopedBatch> FrameAnimationDriver::MakeAnimation(
     const winrt::Microsoft::ReactNative::JSValueObject & /*config*/) {
+  assert(m_useComposition);
   const auto [scopedBatch, animation] = [manager = m_manager.lock()]() {
     const auto compositor = manager->Compositor();
     return std::make_tuple(
@@ -32,7 +34,7 @@ std::tuple<comp::CompositionAnimation, comp::CompositionScopedBatch> FrameAnimat
 
   // Frames contains 60 values per second of duration of the animation, convert
   // the size of frames to duration in ms.
-  std::chrono::milliseconds duration(static_cast<int>(m_frames.size() * 1000.0 / 60.0));
+  std::chrono::milliseconds duration(static_cast<int>(m_frames.size() * s_frameDurationMs));
   animation.Duration(duration);
 
   auto normalizedProgress = 0.0f;
@@ -55,6 +57,41 @@ std::tuple<comp::CompositionAnimation, comp::CompositionScopedBatch> FrameAnimat
 
 double FrameAnimationDriver::ToValue() {
   return m_toValue;
+}
+
+bool FrameAnimationDriver::Update(double timeDeltaMs, bool restarting) {
+  assert(!m_useComposition);
+  if (const auto node = GetAnimatedValue()) {
+    if (!m_startValue) {
+      m_startValue = node->RawValue();
+    }
+
+    const auto startValue = m_startValue.value();
+    const auto startIndex = static_cast<size_t>(timeDeltaMs / s_frameDurationMs);
+    assert(startIndex >= 0);
+    const auto nextIndex = startIndex + 1;
+
+    double nextValue;
+    auto isComplete = false;
+    if (nextIndex >= m_frames.size()) {
+      nextValue = m_toValue;
+      isComplete = true;
+    } else {
+      const auto fromInterval = startIndex * s_frameDurationMs;
+      const auto toInterval = nextIndex * s_frameDurationMs;
+      const auto fromValue = m_frames[startIndex];
+      const auto toValue = m_frames[nextIndex];
+      const auto frameOutput = Interpolate(
+          timeDeltaMs, fromInterval, toInterval, fromValue, toValue, ExtrapolateTypeExtend, ExtrapolateTypeExtend);
+      nextValue = Interpolate(frameOutput, 0, 1, startValue, m_toValue, ExtrapolateTypeExtend, ExtrapolateTypeExtend);
+    }
+
+    node->RawValue(nextValue);
+
+    return isComplete;
+  }
+
+  return true;
 }
 
 } // namespace Microsoft::ReactNative

@@ -52,7 +52,7 @@ export const app = {
   /**
    * Find an element by Automation ID
    *
-   * https://docs.microsoft.com/en-us/dotnet/api/system.windows.automation.automationelement.automationelementinformation.automationid?view=net-5.0
+   * https://docs.microsoft.com/en-us/dotnet/api/system.windows.automation.automationelement.automationelementinformation.automationid?view=net-6.0
    */
   findElementByAutomationID: (id: string): Promise<AutomationElement> =>
     $(`~${id}`),
@@ -60,7 +60,7 @@ export const app = {
   /**
    * Finds an element by the name of its class name (e.g. ListViewItem)
    *
-   * https://docs.microsoft.com/en-us/dotnet/api/system.windows.automation.automationelement.automationelementinformation.classname?view=net-5.0
+   * https://docs.microsoft.com/en-us/dotnet/api/system.windows.automation.automationelement.automationelementinformation.classname?view=net-6.0
    */
   findElementByClassName: (className: string): Promise<AutomationElement> =>
     $(className),
@@ -68,7 +68,7 @@ export const app = {
   /**
    * Find element by ControlType (e.g. Button, CheckBox)
    *
-   * https://docs.microsoft.com/en-us/dotnet/api/system.windows.automation.controltype?view=net-5.0
+   * https://docs.microsoft.com/en-us/dotnet/api/system.windows.automation.controltype?view=net-6.0
    */
   findElementByControlType: (controlType: string): Promise<AutomationElement> =>
     $(`<${controlType} />`),

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Do not use xaml rendering callback in non-xaml apps",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

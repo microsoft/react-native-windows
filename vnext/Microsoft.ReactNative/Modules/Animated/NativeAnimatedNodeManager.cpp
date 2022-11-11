@@ -25,6 +25,7 @@
 #include <Modules/NativeUIManager.h>
 #include <Modules/PaperUIManagerModule.h>
 #include <Windows.Foundation.h>
+#include <queue>
 
 #ifdef USE_FABRIC
 #include <Fabric/Composition/CompositionContextHelper.h>
@@ -131,22 +132,41 @@ void NativeAnimatedNodeManager::GetValue(
 }
 
 void NativeAnimatedNodeManager::ConnectAnimatedNodeToView(int64_t propsNodeTag, int64_t viewTag) {
-  m_propsNodes.at(propsNodeTag)->ConnectToView(viewTag);
+  const auto &propsNode = m_propsNodes.at(propsNodeTag);
+  propsNode->ConnectToView(viewTag);
+  if (!propsNode->UseComposition()) {
+    m_updatedNodes.insert(propsNodeTag);
+    EnsureRendering();
+  }
 }
 
 void NativeAnimatedNodeManager::DisconnectAnimatedNodeToView(int64_t propsNodeTag, int64_t viewTag) {
   m_propsNodes.at(propsNodeTag)->DisconnectFromView(viewTag);
 }
 
+void NativeAnimatedNodeManager::RestoreDefaultValues(int64_t tag) {
+  if (const auto propsNode = GetPropsAnimatedNode(tag)) {
+    propsNode->RestoreDefaultValues();
+  }
+}
+
 void NativeAnimatedNodeManager::ConnectAnimatedNode(int64_t parentNodeTag, int64_t childNodeTag) {
   if (const auto parentNode = GetAnimatedNode(parentNodeTag)) {
     parentNode->AddChild(childNodeTag);
+    if (!parentNode->UseComposition()) {
+      m_updatedNodes.insert(childNodeTag);
+      EnsureRendering();
+    }
   }
 }
 
 void NativeAnimatedNodeManager::DisconnectAnimatedNode(int64_t parentNodeTag, int64_t childNodeTag) {
   if (const auto parentNode = GetAnimatedNode(parentNodeTag)) {
     parentNode->RemoveChild(childNodeTag);
+    if (!parentNode->UseComposition()) {
+      m_updatedNodes.insert(childNodeTag);
+      EnsureRendering();
+    }
   }
 }
 
@@ -155,33 +175,38 @@ void NativeAnimatedNodeManager::StopAnimation(int64_t animationId, bool isTracki
     if (const auto animation = m_activeAnimations.at(animationId)) {
       animation->StopAnimation(isTrackingAnimation);
 
-      // Insert the animation into the pending completion set to ensure it is
-      // not destroyed before the callback occurs. It's safe to assume the
-      // scoped batch completion callback has not run, since if it had, the
-      // animation would have been removed from the set of active animations.
-      m_pendingCompletionAnimations.insert({animationId, animation});
+      // We need to update the node manager state for composition animations
+      // to ensure new animations on the same animated value do not start until
+      // the completion callback has fired for the stopped animation.
+      if (animation->UseComposition()) {
+        // Insert the animation into the pending completion set to ensure it is
+        // not destroyed before the callback occurs. It's safe to assume the
+        // scoped batch completion callback has not run, since if it had, the
+        // animation would have been removed from the set of active animations.
+        m_pendingCompletionAnimations.insert({animationId, animation});
 
-      const auto nodeTag = animation->AnimatedValueTag();
-      if (nodeTag != -1) {
-        const auto deferredAnimation = m_deferredAnimationForValues.find(nodeTag);
-        if (deferredAnimation != m_deferredAnimationForValues.end()) {
-          // We can assume that the currently deferred animation is the one
-          // being stopped given the constraint that only one animation can
-          // be active for a given value node.
-          assert(deferredAnimation->second == animationId);
-          // If the animation is deferred, just remove the deferred animation
-          // entry as two animations cannot animate the same value concurrently.
-          m_deferredAnimationForValues.erase(nodeTag);
-        } else {
-          // Since only one animation can be active at a time, there shouldn't
-          // be any stopped animations for the value node if the animation has
-          // not been deferred.
-          assert(!m_valuesWithStoppedAnimation.count(nodeTag));
-          // In this case, add the value tag to the set of values with stopped
-          // animations. This is used to optimize the lookup when determining
-          // if an animation needs to be deferred (rather than iterating over
-          // the map of pending completion animations).
-          m_valuesWithStoppedAnimation.insert(nodeTag);
+        const auto nodeTag = animation->AnimatedValueTag();
+        if (nodeTag != -1) {
+          const auto deferredAnimation = m_deferredAnimationForValues.find(nodeTag);
+          if (deferredAnimation != m_deferredAnimationForValues.end()) {
+            // We can assume that the currently deferred animation is the one
+            // being stopped given the constraint that only one animation can
+            // be active for a given value node.
+            assert(deferredAnimation->second == animationId);
+            // If the animation is deferred, just remove the deferred animation
+            // entry as two animations cannot animate the same value concurrently.
+            m_deferredAnimationForValues.erase(nodeTag);
+          } else {
+            // Since only one animation can be active at a time, there shouldn't
+            // be any stopped animations for the value node if the animation has
+            // not been deferred.
+            assert(!m_valuesWithStoppedAnimation.count(nodeTag));
+            // In this case, add the value tag to the set of values with stopped
+            // animations. This is used to optimize the lookup when determining
+            // if an animation needs to be deferred (rather than iterating over
+            // the map of pending completion animations).
+            m_valuesWithStoppedAnimation.insert(nodeTag);
+          }
         }
       }
 
@@ -196,6 +221,7 @@ void NativeAnimatedNodeManager::RestartTrackingAnimatedNode(
     const std::shared_ptr<NativeAnimatedNodeManager> &manager) {
   if (m_activeAnimations.count(animationId)) {
     if (const auto animation = m_activeAnimations.at(animationId).get()) {
+      assert(animation->UseComposition());
       auto const animatedValueTag = animation->AnimatedValueTag();
       auto const &animationConfig = animation->AnimationConfig();
       auto const endCallback = animation->EndCallback();
@@ -301,14 +327,19 @@ void NativeAnimatedNodeManager::StartAnimatingNode(
   // If the animated value node has any stopped animations, defer start until
   // all stopped animations fire completion callback and have latest values.
   if (m_activeAnimations.count(animationId)) {
-    if (m_valuesWithStoppedAnimation.count(animatedNodeTag)) {
-      // Since only one animation can be active per value at a time, there will
-      // not be any other deferred animations for the value node.
-      assert(!m_deferredAnimationForValues.count(animatedNodeTag));
-      // Add the animation to the deferred animation map for the value tag.
-      m_deferredAnimationForValues.insert({animatedNodeTag, animationId});
+    const auto &animation = m_activeAnimations.at(animationId);
+    if (animation->UseComposition()) {
+      if (m_valuesWithStoppedAnimation.count(animatedNodeTag)) {
+        // Since only one animation can be active per value at a time, there will
+        // not be any other deferred animations for the value node.
+        assert(!m_deferredAnimationForValues.count(animatedNodeTag));
+        // Add the animation to the deferred animation map for the value tag.
+        m_deferredAnimationForValues.insert({animatedNodeTag, animationId});
+      } else {
+        StartAnimationAndTrackingNodes(animationId, animatedNodeTag, manager);
+      }
     } else {
-      StartAnimationAndTrackingNodes(animationId, animatedNodeTag, manager);
+      EnsureRendering();
     }
   }
 }
@@ -318,17 +349,27 @@ void NativeAnimatedNodeManager::DropAnimatedNode(int64_t tag) {
   m_propsNodes.erase(tag);
   m_styleNodes.erase(tag);
   m_transformNodes.erase(tag);
+  m_updatedNodes.erase(tag);
 }
 
 void NativeAnimatedNodeManager::SetAnimatedNodeValue(int64_t tag, double value) {
   if (const auto valueNode = m_valueNodes.at(tag).get()) {
     valueNode->RawValue(static_cast<float>(value));
+    if (!valueNode->UseComposition()) {
+      StopAnimationsForNode(tag);
+      m_updatedNodes.insert(tag);
+      EnsureRendering();
+    }
   }
 }
 
 void NativeAnimatedNodeManager::SetAnimatedNodeOffset(int64_t tag, double offset) {
   if (const auto valueNode = m_valueNodes.at(tag).get()) {
     valueNode->Offset(static_cast<float>(offset));
+    if (!valueNode->UseComposition()) {
+      m_updatedNodes.insert(tag);
+      EnsureRendering();
+    }
   }
 }
 
@@ -341,6 +382,18 @@ void NativeAnimatedNodeManager::FlattenAnimatedNodeOffset(int64_t tag) {
 void NativeAnimatedNodeManager::ExtractAnimatedNodeOffset(int64_t tag) {
   if (const auto valueNode = m_valueNodes.at(tag).get()) {
     valueNode->ExtractOffset();
+  }
+}
+
+void NativeAnimatedNodeManager::StartListeningToAnimatedNodeValue(int64_t tag, const ValueListenerCallback &callback) {
+  if (const auto valueNode = m_valueNodes.at(tag).get()) {
+    valueNode->ValueListener(callback);
+  }
+}
+
+void NativeAnimatedNodeManager::StopListeningToAnimatedNodeValue(int64_t tag) {
+  if (const auto valueNode = m_valueNodes.at(tag).get()) {
+    valueNode->ValueListener(nullptr);
   }
 }
 
@@ -402,6 +455,9 @@ void NativeAnimatedNodeManager::ProcessDelayedPropsNodes() {
 void NativeAnimatedNodeManager::AddDelayedPropsNode(
     int64_t propsNodeTag,
     const winrt::Microsoft::ReactNative::ReactContext &context) {
+#if DEBUG
+  assert(m_propsNodes.at(propsNodeTag)->UseComposition());
+#endif
   m_delayedPropsNodes.push_back(propsNodeTag);
   if (m_delayedPropsNodes.size() <= 1) {
     if (const auto uiManger = Microsoft::ReactNative::GetNativeUIManager(context).lock()) {
@@ -505,5 +561,177 @@ void NativeAnimatedNodeManager::StartAnimationAndTrackingNodes(
       }
     }
   }
+}
+
+void NativeAnimatedNodeManager::RunUpdates(winrt::TimeSpan renderingTime) {
+  auto hasFinishedAnimations = false;
+  std::unordered_set<int64_t> updatingNodes{};
+  updatingNodes = std::move(m_updatedNodes);
+
+  // Increment animation drivers
+  for (auto id : m_activeAnimationIds) {
+    auto &animation = m_activeAnimations.at(id);
+    animation->RunAnimationStep(renderingTime);
+    updatingNodes.insert(animation->AnimatedValueTag());
+    if (animation->IsComplete()) {
+      hasFinishedAnimations = true;
+    }
+  }
+
+  UpdateNodes(updatingNodes);
+
+  if (hasFinishedAnimations) {
+    for (auto id : m_activeAnimationIds) {
+      auto &animation = m_activeAnimations.at(id);
+      if (animation->IsComplete()) {
+        animation->DoCallback(true);
+        m_activeAnimations.erase(id);
+      }
+    }
+  }
+}
+
+void NativeAnimatedNodeManager::EnsureRendering() {
+  m_renderingRevoker =
+      xaml::Media::CompositionTarget::Rendering(winrt::auto_revoke, {this, &NativeAnimatedNodeManager::OnRendering});
+}
+
+void NativeAnimatedNodeManager::OnRendering(winrt::IInspectable const &sender, winrt::IInspectable const &args) {
+  // The `UpdateActiveAnimationIds` method only tracks animations where
+  // composition is not used, so if only UI.Composition animations are active,
+  // this rendering callback will not run.
+  UpdateActiveAnimationIds();
+  if (m_activeAnimationIds.size() > 0 || m_updatedNodes.size() > 0) {
+    if (const auto renderingArgs = args.try_as<xaml::Media::RenderingEventArgs>()) {
+      RunUpdates(renderingArgs.RenderingTime());
+    }
+  } else {
+    m_renderingRevoker.revoke();
+  }
+}
+
+void NativeAnimatedNodeManager::StopAnimationsForNode(int64_t tag) {
+  UpdateActiveAnimationIds();
+  for (auto id : m_activeAnimationIds) {
+    auto &animation = m_activeAnimations.at(id);
+    if (tag == animation->AnimatedValueTag()) {
+      animation->DoCallback(false);
+      m_activeAnimations.erase(id);
+    }
+  }
+}
+
+void NativeAnimatedNodeManager::UpdateActiveAnimationIds() {
+  m_activeAnimationIds.clear();
+  for (const auto &pair : m_activeAnimations) {
+    if (!pair.second->UseComposition()) {
+      m_activeAnimationIds.push_back(pair.first);
+    }
+  }
+}
+
+void NativeAnimatedNodeManager::UpdateNodes(std::unordered_set<int64_t> &nodes) {
+  auto activeNodesCount = 0;
+  auto updatedNodesCount = 0;
+
+  // BFS state
+  std::unordered_map<int64_t, int64_t> bfsColors;
+  std::unordered_map<int64_t, int64_t> incomingNodeCounts;
+
+  // STEP 1.
+  // BFS over graph of nodes starting from IDs in `nodes` argument and IDs that are attached to
+  // active animations (from `m_activeAnimations)`. Update `incomingNodeCounts` map for each node
+  // during that BFS. Store number of visited nodes in `activeNodesCount`. We "execute" active
+  // animations as a part of this step.
+
+  m_animatedGraphBFSColor++; /* use new color */
+  if (m_animatedGraphBFSColor == 0) {
+    // value "0" is used as an initial color for a new node, using it in BFS may cause some nodes to be skipped.
+    m_animatedGraphBFSColor++;
+  }
+
+  std::queue<int64_t> nodesQueue{};
+  for (auto id : nodes) {
+    if (!bfsColors.count(id) || bfsColors.at(id) != m_animatedGraphBFSColor) {
+      bfsColors[id] = m_animatedGraphBFSColor;
+      activeNodesCount++;
+      nodesQueue.push(id);
+    }
+  }
+
+  while (nodesQueue.size() > 0) {
+    auto id = nodesQueue.front();
+    nodesQueue.pop();
+    if (auto node = GetAnimatedNode(id)) {
+      for (auto &childId : node->Children()) {
+        if (!incomingNodeCounts.count(childId)) {
+          incomingNodeCounts[childId] = 1;
+        } else {
+          incomingNodeCounts.at(childId)++;
+        }
+
+        if (!bfsColors.count(childId) || bfsColors.at(childId) != m_animatedGraphBFSColor) {
+          bfsColors[childId] = m_animatedGraphBFSColor;
+          activeNodesCount++;
+          nodesQueue.push(childId);
+        }
+      }
+    }
+  }
+
+  // STEP 2
+  // BFS over the graph of active nodes in topological order -> visit node only when all its
+  // "predecessors" in the graph have already been visited. It is important to visit nodes in that
+  // order as they may often use values of their predecessors in order to calculate "next state"
+  // of their own. We start by determining the starting set of nodes by looking for nodes with
+  // `incomingNodeCounts[id] = 0` (those can only be the ones that we start BFS in the previous
+  // step). We store number of visited nodes in this step in `updatedNodesCount`
+
+  m_animatedGraphBFSColor++;
+  if (m_animatedGraphBFSColor == 0) {
+    // see reasoning for this check a few lines above
+    m_animatedGraphBFSColor++;
+  }
+
+  // find nodes with zero "incoming nodes", those can be either nodes from `m_updatedNodes` or
+  // ones connected to active animations
+  for (auto id : nodes) {
+    if (!incomingNodeCounts.count(id) ||
+        incomingNodeCounts.at(id) == 0 && bfsColors.at(id) != m_animatedGraphBFSColor) {
+      bfsColors[id] = m_animatedGraphBFSColor;
+      updatedNodesCount++;
+      nodesQueue.push(id);
+    }
+  }
+
+  // Run main "update" loop
+  while (nodesQueue.size() > 0) {
+    auto id = nodesQueue.front();
+    nodesQueue.pop();
+    if (auto node = GetAnimatedNode(id)) {
+      node->Update();
+      if (auto propsNode = GetPropsAnimatedNode(id)) {
+        propsNode->UpdateView();
+      } else if (auto valueNode = GetValueAnimatedNode(id)) {
+        valueNode->OnValueUpdate();
+      }
+
+      for (auto &childId : node->Children()) {
+        auto &incomingCount = incomingNodeCounts.at(childId);
+        auto &bfsColor = bfsColors.at(childId);
+        incomingCount--;
+        if (bfsColor != m_animatedGraphBFSColor && incomingCount == 0) {
+          bfsColor = m_animatedGraphBFSColor;
+          updatedNodesCount++;
+          nodesQueue.push(childId);
+        }
+      }
+    }
+  }
+
+  // Verify that we've visited *all* active nodes. Throw otherwise as this would mean there is a
+  // cycle in animated node graph. We also take advantage of the fact that all active nodes are
+  // visited in the step above so that `incomingNodeCounts` for all node IDs are set to zero
+  assert(activeNodesCount == updatedNodesCount);
 }
 } // namespace Microsoft::ReactNative
