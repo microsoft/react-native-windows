@@ -1002,8 +1002,11 @@ comp::CompositionPropertySet CompositionBaseComponentView::EnsureCenterPointProp
 //   "transform":   A transform to apply to the visual.  This transform is in dips.
 void CompositionBaseComponentView::UpdateCenterPropertySet() noexcept {
   if (m_centerPropSet != nullptr) {
-    //Visual().CenterPoint({m_layoutMetrics.frame.size.width * m_layoutMetrics.pointScaleFactor / 2, m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor / 2, 0});
-    m_centerPropSet.InsertVector3(L"center", {m_layoutMetrics.frame.size.width * m_layoutMetrics.pointScaleFactor / 2, m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor / 2, 0});
+    m_centerPropSet.InsertVector3(
+        L"center",
+        {m_layoutMetrics.frame.size.width * m_layoutMetrics.pointScaleFactor / 2,
+         m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor / 2,
+         0});
     m_centerPropSet.InsertVector3(
         L"dpiScale3",
         {m_layoutMetrics.pointScaleFactor, m_layoutMetrics.pointScaleFactor, m_layoutMetrics.pointScaleFactor});

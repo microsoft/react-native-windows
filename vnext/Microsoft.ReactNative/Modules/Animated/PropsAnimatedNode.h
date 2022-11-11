@@ -37,10 +37,15 @@ class PropsAnimatedNode final : public AnimatedNode {
  private:
   struct AnimationView {
     xaml::UIElement m_element;
+#ifdef USE_FABRIC
     std::shared_ptr<CompositionBaseComponentView> m_componentView;
-
+#endif
     operator bool() const noexcept {
+#ifdef USE_FABRIC
       return m_element || m_componentView;
+#else
+      return m_element != nullptr;
+#endif
     }
   };
 

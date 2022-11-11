@@ -176,10 +176,13 @@ void PropsAnimatedNode::StartAnimations() {
         } else if (anim.second.Target() == L"Rotation") {
           if (view.m_element) {
             view.m_element.RotationAxis(m_rotationAxis);
+#ifdef USE_FABRIC
           } else {
-             auto visual = winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::InnerVisual(
-            view.m_componentView->Visual());
+            auto visual =
+                winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::InnerVisual(
+                    view.m_componentView->Visual());
             visual.RotationAxis(m_rotationAxis);
+#endif
           }
           StartAnimation(view, anim.second);
         } else {
@@ -356,12 +359,20 @@ PropsAnimatedNode::AnimationView PropsAnimatedNode::GetAnimationView() {
   if (IsRS5OrHigher()) {
     if (const auto shadowNodeBase = GetShadowNodeBase()) {
       if (const auto shadowNodeView = shadowNodeBase->GetView()) {
+#ifdef USE_FABRIC
         return {shadowNodeView.as<xaml::UIElement>(), nullptr};
+#else
+        return {shadowNodeView.as<xaml::UIElement>()};
+#endif
       }
     }
   }
 
+#ifdef USE_FABRIC
   return {nullptr, nullptr};
+#else
+  return {nullptr};
+#endif
 }
 
 void PropsAnimatedNode::StartAnimation(
@@ -369,6 +380,7 @@ void PropsAnimatedNode::StartAnimation(
     const comp::CompositionAnimation &animation) noexcept {
   if (view.m_element) {
     view.m_element.StartAnimation(animation);
+#ifdef USE_FABRIC
   } else if (view.m_componentView) {
     auto visual = winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::InnerVisual(
         view.m_componentView->Visual());
@@ -387,14 +399,17 @@ void PropsAnimatedNode::StartAnimation(
       }
       visual.StartAnimation(targetProp, animation);
     }
+#endif
   }
 }
 
 comp::CompositionPropertySet PropsAnimatedNode::EnsureCenterPointPropertySet(const AnimationView &view) noexcept {
   if (view.m_element) {
     return GetShadowNodeBase()->EnsureTransformPS();
+#ifdef USE_FABRIC
   } else if (view.m_componentView) {
     return view.m_componentView->EnsureCenterPointPropertySet();
+#endif
   }
   return nullptr;
 }

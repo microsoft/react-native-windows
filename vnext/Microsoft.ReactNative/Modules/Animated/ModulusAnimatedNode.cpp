@@ -22,8 +22,8 @@ ModulusAnimatedNode::ModulusAnimatedNode(
       anim.SetReferenceParameter(s_inputParameterName, manager->GetValueAnimatedNode(node)->PropertySet());
       anim.SetScalarParameter(s_modName, static_cast<float>(mod));
       anim.Expression(
-          static_cast<winrt::hstring>(L"(") + s_inputParameterName + L"." + s_valueName + L" + " + s_inputParameterName +
-          L"." + s_offsetName + L") % " + s_modName);
+          static_cast<winrt::hstring>(L"(") + s_inputParameterName + L"." + s_valueName + L" + " +
+          s_inputParameterName + L"." + s_offsetName + L") % " + s_modName);
       return anim;
     }());
   }
