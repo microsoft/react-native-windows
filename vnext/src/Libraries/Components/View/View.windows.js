@@ -151,7 +151,7 @@ const View: React.AbstractComponent<
 
     const _keyDown = (event: KeyEvent) => {
       if (otherProps.keyDownEvents && event.isPropagationStopped() !== true) {
-         // $FlowFixMe - keyDownEvents was already checked to not be undefined
+        // $FlowFixMe - keyDownEvents was already checked to not be undefined
         for (const el of otherProps.keyDownEvents) {
           if (event.nativeEvent.code == el.code && el.handledEventPhase == 3) {
             event.stopPropagation();
@@ -163,7 +163,7 @@ const View: React.AbstractComponent<
 
     const _keyUp = (event: KeyEvent) => {
       if (otherProps.keyUpEvents && event.isPropagationStopped() !== true) {
-         // $FlowFixMe - keyDownEvents was already checked to not be undefined
+        // $FlowFixMe - keyDownEvents was already checked to not be undefined
         for (const el of otherProps.keyUpEvents) {
           if (event.nativeEvent.code == el.code && el.handledEventPhase == 3) {
             event.stopPropagation();
@@ -175,7 +175,7 @@ const View: React.AbstractComponent<
 
     const _keyDownCapture = (event: KeyEvent) => {
       if (otherProps.keyDownEvents && event.isPropagationStopped() !== true) {
-         // $FlowFixMe - keyDownEvents was already checked to not be undefined
+        // $FlowFixMe - keyDownEvents was already checked to not be undefined
         for (const el of otherProps.keyDownEvents) {
           if (event.nativeEvent.code == el.code && el.handledEventPhase == 1) {
             event.stopPropagation();
@@ -187,7 +187,7 @@ const View: React.AbstractComponent<
 
     const _keyUpCapture = (event: KeyEvent) => {
       if (otherProps.keyUpEvents && event.isPropagationStopped() !== true) {
-         // $FlowFixMe - keyDownEvents was already checked to not be undefined
+        // $FlowFixMe - keyDownEvents was already checked to not be undefined
         for (const el of otherProps.keyUpEvents) {
           if (event.nativeEvent.code == el.code && el.handledEventPhase == 1) {
             event.stopPropagation();
