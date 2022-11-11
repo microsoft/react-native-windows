@@ -10,14 +10,20 @@ namespace winrt::PlaygroundNativeModules {
 class GridViewManager : public winrt::implements<
                             GridViewManager,
                             React::IViewManager,
+                            React::IViewManagerWithReactContext,
                             React::IViewManagerWithChildren,
                             React::IViewManagerWithNativeProperties,
-                            React::IViewManagerRequiresNativeLayout> {
+                            React::IViewManagerRequiresNativeLayout,
+                            React::IViewManagerWithChildYogaLayout> {
  public:
   // IViewManager
   winrt::hstring Name() noexcept;
 
   xaml::FrameworkElement CreateView() noexcept;
+
+  // IViewManagerWithReactContext
+  React::IReactContext ReactContext() noexcept;
+  void ReactContext(React::IReactContext reactContext) noexcept;
 
   // IViewManagerWithChildren
   void AddView(xaml::FrameworkElement const &parent, xaml::UIElement const &child, int64_t index) noexcept;
@@ -38,6 +44,12 @@ class GridViewManager : public winrt::implements<
   bool RequiresNativeLayout() const noexcept {
     return true;
   }
+
+  // IViewManagerWithChildYogaLayout
+  void CalculateLayoutOnChildren(xaml::FrameworkElement const &view) noexcept;
+
+ private:
+  winrt::Microsoft::ReactNative::ReactContext m_reactContext{nullptr};
 };
 
 } // namespace winrt::PlaygroundNativeModules

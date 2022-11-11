@@ -14,6 +14,14 @@ xaml::FrameworkElement GridViewManager::CreateView() noexcept {
   return xaml::Controls::Grid();
 }
 
+React::IReactContext GridViewManager::ReactContext() noexcept {
+  return m_reactContext.Handle();
+}
+
+void GridViewManager::ReactContext(React::IReactContext reactContext) noexcept {
+  m_reactContext = reactContext;
+}
+
 void GridViewManager::AddView(
     xaml::FrameworkElement const &parent,
     xaml::UIElement const &child,
@@ -99,6 +107,21 @@ void GridViewManager::UpdateProperties(
         xaml::Controls::ColumnDefinition columnDefinition{};
         columnDefinition.Width(GetGridLength(column));
         grid.ColumnDefinitions().Append(columnDefinition);
+      }
+    }
+  }
+}
+
+void GridViewManager::CalculateLayoutOnChildren(xaml::FrameworkElement const &view) noexcept {
+  const auto grid = view.as<xaml::Controls::Grid>();
+  for (const auto gridChild : grid.Children()) {
+    const auto gridItem = gridChild.as<xaml::Controls::Grid>();
+    if (gridItem.Children().Size() > 0) {
+      if (const auto child = gridItem.Children().GetAt(0).try_as<xaml::FrameworkElement>()) {
+        const auto reactTag = React::XamlHelper::GetReactTag(child);
+        React::LayoutService::FromContext(m_reactContext.Handle())
+            .ApplyLayout(
+                reactTag, static_cast<float>(gridItem.ActualWidth()), static_cast<float>(gridItem.ActualHeight()));
       }
     }
   }
