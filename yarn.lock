@@ -1734,11 +1734,6 @@
   resolved "https://registry.yarnpkg.com/@kwsites/promise-deferred/-/promise-deferred-1.1.1.tgz#8ace5259254426ccef57f3175bc64ed7095ed919"
   integrity sha512-GaHYm+c0O9MjZRu0ongGBRbinu8gVAMd2UZjji6jVmqKtZluZnptXGWhz1E8j8D2HJ3f/yMxKAUC0b+57wncIw==
 
-"@lage-run/logger@*":
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/@lage-run/logger/-/logger-1.1.3.tgz#5e72941b48748f341b6504566c8dd7c357985219"
-  integrity sha512-63d1tpJlHxZC3TO7O/zxJqJNCJJpTaAnr0fAqvLhJF440ZMNMQAvLqQchdtNMqCnh9Sj+PjHgeFYTCMUkX75NA==
-
 "@microsoft/applicationinsights-web-snippet@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@microsoft/applicationinsights-web-snippet/-/applicationinsights-web-snippet-1.0.1.tgz#6bb788b2902e48bf5d460c38c6bb7fedd686ddd7"
@@ -5603,6 +5598,21 @@ events@^3.0.0:
   resolved "https://registry.yarnpkg.com/events/-/events-3.3.0.tgz#31a95ad0a924e2d2c419a813aeb2c4e878ea7400"
   integrity sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==
 
+execa@5.1.1, execa@^5.0.0:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/execa/-/execa-5.1.1.tgz#f80ad9cbf4298f7bd1d4c9555c21e93741c411dd"
+  integrity sha512-8uSpZZocAZRBAPIEINJj3Lo9HyGitllczc27Eh5YYojjMFMn8yHMDMaUHE2Jqfq05D/wucwI4JGURyXt1vchyg==
+  dependencies:
+    cross-spawn "^7.0.3"
+    get-stream "^6.0.0"
+    human-signals "^2.1.0"
+    is-stream "^2.0.0"
+    merge-stream "^2.0.0"
+    npm-run-path "^4.0.1"
+    onetime "^5.1.2"
+    signal-exit "^3.0.3"
+    strip-final-newline "^2.0.0"
+
 execa@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/execa/-/execa-1.0.0.tgz#c6236a5bb4df6d6f15e88e7f017798216749ddd8"
@@ -5629,21 +5639,6 @@ execa@^4.0.0:
     npm-run-path "^4.0.0"
     onetime "^5.1.0"
     signal-exit "^3.0.2"
-    strip-final-newline "^2.0.0"
-
-execa@^5.0.0:
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/execa/-/execa-5.1.1.tgz#f80ad9cbf4298f7bd1d4c9555c21e93741c411dd"
-  integrity sha512-8uSpZZocAZRBAPIEINJj3Lo9HyGitllczc27Eh5YYojjMFMn8yHMDMaUHE2Jqfq05D/wucwI4JGURyXt1vchyg==
-  dependencies:
-    cross-spawn "^7.0.3"
-    get-stream "^6.0.0"
-    human-signals "^2.1.0"
-    is-stream "^2.0.0"
-    merge-stream "^2.0.0"
-    npm-run-path "^4.0.1"
-    onetime "^5.1.2"
-    signal-exit "^3.0.3"
     strip-final-newline "^2.0.0"
 
 exit@^0.1.2:
@@ -5773,7 +5768,7 @@ fast-glob@^2.2.6:
     merge2 "^1.2.3"
     micromatch "^3.1.10"
 
-fast-glob@^3.2.11, fast-glob@^3.2.2, fast-glob@^3.2.7, fast-glob@^3.2.9:
+fast-glob@^3.2.11, fast-glob@^3.2.7, fast-glob@^3.2.9:
   version "3.2.11"
   resolved "https://registry.yarnpkg.com/fast-glob/-/fast-glob-3.2.11.tgz#a1172ad95ceb8a16e20caa5c5e56480e5129c1d9"
   integrity sha512-xrO3+1bxSo3ZVHAnqzyuewYT6aMFHRAd4Kcs92MAonjwQZLsK9d0SF1IyQ3k5PoirxTW0Oe/RqFgMQ6TcNE5Ew==
@@ -7888,11 +7883,10 @@ kleur@^3.0.3:
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
 lage@^1.5.0:
-  version "1.9.2"
-  resolved "https://registry.yarnpkg.com/lage/-/lage-1.9.2.tgz#bf695205eb0e6f12c3acb704900bbf724e63f6f6"
-  integrity sha512-zu7/iJ5zWI3bKtFR0iQsUmmFTVMnJmq+fOJ63qggRwtJH3RNveo9RGq4/GC7IoobwD3ue/WyFjTa5dO5L4oDFw==
+  version "1.9.5"
+  resolved "https://registry.yarnpkg.com/lage/-/lage-1.9.5.tgz#c5092d3803b7e7dc8eeb6b686bc3806675936fbe"
+  integrity sha512-l7mLhOGw/eaq65w3+F5YqVl+PZYIq9mF46e2YLlFocw9t1961mtuusfBuMh0DHhCPsh+gUW/rklRJdHlkCDD8A==
   dependencies:
-    "@lage-run/logger" "*"
     "@xmldom/xmldom" "^0.8.0"
     abort-controller "^3.0.0"
     backfill "^6.1.21"
@@ -7901,13 +7895,12 @@ lage@^1.5.0:
     backfill-logger "^5.1.3"
     chalk "^4.0.0"
     cosmiconfig "^7.0.0"
-    execa "^5.0.0"
-    fast-glob "^3.2.2"
+    execa "5.1.1"
+    fast-glob "^3.2.11"
     npmlog "^4.1.2"
     p-graph "^1.1.1"
-    p-limit "^3.1.0"
     p-profiler "^0.2.1"
-    workspace-tools "^0.28.0"
+    workspace-tools "^0.29.0"
     yargs-parser "^18.1.3"
 
 language-subtag-registry@~0.3.2:
@@ -11902,6 +11895,18 @@ workspace-tools@^0.28.0:
   version "0.28.1"
   resolved "https://registry.yarnpkg.com/workspace-tools/-/workspace-tools-0.28.1.tgz#5cc9e8b224b3464afcca9c9f2f3bfbc38f066587"
   integrity sha512-UmTALcSNAhSBT+oClcYHrudO5JIDPgrlEqyI6YlIkNtTQmqqQQ5jdw62zsN9tY5G8Eg/TP6Wb3GnsPsbj1lsiw==
+  dependencies:
+    "@yarnpkg/lockfile" "^1.1.0"
+    git-url-parse "^13.0.0"
+    globby "^11.0.0"
+    jju "^1.4.0"
+    js-yaml "^4.1.0"
+    micromatch "^4.0.0"
+
+workspace-tools@^0.29.0:
+  version "0.29.0"
+  resolved "https://registry.yarnpkg.com/workspace-tools/-/workspace-tools-0.29.0.tgz#c7a8cee69a68350cb17e71569f626397dacbf601"
+  integrity sha512-lH7ZLb6BVzf8Nua2MMKfTBbIh+iTBexFRr/OoiXFm8AbNZ8kRL01r+wISnH7vt7lUmuRbod2/6EtyS4koAPpJg==
   dependencies:
     "@yarnpkg/lockfile" "^1.1.0"
     git-url-parse "^13.0.0"
