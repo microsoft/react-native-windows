@@ -253,12 +253,6 @@ function EnableDevmode {
     }
 }
 
-function GetChocoPkgVersion {
-    param([string]$packageId)
-    [version]$version = (& choco list --local-only $packageId -r -e).Substring($packageId.Length + 1);
-    return $version;
-}
-
 function CheckCppWinRT_VSIX {
     $vsWhere = Get-VSWhere;
     if ($vsWhere -eq $null) {
@@ -393,21 +387,12 @@ $requirements = @(
         Install = { Set-ItemProperty HKLM:/SYSTEM/CurrentControlSet/Control/FileSystem -Name LongPathsEnabled -Value 1 -Type DWord;  };
     },
     @{
-        Id=[CheckId]::Choco;
-        Name = 'Choco';
-        Tags = @('appDev');
-        Valid = { try { (Get-Command choco -ErrorAction Stop) -ne $null } catch { $false }; }
-        Install = {
-            [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072;
-            iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'));
-        };
-    },
-    @{
         Id=[CheckId]::git;
         Name = 'Git';
         Tags = @('rnwDev');
         Valid = { try { (Get-Command git.exe -ErrorAction Stop) -ne $null } catch { $false }; }
         Install = { choco install -y git };
+        InstallsWithChoco = $true;
     },
     @{
         Id=[CheckId]::VSUWP;
@@ -415,6 +400,7 @@ $requirements = @(
         Tags = @('appDev', 'vs2022');
         Valid = { CheckVS; }
         Install = { InstallVS };
+        InstallsWithChoco = $true;
         HasVerboseOutput = $true;
     },
     @{
@@ -423,6 +409,7 @@ $requirements = @(
         Tags = @('appDev');
         Valid = { CheckNode; }
         Install = { choco install -y nodejs-lts };
+        InstallsWithChoco = $true;
         HasVerboseOutput = $true;
     },
     @{
@@ -431,6 +418,7 @@ $requirements = @(
         Tags = @('appDev');
         Valid = { CheckYarn }
         Install = { choco install -y yarn };
+        InstallsWithChoco = $true;
         HasVerboseOutput = $true;
     },
     @{
@@ -459,6 +447,7 @@ $requirements = @(
             cmd /c "assoc .binlog=MSBuildLog >nul";
             cmd /c "ftype MSBuildLog=$($slv.FullName) %1 >nul";
          };
+         InstallsWithChoco = $true;
          Optional = $true;
     },
     @{
@@ -468,6 +457,7 @@ $requirements = @(
         Tags = @('buildLab');
         Valid = { (Test-Path "${env:ProgramFiles(x86)}\Windows Kits\10\Windows Performance Toolkit\wpr.exe"); };
         Install = { choco install -y windows-adk };
+        InstallsWithChoco = $true;
         Optional = $true;
     },
     @{
@@ -495,16 +485,39 @@ $requirements = @(
         Tags = @('appDev');
         Valid = { CheckDotNetCore; };
         Install = { & choco install -y dotnet-$dotnetver-sdk };
+        InstallsWithChoco = $true;
         HasVerboseOutput = $true;
     }
 );
+
+function EnsureChocoForInstall {
+    Write-Verbose "Checking for Choco...";
+    try {
+        $chocoCmd = (Get-Command choco -ErrorAction Stop);
+        if (chocoCmd -ne $null) {
+            Write-Verbose "Choco found.";
+            return;
+        }
+    } catch { Write-Debug $_ }
+
+    Write-Verbose "Choco not found.";
+
+    if (!$NoPrompt -and (Read-Host "Choco is necessary to install this component. Do you want to install Choco? [y/N]").ToUpperInvariant() -eq 'Y') {
+        Write-Host "Installing Choco...";
+        [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072;
+        iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'));
+        return;
+    }
+
+    throw "Choco needed to install.";
+}
 
 function IsElevated {
     return [bool](([System.Security.Principal.WindowsIdentity]::GetCurrent()).groups -match "S-1-5-32-544");
 }
 
 if (!($NoPrompt) -and !(IsElevated)) {
-    Write-Output "rnw-dependencies - this script must run elevated. Exiting.";
+    Write-Host "rnw-dependencies - this script must run elevated. Exiting.";
     exit 1;
 }
 
@@ -555,7 +568,7 @@ foreach ($req in $filteredRequirements)
     $resultPad = 60 - $req.Name.Length;
 
     if ($req.HasVerboseOutput -and -$Verbose) {
-        # This makes sure the berbose output is one line lower
+        # This makes sure the verbose output is one line lower
         Write-Host "";
         $resultPad = 70;
     }
@@ -564,6 +577,7 @@ foreach ($req in $filteredRequirements)
     try {
         $valid = Invoke-Command $req.Valid;
     } catch {
+        Write-Warning "There was a problem checking for $($req.Name). Re-run with -Debug for details."
         Write-Debug $_
     }
 
@@ -576,16 +590,29 @@ foreach ($req in $filteredRequirements)
         }
         if ($req.Install) {
             if ($Install -or (!$NoPrompt -and (Read-Host "Do you want to install? [y/N]").ToUpperInvariant() -eq 'Y')) {
-                $LASTEXITCODE = 0;
-                $outputFromInstall = Invoke-Command $req.Install -ErrorAction Stop;
-                if ($LASTEXITCODE -ne 0) { throw "Last exit code was non-zero: $LASTEXITCODE - $outputFromInstall"; }
-                else { $Installed++; }
-            } else {
-                $NeedsRerun += !($req.Optional); # don't let failures from optional components fail the script
+                try {
+                    if ($req.InstallsWithChoco) {
+                        EnsureChocoForInstall;
+                    }
+
+                    $LASTEXITCODE = 0;
+                    $outputFromInstall = Invoke-Command $req.Install -ErrorAction Stop;
+
+                    if ($LASTEXITCODE -ne 0) {
+                        throw "Last exit code was non-zero: $LASTEXITCODE - $outputFromInstall";
+                    }
+
+                    $Installed++;
+                    continue; # go to the next item
+
+                } catch {
+                    Write-Warning "There was a problem trying to install $($req.Name). Re-run with -Debug for details."
+                    Write-Debug $_
+                }
             }
-        } else {
-            $NeedsRerun += !($req.Optional);
         }
+        # If we got here, the req needed to be installed but wasn't
+        $NeedsRerun += !($req.Optional); # don't let failures from optional components fail the script
     } else {
         Write-Host -ForegroundColor Green " OK".PadLeft($resultPad);
     }
@@ -593,7 +620,7 @@ foreach ($req in $filteredRequirements)
 
 
 if ($Installed -ne 0) {
-    Write-Output "Installed $Installed dependencies. You may need to close this window for changes to take effect.";
+    Write-Host "Installed $Installed dependencies. You may need to close this window for changes to take effect.";
 }
 
 if ($NeedsRerun -ne 0) {
@@ -604,7 +631,7 @@ if ($NeedsRerun -ne 0) {
     }
     exit 1;
 } else {
-    Write-Output "All mandatory requirements met.";
+    Write-Host "All mandatory requirements met.";
     $Tags | Out-File $MarkerFile;
     exit 0;
 }
