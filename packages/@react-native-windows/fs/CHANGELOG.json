@@ -2,6 +2,21 @@
   "name": "@react-native-windows/fs",
   "entries": [
     {
+      "date": "Sat, 12 Nov 2022 06:17:23 GMT",
+      "tag": "@react-native-windows/fs_v0.0.0-canary.9",
+      "version": "0.0.0-canary.9",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/fs",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.1",
+            "commit": "fa576c66ef5ee9bd73553688946f25df4cfc076f"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 10 Nov 2022 06:17:12 GMT",
       "tag": "@react-native-windows/fs_v0.0.0-canary.8",
       "version": "0.0.0-canary.8",

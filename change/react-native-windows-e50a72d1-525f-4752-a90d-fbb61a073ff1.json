@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Suppress Flyout if XamlRoot does not have focus",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}
