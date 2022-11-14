@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Mon, 12 Sep 2022 18:49:08 GMT and should not be manually modified.
+This log was last generated on Mon, 14 Nov 2022 16:12:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.69.3
+
+Mon, 14 Nov 2022 16:12:41 GMT
+
+### Patches
+
+- CG 11/7/22: Update `@xmldom/xmldom` (jthysell@microsoft.com)
 
 ## 0.69.2
 

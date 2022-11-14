@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Mon, 14 Nov 2022 16:12:41 GMT",
+      "tag": "@react-native-windows/telemetry_v0.69.3",
+      "version": "0.69.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "7a8994649175446f0bbe232597eff10a27b5745b",
+            "comment": "CG 11/7/22: Update `@xmldom/xmldom`"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 12 Sep 2022 18:49:08 GMT",
       "tag": "@react-native-windows/telemetry_v0.69.2",
       "version": "0.69.2",

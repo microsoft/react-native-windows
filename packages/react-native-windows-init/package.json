@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@react-native-windows/fs": "0.69.1",
-    "@react-native-windows/telemetry": "0.69.2",
+    "@react-native-windows/telemetry": "0.69.3",
     "@typescript-eslint/eslint-plugin": "^5.20.0",
     "@typescript-eslint/parser": "^5.20.0",
     "chalk": "^4.1.0",
@@ -33,7 +33,7 @@
     "yargs": "^16.2.0"
   },
   "devDependencies": {
-    "@react-native-windows/cli": "0.69.3",
+    "@react-native-windows/cli": "0.69.4",
     "@rnw-scripts/eslint-config": "1.1.12",
     "@rnw-scripts/jest-unittest-config": "1.2.6",
     "@rnw-scripts/just-task": "2.2.3",
