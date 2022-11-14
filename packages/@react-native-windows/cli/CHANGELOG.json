@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 14 Nov 2022 16:10:12 GMT",
+      "tag": "@react-native-windows/cli_v0.67.3",
+      "version": "0.67.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "not available",
+            "comment": "[0.67] CG 11/7/22: Update `@xmldom/xmldom`"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 14 Nov 2022 16:09:48 GMT",
       "tag": "@react-native-windows/cli_v0.67.3",
       "version": "0.67.3",
