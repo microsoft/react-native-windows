@@ -27,7 +27,6 @@
 
 #include <Modules/ExceptionsManagerModule.h>
 #include <Modules/HttpModule.h>
-#include <Modules/NetworkingModule.h>
 #include <Modules/PlatformConstantsModule.h>
 #include <Modules/SourceCodeModule.h>
 #include <Modules/StatusBarManagerModule.h>
@@ -73,11 +72,7 @@ namespace Microsoft::React {
 
 /*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateHttpModule(
     winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept {
-  if (GetRuntimeOptionBool("Http.UseMonolithicModule")) {
-    return std::make_unique<NetworkingModule>();
-  } else {
-    return std::make_unique<HttpModule>(inspectableProperties);
-  }
+  return std::make_unique<HttpModule>(inspectableProperties);
 }
 
 } // namespace Microsoft::React
@@ -633,11 +628,17 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
       []() { return std::make_unique<StatusBarManagerModule>(); },
       nativeQueue));
 
-  modules.push_back(std::make_unique<CxxNativeModule>(
-      m_innerInstance,
-      Microsoft::React::GetBlobModuleName(),
-      [transitionalProps]() { return Microsoft::React::CreateBlobModule(transitionalProps); },
-      nativeQueue));
+  // These modules are instantiated separately in MSRN (Universal Windows).
+  // When there are module name colisions, the last one registered is used.
+  // If this code is enabled, we will have unused module instances.
+  // Also, MSRN has a different property bag mechanism incompatible with this method's transitionalProps variable.
+#if (defined(_MSC_VER) && !defined(WINRT))
+  if (Microsoft::React::GetRuntimeOptionBool("Blob.EnableModule")) {
+    modules.push_back(std::make_unique<CxxNativeModule>(
+        m_innerInstance,
+        Microsoft::React::GetBlobModuleName(),
+        [transitionalProps]() { return Microsoft::React::CreateBlobModule(transitionalProps); },
+        nativeQueue));
 
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
