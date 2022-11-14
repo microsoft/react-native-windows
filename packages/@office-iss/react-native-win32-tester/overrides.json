@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win32/**"
   ],
-  "baseVersion": "0.0.0-20220912-2028-b0aba1b6f",
+  "baseVersion": "0.0.0-20221010-2132-1fc27c4cb",
   "overrides": [
     {
       "type": "patch",
@@ -27,6 +27,13 @@
       "baseHash": "e48c4c9538d7eeb1bb244184c4e7a6e80a1ed4f6"
     },
     {
+      "type": "patch",
+      "file": "src/js/examples-win32/NewArchitecture/ComponentWithState.win32.js",
+      "baseFile": "packages/rn-tester/js/examples/NewArchitecture/ComponentWithState.js",
+      "baseHash": "5eebd768304baac0e80b34cc073c02ac44890e85",
+      "issue": 0
+    },
+    {
       "type": "platform",
       "file": "src/js/examples/PlatformColor/PlatformColorExample.win32.js"
     },
@@ -41,7 +48,7 @@
       "type": "derived",
       "file": "src/js/utils/RNTesterList.win32.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "e3e46179f01995a76b39dc46feae58cbd868633e"
+      "baseHash": "066da127da0eb3a5ac600ff13292e4dc7e65940a"
     },
     {
       "type": "patch",
@@ -54,7 +61,7 @@
       "type": "patch",
       "file": "src/js/utils/testerStateUtils.win32.js",
       "baseFile": "packages/rn-tester/js/utils/testerStateUtils.js",
-      "baseHash": "304453e496b2569b36f602fa0fb0d521756da3ff",
+      "baseHash": "48de7389eff1d9704135c4ac97315a69a2877b35",
       "issue": 6316
     },
     {

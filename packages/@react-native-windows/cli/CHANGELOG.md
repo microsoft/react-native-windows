@@ -1,8 +1,53 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Tue, 01 Nov 2022 05:13:34 GMT and should not be manually modified.
+This log was last generated on Sat, 12 Nov 2022 06:17:21 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.148
+
+Sat, 12 Nov 2022 06:17:21 GMT
+
+### Changes
+
+- Integrate 10/10 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.42
+- Bump @react-native-windows/fs to v0.0.0-canary.9
+- Bump @react-native-windows/package-utils to v0.0.0-canary.35
+- Bump @react-native-windows/telemetry to v0.0.0-canary.52
+- Bump @rnw-scripts/jest-unittest-config to v1.4.1
+- Bump @rnw-scripts/just-task to v2.3.1
+
+## 0.0.0-canary.147
+
+Thu, 10 Nov 2022 06:17:10 GMT
+
+### Changes
+
+- integration 9/26/22 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.41
+- Bump @react-native-windows/fs to v0.0.0-canary.8
+- Bump @react-native-windows/package-utils to v0.0.0-canary.34
+- Bump @react-native-windows/telemetry to v0.0.0-canary.51
+- Bump @rnw-scripts/jest-unittest-config to v1.4.0
+- Bump @rnw-scripts/just-task to v2.3.0
+
+## 0.0.0-canary.146
+
+Tue, 08 Nov 2022 06:12:54 GMT
+
+### Changes
+
+- CG 11/7/22: Update `@xmldom/xmldom` (jthysell@microsoft.com)
+- Bump @react-native-windows/telemetry to v0.0.0-canary.50
+
+## 0.0.0-canary.145
+
+Thu, 03 Nov 2022 05:12:36 GMT
+
+### Changes
+
+- Align templates to not hardcode package versions (jthysell@microsoft.com)
 
 ## 0.0.0-canary.144
 

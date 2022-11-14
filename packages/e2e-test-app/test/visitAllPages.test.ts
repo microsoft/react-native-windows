@@ -33,6 +33,9 @@ describe('visitAllPages', () => {
   }
 
   for (const api of apiExamples) {
+    if (api === 'Transforms')
+      // disable until either transformExample uses units, or that isn't an error
+      continue;
     test(api, async () => await goToApiExample(api));
   }
 });

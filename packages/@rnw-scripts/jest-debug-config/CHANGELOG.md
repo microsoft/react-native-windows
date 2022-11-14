@@ -1,8 +1,24 @@
 # Change Log - @rnw-scripts/jest-debug-config
 
-This log was last generated on Wed, 05 Oct 2022 05:13:44 GMT and should not be manually modified.
+This log was last generated on Sat, 12 Nov 2022 06:17:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.4.1
+
+Sat, 12 Nov 2022 06:17:22 GMT
+
+### Patches
+
+- Integrate 10/10 (34109996+chiaramooney@users.noreply.github.com)
+
+## 1.4.0
+
+Thu, 10 Nov 2022 06:17:10 GMT
+
+### Minor changes
+
+- integration 9/26/22 (tatianakapos@microsoft.com)
 
 ## 1.3.0
 

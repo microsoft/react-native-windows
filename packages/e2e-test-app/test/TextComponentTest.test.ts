@@ -119,4 +119,24 @@ describe('TextTest', () => {
     });
     expect(dump).toMatchSnapshot();
   });
+  test('Text can have customized accessibility', async () => {
+    const dump = await dumpVisualTree('text-accessibility');
+    expect(dump).toMatchSnapshot();
+  });
+  test('Text can have font variants', async () => {
+    const dump = await dumpVisualTree('font-variants');
+    expect(dump).toMatchSnapshot();
+  });
+  test('Text can have advanced borders', async () => {
+    const dump = await dumpVisualTree('advanced-borders');
+    expect(dump).toMatchSnapshot();
+  });
+  test('Text ranging opacity', async () => {
+    const dump = await dumpVisualTree('text-opacity');
+    expect(dump).toMatchSnapshot();
+  });
+  test('Text can have customized dimensions', async () => {
+    const dump = await dumpVisualTree('text-height-width');
+    expect(dump).toMatchSnapshot();
+  });
 });

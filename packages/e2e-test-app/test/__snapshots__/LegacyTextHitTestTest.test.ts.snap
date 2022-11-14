@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`LegacyTextHitTestTest BidirectionalTextPressable 1`] = `
-Object {
+{
   "AutomationId": "pressed-state",
   "Clip": null,
   "FlowDirection": "LeftToRight",
@@ -21,7 +21,7 @@ Object {
 `;
 
 exports[`LegacyTextHitTestTest BidirectionalTextPressableEdgeCaseNotPressable 1`] = `
-Object {
+{
   "AutomationId": "pressed-state",
   "Clip": null,
   "FlowDirection": "LeftToRight",
@@ -41,7 +41,7 @@ Object {
 `;
 
 exports[`LegacyTextHitTestTest BidirectionalTextSeparateRunsEdgeCasePressable 1`] = `
-Object {
+{
   "AutomationId": "pressed-state",
   "Clip": null,
   "FlowDirection": "LeftToRight",
@@ -61,7 +61,7 @@ Object {
 `;
 
 exports[`LegacyTextHitTestTest BidirectionalTextSeparateRunsPressable 1`] = `
-Object {
+{
   "AutomationId": "pressed-state",
   "Clip": null,
   "FlowDirection": "LeftToRight",
@@ -81,7 +81,7 @@ Object {
 `;
 
 exports[`LegacyTextHitTestTest InsertedVirtualTextPressable 1`] = `
-Object {
+{
   "AutomationId": "pressed-state",
   "Clip": null,
   "FlowDirection": "LeftToRight",
@@ -101,7 +101,7 @@ Object {
 `;
 
 exports[`LegacyTextHitTestTest LTRTextInRTLFlowPressable 1`] = `
-Object {
+{
   "AutomationId": "pressed-state",
   "Clip": null,
   "FlowDirection": "LeftToRight",
@@ -121,7 +121,7 @@ Object {
 `;
 
 exports[`LegacyTextHitTestTest MultilineRTLTextEdgeCaseNotPressable 1`] = `
-Object {
+{
   "AutomationId": "pressed-state",
   "Clip": null,
   "FlowDirection": "LeftToRight",
@@ -141,7 +141,7 @@ Object {
 `;
 
 exports[`LegacyTextHitTestTest MultilineRTLTextPressable 1`] = `
-Object {
+{
   "AutomationId": "pressed-state",
   "Clip": null,
   "FlowDirection": "LeftToRight",
@@ -161,7 +161,7 @@ Object {
 `;
 
 exports[`LegacyTextHitTestTest MultilineTextPressable 1`] = `
-Object {
+{
   "AutomationId": "pressed-state",
   "Clip": null,
   "FlowDirection": "LeftToRight",
@@ -181,7 +181,7 @@ Object {
 `;
 
 exports[`LegacyTextHitTestTest RTLTextInRTLFlowPressable 1`] = `
-Object {
+{
   "AutomationId": "pressed-state",
   "Clip": null,
   "FlowDirection": "LeftToRight",
@@ -201,7 +201,7 @@ Object {
 `;
 
 exports[`LegacyTextHitTestTest RTLTextPressable 1`] = `
-Object {
+{
   "AutomationId": "pressed-state",
   "Clip": null,
   "FlowDirection": "LeftToRight",
@@ -221,7 +221,7 @@ Object {
 `;
 
 exports[`LegacyTextHitTestTest TextPressableWithVirtualText 1`] = `
-Object {
+{
   "AutomationId": "pressed-state",
   "Clip": null,
   "FlowDirection": "LeftToRight",
@@ -241,7 +241,7 @@ Object {
 `;
 
 exports[`LegacyTextHitTestTest ToggleVirtualTextPressable 1`] = `
-Object {
+{
   "AutomationId": "pressed-state",
   "Clip": null,
   "FlowDirection": "LeftToRight",
@@ -261,7 +261,7 @@ Object {
 `;
 
 exports[`LegacyTextHitTestTest VirtualTextPressable 1`] = `
-Object {
+{
   "AutomationId": "pressed-state",
   "Clip": null,
   "FlowDirection": "LeftToRight",
@@ -281,7 +281,7 @@ Object {
 `;
 
 exports[`LegacyTextHitTestTest WrappedLTRInRTLFlowEdgeCaseNotPressable 1`] = `
-Object {
+{
   "AutomationId": "pressed-state",
   "Clip": null,
   "FlowDirection": "LeftToRight",

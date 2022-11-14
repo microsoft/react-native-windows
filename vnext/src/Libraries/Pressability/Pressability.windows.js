@@ -8,25 +8,26 @@
  * @format
  */
 
-import {isHoverEnabled} from './HoverState';
-import invariant from 'invariant';
-import SoundManager from '../Components/Sound/SoundManager';
-import {normalizeRect, type RectOrSize} from '../StyleSheet/Rect';
+import type {HostComponent} from '../Renderer/shims/ReactNativeTypes';
 import type {
   BlurEvent,
   FocusEvent,
-  PressEvent,
   MouseEvent,
+  PressEvent,
   KeyEvent, // [Windows]
 } from '../Types/CoreEventTypes';
+
+import SoundManager from '../Components/Sound/SoundManager';
+import ReactNativeFeatureFlags from '../ReactNative/ReactNativeFeatureFlags';
+import UIManager from '../ReactNative/UIManager';
+import {type RectOrSize, normalizeRect} from '../StyleSheet/Rect';
+import {type PointerEvent} from '../Types/CoreEventTypes';
+import Platform from '../Utilities/Platform';
+import {isHoverEnabled} from './HoverState';
 import PressabilityPerformanceEventEmitter from './PressabilityPerformanceEventEmitter.js';
 import {type PressabilityTouchSignal as TouchSignal} from './PressabilityTypes.js';
-import Platform from '../Utilities/Platform';
-import UIManager from '../ReactNative/UIManager';
-import type {HostComponent} from '../Renderer/shims/ReactNativeTypes';
+import invariant from 'invariant';
 import * as React from 'react';
-import ReactNativeFeatureFlags from '../ReactNative/ReactNativeFeatureFlags';
-import {type PointerEvent} from '../Types/CoreEventTypes';
 
 export type PressabilityConfig = $ReadOnly<{|
   /**
@@ -426,6 +427,7 @@ export default class Pressability {
   |}>;
   _touchActivateTime: ?number;
   _touchState: TouchState = 'NOT_RESPONDER';
+  _isKeyDown: boolean = false;
 
   constructor(config: PressabilityConfig) {
     this.configure(config);
@@ -467,6 +469,7 @@ export default class Pressability {
         if (onBlur != null) {
           onBlur(event);
         }
+        this._isKeyDown = false;
       },
       onFocus: (event: FocusEvent): void => {
         const {onFocus} = this._config;
@@ -579,6 +582,7 @@ export default class Pressability {
 
     if (process.env.NODE_ENV === 'test') {
       // We are setting this in order to find this node in ReactNativeTestTools
+      // $FlowFixMe[prop-missing]
       responderEventHandlers.onStartShouldSetResponder.testOnly_pressabilityConfig =
         () => this._config;
     }
@@ -593,7 +597,8 @@ export default class Pressability {
           (event.nativeEvent.code === 'Space' ||
             event.nativeEvent.code === 'Enter' ||
             event.nativeEvent.code === 'GamepadA') &&
-          event.defaultPrevented != true
+          event.defaultPrevented != true &&
+          this._isKeyDown
         ) {
           const {onPressOut, onPress} = this._config;
           // $FlowFixMe: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of passing KeyEvents instead
@@ -601,6 +606,8 @@ export default class Pressability {
           // $FlowFixMe: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of passing KeyEvents instead
           onPress && onPress(event);
         }
+        // Native windows app clears the key pressed state when another key press interrupts the current
+        this._isKeyDown = false;
       },
       onKeyDown: (event: KeyEvent): void => {
         const {onKeyDown} = this._config;
@@ -613,6 +620,7 @@ export default class Pressability {
           event.defaultPrevented != true
         ) {
           const {onPressIn} = this._config;
+          this._isKeyDown = true;
           // $FlowFixMe: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of passing KeyEvents instead
           onPressIn && onPressIn(event);
         }

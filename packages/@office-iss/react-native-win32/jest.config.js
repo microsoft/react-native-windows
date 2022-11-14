@@ -6,9 +6,16 @@ module.exports = {
     '^.+\\.(bmp|gif|jpg|jpeg|mp4|png|psd|svg|webp)$':
       '<rootDir>/jest/assetFileTransformer.js',
   },
-  transformIgnorePatterns: [],
+  transformIgnorePatterns: ['jest-runner'],
   setupFiles: ['./jest/setup.js'],
-  timers: 'fake',
+  fakeTimers: {
+    enableGlobally: true,
+    legacyFakeTimers: true,
+  },
+  snapshotFormat: {
+    escapeString: true,
+    printBasicPrototype: true,
+  },
   testRegex: '/__tests__/.*-test\\.js$',
   testPathIgnorePatterns: [
     // Only run the version of the tests that are part of the merged source output

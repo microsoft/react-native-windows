@@ -50,6 +50,9 @@ struct CompositionBaseComponentView : public IComponentView {
 
   virtual void OnRenderingDeviceLost() noexcept;
 
+  comp::CompositionPropertySet EnsureCenterPointPropertySet() noexcept;
+  void EnsureTransformMatrixFacade() noexcept;
+
  protected:
   std::array<winrt::Microsoft::ReactNative::Composition::SpriteVisual, SpecialBorderLayerCount>
   FindSpecialBorderLayers() const noexcept;
@@ -60,14 +63,17 @@ struct CompositionBaseComponentView : public IComponentView {
   void UpdateSpecialBorderLayers(
       facebook::react::LayoutMetrics const &layoutMetrics,
       const facebook::react::ViewProps &viewProps) noexcept;
+  void UpdateCenterPropertySet() noexcept;
 
   winrt::Microsoft::ReactNative::Composition::ICompositionContext m_compContext;
+  comp::CompositionPropertySet m_centerPropSet{nullptr};
   const facebook::react::Tag m_tag;
   facebook::react::SharedViewEventEmitter m_eventEmitter;
   std::vector<const IComponentView *> m_children;
   IComponentView *m_parent{nullptr};
   facebook::react::LayoutMetrics m_layoutMetrics;
   bool m_needsBorderUpdate{false};
+  bool m_hasTransformMatrixFacade{false};
   uint8_t m_numBorderVisuals{0};
 };
 
