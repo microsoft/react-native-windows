@@ -2,6 +2,27 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 14 Nov 2022 16:12:51 GMT",
+      "tag": "@react-native-windows/cli_v0.70.1",
+      "version": "0.70.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "d62c8e2a92578d11916f1f92164069b1cc3ee88b",
+            "comment": "CG 11/7/22: Update `@xmldom/xmldom`"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.70.1",
+            "commit": "d62c8e2a92578d11916f1f92164069b1cc3ee88b"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 12 Sep 2022 17:54:20 GMT",
       "tag": "@react-native-windows/cli_v0.70.0",
       "version": "0.70.0",
