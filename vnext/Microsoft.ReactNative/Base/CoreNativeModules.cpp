@@ -19,35 +19,6 @@
 
 namespace Microsoft::ReactNative {
 
-using winrt::Microsoft::ReactNative::ReactPropertyBag;
-
-namespace {
-
-using winrt::Microsoft::ReactNative::ReactPropertyId;
-
-bool HasPackageIdentity() noexcept {
-  static const bool hasPackageIdentity = []() noexcept {
-    auto packageStatics = winrt::get_activation_factory<winrt::Windows::ApplicationModel::IPackageStatics>(
-        winrt::name_of<winrt::Windows::ApplicationModel::Package>());
-    auto abiPackageStatics = static_cast<winrt::impl::abi_t<winrt::Windows::ApplicationModel::IPackageStatics> *>(
-        winrt::get_abi(packageStatics));
-    winrt::com_ptr<winrt::impl::abi_t<winrt::Windows::ApplicationModel::IPackage>> dummy;
-    return abiPackageStatics->get_Current(winrt::put_abi(dummy)) !=
-        winrt::impl::hresult_from_win32(APPMODEL_ERROR_NO_PACKAGE);
-  }();
-
-  return hasPackageIdentity;
-}
-
-ReactPropertyId<bool> HttpUseMonolithicModuleProperty() noexcept {
-  static ReactPropertyId<bool> propId{
-      L"ReactNative.Http"
-      L"UseMonolithicModule"};
-  return propId;
-}
-
-} // namespace
-
 std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
     const std::shared_ptr<facebook::react::MessageQueueThread> &batchingUIMessageQueue,
     const std::shared_ptr<facebook::react::MessageQueueThread>
@@ -62,23 +33,14 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
       jsMessageQueue);
 
   modules.emplace_back(
-      "Timing",
-      [batchingUIMessageQueue]() { return facebook::react::CreateTimingModule(batchingUIMessageQueue); },
-      batchingUIMessageQueue);
-
-  // Note: `context` is moved to remove the reference from the current scope.
-  // This should either be the last usage of `context`, or the std::move call should happen later in this method.
-  modules.emplace_back(
-      NativeAnimatedModule::name,
-      [context = std::move(context)]() mutable { return std::make_unique<NativeAnimatedModule>(std::move(context)); },
+      Microsoft::React::GetBlobModuleName(),
+      [props = context->Properties()]() { return Microsoft::React::CreateBlobModule(props); },
       batchingUIMessageQueue);
 
   modules.emplace_back(
-      AppearanceModule::Name,
-      [appearanceListener = std::move(appearanceListener)]() mutable {
-        return std::make_unique<AppearanceModule>(std::move(appearanceListener));
-      },
-      jsMessageQueue);
+      Microsoft::React::GetFileReaderModuleName(),
+      [props = context->Properties()]() { return Microsoft::React::CreateFileReaderModule(props); },
+      batchingUIMessageQueue);
 
   // AsyncStorageModule doesn't work without package identity (it indirectly depends on
   // Windows.Storage.StorageFile), so check for package identity before adding it.
