@@ -10,6 +10,10 @@
 #include "FacadeType.h"
 #include "JSValue.h"
 
+#ifdef USE_FABRIC
+#include <Fabric/Composition/CompositionViewComponentView.h>
+#endif
+
 namespace Microsoft::ReactNative {
 struct ShadowNodeBase;
 }
@@ -31,10 +35,27 @@ class PropsAnimatedNode final : public AnimatedNode {
   void ResumeSuspendedAnimations(int64_t valueTag);
 
  private:
+  struct AnimationView {
+    xaml::UIElement m_element;
+#ifdef USE_FABRIC
+    std::shared_ptr<CompositionBaseComponentView> m_componentView;
+#endif
+    operator bool() const noexcept {
+#ifdef USE_FABRIC
+      return m_element || m_componentView;
+#else
+      return m_element != nullptr;
+#endif
+    }
+  };
+
   void CommitProps();
   void MakeAnimation(int64_t valueNodeTag, FacadeType facadeType);
   Microsoft::ReactNative::ShadowNodeBase *GetShadowNodeBase();
   xaml::UIElement GetUIElement();
+  AnimationView GetAnimationView();
+  void StartAnimation(const AnimationView &view, const comp::CompositionAnimation &animation) noexcept;
+  comp::CompositionPropertySet EnsureCenterPointPropertySet(const AnimationView &view) noexcept;
 
   winrt::Microsoft::ReactNative::ReactContext m_context;
   std::map<std::string, int64_t> m_propMapping{};

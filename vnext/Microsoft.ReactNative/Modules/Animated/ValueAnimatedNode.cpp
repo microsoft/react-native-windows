@@ -20,9 +20,7 @@ ValueAnimatedNode::ValueAnimatedNode(
   }
 
   if (m_useComposition) {
-    // TODO: Islands - need to get the XamlView associated with this animation in order to
-    // use the compositor Microsoft::ReactNative::GetCompositor(xamlView)
-    m_propertySet = Microsoft::ReactNative::GetCompositor().CreatePropertySet();
+    m_propertySet = manager->Compositor().CreatePropertySet();
     m_propertySet.InsertScalar(s_valueName, static_cast<float>(value));
     m_propertySet.InsertScalar(s_offsetName, static_cast<float>(offset));
   } else {

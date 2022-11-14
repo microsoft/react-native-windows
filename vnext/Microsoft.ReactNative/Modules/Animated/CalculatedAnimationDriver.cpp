@@ -11,8 +11,8 @@ namespace Microsoft::ReactNative {
 std::tuple<comp::CompositionAnimation, comp::CompositionScopedBatch> CalculatedAnimationDriver::MakeAnimation(
     const winrt::Microsoft::ReactNative::JSValueObject & /*config*/) {
   assert(m_useComposition);
-  const auto [scopedBatch, animation, easingFunction] = []() {
-    const auto compositor = Microsoft::ReactNative::GetCompositor();
+  const auto [scopedBatch, animation, easingFunction] = [manager = m_manager.lock()]() {
+    const auto compositor = manager->Compositor();
     return std::make_tuple(
         compositor.CreateScopedBatch(comp::CompositionBatchTypes::AllAnimations),
         compositor.CreateScalarKeyFrameAnimation(),

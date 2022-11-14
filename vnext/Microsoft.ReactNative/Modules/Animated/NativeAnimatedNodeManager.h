@@ -43,6 +43,9 @@ class AnimationDriver;
 class EventAnimationDriver;
 class NativeAnimatedNodeManager {
  public:
+  NativeAnimatedNodeManager(winrt::Microsoft::ReactNative::ReactContext const &reactContext);
+  const winrt::Microsoft::ReactNative::ReactContext &ReactContext() const noexcept;
+  comp::Compositor Compositor() const noexcept;
   void CreateAnimatedNode(
       int64_t tag,
       const winrt::Microsoft::ReactNative::JSValueObject &config,
@@ -127,6 +130,7 @@ class NativeAnimatedNodeManager {
   std::unordered_map<int64_t, int64_t> m_deferredAnimationForValues{};
   std::vector<std::tuple<int64_t, int64_t>> m_trackingAndLeadNodeTags{};
   std::vector<int64_t> m_delayedPropsNodes{};
+  winrt::Microsoft::ReactNative::ReactContext m_context;
 
   std::unordered_set<int64_t> m_updatedNodes{};
   std::vector<int64_t> m_activeAnimationIds{};
