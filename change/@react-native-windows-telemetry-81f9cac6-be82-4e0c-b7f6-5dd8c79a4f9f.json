@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "[0.68] CG 11/7/22: Update @xmldom/xmldom",
-  "packageName": "@react-native-windows/telemetry",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
