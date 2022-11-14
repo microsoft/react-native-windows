@@ -173,12 +173,6 @@
   <ItemGroup>
     <PackageReference Include="boost" Version="1.76.0.0" />
     <PackageReference Include="Microsoft.Toolkit.Win32.UI.XamlApplication" Version="6.1.3" />
-    <!--
-      WARNING - DO NOT MAKE THE VERSION OF MICROSOFT.UI.XAML BE ANYTHING BUT PRERELEASE.
-      Playground-Composition is an unpackaged win32 app, and needs to use Microsoft.UI.Xaml from a prerelease,
-      to be able to carry WinUI in-app instead of using the Framework Package
-    -->
-    <!-- <PackageReference Include="Microsoft.UI.Xaml" Version="2.6.1-prerelease.210709001" /> -->
     <PackageReference Include="Microsoft.VCRTForwarders.140" Version="1.0.2-rc" />
     <PackageReference Include="$(V8PackageName)" Version="$(V8Version)" Condition="'$(UseV8)' == 'true'" />
   </ItemGroup>
