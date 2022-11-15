@@ -9,7 +9,7 @@
   },
   "description": "React Native for Windows",
   "main": "./index.windows.js",
-  "typings": "./typings-index.d.ts",
+  "types": "types",
   "scripts": {
     "build": "rnw-scripts build",
     "clean": "rnw-scripts clean",

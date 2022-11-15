@@ -457,7 +457,7 @@
     },
     {
       "type": "platform",
-      "file": "src/typings-index.ts"
+      "file": "src/Libraries/platform-types.d.ts"
     }
   ]
 }

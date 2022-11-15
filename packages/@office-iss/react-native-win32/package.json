@@ -4,7 +4,7 @@
   "description": "Implementation of react native on top of Office's Win32 platform.",
   "license": "MIT",
   "main": "./index.win32.js",
-  "typings": "./typings-index.d.ts",
+  "types": "types",
   "scripts": {
     "build": "rnw-scripts build",
     "bundle": "rnw-scripts prepareBundle && react-native bundle --platform win32 --entry-file ../react-native-win32-tester/js/RNTesterApp.win32.js --bundle-output dist/win32/dev/js/RNTesterApp.bundle --assets-dest dist/win32/dev --sourcemap-output ./dist/win32/dev/js/RNTesterApp.bundle.map",
