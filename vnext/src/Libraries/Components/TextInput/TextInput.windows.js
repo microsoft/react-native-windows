@@ -363,6 +363,12 @@ type IOSProps = $ReadOnly<{|
    * @platform ios
    */
   textContentType?: ?TextContentType,
+
+  /**
+   * Set line break strategy on iOS.
+   * @platform ios
+   */
+  lineBreakStrategyIOS?: ?('none' | 'standard' | 'hangul-word' | 'push-out'),
 |}>;
 
 type AndroidProps = $ReadOnly<{|
@@ -1533,6 +1539,8 @@ function InternalTextInput(props: Props): React.Node {
   } else if (Platform.OS === 'android') {
     const style = [props.style];
     const autoCapitalize = props.autoCapitalize || 'sentences';
+    const _accessibilityLabelledBy =
+      props?.['aria-labelledby'] ?? props?.accessibilityLabelledBy;
     const placeholder = props.placeholder ?? '';
     let children = props.children;
     const childCount = React.Children.count(children);
@@ -1559,6 +1567,7 @@ function InternalTextInput(props: Props): React.Node {
         {...eventHandlers}
         accessible={accessible}
         accessibilityState={_accessibilityState}
+        accessibilityLabelledBy={_accessibilityLabelledBy}
         autoCapitalize={autoCapitalize}
         submitBehavior={submitBehavior}
         caretHidden={caretHidden}

@@ -13,8 +13,9 @@
 
 #include <utility>
 
-namespace facebook {
-namespace react {
+using namespace facebook::jni;
+
+namespace facebook::react {
 
 extern const char WindowsTextInputComponentName[] = "WindowsTextInput";
 
@@ -193,5 +194,4 @@ void WindowsTextInputShadowNode::layout(LayoutContext layoutContext) {
   ConcreteViewShadowNode::layout(layoutContext);
 }
 
-} // namespace react
-} // namespace facebook
+} // namespace facebook::react

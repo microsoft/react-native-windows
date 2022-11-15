@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20221010-2132-1fc27c4cb",
+  "baseVersion": "0.0.0-20221024-2020-c63882238",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "fc3513b4ba5da4026a2b1ad6eb05231223f578a6"
+      "baseHash": "95fe0f39cfd917c4ba7d1b6fb6aac924b0275590"
     },
     {
       "type": "derived",
@@ -26,7 +26,7 @@
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputShadowNode.cpp",
       "baseFile": "ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputShadowNode.cpp",
-      "baseHash": "b0d37c1c0be9f924ca4500828968987664e093be"
+      "baseHash": "a77bd96f21f87bf83bdfd968743064e76d9a0f49"
     },
     {
       "type": "derived",
@@ -38,7 +38,7 @@
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputState.cpp",
       "baseFile": "ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputState.cpp",
-      "baseHash": "bc236a623b51fc05c2d9e7487071ed68c85a1f88"
+      "baseHash": "55fcbb61a35c89bec6b5fb1d0307f97778c0bc72"
     },
     {
       "type": "derived",
@@ -56,7 +56,7 @@
       "type": "patch",
       "file": "Microsoft.ReactNative/Fabric/platform/react/renderer/graphics/Color.cpp",
       "baseFile": "ReactCommon/react/renderer/graphics/platform/cxx/react/renderer/graphics/Color.cpp",
-      "baseHash": "4bb7276f8a02d1cf1ada35b8cf830ad72c9c68b1",
+      "baseHash": "69acf54c8ad83ef508d9d4870018aeb6377a7da2",
       "issue": 7821
     },
     {
@@ -84,20 +84,20 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/attributedstring/AttributedString.cpp",
       "baseFile": "ReactCommon/react/renderer/attributedstring/AttributedString.cpp",
-      "baseHash": "7261d79ceb15c77a7b85bf1eb4edd67bfcc91541"
+      "baseHash": "7decb0395e2e6ac0c24086a3f065d720a2abb8a7"
     },
     {
       "type": "patch",
       "file": "ReactCommon/Yoga.cpp",
       "baseFile": "ReactCommon/yoga/yoga/Yoga.cpp",
-      "baseHash": "d8ddd474f68ab25354c752a34801b1ada3e1877a",
+      "baseHash": "0d3ab0ba70ad0714716893e70e292de212febd9f",
       "issue": 3994
     },
     {
       "type": "copy",
       "directory": "ReactCopies/IntegrationTests",
       "baseDirectory": "IntegrationTests",
-      "baseHash": "c5aa96ea81e29f4e9e6feccf1bed0cb3f0cf1270",
+      "baseHash": "41b1b7a58a19ba5458cf02f8e8071d1d6697ccfd",
       "issue": 4054
     },
     {
@@ -125,7 +125,7 @@
       "type": "derived",
       "file": "src/index.windows.js",
       "baseFile": "index.js",
-      "baseHash": "1a5de21d114835d1ae2af5ecb9bad6bf7dc78330"
+      "baseHash": "e8532b37a2f1fe35de33f4f6db60e77ef42994d9"
     },
     {
       "type": "platform",
@@ -173,7 +173,7 @@
       "type": "patch",
       "file": "src/Libraries/Alert/Alert.windows.js",
       "baseFile": "Libraries/Alert/Alert.js",
-      "baseHash": "51fc12aa32c2ea6e5613bfcf45a845e73d519be3"
+      "baseHash": "897569d77df852480332b7ce7ec1b594cf40aa28"
     },
     {
       "type": "platform",
@@ -289,13 +289,13 @@
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "d8721a3aed1ce52910325762a2cc36b7578ffd2c"
+      "baseHash": "0070af6201942fae50317281046da05bb1a1e236"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInputState.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInputState.js",
-      "baseHash": "46a3793b466d2e30539c08c6a77dc2f5cffe1993"
+      "baseHash": "60655baaca427e1c7c1b8884833b848335c4033b"
     },
     {
       "type": "platform",
@@ -343,7 +343,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/View.windows.js",
       "baseFile": "Libraries/Components/View/View.js",
-      "baseHash": "282dda409a26a480105d6a6b933150fa88eae507"
+      "baseHash": "91864d8f5518fa50da710f545ecdf5727248c45a"
     },
     {
       "type": "patch",
@@ -355,7 +355,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewPropTypes.windows.js",
       "baseFile": "Libraries/Components/View/ViewPropTypes.js",
-      "baseHash": "cca219756c4bdf554cf6a0290a6036d49d6c08dc"
+      "baseHash": "a68210ca1fcc765262bfafb0f42cc8a8bbc536f9"
     },
     {
       "type": "platform",
@@ -369,14 +369,14 @@
       "type": "patch",
       "file": "src/Libraries/Image/Image.windows.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseHash": "6fa595d7ebcb2a7be7324185615b3df2f1eb47d4",
+      "baseHash": "6dd4767a7f8ecd190f2bd84becdeb539122869f0",
       "issue": 4590
     },
     {
       "type": "derived",
       "file": "src/Libraries/NativeComponent/BaseViewConfig.windows.js",
       "baseFile": "Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "7323edadec25bf7ad601b717654faca3660fe0be"
+      "baseHash": "a14d9698dc312aaba608b2877349d4c54600b56c"
     },
     {
       "type": "platform",
@@ -412,7 +412,7 @@
       "type": "patch",
       "file": "src/Libraries/ReactNative/PaperUIManager.windows.js",
       "baseFile": "Libraries/ReactNative/PaperUIManager.js",
-      "baseHash": "803e057c45ff750efe3dfdaf0a0c100e4b05215b"
+      "baseHash": "64504c716b2c64116d1ec74702ce7754fa651c6f"
     },
     {
       "type": "derived",
@@ -428,7 +428,7 @@
       "type": "derived",
       "file": "src/Libraries/Text/Text.windows.js",
       "baseFile": "Libraries/Text/Text.js",
-      "baseHash": "7c6941ba9eb6df96c932100d580ab2a477bb52bf"
+      "baseHash": "019f6c1a24448e44928689bc3b3cf76c002a3f2c"
     },
     {
       "type": "patch",
@@ -453,7 +453,7 @@
       "type": "derived",
       "file": "src/Libraries/Utilities/Platform.windows.js",
       "baseFile": "Libraries/Utilities/Platform.android.js",
-      "baseHash": "cbc7b53f6376082902e412b1da4592cbe7fb043f"
+      "baseHash": "a8b6131f20d78db59b5efc33c4f8de86aad527dc"
     },
     {
       "type": "platform",

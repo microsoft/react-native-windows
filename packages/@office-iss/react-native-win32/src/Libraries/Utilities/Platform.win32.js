@@ -55,7 +55,7 @@ const Platform = {
     // $FlowFixMe[object-this-reference]
     return false;
   },
-  select: <A, N, D>(spec: PlatformSelectSpec<A, N, D>): A | N | D =>
+  select: <T>(spec: PlatformSelectSpec<T>): T =>
     'win32' in spec
       ? // $FlowFixMe[incompatible-return]
         spec.win32

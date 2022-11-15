@@ -1,11 +1,11 @@
 {
-  "baseVersion": "0.0.0-20221010-2132-1fc27c4cb",
+  "baseVersion": "0.0.0-20221024-2020-c63882238",
   "overrides": [
     {
       "type": "copy",
       "file": "package.json",
       "baseFile": "repo-config/package.json",
-      "baseHash": "952e7a468b684779d76c202da6baa8e3bfc5ad9e"
+      "baseHash": "147d9e73ed763f4df33878cc14c3820431f8bb8b"
     }
   ]
 }

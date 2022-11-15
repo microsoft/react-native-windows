@@ -300,6 +300,39 @@ class DisplayNoneStyle extends React.Component<
   };
 }
 
+class FlexGapExample extends React.Component<$ReadOnly<{||}>> {
+  render(): React.Node {
+    return (
+      <View
+        style={{
+          flexDirection: 'row',
+          flexWrap: 'wrap',
+          borderWidth: 1,
+          rowGap: 20,
+          columnGap: 30,
+        }}>
+        <View style={{backgroundColor: 'black', height: 30, width: 30}} />
+        <View style={{backgroundColor: 'black', height: 30, width: 30}} />
+        <View
+          style={{
+            backgroundColor: 'pink',
+            height: 30,
+            flexBasis: 30,
+          }}
+        />
+        <View style={{backgroundColor: 'black', height: 30, width: 30}} />
+        <View style={{backgroundColor: 'black', height: 30, width: 30}} />
+        <View style={{backgroundColor: 'black', height: 30, width: 30}} />
+        <View style={{backgroundColor: 'black', height: 30, width: 30}} />
+        <View style={{backgroundColor: 'pink', height: 30, width: 30}} />
+        <View style={{backgroundColor: 'pink', height: 30, width: 30}} />
+        <View style={{backgroundColor: 'pink', height: 30, width: 30}} />
+        <View style={{backgroundColor: 'pink', height: 30, width: 30}} />
+        </View>
+    );
+  }
+}
+
 class AccessibilityExample extends React.Component<
   $ReadOnly<{||}>,
   {|tap: number|},
@@ -722,6 +755,12 @@ exports.examples = [
         </View>
       );
     },
+  },
+  {
+    title: 'FlexGap',
+    render(): React.Node {
+      return <FlexGapExample />;
+    }
   },
   {
     title: 'Accessibility',

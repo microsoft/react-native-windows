@@ -7,19 +7,19 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20221010-2132-1fc27c4cb",
+  "baseVersion": "0.0.0-20221024-2020-c63882238",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "fc3513b4ba5da4026a2b1ad6eb05231223f578a6"
+      "baseHash": "95fe0f39cfd917c4ba7d1b6fb6aac924b0275590"
     },
     {
       "type": "derived",
       "file": "src/index.win32.js",
       "baseFile": "index.js",
-      "baseHash": "1a5de21d114835d1ae2af5ecb9bad6bf7dc78330"
+      "baseHash": "e8532b37a2f1fe35de33f4f6db60e77ef42994d9"
     },
     {
       "type": "platform",
@@ -29,7 +29,7 @@
       "type": "patch",
       "file": "src/Libraries/Alert/Alert.win32.js",
       "baseFile": "Libraries/Alert/Alert.js",
-      "baseHash": "51fc12aa32c2ea6e5613bfcf45a845e73d519be3"
+      "baseHash": "897569d77df852480332b7ce7ec1b594cf40aa28"
     },
     {
       "type": "patch",
@@ -121,13 +121,13 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.tsx",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "d8721a3aed1ce52910325762a2cc36b7578ffd2c"
+      "baseHash": "0070af6201942fae50317281046da05bb1a1e236"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInputState.win32.js",
       "baseFile": "Libraries/Components/TextInput/TextInputState.js",
-      "baseHash": "46a3793b466d2e30539c08c6a77dc2f5cffe1993"
+      "baseHash": "60655baaca427e1c7c1b8884833b848335c4033b"
     },
     {
       "type": "copy",
@@ -181,13 +181,13 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/View.win32.js",
       "baseFile": "Libraries/Components/View/View.js",
-      "baseHash": "282dda409a26a480105d6a6b933150fa88eae507"
+      "baseHash": "91864d8f5518fa50da710f545ecdf5727248c45a"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewPropTypes.win32.js",
       "baseFile": "Libraries/Components/View/ViewPropTypes.js",
-      "baseHash": "cca219756c4bdf554cf6a0290a6036d49d6c08dc",
+      "baseHash": "a68210ca1fcc765262bfafb0f42cc8a8bbc536f9",
       "issue": 6240
     },
     {
@@ -209,7 +209,7 @@
       "type": "derived",
       "file": "src/Libraries/Image/Image.win32.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseHash": "6fa595d7ebcb2a7be7324185615b3df2f1eb47d4",
+      "baseHash": "6dd4767a7f8ecd190f2bd84becdeb539122869f0",
       "issue": 4320
     },
     {
@@ -296,7 +296,7 @@
       "type": "derived",
       "file": "src/Libraries/NativeComponent/BaseViewConfig.win32.js",
       "baseFile": "Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "7323edadec25bf7ad601b717654faca3660fe0be"
+      "baseHash": "a14d9698dc312aaba608b2877349d4c54600b56c"
     },
     {
       "type": "derived",
@@ -351,7 +351,7 @@
       "type": "patch",
       "file": "src/Libraries/ReactNative/PaperUIManager.win32.js",
       "baseFile": "Libraries/ReactNative/PaperUIManager.js",
-      "baseHash": "803e057c45ff750efe3dfdaf0a0c100e4b05215b"
+      "baseHash": "64504c716b2c64116d1ec74702ce7754fa651c6f"
     },
     {
       "type": "derived",
@@ -381,7 +381,7 @@
       "type": "derived",
       "file": "src/Libraries/Text/TextNativeComponent.win32.js",
       "baseFile": "Libraries/Text/TextNativeComponent.js",
-      "baseHash": "dd29ab4f5f2af9c2fdb069191ca087cbe4519456",
+      "baseHash": "dff7e27b5a85c28662b14d25e07fe7a1f2286ac5",
       "issue": 7074
     },
     {
@@ -428,7 +428,7 @@
       "type": "derived",
       "file": "src/Libraries/Utilities/Platform.win32.js",
       "baseFile": "Libraries/Utilities/Platform.android.js",
-      "baseHash": "cbc7b53f6376082902e412b1da4592cbe7fb043f"
+      "baseHash": "a8b6131f20d78db59b5efc33c4f8de86aad527dc"
     },
     {
       "type": "platform",

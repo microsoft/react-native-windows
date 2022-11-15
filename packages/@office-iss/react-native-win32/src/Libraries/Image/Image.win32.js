@@ -28,8 +28,6 @@ import NativeImageLoaderIOS from './NativeImageLoaderIOS';
 import resolveAssetSource from './resolveAssetSource';
 import * as React from 'react';
 
-import type {ImageIOS} from './Image.flow';
-
 function getSize(
   uri: string,
   success: (width: number, height: number) => void,
