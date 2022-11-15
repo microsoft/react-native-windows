@@ -471,15 +471,26 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
       auto inputStream = co_await response.Content().ReadAsInputStreamAsync();
       auto reader = DataReader{inputStream};
 
-      // #9510 - 10mb limit on fetch
-      co_await reader.LoadAsync(10 * 1024 * 1024);
+      // #9510 - We currently accumulate all incoming request data in 10MB chunks
+      uint32_t segmentSize = 10 * 1024 * 1024;
+      uint32_t length;
 
       // Let response handler take over, if set
       if (auto responseHandler = self->m_responseHandler.lock()) {
         if (responseHandler->Supports(reqArgs->ResponseType)) {
-          auto bytes = vector<uint8_t>(reader.UnconsumedBufferLength());
-          reader.ReadBytes(bytes);
-          auto blob = responseHandler->ToResponseData(std::move(bytes));
+
+          // #9510
+          vector<uint8_t> responseData{};
+          do {
+            co_await reader.LoadAsync(segmentSize);
+            length = reader.UnconsumedBufferLength();
+            auto data = vector<uint8_t>(length);
+            reader.ReadBytes(data);
+
+            responseData.insert(responseData.cend(), data.cbegin(), data.cend());
+          } while (length > 0);
+
+          auto blob = responseHandler->ToResponseData(std::move(responseData));
 
           if (self->m_onDataDynamic && self->m_onRequestSuccess) {
             self->m_onDataDynamic(reqArgs->RequestId, std::move(blob));
@@ -495,17 +506,15 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
         reader.UnicodeEncoding(UnicodeEncoding::Utf8);
       }
 
-      // #9510 - We currently accumulate all incoming request data in 10MB chunks.
-      uint32_t segmentSize = 10 * 1024 * 1024;
+      // #9510
       string responseData;
       winrt::Windows::Storage::Streams::IBuffer buffer;
-      uint32_t length;
       do {
         co_await reader.LoadAsync(segmentSize);
         length = reader.UnconsumedBufferLength();
 
         if (isText) {
-          auto data = std::vector<uint8_t>(length);
+          auto data = vector<uint8_t>(length);
           reader.ReadBytes(data);
 
           responseData += string(Common::Utilities::CheckedReinterpretCast<char *>(data.data()), data.size());
