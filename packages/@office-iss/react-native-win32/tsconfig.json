@@ -5,7 +5,7 @@
     "outDir": ".",
     "rootDir": "src",
     "paths": {
-      "Utilities": ["./rntypes/types/Utilities.d.ts"],
+      "Utilities": ["./types/Utilities.d.ts"],
     },
 
     // Not clean
