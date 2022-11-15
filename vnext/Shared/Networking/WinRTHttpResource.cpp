@@ -478,7 +478,6 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
       // Let response handler take over, if set
       if (auto responseHandler = self->m_responseHandler.lock()) {
         if (responseHandler->Supports(reqArgs->ResponseType)) {
-
           // #9510
           vector<uint8_t> responseData{};
           do {
