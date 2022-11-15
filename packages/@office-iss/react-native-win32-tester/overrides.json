@@ -27,14 +27,6 @@
       "baseHash": "e48c4c9538d7eeb1bb244184c4e7a6e80a1ed4f6"
     },
     {
-      "type": "patch",
-      "file": "src/js/examples-win32/NewArchitecture/ComponentWithState.win32.js",
-      "baseFile": "packages/rn-tester/js/examples/NewArchitecture/ComponentWithState.js",
-      "baseVersion": "0.0.0-20221010-2132-1fc27c4cb",
-      "baseHash": "5eebd768304baac0e80b34cc073c02ac44890e85",
-      "issue": 0
-    },
-    {
       "type": "platform",
       "file": "src/js/examples/PlatformColor/PlatformColorExample.win32.js"
     },
@@ -53,25 +45,9 @@
     },
     {
       "type": "patch",
-      "file": "src/js/utils/RNTesterStatePersister.win32.js",
-      "baseFile": "packages/rn-tester/js/utils/RNTesterStatePersister.js",
-      "baseVersion": "0.0.0-20221010-2132-1fc27c4cb",
-      "baseHash": "5cfce9d3fe8cde84c587190ded5f7b590db5ab5e",
-      "issue": 6316
-    },
-    {
-      "type": "patch",
       "file": "src/js/utils/testerStateUtils.win32.js",
       "baseFile": "packages/rn-tester/js/utils/testerStateUtils.js",
       "baseHash": "4594cd769be825fddad0af155c785c6c7a9dc341",
-      "issue": 6316
-    },
-    {
-      "type": "patch",
-      "file": "src/js/utils/useAsyncStorageReducer.win32.js",
-      "baseFile": "packages/rn-tester/js/utils/useAsyncStorageReducer.js",
-      "baseVersion": "0.0.0-20221010-2132-1fc27c4cb",
-      "baseHash": "67e0a9ac568f477a0b4204a4b88ad22373330493",
       "issue": 6316
     }
   ]

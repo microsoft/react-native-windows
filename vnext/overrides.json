@@ -82,12 +82,6 @@
     },
     {
       "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/attributedstring/AttributedString.cpp",
-      "baseFile": "ReactCommon/react/renderer/attributedstring/AttributedString.cpp",
-      "baseHash": "7decb0395e2e6ac0c24086a3f065d720a2abb8a7"
-    },
-    {
-      "type": "patch",
       "file": "ReactCommon/Yoga.cpp",
       "baseFile": "ReactCommon/yoga/yoga/Yoga.cpp",
       "baseHash": "0d3ab0ba70ad0714716893e70e292de212febd9f",

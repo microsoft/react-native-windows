@@ -21,14 +21,6 @@
       "baseHash": "36c55afe75ac9c6efdec22e5ceb1f114a84ebd45"
     },
     {
-      "type": "patch",
-      "file": "src/js/examples-win/NewArchitecture/ComponentWithState.windows.js",
-      "baseFile": "packages/rn-tester/js/examples/NewArchitecture/ComponentWithState.js",
-      "baseVersion": "0.0.0-20221010-2132-1fc27c4cb",
-      "baseHash": "5eebd768304baac0e80b34cc073c02ac44890e85",
-      "issue": 0
-    },
-    {
       "type": "derived",
       "file": "src/js/examples-win/Switch/SwitchExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Switch/SwitchExample.js",
