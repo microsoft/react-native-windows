@@ -13,8 +13,6 @@
 
 #include <utility>
 
-using namespace facebook::jni;
-
 namespace facebook::react {
 
 extern const char WindowsTextInputComponentName[] = "WindowsTextInput";

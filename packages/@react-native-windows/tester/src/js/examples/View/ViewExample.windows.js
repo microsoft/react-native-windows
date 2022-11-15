@@ -328,7 +328,7 @@ class FlexGapExample extends React.Component<$ReadOnly<{||}>> {
         <View style={{backgroundColor: 'pink', height: 30, width: 30}} />
         <View style={{backgroundColor: 'pink', height: 30, width: 30}} />
         <View style={{backgroundColor: 'pink', height: 30, width: 30}} />
-        </View>
+      </View>
     );
   }
 }
@@ -760,7 +760,7 @@ exports.examples = [
     title: 'FlexGap',
     render(): React.Node {
       return <FlexGapExample />;
-    }
+    },
   },
   {
     title: 'Accessibility',

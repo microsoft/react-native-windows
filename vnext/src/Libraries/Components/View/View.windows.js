@@ -174,7 +174,7 @@ const View: React.AbstractComponent<
           );
           return (
             <ViewNativeComponent
-            {...otherProps}
+              {...otherProps}
               accessibilityLiveRegion={
                 ariaLive === 'off'
                   ? 'none'
@@ -197,7 +197,6 @@ const View: React.AbstractComponent<
                   : importantForAccessibility
               }
               nativeID={id ?? nativeID}
-              {...restWithDefaultProps}
               style={style}
               pointerEvents={newPointerEvents}
               ref={forwardedRef}
