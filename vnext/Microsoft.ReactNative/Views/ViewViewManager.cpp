@@ -356,9 +356,7 @@ bool TryUpdateBorderProperties(
 
 ViewViewManager::ViewViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
-const winrt::TypeName viewViewManagerTypeName{
-    winrt::hstring{L"ViewViewManager"},
-    winrt::TypeKind::Metadata};
+const winrt::TypeName viewViewManagerTypeName{winrt::hstring{L"ViewViewManager"}, winrt::TypeKind::Metadata};
 
 /*static*/ xaml::DependencyProperty ViewViewManager::CanBeScrollAnchorProperty() {
   static xaml::DependencyProperty s_canBeScrollAnchorProperty = xaml::DependencyProperty::RegisterAttached(
