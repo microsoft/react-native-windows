@@ -23,7 +23,7 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "@jest/create-cache-key-function": "^29.2.1",
-    "@react-native-community/cli": "9.2.3",
+    "@react-native-community/cli": "9.2.1",
     "@react-native-community/cli-platform-android": "9.2.1",
     "@react-native-community/cli-platform-ios": "9.2.1",
     "@react-native-windows/cli": "0.0.0-canary.148",
