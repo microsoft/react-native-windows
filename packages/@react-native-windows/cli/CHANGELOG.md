@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Sat, 12 Nov 2022 06:17:21 GMT and should not be manually modified.
+This log was last generated on Tue, 15 Nov 2022 06:16:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.149
+
+Tue, 15 Nov 2022 06:16:37 GMT
+
+### Changes
+
+- Move remaining PackageReferences out of new project templates (jthysell@microsoft.com)
 
 ## 0.0.0-canary.148
 

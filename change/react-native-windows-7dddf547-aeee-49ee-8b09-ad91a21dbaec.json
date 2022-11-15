@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "Always instantiate Blob module inUWP",
+  "comment": "Update to folly 2022.11.07",
   "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
   "dependentChangeType": "patch"
 }

@@ -168,17 +168,10 @@ export async function copyProjectTemplateAndReplace(
     mainComponentName = appJson.name;
   }
 
-  const csNugetPackages: NugetPackage[] = options.useWinUI3
-    ? getWinAppSDKPackages(nugetVersion)
-    : getUwpCsPackages();
-
-  const cppNugetPackages: NugetPackage[] = [
-    {
-      id: 'Microsoft.Windows.CppWinRT',
-      version: '$(CppWinRTVersion)',
-      privateAssets: true,
-    },
-  ];
+  // We should prefer putting new, necessary PackageReference dependencies into the appropriate
+  // external property sheets, but this is here if we "must" inject the dependency into the project file
+  const csNugetPackages: NugetPackage[] = [];
+  const cppNugetPackages: NugetPackage[] = [];
 
   const templateVars: Record<string, any> = {
     useMustache: true,
@@ -460,16 +453,6 @@ export async function copyProjectTemplateAndReplace(
   }
 }
 
-function getUwpCsPackages(): NugetPackage[] {
-  return [
-    {
-      id: 'Microsoft.NETCore.UniversalWindowsPlatform',
-      version: '6.2.9',
-      privateAssets: false,
-    },
-  ];
-}
-
 function toCppNamespace(namespace: string) {
   return namespace.replace(/\./g, '::');
 }
@@ -538,8 +521,4 @@ export async function installScriptsAndDependencies(options: {
       options.verbose ? {stdio: 'inherit'} : {},
     );
   }
-}
-function getWinAppSDKPackages(nugetVersion: string): NugetPackage[] {
-  const winAppSDKPackages: NugetPackage[] = [];
-  return winAppSDKPackages;
 }
