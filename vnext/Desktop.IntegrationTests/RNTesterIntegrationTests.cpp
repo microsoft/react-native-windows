@@ -27,7 +27,6 @@ TEST_MODULE_INITIALIZE(InitModule) {
 
   SetRuntimeOptionBool("WebSocket.AcceptSelfSigned", true);
   SetRuntimeOptionBool("UseBeastWebSocket", false);
-  SetRuntimeOptionBool("Http.UseMonolithicModule", false);
   SetRuntimeOptionBool("Blob.EnableModule", true);
 
   // WebSocketJSExecutor can't register native log hooks.

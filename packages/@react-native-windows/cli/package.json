@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/cli",
-  "version": "0.0.0-canary.147",
+  "version": "0.0.0-canary.148",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "repository": {
@@ -17,10 +17,10 @@
     "watch": "rnw-scripts watch"
   },
   "dependencies": {
-    "@react-native-windows/codegen": "0.0.0-canary.41",
-    "@react-native-windows/fs": "^0.0.0-canary.8",
-    "@react-native-windows/package-utils": "^0.0.0-canary.34",
-    "@react-native-windows/telemetry": "^0.0.0-canary.51",
+    "@react-native-windows/codegen": "0.0.0-canary.42",
+    "@react-native-windows/fs": "^0.0.0-canary.9",
+    "@react-native-windows/package-utils": "^0.0.0-canary.35",
+    "@react-native-windows/telemetry": "^0.0.0-canary.52",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
     "@xmldom/xmldom": "^0.7.7",
@@ -44,8 +44,8 @@
   "devDependencies": {
     "@react-native-community/cli-types": "^5.0.1-alpha.0",
     "@rnw-scripts/eslint-config": "1.1.14",
-    "@rnw-scripts/jest-unittest-config": "1.4.0",
-    "@rnw-scripts/just-task": "2.3.0",
+    "@rnw-scripts/jest-unittest-config": "1.4.1",
+    "@rnw-scripts/just-task": "2.3.1",
     "@rnw-scripts/ts-config": "2.0.2",
     "@types/chalk": "^2.2.0",
     "@types/jest": "^29.2.2",

@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/jest-debug-config",
   "entries": [
     {
+      "date": "Sat, 12 Nov 2022 06:17:22 GMT",
+      "tag": "@rnw-scripts/jest-debug-config_v1.4.1",
+      "version": "1.4.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@rnw-scripts/jest-debug-config",
+            "commit": "fa576c66ef5ee9bd73553688946f25df4cfc076f",
+            "comment": "Integrate 10/10"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 10 Nov 2022 06:17:10 GMT",
       "tag": "@rnw-scripts/jest-debug-config_v1.4.0",
       "version": "1.4.0",

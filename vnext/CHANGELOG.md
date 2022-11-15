@@ -1,8 +1,21 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 11 Nov 2022 06:15:10 GMT and should not be manually modified.
+This log was last generated on Sat, 12 Nov 2022 06:17:23 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.581
+
+Sat, 12 Nov 2022 06:17:23 GMT
+
+### Changes
+
+- Integrate 10/10 (34109996+chiaramooney@users.noreply.github.com)
+- Suppress Flyout if XamlRoot does not have focus (erozell@outlook.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.148
+- Bump @react-native-windows/codegen to v0.0.0-canary.42
+- Bump @rnw-scripts/just-task to v2.3.1
+- Bump react-native-platform-override to v1.8.1
 
 ## 0.0.0-canary.580
 

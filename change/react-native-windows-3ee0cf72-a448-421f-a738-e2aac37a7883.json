@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "Suppress Flyout if XamlRoot does not have focus",
+  "comment": "Always instantiate Blob module inUWP",
   "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
+  "email": "julio.rocha@microsoft.com",
   "dependentChangeType": "patch"
 }
