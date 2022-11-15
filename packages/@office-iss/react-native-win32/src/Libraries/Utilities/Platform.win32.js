@@ -8,10 +8,10 @@
 
 import NativePlatformConstantsWin from './NativePlatformConstantsWin';
 
-export type PlatformSelectSpec<A, N, D> = {
-  win32?: A,
-  native?: N,
-  default?: D,
+export type PlatformSelectSpec<T> = {
+  win32?: T,
+  native?: T,
+  default?: T,
   ...
 };
 

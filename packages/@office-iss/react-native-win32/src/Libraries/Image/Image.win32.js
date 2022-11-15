@@ -9,6 +9,7 @@
  */
 
 import type {RootTag} from '../Types/RootTagTypes';
+import type {ImageIOS} from './Image.flow';
 import TextAncestor from '../Text/TextAncestor'; // [Windows]
 import invariant from 'invariant'; // [Windows]
 

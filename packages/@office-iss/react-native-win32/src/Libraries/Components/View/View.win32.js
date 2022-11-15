@@ -137,7 +137,7 @@ const View: React.AbstractComponent<
     };
 
     // [Windows
-    const childrenWithImportantForAccessibility = children => {
+    const childrenWithImportantForAccessibility = (children: Array) => {
       return React.Children.map(children, child => {
         if (React.isValidElement(child)) {
           if (child.props.children) {
