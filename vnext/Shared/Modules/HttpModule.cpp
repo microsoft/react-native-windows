@@ -33,8 +33,10 @@ constexpr char moduleName[] = "Networking";
 // React event names
 constexpr char completedResponse[] = "didCompleteNetworkResponse";
 constexpr char receivedResponse[] = "didReceiveNetworkResponse";
-constexpr char receivedData[] = "didReceiveNetworkData";
+constexpr char sentData[] = "didSendNetworkData";
+constexpr char receivedIncrementalData[] = "didReceiveNetworkIncrementalData";
 constexpr char receivedDataProgress[] = "didReceiveNetworkDataProgress";
+constexpr char receivedData[] = "didReceiveNetworkData";
 
 static void SetUpHttpResource(
     shared_ptr<IHttpResource> resource,
