@@ -405,6 +405,35 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
 
   try {
     auto sendRequestOp = self->m_client.SendRequestAsync(coRequest);
+
+    sendRequestOp.Progress([](auto &&operation, auto &&progress) {
+      using winrt::Windows::Web::Http::HttpProgressStage;
+      if (progress.Stage == HttpProgressStage::None) {
+        int x = 99;
+      } else if (progress.Stage == HttpProgressStage::DetectingProxy) {
+        int x = 99;
+      } else if (progress.Stage == HttpProgressStage::ResolvingName) {
+        int x = 99;
+      } else if (progress.Stage == HttpProgressStage::ConnectingToServer) {
+        int x = 99;
+      } else if (progress.Stage == HttpProgressStage::NegotiatingSsl) {
+        int x = 99;
+      } else if (progress.Stage == HttpProgressStage::SendingHeaders) {
+        int x = 99;
+      } else if (progress.Stage == HttpProgressStage::SendingContent) {
+        int x = 99;
+      } else if (progress.Stage == HttpProgressStage::WaitingForResponse) {
+        int x = 99;
+      } else if (progress.Stage == HttpProgressStage::ReceivingHeaders) {
+        int x = 99;
+      } else if (progress.Stage == HttpProgressStage::ReceivingContent) {
+        int x = 99;
+      }
+
+      int y = 99;
+    });
+    //sendRequestOp.Completed([](auto &&operation, auto &&progress) {}); // Crashes int. tests
+
     self->TrackResponse(reqArgs->RequestId, sendRequestOp);
 
     if (reqArgs->Timeout > 0) {
