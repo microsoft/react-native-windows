@@ -149,7 +149,7 @@ TEST_CLASS (WebSocketIntegrationTest)
       });
 
       ws->Connect("ws://localhost:" + std::to_string(s_port));
-      // ws->Close();//TODO: Either remove or rename test.
+      ws->Close();//TODO: Either remove or rename test.
     }
 
     server->Stop();
