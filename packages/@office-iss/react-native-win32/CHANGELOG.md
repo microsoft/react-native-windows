@@ -1,8 +1,18 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Sat, 12 Nov 2022 06:17:21 GMT and should not be manually modified.
+This log was last generated on Wed, 16 Nov 2022 06:16:00 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.169
+
+Wed, 16 Nov 2022 06:16:00 GMT
+
+### Changes
+
+- Update how types are exported to align with core (30809111+acoates-ms@users.noreply.github.com)
+- Bump @rnw-scripts/just-task to v2.3.2
+- Bump react-native-platform-override to v1.8.2
 
 ## 0.0.0-canary.168
 

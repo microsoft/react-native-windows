@@ -137,7 +137,8 @@ const View: React.AbstractComponent<
     };
 
     // [Windows
-    const childrenWithImportantForAccessibility = (children: any) => {
+    $FlowFixMe
+    const childrenWithImportantForAccessibility = children => {
       const updatedChildren = React.Children.map(children, child => {
         if (React.isValidElement(child)) {
           if (child.props.children) {

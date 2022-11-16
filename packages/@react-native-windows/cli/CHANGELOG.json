@@ -2,6 +2,45 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Wed, 16 Nov 2022 06:16:01 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.150",
+      "version": "0.0.0-canary.150",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.43",
+            "commit": "a37b9930d9b0749e0b6c893059277fcb1cf3edb6"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.10",
+            "commit": "a37b9930d9b0749e0b6c893059277fcb1cf3edb6"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/package-utils to v0.0.0-canary.36",
+            "commit": "a37b9930d9b0749e0b6c893059277fcb1cf3edb6"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.53",
+            "commit": "a37b9930d9b0749e0b6c893059277fcb1cf3edb6"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.2",
+            "commit": "a37b9930d9b0749e0b6c893059277fcb1cf3edb6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 15 Nov 2022 06:16:37 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.149",
       "version": "0.0.0-canary.149",

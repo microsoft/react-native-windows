@@ -2,6 +2,27 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Wed, 16 Nov 2022 06:16:01 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.43",
+      "version": "0.0.0-canary.43",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.10",
+            "commit": "a37b9930d9b0749e0b6c893059277fcb1cf3edb6"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.2",
+            "commit": "a37b9930d9b0749e0b6c893059277fcb1cf3edb6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 12 Nov 2022 06:17:21 GMT",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.42",
       "version": "0.0.0-canary.42",
