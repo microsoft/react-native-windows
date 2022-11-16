@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/just-task",
   "entries": [
     {
+      "date": "Wed, 16 Nov 2022 06:16:00 GMT",
+      "tag": "@rnw-scripts/just-task_v2.3.2",
+      "version": "2.3.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@rnw-scripts/just-task",
+            "commit": "9bd39df79a56665486d229acc7ee37e39227feac",
+            "comment": "Update how types are exported to align with core"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 12 Nov 2022 06:17:23 GMT",
       "tag": "@rnw-scripts/just-task_v2.3.1",
       "version": "2.3.1",

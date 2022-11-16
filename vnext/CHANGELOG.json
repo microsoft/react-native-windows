@@ -2,6 +2,75 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 16 Nov 2022 06:16:00 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.583",
+      "version": "0.0.0-canary.583",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "lyahdav@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "274fff5797fe7de1de13abc3e4a0191c49acd7de",
+            "comment": "Fix WinUI 3 crash when using keyboard due to KeyboardEventHandler using unsupported class"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "1b9be6254bafdf1fc0044bff59b8460e97f97716",
+            "comment": "Update to folly 2022.11.07"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a37b9930d9b0749e0b6c893059277fcb1cf3edb6",
+            "comment": "Allow >10MB content for blob responses"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "1b4957740b43d783d9c8f4876a430cbeb02eeda4",
+            "comment": "Update folly hash for current version"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "9bd39df79a56665486d229acc7ee37e39227feac",
+            "comment": "Update how types are exported to align with core"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "788c6952c17750db0a3c0caadc63b2d931b88fbb",
+            "comment": "Use standard Panel APIs for children in ViewViewManager"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.150",
+            "commit": "a37b9930d9b0749e0b6c893059277fcb1cf3edb6"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.43",
+            "commit": "a37b9930d9b0749e0b6c893059277fcb1cf3edb6"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.2",
+            "commit": "a37b9930d9b0749e0b6c893059277fcb1cf3edb6"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.8.2",
+            "commit": "a37b9930d9b0749e0b6c893059277fcb1cf3edb6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 15 Nov 2022 06:16:37 GMT",
       "tag": "react-native-windows_v0.0.0-canary.582",
       "version": "0.0.0-canary.582",

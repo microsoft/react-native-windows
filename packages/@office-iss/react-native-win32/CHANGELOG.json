@@ -2,6 +2,33 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 16 Nov 2022 06:16:00 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.169",
+      "version": "0.0.0-canary.169",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "9bd39df79a56665486d229acc7ee37e39227feac",
+            "comment": "Update how types are exported to align with core"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.2",
+            "commit": "a37b9930d9b0749e0b6c893059277fcb1cf3edb6"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump react-native-platform-override to v1.8.2",
+            "commit": "a37b9930d9b0749e0b6c893059277fcb1cf3edb6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 12 Nov 2022 06:17:21 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.168",
       "version": "0.0.0-canary.168",

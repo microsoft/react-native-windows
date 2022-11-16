@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update how types are exported to align with core",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

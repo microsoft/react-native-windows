@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix WinUI 3 crash when using keyboard due to KeyboardEventHandler using unsupported class",
-  "packageName": "react-native-windows",
-  "email": "lyahdav@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
