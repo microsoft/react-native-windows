@@ -52,6 +52,7 @@ node_modules
 /interface.*
 /src/rntypes
 /rntypes
+/types
 /typings-index.*
 /rn-get-polyfills.js
 

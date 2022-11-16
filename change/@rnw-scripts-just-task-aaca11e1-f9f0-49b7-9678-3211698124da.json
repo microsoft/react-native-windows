@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Update how types are exported to align with core",
+  "packageName": "@rnw-scripts/just-task",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
