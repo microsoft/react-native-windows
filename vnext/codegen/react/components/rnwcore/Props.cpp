@@ -68,6 +68,17 @@ AndroidDrawerLayoutProps::AndroidDrawerLayoutProps(
     drawerLockMode(convertRawProp(context, rawProps, "drawerLockMode", sourceProps.drawerLockMode, {AndroidDrawerLayoutDrawerLockMode::Unlocked})),
     statusBarBackgroundColor(convertRawProp(context, rawProps, "statusBarBackgroundColor", sourceProps.statusBarBackgroundColor, {}))
       {}
+GlyphProps::GlyphProps(
+    const PropsParserContext &context,
+    const GlyphProps &sourceProps,
+    const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
+
+    color(convertRawProp(context, rawProps, "color", sourceProps.color, {})),
+    emSize(convertRawProp(context, rawProps, "emSize", sourceProps.emSize, {0.0})),
+    fontUri(convertRawProp(context, rawProps, "fontUri", sourceProps.fontUri, {})),
+    glyph(convertRawProp(context, rawProps, "glyph", sourceProps.glyph, {})),
+    colorEnabled(convertRawProp(context, rawProps, "colorEnabled", sourceProps.colorEnabled, {false}))
+      {}
 AndroidProgressBarProps::AndroidProgressBarProps(
     const PropsParserContext &context,
     const AndroidProgressBarProps &sourceProps,

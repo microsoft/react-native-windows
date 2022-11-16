@@ -357,6 +357,20 @@ class JSI_EXPORT AndroidDrawerLayoutProps final : public ViewProps {
   SharedColor statusBarBackgroundColor{};
 };
 
+class JSI_EXPORT GlyphProps final : public ViewProps {
+ public:
+  GlyphProps() = default;
+  GlyphProps(const PropsParserContext& context, const GlyphProps &sourceProps, const RawProps &rawProps);
+
+#pragma mark - Props
+
+  SharedColor color{};
+  double emSize{0.0};
+  std::string fontUri{};
+  std::string glyph{};
+  bool colorEnabled{false};
+};
+
 class JSI_EXPORT AndroidProgressBarProps final : public ViewProps {
  public:
   AndroidProgressBarProps() = default;
