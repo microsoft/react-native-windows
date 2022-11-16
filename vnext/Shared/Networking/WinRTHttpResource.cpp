@@ -472,22 +472,20 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
       auto reader = DataReader{inputStream};
 
       // #9510 - We currently accumulate all incoming request data in 10MB chunks
-      uint32_t segmentSize = 10 * 1024 * 1024;
-      uint32_t length;
+      const uint32_t segmentSize = 10 * 1024 * 1024;
 
       // Let response handler take over, if set
       if (auto responseHandler = self->m_responseHandler.lock()) {
         if (responseHandler->Supports(reqArgs->ResponseType)) {
           // #9510
           vector<uint8_t> responseData{};
-          do {
-            co_await reader.LoadAsync(segmentSize);
-            length = reader.UnconsumedBufferLength();
+          while (auto loaded = co_await reader.LoadAsync(segmentSize)) {
+            auto length = reader.UnconsumedBufferLength();
             auto data = vector<uint8_t>(length);
             reader.ReadBytes(data);
 
             responseData.insert(responseData.cend(), data.cbegin(), data.cend());
-          } while (length > 0);
+          }
 
           auto blob = responseHandler->ToResponseData(std::move(responseData));
 
@@ -508,9 +506,8 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
       // #9510
       string responseData;
       winrt::Windows::Storage::Streams::IBuffer buffer;
-      do {
-        co_await reader.LoadAsync(segmentSize);
-        length = reader.UnconsumedBufferLength();
+      while (auto loaded = co_await reader.LoadAsync(segmentSize)) {
+        auto length = reader.UnconsumedBufferLength();
 
         if (isText) {
           auto data = vector<uint8_t>(length);
@@ -523,7 +520,7 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
 
           responseData += winrt::to_string(std::wstring_view(data));
         }
-      } while (length > 0);
+      }
 
       if (self->m_onData) {
         self->m_onData(reqArgs->RequestId, std::move(responseData));
