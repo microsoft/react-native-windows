@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Always instantiate Blob module inUWP",
+  "comment": "Allow >10MB content for blob responses",
   "packageName": "react-native-windows",
   "email": "julio.rocha@microsoft.com",
   "dependentChangeType": "patch"

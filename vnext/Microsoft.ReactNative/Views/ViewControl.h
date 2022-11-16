@@ -22,7 +22,7 @@ struct ViewControl : ViewControlT<ViewControl> {
 
   xaml::Automation::Peers::AutomationPeer OnCreateAutomationPeer();
 
-  winrt::Microsoft::ReactNative::ViewPanel GetPanel() const;
+  xaml::Controls::Panel GetPanel() const;
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation

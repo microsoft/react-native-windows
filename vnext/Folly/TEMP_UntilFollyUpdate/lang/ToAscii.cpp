@@ -189,7 +189,8 @@ FOLLY_ALWAYS_INLINE size_t to_ascii_size_clzll(uint64_t v) {
   }
 
   //  blog2r is approx 1 / log<2>(Base), used in log change-of-base just below
-  constexpr auto const blog2r = 8. / constexpr_log2(constexpr_pow(Base, 8));
+  constexpr auto const blog2m = constexpr_log2(constexpr_pow(Base, 8));
+  constexpr auto const blog2r = 8. / double(blog2m);
 
   //  vlogb is approx log<Base>(v) = log<2>(v) / log<2>(Base)
   auto const vlogb = vlog2 * size_t(blog2r * 256) / 256;
@@ -244,18 +245,19 @@ template <uint64_t Base, typename Alphabet>
 FOLLY_ALWAYS_INLINE void to_ascii_with_table(
     char* out, size_t size, uint64_t v) {
   using table = to_ascii_table<Base, Alphabet>;
-  auto pos = size - 2;
-  while (FOLLY_UNLIKELY(v >= Base * Base)) {
+  auto pos = size;
+  while (FOLLY_UNLIKELY(pos > 2)) {
+    pos -= 2;
     //  keep /, % together so a peephole optimization computes them together
     auto const q = v / (Base * Base);
     auto const r = v % (Base * Base);
     auto const val = table::data.data[size_t(r)];
     std::memcpy(out + pos, &val, 2);
-    pos -= 2;
     v = q;
   }
+
   auto const val = table::data.data[size_t(v)];
-  if (FOLLY_UNLIKELY(size % 2 == 0)) {
+  if (FOLLY_UNLIKELY(pos == 2)) {
     std::memcpy(out, &val, 2);
   } else {
     *out = val >> (kIsLittleEndian ? 8 : 0);

@@ -10,6 +10,10 @@
 #include "Utils/PropertyHandlerUtils.h"
 #include "Views/KeyboardEventHandler.h"
 
+#ifdef USE_WINUI3
+#include <winrt/Microsoft.UI.Input.h>
+#endif
+
 using namespace std::placeholders;
 
 static constexpr auto ALT_KEY = "altKey";
@@ -630,14 +634,23 @@ std::string KeyboardHelper::CodeFromVirtualKey(winrt::Windows::System::VirtualKe
 bool KeyboardHelper::IsModifiedKeyPressed(
     winrt::CoreWindow const &coreWindow,
     winrt::Windows::System::VirtualKey virtualKey) {
-  return (coreWindow.GetKeyState(virtualKey) & winrt::CoreVirtualKeyStates::Down) == winrt::CoreVirtualKeyStates::Down;
+#ifdef USE_WINUI3
+  auto const &keyState = winrt::Microsoft::UI::Input::InputKeyboardSource::GetKeyStateForCurrentThread(virtualKey);
+#else
+  auto const &keyState = coreWindow.GetKeyState(virtualKey);
+#endif // USE_WINUI3
+  return (keyState & winrt::CoreVirtualKeyStates::Down) == winrt::CoreVirtualKeyStates::Down;
 }
 
 bool KeyboardHelper::IsModifiedKeyLocked(
     winrt::CoreWindow const &coreWindow,
     winrt::Windows::System::VirtualKey virtualKey) {
-  return (coreWindow.GetKeyState(virtualKey) & winrt::CoreVirtualKeyStates::Locked) ==
-      winrt::CoreVirtualKeyStates::Locked;
+#ifdef USE_WINUI3
+  auto const &keyState = winrt::Microsoft::UI::Input::InputKeyboardSource::GetKeyStateForCurrentThread(virtualKey);
+#else
+  auto const &keyState = coreWindow.GetKeyState(virtualKey);
+#endif // USE_WINUI3
+  return (keyState & winrt::CoreVirtualKeyStates::Locked) == winrt::CoreVirtualKeyStates::Locked;
 }
 
 } // namespace Microsoft::ReactNative

@@ -1,11 +1,11 @@
 {
   "extends": "@rnw-scripts/ts-config",
   "compilerOptions": {
-    "types": ["react-native"],
     "baseUrl": ".",
     "outDir": ".",
+    "rootDir": "src",
     "paths": {
-      "Utilities": ["./rntypes/types/Utilities.d.ts"],
+      "Utilities": ["./types/Utilities.d.ts"],
     },
 
     // Not clean
