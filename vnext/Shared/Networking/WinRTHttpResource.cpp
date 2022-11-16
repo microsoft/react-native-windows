@@ -337,7 +337,7 @@ void WinRTHttpResource::SetOnData(function<void(int64_t requestId, dynamic &&res
 }
 
 void WinRTHttpResource::SetOnIncrementalData(
-  std::function<void(int64_t requestId, std::string&& responseData, int64_t progress, int64_t total)>
+  function<void(int64_t requestId, string&& responseData, int64_t progress, int64_t total)>
   && handler) noexcept /*override*/ {
   m_onIncData = std::move(handler);
 }
@@ -413,7 +413,7 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
     auto sendRequestOp = self->m_client.SendRequestAsync(coRequest);
 
     using winrt::Windows::Web::Http::HttpProgress;
-    sendRequestOp.Progress([](auto &&operation, const HttpProgress &progress) {
+    sendRequestOp.Progress([self = self->shared_from_this(), requestId = reqArgs->RequestId](auto &&operation, const HttpProgress &progress) {
       using winrt::Windows::Web::Http::HttpProgressStage;
       if (progress.Stage == HttpProgressStage::None) {
         int x = 99;
@@ -434,16 +434,11 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
       } else if (progress.Stage == HttpProgressStage::ReceivingHeaders) {
         int x = 99;
       } else if (progress.Stage == HttpProgressStage::ReceivingContent) {
-        HttpProgress p = progress;
-        auto a = p.BytesReceived;
-        auto b = p.TotalBytesToReceive;
-        int x = 99;
-
-        auto total = p.TotalBytesToReceive ? p.TotalBytesToReceive.Value() : 0;
-
+        int64_t total = progress.TotalBytesToReceive ? progress.TotalBytesToReceive.Value() : 0;
+        if (self->m_onIncData) {
+          self->m_onIncData(requestId, "TODO", static_cast<int64_t>(progress.BytesReceived), total);
+        }
       }
-
-      int y = 99;
     });
     //sendRequestOp.Completed([](auto &&operation, auto &&progress) {}); // Crashes int. tests
 
