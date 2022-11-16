@@ -87,7 +87,7 @@ iex (<span class="hljs-built_in">New-Object</span> System.Net.WebClient).Downloa
 <ul>
 <li><strong>Workloads</strong>
 <ul>
-<li>Node.js development, or one of the following alternatives:
+<li><code>Node.js development</code>, or one of the following alternatives:
 <ul>
 <li>Install from <strong>Individual Components</strong>:
 <ul>
@@ -98,16 +98,23 @@ iex (<span class="hljs-built_in">New-Object</span> System.Net.WebClient).Downloa
 </ul></li>
 <li>Install Node.js separately, see below for some options</li>
 </ul></li>
-<li>.NET Desktop development</li>
-<li>Desktop development with C++</li>
-<li>Universal Windows Platform development
+<li><code>.NET Desktop development</code></li>
+<li><code>Desktop development with C++</code>
 <ul>
-<li>Include <code>C++ (v143) Universal Windows Platform tools</code> (under 'Optional')</li>
-<li>Older Windows 10 SDK version may be needed at this point.</li>
+<li>Include <code>MSVC v143 - VS 2022 C++ x64/x86 build tools (Latest)</code> (check under 'Optional')</li>
+</ul></li>
+<li><code>Universal Windows Platform development</code>
+<ul>
+<li>Include <code>C++ (v143) Universal Windows Platform tools</code> (check under 'Optional')</li>
 </ul></li>
 </ul></li>
+<li><strong>Individual Components</strong>
+<ul>
+<li>Include <code>Windows 10 SDK (10.0.19041.0)</code> (target OS version from <a href="/react-native-windows/docs/next/win10-compat#react-native-app-supported-os-versions">this table</a>)</li>
+<li>Include <code>MSVC v143 - VS 2022 C++ ARM64 build tools (Latest)</code> (to target ARM64 devices)</li>
 </ul></li>
-<li>Ensure that long path support is enabled.</li>
+</ul></li>
+<li><a href="https://learn.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation?tabs=registry#enable-long-paths-in-windows-10-version-1607-and-later">Enable Long Paths in Windows 10, Version 1607, and Later</a></li>
 </ul>
 <p>Options to install <a href="https://nodejs.org">Node.js</a> separately:</p>
 <ul>
@@ -121,7 +128,6 @@ iex (<span class="hljs-built_in">New-Object</span> System.Net.WebClient).Downloa
 </ul>
 <p>Optional steps that are <em>highly recommended</em>:</p>
 <ul>
-<li>Install <a href="https://www.google.com/chrome/">Chrome</a> (needed for JS debugging)</li>
 <li>Install <a href="https://yarnpkg.com/en/docs/install">Yarn</a> (<strong>required</strong> to contribute to react-native-windows)</li>
 <li>Install <code>git</code> using a method such as:
 <ul>
