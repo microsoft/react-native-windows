@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Use standard Panel APIs for children in ViewViewManager",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}

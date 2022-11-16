@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/just-task
 
-This log was last generated on Sat, 12 Nov 2022 06:17:23 GMT and should not be manually modified.
+This log was last generated on Wed, 16 Nov 2022 06:16:00 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.3.2
+
+Wed, 16 Nov 2022 06:16:00 GMT
+
+### Patches
+
+- Update how types are exported to align with core (30809111+acoates-ms@users.noreply.github.com)
 
 ## 2.3.1
 
