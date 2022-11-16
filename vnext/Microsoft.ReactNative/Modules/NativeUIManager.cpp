@@ -937,9 +937,16 @@ void NativeUIManager::SetLayoutPropsRecursive(int64_t tag, bool isCollapsed) {
     float width = YGNodeLayoutGetWidth(yogaNode);
     float height = YGNodeLayoutGetHeight(yogaNode);
     const auto uiElement = view.try_as<xaml::UIElement>();
+
+    // Avoid updating XAML layout in collapsed sub-trees (i.e., for descendants
+    // of Views that set { display: 'none' } in style props). This reduces the
+    // amount of work the XAML layout algorithm needs to do when a sub-tree is
+    // collapsed. There is no effect on what gets rendered to the UI because
+    // React Native Windows sets Visibility to Collapsed for this sub-tree.
     if (!isCollapsed) {
       pViewManager->SetLayoutProps(shadowNode, view, left, top, width, height);
     }
+
     if (shadowNode.m_onLayoutRegistered) {
       const auto hasLayoutChanged = !YogaFloatEquals(left, shadowNode.m_layout.Left) ||
           !YogaFloatEquals(top, shadowNode.m_layout.Top) || !YogaFloatEquals(width, shadowNode.m_layout.Width) ||
