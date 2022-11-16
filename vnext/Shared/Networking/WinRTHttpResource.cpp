@@ -427,6 +427,9 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
       } else if (progress.Stage == HttpProgressStage::ReceivingHeaders) {
         int x = 99;
       } else if (progress.Stage == HttpProgressStage::ReceivingContent) {
+        winrt::Windows::Web::Http::HttpProgress p = progress;
+        auto a = p.BytesReceived;
+        auto b = p.TotalBytesToReceive;
         int x = 99;
       }
 
