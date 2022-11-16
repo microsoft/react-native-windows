@@ -29,6 +29,7 @@ export type DialogOptions = {|
   items?: Array<string>,
   cancelable?: boolean,
   defaultButton?: Int32,
+  rootTag?: number,
 |};
 
 export interface Spec extends TurboModule {

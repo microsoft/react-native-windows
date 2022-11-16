@@ -6,6 +6,9 @@
  */
 
 import type {DialogOptions} from './NativeDialogManagerWindows';
+import {useContext} from 'react';
+import {RootTagContext} from 'react-native';
+
 const NativeDialogManagerWindows =
   require('./NativeDialogManagerWindows').default;
 
@@ -27,6 +30,7 @@ type Options = {
   cancelable?: ?boolean,
   userInterfaceStyle?: 'unspecified' | 'light' | 'dark',
   onDismiss?: ?() => void,
+  rootTag?: number,
   ...
 };
 
@@ -46,11 +50,13 @@ class Alert {
       return;
     }
     const constants = NativeDialogManagerWindows.getConstants();
+    const rootTag = useContext(RootTagContext);
 
     const config: DialogOptions = {
       title: title || '',
       message: message || '',
       cancelable: false,
+      rootTag: rootTag,
     };
 
     if (options && options.cancelable) {
