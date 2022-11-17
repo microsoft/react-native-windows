@@ -233,11 +233,15 @@
     },
     {
       "type": "platform",
-      "file": "src/Libraries/Components/Glyph/Glyph.tsx"
+      "file": "src/Libraries/Components/Glyph/Glyph.d.ts"
     },
     {
       "type": "platform",
-      "file": "src/Libraries/Components/Glyph/GlyphProps.ts"
+      "file": "src/Libraries/Components/Glyph/Glyph.js"
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/Components/Glyph/GlyphNativeComponent.js"
     },
     {
       "type": "platform",
