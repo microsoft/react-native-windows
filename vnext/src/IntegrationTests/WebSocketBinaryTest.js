@@ -84,11 +84,11 @@ class WebSocketBinaryTest extends React.Component<{...}, State> {
     });
   };
 
-  _socketIsConnected = () => {
+  _socketIsConnected = (): boolean => {
     return this.state.socketState === 1; //'OPEN'
   };
 
-  _socketIsDisconnected = () => {
+  _socketIsDisconnected = (): boolean => {
     return this.state.socketState === 3; //'CLOSED'
   };
 
@@ -119,9 +119,10 @@ class WebSocketBinaryTest extends React.Component<{...}, State> {
 
   _sendTestMessage = () => {
     this._sendBinary(this.state.testMessage);
+    return;
   };
 
-  _receivedTestExpectedResponse = () => {
+  _receivedTestExpectedResponse = (): boolean => {
     console.log(this.state.lastMessage);
     if (
       this.state.lastMessage?.byteLength !==

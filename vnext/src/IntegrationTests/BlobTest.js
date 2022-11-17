@@ -154,7 +154,7 @@ class BlobTest extends React.Component<{...}, State> {
     this.state.xhr.send();
   };
 
-  _getSucceeded = () => {
+  _getSucceeded = (): boolean => {
     return this.state.statusCode === 200 && this.state.xhr.response !== null;
   };
 
