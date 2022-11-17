@@ -12,7 +12,7 @@ param(
 [xml]$props = gc $PSScriptRoot\..\..\Directory.Build.props
 [string] $FollyVersion = $props.Project.PropertyGroup.FollyVersion;
 $FollyVersion = $FollyVersion.Trim() # The extracted FollyVersion contains a space at the end that isn't actually present, issue #6216
-$FollyRoot = "$SourceRoot\node_modules\.folly\folly-${FollyVersion}";
+$FollyRoot = "$SourceRoot\node_modules\.folly";
 $FollyOverrideRoot = "$ReactWindowsRoot\Folly\TEMP_UntilFollyUpdate";
 
 [string] $FmtVersion = $props.Project.PropertyGroup.FmtVersion;
@@ -73,7 +73,7 @@ Get-ChildItem -Path $FollyRoot -Name -Recurse -Include $patterns | ForEach-Objec
 # Folly overrides
 Get-ChildItem -Path $FollyOverrideRoot -Name -Recurse -Include $patterns | ForEach-Object { Copy-Item `
 	-Path        $FollyOverrideRoot\$_ `
-	-Destination (New-Item -ItemType Directory $TargetRoot\inc\folly\folly\$(Split-Path $_) -Force) `
+	-Destination (New-Item -ItemType Directory $TargetRoot\inc\folly\folly-$FollyVersion\folly\$(Split-Path $_) -Force) `
 	-Force
 }
 
