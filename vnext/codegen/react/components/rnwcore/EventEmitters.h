@@ -101,7 +101,7 @@ class JSI_EXPORT AndroidDrawerLayoutEventEmitter : public ViewEventEmitter {
 
   void onDrawerClose(OnDrawerClose value) const;
 };
-class JSI_EXPORT GlyphEventEmitter : public ViewEventEmitter {
+class JSI_EXPORT PLYIconEventEmitter : public ViewEventEmitter {
  public:
   using ViewEventEmitter::ViewEventEmitter;
 
