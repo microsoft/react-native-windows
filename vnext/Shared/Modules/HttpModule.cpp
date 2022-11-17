@@ -82,6 +82,10 @@ static void SetUpHttpResource(
             dynamic::array(requestId, std::move(responseData), progress, total));
       });
 
+  resource->SetOnDataProgress([weakReactInstance](int64_t requestId, int64_t progress, int64_t total) {
+    SendEvent(weakReactInstance, receivedDataProgress, dynamic::array(requestId, progress, total));
+  });
+
   resource->SetOnError([weakReactInstance](int64_t requestId, string &&message, bool isTimeout) {
     dynamic args = dynamic::array(requestId, std::move(message));
     if (isTimeout) {

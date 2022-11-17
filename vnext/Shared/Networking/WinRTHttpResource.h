@@ -31,6 +31,7 @@ class WinRTHttpResource : public IHttpResource,
   std::function<void(int64_t requestId, folly::dynamic &&responseData)> m_onDataDynamic;
   std::function<void(int64_t requestId, std::string &&errorMessage, bool isTimeout)> m_onError;
   std::function<void(int64_t requestId, std::string &&responseData, int64_t progress, int64_t total)> m_onIncData;
+  std::function<void(int64_t requestId, int64_t progress, int64_t total)> m_onDataProgress;
 
   // Used for IHttpModuleProxy
   std::weak_ptr<IUriHandler> m_uriHandler;
@@ -84,6 +85,8 @@ class WinRTHttpResource : public IHttpResource,
   void SetOnIncrementalData(
       std::function<void(int64_t requestId, std::string &&responseData, int64_t progress, int64_t total)> &&handler) noexcept
       override;
+  void SetOnDataProgress(
+      std::function<void(int64_t requestId, int64_t progress, int64_t total)> &&handler) noexcept override;
   void SetOnError(
       std::function<void(int64_t requestId, std::string &&errorMessage, bool isTimeout)> &&handler) noexcept override;
 

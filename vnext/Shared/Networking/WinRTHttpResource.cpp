@@ -342,6 +342,12 @@ void WinRTHttpResource::SetOnIncrementalData(
   m_onIncData = std::move(handler);
 }
 
+void WinRTHttpResource::SetOnDataProgress(
+    function<void(int64_t requestId, int64_t progress, int64_t total)> &&handler) noexcept
+/*override*/ {
+  m_onDataProgress = std::move(handler);
+}
+
 void WinRTHttpResource::SetOnError(
     function<void(int64_t requestId, string &&errorMessage, bool isTimeout)> &&handler) noexcept
 /*override*/ {
@@ -412,17 +418,27 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
   try {
     auto sendRequestOp = self->m_client.SendRequestAsync(coRequest);
 
-    using winrt::Windows::Web::Http::HttpProgress;
-    using winrt::Windows::Web::Http::HttpProgressStage;
-    sendRequestOp.Progress([self = self->shared_from_this(), requestId = reqArgs->RequestId](
-                               ResponseOperation const &operation, HttpProgress const &progress) {
-      if  (progress.Stage == HttpProgressStage::ReceivingContent) {
-        int64_t total = progress.TotalBytesToReceive ? progress.TotalBytesToReceive.Value() : 0;
-        if (self->m_onIncData) {
-          self->m_onIncData(requestId, "TODO", static_cast<int64_t>(progress.BytesReceived), total);
+    auto isText = reqArgs->ResponseType == "text";
+
+    if (reqArgs->IncrementalUpdates) {
+      using winrt::Windows::Web::Http::HttpProgress;
+      using winrt::Windows::Web::Http::HttpProgressStage;
+      sendRequestOp.Progress([self = self->shared_from_this(), requestId = reqArgs->RequestId, isText](
+                                 ResponseOperation const &operation, HttpProgress const &progress) {
+        if (progress.Stage == HttpProgressStage::ReceivingContent) {
+          int64_t total = progress.TotalBytesToReceive ? progress.TotalBytesToReceive.Value() : 0;
+          if (isText) {
+            if (self->m_onIncData) {
+              self->m_onIncData(requestId, "TODO", static_cast<int64_t>(progress.BytesReceived), total);
+            }
+          } else {
+            if (self->m_onDataProgress) {
+              self->m_onDataProgress(requestId, static_cast<int64_t>(progress.BytesReceived), total);
+            }
+          }
         }
-      }
-    });
+      });
+    }
 
     self->TrackResponse(reqArgs->RequestId, sendRequestOp);
 
@@ -517,7 +533,6 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
         }
       }
 
-      auto isText = reqArgs->ResponseType == "text";
       if (isText) {
         reader.UnicodeEncoding(UnicodeEncoding::Utf8);
       }
