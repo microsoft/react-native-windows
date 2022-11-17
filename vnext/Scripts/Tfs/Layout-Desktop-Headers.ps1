@@ -37,7 +37,7 @@ if (!(Test-Path $FmtRoot)) {
 	$FmtDest = "$SourceRoot\node_modules\.fmt"
 
 	New-Item $FmtRoot -ItemType Directory
-	Invoke-RestMethod -Uri "https://github.com/fmtlib/fmt/archive/refs/tags/$FollyVersion.zip" -OutFile $FmtZip
+	Invoke-RestMethod -Uri "https://github.com/fmtlib/fmt/archive/refs/tags/$FmtVersion.zip" -OutFile $FmtZip
 	Expand-Archive -LiteralPath $FmtZip -DestinationPath $FmtRoot
 }
 
