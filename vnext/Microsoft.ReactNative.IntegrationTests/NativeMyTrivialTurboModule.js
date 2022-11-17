@@ -16,4 +16,6 @@ export interface Spec extends TurboModule {
   +startFromJS: () => void;
 }
 
-export default (TurboModuleRegistry.getEnforcing<Spec>('MyTrivialTurboModule'): Spec);
+export default (TurboModuleRegistry.getEnforcing<Spec>(
+  'MyTrivialTurboModule',
+): Spec);
