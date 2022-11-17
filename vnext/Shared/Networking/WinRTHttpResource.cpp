@@ -413,34 +413,16 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
     auto sendRequestOp = self->m_client.SendRequestAsync(coRequest);
 
     using winrt::Windows::Web::Http::HttpProgress;
-    sendRequestOp.Progress([self = self->shared_from_this(), requestId = reqArgs->RequestId](auto &&operation, const HttpProgress &progress) {
-      using winrt::Windows::Web::Http::HttpProgressStage;
-      if (progress.Stage == HttpProgressStage::None) {
-        int x = 99;
-      } else if (progress.Stage == HttpProgressStage::DetectingProxy) {
-        int x = 99;
-      } else if (progress.Stage == HttpProgressStage::ResolvingName) {
-        int x = 99;
-      } else if (progress.Stage == HttpProgressStage::ConnectingToServer) {
-        int x = 99;
-      } else if (progress.Stage == HttpProgressStage::NegotiatingSsl) {
-        int x = 99;
-      } else if (progress.Stage == HttpProgressStage::SendingHeaders) {
-        int x = 99;
-      } else if (progress.Stage == HttpProgressStage::SendingContent) {
-        int x = 99;
-      } else if (progress.Stage == HttpProgressStage::WaitingForResponse) {
-        int x = 99;
-      } else if (progress.Stage == HttpProgressStage::ReceivingHeaders) {
-        int x = 99;
-      } else if (progress.Stage == HttpProgressStage::ReceivingContent) {
+    using winrt::Windows::Web::Http::HttpProgressStage;
+    sendRequestOp.Progress([self = self->shared_from_this(), requestId = reqArgs->RequestId](
+                               ResponseOperation const &operation, HttpProgress const &progress) {
+      if  (progress.Stage == HttpProgressStage::ReceivingContent) {
         int64_t total = progress.TotalBytesToReceive ? progress.TotalBytesToReceive.Value() : 0;
         if (self->m_onIncData) {
           self->m_onIncData(requestId, "TODO", static_cast<int64_t>(progress.BytesReceived), total);
         }
       }
     });
-    //sendRequestOp.Completed([](auto &&operation, auto &&progress) {}); // Crashes int. tests
 
     self->TrackResponse(reqArgs->RequestId, sendRequestOp);
 
