@@ -68,9 +68,9 @@ AndroidDrawerLayoutProps::AndroidDrawerLayoutProps(
     drawerLockMode(convertRawProp(context, rawProps, "drawerLockMode", sourceProps.drawerLockMode, {AndroidDrawerLayoutDrawerLockMode::Unlocked})),
     statusBarBackgroundColor(convertRawProp(context, rawProps, "statusBarBackgroundColor", sourceProps.statusBarBackgroundColor, {}))
       {}
-GlyphProps::GlyphProps(
+PLYIconProps::PLYIconProps(
     const PropsParserContext &context,
-    const GlyphProps &sourceProps,
+    const PLYIconProps &sourceProps,
     const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
 
     color(convertRawProp(context, rawProps, "color", sourceProps.color, {})),

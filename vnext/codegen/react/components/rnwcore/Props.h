@@ -357,10 +357,10 @@ class JSI_EXPORT AndroidDrawerLayoutProps final : public ViewProps {
   SharedColor statusBarBackgroundColor{};
 };
 
-class JSI_EXPORT GlyphProps final : public ViewProps {
+class JSI_EXPORT PLYIconProps final : public ViewProps {
  public:
-  GlyphProps() = default;
-  GlyphProps(const PropsParserContext& context, const GlyphProps &sourceProps, const RawProps &rawProps);
+  PLYIconProps() = default;
+  PLYIconProps(const PropsParserContext& context, const PLYIconProps &sourceProps, const RawProps &rawProps);
 
 #pragma mark - Props
 

@@ -26,6 +26,6 @@ type NativeProps = $ReadOnly<{|
 
 type NativeType = HostComponent<NativeProps>;
 
-export default (codegenNativeComponent<NativeProps>('Glyph', {
+export default (codegenNativeComponent<NativeProps>('PLYIcon', {
   interfaceOnly: true,
 }): NativeType);
