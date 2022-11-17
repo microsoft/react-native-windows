@@ -13,7 +13,7 @@ param(
 [string] $FollyVersion = $props.Project.PropertyGroup.FollyVersion;
 $FollyVersion = $FollyVersion.Trim() # The extracted FollyVersion contains a space at the end that isn't actually present, issue #6216
 $FollyRoot = "$SourceRoot\node_modules\.folly\folly-${FollyVersion}";
-$FollyOverrideRoot = "$ReactWindowsRoot\Folly\TMEP_UntilFollyUpdate";
+$FollyOverrideRoot = "$ReactWindowsRoot\Folly\TEMP_UntilFollyUpdate";
 
 [string] $FmtVersion = $props.Project.PropertyGroup.FmtVersion;
 $FmtVersion = $FmtVersion.Trim() # The extracted FmtVersion contains a space at the end that isn't actually present, issue #6216
