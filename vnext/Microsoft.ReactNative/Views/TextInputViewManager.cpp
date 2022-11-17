@@ -726,8 +726,9 @@ void TextInputShadowNode::SetText(const winrt::Microsoft::ReactNative::JSValue &
               diffStartIndex++;
             // 2. Find last character the mismatches beyond the first mismatch iterating backwards
             while (diffEndIndex < oldValue.size() - diffStartIndex && diffEndIndex < newValue.size() - diffStartIndex &&
-                   oldValue[oldValue.size() - diffEndIndex - 1] == newValue[newValue.size() - diffEndIndex - 1])
+                   oldValue[oldValue.size() - diffEndIndex - 1] == newValue[newValue.size() - diffEndIndex - 1]) {
               diffEndIndex++;
+            }
             // 3. Select the range between the start and end index in the "old value"
             textBox.SelectionStart(diffStartIndex);
             textBox.SelectionLength(oldValue.size() - diffStartIndex - diffEndIndex);
