@@ -17,7 +17,7 @@ $FollyOverrideRoot = "$ReactWindowsRoot\Folly\TEMP_UntilFollyUpdate";
 
 [string] $FmtVersion = $props.Project.PropertyGroup.FmtVersion;
 $FmtVersion = $FmtVersion.Trim() # The extracted FmtVersion contains a space at the end that isn't actually present, issue #6216
-$FmtRoot = "$SourceRoot\node_modules\.fmt\fmt-${FmtVersion}\include";
+$FmtRoot = "$SourceRoot\node_modules\.fmt\fmt-${FmtVersion}";
 
 # Download Folly if running on a machine which hasn't run native build logic to acquire it
 if (!(Test-Path $FollyRoot)) {
@@ -38,7 +38,7 @@ if (!(Test-Path $FmtRoot)) {
 
 	New-Item $FmtRoot -ItemType Directory
 	Invoke-RestMethod -Uri "https://github.com/fmtlib/fmt/archive/refs/tags/$FmtVersion.zip" -OutFile $FmtZip
-	Expand-Archive -LiteralPath $FmtZip -DestinationPath $FmtRoot
+	Expand-Archive -LiteralPath $FmtZip -DestinationPath $FmtDest
 }
 
 Write-Host "Source root: [$SourceRoot]"
@@ -73,13 +73,13 @@ Get-ChildItem -Path $FollyRoot -Name -Recurse -Include $patterns | ForEach-Objec
 # Folly overrides
 Get-ChildItem -Path $FollyOverrideRoot -Name -Recurse -Include $patterns | ForEach-Object { Copy-Item `
 	-Path        $FollyOverrideRoot\$_ `
-	-Destination (New-Item -ItemType Directory $TargetRoot\inc\folly\folly-$FollyVersion\folly\$(Split-Path $_) -Force) `
+	-Destination (New-Item -ItemType Directory $TargetRoot\inc\folly\folly\$(Split-Path $_) -Force) `
 	-Force
 }
 
 # Fmt headers
-Get-ChildItem -Path $FmtRoot -Name -Recurse -Include $patterns | ForEach-Object { Copy-Item `
-	-Path        $FmtRoot\$_ `
+Get-ChildItem -Path $FmtRoot\include -Name -Recurse -Include $patterns | ForEach-Object { Copy-Item `
+	-Path        $FmtRoot\include\$_ `
 	-Destination (New-Item -ItemType Directory $TargetRoot\inc\$(Split-Path $_) -Force) `
 	-Force
 }
