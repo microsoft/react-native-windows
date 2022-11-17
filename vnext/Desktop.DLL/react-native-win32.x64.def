@@ -5,6 +5,13 @@
 ; **************************************************************************************************
 
 EXPORTS
+??0dynamic@folly@@QEAA@$$QEAU01@@Z
+??8folly@@YA_NAEBUdynamic@0@0@Z
+??4dynamic@folly@@QEAAAEAU01@$$QEAU01@@Z
+?hash@dynamic@folly@@QEBA_KXZ
+?destroy@dynamic@folly@@AEAAXXZ
+??0TypeError@folly@@QEAA@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4Type@dynamic@1@@Z
+??0dynamic@folly@@QEAA@AEBU01@@Z
 ??$safe_assert_terminate@$0A@@detail@folly@@YAXPEBUsafe_assert_arg@01@ZZ
 ??$str_to_floating@N@detail@folly@@YA?AV?$Expected@NW4ConversionCode@folly@@@1@PEAV?$Range@PEBD@1@@Z
 ??$str_to_integral@_J@detail@folly@@YA?AV?$Expected@_JW4ConversionCode@folly@@@1@PEAV?$Range@PEBD@1@@Z
