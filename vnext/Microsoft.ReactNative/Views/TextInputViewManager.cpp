@@ -722,8 +722,9 @@ void TextInputShadowNode::SetText(const winrt::Microsoft::ReactNative::JSValue &
             // single diff in the values:
             // 1. Find first character that mismatches iterating forwards
             while (diffStartIndex < oldValue.size() && diffStartIndex < newValue.size() &&
-                   oldValue[diffStartIndex] == newValue[diffStartIndex])
+                   oldValue[diffStartIndex] == newValue[diffStartIndex]) {
               diffStartIndex++;
+            }
             // 2. Find last character the mismatches beyond the first mismatch iterating backwards
             while (diffEndIndex < oldValue.size() - diffStartIndex && diffEndIndex < newValue.size() - diffStartIndex &&
                    oldValue[oldValue.size() - diffEndIndex - 1] == newValue[newValue.size() - diffEndIndex - 1]) {
