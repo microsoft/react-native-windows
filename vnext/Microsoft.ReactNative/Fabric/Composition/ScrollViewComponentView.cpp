@@ -197,6 +197,7 @@ void ScrollViewComponentView::updateLayoutMetrics(
   // m_needsBorderUpdate = true;
   m_layoutMetrics = layoutMetrics;
 
+  UpdateCenterPropertySet();
   m_visual.Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});

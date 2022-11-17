@@ -2,6 +2,51 @@
   "name": "@react-native-windows/fs",
   "entries": [
     {
+      "date": "Wed, 16 Nov 2022 06:16:01 GMT",
+      "tag": "@react-native-windows/fs_v0.0.0-canary.10",
+      "version": "0.0.0-canary.10",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/fs",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.2",
+            "commit": "a37b9930d9b0749e0b6c893059277fcb1cf3edb6"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 12 Nov 2022 06:17:23 GMT",
+      "tag": "@react-native-windows/fs_v0.0.0-canary.9",
+      "version": "0.0.0-canary.9",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/fs",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.1",
+            "commit": "fa576c66ef5ee9bd73553688946f25df4cfc076f"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 10 Nov 2022 06:17:12 GMT",
+      "tag": "@react-native-windows/fs_v0.0.0-canary.8",
+      "version": "0.0.0-canary.8",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/fs",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.0",
+            "commit": "406d486eb138d4d9e324124e1b65120794424da1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 15 Oct 2022 05:11:59 GMT",
       "tag": "@react-native-windows/fs_v0.0.0-canary.7",
       "version": "0.0.0-canary.7",

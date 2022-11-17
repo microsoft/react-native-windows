@@ -4,6 +4,7 @@
 #include "pch.h"
 
 #include <UI.Composition.h>
+#include "AnimatedPlatformConfig.h"
 #include "AnimationDriver.h"
 
 namespace Microsoft::ReactNative {
@@ -20,6 +21,7 @@ AnimationDriver::AnimationDriver(
       m_endCallback(endCallback),
       m_manager(manager) {
   m_iterations = config.find("iterations") == config.end() ? 1 : config["iterations"].AsInt64();
+  m_useComposition = AnimatedPlatformConfig::ShouldUseComposition(config);
 }
 
 void AnimationDriver::DoCallback(bool value) {
@@ -36,11 +38,12 @@ void AnimationDriver::DoCallback(bool value) {
 }
 
 AnimationDriver::~AnimationDriver() {
-  if (m_scopedBatch)
+  if (m_useComposition && m_scopedBatch)
     m_scopedBatch.Completed(m_scopedBatchCompletedToken);
 }
 
 void AnimationDriver::StartAnimation() {
+  assert(m_useComposition);
   m_started = true;
   const auto [animation, scopedBatch] = MakeAnimation(m_config);
   if (auto const animatedValue = GetAnimatedValue()) {
@@ -76,15 +79,44 @@ void AnimationDriver::StartAnimation() {
 }
 
 void AnimationDriver::StopAnimation(bool ignoreCompletedHandlers) {
-  if (!m_started) {
-    // The animation may have been deferred and never started. In this case,
-    // we will never get a scoped batch completion, so we need to fire the
-    // callback synchronously.
+  if (m_useComposition && m_started) {
+    if (const auto animatedValue = GetAnimatedValue()) {
+      animatedValue->PropertySet().StopAnimation(ValueAnimatedNode::s_valueName);
+      m_stopped = true;
+      m_ignoreCompletedHandlers = ignoreCompletedHandlers;
+    }
+  } else {
+    // For composition animations, the animation may have been deferred and
+    // never started. In this case, we will never get a scoped batch
+    // completion, so we need to fire the callback synchronously. For rendering
+    // animations, we always fire the callback synchronously.
     DoCallback(false);
-  } else if (const auto animatedValue = GetAnimatedValue()) {
-    animatedValue->PropertySet().StopAnimation(ValueAnimatedNode::s_valueName);
-    m_stopped = true;
-    m_ignoreCompletedHandlers = ignoreCompletedHandlers;
+  }
+}
+
+void AnimationDriver::RunAnimationStep(winrt::TimeSpan renderingTime) {
+  assert(!m_useComposition);
+  if (m_isComplete) {
+    return;
+  }
+
+  // winrt::TimeSpan ticks are 100 nanoseconds, divide by 10000 to get milliseconds.
+  const auto frameTimeMs = renderingTime.count() / 10000.0;
+  auto restarting = false;
+  if (m_startFrameTimeMs < 0) {
+    m_startFrameTimeMs = frameTimeMs;
+    restarting = true;
+  }
+
+  const auto timeDeltaMs = frameTimeMs - m_startFrameTimeMs;
+  const auto isComplete = Update(timeDeltaMs, restarting);
+
+  if (isComplete) {
+    if (m_iterations == -1 || ++m_iteration < m_iterations) {
+      m_startFrameTimeMs = -1;
+    } else {
+      m_isComplete = true;
+    }
   }
 }
 

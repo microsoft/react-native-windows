@@ -1,8 +1,39 @@
 # Change Log - @rnw-scripts/doxysaurus
 
-This log was last generated on Sat, 15 Oct 2022 05:11:59 GMT and should not be manually modified.
+This log was last generated on Wed, 16 Nov 2022 06:16:01 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.3.2
+
+Wed, 16 Nov 2022 06:16:01 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.10
+- Bump @rnw-scripts/just-task to v2.3.2
+
+## 0.3.1
+
+Sat, 12 Nov 2022 06:17:22 GMT
+
+### Patches
+
+- Integrate 10/10 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.9
+- Bump @rnw-scripts/jest-unittest-config to v1.4.1
+- Bump @rnw-scripts/just-task to v2.3.1
+
+## 0.3.0
+
+Thu, 10 Nov 2022 06:17:10 GMT
+
+### Minor changes
+
+- integration 9/26/22 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.8
+- Bump @rnw-scripts/jest-unittest-config to v1.4.0
+- Bump @rnw-scripts/just-task to v2.3.0
 
 ## 0.2.1
 

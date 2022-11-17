@@ -48,6 +48,7 @@ namespace Microsoft.ReactNative.Composition
     IVisual GetAt(UInt32 index);
     void Opacity(Single opacity);
     void Scale(Windows.Foundation.Numerics.Vector3 scale);
+    void TransformMatrix(Windows.Foundation.Numerics.Matrix4x4 transform);
     void RotationAngle(Single angle);
     void IsVisible(Boolean isVisible);
     void Size(Windows.Foundation.Numerics.Vector2 size);

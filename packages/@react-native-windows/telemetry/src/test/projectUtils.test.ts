@@ -81,4 +81,4 @@ test('configToProjectInfo() works with playground project info', async () => {
   expect(projectInfo.usesRNConfig).toBe(true);
   expect(projectInfo.jsEngine).toBe('Hermes');
   expect(projectInfo.rnwSource).toBe('Source');
-});
+}, 200000 /* Increase timeout of this test */);

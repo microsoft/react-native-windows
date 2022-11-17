@@ -1,8 +1,70 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 08 Nov 2022 06:12:54 GMT and should not be manually modified.
+This log was last generated on Wed, 16 Nov 2022 06:16:00 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.583
+
+Wed, 16 Nov 2022 06:16:00 GMT
+
+### Changes
+
+- Fix WinUI 3 crash when using keyboard due to KeyboardEventHandler using unsupported class (lyahdav@users.noreply.github.com)
+- Update to folly 2022.11.07 (30809111+acoates-ms@users.noreply.github.com)
+- Allow >10MB content for blob responses (julio.rocha@microsoft.com)
+- Update folly hash for current version (30809111+acoates-ms@users.noreply.github.com)
+- Update how types are exported to align with core (30809111+acoates-ms@users.noreply.github.com)
+- Use standard Panel APIs for children in ViewViewManager (erozell@outlook.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.150
+- Bump @react-native-windows/codegen to v0.0.0-canary.43
+- Bump @rnw-scripts/just-task to v2.3.2
+- Bump react-native-platform-override to v1.8.2
+
+## 0.0.0-canary.582
+
+Tue, 15 Nov 2022 06:16:37 GMT
+
+### Changes
+
+- Always instantiate Blob module inUWP (julio.rocha@microsoft.com)
+- Move remaining PackageReferences out of new project templates (jthysell@microsoft.com)
+- Fabric: Initial NativeAnimated support (30809111+acoates-ms@users.noreply.github.com)
+- Update `rnw-dependencies.ps1` to improve messaging (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.149
+
+## 0.0.0-canary.581
+
+Sat, 12 Nov 2022 06:17:23 GMT
+
+### Changes
+
+- Integrate 10/10 (34109996+chiaramooney@users.noreply.github.com)
+- Suppress Flyout if XamlRoot does not have focus (erozell@outlook.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.148
+- Bump @react-native-windows/codegen to v0.0.0-canary.42
+- Bump @rnw-scripts/just-task to v2.3.1
+- Bump react-native-platform-override to v1.8.1
+
+## 0.0.0-canary.580
+
+Fri, 11 Nov 2022 06:15:10 GMT
+
+### Changes
+
+- Adds Rendering driver option to NativeAnimated (erozell@outlook.com)
+
+## 0.0.0-canary.579
+
+Thu, 10 Nov 2022 06:17:11 GMT
+
+### Changes
+
+- integration 9/26/22 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.147
+- Bump @react-native-windows/codegen to v0.0.0-canary.41
+- Bump @rnw-scripts/just-task to v2.3.0
+- Bump react-native-platform-override to v1.8.0
 
 ## 0.0.0-canary.578
 

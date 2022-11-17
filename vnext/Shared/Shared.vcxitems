@@ -50,7 +50,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\FileReaderModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\HttpModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\I18nModule.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\NetworkingModule.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\NetworkingModule.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\PlatformConstantsModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\SourceCodeModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\StatusBarManagerModule.cpp" />
@@ -203,6 +205,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\YogaStylableProps.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\BatchedEventQueue.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\ComponentDescriptor.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\CoreFeatures.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventBeat.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventDispatcher.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventEmitter.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />

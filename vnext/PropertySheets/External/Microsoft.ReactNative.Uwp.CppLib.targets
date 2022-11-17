@@ -15,6 +15,7 @@
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\External\Microsoft.ReactNative.Cpp.PackageReferences.props" Condition="$(UseExperimentalNuget)" />
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" PrivateAssets="all" />
     <!-- WinUI package name and version are set by WinUI.props -->
     <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" Condition="'$(OverrideWinUIPackage)'!='true'" />
   </ItemGroup>

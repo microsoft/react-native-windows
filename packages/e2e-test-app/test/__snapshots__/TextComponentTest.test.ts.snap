@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TextTest Text alignment 1`] = `
-Object {
+{
   "AutomationId": "text-align",
   "Background": null,
   "BorderBrush": "#00000000",
@@ -18,8 +18,8 @@ Object {
   "Visibility": "Visible",
   "Width": 718,
   "XamlType": "Microsoft.ReactNative.ViewPanel",
-  "children": Array [
-    Object {
+  "children": [
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -35,7 +35,7 @@ Object {
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -51,7 +51,7 @@ Object {
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -67,7 +67,7 @@ Object {
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -83,7 +83,7 @@ Object {
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -104,7 +104,7 @@ Object {
 `;
 
 exports[`TextTest Text background color 1`] = `
-Object {
+{
   "AutomationId": "text-background-color",
   "Background": null,
   "BorderBrush": "#00000000",
@@ -121,8 +121,8 @@ Object {
   "Visibility": "Visible",
   "Width": 718,
   "XamlType": "Microsoft.ReactNative.ViewPanel",
-  "children": Array [
-    Object {
+  "children": [
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FFFFC0CB",
@@ -132,14 +132,14 @@ Object {
       "Margin": "0,0,0,0",
       "Padding": "0,0,0,0",
       "Text": "Outer pink",
-      "TextHighlighters": Array [],
+      "TextHighlighters": [],
       "Top": 0,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -149,14 +149,14 @@ Object {
       "Margin": "0,0,0,0",
       "Padding": "0,0,0,0",
       "Text": "Outer red nested",
-      "TextHighlighters": Array [],
+      "TextHighlighters": [],
       "Top": 19,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -166,12 +166,12 @@ Object {
       "Margin": "0,0,0,0",
       "Padding": "0,0,0,0",
       "Text": "Outer nested white on blue",
-      "TextHighlighters": Array [
-        Object {
+      "TextHighlighters": [
+        {
           "Background": "#FF0000FF",
           "Foreground": "#FFFFFFFF",
-          "Ranges": Array [
-            Object {
+          "Ranges": [
+            {
               "Length": 20,
               "StartIndex": 6,
             },
@@ -184,7 +184,7 @@ Object {
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FFFFC0CB",
@@ -194,14 +194,14 @@ Object {
       "Margin": "0,0,0,0",
       "Padding": "0,0,0,0",
       "Text": "Outer pink nested red",
-      "TextHighlighters": Array [],
+      "TextHighlighters": [],
       "Top": 57,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -211,22 +211,22 @@ Object {
       "Margin": "0,0,0,0",
       "Padding": "0,0,0,0",
       "Text": "Outer on green nested white on inherit green",
-      "TextHighlighters": Array [
-        Object {
+      "TextHighlighters": [
+        {
           "Background": "#FF008000",
           "Foreground": null,
-          "Ranges": Array [
-            Object {
+          "Ranges": [
+            {
               "Length": 44,
               "StartIndex": 0,
             },
           ],
         },
-        Object {
+        {
           "Background": "#FF008000",
           "Foreground": "#FFFFFFFF",
-          "Ranges": Array [
-            Object {
+          "Ranges": [
+            {
               "Length": 29,
               "StartIndex": 15,
             },
@@ -239,7 +239,7 @@ Object {
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FFFFA500",
@@ -249,22 +249,22 @@ Object {
       "Margin": "0,0,0,0",
       "Padding": "0,0,0,0",
       "Text": "Outer orange on green nested white on blue",
-      "TextHighlighters": Array [
-        Object {
+      "TextHighlighters": [
+        {
           "Background": "#FF008000",
           "Foreground": "#FFFFA500",
-          "Ranges": Array [
-            Object {
+          "Ranges": [
+            {
               "Length": 42,
               "StartIndex": 0,
             },
           ],
         },
-        Object {
+        {
           "Background": "#FF0000FF",
           "Foreground": "#FFFFFFFF",
-          "Ranges": Array [
-            Object {
+          "Ranges": [
+            {
               "Length": 20,
               "StartIndex": 22,
             },
@@ -277,7 +277,7 @@ Object {
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FFFFA500",
@@ -287,12 +287,12 @@ Object {
       "Margin": "0,0,0,0",
       "Padding": "0,0,0,0",
       "Text": "Outer orange nested white on blue",
-      "TextHighlighters": Array [
-        Object {
+      "TextHighlighters": [
+        {
           "Background": "#FF0000FF",
           "Foreground": "#FFFFFFFF",
-          "Ranges": Array [
-            Object {
+          "Ranges": [
+            {
               "Length": 20,
               "StartIndex": 13,
             },
@@ -305,7 +305,7 @@ Object {
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FFFFA500",
@@ -315,12 +315,12 @@ Object {
       "Margin": "0,0,0,0",
       "Padding": "0,0,0,0",
       "Text": "nested orange inherit on blue",
-      "TextHighlighters": Array [
-        Object {
+      "TextHighlighters": [
+        {
           "Background": "#FF0000FF",
           "Foreground": "#FFFFA500",
-          "Ranges": Array [
-            Object {
+          "Ranges": [
+            {
               "Length": 29,
               "StartIndex": 0,
             },
@@ -333,7 +333,7 @@ Object {
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -343,22 +343,22 @@ Object {
       "Margin": "0,0,0,0",
       "Padding": "0,0,0,0",
       "Text": "Outer no_color START_NESTED green DEEPER_NESTED magenta on blue END_NESTED attributes.",
-      "TextHighlighters": Array [
-        Object {
+      "TextHighlighters": [
+        {
           "Background": "#FF008000",
           "Foreground": "#FFFFFFFF",
-          "Ranges": Array [
-            Object {
+          "Ranges": [
+            {
               "Length": 59,
               "StartIndex": 15,
             },
           ],
         },
-        Object {
+        {
           "Background": "#FF0000FF",
           "Foreground": "#FFFF00FF",
-          "Ranges": Array [
-            Object {
+          "Ranges": [
+            {
               "Length": 29,
               "StartIndex": 34,
             },
@@ -371,7 +371,7 @@ Object {
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -381,12 +381,12 @@ Object {
       "Margin": "0,0,0,0",
       "Padding": "0,0,0,0",
       "Text": "Outer no_color START_NESTED no_color DEEPER_NESTED blue END_NESTED attributes.",
-      "TextHighlighters": Array [
-        Object {
+      "TextHighlighters": [
+        {
           "Background": "#FF0000FF",
           "Foreground": null,
-          "Ranges": Array [
-            Object {
+          "Ranges": [
+            {
               "Length": 18,
               "StartIndex": 37,
             },
@@ -399,7 +399,7 @@ Object {
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -409,12 +409,12 @@ Object {
       "Margin": "0,0,0,0",
       "Padding": "0,0,0,0",
       "Text": "Outer no_color START_NESTED green DEEPER_NESTED inherit green END_NESTED attributes.",
-      "TextHighlighters": Array [
-        Object {
+      "TextHighlighters": [
+        {
           "Background": "#FF008000",
           "Foreground": null,
-          "Ranges": Array [
-            Object {
+          "Ranges": [
+            {
               "Length": 57,
               "StartIndex": 15,
             },
@@ -427,7 +427,7 @@ Object {
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -437,12 +437,12 @@ Object {
       "Margin": "0,0,0,0",
       "Padding": "0,0,0,0",
       "Text": "Outer red START_NESTED inherit red DEEPER_NESTED inherit red END_NESTED attributes.",
-      "TextHighlighters": Array [
-        Object {
+      "TextHighlighters": [
+        {
           "Background": "#FFFF0000",
           "Foreground": null,
-          "Ranges": Array [
-            Object {
+          "Ranges": [
+            {
               "Length": 83,
               "StartIndex": 0,
             },
@@ -455,7 +455,7 @@ Object {
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -465,32 +465,32 @@ Object {
       "Margin": "0,0,0,0",
       "Padding": "0,0,0,0",
       "Text": "Outer red START_NESTED green DEEPER_NESTED blue END_NESTED attributes.",
-      "TextHighlighters": Array [
-        Object {
+      "TextHighlighters": [
+        {
           "Background": "#FFFF0000",
           "Foreground": null,
-          "Ranges": Array [
-            Object {
+          "Ranges": [
+            {
               "Length": 70,
               "StartIndex": 0,
             },
           ],
         },
-        Object {
+        {
           "Background": "#FF008000",
           "Foreground": null,
-          "Ranges": Array [
-            Object {
+          "Ranges": [
+            {
               "Length": 48,
               "StartIndex": 10,
             },
           ],
         },
-        Object {
+        {
           "Background": "#FF0000FF",
           "Foreground": null,
-          "Ranges": Array [
-            Object {
+          "Ranges": [
+            {
               "Length": 18,
               "StartIndex": 29,
             },
@@ -508,7 +508,7 @@ Object {
 `;
 
 exports[`TextTest Text border 1`] = `
-Object {
+{
   "AutomationId": "text-border",
   "Background": null,
   "BorderBrush": "#00000000",
@@ -525,8 +525,8 @@ Object {
   "Visibility": "Visible",
   "Width": 718,
   "XamlType": "Microsoft.ReactNative.ViewPanel",
-  "children": Array [
-    Object {
+  "children": [
+    {
       "Background": null,
       "BorderBrush": "#FF000000",
       "BorderThickness": "2,2,2,2",
@@ -542,8 +542,8 @@ Object {
       "Visibility": "Visible",
       "Width": 400,
       "XamlType": "Microsoft.ReactNative.ViewPanel",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -559,7 +559,7 @@ Object {
           "Width": 400,
           "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
         },
-        Object {
+        {
           "Background": null,
           "BorderBrush": "#FF000000",
           "BorderThickness": "2,2,2,2",
@@ -577,7 +577,7 @@ Object {
         },
       ],
     },
-    Object {
+    {
       "Background": null,
       "BorderBrush": "#FF008000",
       "BorderThickness": "3,3,3,3",
@@ -593,8 +593,8 @@ Object {
       "Visibility": "Visible",
       "Width": 518,
       "XamlType": "Microsoft.ReactNative.ViewPanel",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -612,7 +612,7 @@ Object {
           "Width": 452,
           "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
         },
-        Object {
+        {
           "Background": null,
           "BorderBrush": "#FF008000",
           "BorderThickness": "3,3,3,3",
@@ -630,7 +630,7 @@ Object {
         },
       ],
     },
-    Object {
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -650,8 +650,451 @@ Object {
 }
 `;
 
+exports[`TextTest Text can have advanced borders 1`] = `
+{
+  "AutomationId": "advanced-borders",
+  "Background": null,
+  "BorderBrush": "#00000000",
+  "BorderThickness": "0,0,0,0",
+  "Clip": null,
+  "CornerRadius": "0,0,0,0",
+  "FlowDirection": "LeftToRight",
+  "Height": 141,
+  "HorizontalAlignment": "Stretch",
+  "Left": 0,
+  "Margin": "0,0,0,0",
+  "Top": 0,
+  "VerticalAlignment": "Stretch",
+  "Visibility": "Visible",
+  "Width": 718,
+  "XamlType": "Microsoft.ReactNative.ViewPanel",
+  "children": [
+    {
+      "Background": null,
+      "BorderBrush": "#FFFF0000",
+      "BorderThickness": "20,15,10,5",
+      "Clip": null,
+      "CornerRadius": "7,5,1,3",
+      "FlowDirection": "LeftToRight",
+      "Height": 59,
+      "HorizontalAlignment": "Stretch",
+      "Left": 0,
+      "Margin": "0,0,0,0",
+      "Padding": "0,0,0,0",
+      "Top": 0,
+      "VerticalAlignment": "Stretch",
+      "Visibility": "Visible",
+      "Width": 718,
+      "XamlType": "Windows.UI.Xaml.Controls.Border",
+      "children": [
+        {
+          "Background": null,
+          "BorderBrush": "#FFFF0000",
+          "BorderThickness": "20,15,10,5",
+          "Clip": null,
+          "CornerRadius": "7,5,1,3",
+          "FlowDirection": "LeftToRight",
+          "HorizontalAlignment": "Stretch",
+          "Left": 0,
+          "Margin": "0,0,0,0",
+          "Top": 0,
+          "VerticalAlignment": "Stretch",
+          "Visibility": "Visible",
+          "XamlType": "Microsoft.ReactNative.ViewPanel",
+          "children": [
+            {
+              "Clip": null,
+              "FlowDirection": "LeftToRight",
+              "Foreground": "#FF000000",
+              "Height": 39,
+              "HorizontalAlignment": "Stretch",
+              "Left": 20,
+              "Margin": "0,0,0,0",
+              "Padding": "0,0,0,0",
+              "Text": "This text has customized borders.",
+              "Top": 15,
+              "VerticalAlignment": "Stretch",
+              "Visibility": "Visible",
+              "Width": 688,
+              "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      "Background": null,
+      "BorderBrush": "#FF0000FF",
+      "BorderThickness": "20,15,10,5",
+      "Clip": null,
+      "CornerRadius": "7,5,1,3",
+      "FlowDirection": "LeftToRight",
+      "Height": 59,
+      "HorizontalAlignment": "Stretch",
+      "Left": 0,
+      "Margin": "0,0,0,0",
+      "Padding": "0,0,0,0",
+      "Top": 59,
+      "VerticalAlignment": "Stretch",
+      "Visibility": "Visible",
+      "Width": 718,
+      "XamlType": "Windows.UI.Xaml.Controls.Border",
+      "children": [
+        {
+          "Background": null,
+          "BorderBrush": "#FF0000FF",
+          "BorderThickness": "20,15,10,5",
+          "Clip": null,
+          "CornerRadius": "7,5,1,3",
+          "FlowDirection": "LeftToRight",
+          "HorizontalAlignment": "Stretch",
+          "Left": 0,
+          "Margin": "0,0,0,0",
+          "Top": 0,
+          "VerticalAlignment": "Stretch",
+          "Visibility": "Visible",
+          "XamlType": "Microsoft.ReactNative.ViewPanel",
+          "children": [
+            {
+              "Clip": null,
+              "FlowDirection": "LeftToRight",
+              "Foreground": "#FF000000",
+              "Height": 39,
+              "HorizontalAlignment": "Stretch",
+              "Left": 20,
+              "Margin": "0,0,0,0",
+              "Padding": "0,0,0,0",
+              "Text": "This text has customized borders.",
+              "Top": 15,
+              "VerticalAlignment": "Stretch",
+              "Visibility": "Visible",
+              "Width": 688,
+              "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      "Background": null,
+      "BorderBrush": "#FF008000",
+      "BorderThickness": "1,1,1,1",
+      "Clip": null,
+      "CornerRadius": "3,3,3,3",
+      "FlowDirection": "LeftToRight",
+      "Height": 23,
+      "HorizontalAlignment": "Stretch",
+      "Left": 0,
+      "Margin": "0,0,0,0",
+      "Padding": "0,0,0,0",
+      "Top": 118,
+      "VerticalAlignment": "Stretch",
+      "Visibility": "Visible",
+      "Width": 718,
+      "XamlType": "Windows.UI.Xaml.Controls.Border",
+      "children": [
+        {
+          "Background": null,
+          "BorderBrush": "#FF008000",
+          "BorderThickness": "1,1,1,1",
+          "Clip": null,
+          "CornerRadius": "3,3,3,3",
+          "FlowDirection": "LeftToRight",
+          "HorizontalAlignment": "Stretch",
+          "Left": 0,
+          "Margin": "0,0,0,0",
+          "Top": 0,
+          "VerticalAlignment": "Stretch",
+          "Visibility": "Visible",
+          "XamlType": "Microsoft.ReactNative.ViewPanel",
+          "children": [
+            {
+              "Clip": null,
+              "FlowDirection": "LeftToRight",
+              "Foreground": "#FF000000",
+              "Height": 21,
+              "HorizontalAlignment": "Stretch",
+              "Left": 1,
+              "Margin": "0,0,0,0",
+              "Padding": "0,0,0,0",
+              "Text": "This text has customized borders.",
+              "Top": 1,
+              "VerticalAlignment": "Stretch",
+              "Visibility": "Visible",
+              "Width": 716,
+              "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+            },
+          ],
+        },
+      ],
+    },
+  ],
+}
+`;
+
+exports[`TextTest Text can have customized accessibility 1`] = `
+{
+  "AutomationId": "text-accessibility",
+  "Background": null,
+  "BorderBrush": null,
+  "BorderThickness": "0,0,0,0",
+  "Clip": null,
+  "CornerRadius": "0,0,0,0",
+  "FlowDirection": "LeftToRight",
+  "Foreground": "#FF000000",
+  "Height": 19,
+  "HorizontalAlignment": "Stretch",
+  "Left": 0,
+  "Margin": "0,0,0,0",
+  "Padding": "0,0,0,0",
+  "Top": 0,
+  "VerticalAlignment": "Stretch",
+  "Visibility": "Visible",
+  "Width": 718,
+  "XamlType": "Microsoft.ReactNative.ViewControl",
+  "children": [
+    {
+      "Background": null,
+      "BorderBrush": null,
+      "BorderThickness": "0,0,0,0",
+      "Clip": null,
+      "CornerRadius": "0,0,0,0",
+      "FlowDirection": "LeftToRight",
+      "Foreground": "#FF000000",
+      "HorizontalAlignment": "Stretch",
+      "Left": 0,
+      "Margin": "0,0,0,0",
+      "Padding": "0,0,0,0",
+      "Top": 0,
+      "VerticalAlignment": "Stretch",
+      "Visibility": "Visible",
+      "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
+      "children": [
+        {
+          "Background": null,
+          "BorderBrush": "#00000000",
+          "BorderThickness": "0,0,0,0",
+          "Clip": null,
+          "CornerRadius": "0,0,0,0",
+          "FlowDirection": "LeftToRight",
+          "Height": 19,
+          "HorizontalAlignment": "Stretch",
+          "Left": 0,
+          "Margin": "0,0,0,0",
+          "Top": 0,
+          "VerticalAlignment": "Stretch",
+          "Visibility": "Visible",
+          "Width": 718,
+          "XamlType": "Microsoft.ReactNative.ViewPanel",
+          "children": [
+            {
+              "Clip": null,
+              "FlowDirection": "LeftToRight",
+              "Foreground": "#FF000000",
+              "Height": 19,
+              "HorizontalAlignment": "Stretch",
+              "Left": 0,
+              "Margin": "0,0,0,0",
+              "Padding": "0,0,0,0",
+              "Text": "This text has customized accessibility.",
+              "Top": 0,
+              "VerticalAlignment": "Stretch",
+              "Visibility": "Visible",
+              "Width": 718,
+              "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+            },
+          ],
+        },
+      ],
+    },
+  ],
+}
+`;
+
+exports[`TextTest Text can have customized dimensions 1`] = `
+{
+  "AutomationId": "text-height-width",
+  "Background": null,
+  "BorderBrush": null,
+  "BorderThickness": "0,0,0,0",
+  "Clip": null,
+  "CornerRadius": "0,0,0,0",
+  "FlowDirection": "LeftToRight",
+  "Foreground": "#FF000000",
+  "Height": 100,
+  "HorizontalAlignment": "Stretch",
+  "Left": 0,
+  "Margin": "0,0,0,0",
+  "Padding": "0,0,0,0",
+  "Top": 0,
+  "VerticalAlignment": "Stretch",
+  "Visibility": "Visible",
+  "Width": 718,
+  "XamlType": "Microsoft.ReactNative.ViewControl",
+  "children": [
+    {
+      "Background": null,
+      "BorderBrush": null,
+      "BorderThickness": "0,0,0,0",
+      "Clip": null,
+      "CornerRadius": "0,0,0,0",
+      "FlowDirection": "LeftToRight",
+      "Foreground": "#FF000000",
+      "HorizontalAlignment": "Stretch",
+      "Left": 0,
+      "Margin": "0,0,0,0",
+      "Padding": "0,0,0,0",
+      "Top": 0,
+      "VerticalAlignment": "Stretch",
+      "Visibility": "Visible",
+      "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
+      "children": [
+        {
+          "Background": null,
+          "BorderBrush": "#00000000",
+          "BorderThickness": "0,0,0,0",
+          "Clip": null,
+          "CornerRadius": "0,0,0,0",
+          "FlowDirection": "LeftToRight",
+          "Height": 100,
+          "HorizontalAlignment": "Stretch",
+          "Left": 0,
+          "Margin": "0,0,0,0",
+          "Top": 0,
+          "VerticalAlignment": "Stretch",
+          "Visibility": "Visible",
+          "Width": 718,
+          "XamlType": "Microsoft.ReactNative.ViewPanel",
+          "children": [
+            {
+              "Clip": null,
+              "FlowDirection": "LeftToRight",
+              "Foreground": "#FF000000",
+              "Height": 100,
+              "HorizontalAlignment": "Stretch",
+              "Left": 0,
+              "Margin": "0,0,0,0",
+              "Padding": "0,0,0,0",
+              "Text": "This text has customized dimensions.",
+              "Top": 0,
+              "VerticalAlignment": "Stretch",
+              "Visibility": "Visible",
+              "Width": 100,
+              "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+            },
+          ],
+        },
+      ],
+    },
+  ],
+}
+`;
+
+exports[`TextTest Text can have font variants 1`] = `
+{
+  "AutomationId": "font-variants",
+  "Background": null,
+  "BorderBrush": "#00000000",
+  "BorderThickness": "0,0,0,0",
+  "Clip": null,
+  "CornerRadius": "0,0,0,0",
+  "FlowDirection": "LeftToRight",
+  "Height": 95,
+  "HorizontalAlignment": "Stretch",
+  "Left": 0,
+  "Margin": "0,0,0,0",
+  "Top": 0,
+  "VerticalAlignment": "Stretch",
+  "Visibility": "Visible",
+  "Width": 718,
+  "XamlType": "Microsoft.ReactNative.ViewPanel",
+  "children": [
+    {
+      "Clip": null,
+      "FlowDirection": "LeftToRight",
+      "Foreground": "#FF000000",
+      "Height": 19,
+      "HorizontalAlignment": "Stretch",
+      "Left": 0,
+      "Margin": "0,0,0,0",
+      "Padding": "0,0,0,0",
+      "Text": "Text with small-caps font variant.",
+      "Top": 0,
+      "VerticalAlignment": "Stretch",
+      "Visibility": "Visible",
+      "Width": 718,
+      "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+    },
+    {
+      "Clip": null,
+      "FlowDirection": "LeftToRight",
+      "Foreground": "#FF000000",
+      "Height": 19,
+      "HorizontalAlignment": "Stretch",
+      "Left": 0,
+      "Margin": "0,0,0,0",
+      "Padding": "0,0,0,0",
+      "Text": "Text with oldstyle-nums font variant.",
+      "Top": 19,
+      "VerticalAlignment": "Stretch",
+      "Visibility": "Visible",
+      "Width": 718,
+      "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+    },
+    {
+      "Clip": null,
+      "FlowDirection": "LeftToRight",
+      "Foreground": "#FF000000",
+      "Height": 19,
+      "HorizontalAlignment": "Stretch",
+      "Left": 0,
+      "Margin": "0,0,0,0",
+      "Padding": "0,0,0,0",
+      "Text": "Text with lining-nums font variant.",
+      "Top": 38,
+      "VerticalAlignment": "Stretch",
+      "Visibility": "Visible",
+      "Width": 718,
+      "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+    },
+    {
+      "Clip": null,
+      "FlowDirection": "LeftToRight",
+      "Foreground": "#FF000000",
+      "Height": 19,
+      "HorizontalAlignment": "Stretch",
+      "Left": 0,
+      "Margin": "0,0,0,0",
+      "Padding": "0,0,0,0",
+      "Text": "Text with tabular-nums font variant.",
+      "Top": 57,
+      "VerticalAlignment": "Stretch",
+      "Visibility": "Visible",
+      "Width": 718,
+      "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+    },
+    {
+      "Clip": null,
+      "FlowDirection": "LeftToRight",
+      "Foreground": "#FF000000",
+      "Height": 19,
+      "HorizontalAlignment": "Stretch",
+      "Left": 0,
+      "Margin": "0,0,0,0",
+      "Padding": "0,0,0,0",
+      "Text": "Text with proportional-nums font variant.",
+      "Top": 76,
+      "VerticalAlignment": "Stretch",
+      "Visibility": "Visible",
+      "Width": 718,
+      "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+    },
+  ],
+}
+`;
+
 exports[`TextTest Text color 1`] = `
-Object {
+{
   "AutomationId": "text-color",
   "Clip": null,
   "FlowDirection": "LeftToRight",
@@ -671,7 +1114,7 @@ Object {
 `;
 
 exports[`TextTest Text color with children 1`] = `
-Object {
+{
   "AutomationId": "text-outer-color",
   "Clip": null,
   "FlowDirection": "LeftToRight",
@@ -691,7 +1134,7 @@ Object {
 `;
 
 exports[`TextTest Text decoration solid linethrough 1`] = `
-Object {
+{
   "AutomationId": "text-decoration-solid-linethru",
   "Clip": null,
   "FlowDirection": "LeftToRight",
@@ -711,7 +1154,7 @@ Object {
 `;
 
 exports[`TextTest Text decoration underline 1`] = `
-Object {
+{
   "AutomationId": "text-decoration-underline",
   "Clip": null,
   "FlowDirection": "LeftToRight",
@@ -731,7 +1174,7 @@ Object {
 `;
 
 exports[`TextTest Text ellipsize 1`] = `
-Object {
+{
   "AutomationId": "text-ellipsize",
   "Background": null,
   "BorderBrush": "#00000000",
@@ -748,8 +1191,8 @@ Object {
   "Visibility": "Visible",
   "Width": 718,
   "XamlType": "Microsoft.ReactNative.ViewPanel",
-  "children": Array [
-    Object {
+  "children": [
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -765,7 +1208,7 @@ Object {
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -781,7 +1224,7 @@ Object {
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -797,7 +1240,7 @@ Object {
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -813,7 +1256,7 @@ Object {
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -829,7 +1272,7 @@ Object {
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -845,7 +1288,7 @@ Object {
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -861,7 +1304,7 @@ Object {
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -882,7 +1325,7 @@ Object {
 `;
 
 exports[`TextTest Text font family 1`] = `
-Object {
+{
   "AutomationId": "text-font-family",
   "Clip": null,
   "FlowDirection": "LeftToRight",
@@ -902,7 +1345,7 @@ Object {
 `;
 
 exports[`TextTest Text font padding 1`] = `
-Object {
+{
   "AutomationId": "text-font-padding",
   "Background": null,
   "BorderBrush": "#00000000",
@@ -919,8 +1362,8 @@ Object {
   "Visibility": "Visible",
   "Width": 718,
   "XamlType": "Microsoft.ReactNative.ViewPanel",
-  "children": Array [
-    Object {
+  "children": [
+    {
       "Background": null,
       "BorderBrush": "#00000000",
       "BorderThickness": "0,0,0,0",
@@ -936,8 +1379,8 @@ Object {
       "Visibility": "Visible",
       "Width": 119,
       "XamlType": "Microsoft.ReactNative.ViewPanel",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -953,7 +1396,7 @@ Object {
           "Width": 119,
           "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
         },
-        Object {
+        {
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -971,7 +1414,7 @@ Object {
         },
       ],
     },
-    Object {
+    {
       "Background": null,
       "BorderBrush": "#00000000",
       "BorderThickness": "0,0,0,0",
@@ -987,8 +1430,8 @@ Object {
       "Visibility": "Visible",
       "Width": 158,
       "XamlType": "Microsoft.ReactNative.ViewPanel",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -1004,7 +1447,7 @@ Object {
           "Width": 119,
           "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
         },
-        Object {
+        {
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -1027,7 +1470,7 @@ Object {
 `;
 
 exports[`TextTest Text force one line 1`] = `
-Object {
+{
   "AutomationId": "text-one-line",
   "Clip": null,
   "FlowDirection": "LeftToRight",
@@ -1047,7 +1490,7 @@ Object {
 `;
 
 exports[`TextTest Text is selectable 1`] = `
-Object {
+{
   "AutomationId": "text-selectable",
   "Clip": null,
   "FlowDirection": "LeftToRight",
@@ -1067,7 +1510,7 @@ Object {
 `;
 
 exports[`TextTest Text letter spacing 1`] = `
-Object {
+{
   "AutomationId": "text-letter-spacing",
   "Background": null,
   "BorderBrush": "#00000000",
@@ -1084,8 +1527,8 @@ Object {
   "Visibility": "Visible",
   "Width": 718,
   "XamlType": "Microsoft.ReactNative.ViewPanel",
-  "children": Array [
-    Object {
+  "children": [
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1101,7 +1544,7 @@ Object {
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1117,7 +1560,7 @@ Object {
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1133,7 +1576,7 @@ Object {
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Background": null,
       "BorderBrush": "#00000000",
       "BorderThickness": "0,0,0,0",
@@ -1149,8 +1592,8 @@ Object {
       "Visibility": "Visible",
       "Width": 718,
       "XamlType": "Microsoft.ReactNative.ViewPanel",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -1168,7 +1611,7 @@ Object {
         },
       ],
     },
-    Object {
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1184,7 +1627,7 @@ Object {
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1205,7 +1648,7 @@ Object {
 `;
 
 exports[`TextTest Text line height 1`] = `
-Object {
+{
   "AutomationId": "text-line-height",
   "Background": null,
   "BorderBrush": "#00000000",
@@ -1222,8 +1665,8 @@ Object {
   "Visibility": "Visible",
   "Width": 718,
   "XamlType": "Microsoft.ReactNative.ViewPanel",
-  "children": Array [
-    Object {
+  "children": [
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1239,7 +1682,7 @@ Object {
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1260,7 +1703,7 @@ Object {
 `;
 
 exports[`TextTest Text padding 1`] = `
-Object {
+{
   "AutomationId": "text-padding",
   "Clip": null,
   "FlowDirection": "LeftToRight",
@@ -1279,8 +1722,191 @@ Object {
 }
 `;
 
+exports[`TextTest Text ranging opacity 1`] = `
+{
+  "AutomationId": "text-opacity",
+  "Background": null,
+  "BorderBrush": "#00000000",
+  "BorderThickness": "0,0,0,0",
+  "Clip": null,
+  "CornerRadius": "0,0,0,0",
+  "FlowDirection": "LeftToRight",
+  "Height": 190,
+  "HorizontalAlignment": "Stretch",
+  "Left": 0,
+  "Margin": "0,0,0,0",
+  "Top": 0,
+  "VerticalAlignment": "Stretch",
+  "Visibility": "Visible",
+  "Width": 718,
+  "XamlType": "Microsoft.ReactNative.ViewPanel",
+  "children": [
+    {
+      "Clip": null,
+      "FlowDirection": "LeftToRight",
+      "Foreground": "#FF000000",
+      "Height": 19,
+      "HorizontalAlignment": "Stretch",
+      "Left": 0,
+      "Margin": "0,0,0,0",
+      "Padding": "0,0,0,0",
+      "Text": "This text has customized opacity.",
+      "Top": 0,
+      "VerticalAlignment": "Stretch",
+      "Visibility": "Visible",
+      "Width": 718,
+      "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+    },
+    {
+      "Clip": null,
+      "FlowDirection": "LeftToRight",
+      "Foreground": "#FF000000",
+      "Height": 19,
+      "HorizontalAlignment": "Stretch",
+      "Left": 0,
+      "Margin": "0,0,0,0",
+      "Padding": "0,0,0,0",
+      "Text": "This text has customized opacity.",
+      "Top": 19,
+      "VerticalAlignment": "Stretch",
+      "Visibility": "Visible",
+      "Width": 718,
+      "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+    },
+    {
+      "Clip": null,
+      "FlowDirection": "LeftToRight",
+      "Foreground": "#FF000000",
+      "Height": 19,
+      "HorizontalAlignment": "Stretch",
+      "Left": 0,
+      "Margin": "0,0,0,0",
+      "Padding": "0,0,0,0",
+      "Text": "This text has customized opacity.",
+      "Top": 38,
+      "VerticalAlignment": "Stretch",
+      "Visibility": "Visible",
+      "Width": 718,
+      "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+    },
+    {
+      "Clip": null,
+      "FlowDirection": "LeftToRight",
+      "Foreground": "#FF000000",
+      "Height": 19,
+      "HorizontalAlignment": "Stretch",
+      "Left": 0,
+      "Margin": "0,0,0,0",
+      "Padding": "0,0,0,0",
+      "Text": "This text has customized opacity.",
+      "Top": 57,
+      "VerticalAlignment": "Stretch",
+      "Visibility": "Visible",
+      "Width": 718,
+      "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+    },
+    {
+      "Clip": null,
+      "FlowDirection": "LeftToRight",
+      "Foreground": "#FF000000",
+      "Height": 19,
+      "HorizontalAlignment": "Stretch",
+      "Left": 0,
+      "Margin": "0,0,0,0",
+      "Padding": "0,0,0,0",
+      "Text": "This text has customized opacity.",
+      "Top": 76,
+      "VerticalAlignment": "Stretch",
+      "Visibility": "Visible",
+      "Width": 718,
+      "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+    },
+    {
+      "Clip": null,
+      "FlowDirection": "LeftToRight",
+      "Foreground": "#FF000000",
+      "Height": 19,
+      "HorizontalAlignment": "Stretch",
+      "Left": 0,
+      "Margin": "0,0,0,0",
+      "Padding": "0,0,0,0",
+      "Text": "This text has customized opacity.",
+      "Top": 95,
+      "VerticalAlignment": "Stretch",
+      "Visibility": "Visible",
+      "Width": 718,
+      "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+    },
+    {
+      "Clip": null,
+      "FlowDirection": "LeftToRight",
+      "Foreground": "#FF000000",
+      "Height": 19,
+      "HorizontalAlignment": "Stretch",
+      "Left": 0,
+      "Margin": "0,0,0,0",
+      "Padding": "0,0,0,0",
+      "Text": "This text has customized opacity.",
+      "Top": 114,
+      "VerticalAlignment": "Stretch",
+      "Visibility": "Visible",
+      "Width": 718,
+      "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+    },
+    {
+      "Clip": null,
+      "FlowDirection": "LeftToRight",
+      "Foreground": "#FF000000",
+      "Height": 19,
+      "HorizontalAlignment": "Stretch",
+      "Left": 0,
+      "Margin": "0,0,0,0",
+      "Padding": "0,0,0,0",
+      "Text": "This text has customized opacity.",
+      "Top": 133,
+      "VerticalAlignment": "Stretch",
+      "Visibility": "Visible",
+      "Width": 718,
+      "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+    },
+    {
+      "Clip": null,
+      "FlowDirection": "LeftToRight",
+      "Foreground": "#FF000000",
+      "Height": 19,
+      "HorizontalAlignment": "Stretch",
+      "Left": 0,
+      "Margin": "0,0,0,0",
+      "Padding": "0,0,0,0",
+      "Text": "This text has customized opacity.",
+      "Top": 152,
+      "VerticalAlignment": "Stretch",
+      "Visibility": "Visible",
+      "Width": 718,
+      "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+    },
+    {
+      "Clip": null,
+      "FlowDirection": "LeftToRight",
+      "Foreground": "#FF000000",
+      "Height": 19,
+      "HorizontalAlignment": "Stretch",
+      "Left": 0,
+      "Margin": "0,0,0,0",
+      "Padding": "0,0,0,0",
+      "Text": "This text has customized opacity.",
+      "Top": 171,
+      "VerticalAlignment": "Stretch",
+      "Visibility": "Visible",
+      "Width": 718,
+      "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+    },
+  ],
+}
+`;
+
 exports[`TextTest Text selection color 1`] = `
-Object {
+{
   "AutomationId": "text-selection-color",
   "Clip": null,
   "FlowDirection": "LeftToRight",
@@ -1300,7 +1926,7 @@ Object {
 `;
 
 exports[`TextTest Text shadows 1`] = `
-Object {
+{
   "AutomationId": "text-shadow",
   "Clip": null,
   "FlowDirection": "LeftToRight",
@@ -1320,7 +1946,7 @@ Object {
 `;
 
 exports[`TextTest Text size 1`] = `
-Object {
+{
   "AutomationId": "text-size",
   "Clip": null,
   "FlowDirection": "LeftToRight",
@@ -1340,7 +1966,7 @@ Object {
 `;
 
 exports[`TextTest Text transform 1`] = `
-Object {
+{
   "AutomationId": "text-transform",
   "Background": null,
   "BorderBrush": "#00000000",
@@ -1357,8 +1983,8 @@ Object {
   "Visibility": "Visible",
   "Width": 718,
   "XamlType": "Microsoft.ReactNative.ViewPanel",
-  "children": Array [
-    Object {
+  "children": [
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1374,7 +2000,7 @@ Object {
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1390,7 +2016,7 @@ Object {
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1406,7 +2032,7 @@ Object {
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1422,7 +2048,7 @@ Object {
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1431,14 +2057,14 @@ Object {
       "Left": 0,
       "Margin": "0,0,0,0",
       "Padding": "0,0,0,0",
-      "Text": "Should be \\"ABC\\":ABC",
+      "Text": "Should be "ABC":ABC",
       "Top": 76,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1447,14 +2073,14 @@ Object {
       "Left": 0,
       "Margin": "0,0,0,0",
       "Padding": "0,0,0,0",
-      "Text": "Should be \\"XyZ\\":XyZ",
+      "Text": "Should be "XyZ":XyZ",
       "Top": 95,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1463,14 +2089,14 @@ Object {
       "Left": 0,
       "Margin": "0,0,0,0",
       "Padding": "0,0,0,0",
-      "Text": "Should be \\"xYz\\":xYz",
+      "Text": "Should be "xYz":xYz",
       "Top": 114,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1486,7 +2112,7 @@ Object {
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1502,7 +2128,7 @@ Object {
       "Width": 718,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
-    Object {
+    {
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -1520,8 +2146,8 @@ Object {
       "Visibility": "Visible",
       "Width": 718,
       "XamlType": "Microsoft.ReactNative.ViewControl",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -1537,8 +2163,8 @@ Object {
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
-          "children": Array [
-            Object {
+          "children": [
+            {
               "Background": "#00FFFFFF",
               "BorderBrush": "#00000000",
               "BorderThickness": "0,0,0,0",
@@ -1554,8 +2180,8 @@ Object {
               "Visibility": "Visible",
               "Width": 718,
               "XamlType": "Microsoft.ReactNative.ViewPanel",
-              "children": Array [
-                Object {
+              "children": [
+                {
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "Foreground": "#FF000000",
@@ -1571,7 +2197,7 @@ Object {
                   "Width": 718,
                   "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
                 },
-                Object {
+                {
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "Foreground": "#FF000000",
@@ -1598,7 +2224,7 @@ Object {
 `;
 
 exports[`TextTest Text unicode characters 1`] = `
-Object {
+{
   "AutomationId": "text-unicode",
   "Background": null,
   "BorderBrush": "#00000000",
@@ -1615,8 +2241,8 @@ Object {
   "Visibility": "Visible",
   "Width": 718,
   "XamlType": "Microsoft.ReactNative.ViewPanel",
-  "children": Array [
-    Object {
+  "children": [
+    {
       "Background": null,
       "BorderBrush": "#00000000",
       "BorderThickness": "0,0,0,0",
@@ -1632,8 +2258,8 @@ Object {
       "Visibility": "Visible",
       "Width": 718,
       "XamlType": "Microsoft.ReactNative.ViewPanel",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -1651,7 +2277,7 @@ Object {
         },
       ],
     },
-    Object {
+    {
       "Background": null,
       "BorderBrush": "#00000000",
       "BorderThickness": "0,0,0,0",
@@ -1667,8 +2293,8 @@ Object {
       "Visibility": "Visible",
       "Width": 718,
       "XamlType": "Microsoft.ReactNative.ViewPanel",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -1686,7 +2312,7 @@ Object {
         },
       ],
     },
-    Object {
+    {
       "Background": null,
       "BorderBrush": "#00000000",
       "BorderThickness": "0,0,0,0",
@@ -1702,8 +2328,8 @@ Object {
       "Visibility": "Visible",
       "Width": 718,
       "XamlType": "Microsoft.ReactNative.ViewPanel",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -1721,7 +2347,7 @@ Object {
         },
       ],
     },
-    Object {
+    {
       "Background": null,
       "BorderBrush": "#00000000",
       "BorderThickness": "0,0,0,0",
@@ -1737,8 +2363,8 @@ Object {
       "Visibility": "Visible",
       "Width": 718,
       "XamlType": "Microsoft.ReactNative.ViewPanel",
-      "children": Array [
-        Object {
+      "children": [
+        {
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -1761,7 +2387,7 @@ Object {
 `;
 
 exports[`TextTest Text wrapping 1`] = `
-Object {
+{
   "AutomationId": "text-wrap",
   "Clip": null,
   "FlowDirection": "LeftToRight",

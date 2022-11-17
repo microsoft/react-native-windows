@@ -113,7 +113,7 @@ const Components: Array<RNTesterModuleInfo> = [
   {
     key: 'SwitchExample',
     category: 'UI',
-    module: require('../examples/Switch/SwitchExample'),
+    module: require('../examples-win/Switch/SwitchExample'),
   },
   {
     key: 'TextExample',
@@ -182,6 +182,11 @@ const Components: Array<RNTesterModuleInfo> = [
     key: 'LegacyTextHitTestTest',
     module: require('../examples-win/LegacyTests/TextHitTestPage'),
   },
+  /*{
+    key: 'ComponentWithState',
+    category: 'UI',
+    module: require('../examples-win/NewArchitecture/ComponentWithState'),
+  },*/
 ];
 
 const APIs: Array<RNTesterModuleInfo> = [
@@ -298,6 +303,11 @@ const APIs: Array<RNTesterModuleInfo> = [
     key: 'NativeAnimationsExample',
     category: 'UI',
     module: require('../examples/NativeAnimation/NativeAnimationsExample'),
+  },
+  {
+    key: 'CompositionBugsExample',
+    category: 'UI',
+    module: require('../examples-win/NativeAnimation/CompositionBugsExample'),
   },
   {
     key: 'PanResponderExample',

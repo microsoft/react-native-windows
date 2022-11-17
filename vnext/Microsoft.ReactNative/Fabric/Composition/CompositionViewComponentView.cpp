@@ -10,6 +10,7 @@
 #include <Utils/ValueUtils.h>
 #include <Views/FrameworkElementTransferProperties.h>
 #include <winrt/Windows.UI.Composition.h>
+#include "CompositionContextHelper.h"
 #include "CompositionHelpers.h"
 #include "d2d1helper.h"
 
@@ -975,6 +976,65 @@ void CompositionBaseComponentView::indexOffsetForBorder(uint32_t &index) const n
 
 void CompositionBaseComponentView::OnRenderingDeviceLost() noexcept {}
 
+comp::CompositionPropertySet CompositionBaseComponentView::EnsureCenterPointPropertySet() noexcept {
+  if (m_centerPropSet == nullptr) {
+    auto compositor =
+        winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::InnerCompositor(
+            m_compContext);
+
+    m_centerPropSet = compositor.CreatePropertySet();
+    UpdateCenterPropertySet();
+    m_centerPropSet.InsertMatrix4x4(L"transform", winrt::Windows::Foundation::Numerics::float4x4::identity());
+    m_centerPropSet.InsertVector3(L"translation", {0, 0, 0});
+  }
+
+  return m_centerPropSet;
+}
+
+// Create a PropertySet that will hold properties used for animation facades:
+//   "center":      This is the center of the Visual, which is used by animations and transforms to rotate around the
+//                  correct center
+//   "dpiScale3":   This is a vector3 containing the scale factor for this view, used in expressions to convert from
+//                  dips to px
+//   "dpiScale3":   This is a vector3 containing the inverse scale factor for this view, used in expressions to
+//                  convert from px to dips "translation": An additional translation to apply to the to the visual in
+//                  addition to Offset.  This is used to apply any translation properties set, or animated
+//   "transform":   A transform to apply to the visual.  This transform is in dips.
+void CompositionBaseComponentView::UpdateCenterPropertySet() noexcept {
+  if (m_centerPropSet != nullptr) {
+    m_centerPropSet.InsertVector3(
+        L"center",
+        {m_layoutMetrics.frame.size.width * m_layoutMetrics.pointScaleFactor / 2,
+         m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor / 2,
+         0});
+    m_centerPropSet.InsertVector3(
+        L"dpiScale3",
+        {m_layoutMetrics.pointScaleFactor, m_layoutMetrics.pointScaleFactor, m_layoutMetrics.pointScaleFactor});
+    m_centerPropSet.InsertVector3(
+        L"dpiScale3Inv",
+        {1 / m_layoutMetrics.pointScaleFactor,
+         1 / m_layoutMetrics.pointScaleFactor,
+         1 / m_layoutMetrics.pointScaleFactor});
+  }
+}
+
+void CompositionBaseComponentView::EnsureTransformMatrixFacade() noexcept {
+  if (m_hasTransformMatrixFacade)
+    return;
+  m_hasTransformMatrixFacade = true;
+
+  auto centerPointPropSet = EnsureCenterPointPropertySet();
+  // TODO cache expression instead of creating new ones all the time
+  auto expression =
+      winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::InnerCompositor(
+          m_compContext)
+          .CreateExpressionAnimation(
+              L"Matrix4x4.CreateFromScale(PS.dpiScale3Inv) * Matrix4x4.CreateFromTranslation(PS.translation) * PS.transform * Matrix4x4.CreateFromScale(PS.dpiScale3)");
+  expression.SetReferenceParameter(L"PS", centerPointPropSet);
+  winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::InnerVisual(Visual())
+      .StartAnimation(L"TransformMatrix", expression);
+}
+
 CompositionViewComponentView::CompositionViewComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag)
@@ -1047,12 +1107,28 @@ void CompositionViewComponentView::updateProps(
 
   // Transform - TODO doesn't handle multiple of the same kind of transform -- Doesn't handle hittesting updates
   if (oldViewProps.transform != newViewProps.transform) {
-    for (const auto &operation : newViewProps.transform.operations) {
-      if (operation.type == facebook::react::TransformOperationType::Scale)
-        m_visual.Scale({operation.x, operation.y, operation.z});
-      else if (operation.type == facebook::react::TransformOperationType::Rotate)
-        m_visual.RotationAngle(operation.z);
-    }
+    winrt::Windows::Foundation::Numerics::float4x4 transformMatrix;
+    transformMatrix.m11 = newViewProps.transform.matrix[0];
+    transformMatrix.m12 = newViewProps.transform.matrix[1];
+    transformMatrix.m13 = newViewProps.transform.matrix[2];
+    transformMatrix.m14 = newViewProps.transform.matrix[3];
+    transformMatrix.m21 = newViewProps.transform.matrix[4];
+    transformMatrix.m22 = newViewProps.transform.matrix[5];
+    transformMatrix.m23 = newViewProps.transform.matrix[6];
+    transformMatrix.m24 = newViewProps.transform.matrix[7];
+    transformMatrix.m31 = newViewProps.transform.matrix[8];
+    transformMatrix.m32 = newViewProps.transform.matrix[9];
+    transformMatrix.m33 = newViewProps.transform.matrix[10];
+    transformMatrix.m34 = newViewProps.transform.matrix[11];
+    transformMatrix.m41 = newViewProps.transform.matrix[12];
+    transformMatrix.m42 = newViewProps.transform.matrix[13];
+    transformMatrix.m43 = newViewProps.transform.matrix[14];
+    transformMatrix.m44 = newViewProps.transform.matrix[15];
+
+    auto centerPointPropSet = EnsureCenterPointPropertySet();
+    centerPointPropSet.InsertMatrix4x4(L"transform", transformMatrix);
+
+    EnsureTransformMatrixFacade();
   }
 
   m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
@@ -1116,6 +1192,7 @@ void CompositionViewComponentView::updateLayoutMetrics(
 
   m_layoutMetrics = layoutMetrics;
 
+  UpdateCenterPropertySet();
   m_visual.Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});

@@ -48,7 +48,7 @@
 <PROJECT_ROOT>/template/.*
 
 ; Ignore the Dangerfile
-<PROJECT_ROOT>/bots/dangerfile.js
+<PROJECT_ROOT>/packages/react-native-bots/dangerfile.js
 
 ; Ignore "BUCK" generated dirs
 <PROJECT_ROOT>/\.buckd/
@@ -69,7 +69,6 @@
 [include]
 ; Need to include hoisted modules
 ../../../node_modules/
-../../@react-native-windows/virtualized-list/
 
 [libs]
 interface.js
@@ -91,7 +90,6 @@ munge_underscores=true
 
 module.name_mapper='^react-native$' -> '<PROJECT_ROOT>/index.win32.js'
 module.name_mapper='^@office-iss/react-native-win32$' -> '<PROJECT_ROOT>/index.win32.js'
-module.name_mapper='^@react-native-windows/virtualized-list$' -> '<PROJECT_ROOT>/../../@react-native-windows/virtualized-list/src/VirtualizedList.js'
 module.name_mapper='^react-native/\(.*\)$' -> '<PROJECT_ROOT>/\1'
 module.name_mapper='^@office-iss/react-native-win32/\(.*\)$' -> '<PROJECT_ROOT>/\1'
 module.name_mapper='^@?[./a-zA-Z0-9$_-]+\.\(bmp\|gif\|jpg\|jpeg\|png\|psd\|svg\|webp\|m4v\|mov\|mp4\|mpeg\|mpg\|webm\|aac\|aiff\|caf\|m4a\|mp3\|wav\|html\|pdf\)$' -> '<PROJECT_ROOT>/Libraries/Image/RelativeImageStub'
@@ -124,4 +122,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.186.0
+^0.188.1

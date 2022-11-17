@@ -8,14 +8,7 @@
  * @format
  */
 
-import * as React from 'react';
-import StyleSheet from '../StyleSheet/StyleSheet';
-
-import ImageInjection from './ImageInjection';
-import ImageAnalyticsTagContext from './ImageAnalyticsTagContext';
-import flattenStyle from '../StyleSheet/flattenStyle';
-import resolveAssetSource from './resolveAssetSource';
-
+import type {RootTag} from '../Types/RootTagTypes';
 import TextAncestor from '../Text/TextAncestor'; // [Windows]
 import invariant from 'invariant'; // [Windows]
 
@@ -24,11 +17,18 @@ import type {ImageProps as ImagePropsType} from './ImageProps';
 import type {ImageStyleProp} from '../StyleSheet/StyleSheet';
 import NativeImageLoaderWin32 from './NativeImageLoaderWin32'; // [Win32] Replace iOS
 
-import {convertObjectFitToResizeMode} from './ImageUtils';
-
-import ImageViewNativeComponent from './ImageViewNativeComponent';
-import type {RootTag} from 'react-native/Libraries/Types/RootTagTypes';
+import flattenStyle from '../StyleSheet/flattenStyle';
+import StyleSheet from '../StyleSheet/StyleSheet';
+import ImageAnalyticsTagContext from './ImageAnalyticsTagContext';
+import ImageInjection from './ImageInjection';
 import {getImageSourcesFromImageProps} from './ImageSourceUtils';
+import {convertObjectFitToResizeMode} from './ImageUtils';
+import ImageViewNativeComponent from './ImageViewNativeComponent';
+import NativeImageLoaderIOS from './NativeImageLoaderIOS';
+import resolveAssetSource from './resolveAssetSource';
+import * as React from 'react';
+
+import type {ImageIOS} from './Image.flow';
 
 function getSize(
   uri: string,
@@ -205,6 +205,7 @@ const BaseImage = (props: ImagePropsType, forwardedRef) => {
                 <ImageViewNativeComponent
                   {...restProps}
                   accessibilityState={_accessibilityState}
+                  accessible={props.alt !== undefined ? true : props.accessible}
                   accessibilityLabel={accessibilityLabel}
                   ref={forwardedRef}
                   style={style}
@@ -303,8 +304,4 @@ const styles = StyleSheet.create({
   },
 });
 
-module.exports = ((Image: any): React.AbstractComponent<
-  ImagePropsType,
-  React.ElementRef<typeof ImageViewNativeComponent>,
-> &
-  ImageComponentStatics);
+module.exports = ((Image: any): ImageIOS);

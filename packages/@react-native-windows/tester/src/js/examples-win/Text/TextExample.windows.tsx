@@ -857,6 +857,158 @@ export class TextExample extends React.Component<
         <RNTesterBlock title="Dynamic backgroundColor">
           <TextHighlightDemo />
         </RNTesterBlock>
+        <RNTesterBlock title="Customized Accessibility">
+          <View accessible={true} testID="text-accessibility">
+            <Text
+              nativeID="text-accessibility"
+              accessibilityLabel="This text has customized accessibility"
+              accessibilityHint="Text">
+              This text has customized accessibility.
+            </Text>
+          </View>
+        </RNTesterBlock>
+        <RNTesterBlock title="Font Variants">
+          <View testID="font-variants">
+            <Text style={{fontVariant: ['small-caps']}}>
+              Text with small-caps font variant.
+            </Text>
+            <Text style={{fontVariant: ['oldstyle-nums']}}>
+              Text with oldstyle-nums font variant.
+            </Text>
+            <Text style={{fontVariant: ['lining-nums']}}>
+              Text with lining-nums font variant.
+            </Text>
+            <Text style={{fontVariant: ['tabular-nums']}}>
+              Text with tabular-nums font variant.
+            </Text>
+            <Text style={{fontVariant: ['proportional-nums']}}>
+              Text with proportional-nums font variant.
+            </Text>
+          </View>
+        </RNTesterBlock>
+        <RNTesterBlock title="Text with Advanced Borders">
+          <View testID="advanced-borders">
+            <Text
+              style={{
+                borderColor: 'red',
+                borderWidth: 1,
+                borderBottomWidth: 5,
+                borderRightWidth: 10,
+                borderTopWidth: 15,
+                borderLeftWidth: 20,
+                borderBottomRightRadius: 1,
+                borderBottomLeftRadius: 3,
+                borderTopRightRadius: 5,
+                borderTopLeftRadius: 7,
+              }}>
+              This text has customized borders.
+            </Text>
+            <Text
+              style={{
+                borderColor: 'blue',
+                borderWidth: 1,
+                borderBottomWidth: 5,
+                borderEndWidth: 10,
+                borderTopWidth: 15,
+                borderStartWidth: 20,
+                borderBottomEndRadius: 1,
+                borderBottomStartRadius: 3,
+                borderTopEndRadius: 5,
+                borderTopStartRadius: 7,
+              }}>
+              This text has customized borders.
+            </Text>
+            <Text
+              style={{
+                borderColor: 'green',
+                borderWidth: 1,
+                borderRadius: 3,
+              }}>
+              This text has customized borders.
+            </Text>
+          </View>
+        </RNTesterBlock>
+        <RNTesterBlock title="Opacity">
+          <View testID="text-opacity">
+            <Text
+              style={{
+                backgroundColor: 'black',
+                opacity: 0.1,
+              }}>
+              This text has customized opacity.
+            </Text>
+            <Text
+              style={{
+                backgroundColor: 'black',
+                opacity: 0.2,
+              }}>
+              This text has customized opacity.
+            </Text>
+            <Text
+              style={{
+                backgroundColor: 'black',
+                opacity: 0.3,
+              }}>
+              This text has customized opacity.
+            </Text>
+            <Text
+              style={{
+                backgroundColor: 'black',
+                opacity: 0.4,
+              }}>
+              This text has customized opacity.
+            </Text>
+            <Text
+              style={{
+                backgroundColor: 'black',
+                opacity: 0.5,
+              }}>
+              This text has customized opacity.
+            </Text>
+            <Text
+              style={{
+                backgroundColor: 'black',
+                opacity: 0.6,
+              }}>
+              This text has customized opacity.
+            </Text>
+            <Text
+              style={{
+                backgroundColor: 'black',
+                opacity: 0.7,
+              }}>
+              This text has customized opacity.
+            </Text>
+            <Text
+              style={{
+                backgroundColor: 'black',
+                opacity: 0.8,
+              }}>
+              This text has customized opacity.
+            </Text>
+            <Text
+              style={{
+                backgroundColor: 'black',
+                opacity: 0.9,
+              }}>
+              This text has customized opacity.
+            </Text>
+            <Text
+              style={{
+                backgroundColor: 'black',
+                opacity: 1,
+              }}>
+              This text has customized opacity.
+            </Text>
+          </View>
+        </RNTesterBlock>
+        <RNTesterBlock title="Height and Width">
+          <View accessible={true} testID="text-height-width">
+            <Text style={{height: 100, width: 100}}>
+              This text has customized dimensions.
+            </Text>
+          </View>
+        </RNTesterBlock>
       </RNTesterPage>
     );
   }

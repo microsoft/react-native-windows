@@ -3,6 +3,9 @@
   "compilerOptions": {
     "rootDir": "src",
     "outDir": ".",
+    "paths": {
+      "Utilities": ["./../../../node_modules/react-native/types/Utilities.d.ts"],
+    },
 
     // Some code copied from react-native-win32 is not strict clean
     "noImplicitAny": false,
