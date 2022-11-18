@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 18 Nov 2022 06:15:35 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.583",
+      "version": "0.0.0-canary.583",
+      "comments": {
+        "none": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d0a0c72c89fc1fd4128c4ea4f516cc1c033a73ff",
+            "comment": "Office nuget should contain fmt headers"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 16 Nov 2022 06:16:00 GMT",
       "tag": "react-native-windows_v0.0.0-canary.583",
       "version": "0.0.0-canary.583",
