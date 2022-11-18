@@ -22,8 +22,6 @@ import {MyComp} from './myComp';
 
 import {default as MyModule} from './src/NativeMyModule';
 
-import {default as MyJsiModule} from './src/NativeMyJsiModule';
-
 const SampleModuleCS = TurboModuleRegistry.get('SampleModuleCS');
 const SampleModuleCpp = TurboModuleRegistry.get('SampleModuleCpp');
 
@@ -360,8 +358,6 @@ class SampleApp extends Component {
         </Text>
 
         <Button onPress={() => { MyModule.voidFunc(); }} title="Call MyModule tests"/>
-
-        <Button onPress={() => { MyJsiModule.voidFunc(); }} title="Call MyJsiModule tests"/>
 
         <Button onPress={() => { this.onPressSampleModuleCS(); }} title="Call SampleModuleCS!" disabled={SampleModuleCS == null} />
         <Button onPress={() => { this.onPressSampleModuleCpp(); }} title="Call SampleModuleCpp!" disabled={SampleModuleCpp == null} />

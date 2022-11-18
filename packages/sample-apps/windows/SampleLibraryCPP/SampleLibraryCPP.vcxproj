@@ -74,11 +74,6 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup />
-  <PropertyGroup Label="JSIModuleDependencies">
-    <FollyVersion>2021.07.22.00</FollyVersion>
-    <FollyDir Condition="'$(FollyDir)' == '' AND Exists('$([MSBuild]::NormalizeDirectory($(MSBuildThisFileDirectory)..\..\..\..\node_modules))')">$(MSBuildThisFileDirectory)..\..\..\..\node_modules\.folly\folly-$(FollyVersion)</FollyDir>
-    <FollyDir>$([MSBuild]::NormalizeDirectory($(FollyDir)))</FollyDir>
-  </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -89,13 +84,8 @@
       <!--Temporarily disable cppwinrt heap enforcement to work around xaml compiler generated std::shared_ptr use -->
       <AdditionalOptions Condition="'$(CppWinRTHeapEnforcement)'==''">/DWINRT_NO_MAKE_DETECTION %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>28204</DisableSpecificWarnings>
-      <PreprocessorDefinitions>_WINRT_DLL;FOLLY_NO_CONFIG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINRT_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalIncludeDirectories>
-        $(FollyDir);
-        $(ReactNativeDir)\ReactCommon;
-        %(AdditionalIncludeDirectories);
-      </AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -132,7 +122,6 @@
     </ClCompile>
     <ClCompile Include="CustomUserControlViewManagerCpp.cpp" />
     <ClCompile Include="CircleViewManagerCpp.cpp" />
-    <ClCompile Include="MyJsiModule.cpp" />
     <ClCompile Include="DebugHelpers.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
@@ -159,9 +148,6 @@
     <Page Include="Themes\Generic.xaml">
       <DeploymentContent>true</DeploymentContent>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="boost" Version="1.76.0.0" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ReactNativeWindowsTargets">

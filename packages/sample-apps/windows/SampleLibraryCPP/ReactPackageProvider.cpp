@@ -22,8 +22,7 @@ namespace winrt::SampleLibraryCpp::implementation {
 void ReactPackageProvider::CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept {
   AddAttributedModules(packageBuilder, true);
 
-  winrt::Microsoft::ReactNative::AddTurboModuleProvider<::SampleLibraryCpp::MyJsiModuleCxx>(
-      packageBuilder, L"MyJsiModule");
+  packageBuilder.AddModule(L"MyModule", MakeTurboModuleProvider<::SampleLibraryCpp::MyModule>());
 
   packageBuilder.AddViewManager(
       L"CustomUserControlViewManagerCpp", []() { return winrt::make<CustomUserControlViewManagerCpp>(); });
