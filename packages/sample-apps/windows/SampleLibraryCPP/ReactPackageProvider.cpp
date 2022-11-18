@@ -11,9 +11,7 @@
 #include "CustomUserControlViewManagerCpp.h"
 #include "SampleModuleCpp.h"
 
-#include "MyJsiModule.h"
 #include "MyModule.h"
-#include "TurboModuleProvider.h"
 
 using namespace winrt::Microsoft::ReactNative;
 
@@ -23,7 +21,6 @@ void ReactPackageProvider::CreatePackage(IReactPackageBuilder const &packageBuil
   AddAttributedModules(packageBuilder, true);
 
   packageBuilder.AddModule(L"MyModule", MakeTurboModuleProvider<::SampleLibraryCpp::MyModule>());
-
   packageBuilder.AddViewManager(
       L"CustomUserControlViewManagerCpp", []() { return winrt::make<CustomUserControlViewManagerCpp>(); });
   packageBuilder.AddViewManager(L"CircleViewManagerCpp", []() { return winrt::make<CircleViewManagerCpp>(); });
