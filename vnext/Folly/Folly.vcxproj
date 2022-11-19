@@ -143,6 +143,7 @@
     <ClInclude Include="$(FollyDir)\folly\IPAddressV4.h" />
     <ClInclude Include="$(FollyDir)\folly\IPAddressV6.h" />
     <ClInclude Include="$(FollyDir)\folly\json.h" />
+    <ClInclude Include="$(FollyDir)\folly\lang\ToAscii.h" />
     <ClInclude Include="$(FollyDir)\folly\Lazy.h" />
     <ClInclude Include="$(FollyDir)\folly\Likely.h" />
     <ClInclude Include="$(FollyDir)\folly\LockTraits.h" />
@@ -320,7 +321,7 @@
   </ItemGroup>
   <Target Name="Deploy" />
   <!-- Reenable this task if we need to temporarily replace any folly files for fixes, while we wait for PRs to land in folly -->
-  <Target Name="ApplyFollyTemporaryPatch" BeforeTargets="PrepareForBuild" DependsOnTargets="UnzipFolly" Inputs="@(TemporaryFollyPatchFiles)" Outputs="@(TemporaryFollyPatchFiles->'$(FollyDir)folly\%(RecursiveDir)%(Filename)%(Extension)')">
+  <Target Name="ApplyFollyTemporaryPatch" BeforeTargets="PrepareForBuild" DependsOnTargets="UnzipFolly">
     <Message Importance="High" Text="Applying temporary patches to folly." />
     <Copy DestinationFiles="@(TemporaryFollyPatchFiles->'$(FollyDir)folly\%(RecursiveDir)%(Filename)%(Extension)')" SourceFiles="@(TemporaryFollyPatchFiles)" />
   </Target>
