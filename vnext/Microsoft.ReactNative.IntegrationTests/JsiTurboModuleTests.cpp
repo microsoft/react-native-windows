@@ -24,6 +24,11 @@
 #include "TestEventService.h"
 #include "TestReactNativeHostHolder.h"
 
+#pragma pack(push)
+#pragma warning(disable : 4100 4127 4324)
+#include "codegen/msrnIntegrationTestsJSI.h"
+#pragma pack(pop)
+
 using namespace facebook;
 using namespace winrt;
 using namespace Microsoft::ReactNative;
@@ -33,170 +38,26 @@ namespace ReactNativeIntegrationTests {
 // Use anonymous namespace to avoid any linking conflicts
 namespace {
 
-// In this test we put spec definition that normally must be generated.
-// >>>> Start generated
-
-// The spec from .h file
-struct MySimpleTurboModuleSpec : react::TurboModule {
-  virtual void logAction(jsi::Runtime &rt, const jsi::String &actionName, const jsi::Value &value) = 0;
-  virtual void voidFunc(jsi::Runtime &rt) = 0;
-  virtual bool getBool(jsi::Runtime &rt, bool arg) = 0;
-  virtual double getNumber(jsi::Runtime &rt, double arg) = 0;
-  virtual jsi::String getString(jsi::Runtime &rt, const jsi::String &arg) = 0;
-  virtual jsi::Array getArray(jsi::Runtime &rt, const jsi::Array &arg) = 0;
-  virtual jsi::Object getObject(jsi::Runtime &rt, const jsi::Object &arg) = 0;
-  virtual jsi::Object getValue(jsi::Runtime &rt, double x, const jsi::String &y, const jsi::Object &z) = 0;
-  virtual void getValueWithCallback(jsi::Runtime &rt, const jsi::Function &callback) = 0;
-  virtual jsi::Value getValueWithPromise(jsi::Runtime &rt, bool error) = 0;
-  virtual jsi::Object getConstants(jsi::Runtime &rt) = 0;
-
- protected:
-  MySimpleTurboModuleSpec(std::shared_ptr<react::CallInvoker> jsInvoker);
-};
-
-// The spec from .cpp file
-
-static jsi::Value MySimpleTurboModuleSpec_logAction(
-    jsi::Runtime &rt,
-    react::TurboModule &turboModule,
-    [[maybe_unused]] const jsi::Value *args,
-    [[maybe_unused]] size_t count) {
-  assert(count >= 2);
-  static_cast<MySimpleTurboModuleSpec *>(&turboModule)->logAction(rt, args[0].getString(rt), args[1]);
-  return jsi::Value::undefined();
-}
-
-static jsi::Value MySimpleTurboModuleSpec_voidFunc(
-    jsi::Runtime &rt,
-    react::TurboModule &turboModule,
-    [[maybe_unused]] const jsi::Value *args,
-    [[maybe_unused]] size_t count) {
-  assert(count >= 0);
-  static_cast<MySimpleTurboModuleSpec *>(&turboModule)->voidFunc(rt);
-  return jsi::Value::undefined();
-}
-
-static jsi::Value MySimpleTurboModuleSpec_getBool(
-    jsi::Runtime &rt,
-    react::TurboModule &turboModule,
-    [[maybe_unused]] const jsi::Value *args,
-    [[maybe_unused]] size_t count) {
-  assert(count >= 1);
-  return jsi::Value(static_cast<MySimpleTurboModuleSpec *>(&turboModule)->getBool(rt, args[0].getBool()));
-}
-
-static jsi::Value MySimpleTurboModuleSpec_getNumber(
-    jsi::Runtime &rt,
-    react::TurboModule &turboModule,
-    [[maybe_unused]] const jsi::Value *args,
-    [[maybe_unused]] size_t count) {
-  assert(count >= 1);
-  return jsi::Value(static_cast<MySimpleTurboModuleSpec *>(&turboModule)->getNumber(rt, args[0].getNumber()));
-}
-
-static jsi::Value MySimpleTurboModuleSpec_getString(
-    jsi::Runtime &rt,
-    react::TurboModule &turboModule,
-    [[maybe_unused]] const jsi::Value *args,
-    [[maybe_unused]] size_t count) {
-  assert(count >= 1);
-  return static_cast<MySimpleTurboModuleSpec *>(&turboModule)->getString(rt, args[0].getString(rt));
-}
-
-static jsi::Value MySimpleTurboModuleSpec_getArray(
-    jsi::Runtime &rt,
-    react::TurboModule &turboModule,
-    [[maybe_unused]] const jsi::Value *args,
-    [[maybe_unused]] size_t count) {
-  assert(count >= 1);
-  return static_cast<MySimpleTurboModuleSpec *>(&turboModule)->getArray(rt, args[0].getObject(rt).getArray(rt));
-}
-
-static jsi::Value MySimpleTurboModuleSpec_getObject(
-    jsi::Runtime &rt,
-    react::TurboModule &turboModule,
-    [[maybe_unused]] const jsi::Value *args,
-    [[maybe_unused]] size_t count) {
-  assert(count >= 1);
-  return static_cast<MySimpleTurboModuleSpec *>(&turboModule)->getObject(rt, args[0].getObject(rt));
-}
-
-static jsi::Value MySimpleTurboModuleSpec_getValue(
-    jsi::Runtime &rt,
-    react::TurboModule &turboModule,
-    [[maybe_unused]] const jsi::Value *args,
-    [[maybe_unused]] size_t count) {
-  assert(count >= 3);
-  return static_cast<MySimpleTurboModuleSpec *>(&turboModule)
-      ->getValue(rt, args[0].getNumber(), args[1].getString(rt), args[2].getObject(rt));
-}
-
-static jsi::Value MySimpleTurboModuleSpec_getValueWithCallback(
-    jsi::Runtime &rt,
-    react::TurboModule &turboModule,
-    [[maybe_unused]] const jsi::Value *args,
-    [[maybe_unused]] size_t count) {
-  assert(count >= 1);
-  static_cast<MySimpleTurboModuleSpec *>(&turboModule)
-      ->getValueWithCallback(rt, std::move(args[0].getObject(rt).getFunction(rt)));
-  return jsi::Value::undefined();
-}
-
-static jsi::Value MySimpleTurboModuleSpec_getValueWithPromise(
-    jsi::Runtime &rt,
-    react::TurboModule &turboModule,
-    [[maybe_unused]] const jsi::Value *args,
-    [[maybe_unused]] size_t count) {
-  assert(count >= 1);
-  return static_cast<MySimpleTurboModuleSpec *>(&turboModule)->getValueWithPromise(rt, args[0].getBool());
-}
-
-static jsi::Value MySimpleTurboModuleSpec_getConstants(
-    jsi::Runtime &rt,
-    react::TurboModule &turboModule,
-    [[maybe_unused]] const jsi::Value *args,
-    [[maybe_unused]] size_t count) {
-  assert(count >= 0);
-  return static_cast<MySimpleTurboModuleSpec *>(&turboModule)->getConstants(rt);
-}
-
-MySimpleTurboModuleSpec::MySimpleTurboModuleSpec(std::shared_ptr<react::CallInvoker> jsInvoker)
-    : react::TurboModule("MySimpleTurboModule", std::move(jsInvoker)) {
-  methodMap_.try_emplace("logAction", MethodMetadata{0, MySimpleTurboModuleSpec_logAction});
-  methodMap_.try_emplace("voidFunc", MethodMetadata{0, MySimpleTurboModuleSpec_voidFunc});
-  methodMap_.try_emplace("getBool", MethodMetadata{1, MySimpleTurboModuleSpec_getBool});
-  methodMap_.try_emplace("getNumber", MethodMetadata{1, MySimpleTurboModuleSpec_getNumber});
-  methodMap_.try_emplace("getString", MethodMetadata{1, MySimpleTurboModuleSpec_getString});
-  methodMap_.try_emplace("getArray", MethodMetadata{1, MySimpleTurboModuleSpec_getArray});
-  methodMap_.try_emplace("getObject", MethodMetadata{1, MySimpleTurboModuleSpec_getObject});
-  methodMap_.try_emplace("getValue", MethodMetadata{3, MySimpleTurboModuleSpec_getValue});
-  methodMap_.try_emplace("getValueWithCallback", MethodMetadata{1, MySimpleTurboModuleSpec_getValueWithCallback});
-  methodMap_.try_emplace("getValueWithPromise", MethodMetadata{1, MySimpleTurboModuleSpec_getValueWithPromise});
-  methodMap_.try_emplace("getConstants", MethodMetadata{0, MySimpleTurboModuleSpec_getConstants});
-}
-
-// <<<< End generated
-
-struct MySimpleTurboModule : MySimpleTurboModuleSpec {
+struct MySimpleTurboModule : react::NativeMySimpleTurboModuleCxxCxxSpecJSI {
   MySimpleTurboModule(std::shared_ptr<react::CallInvoker> jsInvoker);
 
-  void logAction(jsi::Runtime &rt, const jsi::String &actionName, const jsi::Value &value) override;
+  void logAction(jsi::Runtime &rt, const jsi::String actionName, jsi::Value value) override;
   void voidFunc(jsi::Runtime &rt) override;
   bool getBool(jsi::Runtime &rt, bool arg) override;
   double getNumber(jsi::Runtime &rt, double arg) override;
-  jsi::String getString(jsi::Runtime &rt, const jsi::String &arg) override;
-  jsi::Array getArray(jsi::Runtime &rt, const jsi::Array &arg) override;
-  jsi::Object getObject(jsi::Runtime &rt, const jsi::Object &arg) override;
-  jsi::Object getValue(jsi::Runtime &rt, double x, const jsi::String &y, const jsi::Object &z) override;
-  void getValueWithCallback(jsi::Runtime &rt, const jsi::Function &callback) override;
+  jsi::String getString(jsi::Runtime &rt, jsi::String arg) override;
+  jsi::Array getArray(jsi::Runtime &rt, jsi::Array arg) override;
+  jsi::Object getObject(jsi::Runtime &rt, jsi::Object arg) override;
+  jsi::Object getValue(jsi::Runtime &rt, double x, jsi::String y, jsi::Object z) override;
+  void getValueWithCallback(jsi::Runtime &rt, jsi::Function callback) override;
   jsi::Value getValueWithPromise(jsi::Runtime &rt, bool error) override;
   jsi::Object getConstants(jsi::Runtime &rt) override;
 };
 
 MySimpleTurboModule::MySimpleTurboModule(std::shared_ptr<react::CallInvoker> jsInvoker)
-    : MySimpleTurboModuleSpec(std::move(jsInvoker)) {}
+    : NativeMySimpleTurboModuleCxxCxxSpecJSI(std::move(jsInvoker)) {}
 
-void MySimpleTurboModule::logAction(jsi::Runtime &rt, const jsi::String &actionName, const jsi::Value &value) {
+void MySimpleTurboModule::logAction(jsi::Runtime &rt, jsi::String actionName, jsi::Value value) {
   JSValue jsValue{};
   if (value.isBool()) {
     jsValue = JSValue(value.getBool());
@@ -222,22 +83,22 @@ double MySimpleTurboModule::getNumber(jsi::Runtime & /*rt*/, double arg) {
   return arg;
 }
 
-jsi::String MySimpleTurboModule::getString(jsi::Runtime &rt, const jsi::String &arg) {
+jsi::String MySimpleTurboModule::getString(jsi::Runtime &rt, jsi::String arg) {
   TestEventService::LogEvent("getString called", arg.utf8(rt));
   return jsi::String::createFromUtf8(rt, arg.utf8(rt));
 }
 
-jsi::Array MySimpleTurboModule::getArray(jsi::Runtime &rt, const jsi::Array &arg) {
+jsi::Array MySimpleTurboModule::getArray(jsi::Runtime &rt, jsi::Array arg) {
   TestEventService::LogEvent("getArray called", arg.length(rt));
   return react::deepCopyJSIArray(rt, arg);
 }
 
-jsi::Object MySimpleTurboModule::getObject(jsi::Runtime &rt, const jsi::Object &arg) {
+jsi::Object MySimpleTurboModule::getObject(jsi::Runtime &rt, jsi::Object arg) {
   TestEventService::LogEvent("getObject called", "OK");
   return react::deepCopyJSIObject(rt, arg);
 }
 
-jsi::Object MySimpleTurboModule::getValue(jsi::Runtime &rt, double x, const jsi::String &y, const jsi::Object &z) {
+jsi::Object MySimpleTurboModule::getValue(jsi::Runtime &rt, double x, jsi::String y, jsi::Object z) {
   TestEventService::LogEvent("getValue called", "OK");
   // Note: return type isn't type-safe.
   jsi::Object result(rt);
@@ -247,7 +108,7 @@ jsi::Object MySimpleTurboModule::getValue(jsi::Runtime &rt, double x, const jsi:
   return result;
 }
 
-void MySimpleTurboModule::getValueWithCallback(jsi::Runtime &rt, const jsi::Function &callback) {
+void MySimpleTurboModule::getValueWithCallback(jsi::Runtime &rt, jsi::Function callback) {
   TestEventService::LogEvent("getValueWithCallback called", "OK");
   callback.call(rt, jsi::String::createFromUtf8(rt, "value from callback!"));
 }
@@ -276,7 +137,7 @@ jsi::Object MySimpleTurboModule::getConstants(jsi::Runtime &rt) {
 struct MySimpleTurboModulePackageProvider
     : winrt::implements<MySimpleTurboModulePackageProvider, IReactPackageProvider> {
   void CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept {
-    AddTurboModuleProvider<MySimpleTurboModule>(packageBuilder, L"MySimpleTurboModule");
+    AddTurboModuleProvider<MySimpleTurboModule>(packageBuilder, L"MySimpleTurboModuleCxx");
   }
 };
 
