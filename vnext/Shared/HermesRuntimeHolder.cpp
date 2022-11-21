@@ -120,7 +120,7 @@ void HermesRuntimeHolder::initRuntime() noexcept {
     auto adapter = std::make_unique<HermesExecutorRuntimeAdapter>(m_hermesRuntime, *m_hermesRuntime, m_jsQueue);
     facebook::hermes::inspector::chrome::enableDebugging(
         std::move(adapter),
-        devSettings->debuggerRuntimeName.empty() ? "Hermes React Native" : devSettings->debuggerRuntimeName);
+        getDebugTargetName(*devSettings));
   }
 #endif
 
@@ -131,6 +131,34 @@ void HermesRuntimeHolder::initRuntime() noexcept {
                             .getPropertyAsObject(*m_hermesRuntime, "prototype");
   errorPrototype.setProperty(*m_hermesRuntime, "jsEngine", "hermes");
 }
+
+#ifdef HERMES_ENABLE_DEBUGGER
+
+std::string HermesRuntimeHolder::getDebugTargetName(const DevSettings& devSettings)  noexcept {
+  std::stringstream ss;
+
+  if (!devSettings.debuggerRuntimeName.empty()) {
+    ss << devSettings.debuggerRuntimeName;
+  } else if (!devSettings.debugBundlePath.empty()) {
+    ss << devSettings.debugBundlePath;
+  } else {
+    ss << "Hermes React Native";
+  }
+
+  ss << " (";
+
+  char exeFileName[MAX_PATH];
+  if (DWORD moduleFileNameResult = GetModuleFileNameA(/* current process */ NULL, exeFileName, MAX_PATH); moduleFileNameResult > 0) {
+    if (const char *exeBaseName = strrchr(exeFileName, '\\'); exeBaseName != nullptr) {
+      ss << exeBaseName + 1 << ", ";
+    }
+  }
+
+  ss << "PID " << GetCurrentProcessId() << ")";
+  return ss.str();
+}
+
+#endif
 
 } // namespace react
 } // namespace facebook

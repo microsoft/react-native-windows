@@ -31,6 +31,11 @@ class HermesRuntimeHolder : public Microsoft::JSI::RuntimeHolderLazyInit {
 
  private:
   void initRuntime() noexcept;
+
+#ifdef HERMES_ENABLE_DEBUGGER
+  static std::string getDebugTargetName(const DevSettings& devSettings) noexcept;
+#endif
+
   std::shared_ptr<facebook::hermes::HermesRuntime> m_hermesRuntime;
 
   std::once_flag m_once_flag;
