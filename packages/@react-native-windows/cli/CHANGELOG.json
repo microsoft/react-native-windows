@@ -2,6 +2,27 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 21 Nov 2022 06:15:36 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.151",
+      "version": "0.0.0-canary.151",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "ce7f7ac062f998b9d8c198ef7a11e2327304f278",
+            "comment": "Enable ability to codegen JSI C++ TurboModule specs"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.44",
+            "commit": "24da749c63f5c01686296174fe614a20d276a9b1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 16 Nov 2022 06:16:01 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.150",
       "version": "0.0.0-canary.150",
