@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 21 Nov 2022 06:15:36 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.584",
+      "version": "0.0.0-canary.584",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ce7f7ac062f998b9d8c198ef7a11e2327304f278",
+            "comment": "Update codegen version"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.151",
+            "commit": "24da749c63f5c01686296174fe614a20d276a9b1"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.44",
+            "commit": "24da749c63f5c01686296174fe614a20d276a9b1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 18 Nov 2022 06:15:35 GMT",
       "tag": "react-native-windows_v0.0.0-canary.583",
       "version": "0.0.0-canary.583",
