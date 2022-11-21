@@ -28,6 +28,9 @@
     <Filter Include="Source Files\portability">
       <UniqueIdentifier>{9ad1fbe7-56fb-40d8-b0a2-ac0d6d0799e3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\lang">
+      <UniqueIdentifier>{ed8c80f6-ff7c-4f61-b7ec-a2aee564d575}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(FollyDir)\folly\system\ThreadId.cpp">
@@ -79,6 +82,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="$(FollyDir)\folly\system\AtFork.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(FollyDir)\folly\portability\Asm.h">
@@ -532,6 +536,9 @@
       <Filter>Header Files\detail</Filter>
     </ClInclude>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="$(FollyDir)\folly\lang\ToAscii.h">
+      <Filter>Header Files\lang</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="Folly.natvis" />
