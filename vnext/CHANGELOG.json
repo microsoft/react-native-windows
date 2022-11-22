@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 22 Nov 2022 06:15:32 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.585",
+      "version": "0.0.0-canary.585",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmoroz@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "35161b0cef55f55464a7aa7bb4e21c323f6d7d40",
+            "comment": "Fix copying substitution files"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 21 Nov 2022 06:15:36 GMT",
       "tag": "react-native-windows_v0.0.0-canary.584",
       "version": "0.0.0-canary.584",
