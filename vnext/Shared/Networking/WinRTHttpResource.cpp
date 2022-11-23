@@ -420,26 +420,6 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
 
     auto isText = reqArgs->ResponseType == "text";
 
-    if (reqArgs->IncrementalUpdates) {
-      using winrt::Windows::Web::Http::HttpProgress;
-      using winrt::Windows::Web::Http::HttpProgressStage;
-      sendRequestOp.Progress([self = self->shared_from_this(), requestId = reqArgs->RequestId, isText](
-                                 ResponseOperation const &operation, HttpProgress const &progress) {
-        if (progress.Stage == HttpProgressStage::ReceivingContent) {
-          int64_t total = progress.TotalBytesToReceive ? progress.TotalBytesToReceive.Value() : 0;
-          if (isText) {
-            if (self->m_onIncData) {
-              self->m_onIncData(requestId, "TODO", static_cast<int64_t>(progress.BytesReceived), total);
-            }
-          } else {
-            if (self->m_onDataProgress) {
-              self->m_onDataProgress(requestId, static_cast<int64_t>(progress.BytesReceived), total);
-            }
-          }
-        }
-      });
-    }
-
     self->TrackResponse(reqArgs->RequestId, sendRequestOp);
 
     if (reqArgs->Timeout > 0) {
@@ -506,8 +486,9 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
       auto inputStream = co_await response.Content().ReadAsInputStreamAsync();
       auto reader = DataReader{inputStream};
 
-      // #9510 - We currently accumulate all incoming request data in 10MB chunks
-      const uint32_t segmentSize = 10 * 1024 * 1024;
+      // Accumulate all incoming request data in 8MB chunks
+      // Note, the minimum apparent valid chunk size is 128 KB
+      const uint32_t segmentSize = 8 * 1024 * 1024;
 
       // Let response handler take over, if set
       if (auto responseHandler = self->m_responseHandler.lock()) {
