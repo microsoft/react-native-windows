@@ -337,8 +337,8 @@ void WinRTHttpResource::SetOnData(function<void(int64_t requestId, dynamic &&res
 }
 
 void WinRTHttpResource::SetOnIncrementalData(
-  function<void(int64_t requestId, string&& responseData, int64_t progress, int64_t total)>
-  && handler) noexcept /*override*/ {
+    function<void(int64_t requestId, string &&responseData, int64_t progress, int64_t total)> &&handler) noexcept
+/*override*/ {
   m_onIncData = std::move(handler);
 }
 
@@ -346,6 +346,10 @@ void WinRTHttpResource::SetOnDataProgress(
     function<void(int64_t requestId, int64_t progress, int64_t total)> &&handler) noexcept
 /*override*/ {
   m_onDataProgress = std::move(handler);
+}
+
+void WinRTHttpResource::SetOnResponseComplete(function<void(int64_t requestId)> &&handler) noexcept /*override*/ {
+  m_onComplete = std::move(handler);
 }
 
 void WinRTHttpResource::SetOnError(
@@ -402,6 +406,10 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
         if (self->m_onDataDynamic && self->m_onRequestSuccess) {
           self->m_onDataDynamic(reqArgs->RequestId, std::move(blob));
           self->m_onRequestSuccess(reqArgs->RequestId);
+        }
+
+        if (self->m_onComplete) {
+          self->m_onComplete(reqArgs->RequestId);
         }
 
         co_return;
@@ -488,12 +496,12 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
 
       // Accumulate all incoming request data in 8MB chunks
       // Note, the minimum apparent valid chunk size is 128 KB
-      const uint32_t segmentSize = 8 * 1024 * 1024;
+      // Apple's implementation appears to grab 5-8 KB chunks
+      const uint32_t segmentSize = (reqArgs->IncrementalUpdates ? 128 : 8 * 1024) * 1024;
 
       // Let response handler take over, if set
       if (auto responseHandler = self->m_responseHandler.lock()) {
         if (responseHandler->Supports(reqArgs->ResponseType)) {
-          // #9510
           vector<uint8_t> responseData{};
           while (auto loaded = co_await reader.LoadAsync(segmentSize)) {
             auto length = reader.UnconsumedBufferLength();
@@ -510,6 +518,9 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
             self->m_onRequestSuccess(reqArgs->RequestId);
           }
 
+          if (self->m_onComplete) {
+            self->m_onComplete(reqArgs->RequestId);
+          }
           co_return;
         }
       }
@@ -518,27 +529,50 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
         reader.UnicodeEncoding(UnicodeEncoding::Utf8);
       }
 
-      // #9510
+      int64_t received = 0;
       string responseData;
       winrt::Windows::Storage::Streams::IBuffer buffer;
       while (auto loaded = co_await reader.LoadAsync(segmentSize)) {
         auto length = reader.UnconsumedBufferLength();
+        received += length;
 
         if (isText) {
           auto data = vector<uint8_t>(length);
           reader.ReadBytes(data);
 
-          responseData += string(Common::Utilities::CheckedReinterpretCast<char *>(data.data()), data.size());
+          auto increment = string(Common::Utilities::CheckedReinterpretCast<char *>(data.data()), data.size());
+          // #9534 - Send incremental updates.
+          // See https://github.com/facebook/react-native/blob/v0.70.6/Libraries/Network/RCTNetworking.mm#L561
+          if (reqArgs->IncrementalUpdates) {
+            responseData = std::move(increment);
+
+            if (self->m_onIncData) {
+              // For total, see #10849
+              self->m_onIncData(reqArgs->RequestId, std::move(responseData), received, 0 /*total*/);
+            }
+          } else {
+            responseData += std::move(increment);
+          }
         } else {
           buffer = reader.ReadBuffer(length);
           auto data = CryptographicBuffer::EncodeToBase64String(buffer);
 
           responseData += winrt::to_string(std::wstring_view(data));
+
+          if (self->m_onDataProgress) {
+            // For total, see #10849
+            self->m_onDataProgress(reqArgs->RequestId, received, 0 /*total*/);
+          }
         }
       }
 
-      if (self->m_onData) {
+      // If dealing with text-incremental response data, use m_onIncData instead
+      if (self->m_onData && !(reqArgs->IncrementalUpdates && isText)) {
         self->m_onData(reqArgs->RequestId, std::move(responseData));
+      }
+
+      if (self->m_onComplete) {
+        self->m_onComplete(reqArgs->RequestId);
       }
     } else {
       if (self->m_onError) {

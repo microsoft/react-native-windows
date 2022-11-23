@@ -62,9 +62,6 @@ static void SetUpHttpResource(
 
   resource->SetOnData([weakReactInstance](int64_t requestId, string &&responseData) {
     SendEvent(weakReactInstance, receivedData, dynamic::array(requestId, std::move(responseData)));
-
-    // TODO: Move into separate method IF not executed right after onData()
-    SendEvent(weakReactInstance, completedResponse, dynamic::array(requestId));
   });
 
   // Explicitly declaring function type to avoid type inference ambiguity.
@@ -84,6 +81,10 @@ static void SetUpHttpResource(
 
   resource->SetOnDataProgress([weakReactInstance](int64_t requestId, int64_t progress, int64_t total) {
     SendEvent(weakReactInstance, receivedDataProgress, dynamic::array(requestId, progress, total));
+  });
+
+  resource->SetOnResponseComplete([weakReactInstance](int64_t requestId) {
+    SendEvent(weakReactInstance, completedResponse, dynamic::array(requestId));
   });
 
   resource->SetOnError([weakReactInstance](int64_t requestId, string &&message, bool isTimeout) {
