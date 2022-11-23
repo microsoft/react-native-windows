@@ -68,8 +68,9 @@ void Alert::ProcessPendingAlertRequests() noexcept {
         xamlRoot = element.XamlRoot();
       }
     }
-    xamlRoot = xamlRoot || React::XamlUIService::GetXamlRoot(m_context.Properties().Handle());
-
+    if (!xamlRoot) {
+      xamlRoot = React::XamlUIService::GetXamlRoot(m_context.Properties().Handle());
+    }
     if (xamlRoot) {
       useXamlRootForThemeBugWorkaround = true;
       dialog.XamlRoot(xamlRoot);
