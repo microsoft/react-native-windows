@@ -124,19 +124,19 @@ struct CntPtr {
 
   template <typename T1, typename T2>
   friend bool operator==(CntPtr<T1> const &left, CntPtr<T2> const &right) noexcept;
-  template <typename T>
-  friend bool operator==(CntPtr<T> const &left, std::nullptr_t) noexcept;
-  template <typename T>
-  friend bool operator==(std::nullptr_t, CntPtr<T> const &right) noexcept;
+  template <typename T1>
+  friend bool operator==(CntPtr<T1> const &left, std::nullptr_t) noexcept;
+  template <typename T1>
+  friend bool operator==(std::nullptr_t, CntPtr<T1> const &right) noexcept;
   template <typename T1, typename T2>
   friend bool operator!=(CntPtr<T1> const &left, CntPtr<T2> const &right) noexcept;
-  template <typename T>
-  friend bool operator!=(CntPtr<T> const &left, std::nullptr_t) noexcept;
-  template <typename T>
-  friend bool operator!=(std::nullptr_t, CntPtr<T> const &right) noexcept;
+  template <typename T1>
+  friend bool operator!=(CntPtr<T1> const &left, std::nullptr_t) noexcept;
+  template <typename T1>
+  friend bool operator!=(std::nullptr_t, CntPtr<T1> const &right) noexcept;
 
-  template <typename T>
-  friend void std::swap(CntPtr<T> &left, CntPtr<T> &right) noexcept;
+  template <typename T1>
+  friend void std::swap(CntPtr<T1> &left, CntPtr<T1> &right) noexcept;
 
   template <typename TOther>
   friend struct CntPtr;
@@ -450,13 +450,13 @@ inline bool operator==(CntPtr<T1> const &left, CntPtr<T2> const &right) noexcept
   return left.m_ptr == right.m_ptr;
 }
 
-template <typename T>
-inline bool operator==(CntPtr<T> const &left, std::nullptr_t) noexcept {
+template <typename T1>
+inline bool operator==(CntPtr<T1> const &left, std::nullptr_t) noexcept {
   return left.m_ptr == nullptr;
 }
 
-template <typename T>
-inline bool operator==(std::nullptr_t, CntPtr<T> const &right) noexcept {
+template <typename T1>
+inline bool operator==(std::nullptr_t, CntPtr<T1> const &right) noexcept {
   return right.m_ptr == nullptr;
 }
 
@@ -465,13 +465,13 @@ inline bool operator!=(CntPtr<T1> const &left, CntPtr<T2> const &right) noexcept
   return left.m_ptr != right.m_ptr;
 }
 
-template <typename T>
-inline bool operator!=(CntPtr<T> const &left, std::nullptr_t) noexcept {
+template <typename T1>
+inline bool operator!=(CntPtr<T1> const &left, std::nullptr_t) noexcept {
   return left.m_ptr != nullptr;
 }
 
-template <typename T>
-inline bool operator!=(std::nullptr_t, CntPtr<T> const &right) noexcept {
+template <typename T1>
+inline bool operator!=(std::nullptr_t, CntPtr<T1> const &right) noexcept {
   return right.m_ptr != nullptr;
 }
 
@@ -479,9 +479,9 @@ inline bool operator!=(std::nullptr_t, CntPtr<T> const &right) noexcept {
 
 namespace std {
 
-template <typename T>
-inline void swap(Mso::CntPtr<T> &left, Mso::CntPtr<T> &right) noexcept {
-  T *temp = left.m_ptr;
+template <typename T1>
+inline void swap(Mso::CntPtr<T1> &left, Mso::CntPtr<T1> &right) noexcept {
+  T1 *temp = left.m_ptr;
   left.m_ptr = right.m_ptr;
   right.m_ptr = temp;
 }
