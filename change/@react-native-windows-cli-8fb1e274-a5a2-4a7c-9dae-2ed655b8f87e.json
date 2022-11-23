@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix CLI to search for correct VS version range",
-  "packageName": "@react-native-windows/cli",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
