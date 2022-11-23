@@ -8,6 +8,7 @@ import {CodedError} from '@react-native-windows/telemetry';
 import {execSync} from 'child_process';
 import fs from '@react-native-windows/fs';
 import path from 'path';
+import semver from 'semver';
 
 /**
  * A subset of the per-instance properties returned by vswhere
@@ -61,15 +62,46 @@ function vsWhere(args: string[], verbose?: boolean): any[] {
  */
 export function enumerateVsInstalls(opts: {
   requires?: string[];
-  version?: string;
+  minVersion?: string;
   verbose?: boolean;
   latest?: boolean;
   prerelease?: boolean;
 }): VisualStudioInstallation[] {
   const args: string[] = [];
 
-  if (opts.version) {
-    args.push(`-version [${opts.version},${Number(opts.version) + 1})`);
+  if (opts.minVersion) {
+    // VS 2019 ex: minVersion == 16.7 => [16.7,17.0)
+    // VS 2022 ex: minVersion == 17.0 => [17.0,18.0)
+
+    // Try to parse minVersion as both a Number and SemVer
+    const minVersionNum = Number(opts.minVersion);
+    const minVersionSemVer = semver.parse(opts.minVersion);
+
+    let minVersion: string;
+    let maxVersion: string;
+
+    if (minVersionSemVer) {
+      minVersion = minVersionSemVer.toString();
+      maxVersion = (minVersionSemVer.major + 1).toFixed(1);
+    } else if (!Number.isNaN(minVersionNum)) {
+      minVersion = minVersionNum.toFixed(1);
+      maxVersion = (Math.floor(minVersionNum) + 1).toFixed(1);
+    } else {
+      // Unable to parse minVersion and determine maxVersion,
+      // caller will throw error that version couldn't be found.
+      return [];
+    }
+
+    const versionRange =
+      `[${minVersion},${maxVersion}` + (opts.prerelease ? ']' : ')');
+
+    if (opts.verbose) {
+      console.log(
+        `Looking for VS installs with version range: ${versionRange}`,
+      );
+    }
+
+    args.push(`-version ${versionRange}`);
   }
 
   if (opts.requires) {
