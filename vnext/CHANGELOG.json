@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 24 Nov 2022 06:15:42 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.587",
+      "version": "0.0.0-canary.587",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmoroz@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "27efa8adbb8acf96116d584db99b34329d7422ad",
+            "comment": "Avoid shadowing template types in CntPtr"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 23 Nov 2022 06:16:32 GMT",
       "tag": "react-native-windows_v0.0.0-canary.586",
       "version": "0.0.0-canary.586",
