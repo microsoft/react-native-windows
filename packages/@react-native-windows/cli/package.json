@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/cli",
-  "version": "0.69.4",
+  "version": "0.69.5",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "repository": {

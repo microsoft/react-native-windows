@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Mon, 14 Nov 2022 16:12:41 GMT and should not be manually modified.
+This log was last generated on Mon, 28 Nov 2022 16:13:21 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.69.5
+
+Mon, 28 Nov 2022 16:13:21 GMT
+
+### Patches
+
+- Fix CLI to search for correct VS version range (jthysell@microsoft.com)
 
 ## 0.69.4
 
