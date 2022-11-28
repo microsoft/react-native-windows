@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20221024-2020-c63882238",
+  "baseVersion": "0.0.0-20221109-2052-1f0c2c289",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "95fe0f39cfd917c4ba7d1b6fb6aac924b0275590"
+      "baseHash": "1d7352e72d0d3e4535f866a6887f6cc3dc696615"
     },
     {
       "type": "derived",
@@ -55,22 +55,22 @@
     {
       "type": "patch",
       "file": "Microsoft.ReactNative/Fabric/platform/react/renderer/graphics/Color.cpp",
-      "baseFile": "ReactCommon/react/renderer/graphics/platform/cxx/react/renderer/graphics/Color.cpp",
-      "baseHash": "69acf54c8ad83ef508d9d4870018aeb6377a7da2",
+      "baseFile": "ReactCommon/react/renderer/graphics/Color.cpp",
+      "baseHash": "986dfaef4c6a5b57369c1383231cdeb5d69dd4ab",
+      "issue": 7821
+    },
+    {
+      "type": "patch",
+      "file": "Microsoft.ReactNative/Fabric/platform/react/renderer/graphics/Color.h",
+      "baseFile": "ReactCommon/react/renderer/graphics/Color.cpp",
+      "baseHash": "986dfaef4c6a5b57369c1383231cdeb5d69dd4ab",
       "issue": 7821
     },
     {
       "type": "patch",
       "file": "Microsoft.ReactNative/Fabric/platform/react/renderer/graphics/conversions.h",
       "baseFile": "ReactCommon/react/renderer/graphics/conversions.h",
-      "baseHash": "bec2ad16df7ce32be66f72e3793e884003fcf1fb",
-      "issue": 7821
-    },
-    {
-      "type": "patch",
-      "file": "Microsoft.ReactNative/Fabric/platform/react/renderer/graphics/platform/cxx/react/renderer/graphics/Color.h",
-      "baseFile": "ReactCommon/react/renderer/graphics/platform/cxx/react/renderer/graphics/Color.h",
-      "baseHash": "010970b09aebda9348dfed9dd7b8fefb365bcc9b",
+      "baseHash": "253fcacbc70de43800c8ebd47a4af455f7036a95",
       "issue": 7821
     },
     {
@@ -91,7 +91,7 @@
       "type": "copy",
       "directory": "ReactCopies/IntegrationTests",
       "baseDirectory": "IntegrationTests",
-      "baseHash": "41b1b7a58a19ba5458cf02f8e8071d1d6697ccfd",
+      "baseHash": "a85e8eac3cfec05bc3687a8a87c501277375e80e",
       "issue": 4054
     },
     {
@@ -112,14 +112,14 @@
       "type": "patch",
       "file": "src/babel-plugin-codegen/package.json",
       "baseFile": "packages/babel-plugin-codegen/package.json",
-      "baseHash": "651b9ff2c4871a0a63dd3463fd1b8c3d911b66e5",
+      "baseHash": "e6f1ce8c30ed28fe8edc96dc098691e59c772e2e",
       "issue": 5430
     },
     {
       "type": "derived",
       "file": "src/index.windows.js",
       "baseFile": "index.js",
-      "baseHash": "e8532b37a2f1fe35de33f4f6db60e77ef42994d9"
+      "baseHash": "cc43fccadbe8a97f5b95239224c87bcea310a0db"
     },
     {
       "type": "platform",
@@ -203,7 +203,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Button.windows.js",
       "baseFile": "Libraries/Components/Button.js",
-      "baseHash": "ac41bdc45a247b4a17bc012c30e5939594d0eef1"
+      "baseHash": "d640d294264a3e147125043c88381108c949158a"
     },
     {
       "type": "copy",
@@ -253,7 +253,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Pressable/Pressable.windows.js",
       "baseFile": "Libraries/Components/Pressable/Pressable.js",
-      "baseHash": "0d824097eb3cdc5e83f18277271d546b9fd3da92"
+      "baseHash": "2b94e1efd3838e2537829e8935cf2c4a57cb48e4"
     },
     {
       "type": "derived",
@@ -283,7 +283,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "0070af6201942fae50317281046da05bb1a1e236"
+      "baseHash": "dc7a742f2b251110d1a656b99e954262ce427eba"
     },
     {
       "type": "patch",
@@ -324,7 +324,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/TouchableWithoutFeedback.windows.js",
       "baseFile": "Libraries/Components/Touchable/TouchableWithoutFeedback.js",
-      "baseHash": "b5ce9adb9e61c84cd7686bb3794530a04cd87a57"
+      "baseHash": "7cead5e4af7bb5b49450b8e39c7f92515ba99398"
     },
     {
       "type": "patch",
@@ -343,13 +343,13 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewAccessibility.windows.js",
       "baseFile": "Libraries/Components/View/ViewAccessibility.js",
-      "baseHash": "5aa9016250c64bc9840f08ce26032b45c1d50540"
+      "baseHash": "d12245b45ccdc5f473ba9484b5ec994cb45dae75"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewPropTypes.windows.js",
       "baseFile": "Libraries/Components/View/ViewPropTypes.js",
-      "baseHash": "a68210ca1fcc765262bfafb0f42cc8a8bbc536f9"
+      "baseHash": "4e4af90700f8a5b27f8fb94d9628339fcca82f53"
     },
     {
       "type": "platform",
@@ -363,7 +363,7 @@
       "type": "patch",
       "file": "src/Libraries/Image/Image.windows.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseHash": "6dd4767a7f8ecd190f2bd84becdeb539122869f0",
+      "baseHash": "9187c9a894ef6e8f00acd01dea1fd36a52e390f7",
       "issue": 4590
     },
     {
@@ -387,6 +387,10 @@
       "file": "src/Libraries/NewAppScreen/components/ReloadInstructions.windows.js",
       "baseFile": "Libraries/NewAppScreen/components/ReloadInstructions.js",
       "baseHash": "6421466afe8bcbc37920be7f9bc7bf6cc29bf40e"
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/platform-types.d.ts"
     },
     {
       "type": "patch",
@@ -422,7 +426,7 @@
       "type": "derived",
       "file": "src/Libraries/Text/Text.windows.js",
       "baseFile": "Libraries/Text/Text.js",
-      "baseHash": "019f6c1a24448e44928689bc3b3cf76c002a3f2c"
+      "baseHash": "188c96590a5bd43a4d170a81e472ef6b93315ad4"
     },
     {
       "type": "patch",
@@ -448,10 +452,6 @@
       "file": "src/Libraries/Utilities/Platform.windows.js",
       "baseFile": "Libraries/Utilities/Platform.android.js",
       "baseHash": "a8b6131f20d78db59b5efc33c4f8de86aad527dc"
-    },
-    {
-      "type": "platform",
-      "file": "src/Libraries/platform-types.d.ts"
     }
   ]
 }

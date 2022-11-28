@@ -44,11 +44,11 @@ struct ::_MODULE_NAME_::Spec : winrt::Microsoft::ReactNative::TurboModuleSpec {
 `;
 
 export function createNM2Generator({
+  methodOnly,
   namespace,
-  methodonly,
 }: {
+  methodOnly: boolean;
   namespace: string;
-  methodonly: boolean;
 }) {
   return (
     _libraryName: string,
@@ -85,7 +85,7 @@ ${methods[0]}
 
         // prepare constants
         const constants = generateValidateConstants(nativeModule, aliases);
-        if (constants !== undefined && !methodonly) {
+        if (constants !== undefined && !methodOnly) {
           tuples = `
   static constexpr auto constants = std::tuple{
 ${constants[0]}

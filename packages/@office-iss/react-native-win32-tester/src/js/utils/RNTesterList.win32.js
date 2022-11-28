@@ -15,10 +15,13 @@ import type {RNTesterModuleInfo} from '../types/RNTesterTypes';
 import ReactNativeFeatureFlags from 'react-native/Libraries/ReactNative/ReactNativeFeatureFlags';
 
 const Components: Array<RNTesterModuleInfo> = [
-  {
+  /*{
+    key: 'DrawerLayoutAndroid',
+    category: 'UI',
+    module: require('../examples/DrawerLayoutAndroid/DrawerLayoutAndroidExample'),
     key: 'AccessibilityExampleWin32',
     module: require('../examples-win32/Accessibility/AccessibilityExampleWin32'),
-  },
+  },*/
   {
     key: 'ActivityIndicatorExample',
     category: 'UI',
@@ -43,7 +46,6 @@ const Components: Array<RNTesterModuleInfo> = [
     key: 'FlatListExampleIndex',
     module: require('../examples/FlatList/FlatListExampleIndex').default,
     category: 'ListView',
-    supportsTVOS: true,
   },
   {
     key: 'ImageExample',
@@ -277,6 +279,11 @@ const APIs: Array<RNTesterModuleInfo> = [
     key: 'TurboModuleExample',
     category: 'Basic',
     module: require('../examples/TurboModule/TurboModuleExample'),
+  },
+  {
+    key: 'TurboCxxModuleExample',
+    category: 'Basic',
+    module: require('../examples/TurboModule/TurboCxxModuleExample'),
   },
 ];
 

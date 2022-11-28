@@ -64,11 +64,13 @@ export const getExamplesListWithBookmarksAndRecentlyUsed = ({
     return null;
   }
 
-  const components = RNTesterList.Components.map(componentExample => ({
-    ...componentExample,
-    isBookmarked: bookmarks.components.includes(componentExample.key),
-    exampleType: Screens.COMPONENTS,
-  }));
+  const components = RNTesterList.Components.map(
+    (componentExample): RNTesterModuleInfo => ({
+      ...componentExample,
+      isBookmarked: bookmarks.components.includes(componentExample.key),
+      exampleType: Screens.COMPONENTS,
+    }),
+  );
 
   const recentlyUsedComponents = recentlyUsed.components
     .map(recentComponentKey =>
@@ -80,7 +82,7 @@ export const getExamplesListWithBookmarksAndRecentlyUsed = ({
     component => component.isBookmarked,
   );
 
-  const apis = RNTesterList.APIs.map(apiExample => ({
+  const apis = RNTesterList.APIs.map((apiExample): RNTesterModuleInfo => ({
     ...apiExample,
     isBookmarked: bookmarks.apis.includes(apiExample.key),
     exampleType: Screens.APIS,

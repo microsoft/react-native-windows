@@ -2,6 +2,66 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Thu, 24 Nov 2022 06:15:42 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.5.8",
+      "version": "0.5.8",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.587",
+            "commit": "27efa8adbb8acf96116d584db99b34329d7422ad"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 23 Nov 2022 06:16:32 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.5.7",
+      "version": "0.5.7",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.586",
+            "commit": "67f2a340c212f9721f7dc6d0bab9ca8b103904c9"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 22 Nov 2022 06:15:33 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.5.6",
+      "version": "0.5.6",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.585",
+            "commit": "ece6fd69cfecda4c34f9a388a9e3c6855321c9a3"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 21 Nov 2022 06:15:36 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.5.5",
+      "version": "0.5.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.584",
+            "commit": "24da749c63f5c01686296174fe614a20d276a9b1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 16 Nov 2022 06:16:01 GMT",
       "tag": "@react-native-windows/automation-channel_v0.5.4",
       "version": "0.5.4",

@@ -7,19 +7,19 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20221024-2020-c63882238",
+  "baseVersion": "0.0.0-20221109-2052-1f0c2c289",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "95fe0f39cfd917c4ba7d1b6fb6aac924b0275590"
+      "baseHash": "1d7352e72d0d3e4535f866a6887f6cc3dc696615"
     },
     {
       "type": "derived",
       "file": "src/index.win32.js",
       "baseFile": "index.js",
-      "baseHash": "e8532b37a2f1fe35de33f4f6db60e77ef42994d9"
+      "baseHash": "cc43fccadbe8a97f5b95239224c87bcea310a0db"
     },
     {
       "type": "platform",
@@ -75,7 +75,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Pressable/Pressable.win32.js",
       "baseFile": "Libraries/Components/Pressable/Pressable.js",
-      "baseHash": "0d824097eb3cdc5e83f18277271d546b9fd3da92",
+      "baseHash": "2b94e1efd3838e2537829e8935cf2c4a57cb48e4",
       "issue": 6240
     },
     {
@@ -121,7 +121,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.tsx",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "0070af6201942fae50317281046da05bb1a1e236"
+      "baseHash": "dc7a742f2b251110d1a656b99e954262ce427eba"
     },
     {
       "type": "patch",
@@ -187,7 +187,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewPropTypes.win32.js",
       "baseFile": "Libraries/Components/View/ViewPropTypes.js",
-      "baseHash": "a68210ca1fcc765262bfafb0f42cc8a8bbc536f9",
+      "baseHash": "4e4af90700f8a5b27f8fb94d9628339fcca82f53",
       "issue": 6240
     },
     {
@@ -209,7 +209,7 @@
       "type": "derived",
       "file": "src/Libraries/Image/Image.win32.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseHash": "6dd4767a7f8ecd190f2bd84becdeb539122869f0",
+      "baseHash": "9187c9a894ef6e8f00acd01dea1fd36a52e390f7",
       "issue": 4320
     },
     {
@@ -316,6 +316,10 @@
     {
       "type": "platform",
       "file": "src/Libraries/PersonaCoin/PersonaCoinTypes.ts"
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/platform-types.d.ts"
     },
     {
       "type": "patch",
@@ -429,10 +433,6 @@
       "file": "src/Libraries/Utilities/Platform.win32.js",
       "baseFile": "Libraries/Utilities/Platform.android.js",
       "baseHash": "a8b6131f20d78db59b5efc33c4f8de86aad527dc"
-    },
-    {
-      "type": "platform",
-      "file": "src/Libraries/platform-types.d.ts"
     }
   ]
 }
