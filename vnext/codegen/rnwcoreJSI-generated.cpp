@@ -434,6 +434,20 @@ NativeExceptionsManagerCxxSpecJSI::NativeExceptionsManagerCxxSpecJSI(std::shared
   methodMap_["updateExceptionMessage"] = MethodMetadata {3, __hostFunction_NativeExceptionsManagerCxxSpecJSI_updateExceptionMessage};
   methodMap_["dismissRedbox"] = MethodMetadata {0, __hostFunction_NativeExceptionsManagerCxxSpecJSI_dismissRedbox};
 }
+static jsi::Value __hostFunction_NativeDevToolsSettingsManagerCxxSpecJSI_setConsolePatchSettings(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeDevToolsSettingsManagerCxxSpecJSI *>(&turboModule)->setConsolePatchSettings(rt, args[0].asString(rt));
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeDevToolsSettingsManagerCxxSpecJSI_getConsolePatchSettings(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  auto result = static_cast<NativeDevToolsSettingsManagerCxxSpecJSI *>(&turboModule)->getConsolePatchSettings(rt);
+  return result ? jsi::Value(std::move(*result)) : jsi::Value::null();
+}
+
+NativeDevToolsSettingsManagerCxxSpecJSI::NativeDevToolsSettingsManagerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("DevToolsSettingsManager", jsInvoker) {
+  methodMap_["setConsolePatchSettings"] = MethodMetadata {1, __hostFunction_NativeDevToolsSettingsManagerCxxSpecJSI_setConsolePatchSettings};
+  methodMap_["getConsolePatchSettings"] = MethodMetadata {0, __hostFunction_NativeDevToolsSettingsManagerCxxSpecJSI_getConsolePatchSettings};
+}
 static jsi::Value __hostFunction_NativeJSCHeapCaptureCxxSpecJSI_captureComplete(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeJSCHeapCaptureCxxSpecJSI *>(&turboModule)->captureComplete(rt, args[0].asString(rt), args[1].isNull() || args[1].isUndefined() ? std::nullopt : std::make_optional(args[1].asString(rt)));
   return jsi::Value::undefined();
@@ -512,44 +526,6 @@ NativeImageLoaderIOSCxxSpecJSI::NativeImageLoaderIOSCxxSpecJSI(std::shared_ptr<C
   methodMap_["prefetchImage"] = MethodMetadata {1, __hostFunction_NativeImageLoaderIOSCxxSpecJSI_prefetchImage};
   methodMap_["prefetchImageWithMetadata"] = MethodMetadata {3, __hostFunction_NativeImageLoaderIOSCxxSpecJSI_prefetchImageWithMetadata};
   methodMap_["queryCache"] = MethodMetadata {1, __hostFunction_NativeImageLoaderIOSCxxSpecJSI_queryCache};
-}
-static jsi::Value __hostFunction_NativeImagePickerIOSCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeImagePickerIOSCxxSpecJSI *>(&turboModule)->getConstants(rt);
-}
-static jsi::Value __hostFunction_NativeImagePickerIOSCxxSpecJSI_canRecordVideos(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeImagePickerIOSCxxSpecJSI *>(&turboModule)->canRecordVideos(rt, args[0].asObject(rt).asFunction(rt));
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeImagePickerIOSCxxSpecJSI_canUseCamera(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeImagePickerIOSCxxSpecJSI *>(&turboModule)->canUseCamera(rt, args[0].asObject(rt).asFunction(rt));
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeImagePickerIOSCxxSpecJSI_openCameraDialog(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeImagePickerIOSCxxSpecJSI *>(&turboModule)->openCameraDialog(rt, args[0].asObject(rt), args[1].asObject(rt).asFunction(rt), args[2].asObject(rt).asFunction(rt));
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeImagePickerIOSCxxSpecJSI_openSelectDialog(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeImagePickerIOSCxxSpecJSI *>(&turboModule)->openSelectDialog(rt, args[0].asObject(rt), args[1].asObject(rt).asFunction(rt), args[2].asObject(rt).asFunction(rt));
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeImagePickerIOSCxxSpecJSI_clearAllPendingVideos(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeImagePickerIOSCxxSpecJSI *>(&turboModule)->clearAllPendingVideos(rt);
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeImagePickerIOSCxxSpecJSI_removePendingVideo(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeImagePickerIOSCxxSpecJSI *>(&turboModule)->removePendingVideo(rt, args[0].asString(rt));
-  return jsi::Value::undefined();
-}
-
-NativeImagePickerIOSCxxSpecJSI::NativeImagePickerIOSCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("ImagePickerIOS", jsInvoker) {
-  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeImagePickerIOSCxxSpecJSI_getConstants};
-  methodMap_["canRecordVideos"] = MethodMetadata {1, __hostFunction_NativeImagePickerIOSCxxSpecJSI_canRecordVideos};
-  methodMap_["canUseCamera"] = MethodMetadata {1, __hostFunction_NativeImagePickerIOSCxxSpecJSI_canUseCamera};
-  methodMap_["openCameraDialog"] = MethodMetadata {3, __hostFunction_NativeImagePickerIOSCxxSpecJSI_openCameraDialog};
-  methodMap_["openSelectDialog"] = MethodMetadata {3, __hostFunction_NativeImagePickerIOSCxxSpecJSI_openSelectDialog};
-  methodMap_["clearAllPendingVideos"] = MethodMetadata {0, __hostFunction_NativeImagePickerIOSCxxSpecJSI_clearAllPendingVideos};
-  methodMap_["removePendingVideo"] = MethodMetadata {1, __hostFunction_NativeImagePickerIOSCxxSpecJSI_removePendingVideo};
 }
 static jsi::Value __hostFunction_NativeImageStoreAndroidCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeImageStoreAndroidCxxSpecJSI *>(&turboModule)->getConstants(rt);
@@ -1055,89 +1031,13 @@ static jsi::Value __hostFunction_NativeShareModuleCxxSpecJSI_getConstants(jsi::R
   return static_cast<NativeShareModuleCxxSpecJSI *>(&turboModule)->getConstants(rt);
 }
 static jsi::Value __hostFunction_NativeShareModuleCxxSpecJSI_share(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeShareModuleCxxSpecJSI *>(&turboModule)->share(rt, args[0].asObject(rt), args[1].asString(rt));
+  return static_cast<NativeShareModuleCxxSpecJSI *>(&turboModule)->share(rt, args[0].asObject(rt), count < 1 || args[1].isNull() || args[1].isUndefined() ? std::nullopt : std::make_optional(args[1].asString(rt)));
 }
 
 NativeShareModuleCxxSpecJSI::NativeShareModuleCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
   : TurboModule("ShareModule", jsInvoker) {
   methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeShareModuleCxxSpecJSI_getConstants};
   methodMap_["share"] = MethodMetadata {2, __hostFunction_NativeShareModuleCxxSpecJSI_share};
-}
-static jsi::Value __hostFunction_NativeAsyncLocalStorageCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeAsyncLocalStorageCxxSpecJSI *>(&turboModule)->getConstants(rt);
-}
-static jsi::Value __hostFunction_NativeAsyncLocalStorageCxxSpecJSI_multiGet(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAsyncLocalStorageCxxSpecJSI *>(&turboModule)->multiGet(rt, args[0].asObject(rt).asArray(rt), args[1].asObject(rt).asFunction(rt));
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeAsyncLocalStorageCxxSpecJSI_multiSet(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAsyncLocalStorageCxxSpecJSI *>(&turboModule)->multiSet(rt, args[0].asObject(rt).asArray(rt), args[1].asObject(rt).asFunction(rt));
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeAsyncLocalStorageCxxSpecJSI_multiMerge(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAsyncLocalStorageCxxSpecJSI *>(&turboModule)->multiMerge(rt, args[0].asObject(rt).asArray(rt), args[1].asObject(rt).asFunction(rt));
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeAsyncLocalStorageCxxSpecJSI_multiRemove(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAsyncLocalStorageCxxSpecJSI *>(&turboModule)->multiRemove(rt, args[0].asObject(rt).asArray(rt), args[1].asObject(rt).asFunction(rt));
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeAsyncLocalStorageCxxSpecJSI_clear(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAsyncLocalStorageCxxSpecJSI *>(&turboModule)->clear(rt, args[0].asObject(rt).asFunction(rt));
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeAsyncLocalStorageCxxSpecJSI_getAllKeys(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAsyncLocalStorageCxxSpecJSI *>(&turboModule)->getAllKeys(rt, args[0].asObject(rt).asFunction(rt));
-  return jsi::Value::undefined();
-}
-
-NativeAsyncLocalStorageCxxSpecJSI::NativeAsyncLocalStorageCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("AsyncLocalStorage", jsInvoker) {
-  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeAsyncLocalStorageCxxSpecJSI_getConstants};
-  methodMap_["multiGet"] = MethodMetadata {2, __hostFunction_NativeAsyncLocalStorageCxxSpecJSI_multiGet};
-  methodMap_["multiSet"] = MethodMetadata {2, __hostFunction_NativeAsyncLocalStorageCxxSpecJSI_multiSet};
-  methodMap_["multiMerge"] = MethodMetadata {2, __hostFunction_NativeAsyncLocalStorageCxxSpecJSI_multiMerge};
-  methodMap_["multiRemove"] = MethodMetadata {2, __hostFunction_NativeAsyncLocalStorageCxxSpecJSI_multiRemove};
-  methodMap_["clear"] = MethodMetadata {1, __hostFunction_NativeAsyncLocalStorageCxxSpecJSI_clear};
-  methodMap_["getAllKeys"] = MethodMetadata {1, __hostFunction_NativeAsyncLocalStorageCxxSpecJSI_getAllKeys};
-}
-static jsi::Value __hostFunction_NativeAsyncSQLiteDBStorageCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeAsyncSQLiteDBStorageCxxSpecJSI *>(&turboModule)->getConstants(rt);
-}
-static jsi::Value __hostFunction_NativeAsyncSQLiteDBStorageCxxSpecJSI_multiGet(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAsyncSQLiteDBStorageCxxSpecJSI *>(&turboModule)->multiGet(rt, args[0].asObject(rt).asArray(rt), args[1].asObject(rt).asFunction(rt));
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeAsyncSQLiteDBStorageCxxSpecJSI_multiSet(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAsyncSQLiteDBStorageCxxSpecJSI *>(&turboModule)->multiSet(rt, args[0].asObject(rt).asArray(rt), args[1].asObject(rt).asFunction(rt));
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeAsyncSQLiteDBStorageCxxSpecJSI_multiMerge(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAsyncSQLiteDBStorageCxxSpecJSI *>(&turboModule)->multiMerge(rt, args[0].asObject(rt).asArray(rt), args[1].asObject(rt).asFunction(rt));
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeAsyncSQLiteDBStorageCxxSpecJSI_multiRemove(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAsyncSQLiteDBStorageCxxSpecJSI *>(&turboModule)->multiRemove(rt, args[0].asObject(rt).asArray(rt), args[1].asObject(rt).asFunction(rt));
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeAsyncSQLiteDBStorageCxxSpecJSI_clear(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAsyncSQLiteDBStorageCxxSpecJSI *>(&turboModule)->clear(rt, args[0].asObject(rt).asFunction(rt));
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeAsyncSQLiteDBStorageCxxSpecJSI_getAllKeys(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAsyncSQLiteDBStorageCxxSpecJSI *>(&turboModule)->getAllKeys(rt, args[0].asObject(rt).asFunction(rt));
-  return jsi::Value::undefined();
-}
-
-NativeAsyncSQLiteDBStorageCxxSpecJSI::NativeAsyncSQLiteDBStorageCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("AsyncSQLiteDBStorage", jsInvoker) {
-  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeAsyncSQLiteDBStorageCxxSpecJSI_getConstants};
-  methodMap_["multiGet"] = MethodMetadata {2, __hostFunction_NativeAsyncSQLiteDBStorageCxxSpecJSI_multiGet};
-  methodMap_["multiSet"] = MethodMetadata {2, __hostFunction_NativeAsyncSQLiteDBStorageCxxSpecJSI_multiSet};
-  methodMap_["multiMerge"] = MethodMetadata {2, __hostFunction_NativeAsyncSQLiteDBStorageCxxSpecJSI_multiMerge};
-  methodMap_["multiRemove"] = MethodMetadata {2, __hostFunction_NativeAsyncSQLiteDBStorageCxxSpecJSI_multiRemove};
-  methodMap_["clear"] = MethodMetadata {1, __hostFunction_NativeAsyncSQLiteDBStorageCxxSpecJSI_clear};
-  methodMap_["getAllKeys"] = MethodMetadata {1, __hostFunction_NativeAsyncSQLiteDBStorageCxxSpecJSI_getAllKeys};
 }
 static jsi::Value __hostFunction_NativeAppearanceCxxSpecJSI_getColorScheme(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   auto result = static_cast<NativeAppearanceCxxSpecJSI *>(&turboModule)->getColorScheme(rt);
@@ -1238,6 +1138,29 @@ NativeVibrationCxxSpecJSI::NativeVibrationCxxSpecJSI(std::shared_ptr<CallInvoker
   methodMap_["vibrate"] = MethodMetadata {1, __hostFunction_NativeVibrationCxxSpecJSI_vibrate};
   methodMap_["vibrateByPattern"] = MethodMetadata {2, __hostFunction_NativeVibrationCxxSpecJSI_vibrateByPattern};
   methodMap_["cancel"] = MethodMetadata {0, __hostFunction_NativeVibrationCxxSpecJSI_cancel};
+}
+static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_startReporting(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->startReporting(rt, args[0].asString(rt));
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_stopReporting(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->stopReporting(rt, args[0].asString(rt));
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_getPendingEntries(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->getPendingEntries(rt);
+}
+static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_setOnPerformanceEntryCallback(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->setOnPerformanceEntryCallback(rt, count < 0 || args[0].isNull() || args[0].isUndefined() ? std::nullopt : std::make_optional(args[0].asObject(rt).asFunction(rt)));
+  return jsi::Value::undefined();
+}
+
+NativePerformanceObserverCxxSpecJSI::NativePerformanceObserverCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("NativePerformanceObserverCxx", jsInvoker) {
+  methodMap_["startReporting"] = MethodMetadata {1, __hostFunction_NativePerformanceObserverCxxSpecJSI_startReporting};
+  methodMap_["stopReporting"] = MethodMetadata {1, __hostFunction_NativePerformanceObserverCxxSpecJSI_stopReporting};
+  methodMap_["getPendingEntries"] = MethodMetadata {0, __hostFunction_NativePerformanceObserverCxxSpecJSI_getPendingEntries};
+  methodMap_["setOnPerformanceEntryCallback"] = MethodMetadata {1, __hostFunction_NativePerformanceObserverCxxSpecJSI_setOnPerformanceEntryCallback};
 }
 static jsi::Value __hostFunction_NativeWebSocketModuleCxxSpecJSI_connect(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeWebSocketModuleCxxSpecJSI *>(&turboModule)->connect(rt, args[0].asString(rt), args[1].isNull() || args[1].isUndefined() ? std::nullopt : std::make_optional(args[1].asObject(rt).asArray(rt)), args[2].asObject(rt), args[3].asNumber());
@@ -1431,7 +1354,7 @@ static jsi::Value __hostFunction_NativeStatusBarManagerAndroidCxxSpecJSI_setTran
   return jsi::Value::undefined();
 }
 static jsi::Value __hostFunction_NativeStatusBarManagerAndroidCxxSpecJSI_setStyle(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeStatusBarManagerAndroidCxxSpecJSI *>(&turboModule)->setStyle(rt, args[0].isNull() || args[0].isUndefined() ? std::nullopt : std::make_optional(args[0].asString(rt)));
+  static_cast<NativeStatusBarManagerAndroidCxxSpecJSI *>(&turboModule)->setStyle(rt, count < 0 || args[0].isNull() || args[0].isUndefined() ? std::nullopt : std::make_optional(args[0].asString(rt)));
   return jsi::Value::undefined();
 }
 static jsi::Value __hostFunction_NativeStatusBarManagerAndroidCxxSpecJSI_setHidden(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
@@ -1467,7 +1390,7 @@ static jsi::Value __hostFunction_NativeStatusBarManagerIOSCxxSpecJSI_removeListe
   return jsi::Value::undefined();
 }
 static jsi::Value __hostFunction_NativeStatusBarManagerIOSCxxSpecJSI_setStyle(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeStatusBarManagerIOSCxxSpecJSI *>(&turboModule)->setStyle(rt, args[0].isNull() || args[0].isUndefined() ? std::nullopt : std::make_optional(args[0].asString(rt)), args[1].asBool());
+  static_cast<NativeStatusBarManagerIOSCxxSpecJSI *>(&turboModule)->setStyle(rt, count < 0 || args[0].isNull() || args[0].isUndefined() ? std::nullopt : std::make_optional(args[0].asString(rt)), args[1].asBool());
   return jsi::Value::undefined();
 }
 static jsi::Value __hostFunction_NativeStatusBarManagerIOSCxxSpecJSI_setHidden(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {

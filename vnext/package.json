@@ -46,7 +46,7 @@
     "pretty-format": "^26.5.2",
     "promise": "^8.2.0",
     "react-devtools-core": "^4.26.1",
-    "react-native-codegen": "^0.71.0",
+    "react-native-codegen": "^0.72.0",
     "react-native-gradle-plugin": "^0.71.4",
     "react-refresh": "^0.4.0",
     "react-shallow-renderer": "^16.15.0",

@@ -208,11 +208,6 @@ const APIs: Array<RNTesterModuleInfo> = [
     module: require('../examples-win/Accessibility/AccessibilityInfoExample'),
   },
   {
-    key: 'AsyncStorageExampleWindows',
-    category: 'Basic',
-    module: require('../examples-win/AsyncStorage/AsyncStorageExampleWindows'),
-  },
-  {
     key: 'AlertExample',
     category: 'UI',
     module: require('../examples/Alert/AlertExample').default,

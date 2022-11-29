@@ -1082,6 +1082,58 @@ private:
   Delegate delegate_;
 };
 
+class JSI_EXPORT NativeDevToolsSettingsManagerCxxSpecJSI : public TurboModule {
+protected:
+  NativeDevToolsSettingsManagerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
+
+public:
+  virtual void setConsolePatchSettings(jsi::Runtime &rt, jsi::String newConsolePatchSettings) = 0;
+  virtual std::optional<jsi::String> getConsolePatchSettings(jsi::Runtime &rt) = 0;
+
+};
+
+template <typename T>
+class JSI_EXPORT NativeDevToolsSettingsManagerCxxSpec : public TurboModule {
+public:
+  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.get(rt, propName);
+  }
+
+protected:
+  NativeDevToolsSettingsManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
+    : TurboModule("DevToolsSettingsManager", jsInvoker),
+      delegate_(static_cast<T*>(this), jsInvoker) {}
+
+private:
+  class Delegate : public NativeDevToolsSettingsManagerCxxSpecJSI {
+  public:
+    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
+      NativeDevToolsSettingsManagerCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
+
+    void setConsolePatchSettings(jsi::Runtime &rt, jsi::String newConsolePatchSettings) override {
+      static_assert(
+          bridging::getParameterCount(&T::setConsolePatchSettings) == 2,
+          "Expected setConsolePatchSettings(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::setConsolePatchSettings, jsInvoker_, instance_, std::move(newConsolePatchSettings));
+    }
+    std::optional<jsi::String> getConsolePatchSettings(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::getConsolePatchSettings) == 1,
+          "Expected getConsolePatchSettings(...) to have 1 parameters");
+
+      return bridging::callFromJs<std::optional<jsi::String>>(
+          rt, &T::getConsolePatchSettings, jsInvoker_, instance_);
+    }
+
+  private:
+    T *instance_;
+  };
+
+  Delegate delegate_;
+};
+
 class JSI_EXPORT NativeJSCHeapCaptureCxxSpecJSI : public TurboModule {
 protected:
   NativeJSCHeapCaptureCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
@@ -1344,103 +1396,6 @@ private:
 
       return bridging::callFromJs<jsi::Value>(
           rt, &T::queryCache, jsInvoker_, instance_, std::move(uris));
-    }
-
-  private:
-    T *instance_;
-  };
-
-  Delegate delegate_;
-};
-
-class JSI_EXPORT NativeImagePickerIOSCxxSpecJSI : public TurboModule {
-protected:
-  NativeImagePickerIOSCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
-
-public:
-  virtual jsi::Object getConstants(jsi::Runtime &rt) = 0;
-  virtual void canRecordVideos(jsi::Runtime &rt, jsi::Function callback) = 0;
-  virtual void canUseCamera(jsi::Runtime &rt, jsi::Function callback) = 0;
-  virtual void openCameraDialog(jsi::Runtime &rt, jsi::Object config, jsi::Function successCallback, jsi::Function cancelCallback) = 0;
-  virtual void openSelectDialog(jsi::Runtime &rt, jsi::Object config, jsi::Function successCallback, jsi::Function cancelCallback) = 0;
-  virtual void clearAllPendingVideos(jsi::Runtime &rt) = 0;
-  virtual void removePendingVideo(jsi::Runtime &rt, jsi::String url) = 0;
-
-};
-
-template <typename T>
-class JSI_EXPORT NativeImagePickerIOSCxxSpec : public TurboModule {
-public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
-  }
-
-protected:
-  NativeImagePickerIOSCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("ImagePickerIOS", jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
-
-private:
-  class Delegate : public NativeImagePickerIOSCxxSpecJSI {
-  public:
-    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativeImagePickerIOSCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
-
-    jsi::Object getConstants(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::getConstants) == 1,
-          "Expected getConstants(...) to have 1 parameters");
-
-      return bridging::callFromJs<jsi::Object>(
-          rt, &T::getConstants, jsInvoker_, instance_);
-    }
-    void canRecordVideos(jsi::Runtime &rt, jsi::Function callback) override {
-      static_assert(
-          bridging::getParameterCount(&T::canRecordVideos) == 2,
-          "Expected canRecordVideos(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::canRecordVideos, jsInvoker_, instance_, std::move(callback));
-    }
-    void canUseCamera(jsi::Runtime &rt, jsi::Function callback) override {
-      static_assert(
-          bridging::getParameterCount(&T::canUseCamera) == 2,
-          "Expected canUseCamera(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::canUseCamera, jsInvoker_, instance_, std::move(callback));
-    }
-    void openCameraDialog(jsi::Runtime &rt, jsi::Object config, jsi::Function successCallback, jsi::Function cancelCallback) override {
-      static_assert(
-          bridging::getParameterCount(&T::openCameraDialog) == 4,
-          "Expected openCameraDialog(...) to have 4 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::openCameraDialog, jsInvoker_, instance_, std::move(config), std::move(successCallback), std::move(cancelCallback));
-    }
-    void openSelectDialog(jsi::Runtime &rt, jsi::Object config, jsi::Function successCallback, jsi::Function cancelCallback) override {
-      static_assert(
-          bridging::getParameterCount(&T::openSelectDialog) == 4,
-          "Expected openSelectDialog(...) to have 4 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::openSelectDialog, jsInvoker_, instance_, std::move(config), std::move(successCallback), std::move(cancelCallback));
-    }
-    void clearAllPendingVideos(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::clearAllPendingVideos) == 1,
-          "Expected clearAllPendingVideos(...) to have 1 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::clearAllPendingVideos, jsInvoker_, instance_);
-    }
-    void removePendingVideo(jsi::Runtime &rt, jsi::String url) override {
-      static_assert(
-          bridging::getParameterCount(&T::removePendingVideo) == 2,
-          "Expected removePendingVideo(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::removePendingVideo, jsInvoker_, instance_, std::move(url));
     }
 
   private:
@@ -2803,7 +2758,7 @@ protected:
 
 public:
   virtual jsi::Object getConstants(jsi::Runtime &rt) = 0;
-  virtual jsi::Value share(jsi::Runtime &rt, jsi::Object content, jsi::String dialogTitle) = 0;
+  virtual jsi::Value share(jsi::Runtime &rt, jsi::Object content, std::optional<jsi::String> dialogTitle) = 0;
 
 };
 
@@ -2833,207 +2788,13 @@ private:
       return bridging::callFromJs<jsi::Object>(
           rt, &T::getConstants, jsInvoker_, instance_);
     }
-    jsi::Value share(jsi::Runtime &rt, jsi::Object content, jsi::String dialogTitle) override {
+    jsi::Value share(jsi::Runtime &rt, jsi::Object content, std::optional<jsi::String> dialogTitle) override {
       static_assert(
           bridging::getParameterCount(&T::share) == 3,
           "Expected share(...) to have 3 parameters");
 
       return bridging::callFromJs<jsi::Value>(
           rt, &T::share, jsInvoker_, instance_, std::move(content), std::move(dialogTitle));
-    }
-
-  private:
-    T *instance_;
-  };
-
-  Delegate delegate_;
-};
-
-class JSI_EXPORT NativeAsyncLocalStorageCxxSpecJSI : public TurboModule {
-protected:
-  NativeAsyncLocalStorageCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
-
-public:
-  virtual jsi::Object getConstants(jsi::Runtime &rt) = 0;
-  virtual void multiGet(jsi::Runtime &rt, jsi::Array keys, jsi::Function callback) = 0;
-  virtual void multiSet(jsi::Runtime &rt, jsi::Array kvPairs, jsi::Function callback) = 0;
-  virtual void multiMerge(jsi::Runtime &rt, jsi::Array kvPairs, jsi::Function callback) = 0;
-  virtual void multiRemove(jsi::Runtime &rt, jsi::Array keys, jsi::Function callback) = 0;
-  virtual void clear(jsi::Runtime &rt, jsi::Function callback) = 0;
-  virtual void getAllKeys(jsi::Runtime &rt, jsi::Function callback) = 0;
-
-};
-
-template <typename T>
-class JSI_EXPORT NativeAsyncLocalStorageCxxSpec : public TurboModule {
-public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
-  }
-
-protected:
-  NativeAsyncLocalStorageCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("AsyncLocalStorage", jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
-
-private:
-  class Delegate : public NativeAsyncLocalStorageCxxSpecJSI {
-  public:
-    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativeAsyncLocalStorageCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
-
-    jsi::Object getConstants(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::getConstants) == 1,
-          "Expected getConstants(...) to have 1 parameters");
-
-      return bridging::callFromJs<jsi::Object>(
-          rt, &T::getConstants, jsInvoker_, instance_);
-    }
-    void multiGet(jsi::Runtime &rt, jsi::Array keys, jsi::Function callback) override {
-      static_assert(
-          bridging::getParameterCount(&T::multiGet) == 3,
-          "Expected multiGet(...) to have 3 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::multiGet, jsInvoker_, instance_, std::move(keys), std::move(callback));
-    }
-    void multiSet(jsi::Runtime &rt, jsi::Array kvPairs, jsi::Function callback) override {
-      static_assert(
-          bridging::getParameterCount(&T::multiSet) == 3,
-          "Expected multiSet(...) to have 3 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::multiSet, jsInvoker_, instance_, std::move(kvPairs), std::move(callback));
-    }
-    void multiMerge(jsi::Runtime &rt, jsi::Array kvPairs, jsi::Function callback) override {
-      static_assert(
-          bridging::getParameterCount(&T::multiMerge) == 3,
-          "Expected multiMerge(...) to have 3 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::multiMerge, jsInvoker_, instance_, std::move(kvPairs), std::move(callback));
-    }
-    void multiRemove(jsi::Runtime &rt, jsi::Array keys, jsi::Function callback) override {
-      static_assert(
-          bridging::getParameterCount(&T::multiRemove) == 3,
-          "Expected multiRemove(...) to have 3 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::multiRemove, jsInvoker_, instance_, std::move(keys), std::move(callback));
-    }
-    void clear(jsi::Runtime &rt, jsi::Function callback) override {
-      static_assert(
-          bridging::getParameterCount(&T::clear) == 2,
-          "Expected clear(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::clear, jsInvoker_, instance_, std::move(callback));
-    }
-    void getAllKeys(jsi::Runtime &rt, jsi::Function callback) override {
-      static_assert(
-          bridging::getParameterCount(&T::getAllKeys) == 2,
-          "Expected getAllKeys(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::getAllKeys, jsInvoker_, instance_, std::move(callback));
-    }
-
-  private:
-    T *instance_;
-  };
-
-  Delegate delegate_;
-};
-
-class JSI_EXPORT NativeAsyncSQLiteDBStorageCxxSpecJSI : public TurboModule {
-protected:
-  NativeAsyncSQLiteDBStorageCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
-
-public:
-  virtual jsi::Object getConstants(jsi::Runtime &rt) = 0;
-  virtual void multiGet(jsi::Runtime &rt, jsi::Array keys, jsi::Function callback) = 0;
-  virtual void multiSet(jsi::Runtime &rt, jsi::Array kvPairs, jsi::Function callback) = 0;
-  virtual void multiMerge(jsi::Runtime &rt, jsi::Array kvPairs, jsi::Function callback) = 0;
-  virtual void multiRemove(jsi::Runtime &rt, jsi::Array keys, jsi::Function callback) = 0;
-  virtual void clear(jsi::Runtime &rt, jsi::Function callback) = 0;
-  virtual void getAllKeys(jsi::Runtime &rt, jsi::Function callback) = 0;
-
-};
-
-template <typename T>
-class JSI_EXPORT NativeAsyncSQLiteDBStorageCxxSpec : public TurboModule {
-public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
-  }
-
-protected:
-  NativeAsyncSQLiteDBStorageCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("AsyncSQLiteDBStorage", jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
-
-private:
-  class Delegate : public NativeAsyncSQLiteDBStorageCxxSpecJSI {
-  public:
-    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativeAsyncSQLiteDBStorageCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
-
-    jsi::Object getConstants(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::getConstants) == 1,
-          "Expected getConstants(...) to have 1 parameters");
-
-      return bridging::callFromJs<jsi::Object>(
-          rt, &T::getConstants, jsInvoker_, instance_);
-    }
-    void multiGet(jsi::Runtime &rt, jsi::Array keys, jsi::Function callback) override {
-      static_assert(
-          bridging::getParameterCount(&T::multiGet) == 3,
-          "Expected multiGet(...) to have 3 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::multiGet, jsInvoker_, instance_, std::move(keys), std::move(callback));
-    }
-    void multiSet(jsi::Runtime &rt, jsi::Array kvPairs, jsi::Function callback) override {
-      static_assert(
-          bridging::getParameterCount(&T::multiSet) == 3,
-          "Expected multiSet(...) to have 3 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::multiSet, jsInvoker_, instance_, std::move(kvPairs), std::move(callback));
-    }
-    void multiMerge(jsi::Runtime &rt, jsi::Array kvPairs, jsi::Function callback) override {
-      static_assert(
-          bridging::getParameterCount(&T::multiMerge) == 3,
-          "Expected multiMerge(...) to have 3 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::multiMerge, jsInvoker_, instance_, std::move(kvPairs), std::move(callback));
-    }
-    void multiRemove(jsi::Runtime &rt, jsi::Array keys, jsi::Function callback) override {
-      static_assert(
-          bridging::getParameterCount(&T::multiRemove) == 3,
-          "Expected multiRemove(...) to have 3 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::multiRemove, jsInvoker_, instance_, std::move(keys), std::move(callback));
-    }
-    void clear(jsi::Runtime &rt, jsi::Function callback) override {
-      static_assert(
-          bridging::getParameterCount(&T::clear) == 2,
-          "Expected clear(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::clear, jsInvoker_, instance_, std::move(callback));
-    }
-    void getAllKeys(jsi::Runtime &rt, jsi::Function callback) override {
-      static_assert(
-          bridging::getParameterCount(&T::getAllKeys) == 2,
-          "Expected getAllKeys(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::getAllKeys, jsInvoker_, instance_, std::move(callback));
     }
 
   private:
@@ -3441,6 +3202,76 @@ private:
 
       return bridging::callFromJs<void>(
           rt, &T::cancel, jsInvoker_, instance_);
+    }
+
+  private:
+    T *instance_;
+  };
+
+  Delegate delegate_;
+};
+
+class JSI_EXPORT NativePerformanceObserverCxxSpecJSI : public TurboModule {
+protected:
+  NativePerformanceObserverCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
+
+public:
+  virtual void startReporting(jsi::Runtime &rt, jsi::String entryType) = 0;
+  virtual void stopReporting(jsi::Runtime &rt, jsi::String entryType) = 0;
+  virtual jsi::Array getPendingEntries(jsi::Runtime &rt) = 0;
+  virtual void setOnPerformanceEntryCallback(jsi::Runtime &rt, std::optional<jsi::Function> callback) = 0;
+
+};
+
+template <typename T>
+class JSI_EXPORT NativePerformanceObserverCxxSpec : public TurboModule {
+public:
+  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.get(rt, propName);
+  }
+
+protected:
+  NativePerformanceObserverCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
+    : TurboModule("NativePerformanceObserverCxx", jsInvoker),
+      delegate_(static_cast<T*>(this), jsInvoker) {}
+
+private:
+  class Delegate : public NativePerformanceObserverCxxSpecJSI {
+  public:
+    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
+      NativePerformanceObserverCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
+
+    void startReporting(jsi::Runtime &rt, jsi::String entryType) override {
+      static_assert(
+          bridging::getParameterCount(&T::startReporting) == 2,
+          "Expected startReporting(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::startReporting, jsInvoker_, instance_, std::move(entryType));
+    }
+    void stopReporting(jsi::Runtime &rt, jsi::String entryType) override {
+      static_assert(
+          bridging::getParameterCount(&T::stopReporting) == 2,
+          "Expected stopReporting(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::stopReporting, jsInvoker_, instance_, std::move(entryType));
+    }
+    jsi::Array getPendingEntries(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::getPendingEntries) == 1,
+          "Expected getPendingEntries(...) to have 1 parameters");
+
+      return bridging::callFromJs<jsi::Array>(
+          rt, &T::getPendingEntries, jsInvoker_, instance_);
+    }
+    void setOnPerformanceEntryCallback(jsi::Runtime &rt, std::optional<jsi::Function> callback) override {
+      static_assert(
+          bridging::getParameterCount(&T::setOnPerformanceEntryCallback) == 2,
+          "Expected setOnPerformanceEntryCallback(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::setOnPerformanceEntryCallback, jsInvoker_, instance_, std::move(callback));
     }
 
   private:
