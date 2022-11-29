@@ -248,6 +248,14 @@ export function generate(
     rncodegenPath,
     'lib/generators/components/GenerateEventEmitterCpp',
   )).generate;
+  const generatorStateCPP = require(path.resolve(
+    rncodegenPath,
+    'lib/generators/components/GenerateStateCpp',
+  )).generate;
+  const generatorStateH = require(path.resolve(
+    rncodegenPath,
+    'lib/generators/components/GenerateStateH',
+  )).generate;
 
   const moduleGenerators = [];
 
@@ -286,6 +294,8 @@ export function generate(
       generatorPropsH,
       generatorShadowNodeCPP,
       generatorShadowNodeH,
+      generatorStateCPP,
+      generatorStateH,
     ];
 
     componentGenerators.forEach(generator => {
