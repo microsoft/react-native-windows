@@ -89,6 +89,7 @@ jobs:
         continueOnError: ${{ parameters.complianceWarnOnly }}
 
       - script: |
+          which dotnet.exe
           del global.json
         displayName: "Remove global.json"
 
