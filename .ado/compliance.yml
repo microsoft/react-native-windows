@@ -88,15 +88,9 @@ jobs:
         displayName: "🛡️ Initialize CodeQL"
         continueOnError: ${{ parameters.complianceWarnOnly }}
 
-      - script: |
-          setx /M PATH "%PATH:$(Agent.ToolsDirectory)\dotnet;=%"
-          where dotnet.exe
-        displayName: "Remove downloaded dotnet from path"
-
       # Build RNW
 
       - powershell: |
-          Write-Host $env:PATH
           & dotnet --info
         displayName: "dotnet --info"
         workingDirectory: $(Agent.BuildDirectory)
