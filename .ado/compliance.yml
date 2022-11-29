@@ -89,10 +89,9 @@ jobs:
         continueOnError: ${{ parameters.complianceWarnOnly }}
 
       - script: |
-          where dotnet.exe
-          echo %PATH%
-          del global.json
-        displayName: "Remove global.json"
+          dir $(Agent.ToolsDirectory)
+          setx /M PATH "%PATH:D:\a\_work\_tool\dotnet;=%"
+        displayName: "Remove downloaded dotnet from path"
 
       # Build RNW
 
