@@ -89,13 +89,14 @@ jobs:
         continueOnError: ${{ parameters.complianceWarnOnly }}
 
       - script: |
-          dir $(Agent.ToolsDirectory)
-          setx /M PATH "%PATH:D:\a\_work\_tool\dotnet;=%"
+          setx /M PATH "%PATH:$(Agent.ToolsDirectory)\dotnet;=%"
+          where dotnet.exe
         displayName: "Remove downloaded dotnet from path"
 
       # Build RNW
 
       - powershell: |
+          Write-Host $env:PATH
           & dotnet --info
         displayName: "dotnet --info"
         workingDirectory: $(Agent.BuildDirectory)
