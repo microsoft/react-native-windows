@@ -88,6 +88,10 @@ jobs:
         displayName: "🛡️ Initialize CodeQL"
         continueOnError: ${{ parameters.complianceWarnOnly }}
 
+      - script: |
+          del global.json
+        displayName: "Remove global.json"
+
       # Build RNW
 
       - powershell: |
