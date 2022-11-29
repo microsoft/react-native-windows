@@ -89,7 +89,8 @@ jobs:
         continueOnError: ${{ parameters.complianceWarnOnly }}
 
       - script: |
-          which dotnet.exe
+          where dotnet.exe
+          echo %PATH%
           del global.json
         displayName: "Remove global.json"
 
