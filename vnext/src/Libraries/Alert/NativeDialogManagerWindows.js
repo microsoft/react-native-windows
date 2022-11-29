@@ -10,7 +10,7 @@
 
 import type {TurboModule} from '../TurboModule/RCTExport';
 import * as TurboModuleRegistry from '../TurboModule/TurboModuleRegistry';
-import type {Int32} from '../Types/CodegenTypes';
+import type {Int32, Double} from '../Types/CodegenTypes';
 
 /* 'buttonClicked' | 'dismissed' */
 type DialogAction = string;
@@ -29,7 +29,7 @@ export type DialogOptions = {|
   items?: Array<string>,
   cancelable?: boolean,
   defaultButton?: Int32,
-  rootTag?: number,
+  rootTag?: Double,
 |};
 
 export interface Spec extends TurboModule {
