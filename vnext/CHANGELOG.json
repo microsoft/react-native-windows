@@ -2,6 +2,93 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 24 Nov 2022 06:15:42 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.587",
+      "version": "0.0.0-canary.587",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmoroz@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "27efa8adbb8acf96116d584db99b34329d7422ad",
+            "comment": "Avoid shadowing template types in CntPtr"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 23 Nov 2022 06:16:32 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.586",
+      "version": "0.0.0-canary.586",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.152",
+            "commit": "67f2a340c212f9721f7dc6d0bab9ca8b103904c9"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 22 Nov 2022 06:15:32 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.585",
+      "version": "0.0.0-canary.585",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmoroz@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "35161b0cef55f55464a7aa7bb4e21c323f6d7d40",
+            "comment": "Fix copying substitution files"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 21 Nov 2022 06:15:36 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.584",
+      "version": "0.0.0-canary.584",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ce7f7ac062f998b9d8c198ef7a11e2327304f278",
+            "comment": "Update codegen version"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.151",
+            "commit": "24da749c63f5c01686296174fe614a20d276a9b1"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.44",
+            "commit": "24da749c63f5c01686296174fe614a20d276a9b1"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 18 Nov 2022 06:15:35 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.583",
+      "version": "0.0.0-canary.583",
+      "comments": {
+        "none": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d0a0c72c89fc1fd4128c4ea4f516cc1c033a73ff",
+            "comment": "Office nuget should contain fmt headers"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 16 Nov 2022 06:16:00 GMT",
       "tag": "react-native-windows_v0.0.0-canary.583",
       "version": "0.0.0-canary.583",

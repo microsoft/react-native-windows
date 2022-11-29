@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Wed, 16 Nov 2022 06:16:01 GMT and should not be manually modified.
+This log was last generated on Mon, 21 Nov 2022 06:15:36 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.44
+
+Mon, 21 Nov 2022 06:15:36 GMT
+
+### Changes
+
+- Enable ability to codegen JSI C++ TurboModule specs (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.43
 

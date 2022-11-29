@@ -1,8 +1,25 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Wed, 16 Nov 2022 06:16:01 GMT and should not be manually modified.
+This log was last generated on Wed, 23 Nov 2022 06:16:31 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.152
+
+Wed, 23 Nov 2022 06:16:31 GMT
+
+### Changes
+
+- Fix CLI to search for correct VS version range (jthysell@microsoft.com)
+
+## 0.0.0-canary.151
+
+Mon, 21 Nov 2022 06:15:36 GMT
+
+### Changes
+
+- Enable ability to codegen JSI C++ TurboModule specs (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.44
 
 ## 0.0.0-canary.150
 
