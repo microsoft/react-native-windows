@@ -39,7 +39,11 @@
     "type": "modules",
     "jsSrcsDir": "src",
     "windows": {
-      "namespace": "SampleLibraryCodegen"
+      "namespace": "SampleLibraryCodegen",
+      "generators": [
+        "modulesCxx",
+        "modulesWindows"
+      ]
     }
   },
   "engines": {
