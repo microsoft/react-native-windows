@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Use a ReactViewHost to specify view options on CompositionRootView",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
