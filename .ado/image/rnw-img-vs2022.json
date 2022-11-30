@@ -40,7 +40,7 @@
         {
             "name": "windows-npm-global",
             "parameters": {
-                "packages": "yarn@1.22.17, midgard-yarn@1.23.34, verdaccio@5.2.0",
+                "packages": "yarn@1.22.19, midgard-yarn@1.23.34, verdaccio@5.2.0",
                 "addToPath": true
             }
         },
@@ -53,19 +53,13 @@
         {
             "name": "windows-dotnetcore-sdk",
             "parameters": {
-                "DotNetCoreVersion": "2.1.818"
+                "DotNetCoreVersion": "3.1.425"
             }
         },
         {
             "name": "windows-dotnetcore-sdk",
             "parameters": {
-                "DotNetCoreVersion": "3.1.412"
-            }
-        },
-        {
-            "name": "windows-dotnetcore-sdk",
-            "parameters": {
-                "DotNetCoreVersion": "6.0.401"
+                "DotNetCoreVersion": "6.0.403"
             }
         }
     ],
