@@ -59,11 +59,6 @@ jobs:
 
       - template: templates/apply-published-version-vars.yml
 
-      - powershell: |
-          & dotnet --info
-        displayName: "dotnet --info"
-        workingDirectory: $(Agent.BuildDirectory)
-
       # Pre-build compliance tasks
 
       - template: templates/run-compliance-prebuild.yml
@@ -89,11 +84,6 @@ jobs:
         continueOnError: ${{ parameters.complianceWarnOnly }}
 
       # Build RNW
-
-      - powershell: |
-          & dotnet --info
-        displayName: "dotnet --info"
-        workingDirectory: $(Agent.BuildDirectory)
 
       - template: templates/msbuild-sln.yml
         parameters:
