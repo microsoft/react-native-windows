@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import "IJSValueWriter.idl";
+import "ReactCoreInjection.idl";
 import "ReactNativeHost.idl";
 #include "NamespaceRedirect.h"
 #include "DocString.h"
@@ -21,18 +22,12 @@ namespace Microsoft.ReactNative
 
     void Initialize(UInt64 hwnd);
 
-    DOC_STRING("The @ReactNativeHost associated with the @CompositionRootView. It must be set to show any React UI elements.")
-    ReactNativeHost ReactNativeHost { get; set; };
+    DOC_STRING(
+      "A ReactViewHost specifies the root UI component and initial properties to render in this RootView"
+      "It must be set to show any React UI elements.")
+    IReactViewHost ReactViewHost { get; set; };
 
     Int64 TranslateMessage(UInt32 msg, UInt64 wParam, Int64 lParam);
-
-    DOC_STRING(
-      "The name of the root UI component registered in JavaScript with help of the "
-      "[`AppRegistry.registerComponent`](https://reactnative.dev/docs/appregistry#registercomponent) method.")
-    String ComponentName { get; set; };
-
-    DOC_STRING("The @JSValueArgWriter that is used to serialize the main component initial properties.")
-    JSValueArgWriter InitialProps { get; set; };
   }
 
 } // namespace Microsoft.ReactNative

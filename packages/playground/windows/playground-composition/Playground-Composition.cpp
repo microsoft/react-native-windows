@@ -145,8 +145,10 @@ struct WindowData {
           // Nudge the ReactNativeHost to create the instance and wrapping context
           host.ReloadInstance();
 
-          m_CompositionHwndHost.ComponentName(appName);
-          m_CompositionHwndHost.ReactNativeHost(host);
+          winrt::Microsoft::ReactNative::ReactViewOptions viewOptions;
+          viewOptions.ComponentName(appName);
+          m_CompositionHwndHost.ReactViewHost(
+              winrt::Microsoft::ReactNative::ReactCoreInjection::MakeViewHost(host, viewOptions));
 
           auto windowData = WindowData::GetFromWindow(hwnd);
           if (!windowData->m_windowInited) {

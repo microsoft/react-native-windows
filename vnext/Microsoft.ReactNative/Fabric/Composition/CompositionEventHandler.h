@@ -5,6 +5,7 @@
 #include <Fabric/ReactTaggedView.h>
 #include <IReactInstance.h>
 #include <JSValue.h>
+#include <ReactContext.h>
 #include <react/renderer/components/view/PointerEvent.h>
 #include <react/renderer/components/view/Touch.h>
 #include <react/renderer/components/view/TouchEventEmitter.h>
@@ -26,9 +27,9 @@ typedef int PointerId;
 
 class CompositionEventHandler {
  public:
-  CompositionEventHandler(const Mso::React::IReactContext &context);
+  CompositionEventHandler(const winrt::Microsoft::ReactNative::ReactContext &context);
   CompositionEventHandler(
-      const Mso::React::IReactContext &context,
+      const winrt::Microsoft::ReactNative::ReactContext &context,
       const winrt::Microsoft::ReactNative::CompositionRootView &CompositionRootView);
   virtual ~CompositionEventHandler();
 
@@ -109,7 +110,7 @@ class CompositionEventHandler {
 
   std::map<PointerId, std::vector<ReactTaggedView>> m_currentlyHoveredViewsPerPointer;
   winrt::Microsoft::ReactNative::CompositionRootView m_compRootView{nullptr};
-  Mso::CntPtr<const Mso::React::IReactContext> m_context;
+  winrt::Microsoft::ReactNative::ReactContext m_context;
 };
 
 } // namespace Microsoft::ReactNative

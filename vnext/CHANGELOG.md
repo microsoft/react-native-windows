@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 24 Nov 2022 06:15:42 GMT and should not be manually modified.
+This log was last generated on Wed, 30 Nov 2022 06:15:20 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.588
+
+Wed, 30 Nov 2022 06:15:20 GMT
+
+### Changes
+
+- Use a ReactViewHost to specify view options on CompositionRootView (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.587
 

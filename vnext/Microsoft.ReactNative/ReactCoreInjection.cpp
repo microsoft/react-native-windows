@@ -70,7 +70,7 @@ ReactCoreInjection::PostToUIBatchingQueueProperty() noexcept {
                           .Get(winrt::Microsoft::ReactNative::ReactDispatcherHelper::UIDispatcherProperty())
                           .as<winrt::Microsoft::ReactNative::IReactDispatcher>();
   auto viewHost = rnhost->MakeViewHost(viewOptions.as<ReactViewOptions>()->CreateViewOptions());
-  return winrt::make<ReactViewHost>(*viewHost, uiDispatcher);
+  return winrt::make<ReactViewHost>(host, *viewHost, uiDispatcher);
 }
 
 /*static*/ void ReactCoreInjection::PostToUIBatchingQueue(
@@ -81,9 +81,10 @@ ReactCoreInjection::PostToUIBatchingQueueProperty() noexcept {
 }
 
 ReactViewHost::ReactViewHost(
+    const ReactNative::ReactNativeHost &host,
     Mso::React::IReactViewHost &viewHost,
     const winrt::Microsoft::ReactNative::IReactDispatcher &uiDispatcher)
-    : m_viewHost(&viewHost), m_uiDispatcher(uiDispatcher) {}
+    : m_host(host), m_viewHost(&viewHost), m_uiDispatcher(uiDispatcher) {}
 
 // ReactViewOptions ReactViewHost::Options() noexcept;
 // ReactNative::ReactNativeHost ReactViewHost::ReactHost() noexcept {}
@@ -155,6 +156,10 @@ winrt::Windows::Foundation::IAsyncAction ReactViewHost::AttachViewInstance(
 
 winrt::Windows::Foundation::IAsyncAction ReactViewHost::DetachViewInstance() noexcept {
   return make<Mso::AsyncActionFutureAdapter>(m_viewHost->DetachViewInstance());
+}
+
+winrt::Microsoft::ReactNative::ReactNativeHost ReactViewHost::ReactNativeHost() noexcept {
+  return m_host;
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation
