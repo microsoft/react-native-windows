@@ -54,7 +54,6 @@ import typeof AppState from './Libraries/AppState/AppState';
 // [Windows
 import typeof AppTheme from './Libraries/AppTheme/AppTheme';
 // Windows]
-import typeof AsyncStorage from './Libraries/Storage/AsyncStorage';
 import typeof BackHandler from './Libraries/Utilities/BackHandler';
 import typeof Clipboard from './Libraries/Components/Clipboard/Clipboard';
 import typeof DeviceInfo from './Libraries/Utilities/DeviceInfo';
