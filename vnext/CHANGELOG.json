@@ -2,6 +2,36 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 30 Nov 2022 06:15:20 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.588",
+      "version": "0.0.0-canary.588",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "4c07f60254cf5e70f7b74122a22cd770ab5a5622",
+            "comment": "Use a ReactViewHost to specify view options on CompositionRootView"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 24 Nov 2022 06:15:42 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.587",
+      "version": "0.0.0-canary.587",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmoroz@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "27efa8adbb8acf96116d584db99b34329d7422ad",
+            "comment": "Avoid shadowing template types in CntPtr"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 23 Nov 2022 06:16:32 GMT",
       "tag": "react-native-windows_v0.0.0-canary.586",
       "version": "0.0.0-canary.586",
