@@ -24,6 +24,20 @@
     },
     {
       "type": "copy",
+      "file": "NativeCxxModuleExample/NativeCxxModuleExample.js",
+      "baseFile": "packages/rn-tester/NativeCxxModuleExample/NativeCxxModuleExample.js",
+      "baseHash": "7e18320a3b9b04a23312c0ca558179e108ed9caf",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "NativeModuleExample/NativeScreenshotManager.js",
+      "baseFile": "packages/rn-tester/NativeModuleExample/NativeScreenshotManager.js",
+      "baseHash": "5d28f1040292cfd429a9be334bd84ae5d8d691d6",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
       "baseHash": "4d629b95f56686e8e1d066b78a3f140972885f49",

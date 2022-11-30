@@ -6060,11 +6060,6 @@ flatted@^3.1.0:
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.2.5.tgz#76c8584f4fc843db64702a6bd04ab7a8bd666da3"
   integrity sha512-WIWGi2L3DyTUvUrwRKgGi9TwxQMUEqPOPQBVi71R96jZXJdFskXEmf54BoZaS1kknGODoIGASGEzBUYdyMCBJg==
 
-flow-bin@^0.190.1:
-  version "0.190.1"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.190.1.tgz#59ccbc9aaa2515fe32acc66117a05e7ef6a11061"
-  integrity sha512-5c9/6eEkMTTfdNuK2WwssrKfsUXKMUXlZVJZnrlWiqJpDSVc70/Smwyi9sXict9k/oq0f+Mo5wVH0d7peBYREg==
-
 flow-bin@^0.192.0:
   version "0.192.0"
   resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.192.0.tgz#a1d75fb955b3980b23cff43577044c52f5d95d33"
