@@ -10,6 +10,7 @@
 #include <Views/ShadowNodeBase.h>
 #include <windows.h>
 #include <windowsx.h>
+#include <winuser.h>
 
 namespace Microsoft::ReactNative {
 
