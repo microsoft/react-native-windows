@@ -23,7 +23,7 @@ import {
   Command,
   CommandOption,
   Config,
-  Dependency,
+  DependencyConfig,
   ProjectConfig,
 } from '@react-native-community/cli-types';
 import {
@@ -63,7 +63,7 @@ export class AutolinkWindows {
 
   constructor(
     readonly projectConfig: ProjectConfig,
-    readonly dependenciesConfig: {[key: string]: Dependency},
+    readonly dependenciesConfig: {[key: string]: DependencyConfig},
     readonly options: AutoLinkOptions,
   ) {
     this.changesNecessary = false;

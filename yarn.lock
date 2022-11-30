@@ -1993,7 +1993,7 @@
   dependencies:
     serve-static "^1.13.1"
 
-"@react-native-community/cli-doctor@^10.0.0-alpha.1", "@react-native-community/cli-doctor@^10.0.0-alpha.3":
+"@react-native-community/cli-doctor@^10.0.0-alpha.0", "@react-native-community/cli-doctor@^10.0.0-alpha.1", "@react-native-community/cli-doctor@^10.0.0-alpha.3":
   version "10.0.0-alpha.3"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-doctor/-/cli-doctor-10.0.0-alpha.3.tgz#23c933aa7442f6f8d4956d8f75cc5a4baed87c51"
   integrity sha512-i4+5wKlXxZptNeSlmdhMaey9m/ikWvSMDsShkLTeLbyi6mESalUk5PqnpFSqvhLzMbzI/FHIVGhrVPBvNGTe9Q==
@@ -2124,13 +2124,6 @@
   integrity sha512-Mo31VhKKDIGZw9J8LfOqslKadqUvBRGYcUoTT2H17Eg08VuA2TX/M67d+zuCw5wAmJGmPYx1C4jc0S9Xe45s5Q==
   dependencies:
     joi "^17.2.1"
-
-"@react-native-community/cli-types@^5.0.1-alpha.0":
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/@react-native-community/cli-types/-/cli-types-5.0.1.tgz#8c5db4011988b0836d27a5efe230cb34890915dc"
-  integrity sha512-BesXnuFFlU/d1F3+sHhvKt8fUxbQlAbZ3hhMEImp9A6sopl8TEtryUGJ1dbazGjRXcADutxvjwT/i3LJVTIQug==
-  dependencies:
-    ora "^3.4.0"
 
 "@react-native-community/cli@10.0.0-alpha.2":
   version "10.0.0-alpha.2"
