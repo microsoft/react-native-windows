@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 21 Feb 2022 16:09:42 GMT and should not be manually modified.
+This log was last generated on Wed, 14 Sep 2022 18:19:01 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.66.6
+
+Wed, 14 Sep 2022 18:19:01 GMT
+
+### Patches
+
+- Backport Add `accessibilityAccessKey` prop to ViewWin32 (ruaraki@microsoft.com)
 
 ## 0.66.5
 
