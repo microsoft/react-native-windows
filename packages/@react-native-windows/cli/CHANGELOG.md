@@ -1,8 +1,40 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Mon, 04 Apr 2022 15:13:28 GMT and should not be manually modified.
+This log was last generated on Mon, 28 Nov 2022 16:10:31 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.67.4
+
+Mon, 28 Nov 2022 16:10:31 GMT
+
+### Patches
+
+- [0.67] Fix CLI to search for correct VS version range (jthysell@microsoft.com)
+
+## 0.67.4
+
+Mon, 28 Nov 2022 16:10:01 GMT
+
+### Patches
+
+- [0.67] Fix CLI to search for correct VS version range (jthysell@microsoft.com)
+
+## 0.67.3
+
+Mon, 14 Nov 2022 16:10:12 GMT
+
+### Patches
+
+- [0.67] CG 11/7/22: Update `@xmldom/xmldom` (jthysell@microsoft.com)
+
+## 0.67.3
+
+Mon, 14 Nov 2022 16:09:48 GMT
+
+### Patches
+
+- [0.67] CG 11/7/22: Update `@xmldom/xmldom` (jthysell@microsoft.com)
 
 ## 0.67.2
 
