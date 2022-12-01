@@ -45,7 +45,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(ReactNativeWindowsDir)\Mso;$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)Desktop;$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)include\Shared;$(MSBuildThisFileDirectory);$(IncludePath)</IncludePath>
+    <IncludePath>$(ReactNativeWindowsDir)Mso;$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)Desktop;$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)include\Shared;$(MSBuildThisFileDirectory);$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -94,6 +94,7 @@
     <ClCompile Include="MemoryMappedBufferTests.cpp" />
     <ClCompile Include="InstanceMocks.cpp" />
     <ClCompile Include="OriginPolicyHttpFilterTest.cpp" />
+    <ClCompile Include="RedirectHttpFilterUnitTest.cpp" />
     <ClCompile Include="ScriptStoreTests.cpp" />
     <ClCompile Include="UnicodeConversionTest.cpp" />
     <ClCompile Include="UnicodeTestStrings.cpp" />

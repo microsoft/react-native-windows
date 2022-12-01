@@ -2,6 +2,75 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 28 Nov 2022 16:13:21 GMT",
+      "tag": "@react-native-windows/cli_v0.69.5",
+      "version": "0.69.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "76195554a5ea92c70f2bf79a81318026e7e8477d",
+            "comment": "Fix CLI to search for correct VS version range"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 14 Nov 2022 16:12:41 GMT",
+      "tag": "@react-native-windows/cli_v0.69.4",
+      "version": "0.69.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "7a8994649175446f0bbe232597eff10a27b5745b",
+            "comment": "CG 11/7/22: Update `@xmldom/xmldom`"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.69.3",
+            "commit": "7a8994649175446f0bbe232597eff10a27b5745b"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 12 Sep 2022 18:49:10 GMT",
+      "tag": "@react-native-windows/cli_v0.69.3",
+      "version": "0.69.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "eddca55d9faca146b32c42737f2aed5afd0160aa",
+            "comment": "Promote 0.69 to legacy"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/fs to v0.69.1",
+            "commit": "faf7d4bcb43bb9446ad23dd5aff310643a816e38"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/package-utils to v0.69.1",
+            "commit": "faf7d4bcb43bb9446ad23dd5aff310643a816e38"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.69.2",
+            "commit": "faf7d4bcb43bb9446ad23dd5aff310643a816e38"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 25 Jul 2022 15:12:46 GMT",
       "tag": "@react-native-windows/cli_v0.69.2",
       "version": "0.69.2",

@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/virtualized-list
 
-This log was last generated on Mon, 27 Jun 2022 15:09:49 GMT and should not be manually modified.
+This log was last generated on Mon, 12 Sep 2022 18:49:09 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.69.1
+
+Mon, 12 Sep 2022 18:49:09 GMT
+
+### Patches
+
+- Promote 0.69 to legacy (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.69.0
 

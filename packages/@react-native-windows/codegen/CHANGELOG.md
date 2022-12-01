@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Mon, 27 Jun 2022 15:09:48 GMT and should not be manually modified.
+This log was last generated on Mon, 12 Sep 2022 18:49:08 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.69.1
+
+Mon, 12 Sep 2022 18:49:08 GMT
+
+### Patches
+
+- Promote 0.69 to legacy (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.69.1
 
 ## 0.69.0
 

@@ -1,8 +1,82 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 22 Aug 2022 15:09:35 GMT and should not be manually modified.
+This log was last generated on Mon, 28 Nov 2022 16:13:21 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.69.14
+
+Mon, 28 Nov 2022 16:13:21 GMT
+
+### Patches
+
+- Bump @react-native-windows/cli to v0.69.5
+
+## 0.69.13
+
+Mon, 14 Nov 2022 16:12:41 GMT
+
+### Patches
+
+- Bump @react-native-windows/cli to v0.69.4
+
+## 0.69.12
+
+Mon, 07 Nov 2022 16:12:52 GMT
+
+### Patches
+
+- Allow customers to specify $(CppWinRTVersion) (jthysell@microsoft.com)
+
+## 0.69.11
+
+Mon, 24 Oct 2022 15:09:47 GMT
+
+### Patches
+
+- V8 package update (tudor.mihai@microsoft.com)
+
+## 0.69.10
+
+Mon, 10 Oct 2022 15:09:34 GMT
+
+### Patches
+
+- Set Origin HTTP header during CORS (#10700) (julio.rocha@microsoft.com)
+- Set User-Agent header in Origin Policy filter (#10695) (julio.rocha@microsoft.com)
+
+## 0.69.9
+
+Mon, 26 Sep 2022 15:09:58 GMT
+
+### Patches
+
+- Consolidate JavaScript HTTP module specifications (#10628) (julio.rocha@microsoft.com)
+- Move required PackageRestore properties into shared property sheets (jthysell@microsoft.com)
+- Export OriginPolicy.h to NuGet package (#10615) (julio.rocha@microsoft.com)
+
+## 0.69.8
+
+Mon, 19 Sep 2022 15:09:55 GMT
+
+### Patches
+
+- Implement HTTP redirection (#10534) (julio.rocha@microsoft.com)
+
+## 0.69.7
+
+Mon, 12 Sep 2022 18:49:09 GMT
+
+### Patches
+
+- Fixes bug introduced by pointerEvents change (ericroz@fb.com)
+- Use LongLivedObjects for TurboModule callbacks (vmorozov@microsoft.com)
+- Fix crash creating InstanceSettings on Windows 8.1 (30809111+acoates-ms@users.noreply.github.com)
+- Allow batches to complete during load (30809111+acoates-ms@users.noreply.github.com)
+- Promote 0.69 to legacy (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.69.3
+- Bump @react-native-windows/virtualized-list to v0.69.1
+- Bump @react-native-windows/codegen to v0.69.1
 
 ## 0.69.6
 
