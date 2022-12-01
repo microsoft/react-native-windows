@@ -221,6 +221,29 @@ std::wstring ImageFailed(const TImage &image, const TSourceFailedEventArgs &args
   return error.str();
 }
 
+void ReactImage::OnSurfaceLoadedSuccess(
+    winrt::LoadedImageSurface const &surface,
+    winrt::com_ptr<ReactImageBrush> compositionBrush) {
+  winrt::Size size{surface.DecodedPhysicalSize()};
+  m_imageSource.height = size.Height;
+  m_imageSource.width = size.Width;
+
+  // If we are dynamically switching the resizeMode to 'repeat', then
+  // the SizeChanged event has already fired and the ReactImageBrush's
+  // size has not been set. Use ActualWidth/Height in that case.
+  if (compositionBrush->AvailableSize() == winrt::Size{0, 0}) {
+    compositionBrush->AvailableSize(
+        {static_cast<float>(ActualWidth()), static_cast<float>(ActualHeight())});
+  }
+
+  compositionBrush->Source(surface);
+  compositionBrush->ResizeMode(m_resizeMode);
+  compositionBrush->BlurRadius(m_blurRadius);
+  compositionBrush->TintColor(m_tintColor);
+
+  Background(compositionBrush.as<winrt::XamlCompositionBrushBase>());
+}
+
 winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
   const ReactImageSource source{m_imageSource};
   winrt::Uri uri{UriTryCreate(Utf8ToUtf16(source.uri))};
@@ -282,6 +305,23 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
       }
 
       if (surface) {
+        // It's possible that the LoadedImageSurface loaded synchronously from
+        // cache. In this case, there is an occasional bug where LoadCompleted
+        // never fires (perhaps because it is subscribed after the event fires.
+        // While this *should* never happen (since we have synchronous control
+        // of the UI thread from the time we call StartLoadFromUri), it does,
+        // at least for clang builds. To mitigate this issue, we can check if
+        // the DecodedPhysicalSize is already defined to a non-zero value, and
+        // if so, behave as if the LoadCompleted callback has already fired.
+        winrt::Size size{surface.DecodedPhysicalSize()};
+        if (size.Width > 0 || size.Height > 0) {
+          strong_this->OnSurfaceLoadedSuccess(surface, compositionBrush);
+          if (fireLoadEndEvent) {
+            strong_this->m_onLoadEndEvent(*strong_this, {});
+          }
+          strong_this->m_sizeChangedRevoker.revoke();
+        }
+
         strong_this->m_surfaceLoadedRevoker = surface.LoadCompleted(
             winrt::auto_revoke,
             [weak_this, compositionBrush, surface, fireLoadEndEvent, uri](
@@ -290,25 +330,7 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
               if (auto strong_this{weak_this.get()}) {
                 std::wstring error;
                 if (args.Status() == winrt::LoadedImageSourceLoadStatus::Success) {
-                  winrt::Size size{surface.DecodedPhysicalSize()};
-                  strong_this->m_imageSource.height = size.Height;
-                  strong_this->m_imageSource.width = size.Width;
-
-                  // If we are dynamically switching the resizeMode to 'repeat', then
-                  // the SizeChanged event has already fired and the ReactImageBrush's
-                  // size has not been set. Use ActualWidth/Height in that case.
-                  if (compositionBrush->AvailableSize() == winrt::Size{0, 0}) {
-                    compositionBrush->AvailableSize(
-                        {static_cast<float>(strong_this->ActualWidth()),
-                         static_cast<float>(strong_this->ActualHeight())});
-                  }
-
-                  compositionBrush->Source(surface);
-                  compositionBrush->ResizeMode(strong_this->m_resizeMode);
-                  compositionBrush->BlurRadius(strong_this->m_blurRadius);
-                  compositionBrush->TintColor(strong_this->m_tintColor);
-
-                  strong_this->Background(compositionBrush.as<winrt::XamlCompositionBrushBase>());
+                  strong_this->OnSurfaceLoadedSuccess(surface, compositionBrush);
                 } else {
                   error = ImageFailed(uri, args);
                 }

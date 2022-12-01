@@ -57,6 +57,9 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
   winrt::fire_and_forget SetBackground(bool fireLoadEndEvent);
   double GetWidth();
   double GetHeight();
+  void OnSurfaceLoadedSuccess(
+      xaml::Media::LoadedImageSurface const &surface,
+      winrt::com_ptr<ReactImageBrush> compositionBrush);
 
   bool m_useCompositionBrush{false};
   float m_blurRadius{0};
