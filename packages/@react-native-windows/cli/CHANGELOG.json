@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 28 Nov 2022 16:13:14 GMT",
+      "tag": "@react-native-windows/cli_v0.70.2",
+      "version": "0.70.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "99acb73ab952d456565a5f2b175443ecb94ae43f",
+            "comment": "Fix CLI to search for correct VS version range"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 14 Nov 2022 16:12:51 GMT",
       "tag": "@react-native-windows/cli_v0.70.1",
       "version": "0.70.1",

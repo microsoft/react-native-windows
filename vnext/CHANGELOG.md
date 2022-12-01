@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 14 Nov 2022 16:12:51 GMT and should not be manually modified.
+This log was last generated on Mon, 28 Nov 2022 16:13:14 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.70.7
+
+Mon, 28 Nov 2022 16:13:14 GMT
+
+### Patches
+
+- Bump @react-native-windows/cli to v0.70.2
 
 ## 0.70.6
 
