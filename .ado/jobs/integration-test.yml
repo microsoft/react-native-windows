@@ -71,9 +71,6 @@ jobs:
                 Write-Host "##vso[task.setvariable variable=BuildLogDirectory]$(Build.BinariesDirectory)\${{ matrix.BuildPlatform }}\BuildLogs"
               displayName: Set BuildLogDirectory
 
-            - script: .ado\scripts\SetupLocalDumps.cmd integrationtest
-              displayName: Set LocalDumps
-
             - task: PowerShell@2
               displayName: Start tracing
               inputs:
@@ -185,4 +182,3 @@ jobs:
             - template: ../templates/upload-build-logs.yml
               parameters:
                 buildLogDirectory: '$(BuildLogDirectory)'
-                condition: succeededOrFailed()
