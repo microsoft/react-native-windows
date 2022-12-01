@@ -177,6 +177,7 @@ class JSI_EXPORT AndroidSwitchEventEmitter : public ViewEventEmitter {
 
   struct OnChange {
       bool value;
+    int target;
     };
 
   void onChange(OnChange value) const;
@@ -187,6 +188,7 @@ class JSI_EXPORT SwitchEventEmitter : public ViewEventEmitter {
 
   struct OnChange {
       bool value;
+    int target;
     };
 
   void onChange(OnChange value) const;

@@ -14,8 +14,7 @@
 
 #include <utility>
 
-namespace facebook {
-namespace react {
+namespace facebook::react {
 
 WindowsTextInputState::WindowsTextInputState(
     int64_t mostRecentEventCount,
@@ -91,5 +90,4 @@ MapBuffer AndroidTextInputState::getMapBuffer() const {
 
 #endif
 
-} // namespace react
-} // namespace facebook
+} // namespace facebook::react

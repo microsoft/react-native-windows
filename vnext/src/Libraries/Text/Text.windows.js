@@ -16,6 +16,7 @@ import usePressability from '../Pressability/usePressability';
 import flattenStyle from '../StyleSheet/flattenStyle';
 import processColor from '../StyleSheet/processColor';
 import StyleSheet from '../StyleSheet/StyleSheet';
+import {getAccessibilityRoleFromRole} from '../Utilities/AcessibilityMapping';
 import Platform from '../Utilities/Platform';
 import TextAncestor from './TextAncestor';
 import {NativeText, NativeVirtualText} from './TextNativeComponent';
@@ -38,6 +39,7 @@ const Text: React.AbstractComponent<
   const {
     accessible,
     accessibilityLabel,
+    accessibilityRole,
     allowFontScaling,
     'aria-busy': ariaBusy,
     'aria-checked': ariaChecked,
@@ -59,6 +61,7 @@ const Text: React.AbstractComponent<
     onResponderTerminationRequest,
     onStartShouldSetResponder,
     pressRetentionOffset,
+    role,
     suppressHighlighting,
     ...restProps
   } = props;
@@ -235,6 +238,9 @@ const Text: React.AbstractComponent<
         }
         accessibilityLabel={ariaLabel ?? accessibilityLabel}
         accessibilityState={nativeTextAccessibilityState}
+        accessibilityRole={
+          role ? getAccessibilityRoleFromRole(role) : accessibilityRole
+        }
         allowFontScaling={allowFontScaling !== false}
         ellipsizeMode={ellipsizeMode ?? 'tail'}
         isHighlighted={isHighlighted}
@@ -323,6 +329,12 @@ const Text: React.AbstractComponent<
 });
 
 Text.displayName = 'Text';
+
+/**
+ * Switch to `deprecated-react-native-prop-types` for compatibility with future
+ * releases. This is deprecated and will be removed in the future.
+ */
+Text.propTypes = require('deprecated-react-native-prop-types').TextPropTypes;
 
 /**
  * Returns false until the first time `newValue` is true, after which this will

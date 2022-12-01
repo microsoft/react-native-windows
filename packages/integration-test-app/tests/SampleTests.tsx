@@ -7,7 +7,7 @@
 
 import React from 'react';
 import {assert} from 'chai';
-import {AsyncStorage, Image, Platform} from 'react-native';
+import {Image, Platform} from 'react-native';
 import {functionTest, componentTest} from './lib/TestDefinition';
 
 /**
@@ -22,21 +22,6 @@ functionTest('NativeModuleExample', () => {
  */
 functionTest.skip('FailingExample', () => {
   assert.isTrue(false, 'This test should fail');
-});
-
-/**
- * Test methods can also be async
- */
-functionTest('AsyncNativeModuleExample', async () => {
-  await AsyncStorage.clear();
-  await AsyncStorage.setItem('foo', 'bar');
-
-  const storedItem = await AsyncStorage.getItem('foo');
-  assert.equal(
-    storedItem,
-    'bar',
-    'AsyncStorage should store return what we just stored',
-  );
 });
 
 /**

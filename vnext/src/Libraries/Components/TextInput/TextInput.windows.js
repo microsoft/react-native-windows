@@ -363,6 +363,12 @@ type IOSProps = $ReadOnly<{|
    * @platform ios
    */
   textContentType?: ?TextContentType,
+
+  /**
+   * Set line break strategy on iOS.
+   * @platform ios
+   */
+  lineBreakStrategyIOS?: ?('none' | 'standard' | 'hangul-word' | 'push-out'),
 |}>;
 
 type AndroidProps = $ReadOnly<{|
@@ -1533,6 +1539,8 @@ function InternalTextInput(props: Props): React.Node {
   } else if (Platform.OS === 'android') {
     const style = [props.style];
     const autoCapitalize = props.autoCapitalize || 'sentences';
+    const _accessibilityLabelledBy =
+      props?.['aria-labelledby'] ?? props?.accessibilityLabelledBy;
     const placeholder = props.placeholder ?? '';
     let children = props.children;
     const childCount = React.Children.count(children);
@@ -1559,6 +1567,7 @@ function InternalTextInput(props: Props): React.Node {
         {...eventHandlers}
         accessible={accessible}
         accessibilityState={_accessibilityState}
+        accessibilityLabelledBy={_accessibilityLabelledBy}
         autoCapitalize={autoCapitalize}
         submitBehavior={submitBehavior}
         caretHidden={caretHidden}
@@ -1713,6 +1722,7 @@ const ExportedForwardRef: React.AbstractComponent<
     enterKeyHint,
     returnKeyType,
     inputMode,
+    showSoftInputOnFocus,
     keyboardType,
     ...restProps
   },
@@ -1739,6 +1749,9 @@ const ExportedForwardRef: React.AbstractComponent<
       keyboardType={
         inputMode ? inputModeToKeyboardTypeMap[inputMode] : keyboardType
       }
+      showSoftInputOnFocus={
+        inputMode == null ? showSoftInputOnFocus : inputMode !== 'none'
+      }
       autoComplete={
         Platform.OS === 'android'
           ? // $FlowFixMe
@@ -1760,6 +1773,13 @@ const ExportedForwardRef: React.AbstractComponent<
     />
   );
 });
+
+/**
+ * Switch to `deprecated-react-native-prop-types` for compatibility with future
+ * releases. This is deprecated and will be removed in the future.
+ */
+ExportedForwardRef.propTypes =
+  require('deprecated-react-native-prop-types').TextInputPropTypes;
 
 // $FlowFixMe[prop-missing]
 ExportedForwardRef.State = {
