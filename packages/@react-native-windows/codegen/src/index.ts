@@ -131,10 +131,10 @@ export function parseFile(filename: string): SchemaType {
   try {
     const isTypeScript =
       path.extname(filename) === '.ts' || path.extname(filename) === '.tsx';
-
+    const contents = fs.readFileSync(filename, 'utf8');
     const schema = isTypeScript
-      ? TypeScriptParser.parseFile(filename)
-      : FlowParser.parseFile(filename);
+      ? TypeScriptParser.parseString(contents, filename)
+      : FlowParser.parseString(contents, filename);
     // there will be at most one turbo module per file
     const moduleName = Object.keys(schema.modules)[0];
     if (moduleName) {
@@ -248,6 +248,14 @@ export function generate(
     rncodegenPath,
     'lib/generators/components/GenerateEventEmitterCpp',
   )).generate;
+  const generatorStateCPP = require(path.resolve(
+    rncodegenPath,
+    'lib/generators/components/GenerateStateCpp',
+  )).generate;
+  const generatorStateH = require(path.resolve(
+    rncodegenPath,
+    'lib/generators/components/GenerateStateH',
+  )).generate;
 
   const moduleGenerators = [];
 
@@ -286,6 +294,8 @@ export function generate(
       generatorPropsH,
       generatorShadowNodeCPP,
       generatorShadowNodeH,
+      generatorStateCPP,
+      generatorStateH,
     ];
 
     componentGenerators.forEach(generator => {

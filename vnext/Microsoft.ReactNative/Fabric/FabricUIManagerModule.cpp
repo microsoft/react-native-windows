@@ -411,13 +411,6 @@ void FabricUIManager::schedulerDidRequestPreliminaryViewAllocation(
   }
 }
 
-void FabricUIManager::schedulerDidCloneShadowNode(
-    facebook::react::SurfaceId /*surfaceId*/,
-    const facebook::react::ShadowNode & /*oldShadowNode*/,
-    const facebook::react::ShadowNode & /*newShadowNode*/) {
-  // currently unused
-}
-
 void FabricUIManager::schedulerDidDispatchCommand(
     facebook::react::ShadowView const &shadowView,
     std::string const &commandName,

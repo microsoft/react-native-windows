@@ -1,25 +1,51 @@
 parameters:
+  artifactName: $(Agent.JobName)-$(System.JobAttempt)
   buildLogDirectory: $(Build.BinariesDirectory)\$(BuildPlatform)\$(BuildConfiguration)\BuildLogs
+  uploadBuildLogs: true
+  uploadCrashDumps: true
 
 steps:
   - task: PublishBuildArtifacts@1
     displayName: Upload build logs
-    condition:  succeededOrFailed()
+    condition:  and(succeededOrFailed(), ${{ parameters.uploadBuildLogs }})
     inputs:
       pathtoPublish: '${{ parameters.buildLogDirectory }}'
-      artifactName: 'Build logs - $(Agent.JobName)-$(System.JobAttempt)'
+      artifactName: 'Build logs - ${{ parameters.artifactName }}'
 
-  - task: CmdLine@2
-    displayName: dir CrashDumps
+  - task: PowerShell@2
+    displayName: Cleanup ProcDump
+    condition:  succeededOrFailed()
     inputs:
-      script: dir $(Build.StagingDirectory)\CrashDumps /s
-      failOnStderr: false
-    condition:  failed()
-
+      targetType: inline # filePath | inline
+      script: |
+        Write-Host "Looking for procdump64 processes...";
+        Get-Process | ForEach-Object {
+          if ($_.ProcessName -eq 'procdump64') {
+            try {
+              Write-Host "Waiting on process $($_.Id)...";
+              Wait-Process -Id $_.Id -Timeout 360;
+            } catch { }
+          }
+        }
+        if (Test-Path '$(ProcDumpPath)') {
+          Write-Host "Uninstalling ProcDump as AeDebug";
+          & $(ProcDumpPath)\procdump64.exe -u
+        }
+  
+  - task: PowerShell@2
+    displayName: List crash dumps
+    condition:  and(succeededOrFailed(), ${{ parameters.uploadCrashDumps }})
+    inputs:
+      targetType: inline # filePath | inline
+      script: |
+        Write-Host "Looking for crash dumps in $(CrashDumpRootPath)...";
+        Get-ChildItem -Path $(CrashDumpRootPath) -File -Recurse;
+        $HasCrashDumps = (Get-ChildItem -Path $(CrashDumpRootPath) -File -Recurse | Measure-Object).Count -gt 0;
+        Write-Host "##vso[task.setvariable variable=HasCrashDumps]$HasCrashDumps";
 
   - task: PublishBuildArtifacts@1
     displayName: Upload crash dumps
+    condition: and(succeededOrFailed(), ${{ parameters.uploadCrashDumps }}, eq(variables.HasCrashDumps, 'True'))
     inputs:
-      pathtoPublish: '$(Build.StagingDirectory)/CrashDumps'
-      artifactName: 'Crash dumps - $(Agent.JobName)-$(System.JobAttempt)'
-    condition: failed()
+      pathtoPublish: '$(CrashDumpRootPath)'
+      artifactName: 'Crash dumps - ${{ parameters.artifactName }}'

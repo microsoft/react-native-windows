@@ -7,7 +7,7 @@ const cliDir = path.dirname(require.resolve('@react-native-community/cli/package
 const execaPath = require.resolve('execa', { paths: [cliDir] });
 const execa = require(execaPath);
 
-import type {HealthCheckCategory} from '@react-native-community/cli-types';
+import type {HealthCheckCategory} from '@react-native-community/cli-doctor/build/types';
 import { powershell } from './runWindows/utils/commandWithProgress';
 
 export function getHealthChecks(): HealthCheckCategory[] | undefined {

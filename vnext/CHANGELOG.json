@@ -2,6 +2,36 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 01 Dec 2022 06:15:01 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.589",
+      "version": "0.0.0-canary.589",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b823e377b81388ce1a5a39034c7771150b3196ac",
+            "comment": "Minor build fixes to enable fabric in desktop dll"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 30 Nov 2022 06:15:20 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.588",
+      "version": "0.0.0-canary.588",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "4c07f60254cf5e70f7b74122a22cd770ab5a5622",
+            "comment": "Use a ReactViewHost to specify view options on CompositionRootView"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 24 Nov 2022 06:15:42 GMT",
       "tag": "react-native-windows_v0.0.0-canary.587",
       "version": "0.0.0-canary.587",

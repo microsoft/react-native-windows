@@ -167,8 +167,10 @@ void LogBox::ShowOnUIThread() noexcept {
 
     if (!m_hwnd) {
       auto CompositionHwndHost = React::CompositionHwndHost();
-      CompositionHwndHost.ComponentName(L"LogBox");
-      CompositionHwndHost.ReactNativeHost(host);
+      winrt::Microsoft::ReactNative::ReactViewOptions viewOptions;
+      viewOptions.ComponentName(L"LogBox");
+      CompositionHwndHost.ReactViewHost(
+          winrt::Microsoft::ReactNative::ReactCoreInjection::MakeViewHost(host, viewOptions));
       HINSTANCE hInstance = GetModuleHandle(NULL);
       winrt::impl::abi<winrt::Microsoft::ReactNative::ICompositionHwndHost>::type *pHost{nullptr};
       winrt::com_ptr<::IUnknown> spunk;

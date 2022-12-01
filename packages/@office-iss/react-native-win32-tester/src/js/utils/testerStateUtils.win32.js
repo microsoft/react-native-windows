@@ -14,12 +14,11 @@ import type {
   ComponentList,
   ExamplesList,
   RNTesterModuleInfo,
-  RNTesterState,
+  RNTesterNavigationState,
   SectionData,
 } from '../types/RNTesterTypes';
 
 import RNTesterList from './RNTesterList';
-import {AsyncStorage} from 'react-native';
 
 export const Screens = {
   COMPONENTS: 'components',
@@ -27,13 +26,13 @@ export const Screens = {
   BOOKMARKS: 'bookmarks',
 };
 
-export const initialState: RNTesterState = {
+export const initialNavigationState: RNTesterNavigationState = {
   activeModuleKey: null,
   activeModuleTitle: null,
   activeModuleExampleKey: null,
-  screen: null,
-  bookmarks: null,
-  recentlyUsed: null,
+  screen: Screens.COMPONENTS,
+  bookmarks: {components: [], apis: []},
+  recentlyUsed: {components: [], apis: []},
 };
 
 const filterEmptySections = (examplesList: ExamplesList): any => {
@@ -65,11 +64,13 @@ export const getExamplesListWithBookmarksAndRecentlyUsed = ({
     return null;
   }
 
-  const components = RNTesterList.Components.map(componentExample => ({
-    ...componentExample,
-    isBookmarked: bookmarks.components.includes(componentExample.key),
-    exampleType: Screens.COMPONENTS,
-  }));
+  const components = RNTesterList.Components.map(
+    (componentExample): RNTesterModuleInfo => ({
+      ...componentExample,
+      isBookmarked: bookmarks.components.includes(componentExample.key),
+      exampleType: Screens.COMPONENTS,
+    }),
+  );
 
   const recentlyUsedComponents = recentlyUsed.components
     .map(recentComponentKey =>
@@ -81,7 +82,7 @@ export const getExamplesListWithBookmarksAndRecentlyUsed = ({
     component => component.isBookmarked,
   );
 
-  const apis = RNTesterList.APIs.map(apiExample => ({
+  const apis = RNTesterList.APIs.map((apiExample): RNTesterModuleInfo => ({
     ...apiExample,
     isBookmarked: bookmarks.apis.includes(apiExample.key),
     exampleType: Screens.APIS,
@@ -135,25 +136,4 @@ export const getExamplesListWithBookmarksAndRecentlyUsed = ({
   };
 
   return filterEmptySections(examplesList);
-};
-
-export const getInitialStateFromAsyncStorage = async (
-  storageKey: string,
-): Promise<RNTesterState> => {
-  // [Win32 #6316
-  const initialStateString = null;
-  // Win32]
-
-  if (!initialStateString) {
-    return {
-      activeModuleKey: null,
-      activeModuleTitle: null,
-      activeModuleExampleKey: null,
-      screen: Screens.COMPONENTS,
-      bookmarks: {components: [], apis: []},
-      recentlyUsed: {components: [], apis: []},
-    };
-  } else {
-    return JSON.parse(initialStateString);
-  }
 };
