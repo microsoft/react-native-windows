@@ -15,8 +15,13 @@
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
     "react": "18.2.0",
+<<<<<<< HEAD
     "react-native": "0.0.0-20221109-2052-1f0c2c289",
     "react-native-windows": "^0.0.0-canary.588"
+=======
+    "react-native": "0.0.0-20221010-2132-1fc27c4cb",
+    "react-native-windows": "^0.0.0-canary.589"
+>>>>>>> 59255602232f53133c1eedd4c8ade5757da36f1d
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",

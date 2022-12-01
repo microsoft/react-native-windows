@@ -499,7 +499,7 @@ void SetBorderLayerProperties(
 
       winrt::com_ptr<ID2D1TransformedGeometry> transformedShape;
       D2D1::Matrix3x2F translationTransform = D2D1::Matrix3x2F::Translation(-textureRect.left, -textureRect.top);
-      VerifySucceededElseCrash(
+      winrt::check_hresult(
           spD2dFactory->CreateTransformedGeometry(&shape, &translationTransform, transformedShape.put()));
 
       layer.as<Composition::IVisualInterop>()->SetClippingPath(transformedShape.get());

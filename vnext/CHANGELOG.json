@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 01 Dec 2022 06:15:01 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.589",
+      "version": "0.0.0-canary.589",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b823e377b81388ce1a5a39034c7771150b3196ac",
+            "comment": "Minor build fixes to enable fabric in desktop dll"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 30 Nov 2022 06:15:20 GMT",
       "tag": "react-native-windows_v0.0.0-canary.588",
       "version": "0.0.0-canary.588",
