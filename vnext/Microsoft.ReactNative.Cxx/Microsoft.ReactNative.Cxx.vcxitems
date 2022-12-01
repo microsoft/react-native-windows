@@ -39,6 +39,7 @@
     <ClInclude Include="$(JSI_SourcePath)\jsi\jsi.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CoreApp.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DesktopWindowBridge.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\LongLivedJsiValue.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\NodeApiJsiRuntime.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TurboModuleProvider.h" />
     <ClInclude Include="$(CallInvoker_SourcePath)\ReactCommon\CallInvoker.h" />
@@ -127,8 +128,9 @@
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)README.md" />
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup Condition="'$(BuildMSRNCxx)' != 'false' and '$(RNExternalReferences)' != 'true'">
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\NodeApiJsiRuntime.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <ExcludedFromBuild Condition="'$(UseV8)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
   </ItemGroup>

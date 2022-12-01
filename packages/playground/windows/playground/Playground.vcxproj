@@ -169,6 +169,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" />
     <PackageReference Include="ReactNative.Hermes.Windows" Version="$(HermesVersion)" />
+    <PackageReference Include="$(V8PackageName)" Version="$(V8Version)" Condition="'$(UseV8)' == 'true'" />
   </ItemGroup>
   <Target Name="EnsureReactNativeWindowsTargets" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

@@ -2,6 +2,186 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 28 Nov 2022 16:13:14 GMT",
+      "tag": "react-native-windows_v0.70.7",
+      "version": "0.70.7",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.70.2",
+            "commit": "99acb73ab952d456565a5f2b175443ecb94ae43f"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 14 Nov 2022 16:12:51 GMT",
+      "tag": "react-native-windows_v0.70.6",
+      "version": "0.70.6",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.70.1",
+            "commit": "d62c8e2a92578d11916f1f92164069b1cc3ee88b"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 07 Nov 2022 16:12:34 GMT",
+      "tag": "react-native-windows_v0.70.5",
+      "version": "0.70.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "069f4121cddbf8c2b6b2c09cfaba35a518a4495c",
+            "comment": "Allow customers to specify $(CppWinRTVersion)"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 24 Oct 2022 15:10:06 GMT",
+      "tag": "react-native-windows_v0.70.4",
+      "version": "0.70.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "tudor.mihai@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "8dc4f1abdf42f48ffc394ed251462af10bb57500",
+            "comment": "V8 package update"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "9df637356ea4534eb9bf49cd0bccfe818637c247",
+            "comment": "Save State"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 10 Oct 2022 15:09:52 GMT",
+      "tag": "react-native-windows_v0.70.3",
+      "version": "0.70.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "66f46b195402e87a7ac7a2c56956131b97e3be4b",
+            "comment": "Set Origin HTTP header during CORS (#10700)"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "bf355fcb3f6cae78f940958d66f5b178dd910d2f",
+            "comment": "Set User-Agent header in Origin Policy filter (#10695)"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 26 Sep 2022 15:10:18 GMT",
+      "tag": "react-native-windows_v0.70.2",
+      "version": "0.70.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "77bf7205988f1e6021eee18c5b5970e53904b892",
+            "comment": "Export OriginPolicy.h to NuGet package (#10615)"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ecd361d52e6efeeb66bb9d1404997d6b06027a0f",
+            "comment": "Consolidate JavaScript HTTP module specifications"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5c1c0839658e86fa2daa126494038547ed09a80a",
+            "comment": "Move required PackageRestore properties into shared property sheets"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 19 Sep 2022 15:10:15 GMT",
+      "tag": "react-native-windows_v0.70.1",
+      "version": "0.70.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "4161b2c6985d7b92b6f29de096a2074cfa84e51e",
+            "comment": "Implement HTTP redirection (#10534)"
+          },
+          {
+            "author": "ericroz@fb.com",
+            "package": "react-native-windows",
+            "commit": "76794bf8a66d76539e21050698d226dc687e79b1",
+            "comment": "Fixes bug introduced by pointerEvents change"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 12 Sep 2022 17:54:21 GMT",
+      "tag": "react-native-windows_v0.70.0",
+      "version": "0.70.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a32daf434ab33a2f5507bbbfd19a5317d0050b01",
+            "comment": "Integrate 70 Stable"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "2dfa35f7f1a0b591aac1479a4e0189e494a79e35",
+            "comment": "Use LongLivedObjects for TurboModule callbacks"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "6703c830bf731417571a56989d4771f06c74a930",
+            "comment": "Fix crash creating InstanceSettings on Windows 8.1"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.70.0",
+            "commit": "a32daf434ab33a2f5507bbbfd19a5317d0050b01"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.70.0",
+            "commit": "a32daf434ab33a2f5507bbbfd19a5317d0050b01"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.70.0",
+            "commit": "a32daf434ab33a2f5507bbbfd19a5317d0050b01"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 23 Aug 2022 23:36:52 GMT",
       "tag": "react-native-windows_v0.70.0-preview.2",
       "version": "0.70.0-preview.2",

@@ -8,6 +8,8 @@
 #include "RuntimeHolder.h"
 #include "ScriptStore.h"
 
+#include <cxxreact/MessageQueueThread.h>
+
 namespace Microsoft::JSI {
 
 class NapiJsiV8RuntimeHolder : public Microsoft::JSI::RuntimeHolderLazyInit {

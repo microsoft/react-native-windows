@@ -1,8 +1,16 @@
 # Change Log - debug-test
 
-This log was last generated on Mon, 22 Aug 2022 20:20:07 GMT and should not be manually modified.
+This log was last generated on Mon, 12 Sep 2022 17:54:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Mon, 12 Sep 2022 17:54:22 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.70.0
 
 ## 0.0.0
 

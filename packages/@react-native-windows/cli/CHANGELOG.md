@@ -1,8 +1,36 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Mon, 22 Aug 2022 20:20:06 GMT and should not be manually modified.
+This log was last generated on Mon, 28 Nov 2022 16:13:14 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.70.2
+
+Mon, 28 Nov 2022 16:13:14 GMT
+
+### Patches
+
+- Fix CLI to search for correct VS version range (jthysell@microsoft.com)
+
+## 0.70.1
+
+Mon, 14 Nov 2022 16:12:51 GMT
+
+### Patches
+
+- CG 11/7/22: Update `@xmldom/xmldom` (jthysell@microsoft.com)
+- Bump @react-native-windows/telemetry to v0.70.1
+
+## 0.70.0
+
+Mon, 12 Sep 2022 17:54:20 GMT
+
+### Patches
+
+- Promote 0.70 to latest (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.70.0
+- Bump @react-native-windows/package-utils to v0.70.0
+- Bump @react-native-windows/telemetry to v0.70.0
 
 ## 0.70.0-preview.1
 

@@ -99,6 +99,12 @@ struct CppTurboModuleSpec : TurboModuleSpec {
       SyncMethod<int(int, int) noexcept>{INDEX(c2), L"addSync"},
       SyncMethod<int(int) noexcept>{INDEX(c2), L"negateSync"},
       SyncMethod<std::string() noexcept>{INDEX(c2), L"sayHelloSync"},
+
+      Method<void(int, Callback<int>) noexcept>{INDEX(c2), L"negateDeferredCallback"},
+      Method<void(int, Callback<int>, Callback<std::string const &>) noexcept>{
+          INDEX(c2),
+          L"negateDeferredTwoCallbacks"},
+      Method<void(int, ReactPromise<int>) noexcept>{INDEX(c2), L"negateDeferredPromise"},
   };
 
   template <class TModule>
@@ -150,6 +156,10 @@ struct CppTurboModuleSpec : TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(INDEX(c3), "addSync", "Generated error message with signatures");
     REACT_SHOW_METHOD_SPEC_ERRORS(INDEX(c3), "negateSync", "Generated error message with signatures");
     REACT_SHOW_METHOD_SPEC_ERRORS(INDEX(c3), "sayHelloSync", "Generated error message with signatures");
+
+    REACT_SHOW_METHOD_SPEC_ERRORS(INDEX(c3), "negateDeferredCallback", "Generated error message with signatures");
+    REACT_SHOW_METHOD_SPEC_ERRORS(INDEX(c3), "negateDeferredTwoCallbacks", "Generated error message with signatures");
+    REACT_SHOW_METHOD_SPEC_ERRORS(INDEX(c3), "negateDeferredPromise", "Generated error message with signatures");
   }
 };
 
@@ -158,7 +168,14 @@ struct CppTurboModule {
   using ModuleSpec = CppTurboModuleSpec;
 
   REACT_INIT(Initialize)
-  void Initialize(ReactContext const & /*reactContext*/) noexcept {}
+  void Initialize(ReactContext const &reactContext) noexcept {
+    m_reactContext = reactContext;
+  }
+
+  REACT_SYNC_METHOD(GetTestName, L"getTestName")
+  hstring GetTestName() noexcept {
+    return m_reactContext.Properties().Get(CppTurboModule::TestName).value();
+  }
 
   REACT_CONSTANT(ConstantString, L"constantString")
   const std::string ConstantString{"myConstantString"};
@@ -475,6 +492,61 @@ struct CppTurboModule {
   std::string SayHelloSync() noexcept {
     return "Hello";
   }
+
+  REACT_METHOD(NegateDeferredCallback, L"negateDeferredCallback")
+  void NegateDeferredCallback(int x, std::function<void(int)> const &resolve) noexcept {
+    TestNotificationService::Set("NegateDeferredCallback called");
+    auto dispatcher = ReactDispatcher(m_reactContext.Properties().Get(TestDispatcher));
+    dispatcher.Post([x, resolve]() noexcept {
+      TestNotificationService::Set("NegateDeferredCallback call started");
+      resolve(-x);
+      TestNotificationService::Set("NegateDeferredCallback call ended");
+    });
+  }
+
+  REACT_METHOD(NegateDeferredTwoCallbacks, L"negateDeferredTwoCallbacks")
+  void NegateDeferredTwoCallbacks(
+      int x,
+      std::function<void(int)> const &resolve,
+      std::function<void(std::string const &)> const &reject) noexcept {
+    TestNotificationService::Set("NegateDeferredTwoCallbacks called");
+    auto dispatcher = ReactDispatcher(m_reactContext.Properties().Get(TestDispatcher));
+    dispatcher.Post([x, resolve, reject]() noexcept {
+      if (x >= 0) {
+        TestNotificationService::Set("NegateDeferredTwoCallbacks resolve started");
+        resolve(-x);
+      } else {
+        TestNotificationService::Set("NegateDeferredTwoCallbacks reject started");
+        reject("Already negative");
+      }
+      TestNotificationService::Set("NegateDeferredTwoCallbacks call ended");
+    });
+  }
+
+  REACT_METHOD(NegateDeferredPromise, L"negateDeferredPromise")
+  void NegateDeferredPromise(int x, React::ReactPromise<int> const &result) noexcept {
+    TestNotificationService::Set("NegateDeferredPromise called");
+    auto dispatcher = ReactDispatcher(m_reactContext.Properties().Get(TestDispatcher));
+    dispatcher.Post([x, result]() noexcept {
+      if (x >= 0) {
+        TestNotificationService::Set("Promise resolve started");
+        result.Resolve(-x);
+      } else {
+        TestNotificationService::Set("Promise reject started");
+        React::ReactError error{};
+        error.Message = "Already negative";
+        result.Reject(std::move(error));
+      }
+      TestNotificationService::Set("Promise call ended");
+    });
+  }
+
+ public:
+  static inline ReactPropertyId<hstring> TestName{L"TurboModuleTests", L"TestName"};
+  static inline ReactPropertyId<IReactDispatcher> TestDispatcher{L"TurboModuleTests", L"TestDispatcher"};
+
+ private:
+  ReactContext m_reactContext;
 };
 
 struct CppTurboModulePackageProvider : winrt::implements<CppTurboModulePackageProvider, IReactPackageProvider> {
@@ -492,6 +564,7 @@ TEST_CLASS (TurboModuleTests) {
 
     auto reactNativeHost = TestReactNativeHostHolder(L"TurboModuleTests", [](ReactNativeHost const &host) noexcept {
       host.PackageProviders().Append(winrt::make<CppTurboModulePackageProvider>());
+      ReactPropertyBag(host.InstanceSettings().Properties()).Set(CppTurboModule::TestName, L"ExecuteSampleTurboModule");
     });
 
     TestEventService::ObserveEvents({
@@ -560,6 +633,189 @@ TEST_CLASS (TurboModuleTests) {
         TestEvent{"negateSync", -12},
         TestEvent{"sayHelloSync", "Hello"},
     });
+  }
+
+  TEST_METHOD(JSDispatcherAfterInstanceUnload) {
+    TestEventService::Initialize();
+    TestNotificationService::Initialize();
+
+    auto reactNativeHost = TestReactNativeHostHolder(L"TurboModuleTests", [](ReactNativeHost const &host) noexcept {
+      host.PackageProviders().Append(winrt::make<CppTurboModulePackageProvider>());
+      ReactPropertyBag(host.InstanceSettings().Properties())
+          .Set(CppTurboModule::TestName, L"JSDispatcherAfterInstanceUnload");
+      host.InstanceSettings().InstanceDestroyed(
+          [&](IInspectable const & /*sender*/, InstanceDestroyedEventArgs const & /*args*/) {
+            TestNotificationService::Set("Instance destroyed event");
+          });
+    });
+
+    TestEventService::ObserveEvents({
+        TestEvent{"addSync", 42},
+    });
+
+    reactNativeHost.Host().UnloadInstance();
+    TestNotificationService::Wait("Instance destroyed event");
+
+    // JSDispatcher must not process any callbacks
+    auto jsDispatcher = reactNativeHost.Host()
+                            .InstanceSettings()
+                            .Properties()
+                            .Get(ReactDispatcherHelper::JSDispatcherProperty())
+                            .as<IReactDispatcher>();
+    struct CallbackData {
+      ~CallbackData() {
+        TestNotificationService::Set("CallbackData destroyed");
+      }
+    };
+    bool callbackIsCalled{false};
+    jsDispatcher.Post([&callbackIsCalled, data = std::make_shared<CallbackData>()] { callbackIsCalled = true; });
+    TestNotificationService::Wait("CallbackData destroyed");
+    TestCheck(!callbackIsCalled);
+  }
+
+  TEST_METHOD(DeferCallbackAfterInstanceUnload) {
+    TestNotificationService::Initialize();
+
+    auto testDispatcher = ReactDispatcher(ReactDispatcherHelper::CreateSerialDispatcher());
+    testDispatcher.Post([] { TestNotificationService::Wait("Resume Dispatcher"); });
+
+    auto reactNativeHost =
+        TestReactNativeHostHolder(L"TurboModuleTests", [testDispatcher](ReactNativeHost const &host) noexcept {
+          host.PackageProviders().Append(winrt::make<CppTurboModulePackageProvider>());
+          auto properties = ReactPropertyBag(host.InstanceSettings().Properties());
+          properties.Set(CppTurboModule::TestName, L"DeferCallbackAfterInstanceUnload");
+          properties.Set(CppTurboModule::TestDispatcher, testDispatcher.Handle());
+          host.InstanceSettings().InstanceDestroyed(
+              [&](IInspectable const & /*sender*/, InstanceDestroyedEventArgs const & /*args*/) {
+                TestNotificationService::Set("Instance destroyed event");
+              });
+        });
+
+    TestNotificationService::Wait("NegateDeferredCallback called");
+
+    reactNativeHost.Host().UnloadInstance();
+    TestNotificationService::Wait("Instance destroyed event");
+
+    // No crash must happen when the Promise is resolved after RN instance unload.
+    TestNotificationService::Set("Resume Dispatcher");
+    TestNotificationService::Wait("NegateDeferredCallback call started");
+    TestNotificationService::Wait("NegateDeferredCallback call ended");
+  }
+
+  TEST_METHOD(DeferResolveCallbackAfterInstanceUnload) {
+    TestNotificationService::Initialize();
+
+    auto testDispatcher = ReactDispatcher(ReactDispatcherHelper::CreateSerialDispatcher());
+    testDispatcher.Post([] { TestNotificationService::Wait("Resume Dispatcher"); });
+
+    auto reactNativeHost =
+        TestReactNativeHostHolder(L"TurboModuleTests", [testDispatcher](ReactNativeHost const &host) noexcept {
+          host.PackageProviders().Append(winrt::make<CppTurboModulePackageProvider>());
+          auto properties = ReactPropertyBag(host.InstanceSettings().Properties());
+          properties.Set(CppTurboModule::TestName, L"DeferResolveCallbackAfterInstanceUnload");
+          properties.Set(CppTurboModule::TestDispatcher, testDispatcher.Handle());
+          host.InstanceSettings().InstanceDestroyed(
+              [&](IInspectable const & /*sender*/, InstanceDestroyedEventArgs const & /*args*/) {
+                TestNotificationService::Set("Instance destroyed event");
+              });
+        });
+
+    TestNotificationService::Wait("NegateDeferredTwoCallbacks called");
+
+    reactNativeHost.Host().UnloadInstance();
+    TestNotificationService::Wait("Instance destroyed event");
+
+    // No crash must happen when the Promise is resolved after RN instance unload.
+    TestNotificationService::Set("Resume Dispatcher");
+    TestNotificationService::Wait("NegateDeferredTwoCallbacks resolve started");
+    TestNotificationService::Wait("NegateDeferredTwoCallbacks call ended");
+  }
+
+  TEST_METHOD(DeferRejectCallbackAfterInstanceUnload) {
+    TestNotificationService::Initialize();
+
+    auto testDispatcher = ReactDispatcher(ReactDispatcherHelper::CreateSerialDispatcher());
+    testDispatcher.Post([] { TestNotificationService::Wait("Resume Dispatcher"); });
+
+    auto reactNativeHost =
+        TestReactNativeHostHolder(L"TurboModuleTests", [testDispatcher](ReactNativeHost const &host) noexcept {
+          host.PackageProviders().Append(winrt::make<CppTurboModulePackageProvider>());
+          auto properties = ReactPropertyBag(host.InstanceSettings().Properties());
+          properties.Set(CppTurboModule::TestName, L"DeferRejectCallbackAfterInstanceUnload");
+          properties.Set(CppTurboModule::TestDispatcher, testDispatcher.Handle());
+          host.InstanceSettings().InstanceDestroyed(
+              [&](IInspectable const & /*sender*/, InstanceDestroyedEventArgs const & /*args*/) {
+                TestNotificationService::Set("Instance destroyed event");
+              });
+        });
+
+    TestNotificationService::Wait("NegateDeferredTwoCallbacks called");
+
+    reactNativeHost.Host().UnloadInstance();
+    TestNotificationService::Wait("Instance destroyed event");
+
+    // No crash must happen when the Promise is resolved after RN instance unload.
+    TestNotificationService::Set("Resume Dispatcher");
+    TestNotificationService::Wait("NegateDeferredTwoCallbacks reject started");
+    TestNotificationService::Wait("NegateDeferredTwoCallbacks call ended");
+  }
+
+  TEST_METHOD(DeferPromiseResolveAfterInstanceUnload) {
+    TestNotificationService::Initialize();
+
+    auto testDispatcher = ReactDispatcher(ReactDispatcherHelper::CreateSerialDispatcher());
+    testDispatcher.Post([] { TestNotificationService::Wait("Resume Dispatcher"); });
+
+    auto reactNativeHost =
+        TestReactNativeHostHolder(L"TurboModuleTests", [testDispatcher](ReactNativeHost const &host) noexcept {
+          host.PackageProviders().Append(winrt::make<CppTurboModulePackageProvider>());
+          auto properties = ReactPropertyBag(host.InstanceSettings().Properties());
+          properties.Set(CppTurboModule::TestName, L"DeferPromiseResolveAfterInstanceUnload");
+          properties.Set(CppTurboModule::TestDispatcher, testDispatcher.Handle());
+          host.InstanceSettings().InstanceDestroyed(
+              [&](IInspectable const & /*sender*/, InstanceDestroyedEventArgs const & /*args*/) {
+                TestNotificationService::Set("Instance destroyed event");
+              });
+        });
+
+    TestNotificationService::Wait("NegateDeferredPromise called");
+
+    reactNativeHost.Host().UnloadInstance();
+    TestNotificationService::Wait("Instance destroyed event");
+
+    // No crash must happen when the Promise is resolved after RN instance unload.
+    TestNotificationService::Set("Resume Dispatcher");
+    TestNotificationService::Wait("Promise resolve started");
+    TestNotificationService::Wait("Promise call ended");
+  }
+
+  TEST_METHOD(DeferPromiseRejectAfterInstanceUnload) {
+    TestNotificationService::Initialize();
+
+    auto testDispatcher = ReactDispatcher(ReactDispatcherHelper::CreateSerialDispatcher());
+    testDispatcher.Post([] { TestNotificationService::Wait("Resume Dispatcher"); });
+
+    auto reactNativeHost =
+        TestReactNativeHostHolder(L"TurboModuleTests", [testDispatcher](ReactNativeHost const &host) noexcept {
+          host.PackageProviders().Append(winrt::make<CppTurboModulePackageProvider>());
+          auto properties = ReactPropertyBag(host.InstanceSettings().Properties());
+          properties.Set(CppTurboModule::TestName, L"DeferPromiseRejectAfterInstanceUnload");
+          properties.Set(CppTurboModule::TestDispatcher, testDispatcher.Handle());
+          host.InstanceSettings().InstanceDestroyed(
+              [&](IInspectable const & /*sender*/, InstanceDestroyedEventArgs const & /*args*/) {
+                TestNotificationService::Set("Instance destroyed event");
+              });
+        });
+
+    TestNotificationService::Wait("NegateDeferredPromise called");
+
+    reactNativeHost.Host().UnloadInstance();
+    TestNotificationService::Wait("Instance destroyed event");
+
+    // No crash must happen when the Promise is resolved after RN instance unload.
+    TestNotificationService::Set("Resume Dispatcher");
+    TestNotificationService::Wait("Promise reject started");
+    TestNotificationService::Wait("Promise call ended");
   }
 };
 
