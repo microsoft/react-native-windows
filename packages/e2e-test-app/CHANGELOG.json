@@ -2,6 +2,126 @@
   "name": "e2e-test-app",
   "entries": [
     {
+      "date": "Mon, 28 Nov 2022 16:10:57 GMT",
+      "tag": "e2e-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "e2e-test-app",
+            "comment": "Bump react-native-windows to v0.68.22",
+            "commit": "ab0a4495e00ee478031b30f04cfb6ba05a642955"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 14 Nov 2022 16:10:37 GMT",
+      "tag": "e2e-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "e2e-test-app",
+            "comment": "Bump react-native-windows to v0.68.21",
+            "commit": "6f4c6b86d74695acddb8b781abe16c619d218be6"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 24 Oct 2022 15:08:15 GMT",
+      "tag": "e2e-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "e2e-test-app",
+            "comment": "Bump react-native-windows to v0.68.20",
+            "commit": "aa91e7bf33f272ec2a181796027fdc842b1c584f"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 10 Oct 2022 15:07:52 GMT",
+      "tag": "e2e-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "e2e-test-app",
+            "comment": "Bump react-native-windows to v0.68.19",
+            "commit": "b44cfb98e2268d7112bc007eac9faa2732d480e3"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 26 Sep 2022 15:08:22 GMT",
+      "tag": "e2e-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "e2e-test-app",
+            "comment": "Bump react-native-windows to v0.68.18",
+            "commit": "ed87b1767b8a150e225eb9ef9e2d1a75fbd15830"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 17 Sep 2022 02:23:36 GMT",
+      "tag": "e2e-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "e2e-test-app",
+            "comment": "Bump react-native-windows to v0.68.17",
+            "commit": "62083ca0fc6fb45934c5776f218ca05d8d26822f"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 14 Sep 2022 18:19:22 GMT",
+      "tag": "e2e-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "e2e-test-app",
+            "comment": "Bump react-native-windows to v0.68.16",
+            "commit": "f61cf37c056df5b62844a9d2c08810598f635fba"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 31 Aug 2022 19:24:45 GMT",
+      "tag": "e2e-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "e2e-test-app",
+            "comment": "Bump react-native-windows to v0.68.15",
+            "commit": "38610c7915995bc3c7004ebe115aa2f4dba2f557"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 22 Aug 2022 15:08:28 GMT",
       "tag": "e2e-test-app_v0.0.0",
       "version": "0.0.0",

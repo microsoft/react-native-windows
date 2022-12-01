@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/cli",
-  "version": "0.68.5",
+  "version": "0.68.7",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "repository": {
@@ -19,8 +19,8 @@
   "dependencies": {
     "@react-native-windows/fs": "0.68.1",
     "@react-native-windows/package-utils": "0.68.1",
-    "@react-native-windows/telemetry": "0.68.4",
-    "@xmldom/xmldom": "^0.7.5",
+    "@react-native-windows/telemetry": "0.68.5",
+    "@xmldom/xmldom": "^0.7.7",
     "chalk": "^4.1.0",
     "cli-spinners": "^2.2.0",
     "envinfo": "^7.5.0",

@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/telemetry",
-  "version": "0.68.4",
+  "version": "0.68.5",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "typings": "lib-commonjs/index.d.ts",
@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@react-native-windows/fs": "0.68.1",
-    "@xmldom/xmldom": "^0.7.5",
+    "@xmldom/xmldom": "^0.7.7",
     "applicationinsights": "^2.3.1",
     "ci-info": "^3.2.0",
     "envinfo": "^7.8.1",

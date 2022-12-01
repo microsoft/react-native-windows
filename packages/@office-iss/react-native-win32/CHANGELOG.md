@@ -1,8 +1,57 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 25 Jul 2022 15:10:45 GMT and should not be manually modified.
+This log was last generated on Mon, 07 Nov 2022 16:10:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.68.8
+
+Mon, 07 Nov 2022 16:10:04 GMT
+
+### Patches
+
+- Add accessibilityLevel to BasePropsWin32 (krsiler@microsoft.com)
+- Remove duplicate accessibilityLevel prop (krsiler@microsoft.com)
+
+## 0.68.7
+
+Mon, 24 Oct 2022 15:08:15 GMT
+
+### Patches
+
+- Bump RN types to 0.68 (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.68.6
+
+Mon, 26 Sep 2022 15:08:21 GMT
+
+### Patches
+
+- Consolidate JavaScript HTTP module specifications (#10628) (julio.rocha@microsoft.com)
+
+## 0.68.5
+
+Sat, 17 Sep 2022 02:23:36 GMT
+
+### Patches
+
+- Add Dimensions.win32 implementation to support text scale factor (patboyd@microsoft.com)
+
+## 0.68.4
+
+Wed, 14 Sep 2022 18:19:21 GMT
+
+### Patches
+
+- Add `accessibilityAccessKey` prop to ViewWin32 (#10527) (ruaraki@microsoft.com)
+
+## 0.68.3
+
+Wed, 31 Aug 2022 19:24:44 GMT
+
+### Patches
+
+- Add Toggle action to accessibilityActionName (krsiler@microsoft.com)
 
 ## 0.68.2
 

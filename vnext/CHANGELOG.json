@@ -2,6 +2,150 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 28 Nov 2022 16:10:57 GMT",
+      "tag": "react-native-windows_v0.68.22",
+      "version": "0.68.22",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.68.7",
+            "commit": "ab0a4495e00ee478031b30f04cfb6ba05a642955"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 14 Nov 2022 16:10:37 GMT",
+      "tag": "react-native-windows_v0.68.21",
+      "version": "0.68.21",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.68.6",
+            "commit": "6f4c6b86d74695acddb8b781abe16c619d218be6"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 24 Oct 2022 15:08:15 GMT",
+      "tag": "react-native-windows_v0.68.20",
+      "version": "0.68.20",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "aa91e7bf33f272ec2a181796027fdc842b1c584f",
+            "comment": "Bump RN types to 0.68"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 10 Oct 2022 15:07:51 GMT",
+      "tag": "react-native-windows_v0.68.19",
+      "version": "0.68.19",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b44cfb98e2268d7112bc007eac9faa2732d480e3",
+            "comment": "Set Origin HTTP header during CORS (#10700)"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e9e42509a8ebf996bb23e39b07e5b116d061a6c2",
+            "comment": "Set User-Agent header in Origin Policy filter (#10695)"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 26 Sep 2022 15:08:21 GMT",
+      "tag": "react-native-windows_v0.68.18",
+      "version": "0.68.18",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ed87b1767b8a150e225eb9ef9e2d1a75fbd15830",
+            "comment": "Consolidate JavaScript HTTP module specifications (#10628)"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a4c99aee0a866787c8525e8f93a087df817d0b60",
+            "comment": "[0.68] Move required PackageRestore properties into shared property sheets"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "53835e73145d3a47d6f1abbdc62e4517c9ee678e",
+            "comment": "Export OriginPolicy.h to NuGet package (#10615)"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 17 Sep 2022 02:23:36 GMT",
+      "tag": "react-native-windows_v0.68.17",
+      "version": "0.68.17",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "62083ca0fc6fb45934c5776f218ca05d8d26822f",
+            "comment": "Implement HTTP redirection (#10534)"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 14 Sep 2022 18:19:22 GMT",
+      "tag": "react-native-windows_v0.68.16",
+      "version": "0.68.16",
+      "comments": {
+        "patch": [
+          {
+            "author": "ericroz@fb.com",
+            "package": "react-native-windows",
+            "commit": "5ef9d3b367c2c81dd6bd9dc587a3d4cfaa45b254",
+            "comment": "Fixes bug introduced by pointerEvents change"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 31 Aug 2022 19:24:45 GMT",
+      "tag": "react-native-windows_v0.68.15",
+      "version": "0.68.15",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "7d6c9694dd40590a035294ef58a6f2095cb4c411",
+            "comment": "Use LongLivedObjects for TurboModule callbacks"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "38610c7915995bc3c7004ebe115aa2f4dba2f557",
+            "comment": "Fix crash creating InstanceSettings on Windows 8.1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 22 Aug 2022 15:08:28 GMT",
       "tag": "react-native-windows_v0.68.14",
       "version": "0.68.14",
