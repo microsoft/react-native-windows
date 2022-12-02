@@ -62,14 +62,18 @@ class NapiTaskRunner {
   }
 
  private:
-  static void PostTask(void *taskRunner, void *task, v8_task_run_cb onTaskRun, v8_task_release_cb onTaskRelease) {
+  static void __cdecl PostTask(
+      void *taskRunner,
+      void *task,
+      v8_task_run_cb onTaskRun,
+      v8_task_release_cb onTaskRelease) {
     auto napiTask = std::make_shared<NapiTask>(task, onTaskRun, onTaskRelease);
     reinterpret_cast<NapiTaskRunner *>(taskRunner)->m_jsQueue->runOnQueue([napiTask = std::move(napiTask)] {
       napiTask->Run();
     });
   }
 
-  static void Release(void *taskRunner) {
+  static void __cdecl Release(void *taskRunner) {
     delete reinterpret_cast<NapiTaskRunner *>(taskRunner);
   }
 
