@@ -15,6 +15,16 @@ import {type NativeResponseType} from './XMLHttpRequest';
 import convertRequestBody, {type RequestBody} from './convertRequestBody';
 import {type EventSubscription} from '../vendor/emitter/EventEmitter';
 
+// Convert FormData headers to arrays, which are easier to consume in
+// native on Android.
+function convertHeadersMapToArray(headers: Object): Array<Header> {
+  const headerArray: Array<Header> = [];
+  for (const name in headers) {
+    headerArray.push([name, headers[name]]);
+  }
+  return headerArray;
+}
+
 type RCTNetworkingEventDefinitions = $ReadOnly<{
   didSendNetworkData: [
     [

@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20221109-2052-1f0c2c289",
+  "baseVersion": "0.0.0-20221120-2051-81e441ae8",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "1d7352e72d0d3e4535f866a6887f6cc3dc696615"
+      "baseHash": "5b31122dae356999a8c9070cac37a1e28a0570e9"
     },
     {
       "type": "derived",
@@ -70,7 +70,7 @@
       "type": "patch",
       "file": "Microsoft.ReactNative/Fabric/platform/react/renderer/graphics/conversions.h",
       "baseFile": "ReactCommon/react/renderer/graphics/conversions.h",
-      "baseHash": "253fcacbc70de43800c8ebd47a4af455f7036a95",
+      "baseHash": "58ac74f1fc271c4a810df60e1b592e653a0c066a",
       "issue": 7821
     },
     {
@@ -84,7 +84,7 @@
       "type": "patch",
       "file": "ReactCommon/Yoga.cpp",
       "baseFile": "ReactCommon/yoga/yoga/Yoga.cpp",
-      "baseHash": "0d3ab0ba70ad0714716893e70e292de212febd9f",
+      "baseHash": "38b779b071d9eab2cb96830dad0c8e867cb382f5",
       "issue": 3994
     },
     {
@@ -119,7 +119,7 @@
       "type": "derived",
       "file": "src/index.windows.js",
       "baseFile": "index.js",
-      "baseHash": "cc43fccadbe8a97f5b95239224c87bcea310a0db"
+      "baseHash": "7da90f6b0172d5a9c302184c7247680804c328b7"
     },
     {
       "type": "platform",
@@ -262,12 +262,6 @@
       "baseHash": "09f143fc3f2ee80463764e1c2b3f23107d501a4c"
     },
     {
-      "type": "copy",
-      "file": "src/Libraries/Components/ProgressViewIOS/ProgressViewIOS.windows.js",
-      "baseFile": "Libraries/Components/ProgressViewIOS/ProgressViewIOS.android.js",
-      "baseHash": "b7d8fc4fe48e96f682477a4e4dfbe7de4f134cfb"
-    },
-    {
       "type": "patch",
       "file": "src/Libraries/Components/RefreshControl/RefreshControl.windows.js",
       "baseFile": "Libraries/Components/RefreshControl/RefreshControl.js",
@@ -283,7 +277,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "dc7a742f2b251110d1a656b99e954262ce427eba"
+      "baseHash": "6ea39d9b574afdfeda40969a192df3a342320082"
     },
     {
       "type": "patch",
@@ -305,26 +299,26 @@
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/Touchable.windows.js",
       "baseFile": "Libraries/Components/Touchable/Touchable.js",
-      "baseHash": "f2ee27f78b9601205f0483ed11e16036644ab4ce",
+      "baseHash": "ddfc674fe37ab886bd73a263786a4049b3cc73ff",
       "issue": 0
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/TouchableHighlight.windows.js",
       "baseFile": "Libraries/Components/Touchable/TouchableHighlight.js",
-      "baseHash": "dd1b61b4fe510d1cf943608dae7360cda86d90d5"
+      "baseHash": "6dd61c1950ec539790b3e4fd8fa3f3b773ac97f3"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/TouchableOpacity.windows.js",
       "baseFile": "Libraries/Components/Touchable/TouchableOpacity.js",
-      "baseHash": "7bbb5ce77e21e6badbe532a414d6168d68ea63e5"
+      "baseHash": "c29a39f9a6a5804a68e753126e9d1c1b63983bbe"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/TouchableWithoutFeedback.windows.js",
       "baseFile": "Libraries/Components/Touchable/TouchableWithoutFeedback.js",
-      "baseHash": "7cead5e4af7bb5b49450b8e39c7f92515ba99398"
+      "baseHash": "08509c3728ada67754e7aefa1d0c00b56e06eb21"
     },
     {
       "type": "patch",
@@ -337,7 +331,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/View.windows.js",
       "baseFile": "Libraries/Components/View/View.js",
-      "baseHash": "91864d8f5518fa50da710f545ecdf5727248c45a"
+      "baseHash": "7945214eb22374ea322b95d12cf8d68a4cf321e4"
     },
     {
       "type": "patch",
@@ -349,7 +343,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewPropTypes.windows.js",
       "baseFile": "Libraries/Components/View/ViewPropTypes.js",
-      "baseHash": "4e4af90700f8a5b27f8fb94d9628339fcca82f53"
+      "baseHash": "6ef6e875149d8c9c6da9b72703890736dd665463"
     },
     {
       "type": "platform",
@@ -358,6 +352,13 @@
     {
       "type": "platform",
       "file": "src/Libraries/Components/View/ViewWindowsProps.ts"
+    },
+    {
+      "type": "copy",
+      "file": "src/Libraries/DevToolsSettings/DevToolsSettingsManager.windows.js",
+      "baseFile": "Libraries/DevToolsSettings/DevToolsSettingsManager.android.js",
+      "baseHash": "cfac368d69ef306cf0af8072366008af3d925049",
+      "issue": 1
     },
     {
       "type": "patch",
@@ -370,7 +371,7 @@
       "type": "derived",
       "file": "src/Libraries/NativeComponent/BaseViewConfig.windows.js",
       "baseFile": "Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "a14d9698dc312aaba608b2877349d4c54600b56c"
+      "baseHash": "e7e0d3f2af900c894dd233ec3a7bb9d1e7306bbd"
     },
     {
       "type": "platform",
@@ -426,7 +427,7 @@
       "type": "derived",
       "file": "src/Libraries/Text/Text.windows.js",
       "baseFile": "Libraries/Text/Text.js",
-      "baseHash": "188c96590a5bd43a4d170a81e472ef6b93315ad4"
+      "baseHash": "abdf0022b453823f9f4a8627519ba54f5fcad841"
     },
     {
       "type": "patch",

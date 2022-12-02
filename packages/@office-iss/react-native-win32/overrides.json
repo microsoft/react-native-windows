@@ -7,19 +7,19 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20221109-2052-1f0c2c289",
+  "baseVersion": "0.0.0-20221120-2051-81e441ae8",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "1d7352e72d0d3e4535f866a6887f6cc3dc696615"
+      "baseHash": "5b31122dae356999a8c9070cac37a1e28a0570e9"
     },
     {
       "type": "derived",
       "file": "src/index.win32.js",
       "baseFile": "index.js",
-      "baseHash": "cc43fccadbe8a97f5b95239224c87bcea310a0db"
+      "baseHash": "7da90f6b0172d5a9c302184c7247680804c328b7"
     },
     {
       "type": "platform",
@@ -86,12 +86,6 @@
       "issue": 4378
     },
     {
-      "type": "copy",
-      "file": "src/Libraries/Components/ProgressViewIOS/ProgressViewIOS.win32.js",
-      "baseFile": "Libraries/Components/ProgressViewIOS/ProgressViewIOS.android.js",
-      "baseHash": "b7d8fc4fe48e96f682477a4e4dfbe7de4f134cfb"
-    },
-    {
       "type": "patch",
       "file": "src/Libraries/Components/SafeAreaView/SafeAreaView.win32.js",
       "baseFile": "Libraries/Components/SafeAreaView/SafeAreaView.js",
@@ -121,7 +115,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.tsx",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "dc7a742f2b251110d1a656b99e954262ce427eba"
+      "baseHash": "6ea39d9b574afdfeda40969a192df3a342320082"
     },
     {
       "type": "patch",
@@ -144,7 +138,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/Touchable.win32.js",
       "baseFile": "Libraries/Components/Touchable/Touchable.js",
-      "baseHash": "f2ee27f78b9601205f0483ed11e16036644ab4ce",
+      "baseHash": "ddfc674fe37ab886bd73a263786a4049b3cc73ff",
       "issue": 0
     },
     {
@@ -181,13 +175,13 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/View.win32.js",
       "baseFile": "Libraries/Components/View/View.js",
-      "baseHash": "91864d8f5518fa50da710f545ecdf5727248c45a"
+      "baseHash": "7945214eb22374ea322b95d12cf8d68a4cf321e4"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewPropTypes.win32.js",
       "baseFile": "Libraries/Components/View/ViewPropTypes.js",
-      "baseHash": "4e4af90700f8a5b27f8fb94d9628339fcca82f53",
+      "baseHash": "6ef6e875149d8c9c6da9b72703890736dd665463",
       "issue": 6240
     },
     {
@@ -202,7 +196,7 @@
       "type": "patch",
       "file": "src/Libraries/Core/ReactNativeVersionCheck.win32.js",
       "baseFile": "Libraries/Core/ReactNativeVersionCheck.js",
-      "baseHash": "37908d71eb9a61c619f700795ff2d692410c5a57",
+      "baseHash": "a7a9ebb513e71e59d61124f358c8cb9c8846e2eb",
       "issue": 5170
     },
     {
@@ -263,7 +257,7 @@
       "type": "patch",
       "file": "src/Libraries/Inspector/Inspector.win32.js",
       "baseFile": "Libraries/Inspector/Inspector.js",
-      "baseHash": "0be6eb41e6972e290e4779836c663ae11d328600"
+      "baseHash": "012b5d37e2c8803715cde491bd6376dd44604886"
     },
     {
       "type": "patch",
@@ -282,7 +276,7 @@
       "type": "derived",
       "file": "src/Libraries/LogBox/UI/LogBoxInspectorStackFrame.win32.js",
       "baseFile": "Libraries/LogBox/UI/LogBoxInspectorStackFrame.js",
-      "baseHash": "d304a9b9195798f76b02b2ccbb9d3309c1818a55",
+      "baseHash": "663d3325298404d7c012a6aa53e833eb5fc2ec76",
       "issue": 5885
     },
     {
@@ -296,13 +290,13 @@
       "type": "derived",
       "file": "src/Libraries/NativeComponent/BaseViewConfig.win32.js",
       "baseFile": "Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "a14d9698dc312aaba608b2877349d4c54600b56c"
+      "baseHash": "e7e0d3f2af900c894dd233ec3a7bb9d1e7306bbd"
     },
     {
       "type": "derived",
       "file": "src/Libraries/Network/RCTNetworking.win32.js",
       "baseFile": "Libraries/Network/RCTNetworking.android.js",
-      "baseHash": "391a7efd0d2529eb536c1c7cf852f5ee538ff0b6",
+      "baseHash": "8177420114e343900c5242c18e875588430c6928",
       "issue": 4318
     },
     {
@@ -385,7 +379,7 @@
       "type": "derived",
       "file": "src/Libraries/Text/TextNativeComponent.win32.js",
       "baseFile": "Libraries/Text/TextNativeComponent.js",
-      "baseHash": "dff7e27b5a85c28662b14d25e07fe7a1f2286ac5",
+      "baseHash": "abcdb74e2fe1e491baaefdd0ba6369199b8032d0",
       "issue": 7074
     },
     {

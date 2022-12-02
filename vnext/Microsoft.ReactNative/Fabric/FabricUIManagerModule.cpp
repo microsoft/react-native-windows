@@ -73,7 +73,7 @@ class AsyncEventBeat final : public facebook::react::EventBeat {
     isRequested_ = false;
     m_isBeatCallbackScheduled = true;
 
-    m_runtimeExecutor([this, ownerBox = ownerBox_](jsi::Runtime &runtime) {
+    m_runtimeExecutor([this, ownerBox = ownerBox_](facebook::jsi::Runtime &runtime) {
       auto owner = ownerBox->owner.lock();
       if (!owner) {
         return;
