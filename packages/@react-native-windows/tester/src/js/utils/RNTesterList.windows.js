@@ -12,13 +12,6 @@ import type {RNTesterModuleInfo} from '../types/RNTesterTypes';
 import ReactNativeFeatureFlags from 'react-native/Libraries/ReactNative/ReactNativeFeatureFlags';
 
 const Components: Array<RNTesterModuleInfo> = [
-  /*{
-    key: 'DrawerLayoutAndroid',
-    category: 'UI',
-    module: require('../examples/DrawerLayoutAndroid/DrawerLayoutAndroidExample'),
-    key: 'HTTPExample',
-    module: require('../examples/HTTP/HTTPExample'),
-  },*/
   {
     key: 'XHRExample',
     module: require('../examples/XHR/XHRExample'),
@@ -37,6 +30,7 @@ const Components: Array<RNTesterModuleInfo> = [
     key: 'FlatListExampleIndex',
     module: require('../examples/FlatList/FlatListExampleIndex').default,
     category: 'ListView',
+    supportsTVOS: true,
   },
   {
     key: 'ImageExample',

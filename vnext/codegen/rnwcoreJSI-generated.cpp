@@ -434,20 +434,6 @@ NativeExceptionsManagerCxxSpecJSI::NativeExceptionsManagerCxxSpecJSI(std::shared
   methodMap_["updateExceptionMessage"] = MethodMetadata {3, __hostFunction_NativeExceptionsManagerCxxSpecJSI_updateExceptionMessage};
   methodMap_["dismissRedbox"] = MethodMetadata {0, __hostFunction_NativeExceptionsManagerCxxSpecJSI_dismissRedbox};
 }
-static jsi::Value __hostFunction_NativeDevToolsSettingsManagerCxxSpecJSI_setConsolePatchSettings(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeDevToolsSettingsManagerCxxSpecJSI *>(&turboModule)->setConsolePatchSettings(rt, args[0].asString(rt));
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeDevToolsSettingsManagerCxxSpecJSI_getConsolePatchSettings(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  auto result = static_cast<NativeDevToolsSettingsManagerCxxSpecJSI *>(&turboModule)->getConsolePatchSettings(rt);
-  return result ? jsi::Value(std::move(*result)) : jsi::Value::null();
-}
-
-NativeDevToolsSettingsManagerCxxSpecJSI::NativeDevToolsSettingsManagerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("DevToolsSettingsManager", jsInvoker) {
-  methodMap_["setConsolePatchSettings"] = MethodMetadata {1, __hostFunction_NativeDevToolsSettingsManagerCxxSpecJSI_setConsolePatchSettings};
-  methodMap_["getConsolePatchSettings"] = MethodMetadata {0, __hostFunction_NativeDevToolsSettingsManagerCxxSpecJSI_getConsolePatchSettings};
-}
 static jsi::Value __hostFunction_NativeJSCHeapCaptureCxxSpecJSI_captureComplete(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeJSCHeapCaptureCxxSpecJSI *>(&turboModule)->captureComplete(rt, args[0].asString(rt), args[1].isNull() || args[1].isUndefined() ? std::nullopt : std::make_optional(args[1].asString(rt)));
   return jsi::Value::undefined();

@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20221109-2052-1f0c2c289",
+  "baseVersion": "0.71.0-rc.3",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "1d7352e72d0d3e4535f866a6887f6cc3dc696615"
+      "baseHash": "4ae4a26e97993e8d3f0382de3f359016f77a0ca5"
     },
     {
       "type": "derived",
@@ -55,22 +55,22 @@
     {
       "type": "patch",
       "file": "Microsoft.ReactNative/Fabric/platform/react/renderer/graphics/Color.cpp",
-      "baseFile": "ReactCommon/react/renderer/graphics/Color.cpp",
-      "baseHash": "986dfaef4c6a5b57369c1383231cdeb5d69dd4ab",
+      "baseFile": "ReactCommon/react/renderer/graphics/platform/cxx/react/renderer/graphics/Color.cpp",
+      "baseHash": "69acf54c8ad83ef508d9d4870018aeb6377a7da2",
       "issue": 7821
     },
     {
       "type": "patch",
       "file": "Microsoft.ReactNative/Fabric/platform/react/renderer/graphics/Color.h",
-      "baseFile": "ReactCommon/react/renderer/graphics/Color.cpp",
-      "baseHash": "986dfaef4c6a5b57369c1383231cdeb5d69dd4ab",
+      "baseFile": "ReactCommon/react/renderer/graphics/platform/cxx/react/renderer/graphics/Color.h",
+      "baseHash": "010970b09aebda9348dfed9dd7b8fefb365bcc9b",
       "issue": 7821
     },
     {
       "type": "patch",
       "file": "Microsoft.ReactNative/Fabric/platform/react/renderer/graphics/conversions.h",
       "baseFile": "ReactCommon/react/renderer/graphics/conversions.h",
-      "baseHash": "253fcacbc70de43800c8ebd47a4af455f7036a95",
+      "baseHash": "bec2ad16df7ce32be66f72e3793e884003fcf1fb",
       "issue": 7821
     },
     {
@@ -84,7 +84,7 @@
       "type": "patch",
       "file": "ReactCommon/Yoga.cpp",
       "baseFile": "ReactCommon/yoga/yoga/Yoga.cpp",
-      "baseHash": "0d3ab0ba70ad0714716893e70e292de212febd9f",
+      "baseHash": "38b779b071d9eab2cb96830dad0c8e867cb382f5",
       "issue": 3994
     },
     {
@@ -112,7 +112,7 @@
       "type": "patch",
       "file": "src/babel-plugin-codegen/package.json",
       "baseFile": "packages/babel-plugin-codegen/package.json",
-      "baseHash": "e6f1ce8c30ed28fe8edc96dc098691e59c772e2e",
+      "baseHash": "1aeac132f50c4aee1f50953b4f0691a5bc763b81",
       "issue": 5430
     },
     {
@@ -283,7 +283,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "dc7a742f2b251110d1a656b99e954262ce427eba"
+      "baseHash": "5de06cf785aabebe8a0bb7331389a5320d7f38c0"
     },
     {
       "type": "patch",
@@ -343,7 +343,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewAccessibility.windows.js",
       "baseFile": "Libraries/Components/View/ViewAccessibility.js",
-      "baseHash": "d12245b45ccdc5f473ba9484b5ec994cb45dae75"
+      "baseHash": "b8dca610ae67781f86534eab2373f2a3eb29fca3"
     },
     {
       "type": "patch",

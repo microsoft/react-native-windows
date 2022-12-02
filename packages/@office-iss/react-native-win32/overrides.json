@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20221109-2052-1f0c2c289",
+  "baseVersion": "0.71.0-rc.3",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "1d7352e72d0d3e4535f866a6887f6cc3dc696615"
+      "baseHash": "4ae4a26e97993e8d3f0382de3f359016f77a0ca5"
     },
     {
       "type": "derived",
@@ -121,7 +121,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.tsx",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "dc7a742f2b251110d1a656b99e954262ce427eba"
+      "baseHash": "5de06cf785aabebe8a0bb7331389a5320d7f38c0"
     },
     {
       "type": "patch",
@@ -385,7 +385,7 @@
       "type": "derived",
       "file": "src/Libraries/Text/TextNativeComponent.win32.js",
       "baseFile": "Libraries/Text/TextNativeComponent.js",
-      "baseHash": "dff7e27b5a85c28662b14d25e07fe7a1f2286ac5",
+      "baseHash": "abcdb74e2fe1e491baaefdd0ba6369199b8032d0",
       "issue": 7074
     },
     {
