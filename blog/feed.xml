@@ -17,14 +17,17 @@
             <link>https://microsoft.github.io/react-native-windows/blog/2022/07/29/coreapp.html</link>
             <guid>https://microsoft.github.io/react-native-windows/blog/2022/07/29/coreapp.html</guid>
             <pubDate>Fri, 29 Jul 2022 06:00:00 GMT</pubDate>
-            <description><![CDATA[<p>React Native builds on top of the native platform for every OS it runs on; on Windows, this translates to producing a Universal Windows Platform (UWP) app.</p> <p>We heard from some of our customers that build times for these types of apps can be pretty lon...</p>]]></description>
+            <description><![CDATA[<p><head> <meta http-equiv="Refresh" content="0; URL=https://devblogs.microsoft.com/react-native/steamline-coreapp-windows/"> </head></p> <p>React Native builds on top of the native platform for every OS it runs on; on Windows, this translates to producing a Universal Windows Platform (UWP) app.</p> <p>We heard from some of our customers that build times for these types of apps can be pretty ...</p>]]></description>
         </item>
         <item>
             <title><![CDATA[React Native for Windows is helping Settings improve more quickly]]></title>
             <link>https://microsoft.github.io/react-native-windows/blog/2022/02/11/settings.html</link>
             <guid>https://microsoft.github.io/react-native-windows/blog/2022/02/11/settings.html</guid>
             <pubDate>Fri, 11 Feb 2022 06:00:00 GMT</pubDate>
-            <description><![CDATA[<p>React Native isn’t just for mobile! Check out how the Windows 11 Settings app is leveraging React Native for Windows to deliver new features and capabilities to users faster and with the same great visual fidelity as Windows 11.</p>
+            <description><![CDATA[<p><head>
+<meta http-equiv="Refresh" content="0; URL=https://devblogs.microsoft.com/react-native/rnw-settings-win11/" />
+</head></p>
+<p>React Native isn’t just for mobile! Check out how the Windows 11 Settings app is leveraging React Native for Windows to deliver new features and capabilities to users faster and with the same great visual fidelity as Windows 11.</p>
 <p>In this blog post, we discuss how and why Microsoft is using React Native for Windows to deliver the Your Microsoft Account page in Windows 11 Settings.</p>
 ]]></description>
         </item>
@@ -33,7 +36,10 @@
             <link>https://microsoft.github.io/react-native-windows/blog/2022/02/11/rnwinrt.html</link>
             <guid>https://microsoft.github.io/react-native-windows/blog/2022/02/11/rnwinrt.html</guid>
             <pubDate>Fri, 11 Feb 2022 06:00:00 GMT</pubDate>
-            <description><![CDATA[<p>We are excited to announce the <a href="http://aka.ms/reactnativewinrt">React Native WinRT</a> project, a new extension that makes it easier for <a href="https://microsoft.github.io/react-native-windows/">React Native for Windows</a> developers to call Windows Runtime APIs directly from JavaScript! With React Native WinRT, developers can light up experiences that take advantage of unique platform features on Windows.</p>
+            <description><![CDATA[<p><head>
+<meta http-equiv="Refresh" content="0; URL=https://devblogs.microsoft.com/react-native/announcing-rnwinrt/" />
+</head></p>
+<p>We are excited to announce the <a href="http://aka.ms/reactnativewinrt">React Native WinRT</a> project, a new extension that makes it easier for <a href="https://microsoft.github.io/react-native-windows/">React Native for Windows</a> developers to call Windows Runtime APIs directly from JavaScript! With React Native WinRT, developers can light up experiences that take advantage of unique platform features on Windows.</p>
 <p>In this blog post, we will dive a little deeper into the technology, walk through some sample code, and show how React Native WinRT is already in use today.</p>
 <p>The <a href="https://github.com/microsoft/react-native-winrt">React Native WinRT repo</a> is now public, and a preview is available for developers to get started!</p>
 ]]></description>
@@ -43,7 +49,10 @@
             <link>https://microsoft.github.io/react-native-windows/blog/2021/08/05/win32component.html</link>
             <guid>https://microsoft.github.io/react-native-windows/blog/2021/08/05/win32component.html</guid>
             <pubDate>Thu, 05 Aug 2021 06:00:00 GMT</pubDate>
-            <description><![CDATA[<p>If you have adopted React Native to build your Windows applications, you'll know that the final output is a <a href="https://docs.microsoft.com/windows/uwp/get-started/universal-application-platform-guide">Universal Windows Platform application</a>. This development platform gives you access to all the latest enhancements in the Windows ecosystem (modern UI platform, notifications, integration with features like inking and Windows Hello, etc.), plus greater security and reliability thanks to the sandbox the application runs in.
+            <description><![CDATA[<p><head>
+<meta http-equiv="Refresh" content="0; URL=https://devblogs.microsoft.com/react-native/win32component/" />
+</head></p>
+<p>If you have adopted React Native to build your Windows applications, you'll know that the final output is a <a href="https://docs.microsoft.com/windows/uwp/get-started/universal-application-platform-guide">Universal Windows Platform application</a>. This development platform gives you access to all the latest enhancements in the Windows ecosystem (modern UI platform, notifications, integration with features like inking and Windows Hello, etc.), plus greater security and reliability thanks to the sandbox the application runs in.
 However, there might be scenarios where UWP isn't enough and you need to perform one or more tasks which are supported only by the Win32 ecosystem: working with any file on the disk without user intervention, reading a key from the registry, integrating a SDK which doesn't support the Windows Runtime.</p>
 <p>In this post we're going to explore a solution that will enable you to get the best of both worlds: a React Native for Windows application which integrates a classic Win32 process. We're going to build a sample React Native application which will be able to read a registry key and display it. The goal is to display to the user values stored in the <code>\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion</code> hive, which contains many information about the currently installed version of Windows.</p>
 ]]></description>
@@ -53,7 +62,10 @@ However, there might be scenarios where UWP isn't enough and you need to perform
             <link>https://microsoft.github.io/react-native-windows/blog/2021/06/30/notifications.html</link>
             <guid>https://microsoft.github.io/react-native-windows/blog/2021/06/30/notifications.html</guid>
             <pubDate>Wed, 30 Jun 2021 06:00:00 GMT</pubDate>
-            <description><![CDATA[<p>In this article, we will discuss how to enable your app to show toast notifications, which you can use to notify the user that something needs their attention, or to notify them that a long running operation has completed.</p>
+            <description><![CDATA[<p><head>
+<meta http-equiv="Refresh" content="0; URL=https://devblogs.microsoft.com/react-native/react-native-windows-notifications/" />
+</head></p>
+<p>In this article, we will discuss how to enable your app to show toast notifications, which you can use to notify the user that something needs their attention, or to notify them that a long running operation has completed.</p>
 ]]></description>
         </item>
         <item>
@@ -61,7 +73,10 @@ However, there might be scenarios where UWP isn't enough and you need to perform
             <link>https://microsoft.github.io/react-native-windows/blog/2021/05/25/inking.html</link>
             <guid>https://microsoft.github.io/react-native-windows/blog/2021/05/25/inking.html</guid>
             <pubDate>Tue, 25 May 2021 06:00:00 GMT</pubDate>
-            <description><![CDATA[<p>Windows 10 is one of the most powerful platforms on the market when it comes to supporting digital inking experiences. As such, the Universal Windows Platform comes with a dedicated series of controls that you can add to your application to enable inking experiences. Thanks to these controls, you can easily implements features like capturing signatures, text and shape recognition, etc.</p>
+            <description><![CDATA[<p><head>
+<meta http-equiv="Refresh" content="0; URL=https://devblogs.microsoft.com/react-native/rnw-inking/" />
+</head></p>
+<p>Windows 10 is one of the most powerful platforms on the market when it comes to supporting digital inking experiences. As such, the Universal Windows Platform comes with a dedicated series of controls that you can add to your application to enable inking experiences. Thanks to these controls, you can easily implements features like capturing signatures, text and shape recognition, etc.</p>
 <p>If you're building a Windows application with React Native, there are a few options you can explore to add such a feature. One of them is using a community module called <a href="https://github.com/creambyemute/react-native-sketch-canvas">react-native-sketch-canvas</a>, which provides a Windows implementation as well. This module is based on Win2D and it enables the recording and playback of ink strokes. While this solution can be a great fit for many applications, there are scenarios in which you need more precision and better integration with the Windows ecosystem, like when you need to capture a signature. For these purposes, Windows 10 offers a native control called <a href="https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.InkCanvas"><code>InkCanvas</code></a>, which enables powerful inking experiences. <code>InkCanvas</code> is specifically a Windows control and isn't exposed automatically by React Native. As such, we'll have to wrap it with a <a href="https://microsoft.github.io/react-native-windows/docs/view-managers">native UI component</a>, which is a feature provided by React Native which exposes native UI controls for Windows, Android or iOS to the JavaScript layer using JSX.</p>
 <p>In this article we'll walk through the process of wrapping the <code>InkCanvas</code> control, with the dual goals of enabling your apps to support inking and walking you through the process of creating a native UI component, which can be useful for exposing other native controls.</p>
 ]]></description>
@@ -71,7 +86,10 @@ However, there might be scenarios where UWP isn't enough and you need to perform
             <link>https://microsoft.github.io/react-native-windows/blog/2021/05/17/codepush.html</link>
             <guid>https://microsoft.github.io/react-native-windows/blog/2021/05/17/codepush.html</guid>
             <pubDate>Mon, 17 May 2021 06:00:00 GMT</pubDate>
-            <description><![CDATA[<p>CodePush is a service built by Microsoft, now incorporated into the <a href="https://appcenter.ms/">Visual Studio App Center platform</a>, which provides a way for React Native and Cordova developers to be more agile in delivering updates to their applications.
+            <description><![CDATA[<p><head>
+<meta http-equiv="Refresh" content="0; URL=https://devblogs.microsoft.com/react-native/rnw-codepush/" />
+</head></p>
+<p>CodePush is a service built by Microsoft, now incorporated into the <a href="https://appcenter.ms/">Visual Studio App Center platform</a>, which provides a way for React Native and Cordova developers to be more agile in delivering updates to their applications.
 Thanks to CodePush, you are able to deliver a new bundle (which might contain updated JavaScript files, new images, etc.) without having to fully redeploy a new package. This means, for example, that you can update the content of your application published on a Store without submitting a new package and waiting for the certification process to be completed; or that you can add a new feature in your LOB app without having to redeploy it via Intune or another MDM solution to all your employees.</p>
 ]]></description>
         </item>
@@ -80,7 +98,10 @@ Thanks to CodePush, you are able to deliver a new bundle (which might contain up
             <link>https://microsoft.github.io/react-native-windows/blog/2021/03/16/64updates.html</link>
             <guid>https://microsoft.github.io/react-native-windows/blog/2021/03/16/64updates.html</guid>
             <pubDate>Tue, 16 Mar 2021 06:00:00 GMT</pubDate>
-            <description><![CDATA[<p>React Native 0.64 is out! Which means it's time to showcase all the work we've put in around supporting more community modules, TurboModules, APIs improvements, and even some tools, all in the effort to improve the developer experience.</p>
+            <description><![CDATA[<p><head>
+<meta http-equiv="Refresh" content="0; URL=https://devblogs.microsoft.com/react-native/2021-03-16-64updates/" />
+</head></p>
+<p>React Native 0.64 is out! Which means it's time to showcase all the work we've put in around supporting more community modules, TurboModules, APIs improvements, and even some tools, all in the effort to improve the developer experience.</p>
 ]]></description>
         </item>
         <item>
@@ -88,7 +109,10 @@ Thanks to CodePush, you are able to deliver a new bundle (which might contain up
             <link>https://microsoft.github.io/react-native-windows/blog/2020/09/02/63updates.html</link>
             <guid>https://microsoft.github.io/react-native-windows/blog/2020/09/02/63updates.html</guid>
             <pubDate>Wed, 02 Sep 2020 06:00:00 GMT</pubDate>
-            <description><![CDATA[<p>React Native for Windows is now on a <a href="https://www.npmjs.com/package/react-native-windows">0.63</a> stable release with React Native core, lighting up some fun new APIs.</p>
+            <description><![CDATA[<p><head>
+<meta http-equiv="Refresh" content="0; URL=https://devblogs.microsoft.com/react-native/2020-09-02-rnw-63updates/" />
+</head></p>
+<p>React Native for Windows is now on a <a href="https://www.npmjs.com/package/react-native-windows">0.63</a> stable release with React Native core, lighting up some fun new APIs.</p>
 ]]></description>
         </item>
         <item>
@@ -96,7 +120,10 @@ Thanks to CodePush, you are able to deliver a new bundle (which might contain up
             <link>https://microsoft.github.io/react-native-windows/blog/2020/07/22/62updates.html</link>
             <guid>https://microsoft.github.io/react-native-windows/blog/2020/07/22/62updates.html</guid>
             <pubDate>Wed, 22 Jul 2020 06:00:00 GMT</pubDate>
-            <description><![CDATA[<p>React Native for Windows released latest stable <a href="https://www.npmjs.com/package/react-native-windows/v/0.62.2">0.62.2</a> with Fast Refresh, RTL support, RedBox and thread safe property storage APIs.</p>
+            <description><![CDATA[<p><head>
+<meta http-equiv="Refresh" content="0; URL=https://devblogs.microsoft.com/react-native/2020-07-22-rnw-62updates/" />
+</head></p>
+<p>React Native for Windows released latest stable <a href="https://www.npmjs.com/package/react-native-windows/v/0.62.2">0.62.2</a> with Fast Refresh, RTL support, RedBox and thread safe property storage APIs.</p>
 ]]></description>
         </item>
         <item>
@@ -104,14 +131,17 @@ Thanks to CodePush, you are able to deliver a new bundle (which might contain up
             <link>https://microsoft.github.io/react-native-windows/blog/2020/06/01/build2020recap.html</link>
             <guid>https://microsoft.github.io/react-native-windows/blog/2020/06/01/build2020recap.html</guid>
             <pubDate>Mon, 01 Jun 2020 06:00:00 GMT</pubDate>
-            <description><![CDATA[<p>At the end of May 2020, Microsoft wrapped up the annual <a href="https://mybuild.microsoft.com/">Build developer conference</a>. React Native was a big theme at Build 2020 this year, with over 6 sessions dedicated to React Native and many tie-ins from other talks.</p> <p>The biggest announcement from ...</p>]]></description>
+            <description><![CDATA[<p><head> <meta http-equiv="Refresh" content="0; URL=https://devblogs.microsoft.com/react-native/2020-06-01-build2020recap/"> </head></p> <p>At the end of May 2020, Microsoft wrapped up the annual <a href="https://mybuild.microsoft.com/">Build developer conference</a>. React Native was a big theme at Build 2020 this year, with over 6 sessions dedicated to React Native and many tie-ins from other talks.</p> <p>The biggest announcement fr...</p>]]></description>
         </item>
         <item>
             <title><![CDATA[Announcing React Native for macOS and more]]></title>
             <link>https://microsoft.github.io/react-native-windows/blog/2020/05/19/rn4mupdadates.html</link>
             <guid>https://microsoft.github.io/react-native-windows/blog/2020/05/19/rn4mupdadates.html</guid>
             <pubDate>Tue, 19 May 2020 06:00:00 GMT</pubDate>
-            <description><![CDATA[<p>We're excited to announce our first preview release aligning with <a href="https://reactnative.dev/blog/2020/03/26/version-0.62">React Native 0.62</a>!</p>
+            <description><![CDATA[<p><head>
+<meta http-equiv="Refresh" content="0; URL=https://devblogs.microsoft.com/react-native/2020-05-19-rn4m-updates/" />
+</head></p>
+<p>We're excited to announce our first preview release aligning with <a href="https://reactnative.dev/blog/2020/03/26/version-0.62">React Native 0.62</a>!</p>
 ]]></description>
         </item>
         <item>
@@ -119,7 +149,10 @@ Thanks to CodePush, you are able to deliver a new bundle (which might contain up
             <link>https://microsoft.github.io/react-native-windows/blog/2020/02/010/m4updates.html</link>
             <guid>https://microsoft.github.io/react-native-windows/blog/2020/02/010/m4updates.html</guid>
             <pubDate>Thu, 01 Jan 1970 00:00:00 GMT</pubDate>
-            <description><![CDATA[<p>Announcing React Native for Windows v0.61, now on the high performance common core across iOS and Android!</p>
+            <description><![CDATA[<p><head>
+<meta http-equiv="Refresh" content="0; URL=https://devblogs.microsoft.com/react-native/2020-02-10-m4updates/" />
+</head></p>
+<p>Announcing React Native for Windows v0.61, now on the high performance common core across iOS and Android!</p>
 ]]></description>
         </item>
         <item>
@@ -127,7 +160,10 @@ Thanks to CodePush, you are able to deliver a new bundle (which might contain up
             <link>https://microsoft.github.io/react-native-windows/blog/2019/12/3/m3updates.html</link>
             <guid>https://microsoft.github.io/react-native-windows/blog/2019/12/3/m3updates.html</guid>
             <pubDate>Thu, 01 Jan 1970 00:00:00 GMT</pubDate>
-            <description><![CDATA[<p>We wrapped up <a href="https://github.com/microsoft/react-native-windows/milestone/17">Milestone 3</a> a month ago which included <strong>upgrade to support React Native version 0.60, Native extensions developer story, integration with the new high performance JS engine- Hermes, E2E test infrastructure and a host of added API support</strong>. Some detailed highlights from the past few months are shared below.</p>
+            <description><![CDATA[<p><head>
+<meta http-equiv="Refresh" content="0; URL=https://devblogs.microsoft.com/react-native/2019-12-03-m3updates/" />
+</head></p>
+<p>We wrapped up <a href="https://github.com/microsoft/react-native-windows/milestone/17">Milestone 3</a> a month ago which included <strong>upgrade to support React Native version 0.60, Native extensions developer story, integration with the new high performance JS engine- Hermes, E2E test infrastructure and a host of added API support</strong>. Some detailed highlights from the past few months are shared below.</p>
 ]]></description>
         </item>
         <item>
@@ -135,7 +171,10 @@ Thanks to CodePush, you are able to deliver a new bundle (which might contain up
             <link>https://microsoft.github.io/react-native-windows/blog/2019/07/22/roadmap.html</link>
             <guid>https://microsoft.github.io/react-native-windows/blog/2019/07/22/roadmap.html</guid>
             <pubDate>Mon, 22 Jul 2019 06:00:00 GMT</pubDate>
-            <description><![CDATA[<p>This document outlines some context and prospective roadmap for React Native for Windows. This project is under active development by the Microsoft Developer Platform team in collaboration with Office, Xbox and other partners as well as the wider React Native community. This roadmap is not meant to be exhaustive or guaranteed since we are also keeping up with the evolving <a href="http://facebook.github.io/react-native/">facebook\react-native</a> project and the needs of the React Native community.</p>
+            <description><![CDATA[<p><head>
+<meta http-equiv="Refresh" content="0; URL=https://devblogs.microsoft.com/react-native/2019-07-22-rnw-roadmap/" />
+</head></p>
+<p>This document outlines some context and prospective roadmap for React Native for Windows. This project is under active development by the Microsoft Developer Platform team in collaboration with Office, Xbox and other partners as well as the wider React Native community. This roadmap is not meant to be exhaustive or guaranteed since we are also keeping up with the evolving <a href="http://facebook.github.io/react-native/">facebook\react-native</a> project and the needs of the React Native community.</p>
 ]]></description>
         </item>
         <item>
@@ -143,7 +182,10 @@ Thanks to CodePush, you are able to deliver a new bundle (which might contain up
             <link>https://microsoft.github.io/react-native-windows/blog/2019/07/21/updates.html</link>
             <guid>https://microsoft.github.io/react-native-windows/blog/2019/07/21/updates.html</guid>
             <pubDate>Sun, 21 Jul 2019 06:00:00 GMT</pubDate>
-            <description><![CDATA[<p>Over the past couple of months and spread across several contributors from Microsoft, we have completed <a href="https://github.com/microsoft/react-native-windows/milestone/16">Milestone 2</a> for React Native for Windows. This blog post covers the highlights of the release.</p>
+            <description><![CDATA[<p><head>
+<meta http-equiv="Refresh" content="0; URL=https://devblogs.microsoft.com/react-native/2019-07-21-rnw-updates/" />
+</head></p>
+<p>Over the past couple of months and spread across several contributors from Microsoft, we have completed <a href="https://github.com/microsoft/react-native-windows/milestone/16">Milestone 2</a> for React Native for Windows. This blog post covers the highlights of the release.</p>
 ]]></description>
         </item>
     </channel>
