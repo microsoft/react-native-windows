@@ -8,7 +8,7 @@ import React from 'react'
 import RN = require('react-native');
 import { View, findNodeHandle, UIManager } from 'react-native';
 import { IViewWin32Props, UseFrom } from './ViewWin32.Props';
-const setAndForwardRef = require('../../Utilities/setAndForwardRef');
+const useMergeRefs = require('../../Utilities/useMergeRefs');
 
 /**
  * Basic View component with additional Win32 specific functionality
@@ -87,8 +87,7 @@ export const ViewWin32 = React.forwardRef(
      * Set up the forwarding ref to enable adding the focus method.
      */
     const focusRef = React.useRef<ViewWin32>();
-    const setNativeRef = setAndForwardRef({
-      getForwardedRef: () => ref,
+    const setNativeRef = useMergeRefs({
       setLocalRef: localRef => {
         focusRef.current = localRef;  
 
@@ -106,6 +105,7 @@ export const ViewWin32 = React.forwardRef(
           };
         }
       },
+      ref,
     });
 
     return <View ref={setNativeRef}
@@ -115,5 +115,6 @@ export const ViewWin32 = React.forwardRef(
     {...((describedByTarget !== null) ? {accessibilityDescribedBy:describedByTarget} : {})}
     />;
   });
+  
 
 export type ViewWin32 = ViewWin32Type;
