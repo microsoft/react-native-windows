@@ -5,7 +5,7 @@
   "main": "index.js",
   "repository": "https://github.com/microsoft/react-native-windows",
   "license": "MIT",
-  "private": false,
+  "private": true,
   "scripts": {
     "build": "rnw-scripts build",
     "clean": "rnw-scripts clean",
@@ -18,8 +18,8 @@
     "react-native-windows-init": "./bin.js"
   },
   "dependencies": {
-    "@react-native-windows/fs": "^0.0.0-canary.11",
-    "@react-native-windows/telemetry": "^0.0.0-canary.54",
+    "@react-native-windows/fs": "0.71.0-preview.0",
+    "@react-native-windows/telemetry": "0.71.0-preview.0",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
     "chalk": "^4.1.0",
@@ -33,7 +33,7 @@
     "yargs": "^16.2.0"
   },
   "devDependencies": {
-    "@react-native-windows/cli": "0.0.0-canary.153",
+    "@react-native-windows/cli": "0.71.0-preview.0",
     "@rnw-scripts/eslint-config": "1.1.14",
     "@rnw-scripts/jest-unittest-config": "1.4.2",
     "@rnw-scripts/just-task": "2.3.3",
