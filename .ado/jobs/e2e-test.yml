@@ -61,12 +61,6 @@ jobs:
                 Write-Host "##vso[task.setvariable variable=BuildLogDirectory]$(Build.BinariesDirectory)\${{ parameters.BuildPlatform }}\BuildLogs"
               displayName: Set BuildLogDirectory
 
-            - task: CmdLine@2
-              displayName: Set LocalDumps
-              inputs:
-                script: $(Build.SourcesDirectory)\.ado\scripts\SetupLocalDumps.cmd RNTesterApp
-                workingDirectory: $(Build.SourcesDirectory)
-
             - task: PowerShell@2
               displayName: Start tracing
               inputs:
@@ -133,20 +127,19 @@ jobs:
               condition: failed()
 
             - task: PublishPipelineArtifact@1
-              displayName: "Publish Artifact:RNTesterApp"
+              displayName: "Publish Artifact: RNTesterApp"
               inputs:
-                artifactName: RNTesterApp-${{ matrix.BuildPlatform }}-$(System.JobAttempt)
+                artifactName: RNTesterApp-${{ matrix.Name }}-$(System.JobAttempt)
                 targetPath: $(Build.StagingDirectory)/RNTesterApp
               condition: failed()
 
             - task: PublishPipelineArtifact@1
-              displayName: "Publish Artifact:Snapshots"
+              displayName: "Publish Artifact: Snapshots"
               inputs:
-                artifactName: Snapshots-${{ matrix.BuildPlatform }}-$(System.JobAttempt)
+                artifactName: Snapshots - RNTesterApp-${{ matrix.Name }}-$(System.JobAttempt)
                 targetPath: $(Build.StagingDirectory)/snapshots
               condition: failed()
 
             - template: ../templates/upload-build-logs.yml
               parameters:
                 buildLogDirectory: '$(BuildLogDirectory)'
-                condition: succeededOrFailed()

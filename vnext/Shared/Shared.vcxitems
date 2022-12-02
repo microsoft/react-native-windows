@@ -162,6 +162,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)V8JSIRuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)WebSocketJSExecutorFactory.h" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\ReactRootViewTagGenerator.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Utils\ImageUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)tracing\rnw.wprp" />

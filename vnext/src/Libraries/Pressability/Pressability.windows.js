@@ -786,7 +786,8 @@ export default class Pressability {
   }
 
   // [Windows]
-  _isDefaultPressButton(button) {
+  // $FlowFixMe - button typing
+  _isDefaultPressButton(button): boolean {
     return !button; // Treat 0 or undefined as default press
   }
 

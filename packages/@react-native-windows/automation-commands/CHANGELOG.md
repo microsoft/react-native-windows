@@ -1,8 +1,26 @@
 # Change Log - @react-native-windows/automation-commands
 
-This log was last generated on Wed, 30 Nov 2022 06:15:20 GMT and should not be manually modified.
+This log was last generated on Fri, 02 Dec 2022 06:19:02 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.31
+
+Fri, 02 Dec 2022 06:19:02 GMT
+
+### Patches
+
+- Merge branch 'main' of https://github.com/microsoft/react-native-windows into cm-intg-10-24 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/automation-channel to v0.5.11
+- Bump @rnw-scripts/just-task to v2.3.3
+
+## 0.1.30
+
+Thu, 01 Dec 2022 06:15:01 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.5.10
 
 ## 0.1.29
 

@@ -8,10 +8,10 @@
 
 import NativePlatformConstantsWin from './NativePlatformConstantsWin';
 
-export type PlatformSelectSpec<A, N, D> = {
-  windows?: A,
-  native?: N,
-  default?: D,
+export type PlatformSelectSpec<T> = {
+  windows?: T,
+  native?: T,
+  default?: T,
   ...
 };
 
@@ -55,7 +55,7 @@ const Platform = {
     // $FlowFixMe[object-this-reference]
     return false;
   },
-  select: <A, N, D>(spec: PlatformSelectSpec<A, N, D>): A | N | D =>
+  select: <T>(spec: PlatformSelectSpec<T>): T =>
     'windows' in spec
       ? // $FlowFixMe[incompatible-return]
         spec.windows

@@ -4,3 +4,4 @@ steps:
       Write-Host $PfxPath
       Remove-Item -path $PfxPath
     displayName: Remove Certificate
+    condition: succeededOrFailed()

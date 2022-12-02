@@ -2,6 +2,66 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 02 Dec 2022 06:19:04 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.590",
+      "version": "0.0.0-canary.590",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7c8e70822dd353027b9a0afafa67038810498f1c",
+            "comment": "Integrate 10/10"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7c8e70822dd353027b9a0afafa67038810498f1c",
+            "comment": "Bump codegen version"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.153",
+            "commit": "2f939521a7e852faf4ccfba4e017c0ebaa64babc"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.45",
+            "commit": "2f939521a7e852faf4ccfba4e017c0ebaa64babc"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.3",
+            "commit": "2f939521a7e852faf4ccfba4e017c0ebaa64babc"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.8.3",
+            "commit": "2f939521a7e852faf4ccfba4e017c0ebaa64babc"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 01 Dec 2022 06:15:01 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.589",
+      "version": "0.0.0-canary.589",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b823e377b81388ce1a5a39034c7771150b3196ac",
+            "comment": "Minor build fixes to enable fabric in desktop dll"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 30 Nov 2022 06:15:20 GMT",
       "tag": "react-native-windows_v0.0.0-canary.588",
       "version": "0.0.0-canary.588",

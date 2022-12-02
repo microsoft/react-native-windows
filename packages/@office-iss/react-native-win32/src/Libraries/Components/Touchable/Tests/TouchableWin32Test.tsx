@@ -2,7 +2,7 @@
 
 import React from 'react'
 import {NativeSyntheticEvent, StyleSheet, Text, ViewStyle } from 'react-native';
-import {Insets} from 'react-native/types/Utilities';
+import {Insets} from 'react-native/types/public/Insets';
 import { TextWin32 } from '../../Text/TextWin32';
 import { ViewWin32 } from '../../View/ViewWin32';
 import { IViewWin32Props, IKeyboardEvent } from '../../View/ViewWin32.Props';
