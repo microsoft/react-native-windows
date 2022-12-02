@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/jest-unittest-config
 
-This log was last generated on Sat, 12 Nov 2022 06:17:22 GMT and should not be manually modified.
+This log was last generated on Fri, 02 Dec 2022 06:19:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.4.2
+
+Fri, 02 Dec 2022 06:19:04 GMT
+
+### Patches
+
+- Integrate 10/10 (34109996+chiaramooney@users.noreply.github.com)
 
 ## 1.4.1
 

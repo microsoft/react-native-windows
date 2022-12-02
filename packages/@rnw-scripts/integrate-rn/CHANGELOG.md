@@ -1,8 +1,22 @@
 # Change Log - @rnw-scripts/integrate-rn
 
-This log was last generated on Wed, 16 Nov 2022 06:16:01 GMT and should not be manually modified.
+This log was last generated on Fri, 02 Dec 2022 06:19:03 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.3.3
+
+Fri, 02 Dec 2022 06:19:03 GMT
+
+### Patches
+
+- Integrate 10/10 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.40
+- Bump @react-native-windows/fs to v0.0.0-canary.11
+- Bump @react-native-windows/package-utils to v0.0.0-canary.37
+- Bump react-native-platform-override to v1.8.3
+- Bump @rnw-scripts/jest-unittest-config to v1.4.2
+- Bump @rnw-scripts/just-task to v2.3.3
 
 ## 1.3.2
 
