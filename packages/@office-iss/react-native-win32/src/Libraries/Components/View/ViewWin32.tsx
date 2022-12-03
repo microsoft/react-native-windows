@@ -4,11 +4,11 @@
  * RN-specific implementation of the cross-platform View abstraction.
  */
 
-import React from 'react'
+import React, {useCallback} from 'react'
 import RN = require('react-native');
-import { View, findNodeHandle, UIManager } from 'react-native';
+import { View, findNodeHandle, UIManager} from 'react-native';
 import { IViewWin32Props, UseFrom } from './ViewWin32.Props';
-const useMergeRefs = require('../../Utilities/useMergeRefs');
+import useMergeRefs from '../../Utilities/useMergeRefs';
 
 /**
  * Basic View component with additional Win32 specific functionality
@@ -87,24 +87,29 @@ export const ViewWin32 = React.forwardRef(
      * Set up the forwarding ref to enable adding the focus method.
      */
     const focusRef = React.useRef<ViewWin32>();
-    const setNativeRef = useMergeRefs({
-      setLocalRef: localRef => {
-        focusRef.current = localRef;  
 
+    const setLocalRef = useCallback(
+      (instance: ViewWin32 | null) => {
+        focusRef.current = instance;  
         /**
          * Add focus() as a callable function to the forwarded reference.
          */
-        if (localRef)
+        if (instance)
         {
-          localRef.focus = () => {
+          instance.focus = () => {
             UIManager.dispatchViewManagerCommand(
-              findNodeHandle(localRef),
+              findNodeHandle(instance),
               UIManager.getViewManagerConfig('RCTView').Commands.focus,
               null
               );
           };
         }
-      },
+    },
+    [focusRef],
+    );
+
+    const setNativeRef = useMergeRefs({
+      setLocalRef,
       ref,
     });
 

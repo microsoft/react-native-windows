@@ -274,7 +274,7 @@ const Text: React.AbstractComponent<
         styleProps.borderTopWidth)
     ) {
       let textStyleProps = Array.isArray(styleProps)
-        ? StyleSheet.flatten(styleProps)
+        ? flattenStyle(styleProps)
         : styleProps;
       let {
         margin,
