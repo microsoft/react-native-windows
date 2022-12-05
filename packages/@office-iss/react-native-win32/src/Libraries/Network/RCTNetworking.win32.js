@@ -16,10 +16,10 @@ import convertRequestBody, {type RequestBody} from './convertRequestBody';
 import {type EventSubscription} from '../vendor/emitter/EventEmitter';
 
 type Header = [string, string];
-
 // Convert FormData headers to arrays, which are easier to consume in
 // native on Android.
-function convertHeadersMapToArray(headers: Header): Array<Header> {
+// $FlowFixMe[unclear-type] Unclear type. Using `any` type is not safe.
+function convertHeadersMapToArray(headers: Object): Array<Header> {
   const headerArray: Array<Header> = [];
   for (const name in headers) {
     headerArray.push([name, headers[name]]);
