@@ -176,7 +176,7 @@
   </Target>
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.210312.4\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.210312.4\build\native\Microsoft.Windows.CppWinRT.targets')" />
-    <Import Project="..\packages\ReactNative.Hermes.Windows.0.0.0-2211.20001-13de58e2\build\native\ReactNative.Hermes.Windows.targets" Condition="Exists('..\packages\ReactNative.Hermes.Windows.0.8.1-ms.5\build\native\ReactNative.Hermes.Windows.targets')" />
+    <Import Project="..\packages\ReactNative.Hermes.Windows.0.8.1-ms.5\build\native\ReactNative.Hermes.Windows.targets" Condition="Exists('..\packages\ReactNative.Hermes.Windows.0.8.1-ms.5\build\native\ReactNative.Hermes.Windows.targets')" />
     <Import Project="..\packages\Microsoft.ReactNative.0.0.0-canary.359\build\native\Microsoft.ReactNative.targets" Condition="Exists('..\packages\Microsoft.ReactNative.0.0.0-canary.359\build\native\Microsoft.ReactNative.targets')" />
     <Import Project="..\packages\Microsoft.ReactNative.Cxx.0.0.0-canary.359\build\native\Microsoft.ReactNative.Cxx.targets" Condition="Exists('..\packages\Microsoft.ReactNative.Cxx.0.0.0-canary.359\build\native\Microsoft.ReactNative.Cxx.targets')" />
     <Import Project="..\packages\$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).targets" Condition="Exists('..\packages\$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).targets')" />
