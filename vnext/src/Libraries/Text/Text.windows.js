@@ -10,17 +10,16 @@
  */
 
 import type {PressEvent} from '../Types/CoreEventTypes';
+import type {TextProps} from './TextProps';
 
 import * as PressabilityDebug from '../Pressability/PressabilityDebug';
 import usePressability from '../Pressability/usePressability';
 import flattenStyle from '../StyleSheet/flattenStyle';
 import processColor from '../StyleSheet/processColor';
-import StyleSheet from '../StyleSheet/StyleSheet';
 import {getAccessibilityRoleFromRole} from '../Utilities/AcessibilityMapping';
 import Platform from '../Utilities/Platform';
 import TextAncestor from './TextAncestor';
 import {NativeText, NativeVirtualText} from './TextNativeComponent';
-import {type TextProps} from './TextProps';
 import * as React from 'react';
 import {useContext, useMemo, useState} from 'react';
 
@@ -40,6 +39,7 @@ const Text: React.AbstractComponent<
     accessible,
     accessibilityLabel,
     accessibilityRole,
+    accessibilityState,
     allowFontScaling,
     'aria-busy': ariaBusy,
     'aria-checked': ariaChecked,
@@ -68,13 +68,23 @@ const Text: React.AbstractComponent<
 
   const [isHighlighted, setHighlighted] = useState(false);
 
-  const _accessibilityState = {
-    busy: ariaBusy ?? props.accessibilityState?.busy,
-    checked: ariaChecked ?? props.accessibilityState?.checked,
-    disabled: ariaDisabled ?? props.accessibilityState?.disabled,
-    expanded: ariaExpanded ?? props.accessibilityState?.expanded,
-    selected: ariaSelected ?? props.accessibilityState?.selected,
-  };
+  let _accessibilityState;
+  if (
+    accessibilityState != null ||
+    ariaBusy != null ||
+    ariaChecked != null ||
+    ariaDisabled != null ||
+    ariaExpanded != null ||
+    ariaSelected != null
+  ) {
+    _accessibilityState = {
+      busy: ariaBusy ?? accessibilityState?.busy,
+      checked: ariaChecked ?? accessibilityState?.checked,
+      disabled: ariaDisabled ?? accessibilityState?.disabled,
+      expanded: ariaExpanded ?? accessibilityState?.expanded,
+      selected: ariaSelected ?? accessibilityState?.selected,
+    };
+  }
 
   const _disabled =
     restProps.disabled != null
@@ -178,25 +188,11 @@ const Text: React.AbstractComponent<
       ? null
       : processColor(restProps.selectionColor);
 
-  let style = flattenStyle(restProps.style);
-
-  let _selectable = restProps.selectable;
-  if (style?.userSelect != null) {
-    _selectable = userSelectToSelectableMap[style.userSelect];
-  }
-
-  if (style?.verticalAlign != null) {
-    style = StyleSheet.compose(style, {
-      textAlignVertical:
-        verticalAlignToTextAlignVerticalMap[style.verticalAlign],
-    });
-  }
+  let style = restProps.style;
 
   if (__DEV__) {
     if (PressabilityDebug.isEnabled() && onPress != null) {
-      style = StyleSheet.compose(restProps.style, {
-        color: 'magenta',
-      });
+      style = [restProps.style, {color: 'magenta'}];
     }
   }
 
@@ -215,10 +211,22 @@ const Text: React.AbstractComponent<
     default: accessible,
   });
 
-  let flattenedStyle = flattenStyle(style);
+  style = flattenStyle(style);
 
-  if (typeof flattenedStyle?.fontWeight === 'number') {
-    flattenedStyle.fontWeight = flattenedStyle?.fontWeight.toString();
+  if (typeof style?.fontWeight === 'number') {
+    style.fontWeight = style?.fontWeight.toString();
+  }
+
+  let _selectable = restProps.selectable;
+  if (style?.userSelect != null) {
+    _selectable = userSelectToSelectableMap[style.userSelect];
+    delete style.userSelect;
+  }
+
+  if (style?.verticalAlign != null) {
+    style.textAlignVertical =
+      verticalAlignToTextAlignVerticalMap[style.verticalAlign];
+    delete style.verticalAlign;
   }
 
   const _hasOnPressOrOnLongPress =
@@ -229,27 +237,27 @@ const Text: React.AbstractComponent<
       <NativeVirtualText
         {...restProps}
         {...eventHandlersForText}
-        disabled={_disabled}
-        selectable={_selectable}
+        accessibilityLabel={ariaLabel ?? accessibilityLabel}
+        accessibilityRole={
+          role ? getAccessibilityRoleFromRole(role) : accessibilityRole
+        }
+        accessibilityState={nativeTextAccessibilityState}
         accessible={
           accessible == null && Platform.OS === 'android'
             ? _hasOnPressOrOnLongPress
             : _accessible
         }
-        accessibilityLabel={ariaLabel ?? accessibilityLabel}
-        accessibilityState={nativeTextAccessibilityState}
-        accessibilityRole={
-          role ? getAccessibilityRoleFromRole(role) : accessibilityRole
-        }
         allowFontScaling={allowFontScaling !== false}
+        disabled={_disabled}
         ellipsizeMode={ellipsizeMode ?? 'tail'}
         isHighlighted={isHighlighted}
         nativeID={id ?? nativeID}
         isPressable={isPressable}
         numberOfLines={numberOfLines}
-        selectionColor={selectionColor}
-        style={flattenedStyle}
         ref={forwardedRef}
+        selectable={_selectable}
+        selectionColor={selectionColor}
+        style={style}
       />
     );
   } else {
@@ -266,7 +274,7 @@ const Text: React.AbstractComponent<
         styleProps.borderTopWidth)
     ) {
       let textStyleProps = Array.isArray(styleProps)
-        ? StyleSheet.flatten(styleProps)
+        ? flattenStyle(styleProps)
         : styleProps;
       let {
         margin,

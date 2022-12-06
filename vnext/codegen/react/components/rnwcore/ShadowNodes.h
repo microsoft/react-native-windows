@@ -52,17 +52,6 @@ using AndroidDrawerLayoutShadowNode = ConcreteViewShadowNode<
     AndroidDrawerLayoutEventEmitter,
     AndroidDrawerLayoutState>;
 
-JSI_EXPORT extern const char RCTProgressViewComponentName[];
-
-/*
- * `ShadowNode` for <RCTProgressView> component.
- */
-using RCTProgressViewShadowNode = ConcreteViewShadowNode<
-    RCTProgressViewComponentName,
-    RCTProgressViewProps,
-    RCTProgressViewEventEmitter,
-    RCTProgressViewState>;
-
 JSI_EXPORT extern const char AndroidSwipeRefreshLayoutComponentName[];
 
 /*

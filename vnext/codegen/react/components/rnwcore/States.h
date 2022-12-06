@@ -62,21 +62,6 @@ public:
 #endif
 };
 
-class RCTProgressViewState {
-public:
-  RCTProgressViewState() = default;
-
-#ifdef ANDROID
-  RCTProgressViewState(RCTProgressViewState const &previousState, folly::dynamic data){};
-  folly::dynamic getDynamic() const {
-    return {};
-  };
-  MapBuffer getMapBuffer() const {
-    return MapBufferBuilder::EMPTY();
-  };
-#endif
-};
-
 class AndroidSwipeRefreshLayoutState {
 public:
   AndroidSwipeRefreshLayoutState() = default;
