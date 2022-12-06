@@ -1618,6 +1618,7 @@ function InternalTextInput(props: Props): React.Node {
   else if (Platform.OS === 'windows') {
     textInput = (
       <WindowsTextInput
+        // $FlowFixMe[incompatible-type] - Figure out imperative + forward refs.
         ref={ref}
         {...props}
         accessible={accessible}
