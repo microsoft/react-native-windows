@@ -32,7 +32,7 @@ struct DialogManagerWindowsSpec_DialogOptions {
     REACT_FIELD(defaultButton)
     std::optional<int> defaultButton;
     REACT_FIELD(rootTag)
-    std::optional<double> rootTag;
+    std::optional<int> rootTag;
 };
 
 REACT_STRUCT(DialogManagerWindowsSpec_Constants)
