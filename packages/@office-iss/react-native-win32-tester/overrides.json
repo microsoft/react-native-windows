@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win32/**"
   ],
-  "baseVersion": "0.0.0-20221109-2052-1f0c2c289",
+  "baseVersion": "0.0.0-20221120-2051-81e441ae8",
   "overrides": [
     {
       "type": "patch",
@@ -24,7 +24,7 @@
       "type": "patch",
       "file": "src/js/components/RNTesterExampleFilter.win32.js",
       "baseFile": "packages/rn-tester/js/components/RNTesterExampleFilter.js",
-      "baseHash": "e48c4c9538d7eeb1bb244184c4e7a6e80a1ed4f6"
+      "baseHash": "91b349ecb666e3c44c14fecc5d8ac2a5fdba4ae6"
     },
     {
       "type": "platform",

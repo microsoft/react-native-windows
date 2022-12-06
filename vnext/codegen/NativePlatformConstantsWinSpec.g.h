@@ -22,7 +22,7 @@ struct PlatformConstantsWinSpec_Constants_reactNativeVersion {
     REACT_FIELD(patch)
     double patch;
     REACT_FIELD(prerelease)
-    std::optional<double> prerelease;
+    std::optional<std::string> prerelease;
 };
 
 REACT_STRUCT(PlatformConstantsWinSpec_Constants)

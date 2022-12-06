@@ -109,14 +109,6 @@ class JSI_EXPORT AndroidProgressBarEventEmitter : public ViewEventEmitter {
 
   
 };
-class JSI_EXPORT RCTProgressViewEventEmitter : public ViewEventEmitter {
- public:
-  using ViewEventEmitter::ViewEventEmitter;
-
-  
-
-  
-};
 class JSI_EXPORT AndroidSwipeRefreshLayoutEventEmitter : public ViewEventEmitter {
  public:
   using ViewEventEmitter::ViewEventEmitter;

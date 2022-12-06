@@ -13,8 +13,8 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(PerformanceObserverSpec_getPendingEntries_returnType_element)
-struct PerformanceObserverSpec_getPendingEntries_returnType_element {
+REACT_STRUCT(PerformanceObserverSpec_RawPerformanceEntry)
+struct PerformanceObserverSpec_RawPerformanceEntry {
     REACT_FIELD(name)
     std::string name;
     REACT_FIELD(entryType)
@@ -35,7 +35,7 @@ struct PerformanceObserverSpec : winrt::Microsoft::ReactNative::TurboModuleSpec 
   static constexpr auto methods = std::tuple{
       Method<void(std::string) noexcept>{0, L"startReporting"},
       Method<void(std::string) noexcept>{1, L"stopReporting"},
-      SyncMethod<std::vector<PerformanceObserverSpec_getPendingEntries_returnType_element>() noexcept>{2, L"getPendingEntries"},
+      SyncMethod<std::vector<PerformanceObserverSpec_RawPerformanceEntry>() noexcept>{2, L"getPendingEntries"},
       Method<void(Callback<>) noexcept>{3, L"setOnPerformanceEntryCallback"},
   };
 
@@ -56,8 +56,8 @@ struct PerformanceObserverSpec : winrt::Microsoft::ReactNative::TurboModuleSpec 
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "getPendingEntries",
-          "    REACT_SYNC_METHOD(getPendingEntries) std::vector<PerformanceObserverSpec_getPendingEntries_returnType_element> getPendingEntries() noexcept { /* implementation */ }\n"
-          "    REACT_SYNC_METHOD(getPendingEntries) static std::vector<PerformanceObserverSpec_getPendingEntries_returnType_element> getPendingEntries() noexcept { /* implementation */ }\n");
+          "    REACT_SYNC_METHOD(getPendingEntries) std::vector<PerformanceObserverSpec_RawPerformanceEntry> getPendingEntries() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(getPendingEntries) static std::vector<PerformanceObserverSpec_RawPerformanceEntry> getPendingEntries() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "setOnPerformanceEntryCallback",
