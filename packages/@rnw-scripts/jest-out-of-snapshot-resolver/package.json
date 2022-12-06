@@ -5,7 +5,7 @@
   "main": "jest-snapshot-resolver.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/microsoft/react-native-windows.git",
+    "url": "https://github.com/microsoft/react-native-windows",
     "directory": "packages/@rnw-scripts/jest-out-of-snapshot-resolver"
   },
   "devDependencies": {

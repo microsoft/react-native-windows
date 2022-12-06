@@ -5,7 +5,7 @@
   "main": "lib-commonjs/index.js",
   "repository": {
     "type": "git",
-    "url": "git@github.com:microsoft/react-native-windows.git",
+    "url": "https://github.com/microsoft/react-native-windows",
     "directory": "packages/@react-native-windows/cli"
   },
   "scripts": {

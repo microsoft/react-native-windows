@@ -12,7 +12,7 @@
   "main": "lib-commonjs/findRepoRoot.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/microsoft/react-native-windows.git",
+    "url": "https://github.com/microsoft/react-native-windows",
     "directory": "packages/@react-native-windows/find-repo-root"
   },
   "dependencies": {
