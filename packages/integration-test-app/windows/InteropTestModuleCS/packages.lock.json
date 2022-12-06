@@ -65,7 +65,7 @@
       },
       "ReactNative.Hermes.Windows": {
         "type": "Transitive",
-        "resolved": "0.0.0-2211.20001-13de58e2",
+        "resolved": "0.0.0-2210.24002-3d61ad03",
         "contentHash": "/RxDNnNA6w42Kz7cEep5wc6j8cmE4jepbjm5ElWXYWPHg4xu5D0AIj6RQ+WW2DxUHaDhbm6pjtS7MJSWagdi+g=="
       },
       "runtime.win10-arm.Microsoft.Net.Native.Compiler": {
@@ -156,7 +156,7 @@
           "Microsoft.UI.Xaml": "[2.7.0, )",
           "Microsoft.Windows.SDK.BuildTools": "[10.0.22000.194, )",
           "ReactCommon": "[1.0.0, )",
-          "ReactNative.Hermes.Windows": "[0.0.0-2211.20001-13de58e2, )",
+          "ReactNative.Hermes.Windows": "[0.0.0-2210.24002-3d61ad03, )",
           "boost": "[1.76.0, )"
         }
       },
