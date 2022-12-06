@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "upgrade hermes version",
+  "packageName": "@react-native-windows/telemetry",
+  "email": "tatianakapos@microsoft.com",
+  "dependentChangeType": "patch"
+}
