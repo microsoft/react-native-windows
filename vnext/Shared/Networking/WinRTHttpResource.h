@@ -35,32 +35,32 @@ class WinRTHttpResource : public IHttpResource,
   std::function<void(int64_t requestId, int64_t progress, int64_t total)> m_onDataProgress;
   std::function<void(int64_t requestId)> m_onComplete;
 
-    // Used for IHttpModuleProxy
-    std::weak_ptr<IUriHandler> m_uriHandler;
-    std::weak_ptr<IRequestBodyHandler> m_requestBodyHandler;
-    std::weak_ptr<IResponseHandler> m_responseHandler;
+  // Used for IHttpModuleProxy
+  std::weak_ptr<IUriHandler> m_uriHandler;
+  std::weak_ptr<IRequestBodyHandler> m_requestBodyHandler;
+  std::weak_ptr<IResponseHandler> m_responseHandler;
 
-    void TrackResponse(int64_t requestId, ResponseOperation response) noexcept;
+  void TrackResponse(int64_t requestId, ResponseOperation response) noexcept;
 
-    void UntrackResponse(int64_t requestId) noexcept;
+  void UntrackResponse(int64_t requestId) noexcept;
 
   winrt::fire_and_forget PerformSendRequest(
       winrt::Windows::Web::Http::HttpMethod &&method,
       winrt::Windows::Foundation::Uri &&uri,
       winrt::Windows::Foundation::IInspectable const &args) noexcept;
 
-  public:
-    WinRTHttpResource() noexcept;
+ public:
+  WinRTHttpResource() noexcept;
 
-    WinRTHttpResource(winrt::Windows::Web::Http::IHttpClient&& client) noexcept;
+  WinRTHttpResource(winrt::Windows::Web::Http::IHttpClient &&client) noexcept;
 
 #pragma region IWinRTHttpRequestFactory
 
-    winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Web::Http::HttpRequestMessage> CreateRequest(
-      winrt::Windows::Web::Http::HttpMethod&& method,
-      winrt::Windows::Foundation::Uri&& uri,
+  winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Web::Http::HttpRequestMessage> CreateRequest(
+      winrt::Windows::Web::Http::HttpMethod &&method,
+      winrt::Windows::Foundation::Uri &&uri,
       winrt::Windows::Foundation::Collections::IMap<winrt::hstring, winrt::Windows::Foundation::IInspectable>
-      props) noexcept override;
+          props) noexcept override;
 
 #pragma endregion IWinRTHttpRequestFactory
 
@@ -76,19 +76,19 @@ class WinRTHttpResource : public IHttpResource,
 
 #pragma region IHttpResource
 
-    void SendRequest(
-      std::string&& method,
-      std::string&& url,
+  void SendRequest(
+      std::string &&method,
+      std::string &&url,
       int64_t requestId,
-      Headers&& headers,
-      folly::dynamic&& data,
-      std::string&& responseType,
+      Headers &&headers,
+      folly::dynamic &&data,
+      std::string &&responseType,
       bool useIncrementalUpdates,
       int64_t timeout,
       bool withCredentials,
-      std::function<void(int64_t)>&& callback) noexcept override;
-    void AbortRequest(int64_t requestId) noexcept override;
-    void ClearCookies() noexcept override;
+      std::function<void(int64_t)> &&callback) noexcept override;
+  void AbortRequest(int64_t requestId) noexcept override;
+  void ClearCookies() noexcept override;
 
   void SetOnRequestSuccess(std::function<void(int64_t requestId)> &&handler) noexcept override;
   void SetOnResponse(std::function<void(int64_t requestId, Response &&response)> &&handler) noexcept override;
@@ -107,13 +107,13 @@ class WinRTHttpResource : public IHttpResource,
 
 #pragma region IHttpModuleProxy
 
-    void AddUriHandler(std::shared_ptr<IUriHandler> uriHandler) noexcept override;
+  void AddUriHandler(std::shared_ptr<IUriHandler> uriHandler) noexcept override;
 
-    void AddRequestBodyHandler(std::shared_ptr<IRequestBodyHandler> requestBodyHandler) noexcept override;
+  void AddRequestBodyHandler(std::shared_ptr<IRequestBodyHandler> requestBodyHandler) noexcept override;
 
-    void AddResponseHandler(std::shared_ptr<IResponseHandler> responseHandler) noexcept override;
+  void AddResponseHandler(std::shared_ptr<IResponseHandler> responseHandler) noexcept override;
 
 #pragma endregion IHttpModuleProxy
-  };
+};
 
 } // namespace Microsoft::React::Networking

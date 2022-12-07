@@ -23,8 +23,8 @@ using std::promise;
 using std::string;
 
 namespace {
-  constexpr char s_serverHost[]{ "http://localhost" };
-  constexpr char s_crossOriginUrl[]{ "http://example.rnw" };
+constexpr char s_serverHost[]{"http://localhost"};
+constexpr char s_crossOriginUrl[]{"http://example.rnw"};
 } // namespace
 
 // clang-format off
