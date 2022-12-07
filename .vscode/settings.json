@@ -7,7 +7,7 @@
     "**/lib": true,
     "**/dist": true
   },
-  "editor.formatOnSave": true,
+  "editor.formatOnSave": false,
   "eslint.format.enable": true,
   "eslint.packageManager": "yarn",
   "eslint.enable": true,
