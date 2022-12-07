@@ -2088,9 +2088,9 @@
     shell-quote "^1.7.3"
 
 "@react-native-community/cli-types@^10.0.0-alpha.0":
-  version "10.0.0-alpha.0"
-  resolved "https://registry.yarnpkg.com/@react-native-community/cli-types/-/cli-types-10.0.0-alpha.0.tgz#9b6929bd8cc6cb4204a780c963c120e0e22a1602"
-  integrity sha512-Mo31VhKKDIGZw9J8LfOqslKadqUvBRGYcUoTT2H17Eg08VuA2TX/M67d+zuCw5wAmJGmPYx1C4jc0S9Xe45s5Q==
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/cli-types/-/cli-types-10.0.0.tgz#046470c75ec18f8b3bd906e54e43a6f678e01a45"
+  integrity sha512-31oUM6/rFBZQfSmDQsT1DX/5fjqfxg7sf2u8kTPJK7rXVya5SRpAMaCXsPAG0omsmJxXt+J9HxUi3Ic+5Ux5Iw==
   dependencies:
     joi "^17.2.1"
 
