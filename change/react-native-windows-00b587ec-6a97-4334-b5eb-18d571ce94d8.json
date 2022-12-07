@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Implement HTTP incremental updates",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}
