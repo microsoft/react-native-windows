@@ -640,11 +640,13 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
         [transitionalProps]() { return Microsoft::React::CreateBlobModule(transitionalProps); },
         nativeQueue));
 
-  modules.push_back(std::make_unique<CxxNativeModule>(
-      m_innerInstance,
-      Microsoft::React::GetFileReaderModuleName(),
-      [transitionalProps]() { return Microsoft::React::CreateFileReaderModule(transitionalProps); },
-      nativeQueue));
+    modules.push_back(std::make_unique<CxxNativeModule>(
+        m_innerInstance,
+        Microsoft::React::GetFileReaderModuleName(),
+        [transitionalProps]() { return Microsoft::React::CreateFileReaderModule(transitionalProps); },
+        nativeQueue));
+  }
+#endif
 
   return modules;
 }
