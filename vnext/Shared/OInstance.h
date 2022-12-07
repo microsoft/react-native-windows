@@ -10,6 +10,7 @@
 #include "InstanceManager.h"
 
 // React Native
+#include <ReactCommon/LongLivedObject.h>
 #include <cxxreact/Instance.h>
 
 // Standard Libriary
