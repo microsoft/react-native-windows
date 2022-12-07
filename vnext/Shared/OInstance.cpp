@@ -27,6 +27,7 @@
 
 #include <Modules/ExceptionsManagerModule.h>
 #include <Modules/HttpModule.h>
+#include <Modules/NetworkingModule.h>
 #include <Modules/PlatformConstantsModule.h>
 #include <Modules/SourceCodeModule.h>
 #include <Modules/StatusBarManagerModule.h>
@@ -645,34 +646,36 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
         Microsoft::React::GetFileReaderModuleName(),
         [transitionalProps]() { return Microsoft::React::CreateFileReaderModule(transitionalProps); },
         nativeQueue));
+  }
+#endif
 
-    return modules;
+  return modules;
+}
+
+void InstanceImpl::RegisterForReloadIfNecessary() noexcept {
+  // setup polling for live reload
+  if (!m_isInError && !m_devSettings->useFastRefresh && m_devSettings->liveReloadCallback != nullptr) {
+    m_devManager->StartPollingLiveReload(
+        m_devSettings->sourceBundleHost, m_devSettings->sourceBundlePort, m_devSettings->liveReloadCallback);
+  }
+}
+
+void InstanceImpl::DispatchEvent(int64_t viewTag, std::string eventName, folly::dynamic &&eventData) {
+  if (m_isInError) {
+    return;
   }
 
-  void InstanceImpl::RegisterForReloadIfNecessary() noexcept {
-    // setup polling for live reload
-    if (!m_isInError && !m_devSettings->useFastRefresh && m_devSettings->liveReloadCallback != nullptr) {
-      m_devManager->StartPollingLiveReload(
-          m_devSettings->sourceBundleHost, m_devSettings->sourceBundlePort, m_devSettings->liveReloadCallback);
-    }
+  folly::dynamic params = folly::dynamic::array(viewTag, eventName, std::move(eventData));
+  m_innerInstance->callJSFunction("RCTEventEmitter", "receiveEvent", std::move(params));
+}
+
+void InstanceImpl::invokeCallback(const int64_t callbackId, folly::dynamic &&params) {
+  if (m_isInError) {
+    return;
   }
 
-  void InstanceImpl::DispatchEvent(int64_t viewTag, std::string eventName, folly::dynamic && eventData) {
-    if (m_isInError) {
-      return;
-    }
-
-    folly::dynamic params = folly::dynamic::array(viewTag, eventName, std::move(eventData));
-    m_innerInstance->callJSFunction("RCTEventEmitter", "receiveEvent", std::move(params));
-  }
-
-  void InstanceImpl::invokeCallback(const int64_t callbackId, folly::dynamic &&params) {
-    if (m_isInError) {
-      return;
-    }
-
-    m_innerInstance->callJSCallback(callbackId, std::move(params));
-  }
+  m_innerInstance->callJSCallback(callbackId, std::move(params));
+}
 
 } // namespace react
 } // namespace facebook
