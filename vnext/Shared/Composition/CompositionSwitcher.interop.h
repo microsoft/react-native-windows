@@ -10,6 +10,7 @@
 #include <d2d1_1.h>
 #include <d3d11.h>
 #include <d3d11_4.h>
+#include <guid/msoGuid.h>
 #include <winrt/Microsoft.ReactNative.Composition.h>
 #include <winrt/Windows.Graphics.DirectX.Direct3D11.h>
 

@@ -3,8 +3,11 @@
 
 #include "pch.h"
 
+#ifndef CORE_ABI
 #include <Modules/NativeUIManager.h>
 #include <Modules/PaperUIManagerModule.h>
+#endif
+
 #include <Utils/Helpers.h>
 #include <Views/ShadowNodeBase.h>
 #include <Views/XamlFeatures.h>
@@ -318,16 +321,19 @@ void PropsAnimatedNode::MakeAnimation(int64_t valueNodeTag, FacadeType facadeTyp
 }
 
 Microsoft::ReactNative::ShadowNodeBase *PropsAnimatedNode::GetShadowNodeBase() {
+#ifndef CORE_ABI
   if (const auto uiManager = Microsoft::ReactNative::GetNativeUIManager(m_context).lock()) {
     if (const auto nativeUIManagerHost = uiManager->getHost()) {
       return static_cast<Microsoft::ReactNative::ShadowNodeBase *>(
           nativeUIManagerHost->FindShadowNodeForTag(m_connectedViewTag));
     }
   }
+#endif
   return nullptr;
 }
 
 xaml::UIElement PropsAnimatedNode::GetUIElement() {
+#ifndef CORE_ABI
   if (IsRS5OrHigher()) {
     if (const auto shadowNodeBase = GetShadowNodeBase()) {
       if (const auto shadowNodeView = shadowNodeBase->GetView()) {
@@ -335,15 +341,18 @@ xaml::UIElement PropsAnimatedNode::GetUIElement() {
       }
     }
   }
+#endif
   return nullptr;
 }
 
 void PropsAnimatedNode::CommitProps() {
+#ifndef CORE_ABI
   if (const auto node = GetShadowNodeBase()) {
     if (!node->m_zombie) {
       node->updateProperties(m_props);
     }
   }
+#endif
 }
 
 PropsAnimatedNode::AnimationView PropsAnimatedNode::GetAnimationView() {
@@ -355,7 +364,8 @@ PropsAnimatedNode::AnimationView PropsAnimatedNode::GetAnimationView() {
       return {nullptr, std::static_pointer_cast<CompositionBaseComponentView>(componentView)};
     }
   }
-#endif
+#endif // USE_FABRIC
+#ifndef CORE_ABI
   if (IsRS5OrHigher()) {
     if (const auto shadowNodeBase = GetShadowNodeBase()) {
       if (const auto shadowNodeView = shadowNodeBase->GetView()) {
@@ -367,6 +377,7 @@ PropsAnimatedNode::AnimationView PropsAnimatedNode::GetAnimationView() {
       }
     }
   }
+#endif // CORE_ABI
 
 #ifdef USE_FABRIC
   return {nullptr, nullptr};
@@ -404,10 +415,13 @@ void PropsAnimatedNode::StartAnimation(
 }
 
 comp::CompositionPropertySet PropsAnimatedNode::EnsureCenterPointPropertySet(const AnimationView &view) noexcept {
+#ifndef CORE_ABI
   if (view.m_element) {
     return GetShadowNodeBase()->EnsureTransformPS();
+  }
+#endif
 #ifdef USE_FABRIC
-  } else if (view.m_componentView) {
+  if (view.m_componentView) {
     return view.m_componentView->EnsureCenterPointPropertySet();
 #endif
   }
