@@ -30,7 +30,8 @@ class WinRTHttpResource : public IHttpResource,
   std::function<void(int64_t requestId, std::string &&responseData)> m_onData;
   std::function<void(int64_t requestId, folly::dynamic &&responseData)> m_onDataDynamic;
   std::function<void(int64_t requestId, std::string &&errorMessage, bool isTimeout)> m_onError;
-  std::function<void(int64_t requestId, std::string &&responseData, int64_t progress, int64_t total)> m_onIncData;
+  std::function<void(int64_t requestId, std::string &&responseData, int64_t progress, int64_t total)>
+      m_onIncrementalData;
   std::function<void(int64_t requestId, int64_t progress, int64_t total)> m_onDataProgress;
   std::function<void(int64_t requestId)> m_onComplete;
 

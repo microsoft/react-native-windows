@@ -51,6 +51,21 @@ using winrt::Windows::Web::Http::IHttpClient;
 using winrt::Windows::Web::Http::IHttpContent;
 using winrt::Windows::Web::Http::Headers::HttpMediaTypeHeaderValue;
 
+namespace {
+
+constexpr uint32_t operator""_KiB(unsigned long long int x) {
+  return static_cast<uint32_t>(1024 * x);
+}
+
+constexpr uint32_t operator""_MiB(unsigned long long int x) {
+  return static_cast<uint32_t>(1024_KiB * x);
+}
+
+constexpr char responseTypeText[] = "text";
+constexpr char responseTypeBase64[] = "base64";
+constexpr char responseTypeBlob[] = "blob";
+
+} // namespace
 namespace Microsoft::React::Networking {
 
 // May throw winrt::hresult_error
@@ -258,7 +273,7 @@ void WinRTHttpResource::SendRequest(
     bool withCredentials,
     std::function<void(int64_t)> &&callback) noexcept /*override*/ {
   // Enforce supported args
-  assert(responseType == "text" || responseType == "base64" || responseType == "blob");
+  assert(responseType == responseTypeText || responseType == responseTypeBase64 || responseType == responseTypeBlob);
 
   if (callback) {
     callback(requestId);
@@ -339,7 +354,7 @@ void WinRTHttpResource::SetOnData(function<void(int64_t requestId, dynamic &&res
 void WinRTHttpResource::SetOnIncrementalData(
     function<void(int64_t requestId, string &&responseData, int64_t progress, int64_t total)> &&handler) noexcept
 /*override*/ {
-  m_onIncData = std::move(handler);
+  m_onIncrementalData = std::move(handler);
 }
 
 void WinRTHttpResource::SetOnDataProgress(
@@ -426,7 +441,7 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
   try {
     auto sendRequestOp = self->m_client.SendRequestAsync(coRequest);
 
-    auto isText = reqArgs->ResponseType == "text";
+    auto isText = reqArgs->ResponseType == responseTypeText;
 
     self->TrackResponse(reqArgs->RequestId, sendRequestOp);
 
@@ -497,7 +512,7 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
       // Accumulate all incoming request data in 8MB chunks
       // Note, the minimum apparent valid chunk size is 128 KB
       // Apple's implementation appears to grab 5-8 KB chunks
-      const uint32_t segmentSize = (reqArgs->IncrementalUpdates ? 128 : 8 * 1024) * 1024;
+      const uint32_t segmentSize = reqArgs->IncrementalUpdates ? 128_KiB : 8_MiB;
 
       // Let response handler take over, if set
       if (auto responseHandler = self->m_responseHandler.lock()) {
@@ -529,29 +544,29 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
         reader.UnicodeEncoding(UnicodeEncoding::Utf8);
       }
 
-      int64_t received = 0;
+      int64_t receivedBytes = 0;
       string responseData;
       winrt::Windows::Storage::Streams::IBuffer buffer;
       while (auto loaded = co_await reader.LoadAsync(segmentSize)) {
         auto length = reader.UnconsumedBufferLength();
-        received += length;
+        receivedBytes += length;
 
         if (isText) {
           auto data = vector<uint8_t>(length);
           reader.ReadBytes(data);
 
-          auto increment = string(Common::Utilities::CheckedReinterpretCast<char *>(data.data()), data.size());
+          auto incrementData = string(Common::Utilities::CheckedReinterpretCast<char *>(data.data()), data.size());
           // #9534 - Send incremental updates.
           // See https://github.com/facebook/react-native/blob/v0.70.6/Libraries/Network/RCTNetworking.mm#L561
           if (reqArgs->IncrementalUpdates) {
-            responseData = std::move(increment);
+            responseData = std::move(incrementData);
 
-            if (self->m_onIncData) {
+            if (self->m_onIncrementalData) {
               // For total, see #10849
-              self->m_onIncData(reqArgs->RequestId, std::move(responseData), received, 0 /*total*/);
+              self->m_onIncrementalData(reqArgs->RequestId, std::move(responseData), receivedBytes, 0 /*total*/);
             }
           } else {
-            responseData += std::move(increment);
+            responseData += std::move(incrementData);
           }
         } else {
           buffer = reader.ReadBuffer(length);
@@ -561,12 +576,12 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
 
           if (self->m_onDataProgress) {
             // For total, see #10849
-            self->m_onDataProgress(reqArgs->RequestId, received, 0 /*total*/);
+            self->m_onDataProgress(reqArgs->RequestId, receivedBytes, 0 /*total*/);
           }
         }
       }
 
-      // If dealing with text-incremental response data, use m_onIncData instead
+      // If dealing with text-incremental response data, use m_onIncrementalData instead
       if (self->m_onData && !(reqArgs->IncrementalUpdates && isText)) {
         self->m_onData(reqArgs->RequestId, std::move(responseData));
       }
