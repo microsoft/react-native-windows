@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-canary.590",
+  "version": "0.0.0-canary.591",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -26,7 +26,7 @@
     "@react-native-community/cli": "10.0.0-alpha.5",
     "@react-native-community/cli-platform-android": "10.0.0-alpha.4",
     "@react-native-community/cli-platform-ios": "10.0.0-alpha.3",
-    "@react-native-windows/cli": "0.0.0-canary.153",
+    "@react-native-windows/cli": "0.0.0-canary.154",
     "@react-native/assets": "1.0.0",
     "@react-native/normalize-color": "2.1.0",
     "@react-native/polyfills": "2.0.0",
