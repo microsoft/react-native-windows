@@ -92,10 +92,6 @@
     },
     {
       "type": "platform",
-      "file": "src/IntegrationTests/BlobTest.js"
-    },
-    {
-      "type": "platform",
       "file": "src/IntegrationTests/DummyTest.js"
     },
     {
