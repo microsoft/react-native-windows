@@ -123,11 +123,13 @@ std::map<string, dynamic> HttpModule::getConstants() {
 }
 
 // clang-format off
-  std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods() {
+std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods() {
 
   return
   {
     {
+      "sendRequest",
+      [weakHolder = weak_ptr<ModuleHolder>(m_holder)](dynamic args, Callback cxxCallback)
       {
         auto holder = weakHolder.lock();
         if (!holder) {
@@ -187,21 +189,11 @@ std::map<string, dynamic> HttpModule::getConstants() {
       "clearCookies",
       [weakHolder = weak_ptr<ModuleHolder>(m_holder)](dynamic args)
       {
-        "clearCookies",
-        [weakHolder = weak_ptr<ModuleHolder>(m_holder)](dynamic args)
+        auto holder = weakHolder.lock();
+        if (!holder)
         {
-          auto holder = weakHolder.lock();
-          if (!holder)
-          {
-            return;
-          }
-
-          auto resource = holder->Module->m_resource;
-          if (!holder->Module->m_isResourceSetup)
-          {
-            SetUpHttpResource(resource, holder->Module->getInstance(), holder->Module->m_inspectableProperties);
-            holder->Module->m_isResourceSetup = true;
-          }
+          return;
+        }
 
         auto resource = holder->Module->m_resource;
         if (!holder->Module->m_isResourceSetup)
@@ -212,8 +204,9 @@ std::map<string, dynamic> HttpModule::getConstants() {
 
         resource->ClearCookies();
       }
-    };
-  }
+    }
+  };
+}
 // clang-format on
 
 #pragma endregion CxxModule
