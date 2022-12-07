@@ -4,6 +4,7 @@
 #include "FileReaderModule.h"
 
 #include <ReactPropertyBag.h>
+#include <sstream>
 
 // Boost Library
 #include <boost/archive/iterators/base64_from_binary.hpp>
@@ -64,68 +65,6 @@ std::vector<module::CxxModule::Method> FileReaderModule::getMethods() {
          if (!blobPersistor) {
            return reject({"Could not find Blob persistor"});
          }
-
-         auto blob = jsArgAsObject(args, 0);
-
-         auto blobId = blob["blobId"].asString();
-         auto offset = blob["offset"].asInt();
-         auto size = blob["size"].asInt();
-
-         winrt::array_view<uint8_t> bytes;
-         try {
-           bytes = blobPersistor->ResolveMessage(std::move(blobId), offset, size);
-         } catch (const std::exception &e) {
-           return reject({e.what()});
-         }
-
-         auto result = string{"data:"};
-         auto typeItr = blob.find("type");
-         if (typeItr == blob.items().end()) {
-           result += "application/octet-stream";
-         } else {
-           result += (*typeItr).second.asString();
-         }
-         result += ";base64,";
-
-         // https://www.boost.org/doc/libs/1_76_0/libs/serialization/doc/dataflow.html
-         using namespace boost::archive::iterators;
-         typedef base64_from_binary<transform_width<const char *, 6, 8>> encode_base64;
-         std::ostringstream oss;
-         std::copy(encode_base64(bytes.cbegin()), encode_base64(bytes.cend()), ostream_iterator<char>(oss));
-         result += oss.str();
-
-         resolve({std::move(result)});
-       }},
-      {///
-       /// <param name="args">
-       /// Array of arguments passed from the JavaScript layer.
-       /// [0]  - dynamic blob object { blobId, offset, size }
-       /// [1]  - string encoding
-       /// </param>
-       ///
-       "readAsText",
-       [blobPersistor = m_weakBlobPersistor.lock()](dynamic args, Callback resolve, Callback reject) {
-         if (!blobPersistor) {
-           return reject({"Could not find Blob persistor"});
-         }
-
-         auto blob = jsArgAsObject(args, 0);
-         auto encoding = jsArgAsString(args, 1); // Default: "UTF-8"
-
-         auto blobId = blob["blobId"].asString();
-         auto offset = blob["offset"].asInt();
-         auto size = blob["size"].asInt();
-
-         winrt::array_view<uint8_t> bytes;
-         try {
-           bytes = blobPersistor->ResolveMessage(std::move(blobId), offset, size);
-         } catch (const std::exception &e) {
-           return reject({e.what()});
-         }
-
-         // #9982 - Handle non-UTF8 encodings
-         //         See https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/charset/Charset.html
-         auto result = string{bytes.cbegin(), bytes.cend()};
 
          auto blob = jsArgAsObject(args, 0);
 
