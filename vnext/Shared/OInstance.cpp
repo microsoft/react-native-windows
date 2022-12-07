@@ -640,39 +640,39 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
         [transitionalProps]() { return Microsoft::React::CreateBlobModule(transitionalProps); },
         nativeQueue));
 
-  modules.push_back(std::make_unique<CxxNativeModule>(
-      m_innerInstance,
-      Microsoft::React::GetFileReaderModuleName(),
-      [transitionalProps]() { return Microsoft::React::CreateFileReaderModule(transitionalProps); },
-      nativeQueue));
+    modules.push_back(std::make_unique<CxxNativeModule>(
+        m_innerInstance,
+        Microsoft::React::GetFileReaderModuleName(),
+        [transitionalProps]() { return Microsoft::React::CreateFileReaderModule(transitionalProps); },
+        nativeQueue));
 
-  return modules;
-}
-
-void InstanceImpl::RegisterForReloadIfNecessary() noexcept {
-  // setup polling for live reload
-  if (!m_isInError && !m_devSettings->useFastRefresh && m_devSettings->liveReloadCallback != nullptr) {
-    m_devManager->StartPollingLiveReload(
-        m_devSettings->sourceBundleHost, m_devSettings->sourceBundlePort, m_devSettings->liveReloadCallback);
-  }
-}
-
-void InstanceImpl::DispatchEvent(int64_t viewTag, std::string eventName, folly::dynamic &&eventData) {
-  if (m_isInError) {
-    return;
+    return modules;
   }
 
-  folly::dynamic params = folly::dynamic::array(viewTag, eventName, std::move(eventData));
-  m_innerInstance->callJSFunction("RCTEventEmitter", "receiveEvent", std::move(params));
-}
-
-void InstanceImpl::invokeCallback(const int64_t callbackId, folly::dynamic &&params) {
-  if (m_isInError) {
-    return;
+  void InstanceImpl::RegisterForReloadIfNecessary() noexcept {
+    // setup polling for live reload
+    if (!m_isInError && !m_devSettings->useFastRefresh && m_devSettings->liveReloadCallback != nullptr) {
+      m_devManager->StartPollingLiveReload(
+          m_devSettings->sourceBundleHost, m_devSettings->sourceBundlePort, m_devSettings->liveReloadCallback);
+    }
   }
 
-  m_innerInstance->callJSCallback(callbackId, std::move(params));
-}
+  void InstanceImpl::DispatchEvent(int64_t viewTag, std::string eventName, folly::dynamic && eventData) {
+    if (m_isInError) {
+      return;
+    }
+
+    folly::dynamic params = folly::dynamic::array(viewTag, eventName, std::move(eventData));
+    m_innerInstance->callJSFunction("RCTEventEmitter", "receiveEvent", std::move(params));
+  }
+
+  void InstanceImpl::invokeCallback(const int64_t callbackId, folly::dynamic &&params) {
+    if (m_isInError) {
+      return;
+    }
+
+    m_innerInstance->callJSCallback(callbackId, std::move(params));
+  }
 
 } // namespace react
 } // namespace facebook

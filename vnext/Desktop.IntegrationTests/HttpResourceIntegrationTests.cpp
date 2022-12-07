@@ -169,123 +169,123 @@ TEST_CLASS (HttpResourceIntegrationTest) {
       }
     }
 
-  TEST_METHOD(RequestGetExplicitUserAgentSucceeds) {
-    string url = "https://api.github.com/repos/microsoft/react-native-xaml";
+    TEST_METHOD(RequestGetExplicitUserAgentSucceeds) {
+      string url = "https://api.github.com/repos/microsoft/react-native-xaml";
 
-    promise<void> rcPromise;
-    string error;
-    IHttpResource::Response response;
+      promise<void> rcPromise;
+      string error;
+      IHttpResource::Response response;
 
-    auto resource = IHttpResource::Make();
-    resource->SetOnResponse([&rcPromise, &response](int64_t, IHttpResource::Response callbackResponse) {
-      response = callbackResponse;
-      rcPromise.set_value();
-    });
-    resource->SetOnError([&rcPromise, &error](int64_t, string &&message, bool) {
-      error = std::move(message);
-      rcPromise.set_value();
-    });
+      auto resource = IHttpResource::Make();
+      resource->SetOnResponse([&rcPromise, &response](int64_t, IHttpResource::Response callbackResponse) {
+        response = callbackResponse;
+        rcPromise.set_value();
+      });
+      resource->SetOnError([&rcPromise, &error](int64_t, string &&message, bool) {
+        error = std::move(message);
+        rcPromise.set_value();
+      });
 
-    //clang-format off
-    resource->SendRequest(
-        "GET",
-        std::move(url),
-        0, /*requestId*/
-        {{"User-Agent", "React Native Windows"}},
-        {}, /*data*/
-        "text", /*responseType*/
-        false,
-        0 /*timeout*/,
-        false /*withCredentials*/,
-        [](int64_t) {});
-    //clang-format on
+      //clang-format off
+      resource->SendRequest(
+          "GET",
+          std::move(url),
+          0, /*requestId*/
+          {{"User-Agent", "React Native Windows"}},
+          {}, /*data*/
+          "text", /*responseType*/
+          false,
+          0 /*timeout*/,
+          false /*withCredentials*/,
+          [](int64_t) {});
+      //clang-format on
 
-    rcPromise.get_future().wait();
+      rcPromise.get_future().wait();
 
-    Assert::AreEqual({}, error, L"Error encountered");
-    Assert::AreEqual(static_cast<int64_t>(200), response.StatusCode);
-  }
+      Assert::AreEqual({}, error, L"Error encountered");
+      Assert::AreEqual(static_cast<int64_t>(200), response.StatusCode);
+    }
 
-  TEST_METHOD(RequestGetImplicitUserAgentSucceeds) {
-    string url = "https://api.github.com/repos/microsoft/react-native-windows";
+    TEST_METHOD(RequestGetImplicitUserAgentSucceeds) {
+      string url = "https://api.github.com/repos/microsoft/react-native-windows";
 
-    promise<void> rcPromise;
-    string error;
-    IHttpResource::Response response;
+      promise<void> rcPromise;
+      string error;
+      IHttpResource::Response response;
 
-    auto resource = IHttpResource::Make();
-    resource->SetOnResponse([&rcPromise, &response](int64_t, IHttpResource::Response callbackResponse) {
-      response = callbackResponse;
-      rcPromise.set_value();
-    });
-    resource->SetOnError([&rcPromise, &error](int64_t, string &&message, bool) {
-      error = std::move(message);
-      rcPromise.set_value();
-    });
+      auto resource = IHttpResource::Make();
+      resource->SetOnResponse([&rcPromise, &response](int64_t, IHttpResource::Response callbackResponse) {
+        response = callbackResponse;
+        rcPromise.set_value();
+      });
+      resource->SetOnError([&rcPromise, &error](int64_t, string &&message, bool) {
+        error = std::move(message);
+        rcPromise.set_value();
+      });
 
-    MicrosoftReactSetRuntimeOptionString("Http.UserAgent", "React Native Windows");
+      MicrosoftReactSetRuntimeOptionString("Http.UserAgent", "React Native Windows");
 
-    //clang-format off
-    resource->SendRequest(
-        "GET",
-        std::move(url),
-        0, /*requestId*/
-        {}, /*headers*/
-        {}, /*data*/
-        "text", /*responseType*/
-        false,
-        0 /*timeout*/,
-        false /*withCredentials*/,
-        [](int64_t) {});
-    //clang-format on
+      //clang-format off
+      resource->SendRequest(
+          "GET",
+          std::move(url),
+          0, /*requestId*/
+          {}, /*headers*/
+          {}, /*data*/
+          "text", /*responseType*/
+          false,
+          0 /*timeout*/,
+          false /*withCredentials*/,
+          [](int64_t) {});
+      //clang-format on
 
-    rcPromise.get_future().wait();
+      rcPromise.get_future().wait();
 
-    Assert::AreEqual({}, error, L"Error encountered");
-    Assert::AreEqual(static_cast<int64_t>(200), response.StatusCode);
-  }
+      Assert::AreEqual({}, error, L"Error encountered");
+      Assert::AreEqual(static_cast<int64_t>(200), response.StatusCode);
+    }
 
-  TEST_METHOD(RequestGetMissingUserAgentFails) {
-    // string url = "http://localhost:" + std::to_string(s_port);
-    string url = "https://api.github.com/repos/microsoft/react-native-macos";
+    TEST_METHOD(RequestGetMissingUserAgentFails) {
+      // string url = "http://localhost:" + std::to_string(s_port);
+      string url = "https://api.github.com/repos/microsoft/react-native-macos";
 
-    promise<void> rcPromise;
-    string error;
-    IHttpResource::Response response;
+      promise<void> rcPromise;
+      string error;
+      IHttpResource::Response response;
 
-    auto resource = IHttpResource::Make();
-    resource->SetOnResponse([&rcPromise, &response](int64_t, IHttpResource::Response callbackResponse) {
-      response = callbackResponse;
-      rcPromise.set_value();
-    });
-    resource->SetOnError([&rcPromise, &error](int64_t, string &&message, bool) {
-      error = std::move(message);
-      rcPromise.set_value();
-    });
+      auto resource = IHttpResource::Make();
+      resource->SetOnResponse([&rcPromise, &response](int64_t, IHttpResource::Response callbackResponse) {
+        response = callbackResponse;
+        rcPromise.set_value();
+      });
+      resource->SetOnError([&rcPromise, &error](int64_t, string &&message, bool) {
+        error = std::move(message);
+        rcPromise.set_value();
+      });
 
-    //clang-format off
-    resource->SendRequest(
-        "GET",
-        std::move(url),
-        0, /*requestId*/
-        {}, /*headers*/
-        {}, /*data*/
-        "text", /*responseType*/
-        false,
-        0 /*timeout*/,
-        false /*withCredentials*/,
-        [](int64_t) {});
-    //clang-format on
+      //clang-format off
+      resource->SendRequest(
+          "GET",
+          std::move(url),
+          0, /*requestId*/
+          {}, /*headers*/
+          {}, /*data*/
+          "text", /*responseType*/
+          false,
+          0 /*timeout*/,
+          false /*withCredentials*/,
+          [](int64_t) {});
+      //clang-format on
 
-    rcPromise.get_future().wait();
+      rcPromise.get_future().wait();
 
-    Assert::AreEqual({}, error, L"Error encountered");
-    Assert::AreEqual(static_cast<int64_t>(403), response.StatusCode);
-  }
+      Assert::AreEqual({}, error, L"Error encountered");
+      Assert::AreEqual(static_cast<int64_t>(403), response.StatusCode);
+    }
 
-  TEST_METHOD(RequestGetFails) {
-    string error;
-    promise<void> promise;
+    TEST_METHOD(RequestGetFails) {
+      string error;
+      promise<void> promise;
 
       auto resource = IHttpResource::Make();
       resource->SetOnError([&error, &promise](int64_t, string &&message, bool) {
