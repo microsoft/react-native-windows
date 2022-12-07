@@ -91,10 +91,136 @@ namespace Microsoft::React::Networking {
 
     virtual void ClearCookies() noexcept = 0;
 
+  /// <summary>
+  /// Sets a function to be invoked when a request has been successfully responded.
+  /// </summary>
+  /// <param name="handler">
+  ///
+  /// Parameters:
+  ///   <param name="requestId">
+  ///   Unique number identifying the HTTP request
+  ///   </param>
+  /// </param>
   virtual void SetOnRequestSuccess(std::function<void(int64_t requestId)> &&handler) noexcept = 0;
+
+  /// <summary>
+  /// Sets a function to be invoked when a response arrives and its headers are received.
+  /// </summary>
+  /// <param name="handler">
+  ///
+  /// Parameters:
+  ///   <param name="requestId">
+  ///   Unique number identifying the HTTP request
+  ///   </param>
+  ///   <param name="response">
+  ///   Object containing basic response data
+  ///   </param>
+  /// </param>
   virtual void SetOnResponse(std::function<void(int64_t requestId, Response &&response)> &&handler) noexcept = 0;
+
+  /// <summary>
+  /// Sets a function to be invoked when response content data has been received.
+  /// </summary>
+  /// <param name="handler">
+  ///
+  /// Parameters:
+  ///   <param name="requestId">
+  ///   Unique number identifying the HTTP request
+  ///   </param>
+  ///   <param name="responseData">
+  ///   Response content payload (plain text or Base64-encoded)
+  ///   </param>
+  /// </param>
   virtual void SetOnData(std::function<void(int64_t requestId, std::string &&responseData)> &&handler) noexcept = 0;
+
+  /// <summary>
+  /// Sets a function to be invoked when response content data has been received.
+  /// </summary>
+  /// <param name="handler">
+  ///
+  /// Parameters:
+  ///   <param name="requestId">
+  ///   Unique number identifying the HTTP request
+  ///   </param>
+  ///   <param name="responseData">
+  ///   Structured response content payload (i.e. Blob data)
+  ///   </param>
+  /// </param>
   virtual void SetOnData(std::function<void(int64_t requestId, folly::dynamic &&responseData)> &&handler) noexcept = 0;
+
+  /// <summary>
+  /// Sets a function to be invoked when a response content increment has been received.
+  /// </summary>
+  /// <remarks>
+  /// The handler set by this method will only be called if the request sets the incremental updates flag.
+  /// The handler is also mutually exclusive with those set by `SetOnData`, which are used for one pass, non-incremental
+  /// updates.
+  /// </remarks>
+  /// <param name="handler">
+  ///
+  /// Parameters:
+  ///   <param name="requestId">
+  ///   Unique number identifying the HTTP request
+  ///   </param>
+  ///   <param name="responseData">
+  ///   Partial response content data increment (non-accumulative)
+  ///   </param>
+  ///   <param name="progress">
+  ///   Number of bytes received so far
+  ///   </param>
+  ///   <param name="total">
+  ///   Number of total bytes to receive
+  ///   </param>
+  /// </param>
+  virtual void SetOnIncrementalData(
+      std::function<void(int64_t requestId, std::string &&responseData, int64_t progress, int64_t total)>
+          &&handler) noexcept = 0;
+
+  /// <summary>
+  /// Sets a function to be invoked when response content download progress is reported.
+  /// </summary>
+  /// <param name="handler">
+  ///
+  /// Parameters:
+  ///   <param name="requestId">
+  ///   Unique number identifying the HTTP request
+  ///   </param>
+  ///   <param name="progress">
+  ///   Number of bytes received so far
+  ///   </param>
+  ///   <param name="total">
+  ///   Number of total bytes to receive
+  ///   </param>
+  /// </param>
+  virtual void SetOnDataProgress(
+      std::function<void(int64_t requestId, int64_t progress, int64_t total)> &&handler) noexcept = 0;
+
+  /// <summary>
+  /// Sets a function to be invoked when a response has been fully handled (either succeeded or failed).
+  /// </summary>
+  /// <param name="handler">
+  ///
+  /// Parameters:
+  ///   <param name="requestId">
+  ///   Unique number identifying the HTTP request
+  ///   </param>
+  /// </param>
+  virtual void SetOnResponseComplete(std::function<void(int64_t requestId)> &&handler) noexcept = 0;
+
+  /// <summary>
+  /// Sets a function to be invoked when an error condition is found.
+  /// </summary>
+  /// <remarks>
+  /// The handler's purpose is not to report any given HTTP error status (i.e. 403, 501).
+  /// It is meant to report application errors when executing HTTP requests.
+  /// </remarks>
+  /// <param name="handler">
+  ///
+  /// Parameters:
+  ///   <param name="requestId">
+  ///   Unique number identifying the HTTP request
+  ///   </param>
+  /// </param>
   virtual void SetOnError(
       std::function<void(int64_t requestId, std::string &&errorMessage, bool isTimeout)> &&handler) noexcept = 0;
 };
