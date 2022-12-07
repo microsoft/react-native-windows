@@ -51,6 +51,21 @@ using winrt::Windows::Web::Http::IHttpClient;
 using winrt::Windows::Web::Http::IHttpContent;
 using winrt::Windows::Web::Http::Headers::HttpMediaTypeHeaderValue;
 
+namespace {
+
+constexpr uint32_t operator""_KiB(unsigned long long int x) {
+  return static_cast<uint32_t>(1024 * x);
+}
+
+constexpr uint32_t operator""_MiB(unsigned long long int x) {
+  return static_cast<uint32_t>(1024_KiB * x);
+}
+
+constexpr char responseTypeText[] = "text";
+constexpr char responseTypeBase64[] = "base64";
+constexpr char responseTypeBlob[] = "blob";
+
+} // namespace
 namespace Microsoft::React::Networking {
 
 #pragma region WinRTHttpResource
@@ -205,7 +220,7 @@ void WinRTHttpResource::SendRequest(
     bool withCredentials,
     std::function<void(int64_t)> &&callback) noexcept /*override*/ {
   // Enforce supported args
-  assert(responseType == "text" || responseType == "base64" || responseType == "blob");
+  assert(responseType == responseTypeText || responseType == responseTypeBase64 || responseType == responseTypeBlob);
 
   if (callback) {
     callback(requestId);
@@ -283,6 +298,22 @@ void WinRTHttpResource::SetOnData(function<void(int64_t requestId, dynamic &&res
   m_onDataDynamic = std::move(handler);
 }
 
+void WinRTHttpResource::SetOnIncrementalData(
+    function<void(int64_t requestId, string &&responseData, int64_t progress, int64_t total)> &&handler) noexcept
+/*override*/ {
+  m_onIncrementalData = std::move(handler);
+}
+
+void WinRTHttpResource::SetOnDataProgress(
+    function<void(int64_t requestId, int64_t progress, int64_t total)> &&handler) noexcept
+/*override*/ {
+  m_onDataProgress = std::move(handler);
+}
+
+void WinRTHttpResource::SetOnResponseComplete(function<void(int64_t requestId)> &&handler) noexcept /*override*/ {
+  m_onComplete = std::move(handler);
+}
+
 void WinRTHttpResource::SetOnError(
     function<void(int64_t requestId, string &&errorMessage, bool isTimeout)> &&handler) noexcept
 /*override*/ {
@@ -332,6 +363,10 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
           self->m_onRequestSuccess(reqArgs->RequestId);
         }
 
+        if (self->m_onComplete) {
+          self->m_onComplete(reqArgs->RequestId);
+        }
+
         co_return;
       }
     } catch (const hresult_error &e) {
@@ -345,6 +380,9 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
 
   try {
     auto sendRequestOp = self->m_client.SendRequestAsync(coRequest);
+
+    auto isText = reqArgs->ResponseType == responseTypeText;
+
     self->TrackResponse(reqArgs->RequestId, sendRequestOp);
 
     if (reqArgs->Timeout > 0) {
@@ -411,13 +449,14 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
       auto inputStream = co_await response.Content().ReadAsInputStreamAsync();
       auto reader = DataReader{inputStream};
 
-      // #9510 - We currently accumulate all incoming request data in 10MB chunks
-      const uint32_t segmentSize = 10 * 1024 * 1024;
+      // Accumulate all incoming request data in 8MB chunks
+      // Note, the minimum apparent valid chunk size is 128 KB
+      // Apple's implementation appears to grab 5-8 KB chunks
+      const uint32_t segmentSize = reqArgs->IncrementalUpdates ? 128_KiB : 8_MiB;
 
       // Let response handler take over, if set
       if (auto responseHandler = self->m_responseHandler.lock()) {
         if (responseHandler->Supports(reqArgs->ResponseType)) {
-          // #9510
           vector<uint8_t> responseData{};
           while (auto loaded = co_await reader.LoadAsync(segmentSize)) {
             auto length = reader.UnconsumedBufferLength();
@@ -434,36 +473,61 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
             self->m_onRequestSuccess(reqArgs->RequestId);
           }
 
+          if (self->m_onComplete) {
+            self->m_onComplete(reqArgs->RequestId);
+          }
           co_return;
         }
       }
 
-      auto isText = reqArgs->ResponseType == "text";
       if (isText) {
         reader.UnicodeEncoding(UnicodeEncoding::Utf8);
       }
 
-      // #9510
+      int64_t receivedBytes = 0;
       string responseData;
       winrt::Windows::Storage::Streams::IBuffer buffer;
       while (auto loaded = co_await reader.LoadAsync(segmentSize)) {
         auto length = reader.UnconsumedBufferLength();
+        receivedBytes += length;
 
         if (isText) {
           auto data = vector<uint8_t>(length);
           reader.ReadBytes(data);
 
-          responseData += string(Common::Utilities::CheckedReinterpretCast<char *>(data.data()), data.size());
+          auto incrementData = string(Common::Utilities::CheckedReinterpretCast<char *>(data.data()), data.size());
+          // #9534 - Send incremental updates.
+          // See https://github.com/facebook/react-native/blob/v0.70.6/Libraries/Network/RCTNetworking.mm#L561
+          if (reqArgs->IncrementalUpdates) {
+            responseData = std::move(incrementData);
+
+            if (self->m_onIncrementalData) {
+              // For total, see #10849
+              self->m_onIncrementalData(reqArgs->RequestId, std::move(responseData), receivedBytes, 0 /*total*/);
+            }
+          } else {
+            responseData += std::move(incrementData);
+          }
         } else {
           buffer = reader.ReadBuffer(length);
           auto data = CryptographicBuffer::EncodeToBase64String(buffer);
 
           responseData += winrt::to_string(std::wstring_view(data));
+
+          if (self->m_onDataProgress) {
+            // For total, see #10849
+            self->m_onDataProgress(reqArgs->RequestId, receivedBytes, 0 /*total*/);
+          }
         }
       }
 
-      if (self->m_onData) {
+      // If dealing with text-incremental response data, use m_onIncrementalData instead
+      if (self->m_onData && !(reqArgs->IncrementalUpdates && isText)) {
         self->m_onData(reqArgs->RequestId, std::move(responseData));
+      }
+
+      if (self->m_onComplete) {
+        self->m_onComplete(reqArgs->RequestId);
       }
     } else {
       if (self->m_onError) {
