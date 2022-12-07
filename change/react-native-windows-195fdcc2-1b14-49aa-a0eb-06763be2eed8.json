@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Use uint8_t const in IBlobPersistor.h",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}
