@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Implement Blob module",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}
