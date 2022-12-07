@@ -27,7 +27,6 @@
 
 #include <Modules/ExceptionsManagerModule.h>
 #include <Modules/HttpModule.h>
-#include <Modules/NetworkingModule.h>
 #include <Modules/PlatformConstantsModule.h>
 #include <Modules/SourceCodeModule.h>
 #include <Modules/StatusBarManagerModule.h>
