@@ -7,6 +7,7 @@
 
 #include <Modules/NativeUIManager.h>
 #include <Modules/PaperUIManagerModule.h>
+#include <UI.Xaml.Media.h>
 #include <Utils/ValueUtils.h>
 #include "DynamicWriter.h"
 #include "XamlView.h"

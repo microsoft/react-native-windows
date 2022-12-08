@@ -5,6 +5,10 @@
 #include "XamlHelper.g.h"
 #include "Base/FollyIncludes.h"
 
+namespace Mso::React {
+struct IReactContext;
+} // namespace Mso::React
+
 namespace winrt::Microsoft::ReactNative::implementation {
 
 struct XamlHelper : XamlHelperT<XamlHelper> {
@@ -27,6 +31,11 @@ struct XamlHelper : XamlHelperT<XamlHelper, implementation::XamlHelper> {};
 } // namespace winrt::Microsoft::ReactNative::factory_implementation
 
 namespace Microsoft::ReactNative {
+
+struct ReactId {
+  int64_t tag{0};
+  bool isValid{false};
+};
 
 // Not only react-native, native modules could set tag too for controls.
 // For example, to identify an clicked item, customer may add tag in

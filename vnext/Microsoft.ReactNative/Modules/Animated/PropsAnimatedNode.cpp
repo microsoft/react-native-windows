@@ -423,8 +423,8 @@ comp::CompositionPropertySet PropsAnimatedNode::EnsureCenterPointPropertySet(con
 #ifdef USE_FABRIC
   if (view.m_componentView) {
     return view.m_componentView->EnsureCenterPointPropertySet();
-#endif
   }
+#endif
   return nullptr;
 }
 

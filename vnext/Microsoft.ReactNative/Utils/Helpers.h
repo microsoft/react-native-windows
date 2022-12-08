@@ -12,11 +12,6 @@ namespace Microsoft::ReactNative {
 
 using namespace std;
 
-struct ReactId {
-  int64_t tag{0};
-  bool isValid{false};
-};
-
 template <typename T>
 inline T asEnum(winrt::Microsoft::ReactNative::JSValue const &obj) {
   return static_cast<T>(obj.AsInt64());

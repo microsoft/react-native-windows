@@ -3,7 +3,6 @@
 
 #include "pch.h"
 
-#include <UI.Xaml.Media.h>
 #include <Utils/Helpers.h>
 #include <winrt/Windows.Foundation.Metadata.h>
 
