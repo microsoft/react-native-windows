@@ -1,8 +1,16 @@
 # Change Log - sample-apps
 
-This log was last generated on Mon, 28 Nov 2022 16:10:57 GMT and should not be manually modified.
+This log was last generated on Mon, 05 Dec 2022 16:10:42 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Mon, 05 Dec 2022 16:10:42 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.68.23
 
 ## 0.0.0
 
