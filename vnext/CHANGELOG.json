@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 09 Dec 2022 06:14:58 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.592",
+      "version": "0.0.0-canary.592",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "68fa51097b993485518694ff48d2e322fdbf4ee0",
+            "comment": "Implement rowGap, columnGap and gap flex properties"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "0e91ad304e646782efbc2d379ad6d2cabe9cb957",
+            "comment": "More support for running fabric in desktop dll"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "4c8e5474f23b8e56838033ea331afe011da52a7d",
+            "comment": "Adds logic to retain undo/redo history for TextInput"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 07 Dec 2022 06:14:42 GMT",
       "tag": "react-native-windows_v0.0.0-canary.591",
       "version": "0.0.0-canary.591",

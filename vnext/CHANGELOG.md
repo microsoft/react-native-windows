@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 07 Dec 2022 06:14:42 GMT and should not be manually modified.
+This log was last generated on Fri, 09 Dec 2022 06:14:58 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.592
+
+Fri, 09 Dec 2022 06:14:58 GMT
+
+### Changes
+
+- Implement rowGap, columnGap and gap flex properties (30809111+acoates-ms@users.noreply.github.com)
+- More support for running fabric in desktop dll (30809111+acoates-ms@users.noreply.github.com)
+- Adds logic to retain undo/redo history for TextInput (erozell@outlook.com)
 
 ## 0.0.0-canary.591
 
