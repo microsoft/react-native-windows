@@ -58,7 +58,7 @@ jobs:
             - name: Desktop.IntegrationTests.SkipRNTester
               value: false
 
-            #5059 - Disable failing or intermittent tests (IntegrationTestHarness,,WebSocket,Logging).
+            #5059 - Disable failing or intermittent tests (IntegrationTestHarness,WebSocket,Logging).
             #10732 -  WebSocketIntegrationTest::SendReceiveSsl fails on Windows Server 2022.
             - name: Desktop.IntegrationTests.Filter
               value: >
