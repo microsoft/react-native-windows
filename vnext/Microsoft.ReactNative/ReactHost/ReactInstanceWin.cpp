@@ -43,7 +43,9 @@
 #include "Modules/AccessibilityInfoModule.h"
 #include "Modules/AlertModule.h"
 #endif
+#if !defined(CORE_ABI) || defined(USE_FABRIC)
 #include "Modules/Animated/NativeAnimatedModule.h"
+#endif
 #ifndef CORE_ABI
 #include "Modules/AppStateModule.h"
 #include "Modules/AppThemeModuleUwp.h"
@@ -54,7 +56,9 @@
 #include "Modules/DeviceInfoModule.h"
 #include "Modules/I18nManagerModule.h"
 #endif
+#if !defined(CORE_ABI) || defined(USE_FABRIC)
 #include <Modules/ImageViewManagerModule.h>
+#endif
 #ifndef CORE_ABI
 #include "Modules/LinkingManagerModule.h"
 #include "Modules/LogBoxModule.h"
