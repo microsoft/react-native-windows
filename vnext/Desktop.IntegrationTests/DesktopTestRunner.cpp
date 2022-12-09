@@ -41,12 +41,6 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
 
   // See InstanceImpl::GetDefaultNativeModules at OInstance.cpp
   vector<tuple<string, CxxModule::Provider, shared_ptr<MessageQueueThread>>> extraModules{
-      {"AsyncLocalStorage",
-       []() -> unique_ptr<CxxModule> {
-         return /*CreateAsyncStorageModule(L"ReactNativeAsyncStorage")*/ nullptr; // #6882
-       },
-       nativeQueue},
-
       // Apparently mandatory for /IntegrationTests
       {TestAppStateModule::name,
        []() -> unique_ptr<CxxModule> { return std::make_unique<TestAppStateModule>(); },

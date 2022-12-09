@@ -7,12 +7,6 @@
     <ClCompile Include="InstanceMocks.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AsyncStorageManagerTest.cpp">
-      <Filter>Unit Tests</Filter>
-    </ClCompile>
-    <ClCompile Include="AsyncStorageTest.cpp">
-      <Filter>Unit Tests</Filter>
-    </ClCompile>
     <ClCompile Include="BaseWebSocketTests.cpp">
       <Filter>Unit Tests</Filter>
     </ClCompile>
@@ -78,9 +72,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EmptyUIManagerModule.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AsyncStorageTestClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UnicodeTestStrings.h">
