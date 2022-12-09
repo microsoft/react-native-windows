@@ -4,10 +4,6 @@
     "baseUrl": ".",
     "outDir": ".",
     "rootDir": "src",
-    "paths": {
-      "Utilities": ["./types/Utilities.d.ts"],
-    },
-
     // Not clean
     "strict": false,
   },
