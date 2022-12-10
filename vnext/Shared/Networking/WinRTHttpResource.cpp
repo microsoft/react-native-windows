@@ -51,7 +51,50 @@ using winrt::Windows::Web::Http::IHttpClient;
 using winrt::Windows::Web::Http::IHttpContent;
 using winrt::Windows::Web::Http::Headers::HttpMediaTypeHeaderValue;
 
+namespace {
+
+constexpr uint32_t operator""_KiB(unsigned long long int x) {
+  return static_cast<uint32_t>(1024 * x);
+}
+
+constexpr uint32_t operator""_MiB(unsigned long long int x) {
+  return static_cast<uint32_t>(1024_KiB * x);
+}
+
+constexpr char responseTypeText[] = "text";
+constexpr char responseTypeBase64[] = "base64";
+constexpr char responseTypeBlob[] = "blob";
+
+} // namespace
 namespace Microsoft::React::Networking {
+
+// May throw winrt::hresult_error
+void AttachMultipartHeaders(IHttpContent content, const dynamic &headers) {
+  HttpMediaTypeHeaderValue contentType{nullptr};
+
+  // Headers are generally case-insensitive
+  // https://www.ietf.org/rfc/rfc2616.txt section 4.2
+  // TODO: Consolidate with PerformRequest's header parsing.
+  for (auto &header : headers.items()) {
+    auto &name = header.first.getString();
+    auto &value = header.second.getString();
+
+    if (boost::iequals(name.c_str(), "Content-Type")) {
+      contentType = HttpMediaTypeHeaderValue::Parse(to_hstring(value));
+    } else if (boost::iequals(name.c_str(), "Authorization")) {
+      bool success = content.Headers().TryAppendWithoutValidation(to_hstring(name), to_hstring(value));
+      if (!success) {
+        throw hresult_error{E_INVALIDARG, L"Failed to append Authorization"};
+      }
+    } else {
+      content.Headers().Append(to_hstring(name), to_hstring(value));
+    }
+  }
+
+  if (contentType) {
+    content.Headers().ContentType(contentType);
+  }
+}
 
 #pragma region WinRTHttpResource
 
@@ -81,20 +124,23 @@ IAsyncOperation<HttpRequestMessage> WinRTHttpResource::CreateRequest(
   // Headers are generally case-insensitive
   // https://www.ietf.org/rfc/rfc2616.txt section 4.2
   for (auto &header : reqArgs->Headers) {
-    if (boost::iequals(header.first.c_str(), "Content-Type")) {
-      bool success = HttpMediaTypeHeaderValue::TryParse(to_hstring(header.second), contentType);
+    auto &name = header.first;
+    auto &value = header.second;
+
+    if (boost::iequals(name.c_str(), "Content-Type")) {
+      bool success = HttpMediaTypeHeaderValue::TryParse(to_hstring(value), contentType);
       if (!success) {
         if (self->m_onError) {
           self->m_onError(reqArgs->RequestId, "Failed to parse Content-Type", false);
         }
         co_return nullptr;
       }
-    } else if (boost::iequals(header.first.c_str(), "Content-Encoding")) {
-      contentEncoding = header.second;
-    } else if (boost::iequals(header.first.c_str(), "Content-Length")) {
-      contentLength = header.second;
-    } else if (boost::iequals(header.first.c_str(), "Authorization")) {
-      bool success = request.Headers().TryAppendWithoutValidation(to_hstring(header.first), to_hstring(header.second));
+    } else if (boost::iequals(name.c_str(), "Content-Encoding")) {
+      contentEncoding = value;
+    } else if (boost::iequals(name.c_str(), "Content-Length")) {
+      contentLength = value;
+    } else if (boost::iequals(name.c_str(), "Authorization")) {
+      bool success = request.Headers().TryAppendWithoutValidation(to_hstring(name), to_hstring(value));
       if (!success) {
         if (self->m_onError) {
           self->m_onError(reqArgs->RequestId, "Failed to append Authorization", false);
@@ -103,7 +149,7 @@ IAsyncOperation<HttpRequestMessage> WinRTHttpResource::CreateRequest(
       }
     } else {
       try {
-        request.Headers().Append(to_hstring(header.first), to_hstring(header.second));
+        request.Headers().Append(to_hstring(name), to_hstring(value));
       } catch (hresult_error const &e) {
         if (self->m_onError) {
           self->m_onError(reqArgs->RequestId, Utilities::HResultToString(e), false);
@@ -146,9 +192,31 @@ IAsyncOperation<HttpRequestMessage> WinRTHttpResource::CreateRequest(
       auto file = co_await StorageFile::GetFileFromApplicationUriAsync(Uri{to_hstring(data["uri"].asString())});
       auto stream = co_await file.OpenReadAsync();
       content = HttpStreamContent{std::move(stream)};
-    } else if (!data["form"].empty()) {
-      // #9535 - HTTP form data support
-      // winrt::Windows::Web::Http::HttpMultipartFormDataContent()
+    } else if (!data["formData"].empty()) {
+      winrt::Windows::Web::Http::HttpMultipartFormDataContent multiPartContent;
+      auto formData = data["formData"];
+
+      // #6046 -  Overwriting WinRT's HttpMultipartFormDataContent implicit Content-Type clears the generated boundary
+      contentType = nullptr;
+
+      for (auto &formDataPart : formData) {
+        IHttpContent formContent{nullptr};
+        if (!formDataPart["string"].isNull()) {
+          formContent = HttpStringContent{to_hstring(formDataPart["string"].asString())};
+        } else if (!formDataPart["uri"].empty()) {
+          auto filePath = to_hstring(formDataPart["uri"].asString());
+          auto file = co_await StorageFile::GetFileFromPathAsync(filePath);
+          auto stream = co_await file.OpenReadAsync();
+          formContent = HttpStreamContent{stream};
+        }
+
+        if (formContent) {
+          AttachMultipartHeaders(formContent, formDataPart["headers"]);
+          multiPartContent.Add(formContent, to_hstring(formDataPart["fieldName"].asString()));
+        }
+      } // foreach form data part
+
+      content = multiPartContent;
     }
   }
 
@@ -205,7 +273,7 @@ void WinRTHttpResource::SendRequest(
     bool withCredentials,
     std::function<void(int64_t)> &&callback) noexcept /*override*/ {
   // Enforce supported args
-  assert(responseType == "text" || responseType == "base64" || responseType == "blob");
+  assert(responseType == responseTypeText || responseType == responseTypeBase64 || responseType == responseTypeBlob);
 
   if (callback) {
     callback(requestId);
@@ -283,6 +351,22 @@ void WinRTHttpResource::SetOnData(function<void(int64_t requestId, dynamic &&res
   m_onDataDynamic = std::move(handler);
 }
 
+void WinRTHttpResource::SetOnIncrementalData(
+    function<void(int64_t requestId, string &&responseData, int64_t progress, int64_t total)> &&handler) noexcept
+/*override*/ {
+  m_onIncrementalData = std::move(handler);
+}
+
+void WinRTHttpResource::SetOnDataProgress(
+    function<void(int64_t requestId, int64_t progress, int64_t total)> &&handler) noexcept
+/*override*/ {
+  m_onDataProgress = std::move(handler);
+}
+
+void WinRTHttpResource::SetOnResponseComplete(function<void(int64_t requestId)> &&handler) noexcept /*override*/ {
+  m_onComplete = std::move(handler);
+}
+
 void WinRTHttpResource::SetOnError(
     function<void(int64_t requestId, string &&errorMessage, bool isTimeout)> &&handler) noexcept
 /*override*/ {
@@ -316,10 +400,17 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
   auto props = winrt::multi_threaded_map<winrt::hstring, IInspectable>();
   props.Insert(L"RequestArgs", coArgs);
 
-  auto coRequest = co_await CreateRequest(std::move(coMethod), std::move(coUri), props);
-  if (!coRequest) {
-    co_return;
+  auto coRequestOp = CreateRequest(std::move(coMethod), std::move(coUri), props);
+  co_await lessthrow_await_adapter<IAsyncOperation<HttpRequestMessage>>{coRequestOp};
+  auto coRequestOpHR = coRequestOp.ErrorCode();
+  if (coRequestOpHR < 0) {
+    if (self->m_onError) {
+      self->m_onError(reqArgs->RequestId, Utilities::HResultToString(std::move(coRequestOpHR)), false);
+    }
+    co_return self->UntrackResponse(reqArgs->RequestId);
   }
+
+  auto coRequest = coRequestOp.GetResults();
 
   // If URI handler is available, it takes over request processing.
   if (auto uriHandler = self->m_uriHandler.lock()) {
@@ -330,6 +421,10 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
         if (self->m_onDataDynamic && self->m_onRequestSuccess) {
           self->m_onDataDynamic(reqArgs->RequestId, std::move(blob));
           self->m_onRequestSuccess(reqArgs->RequestId);
+        }
+
+        if (self->m_onComplete) {
+          self->m_onComplete(reqArgs->RequestId);
         }
 
         co_return;
@@ -345,6 +440,9 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
 
   try {
     auto sendRequestOp = self->m_client.SendRequestAsync(coRequest);
+
+    auto isText = reqArgs->ResponseType == responseTypeText;
+
     self->TrackResponse(reqArgs->RequestId, sendRequestOp);
 
     if (reqArgs->Timeout > 0) {
@@ -411,54 +509,85 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
       auto inputStream = co_await response.Content().ReadAsInputStreamAsync();
       auto reader = DataReader{inputStream};
 
-      // #9510 - 10mb limit on fetch
-      co_await reader.LoadAsync(10 * 1024 * 1024);
+      // Accumulate all incoming request data in 8MB chunks
+      // Note, the minimum apparent valid chunk size is 128 KB
+      // Apple's implementation appears to grab 5-8 KB chunks
+      const uint32_t segmentSize = reqArgs->IncrementalUpdates ? 128_KiB : 8_MiB;
 
       // Let response handler take over, if set
       if (auto responseHandler = self->m_responseHandler.lock()) {
         if (responseHandler->Supports(reqArgs->ResponseType)) {
-          auto bytes = vector<uint8_t>(reader.UnconsumedBufferLength());
-          reader.ReadBytes(bytes);
-          auto blob = responseHandler->ToResponseData(std::move(bytes));
+          vector<uint8_t> responseData{};
+          while (auto loaded = co_await reader.LoadAsync(segmentSize)) {
+            auto length = reader.UnconsumedBufferLength();
+            auto data = vector<uint8_t>(length);
+            reader.ReadBytes(data);
+
+            responseData.insert(responseData.cend(), data.cbegin(), data.cend());
+          }
+
+          auto blob = responseHandler->ToResponseData(std::move(responseData));
 
           if (self->m_onDataDynamic && self->m_onRequestSuccess) {
             self->m_onDataDynamic(reqArgs->RequestId, std::move(blob));
             self->m_onRequestSuccess(reqArgs->RequestId);
           }
 
+          if (self->m_onComplete) {
+            self->m_onComplete(reqArgs->RequestId);
+          }
           co_return;
         }
       }
 
-      auto isText = reqArgs->ResponseType == "text";
       if (isText) {
         reader.UnicodeEncoding(UnicodeEncoding::Utf8);
       }
 
-      // #9510 - We currently accumulate all incoming request data in 10MB chunks.
-      uint32_t segmentSize = 10 * 1024 * 1024;
+      int64_t receivedBytes = 0;
       string responseData;
       winrt::Windows::Storage::Streams::IBuffer buffer;
-      uint32_t length;
-      do {
-        co_await reader.LoadAsync(segmentSize);
-        length = reader.UnconsumedBufferLength();
+      while (auto loaded = co_await reader.LoadAsync(segmentSize)) {
+        auto length = reader.UnconsumedBufferLength();
+        receivedBytes += length;
 
         if (isText) {
-          auto data = std::vector<uint8_t>(length);
+          auto data = vector<uint8_t>(length);
           reader.ReadBytes(data);
 
-          responseData += string(Common::Utilities::CheckedReinterpretCast<char *>(data.data()), data.size());
+          auto incrementData = string(Common::Utilities::CheckedReinterpretCast<char *>(data.data()), data.size());
+          // #9534 - Send incremental updates.
+          // See https://github.com/facebook/react-native/blob/v0.70.6/Libraries/Network/RCTNetworking.mm#L561
+          if (reqArgs->IncrementalUpdates) {
+            responseData = std::move(incrementData);
+
+            if (self->m_onIncrementalData) {
+              // For total, see #10849
+              self->m_onIncrementalData(reqArgs->RequestId, std::move(responseData), receivedBytes, 0 /*total*/);
+            }
+          } else {
+            responseData += std::move(incrementData);
+          }
         } else {
           buffer = reader.ReadBuffer(length);
           auto data = CryptographicBuffer::EncodeToBase64String(buffer);
 
           responseData += winrt::to_string(std::wstring_view(data));
-        }
-      } while (length > 0);
 
-      if (self->m_onData) {
+          if (self->m_onDataProgress) {
+            // For total, see #10849
+            self->m_onDataProgress(reqArgs->RequestId, receivedBytes, 0 /*total*/);
+          }
+        }
+      }
+
+      // If dealing with text-incremental response data, use m_onIncrementalData instead
+      if (self->m_onData && !(reqArgs->IncrementalUpdates && isText)) {
         self->m_onData(reqArgs->RequestId, std::move(responseData));
+      }
+
+      if (self->m_onComplete) {
+        self->m_onComplete(reqArgs->RequestId);
       }
     } else {
       if (self->m_onError) {

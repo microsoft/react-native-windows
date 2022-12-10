@@ -14,6 +14,7 @@
 /* eslint-env node */
 
 const WebSocket = require('ws');
+const Blob = require('node-fetch');
 
 console.log(`\
 WebSocket binary integration test server

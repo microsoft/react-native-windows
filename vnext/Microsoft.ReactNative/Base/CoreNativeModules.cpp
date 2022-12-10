@@ -23,8 +23,6 @@ using winrt::Microsoft::ReactNative::ReactPropertyBag;
 
 namespace {
 
-using winrt::Microsoft::ReactNative::ReactPropertyId;
-
 bool HasPackageIdentity() noexcept {
   static const bool hasPackageIdentity = []() noexcept {
     auto packageStatics = winrt::get_activation_factory<winrt::Windows::ApplicationModel::IPackageStatics>(
@@ -37,13 +35,6 @@ bool HasPackageIdentity() noexcept {
   }();
 
   return hasPackageIdentity;
-}
-
-ReactPropertyId<bool> HttpUseMonolithicModuleProperty() noexcept {
-  static ReactPropertyId<bool> propId{
-      L"ReactNative.Http"
-      L"UseMonolithicModule"};
-  return propId;
 }
 
 } // namespace
@@ -61,17 +52,15 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
       [props = context->Properties()]() { return Microsoft::React::CreateHttpModule(props); },
       jsMessageQueue);
 
-  if (!ReactPropertyBag(context->Properties()).Get(HttpUseMonolithicModuleProperty())) {
-    modules.emplace_back(
-        Microsoft::React::GetBlobModuleName(),
-        [props = context->Properties()]() { return Microsoft::React::CreateBlobModule(props); },
-        batchingUIMessageQueue);
+  modules.emplace_back(
+      Microsoft::React::GetBlobModuleName(),
+      [props = context->Properties()]() { return Microsoft::React::CreateBlobModule(props); },
+      batchingUIMessageQueue);
 
-    modules.emplace_back(
-        Microsoft::React::GetFileReaderModuleName(),
-        [props = context->Properties()]() { return Microsoft::React::CreateFileReaderModule(props); },
-        batchingUIMessageQueue);
-  }
+  modules.emplace_back(
+      Microsoft::React::GetFileReaderModuleName(),
+      [props = context->Properties()]() { return Microsoft::React::CreateFileReaderModule(props); },
+      batchingUIMessageQueue);
 
   modules.emplace_back(
       "Timing",
