@@ -58,13 +58,13 @@ class HTTPExampleMultiPartFormData extends React.Component<any, any> {
       },
       body: formData,
     })
-      .then(response => {
+      .then((response) => {
         this.responseURL = response.url;
         this.responseHeaders = response.headers;
 
         return response.text();
       })
-      .then(body => {
+      .then((body) => {
         this.setState({responseText: body});
       });
   }
@@ -122,7 +122,7 @@ class HTTPExampleMultiPartFormData extends React.Component<any, any> {
         <TextInput
           returnKeyType="go"
           defaultValue="https://tryphp.w3schools.com/demo/demo_form_validation_complete.php"
-          onSubmitEditing={event => {
+          onSubmitEditing={(event) => {
             this.submit(event.nativeEvent.text);
           }}
           style={styles.textInput}
