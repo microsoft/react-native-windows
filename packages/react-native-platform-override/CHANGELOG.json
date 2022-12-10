@@ -2,6 +2,21 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Sat, 10 Dec 2022 06:15:31 GMT",
+      "tag": "react-native-platform-override_v1.8.4",
+      "version": "1.8.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-platform-override",
+            "commit": "b833fdba3ad8cf1f92584c0b3a1dbe147d0516bb",
+            "comment": "Remove work around for broken Utilities import in core"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 02 Dec 2022 06:19:04 GMT",
       "tag": "react-native-platform-override_v1.8.3",
       "version": "1.8.3",

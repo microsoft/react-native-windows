@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 10 Dec 2022 06:15:31 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.593",
+      "version": "0.0.0-canary.593",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b833fdba3ad8cf1f92584c0b3a1dbe147d0516bb",
+            "comment": "Remove work around for broken Utilities import in core"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.8.4",
+            "commit": "b833fdba3ad8cf1f92584c0b3a1dbe147d0516bb"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 09 Dec 2022 06:14:58 GMT",
       "tag": "react-native-windows_v0.0.0-canary.592",
       "version": "0.0.0-canary.592",

@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/integrate-rn",
   "entries": [
     {
+      "date": "Sat, 10 Dec 2022 06:15:31 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v1.3.4",
+      "version": "1.3.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Bump react-native-platform-override to v1.8.4",
+            "commit": "b833fdba3ad8cf1f92584c0b3a1dbe147d0516bb"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 02 Dec 2022 06:19:03 GMT",
       "tag": "@rnw-scripts/integrate-rn_v1.3.3",
       "version": "1.3.3",

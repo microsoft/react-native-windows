@@ -1,8 +1,16 @@
 # Change Log - react-native-platform-override
 
-This log was last generated on Fri, 02 Dec 2022 06:19:04 GMT and should not be manually modified.
+This log was last generated on Sat, 10 Dec 2022 06:15:31 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.8.4
+
+Sat, 10 Dec 2022 06:15:31 GMT
+
+### Patches
+
+- Remove work around for broken Utilities import in core (30809111+acoates-ms@users.noreply.github.com)
 
 ## 1.8.3
 

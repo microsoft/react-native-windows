@@ -1,8 +1,17 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Wed, 07 Dec 2022 06:14:41 GMT and should not be manually modified.
+This log was last generated on Sat, 10 Dec 2022 06:15:31 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.172
+
+Sat, 10 Dec 2022 06:15:31 GMT
+
+### Changes
+
+- Remove work around for broken Utilities import in core (30809111+acoates-ms@users.noreply.github.com)
+- Bump react-native-platform-override to v1.8.4
 
 ## 0.0.0-canary.171
 

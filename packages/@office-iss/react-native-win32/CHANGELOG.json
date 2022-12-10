@@ -2,6 +2,27 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Sat, 10 Dec 2022 06:15:31 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.172",
+      "version": "0.0.0-canary.172",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "b833fdba3ad8cf1f92584c0b3a1dbe147d0516bb",
+            "comment": "Remove work around for broken Utilities import in core"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump react-native-platform-override to v1.8.4",
+            "commit": "b833fdba3ad8cf1f92584c0b3a1dbe147d0516bb"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 07 Dec 2022 06:14:41 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.171",
       "version": "0.0.0-canary.171",
