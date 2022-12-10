@@ -120,12 +120,12 @@ bool OriginPolicyHttpFilter::ConstWcharComparer::operator()(const wchar_t *a, co
 }
 
 /*static*/ bool OriginPolicyHttpFilter::IsSimpleCorsRequest(HttpRequestMessage const &request) noexcept {
-  // Ensure header is in Simple CORS white list
+  // Ensure header is in Simple CORS allowlist
   for (const auto &header : request.Headers()) {
     if (s_simpleCorsRequestHeaderNames.find(header.Key().c_str()) == s_simpleCorsRequestHeaderNames.cend())
       return false;
 
-    // Ensure Content-Type value is in Simple CORS white list, if present
+    // Ensure Content-Type value is in Simple CORS allowlist, if present
     if (boost::iequals(header.Key(), L"Content-Type")) {
       if (s_simpleCorsContentTypeValues.find(header.Value().c_str()) != s_simpleCorsContentTypeValues.cend())
         return false;
@@ -135,12 +135,12 @@ bool OriginPolicyHttpFilter::ConstWcharComparer::operator()(const wchar_t *a, co
   // WinRT separates request headers from request content headers
   if (auto content = request.Content()) {
     for (const auto &header : content.Headers()) {
-      // WinRT automatically appends non-whitelisted header Content-Length when Content-Type is set. Skip it.
+      // WinRT automatically appends non-allowlisted header Content-Length when Content-Type is set. Skip it.
       if (s_simpleCorsRequestHeaderNames.find(header.Key().c_str()) == s_simpleCorsRequestHeaderNames.cend() &&
           !boost::iequals(header.Key(), "Content-Length"))
         return false;
 
-      // Ensure Content-Type value is in Simple CORS white list, if present
+      // Ensure Content-Type value is in Simple CORS allowlist, if present
       if (boost::iequals(header.Key(), L"Content-Type")) {
         if (s_simpleCorsContentTypeValues.find(header.Value().c_str()) == s_simpleCorsContentTypeValues.cend())
           return false;
@@ -148,7 +148,7 @@ bool OriginPolicyHttpFilter::ConstWcharComparer::operator()(const wchar_t *a, co
     }
   }
 
-  // Ensure method is in Simple CORS white list
+  // Ensure method is in Simple CORS allowlist
   return s_simpleCorsMethods.find(request.Method().ToString().c_str()) != s_simpleCorsMethods.cend();
 }
 
@@ -599,7 +599,7 @@ void OriginPolicyHttpFilter::ValidateResponse(HttpResponseMessage const &respons
     }
 
     if (originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing) {
-      // Filter out response headers that are not in the Simple CORS whitelist
+      // Filter out response headers that are not in the Simple CORS allowlist
       std::queue<hstring> nonSimpleNames;
       for (const auto &header : response.Headers().GetView()) {
         if (s_simpleCorsResponseHeaderNames.find(header.Key().c_str()) == s_simpleCorsResponseHeaderNames.cend())
@@ -651,21 +651,26 @@ ResponseOperation OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage 
   preflightRequest.Headers().Insert(L"Access-Control-Request-Method", coRequest.Method().ToString());
 
   auto headerNames = wstring{};
-  auto headerItr = coRequest.Headers().begin();
-  if (headerItr != coRequest.Headers().end()) {
-    headerNames += (*headerItr).Key();
+  auto writeSeparator = false;
+  for (const auto &header : coRequest.Headers()) {
+    if (writeSeparator) {
+      headerNames += L", ";
+    } else {
+      writeSeparator = true;
+    }
 
-    while (++headerItr != coRequest.Headers().end())
-      headerNames += L", " + (*headerItr).Key();
+    headerNames += header.Key();
   }
 
   if (coRequest.Content()) {
-    headerItr = coRequest.Content().Headers().begin();
-    if (headerItr != coRequest.Content().Headers().end()) {
-      headerNames += (*headerItr).Key();
+    for (const auto &header : coRequest.Content().Headers()) {
+      if (writeSeparator) {
+        headerNames += L", ";
+      } else {
+        writeSeparator = true;
+      }
 
-      while (++headerItr != coRequest.Content().Headers().end())
-        headerNames += L", " + (*headerItr).Key();
+      headerNames += header.Key();
     }
   }
 
