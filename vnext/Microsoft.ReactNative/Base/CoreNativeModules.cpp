@@ -20,21 +20,6 @@
 
 namespace Microsoft::ReactNative {
 
-using winrt::Microsoft::ReactNative::ReactPropertyBag;
-
-namespace {
-
-using winrt::Microsoft::ReactNative::ReactPropertyId;
-
-ReactPropertyId<bool> HttpUseMonolithicModuleProperty() noexcept {
-  static ReactPropertyId<bool> propId{
-      L"ReactNative.Http"
-      L"UseMonolithicModule"};
-  return propId;
-}
-
-} // namespace
-
 std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
     const std::shared_ptr<facebook::react::MessageQueueThread> &batchingUIMessageQueue,
     const std::shared_ptr<facebook::react::MessageQueueThread>
@@ -48,17 +33,15 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
       [props = context->Properties()]() { return Microsoft::React::CreateHttpModule(props); },
       jsMessageQueue);
 
-  if (!ReactPropertyBag(context->Properties()).Get(HttpUseMonolithicModuleProperty())) {
-    modules.emplace_back(
-        Microsoft::React::GetBlobModuleName(),
-        [props = context->Properties()]() { return Microsoft::React::CreateBlobModule(props); },
-        batchingUIMessageQueue);
+  modules.emplace_back(
+      Microsoft::React::GetBlobModuleName(),
+      [props = context->Properties()]() { return Microsoft::React::CreateBlobModule(props); },
+      batchingUIMessageQueue);
 
-    modules.emplace_back(
-        Microsoft::React::GetFileReaderModuleName(),
-        [props = context->Properties()]() { return Microsoft::React::CreateFileReaderModule(props); },
-        batchingUIMessageQueue);
-  }
+  modules.emplace_back(
+      Microsoft::React::GetFileReaderModuleName(),
+      [props = context->Properties()]() { return Microsoft::React::CreateFileReaderModule(props); },
+      batchingUIMessageQueue);
 
   modules.emplace_back(
       "Timing",
