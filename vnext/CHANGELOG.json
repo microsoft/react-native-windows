@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 12 Dec 2022 16:11:17 GMT",
+      "tag": "react-native-windows_v0.68.24",
+      "version": "0.68.24",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "f87aaef826e6fde7ea1b245119505707f8161de2",
+            "comment": "Implement HTTP incremental updates (#10933)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 05 Dec 2022 16:10:41 GMT",
       "tag": "react-native-windows_v0.68.23",
       "version": "0.68.23",
