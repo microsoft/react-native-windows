@@ -15,10 +15,10 @@ import {
 } from './generators/GenerateTypeScript';
 import type {SchemaType} from 'react-native-tscodegen';
 
-// Load react-native-codegen from react-native
+// Load @react-native/codegen from react-native
 const rnPath = path.dirname(require.resolve('react-native/package.json'));
 const rncodegenPath = path.dirname(
-  require.resolve('react-native-codegen/package.json', {paths: [rnPath]}),
+  require.resolve('@react-native/codegen/package.json', {paths: [rnPath]}),
 );
 const FlowParser = require(path.resolve(rncodegenPath, 'lib/parsers/flow'));
 const TypeScriptParser = require(path.resolve(

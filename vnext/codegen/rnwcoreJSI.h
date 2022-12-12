@@ -85,6 +85,83 @@ private:
   Delegate delegate_;
 };
 
+#pragma mark - AlertManagerBaseArgs
+
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8, typename P9>
+struct AlertManagerBaseArgs {
+  P0 title;
+  P1 message;
+  P2 buttons;
+  P3 type;
+  P4 defaultValue;
+  P5 cancelButtonKey;
+  P6 destructiveButtonKey;
+  P7 preferredButtonKey;
+  P8 keyboardType;
+  P9 userInterfaceStyle;
+  bool operator==(const AlertManagerBaseArgs &other) const {
+    return title == other.title && message == other.message && buttons == other.buttons && type == other.type && defaultValue == other.defaultValue && cancelButtonKey == other.cancelButtonKey && destructiveButtonKey == other.destructiveButtonKey && preferredButtonKey == other.preferredButtonKey && keyboardType == other.keyboardType && userInterfaceStyle == other.userInterfaceStyle;
+  }
+};
+
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8, typename P9>
+struct AlertManagerBaseArgsBridging {
+  static AlertManagerBaseArgs<P0, P1, P2, P3, P4, P5, P6, P7, P8, P9> fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    AlertManagerBaseArgs<P0, P1, P2, P3, P4, P5, P6, P7, P8, P9> result{
+      bridging::fromJs<P0>(rt, value.getProperty(rt, "title"), jsInvoker),
+      bridging::fromJs<P1>(rt, value.getProperty(rt, "message"), jsInvoker),
+      bridging::fromJs<P2>(rt, value.getProperty(rt, "buttons"), jsInvoker),
+      bridging::fromJs<P3>(rt, value.getProperty(rt, "type"), jsInvoker),
+      bridging::fromJs<P4>(rt, value.getProperty(rt, "defaultValue"), jsInvoker),
+      bridging::fromJs<P5>(rt, value.getProperty(rt, "cancelButtonKey"), jsInvoker),
+      bridging::fromJs<P6>(rt, value.getProperty(rt, "destructiveButtonKey"), jsInvoker),
+      bridging::fromJs<P7>(rt, value.getProperty(rt, "preferredButtonKey"), jsInvoker),
+      bridging::fromJs<P8>(rt, value.getProperty(rt, "keyboardType"), jsInvoker),
+      bridging::fromJs<P9>(rt, value.getProperty(rt, "userInterfaceStyle"), jsInvoker)};
+    return result;
+  }
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const AlertManagerBaseArgs<P0, P1, P2, P3, P4, P5, P6, P7, P8, P9> &value) {
+    auto result = facebook::jsi::Object(rt);
+    if (value.title) {
+      result.setProperty(rt, "title", bridging::toJs(rt, value.title.value()));
+    }
+    if (value.message) {
+      result.setProperty(rt, "message", bridging::toJs(rt, value.message.value()));
+    }
+    if (value.buttons) {
+      result.setProperty(rt, "buttons", bridging::toJs(rt, value.buttons.value()));
+    }
+    if (value.type) {
+      result.setProperty(rt, "type", bridging::toJs(rt, value.type.value()));
+    }
+    if (value.defaultValue) {
+      result.setProperty(rt, "defaultValue", bridging::toJs(rt, value.defaultValue.value()));
+    }
+    if (value.cancelButtonKey) {
+      result.setProperty(rt, "cancelButtonKey", bridging::toJs(rt, value.cancelButtonKey.value()));
+    }
+    if (value.destructiveButtonKey) {
+      result.setProperty(rt, "destructiveButtonKey", bridging::toJs(rt, value.destructiveButtonKey.value()));
+    }
+    if (value.preferredButtonKey) {
+      result.setProperty(rt, "preferredButtonKey", bridging::toJs(rt, value.preferredButtonKey.value()));
+    }
+    if (value.keyboardType) {
+      result.setProperty(rt, "keyboardType", bridging::toJs(rt, value.keyboardType.value()));
+    }
+    if (value.userInterfaceStyle) {
+      result.setProperty(rt, "userInterfaceStyle", bridging::toJs(rt, value.userInterfaceStyle.value()));
+    }
+    return result;
+  }
+};
+
 class JSI_EXPORT NativeAlertManagerCxxSpecJSI : public TurboModule {
 protected:
   NativeAlertManagerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
@@ -126,6 +203,73 @@ private:
   };
 
   Delegate delegate_;
+};
+
+#pragma mark - AlertBaseDialogOptions
+
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7>
+struct AlertBaseDialogOptions {
+  P0 title;
+  P1 message;
+  P2 buttonPositive;
+  P3 buttonNegative;
+  P4 buttonNeutral;
+  P5 items;
+  P6 cancelable;
+  P7 defaultButton;
+  bool operator==(const AlertBaseDialogOptions &other) const {
+    return title == other.title && message == other.message && buttonPositive == other.buttonPositive && buttonNegative == other.buttonNegative && buttonNeutral == other.buttonNeutral && items == other.items && cancelable == other.cancelable && defaultButton == other.defaultButton;
+  }
+};
+
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7>
+struct AlertBaseDialogOptionsBridging {
+  static AlertBaseDialogOptions<P0, P1, P2, P3, P4, P5, P6, P7> fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    AlertBaseDialogOptions<P0, P1, P2, P3, P4, P5, P6, P7> result{
+      bridging::fromJs<P0>(rt, value.getProperty(rt, "title"), jsInvoker),
+      bridging::fromJs<P1>(rt, value.getProperty(rt, "message"), jsInvoker),
+      bridging::fromJs<P2>(rt, value.getProperty(rt, "buttonPositive"), jsInvoker),
+      bridging::fromJs<P3>(rt, value.getProperty(rt, "buttonNegative"), jsInvoker),
+      bridging::fromJs<P4>(rt, value.getProperty(rt, "buttonNeutral"), jsInvoker),
+      bridging::fromJs<P5>(rt, value.getProperty(rt, "items"), jsInvoker),
+      bridging::fromJs<P6>(rt, value.getProperty(rt, "cancelable"), jsInvoker),
+      bridging::fromJs<P7>(rt, value.getProperty(rt, "defaultButton"), jsInvoker)};
+    return result;
+  }
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const AlertBaseDialogOptions<P0, P1, P2, P3, P4, P5, P6, P7> &value) {
+    auto result = facebook::jsi::Object(rt);
+    if (value.title) {
+      result.setProperty(rt, "title", bridging::toJs(rt, value.title.value()));
+    }
+    if (value.message) {
+      result.setProperty(rt, "message", bridging::toJs(rt, value.message.value()));
+    }
+    if (value.buttonPositive) {
+      result.setProperty(rt, "buttonPositive", bridging::toJs(rt, value.buttonPositive.value()));
+    }
+    if (value.buttonNegative) {
+      result.setProperty(rt, "buttonNegative", bridging::toJs(rt, value.buttonNegative.value()));
+    }
+    if (value.buttonNeutral) {
+      result.setProperty(rt, "buttonNeutral", bridging::toJs(rt, value.buttonNeutral.value()));
+    }
+    if (value.items) {
+      result.setProperty(rt, "items", bridging::toJs(rt, value.items.value()));
+    }
+    if (value.cancelable) {
+      result.setProperty(rt, "cancelable", bridging::toJs(rt, value.cancelable.value()));
+    }
+    if (value.defaultButton) {
+      result.setProperty(rt, "defaultButton", bridging::toJs(rt, value.defaultButton.value()));
+    }
+    return result;
+  }
 };
 
 class JSI_EXPORT NativeDialogManagerWindowsCxxSpecJSI : public TurboModule {
@@ -178,6 +322,70 @@ private:
   };
 
   Delegate delegate_;
+};
+
+#pragma mark - NativeAnimatedModuleBaseEndResult
+
+template <typename P0>
+struct NativeAnimatedModuleBaseEndResult {
+  P0 finished;
+  bool operator==(const NativeAnimatedModuleBaseEndResult &other) const {
+    return finished == other.finished;
+  }
+};
+
+template <typename P0>
+struct NativeAnimatedModuleBaseEndResultBridging {
+  static NativeAnimatedModuleBaseEndResult<P0> fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    NativeAnimatedModuleBaseEndResult<P0> result{
+      bridging::fromJs<P0>(rt, value.getProperty(rt, "finished"), jsInvoker)};
+    return result;
+  }
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const NativeAnimatedModuleBaseEndResult<P0> &value) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "finished", bridging::toJs(rt, value.finished));
+    return result;
+  }
+};
+
+
+#pragma mark - NativeAnimatedModuleBaseEventMapping
+
+template <typename P0, typename P1>
+struct NativeAnimatedModuleBaseEventMapping {
+  P0 nativeEventPath;
+  P1 animatedValueTag;
+  bool operator==(const NativeAnimatedModuleBaseEventMapping &other) const {
+    return nativeEventPath == other.nativeEventPath && animatedValueTag == other.animatedValueTag;
+  }
+};
+
+template <typename P0, typename P1>
+struct NativeAnimatedModuleBaseEventMappingBridging {
+  static NativeAnimatedModuleBaseEventMapping<P0, P1> fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    NativeAnimatedModuleBaseEventMapping<P0, P1> result{
+      bridging::fromJs<P0>(rt, value.getProperty(rt, "nativeEventPath"), jsInvoker),
+      bridging::fromJs<P1>(rt, value.getProperty(rt, "animatedValueTag"), jsInvoker)};
+    return result;
+  }
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const NativeAnimatedModuleBaseEventMapping<P0, P1> &value) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "nativeEventPath", bridging::toJs(rt, value.nativeEventPath));
+    result.setProperty(rt, "animatedValueTag", bridging::toJs(rt, value.animatedValueTag));
+    return result;
+  }
 };
 
 class JSI_EXPORT NativeAnimatedModuleCxxSpecJSI : public TurboModule {
@@ -428,6 +636,70 @@ private:
   };
 
   Delegate delegate_;
+};
+
+#pragma mark - NativeAnimatedTurboModuleBaseEndResult
+
+template <typename P0>
+struct NativeAnimatedTurboModuleBaseEndResult {
+  P0 finished;
+  bool operator==(const NativeAnimatedTurboModuleBaseEndResult &other) const {
+    return finished == other.finished;
+  }
+};
+
+template <typename P0>
+struct NativeAnimatedTurboModuleBaseEndResultBridging {
+  static NativeAnimatedTurboModuleBaseEndResult<P0> fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    NativeAnimatedTurboModuleBaseEndResult<P0> result{
+      bridging::fromJs<P0>(rt, value.getProperty(rt, "finished"), jsInvoker)};
+    return result;
+  }
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const NativeAnimatedTurboModuleBaseEndResult<P0> &value) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "finished", bridging::toJs(rt, value.finished));
+    return result;
+  }
+};
+
+
+#pragma mark - NativeAnimatedTurboModuleBaseEventMapping
+
+template <typename P0, typename P1>
+struct NativeAnimatedTurboModuleBaseEventMapping {
+  P0 nativeEventPath;
+  P1 animatedValueTag;
+  bool operator==(const NativeAnimatedTurboModuleBaseEventMapping &other) const {
+    return nativeEventPath == other.nativeEventPath && animatedValueTag == other.animatedValueTag;
+  }
+};
+
+template <typename P0, typename P1>
+struct NativeAnimatedTurboModuleBaseEventMappingBridging {
+  static NativeAnimatedTurboModuleBaseEventMapping<P0, P1> fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    NativeAnimatedTurboModuleBaseEventMapping<P0, P1> result{
+      bridging::fromJs<P0>(rt, value.getProperty(rt, "nativeEventPath"), jsInvoker),
+      bridging::fromJs<P1>(rt, value.getProperty(rt, "animatedValueTag"), jsInvoker)};
+    return result;
+  }
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const NativeAnimatedTurboModuleBaseEventMapping<P0, P1> &value) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "nativeEventPath", bridging::toJs(rt, value.nativeEventPath));
+    result.setProperty(rt, "animatedValueTag", bridging::toJs(rt, value.animatedValueTag));
+    return result;
+  }
 };
 
 class JSI_EXPORT NativeAnimatedTurboModuleCxxSpecJSI : public TurboModule {
@@ -750,6 +1022,91 @@ private:
   Delegate delegate_;
 };
 
+#pragma mark - AppThemeBaseHighContrastColors
+
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7>
+struct AppThemeBaseHighContrastColors {
+  P0 ButtonFaceColor;
+  P1 ButtonTextColor;
+  P2 GrayTextColor;
+  P3 HighlightColor;
+  P4 HighlightTextColor;
+  P5 HotlightColor;
+  P6 WindowColor;
+  P7 WindowTextColor;
+  bool operator==(const AppThemeBaseHighContrastColors &other) const {
+    return ButtonFaceColor == other.ButtonFaceColor && ButtonTextColor == other.ButtonTextColor && GrayTextColor == other.GrayTextColor && HighlightColor == other.HighlightColor && HighlightTextColor == other.HighlightTextColor && HotlightColor == other.HotlightColor && WindowColor == other.WindowColor && WindowTextColor == other.WindowTextColor;
+  }
+};
+
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7>
+struct AppThemeBaseHighContrastColorsBridging {
+  static AppThemeBaseHighContrastColors<P0, P1, P2, P3, P4, P5, P6, P7> fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    AppThemeBaseHighContrastColors<P0, P1, P2, P3, P4, P5, P6, P7> result{
+      bridging::fromJs<P0>(rt, value.getProperty(rt, "ButtonFaceColor"), jsInvoker),
+      bridging::fromJs<P1>(rt, value.getProperty(rt, "ButtonTextColor"), jsInvoker),
+      bridging::fromJs<P2>(rt, value.getProperty(rt, "GrayTextColor"), jsInvoker),
+      bridging::fromJs<P3>(rt, value.getProperty(rt, "HighlightColor"), jsInvoker),
+      bridging::fromJs<P4>(rt, value.getProperty(rt, "HighlightTextColor"), jsInvoker),
+      bridging::fromJs<P5>(rt, value.getProperty(rt, "HotlightColor"), jsInvoker),
+      bridging::fromJs<P6>(rt, value.getProperty(rt, "WindowColor"), jsInvoker),
+      bridging::fromJs<P7>(rt, value.getProperty(rt, "WindowTextColor"), jsInvoker)};
+    return result;
+  }
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const AppThemeBaseHighContrastColors<P0, P1, P2, P3, P4, P5, P6, P7> &value) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "ButtonFaceColor", bridging::toJs(rt, value.ButtonFaceColor));
+    result.setProperty(rt, "ButtonTextColor", bridging::toJs(rt, value.ButtonTextColor));
+    result.setProperty(rt, "GrayTextColor", bridging::toJs(rt, value.GrayTextColor));
+    result.setProperty(rt, "HighlightColor", bridging::toJs(rt, value.HighlightColor));
+    result.setProperty(rt, "HighlightTextColor", bridging::toJs(rt, value.HighlightTextColor));
+    result.setProperty(rt, "HotlightColor", bridging::toJs(rt, value.HotlightColor));
+    result.setProperty(rt, "WindowColor", bridging::toJs(rt, value.WindowColor));
+    result.setProperty(rt, "WindowTextColor", bridging::toJs(rt, value.WindowTextColor));
+    return result;
+  }
+};
+
+
+#pragma mark - AppThemeBaseAppThemeData
+
+template <typename P0, typename P1>
+struct AppThemeBaseAppThemeData {
+  P0 isHighContrast;
+  P1 highContrastColors;
+  bool operator==(const AppThemeBaseAppThemeData &other) const {
+    return isHighContrast == other.isHighContrast && highContrastColors == other.highContrastColors;
+  }
+};
+
+template <typename P0, typename P1>
+struct AppThemeBaseAppThemeDataBridging {
+  static AppThemeBaseAppThemeData<P0, P1> fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    AppThemeBaseAppThemeData<P0, P1> result{
+      bridging::fromJs<P0>(rt, value.getProperty(rt, "isHighContrast"), jsInvoker),
+      bridging::fromJs<P1>(rt, value.getProperty(rt, "highContrastColors"), jsInvoker)};
+    return result;
+  }
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const AppThemeBaseAppThemeData<P0, P1> &value) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "isHighContrast", bridging::toJs(rt, value.isHighContrast));
+    result.setProperty(rt, "highContrastColors", bridging::toJs(rt, value.highContrastColors));
+    return result;
+  }
+};
+
 class JSI_EXPORT NativeAppThemeCxxSpecJSI : public TurboModule {
 protected:
   NativeAppThemeCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
@@ -1003,6 +1360,104 @@ private:
   Delegate delegate_;
 };
 
+#pragma mark - ExceptionsManagerBaseStackFrame
+
+template <typename P0, typename P1, typename P2, typename P3, typename P4>
+struct ExceptionsManagerBaseStackFrame {
+  P0 column;
+  P1 file;
+  P2 lineNumber;
+  P3 methodName;
+  P4 collapse;
+  bool operator==(const ExceptionsManagerBaseStackFrame &other) const {
+    return column == other.column && file == other.file && lineNumber == other.lineNumber && methodName == other.methodName && collapse == other.collapse;
+  }
+};
+
+template <typename P0, typename P1, typename P2, typename P3, typename P4>
+struct ExceptionsManagerBaseStackFrameBridging {
+  static ExceptionsManagerBaseStackFrame<P0, P1, P2, P3, P4> fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    ExceptionsManagerBaseStackFrame<P0, P1, P2, P3, P4> result{
+      bridging::fromJs<P0>(rt, value.getProperty(rt, "column"), jsInvoker),
+      bridging::fromJs<P1>(rt, value.getProperty(rt, "file"), jsInvoker),
+      bridging::fromJs<P2>(rt, value.getProperty(rt, "lineNumber"), jsInvoker),
+      bridging::fromJs<P3>(rt, value.getProperty(rt, "methodName"), jsInvoker),
+      bridging::fromJs<P4>(rt, value.getProperty(rt, "collapse"), jsInvoker)};
+    return result;
+  }
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const ExceptionsManagerBaseStackFrame<P0, P1, P2, P3, P4> &value) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "column", bridging::toJs(rt, value.column));
+    result.setProperty(rt, "file", bridging::toJs(rt, value.file));
+    result.setProperty(rt, "lineNumber", bridging::toJs(rt, value.lineNumber));
+    result.setProperty(rt, "methodName", bridging::toJs(rt, value.methodName));
+    if (value.collapse) {
+      result.setProperty(rt, "collapse", bridging::toJs(rt, value.collapse.value()));
+    }
+    return result;
+  }
+};
+
+
+#pragma mark - ExceptionsManagerBaseExceptionData
+
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7>
+struct ExceptionsManagerBaseExceptionData {
+  P0 message;
+  P1 originalMessage;
+  P2 name;
+  P3 componentStack;
+  P4 stack;
+  P5 id;
+  P6 isFatal;
+  P7 extraData;
+  bool operator==(const ExceptionsManagerBaseExceptionData &other) const {
+    return message == other.message && originalMessage == other.originalMessage && name == other.name && componentStack == other.componentStack && stack == other.stack && id == other.id && isFatal == other.isFatal && extraData == other.extraData;
+  }
+};
+
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7>
+struct ExceptionsManagerBaseExceptionDataBridging {
+  static ExceptionsManagerBaseExceptionData<P0, P1, P2, P3, P4, P5, P6, P7> fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    ExceptionsManagerBaseExceptionData<P0, P1, P2, P3, P4, P5, P6, P7> result{
+      bridging::fromJs<P0>(rt, value.getProperty(rt, "message"), jsInvoker),
+      bridging::fromJs<P1>(rt, value.getProperty(rt, "originalMessage"), jsInvoker),
+      bridging::fromJs<P2>(rt, value.getProperty(rt, "name"), jsInvoker),
+      bridging::fromJs<P3>(rt, value.getProperty(rt, "componentStack"), jsInvoker),
+      bridging::fromJs<P4>(rt, value.getProperty(rt, "stack"), jsInvoker),
+      bridging::fromJs<P5>(rt, value.getProperty(rt, "id"), jsInvoker),
+      bridging::fromJs<P6>(rt, value.getProperty(rt, "isFatal"), jsInvoker),
+      bridging::fromJs<P7>(rt, value.getProperty(rt, "extraData"), jsInvoker)};
+    return result;
+  }
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const ExceptionsManagerBaseExceptionData<P0, P1, P2, P3, P4, P5, P6, P7> &value) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "message", bridging::toJs(rt, value.message));
+    result.setProperty(rt, "originalMessage", bridging::toJs(rt, value.originalMessage));
+    result.setProperty(rt, "name", bridging::toJs(rt, value.name));
+    result.setProperty(rt, "componentStack", bridging::toJs(rt, value.componentStack));
+    result.setProperty(rt, "stack", bridging::toJs(rt, value.stack));
+    result.setProperty(rt, "id", bridging::toJs(rt, value.id));
+    result.setProperty(rt, "isFatal", bridging::toJs(rt, value.isFatal));
+    if (value.extraData) {
+      result.setProperty(rt, "extraData", bridging::toJs(rt, value.extraData.value()));
+    }
+    return result;
+  }
+};
+
 class JSI_EXPORT NativeExceptionsManagerCxxSpecJSI : public TurboModule {
 protected:
   NativeExceptionsManagerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
@@ -1175,6 +1630,54 @@ private:
   };
 
   Delegate delegate_;
+};
+
+#pragma mark - ImageEditingManagerBaseOptions
+
+template <typename P0, typename P1, typename P2, typename P3, typename P4>
+struct ImageEditingManagerBaseOptions {
+  P0 offset;
+  P1 size;
+  P2 displaySize;
+  P3 resizeMode;
+  P4 allowExternalStorage;
+  bool operator==(const ImageEditingManagerBaseOptions &other) const {
+    return offset == other.offset && size == other.size && displaySize == other.displaySize && resizeMode == other.resizeMode && allowExternalStorage == other.allowExternalStorage;
+  }
+};
+
+template <typename P0, typename P1, typename P2, typename P3, typename P4>
+struct ImageEditingManagerBaseOptionsBridging {
+  static ImageEditingManagerBaseOptions<P0, P1, P2, P3, P4> fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    ImageEditingManagerBaseOptions<P0, P1, P2, P3, P4> result{
+      bridging::fromJs<P0>(rt, value.getProperty(rt, "offset"), jsInvoker),
+      bridging::fromJs<P1>(rt, value.getProperty(rt, "size"), jsInvoker),
+      bridging::fromJs<P2>(rt, value.getProperty(rt, "displaySize"), jsInvoker),
+      bridging::fromJs<P3>(rt, value.getProperty(rt, "resizeMode"), jsInvoker),
+      bridging::fromJs<P4>(rt, value.getProperty(rt, "allowExternalStorage"), jsInvoker)};
+    return result;
+  }
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const ImageEditingManagerBaseOptions<P0, P1, P2, P3, P4> &value) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "offset", bridging::toJs(rt, value.offset));
+    result.setProperty(rt, "size", bridging::toJs(rt, value.size));
+    if (value.displaySize) {
+      result.setProperty(rt, "displaySize", bridging::toJs(rt, value.displaySize.value()));
+    }
+    if (value.resizeMode) {
+      result.setProperty(rt, "resizeMode", bridging::toJs(rt, value.resizeMode.value()));
+    }
+    if (value.allowExternalStorage) {
+      result.setProperty(rt, "allowExternalStorage", bridging::toJs(rt, value.allowExternalStorage.value()));
+    }
+    return result;
+  }
 };
 
 class JSI_EXPORT NativeImageEditorCxxSpecJSI : public TurboModule {
@@ -2096,6 +2599,120 @@ private:
   Delegate delegate_;
 };
 
+#pragma mark - PushNotificationManagerBasePermissions
+
+template <typename P0, typename P1, typename P2>
+struct PushNotificationManagerBasePermissions {
+  P0 alert;
+  P1 badge;
+  P2 sound;
+  bool operator==(const PushNotificationManagerBasePermissions &other) const {
+    return alert == other.alert && badge == other.badge && sound == other.sound;
+  }
+};
+
+template <typename P0, typename P1, typename P2>
+struct PushNotificationManagerBasePermissionsBridging {
+  static PushNotificationManagerBasePermissions<P0, P1, P2> fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    PushNotificationManagerBasePermissions<P0, P1, P2> result{
+      bridging::fromJs<P0>(rt, value.getProperty(rt, "alert"), jsInvoker),
+      bridging::fromJs<P1>(rt, value.getProperty(rt, "badge"), jsInvoker),
+      bridging::fromJs<P2>(rt, value.getProperty(rt, "sound"), jsInvoker)};
+    return result;
+  }
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const PushNotificationManagerBasePermissions<P0, P1, P2> &value) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "alert", bridging::toJs(rt, value.alert));
+    result.setProperty(rt, "badge", bridging::toJs(rt, value.badge));
+    result.setProperty(rt, "sound", bridging::toJs(rt, value.sound));
+    return result;
+  }
+};
+
+
+#pragma mark - PushNotificationManagerBaseNotification
+
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8, typename P9>
+struct PushNotificationManagerBaseNotification {
+  P0 alertTitle;
+  P1 fireDate;
+  P2 alertBody;
+  P3 alertAction;
+  P4 userInfo;
+  P5 category;
+  P6 repeatInterval;
+  P7 applicationIconBadgeNumber;
+  P8 isSilent;
+  P9 soundName;
+  bool operator==(const PushNotificationManagerBaseNotification &other) const {
+    return alertTitle == other.alertTitle && fireDate == other.fireDate && alertBody == other.alertBody && alertAction == other.alertAction && userInfo == other.userInfo && category == other.category && repeatInterval == other.repeatInterval && applicationIconBadgeNumber == other.applicationIconBadgeNumber && isSilent == other.isSilent && soundName == other.soundName;
+  }
+};
+
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8, typename P9>
+struct PushNotificationManagerBaseNotificationBridging {
+  static PushNotificationManagerBaseNotification<P0, P1, P2, P3, P4, P5, P6, P7, P8, P9> fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    PushNotificationManagerBaseNotification<P0, P1, P2, P3, P4, P5, P6, P7, P8, P9> result{
+      bridging::fromJs<P0>(rt, value.getProperty(rt, "alertTitle"), jsInvoker),
+      bridging::fromJs<P1>(rt, value.getProperty(rt, "fireDate"), jsInvoker),
+      bridging::fromJs<P2>(rt, value.getProperty(rt, "alertBody"), jsInvoker),
+      bridging::fromJs<P3>(rt, value.getProperty(rt, "alertAction"), jsInvoker),
+      bridging::fromJs<P4>(rt, value.getProperty(rt, "userInfo"), jsInvoker),
+      bridging::fromJs<P5>(rt, value.getProperty(rt, "category"), jsInvoker),
+      bridging::fromJs<P6>(rt, value.getProperty(rt, "repeatInterval"), jsInvoker),
+      bridging::fromJs<P7>(rt, value.getProperty(rt, "applicationIconBadgeNumber"), jsInvoker),
+      bridging::fromJs<P8>(rt, value.getProperty(rt, "isSilent"), jsInvoker),
+      bridging::fromJs<P9>(rt, value.getProperty(rt, "soundName"), jsInvoker)};
+    return result;
+  }
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const PushNotificationManagerBaseNotification<P0, P1, P2, P3, P4, P5, P6, P7, P8, P9> &value) {
+    auto result = facebook::jsi::Object(rt);
+    if (value.alertTitle) {
+      result.setProperty(rt, "alertTitle", bridging::toJs(rt, value.alertTitle.value()));
+    }
+    if (value.fireDate) {
+      result.setProperty(rt, "fireDate", bridging::toJs(rt, value.fireDate.value()));
+    }
+    if (value.alertBody) {
+      result.setProperty(rt, "alertBody", bridging::toJs(rt, value.alertBody.value()));
+    }
+    if (value.alertAction) {
+      result.setProperty(rt, "alertAction", bridging::toJs(rt, value.alertAction.value()));
+    }
+    if (value.userInfo) {
+      result.setProperty(rt, "userInfo", bridging::toJs(rt, value.userInfo.value()));
+    }
+    if (value.category) {
+      result.setProperty(rt, "category", bridging::toJs(rt, value.category.value()));
+    }
+    if (value.repeatInterval) {
+      result.setProperty(rt, "repeatInterval", bridging::toJs(rt, value.repeatInterval.value()));
+    }
+    if (value.applicationIconBadgeNumber) {
+      result.setProperty(rt, "applicationIconBadgeNumber", bridging::toJs(rt, value.applicationIconBadgeNumber.value()));
+    }
+    if (value.isSilent) {
+      result.setProperty(rt, "isSilent", bridging::toJs(rt, value.isSilent.value()));
+    }
+    if (value.soundName) {
+      result.setProperty(rt, "soundName", bridging::toJs(rt, value.soundName.value()));
+    }
+    return result;
+  }
+};
+
 class JSI_EXPORT NativePushNotificationManagerIOSCxxSpecJSI : public TurboModule {
 protected:
   NativePushNotificationManagerIOSCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
@@ -2865,6 +3482,136 @@ private:
   Delegate delegate_;
 };
 
+#pragma mark - DeviceInfoBaseDisplayMetrics
+
+template <typename P0, typename P1, typename P2, typename P3>
+struct DeviceInfoBaseDisplayMetrics {
+  P0 width;
+  P1 height;
+  P2 scale;
+  P3 fontScale;
+  bool operator==(const DeviceInfoBaseDisplayMetrics &other) const {
+    return width == other.width && height == other.height && scale == other.scale && fontScale == other.fontScale;
+  }
+};
+
+template <typename P0, typename P1, typename P2, typename P3>
+struct DeviceInfoBaseDisplayMetricsBridging {
+  static DeviceInfoBaseDisplayMetrics<P0, P1, P2, P3> fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    DeviceInfoBaseDisplayMetrics<P0, P1, P2, P3> result{
+      bridging::fromJs<P0>(rt, value.getProperty(rt, "width"), jsInvoker),
+      bridging::fromJs<P1>(rt, value.getProperty(rt, "height"), jsInvoker),
+      bridging::fromJs<P2>(rt, value.getProperty(rt, "scale"), jsInvoker),
+      bridging::fromJs<P3>(rt, value.getProperty(rt, "fontScale"), jsInvoker)};
+    return result;
+  }
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const DeviceInfoBaseDisplayMetrics<P0, P1, P2, P3> &value) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "width", bridging::toJs(rt, value.width));
+    result.setProperty(rt, "height", bridging::toJs(rt, value.height));
+    result.setProperty(rt, "scale", bridging::toJs(rt, value.scale));
+    result.setProperty(rt, "fontScale", bridging::toJs(rt, value.fontScale));
+    return result;
+  }
+};
+
+
+#pragma mark - DeviceInfoBaseDisplayMetricsAndroid
+
+template <typename P0, typename P1, typename P2, typename P3, typename P4>
+struct DeviceInfoBaseDisplayMetricsAndroid {
+  P0 width;
+  P1 height;
+  P2 scale;
+  P3 fontScale;
+  P4 densityDpi;
+  bool operator==(const DeviceInfoBaseDisplayMetricsAndroid &other) const {
+    return width == other.width && height == other.height && scale == other.scale && fontScale == other.fontScale && densityDpi == other.densityDpi;
+  }
+};
+
+template <typename P0, typename P1, typename P2, typename P3, typename P4>
+struct DeviceInfoBaseDisplayMetricsAndroidBridging {
+  static DeviceInfoBaseDisplayMetricsAndroid<P0, P1, P2, P3, P4> fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    DeviceInfoBaseDisplayMetricsAndroid<P0, P1, P2, P3, P4> result{
+      bridging::fromJs<P0>(rt, value.getProperty(rt, "width"), jsInvoker),
+      bridging::fromJs<P1>(rt, value.getProperty(rt, "height"), jsInvoker),
+      bridging::fromJs<P2>(rt, value.getProperty(rt, "scale"), jsInvoker),
+      bridging::fromJs<P3>(rt, value.getProperty(rt, "fontScale"), jsInvoker),
+      bridging::fromJs<P4>(rt, value.getProperty(rt, "densityDpi"), jsInvoker)};
+    return result;
+  }
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const DeviceInfoBaseDisplayMetricsAndroid<P0, P1, P2, P3, P4> &value) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "width", bridging::toJs(rt, value.width));
+    result.setProperty(rt, "height", bridging::toJs(rt, value.height));
+    result.setProperty(rt, "scale", bridging::toJs(rt, value.scale));
+    result.setProperty(rt, "fontScale", bridging::toJs(rt, value.fontScale));
+    result.setProperty(rt, "densityDpi", bridging::toJs(rt, value.densityDpi));
+    return result;
+  }
+};
+
+
+#pragma mark - DeviceInfoBaseDimensionsPayload
+
+template <typename P0, typename P1, typename P2, typename P3>
+struct DeviceInfoBaseDimensionsPayload {
+  P0 window;
+  P1 screen;
+  P2 windowPhysicalPixels;
+  P3 screenPhysicalPixels;
+  bool operator==(const DeviceInfoBaseDimensionsPayload &other) const {
+    return window == other.window && screen == other.screen && windowPhysicalPixels == other.windowPhysicalPixels && screenPhysicalPixels == other.screenPhysicalPixels;
+  }
+};
+
+template <typename P0, typename P1, typename P2, typename P3>
+struct DeviceInfoBaseDimensionsPayloadBridging {
+  static DeviceInfoBaseDimensionsPayload<P0, P1, P2, P3> fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    DeviceInfoBaseDimensionsPayload<P0, P1, P2, P3> result{
+      bridging::fromJs<P0>(rt, value.getProperty(rt, "window"), jsInvoker),
+      bridging::fromJs<P1>(rt, value.getProperty(rt, "screen"), jsInvoker),
+      bridging::fromJs<P2>(rt, value.getProperty(rt, "windowPhysicalPixels"), jsInvoker),
+      bridging::fromJs<P3>(rt, value.getProperty(rt, "screenPhysicalPixels"), jsInvoker)};
+    return result;
+  }
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const DeviceInfoBaseDimensionsPayload<P0, P1, P2, P3> &value) {
+    auto result = facebook::jsi::Object(rt);
+    if (value.window) {
+      result.setProperty(rt, "window", bridging::toJs(rt, value.window.value()));
+    }
+    if (value.screen) {
+      result.setProperty(rt, "screen", bridging::toJs(rt, value.screen.value()));
+    }
+    if (value.windowPhysicalPixels) {
+      result.setProperty(rt, "windowPhysicalPixels", bridging::toJs(rt, value.windowPhysicalPixels.value()));
+    }
+    if (value.screenPhysicalPixels) {
+      result.setProperty(rt, "screenPhysicalPixels", bridging::toJs(rt, value.screenPhysicalPixels.value()));
+    }
+    return result;
+  }
+};
+
 class JSI_EXPORT NativeDeviceInfoCxxSpecJSI : public TurboModule {
 protected:
   NativeDeviceInfoCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
@@ -3211,6 +3958,60 @@ private:
   Delegate delegate_;
 };
 
+#pragma mark - NativePerformanceObserverCxxBaseRawPerformanceEntry
+
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6>
+struct NativePerformanceObserverCxxBaseRawPerformanceEntry {
+  P0 name;
+  P1 entryType;
+  P2 startTime;
+  P3 duration;
+  P4 processingStart;
+  P5 processingEnd;
+  P6 interactionId;
+  bool operator==(const NativePerformanceObserverCxxBaseRawPerformanceEntry &other) const {
+    return name == other.name && entryType == other.entryType && startTime == other.startTime && duration == other.duration && processingStart == other.processingStart && processingEnd == other.processingEnd && interactionId == other.interactionId;
+  }
+};
+
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6>
+struct NativePerformanceObserverCxxBaseRawPerformanceEntryBridging {
+  static NativePerformanceObserverCxxBaseRawPerformanceEntry<P0, P1, P2, P3, P4, P5, P6> fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    NativePerformanceObserverCxxBaseRawPerformanceEntry<P0, P1, P2, P3, P4, P5, P6> result{
+      bridging::fromJs<P0>(rt, value.getProperty(rt, "name"), jsInvoker),
+      bridging::fromJs<P1>(rt, value.getProperty(rt, "entryType"), jsInvoker),
+      bridging::fromJs<P2>(rt, value.getProperty(rt, "startTime"), jsInvoker),
+      bridging::fromJs<P3>(rt, value.getProperty(rt, "duration"), jsInvoker),
+      bridging::fromJs<P4>(rt, value.getProperty(rt, "processingStart"), jsInvoker),
+      bridging::fromJs<P5>(rt, value.getProperty(rt, "processingEnd"), jsInvoker),
+      bridging::fromJs<P6>(rt, value.getProperty(rt, "interactionId"), jsInvoker)};
+    return result;
+  }
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const NativePerformanceObserverCxxBaseRawPerformanceEntry<P0, P1, P2, P3, P4, P5, P6> &value) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "name", bridging::toJs(rt, value.name));
+    result.setProperty(rt, "entryType", bridging::toJs(rt, value.entryType));
+    result.setProperty(rt, "startTime", bridging::toJs(rt, value.startTime));
+    result.setProperty(rt, "duration", bridging::toJs(rt, value.duration));
+    if (value.processingStart) {
+      result.setProperty(rt, "processingStart", bridging::toJs(rt, value.processingStart.value()));
+    }
+    if (value.processingEnd) {
+      result.setProperty(rt, "processingEnd", bridging::toJs(rt, value.processingEnd.value()));
+    }
+    if (value.interactionId) {
+      result.setProperty(rt, "interactionId", bridging::toJs(rt, value.interactionId.value()));
+    }
+    return result;
+  }
+};
+
 class JSI_EXPORT NativePerformanceObserverCxxSpecJSI : public TurboModule {
 protected:
   NativePerformanceObserverCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
@@ -3220,6 +4021,7 @@ public:
   virtual void stopReporting(jsi::Runtime &rt, jsi::String entryType) = 0;
   virtual jsi::Array getPendingEntries(jsi::Runtime &rt) = 0;
   virtual void setOnPerformanceEntryCallback(jsi::Runtime &rt, std::optional<jsi::Function> callback) = 0;
+  virtual void logEntryForDebug(jsi::Runtime &rt, jsi::Object entry) = 0;
 
 };
 
@@ -3272,6 +4074,14 @@ private:
 
       return bridging::callFromJs<void>(
           rt, &T::setOnPerformanceEntryCallback, jsInvoker_, instance_, std::move(callback));
+    }
+    void logEntryForDebug(jsi::Runtime &rt, jsi::Object entry) override {
+      static_assert(
+          bridging::getParameterCount(&T::logEntryForDebug) == 2,
+          "Expected logEntryForDebug(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::logEntryForDebug, jsInvoker_, instance_, std::move(entry));
     }
 
   private:
@@ -4462,6 +5272,68 @@ private:
   };
 
   Delegate delegate_;
+};
+
+#pragma mark - DialogManagerAndroidBaseDialogOptions
+
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6>
+struct DialogManagerAndroidBaseDialogOptions {
+  P0 title;
+  P1 message;
+  P2 buttonPositive;
+  P3 buttonNegative;
+  P4 buttonNeutral;
+  P5 items;
+  P6 cancelable;
+  bool operator==(const DialogManagerAndroidBaseDialogOptions &other) const {
+    return title == other.title && message == other.message && buttonPositive == other.buttonPositive && buttonNegative == other.buttonNegative && buttonNeutral == other.buttonNeutral && items == other.items && cancelable == other.cancelable;
+  }
+};
+
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6>
+struct DialogManagerAndroidBaseDialogOptionsBridging {
+  static DialogManagerAndroidBaseDialogOptions<P0, P1, P2, P3, P4, P5, P6> fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    DialogManagerAndroidBaseDialogOptions<P0, P1, P2, P3, P4, P5, P6> result{
+      bridging::fromJs<P0>(rt, value.getProperty(rt, "title"), jsInvoker),
+      bridging::fromJs<P1>(rt, value.getProperty(rt, "message"), jsInvoker),
+      bridging::fromJs<P2>(rt, value.getProperty(rt, "buttonPositive"), jsInvoker),
+      bridging::fromJs<P3>(rt, value.getProperty(rt, "buttonNegative"), jsInvoker),
+      bridging::fromJs<P4>(rt, value.getProperty(rt, "buttonNeutral"), jsInvoker),
+      bridging::fromJs<P5>(rt, value.getProperty(rt, "items"), jsInvoker),
+      bridging::fromJs<P6>(rt, value.getProperty(rt, "cancelable"), jsInvoker)};
+    return result;
+  }
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const DialogManagerAndroidBaseDialogOptions<P0, P1, P2, P3, P4, P5, P6> &value) {
+    auto result = facebook::jsi::Object(rt);
+    if (value.title) {
+      result.setProperty(rt, "title", bridging::toJs(rt, value.title.value()));
+    }
+    if (value.message) {
+      result.setProperty(rt, "message", bridging::toJs(rt, value.message.value()));
+    }
+    if (value.buttonPositive) {
+      result.setProperty(rt, "buttonPositive", bridging::toJs(rt, value.buttonPositive.value()));
+    }
+    if (value.buttonNegative) {
+      result.setProperty(rt, "buttonNegative", bridging::toJs(rt, value.buttonNegative.value()));
+    }
+    if (value.buttonNeutral) {
+      result.setProperty(rt, "buttonNeutral", bridging::toJs(rt, value.buttonNeutral.value()));
+    }
+    if (value.items) {
+      result.setProperty(rt, "items", bridging::toJs(rt, value.items.value()));
+    }
+    if (value.cancelable) {
+      result.setProperty(rt, "cancelable", bridging::toJs(rt, value.cancelable.value()));
+    }
+    return result;
+  }
 };
 
 class JSI_EXPORT NativeDialogManagerAndroidCxxSpecJSI : public TurboModule {

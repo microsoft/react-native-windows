@@ -16,11 +16,11 @@
     "@typescript-eslint/parser": "^5.21.0",
     "chai": "^4.2.0",
     "react": "18.2.0",
-    "react-native": "0.0.0-20221120-2051-81e441ae8",
+    "react-native": "0.0.0-20221202-2018-dfbb63996",
     "react-native-windows": "^0.0.0-canary.590"
   },
   "devDependencies": {
-    "@babel/core": "^7.14.0",
+    "@babel/core": "^7.20.0",
     "@babel/parser": "^7.11.5",
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-typescript": "^7.11.5",
