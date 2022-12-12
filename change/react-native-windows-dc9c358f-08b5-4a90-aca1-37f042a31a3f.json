@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix raw text update clearing Text",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
