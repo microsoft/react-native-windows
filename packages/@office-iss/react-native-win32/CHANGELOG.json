@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 12 Dec 2022 16:13:51 GMT",
+      "tag": "@office-iss/react-native-win32_v0.69.4",
+      "version": "0.69.4",
+      "comments": {
+        "none": [
+          {
+            "author": "email not defined",
+            "package": "@office-iss/react-native-win32",
+            "commit": "bc8fbcf922306fddbc976920b8026989f878e639",
+            "comment": "add new prop alwaysShowToolTip to ViewWin32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 07 Nov 2022 16:12:51 GMT",
       "tag": "@office-iss/react-native-win32_v0.69.4",
       "version": "0.69.4",

@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 12 Dec 2022 16:13:51 GMT",
+      "tag": "react-native-windows_v0.69.15",
+      "version": "0.69.15",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "4b540b23edd510919ecaf37f7342f2277fc3a9be",
+            "comment": "Allow fetching HTTP content by segments"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 28 Nov 2022 16:13:21 GMT",
       "tag": "react-native-windows_v0.69.14",
       "version": "0.69.14",
