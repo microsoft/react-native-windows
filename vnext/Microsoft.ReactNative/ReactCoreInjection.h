@@ -46,6 +46,9 @@ struct ReactCoreInjection : ReactCoreInjectionT<ReactCoreInjection> {
   static void PostToUIBatchingQueue(
       ReactNative::IReactContext context,
       ReactNative::ReactDispatcherCallback callback) noexcept;
+
+  static void SetPlatformNameOverride(IReactPropertyBag const &properties, winrt::hstring const &platformName) noexcept;
+  static std::string GetPlatformName(IReactPropertyBag const &properties) noexcept;
 };
 
 struct ReactViewHost : public winrt::implements<ReactViewHost, IReactViewHost> {

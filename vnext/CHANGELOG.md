@@ -1,8 +1,37 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 02 Dec 2022 06:19:04 GMT and should not be manually modified.
+This log was last generated on Sat, 10 Dec 2022 06:15:31 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.593
+
+Sat, 10 Dec 2022 06:15:31 GMT
+
+### Changes
+
+- Remove work around for broken Utilities import in core (30809111+acoates-ms@users.noreply.github.com)
+- Bump react-native-platform-override to v1.8.4
+
+## 0.0.0-canary.592
+
+Fri, 09 Dec 2022 06:14:58 GMT
+
+### Changes
+
+- Implement rowGap, columnGap and gap flex properties (30809111+acoates-ms@users.noreply.github.com)
+- More support for running fabric in desktop dll (30809111+acoates-ms@users.noreply.github.com)
+- Adds logic to retain undo/redo history for TextInput (erozell@outlook.com)
+
+## 0.0.0-canary.591
+
+Wed, 07 Dec 2022 06:14:42 GMT
+
+### Changes
+
+- Implement HTTP incremental updates (julio.rocha@microsoft.com)
+- integration 11/18/22 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.154
 
 ## 0.0.0-canary.590
 
