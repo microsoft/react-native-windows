@@ -7,7 +7,7 @@
   "typings": "./lib-commonjs/Api.d.ts",
   "repository": {
     "type": "git",
-    "url": "git@github.com:microsoft/react-native-windows.git",
+    "url": "https://github.com/microsoft/react-native-windows",
     "directory": "packages/react-native-platform-override"
   },
   "scripts": {

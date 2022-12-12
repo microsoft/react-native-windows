@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Standardize on the repository field in package.json",
+  "packageName": "@react-native-windows/package-utils",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch"
+}

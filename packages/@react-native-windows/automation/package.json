@@ -3,7 +3,11 @@
   "version": "0.3.14",
   "description": "UI Automation Suite for React Native Windows Applications",
   "main": "lib-commonjs/index.js",
-  "repository": "https://github.com/microsoft/react-native-windows",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/react-native-windows",
+    "directory": "packages/@react-native-windows/automation"
+  },
   "license": "MIT",
   "private": false,
   "scripts": {

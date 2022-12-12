@@ -5,7 +5,7 @@
   "main": "babel.config.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/microsoft/react-native-windows.git",
+    "url": "https://github.com/microsoft/react-native-windows",
     "directory": "packages/@rnw-scripts/babel-node-config"
   },
   "devDependencies": {

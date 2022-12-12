@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Standardize on the repository field in package.json",
+  "packageName": "@rnw-scripts/jest-unittest-config",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch"
+}
