@@ -5,7 +5,7 @@
   "main": "jest.debug.config.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/microsoft/react-native-windows.git",
+    "url": "https://github.com/microsoft/react-native-windows",
     "directory": "packages/@rnw-scripts/jest-debug-config"
   },
   "dependencies": {

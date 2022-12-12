@@ -2,6 +2,11 @@
   "name": "@office-iss/react-native-win32",
   "version": "0.0.0-canary.172",
   "description": "Implementation of react native on top of Office's Win32 platform.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/react-native-windows",
+    "directory": "packages/@office-iss/react-native-win32"
+  },
   "license": "MIT",
   "main": "./index.win32.js",
   "types": "types",

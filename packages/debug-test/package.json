@@ -1,7 +1,7 @@
 {
   "name": "debug-test",
   "version": "0.0.0",
-  "private": "true",
+  "private": true,
   "scripts": {
     "debugtest": "jest",
     "lint": "rnw-scripts lint",
