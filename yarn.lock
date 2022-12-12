@@ -150,7 +150,7 @@
   resolved "https://registry.yarnpkg.com/@babel/compat-data/-/compat-data-7.20.1.tgz#f2e6ef7790d8c8dbf03d379502dcc246dcce0b30"
   integrity sha512-EWZ4mE2diW3QALKvDMiXnbZpRvlj+nayZ112nK93SnhqOtpdsbVD4W+2tEoT3YNBAG9RBR0ISY758ZkOgsn6pQ==
 
-"@babel/core@^7.1.6", "@babel/core@^7.11.6", "@babel/core@^7.12.3", "@babel/core@^7.13.16", "@babel/core@^7.14.0":
+"@babel/core@^7.1.6", "@babel/core@^7.11.6", "@babel/core@^7.12.3", "@babel/core@^7.13.16", "@babel/core@^7.14.0", "@babel/core@^7.20.0":
   version "7.20.5"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.20.5.tgz#45e2114dc6cd4ab167f81daf7820e8fa1250d113"
   integrity sha512-UdOWmk4pNWTm/4DlPUl/Pt4Gz4rcEMb7CY0Y3eJl5Yz1vI8ZJGmHWaVE55LoxRjdpx0z259GE9U5STA9atUinQ==
@@ -171,7 +171,7 @@
     json5 "^2.2.1"
     semver "^6.3.0"
 
-"@babel/eslint-parser@^7.18.2":
+"@babel/eslint-parser@^7.18.2", "@babel/eslint-parser@^7.19.0":
   version "7.19.1"
   resolved "https://registry.yarnpkg.com/@babel/eslint-parser/-/eslint-parser-7.19.1.tgz#4f68f6b0825489e00a24b41b6a1ae35414ecd2f4"
   integrity sha512-AqNf2QWt1rtu2/1rLswy6CDP7H9Oh3mMhk177Y67Rg8d7RD9WfOLLv8CGn6tisFvS2htm86yIe1yLF6I1UDaGQ==
@@ -470,7 +470,7 @@
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.16.4.tgz#d5f92f57cf2c74ffe9b37981c0e72fee7311372e"
   integrity sha512-6V0qdPUaiVHH3RtZeLIsc+6pDhbYzHR8ogA8w+f+Wc77DuXto19g2QUwveINoS34Uw+W8/hQDGJCx+i4n7xcng==
 
-"@babel/parser@^7.1.0", "@babel/parser@^7.1.6", "@babel/parser@^7.11.5", "@babel/parser@^7.13.16", "@babel/parser@^7.14.0", "@babel/parser@^7.14.7", "@babel/parser@^7.16.4", "@babel/parser@^7.18.10", "@babel/parser@^7.20.5":
+"@babel/parser@^7.1.0", "@babel/parser@^7.1.6", "@babel/parser@^7.11.5", "@babel/parser@^7.13.16", "@babel/parser@^7.14.0", "@babel/parser@^7.14.7", "@babel/parser@^7.16.4", "@babel/parser@^7.18.10", "@babel/parser@^7.20.0", "@babel/parser@^7.20.5":
   version "7.20.5"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.20.5.tgz#7f3c7335fe417665d929f34ae5dceae4c04015e8"
   integrity sha512-r27t/cy/m9uKLXQNWWebeCUHgnAZq0CpG1OwKRxzJMP1vpSU4bSIK2hq+/cp0bQxetkXx38n09rNu8jVkcK/zA==
@@ -1195,7 +1195,7 @@
     core-js-compat "^3.25.1"
     semver "^6.3.0"
 
-"@babel/preset-flow@^7.0.0", "@babel/preset-flow@^7.13.13", "@babel/preset-flow@^7.17.12":
+"@babel/preset-flow@^7.0.0", "@babel/preset-flow@^7.13.13", "@babel/preset-flow@^7.18.0":
   version "7.18.6"
   resolved "https://registry.yarnpkg.com/@babel/preset-flow/-/preset-flow-7.18.6.tgz#83f7602ba566e72a9918beefafef8ef16d2810cb"
   integrity sha512-E7BDhL64W6OUqpuyHnSroLnqyRTcG6ZdOBl1OKI/QK/HJfplqK/S3sq1Cckx7oTodJ5yOXyfw7rEADJ6UjoQDQ==
@@ -2181,19 +2181,29 @@
   resolved "https://registry.yarnpkg.com/@react-native/assets/-/assets-1.0.0.tgz#c6f9bf63d274bafc8e970628de24986b30a55c8e"
   integrity sha512-KrwSpS1tKI70wuKl68DwJZYEvXktDHdZMG0k2AXD/rJVSlB23/X2CB2cutVR0HwNMJIal9HOUOBB2rVfa6UGtQ==
 
-"@react-native/eslint-plugin-specs@^0.72.0":
-  version "0.72.0"
-  resolved "https://registry.yarnpkg.com/@react-native/eslint-plugin-specs/-/eslint-plugin-specs-0.72.0.tgz#c55200ed39928ae1a94943dc9e86ecc620b5c101"
-  integrity sha512-kuw8HPpeJJhySOUNMwQTPGmZVuZA9dd0bvuRqRQWPUctmubVrBuVoAUJ023Nf2sWkql+WpMLBGGAiInmV0CGfA==
+"@react-native/codegen@*":
+  version "0.72.1"
+  resolved "https://registry.yarnpkg.com/@react-native/codegen/-/codegen-0.72.1.tgz#28fd5e113c5db969fbc7fbfa3ee515bde7ce5ad7"
+  integrity sha512-GHI5np5u1yzPkVAfDuFOKVqpsiDMKJGHG8dEe0uUUkTuEcPxKmSifH0EXbVJm6pPFQO4AKH1J5j1dYtE44UTgA==
   dependencies:
-    "@babel/core" "^7.14.0"
-    "@babel/eslint-parser" "^7.18.2"
+    "@babel/parser" "^7.20.0"
+    flow-parser "^0.185.0"
+    jscodeshift "^0.14.0"
+    nullthrows "^1.1.1"
+
+"@react-native/eslint-plugin-specs@^0.72.0":
+  version "0.72.1"
+  resolved "https://registry.yarnpkg.com/@react-native/eslint-plugin-specs/-/eslint-plugin-specs-0.72.1.tgz#6af0f25d9347f6500d8de433a44b07b2306ffff8"
+  integrity sha512-6YCMEnO7lXhEC7l8ZbgQsh+udlxTacBjYJqPnLpCEp7uDHmOf6L39qHwvXO5Im0Ch5mQtBF9pLxUapXlie331A==
+  dependencies:
+    "@babel/core" "^7.20.0"
+    "@babel/eslint-parser" "^7.19.0"
     "@babel/plugin-transform-flow-strip-types" "^7.0.0"
-    "@babel/preset-flow" "^7.17.12"
+    "@babel/preset-flow" "^7.18.0"
+    "@react-native/codegen" "*"
     flow-parser "^0.185.0"
     make-dir "^2.1.0"
     pirates "^4.0.1"
-    react-native-codegen "*"
     source-map-support "0.5.0"
 
 "@react-native/normalize-color@*", "@react-native/normalize-color@2.1.0":
@@ -10058,7 +10068,7 @@ react-is@^18.0.0, react-is@^18.2.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.2.0.tgz#199431eeaaa2e09f86427efbb4f1473edb47609b"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
 
-react-native-codegen@*, react-native-codegen@^0.72.0:
+react-native-codegen@^0.72.0:
   version "0.72.0"
   resolved "https://registry.yarnpkg.com/react-native-codegen/-/react-native-codegen-0.72.0.tgz#b130e9798bbbc70a75e293b432438e65bda9d3c5"
   integrity sha512-FoM//DIikIgdTurw+3EJyM4enZSKDdEswxhvWa/6eiRNzCegPFVLgk7WppGfJ084R3jEE2Q1e0IHu+nhff6LeA==
