@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Standardize on the repository field in package.json",
-  "packageName": "@rnw-scripts/jest-e2e-config",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch"
-}
