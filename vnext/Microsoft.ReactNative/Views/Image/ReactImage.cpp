@@ -334,6 +334,25 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
                 ImageFailed(svgImageSource, args);
               });
 
+          double height{strong_this->Height()};
+          double width{strong_this->Width()};
+
+          if (std::isnan(height)) {
+            height = strong_this->ActualHeight();
+            if (std::isnan(height)) {
+              height = 0;
+            }
+          }
+
+          if (std::isnan(width)) {
+            width = strong_this->ActualWidth();
+            if (std::isnan(width)) {
+              width = 0;
+            }
+          }
+
+          svgImageSource.RasterizePixelHeight(height);
+          svgImageSource.RasterizePixelWidth(width);
           imageBrush.ImageSource(svgImageSource);
         }
 
