@@ -36,6 +36,7 @@
     <file src="$nugetroot$\ARM64\Release\React.Windows.Desktop.Test.DLL\React.Windows.Desktop.Test.**"  target="lib\ship\ARM64"   exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
 
     <file src="$nugetroot$\inc\callinvoker\ReactCommon\CallInvoker.h" target="inc\ReactCommon"/>
+    <file src="$nugetroot$\inc\callinvoker\ReactCommon\SchedulerPriority.h" target="inc\ReactCommon"/>
     <file src="$nugetroot$\inc\runtimeexecutor\ReactCommon\RuntimeExecutor.h" target="inc\ReactCommon"/>
     <file src="$nugetroot$\inc\cxxreact\*" target="inc\cxxreact"/>
     <file src="$nugetroot$\inc\jsi\**\*.*" target="inc\jsi"/>
