@@ -108,10 +108,13 @@ bool ControlViewManager::UpdateProperty(
 void ControlViewManager::OnPropertiesUpdated(ShadowNodeBase *node) {
   auto control(node->GetView().as<xaml::Controls::Control>());
 
+  // If developer specifies either the accessible and focusable prop to be false
+  // remove accessibility and keyboard focus for component.
   if (IsAccessible() != IsFocusable()) {
     control.IsTabStop(false);
     xaml::Automation::AutomationProperties::SetAccessibilityView(
         control, xaml::Automation::Peers::AccessibilityView::Raw);
+    control.IsEnabled(false);
   }
 }
 

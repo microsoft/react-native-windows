@@ -123,9 +123,6 @@ class ViewShadowNode : public ShadowNodeBase {
   }
   void IsFocusable(bool isFocusable) {
     m_isFocusable = isFocusable;
-
-    if (IsControl())
-      GetControl().IsTabStop(m_isFocusable);
   }
 
   bool IsAccessible() const {
@@ -405,23 +402,18 @@ bool ViewViewManager::UpdateProperty(
     if (TryUpdateBackgroundBrush(pPanel, propertyName, propertyValue)) {
     } else if (TryUpdateBorderProperties(nodeToUpdate, pPanel, propertyName, propertyValue)) {
     } else if (TryUpdateCornerRadiusOnNode(nodeToUpdate, pPanel, propertyName, propertyValue)) {
-      UpdateCornerRadiusOnElement(nodeToUpdate, pPanel);
     } else if (TryUpdateMouseEvents(nodeToUpdate, propertyName, propertyValue)) {
     } else if (propertyName == "onClick") {
-      pViewShadowNode->OnClick(!propertyValue.IsNull() && propertyValue.AsBoolean());
+      pViewShadowNode->OnClick(propertyValue.AsBoolean());
     } else if (propertyName == "overflow") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
         bool clipChildren = propertyValue.AsString() == "hidden";
         pPanel.ClipChildren(clipChildren);
       }
     } else if (propertyName == "focusable") {
-      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)
-        pViewShadowNode->IsFocusable(propertyValue.AsBoolean());
+      pViewShadowNode->IsFocusable(propertyValue.AsBoolean());
     } else if (propertyName == "enableFocusRing") {
-      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)
-        pViewShadowNode->EnableFocusRing(propertyValue.AsBoolean());
-      else if (propertyValue.IsNull())
-        pViewShadowNode->EnableFocusRing(false);
+      pViewShadowNode->EnableFocusRing(propertyValue.AsBoolean());
     } else if (propertyName == "tabIndex") {
       auto tabIndex = propertyValue.AsInt64();
       if (tabIndex == static_cast<int32_t>(tabIndex)) {
@@ -431,9 +423,7 @@ bool ViewViewManager::UpdateProperty(
       }
     } else {
       if (propertyName == "accessible") {
-        if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
-          pViewShadowNode->IsAccessible(propertyValue.AsBoolean());
-        }
+        pViewShadowNode->IsAccessible(propertyValue.AsBoolean());
       }
       ret = Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
     }
@@ -445,7 +435,6 @@ bool ViewViewManager::UpdateProperty(
 void ViewViewManager::OnPropertiesUpdated(ShadowNodeBase *node) {
   auto *viewShadowNode = static_cast<ViewShadowNode *>(node);
   auto panel = viewShadowNode->GetViewPanel();
-
   if (panel.ReadLocalValue(ViewPanel::ViewBackgroundProperty()) == xaml::DependencyProperty::UnsetValue()) {
     // In XAML, a null background means no hit-test will happen.
     // We actually want hit-testing to happen if the app has registered
@@ -458,7 +447,10 @@ void ViewViewManager::OnPropertiesUpdated(ShadowNodeBase *node) {
     // keep it around, so not adding that code (yet).
   }
 
-  bool shouldBeControl = viewShadowNode->IsFocusable();
+  // If component is focusable, it should be a ViewControl.
+  // If component is a View with accessible set to true, the component should be focusable, thus we need a ViewControl.
+  bool shouldBeControl =
+      (viewShadowNode->IsFocusable() || (viewShadowNode->IsAccessible() && !viewShadowNode->OnClick()));
   if (auto view = viewShadowNode->GetView().try_as<xaml::UIElement>()) {
     // If we have DynamicAutomationProperties, we need a ViewControl with a
     // DynamicAutomationPeer
@@ -468,6 +460,7 @@ void ViewViewManager::OnPropertiesUpdated(ShadowNodeBase *node) {
   panel.FinalizeProperties();
 
   TryUpdateView(viewShadowNode, panel, shouldBeControl);
+  SyncFocusableAndAccessible(viewShadowNode, shouldBeControl);
 }
 
 void ViewViewManager::TryUpdateView(
@@ -578,11 +571,23 @@ void ViewViewManager::TryUpdateView(
 
   if (useControl)
     pViewShadowNode->GetControl().Content(visualRoot);
+}
 
-  if (useControl && pViewShadowNode->IsAccessible() != pViewShadowNode->IsFocusable()) {
-    pViewShadowNode->GetControl().IsTabStop(false);
-    xaml::Automation::AutomationProperties::SetAccessibilityView(
-        pViewShadowNode->GetControl(), xaml::Automation::Peers::AccessibilityView::Raw);
+void ViewViewManager::SyncFocusableAndAccessible(ViewShadowNode *pViewShadowNode, bool useControl) {
+  // If developer specifies either the accessible and focusable prop to be false
+  // remove accessibility and keyboard focus for component. Exception is made
+  // for case where a View with undefined onPress is specified, where
+  // component gains accessibility focus when either the accessible and focusable prop are true.
+  if (useControl) {
+    const auto isFocusable = pViewShadowNode->IsFocusable();
+    const auto isAccessible = pViewShadowNode->IsAccessible();
+    const auto isPressable = pViewShadowNode->OnClick();
+    const auto isTabStop =
+        (isPressable && isFocusable && isAccessible) || (!isPressable && (isFocusable || isAccessible));
+    const auto accessibilityView = isTabStop ? xaml::Automation::Peers::AccessibilityView::Content
+                                             : xaml::Automation::Peers::AccessibilityView::Raw;
+    pViewShadowNode->GetControl().IsTabStop(isTabStop);
+    xaml::Automation::AutomationProperties::SetAccessibilityView(pViewShadowNode->GetControl(), accessibilityView);
   }
 }
 
