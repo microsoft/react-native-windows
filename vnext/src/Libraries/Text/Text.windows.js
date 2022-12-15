@@ -14,6 +14,7 @@ import type {TextProps} from './TextProps';
 
 import * as PressabilityDebug from '../Pressability/PressabilityDebug';
 import usePressability from '../Pressability/usePressability';
+import StyleSheet from '../StyleSheet/StyleSheet';
 import flattenStyle from '../StyleSheet/flattenStyle';
 import processColor from '../StyleSheet/processColor';
 import {getAccessibilityRoleFromRole} from '../Utilities/AcessibilityMapping';
@@ -54,6 +55,14 @@ const Text: React.AbstractComponent<
     onPress,
     onPressIn,
     onPressOut,
+    // [Windows
+    onBlur,
+    onFocus,
+    onMouseEnter,
+    onMouseLeave,
+    onKeyDown,
+    onKeyUp,
+    // Windows]
     onResponderGrant,
     onResponderMove,
     onResponderRelease,
@@ -132,6 +141,14 @@ const Text: React.AbstractComponent<
       onPress,
       onPressIn,
       onPressOut,
+      // [Windows
+      onBlur,
+      onFocus,
+      onMouseEnter,
+      onMouseLeave,
+      onKeyDown,
+      onKeyUp,
+      // Windows]
       onResponderTerminationRequest,
       onStartShouldSetResponder,
       suppressHighlighting,
@@ -169,6 +186,13 @@ const Text: React.AbstractComponent<
               }
             },
             onClick: eventHandlers.onClick,
+            // [Windows
+            onBlur: eventHandlers.onBlur,
+            onFocus: eventHandlers.onFocus,
+            onMouseEnter: eventHandlers.onMouseEnter,
+            onMouseLeave: eventHandlers.onMouseLeave,
+            onKeyDown: eventHandlers.onKeyDown,
+            onKeyUp: eventHandlers.onKeyUp, // Windows]
             onResponderTerminationRequest:
               eventHandlers.onResponderTerminationRequest,
             onStartShouldSetResponder: eventHandlers.onStartShouldSetResponder,
@@ -188,11 +212,18 @@ const Text: React.AbstractComponent<
       ? null
       : processColor(restProps.selectionColor);
 
-  let style = restProps.style;
+  let style = flattenStyle(restProps.style);
+
+  let _selectable = restProps.selectable;
+  if (style?.userSelect != null) {
+    _selectable = userSelectToSelectableMap[style.userSelect];
+  }
 
   if (__DEV__) {
     if (PressabilityDebug.isEnabled() && onPress != null) {
-      style = [restProps.style, {color: 'magenta'}];
+      style = StyleSheet.compose(restProps.style, {
+        color: 'magenta',
+      });
     }
   }
 
@@ -211,22 +242,16 @@ const Text: React.AbstractComponent<
     default: accessible,
   });
 
-  style = flattenStyle(style);
+  let flattenedStyle = flattenStyle(style);
 
-  if (typeof style?.fontWeight === 'number') {
-    style.fontWeight = style?.fontWeight.toString();
+  if (typeof flattenedStyle?.fontWeight === 'number') {
+    flattenedStyle.fontWeight = flattenedStyle?.fontWeight.toString();
   }
 
-  let _selectable = restProps.selectable;
-  if (style?.userSelect != null) {
-    _selectable = userSelectToSelectableMap[style.userSelect];
-    delete style.userSelect;
-  }
-
-  if (style?.verticalAlign != null) {
-    style.textAlignVertical =
-      verticalAlignToTextAlignVerticalMap[style.verticalAlign];
-    delete style.verticalAlign;
+  if (flattenedStyle?.verticalAlign != null) {
+    flattenedStyle.textAlignVertical =
+      verticalAlignToTextAlignVerticalMap[flattenedStyle.verticalAlign];
+    delete flattenedStyle.verticalAlign;
   }
 
   const _hasOnPressOrOnLongPress =
@@ -257,7 +282,7 @@ const Text: React.AbstractComponent<
         ref={forwardedRef}
         selectable={_selectable}
         selectionColor={selectionColor}
-        style={style}
+        style={flattenedStyle}
       />
     );
   } else {
@@ -274,7 +299,7 @@ const Text: React.AbstractComponent<
         styleProps.borderTopWidth)
     ) {
       let textStyleProps = Array.isArray(styleProps)
-        ? flattenStyle(styleProps)
+        ? StyleSheet.flatten(styleProps)
         : styleProps;
       let {
         margin,
