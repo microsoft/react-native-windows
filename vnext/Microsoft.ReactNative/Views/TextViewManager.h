@@ -29,6 +29,8 @@ class TextViewManager : public FrameworkElementViewManager {
 
   static void UpdateTextHighlighters(ShadowNodeBase *node, bool highlightAdded);
 
+  static void UpdateOptimizedText(ShadowNodeBase *node);
+
   static void SetDescendantPressable(ShadowNodeBase *node);
 
   static TextTransform GetTextTransformValue(ShadowNodeBase *node);

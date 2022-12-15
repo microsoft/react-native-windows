@@ -142,7 +142,7 @@ struct NativeAnimatedModule : std::enable_shared_from_this<NativeAnimatedModule>
   void queueAndExecuteBatchedOperations(::React::JSValueArray &&operationsAndArgs) noexcept;
 
  private:
-  std::shared_ptr<NativeAnimatedNodeManager> m_nodesManager{std::make_shared<NativeAnimatedNodeManager>()};
+  std::shared_ptr<NativeAnimatedNodeManager> m_nodesManager;
   winrt::Microsoft::ReactNative::ReactContext m_context;
 };
 } // namespace Microsoft::ReactNative

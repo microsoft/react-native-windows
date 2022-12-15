@@ -7,6 +7,7 @@
  */
 
 import type {TurboModule} from '../TurboModule/RCTExport';
+
 import * as TurboModuleRegistry from '../TurboModule/TurboModuleRegistry';
 
 export interface Spec extends TurboModule {
@@ -16,7 +17,7 @@ export interface Spec extends TurboModule {
       major: number,
       minor: number,
       patch: number,
-      prerelease: ?number,
+      prerelease: ?string,
     |},
     osVersion: number,
   |};

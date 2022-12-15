@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": ".",
-    "rootDir": "src"
+    "rootDir": "src",
   },
   "include": ["src"],
   "exclude": ["node_modules"]

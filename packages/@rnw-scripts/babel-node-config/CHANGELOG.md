@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/babel-node-config
 
-This log was last generated on Wed, 05 Oct 2022 05:13:43 GMT and should not be manually modified.
+This log was last generated on Tue, 13 Dec 2022 06:15:23 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.1.1
+
+Tue, 13 Dec 2022 06:15:23 GMT
+
+### Patches
+
+- Standardize on the repository field in package.json (dannyvv@microsoft.com)
 
 ## 2.1.0
 

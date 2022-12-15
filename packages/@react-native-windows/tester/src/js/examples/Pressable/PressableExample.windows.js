@@ -10,15 +10,15 @@
 
 import * as React from 'react';
 import {
+  Alert,
   Animated,
   Image,
+  Platform,
   Pressable,
   StyleSheet,
   Text,
   TouchableHighlight,
-  Platform,
   View,
-  Alert,
   Switch,
 } from 'react-native';
 import ReactNativeFeatureFlags from 'react-native/Libraries/ReactNative/ReactNativeFeatureFlags';
@@ -103,7 +103,7 @@ function PressableAriaLabel() {
   );
 }
 function PressableFeedbackEvents() {
-  const [eventLog, setEventLog] = useState([]);
+  const [eventLog, setEventLog] = useState<Array<string>>([]);
 
   function appendEvent(eventName: string) {
     const limit = 6;
@@ -143,7 +143,7 @@ function PressableFeedbackEvents() {
 }
 
 function PressableDelayEvents() {
-  const [eventLog, setEventLog] = useState([]);
+  const [eventLog, setEventLog] = useState<Array<string>>([]);
 
   function appendEvent(eventName: string) {
     const limit = 6;
@@ -232,7 +232,7 @@ function PressableHitSlop() {
 
 function PressableNativeMethods() {
   const [status, setStatus] = useState<?boolean>(null);
-  const ref = useRef(null);
+  const ref = useRef<$FlowFixMe>(null);
 
   useEffect(() => {
     setStatus(ref.current != null && typeof ref.current.measure === 'function');

@@ -54,9 +54,7 @@ void CompositionHwndHost::Initialize(uint64_t hwnd) noexcept {
   CreateDesktopWindowTarget(m_hwnd);
   CreateCompositionRoot();
 
-  m_compRootView.InitialProps(std::move(m_initialPropsWriter));
-  m_compRootView.ComponentName(std::move(m_componentName));
-  m_compRootView.ReactNativeHost(std::move(m_reactNativeHost));
+  m_compRootView.ReactViewHost(std::move(m_reactViewHost));
 
   m_compRootView.ScaleFactor(ScaleFactor());
   m_compRootView.RootVisual(
@@ -123,47 +121,25 @@ LRESULT CompositionHwndHost::TranslateMessage(int msg, uint64_t wParam, int64_t 
   return 0;
 }
 
-ReactNative::ReactNativeHost CompositionHwndHost::ReactNativeHost() const noexcept {
-  return m_reactNativeHost ? m_reactNativeHost : m_compRootView.ReactNativeHost();
+ReactNative::IReactViewHost CompositionHwndHost::ReactViewHost() const noexcept {
+  return m_reactViewHost ? m_reactViewHost : m_compRootView.ReactViewHost();
 }
 
-void CompositionHwndHost::ReactNativeHost(ReactNative::ReactNativeHost const &value) noexcept {
+void CompositionHwndHost::ReactViewHost(ReactNative::IReactViewHost const &value) noexcept {
   if (m_compRootView) {
-    m_compRootView.ReactNativeHost(value);
+    m_compRootView.ReactViewHost(value);
   } else {
-    m_reactNativeHost = value;
+    m_reactViewHost = value;
   }
 }
 
 winrt::Windows::UI::Composition::Compositor CompositionHwndHost::Compositor() const noexcept {
   auto compositionContext =
       winrt::Microsoft::ReactNative::Composition::implementation::CompositionUIService::GetCompositionContext(
-          ReactNativeHost().InstanceSettings().Properties());
+          m_reactViewHost.ReactNativeHost().InstanceSettings().Properties());
 
   return winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::InnerCompositor(
       compositionContext);
-}
-
-winrt::hstring CompositionHwndHost::ComponentName() noexcept {
-  return m_compRootView ? m_compRootView.ComponentName() : m_componentName;
-}
-
-void CompositionHwndHost::ComponentName(winrt::hstring const &value) noexcept {
-  if (m_compRootView)
-    m_compRootView.ComponentName(value);
-  else
-    m_componentName = value;
-}
-
-ReactNative::JSValueArgWriter CompositionHwndHost::InitialProps() noexcept {
-  return m_compRootView ? m_compRootView.InitialProps() : m_initialPropsWriter;
-}
-
-void CompositionHwndHost::InitialProps(ReactNative::JSValueArgWriter const &value) noexcept {
-  if (m_compRootView)
-    m_compRootView.InitialProps(value);
-  else
-    m_initialPropsWriter = value;
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

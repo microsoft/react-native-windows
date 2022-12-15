@@ -1,8 +1,180 @@
 # Change Log - debug-test
 
-This log was last generated on Fri, 28 Oct 2022 05:11:30 GMT and should not be manually modified.
+This log was last generated on Sat, 10 Dec 2022 06:15:31 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Sat, 10 Dec 2022 06:15:31 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation to v0.3.14
+
+## 0.0.0
+
+Fri, 09 Dec 2022 06:14:58 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation to v0.3.13
+
+## 0.0.0
+
+Wed, 07 Dec 2022 06:14:43 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation to v0.3.12
+
+## 0.0.0
+
+Fri, 02 Dec 2022 06:19:05 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation to v0.3.11
+- Bump @react-native-windows/fs to v0.0.0-canary.11
+
+## 0.0.0
+
+Thu, 01 Dec 2022 06:15:01 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation to v0.3.10
+
+## 0.0.0
+
+Wed, 30 Nov 2022 06:15:20 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation to v0.3.9
+
+## 0.0.0
+
+Thu, 24 Nov 2022 06:15:42 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation to v0.3.8
+
+## 0.0.0
+
+Wed, 23 Nov 2022 06:16:32 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation to v0.3.7
+
+## 0.0.0
+
+Tue, 22 Nov 2022 06:15:33 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation to v0.3.6
+
+## 0.0.0
+
+Mon, 21 Nov 2022 06:15:36 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation to v0.3.5
+
+## 0.0.0
+
+Wed, 16 Nov 2022 06:16:01 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation to v0.3.4
+- Bump @react-native-windows/fs to v0.0.0-canary.10
+
+## 0.0.0
+
+Tue, 15 Nov 2022 06:16:38 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation to v0.3.3
+
+## 0.0.0
+
+Sat, 12 Nov 2022 06:17:23 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation to v0.3.2
+- Bump @react-native-windows/fs to v0.0.0-canary.9
+
+## 0.0.0
+
+Fri, 11 Nov 2022 06:15:10 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation to v0.3.1
+
+## 0.0.0
+
+Thu, 10 Nov 2022 06:17:12 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation to v0.3.0
+- Bump @react-native-windows/fs to v0.0.0-canary.8
+
+## 0.0.0
+
+Tue, 08 Nov 2022 06:12:54 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation to v0.2.19
+
+## 0.0.0
+
+Mon, 07 Nov 2022 06:12:29 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation to v0.2.18
+
+## 0.0.0
+
+Fri, 04 Nov 2022 05:12:37 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation to v0.2.17
+
+## 0.0.0
+
+Thu, 03 Nov 2022 05:12:36 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation to v0.2.16
+
+## 0.0.0
+
+Wed, 02 Nov 2022 05:12:37 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation to v0.2.15
+
+## 0.0.0
+
+Tue, 01 Nov 2022 05:13:34 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation to v0.2.14
 
 ## 0.0.0
 

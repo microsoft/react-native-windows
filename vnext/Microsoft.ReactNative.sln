@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30002.166
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microsoft.ReactNative", "Microsoft.ReactNative\Microsoft.ReactNative.vcxproj", "{F7D32BD0-2749-483E-9A0D-1635EF7E3136}"
 EndProject
@@ -119,24 +119,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.ReactNative.Managed.IntegrationTests", "Microsoft.ReactNative.Managed.IntegrationTests\Microsoft.ReactNative.Managed.IntegrationTests.csproj", "{E2BE6630-21C7-43A4-AC90-8D2844C06617}"
 EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems*{14fa0516-e6d7-4e4d-b097-1470198c5072}*SharedItemsImports = 4
-		Mso\Mso.vcxitems*{14fa0516-e6d7-4e4d-b097-1470198c5072}*SharedItemsImports = 4
-		Mso\Mso.vcxitems*{1958ceaa-fbe0-44e3-8a99-90ad85531ffe}*SharedItemsImports = 4
-		Shared\Shared.vcxitems*{2049dbe9-8d13-42c9-ae4b-413ae38fffd0}*SharedItemsImports = 9
-		Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems*{6c60e295-c8ca-4dc5-b8be-09888f58b249}*SharedItemsImports = 4
-		Mso\Mso.vcxitems*{6c60e295-c8ca-4dc5-b8be-09888f58b249}*SharedItemsImports = 4
-		Mso\Mso.vcxitems*{84e05bfa-cbaf-4f0d-bfb6-4ce85742a57e}*SharedItemsImports = 9
-		Chakra\Chakra.vcxitems*{93792779-4948-4a5d-8ca7-86ed5e3bec27}*SharedItemsImports = 4
-		Mso\Mso.vcxitems*{93792779-4948-4a5d-8ca7-86ed5e3bec27}*SharedItemsImports = 4
-		Chakra\Chakra.vcxitems*{c38970c0-5fbf-4d69-90d8-cbac225ae895}*SharedItemsImports = 9
-		Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems*{da8b35b3-da00-4b02-bde6-6a397b3fd46b}*SharedItemsImports = 9
-		include\Include.vcxitems*{ef074ba1-2d54-4d49-a28e-5e040b47cd2e}*SharedItemsImports = 9
-		Chakra\Chakra.vcxitems*{f7d32bd0-2749-483e-9a0d-1635ef7e3136}*SharedItemsImports = 4
-		Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems*{f7d32bd0-2749-483e-9a0d-1635ef7e3136}*SharedItemsImports = 4
-		Mso\Mso.vcxitems*{f7d32bd0-2749-483e-9a0d-1635ef7e3136}*SharedItemsImports = 4
-		Shared\Shared.vcxitems*{f7d32bd0-2749-483e-9a0d-1635ef7e3136}*SharedItemsImports = 4
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
@@ -296,8 +278,6 @@ Global
 		{ADED4FBE-887D-4271-AF24-F0823BCE7961}.Release|x86.ActiveCfg = Release|x86
 		{ADED4FBE-887D-4271-AF24-F0823BCE7961}.Release|x86.Build.0 = Release|x86
 		{E2BE6630-21C7-43A4-AC90-8D2844C06617}.Debug|ARM64.ActiveCfg = Debug|ARM64
-		{E2BE6630-21C7-43A4-AC90-8D2844C06617}.Debug|ARM64.Build.0 = Debug|ARM64
-		{E2BE6630-21C7-43A4-AC90-8D2844C06617}.Debug|ARM64.Deploy.0 = Debug|ARM64
 		{E2BE6630-21C7-43A4-AC90-8D2844C06617}.Debug|x64.ActiveCfg = Debug|x64
 		{E2BE6630-21C7-43A4-AC90-8D2844C06617}.Debug|x64.Build.0 = Debug|x64
 		{E2BE6630-21C7-43A4-AC90-8D2844C06617}.Debug|x64.Deploy.0 = Debug|x64
@@ -305,8 +285,6 @@ Global
 		{E2BE6630-21C7-43A4-AC90-8D2844C06617}.Debug|x86.Build.0 = Debug|x86
 		{E2BE6630-21C7-43A4-AC90-8D2844C06617}.Debug|x86.Deploy.0 = Debug|x86
 		{E2BE6630-21C7-43A4-AC90-8D2844C06617}.Release|ARM64.ActiveCfg = Release|ARM64
-		{E2BE6630-21C7-43A4-AC90-8D2844C06617}.Release|ARM64.Build.0 = Release|ARM64
-		{E2BE6630-21C7-43A4-AC90-8D2844C06617}.Release|ARM64.Deploy.0 = Release|ARM64
 		{E2BE6630-21C7-43A4-AC90-8D2844C06617}.Release|x64.ActiveCfg = Release|x64
 		{E2BE6630-21C7-43A4-AC90-8D2844C06617}.Release|x64.Build.0 = Release|x64
 		{E2BE6630-21C7-43A4-AC90-8D2844C06617}.Release|x64.Deploy.0 = Release|x64
@@ -341,5 +319,23 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {988F03E6-640A-4C7E-8B55-C1291B70669E}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems*{14fa0516-e6d7-4e4d-b097-1470198c5072}*SharedItemsImports = 4
+		Mso\Mso.vcxitems*{14fa0516-e6d7-4e4d-b097-1470198c5072}*SharedItemsImports = 4
+		Mso\Mso.vcxitems*{1958ceaa-fbe0-44e3-8a99-90ad85531ffe}*SharedItemsImports = 4
+		Shared\Shared.vcxitems*{2049dbe9-8d13-42c9-ae4b-413ae38fffd0}*SharedItemsImports = 9
+		Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems*{6c60e295-c8ca-4dc5-b8be-09888f58b249}*SharedItemsImports = 4
+		Mso\Mso.vcxitems*{6c60e295-c8ca-4dc5-b8be-09888f58b249}*SharedItemsImports = 4
+		Mso\Mso.vcxitems*{84e05bfa-cbaf-4f0d-bfb6-4ce85742a57e}*SharedItemsImports = 9
+		Chakra\Chakra.vcxitems*{93792779-4948-4a5d-8ca7-86ed5e3bec27}*SharedItemsImports = 4
+		Mso\Mso.vcxitems*{93792779-4948-4a5d-8ca7-86ed5e3bec27}*SharedItemsImports = 4
+		Chakra\Chakra.vcxitems*{c38970c0-5fbf-4d69-90d8-cbac225ae895}*SharedItemsImports = 9
+		Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems*{da8b35b3-da00-4b02-bde6-6a397b3fd46b}*SharedItemsImports = 9
+		include\Include.vcxitems*{ef074ba1-2d54-4d49-a28e-5e040b47cd2e}*SharedItemsImports = 9
+		Chakra\Chakra.vcxitems*{f7d32bd0-2749-483e-9a0d-1635ef7e3136}*SharedItemsImports = 4
+		Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems*{f7d32bd0-2749-483e-9a0d-1635ef7e3136}*SharedItemsImports = 4
+		Mso\Mso.vcxitems*{f7d32bd0-2749-483e-9a0d-1635ef7e3136}*SharedItemsImports = 4
+		Shared\Shared.vcxitems*{f7d32bd0-2749-483e-9a0d-1635ef7e3136}*SharedItemsImports = 4
 	EndGlobalSection
 EndGlobal

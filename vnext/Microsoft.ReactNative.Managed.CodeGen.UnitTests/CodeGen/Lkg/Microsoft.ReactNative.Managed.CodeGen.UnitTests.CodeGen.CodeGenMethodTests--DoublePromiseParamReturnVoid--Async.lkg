@@ -2,6 +2,4 @@ moduleBuilder.AddMethod("MyMethod", global::Microsoft.ReactNative.MethodReturnTy
 {
     global::Microsoft.ReactNative.Managed.JSValueReader.ReadArgs(reader, out global::Microsoft.ReactNative.Managed.IReactPromise<string> arg0);
     module.Method(arg0, new global::Microsoft.ReactNative.Managed.ReactPromise<int>(writer, resolve, reject));
-}
-
-);
+});

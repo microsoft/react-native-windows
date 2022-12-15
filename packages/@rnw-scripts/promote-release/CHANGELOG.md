@@ -1,8 +1,66 @@
 # Change Log - @rnw-scripts/promote-release
 
-This log was last generated on Sat, 15 Oct 2022 05:12:00 GMT and should not be manually modified.
+This log was last generated on Tue, 13 Dec 2022 06:15:25 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.1.6
+
+Tue, 13 Dec 2022 06:15:25 GMT
+
+### Patches
+
+- Standardize on the repository field in package.json (dannyvv@microsoft.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.41
+- Bump @react-native-windows/fs to v0.0.0-canary.12
+- Bump @react-native-windows/package-utils to v0.0.0-canary.38
+- Bump @rnw-scripts/eslint-config to v1.1.15
+- Bump @rnw-scripts/just-task to v2.3.4
+- Bump @rnw-scripts/ts-config to v2.0.3
+
+## 2.1.5
+
+Fri, 02 Dec 2022 06:19:05 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.40
+- Bump @react-native-windows/fs to v0.0.0-canary.11
+- Bump @react-native-windows/package-utils to v0.0.0-canary.37
+- Bump @rnw-scripts/just-task to v2.3.3
+
+## 2.1.4
+
+Wed, 16 Nov 2022 06:16:01 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.39
+- Bump @react-native-windows/fs to v0.0.0-canary.10
+- Bump @react-native-windows/package-utils to v0.0.0-canary.36
+- Bump @rnw-scripts/just-task to v2.3.2
+
+## 2.1.3
+
+Sat, 12 Nov 2022 06:17:23 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.38
+- Bump @react-native-windows/fs to v0.0.0-canary.9
+- Bump @react-native-windows/package-utils to v0.0.0-canary.35
+- Bump @rnw-scripts/just-task to v2.3.1
+
+## 2.1.2
+
+Thu, 10 Nov 2022 06:17:12 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.37
+- Bump @react-native-windows/fs to v0.0.0-canary.8
+- Bump @react-native-windows/package-utils to v0.0.0-canary.34
+- Bump @rnw-scripts/just-task to v2.3.0
 
 ## 2.1.1
 

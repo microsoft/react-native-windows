@@ -15,11 +15,11 @@ namespace Microsoft.ReactNative
 
     // Public Methods
     void InsertAt(UInt32 index, XAML_NAMESPACE.UIElement value);
-      void RemoveAt(UInt32 index);
-      void Clear();
+    void RemoveAt(UInt32 index);
+    void Clear();
 
     void FinalizeProperties();
-      XAML_NAMESPACE.Controls.Border GetOuterBorder();
+    XAML_NAMESPACE.Controls.Border GetOuterBorder();
 
     // Public Properties
     XAML_NAMESPACE.Media.Brush ViewBackground { get; set; };
@@ -51,6 +51,6 @@ namespace Microsoft.ReactNative
   {
     ViewControl();
 
-    ViewPanel GetPanel();
+    XAML_NAMESPACE.Controls.Panel GetPanel();
   }
 }

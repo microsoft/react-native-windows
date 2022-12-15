@@ -17,8 +17,6 @@ class CalculatedAnimationDriver : public AnimationDriver {
 
  protected:
   virtual std::tuple<float, double> GetValueAndVelocityForTime(double time) = 0;
-
   virtual bool IsAnimationDone(double currentValue, std::optional<double> previousValue, double currentVelocity) = 0;
-  double m_startValue{0};
 };
 } // namespace Microsoft::ReactNative

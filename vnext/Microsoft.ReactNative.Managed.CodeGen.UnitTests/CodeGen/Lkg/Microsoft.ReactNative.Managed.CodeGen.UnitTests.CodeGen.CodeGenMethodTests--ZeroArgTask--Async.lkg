@@ -2,6 +2,4 @@ moduleBuilder.AddMethod("MyMethod", global::Microsoft.ReactNative.MethodReturnTy
 {
     global::System.Threading.Tasks.Task result = module.Method();
     global::Microsoft.ReactNative.Managed.ReactTaskExtensions.ContinueWith(result, writer, resolve, reject);
-}
-
-);
+});

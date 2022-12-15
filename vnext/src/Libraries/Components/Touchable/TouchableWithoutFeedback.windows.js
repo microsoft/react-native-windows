@@ -8,10 +8,6 @@
  * @format
  */
 
-import Pressability, {
-  type PressabilityConfig,
-} from '../../Pressability/Pressability';
-import {PressabilityDebugView} from '../../Pressability/PressabilityDebug';
 import type {
   AccessibilityActionEvent,
   AccessibilityActionInfo,
@@ -27,7 +23,12 @@ import type {
   MouseEvent, // [Windows]
   PressEvent,
 } from '../../Types/CoreEventTypes';
+
 import View from '../../Components/View/View';
+import Pressability, {
+  type PressabilityConfig,
+} from '../../Pressability/Pressability';
+import {PressabilityDebugView} from '../../Pressability/PressabilityDebug';
 import * as React from 'react';
 
 type Props = $ReadOnly<{|
@@ -54,7 +55,7 @@ type Props = $ReadOnly<{|
    * see https://reactnative.dev/docs/accessibility#accessibilitystate
    */
   'aria-busy'?: ?boolean,
-  'aria-checked'?: ?boolean,
+  'aria-checked'?: ?boolean | 'mixed',
   'aria-disabled'?: ?boolean,
   'aria-expanded'?: ?boolean,
   'aria-selected'?: ?boolean,
@@ -135,7 +136,7 @@ class TouchableWithoutFeedback extends React.Component<Props, State> {
   };
 
   render(): React.Node {
-    const element = React.Children.only(this.props.children);
+    const element = React.Children.only<$FlowFixMe>(this.props.children);
     const children = [element.props.children];
     const ariaLive = this.props['aria-live'];
 

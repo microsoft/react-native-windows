@@ -1,8 +1,87 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Wed, 26 Oct 2022 05:11:35 GMT and should not be manually modified.
+This log was last generated on Tue, 13 Dec 2022 06:15:23 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.56
+
+Tue, 13 Dec 2022 06:15:23 GMT
+
+### Changes
+
+- Standardize on the repository field in package.json (dannyvv@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.12
+- Bump @rnw-scripts/eslint-config to v1.1.15
+- Bump @rnw-scripts/jest-unittest-config to v1.4.3
+- Bump @rnw-scripts/just-task to v2.3.4
+- Bump @rnw-scripts/ts-config to v2.0.3
+
+## 0.0.0-canary.55
+
+Wed, 07 Dec 2022 06:14:42 GMT
+
+### Changes
+
+- integration 11/18/22 (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.54
+
+Fri, 02 Dec 2022 06:19:03 GMT
+
+### Changes
+
+- Merge (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.11
+- Bump @rnw-scripts/jest-unittest-config to v1.4.2
+- Bump @rnw-scripts/just-task to v2.3.3
+
+## 0.0.0-canary.53
+
+Wed, 16 Nov 2022 06:16:01 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.10
+- Bump @rnw-scripts/just-task to v2.3.2
+
+## 0.0.0-canary.52
+
+Sat, 12 Nov 2022 06:17:22 GMT
+
+### Changes
+
+- Integrate 10/10 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.9
+- Bump @rnw-scripts/jest-unittest-config to v1.4.1
+- Bump @rnw-scripts/just-task to v2.3.1
+
+## 0.0.0-canary.51
+
+Thu, 10 Nov 2022 06:17:10 GMT
+
+### Changes
+
+- integration 9/26/22 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.8
+- Bump @rnw-scripts/jest-unittest-config to v1.4.0
+- Bump @rnw-scripts/just-task to v2.3.0
+
+## 0.0.0-canary.50
+
+Tue, 08 Nov 2022 06:12:54 GMT
+
+### Changes
+
+- CG 11/7/22: Update `@xmldom/xmldom` (jthysell@microsoft.com)
+
+## 0.0.0-canary.49
+
+Tue, 01 Nov 2022 05:13:34 GMT
+
+### Changes
+
+- Upgrade to VS 2022 (jthysell@microsoft.com)
 
 ## 0.0.0-canary.48
 

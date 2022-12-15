@@ -1,8 +1,231 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 28 Oct 2022 05:11:29 GMT and should not be manually modified.
+This log was last generated on Tue, 13 Dec 2022 06:15:26 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.594
+
+Tue, 13 Dec 2022 06:15:26 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.155
+- Bump @react-native-windows/codegen to v0.0.0-canary.46
+- Bump @rnw-scripts/eslint-config to v1.1.15
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.1
+- Bump @rnw-scripts/just-task to v2.3.4
+- Bump react-native-platform-override to v1.8.5
+
+## 0.0.0-canary.593
+
+Sat, 10 Dec 2022 06:15:31 GMT
+
+### Changes
+
+- Remove work around for broken Utilities import in core (30809111+acoates-ms@users.noreply.github.com)
+- Bump react-native-platform-override to v1.8.4
+
+## 0.0.0-canary.592
+
+Fri, 09 Dec 2022 06:14:58 GMT
+
+### Changes
+
+- Implement rowGap, columnGap and gap flex properties (30809111+acoates-ms@users.noreply.github.com)
+- More support for running fabric in desktop dll (30809111+acoates-ms@users.noreply.github.com)
+- Adds logic to retain undo/redo history for TextInput (erozell@outlook.com)
+
+## 0.0.0-canary.591
+
+Wed, 07 Dec 2022 06:14:42 GMT
+
+### Changes
+
+- Implement HTTP incremental updates (julio.rocha@microsoft.com)
+- integration 11/18/22 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.154
+
+## 0.0.0-canary.590
+
+Fri, 02 Dec 2022 06:19:04 GMT
+
+### Changes
+
+- Integrate 10/10 (34109996+chiaramooney@users.noreply.github.com)
+- Bump codegen version (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.153
+- Bump @react-native-windows/codegen to v0.0.0-canary.45
+- Bump @rnw-scripts/just-task to v2.3.3
+- Bump react-native-platform-override to v1.8.3
+
+## 0.0.0-canary.589
+
+Thu, 01 Dec 2022 06:15:01 GMT
+
+### Changes
+
+- Minor build fixes to enable fabric in desktop dll (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.588
+
+Wed, 30 Nov 2022 06:15:20 GMT
+
+### Changes
+
+- Use a ReactViewHost to specify view options on CompositionRootView (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.587
+
+Thu, 24 Nov 2022 06:15:42 GMT
+
+### Changes
+
+- Avoid shadowing template types in CntPtr (vmoroz@users.noreply.github.com)
+
+## 0.0.0-canary.586
+
+Wed, 23 Nov 2022 06:16:32 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.152
+
+## 0.0.0-canary.585
+
+Tue, 22 Nov 2022 06:15:32 GMT
+
+### Changes
+
+- Fix copying substitution files (vmoroz@users.noreply.github.com)
+
+## 0.0.0-canary.584
+
+Mon, 21 Nov 2022 06:15:36 GMT
+
+### Changes
+
+- Update codegen version (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.151
+- Bump @react-native-windows/codegen to v0.0.0-canary.44
+
+## 0.0.0-canary.583
+
+Wed, 16 Nov 2022 06:16:00 GMT
+
+### Changes
+
+- Fix WinUI 3 crash when using keyboard due to KeyboardEventHandler using unsupported class (lyahdav@users.noreply.github.com)
+- Update to folly 2022.11.07 (30809111+acoates-ms@users.noreply.github.com)
+- Allow >10MB content for blob responses (julio.rocha@microsoft.com)
+- Update folly hash for current version (30809111+acoates-ms@users.noreply.github.com)
+- Update how types are exported to align with core (30809111+acoates-ms@users.noreply.github.com)
+- Use standard Panel APIs for children in ViewViewManager (erozell@outlook.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.150
+- Bump @react-native-windows/codegen to v0.0.0-canary.43
+- Bump @rnw-scripts/just-task to v2.3.2
+- Bump react-native-platform-override to v1.8.2
+
+## 0.0.0-canary.582
+
+Tue, 15 Nov 2022 06:16:37 GMT
+
+### Changes
+
+- Always instantiate Blob module inUWP (julio.rocha@microsoft.com)
+- Move remaining PackageReferences out of new project templates (jthysell@microsoft.com)
+- Fabric: Initial NativeAnimated support (30809111+acoates-ms@users.noreply.github.com)
+- Update `rnw-dependencies.ps1` to improve messaging (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.149
+
+## 0.0.0-canary.581
+
+Sat, 12 Nov 2022 06:17:23 GMT
+
+### Changes
+
+- Integrate 10/10 (34109996+chiaramooney@users.noreply.github.com)
+- Suppress Flyout if XamlRoot does not have focus (erozell@outlook.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.148
+- Bump @react-native-windows/codegen to v0.0.0-canary.42
+- Bump @rnw-scripts/just-task to v2.3.1
+- Bump react-native-platform-override to v1.8.1
+
+## 0.0.0-canary.580
+
+Fri, 11 Nov 2022 06:15:10 GMT
+
+### Changes
+
+- Adds Rendering driver option to NativeAnimated (erozell@outlook.com)
+
+## 0.0.0-canary.579
+
+Thu, 10 Nov 2022 06:17:11 GMT
+
+### Changes
+
+- integration 9/26/22 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.147
+- Bump @react-native-windows/codegen to v0.0.0-canary.41
+- Bump @rnw-scripts/just-task to v2.3.0
+- Bump react-native-platform-override to v1.8.0
+
+## 0.0.0-canary.578
+
+Tue, 08 Nov 2022 06:12:54 GMT
+
+### Changes
+
+- Simplify root node lookups (erozell@outlook.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.146
+
+## 0.0.0-canary.577
+
+Mon, 07 Nov 2022 06:12:29 GMT
+
+### Changes
+
+- Implement Form Data requests (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.576
+
+Fri, 04 Nov 2022 05:12:36 GMT
+
+### Changes
+
+- Simplify root node lookups (erozell@outlook.com)
+- Workaround for blur on XAML Islands (erozell@outlook.com)
+- Adds LayoutService interface to allow native layout updates (erozell@outlook.com)
+- Apply fast text optimization to multiple runs (erozell@outlook.com)
+- Fixes issue with zoom and horizontal scrolling (erozell@outlook.com)
+
+## 0.0.0-canary.575
+
+Thu, 03 Nov 2022 05:12:36 GMT
+
+### Changes
+
+- Align templates to not hardcode package versions (jthysell@microsoft.com)
+- renamed isPressed to isKeyDown (helewxdong@gmail.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.145
+
+## 0.0.0-canary.574
+
+Wed, 02 Nov 2022 05:12:37 GMT
+
+### Changes
+
+- Remove Microsoft.ReactNative.Managed.IntegrationTests from ARM64 build (jthysell@microsoft.com)
+
+## 0.0.0-canary.573
+
+Tue, 01 Nov 2022 05:13:34 GMT
+
+### Changes
+
+- Upgrade to VS 2022 (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.144
 
 ## 0.0.0-canary.572
 

@@ -3,6 +3,6 @@
   "include": ["."],
   "exclude": ["node_modules"],
   "compilerOptions": {
-    "noEmit": true
-  }
+    "noEmit": true,
+  },
 }

@@ -1,11 +1,11 @@
 {
-  "baseVersion": "0.0.0-20220912-2028-b0aba1b6f",
+  "baseVersion": "0.0.0-20221120-2051-81e441ae8",
   "overrides": [
     {
       "type": "copy",
       "directory": "js",
       "baseDirectory": "packages/rn-tester/js",
-      "baseHash": "ffb0f303f4ba117f0d504655bd6fbde7cf1e3c5c",
+      "baseHash": "6c51b9bef8bbe56e286aa0882e575eefcd61e1b5",
       "issue": 4054
     },
     {
@@ -23,10 +23,24 @@
       "issue": 4054
     },
     {
-      "type": "patch",
+      "type": "copy",
+      "file": "NativeCxxModuleExample/NativeCxxModuleExample.js",
+      "baseFile": "packages/rn-tester/NativeCxxModuleExample/NativeCxxModuleExample.js",
+      "baseHash": "7e18320a3b9b04a23312c0ca558179e108ed9caf",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "NativeModuleExample/NativeScreenshotManager.js",
+      "baseFile": "packages/rn-tester/NativeModuleExample/NativeScreenshotManager.js",
+      "baseHash": "5d28f1040292cfd429a9be334bd84ae5d8d691d6",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
-      "baseHash": "f00fc4a2a1f1b88073a936fecee2648fd4a91ae2",
+      "baseHash": "4d629b95f56686e8e1d066b78a3f140972885f49",
       "issue": 4054
     }
   ]

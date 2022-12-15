@@ -2,6 +2,117 @@
   "name": "@rnw-scripts/just-task",
   "entries": [
     {
+      "date": "Tue, 13 Dec 2022 06:15:25 GMT",
+      "tag": "@rnw-scripts/just-task_v2.3.4",
+      "version": "2.3.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "dannyvv@microsoft.com",
+            "package": "@rnw-scripts/just-task",
+            "commit": "e18db30cd3f5c70a97c5d3c1f15f3431b95ec7aa",
+            "comment": "Standardize on the repository field in package.json"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/just-task",
+            "comment": "Bump @rnw-scripts/jest-e2e-config to v1.3.3",
+            "commit": "e18db30cd3f5c70a97c5d3c1f15f3431b95ec7aa"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/just-task",
+            "comment": "Bump @rnw-scripts/jest-unittest-config to v1.4.3",
+            "commit": "e18db30cd3f5c70a97c5d3c1f15f3431b95ec7aa"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 02 Dec 2022 06:19:05 GMT",
+      "tag": "@rnw-scripts/just-task_v2.3.3",
+      "version": "2.3.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/just-task",
+            "comment": "Bump @rnw-scripts/jest-e2e-config to v1.3.2",
+            "commit": "2f939521a7e852faf4ccfba4e017c0ebaa64babc"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/just-task",
+            "comment": "Bump @rnw-scripts/jest-unittest-config to v1.4.2",
+            "commit": "2f939521a7e852faf4ccfba4e017c0ebaa64babc"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 16 Nov 2022 06:16:00 GMT",
+      "tag": "@rnw-scripts/just-task_v2.3.2",
+      "version": "2.3.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@rnw-scripts/just-task",
+            "commit": "9bd39df79a56665486d229acc7ee37e39227feac",
+            "comment": "Update how types are exported to align with core"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 12 Nov 2022 06:17:23 GMT",
+      "tag": "@rnw-scripts/just-task_v2.3.1",
+      "version": "2.3.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/just-task",
+            "comment": "Bump @rnw-scripts/jest-e2e-config to v1.3.1",
+            "commit": "fa576c66ef5ee9bd73553688946f25df4cfc076f"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/just-task",
+            "comment": "Bump @rnw-scripts/jest-unittest-config to v1.4.1",
+            "commit": "fa576c66ef5ee9bd73553688946f25df4cfc076f"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 10 Nov 2022 06:17:11 GMT",
+      "tag": "@rnw-scripts/just-task_v2.3.0",
+      "version": "2.3.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@rnw-scripts/just-task",
+            "commit": "ca86014a9c1bc80611fb68051fc67e51339c5bfd",
+            "comment": "integration 9/26/22"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/just-task",
+            "comment": "Bump @rnw-scripts/jest-e2e-config to v1.3.0",
+            "commit": "406d486eb138d4d9e324124e1b65120794424da1"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/just-task",
+            "comment": "Bump @rnw-scripts/jest-unittest-config to v1.4.0",
+            "commit": "406d486eb138d4d9e324124e1b65120794424da1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 05 Oct 2022 05:13:47 GMT",
       "tag": "@rnw-scripts/just-task_v2.2.6",
       "version": "2.2.6",

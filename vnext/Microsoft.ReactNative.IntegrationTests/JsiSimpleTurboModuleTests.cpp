@@ -11,53 +11,26 @@
 #include "TestEventService.h"
 #include "TestReactNativeHostHolder.h"
 
+#pragma pack(push)
+#pragma warning(disable : 4100 4127 4324)
+#include "codegen/msrnIntegrationTestsJSI-generated.cpp"
+#include "codegen/msrnIntegrationTestsJSI.h"
+#pragma pack(pop)
+
 using namespace facebook;
 using namespace winrt;
 using namespace Microsoft::ReactNative;
 
 namespace ReactNativeIntegrationTests {
 
-// Use anonymous namespace to avoid any linking conflicts
-namespace {
-
-// In this test we put spec definition that normally must be generated.
-// >>>> Start generated
-
-// The spec from .h file
-struct MyTrivialTurboModuleSpec : react::TurboModule {
-  virtual void startFromJS(jsi::Runtime &rt) = 0;
-
- protected:
-  MyTrivialTurboModuleSpec(std::shared_ptr<react::CallInvoker> jsInvoker);
-};
-
-// The spec from .cpp file
-
-static jsi::Value MyTrivialTurboModuleSpec_startFromJS(
-    jsi::Runtime &rt,
-    react::TurboModule &turboModule,
-    [[maybe_unused]] const jsi::Value *args,
-    [[maybe_unused]] size_t count) {
-  assert(count >= 0);
-  static_cast<MyTrivialTurboModuleSpec *>(&turboModule)->startFromJS(rt);
-  return jsi::Value::undefined();
-}
-
-MyTrivialTurboModuleSpec::MyTrivialTurboModuleSpec(std::shared_ptr<react::CallInvoker> jsInvoker)
-    : react::TurboModule("MyTrivialTurboModuleSpec", std::move(jsInvoker)) {
-  methodMap_.try_emplace("startFromJS", MethodMetadata{0, MyTrivialTurboModuleSpec_startFromJS});
-}
-
-// <<<< End generated
-
-struct MyTrivialTurboModule : MyTrivialTurboModuleSpec {
+struct MyTrivialTurboModule : react::NativeMyTrivialTurboModuleCxxSpecJSI {
   MyTrivialTurboModule(std::shared_ptr<react::CallInvoker> jsInvoker);
 
   void startFromJS(jsi::Runtime &rt) override;
 };
 
 MyTrivialTurboModule::MyTrivialTurboModule(std::shared_ptr<react::CallInvoker> jsInvoker)
-    : MyTrivialTurboModuleSpec(std::move(jsInvoker)) {}
+    : NativeMyTrivialTurboModuleCxxSpecJSI(std::move(jsInvoker)) {}
 
 void MyTrivialTurboModule::startFromJS(jsi::Runtime & /*rt*/) {
   TestEventService::LogEvent("startFromJS called", nullptr);
@@ -69,8 +42,6 @@ struct MyTrivialTurboModulePackageProvider
     AddTurboModuleProvider<MyTrivialTurboModule>(packageBuilder, L"MyTrivialTurboModule");
   }
 };
-
-} // namespace
 
 TEST_CLASS (JsiSimpleTurboModuleTests) {
   TEST_METHOD(TestInstanceReload) {

@@ -47,10 +47,22 @@ class AnimationDriver : public std::enable_shared_from_this<AnimationDriver> {
   };
 
   virtual std::vector<double> Frames() {
+    assert(m_useComposition);
     return std::vector<double>();
   }
 
   void DoCallback(bool value);
+
+  bool UseComposition() const noexcept {
+    return m_useComposition;
+  }
+
+  bool IsComplete() {
+    assert(!m_useComposition);
+    return m_isComplete;
+  }
+
+  void RunAnimationStep(winrt::TimeSpan renderingTime);
 
  private:
   Callback m_endCallback{};
@@ -60,12 +72,21 @@ class AnimationDriver : public std::enable_shared_from_this<AnimationDriver> {
 
  protected:
   ValueAnimatedNode *GetAnimatedValue();
+  virtual bool Update(double timeDeltaMs, bool restarting) {
+    return true;
+  };
 
+  bool m_useComposition{};
   int64_t m_id{0};
   int64_t m_animatedValueTag{};
   int64_t m_iterations{0};
   winrt::Microsoft::ReactNative::JSValueObject m_config{};
   std::weak_ptr<NativeAnimatedNodeManager> m_manager{};
+
+  bool m_isComplete{false};
+  int64_t m_iteration{0};
+  double m_startFrameTimeMs{-1};
+  std::optional<double> m_originalValue{};
 
   comp::CompositionAnimation m_animation{nullptr};
   comp::CompositionScopedBatch m_scopedBatch{nullptr};
@@ -75,5 +96,7 @@ class AnimationDriver : public std::enable_shared_from_this<AnimationDriver> {
   bool m_started{false};
   bool m_stopped{false};
   bool m_ignoreCompletedHandlers{false};
+
+  static constexpr double s_frameDurationMs = 1000.0 / 60.0;
 };
 } // namespace Microsoft::ReactNative

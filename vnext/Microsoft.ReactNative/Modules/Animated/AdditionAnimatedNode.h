@@ -12,6 +12,8 @@ class AdditionAnimatedNode final : public ValueAnimatedNode {
       const winrt::Microsoft::ReactNative::JSValueObject &config,
       const std::shared_ptr<NativeAnimatedNodeManager> &manager);
 
+  virtual void Update() override;
+
  private:
   std::unordered_set<int64_t> m_inputNodes{};
 };

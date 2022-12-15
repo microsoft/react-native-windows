@@ -17,6 +17,7 @@
 #include <UI.Xaml.Media.h>
 #include <Utils/Helpers.h>
 #include <Utils/PropertyHandlerUtils.h>
+#include <XamlHelper.h>
 
 #ifdef USE_WINUI3
 namespace winrt::Microsoft::UI::Xaml::Controls::Primitives {
@@ -122,7 +123,7 @@ class FlyoutShadowNode : public ShadowNodeBase {
   winrt::Popup GetFlyoutParentPopup() const;
   winrt::FlyoutPresenter GetFlyoutPresenter() const;
   void OnShowFlyout();
-  void LogErrorAndClose(const string &error);
+  void LogErrorAndClose(const std::string &error);
   xaml::FrameworkElement m_targetElement = nullptr;
   winrt::Flyout m_flyout = nullptr;
   bool m_isLightDismissEnabled = true;
@@ -408,7 +409,10 @@ void FlyoutShadowNode::OnShowFlyout() {
       LogErrorAndClose("The target view window was closed before flyout could be shown.");
     } else if (!m_targetElement && m_targetTag > 0) {
       LogErrorAndClose("The target view unmounted before flyout could be shown.");
-    } else if (m_targetElement && m_flyout.XamlRoot() != m_targetElement.XamlRoot()) {
+    } else if (
+        m_targetElement &&
+        (m_flyout.XamlRoot() != m_targetElement.XamlRoot() ||
+         m_flyout.XamlRoot() != React::XamlUIService::GetXamlRoot(GetViewManager()->GetReactContext().Properties()))) {
       LogErrorAndClose("The target view window lost focus before flyout could be shown.");
     } else {
       m_flyout.ShowAt(m_targetElement, m_showOptions);

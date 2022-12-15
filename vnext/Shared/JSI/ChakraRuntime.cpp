@@ -743,6 +743,8 @@ JsValueRef ChakraRuntime::ToJsValueRef(const facebook::jsi::Value &value) {
     return GetJsRef(value.getString(*this));
   } else if (value.isObject()) {
     return GetJsRef(value.getObject(*this));
+  } else if (value.isBigInt()) {
+    return GetJsRef(value.getBigInt(*this));
   } else {
     throw facebook::jsi::JSINativeException("Unexpected jsi::Value type");
   }

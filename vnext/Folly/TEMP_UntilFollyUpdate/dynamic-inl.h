@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@
 #include <folly/Conv.h>
 #include <folly/Format.h>
 #include <folly/Likely.h>
+#include <folly/Portability.h>
 #include <folly/detail/Iterators.h>
 #include <folly/lang/Exception.h>
 
@@ -87,38 +88,41 @@ struct hash<::folly::dynamic> {
 } // namespace std
 
 //////////////////////////////////////////////////////////////////////
-
+/* clang-format off */
 // This is a higher-order preprocessor macro to aid going from runtime
 // types to the compile time type system.
-#define FB_DYNAMIC_APPLY(type, apply) \
-  do {                                \
-    switch ((type)) {                 \
-      case NULLT:                     \
-        apply(std::nullptr_t);        \
-        break;                        \
-      case ARRAY:                     \
-        apply(Array);                 \
-        break;                        \
-      case BOOL:                      \
-        apply(bool);                  \
-        break;                        \
-      case DOUBLE:                    \
-        apply(double);                \
-        break;                        \
-      case INT64:                     \
-        apply(int64_t);               \
-        break;                        \
-      case OBJECT:                    \
-        apply(ObjectImpl);            \
-        break;                        \
-      case STRING:                    \
-        apply(std::string);           \
-        break;                        \
-      default:                        \
-        abort();                      \
-    }                                 \
-  } while (0)
 
+#define FB_DYNAMIC_APPLY(type, apply)                                             \
+  do {                                                                            \
+    FOLLY_PUSH_WARNING FOLLY_CLANG_DISABLE_WARNING("-Wcovered-switch-default")    \
+    switch ((type)) {                                                             \
+      case NULLT:                                                                 \
+        apply(std::nullptr_t);                                                    \
+        break;                                                                    \
+      case ARRAY:                                                                 \
+        apply(Array);                                                             \
+        break;                                                                    \
+      case BOOL:                                                                  \
+        apply(bool);                                                              \
+        break;                                                                    \
+      case DOUBLE:                                                                \
+        apply(double);                                                            \
+        break;                                                                    \
+      case INT64:                                                                 \
+        apply(int64_t);                                                           \
+        break;                                                                    \
+      case OBJECT:                                                                \
+        apply(ObjectImpl);                                                        \
+        break;                                                                    \
+      case STRING:                                                                \
+        apply(std::string);                                                       \
+        break;                                                                    \
+      default:                                                                    \
+        abort();                                                                  \
+    }                                                                             \
+    FOLLY_POP_WARNING                                                             \
+  } while (0)
+/* clang-format on */
 //////////////////////////////////////////////////////////////////////
 
 namespace folly {
@@ -235,6 +239,7 @@ struct dynamic::item_iterator : detail::IteratorAdaptor<
       dynamic::ObjectImpl::iterator,
       std::pair<dynamic const, dynamic>,
       std::forward_iterator_tag>;
+  item_iterator() = default;
   /* implicit */ item_iterator(dynamic::ObjectImpl::iterator b) : Super(b) {}
 
   using object_type = dynamic::ObjectImpl;
@@ -250,6 +255,7 @@ struct dynamic::value_iterator : detail::IteratorAdaptor<
       dynamic::ObjectImpl::iterator,
       dynamic,
       std::forward_iterator_tag>;
+  value_iterator() = default;
   /* implicit */ value_iterator(dynamic::ObjectImpl::iterator b) : Super(b) {}
 
   using object_type = dynamic::ObjectImpl;
@@ -268,6 +274,7 @@ struct dynamic::const_item_iterator
       dynamic::ObjectImpl::const_iterator,
       std::pair<dynamic const, dynamic> const,
       std::forward_iterator_tag>;
+  const_item_iterator() = default;
   /* implicit */ const_item_iterator(dynamic::ObjectImpl::const_iterator b)
       : Super(b) {}
   /* implicit */ const_item_iterator(const_item_iterator const& i)
@@ -287,6 +294,7 @@ struct dynamic::const_key_iterator : detail::IteratorAdaptor<
       dynamic::ObjectImpl::const_iterator,
       dynamic const,
       std::forward_iterator_tag>;
+  const_key_iterator() = default;
   /* implicit */ const_key_iterator(dynamic::ObjectImpl::const_iterator b)
       : Super(b) {}
 
@@ -305,6 +313,7 @@ struct dynamic::const_value_iterator : detail::IteratorAdaptor<
       dynamic::ObjectImpl::const_iterator,
       dynamic const,
       std::forward_iterator_tag>;
+  const_value_iterator() = default;
   /* implicit */ const_value_iterator(dynamic::ObjectImpl::const_iterator b)
       : Super(b) {}
   /* implicit */ const_value_iterator(value_iterator i) : Super(i.base()) {}
@@ -346,14 +355,6 @@ inline dynamic::dynamic(Stringish&& s) : type_(STRING) {
 inline dynamic::dynamic(ObjectMaker&& maker) : type_(OBJECT) {
   new (getAddress<ObjectImpl>())
       ObjectImpl(std::move(*maker.val_.getAddress<ObjectImpl>()));
-}
-
-inline dynamic::dynamic(dynamic const& o) : type_(NULLT) {
-  *this = o;
-}
-
-inline dynamic::dynamic(dynamic&& o) noexcept : type_(NULLT) {
-  *this = std::move(o);
 }
 
 inline dynamic::~dynamic() noexcept {
@@ -558,7 +559,7 @@ struct dynamic::CompareOp<dynamic::ObjectImpl> {
 template <>
 struct dynamic::CompareOp<std::nullptr_t> {
   static bool comp(std::nullptr_t const&, std::nullptr_t const&) {
-    return true;
+    return false;
   }
 };
 
@@ -834,6 +835,20 @@ inline dynamic::IfNotIterator<K, void> dynamic::insert(K&& key, V&& val) {
   obj[std::forward<K>(key)] = std::forward<V>(val);
 }
 
+template <class... Args>
+inline std::pair<dynamic::item_iterator, bool> dynamic::emplace(
+    Args&&... args) {
+  auto& obj = get<ObjectImpl>();
+  return obj.emplace(std::forward<Args>(args)...);
+}
+
+template <class K, class... Args>
+inline std::pair<dynamic::item_iterator, bool> dynamic::try_emplace(
+    K&& key, Args&&... args) {
+  auto& obj = get<ObjectImpl>();
+  return obj.try_emplace(std::forward<K>(key), std::forward<Args>(args)...);
+}
+
 template <class T>
 inline dynamic::iterator dynamic::insert(const_iterator pos, T&& value) {
   auto& arr = get<Array>();
@@ -993,6 +1008,8 @@ FOLLY_DYNAMIC_DEC_TYPEINFO(dynamic::ObjectImpl, dynamic::OBJECT)
 
 template <class T>
 T dynamic::asImpl() const {
+  FOLLY_PUSH_WARNING
+  FOLLY_CLANG_DISABLE_WARNING("-Wcovered-switch-default")
   switch (type()) {
     case INT64:
       return to<T>(*get_nothrow<int64_t>());
@@ -1008,10 +1025,10 @@ T dynamic::asImpl() const {
     default:
       throw_exception<TypeError>("int/double/bool/string", type());
   }
+  FOLLY_POP_WARNING
 }
 
 // Return a T* to our type, or null if we're not that type.
-// clang-format off
 template <class T>
 T* dynamic::get_nothrow() & noexcept {
   if (type_ != TypeInfo<T>::type) {
@@ -1019,7 +1036,6 @@ T* dynamic::get_nothrow() & noexcept {
   }
   return getAddress<T>();
 }
-// clang-format on
 
 template <class T>
 T const* dynamic::get_nothrow() const& noexcept {
@@ -1216,7 +1232,7 @@ const_dynamic_view::descend_unchecked_(Key const& key) const noexcept {
     if /* constexpr */ (!std::is_integral<Key>::value) {
       return nullptr;
     }
-    if (key < 0 || key >= parray->size()) {
+    if (key < 0 || folly::to_unsigned(key) >= parray->size()) {
       return nullptr;
     }
     return &(*parray)[size_t(key)];
@@ -1327,7 +1343,7 @@ inline std::string dynamic_view::move_string_or(Stringish&& val) {
 
 //////////////////////////////////////////////////////////////////////
 
-// Secialization of FormatValue so dynamic objects can be formatted
+// Specialization of FormatValue so dynamic objects can be formatted
 template <>
 class FormatValue<dynamic> {
  public:

@@ -23,7 +23,7 @@ param (
 			"ReactCommon.UnitTests\ReactCommon.UnitTests.exe")
 	),
 
-	[System.IO.FileInfo] $VsTest = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe"
+	[System.IO.FileInfo] $VsTest = "${env:ProgramFiles}\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe"
 )
 
 if ($Include.Count) {

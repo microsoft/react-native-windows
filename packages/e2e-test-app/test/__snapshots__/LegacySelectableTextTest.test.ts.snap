@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`LegacySelectableTextTest DoubleClickWhenNotSelectable 1`] = `
-Object {
+{
   "AutomationId": "pressed-state",
   "Clip": null,
   "FlowDirection": "LeftToRight",
-  "Foreground": "#E4000000",
+  "Foreground": "#FF000000",
   "Height": 19,
   "HorizontalAlignment": "Stretch",
   "Left": 0,
@@ -21,11 +21,11 @@ Object {
 `;
 
 exports[`LegacySelectableTextTest DoubleClickWhenSelectable 1`] = `
-Object {
+{
   "AutomationId": "pressed-state",
   "Clip": null,
   "FlowDirection": "LeftToRight",
-  "Foreground": "#E4000000",
+  "Foreground": "#FF000000",
   "Height": 19,
   "HorizontalAlignment": "Stretch",
   "Left": 0,
@@ -41,11 +41,11 @@ Object {
 `;
 
 exports[`LegacySelectableTextTest PressableWhenNotSelectable 1`] = `
-Object {
+{
   "AutomationId": "pressed-state",
   "Clip": null,
   "FlowDirection": "LeftToRight",
-  "Foreground": "#E4000000",
+  "Foreground": "#FF000000",
   "Height": 19,
   "HorizontalAlignment": "Stretch",
   "Left": 0,
@@ -61,11 +61,11 @@ Object {
 `;
 
 exports[`LegacySelectableTextTest PressableWhenSelectable 1`] = `
-Object {
+{
   "AutomationId": "pressed-state",
   "Clip": null,
   "FlowDirection": "LeftToRight",
-  "Foreground": "#E4000000",
+  "Foreground": "#FF000000",
   "Height": 19,
   "HorizontalAlignment": "Stretch",
   "Left": 0,

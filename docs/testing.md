@@ -4,7 +4,7 @@ When contributing to this project, unit and integration tests should be run to h
 
 ## Windows Desktop
 Tests should be run with a VSTest-compatible client
-(i.e. [VSTest.Console.exe](https://docs.microsoft.com/en-us/visualstudio/test/vstest-console-options?view=vs-2019),
+(i.e. [VSTest.Console.exe](https://docs.microsoft.com/en-us/visualstudio/test/vstest-console-options?view=vs-2022),
 [Visual Studio Test task](https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/test/vstest?view=azure-devops)).
 This project includes convenience scripts to set up and run the test artifacts.
 

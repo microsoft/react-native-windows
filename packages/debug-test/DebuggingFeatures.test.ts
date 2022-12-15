@@ -281,11 +281,7 @@ test('reload after continue', async () => {
 });
 
 // Regression test for the fix for RN:34639 (https://github.com/facebook/react-native/issues/34639).
-//
-// This test method needs to remain disabled until RNW import the hermes-windows version containing
-// https://github.com/microsoft/hermes-windows/commit/016aab4e0c76180b3f06f8efdcd2c07b44809cc5 (hermes-windows patch) or
-// https://github.com/facebook/react-native/commit/545366aea30c3db6cb28c77ce85208e9973cc1fb (upstream in RN Core).
-test.skip('execution context identifier in Debugger.scriptParsed event', async () => {
+test('execution context identifier in Debugger.scriptParsed event', async () => {
   testLog.message(`executing 'pause, resume' test on PID ${pid}`);
 
   const settings = await PlaygroundDebugSettings.set({

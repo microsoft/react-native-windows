@@ -10,9 +10,10 @@
 
 'use strict';
 import type {RNTesterModuleExample} from '../../types/RNTesterTypes';
+
 import BaseFlatListExample from './BaseFlatListExample';
-import {StyleSheet, View, Text} from 'react-native';
 import * as React from 'react';
+import {StyleSheet, Text, View} from 'react-native';
 
 const Separator =
   (defaultColor: string, highlightColor: string) =>
@@ -32,7 +33,7 @@ const Separator =
           styles.separator,
           {backgroundColor: highlighted ? highlightColor : defaultColor},
         ]}>
-        <Text style={styles.separtorText}>{text}</Text>
+        <Text style={styles.separatorText}>{text}</Text>
       </View>
     );
   };
@@ -41,7 +42,7 @@ export function FlatList_withSeparators(): React.Node {
   const exampleProps = {
     ItemSeparatorComponent: Separator('lightgreen', 'green'),
   };
-  const ref = React.useRef(null);
+  const ref = React.useRef<$FlowFixMe>(null);
 
   return <BaseFlatListExample ref={ref} exampleProps={exampleProps} />;
 }
@@ -50,7 +51,7 @@ const styles = StyleSheet.create({
   separator: {
     height: 12,
   },
-  separtorText: {
+  separatorText: {
     fontSize: 10,
   },
 });

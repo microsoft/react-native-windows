@@ -33,12 +33,14 @@ const schemaValidator = require(path.resolve(
 
 interface Options {
   libraryName: string;
-  schema: SchemaType;
-  outputDirectory: string;
+  methodOnly: boolean;
+  modulesCxx: boolean;
   moduleSpecName: string;
+  modulesTypeScriptTypes: boolean;
+  modulesWindows: boolean;
   namespace: string;
-  methodonly: boolean;
-  ts: boolean;
+  outputDirectory: string;
+  schema: SchemaType;
 }
 
 interface Config {
@@ -129,10 +131,10 @@ export function parseFile(filename: string): SchemaType {
   try {
     const isTypeScript =
       path.extname(filename) === '.ts' || path.extname(filename) === '.tsx';
-
+    const contents = fs.readFileSync(filename, 'utf8');
     const schema = isTypeScript
-      ? TypeScriptParser.parseFile(filename)
-      : FlowParser.parseFile(filename);
+      ? TypeScriptParser.parseString(contents, filename)
+      : FlowParser.parseString(contents, filename);
     // there will be at most one turbo module per file
     const moduleName = Object.keys(schema.modules)[0];
     if (moduleName) {
@@ -179,12 +181,14 @@ export function combineSchemas(files: string[]): SchemaType {
 export function generate(
   {
     libraryName,
-    schema,
-    outputDirectory,
+    methodOnly,
+    modulesCxx,
     moduleSpecName,
+    modulesTypeScriptTypes,
+    modulesWindows,
     namespace,
-    methodonly,
-    ts,
+    outputDirectory,
+    schema,
   }: Options,
   {/*generators,*/ test}: Config,
 ): boolean {
@@ -204,10 +208,18 @@ export function generate(
   );
 
   const generateNM2 = createNM2Generator({
+    methodOnly,
     namespace,
-    methodonly,
   });
 
+  const generateJsiModuleH = require(path.resolve(
+    rncodegenPath,
+    'lib/generators/modules/GenerateModuleH',
+  )).generate;
+  const generateJsiModuleCpp = require(path.resolve(
+    rncodegenPath,
+    'lib/generators/modules/GenerateModuleCpp',
+  )).generate;
   const generatorPropsH = require(path.resolve(
     rncodegenPath,
     'lib/generators/components/GeneratePropsH',
@@ -236,20 +248,38 @@ export function generate(
     rncodegenPath,
     'lib/generators/components/GenerateEventEmitterCpp',
   )).generate;
+  const generatorStateCPP = require(path.resolve(
+    rncodegenPath,
+    'lib/generators/components/GenerateStateCpp',
+  )).generate;
+  const generatorStateH = require(path.resolve(
+    rncodegenPath,
+    'lib/generators/components/GenerateStateH',
+  )).generate;
 
-  normalizeFileMap(
-    generateNM2(libraryName, schema, moduleSpecName),
-    outputDirectory,
-    generatedFiles,
-  );
+  const moduleGenerators = [];
 
-  if (ts) {
-    normalizeFileMap(
-      generateTypeScript(libraryName, schema, moduleSpecName),
-      outputDirectory,
-      generatedFiles,
-    );
+  if (modulesWindows) {
+    moduleGenerators.push(generateNM2);
   }
+
+  if (modulesCxx) {
+    moduleGenerators.push(generateJsiModuleH);
+    moduleGenerators.push(generateJsiModuleCpp);
+  }
+
+  if (modulesTypeScriptTypes) {
+    moduleGenerators.push(generateTypeScript);
+  }
+
+  moduleGenerators.forEach(generator => {
+    const generated: Map<string, string> = generator(
+      libraryName,
+      schema,
+      moduleSpecName,
+    );
+    normalizeFileMap(generated, outputDirectory, generatedFiles);
+  });
 
   if (
     Object.keys(schema.modules).some(
@@ -257,13 +287,15 @@ export function generate(
     )
   ) {
     const componentGenerators = [
-      generatorPropsH,
-      generatorPropsCPP,
-      generatorShadowNodeH,
-      generatorShadowNodeCPP,
       generatorComponentDescriptorH,
-      generatorEventEmitterH,
       generatorEventEmitterCPP,
+      generatorEventEmitterH,
+      generatorPropsCPP,
+      generatorPropsH,
+      generatorShadowNodeCPP,
+      generatorShadowNodeH,
+      generatorStateCPP,
+      generatorStateH,
     ];
 
     componentGenerators.forEach(generator => {
@@ -287,10 +319,12 @@ export type CodeGenOptions = {
   file?: string;
   files?: string[];
   libraryName: string;
-  outdir: string;
+  methodOnly: boolean;
+  modulesCxx: boolean;
+  modulesTypeScriptTypes: boolean;
+  modulesWindows: boolean;
   namespace: string;
-  methodonly: boolean;
-  ts: boolean;
+  outputDirectory: string;
   test: boolean;
 };
 
@@ -304,17 +338,25 @@ export function runCodeGen(options: CodeGenOptions): boolean {
 
   const libraryName = options.libraryName;
   const moduleSpecName = 'moduleSpecName';
-  const outputDirectory = options.outdir;
-  const {namespace, methodonly, ts} = options;
+  const {
+    methodOnly,
+    modulesCxx,
+    modulesTypeScriptTypes,
+    modulesWindows,
+    namespace,
+    outputDirectory,
+  } = options;
   return generate(
     {
       libraryName,
-      schema,
-      outputDirectory,
+      methodOnly,
+      modulesCxx,
       moduleSpecName,
+      modulesTypeScriptTypes,
+      modulesWindows,
       namespace,
-      methodonly,
-      ts,
+      outputDirectory,
+      schema,
     },
     {generators: [], test: options.test},
   );

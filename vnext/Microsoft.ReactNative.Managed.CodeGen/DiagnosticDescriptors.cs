@@ -35,7 +35,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
       id: Invariant($"{ReactNativeNames.ErrorCodePrefix}1002"),
       category: ReactNativeNames.ErrorCategory,
       title: "Unexpected attribute arguments",
-      messageFormat: "Unexpected named attribute '{0}' encountered on attribute '{1}'. Did you mix versions of React Native Windows and the Sdk?",
+      messageFormat: "Unexpected named attribute '{0}' encountered on attribute '{1}'. You may have mixed versions of React Native Windows and the Sdk.",
       defaultSeverity: DiagnosticSeverity.Error,
       isEnabledByDefault: true);
 
@@ -51,7 +51,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
       id: Invariant($"{ReactNativeNames.ErrorCodePrefix}1003"),
       category: ReactNativeNames.ErrorCategory,
       title: "Cannot serialie type",
-      messageFormat: "Types that are serialized for React bust have a default parameter-less constructor.",
+      messageFormat: "Types that are serialized for React bust have a default parameter-less constructor",
       defaultSeverity: DiagnosticSeverity.Error,
       isEnabledByDefault: true);
 
@@ -146,7 +146,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
     public static readonly DiagnosticDescriptor MethodShouldNotReturnTaskWhenSynchronous = new DiagnosticDescriptor(
       id: Invariant($"{ReactNativeNames.ErrorCodePrefix}1015"),
       category: ReactNativeNames.ErrorCategory,
-      title: "ReactModule Methods should not return ",
+      title: "ReactModule Methods should not return",
       messageFormat: "Methods of ReactModules should not return a Task when they are synchronous. Change the attribute from '[ReactSyncMethod]' to '[ReactMethod]' for method '{0}' of module '{1}'.",
       defaultSeverity: DiagnosticSeverity.Error,
       isEnabledByDefault: true);

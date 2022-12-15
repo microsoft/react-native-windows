@@ -14,4 +14,8 @@ describe('PopupTests', () => {
     const dump = await dumpVisualTree('popup-placement');
     expect(dump).toMatchSnapshot();
   });
+  test('Popups can have customized accessibility', async () => {
+    const dump = await dumpVisualTree('popup-accessibility');
+    expect(dump).toMatchSnapshot();
+  });
 });

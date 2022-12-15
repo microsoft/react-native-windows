@@ -1,8 +1,87 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Wed, 26 Oct 2022 05:11:35 GMT and should not be manually modified.
+This log was last generated on Tue, 13 Dec 2022 06:15:21 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.173
+
+Tue, 13 Dec 2022 06:15:21 GMT
+
+### Changes
+
+- Standardize on the repository field in package.json (dannyvv@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.1.15
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.1
+- Bump @rnw-scripts/just-task to v2.3.4
+- Bump react-native-platform-override to v1.8.5
+
+## 0.0.0-canary.172
+
+Sat, 10 Dec 2022 06:15:31 GMT
+
+### Changes
+
+- Remove work around for broken Utilities import in core (30809111+acoates-ms@users.noreply.github.com)
+- Bump react-native-platform-override to v1.8.4
+
+## 0.0.0-canary.171
+
+Wed, 07 Dec 2022 06:14:41 GMT
+
+### Changes
+
+- integration 11/18/22 (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.170
+
+Fri, 02 Dec 2022 06:19:04 GMT
+
+### Changes
+
+- Bump codegen version (30809111+acoates-ms@users.noreply.github.com)
+- Integrate 10/10 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/just-task to v2.3.3
+- Bump react-native-platform-override to v1.8.3
+
+## 0.0.0-canary.169
+
+Wed, 16 Nov 2022 06:16:00 GMT
+
+### Changes
+
+- Update how types are exported to align with core (30809111+acoates-ms@users.noreply.github.com)
+- Bump @rnw-scripts/just-task to v2.3.2
+- Bump react-native-platform-override to v1.8.2
+
+## 0.0.0-canary.168
+
+Sat, 12 Nov 2022 06:17:21 GMT
+
+### Changes
+
+- Integrate 10/10 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/just-task to v2.3.1
+- Bump react-native-platform-override to v1.8.1
+
+## 0.0.0-canary.167
+
+Thu, 10 Nov 2022 06:17:11 GMT
+
+### Changes
+
+- integration 9/26/22 (tatianakapos@microsoft.com)
+- Bump @rnw-scripts/just-task to v2.3.0
+- Bump react-native-platform-override to v1.8.0
+
+## 0.0.0-canary.166
+
+Thu, 03 Nov 2022 05:12:35 GMT
+
+### Changes
+
+- Add accessibilityLevel to BasePropsWin32 (krsiler@microsoft.com)
+- Remove duplicate accessibilityLevel prop (krsiler@microsoft.com)
 
 ## 0.0.0-canary.165
 

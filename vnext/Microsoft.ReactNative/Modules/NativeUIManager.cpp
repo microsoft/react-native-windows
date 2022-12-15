@@ -260,6 +260,10 @@ void NativeUIManager::ensureInBatch() {
     m_inBatch = true;
 }
 
+bool NativeUIManager::isInBatch() {
+  return m_inBatch;
+}
+
 static float NumberOrDefault(const winrt::Microsoft::ReactNative::JSValue &value, float defaultValue) {
   float result = defaultValue;
 
@@ -622,6 +626,15 @@ static void StyleYogaNode(
       YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
       SetYogaUnitValueHelper(yogaNode, result, YGNodeStyleSetMaxHeight, YGNodeStyleSetMaxHeightPercent);
+    } else if (key == "rowGap") {
+      float result = NumberOrDefault(value, 0.0f /*default*/);
+      YGNodeStyleSetGap(yogaNode, YGGutterRow, result);
+    } else if (key == "columnGap") {
+      float result = NumberOrDefault(value, 0.0f /*default*/);
+      YGNodeStyleSetGap(yogaNode, YGGutterColumn, result);
+    } else if (key == "gap") {
+      float result = NumberOrDefault(value, 0.0f /*default*/);
+      YGNodeStyleSetGap(yogaNode, YGGutterAll, result);
     } else if (key == "margin") {
       YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
@@ -884,28 +897,28 @@ void NativeUIManager::DoLayout() {
   auto &rootTags = m_host->GetAllRootTags();
   for (int64_t rootTag : rootTags) {
     ShadowNodeBase &rootShadowNode = static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(rootTag));
-    if (YGNodeRef rootNode = GetYogaNode(rootTag)) {
-      auto rootElement = rootShadowNode.GetView().as<xaml::FrameworkElement>();
+    const auto rootElement = rootShadowNode.GetView().as<xaml::FrameworkElement>();
+    float actualWidth = static_cast<float>(rootElement.ActualWidth());
+    float actualHeight = static_cast<float>(rootElement.ActualHeight());
+    ApplyLayout(rootTag, actualWidth, actualHeight);
+  }
+}
 
-      float actualWidth = static_cast<float>(rootElement.ActualWidth());
-      float actualHeight = static_cast<float>(rootElement.ActualHeight());
+void NativeUIManager::ApplyLayout(int64_t tag, float width, float height) {
+  if (YGNodeRef rootNode = GetYogaNode(tag)) {
+    SystraceSection s("NativeUIManager::DoLayout::YGNodeCalculateLayout");
+    // We must always run layout in LTR mode, which might seem unintuitive.
+    // We will flip the root of the tree into RTL by forcing the root XAML node's FlowDirection to RightToLeft
+    // which will inherit down the XAML tree, allowing all native controls to pick it up.
+    YGNodeCalculateLayout(rootNode, width, height, YGDirectionLTR);
+  } else {
+    assert(false);
+    return;
+  }
 
-      {
-        SystraceSection s("NativeUIManager::DoLayout::YGNodeCalculateLayout");
-        // We must always run layout in LTR mode, which might seem unintuitive.
-        // We will flip the root of the tree into RTL by forcing the root XAML node's FlowDirection to RightToLeft
-        // which will inherit down the XAML tree, allowing all native controls to pick it up.
-        YGNodeCalculateLayout(rootNode, actualWidth, actualHeight, YGDirectionLTR);
-      }
-    } else {
-      assert(false);
-      return;
-    }
-
-    {
-      SystraceSection s("NativeUIManager::DoLayout::SetLayoutProps");
-      SetLayoutPropsRecursive(rootTag);
-    }
+  {
+    SystraceSection s("NativeUIManager::DoLayout::SetLayoutProps");
+    SetLayoutPropsRecursive(tag);
   }
 }
 
@@ -1132,9 +1145,9 @@ void NativeUIManager::focus(int64_t reactTag) {
 // Note: It's a known issue that blur on flyout/popup would dismiss them.
 void NativeUIManager::blur(int64_t reactTag) {
   if (auto shadowNode = static_cast<ShadowNodeBase *>(m_host->FindShadowNodeForTag(reactTag))) {
-    auto view = shadowNode->GetView();
     // Only blur if current UI is focused to avoid problem described in PR #2687
-    if (view == xaml::Input::FocusManager::GetFocusedElement().try_as<xaml::DependencyObject>()) {
+    const auto xamlRoot = tryGetXamlRoot(shadowNode->m_rootTag);
+    if (shadowNode->GetView() == xaml::Input::FocusManager::GetFocusedElement(xamlRoot)) {
       if (auto reactControl = GetParentXamlReactControl(reactTag).get()) {
         reactControl.as<winrt::Microsoft::ReactNative::implementation::ReactRootView>()->blur(shadowNode->GetView());
       } else {
@@ -1151,8 +1164,8 @@ void NativeUIManager::blur(int64_t reactTag) {
 // m_tagsToXamlReactControl to get the IXamlReactControl
 winrt::weak_ref<winrt::Microsoft::ReactNative::ReactRootView> NativeUIManager::GetParentXamlReactControl(
     int64_t tag) const {
-  if (auto shadowNode = static_cast<ShadowNodeBase *>(m_host->FindParentRootShadowNode(tag))) {
-    auto it = m_tagsToXamlReactControl.find(shadowNode->m_tag);
+  if (auto shadowNode = m_host->FindShadowNodeForTag(tag)) {
+    auto it = m_tagsToXamlReactControl.find(shadowNode->m_rootTag);
     if (it != m_tagsToXamlReactControl.end()) {
       return it->second;
     }

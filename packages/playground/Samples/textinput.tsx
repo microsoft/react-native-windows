@@ -15,11 +15,21 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 
-export default class Bootstrap extends React.Component<{}, any> {
-  componentDidMount() {
-    Keyboard.addListener('keyboardDidShow', this.keyboardDidShow);
+import type {EventSubscription} from 'react-native';
 
-    Keyboard.addListener('keyboardDidHide', this.keyboardDidHide);
+export default class Bootstrap extends React.Component<{}, any> {
+  didShowEmitterSubscription = {} as EventSubscription;
+  didHideEmitterSubscription = {} as EventSubscription;
+
+  componentDidMount() {
+    this.didShowEmitterSubscription = Keyboard.addListener(
+      'keyboardDidShow',
+      this.keyboardDidShow,
+    );
+    this.didHideEmitterSubscription = Keyboard.addListener(
+      'keyboardDidHide',
+      this.keyboardDidHide,
+    );
   }
 
   keyboardDidShow = () => {
@@ -31,9 +41,8 @@ export default class Bootstrap extends React.Component<{}, any> {
   };
 
   componentWillUnmount() {
-    Keyboard.removeListener('keyboardDidShow', this.keyboardDidShow);
-
-    Keyboard.removeListener('keyboardDidHide', this.keyboardDidHide);
+    this.didShowEmitterSubscription.remove();
+    this.didHideEmitterSubscription.remove();
   }
 
   state = {
@@ -47,6 +56,7 @@ export default class Bootstrap extends React.Component<{}, any> {
   };
 
   render() {
+    let textInputRef: TextInput | null;
     return (
       <View style={styles.container}>
         <TextInput
@@ -88,6 +98,12 @@ export default class Bootstrap extends React.Component<{}, any> {
           style={styles.input}
           autoCapitalize="characters"
           placeholder={'autoCapitalize characters'}
+        />
+        <TextInput
+          ref={ref => (textInputRef = ref)}
+          onFocus={() => setTimeout(() => textInputRef?.blur(), 5000)}
+          placeholder={'blurs after 5 seconds'}
+          style={styles.input}
         />
         <TextInput
           style={styles.input}

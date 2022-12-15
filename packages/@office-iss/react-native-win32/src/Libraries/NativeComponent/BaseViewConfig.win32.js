@@ -8,12 +8,13 @@
  * @flow strict-local
  */
 
-import {
-  DynamicallyInjectedByGestureHandler,
-  ConditionallyIgnoredEventHandlers,
-} from './ViewConfigIgnore';
-import ReactNativeStyleAttributes from '../Components/View/ReactNativeStyleAttributes';
 import type {PartialViewConfigWithoutName} from './PlatformBaseViewConfig';
+
+import ReactNativeStyleAttributes from '../Components/View/ReactNativeStyleAttributes';
+import {
+  ConditionallyIgnoredEventHandlers,
+  DynamicallyInjectedByGestureHandler,
+} from './ViewConfigIgnore';
 
 const bubblingEventTypes = {
   // Generic Events
@@ -248,28 +249,43 @@ const validAttributesForNonEventProps = {
   // borderEndWidth: true,
   // borderWidth: true,
 
-  marginTop: true,
-  marginRight: true,
-  marginBottom: true,
-  marginLeft: true,
-  marginStart: true,
-  marginEnd: true,
-  marginVertical: true,
-  marginHorizontal: true,
   margin: true,
+  marginBlock: true,
+  marginBlockEnd: true,
+  marginBlockStart: true,
+  marginBottom: true,
+  marginEnd: true,
+  marginHorizontal: true,
+  marginInline: true,
+  marginInlineEnd: true,
+  marginInlineStart: true,
+  marginLeft: true,
+  marginRight: true,
+  marginStart: true,
+  marginTop: true,
+  marginVertical: true,
 
-  paddingTop: true,
-  paddingRight: true,
-  paddingBottom: true,
-  paddingLeft: true,
-  paddingStart: true,
-  paddingEnd: true,
-  paddingVertical: true,
-  paddingHorizontal: true,
   padding: true,
+  paddingBlock: true,
+  paddingBlockEnd: true,
+  paddingBlockStart: true,
+  paddingBottom: true,
+  paddingEnd: true,
+  paddingHorizontal: true,
+  paddingInline: true,
+  paddingInlineEnd: true,
+  paddingInlineStart: true,
+  paddingLeft: true,
+  paddingRight: true,
+  paddingStart: true,
+  paddingTop: true,
+  paddingVertical: true,
 
   flex: true,
   flexGrow: true,
+  rowGap: true,
+  columnGap: true,
+  gap: true,
   flexShrink: true,
   flexBasis: true,
   flexDirection: true,

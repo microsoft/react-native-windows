@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.0.0-20220912-2028-b0aba1b6f",
+  "baseVersion": "0.0.0-20221120-2051-81e441ae8",
   "overrides": [
     {
       "type": "patch",
@@ -21,10 +21,24 @@
       "baseHash": "36c55afe75ac9c6efdec22e5ceb1f114a84ebd45"
     },
     {
+      "type": "derived",
+      "file": "src/js/examples-win/Switch/SwitchExample.windows.js",
+      "baseFile": "packages/rn-tester/js/examples/Switch/SwitchExample.js",
+      "baseHash": "ba4cd945121522ef59ed862bb6104d8767e66e5e"
+    },
+    {
+      "type": "platform",
+      "file": "src/js/examples/HTTP/HTTPExample.js"
+    },
+    {
+      "type": "platform",
+      "file": "src/js/examples/HTTP/HTTPExampleMultiPartFormData.js"
+    },
+    {
       "type": "patch",
       "file": "src/js/examples/Pressable/PressableExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Pressable/PressableExample.js",
-      "baseHash": "2fd05e8c48baa3ea8733cd4dbedddac5136b13ca",
+      "baseHash": "52addf0c993863131d5332f89087baaefeba604f",
       "issue": 6240
     },
     {
@@ -38,7 +52,7 @@
       "type": "patch",
       "file": "src/js/examples/View/ViewExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/View/ViewExample.js",
-      "baseHash": "43e3b91beccd0f5e811bcf70c2979c9258e8cd2d"
+      "baseHash": "bce9ad5810b0606eb3977398fd8c9fb555b84d88"
     },
     {
       "type": "copy",
@@ -51,7 +65,7 @@
       "type": "derived",
       "file": "src/js/utils/RNTesterList.windows.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "e3e46179f01995a76b39dc46feae58cbd868633e"
+      "baseHash": "fde4de703b71dbb64f858158b880c147a295205d"
     }
   ]
 }

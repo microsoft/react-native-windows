@@ -15,7 +15,9 @@ const screenshotDir = './errorShots';
 fs.mkdirSync(screenshotDir, {recursive: true});
 
 // Register to screenshot on each test failure
-global.jasmine.getEnv().addReporter({
+// TODO - use a jest reporter to create screenshots
+/*
+global.jasmine.addReporter({
   specDone: async result => {
     if (result.status === 'failed') {
       const friendlySpecName = sanitizeFilename(
@@ -27,5 +29,6 @@ global.jasmine.getEnv().addReporter({
     }
   },
 });
+*/
 
 LogBox.ignoreAllLogs(true);

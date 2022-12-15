@@ -207,6 +207,10 @@ struct CompVisual : public winrt::implements<
     m_visual.Scale(scale);
   }
 
+  void TransformMatrix(winrt::Windows::Foundation::Numerics::float4x4 const &transform) noexcept {
+    m_visual.TransformMatrix(transform);
+  }
+
   void RotationAngle(float rotation) noexcept {
     m_visual.RotationAngle(rotation);
   }
@@ -287,6 +291,10 @@ struct CompSpriteVisual : winrt::Microsoft::ReactNative::Composition::implementa
 
   void Scale(winrt::Windows::Foundation::Numerics::float3 const &scale) noexcept {
     m_visual.Scale(scale);
+  }
+
+  void TransformMatrix(winrt::Windows::Foundation::Numerics::float4x4 const &transform) noexcept {
+    m_visual.TransformMatrix(transform);
   }
 
   void RotationAngle(float rotation) noexcept {
@@ -465,6 +473,10 @@ struct CompScrollerVisual : winrt::Microsoft::ReactNative::Composition::implemen
 
   void Scale(winrt::Windows::Foundation::Numerics::float3 const &scale) noexcept {
     m_visual.Scale(scale);
+  }
+
+  void TransformMatrix(winrt::Windows::Foundation::Numerics::float4x4 const &transform) noexcept {
+    m_visual.TransformMatrix(transform);
   }
 
   void RotationAngle(float rotation) noexcept {
