@@ -111,8 +111,8 @@ void ControlViewManager::OnPropertiesUpdated(ShadowNodeBase *node) {
   // If developer specifies either the accessible and focusable prop to be false
   // remove accessibility and keyboard focus for component.
   const auto isTabStop = (IsFocusable() && IsAccessible());
-  const auto accessibilityView = isTabStop ? xaml::Automation::Peers::AccessibilityView::Content
-                                             : xaml::Automation::Peers::AccessibilityView::Raw;
+  const auto accessibilityView =
+      isTabStop ? xaml::Automation::Peers::AccessibilityView::Content : xaml::Automation::Peers::AccessibilityView::Raw;
   control.IsTabStop(isTabStop);
   xaml::Automation::AutomationProperties::SetAccessibilityView(control, accessibilityView);
   control.IsEnabled(isTabStop);
