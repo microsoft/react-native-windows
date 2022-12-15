@@ -19,15 +19,15 @@ import type {
   BlurEvent,
   FocusEvent,
   KeyEvent, // Windows]
-} from '../Types/CoreEventTypes';
+} from '../../../Libraries/Types/CoreEventTypes';
 import type {Node} from 'react';
-import type {TextStyleProp} from '../StyleSheet/StyleSheet';
+import type {TextStyleProp} from '../../../Libraries/StyleSheet/StyleSheet';
 import type {
   AccessibilityRole,
   AccessibilityState,
   AccessibilityActionInfo,
   AccessibilityActionEvent,
-} from '../Components/View/ViewAccessibility';
+} from '../../../Libraries/Components/View/ViewAccessibility';
 
 export type PressRetentionOffset = $ReadOnly<{|
   top: number,

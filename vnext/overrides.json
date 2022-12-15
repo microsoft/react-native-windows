@@ -17,15 +17,15 @@
       "baseHash": "5b31122dae356999a8c9070cac37a1e28a0570e9"
     },
     {
-      "type": "derived",
-      "file": "Libraries/Text/Text.windows.js",
+      "type": "patch",
+      "file": "src/Libraries/Text/Text.windows.js",
       "baseFile": "Libraries/Text/Text.js",
       "baseHash": "46f2d9bc869612c91277b816e45857d48c754869",
       "issue": 10808
     },
     {
-      "type": "derived",
-      "file": "Libraries/Text/TextProps.windows.js",
+      "type": "patch",
+      "file": "src/Libraries/Text/TextProps.windows.js",
       "baseFile": "Libraries/Text/TextProps.js",
       "baseHash": "f15d5d94d36d558f580ed6bc20df63ce89230b25",
       "issue": 10808
