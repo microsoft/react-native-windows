@@ -17,20 +17,6 @@
       "baseHash": "5b31122dae356999a8c9070cac37a1e28a0570e9"
     },
     {
-      "type": "patch",
-      "file": "src/Libraries/Text/Text.windows.js",
-      "baseFile": "Libraries/Text/Text.js",
-      "baseHash": "46f2d9bc869612c91277b816e45857d48c754869",
-      "issue": 10808
-    },
-    {
-      "type": "patch",
-      "file": "src/Libraries/Text/TextProps.windows.js",
-      "baseFile": "Libraries/Text/TextProps.js",
-      "baseHash": "f15d5d94d36d558f580ed6bc20df63ce89230b25",
-      "issue": 10808
-    },
-    {
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputComponentDescriptor.h",
       "baseFile": "ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputComponentDescriptor.h",
@@ -435,6 +421,19 @@
     {
       "type": "platform",
       "file": "src/Libraries/StyleSheet/PlatformColorValueTypes.windows.js"
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/Text/Text.windows.js",
+      "baseFile": "Libraries/Text/Text.js",
+      "baseHash": "abdf0022b453823f9f4a8627519ba54f5fcad841"
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/Text/TextProps.windows.js",
+      "baseFile": "Libraries/Text/TextProps.js",
+      "baseHash": "e736dc155522360832e7cf01fd8acdfc379ab022",
+      "issue": 10808
     },
     {
       "type": "patch",
