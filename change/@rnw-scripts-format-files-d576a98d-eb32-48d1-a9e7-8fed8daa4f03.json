@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Standardize on the repository field in package.json",
-  "packageName": "@rnw-scripts/format-files",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch"
-}

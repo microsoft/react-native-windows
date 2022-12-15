@@ -2,6 +2,27 @@
   "name": "@rnw-scripts/jest-debug-config",
   "entries": [
     {
+      "date": "Tue, 13 Dec 2022 06:15:24 GMT",
+      "tag": "@rnw-scripts/jest-debug-config_v1.4.3",
+      "version": "1.4.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "dannyvv@microsoft.com",
+            "package": "@rnw-scripts/jest-debug-config",
+            "commit": "e18db30cd3f5c70a97c5d3c1f15f3431b95ec7aa",
+            "comment": "Standardize on the repository field in package.json"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/jest-debug-config",
+            "comment": "Bump @rnw-scripts/babel-node-config to v2.1.1",
+            "commit": "e18db30cd3f5c70a97c5d3c1f15f3431b95ec7aa"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 02 Dec 2022 06:19:03 GMT",
       "tag": "@rnw-scripts/jest-debug-config_v1.4.2",
       "version": "1.4.2",

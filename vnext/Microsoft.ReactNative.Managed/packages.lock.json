@@ -86,7 +86,7 @@
       "ReactNative.Hermes.Windows": {
         "type": "Transitive",
         "resolved": "0.0.0-2211.20001-13de58e2",
-        "contentHash": "q38h/Gkw8d0pfUqIhRCd1j/XLhpQY4Hm7kSQthZUzetEST34acbR883/Eh+DKt4FVz9a0lh5kiAfP7piO768SA=="
+        "contentHash": "aYkNwa6qSb9euKVnYw2ZGoyXvRT2d9ss6i8VKFfqh86QR6Z+5+iqVHWa+z/2Y6TWSkkFhV5znJ7Pt4ESObYKJA=="
       },
       "runtime.win10-arm.Microsoft.Net.Native.Compiler": {
         "type": "Transitive",

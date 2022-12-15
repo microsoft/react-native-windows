@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Standardize on the repository field in package.json",
-  "packageName": "@react-native-windows/automation-channel",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch"
-}

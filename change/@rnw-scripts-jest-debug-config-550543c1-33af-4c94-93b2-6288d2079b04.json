@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Standardize on the repository field in package.json",
-  "packageName": "@rnw-scripts/jest-debug-config",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch"
-}

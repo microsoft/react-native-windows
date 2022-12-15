@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Mark Text dirty when descendant Text updates occur",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
