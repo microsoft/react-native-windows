@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 13 Dec 2022 06:15:26 GMT and should not be manually modified.
+This log was last generated on Thu, 15 Dec 2022 06:14:42 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.595
+
+Thu, 15 Dec 2022 06:14:42 GMT
+
+### Changes
+
+- Mark Text dirty when descendant Text updates occur (erozell@outlook.com)
 
 ## 0.0.0-canary.594
 
