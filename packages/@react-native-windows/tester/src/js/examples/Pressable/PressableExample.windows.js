@@ -102,6 +102,8 @@ function PressableFeedbackEvents() {
           accessibilityLabel="pressable feedback events"
           accessibilityRole="button"
           // [Windows
+          onFocus={() => appendEvent('focus')}
+          onBlur={() => appendEvent('blur')}
           onHoverIn={() => appendEvent('hover in')}
           onHoverOut={() => appendEvent('hover out')}
           // Windows]
