@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Remove unnecessary overrides to onFocus and onBlur in Pressable",
   "packageName": "react-native-windows",
   "email": "sanajmi@microsoft.com",
