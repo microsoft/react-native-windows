@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 15 Dec 2022 06:14:42 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.595",
+      "version": "0.0.0-canary.595",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "06245ff4027db276b63592fe035c4e45bc23bf7f",
+            "comment": "Mark Text dirty when descendant Text updates occur"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 13 Dec 2022 06:15:26 GMT",
       "tag": "react-native-windows_v0.0.0-canary.594",
       "version": "0.0.0-canary.594",
