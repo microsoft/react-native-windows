@@ -106,14 +106,14 @@ function renderProperties(
       if (funcType.returnTypeAnnotation.type === 'PromiseTypeAnnotation') {
         if (funcType.returnTypeAnnotation.elementType) {
           traversedArgs.push(
-            `::Promise<${translateSpecReturnType(
+            `Promise<${translateSpecReturnType(
               funcType.returnTypeAnnotation.elementType,
               aliases,
               propAliasName,
             )}>`,
           );
         } else {
-          traversedArgs.push('::Promise<::React::JSValue>');
+          traversedArgs.push('Promise<::React::JSValue>');
         }
       }
 
