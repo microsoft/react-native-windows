@@ -178,7 +178,7 @@
       "file": "src/Libraries/Animated/nodes/AnimatedInterpolation.windows.js",
       "baseFile": "Libraries/Animated/nodes/AnimatedInterpolation.js",
       "baseHash": "7dae17d655423f7e6213c5e0b15984aa2c13f1fd",
-      "issue": 1
+      "issue": 11018
     },
     {
       "type": "platform",
