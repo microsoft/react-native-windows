@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 15 Dec 2022 06:14:42 GMT and should not be manually modified.
+This log was last generated on Fri, 16 Dec 2022 06:14:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.596
+
+Fri, 16 Dec 2022 06:14:59 GMT
+
+### Changes
+
+- Remove unnecessary overrides to onFocus and onBlur in Pressable (sanajmi@microsoft.com)
+- Fix raw text update clearing Text (erozell@outlook.com)
 
 ## 0.0.0-canary.595
 

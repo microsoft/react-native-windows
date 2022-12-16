@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 16 Dec 2022 06:14:59 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.596",
+      "version": "0.0.0-canary.596",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "sanajmi@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a19090da73383153e83690dd30cbf951a1a95271",
+            "comment": "Remove unnecessary overrides to onFocus and onBlur in Pressable"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "9e222986b786be11d038ece5af9ad2c9632e31b7",
+            "comment": "Fix raw text update clearing Text"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 15 Dec 2022 06:14:42 GMT",
       "tag": "react-native-windows_v0.0.0-canary.595",
       "version": "0.0.0-canary.595",
