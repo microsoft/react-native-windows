@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 02 Dec 2022 06:19:04 GMT and should not be manually modified.
+This log was last generated on Mon, 12 Dec 2022 16:16:51 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.0-preview.1
+
+Mon, 12 Dec 2022 16:16:51 GMT
+
+### Changes
+
+- Implement HTTP incremental updates (#10933) (jurocha@microsoft.com)
+- Promote 0.71 to preview (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.71.0-preview.1
+- Bump @react-native-windows/codegen to v0.71.0-preview.1
 
 ## 0.0.0-canary.590
 
