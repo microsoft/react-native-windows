@@ -171,8 +171,10 @@ function mapStringToNumericComponents(
   } else {
     const components: Array<string | number> = [];
     let lastMatchEnd = 0;
+    // [Windows See issue #11018, remove this override once we hit future RN PR
     let match: RegExp$matchResult;
     while ((match = (numericComponentRegex.exec(input): any)) != null) {
+      // Windows]
       if (match.index > lastMatchEnd) {
         components.push(input.substring(lastMatchEnd, match.index));
       }
