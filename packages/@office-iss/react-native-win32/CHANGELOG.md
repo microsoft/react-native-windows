@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 07 Nov 2022 16:12:33 GMT and should not be manually modified.
+This log was last generated on Mon, 19 Dec 2022 16:13:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.70.4
+
+Mon, 19 Dec 2022 16:13:04 GMT
+
+### Patches
+
+- Remove unnecessary overrides to onFocus and onBlur in Pressable (sanajmi@microsoft.com)
 
 ## 0.70.3
 
