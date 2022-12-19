@@ -6,7 +6,6 @@
  */
 
 import type {DialogOptions} from './NativeDialogManagerWindows';
-
 const NativeDialogManagerWindows =
   require('./NativeDialogManagerWindows').default;
 
