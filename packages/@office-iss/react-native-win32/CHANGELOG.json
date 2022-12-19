@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 19 Dec 2022 16:12:47 GMT",
+      "tag": "@office-iss/react-native-win32_v0.69.5",
+      "version": "0.69.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "sanajmi@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "a9315c7f017f238f755922c1d2766524724e0c08",
+            "comment": "Remove unnecessary overrides to onFocus and onBlur in Pressable"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 12 Dec 2022 16:13:51 GMT",
       "tag": "@office-iss/react-native-win32_v0.69.4",
       "version": "0.69.4",
