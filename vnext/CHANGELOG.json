@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 19 Dec 2022 16:10:36 GMT",
+      "tag": "react-native-windows_v0.68.25",
+      "version": "0.68.25",
+      "comments": {
+        "patch": [
+          {
+            "author": "sanajmi@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "36fd1854a9da654ce92a3b208e81f5413ebb8736",
+            "comment": "Remove unnecessary overrides to onFocus and onBlur in Pressable"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 12 Dec 2022 16:11:17 GMT",
       "tag": "react-native-windows_v0.68.24",
       "version": "0.68.24",
