@@ -239,13 +239,6 @@ class ChakraRuntime : public facebook::jsi::Runtime, public ChakraApi, ChakraApi
     // ~ChakraPointerValue() should only be invoked by invalidate().
     // Hence we make it private.
     ~ChakraPointerValue() noexcept override {
-      if (JsRef ref = GetRef()) {
-        // JSI allows the destructor to be run on a random thread.
-        // To handle it correctly we must schedule a task to the thread associated
-        // with the Chakra context. For now we just leak the value.
-        // TODO: Implement proper ref count release if it is called on a wrong thread.
-        JsRelease(ref, nullptr); // We ignore the error until we fix the TODO above.
-      }
     }
   };
 
