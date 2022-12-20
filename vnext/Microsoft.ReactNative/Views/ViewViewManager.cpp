@@ -118,21 +118,6 @@ class ViewShadowNode : public ShadowNodeBase {
     m_onClick = isSet;
   }
 
-  bool IsFocusable() const {
-    return m_isFocusable;
-  }
-  void IsFocusable(bool isFocusable) {
-    m_isFocusable = isFocusable;
-  }
-
-  bool IsAccessible() const {
-    return m_isAccessible;
-  }
-
-  void IsAccessible(bool isAccessible) {
-    m_isAccessible = isAccessible;
-  }
-
   bool IsHitTestBrushRequired() const {
     return IsRegisteredForMouseEvents();
   }
@@ -256,8 +241,6 @@ class ViewShadowNode : public ShadowNodeBase {
 
   bool m_enableFocusRing = true;
   bool m_onClick = false;
-  bool m_isFocusable = false;
-  bool m_isAccessible = false;
   int32_t m_tabIndex = std::numeric_limits<std::int32_t>::max();
 
   xaml::Controls::ContentControl::GotFocus_revoker m_contentControlGotFocusRevoker{};
