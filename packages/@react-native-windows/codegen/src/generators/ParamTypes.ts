@@ -8,7 +8,12 @@
 
 import type {
   NamedShape,
+  NativeModuleArrayTypeAnnotation,
+  NativeModuleBaseTypeAnnotation,
+  NativeModuleEnumDeclaration,
+  NativeModuleFunctionTypeAnnotation,
   NativeModuleParamTypeAnnotation,
+  NativeModuleUnionTypeAnnotation,
   Nullable,
 } from 'react-native-tscodegen';
 import {
@@ -34,6 +39,87 @@ function decorateType(type: string, target: ParamTarget): string {
   }
 }
 
+function translateUnionReturnType(
+  type: NativeModuleEnumDeclaration | NativeModuleUnionTypeAnnotation,
+  target: ParamTarget,
+): string {
+  const memberType = type.memberType;
+  switch (type.memberType) {
+    case 'StringTypeAnnotation':
+      return 'std::string';
+    case 'NumberTypeAnnotation':
+      return 'double';
+    case 'ObjectTypeAnnotation':
+      return decorateType('::React::JSValue', target);
+    default:
+      throw new Error(
+        `Unknown enum/union member type in translateReturnType: ${memberType}`,
+      );
+  }
+}
+
+function translateFunction(
+  param: NativeModuleFunctionTypeAnnotation,
+  aliases: AliasMap,
+  baseAliasName: string,
+  target: ParamTarget,
+): string {
+  // TODO: type.returnTypeAnnotation
+  switch (target) {
+    case 'spec':
+      return `Callback<${param.params
+        .map((p: NativeModuleParamShape) =>
+          translateSpecFunctionParam(p, aliases, `${baseAliasName}_${p.name}`),
+        )
+        .join(', ')}>`;
+    case 'template':
+      return `std::function<void(${param.params
+        .map((p: NativeModuleParamShape) =>
+          translateCallbackParam(p, aliases, `${baseAliasName}_${p.name}`),
+        )
+        .join(', ')})>`;
+    default:
+      return `std::function<void(${param.params
+        .map((p: NativeModuleParamShape) =>
+          translateCallbackParam(p, aliases, `${baseAliasName}_${p.name}`),
+        )
+        .join(', ')})> const &`;
+  }
+}
+
+function translateArray(
+  param: NativeModuleArrayTypeAnnotation<
+    Nullable<NativeModuleBaseTypeAnnotation>
+  >,
+  aliases: AliasMap,
+  baseAliasName: string,
+  target: ParamTarget,
+): string {
+  if (param.elementType) {
+    switch (target) {
+      case 'spec':
+      case 'template':
+        return `std::vector<${translateNullableParamType(
+          param.elementType,
+          aliases,
+          `${baseAliasName}_element`,
+          'template',
+          'template',
+        )}>`;
+      default:
+        return `std::vector<${translateNullableParamType(
+          param.elementType,
+          aliases,
+          `${baseAliasName}_element`,
+          'template',
+          'template',
+        )}> const &`;
+    }
+  } else {
+    return decorateType('::React::JSValueArray', target);
+  }
+}
+
 function translateParam(
   param: NativeModuleParamTypeAnnotation,
   aliases: AliasMap,
@@ -53,57 +139,10 @@ function translateParam(
       return 'int';
     case 'BooleanTypeAnnotation':
       return 'bool';
-    case 'FunctionTypeAnnotation': {
-      // TODO: type.returnTypeAnnotation
-      switch (target) {
-        case 'spec':
-          return `Callback<${param.params
-            .map((p: NativeModuleParamShape) =>
-              translateSpecFunctionParam(
-                p,
-                aliases,
-                `${baseAliasName}_${p.name}`,
-              ),
-            )
-            .join(', ')}>`;
-        case 'template':
-          return `std::function<void(${param.params
-            .map((p: NativeModuleParamShape) =>
-              translateCallbackParam(p, aliases, `${baseAliasName}_${p.name}`),
-            )
-            .join(', ')})>`;
-        default:
-          return `std::function<void(${param.params
-            .map((p: NativeModuleParamShape) =>
-              translateCallbackParam(p, aliases, `${baseAliasName}_${p.name}`),
-            )
-            .join(', ')})> const &`;
-      }
-    }
+    case 'FunctionTypeAnnotation':
+      return translateFunction(param, aliases, baseAliasName, target);
     case 'ArrayTypeAnnotation':
-      if (param.elementType) {
-        switch (target) {
-          case 'spec':
-          case 'template':
-            return `std::vector<${translateNullableParamType(
-              param.elementType,
-              aliases,
-              `${baseAliasName}_element`,
-              'template',
-              'template',
-            )}>`;
-          default:
-            return `std::vector<${translateNullableParamType(
-              param.elementType,
-              aliases,
-              `${baseAliasName}_element`,
-              'template',
-              'template',
-            )}> const &`;
-        }
-      } else {
-        return decorateType('::React::JSValueArray', target);
-      }
+      return translateArray(param, aliases, baseAliasName, target);
     case 'GenericObjectTypeAnnotation':
       return decorateType('::React::JSValue', target);
     case 'ObjectTypeAnnotation':
@@ -122,6 +161,9 @@ function translateParam(
     }
     case 'TypeAliasTypeAnnotation':
       return decorateType(getAliasCppName(param.name), target);
+    case 'EnumDeclaration':
+    case 'UnionTypeAnnotation':
+      return translateUnionReturnType(param, target);
     default:
       throw new Error(`Unhandled type in translateParam: ${paramType}`);
   }
