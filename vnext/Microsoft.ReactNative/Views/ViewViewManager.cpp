@@ -419,7 +419,7 @@ bool ViewViewManager::UpdateProperty(
 void ViewViewManager::OnPropertiesUpdated(ShadowNodeBase *node) {
   auto *viewShadowNode = static_cast<ViewShadowNode *>(node);
   auto panel = viewShadowNode->GetViewPanel();
-  
+
   if (panel.ReadLocalValue(ViewPanel::ViewBackgroundProperty()) == xaml::DependencyProperty::UnsetValue()) {
     // In XAML, a null background means no hit-test will happen.
     // We actually want hit-testing to happen if the app has registered
