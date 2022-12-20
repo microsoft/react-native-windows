@@ -501,10 +501,20 @@ void ReactInstanceWin::Initialize() noexcept {
                       std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(winrt::to_string(tempPath));
                 }
               }
-            }
+
+              bool enableMultiThreadSupport{false};
+#ifdef USE_FABRIC
+              enableMultiThreadSupport = IsFabricEnabled(m_reactContext->Properties());
+#endif // USE_FABRIC
+
               devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
-                  devSettings, m_jsMessageThread.Load(), std::move(scriptStore), std::move(preparedScriptStore));
-              break;
+                  devSettings,
+                  m_jsMessageThread.Load(),
+                  std::move(scriptStore),
+                  std::move(preparedScriptStore),
+                  enableMultiThreadSupport);
+
+            } break;
 #endif // USE_V8
             case JSIEngine::Chakra:
 #ifndef CORE_ABI

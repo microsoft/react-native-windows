@@ -24,14 +24,16 @@ class V8JSIRuntimeHolder : public Microsoft::JSI::RuntimeHolderLazyInit {
       std::shared_ptr<facebook::react::DevSettings> devSettings,
       std::shared_ptr<facebook::react::MessageQueueThread> jsQueue,
       std::unique_ptr<facebook::jsi::ScriptStore> &&scriptStore,
-      std::unique_ptr<facebook::jsi::PreparedScriptStore> &&preparedScriptStore) noexcept
+      std::unique_ptr<facebook::jsi::PreparedScriptStore> &&preparedScriptStore,
+      bool enableMultiThreadSupport) noexcept
       : useDirectDebugger_(devSettings->useDirectDebugger),
         debuggerBreakOnNextLine_(devSettings->debuggerBreakOnNextLine),
         debuggerPort_(devSettings->debuggerPort),
         debuggerRuntimeName_(devSettings->debuggerRuntimeName),
         jsQueue_(std::move(jsQueue)),
         scriptStore_(std::move(scriptStore)),
-        preparedScriptStore_(std::move(preparedScriptStore)) {}
+        preparedScriptStore_(std::move(preparedScriptStore)),
+        enableMultiThreadSupport_(enableMultiThreadSupport) {}
 
  private:
   void initRuntime() noexcept;
@@ -48,6 +50,7 @@ class V8JSIRuntimeHolder : public Microsoft::JSI::RuntimeHolderLazyInit {
   uint16_t debuggerPort_;
   bool useDirectDebugger_;
   bool debuggerBreakOnNextLine_;
+  bool enableMultiThreadSupport_;
   std::string debuggerRuntimeName_;
 };
 
