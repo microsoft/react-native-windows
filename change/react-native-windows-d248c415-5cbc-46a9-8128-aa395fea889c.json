@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Cleanup unnecessary include in TouchEventHandler",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
