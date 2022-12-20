@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "V8 package update",
+  "packageName": "react-native-windows",
+  "email": "48035227+tudorms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
