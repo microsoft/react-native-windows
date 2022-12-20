@@ -44,6 +44,8 @@ class ViewShadowNode : public ShadowNodeBase {
     Super::createView(props);
 
     auto panel = GetViewPanel();
+    IsAccessible(false);
+    IsFocusable(false);
 
     DynamicAutomationProperties::SetAccessibilityInvokeEventHandler(panel, [=]() {
       if (OnClick())
