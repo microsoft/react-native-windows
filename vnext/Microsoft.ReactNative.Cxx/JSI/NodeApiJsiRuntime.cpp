@@ -7,6 +7,8 @@
 #include "NodeApiJsiRuntime.h"
 
 // Standard Library
+#include <array>
+#include <sstream>
 #include <string_view>
 #include <unordered_set>
 
