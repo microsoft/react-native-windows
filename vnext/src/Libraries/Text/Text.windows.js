@@ -108,15 +108,26 @@ const Text: React.AbstractComponent<
   const isPressable =
     (onPress != null ||
       onLongPress != null ||
-      onStartShouldSetResponder != null) &&
+      onStartShouldSetResponder != null || 
+      onPressIn != null ||
+      onPressOut != null) &&
+    _disabled !== true;
+  const isInteractable =
+    (
+      onMouseEnter != null ||
+      onMouseLeave != null||
+      onFocus != null ||
+      onBlur != null ||
+      onKeyDown != null ||
+      onKeyUp != null) &&
     _disabled !== true;
 
-  const initialized = useLazyInitialization(isPressable);
+  const initialized = useLazyInitialization(isPressable) || useLazyInitialization(isInteractable);
   const config = useMemo(
     () =>
       initialized
         ? {
-            disabled: !isPressable,
+            disabled: !isPressable && !isInteractable,
             pressRectOffset: pressRetentionOffset,
             onLongPress,
             onPress,
@@ -131,6 +142,14 @@ const Text: React.AbstractComponent<
             onResponderTerminationRequest_DEPRECATED:
               onResponderTerminationRequest,
             onStartShouldSetResponder_DEPRECATED: onStartShouldSetResponder,
+            // [Windows
+            onBlur,
+            onFocus,
+            onHoverIn: onMouseEnter,
+            onHoverOut: onMouseLeave,
+            onKeyDown,
+            onKeyUp,
+            // Windows]
           }
         : null,
     [
@@ -189,8 +208,8 @@ const Text: React.AbstractComponent<
             // [Windows
             onBlur: eventHandlers.onBlur,
             onFocus: eventHandlers.onFocus,
-            onMouseEnter: eventHandlers.onMouseEnter,
-            onMouseLeave: eventHandlers.onMouseLeave,
+            onMouseEnter: eventHandlers.onHoverIn? eventHandlers.onHoverIn : eventHandlers.onMouseEnter,
+            onMouseLeave: eventHandlers.onHoverOut? eventHandlers.onHoverOut : eventHandlers.onMouseLeave,
             onKeyDown: eventHandlers.onKeyDown,
             onKeyUp: eventHandlers.onKeyUp, // Windows]
             onResponderTerminationRequest:

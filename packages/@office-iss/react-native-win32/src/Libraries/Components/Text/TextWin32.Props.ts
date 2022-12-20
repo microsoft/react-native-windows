@@ -36,6 +36,9 @@ export interface ITextWin32Props extends Omit<RN.TextProps, TextWin32OmitTypes>,
   onKeyDownCapture?: (args: IKeyboardEvent) => void;
   onKeyUp?: (args: IKeyboardEvent) => void;
   onKeyUpCapture?: (args: IKeyboardEvent) => void;
+  
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 
   keyDownEvents?: IHandledKeyboardEvent[];
   keyUpEvents?: IHandledKeyboardEvent[];

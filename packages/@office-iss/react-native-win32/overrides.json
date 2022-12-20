@@ -96,13 +96,6 @@
       "file": "src/Libraries/Components/Text/Tests/TextWin32Test.tsx"
     },
     {
-      "type": "patch",
-      "file": "src/Libraries/Components/Text/Text.win32.js",
-      "baseFile": "Libraries/Text/Text.js",
-      "baseHash": "abdf0022b453823f9f4a8627519ba54f5fcad841",
-      "issue": 10808
-    },
-    {
       "type": "platform",
       "file": "src/Libraries/Components/Text/TextWin32.Props.ts"
     },
@@ -387,6 +380,13 @@
       "file": "src/Libraries/StyleSheet/StyleSheet.win32.js",
       "baseFile": "Libraries/StyleSheet/StyleSheet.js",
       "baseHash": "b3075a13a629f20b347a9d9bca13df99c556fc93"
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/Text/Text.win32.js",
+      "baseFile": "Libraries/Text/Text.js",
+      "baseHash": "abdf0022b453823f9f4a8627519ba54f5fcad841",
+      "issue": 10808
     },
     {
       "type": "derived",

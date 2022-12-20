@@ -54,6 +54,8 @@ const textViewConfig = {
     // would need to be listed here.
     focusable: true,
     accessibilityLevel: true,
+    onMouseEnter: true,
+    onMouseLeave: true,
     // Windows]
   },
   directEventTypes: {
@@ -72,6 +74,10 @@ const virtualTextViewConfig = {
     isHighlighted: true,
     isPressable: true,
     maxFontSizeMultiplier: true,
+    // [Windows
+    onMouseEnter: true,
+    onMouseLeave: true,
+    // Windows]
   },
   uiViewClassName: 'RCTVirtualText',
 };
