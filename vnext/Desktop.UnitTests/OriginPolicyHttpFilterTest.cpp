@@ -4,19 +4,27 @@
 #include <CppUnitTest.h>
 
 #include <Networking/OriginPolicyHttpFilter.h>
+#include <Networking/WinRTTypes.h>
+#include "WinRTNetworkingMocks.h"
 
 // Windows API
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Web.Http.h>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+using namespace winrt::Windows::Web::Http;
 
 using Microsoft::React::Networking::OriginPolicyHttpFilter;
+using Microsoft::React::Networking::ResponseOperation;
 using winrt::Windows::Foundation::Uri;
 
 namespace Microsoft::React::Test {
 
 TEST_CLASS (OriginPolicyHttpFilterTest) {
+  TEST_CLASS_INITIALIZE(Initialize) {
+    winrt::uninit_apartment(); // Why does this work?
+  }
+
   // TEMP tests to see if Uri has comparison capabilities
   TEST_METHOD(UrlsHaveSameOrigin) {
     // clang-format off
@@ -240,6 +248,40 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
       OriginPolicyHttpFilter::RemoveHttpOnlyCookiesFromResponseHeaders(response, true /*removeAll*/);
 
       Assert::AreEqual(2, static_cast<int>(response.Headers().Size()));
+    }
+  }
+
+  TEST_METHOD(ValidatePreflightResponseMainAndContentHeadersSucceeds) {
+    auto mockFilter = winrt::make<MockHttpBaseFilter>();
+    mockFilter.as<MockHttpBaseFilter>()->Mocks.SendRequestAsync =
+        [](HttpRequestMessage const &request) -> ResponseOperation {
+      HttpResponseMessage response{};
+
+      response.StatusCode(HttpStatusCode::Ok);
+      response.Content(HttpStringContent{L""});
+
+      co_return response;
+    };
+
+    auto request = HttpRequestMessage(HttpMethod::Get(), Uri{L"http://somehost"});
+
+    auto filter = winrt::make<OriginPolicyHttpFilter>(mockFilter);
+    auto client = HttpClient{filter};
+    auto opFilter = filter.as<OriginPolicyHttpFilter>();
+
+    OriginPolicyHttpFilter::SetStaticOrigin("http://somehost");
+    try {
+      //auto sendOp = client.SendRequestAsync(request);
+      //sendOp.get();
+      auto sendOp = opFilter->SendPreflightAsync(request);
+      sendOp.get();
+
+      opFilter->ValidatePreflightResponse(request, sendOp.GetResults());
+
+      Assert::IsTrue(true);
+      OriginPolicyHttpFilter::SetStaticOrigin({});
+    } catch (const winrt::hresult_error &e) {
+      Assert::Fail(e.message().c_str());
     }
   }
 };
