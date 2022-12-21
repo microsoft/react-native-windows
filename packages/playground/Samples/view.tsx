@@ -5,7 +5,17 @@
  */
 
 import React from 'react';
-import {AppRegistry, StyleSheet, Switch, Text, View} from 'react-native';
+import {
+  AppRegistry,
+  StyleSheet,
+  Switch,
+  Text,
+  View,
+  TextInput,
+  Image,
+  Button,
+  TouchableHighlight,
+} from 'react-native';
 
 export default class Bootstrap extends React.Component<
   {},
@@ -173,7 +183,7 @@ export default class Bootstrap extends React.Component<
             width: 250,
             backgroundColor: 'azure',
           }}>
-          <Switch
+          <View
             focusable={this.state.focusable ? true : false}
             accessible={this.state.accessible ? true : false}
             {...{onClick: this.state.pressable}}
@@ -187,8 +197,9 @@ export default class Bootstrap extends React.Component<
                   ? styles.radial
                   : styles.noBorder
                 : null
-            }
-          />
+            }>
+            <Text style={styles.child}>The Text</Text>
+          </View>
         </View>
       </View>
     );
