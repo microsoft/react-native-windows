@@ -23,7 +23,7 @@ namespace Microsoft::React::Test {
 
 TEST_CLASS (OriginPolicyHttpFilterTest) {
   TEST_CLASS_INITIALIZE(Initialize) {
-    winrt::uninit_apartment(); // Why does this work?
+    winrt::uninit_apartment();
   }
 
   // TEMP tests to see if Uri has comparison capabilities
