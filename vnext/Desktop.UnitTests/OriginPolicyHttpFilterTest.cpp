@@ -15,6 +15,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace winrt::Windows::Web::Http;
 
 using Microsoft::React::Networking::OriginPolicyHttpFilter;
+using Microsoft::React::Networking::RequestArgs;
 using Microsoft::React::Networking::ResponseOperation;
 using winrt::Windows::Foundation::Uri;
 
@@ -258,21 +259,21 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
       HttpResponseMessage response{};
 
       response.StatusCode(HttpStatusCode::Ok);
+      response.Headers().Insert(L"Access-Control-Allow-Origin", L"*");
       response.Content(HttpStringContent{L""});
 
       co_return response;
     };
 
+    auto reqArgs = winrt::make<RequestArgs>();
     auto request = HttpRequestMessage(HttpMethod::Get(), Uri{L"http://somehost"});
+    request.Properties().Insert(L"RequestArgs", reqArgs);
 
     auto filter = winrt::make<OriginPolicyHttpFilter>(mockFilter);
-    auto client = HttpClient{filter};
     auto opFilter = filter.as<OriginPolicyHttpFilter>();
 
     OriginPolicyHttpFilter::SetStaticOrigin("http://somehost");
     try {
-      //auto sendOp = client.SendRequestAsync(request);
-      //sendOp.get();
       auto sendOp = opFilter->SendPreflightAsync(request);
       sendOp.get();
 
