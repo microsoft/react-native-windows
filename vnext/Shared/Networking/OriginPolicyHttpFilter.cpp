@@ -113,6 +113,8 @@ bool OriginPolicyHttpFilter::ConstWcharComparer::operator()(const wchar_t *a, co
 /*static*/ void OriginPolicyHttpFilter::SetStaticOrigin(std::string &&url) {
   if (!url.empty())
     s_origin = Uri{to_hstring(url)};
+  else
+    s_origin = nullptr;
 }
 
 /*static*/ bool OriginPolicyHttpFilter::IsSameOrigin(Uri const &u1, Uri const &u2) noexcept {
