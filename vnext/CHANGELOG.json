@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 21 Dec 2022 06:15:26 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.597",
+      "version": "0.0.0-canary.597",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "d340afac0ba0ae008081690728e99058c690ed50",
+            "comment": "Cleanup unnecessary include in TouchEventHandler"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.156",
+            "commit": "d340afac0ba0ae008081690728e99058c690ed50"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.47",
+            "commit": "d340afac0ba0ae008081690728e99058c690ed50"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 16 Dec 2022 06:14:59 GMT",
       "tag": "react-native-windows_v0.0.0-canary.596",
       "version": "0.0.0-canary.596",

@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Wed, 21 Dec 2022 06:15:26 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.47",
+      "version": "0.0.0-canary.47",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "d949cc922ac19150ea7b72b1d0315b506b1dac48",
+            "comment": "Support enum/union and T in Promise<T> in codegen"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 13 Dec 2022 06:15:22 GMT",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.46",
       "version": "0.0.0-canary.46",

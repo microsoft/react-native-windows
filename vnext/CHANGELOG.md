@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 16 Dec 2022 06:14:59 GMT and should not be manually modified.
+This log was last generated on Wed, 21 Dec 2022 06:15:26 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.597
+
+Wed, 21 Dec 2022 06:15:26 GMT
+
+### Changes
+
+- Cleanup unnecessary include in TouchEventHandler (erozell@outlook.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.156
+- Bump @react-native-windows/codegen to v0.0.0-canary.47
 
 ## 0.0.0-canary.596
 
