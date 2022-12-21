@@ -285,9 +285,12 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
       auto response = sendOp.GetResults();
       opFilter->ValidatePreflightResponse(request, response);
 
-      Assert::AreEqual(L"Authorization, Content-Length, Content-Type", response.Headers().Lookup(L"Access-Control-Allow-Headers").c_str());
       OriginPolicyHttpFilter::SetStaticOrigin({});
+      Assert::AreEqual(
+          L"Authorization, Content-Length, Content-Type",
+          response.Headers().Lookup(L"Access-Control-Allow-Headers").c_str());
     } catch (const winrt::hresult_error &e) {
+      OriginPolicyHttpFilter::SetStaticOrigin({});
       Assert::Fail(e.message().c_str());
     }
   }
