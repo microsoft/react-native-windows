@@ -260,7 +260,9 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
 
       response.StatusCode(HttpStatusCode::Ok);
       response.Headers().Insert(L"Access-Control-Allow-Origin", L"*");
-      response.Content(HttpStringContent{L""});
+      // Return allowed headers as requested by client
+      response.Headers().Insert(
+          L"Access-Control-Allow-Headers", request.Headers().Lookup(L"Access-Control-Request-Headers"));
 
       co_return response;
     };
@@ -268,6 +270,9 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
     auto reqArgs = winrt::make<RequestArgs>();
     auto request = HttpRequestMessage(HttpMethod::Get(), Uri{L"http://somehost"});
     request.Properties().Insert(L"RequestArgs", reqArgs);
+    request.Headers().TryAppendWithoutValidation(L"Authorization", L"Bearer abc");
+    // Should implicitly set Conent-Length and Content-Type
+    request.Content(HttpStringContent{L"PreflightContent"});
 
     auto filter = winrt::make<OriginPolicyHttpFilter>(mockFilter);
     auto opFilter = filter.as<OriginPolicyHttpFilter>();
@@ -277,9 +282,10 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
       auto sendOp = opFilter->SendPreflightAsync(request);
       sendOp.get();
 
-      opFilter->ValidatePreflightResponse(request, sendOp.GetResults());
+      auto response = sendOp.GetResults();
+      opFilter->ValidatePreflightResponse(request, response);
 
-      Assert::IsTrue(true);
+      Assert::AreEqual(L"Authorization, Content-Length, Content-Type", response.Headers().Lookup(L"Access-Control-Allow-Headers").c_str());
       OriginPolicyHttpFilter::SetStaticOrigin({});
     } catch (const winrt::hresult_error &e) {
       Assert::Fail(e.message().c_str());
