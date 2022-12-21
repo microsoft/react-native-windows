@@ -664,6 +664,10 @@ ResponseOperation OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage 
 
   if (coRequest.Content()) {
     for (const auto &header : coRequest.Content().Headers()) {
+      //// Ensure content headers are prefixed by a comma if request headers exist
+      //if (coRequest.Headers().Size() > 0) {
+      //  headerNames += L", ";
+      //}
       if (writeSeparator) {
         headerNames += L", ";
       } else {
