@@ -124,6 +124,10 @@ void ReactDispatcher::InvokeElsePost(Mso::DispatchTask &&task) const noexcept {
   return jsThreadDispatcherProperty;
 }
 
+/*static*/ IReactDispatcher ReactDispatcher::GetJSDispatcher(IReactPropertyBag const &properties) noexcept {
+  return properties.Get(JSDispatcherProperty()).try_as<IReactDispatcher>();
+}
+
 /*static*/ IReactPropertyName ReactDispatcher::JSDispatcherTaskStartingEventName() noexcept {
   static IReactPropertyName jsThreadDispatcherProperty{ReactPropertyBagHelper::GetName(
       ReactPropertyBagHelper::GetNamespace(L"ReactNative.Dispatcher"), L"JSDispatcherTaskStartingEventName")};

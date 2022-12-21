@@ -15,10 +15,16 @@
 #include "winrt/Windows.UI.Core.h"
 #include "winrt/Windows.UI.Xaml.Interop.h"
 
+#include <hermes/hermes.h>
 #include <winrt/Windows.ApplicationModel.DataTransfer.h>
+#include "HermesRuntimeHolder.h"
 #include "HermesSamplingProfiler.h"
 
 using namespace winrt::Windows::ApplicationModel;
+
+namespace React {
+using namespace winrt::Microsoft::ReactNative;
+}
 
 namespace Microsoft::ReactNative {
 
@@ -205,12 +211,18 @@ void DevMenuManager::CreateAndShowUI() noexcept {
   if (Mso::React::ReactOptions::JsiEngine(m_context->Properties()) == Mso::React::JSIEngine::Hermes) {
     m_samplingProfilerRevoker = devMenu.SamplingProfiler().Click(
         winrt::auto_revoke,
-        [wkThis = weak_from_this()](auto & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept
-        -> winrt::fire_and_forget {
+        [wkThis = weak_from_this()](
+            auto & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept -> winrt::fire_and_forget {
           if (auto strongThis = wkThis.lock()) {
             strongThis->Hide();
+            auto jsDispatcher =
+                React::implementation::ReactDispatcher::GetJSDispatcher(strongThis->m_context->Properties());
             if (!Microsoft::ReactNative::HermesSamplingProfiler::IsStarted()) {
-              Microsoft::ReactNative::HermesSamplingProfiler::Start();
+              jsDispatcher.Post([propertyBag = React::ReactPropertyBag(strongThis->m_context->Properties())] {
+                auto hermesRuntimeHolder = facebook::react::HermesRuntimeHolder::loadFrom(propertyBag);
+                hermesRuntimeHolder->getHermesRuntime()->registerForProfiling();
+                Microsoft::ReactNative::HermesSamplingProfiler::Start();
+              });
             } else {
               auto traceFilePath = co_await Microsoft::ReactNative::HermesSamplingProfiler::Stop();
               auto uiDispatcher =
@@ -219,6 +231,10 @@ void DevMenuManager::CreateAndShowUI() noexcept {
                 DataTransfer::DataPackage data;
                 data.SetText(winrt::to_hstring(traceFilePath));
                 DataTransfer::Clipboard::SetContentWithOptions(data, nullptr);
+              });
+              jsDispatcher.Post([propertyBag = React::ReactPropertyBag(strongThis->m_context->Properties())]() {
+                auto hermesRuntimeHolder = facebook::react::HermesRuntimeHolder::loadFrom(propertyBag);
+                hermesRuntimeHolder->getHermesRuntime()->unregisterForProfiling();
               });
             }
           }

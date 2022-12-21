@@ -8,6 +8,7 @@
 #include <thread>
 
 #include <DevSettings.h>
+#include <ReactPropertyBag.h>
 
 namespace facebook::hermes {
 class HermesRuntime;
@@ -28,6 +29,15 @@ class HermesRuntimeHolder : public Microsoft::JSI::RuntimeHolderLazyInit {
   HermesRuntimeHolder(
       std::shared_ptr<facebook::react::DevSettings> devSettings,
       std::shared_ptr<facebook::react::MessageQueueThread> jsQueue) noexcept;
+
+  std::shared_ptr<facebook::hermes::HermesRuntime> getHermesRuntime() noexcept;
+
+  static std::shared_ptr<HermesRuntimeHolder> loadFrom(
+      winrt::Microsoft::ReactNative::ReactPropertyBag const &propertyBag) noexcept;
+
+  static void storeTo(
+      winrt::Microsoft::ReactNative::ReactPropertyBag const &propertyBag,
+      std::shared_ptr<HermesRuntimeHolder> const &holder) noexcept;
 
  private:
   void initRuntime() noexcept;

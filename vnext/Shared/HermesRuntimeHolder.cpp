@@ -20,8 +20,19 @@
 using namespace facebook;
 using namespace Microsoft::ReactNative;
 
+namespace React {
+using namespace winrt::Microsoft::ReactNative;
+}
+
 namespace facebook {
 namespace react {
+
+React::ReactPropertyId<React::ReactNonAbiValue<std::shared_ptr<HermesRuntimeHolder>>>
+HermesRuntimeHolderProperty() noexcept {
+  static React::ReactPropertyId<React::ReactNonAbiValue<std::shared_ptr<HermesRuntimeHolder>>> propId{
+      L"ReactNative.HermesRuntimeHolder", L"HermesRuntimeHolder"};
+  return propId;
+}
 
 namespace {
 
@@ -90,6 +101,10 @@ facebook::react::JSIEngineOverride HermesRuntimeHolder::getRuntimeType() noexcep
 }
 
 std::shared_ptr<jsi::Runtime> HermesRuntimeHolder::getRuntime() noexcept {
+  return getHermesRuntime();
+}
+
+std::shared_ptr<facebook::hermes::HermesRuntime> HermesRuntimeHolder::getHermesRuntime() noexcept {
   std::call_once(m_once_flag, [this]() { initRuntime(); });
 
   if (!m_hermesRuntime)
@@ -130,6 +145,17 @@ void HermesRuntimeHolder::initRuntime() noexcept {
                             .getPropertyAsObject(*m_hermesRuntime, "Error")
                             .getPropertyAsObject(*m_hermesRuntime, "prototype");
   errorPrototype.setProperty(*m_hermesRuntime, "jsEngine", "hermes");
+}
+
+std::shared_ptr<HermesRuntimeHolder> HermesRuntimeHolder::loadFrom(
+    React::ReactPropertyBag const &propertyBag) noexcept {
+  return *(propertyBag.Get(HermesRuntimeHolderProperty()));
+}
+
+void HermesRuntimeHolder::storeTo(
+    React::ReactPropertyBag const &propertyBag,
+    std::shared_ptr<HermesRuntimeHolder> const &holder) noexcept {
+  propertyBag.Set(HermesRuntimeHolderProperty(), holder);
 }
 
 } // namespace react
