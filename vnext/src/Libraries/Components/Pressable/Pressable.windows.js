@@ -249,22 +249,6 @@ function Pressable(props: Props, forwardedRef): React.Node {
   const viewRef = useRef<React.ElementRef<typeof View> | null>(null);
   useImperativeHandle(forwardedRef, () => viewRef.current);
 
-  // [Windows
-  const _onBlur = (event: BlurEvent) => {
-    TextInputState.blurInput(viewRef.current);
-    if (props.onBlur) {
-      props.onBlur(event);
-    }
-  };
-
-  const _onFocus = (event: FocusEvent) => {
-    TextInputState.focusInput(viewRef.current);
-    if (props.onFocus) {
-      props.onFocus(event);
-    }
-  };
-  // Windows]
-
   const android_rippleConfig = useAndroidRippleForView(android_ripple, viewRef);
 
   const [pressed, setPressed] = usePressState(testOnly_pressed === true);
@@ -358,10 +342,6 @@ function Pressable(props: Props, forwardedRef): React.Node {
     <View
       {...restPropsWithDefaults}
       {...eventHandlers}
-      // [Windows
-      onBlur={_onBlur}
-      onFocus={_onFocus}
-      // Windows]
       ref={viewRef}
       style={typeof style === 'function' ? style({pressed}) : style}>
       {typeof children === 'function' ? children({pressed}) : children}

@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix compiler issue for older versions of C++/WinRT (#10278)",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
