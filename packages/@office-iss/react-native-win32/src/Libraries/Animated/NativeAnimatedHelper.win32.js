@@ -142,6 +142,13 @@ const API = {
     }
   },
   flushQueue: function (): void {
+    // GH: 11042 This invariant causes the win32 tester to not work
+    // NativeAnimatedModule is not implemented in win32
+    // // TODO: (T136971132)
+    // invariant(
+    //   NativeAnimatedModule || process.env.NODE_ENV === 'test',
+    //   'Native animated module is not available',
+    // );
     flushQueueTimeout = null;
 
     // Early returns before calling any APIs
