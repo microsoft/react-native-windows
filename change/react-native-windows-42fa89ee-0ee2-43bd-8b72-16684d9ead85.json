@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Working implementation of rootTag",
-  "packageName": "react-native-windows",
-  "email": "helewxdong@gmail.com",
-  "dependentChangeType": "patch"
-}

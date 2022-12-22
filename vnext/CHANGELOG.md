@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 21 Dec 2022 06:15:26 GMT and should not be manually modified.
+This log was last generated on Thu, 22 Dec 2022 06:14:38 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.598
+
+Thu, 22 Dec 2022 06:14:38 GMT
+
+### Changes
+
+- Test Access-Control-Request-Headers (julio.rocha@microsoft.com)
+- Working implementation of rootTag (helewxdong@gmail.com)
+- V8 package update (48035227+tudorms@users.noreply.github.com)
 
 ## 0.0.0-canary.597
 
