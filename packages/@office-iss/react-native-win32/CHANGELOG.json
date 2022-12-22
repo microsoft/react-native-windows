@@ -2,6 +2,36 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 19 Dec 2022 16:13:04 GMT",
+      "tag": "@office-iss/react-native-win32_v0.70.4",
+      "version": "0.70.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "sanajmi@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "ec85514994876376e4f546446818c0621625eb97",
+            "comment": "Remove unnecessary overrides to onFocus and onBlur in Pressable"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 05 Dec 2022 16:12:48 GMT",
+      "tag": "@office-iss/react-native-win32_v0.70.3",
+      "version": "0.70.3",
+      "comments": {
+        "none": [
+          {
+            "author": "email not defined",
+            "package": "@office-iss/react-native-win32",
+            "commit": "92adeacc1c62666877ba051b8407155541d4bc69",
+            "comment": "add new prop alwaysShowToolTip to ViewWin32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 07 Nov 2022 16:12:33 GMT",
       "tag": "@office-iss/react-native-win32_v0.70.3",
       "version": "0.70.3",

@@ -1,8 +1,24 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 28 Nov 2022 16:13:14 GMT and should not be manually modified.
+This log was last generated on Mon, 19 Dec 2022 16:13:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.70.9
+
+Mon, 19 Dec 2022 16:13:04 GMT
+
+### Patches
+
+- Remove unnecessary overrides to onFocus and onBlur in Pressable (sanajmi@microsoft.com)
+
+## 0.70.8
+
+Mon, 12 Dec 2022 16:13:31 GMT
+
+### Patches
+
+- Implement HTTP incremental updates (#10933) (jurocha@microsoft.com)
 
 ## 0.70.7
 
