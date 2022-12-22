@@ -4,19 +4,28 @@
 #include <CppUnitTest.h>
 
 #include <Networking/OriginPolicyHttpFilter.h>
+#include <Networking/WinRTTypes.h>
+#include "WinRTNetworkingMocks.h"
 
 // Windows API
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Web.Http.h>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+using namespace winrt::Windows::Web::Http;
 
 using Microsoft::React::Networking::OriginPolicyHttpFilter;
+using Microsoft::React::Networking::RequestArgs;
+using Microsoft::React::Networking::ResponseOperation;
 using winrt::Windows::Foundation::Uri;
 
 namespace Microsoft::React::Test {
 
 TEST_CLASS (OriginPolicyHttpFilterTest) {
+  TEST_CLASS_INITIALIZE(Initialize) {
+    winrt::uninit_apartment();
+  }
+
   // TEMP tests to see if Uri has comparison capabilities
   TEST_METHOD(UrlsHaveSameOrigin) {
     // clang-format off
@@ -240,6 +249,49 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
       OriginPolicyHttpFilter::RemoveHttpOnlyCookiesFromResponseHeaders(response, true /*removeAll*/);
 
       Assert::AreEqual(2, static_cast<int>(response.Headers().Size()));
+    }
+  }
+
+  TEST_METHOD(ValidatePreflightResponseMainAndContentHeadersSucceeds) {
+    auto mockFilter = winrt::make<MockHttpBaseFilter>();
+    mockFilter.as<MockHttpBaseFilter>()->Mocks.SendRequestAsync =
+        [](HttpRequestMessage const &request) -> ResponseOperation {
+      HttpResponseMessage response{};
+
+      response.StatusCode(HttpStatusCode::Ok);
+      response.Headers().Insert(L"Access-Control-Allow-Origin", L"*");
+      // Return allowed headers as requested by client
+      response.Headers().Insert(
+          L"Access-Control-Allow-Headers", request.Headers().Lookup(L"Access-Control-Request-Headers"));
+
+      co_return response;
+    };
+
+    auto reqArgs = winrt::make<RequestArgs>();
+    auto request = HttpRequestMessage(HttpMethod::Get(), Uri{L"http://somehost"});
+    request.Properties().Insert(L"RequestArgs", reqArgs);
+    request.Headers().TryAppendWithoutValidation(L"Authorization", L"Bearer abc");
+    // Should implicitly set Conent-Length and Content-Type
+    request.Content(HttpStringContent{L"PreflightContent"});
+
+    auto filter = winrt::make<OriginPolicyHttpFilter>(mockFilter);
+    auto opFilter = filter.as<OriginPolicyHttpFilter>();
+
+    OriginPolicyHttpFilter::SetStaticOrigin("http://somehost");
+    try {
+      auto sendOp = opFilter->SendPreflightAsync(request);
+      sendOp.get();
+
+      auto response = sendOp.GetResults();
+      opFilter->ValidatePreflightResponse(request, response);
+
+      OriginPolicyHttpFilter::SetStaticOrigin({});
+      Assert::AreEqual(
+          L"Authorization, Content-Length, Content-Type",
+          response.Headers().Lookup(L"Access-Control-Allow-Headers").c_str());
+    } catch (const winrt::hresult_error &e) {
+      OriginPolicyHttpFilter::SetStaticOrigin({});
+      Assert::Fail(e.message().c_str());
     }
   }
 };
