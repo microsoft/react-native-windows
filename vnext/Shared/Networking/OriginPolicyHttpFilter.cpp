@@ -113,6 +113,8 @@ bool OriginPolicyHttpFilter::ConstWcharComparer::operator()(const wchar_t *a, co
 /*static*/ void OriginPolicyHttpFilter::SetStaticOrigin(std::string &&url) {
   if (!url.empty())
     s_origin = Uri{to_hstring(url)};
+  else
+    s_origin = nullptr;
 }
 
 /*static*/ bool OriginPolicyHttpFilter::IsSameOrigin(Uri const &u1, Uri const &u2) noexcept {
@@ -651,21 +653,26 @@ ResponseOperation OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage 
   preflightRequest.Headers().Insert(L"Access-Control-Request-Method", coRequest.Method().ToString());
 
   auto headerNames = wstring{};
-  auto headerItr = coRequest.Headers().begin();
-  if (headerItr != coRequest.Headers().end()) {
-    headerNames += (*headerItr).Key();
+  auto writeSeparator = false;
+  for (const auto &header : coRequest.Headers()) {
+    if (writeSeparator) {
+      headerNames += L", ";
+    } else {
+      writeSeparator = true;
+    }
 
-    while (++headerItr != coRequest.Headers().end())
-      headerNames += L", " + (*headerItr).Key();
+    headerNames += header.Key();
   }
 
   if (coRequest.Content()) {
-    headerItr = coRequest.Content().Headers().begin();
-    if (headerItr != coRequest.Content().Headers().end()) {
-      headerNames += (*headerItr).Key();
+    for (const auto &header : coRequest.Content().Headers()) {
+      if (writeSeparator) {
+        headerNames += L", ";
+      } else {
+        writeSeparator = true;
+      }
 
-      while (++headerItr != coRequest.Content().Headers().end())
-        headerNames += L", " + (*headerItr).Key();
+      headerNames += header.Key();
     }
   }
 
