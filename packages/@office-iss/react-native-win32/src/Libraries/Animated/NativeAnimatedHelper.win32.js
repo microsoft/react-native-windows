@@ -142,11 +142,6 @@ const API = {
     }
   },
   flushQueue: function (): void {
-    // TODO: (T136971132)
-    invariant(
-      NativeAnimatedModule || process.env.NODE_ENV === 'test',
-      'Native animated module is not available',
-    );
     flushQueueTimeout = null;
 
     // Early returns before calling any APIs
