@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 19 Dec 2022 16:14:52 GMT and should not be manually modified.
+This log was last generated on Mon, 26 Dec 2022 16:17:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.0-preview.3
+
+Mon, 26 Dec 2022 16:17:37 GMT
+
+### Changes
+
+- Backport: Fix raw text update clearing text (34109996+chiaramooney@users.noreply.github.com)
+- Test Access-Control-Request-Headers (#11031) (jurocha@microsoft.com)
+- Bump @react-native-windows/cli to v0.71.0-preview.2
 
 ## 0.71.0-preview.2
 
