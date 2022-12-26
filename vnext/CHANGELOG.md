@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 19 Dec 2022 16:13:04 GMT and should not be manually modified.
+This log was last generated on Mon, 26 Dec 2022 16:12:01 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.70.10
+
+Mon, 26 Dec 2022 16:12:01 GMT
+
+### Patches
+
+- Test Access-Control-Request-Headers #11034 (jurocha@microsoft.com)
 
 ## 0.70.9
 

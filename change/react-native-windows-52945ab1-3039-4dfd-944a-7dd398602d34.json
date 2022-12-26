@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Test Access-Control-Request-Headers #11034",
-  "packageName": "react-native-windows",
-  "email": "jurocha@microsoft.com",
-  "dependentChangeType": "patch"
-}
