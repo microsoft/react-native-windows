@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 26 Dec 2022 16:09:55 GMT",
+      "tag": "react-native-windows_v0.68.26",
+      "version": "0.68.26",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "33121c5f486bbb0762c79f7a6180fb8e0409c60c",
+            "comment": "Fix compiler issue for older versions of C++/WinRT (#10278)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 19 Dec 2022 16:10:36 GMT",
       "tag": "react-native-windows_v0.68.25",
       "version": "0.68.25",

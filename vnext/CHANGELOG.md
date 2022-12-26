@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 19 Dec 2022 16:10:36 GMT and should not be manually modified.
+This log was last generated on Mon, 26 Dec 2022 16:09:55 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.68.26
+
+Mon, 26 Dec 2022 16:09:55 GMT
+
+### Patches
+
+- Fix compiler issue for older versions of C++/WinRT (#10278) (julio.rocha@microsoft.com)
 
 ## 0.68.25
 
