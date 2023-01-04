@@ -89,10 +89,11 @@ class ImageShadowNode : public ShadowNodeBase {
         *reactImage, winrt::Microsoft::ReactNative::AccessibilityRoles::Image);
 
     m_onLoadEndToken = reactImage->OnLoadEnd([imageViewManager{static_cast<ImageViewManager *>(GetViewManager())},
-                                              reactImage](const auto &, const bool &succeeded) {
+                                              reactImage](const auto &, const winrt::hstring &error) {
       ReactImageSource source{reactImage->Source()};
 
-      imageViewManager->EmitImageEvent(reactImage.as<winrt::Grid>(), succeeded ? "topLoad" : "topError", source);
+      imageViewManager->EmitImageEvent(
+          reactImage.as<winrt::Grid>(), error.empty() ? "topLoad" : "topError", source, error);
       imageViewManager->EmitImageEvent(reactImage.as<winrt::Grid>(), "topLoadEnd", source);
     });
   }
@@ -166,12 +167,19 @@ bool ImageViewManager::UpdateProperty(
   return ret;
 }
 
-void ImageViewManager::EmitImageEvent(winrt::Grid grid, const char *eventName, ReactImageSource &source) {
+void ImageViewManager::EmitImageEvent(
+    winrt::Grid grid,
+    const char *eventName,
+    ReactImageSource &source,
+    const winrt::hstring &error) {
   int64_t tag = GetTag(grid);
   folly::dynamic imageSource =
       folly::dynamic::object()("uri", source.uri)("width", source.width)("height", source.height);
 
   folly::dynamic eventData = folly::dynamic::object()("target", tag)("source", imageSource);
+  if (!error.empty()) {
+    eventData["error"] = winrt::to_string(error);
+  }
   GetReactContext().DispatchEvent(tag, eventName, std::move(eventData));
 }
 
