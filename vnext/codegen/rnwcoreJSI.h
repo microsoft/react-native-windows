@@ -207,7 +207,7 @@ private:
 
 #pragma mark - AlertBaseDialogOptions
 
-template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7>
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8>
 struct AlertBaseDialogOptions {
   P0 title;
   P1 message;
@@ -217,18 +217,19 @@ struct AlertBaseDialogOptions {
   P5 items;
   P6 cancelable;
   P7 defaultButton;
+  P8 rootTag;
   bool operator==(const AlertBaseDialogOptions &other) const {
-    return title == other.title && message == other.message && buttonPositive == other.buttonPositive && buttonNegative == other.buttonNegative && buttonNeutral == other.buttonNeutral && items == other.items && cancelable == other.cancelable && defaultButton == other.defaultButton;
+    return title == other.title && message == other.message && buttonPositive == other.buttonPositive && buttonNegative == other.buttonNegative && buttonNeutral == other.buttonNeutral && items == other.items && cancelable == other.cancelable && defaultButton == other.defaultButton && rootTag == other.rootTag;
   }
 };
 
-template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7>
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8>
 struct AlertBaseDialogOptionsBridging {
-  static AlertBaseDialogOptions<P0, P1, P2, P3, P4, P5, P6, P7> fromJs(
+  static AlertBaseDialogOptions<P0, P1, P2, P3, P4, P5, P6, P7, P8> fromJs(
       jsi::Runtime &rt,
       const jsi::Object &value,
       const std::shared_ptr<CallInvoker> &jsInvoker) {
-    AlertBaseDialogOptions<P0, P1, P2, P3, P4, P5, P6, P7> result{
+    AlertBaseDialogOptions<P0, P1, P2, P3, P4, P5, P6, P7, P8> result{
       bridging::fromJs<P0>(rt, value.getProperty(rt, "title"), jsInvoker),
       bridging::fromJs<P1>(rt, value.getProperty(rt, "message"), jsInvoker),
       bridging::fromJs<P2>(rt, value.getProperty(rt, "buttonPositive"), jsInvoker),
@@ -236,13 +237,14 @@ struct AlertBaseDialogOptionsBridging {
       bridging::fromJs<P4>(rt, value.getProperty(rt, "buttonNeutral"), jsInvoker),
       bridging::fromJs<P5>(rt, value.getProperty(rt, "items"), jsInvoker),
       bridging::fromJs<P6>(rt, value.getProperty(rt, "cancelable"), jsInvoker),
-      bridging::fromJs<P7>(rt, value.getProperty(rt, "defaultButton"), jsInvoker)};
+      bridging::fromJs<P7>(rt, value.getProperty(rt, "defaultButton"), jsInvoker),
+      bridging::fromJs<P8>(rt, value.getProperty(rt, "rootTag"), jsInvoker)};
     return result;
   }
 
   static jsi::Object toJs(
       jsi::Runtime &rt,
-      const AlertBaseDialogOptions<P0, P1, P2, P3, P4, P5, P6, P7> &value) {
+      const AlertBaseDialogOptions<P0, P1, P2, P3, P4, P5, P6, P7, P8> &value) {
     auto result = facebook::jsi::Object(rt);
     if (value.title) {
       result.setProperty(rt, "title", bridging::toJs(rt, value.title.value()));
@@ -267,6 +269,9 @@ struct AlertBaseDialogOptionsBridging {
     }
     if (value.defaultButton) {
       result.setProperty(rt, "defaultButton", bridging::toJs(rt, value.defaultButton.value()));
+    }
+    if (value.rootTag) {
+      result.setProperty(rt, "rootTag", bridging::toJs(rt, value.rootTag.value()));
     }
     return result;
   }

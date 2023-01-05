@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Tue, 13 Dec 2022 06:15:22 GMT and should not be manually modified.
+This log was last generated on Wed, 21 Dec 2022 06:15:26 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.47
+
+Wed, 21 Dec 2022 06:15:26 GMT
+
+### Changes
+
+- Support enum/union and T in Promise<T> in codegen (53799235+ZihanChen-MSFT@users.noreply.github.com)
 
 ## 0.0.0-canary.46
 

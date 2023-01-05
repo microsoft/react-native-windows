@@ -36,7 +36,7 @@ struct MyModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
       SyncMethod<::React::JSValue(::React::JSValue) noexcept>{5, L"getObject"},
       SyncMethod<::React::JSValue(double, std::string, ::React::JSValue) noexcept>{6, L"getValue"},
       Method<void(Callback<std::string>) noexcept>{7, L"getValueWithCallback"},
-      Method<void(bool, Promise<::React::JSValue>) noexcept>{8, L"getValueWithPromise"},
+      Method<void(bool, Promise<std::string>) noexcept>{8, L"getValueWithPromise"},
   };
 
   template <class TModule>
@@ -93,8 +93,8 @@ struct MyModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           8,
           "getValueWithPromise",
-          "    REACT_METHOD(getValueWithPromise) void getValueWithPromise(bool error, ::React::ReactPromise<::React::JSValue> &&result) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(getValueWithPromise) static void getValueWithPromise(bool error, ::React::ReactPromise<::React::JSValue> &&result) noexcept { /* implementation */ }\n");
+          "    REACT_METHOD(getValueWithPromise) void getValueWithPromise(bool error, ::React::ReactPromise<std::string> &&result) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(getValueWithPromise) static void getValueWithPromise(bool error, ::React::ReactPromise<std::string> &&result) noexcept { /* implementation */ }\n");
   }
 };
 
