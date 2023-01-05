@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 05 Jan 2023 06:18:16 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.599",
+      "version": "0.0.0-canary.599",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ilit@fb.com",
+            "package": "react-native-windows",
+            "commit": "874960ee05d21c432fd7735bb22c51a00197fa07",
+            "comment": "ReactImage: propagate error messages to JS"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 22 Dec 2022 06:14:38 GMT",
       "tag": "react-native-windows_v0.0.0-canary.598",
       "version": "0.0.0-canary.598",

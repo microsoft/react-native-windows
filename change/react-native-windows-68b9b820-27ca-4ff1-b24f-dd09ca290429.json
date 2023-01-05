@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "ReactImage: propagate error messages to JS",
-  "packageName": "react-native-windows",
-  "email": "ilit@fb.com",
-  "dependentChangeType": "patch"
-}
