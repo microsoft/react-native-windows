@@ -162,6 +162,15 @@ const directEventTypes = {
   onGestureHandlerStateChange: DynamicallyInjectedByGestureHandler({
     registrationName: 'onGestureHandlerStateChange',
   }),
+  // [Windows
+  // Mouse enter/leave events
+  topMouseEnter: {
+    registrationName: 'onMouseEnter',
+  },
+  topMouseLeave: {
+    registrationName: 'onMouseLeave',
+  },
+  // Windows]
 };
 
 const validAttributesForNonEventProps = {
@@ -348,6 +357,12 @@ const validAttributesForEventProps = {
   onPointerLeave: true,
   onPointerOver: true,
   onPointerOut: true,
+
+  // [Windows
+  // Mouse enter/leave events
+  onMouseEnter: true,
+  onMouseLeave: true,
+  // Windows]
 // [Windows
 };
 // Windows]
