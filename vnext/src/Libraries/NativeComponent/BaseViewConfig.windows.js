@@ -307,7 +307,9 @@ const validAttributesForNonEventProps = {
 };
 
 // Props for bubbling and direct events
-const validAttributesForEventProps = ConditionallyIgnoredEventHandlers({
+// [Windows
+const validAttributesForEventProps = {
+// Windows]
   onLayout: true,
   onMagicTap: true,
 
@@ -346,13 +348,18 @@ const validAttributesForEventProps = ConditionallyIgnoredEventHandlers({
   onPointerLeave: true,
   onPointerOver: true,
   onPointerOut: true,
-});
+// [Windows
+};
+// Windows]
+
 
 /**
  * On iOS, view managers define all of a component's props.
  * All view managers extend RCTViewManager, and RCTViewManager declares these props.
  */
+// [Windows
 const PlatformBaseViewConfigWindows: PartialViewConfigWithoutName = {
+// Windows]
   bubblingEventTypes,
   directEventTypes,
   validAttributes: {
