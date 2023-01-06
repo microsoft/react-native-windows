@@ -11,10 +11,7 @@
 import type {PartialViewConfigWithoutName} from './PlatformBaseViewConfig';
 
 import ReactNativeStyleAttributes from '../Components/View/ReactNativeStyleAttributes';
-import {
-  ConditionallyIgnoredEventHandlers,
-  DynamicallyInjectedByGestureHandler,
-} from './ViewConfigIgnore';
+import {DynamicallyInjectedByGestureHandler} from './ViewConfigIgnore';
 
 const bubblingEventTypes = {
   // Generic Events
@@ -318,7 +315,7 @@ const validAttributesForNonEventProps = {
 // Props for bubbling and direct events
 // [Windows
 const validAttributesForEventProps = {
-// Windows]
+  // Windows]
   onLayout: true,
   onMagicTap: true,
 
@@ -363,10 +360,9 @@ const validAttributesForEventProps = {
   onMouseEnter: true,
   onMouseLeave: true,
   // Windows]
-// [Windows
+  // [Windows
 };
 // Windows]
-
 
 /**
  * On iOS, view managers define all of a component's props.
@@ -374,7 +370,7 @@ const validAttributesForEventProps = {
  */
 // [Windows
 const PlatformBaseViewConfigWindows: PartialViewConfigWithoutName = {
-// Windows]
+  // Windows]
   bubblingEventTypes,
   directEventTypes,
   validAttributes: {
