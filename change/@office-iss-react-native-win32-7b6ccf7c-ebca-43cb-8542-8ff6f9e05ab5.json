@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Make fork of NativeAnimatedHelper",
+  "comment": "Fix RN win32 tester app (#11042)",
   "packageName": "@office-iss/react-native-win32",
   "email": "ruaraki@microsoft.com",
   "dependentChangeType": "patch"
