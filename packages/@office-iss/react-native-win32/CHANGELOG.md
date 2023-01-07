@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Fri, 16 Dec 2022 06:14:58 GMT and should not be manually modified.
+This log was last generated on Sat, 07 Jan 2023 06:14:46 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.175
+
+Sat, 07 Jan 2023 06:14:46 GMT
+
+### Changes
+
+- Make fork of NativeAnimatedHelper (ruaraki@microsoft.com)
 
 ## 0.0.0-canary.174
 

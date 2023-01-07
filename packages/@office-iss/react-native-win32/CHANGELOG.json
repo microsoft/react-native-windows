@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Sat, 07 Jan 2023 06:14:46 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.175",
+      "version": "0.0.0-canary.175",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ruaraki@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "6d81c52c48782f9af6e4583b9e2068854ddbb056",
+            "comment": "Make fork of NativeAnimatedHelper"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 16 Dec 2022 06:14:58 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.174",
       "version": "0.0.0-canary.174",
