@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Force border with default brush for borderWidth",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
