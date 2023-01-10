@@ -311,6 +311,9 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\callinvoker\ReactCommon\CallInvoker.h">
       <Filter>callinvoker\ReactCommon</Filter>
     </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\callinvoker\ReactCommon\SchedulerPriority.h">
+      <Filter>callinvoker\ReactCommon</Filter>
+    </ClInclude>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\bridging\CallbackWrapper.h">
       <Filter>react\bridging</Filter>
     </ClInclude>

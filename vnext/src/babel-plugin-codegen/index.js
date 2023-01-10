@@ -12,17 +12,17 @@
 let flowParser, typeScriptParser, RNCodegen;
 
 try {
-  flowParser = require('react-native-codegen/src/parsers/flow');
-  typeScriptParser = require('react-native-codegen/src/parsers/typescript');
-  RNCodegen = require('react-native-codegen/src/generators/RNCodegen');
+  flowParser = require('@react-native/codegen/src/parsers/flow');
+  typeScriptParser = require('@react-native/codegen/src/parsers/typescript');
+  RNCodegen = require('@react-native/codegen/src/generators/RNCodegen');
 } catch (e) {
   // Fallback to lib when source doesn't exit (e.g. when installed as a dev dependency)
-  flowParser = require('react-native-codegen/lib/parsers/flow');
-  typeScriptParser = require('react-native-codegen/lib/parsers/typescript');
-  RNCodegen = require('react-native-codegen/lib/generators/RNCodegen');
+  flowParser = require('@react-native/codegen/lib/parsers/flow');
+  typeScriptParser = require('@react-native/codegen/lib/parsers/typescript');
+  RNCodegen = require('@react-native/codegen/lib/generators/RNCodegen');
 }
 
-// [Win - changes to use local react-native-codegen from tscodegen, which has the flow types removed
+// [Win - changes to use local @react-native/codegen from tscodegen, which has the flow types removed
 flowParser = require('../../../node_modules/react-native-tscodegen/lib/rncodegen/src/parsers/flow');
 RNCodegen = {
   generateViewConfig: ({libraryName, schema}) => {

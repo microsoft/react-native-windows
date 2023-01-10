@@ -48,9 +48,7 @@ LinkingManager::~LinkingManager() noexcept {
   }
 }
 
-/*static*/ fire_and_forget LinkingManager::canOpenURL(
-    std::string url,
-    ::React::ReactPromise<::React::JSValue> result) noexcept {
+/*static*/ fire_and_forget LinkingManager::canOpenURL(std::string url, ::React::ReactPromise<bool> result) noexcept {
   winrt::Windows::Foundation::Uri uri(Utf8ToUtf16(url));
   auto status = co_await Launcher::QueryUriSupportAsync(uri, LaunchQuerySupportType::Uri);
   if (status == LaunchQuerySupportStatus::Available) {
@@ -60,12 +58,12 @@ LinkingManager::~LinkingManager() noexcept {
   }
 }
 
-fire_and_forget openUrlAsync(std::string url, ::React::ReactPromise<::React::JSValue> result) noexcept {
+fire_and_forget openUrlAsync(std::string url, ::React::ReactPromise<void> result) noexcept {
   try {
     winrt::Windows::Foundation::Uri uri(Utf8ToUtf16(url));
 
     if (co_await Launcher::LaunchUriAsync(uri)) {
-      result.Resolve({});
+      result.Resolve();
     } else {
       result.Reject(("Unable to open URL: " + url).c_str());
     }
@@ -74,7 +72,7 @@ fire_and_forget openUrlAsync(std::string url, ::React::ReactPromise<::React::JSV
   }
 }
 
-void LinkingManager::openURL(std::string &&url, ::React::ReactPromise<::React::JSValue> &&result) noexcept {
+void LinkingManager::openURL(std::string &&url, ::React::ReactPromise<void> &&result) noexcept {
   m_context.UIDispatcher().Post(
       [url = std::move(url), result = std::move(result)]() { openUrlAsync(std::move(url), std::move(result)); });
 }
@@ -99,7 +97,7 @@ void LinkingManager::HandleOpenUri(winrt::hstring const &uri) noexcept {
   m_context.EmitJSEvent(L"RCTDeviceEventEmitter", L"url", React::JSValueObject{{"url", winrt::to_string(uri)}});
 }
 
-/*static*/ void LinkingManager::openSettings(::React::ReactPromise<::React::JSValue> &&result) noexcept {
+/*static*/ void LinkingManager::openSettings(::React::ReactPromise<void> &&result) noexcept {
   result.Reject(L"Could not open settings.  Not suported on this platform.");
 }
 
@@ -111,7 +109,7 @@ void LinkingManager::HandleOpenUri(winrt::hstring const &uri) noexcept {
   // no-op
 }
 
-/*static*/ void LinkingManager::getInitialURL(::React::ReactPromise<::React::JSValue> &&result) noexcept {
+/*static*/ void LinkingManager::getInitialURL(::React::ReactPromise<std::string> &&result) noexcept {
   if (s_initialUri) {
     result.Resolve(to_string(s_initialUri.AbsoluteUri()));
   } else {

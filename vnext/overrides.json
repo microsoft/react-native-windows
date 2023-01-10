@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20221120-2051-81e441ae8",
+  "baseVersion": "0.0.0-20221202-2018-dfbb63996",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "5b31122dae356999a8c9070cac37a1e28a0570e9"
+      "baseHash": "c7af58fd30d2d5ad0171b068a4aa2ccc59d35783"
     },
     {
       "type": "derived",
@@ -105,14 +105,14 @@
       "type": "patch",
       "file": "src/babel-plugin-codegen/index.js",
       "baseFile": "packages/babel-plugin-codegen/index.js",
-      "baseHash": "61bf7c988a9e6927c810b552dbfd55fbb27961ef",
+      "baseHash": "dcee030f739cc0047038da7e94ec3be58145f25f",
       "issue": 5430
     },
     {
       "type": "patch",
       "file": "src/babel-plugin-codegen/package.json",
       "baseFile": "packages/babel-plugin-codegen/package.json",
-      "baseHash": "e6f1ce8c30ed28fe8edc96dc098691e59c772e2e",
+      "baseHash": "e6151216a4159d51461db6ca7677a8fa7ef30a13",
       "issue": 5430
     },
     {
@@ -172,6 +172,13 @@
     {
       "type": "platform",
       "file": "src/Libraries/Alert/NativeDialogManagerWindows.js"
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/Animated/nodes/AnimatedInterpolation.windows.js",
+      "baseFile": "Libraries/Animated/nodes/AnimatedInterpolation.js",
+      "baseHash": "7dae17d655423f7e6213c5e0b15984aa2c13f1fd",
+      "issue": 11018
     },
     {
       "type": "platform",

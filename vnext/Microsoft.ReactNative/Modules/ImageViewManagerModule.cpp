@@ -101,14 +101,33 @@ void ImageLoader::Initialize(React::ReactContext const &reactContext) noexcept {
   m_context = reactContext;
 }
 
-void ImageLoader::getSize(std::string uri, React::ReactPromise<React::JSValue> &&result) noexcept {
-  getSizeWithHeaders(std::move(uri), {}, std::move(result));
+void ImageLoader::getSize(std::string uri, React::ReactPromise<std::vector<double>> &&result) noexcept {
+  m_context.UIDispatcher().Post(
+      [context = m_context, uri = std::move(uri), result = std::move(result)]() mutable noexcept {
+        GetImageSizeAsync(
+            std::move(uri),
+            {},
+            [result, context](double width, double height) noexcept {
+              context.JSDispatcher().Post([result = std::move(result), width, height]() noexcept {
+                result.Resolve(std::vector<double>{width, height});
+              });
+            },
+            [result, context]() noexcept {
+              context.JSDispatcher().Post([result = std::move(result)]() noexcept { result.Reject("Failed"); });
+            }
+#ifdef USE_FABRIC
+            ,
+            IsFabricEnabled(context.Properties().Handle())
+#endif // USE_FABRIC
+        );
+      });
 }
 
 void ImageLoader::getSizeWithHeaders(
     std::string uri,
     React::JSValue &&headers,
-    React::ReactPromise<React::JSValue> &&result) noexcept {
+    React::ReactPromise<Microsoft::ReactNativeSpecs::ImageLoaderIOSSpec_getSizeWithHeaders_returnType>
+        &&result) noexcept {
   m_context.UIDispatcher().Post([context = m_context,
                                  uri = std::move(uri),
                                  headers = std::move(headers),
@@ -116,9 +135,10 @@ void ImageLoader::getSizeWithHeaders(
     GetImageSizeAsync(
         std::move(uri),
         std::move(headers),
-        [result, context](int32_t width, int32_t height) noexcept {
+        [result, context](double width, double height) noexcept {
           context.JSDispatcher().Post([result = std::move(result), width, height]() noexcept {
-            result.Resolve(React::JSValueArray{width, height});
+            result.Resolve(
+                Microsoft::ReactNativeSpecs::ImageLoaderIOSSpec_getSizeWithHeaders_returnType{width, height});
           });
         },
         [result, context]() noexcept {
@@ -132,7 +152,7 @@ void ImageLoader::getSizeWithHeaders(
   });
 }
 
-void ImageLoader::prefetchImage(std::string uri, React::ReactPromise<React::JSValue> &&result) noexcept {
+void ImageLoader::prefetchImage(std::string uri, React::ReactPromise<bool> &&result) noexcept {
   // NYI
   result.Resolve(true);
 }
@@ -141,7 +161,7 @@ void ImageLoader::prefetchImageWithMetadata(
     std::string uri,
     std::string queryRootName,
     double rootTag,
-    React::ReactPromise<React::JSValue> &&result) noexcept {
+    React::ReactPromise<bool> &&result) noexcept {
   // NYI
   result.Resolve(true);
 }

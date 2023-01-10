@@ -15,7 +15,7 @@ struct Clipboard {
   void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
   REACT_METHOD(getString)
-  void getString(React::ReactPromise<React::JSValue> result) noexcept;
+  void getString(React::ReactPromise<std::string> result) noexcept;
 
   REACT_METHOD(setString)
   void setString(std::string content) noexcept;

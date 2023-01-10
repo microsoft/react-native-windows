@@ -15,7 +15,7 @@ void Clipboard::Initialize(winrt::Microsoft::ReactNative::ReactContext const &re
   m_reactContext = reactContext;
 }
 
-void Clipboard::getString(React::ReactPromise<React::JSValue> result) noexcept {
+void Clipboard::getString(React::ReactPromise<std::string> result) noexcept {
   auto jsDispatcher = m_reactContext.JSDispatcher();
   m_reactContext.UIDispatcher().Post([jsDispatcher, result] {
     auto data = DataTransfer::Clipboard::GetContent();
@@ -27,7 +27,7 @@ void Clipboard::getString(React::ReactPromise<React::JSValue> result) noexcept {
         case AsyncStatus::Completed: {
           auto text = std::wstring(asyncOp.GetResults());
           jsDispatcher.Post(
-              [result, text] { result.Resolve(React::JSValue{Microsoft::Common::Unicode::Utf16ToUtf8(text)}); });
+              [result, text] { result.Resolve(std::string{Microsoft::Common::Unicode::Utf16ToUtf8(text)}); });
           break;
         }
         case AsyncStatus::Canceled: {
