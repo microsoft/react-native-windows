@@ -143,7 +143,6 @@
         api-ms-win-core-windowserrorreporting-l1-1-0.dll;
         ext-ms-win-uiacore-l1-1-1.dll;
         chakra.dll;
-        winsqlite3.dll;
         %(DelayLoadDLLs)
       </DelayLoadDLLs>
       <SubSystem>Console</SubSystem>

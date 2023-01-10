@@ -6,8 +6,6 @@
 
 // Modules
 #include <AppModelHelpers.h>
-#include <AsyncStorageModule.h>
-#include <Modules/AsyncStorageModuleWin32.h>
 #include <Modules/ClipboardModule.h>
 #include <Modules/NativeUIManager.h>
 #include <Modules/PaperUIManagerModule.h>
@@ -39,19 +37,6 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
       Microsoft::React::GetFileReaderModuleName(),
       [props = context->Properties()]() { return Microsoft::React::CreateFileReaderModule(props); },
       batchingUIMessageQueue);
-
-  // AsyncStorageModule doesn't work without package identity (it indirectly depends on
-  // Windows.Storage.StorageFile), so check for package identity before adding it.
-  modules.emplace_back(
-      "AsyncLocalStorage",
-      []() -> std::unique_ptr<facebook::xplat::module::CxxModule> {
-        if (HasPackageIdentity()) {
-          return std::make_unique<facebook::react::AsyncStorageModule>(L"asyncStorage");
-        } else {
-          return std::make_unique<facebook::react::AsyncStorageModuleWin32>();
-        }
-      },
-      jsMessageQueue);
 
   return modules;
 }
