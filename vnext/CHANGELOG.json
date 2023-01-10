@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 10 Jan 2023 06:15:45 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.600",
+      "version": "0.0.0-canary.600",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "5b40a3de5630739b44f8e918f66a865cdc879b13",
+            "comment": "Fix keyboard event unsubscribe"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ffef3765557c32a96cf6d15823e877ccbf6cf201",
+            "comment": "Remove AsyncStorage"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 05 Jan 2023 06:18:16 GMT",
       "tag": "react-native-windows_v0.0.0-canary.599",
       "version": "0.0.0-canary.599",

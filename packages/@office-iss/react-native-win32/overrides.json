@@ -32,6 +32,13 @@
       "baseHash": "897569d77df852480332b7ce7ec1b594cf40aa28"
     },
     {
+      "type": "derived",
+      "file": "src/Libraries/Animated/NativeAnimatedHelper.win32.js",
+      "baseFile": "Libraries/Animated/NativeAnimatedHelper.js",
+      "baseHash": "ba616684f3d71f34a0d8152c675f90ee20913860",
+      "issue": 11041
+    },
+    {
       "type": "patch",
       "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.win32.js",
       "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.js",
