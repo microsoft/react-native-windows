@@ -281,7 +281,7 @@ void ImageComponentView::DrawImage() noexcept {
     }
 
     const auto imageProps = std::static_pointer_cast<const facebook::react::ImageProps>(m_props);
-    
+
     bool useEffects{
         imageProps->blurRadius > 0 || isColorMeaningful(imageProps->tintColor) ||
         imageProps->resizeMode == facebook::react::ImageResizeMode::Repeat};
@@ -294,7 +294,8 @@ void ImageComponentView::DrawImage() noexcept {
       if (imageProps->blurRadius > 0) {
         winrt::com_ptr<ID2D1Effect> gaussianBlurEffect;
         winrt::check_hresult(d2dDeviceContext->CreateEffect(CLSID_D2D1GaussianBlur, gaussianBlurEffect.put()));
-        winrt::check_hresult(gaussianBlurEffect->SetValue(D2D1_GAUSSIANBLUR_PROP_STANDARD_DEVIATION, imageProps->blurRadius));
+        winrt::check_hresult(
+            gaussianBlurEffect->SetValue(D2D1_GAUSSIANBLUR_PROP_STANDARD_DEVIATION, imageProps->blurRadius));
         gaussianBlurEffect->SetInputEffect(0, bitmapEffects.get());
         bitmapEffects.copy_from(gaussianBlurEffect.get());
       }
@@ -328,7 +329,8 @@ void ImageComponentView::DrawImage() noexcept {
         D2D1_RECT_F imageBounds;
         winrt::check_hresult(d2dDeviceContext->GetImageLocalBounds(image.get(), &imageBounds));
 
-        d2dDeviceContext->DrawImage(bitmapEffects.get(), {static_cast<float>(offset.x), static_cast<float>(offset.y)}, imageBounds);
+        d2dDeviceContext->DrawImage(
+            bitmapEffects.get(), {static_cast<float>(offset.x), static_cast<float>(offset.y)}, imageBounds);
       }
     } else {
       UINT width, height;
