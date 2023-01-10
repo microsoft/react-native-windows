@@ -41,6 +41,7 @@ void TextPropertyChangedParentVisitor::VisitText(ShadowNodeBase *node) {
     }
 
     TextViewManager::UpdateOptimizedText(node);
+    node->GetViewManager()->MarkDirty(node->m_tag);
   }
 
   // Refresh text highlighters

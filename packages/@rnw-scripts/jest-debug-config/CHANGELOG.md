@@ -1,8 +1,25 @@
 # Change Log - @rnw-scripts/jest-debug-config
 
-This log was last generated on Sat, 12 Nov 2022 06:17:22 GMT and should not be manually modified.
+This log was last generated on Tue, 13 Dec 2022 06:15:24 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.4.3
+
+Tue, 13 Dec 2022 06:15:24 GMT
+
+### Patches
+
+- Standardize on the repository field in package.json (dannyvv@microsoft.com)
+- Bump @rnw-scripts/babel-node-config to v2.1.1
+
+## 1.4.2
+
+Fri, 02 Dec 2022 06:19:03 GMT
+
+### Patches
+
+- Integrate 10/10 (34109996+chiaramooney@users.noreply.github.com)
 
 ## 1.4.1
 

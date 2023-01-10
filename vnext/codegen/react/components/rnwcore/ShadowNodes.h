@@ -12,6 +12,7 @@
 
 #include <react/renderer/components/rnwcore/EventEmitters.h>
 #include <react/renderer/components/rnwcore/Props.h>
+#include <react/renderer/components/rnwcore/States.h>
 #include <react/renderer/components/view/ConcreteViewShadowNode.h>
 #include <jsi/jsi.h>
 
@@ -25,7 +26,9 @@ JSI_EXPORT extern const char ActivityIndicatorViewComponentName[];
  */
 using ActivityIndicatorViewShadowNode = ConcreteViewShadowNode<
     ActivityIndicatorViewComponentName,
-    ActivityIndicatorViewProps>;
+    ActivityIndicatorViewProps,
+    ActivityIndicatorViewEventEmitter,
+    ActivityIndicatorViewState>;
 
 JSI_EXPORT extern const char DatePickerComponentName[];
 
@@ -35,7 +38,8 @@ JSI_EXPORT extern const char DatePickerComponentName[];
 using DatePickerShadowNode = ConcreteViewShadowNode<
     DatePickerComponentName,
     DatePickerProps,
-DatePickerEventEmitter>;
+    DatePickerEventEmitter,
+    DatePickerState>;
 
 JSI_EXPORT extern const char AndroidDrawerLayoutComponentName[];
 
@@ -45,16 +49,8 @@ JSI_EXPORT extern const char AndroidDrawerLayoutComponentName[];
 using AndroidDrawerLayoutShadowNode = ConcreteViewShadowNode<
     AndroidDrawerLayoutComponentName,
     AndroidDrawerLayoutProps,
-AndroidDrawerLayoutEventEmitter>;
-
-JSI_EXPORT extern const char RCTProgressViewComponentName[];
-
-/*
- * `ShadowNode` for <RCTProgressView> component.
- */
-using RCTProgressViewShadowNode = ConcreteViewShadowNode<
-    RCTProgressViewComponentName,
-    RCTProgressViewProps>;
+    AndroidDrawerLayoutEventEmitter,
+    AndroidDrawerLayoutState>;
 
 JSI_EXPORT extern const char AndroidSwipeRefreshLayoutComponentName[];
 
@@ -64,7 +60,8 @@ JSI_EXPORT extern const char AndroidSwipeRefreshLayoutComponentName[];
 using AndroidSwipeRefreshLayoutShadowNode = ConcreteViewShadowNode<
     AndroidSwipeRefreshLayoutComponentName,
     AndroidSwipeRefreshLayoutProps,
-AndroidSwipeRefreshLayoutEventEmitter>;
+    AndroidSwipeRefreshLayoutEventEmitter,
+    AndroidSwipeRefreshLayoutState>;
 
 JSI_EXPORT extern const char PullToRefreshViewComponentName[];
 
@@ -74,7 +71,8 @@ JSI_EXPORT extern const char PullToRefreshViewComponentName[];
 using PullToRefreshViewShadowNode = ConcreteViewShadowNode<
     PullToRefreshViewComponentName,
     PullToRefreshViewProps,
-PullToRefreshViewEventEmitter>;
+    PullToRefreshViewEventEmitter,
+    PullToRefreshViewState>;
 
 JSI_EXPORT extern const char AndroidHorizontalScrollContentViewComponentName[];
 
@@ -83,7 +81,9 @@ JSI_EXPORT extern const char AndroidHorizontalScrollContentViewComponentName[];
  */
 using AndroidHorizontalScrollContentViewShadowNode = ConcreteViewShadowNode<
     AndroidHorizontalScrollContentViewComponentName,
-    AndroidHorizontalScrollContentViewProps>;
+    AndroidHorizontalScrollContentViewProps,
+    AndroidHorizontalScrollContentViewEventEmitter,
+    AndroidHorizontalScrollContentViewState>;
 
 JSI_EXPORT extern const char SwitchComponentName[];
 
@@ -93,7 +93,8 @@ JSI_EXPORT extern const char SwitchComponentName[];
 using SwitchShadowNode = ConcreteViewShadowNode<
     SwitchComponentName,
     SwitchProps,
-SwitchEventEmitter>;
+    SwitchEventEmitter,
+    SwitchState>;
 
 JSI_EXPORT extern const char UnimplementedNativeViewComponentName[];
 
@@ -102,7 +103,9 @@ JSI_EXPORT extern const char UnimplementedNativeViewComponentName[];
  */
 using UnimplementedNativeViewShadowNode = ConcreteViewShadowNode<
     UnimplementedNativeViewComponentName,
-    UnimplementedNativeViewProps>;
+    UnimplementedNativeViewProps,
+    UnimplementedNativeViewEventEmitter,
+    UnimplementedNativeViewState>;
 
 } // namespace react
 } // namespace facebook

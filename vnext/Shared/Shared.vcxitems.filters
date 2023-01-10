@@ -1,23 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)AsyncStorage\StorageFileIO.cpp">
-      <Filter>Source Files\AsyncStorage</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)AsyncStorage\AsyncStorageManager.cpp">
-      <Filter>Source Files\AsyncStorage</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)AsyncStorage\FollyDynamicConverter.cpp">
-      <Filter>Source Files\AsyncStorage</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)AsyncStorage\KeyValueStorage.cpp">
-      <Filter>Source Files\AsyncStorage</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)tracing\tracing.cpp">
       <Filter>Source Files\tracing</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\AsyncStorageModule.cpp">
-      <Filter>Source Files\Modules</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\ExceptionsManagerModule.cpp">
       <Filter>Source Files\Modules</Filter>
@@ -60,9 +45,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)V8JSIRuntimeHolder.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\AsyncStorageModuleWin32.cpp">
-      <Filter>Source Files\Modules</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)InstanceManager.cpp">
       <Filter>Source Files</Filter>
@@ -155,6 +137,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\BlobModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Utils\ImageUtils.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Utils\Helpers.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
@@ -162,12 +146,6 @@
     </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{d297c8b2-b89e-46e9-8d7c-ee4766384cb5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\AsyncStorage">
-      <UniqueIdentifier>{83a6224b-fdbc-49fa-83d4-c9010f17bffa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\AsyncStorage">
-      <UniqueIdentifier>{ee633764-9967-4233-8848-81edf1488790}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Modules">
       <UniqueIdentifier>{37d57028-146d-45f3-a56d-2ce7625a3449}</UniqueIdentifier>
@@ -216,18 +194,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\StorageFileIO.h">
-      <Filter>Header Files\AsyncStorage</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\AsyncStorageManager.h">
-      <Filter>Header Files\AsyncStorage</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\FollyDynamicConverter.h">
-      <Filter>Header Files\AsyncStorage</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\KeyValueStorage.h">
-      <Filter>Header Files\AsyncStorage</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\ExceptionsManagerModule.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
@@ -253,9 +219,6 @@
       <Filter>Header Files\Pch</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)AbiSafe.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorageModule.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)BaseScriptStoreImpl.h">
@@ -338,9 +301,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)WebSocketJSExecutorFactory.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\AsyncStorageModuleWin32.h">
-      <Filter>Header Files\Modules</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Executors\WebSocketJSExecutor.h">
       <Filter>Header Files\Executors</Filter>

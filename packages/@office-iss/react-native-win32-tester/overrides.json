@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win32/**"
   ],
-  "baseVersion": "0.0.0-20221010-2132-1fc27c4cb",
+  "baseVersion": "0.0.0-20221120-2051-81e441ae8",
   "overrides": [
     {
       "type": "patch",
@@ -24,14 +24,7 @@
       "type": "patch",
       "file": "src/js/components/RNTesterExampleFilter.win32.js",
       "baseFile": "packages/rn-tester/js/components/RNTesterExampleFilter.js",
-      "baseHash": "e48c4c9538d7eeb1bb244184c4e7a6e80a1ed4f6"
-    },
-    {
-      "type": "patch",
-      "file": "src/js/examples-win32/NewArchitecture/ComponentWithState.win32.js",
-      "baseFile": "packages/rn-tester/js/examples/NewArchitecture/ComponentWithState.js",
-      "baseHash": "5eebd768304baac0e80b34cc073c02ac44890e85",
-      "issue": 0
+      "baseHash": "91b349ecb666e3c44c14fecc5d8ac2a5fdba4ae6"
     },
     {
       "type": "platform",
@@ -48,28 +41,7 @@
       "type": "derived",
       "file": "src/js/utils/RNTesterList.win32.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "066da127da0eb3a5ac600ff13292e4dc7e65940a"
-    },
-    {
-      "type": "patch",
-      "file": "src/js/utils/RNTesterStatePersister.win32.js",
-      "baseFile": "packages/rn-tester/js/utils/RNTesterStatePersister.js",
-      "baseHash": "5cfce9d3fe8cde84c587190ded5f7b590db5ab5e",
-      "issue": 6316
-    },
-    {
-      "type": "patch",
-      "file": "src/js/utils/testerStateUtils.win32.js",
-      "baseFile": "packages/rn-tester/js/utils/testerStateUtils.js",
-      "baseHash": "48de7389eff1d9704135c4ac97315a69a2877b35",
-      "issue": 6316
-    },
-    {
-      "type": "patch",
-      "file": "src/js/utils/useAsyncStorageReducer.win32.js",
-      "baseFile": "packages/rn-tester/js/utils/useAsyncStorageReducer.js",
-      "baseHash": "67e0a9ac568f477a0b4204a4b88ad22373330493",
-      "issue": 6316
+      "baseHash": "fde4de703b71dbb64f858158b880c147a295205d"
     }
   ]
 }

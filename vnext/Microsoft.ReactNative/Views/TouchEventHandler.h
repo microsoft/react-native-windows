@@ -12,10 +12,6 @@
 #include "Utils/BatchingEventEmitter.h"
 #include "XamlView.h"
 
-#ifdef USE_FABRIC
-#include <react/renderer/components/view/Touch.h>
-#endif
-
 namespace winrt {
 using namespace Windows::UI;
 using namespace xaml;

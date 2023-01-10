@@ -16,6 +16,7 @@
 #include <UI.Xaml.Media.h>
 #include <Utils/Helpers.h>
 #include <Utils/ValueUtils.h>
+#include <XamlHelper.h>
 #include <winrt/Windows.UI.Core.h>
 
 namespace winrt {

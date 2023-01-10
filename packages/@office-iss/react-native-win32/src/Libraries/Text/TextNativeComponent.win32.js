@@ -34,6 +34,7 @@ const textViewConfig = {
     numberOfLines: true,
     ellipsizeMode: true,
     allowFontScaling: true,
+    dynamicTypeRamp: true,
     maxFontSizeMultiplier: true,
     disabled: true,
     selectable: true,
@@ -45,6 +46,7 @@ const textViewConfig = {
     onInlineViewLayout: true,
     dataDetectorType: true,
     android_hyphenationFrequency: true,
+    lineBreakStrategyIOS: true,
     // [Windows
     // Listed for the property to be honored even though
     // the property tooltip and the events from ViewWin32

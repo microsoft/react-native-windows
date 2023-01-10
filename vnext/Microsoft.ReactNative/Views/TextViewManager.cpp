@@ -69,7 +69,7 @@ class TextShadowNode final : public ShadowNodeBase {
       UpdateOptimizedText();
     } else if (wasOptimized) {
       // Remove optimized text and re-construct as Inline tree
-      UpdateOptimizedText();
+      UpdateOptimizedText(true);
       if (const auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
         for (size_t i = 0; i < m_children.size(); ++i) {
           if (const auto childNode =
@@ -83,16 +83,17 @@ class TextShadowNode final : public ShadowNodeBase {
     }
 
     RecalculateTextHighlighters();
+    GetViewManager()->MarkDirty(m_tag);
   }
 
   void removeAllChildren() override {
     if (m_isTextOptimized) {
-      auto textBlock = this->GetView().as<xaml::Controls::TextBlock>();
-      textBlock.ClearValue(xaml::Controls::TextBlock::TextProperty());
+      UpdateOptimizedText();
     } else {
       Super::removeAllChildren();
     }
     RecalculateTextHighlighters();
+    GetViewManager()->MarkDirty(m_tag);
   }
 
   void RemoveChildAt(int64_t indexToRemove) override {
@@ -102,9 +103,10 @@ class TextShadowNode final : public ShadowNodeBase {
       Super::RemoveChildAt(indexToRemove);
     }
     RecalculateTextHighlighters();
+    GetViewManager()->MarkDirty(m_tag);
   }
 
-  void UpdateOptimizedText() {
+  void UpdateOptimizedText(bool clearOptimizedText = false) {
     if (m_children.size() > 0 && m_isTextOptimized) {
       if (const auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
         winrt::hstring text = L"";
@@ -117,7 +119,7 @@ class TextShadowNode final : public ShadowNodeBase {
         auto textBlock = this->GetView().as<xaml::Controls::TextBlock>();
         textBlock.Text(text);
       }
-    } else {
+    } else if (m_isTextOptimized || clearOptimizedText) {
       auto textBlock = this->GetView().as<xaml::Controls::TextBlock>();
       textBlock.ClearValue(xaml::Controls::TextBlock::TextProperty());
     }

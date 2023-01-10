@@ -121,6 +121,8 @@ function PressableFeedbackEvents() {
           accessibilityLabel="pressable feedback events"
           accessibilityRole="button"
           // [Windows
+          onFocus={() => appendEvent('focus')}
+          onBlur={() => appendEvent('blur')}
           onHoverIn={() => appendEvent('hover in')}
           onHoverOut={() => appendEvent('hover out')}
           // Windows]
@@ -232,7 +234,7 @@ function PressableHitSlop() {
 
 function PressableNativeMethods() {
   const [status, setStatus] = useState<?boolean>(null);
-  const ref = useRef(null);
+  const ref = useRef<$FlowFixMe>(null);
 
   useEffect(() => {
     setStatus(ref.current != null && typeof ref.current.measure === 'function');

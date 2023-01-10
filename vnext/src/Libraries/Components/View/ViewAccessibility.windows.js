@@ -52,6 +52,7 @@ export type AccessibilityNodeInfoProp = {
 export type AccessibilityRole =
   | 'none'
   | 'button'
+  | 'dropdownlist'
   | 'togglebutton'
   | 'link'
   | 'search'
@@ -81,6 +82,14 @@ export type AccessibilityRole =
   | 'list'
   | 'toolbar'
   | 'grid'
+  | 'pager'
+  | 'scrollview'
+  | 'horizontalscrollview'
+  | 'viewgroup'
+  | 'webview'
+  | 'drawerlayout'
+  | 'slidingdrawer'
+  | 'iconmenu'
   | 'listitem'; // RNW-only
 
 // Role types for web
@@ -122,6 +131,7 @@ export type Role =
   | 'navigation'
   | 'none'
   | 'note'
+  | 'option'
   | 'presentation'
   | 'progressbar'
   | 'radio'

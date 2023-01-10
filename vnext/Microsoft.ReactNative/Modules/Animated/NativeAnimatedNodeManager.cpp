@@ -18,12 +18,11 @@
 #include "FrameAnimationDriver.h"
 #include "SpringAnimationDriver.h"
 
+#include <ReactCoreInjection.h>
 #include "AnimatedNodeType.h"
 #include "AnimationType.h"
 #include "FacadeType.h"
 
-#include <Modules/NativeUIManager.h>
-#include <Modules/PaperUIManagerModule.h>
 #include <Windows.Foundation.h>
 #include <queue>
 
@@ -51,9 +50,13 @@ comp::Compositor NativeAnimatedNodeManager::Compositor() const noexcept {
         compositionContext);
   }
 #endif
+#ifndef CORE_ABI
   // TODO: Islands - need to get the XamlView associated with this animation in order to
   // use the compositor Microsoft::ReactNative::GetCompositor(xamlView)
   return Microsoft::ReactNative::GetCompositor();
+#else
+  return nullptr;
+#endif
 }
 
 void NativeAnimatedNodeManager::CreateAnimatedNode(
@@ -460,9 +463,8 @@ void NativeAnimatedNodeManager::AddDelayedPropsNode(
 #endif
   m_delayedPropsNodes.push_back(propsNodeTag);
   if (m_delayedPropsNodes.size() <= 1) {
-    if (const auto uiManger = Microsoft::ReactNative::GetNativeUIManager(context).lock()) {
-      uiManger->AddBatchCompletedCallback([this]() { ProcessDelayedPropsNodes(); });
-    }
+    winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::PostToUIBatchingQueue(
+        m_context.Handle(), [this]() { ProcessDelayedPropsNodes(); });
   }
 }
 

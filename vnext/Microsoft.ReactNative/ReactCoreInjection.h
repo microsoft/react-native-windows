@@ -46,10 +46,14 @@ struct ReactCoreInjection : ReactCoreInjectionT<ReactCoreInjection> {
   static void PostToUIBatchingQueue(
       ReactNative::IReactContext context,
       ReactNative::ReactDispatcherCallback callback) noexcept;
+
+  static void SetPlatformNameOverride(IReactPropertyBag const &properties, winrt::hstring const &platformName) noexcept;
+  static std::string GetPlatformName(IReactPropertyBag const &properties) noexcept;
 };
 
 struct ReactViewHost : public winrt::implements<ReactViewHost, IReactViewHost> {
   ReactViewHost(
+      const winrt::Microsoft::ReactNative::ReactNativeHost &host,
       Mso::React::IReactViewHost &viewHost,
       const winrt::Microsoft::ReactNative::IReactDispatcher &uiDispatcher);
 
@@ -58,8 +62,10 @@ struct ReactViewHost : public winrt::implements<ReactViewHost, IReactViewHost> {
   Windows::Foundation::IAsyncAction UnloadViewInstance() noexcept;
   Windows::Foundation::IAsyncAction AttachViewInstance(IReactViewInstance viewInstance) noexcept;
   Windows::Foundation::IAsyncAction DetachViewInstance() noexcept;
+  winrt::Microsoft::ReactNative::ReactNativeHost ReactNativeHost() noexcept;
 
  private:
+  const ReactNative::ReactNativeHost m_host;
   Mso::CntPtr<Mso::React::IReactViewHost> m_viewHost;
   winrt::Microsoft::ReactNative::IReactDispatcher m_uiDispatcher;
 };

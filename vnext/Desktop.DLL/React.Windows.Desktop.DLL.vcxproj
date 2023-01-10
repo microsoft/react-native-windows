@@ -154,6 +154,7 @@
     <PackageReference Include="boost" Version="1.76.0.0" />
     <PackageReference Include="ReactNative.Hermes.Windows" Version="$(HermesVersion)" />
     <PackageReference Include="ReactWindows.OpenSSL.StdCall.Static" Version="1.0.2-p.5" />
+    <PackageReference Include="$(V8PackageName)" Version="$(V8Version)" Condition="'$(UseV8)' == 'true'" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(EnableSourceLink)' == 'true'">
@@ -161,13 +162,6 @@
         <PackageReference Include="Microsoft.Build.Tasks.Git" Version="1.0.0" />
         <PackageReference Include="Microsoft.SourceLink.Common" Version="1.0.0" />
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
-      </ItemGroup>
-    </When>
-  </Choose>
-  <Choose>
-    <When Condition="'$(UseV8)' == 'true'">
-      <ItemGroup>
-        <PackageReference Include="ReactNative.V8Jsi.Windows" Version="$(V8Version)" />
       </ItemGroup>
     </When>
   </Choose>

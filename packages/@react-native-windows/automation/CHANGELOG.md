@@ -1,8 +1,152 @@
 # Change Log - @react-native-windows/automation
 
-This log was last generated on Wed, 16 Nov 2022 06:16:01 GMT and should not be manually modified.
+This log was last generated on Tue, 10 Jan 2023 06:15:45 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.3.21
+
+Tue, 10 Jan 2023 06:15:45 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.5.21
+
+## 0.3.20
+
+Thu, 05 Jan 2023 06:18:16 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.5.20
+
+## 0.3.19
+
+Thu, 22 Dec 2022 06:14:38 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.5.19
+
+## 0.3.18
+
+Wed, 21 Dec 2022 06:15:27 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.5.18
+
+## 0.3.17
+
+Fri, 16 Dec 2022 06:14:59 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.5.17
+
+## 0.3.16
+
+Thu, 15 Dec 2022 06:14:42 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.5.16
+
+## 0.3.15
+
+Tue, 13 Dec 2022 06:15:22 GMT
+
+### Patches
+
+- Standardize on the repository field in package.json (dannyvv@microsoft.com)
+- Bump @react-native-windows/automation-channel to v0.5.15
+- Bump @react-native-windows/fs to v0.0.0-canary.12
+- Bump @rnw-scripts/eslint-config to v1.1.15
+- Bump @rnw-scripts/just-task to v2.3.4
+- Bump @rnw-scripts/ts-config to v2.0.3
+
+## 0.3.14
+
+Sat, 10 Dec 2022 06:15:31 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.5.14
+
+## 0.3.13
+
+Fri, 09 Dec 2022 06:14:58 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.5.13
+
+## 0.3.12
+
+Wed, 07 Dec 2022 06:14:43 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.5.12
+
+## 0.3.11
+
+Fri, 02 Dec 2022 06:19:05 GMT
+
+### Patches
+
+- Merge branch 'main' of https://github.com/microsoft/react-native-windows into cm-intg-10-24 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/automation-channel to v0.5.11
+- Bump @react-native-windows/fs to v0.0.0-canary.11
+- Bump @rnw-scripts/just-task to v2.3.3
+
+## 0.3.10
+
+Thu, 01 Dec 2022 06:15:01 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.5.10
+
+## 0.3.9
+
+Wed, 30 Nov 2022 06:15:20 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.5.9
+
+## 0.3.8
+
+Thu, 24 Nov 2022 06:15:42 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.5.8
+
+## 0.3.7
+
+Wed, 23 Nov 2022 06:16:32 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.5.7
+
+## 0.3.6
+
+Tue, 22 Nov 2022 06:15:33 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.5.6
+
+## 0.3.5
+
+Mon, 21 Nov 2022 06:15:36 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.5.5
 
 ## 0.3.4
 

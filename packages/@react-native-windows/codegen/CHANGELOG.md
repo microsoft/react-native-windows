@@ -1,8 +1,49 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Wed, 16 Nov 2022 06:16:01 GMT and should not be manually modified.
+This log was last generated on Wed, 21 Dec 2022 06:15:26 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.47
+
+Wed, 21 Dec 2022 06:15:26 GMT
+
+### Changes
+
+- Support enum/union and T in Promise<T> in codegen (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.46
+
+Tue, 13 Dec 2022 06:15:22 GMT
+
+### Changes
+
+- Standardize on the repository field in package.json (dannyvv@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.12
+- Bump @rnw-scripts/eslint-config to v1.1.15
+- Bump @rnw-scripts/jest-unittest-config to v1.4.3
+- Bump @rnw-scripts/just-task to v2.3.4
+- Bump @rnw-scripts/ts-config to v2.0.3
+
+## 0.0.0-canary.45
+
+Fri, 02 Dec 2022 06:19:03 GMT
+
+### Changes
+
+- Integrate 10/10 (34109996+chiaramooney@users.noreply.github.com)
+- Bump codegen version (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.11
+- Bump @rnw-scripts/jest-unittest-config to v1.4.2
+- Bump @rnw-scripts/just-task to v2.3.3
+
+## 0.0.0-canary.44
+
+Mon, 21 Nov 2022 06:15:36 GMT
+
+### Changes
+
+- Enable ability to codegen JSI C++ TurboModule specs (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.43
 

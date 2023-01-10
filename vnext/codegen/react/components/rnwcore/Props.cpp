@@ -92,18 +92,6 @@ AndroidProgressBarProps::AndroidProgressBarProps(
     color(convertRawProp(context, rawProps, "color", sourceProps.color, {})),
     testID(convertRawProp(context, rawProps, "testID", sourceProps.testID, {""}))
       {}
-RCTProgressViewProps::RCTProgressViewProps(
-    const PropsParserContext &context,
-    const RCTProgressViewProps &sourceProps,
-    const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
-
-    progressViewStyle(convertRawProp(context, rawProps, "progressViewStyle", sourceProps.progressViewStyle, {RCTProgressViewProgressViewStyle::Default})),
-    progress(convertRawProp(context, rawProps, "progress", sourceProps.progress, {0.0})),
-    progressTintColor(convertRawProp(context, rawProps, "progressTintColor", sourceProps.progressTintColor, {})),
-    trackTintColor(convertRawProp(context, rawProps, "trackTintColor", sourceProps.trackTintColor, {})),
-    progressImage(convertRawProp(context, rawProps, "progressImage", sourceProps.progressImage, {})),
-    trackImage(convertRawProp(context, rawProps, "trackImage", sourceProps.trackImage, {}))
-      {}
 AndroidSwipeRefreshLayoutProps::AndroidSwipeRefreshLayoutProps(
     const PropsParserContext &context,
     const AndroidSwipeRefreshLayoutProps &sourceProps,

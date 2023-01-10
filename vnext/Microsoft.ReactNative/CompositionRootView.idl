@@ -3,6 +3,7 @@
 
 import "CompositionContext.idl";
 import "IJSValueWriter.idl";
+import "ReactCoreInjection.idl";
 import "ReactNativeHost.idl";
 #include "NamespaceRedirect.h"
 #include "DocString.h"
@@ -18,8 +19,10 @@ namespace Microsoft.ReactNative
     DOC_STRING("Creates a new instance of @CompositionRootView.")
     CompositionRootView();
 
-    DOC_STRING("The @ReactNativeHost associated with the @CompositionRootView. It must be set to show any React UI elements.")
-    ReactNativeHost ReactNativeHost { get; set; };
+    DOC_STRING(
+      "A ReactViewHost specifies the root UI component and initial properties to render in this RootView"
+      "It must be set to show any React UI elements.")
+    IReactViewHost ReactViewHost { get; set; };
 
     DOC_STRING("The RootVisual associated with the @CompositionRootView. It must be set to show any React UI elements.")
     Microsoft.ReactNative.Composition.IVisual RootVisual { get; set; };
@@ -37,17 +40,6 @@ namespace Microsoft.ReactNative
     //void OnPointerPressed(PointerPressedArgs args);
     //void OnMouseUp(Windows.Foundation.Point point);
     void OnScrollWheel(Windows.Foundation.Point point, Int32 delta);
-
-    DOC_STRING(
-      "The name of the root UI component registered in JavaScript with help of the "
-      "[`AppRegistry.registerComponent`](https://reactnative.dev/docs/appregistry#registercomponent) method.")
-    String ComponentName { get; set; };
-
-    DOC_STRING("The @JSValueArgWriter that is used to serialize the main component initial properties.")
-    JSValueArgWriter InitialProps { get; set; };
-
-    DOC_STRING("Reloads the current @ReactRootView UI components.")
-    void ReloadView();
   }
 
 } // namespace Microsoft.ReactNative

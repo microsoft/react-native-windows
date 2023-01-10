@@ -63,6 +63,9 @@ DOC_STRING("Settings per each IReactViewHost associated with an IReactHost insta
 
     DOC_STRING("Detaches IReactViewInstance from the IReactViewHost.")
       Windows.Foundation.IAsyncAction DetachViewInstance();
+
+    DOC_STRING("The ReactNativeHost associated with this ReactViewHost.")
+      ReactNativeHost ReactNativeHost { get; };
   }
 
   [experimental]
@@ -86,6 +89,9 @@ DOC_STRING("Settings per each IReactViewHost associated with an IReactHost insta
 
     DOC_STRING("Post something to the main UI dispatcher using the batching queue")
     static void PostToUIBatchingQueue(IReactContext context, ReactDispatcherCallback callback);
+
+    DOC_STRING("Override platform name. This will change the platform used when requesting bundles from metro. Default: \"windows\"")
+    static void SetPlatformNameOverride(IReactPropertyBag properties, String platformName);
   }
 
 

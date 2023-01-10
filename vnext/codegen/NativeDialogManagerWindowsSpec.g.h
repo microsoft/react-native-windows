@@ -31,6 +31,8 @@ struct DialogManagerWindowsSpec_DialogOptions {
     std::optional<bool> cancelable;
     REACT_FIELD(defaultButton)
     std::optional<int> defaultButton;
+    REACT_FIELD(rootTag)
+    std::optional<int> rootTag;
 };
 
 REACT_STRUCT(DialogManagerWindowsSpec_Constants)

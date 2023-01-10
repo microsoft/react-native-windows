@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #pragma once
+#include <CppWinRTIncludes.h>
 #include <JSValue.h>
 #include <UI.Composition.h>
 #include <unordered_set>

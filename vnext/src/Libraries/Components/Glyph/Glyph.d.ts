@@ -4,8 +4,8 @@
  * @format
  */
 
-import {Constructor} from 'Utilities';
-import {NativeMethods} from '../../Renderer/shims/ReactNativeTypes';
+import {Constructor} from '../../../types/private/Utilities';
+import {NativeMethods} from '../../../types/public/ReactNativeTypes';
 import {ColorValue, StyleProp} from '../../StyleSheet/StyleSheet';
 import {ViewStyle} from '../../StyleSheet/StyleSheetTypes';
 import {ViewProps} from '../View/ViewPropTypes';

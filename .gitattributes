@@ -12,6 +12,7 @@
 # Spec Codegen uses LF
 *Spec.g.h eol=lf
 /vnext/codegen/** eol=lf
+/vnext/Microsoft.ReactNative.IntegrationTests/codegen/** eol=lf
 /packages/sample-apps/codegen/** eol=lf
 
 # Force Visual Studio project files (mostly XML) to CRLF

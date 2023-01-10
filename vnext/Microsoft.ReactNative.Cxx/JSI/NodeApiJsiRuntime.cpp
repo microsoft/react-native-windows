@@ -7,6 +7,8 @@
 #include "NodeApiJsiRuntime.h"
 
 // Standard Library
+#include <array>
+#include <sstream>
 #include <string_view>
 #include <unordered_set>
 
@@ -2061,6 +2063,8 @@ napi_value NapiJsiRuntime::GetNapiValue(const Value &value) const {
     return GetNapiValue(value.getString(*const_cast<NapiJsiRuntime *>(this)));
   } else if (value.isObject()) {
     return GetNapiValue(value.getObject(*const_cast<NapiJsiRuntime *>(this)));
+  } else if (value.isBigInt()) {
+    return GetNapiValue(value.getBigInt(*const_cast<NapiJsiRuntime *>(this)));
   } else {
     throw JSINativeException("Unexpected jsi::Value type");
   }

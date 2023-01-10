@@ -1,5 +1,5 @@
-import {ViewStyle } from 'react-native';
-import {Insets} from 'react-native/types/Utilities';
+import {ViewStyle} from 'react-native';
+import {Insets} from 'react-native/types/public/Insets';
 
 import { IPressEvent, IRenderChild, IRenderStyle } from './TouchableWin32.Types';
 import { IViewWin32Props, IKeyboardEvent } from '../View/ViewWin32.Props';

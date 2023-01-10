@@ -27,6 +27,7 @@ type Options = {
   cancelable?: ?boolean,
   userInterfaceStyle?: 'unspecified' | 'light' | 'dark',
   onDismiss?: ?() => void,
+  rootTag?: number,
   ...
 };
 
@@ -51,6 +52,7 @@ class Alert {
       title: title || '',
       message: message || '',
       cancelable: false,
+      rootTag: options && options.rootTag,
     };
 
     if (options && options.cancelable) {
@@ -105,7 +107,7 @@ class Alert {
         options && options.onDismiss && options.onDismiss();
       }
     };
-    const onError = errorMessage => console.warn(errorMessage);
+    const onError = (errorMessage: string) => console.warn(errorMessage);
     NativeDialogManagerWindows.showAlert(config, onError, onAction);
   }
 

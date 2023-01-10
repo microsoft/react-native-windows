@@ -9,6 +9,7 @@
 #include "Utils/Helpers.h"
 #include "Utils/PropertyHandlerUtils.h"
 #include "Views/KeyboardEventHandler.h"
+#include "XamlHelper.h"
 
 #ifdef USE_WINUI3
 #include <winrt/Microsoft.UI.Input.h>
