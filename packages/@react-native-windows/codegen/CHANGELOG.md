@@ -1,8 +1,19 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Wed, 21 Dec 2022 06:15:26 GMT and should not be manually modified.
+This log was last generated on Wed, 11 Jan 2023 06:15:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.48
+
+Wed, 11 Jan 2023 06:15:29 GMT
+
+### Changes
+
+- integrate 12/2/22 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.13
+- Bump @rnw-scripts/jest-unittest-config to v1.5.0
+- Bump @rnw-scripts/just-task to v2.3.5
 
 ## 0.0.0-canary.47
 

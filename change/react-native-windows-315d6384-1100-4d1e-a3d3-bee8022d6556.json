@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Removed warnings that were not being triggered",
-  "packageName": "react-native-windows",
-  "email": "email not defined",
-  "dependentChangeType": "none"
-}

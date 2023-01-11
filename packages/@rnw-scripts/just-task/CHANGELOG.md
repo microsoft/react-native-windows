@@ -1,8 +1,18 @@
 # Change Log - @rnw-scripts/just-task
 
-This log was last generated on Tue, 13 Dec 2022 06:15:25 GMT and should not be manually modified.
+This log was last generated on Wed, 11 Jan 2023 06:15:30 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.3.5
+
+Wed, 11 Jan 2023 06:15:30 GMT
+
+### Patches
+
+- Copy all types files from core (30809111+acoates-ms@users.noreply.github.com)
+- Bump @rnw-scripts/jest-e2e-config to v1.4.0
+- Bump @rnw-scripts/jest-unittest-config to v1.5.0
 
 ## 2.3.4
 

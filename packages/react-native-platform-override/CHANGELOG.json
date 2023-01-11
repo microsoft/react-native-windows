@@ -2,6 +2,45 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Wed, 11 Jan 2023 06:15:30 GMT",
+      "tag": "react-native-platform-override_v1.9.0",
+      "version": "1.9.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-platform-override",
+            "commit": "6b10c0f1a97580e0c9b8e0cf429cf8577a301d22",
+            "comment": "integrate 12/2/22"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-platform-override",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.13",
+            "commit": "8aa2371e50374bd1e269ab38363fd15981a4c0ae"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-platform-override",
+            "comment": "Bump @react-native-windows/package-utils to v0.0.0-canary.39",
+            "commit": "8aa2371e50374bd1e269ab38363fd15981a4c0ae"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-platform-override",
+            "comment": "Bump @rnw-scripts/jest-unittest-config to v1.5.0",
+            "commit": "8aa2371e50374bd1e269ab38363fd15981a4c0ae"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-platform-override",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.5",
+            "commit": "8aa2371e50374bd1e269ab38363fd15981a4c0ae"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 13 Dec 2022 06:15:26 GMT",
       "tag": "react-native-platform-override_v1.8.5",
       "version": "1.8.5",

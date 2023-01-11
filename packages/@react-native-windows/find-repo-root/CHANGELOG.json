@@ -2,6 +2,27 @@
   "name": "@react-native-windows/find-repo-root",
   "entries": [
     {
+      "date": "Wed, 11 Jan 2023 06:15:31 GMT",
+      "tag": "@react-native-windows/find-repo-root_v0.0.0-canary.42",
+      "version": "0.0.0-canary.42",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/find-repo-root",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.13",
+            "commit": "8aa2371e50374bd1e269ab38363fd15981a4c0ae"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/find-repo-root",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.5",
+            "commit": "8aa2371e50374bd1e269ab38363fd15981a4c0ae"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 13 Dec 2022 06:15:22 GMT",
       "tag": "@react-native-windows/find-repo-root_v0.0.0-canary.41",
       "version": "0.0.0-canary.41",

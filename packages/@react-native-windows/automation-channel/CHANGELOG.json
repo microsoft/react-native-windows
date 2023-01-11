@@ -2,6 +2,33 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Wed, 11 Jan 2023 06:15:29 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.6.0",
+      "version": "0.6.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "6b10c0f1a97580e0c9b8e0cf429cf8577a301d22",
+            "comment": "integrate 12/2/22"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.5",
+            "commit": "8aa2371e50374bd1e269ab38363fd15981a4c0ae"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.601",
+            "commit": "8aa2371e50374bd1e269ab38363fd15981a4c0ae"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 10 Jan 2023 06:15:45 GMT",
       "tag": "@react-native-windows/automation-channel_v0.5.21",
       "version": "0.5.21",

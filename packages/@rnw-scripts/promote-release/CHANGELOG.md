@@ -1,8 +1,19 @@
 # Change Log - @rnw-scripts/promote-release
 
-This log was last generated on Tue, 13 Dec 2022 06:15:25 GMT and should not be manually modified.
+This log was last generated on Wed, 11 Jan 2023 06:15:31 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.1.7
+
+Wed, 11 Jan 2023 06:15:31 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.42
+- Bump @react-native-windows/fs to v0.0.0-canary.13
+- Bump @react-native-windows/package-utils to v0.0.0-canary.39
+- Bump @rnw-scripts/just-task to v2.3.5
 
 ## 2.1.6
 
