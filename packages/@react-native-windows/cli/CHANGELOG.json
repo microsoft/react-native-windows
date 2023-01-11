@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 26 Dec 2022 16:17:38 GMT",
+      "tag": "@react-native-windows/cli_v0.71.0-preview.2",
+      "version": "0.71.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.71.0-preview.2",
+            "commit": "efc6e5ef75bc88e0603d5ce1ae036204a864cdfe"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 12 Dec 2022 16:16:50 GMT",
       "tag": "@react-native-windows/cli_v0.71.0-preview.1",
       "version": "0.71.0-preview.1",

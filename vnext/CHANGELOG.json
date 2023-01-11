@@ -2,6 +2,48 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 26 Dec 2022 16:17:37 GMT",
+      "tag": "react-native-windows_v0.71.0-preview.3",
+      "version": "0.71.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "1eebfdb67ae518a84b4e7b22dd7403bf95132312",
+            "comment": "Backport: Fix raw text update clearing text"
+          },
+          {
+            "author": "jurocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "efc6e5ef75bc88e0603d5ce1ae036204a864cdfe",
+            "comment": "Test Access-Control-Request-Headers (#11031)"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.71.0-preview.2",
+            "commit": "efc6e5ef75bc88e0603d5ce1ae036204a864cdfe"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 19 Dec 2022 16:14:52 GMT",
+      "tag": "react-native-windows_v0.71.0-preview.2",
+      "version": "0.71.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "sanajmi@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ca74f27bb2fc5f96d982a3175b33dd02a1a648d3",
+            "comment": "Remove unnecessary overrides to onFocus and onBlur in Pressable"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 12 Dec 2022 16:16:51 GMT",
       "tag": "react-native-windows_v0.71.0-preview.1",
       "version": "0.71.0-preview.1",
