@@ -36,8 +36,8 @@ struct PerformanceObserverSpec : winrt::Microsoft::ReactNative::TurboModuleSpec 
       Method<void(std::string) noexcept>{0, L"startReporting"},
       Method<void(std::string) noexcept>{1, L"stopReporting"},
       SyncMethod<std::vector<PerformanceObserverSpec_RawPerformanceEntry>() noexcept>{2, L"getPendingEntries"},
-      Method<void(Callback<>) noexcept>{3, L"setOnPerformanceEntryCallback"},
-      Method<void(PerformanceObserverSpec_RawPerformanceEntry) noexcept>{4, L"logEntryForDebug"},
+      SyncMethod<std::vector<PerformanceObserverSpec_RawPerformanceEntry>() noexcept>{3, L"popPendingEntries"},
+      Method<void(Callback<>) noexcept>{4, L"setOnPerformanceEntryCallback"},
   };
 
   template <class TModule>
@@ -61,14 +61,14 @@ struct PerformanceObserverSpec : winrt::Microsoft::ReactNative::TurboModuleSpec 
           "    REACT_SYNC_METHOD(getPendingEntries) static std::vector<PerformanceObserverSpec_RawPerformanceEntry> getPendingEntries() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
+          "popPendingEntries",
+          "    REACT_SYNC_METHOD(popPendingEntries) std::vector<PerformanceObserverSpec_RawPerformanceEntry> popPendingEntries() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(popPendingEntries) static std::vector<PerformanceObserverSpec_RawPerformanceEntry> popPendingEntries() noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          4,
           "setOnPerformanceEntryCallback",
           "    REACT_METHOD(setOnPerformanceEntryCallback) void setOnPerformanceEntryCallback(std::function<void()> const & callback) noexcept { /* implementation */ }\n"
           "    REACT_METHOD(setOnPerformanceEntryCallback) static void setOnPerformanceEntryCallback(std::function<void()> const & callback) noexcept { /* implementation */ }\n");
-    REACT_SHOW_METHOD_SPEC_ERRORS(
-          4,
-          "logEntryForDebug",
-          "    REACT_METHOD(logEntryForDebug) void logEntryForDebug(PerformanceObserverSpec_RawPerformanceEntry && entry) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(logEntryForDebug) static void logEntryForDebug(PerformanceObserverSpec_RawPerformanceEntry && entry) noexcept { /* implementation */ }\n");
   }
 };
 

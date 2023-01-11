@@ -9,6 +9,7 @@
 
 'use strict';
 
+import type {TextStyleProp, ViewStyleProp} from '../StyleSheet/StyleSheet';
 import type {PressEvent} from '../Types/CoreEventTypes';
 import type {Button as ButtonType} from './Button.flow';
 import type {
@@ -332,8 +333,8 @@ class Button extends React.Component<
       onAccessibilityAction,
       tabIndex,
     } = this.props;
-    const buttonStyles = [styles.button];
-    const textStyles = [styles.text];
+    const buttonStyles: Array<ViewStyleProp> = [styles.button];
+    const textStyles: Array<TextStyleProp> = [styles.text];
     if (color) {
       if (Platform.OS === 'ios') {
         textStyles.push({color: color});

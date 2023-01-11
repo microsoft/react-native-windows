@@ -102,6 +102,7 @@ const View: React.AbstractComponent<
       };
     }
 
+    // $FlowFixMe[underconstrained-implicit-instantiation]
     let style = flattenStyle(otherProps.style);
 
     const newPointerEvents = style?.pointerEvents || pointerEvents;
@@ -159,7 +160,9 @@ const View: React.AbstractComponent<
     const childrenWithImportantForAccessibility = children => {
       return React.Children.map(children, child => {
         if (React.isValidElement(child)) {
+          // $FlowFixMe[incompatible-use]
           if (child.props.children) {
+            // $FlowFixMe[incompatible-type]
             return React.cloneElement(child, {
               accessible: false,
               children: childrenWithImportantForAccessibility(
@@ -167,6 +170,7 @@ const View: React.AbstractComponent<
               ),
             });
           } else {
+            // $FlowFixMe[incompatible-type]
             return React.cloneElement(child, {accessible: false});
           }
         }

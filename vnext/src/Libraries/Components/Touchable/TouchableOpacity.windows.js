@@ -208,6 +208,7 @@ class TouchableOpacity extends React.Component<Props, State> {
   }
 
   _getChildStyleOpacityWithDefault(): number {
+    // $FlowFixMe[underconstrained-implicit-instantiation]
     const opacity = flattenStyle(this.props.style)?.opacity;
     return typeof opacity === 'number' ? opacity : 1;
   }
@@ -315,7 +316,9 @@ class TouchableOpacity extends React.Component<Props, State> {
     this.state.pressability.configure(this._createPressabilityConfig());
     if (
       this.props.disabled !== prevProps.disabled ||
+      // $FlowFixMe[underconstrained-implicit-instantiation]
       flattenStyle(prevProps.style)?.opacity !==
+        // $FlowFixMe[underconstrained-implicit-instantiation]
         flattenStyle(this.props.style)?.opacity
     ) {
       this._opacityInactive(250);

@@ -10,6 +10,7 @@
 
 // [Windows
 import * as TurboModuleRegistry from '../TurboModule/TurboModuleRegistry';
+// $FlowFixMe[underconstrained-implicit-instantiation]
 const PLYAlertManager = TurboModuleRegistry.getEnforcing('Alert');
 // Windows]
 

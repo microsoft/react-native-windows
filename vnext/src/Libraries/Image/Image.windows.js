@@ -116,10 +116,13 @@ const BaseImage = (props: ImagePropsType, forwardedRef) => {
   let sources;
   let style: ImageStyleProp;
   if (Array.isArray(source)) {
+    // $FlowFixMe[underconstrained-implicit-instantiation]
     style = flattenStyle([styles.base, props.style]) || {};
     sources = source;
   } else {
+    // $FlowFixMe[incompatible-type]
     const {width = props.width, height = props.height, uri} = source;
+    // $FlowFixMe[underconstrained-implicit-instantiation]
     style = flattenStyle([{width, height}, styles.base, props.style]) || {};
     sources = [source];
 

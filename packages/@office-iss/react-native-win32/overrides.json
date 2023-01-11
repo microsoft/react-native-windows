@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20221202-2018-dfbb63996",
+  "baseVersion": "0.0.0-20221214-2026-25a25ea23",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "c7af58fd30d2d5ad0171b068a4aa2ccc59d35783"
+      "baseHash": "3078c10e59be5ba72f885fa75ba8ca5fccf63747"
     },
     {
       "type": "derived",
@@ -35,7 +35,7 @@
       "type": "derived",
       "file": "src/Libraries/Animated/NativeAnimatedHelper.win32.js",
       "baseFile": "Libraries/Animated/NativeAnimatedHelper.js",
-      "baseHash": "ba616684f3d71f34a0d8152c675f90ee20913860",
+      "baseHash": "dffef42e9c8a4a5e9849892b7de7a3141c5e96bd",
       "issue": 11041
     },
     {
@@ -122,7 +122,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.tsx",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "6ea39d9b574afdfeda40969a192df3a342320082"
+      "baseHash": "7305b4ef570eb19e8f4238e252d8c788ce974b16"
     },
     {
       "type": "patch",
@@ -182,7 +182,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/View.win32.js",
       "baseFile": "Libraries/Components/View/View.js",
-      "baseHash": "7945214eb22374ea322b95d12cf8d68a4cf321e4"
+      "baseHash": "e1e15345be1d7794284bca007299ca5814969983"
     },
     {
       "type": "patch",
@@ -210,13 +210,13 @@
       "type": "copy",
       "file": "src/Libraries/DevToolsSettings/DevToolsSettingsManager.win32.js",
       "baseFile": "Libraries/DevToolsSettings/DevToolsSettingsManager.android.js",
-      "baseHash": "cfac368d69ef306cf0af8072366008af3d925049"
+      "baseHash": "1c9eb481e8ed077fa650e3ea34837e2a31310366"
     },
     {
       "type": "derived",
       "file": "src/Libraries/Image/Image.win32.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseHash": "9187c9a894ef6e8f00acd01dea1fd36a52e390f7",
+      "baseHash": "7d73c2d79bc09080618747146ebbba9b9da7dbca",
       "issue": 4320
     },
     {
@@ -339,7 +339,7 @@
       "type": "patch",
       "file": "src/Libraries/Pressability/Pressability.win32.js",
       "baseFile": "Libraries/Pressability/Pressability.js",
-      "baseHash": "bf6fd4d0e38e5d8b6fd8395503cf452fa08a5fc5",
+      "baseHash": "341cc5f4f57c16994ee78c06819a70dd2e993bba",
       "issue": 6240
     },
     {
