@@ -51,8 +51,8 @@ winrt::Size ReactImage::ArrangeOverride(winrt::Size finalSize) {
   }
 
   if (m_imageSource.sourceFormat == ImageSourceFormat::Svg) {
-    if (auto const &imageBrush{Background().try_as<winrt::ImageBrush>()}) {
-      if (auto const &svgImageSource{imageBrush.ImageSource().try_as<winrt::SvgImageSource>()}) {
+    if (auto const imageBrush{Background().try_as<winrt::ImageBrush>()}) {
+      if (auto const svgImageSource{imageBrush.ImageSource().try_as<winrt::SvgImageSource>()}) {
         if (svgImageSource.RasterizePixelWidth() != GetWidth() ||
             svgImageSource.RasterizePixelHeight() != GetHeight()) {
           SetBackground(false);
