@@ -143,8 +143,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     includeFontPadding: false,
     lineHeight: 20,
-    // $FlowFixMe[underconstrained-implicit-instantiation]
-    fontFamily: Platform.select({android: 'monospace', ios: 'Menlo'}),
+    fontFamily: Platform.select({
+      android: 'monospace',
+      ios: 'Menlo',
+      windows: 'sans-serif',
+    }),
   },
   fileText: {
     color: LogBoxStyle.getTextColor(0.5),
@@ -153,8 +156,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     includeFontPadding: false,
     lineHeight: 16,
-    // $FlowFixMe[underconstrained-implicit-instantiation]
-    fontFamily: Platform.select({android: 'monospace', ios: 'Menlo'}),
+    fontFamily: Platform.select({
+      android: 'monospace',
+      ios: 'Menlo',
+      windows: 'sans-serif',
+    }),
   },
 });
 

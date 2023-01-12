@@ -417,15 +417,19 @@ const styles = StyleSheet.create({
       },
     }),
   },
-  // $FlowFixMe[underconstrained-implicit-instantiation]
   buttonDisabled: Platform.select({
     ios: {},
     android: {
       elevation: 0,
       backgroundColor: '#dfdfdf',
     },
+    // [Windows
+    windows: {
+      backgroundColor: PlatformColor('ButtonBackgroundDisabled'),
+      borderColor: PlatformColor('ButtonBorderBrushDisabled'),
+    },
+    // Windows]
   }),
-  // $FlowFixMe[underconstrained-implicit-instantiation]
   textDisabled: Platform.select({
     ios: {
       color: '#cdcdcd',
@@ -433,6 +437,11 @@ const styles = StyleSheet.create({
     android: {
       color: '#a1a1a1',
     },
+    // [Windows
+    windows: {
+      color: PlatformColor('ButtonForegroundDisabled'),
+    },
+    // Windows]
   }),
 });
 

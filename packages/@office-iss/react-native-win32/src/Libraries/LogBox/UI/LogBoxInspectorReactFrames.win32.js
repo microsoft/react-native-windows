@@ -166,8 +166,11 @@ const componentStyles = StyleSheet.create({
     lineHeight: 18,
   },
   bracket: {
-    // $FlowFixMe[underconstrained-implicit-instantiation]
-    fontFamily: Platform.select({android: 'monospace', ios: 'Menlo'}),
+    fontFamily: Platform.select({
+      android: 'monospace',
+      ios: 'Menlo',
+      windows: 'sans-serif',
+    }),
     color: LogBoxStyle.getTextColor(0.4),
     fontSize: 14,
     fontWeight: '500',

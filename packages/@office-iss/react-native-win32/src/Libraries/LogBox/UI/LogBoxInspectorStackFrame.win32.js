@@ -88,8 +88,11 @@ const styles = StyleSheet.create({
     includeFontPadding: false,
     lineHeight: 18,
     fontWeight: '400',
-    // $FlowFixMe[underconstrained-implicit-instantiation]
-    fontFamily: Platform.select({android: 'monospace', ios: 'Menlo'}),
+    fontFamily: Platform.select({
+      android: 'monospace',
+      ios: 'Menlo',
+      windows: 'sans-serif',
+    }),
   },
   location: {
     color: LogBoxStyle.getTextColor(0.8),
