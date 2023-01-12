@@ -34,6 +34,7 @@
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorCodeFrame.js
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorHeader.js
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorStackFrame.js
+<PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorReactFrames.js
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxStyle.js
 
 ; Ignore react-native files in node_modules since they are copied into project root
@@ -107,6 +108,8 @@ suppress_type=$FlowFixMeEmpty
 
 experimental.array_literal_providers=true
 inference_mode=experimental.lti
+
+sharedmemory.hash_table_pow=21
 
 [lints]
 sketchy-null-number=warn
