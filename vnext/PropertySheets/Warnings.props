@@ -10,7 +10,7 @@
         C4458 - declaration of 'identifier' hides class member
         C4702 - unreachable code
       -->
-    <OfficePreDisabledWarnings>4201;4505;4456;4458;4702</OfficePreDisabledWarnings>
+    <OfficePreDisabledWarnings>4456;4702;4458</OfficePreDisabledWarnings>
     <!--
         The following list matches the list in ..\make.inc
           C4068 - unknown pragma

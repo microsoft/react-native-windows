@@ -27,6 +27,7 @@ type Options = {
   cancelable?: ?boolean,
   userInterfaceStyle?: 'unspecified' | 'light' | 'dark',
   onDismiss?: ?() => void,
+  rootTag?: number,
   ...
 };
 
@@ -51,6 +52,7 @@ class Alert {
       title: title || '',
       message: message || '',
       cancelable: false,
+      rootTag: options && options.rootTag,
     };
 
     if (options && options.cancelable) {

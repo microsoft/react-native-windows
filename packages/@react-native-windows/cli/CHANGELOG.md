@@ -1,8 +1,45 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Wed, 07 Dec 2022 06:14:42 GMT and should not be manually modified.
+This log was last generated on Wed, 11 Jan 2023 06:15:31 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.157
+
+Wed, 11 Jan 2023 06:15:31 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.48
+- Bump @react-native-windows/fs to v0.0.0-canary.13
+- Bump @react-native-windows/package-utils to v0.0.0-canary.39
+- Bump @react-native-windows/telemetry to v0.0.0-canary.57
+- Bump @rnw-scripts/jest-unittest-config to v1.5.0
+- Bump @rnw-scripts/just-task to v2.3.5
+
+## 0.0.0-canary.156
+
+Wed, 21 Dec 2022 06:15:27 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.47
+
+## 0.0.0-canary.155
+
+Tue, 13 Dec 2022 06:15:22 GMT
+
+### Changes
+
+- Standardize on the repository field in package.json (dannyvv@microsoft.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.46
+- Bump @react-native-windows/fs to v0.0.0-canary.12
+- Bump @react-native-windows/package-utils to v0.0.0-canary.38
+- Bump @react-native-windows/telemetry to v0.0.0-canary.56
+- Bump @rnw-scripts/eslint-config to v1.1.15
+- Bump @rnw-scripts/jest-unittest-config to v1.4.3
+- Bump @rnw-scripts/just-task to v2.3.4
+- Bump @rnw-scripts/ts-config to v2.0.3
 
 ## 0.0.0-canary.154
 

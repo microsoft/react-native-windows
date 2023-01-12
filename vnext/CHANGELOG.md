@@ -1,8 +1,107 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 09 Dec 2022 06:14:58 GMT and should not be manually modified.
+This log was last generated on Thu, 12 Jan 2023 06:14:52 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.602
+
+Thu, 12 Jan 2023 06:14:52 GMT
+
+### Changes
+
+- Enable enablePropIteratorSetter for better perf (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.601
+
+Wed, 11 Jan 2023 06:15:31 GMT
+
+### Changes
+
+- Convert Glyph to flow, and provide ComponentSpec for it (30809111+acoates-ms@users.noreply.github.com)
+- Force border with default brush for borderWidth (erozell@outlook.com)
+- Do not conditionally ignore event props (erozell@outlook.com)
+- integrate 12/2/22 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.157
+- Bump @react-native-windows/codegen to v0.0.0-canary.48
+- Bump @rnw-scripts/just-task to v2.3.5
+- Bump react-native-platform-override to v1.9.0
+
+## 0.0.0-canary.600
+
+Tue, 10 Jan 2023 06:15:45 GMT
+
+### Changes
+
+- Fix keyboard event unsubscribe (erozell@outlook.com)
+- Remove AsyncStorage (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.599
+
+Thu, 05 Jan 2023 06:18:16 GMT
+
+### Changes
+
+- ReactImage: propagate error messages to JS (ilit@fb.com)
+
+## 0.0.0-canary.598
+
+Thu, 22 Dec 2022 06:14:38 GMT
+
+### Changes
+
+- Test Access-Control-Request-Headers (julio.rocha@microsoft.com)
+- Working implementation of rootTag (helewxdong@gmail.com)
+- V8 package update (48035227+tudorms@users.noreply.github.com)
+
+## 0.0.0-canary.597
+
+Wed, 21 Dec 2022 06:15:26 GMT
+
+### Changes
+
+- Cleanup unnecessary include in TouchEventHandler (erozell@outlook.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.156
+- Bump @react-native-windows/codegen to v0.0.0-canary.47
+
+## 0.0.0-canary.596
+
+Fri, 16 Dec 2022 06:14:59 GMT
+
+### Changes
+
+- Remove unnecessary overrides to onFocus and onBlur in Pressable (sanajmi@microsoft.com)
+- Fix raw text update clearing Text (erozell@outlook.com)
+
+## 0.0.0-canary.595
+
+Thu, 15 Dec 2022 06:14:42 GMT
+
+### Changes
+
+- Mark Text dirty when descendant Text updates occur (erozell@outlook.com)
+
+## 0.0.0-canary.594
+
+Tue, 13 Dec 2022 06:15:26 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.155
+- Bump @react-native-windows/codegen to v0.0.0-canary.46
+- Bump @rnw-scripts/eslint-config to v1.1.15
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.1
+- Bump @rnw-scripts/just-task to v2.3.4
+- Bump react-native-platform-override to v1.8.5
+
+## 0.0.0-canary.593
+
+Sat, 10 Dec 2022 06:15:31 GMT
+
+### Changes
+
+- Remove work around for broken Utilities import in core (30809111+acoates-ms@users.noreply.github.com)
+- Bump react-native-platform-override to v1.8.4
 
 ## 0.0.0-canary.592
 

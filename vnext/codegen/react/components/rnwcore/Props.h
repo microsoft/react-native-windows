@@ -357,6 +357,20 @@ class JSI_EXPORT AndroidDrawerLayoutProps final : public ViewProps {
   SharedColor statusBarBackgroundColor{};
 };
 
+class JSI_EXPORT PLYIconProps final : public ViewProps {
+ public:
+  PLYIconProps() = default;
+  PLYIconProps(const PropsParserContext& context, const PLYIconProps &sourceProps, const RawProps &rawProps);
+
+#pragma mark - Props
+
+  SharedColor color{};
+  double emSize{0.0};
+  std::string fontUri{};
+  std::string glyph{};
+  bool colorEnabled{false};
+};
+
 class JSI_EXPORT AndroidProgressBarProps final : public ViewProps {
  public:
   AndroidProgressBarProps() = default;

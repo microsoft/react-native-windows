@@ -62,14 +62,14 @@ struct PushNotificationManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModu
       Method<void(std::string, std::string) noexcept>{0, L"onFinishRemoteNotification"},
       Method<void(double) noexcept>{1, L"setApplicationIconBadgeNumber"},
       Method<void(Callback<double>) noexcept>{2, L"getApplicationIconBadgeNumber"},
-      Method<void(PushNotificationManagerIOSSpec_requestPermissions_permission, Promise<::React::JSValue>) noexcept>{3, L"requestPermissions"},
+      Method<void(PushNotificationManagerIOSSpec_requestPermissions_permission, Promise<PushNotificationManagerIOSSpec_Permissions>) noexcept>{3, L"requestPermissions"},
       Method<void() noexcept>{4, L"abandonPermissions"},
       Method<void(Callback<PushNotificationManagerIOSSpec_Permissions>) noexcept>{5, L"checkPermissions"},
       Method<void(PushNotificationManagerIOSSpec_Notification) noexcept>{6, L"presentLocalNotification"},
       Method<void(PushNotificationManagerIOSSpec_Notification) noexcept>{7, L"scheduleLocalNotification"},
       Method<void() noexcept>{8, L"cancelAllLocalNotifications"},
       Method<void(::React::JSValue) noexcept>{9, L"cancelLocalNotifications"},
-      Method<void(Promise<::React::JSValue>) noexcept>{10, L"getInitialNotification"},
+      Method<void(Promise<std::optional<PushNotificationManagerIOSSpec_Notification>>) noexcept>{10, L"getInitialNotification"},
       Method<void(Callback<PushNotificationManagerIOSSpec_Notification>) noexcept>{11, L"getScheduledLocalNotifications"},
       Method<void() noexcept>{12, L"removeAllDeliveredNotifications"},
       Method<void(std::vector<std::string>) noexcept>{13, L"removeDeliveredNotifications"},
@@ -101,8 +101,8 @@ struct PushNotificationManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModu
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "requestPermissions",
-          "    REACT_METHOD(requestPermissions) void requestPermissions(PushNotificationManagerIOSSpec_requestPermissions_permission && permission, ::React::ReactPromise<::React::JSValue> &&result) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(requestPermissions) static void requestPermissions(PushNotificationManagerIOSSpec_requestPermissions_permission && permission, ::React::ReactPromise<::React::JSValue> &&result) noexcept { /* implementation */ }\n");
+          "    REACT_METHOD(requestPermissions) void requestPermissions(PushNotificationManagerIOSSpec_requestPermissions_permission && permission, ::React::ReactPromise<PushNotificationManagerIOSSpec_Permissions> &&result) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(requestPermissions) static void requestPermissions(PushNotificationManagerIOSSpec_requestPermissions_permission && permission, ::React::ReactPromise<PushNotificationManagerIOSSpec_Permissions> &&result) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           4,
           "abandonPermissions",
@@ -136,8 +136,8 @@ struct PushNotificationManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModu
     REACT_SHOW_METHOD_SPEC_ERRORS(
           10,
           "getInitialNotification",
-          "    REACT_METHOD(getInitialNotification) void getInitialNotification(::React::ReactPromise<::React::JSValue> &&result) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(getInitialNotification) static void getInitialNotification(::React::ReactPromise<::React::JSValue> &&result) noexcept { /* implementation */ }\n");
+          "    REACT_METHOD(getInitialNotification) void getInitialNotification(::React::ReactPromise<std::optional<PushNotificationManagerIOSSpec_Notification>> &&result) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(getInitialNotification) static void getInitialNotification(::React::ReactPromise<std::optional<PushNotificationManagerIOSSpec_Notification>> &&result) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           11,
           "getScheduledLocalNotifications",

@@ -1154,6 +1154,10 @@ static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_setOnPerfor
   static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->setOnPerformanceEntryCallback(rt, count < 0 || args[0].isNull() || args[0].isUndefined() ? std::nullopt : std::make_optional(args[0].asObject(rt).asFunction(rt)));
   return jsi::Value::undefined();
 }
+static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_logEntryForDebug(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->logEntryForDebug(rt, args[0].asObject(rt));
+  return jsi::Value::undefined();
+}
 
 NativePerformanceObserverCxxSpecJSI::NativePerformanceObserverCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
   : TurboModule("NativePerformanceObserverCxx", jsInvoker) {
@@ -1161,6 +1165,7 @@ NativePerformanceObserverCxxSpecJSI::NativePerformanceObserverCxxSpecJSI(std::sh
   methodMap_["stopReporting"] = MethodMetadata {1, __hostFunction_NativePerformanceObserverCxxSpecJSI_stopReporting};
   methodMap_["getPendingEntries"] = MethodMetadata {0, __hostFunction_NativePerformanceObserverCxxSpecJSI_getPendingEntries};
   methodMap_["setOnPerformanceEntryCallback"] = MethodMetadata {1, __hostFunction_NativePerformanceObserverCxxSpecJSI_setOnPerformanceEntryCallback};
+  methodMap_["logEntryForDebug"] = MethodMetadata {1, __hostFunction_NativePerformanceObserverCxxSpecJSI_logEntryForDebug};
 }
 static jsi::Value __hostFunction_NativeWebSocketModuleCxxSpecJSI_connect(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeWebSocketModuleCxxSpecJSI *>(&turboModule)->connect(rt, args[0].asString(rt), args[1].isNull() || args[1].isUndefined() ? std::nullopt : std::make_optional(args[1].asObject(rt).asArray(rt)), args[2].asObject(rt), args[3].asNumber());

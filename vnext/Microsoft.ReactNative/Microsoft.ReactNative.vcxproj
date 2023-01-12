@@ -143,7 +143,6 @@
         api-ms-win-core-windowserrorreporting-l1-1-0.dll;
         ext-ms-win-uiacore-l1-1-1.dll;
         chakra.dll;
-        winsqlite3.dll;
         %(DelayLoadDLLs)
       </DelayLoadDLLs>
       <SubSystem>Console</SubSystem>
@@ -748,6 +747,7 @@
     <PackageReference Include="ReactNative.Hermes.Windows" Version="$(HermesVersion)" />
     <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" Condition="'$(OverrideWinUIPackage)'!='true'" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22000.194" />
+    <PackageReference Include="$(V8PackageName)" Version="$(V8Version)" Condition="'$(UseV8)' == 'true'" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(EnableSourceLink)' == 'true'">
@@ -755,13 +755,6 @@
         <PackageReference Include="Microsoft.Build.Tasks.Git" Version="1.0.0" />
         <PackageReference Include="Microsoft.SourceLink.Common" Version="1.0.0" />
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
-      </ItemGroup>
-    </When>
-  </Choose>
-  <Choose>
-    <When Condition="'$(UseV8)' == 'true'">
-      <ItemGroup>
-        <PackageReference Include="ReactNative.V8Jsi.Windows.UWP" Version="$(V8Version)" />
       </ItemGroup>
     </When>
   </Choose>

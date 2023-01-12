@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/ts-config",
   "entries": [
     {
+      "date": "Tue, 13 Dec 2022 06:15:26 GMT",
+      "tag": "@rnw-scripts/ts-config_v2.0.3",
+      "version": "2.0.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "dannyvv@microsoft.com",
+            "package": "@rnw-scripts/ts-config",
+            "commit": "e18db30cd3f5c70a97c5d3c1f15f3431b95ec7aa",
+            "comment": "Standardize on the repository field in package.json"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 09 Feb 2022 06:09:38 GMT",
       "tag": "@rnw-scripts/ts-config_v2.0.2",
       "version": "2.0.2",

@@ -1,8 +1,46 @@
 # Change Log - @rnw-scripts/integrate-rn
 
-This log was last generated on Fri, 02 Dec 2022 06:19:03 GMT and should not be manually modified.
+This log was last generated on Wed, 11 Jan 2023 06:15:30 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.4.0
+
+Wed, 11 Jan 2023 06:15:30 GMT
+
+### Minor changes
+
+- integrate 12/2/22 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.42
+- Bump @react-native-windows/fs to v0.0.0-canary.13
+- Bump @react-native-windows/package-utils to v0.0.0-canary.39
+- Bump react-native-platform-override to v1.9.0
+- Bump @rnw-scripts/jest-unittest-config to v1.5.0
+- Bump @rnw-scripts/just-task to v2.3.5
+
+## 1.3.5
+
+Tue, 13 Dec 2022 06:15:24 GMT
+
+### Patches
+
+- Standardize on the repository field in package.json (dannyvv@microsoft.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.41
+- Bump @react-native-windows/fs to v0.0.0-canary.12
+- Bump @react-native-windows/package-utils to v0.0.0-canary.38
+- Bump react-native-platform-override to v1.8.5
+- Bump @rnw-scripts/eslint-config to v1.1.15
+- Bump @rnw-scripts/jest-unittest-config to v1.4.3
+- Bump @rnw-scripts/just-task to v2.3.4
+- Bump @rnw-scripts/ts-config to v2.0.3
+
+## 1.3.4
+
+Sat, 10 Dec 2022 06:15:31 GMT
+
+### Patches
+
+- Bump react-native-platform-override to v1.8.4
 
 ## 1.3.3
 

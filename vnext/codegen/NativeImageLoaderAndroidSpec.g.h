@@ -13,12 +13,28 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
+REACT_STRUCT(ImageLoaderAndroidSpec_getSize_returnType)
+struct ImageLoaderAndroidSpec_getSize_returnType {
+    REACT_FIELD(width)
+    double width;
+    REACT_FIELD(height)
+    double height;
+};
+
+REACT_STRUCT(ImageLoaderAndroidSpec_getSizeWithHeaders_returnType)
+struct ImageLoaderAndroidSpec_getSizeWithHeaders_returnType {
+    REACT_FIELD(width)
+    double width;
+    REACT_FIELD(height)
+    double height;
+};
+
 struct ImageLoaderAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
       Method<void(double) noexcept>{0, L"abortRequest"},
-      Method<void(std::string, Promise<::React::JSValue>) noexcept>{1, L"getSize"},
-      Method<void(std::string, ::React::JSValue, Promise<::React::JSValue>) noexcept>{2, L"getSizeWithHeaders"},
-      Method<void(std::string, double, Promise<::React::JSValue>) noexcept>{3, L"prefetchImage"},
+      Method<void(std::string, Promise<ImageLoaderAndroidSpec_getSize_returnType>) noexcept>{1, L"getSize"},
+      Method<void(std::string, ::React::JSValue, Promise<ImageLoaderAndroidSpec_getSizeWithHeaders_returnType>) noexcept>{2, L"getSizeWithHeaders"},
+      Method<void(std::string, double, Promise<bool>) noexcept>{3, L"prefetchImage"},
       Method<void(std::vector<std::string>, Promise<::React::JSValue>) noexcept>{4, L"queryCache"},
   };
 
@@ -34,18 +50,18 @@ struct ImageLoaderAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "getSize",
-          "    REACT_METHOD(getSize) void getSize(std::string uri, ::React::ReactPromise<::React::JSValue> &&result) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(getSize) static void getSize(std::string uri, ::React::ReactPromise<::React::JSValue> &&result) noexcept { /* implementation */ }\n");
+          "    REACT_METHOD(getSize) void getSize(std::string uri, ::React::ReactPromise<ImageLoaderAndroidSpec_getSize_returnType> &&result) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(getSize) static void getSize(std::string uri, ::React::ReactPromise<ImageLoaderAndroidSpec_getSize_returnType> &&result) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "getSizeWithHeaders",
-          "    REACT_METHOD(getSizeWithHeaders) void getSizeWithHeaders(std::string uri, ::React::JSValue && headers, ::React::ReactPromise<::React::JSValue> &&result) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(getSizeWithHeaders) static void getSizeWithHeaders(std::string uri, ::React::JSValue && headers, ::React::ReactPromise<::React::JSValue> &&result) noexcept { /* implementation */ }\n");
+          "    REACT_METHOD(getSizeWithHeaders) void getSizeWithHeaders(std::string uri, ::React::JSValue && headers, ::React::ReactPromise<ImageLoaderAndroidSpec_getSizeWithHeaders_returnType> &&result) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(getSizeWithHeaders) static void getSizeWithHeaders(std::string uri, ::React::JSValue && headers, ::React::ReactPromise<ImageLoaderAndroidSpec_getSizeWithHeaders_returnType> &&result) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "prefetchImage",
-          "    REACT_METHOD(prefetchImage) void prefetchImage(std::string uri, double requestId, ::React::ReactPromise<::React::JSValue> &&result) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(prefetchImage) static void prefetchImage(std::string uri, double requestId, ::React::ReactPromise<::React::JSValue> &&result) noexcept { /* implementation */ }\n");
+          "    REACT_METHOD(prefetchImage) void prefetchImage(std::string uri, double requestId, ::React::ReactPromise<bool> &&result) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(prefetchImage) static void prefetchImage(std::string uri, double requestId, ::React::ReactPromise<bool> &&result) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           4,
           "queryCache",

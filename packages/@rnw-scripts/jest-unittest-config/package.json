@@ -1,18 +1,18 @@
 {
   "name": "@rnw-scripts/jest-unittest-config",
-  "version": "1.4.2",
+  "version": "1.5.0",
   "license": "MIT",
   "main": "jest.unittest.config.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/microsoft/react-native-windows.git",
+    "url": "https://github.com/microsoft/react-native-windows",
     "directory": "packages/@rnw-scripts/jest-unittest-config"
   },
   "dependencies": {
-    "@rnw-scripts/babel-node-config": "2.1.0"
+    "@rnw-scripts/babel-node-config": "2.2.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.14.0",
+    "@babel/core": "^7.20.0",
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-typescript": "^7.8.3",
     "babel-jest": "^29.3.0",

@@ -1,15 +1,15 @@
 {
   "name": "@rnw-scripts/jest-out-of-tree-snapshot-resolver",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "license": "MIT",
   "main": "jest-snapshot-resolver.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/microsoft/react-native-windows.git",
+    "url": "https://github.com/microsoft/react-native-windows",
     "directory": "packages/@rnw-scripts/jest-out-of-snapshot-resolver"
   },
   "devDependencies": {
-    "@rnw-scripts/eslint-config": "1.1.14",
+    "@rnw-scripts/eslint-config": "1.1.15",
     "eslint": "^8.19.0",
     "prettier": "^2.4.1"
   },

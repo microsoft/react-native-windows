@@ -4,6 +4,7 @@
 #pragma once
 
 #include "codegen/NativeImageLoaderIOSSpec.g.h"
+#include <NativeImageLoaderIOSSpec.g.h>
 #include <NativeModules.h>
 #include <winrt/Windows.ApplicationModel.h>
 #include <winrt/Windows.Foundation.h>
@@ -19,21 +20,24 @@ struct ImageLoader {
   void Initialize(React::ReactContext const &reactContext) noexcept;
 
   REACT_METHOD(getSize)
-  void getSize(std::string uri, React::ReactPromise<React::JSValue> &&result) noexcept;
+  void getSize(std::string uri, React::ReactPromise<std::vector<double>> &&result) noexcept;
 
   REACT_METHOD(getSizeWithHeaders)
-  void
-  getSizeWithHeaders(std::string uri, React::JSValue &&headers, React::ReactPromise<React::JSValue> &&result) noexcept;
+  void getSizeWithHeaders(
+      std::string uri,
+      React::JSValue &&headers,
+      React::ReactPromise<Microsoft::ReactNativeSpecs::ImageLoaderIOSSpec_getSizeWithHeaders_returnType>
+          &&result) noexcept;
 
   REACT_METHOD(prefetchImage)
-  void prefetchImage(std::string uri, React::ReactPromise<React::JSValue> &&result) noexcept;
+  void prefetchImage(std::string uri, React::ReactPromise<bool> &&result) noexcept;
 
   REACT_METHOD(prefetchImageWithMetadata)
   void prefetchImageWithMetadata(
       std::string uri,
       std::string queryRootName,
       double rootTag,
-      React::ReactPromise<React::JSValue> &&result) noexcept;
+      React::ReactPromise<bool> &&result) noexcept;
 
   REACT_METHOD(queryCache)
   void queryCache(std::vector<std::string> const &uris, React::ReactPromise<React::JSValue> &&result) noexcept;

@@ -2,6 +2,36 @@
   "name": "@rnw-scripts/babel-node-config",
   "entries": [
     {
+      "date": "Wed, 11 Jan 2023 06:15:29 GMT",
+      "tag": "@rnw-scripts/babel-node-config_v2.2.0",
+      "version": "2.2.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@rnw-scripts/babel-node-config",
+            "commit": "6b10c0f1a97580e0c9b8e0cf429cf8577a301d22",
+            "comment": "integrate 12/2/22"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 13 Dec 2022 06:15:23 GMT",
+      "tag": "@rnw-scripts/babel-node-config_v2.1.1",
+      "version": "2.1.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "dannyvv@microsoft.com",
+            "package": "@rnw-scripts/babel-node-config",
+            "commit": "e18db30cd3f5c70a97c5d3c1f15f3431b95ec7aa",
+            "comment": "Standardize on the repository field in package.json"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 05 Oct 2022 05:13:43 GMT",
       "tag": "@rnw-scripts/babel-node-config_v2.1.0",
       "version": "2.1.0",

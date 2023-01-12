@@ -8,7 +8,7 @@ parameters:
 jobs:
   - job: Setup
     displayName: Setup
-    timeoutInMinutes: 3 # Kill the job early to catch Beachball hangs
+    timeoutInMinutes: 4 # Kill the job early to catch Beachball hangs
     variables: [template: ../variables/shared.yml]
     pool: {vmImage: ubuntu-latest}
 

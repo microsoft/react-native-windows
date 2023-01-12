@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win32/**"
   ],
-  "baseVersion": "0.0.0-20221120-2051-81e441ae8",
+  "baseVersion": "0.0.0-20221202-2018-dfbb63996",
   "overrides": [
     {
       "type": "patch",
@@ -42,13 +42,6 @@
       "file": "src/js/utils/RNTesterList.win32.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
       "baseHash": "fde4de703b71dbb64f858158b880c147a295205d"
-    },
-    {
-      "type": "patch",
-      "file": "src/js/utils/testerStateUtils.win32.js",
-      "baseFile": "packages/rn-tester/js/utils/testerStateUtils.js",
-      "baseHash": "fafcb01f5f717d16fd558668a58ed12dcdf4454c",
-      "issue": 6316
     }
   ]
 }

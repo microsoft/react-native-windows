@@ -92,6 +92,9 @@ class WindowsTextInputProps final : public ViewProps, public BaseTextProps {
       const WindowsTextInputProps &sourceProps,
       const RawProps &rawProps);
 
+  void
+  setProp(const PropsParserContext &context, RawPropsPropNameHash hash, const char *propName, RawValue const &value);
+
   bool allowFontScaling{true};
   bool clearTextOnFocus{false};
   bool editable{true};

@@ -2,6 +2,278 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 12 Jan 2023 06:14:52 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.602",
+      "version": "0.0.0-canary.602",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "089b7ea0165399229ee6777dede6eda421e2dcf1",
+            "comment": "Enable enablePropIteratorSetter for better perf"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 11 Jan 2023 06:15:31 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.601",
+      "version": "0.0.0-canary.601",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "10a5ba47b9c42d572e1b3731d8a791425f44efb9",
+            "comment": "Convert Glyph to flow, and provide ComponentSpec for it"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "6bb0ecd807c423901a1252c18922525a604c3c6d",
+            "comment": "Force border with default brush for borderWidth"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "372107f34f816cc0610de8c6c94f81510b855bb2",
+            "comment": "Do not conditionally ignore event props"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6b10c0f1a97580e0c9b8e0cf429cf8577a301d22",
+            "comment": "integrate 12/2/22"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.157",
+            "commit": "8aa2371e50374bd1e269ab38363fd15981a4c0ae"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.48",
+            "commit": "8aa2371e50374bd1e269ab38363fd15981a4c0ae"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.5",
+            "commit": "8aa2371e50374bd1e269ab38363fd15981a4c0ae"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.9.0",
+            "commit": "8aa2371e50374bd1e269ab38363fd15981a4c0ae"
+          }
+        ],
+        "none": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "e5ef5f5f54f8bca1d6472d2efc29a0b7502f4927",
+            "comment": "Removed warnings that were not being triggered"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 10 Jan 2023 06:15:45 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.600",
+      "version": "0.0.0-canary.600",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "5b40a3de5630739b44f8e918f66a865cdc879b13",
+            "comment": "Fix keyboard event unsubscribe"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ffef3765557c32a96cf6d15823e877ccbf6cf201",
+            "comment": "Remove AsyncStorage"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 05 Jan 2023 06:18:16 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.599",
+      "version": "0.0.0-canary.599",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ilit@fb.com",
+            "package": "react-native-windows",
+            "commit": "874960ee05d21c432fd7735bb22c51a00197fa07",
+            "comment": "ReactImage: propagate error messages to JS"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 22 Dec 2022 06:14:38 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.598",
+      "version": "0.0.0-canary.598",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "000a1d0f374d5eafb18aa1f4a20a4807c56427ed",
+            "comment": "Test Access-Control-Request-Headers"
+          },
+          {
+            "author": "helewxdong@gmail.com",
+            "package": "react-native-windows",
+            "commit": "d178c7c670f35f9175b97d6bca9a31d008f4bed2",
+            "comment": "Working implementation of rootTag"
+          },
+          {
+            "author": "48035227+tudorms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "2e14e823b989e5521030c48abda17cc0ca7f6fa3",
+            "comment": "V8 package update"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 21 Dec 2022 06:15:26 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.597",
+      "version": "0.0.0-canary.597",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "d340afac0ba0ae008081690728e99058c690ed50",
+            "comment": "Cleanup unnecessary include in TouchEventHandler"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.156",
+            "commit": "d340afac0ba0ae008081690728e99058c690ed50"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.47",
+            "commit": "d340afac0ba0ae008081690728e99058c690ed50"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 16 Dec 2022 06:14:59 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.596",
+      "version": "0.0.0-canary.596",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "sanajmi@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a19090da73383153e83690dd30cbf951a1a95271",
+            "comment": "Remove unnecessary overrides to onFocus and onBlur in Pressable"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "9e222986b786be11d038ece5af9ad2c9632e31b7",
+            "comment": "Fix raw text update clearing Text"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 15 Dec 2022 06:14:42 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.595",
+      "version": "0.0.0-canary.595",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "06245ff4027db276b63592fe035c4e45bc23bf7f",
+            "comment": "Mark Text dirty when descendant Text updates occur"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 13 Dec 2022 06:15:26 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.594",
+      "version": "0.0.0-canary.594",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.155",
+            "commit": "e18db30cd3f5c70a97c5d3c1f15f3431b95ec7aa"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.46",
+            "commit": "e18db30cd3f5c70a97c5d3c1f15f3431b95ec7aa"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.15",
+            "commit": "e18db30cd3f5c70a97c5d3c1f15f3431b95ec7aa"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.1",
+            "commit": "e18db30cd3f5c70a97c5d3c1f15f3431b95ec7aa"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.4",
+            "commit": "e18db30cd3f5c70a97c5d3c1f15f3431b95ec7aa"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.8.5",
+            "commit": "e18db30cd3f5c70a97c5d3c1f15f3431b95ec7aa"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 10 Dec 2022 06:15:31 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.593",
+      "version": "0.0.0-canary.593",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b833fdba3ad8cf1f92584c0b3a1dbe147d0516bb",
+            "comment": "Remove work around for broken Utilities import in core"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.8.4",
+            "commit": "b833fdba3ad8cf1f92584c0b3a1dbe147d0516bb"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 09 Dec 2022 06:14:58 GMT",
       "tag": "react-native-windows_v0.0.0-canary.592",
       "version": "0.0.0-canary.592",

@@ -140,6 +140,9 @@
     <ClInclude Include="$(CallInvoker_SourcePath)\ReactCommon\CallInvoker.h">
       <Filter>TurboModule</Filter>
     </ClInclude>
+    <ClInclude Include="$(CallInvoker_SourcePath)\ReactCommon\SchedulerPriority.h">
+      <Filter>TurboModule</Filter>
+    </ClInclude>
     <ClInclude Include="$(TurboModule_SourcePath)\ReactCommon\TurboModule.h">
       <Filter>TurboModule</Filter>
     </ClInclude>
