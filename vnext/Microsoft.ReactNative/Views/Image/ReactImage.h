@@ -55,6 +55,8 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
   xaml::Media::Stretch ResizeModeToStretch();
   xaml::Media::Stretch ResizeModeToStretch(winrt::Windows::Foundation::Size size);
   winrt::fire_and_forget SetBackground(bool fireLoadEndEvent);
+  double GetWidth();
+  double GetHeight();
 
   bool m_useCompositionBrush{false};
   float m_blurRadius{0};

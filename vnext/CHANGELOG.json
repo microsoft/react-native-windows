@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 12 Jan 2023 06:14:52 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.602",
+      "version": "0.0.0-canary.602",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "089b7ea0165399229ee6777dede6eda421e2dcf1",
+            "comment": "Enable enablePropIteratorSetter for better perf"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 11 Jan 2023 06:15:31 GMT",
       "tag": "react-native-windows_v0.0.0-canary.601",
       "version": "0.0.0-canary.601",

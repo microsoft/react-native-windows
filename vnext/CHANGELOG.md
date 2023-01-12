@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 11 Jan 2023 06:15:31 GMT and should not be manually modified.
+This log was last generated on Thu, 12 Jan 2023 06:14:52 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.602
+
+Thu, 12 Jan 2023 06:14:52 GMT
+
+### Changes
+
+- Enable enablePropIteratorSetter for better perf (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.601
 
