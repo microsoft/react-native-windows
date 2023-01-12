@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "integrate 12/2/22",
-  "packageName": "@react-native-windows/telemetry",
-  "email": "tatianakapos@microsoft.com",
-  "dependentChangeType": "patch"
-}

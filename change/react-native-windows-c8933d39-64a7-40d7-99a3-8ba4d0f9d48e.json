@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Convert Glyph to flow, and provide ComponentSpec for it",
+  "comment": "Enable enablePropIteratorSetter for better perf",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
   "dependentChangeType": "patch"

@@ -2,6 +2,33 @@
   "name": "@rnw-scripts/just-task",
   "entries": [
     {
+      "date": "Wed, 11 Jan 2023 06:15:30 GMT",
+      "tag": "@rnw-scripts/just-task_v2.3.5",
+      "version": "2.3.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@rnw-scripts/just-task",
+            "commit": "10a5ba47b9c42d572e1b3731d8a791425f44efb9",
+            "comment": "Copy all types files from core"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/just-task",
+            "comment": "Bump @rnw-scripts/jest-e2e-config to v1.4.0",
+            "commit": "8aa2371e50374bd1e269ab38363fd15981a4c0ae"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/just-task",
+            "comment": "Bump @rnw-scripts/jest-unittest-config to v1.5.0",
+            "commit": "8aa2371e50374bd1e269ab38363fd15981a4c0ae"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 13 Dec 2022 06:15:25 GMT",
       "tag": "@rnw-scripts/just-task_v2.3.4",
       "version": "2.3.4",

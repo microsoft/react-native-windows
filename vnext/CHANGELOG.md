@@ -1,8 +1,23 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 10 Jan 2023 06:15:45 GMT and should not be manually modified.
+This log was last generated on Wed, 11 Jan 2023 06:15:31 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.601
+
+Wed, 11 Jan 2023 06:15:31 GMT
+
+### Changes
+
+- Convert Glyph to flow, and provide ComponentSpec for it (30809111+acoates-ms@users.noreply.github.com)
+- Force border with default brush for borderWidth (erozell@outlook.com)
+- Do not conditionally ignore event props (erozell@outlook.com)
+- integrate 12/2/22 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.157
+- Bump @react-native-windows/codegen to v0.0.0-canary.48
+- Bump @rnw-scripts/just-task to v2.3.5
+- Bump react-native-platform-override to v1.9.0
 
 ## 0.0.0-canary.600
 
