@@ -22,7 +22,7 @@
     "@rnx-kit/metro-serializer": "^1.0.11",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
-    "metro-config": "0.72.3"
+    "metro-config": "0.73.5"
   },
   "devDependencies": {
     "@rnw-scripts/eslint-config": "1.1.15",
