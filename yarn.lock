@@ -11540,9 +11540,9 @@ truncate-utf8-bytes@^1.0.0:
     utf8-byte-length "^1.0.1"
 
 ts-jest@^29.0.3:
-  version "29.0.4"
-  resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-29.0.4.tgz#9bc1fd0ec4d863f001af6c5c630e3a807df90f6d"
-  integrity sha512-YdNofkoyzeinwjIqLSYQeAM+GTmFQ7xFNtWcR5OyitY5VLzzNINrNmfhP5H3daA/V+RGQR7O3g1K6ysRgu5xIQ==
+  version "29.0.5"
+  resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-29.0.5.tgz#c5557dcec8fe434fcb8b70c3e21c6b143bfce066"
+  integrity sha512-PL3UciSgIpQ7f6XjVOmbi96vmDHUqAyqDr8YxzopDqX3kfgYtX1cuNeBjP+L9sFXi6nzsGGA6R3fP3DDDJyrxA==
   dependencies:
     bs-logger "0.x"
     fast-json-stable-stringify "2.x"
