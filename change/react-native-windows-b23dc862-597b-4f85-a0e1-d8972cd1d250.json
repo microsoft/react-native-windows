@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Do not conditionally ignore event props",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}
