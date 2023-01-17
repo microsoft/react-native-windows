@@ -291,7 +291,6 @@ class AccessibilitySwitchExample extends React.Component<
         <ExampleRow>
           <Switch
             accessibilityLabel="This is a Switch"
-            accessibilityValue={this.state.switchValue}
             accessibilityHint="Switch"
             nativeID="accessibility-switch"
             onValueChange={value => this.setState({switchValue: value})}
@@ -299,7 +298,6 @@ class AccessibilitySwitchExample extends React.Component<
           />
           <Switch
             accessibilityLabel="This is a Switch with focusable set to false"
-            accessibilityValue={this.state.noFocusableValue}
             accessibilityHint="Switch"
             // focusable={false}
             onValueChange={value => this.setState({noFocusableValue: value})}
@@ -309,7 +307,6 @@ class AccessibilitySwitchExample extends React.Component<
         <ExampleRow>
           <Switch
             accessibilityLabel="This is a Switch with accessible set to false"
-            accessibilityValue={this.state.noAccessibleValue}
             accessibilityHint="Switch"
             // accessible={false}
             onValueChange={value => this.setState({noAccessibleValue: value})}
@@ -317,7 +314,6 @@ class AccessibilitySwitchExample extends React.Component<
           />
           <Switch
             accessibilityLabel="This is a Switch with focusable and accessible set to false"
-            accessibilityValue={this.state.noFocusValue}
             accessibilityHint="Switch"
             // focusable={false}
             // accessible={false}
