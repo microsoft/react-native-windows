@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 26 Dec 2022 16:17:37 GMT and should not be manually modified.
+This log was last generated on Mon, 16 Jan 2023 16:13:32 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.0-preview.4
+
+Mon, 16 Jan 2023 16:13:32 GMT
+
+### Changes
+
+- Do not conditionally ignore event props (erozell@outlook.com)
 
 ## 0.71.0-preview.3
 
