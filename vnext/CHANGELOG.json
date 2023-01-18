@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 16 Jan 2023 16:13:32 GMT",
+      "tag": "react-native-windows_v0.71.0-preview.4",
+      "version": "0.71.0-preview.4",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "609b24abc645b8350426dd65cc7879eb92f82d43",
+            "comment": "Do not conditionally ignore event props"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 26 Dec 2022 16:17:37 GMT",
       "tag": "react-native-windows_v0.71.0-preview.3",
       "version": "0.71.0-preview.3",
