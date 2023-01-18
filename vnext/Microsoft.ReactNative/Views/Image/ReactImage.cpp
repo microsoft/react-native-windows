@@ -50,6 +50,17 @@ winrt::Size ReactImage::ArrangeOverride(winrt::Size finalSize) {
     brush.Stretch(ResizeModeToStretch(finalSize));
   }
 
+  if (m_imageSource.sourceFormat == ImageSourceFormat::Svg) {
+    if (auto const imageBrush{Background().try_as<winrt::ImageBrush>()}) {
+      if (auto const svgImageSource{imageBrush.ImageSource().try_as<winrt::SvgImageSource>()}) {
+        if (svgImageSource.RasterizePixelWidth() != GetWidth() ||
+            svgImageSource.RasterizePixelHeight() != GetHeight()) {
+          SetBackground(false);
+        }
+      }
+    }
+  }
+
   return finalSize;
 }
 
@@ -312,30 +323,29 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
       }
 
       if (source.sourceFormat == ImageSourceFormat::Svg) {
-        winrt::SvgImageSource svgImageSource{imageBrush.ImageSource().try_as<winrt::SvgImageSource>()};
+        winrt::SvgImageSource svgImageSource{};
 
-        if (!svgImageSource) {
-          svgImageSource = winrt::SvgImageSource{};
+        strong_this->m_svgImageSourceOpenedRevoker =
+            svgImageSource.Opened(winrt::auto_revoke, [weak_this, fireLoadEndEvent](const auto &, const auto &) {
+              auto strong_this{weak_this.get()};
+              if (strong_this && fireLoadEndEvent) {
+                strong_this->m_onLoadEndEvent(*strong_this, true);
+              }
+            });
 
-          strong_this->m_svgImageSourceOpenedRevoker =
-              svgImageSource.Opened(winrt::auto_revoke, [weak_this, fireLoadEndEvent](const auto &, const auto &) {
-                auto strong_this{weak_this.get()};
-                if (strong_this && fireLoadEndEvent) {
-                  strong_this->m_onLoadEndEvent(*strong_this, true);
-                }
-              });
+        strong_this->m_svgImageSourceOpenFailedRevoker = svgImageSource.OpenFailed(
+            winrt::auto_revoke, [weak_this, fireLoadEndEvent, svgImageSource](const auto &, const auto &args) {
+              auto strong_this{weak_this.get()};
+              if (strong_this && fireLoadEndEvent) {
+                strong_this->m_onLoadEndEvent(*strong_this, false);
+              }
+              ImageFailed(svgImageSource, args);
+            });
 
-          strong_this->m_svgImageSourceOpenFailedRevoker = svgImageSource.OpenFailed(
-              winrt::auto_revoke, [weak_this, fireLoadEndEvent, svgImageSource](const auto &, const auto &args) {
-                auto strong_this{weak_this.get()};
-                if (strong_this && fireLoadEndEvent) {
-                  strong_this->m_onLoadEndEvent(*strong_this, false);
-                }
-                ImageFailed(svgImageSource, args);
-              });
+        svgImageSource.RasterizePixelWidth(GetWidth());
+        svgImageSource.RasterizePixelHeight(GetHeight());
 
-          imageBrush.ImageSource(svgImageSource);
-        }
+        imageBrush.ImageSource(svgImageSource);
 
         if (fromStream) {
           try {
@@ -357,7 +367,6 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
         } else {
           svgImageSource.UriSource(uri);
         }
-
       } else {
         winrt::BitmapImage bitmapImage{imageBrush.ImageSource().try_as<winrt::BitmapImage>()};
 
@@ -434,4 +443,11 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
   }
 }
 
+double ReactImage::GetWidth() {
+  return std::isnan(Width()) ? m_imageSource.width : Width();
+}
+
+double ReactImage::GetHeight() {
+  return std::isnan(Height()) ? m_imageSource.height : Height();
+}
 } // namespace Microsoft::ReactNative
