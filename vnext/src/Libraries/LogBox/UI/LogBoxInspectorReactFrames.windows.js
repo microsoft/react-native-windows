@@ -158,6 +158,7 @@ const componentStyles = StyleSheet.create({
     paddingRight: 10,
   },
   frameName: {
+    // $FlowFixMe[underconstrained-implicit-instantiation]
     fontFamily: Platform.select({
       android: 'monospace',
       ios: 'Menlo',
@@ -169,6 +170,7 @@ const componentStyles = StyleSheet.create({
     lineHeight: 18,
   },
   bracket: {
+    // $FlowFixMe[underconstrained-implicit-instantiation]
     fontFamily: Platform.select({
       android: 'monospace',
       ios: 'Menlo',

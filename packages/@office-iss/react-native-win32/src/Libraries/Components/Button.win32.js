@@ -23,6 +23,7 @@ import type {
 import StyleSheet, {type ColorValue} from '../StyleSheet/StyleSheet';
 import Text from '../Text/Text';
 import Platform from '../Utilities/Platform';
+import {PlatformColor} from '../StyleSheet/PlatformColorValueTypes';
 import TouchableNativeFeedback from './Touchable/TouchableNativeFeedback';
 import TouchableOpacity from './Touchable/TouchableOpacity';
 import View from './View/View';
@@ -417,6 +418,7 @@ const styles = StyleSheet.create({
       },
     }),
   },
+  // $FlowFixMe[underconstrained-implicit-instantiation]
   buttonDisabled: Platform.select({
     ios: {},
     android: {
@@ -430,6 +432,7 @@ const styles = StyleSheet.create({
     },
     // Windows]
   }),
+  // $FlowFixMe[underconstrained-implicit-instantiation]
   textDisabled: Platform.select({
     ios: {
       color: '#cdcdcd',

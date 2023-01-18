@@ -166,6 +166,7 @@ const componentStyles = StyleSheet.create({
     lineHeight: 18,
   },
   bracket: {
+    // $FlowFixMe[underconstrained-implicit-instantiation]
     fontFamily: Platform.select({
       android: 'monospace',
       ios: 'Menlo',
