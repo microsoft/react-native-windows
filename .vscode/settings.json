@@ -16,9 +16,9 @@
     "regex": "cpp"
   },
   "search.exclude": {
-    "**/node_modules": true,
+    "**/dist/**/*.js": true,
     "**/lib/**/*.js": true,
-    "**/dist/**/*.js": true
+    "**/node_modules": false
   },
   "editor.formatOnSave": true,
   "eslint.format.enable": true,

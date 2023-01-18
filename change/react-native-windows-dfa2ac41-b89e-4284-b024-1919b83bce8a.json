@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "[Image] Fix rendering statically sized svgs",
+  "comment": "Revert 10863",
   "packageName": "react-native-windows",
-  "email": "email not defined",
+  "email": "34109996+chiaramooney@users.noreply.github.com",
   "dependentChangeType": "patch"
 }
