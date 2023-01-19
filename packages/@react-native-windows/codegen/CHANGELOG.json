@@ -2,6 +2,240 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Wed, 11 Jan 2023 06:15:29 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.48",
+      "version": "0.0.0-canary.48",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "6b10c0f1a97580e0c9b8e0cf429cf8577a301d22",
+            "comment": "integrate 12/2/22"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.13",
+            "commit": "8aa2371e50374bd1e269ab38363fd15981a4c0ae"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @rnw-scripts/jest-unittest-config to v1.5.0",
+            "commit": "8aa2371e50374bd1e269ab38363fd15981a4c0ae"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.5",
+            "commit": "8aa2371e50374bd1e269ab38363fd15981a4c0ae"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 21 Dec 2022 06:15:26 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.47",
+      "version": "0.0.0-canary.47",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "d949cc922ac19150ea7b72b1d0315b506b1dac48",
+            "comment": "Support enum/union and T in Promise<T> in codegen"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 13 Dec 2022 06:15:22 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.46",
+      "version": "0.0.0-canary.46",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "dannyvv@microsoft.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "e18db30cd3f5c70a97c5d3c1f15f3431b95ec7aa",
+            "comment": "Standardize on the repository field in package.json"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.12",
+            "commit": "e18db30cd3f5c70a97c5d3c1f15f3431b95ec7aa"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.15",
+            "commit": "e18db30cd3f5c70a97c5d3c1f15f3431b95ec7aa"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @rnw-scripts/jest-unittest-config to v1.4.3",
+            "commit": "e18db30cd3f5c70a97c5d3c1f15f3431b95ec7aa"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.4",
+            "commit": "e18db30cd3f5c70a97c5d3c1f15f3431b95ec7aa"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @rnw-scripts/ts-config to v2.0.3",
+            "commit": "e18db30cd3f5c70a97c5d3c1f15f3431b95ec7aa"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 02 Dec 2022 06:19:03 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.45",
+      "version": "0.0.0-canary.45",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "7c8e70822dd353027b9a0afafa67038810498f1c",
+            "comment": "Integrate 10/10"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "7c8e70822dd353027b9a0afafa67038810498f1c",
+            "comment": "Bump codegen version"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.11",
+            "commit": "2f939521a7e852faf4ccfba4e017c0ebaa64babc"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @rnw-scripts/jest-unittest-config to v1.4.2",
+            "commit": "2f939521a7e852faf4ccfba4e017c0ebaa64babc"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.3",
+            "commit": "2f939521a7e852faf4ccfba4e017c0ebaa64babc"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 21 Nov 2022 06:15:36 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.44",
+      "version": "0.0.0-canary.44",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "ce7f7ac062f998b9d8c198ef7a11e2327304f278",
+            "comment": "Enable ability to codegen JSI C++ TurboModule specs"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 16 Nov 2022 06:16:01 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.43",
+      "version": "0.0.0-canary.43",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.10",
+            "commit": "a37b9930d9b0749e0b6c893059277fcb1cf3edb6"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.2",
+            "commit": "a37b9930d9b0749e0b6c893059277fcb1cf3edb6"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 12 Nov 2022 06:17:21 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.42",
+      "version": "0.0.0-canary.42",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "fa576c66ef5ee9bd73553688946f25df4cfc076f",
+            "comment": "Integrate 10/10"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.9",
+            "commit": "fa576c66ef5ee9bd73553688946f25df4cfc076f"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @rnw-scripts/jest-unittest-config to v1.4.1",
+            "commit": "fa576c66ef5ee9bd73553688946f25df4cfc076f"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.1",
+            "commit": "fa576c66ef5ee9bd73553688946f25df4cfc076f"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 10 Nov 2022 06:17:10 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.41",
+      "version": "0.0.0-canary.41",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "ca86014a9c1bc80611fb68051fc67e51339c5bfd",
+            "comment": "integration 9/26/22"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.8",
+            "commit": "406d486eb138d4d9e324124e1b65120794424da1"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @rnw-scripts/jest-unittest-config to v1.4.0",
+            "commit": "406d486eb138d4d9e324124e1b65120794424da1"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.0",
+            "commit": "406d486eb138d4d9e324124e1b65120794424da1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 18 Oct 2022 05:12:09 GMT",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.40",
       "version": "0.0.0-canary.40",

@@ -27,7 +27,6 @@ TEST_MODULE_INITIALIZE(InitModule) {
 
   SetRuntimeOptionBool("WebSocket.AcceptSelfSigned", true);
   SetRuntimeOptionBool("UseBeastWebSocket", false);
-  SetRuntimeOptionBool("Http.UseMonolithicModule", false);
   SetRuntimeOptionBool("Blob.EnableModule", true);
 
   // WebSocketJSExecutor can't register native log hooks.
@@ -115,14 +114,6 @@ TEST_CLASS (RNTesterIntegrationTests) {
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(Timers) {
     TestComponent("TimersTest");
-  }
-
-  // #6882 - AsyncStorage seems broken in Windows Desktop
-  BEGIN_TEST_METHOD_ATTRIBUTE(AsyncStorage)
-  TEST_IGNORE()
-  END_TEST_METHOD_ATTRIBUTE()
-  TEST_METHOD(AsyncStorage) {
-    TestComponent("AsyncStorageTest");
   }
 
   BEGIN_TEST_METHOD_ATTRIBUTE(LayoutEvents)

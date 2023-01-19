@@ -1,15 +1,15 @@
 {
   "name": "@rnw-scripts/babel-node-config",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "license": "MIT",
   "main": "babel.config.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/microsoft/react-native-windows.git",
+    "url": "https://github.com/microsoft/react-native-windows",
     "directory": "packages/@rnw-scripts/babel-node-config"
   },
   "devDependencies": {
-    "@babel/core": "^7.14.0",
+    "@babel/core": "^7.20.0",
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-typescript": "^7.8.3",
     "@types/node": "^14.14.22",

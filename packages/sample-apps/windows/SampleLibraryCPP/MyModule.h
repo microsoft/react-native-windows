@@ -67,11 +67,11 @@ struct MyModule {
   }
 
   REACT_METHOD(getValueWithPromise)
-  void getValueWithPromise(bool error, React::ReactPromise<React::JSValue> &&result) noexcept {
+  void getValueWithPromise(bool error, React::ReactPromise<std::string> &&result) noexcept {
     if (error) {
       result.Reject("Failure");
     } else {
-      result.Resolve(React::JSValue{"Succeeded"});
+      result.Resolve(std::string{"Succeeded"});
     }
   }
 };

@@ -21,6 +21,7 @@ class SpringAnimationDriver : public CalculatedAnimationDriver {
   double ToValue() override;
 
  protected:
+  bool Update(double timeDeltaMs, bool restarting) override;
   std::tuple<float, double> GetValueAndVelocityForTime(double time) override;
   bool IsAnimationDone(double currentValue, std::optional<double> previousValue, double currentVelocity) override;
 
@@ -38,6 +39,9 @@ class SpringAnimationDriver : public CalculatedAnimationDriver {
   bool m_overshootClampingEnabled{0};
   int m_iterations{0};
   winrt::Microsoft::ReactNative::JSValueArray m_dynamicToValues{};
+
+  double m_lastTime{0};
+  double m_timeAccumulator{0};
 
   static constexpr std::string_view s_springStiffnessParameterName{"stiffness"};
   static constexpr std::string_view s_springDampingParameterName{"damping"};

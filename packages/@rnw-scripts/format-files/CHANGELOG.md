@@ -1,8 +1,59 @@
 # Change Log - @rnw-scripts/format-files
 
-This log was last generated on Wed, 05 Oct 2022 05:13:44 GMT and should not be manually modified.
+This log was last generated on Wed, 11 Jan 2023 06:15:31 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.6
+
+Wed, 11 Jan 2023 06:15:31 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.3.5
+
+## 1.1.5
+
+Tue, 13 Dec 2022 06:15:24 GMT
+
+### Patches
+
+- Standardize on the repository field in package.json (dannyvv@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.1.15
+- Bump @rnw-scripts/just-task to v2.3.4
+- Bump @rnw-scripts/ts-config to v2.0.3
+
+## 1.1.4
+
+Fri, 02 Dec 2022 06:19:05 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.3.3
+
+## 1.1.3
+
+Wed, 16 Nov 2022 06:16:01 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.3.2
+
+## 1.1.2
+
+Sat, 12 Nov 2022 06:17:23 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.3.1
+
+## 1.1.1
+
+Thu, 10 Nov 2022 06:17:12 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.3.0
 
 ## 1.1.0
 

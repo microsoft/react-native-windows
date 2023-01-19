@@ -23,6 +23,7 @@
 #include <react/renderer/components/text/RawTextComponentDescriptor.h>
 #include <react/renderer/components/text/TextComponentDescriptor.h>
 #include <react/renderer/components/view/ViewComponentDescriptor.h>
+#include <react/renderer/core/CoreFeatures.h>
 #include <react/renderer/core/EventBeat.h>
 #include <react/renderer/scheduler/Scheduler.h>
 #include <react/renderer/scheduler/SchedulerToolbox.h>
@@ -53,7 +54,9 @@ FabicUIManagerProperty() noexcept {
   return props.Get(FabicUIManagerProperty()).Value();
 }
 
-FabricUIManager::FabricUIManager() {}
+FabricUIManager::FabricUIManager() {
+  facebook::react::CoreFeatures::enablePropIteratorSetter = true;
+}
 
 FabricUIManager::~FabricUIManager() {}
 
@@ -73,7 +76,7 @@ class AsyncEventBeat final : public facebook::react::EventBeat {
     isRequested_ = false;
     m_isBeatCallbackScheduled = true;
 
-    m_runtimeExecutor([this, ownerBox = ownerBox_](jsi::Runtime &runtime) {
+    m_runtimeExecutor([this, ownerBox = ownerBox_](facebook::jsi::Runtime &runtime) {
       auto owner = ownerBox->owner.lock();
       if (!owner) {
         return;
@@ -409,13 +412,6 @@ void FabricUIManager::schedulerDidRequestPreliminaryViewAllocation(
           self->m_registry.dequeueComponentViewWithComponentHandle(componentHandle, surfaceId, self->m_compContext);
         });
   }
-}
-
-void FabricUIManager::schedulerDidCloneShadowNode(
-    facebook::react::SurfaceId /*surfaceId*/,
-    const facebook::react::ShadowNode & /*oldShadowNode*/,
-    const facebook::react::ShadowNode & /*newShadowNode*/) {
-  // currently unused
 }
 
 void FabricUIManager::schedulerDidDispatchCommand(

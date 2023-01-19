@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/ts-config
 
-This log was last generated on Wed, 09 Feb 2022 06:09:38 GMT and should not be manually modified.
+This log was last generated on Tue, 13 Dec 2022 06:15:26 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.0.3
+
+Tue, 13 Dec 2022 06:15:26 GMT
+
+### Patches
+
+- Standardize on the repository field in package.json (dannyvv@microsoft.com)
 
 ## 2.0.2
 

@@ -90,6 +90,7 @@
                     <ComboBoxItem Content="Samples\ticTacToe" />
                     <ComboBoxItem Content="Samples\view" />
                     <ComboBoxItem Content="Samples\debugTest01" />
+                    <ComboBoxItem Content="Samples\nativeLayout" />
                 </ComboBox.Items>
             </ComboBox>
 

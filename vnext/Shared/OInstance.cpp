@@ -27,7 +27,6 @@
 
 #include <Modules/ExceptionsManagerModule.h>
 #include <Modules/HttpModule.h>
-#include <Modules/NetworkingModule.h>
 #include <Modules/PlatformConstantsModule.h>
 #include <Modules/SourceCodeModule.h>
 #include <Modules/StatusBarManagerModule.h>
@@ -75,11 +74,7 @@ namespace Microsoft::React {
 
 /*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateHttpModule(
     winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept {
-  if (GetRuntimeOptionBool("Http.UseMonolithicModule")) {
-    return std::make_unique<NetworkingModule>();
-  } else {
-    return std::make_unique<HttpModule>(inspectableProperties);
-  }
+  return std::make_unique<HttpModule>(inspectableProperties);
 }
 
 } // namespace Microsoft::React
@@ -336,8 +331,18 @@ InstanceImpl::InstanceImpl(
             preparedScriptStore = std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(tempPath);
           }
 
+          bool enableMultiThreadSupport{false};
+
+#ifdef USE_FABRIC
+          enableMultiThreadSupport = IsFabricEnabled(m_reactContext->Properties());
+#endif // USE_FABRIC
+
           m_devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
-              m_devSettings, m_jsThread, std::move(scriptStore), std::move(preparedScriptStore));
+              m_devSettings,
+              m_jsThread,
+              std::move(scriptStore),
+              std::move(preparedScriptStore),
+              enableMultiThreadSupport);
           break;
 #else
           assert(false); // V8 is not available in this build, fallthrough
@@ -643,8 +648,7 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
   // If this code is enabled, we will have unused module instances.
   // Also, MSRN has a different property bag mechanism incompatible with this method's transitionalProps variable.
 #if (defined(_MSC_VER) && !defined(WINRT))
-  if (Microsoft::React::GetRuntimeOptionBool("Blob.EnableModule") &&
-      !Microsoft::React::GetRuntimeOptionBool("Http.UseMonolithicModule")) {
+  if (Microsoft::React::GetRuntimeOptionBool("Blob.EnableModule")) {
     modules.push_back(std::make_unique<CxxNativeModule>(
         m_innerInstance,
         Microsoft::React::GetBlobModuleName(),

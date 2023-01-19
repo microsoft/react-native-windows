@@ -10,9 +10,10 @@
 
 import type {ViewProps} from './ViewPropTypes';
 
-import ViewNativeComponent from './ViewNativeComponent';
-import TextAncestor from '../../Text/TextAncestor';
 import flattenStyle from '../../StyleSheet/flattenStyle';
+import TextAncestor from '../../Text/TextAncestor';
+import {getAccessibilityRoleFromRole} from '../../Utilities/AcessibilityMapping';
+import ViewNativeComponent from './ViewNativeComponent';
 import * as React from 'react';
 import invariant from 'invariant'; // [Windows]
 // [Windows
@@ -35,123 +36,79 @@ const View: React.AbstractComponent<
   (
     {
       accessibilityElementsHidden,
-      accessibilityLiveRegion,
-      'aria-live': ariaLive,
       accessibilityLabel,
+      accessibilityLabelledBy,
+      accessibilityLiveRegion,
       accessibilityRole,
-      'aria-label': ariaLabel,
+      accessibilityState,
+      accessibilityValue,
+      'aria-busy': ariaBusy,
+      'aria-checked': ariaChecked,
+      'aria-disabled': ariaDisabled,
+      'aria-expanded': ariaExpanded,
       'aria-hidden': ariaHidden,
+      'aria-label': ariaLabel,
+      'aria-labelledby': ariaLabelledBy,
+      'aria-live': ariaLive,
+      'aria-selected': ariaSelected,
+      'aria-valuemax': ariaValueMax,
+      'aria-valuemin': ariaValueMin,
+      'aria-valuenow': ariaValueNow,
+      'aria-valuetext': ariaValueText,
       focusable,
       id,
       importantForAccessibility,
       nativeID,
       pointerEvents,
       role,
-      style,
       tabIndex,
       ...otherProps
     }: ViewProps,
     forwardedRef,
   ) => {
-    const {
-      accessibilityState,
-      'aria-busy': ariaBusy,
-      'aria-checked': ariaChecked,
-      'aria-disabled': ariaDisabled,
-      'aria-expanded': ariaExpanded,
-      'aria-selected': ariaSelected,
-      ...restProps
-    } = otherProps;
+    const _accessibilityLabelledBy =
+      ariaLabelledBy?.split(/\s*,\s*/g) ?? accessibilityLabelledBy;
 
-    const _accessibilityState = {
-      busy: ariaBusy ?? accessibilityState?.busy,
-      checked: ariaChecked ?? accessibilityState?.checked,
-      disabled: ariaDisabled ?? accessibilityState?.disabled,
-      expanded: ariaExpanded ?? accessibilityState?.expanded,
-      selected: ariaSelected ?? accessibilityState?.selected,
-    };
+    let _accessibilityState;
+    if (
+      accessibilityState != null ||
+      ariaBusy != null ||
+      ariaChecked != null ||
+      ariaDisabled != null ||
+      ariaExpanded != null ||
+      ariaSelected != null
+    ) {
+      _accessibilityState = {
+        busy: ariaBusy ?? accessibilityState?.busy,
+        checked: ariaChecked ?? accessibilityState?.checked,
+        disabled: ariaDisabled ?? accessibilityState?.disabled,
+        expanded: ariaExpanded ?? accessibilityState?.expanded,
+        selected: ariaSelected ?? accessibilityState?.selected,
+      };
+    }
+    let _accessibilityValue;
+    if (
+      accessibilityValue != null ||
+      ariaValueMax != null ||
+      ariaValueMin != null ||
+      ariaValueNow != null ||
+      ariaValueText != null
+    ) {
+      _accessibilityValue = {
+        max: ariaValueMax ?? accessibilityValue?.max,
+        min: ariaValueMin ?? accessibilityValue?.min,
+        now: ariaValueNow ?? accessibilityValue?.now,
+        text: ariaValueText ?? accessibilityValue?.text,
+      };
+    }
 
-    // Map role values to AccessibilityRole values
-    const roleToAccessibilityRoleMapping = {
-      alert: 'alert',
-      alertdialog: undefined,
-      application: undefined,
-      article: undefined,
-      banner: undefined,
-      button: 'button',
-      cell: undefined,
-      checkbox: 'checkbox',
-      columnheader: undefined,
-      combobox: 'combobox',
-      complementary: undefined,
-      contentinfo: undefined,
-      definition: undefined,
-      dialog: undefined,
-      directory: undefined,
-      document: undefined,
-      feed: undefined,
-      figure: undefined,
-      form: undefined,
-      grid: 'grid',
-      group: undefined,
-      heading: 'header',
-      img: 'image',
-      link: 'link',
-      list: 'list',
-      listitem: undefined,
-      log: undefined,
-      main: undefined,
-      marquee: undefined,
-      math: undefined,
-      menu: 'menu',
-      menubar: 'menubar',
-      menuitem: 'menuitem',
-      meter: undefined,
-      navigation: undefined,
-      none: 'none',
-      note: undefined,
-      presentation: 'none',
-      progressbar: 'progressbar',
-      radio: 'radio',
-      radiogroup: 'radiogroup',
-      region: undefined,
-      row: undefined,
-      rowgroup: undefined,
-      rowheader: undefined,
-      scrollbar: 'scrollbar',
-      searchbox: 'search',
-      separator: undefined,
-      slider: 'adjustable',
-      spinbutton: 'spinbutton',
-      status: undefined,
-      summary: 'summary',
-      switch: 'switch',
-      tab: 'tab',
-      table: undefined,
-      tablist: 'tablist',
-      tabpanel: undefined,
-      term: undefined,
-      timer: 'timer',
-      toolbar: 'toolbar',
-      tooltip: undefined,
-      tree: undefined,
-      treegrid: undefined,
-      treeitem: undefined,
-    };
+    let style = flattenStyle(otherProps.style);
 
-    const accessibilityValue = {
-      max: otherProps['aria-valuemax'] ?? otherProps.accessibilityValue?.max,
-      min: otherProps['aria-valuemin'] ?? otherProps.accessibilityValue?.min,
-      now: otherProps['aria-valuenow'] ?? otherProps.accessibilityValue?.now,
-      text: otherProps['aria-valuetext'] ?? otherProps.accessibilityValue?.text,
-    };
-    const restWithDefaultProps = {...otherProps, accessibilityValue};
-
-    const flattenedStyle = flattenStyle(style);
-    const newPointerEvents = flattenedStyle?.pointerEvents || pointerEvents;
+    const newPointerEvents = style?.pointerEvents || pointerEvents;
 
     const _keyDown = (event: KeyEvent) => {
       if (otherProps.keyDownEvents && event.isPropagationStopped() !== true) {
+        // $FlowFixMe - keyDownEvents was already checked to not be undefined
         for (const el of otherProps.keyDownEvents) {
           if (event.nativeEvent.code == el.code && el.handledEventPhase == 3) {
             event.stopPropagation();
@@ -163,6 +120,7 @@ const View: React.AbstractComponent<
 
     const _keyUp = (event: KeyEvent) => {
       if (otherProps.keyUpEvents && event.isPropagationStopped() !== true) {
+        // $FlowFixMe - keyDownEvents was already checked to not be undefined
         for (const el of otherProps.keyUpEvents) {
           if (event.nativeEvent.code == el.code && el.handledEventPhase == 3) {
             event.stopPropagation();
@@ -174,6 +132,7 @@ const View: React.AbstractComponent<
 
     const _keyDownCapture = (event: KeyEvent) => {
       if (otherProps.keyDownEvents && event.isPropagationStopped() !== true) {
+        // $FlowFixMe - keyDownEvents was already checked to not be undefined
         for (const el of otherProps.keyDownEvents) {
           if (event.nativeEvent.code == el.code && el.handledEventPhase == 1) {
             event.stopPropagation();
@@ -185,6 +144,7 @@ const View: React.AbstractComponent<
 
     const _keyUpCapture = (event: KeyEvent) => {
       if (otherProps.keyUpEvents && event.isPropagationStopped() !== true) {
+        // $FlowFixMe - keyDownEvents was already checked to not be undefined
         for (const el of otherProps.keyUpEvents) {
           if (event.nativeEvent.code == el.code && el.handledEventPhase == 1) {
             event.stopPropagation();
@@ -195,6 +155,7 @@ const View: React.AbstractComponent<
     };
 
     // [Windows
+    // $FlowFixMe - children typing
     const childrenWithImportantForAccessibility = children => {
       const updatedChildren = React.Children.map(children, child => {
         if (React.isValidElement(child)) {
@@ -232,6 +193,7 @@ const View: React.AbstractComponent<
           );
           return (
             <ViewNativeComponent
+              {...otherProps}
               accessibilityLiveRegion={
                 ariaLive === 'off'
                   ? 'none'
@@ -241,18 +203,19 @@ const View: React.AbstractComponent<
               focusable={tabIndex !== undefined ? !tabIndex : focusable}
               accessibilityState={_accessibilityState}
               accessibilityRole={
-                role ? roleToAccessibilityRoleMapping[role] : accessibilityRole
+                role ? getAccessibilityRoleFromRole(role) : accessibilityRole
               }
               accessibilityElementsHidden={
                 ariaHidden ?? accessibilityElementsHidden
               }
+              accessibilityLabelledBy={_accessibilityLabelledBy}
+              accessibilityValue={_accessibilityValue}
               importantForAccessibility={
                 ariaHidden === true
                   ? 'no-hide-descendants'
                   : importantForAccessibility
               }
               nativeID={id ?? nativeID}
-              {...restWithDefaultProps}
               style={style}
               pointerEvents={newPointerEvents}
               ref={forwardedRef}

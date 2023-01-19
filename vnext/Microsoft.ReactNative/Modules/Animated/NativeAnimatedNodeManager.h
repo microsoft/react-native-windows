@@ -5,6 +5,7 @@
 // Licensed under the MIT License.
 
 #include <IReactInstance.h>
+#include <UI.Xaml.Media.h>
 #include <cxxreact/CxxModule.h>
 #include <folly/dynamic.h>
 #include "AnimatedNode.h"
@@ -30,6 +31,7 @@ namespace Microsoft::ReactNative {
 /// </summary>
 
 typedef std::function<void(bool)> EndCallback;
+typedef std::function<void(double)> ValueListenerCallback;
 
 class AnimatedNode;
 class StyleAnimatedNode;
@@ -41,6 +43,9 @@ class AnimationDriver;
 class EventAnimationDriver;
 class NativeAnimatedNodeManager {
  public:
+  NativeAnimatedNodeManager(winrt::Microsoft::ReactNative::ReactContext const &reactContext);
+  const winrt::Microsoft::ReactNative::ReactContext &ReactContext() const noexcept;
+  comp::Compositor Compositor() const noexcept;
   void CreateAnimatedNode(
       int64_t tag,
       const winrt::Microsoft::ReactNative::JSValueObject &config,
@@ -49,6 +54,7 @@ class NativeAnimatedNodeManager {
   void GetValue(int64_t animatedNodeTag, std::function<void(double)> const &endCallback);
   void ConnectAnimatedNodeToView(int64_t propsNodeTag, int64_t viewTag);
   void DisconnectAnimatedNodeToView(int64_t propsNodeTag, int64_t viewTag);
+  void RestoreDefaultValues(int64_t tag);
   void ConnectAnimatedNode(int64_t parentNodeTag, int64_t childNodeTag);
   void DisconnectAnimatedNode(int64_t parentNodeTag, int64_t childNodeTag);
   void StopAnimation(int64_t animationId, bool isTrackingAnimation = false);
@@ -75,6 +81,8 @@ class NativeAnimatedNodeManager {
   void SetAnimatedNodeOffset(int64_t tag, double offset);
   void FlattenAnimatedNodeOffset(int64_t tag);
   void ExtractAnimatedNodeOffset(int64_t tag);
+  void StartListeningToAnimatedNodeValue(int64_t tag, const ValueListenerCallback &callback);
+  void StopListeningToAnimatedNodeValue(int64_t tag);
   void AddAnimatedEventToView(
       int64_t viewTag,
       const std::string &eventName,
@@ -102,6 +110,13 @@ class NativeAnimatedNodeManager {
       const std::shared_ptr<NativeAnimatedNodeManager> &manager);
 
  private:
+  void EnsureRendering();
+  void OnRendering(winrt::IInspectable const &sender, winrt::IInspectable const &args);
+  void RunUpdates(winrt::TimeSpan renderingTime);
+  void StopAnimationsForNode(int64_t tag);
+  void UpdateActiveAnimationIds();
+  void UpdateNodes(std::unordered_set<int64_t> &nodes);
+
   std::unordered_map<int64_t, std::unique_ptr<ValueAnimatedNode>> m_valueNodes{};
   std::unordered_map<int64_t, std::unique_ptr<PropsAnimatedNode>> m_propsNodes{};
   std::unordered_map<int64_t, std::unique_ptr<StyleAnimatedNode>> m_styleNodes{};
@@ -115,6 +130,12 @@ class NativeAnimatedNodeManager {
   std::unordered_map<int64_t, int64_t> m_deferredAnimationForValues{};
   std::vector<std::tuple<int64_t, int64_t>> m_trackingAndLeadNodeTags{};
   std::vector<int64_t> m_delayedPropsNodes{};
+  winrt::Microsoft::ReactNative::ReactContext m_context;
+
+  std::unordered_set<int64_t> m_updatedNodes{};
+  std::vector<int64_t> m_activeAnimationIds{};
+  int64_t m_animatedGraphBFSColor{};
+  xaml::Media::CompositionTarget::Rendering_revoker m_renderingRevoker;
 
   static constexpr std::string_view s_toValueIdName{"toValue"};
   static constexpr std::string_view s_framesName{"frames"};

@@ -8,27 +8,23 @@
  * @format
  */
 
-import * as React from 'react';
-import StyleSheet from '../StyleSheet/StyleSheet';
-
-import ImageInjection from './ImageInjection';
-import ImageAnalyticsTagContext from './ImageAnalyticsTagContext';
-import flattenStyle from '../StyleSheet/flattenStyle';
-import resolveAssetSource from './resolveAssetSource';
+import type {ImageStyleProp} from '../StyleSheet/StyleSheet';
+import type {RootTag} from '../Types/RootTagTypes';
+import type {ImageIOS} from './Image.flow';
+import type {ImageProps as ImagePropsType} from './ImageProps';
 
 import TextAncestor from '../Text/TextAncestor'; // [Windows]
 import invariant from 'invariant'; // [Windows]
-
-import type {ImageProps as ImagePropsType} from './ImageProps';
-
-import type {ImageStyleProp} from '../StyleSheet/StyleSheet';
-import NativeImageLoaderIOS from './NativeImageLoaderIOS';
-
-import {convertObjectFitToResizeMode} from './ImageUtils';
-
-import ImageViewNativeComponent from './ImageViewNativeComponent';
-import type {RootTag} from 'react-native/Libraries/Types/RootTagTypes';
+import flattenStyle from '../StyleSheet/flattenStyle';
+import StyleSheet from '../StyleSheet/StyleSheet';
+import ImageAnalyticsTagContext from './ImageAnalyticsTagContext';
+import ImageInjection from './ImageInjection';
 import {getImageSourcesFromImageProps} from './ImageSourceUtils';
+import {convertObjectFitToResizeMode} from './ImageUtils';
+import ImageViewNativeComponent from './ImageViewNativeComponent';
+import NativeImageLoaderIOS from './NativeImageLoaderIOS';
+import resolveAssetSource from './resolveAssetSource';
+import * as React from 'react';
 
 function getSize(
   uri: string,
@@ -186,6 +182,7 @@ const BaseImage = (props: ImagePropsType, forwardedRef) => {
                 <ImageViewNativeComponent
                   accessibilityState={_accessibilityState}
                   accessibilityLabel={accessibilityLabel}
+                  accessible={props.alt !== undefined ? true : props.accessible}
                   {...restProps}
                   ref={forwardedRef}
                   style={style}
@@ -278,14 +275,16 @@ Image.queryCache = queryCache;
  * delete this comment and run Flow. */
 Image.resolveAssetSource = resolveAssetSource;
 
+/**
+ * Switch to `deprecated-react-native-prop-types` for compatibility with future
+ * releases. This is deprecated and will be removed in the future.
+ */
+Image.propTypes = require('deprecated-react-native-prop-types').ImagePropTypes;
+
 const styles = StyleSheet.create({
   base: {
     overflow: 'hidden',
   },
 });
 
-module.exports = ((Image: any): React.AbstractComponent<
-  ImagePropsType,
-  React.ElementRef<typeof ImageViewNativeComponent>,
-> &
-  ImageComponentStatics);
+module.exports = ((Image: any): ImageIOS);

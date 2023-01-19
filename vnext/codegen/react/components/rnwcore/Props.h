@@ -357,6 +357,20 @@ class JSI_EXPORT AndroidDrawerLayoutProps final : public ViewProps {
   SharedColor statusBarBackgroundColor{};
 };
 
+class JSI_EXPORT PLYIconProps final : public ViewProps {
+ public:
+  PLYIconProps() = default;
+  PLYIconProps(const PropsParserContext& context, const PLYIconProps &sourceProps, const RawProps &rawProps);
+
+#pragma mark - Props
+
+  SharedColor color{};
+  double emSize{0.0};
+  std::string fontUri{};
+  std::string glyph{};
+  bool colorEnabled{false};
+};
+
 class JSI_EXPORT AndroidProgressBarProps final : public ViewProps {
  public:
   AndroidProgressBarProps() = default;
@@ -371,37 +385,6 @@ class JSI_EXPORT AndroidProgressBarProps final : public ViewProps {
   bool animating{true};
   SharedColor color{};
   std::string testID{""};
-};
-
-enum class RCTProgressViewProgressViewStyle { Default, Bar };
-
-static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, RCTProgressViewProgressViewStyle &result) {
-  auto string = (std::string)value;
-  if (string == "default") { result = RCTProgressViewProgressViewStyle::Default; return; }
-  if (string == "bar") { result = RCTProgressViewProgressViewStyle::Bar; return; }
-  abort();
-}
-
-static inline std::string toString(const RCTProgressViewProgressViewStyle &value) {
-  switch (value) {
-    case RCTProgressViewProgressViewStyle::Default: return "default";
-    case RCTProgressViewProgressViewStyle::Bar: return "bar";
-  }
-}
-
-class JSI_EXPORT RCTProgressViewProps final : public ViewProps {
- public:
-  RCTProgressViewProps() = default;
-  RCTProgressViewProps(const PropsParserContext& context, const RCTProgressViewProps &sourceProps, const RawProps &rawProps);
-
-#pragma mark - Props
-
-  RCTProgressViewProgressViewStyle progressViewStyle{RCTProgressViewProgressViewStyle::Default};
-  Float progress{0.0};
-  SharedColor progressTintColor{};
-  SharedColor trackTintColor{};
-  ImageSource progressImage{};
-  ImageSource trackImage{};
 };
 
 enum class AndroidSwipeRefreshLayoutSize { Default, Large };

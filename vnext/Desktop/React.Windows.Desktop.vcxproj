@@ -254,6 +254,31 @@
     </ClCompile>
     <ClCompile Include="WebSocketResourceFactory.cpp" />
   </ItemGroup>
+  <ItemGroup Condition="'$(UseFabric)' == 'true'">
+    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\AdditionAnimatedNode.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\AnimatedNode.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\AnimatedPlatformConfig.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\AnimationDriver.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\CalculatedAnimationDriver.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\DecayAnimationDriver.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\DiffClampAnimatedNode.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\DivisionAnimatedNode.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\EventAnimationDriver.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\FrameAnimationDriver.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\InterpolationAnimatedNode.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\ModulusAnimatedNode.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\MultiplicationAnimatedNode.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\NativeAnimatedModule.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\NativeAnimatedNodeManager.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\PropsAnimatedNode.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\SpringAnimationDriver.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\StyleAnimatedNode.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\SubtractionAnimatedNode.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\TrackingAnimatedNode.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\TransformAnimatedNode.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\ValueAnimatedNode.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\Modules\ImageViewManagerModule.cpp" />
+  </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABI\MessageQueueShim.h">
       <DependentUpon>ABI\MessageQueue.idl</DependentUpon>
@@ -336,6 +361,7 @@
     <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" PrivateAssets="all" />
     <PackageReference Include="ReactNative.Hermes.Windows" Version="$(HermesVersion)" />
     <PackageReference Include="ReactWindows.OpenSSL.StdCall.Static" Version="1.0.2-p.5" />
+    <PackageReference Include="$(V8PackageName)" Version="$(V8Version)" Condition="'$(UseV8)' == 'true'" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(EnableSourceLink)' == 'true'">
@@ -343,13 +369,6 @@
         <PackageReference Include="Microsoft.Build.Tasks.Git" Version="1.0.0" />
         <PackageReference Include="Microsoft.SourceLink.Common" Version="1.0.0" />
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
-      </ItemGroup>
-    </When>
-  </Choose>
-  <Choose>
-    <When Condition="'$(UseV8)' == 'true'">
-      <ItemGroup>
-        <PackageReference Include="ReactNative.V8Jsi.Windows" Version="$(V8Version)" />
       </ItemGroup>
     </When>
   </Choose>

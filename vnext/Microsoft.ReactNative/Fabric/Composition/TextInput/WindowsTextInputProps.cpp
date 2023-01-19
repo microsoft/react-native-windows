@@ -48,4 +48,13 @@ WindowsTextInputProps::WindowsTextInputProps(
       submitKeyEvents(convertRawProp(context, rawProps, "submitKeyEvents", sourceProps.submitKeyEvents, {})),
       autoFocus(convertRawProp(context, rawProps, "autoFocus", sourceProps.autoFocus, {false})) {}
 
+void WindowsTextInputProps::setProp(
+    const PropsParserContext &context,
+    RawPropsPropNameHash hash,
+    const char *propName,
+    RawValue const &value) {
+  BaseTextProps::setProp(context, hash, propName, value);
+  ViewProps::setProp(context, hash, propName, value);
+}
+
 } // namespace facebook::react

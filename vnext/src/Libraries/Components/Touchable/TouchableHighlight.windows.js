@@ -8,15 +8,16 @@
  * @format
  */
 
+import type {ColorValue} from '../../StyleSheet/StyleSheet';
+import typeof TouchableWithoutFeedback from './TouchableWithoutFeedback';
+
+import View from '../../Components/View/View';
 import Pressability, {
   type PressabilityConfig,
 } from '../../Pressability/Pressability';
 import {PressabilityDebugView} from '../../Pressability/PressabilityDebug';
 import StyleSheet, {type ViewStyleProp} from '../../StyleSheet/StyleSheet';
-import type {ColorValue} from '../../StyleSheet/StyleSheet';
-import typeof TouchableWithoutFeedback from './TouchableWithoutFeedback';
 import Platform from '../../Utilities/Platform';
-import View from '../../Components/View/View';
 import * as React from 'react';
 
 type AndroidProps = $ReadOnly<{|
@@ -278,7 +279,7 @@ class TouchableHighlight extends React.Component<Props, State> {
   }
 
   render(): React.Node {
-    const child = React.Children.only(this.props.children);
+    const child = React.Children.only<$FlowFixMe>(this.props.children);
 
     // BACKWARD-COMPATIBILITY: Focus and blur events were never supported before
     // adopting `Pressability`, so preserve that behavior.

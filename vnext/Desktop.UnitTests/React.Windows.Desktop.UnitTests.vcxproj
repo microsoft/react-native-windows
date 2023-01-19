@@ -83,8 +83,6 @@
   </ItemDefinitionGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
   <ItemGroup>
-    <ClCompile Include="AsyncStorageManagerTest.cpp" />
-    <ClCompile Include="AsyncStorageTest.cpp" />
     <ClCompile Include="BaseWebSocketTests.cpp">
       <ExcludedFromBuild Condition="'$(EnableBeast)' == 0">true</ExcludedFromBuild>
     </ClCompile>
@@ -108,7 +106,6 @@
     <ClCompile Include="WinRTWebSocketResourceUnitTest.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AsyncStorageTestClass.h" />
     <ClInclude Include="EmptyUIManagerModule.h" />
     <ClInclude Include="InstanceMocks.h" />
     <ClInclude Include="UnicodeTestStrings.h" />

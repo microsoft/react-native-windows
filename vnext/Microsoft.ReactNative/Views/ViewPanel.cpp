@@ -301,7 +301,7 @@ void ViewPanel::FinalizeProperties() {
   bool hasBorderBrush = ReadLocalValue(BorderBrushProperty()) != unsetValue;
   bool hasBorderThickness = BorderThickness() != emptyThickness;
   bool hasCornerRadius = ReadLocalValue(CornerRadiusProperty()) != unsetValue;
-  bool displayBorder = hasBorderBrush && hasBorderThickness;
+  bool displayBorder = hasBorderThickness;
 
   // Determine which scenario our current properties have put us into
   enum class Scenario { OuterBorder, InnerBorder, NoBorder } scenario;

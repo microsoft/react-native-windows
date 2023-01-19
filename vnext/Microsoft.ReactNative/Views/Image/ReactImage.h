@@ -27,7 +27,7 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
   xaml::Automation::Peers::AutomationPeer OnCreateAutomationPeer();
 
   // Events
-  winrt::event_token OnLoadEnd(winrt::Windows::Foundation::EventHandler<bool> const &handler);
+  winrt::event_token OnLoadEnd(winrt::Windows::Foundation::EventHandler<winrt::hstring> const &handler);
   void OnLoadEnd(winrt::event_token const &token) noexcept;
 
   // Public Properties
@@ -55,6 +55,8 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
   xaml::Media::Stretch ResizeModeToStretch();
   xaml::Media::Stretch ResizeModeToStretch(winrt::Windows::Foundation::Size size);
   winrt::fire_and_forget SetBackground(bool fireLoadEndEvent);
+  double GetWidth();
+  double GetHeight();
 
   bool m_useCompositionBrush{false};
   float m_blurRadius{0};
@@ -63,7 +65,7 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
   facebook::react::ImageResizeMode m_resizeMode{facebook::react::ImageResizeMode::Contain};
   winrt::Windows::UI::Color m_tintColor{winrt::Colors::Transparent()};
 
-  winrt::event<winrt::Windows::Foundation::EventHandler<bool>> m_onLoadEndEvent;
+  winrt::event<winrt::Windows::Foundation::EventHandler<winrt::hstring>> m_onLoadEndEvent;
   xaml::FrameworkElement::SizeChanged_revoker m_sizeChangedRevoker;
   xaml::Media::LoadedImageSurface::LoadCompleted_revoker m_surfaceLoadedRevoker;
   xaml::Media::Imaging::BitmapImage::ImageOpened_revoker m_bitmapImageOpened;

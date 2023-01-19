@@ -101,7 +101,7 @@ class JSI_EXPORT AndroidDrawerLayoutEventEmitter : public ViewEventEmitter {
 
   void onDrawerClose(OnDrawerClose value) const;
 };
-class JSI_EXPORT AndroidProgressBarEventEmitter : public ViewEventEmitter {
+class JSI_EXPORT PLYIconEventEmitter : public ViewEventEmitter {
  public:
   using ViewEventEmitter::ViewEventEmitter;
 
@@ -109,7 +109,7 @@ class JSI_EXPORT AndroidProgressBarEventEmitter : public ViewEventEmitter {
 
   
 };
-class JSI_EXPORT RCTProgressViewEventEmitter : public ViewEventEmitter {
+class JSI_EXPORT AndroidProgressBarEventEmitter : public ViewEventEmitter {
  public:
   using ViewEventEmitter::ViewEventEmitter;
 
@@ -177,6 +177,7 @@ class JSI_EXPORT AndroidSwitchEventEmitter : public ViewEventEmitter {
 
   struct OnChange {
       bool value;
+    int target;
     };
 
   void onChange(OnChange value) const;
@@ -187,6 +188,7 @@ class JSI_EXPORT SwitchEventEmitter : public ViewEventEmitter {
 
   struct OnChange {
       bool value;
+    int target;
     };
 
   void onChange(OnChange value) const;

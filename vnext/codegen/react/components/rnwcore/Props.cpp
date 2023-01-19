@@ -68,6 +68,17 @@ AndroidDrawerLayoutProps::AndroidDrawerLayoutProps(
     drawerLockMode(convertRawProp(context, rawProps, "drawerLockMode", sourceProps.drawerLockMode, {AndroidDrawerLayoutDrawerLockMode::Unlocked})),
     statusBarBackgroundColor(convertRawProp(context, rawProps, "statusBarBackgroundColor", sourceProps.statusBarBackgroundColor, {}))
       {}
+PLYIconProps::PLYIconProps(
+    const PropsParserContext &context,
+    const PLYIconProps &sourceProps,
+    const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
+
+    color(convertRawProp(context, rawProps, "color", sourceProps.color, {})),
+    emSize(convertRawProp(context, rawProps, "emSize", sourceProps.emSize, {0.0})),
+    fontUri(convertRawProp(context, rawProps, "fontUri", sourceProps.fontUri, {})),
+    glyph(convertRawProp(context, rawProps, "glyph", sourceProps.glyph, {})),
+    colorEnabled(convertRawProp(context, rawProps, "colorEnabled", sourceProps.colorEnabled, {false}))
+      {}
 AndroidProgressBarProps::AndroidProgressBarProps(
     const PropsParserContext &context,
     const AndroidProgressBarProps &sourceProps,
@@ -80,18 +91,6 @@ AndroidProgressBarProps::AndroidProgressBarProps(
     animating(convertRawProp(context, rawProps, "animating", sourceProps.animating, {true})),
     color(convertRawProp(context, rawProps, "color", sourceProps.color, {})),
     testID(convertRawProp(context, rawProps, "testID", sourceProps.testID, {""}))
-      {}
-RCTProgressViewProps::RCTProgressViewProps(
-    const PropsParserContext &context,
-    const RCTProgressViewProps &sourceProps,
-    const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
-
-    progressViewStyle(convertRawProp(context, rawProps, "progressViewStyle", sourceProps.progressViewStyle, {RCTProgressViewProgressViewStyle::Default})),
-    progress(convertRawProp(context, rawProps, "progress", sourceProps.progress, {0.0})),
-    progressTintColor(convertRawProp(context, rawProps, "progressTintColor", sourceProps.progressTintColor, {})),
-    trackTintColor(convertRawProp(context, rawProps, "trackTintColor", sourceProps.trackTintColor, {})),
-    progressImage(convertRawProp(context, rawProps, "progressImage", sourceProps.progressImage, {})),
-    trackImage(convertRawProp(context, rawProps, "trackImage", sourceProps.trackImage, {}))
       {}
 AndroidSwipeRefreshLayoutProps::AndroidSwipeRefreshLayoutProps(
     const PropsParserContext &context,

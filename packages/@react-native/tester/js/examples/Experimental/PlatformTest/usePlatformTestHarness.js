@@ -40,7 +40,7 @@ function constructAsyncTestHook(
   ) => Array<PlatformTestAssertionResult>,
 ) {
   return (description: string, timeoutMs?: number = 10000) => {
-    const assertionsRef = useRef([]);
+    const assertionsRef = useRef<Array<PlatformTestAssertionResult>>([]);
 
     const timeoutIDRef = useRef<TimeoutID | null>(null);
 
@@ -106,7 +106,7 @@ function constructAsyncTestHook(
       });
     }, [description]);
 
-    const stepHandler = useCallback(testCase => {
+    const stepHandler = useCallback((testCase: PlatformTestCase) => {
       const stepAssertions = runTestCase(testCase);
       assertionsRef.current.push(...stepAssertions);
     }, []);
@@ -148,7 +148,7 @@ export default function usePlatformTestHarness(): PlatformTestHarnessHookResult 
   // we use a basic debouncing logic to minimize the number of re-renders
   // caused by adding test results
   const resultQueueRef = useRef<Array<PlatformTestResult>>([]);
-  const schedulerTimeoutIdRef = useRef(null);
+  const schedulerTimeoutIdRef = useRef<null | TimeoutID>(null);
 
   const commitResults = useCallback(() => {
     const queuedResults = resultQueueRef.current;

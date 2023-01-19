@@ -1,0 +1,10 @@
+# This file modifies how vscode uses .gitignore to filter search results
+
+# Setup for individual module folders to be searchable
+!node_modules
+node_modules/*
+
+# Enable individual module folders
+!node_modules/.fmt
+!node_modules/.folly
+!node_modules/react-native

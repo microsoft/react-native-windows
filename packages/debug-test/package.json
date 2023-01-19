@@ -1,21 +1,21 @@
 {
   "name": "debug-test",
   "version": "0.0.0",
-  "private": "true",
+  "private": true,
   "scripts": {
     "debugtest": "jest",
     "lint": "rnw-scripts lint",
     "lint:fix": "rnw-scripts lint:fix"
   },
   "devDependencies": {
-    "@react-native-windows/automation": "^0.2.19",
-    "@react-native-windows/fs": "^0.0.0-canary.7",
-    "@rnw-scripts/eslint-config": "1.1.14",
+    "@react-native-windows/automation": "^0.3.25",
+    "@react-native-windows/fs": "^0.0.0-canary.13",
+    "@rnw-scripts/eslint-config": "1.1.15",
     "@types/jest": "^29.2.2",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
     "lodash": "^4.17.15",
     "ts-jest": "^29.0.3",
-    "ws": "^6.1.4"
+    "ws": "^6.2.2"
   }
 }

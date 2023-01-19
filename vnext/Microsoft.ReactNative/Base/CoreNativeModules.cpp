@@ -6,8 +6,6 @@
 
 // Modules
 #include <AppModelHelpers.h>
-#include <AsyncStorageModule.h>
-#include <Modules/AsyncStorageModuleWin32.h>
 #include <Modules/ClipboardModule.h>
 #include <Modules/NativeUIManager.h>
 #include <Modules/PaperUIManagerModule.h>
@@ -17,21 +15,6 @@
 #include <CreateModules.h>
 
 namespace Microsoft::ReactNative {
-
-using winrt::Microsoft::ReactNative::ReactPropertyBag;
-
-namespace {
-
-using winrt::Microsoft::ReactNative::ReactPropertyId;
-
-ReactPropertyId<bool> HttpUseMonolithicModuleProperty() noexcept {
-  static ReactPropertyId<bool> propId{
-      L"ReactNative.Http"
-      L"UseMonolithicModule"};
-  return propId;
-}
-
-} // namespace
 
 std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
     const std::shared_ptr<facebook::react::MessageQueueThread> &batchingUIMessageQueue,
@@ -45,30 +28,15 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
       [props = context->Properties()]() { return Microsoft::React::CreateHttpModule(props); },
       jsMessageQueue);
 
-  if (!ReactPropertyBag(context->Properties()).Get(HttpUseMonolithicModuleProperty())) {
-    modules.emplace_back(
-        Microsoft::React::GetBlobModuleName(),
-        [props = context->Properties()]() { return Microsoft::React::CreateBlobModule(props); },
-        batchingUIMessageQueue);
-
-    modules.emplace_back(
-        Microsoft::React::GetFileReaderModuleName(),
-        [props = context->Properties()]() { return Microsoft::React::CreateFileReaderModule(props); },
-        batchingUIMessageQueue);
-  }
-
-  // AsyncStorageModule doesn't work without package identity (it indirectly depends on
-  // Windows.Storage.StorageFile), so check for package identity before adding it.
   modules.emplace_back(
-      "AsyncLocalStorage",
-      []() -> std::unique_ptr<facebook::xplat::module::CxxModule> {
-        if (HasPackageIdentity()) {
-          return std::make_unique<facebook::react::AsyncStorageModule>(L"asyncStorage");
-        } else {
-          return std::make_unique<facebook::react::AsyncStorageModuleWin32>();
-        }
-      },
-      jsMessageQueue);
+      Microsoft::React::GetBlobModuleName(),
+      [props = context->Properties()]() { return Microsoft::React::CreateBlobModule(props); },
+      batchingUIMessageQueue);
+
+  modules.emplace_back(
+      Microsoft::React::GetFileReaderModuleName(),
+      [props = context->Properties()]() { return Microsoft::React::CreateFileReaderModule(props); },
+      batchingUIMessageQueue);
 
   return modules;
 }

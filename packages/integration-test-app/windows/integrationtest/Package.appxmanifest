@@ -7,7 +7,7 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="7889084a-58b3-490f-9d1c-2abf27e2edb4"
+    Name="integrationtest"
     Publisher="CN=react-native-windows-testing"
     Version="1.0.0.0" />
 

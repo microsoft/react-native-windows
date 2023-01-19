@@ -38,7 +38,7 @@ class XHRTest extends React.Component<{...}, State> {
     this.state.xhr.send();
   };
 
-  _getSucceeded = () => {
+  _getSucceeded = (): boolean => {
     console.log(
       `_getSucceeded [${this.state.statusCode}],[${this.state.xhr.responseText.length}]`,
     );

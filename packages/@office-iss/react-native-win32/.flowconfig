@@ -78,7 +78,6 @@ flow/
 emoji=true
 
 exact_by_default=true
-exact_empty_objects=true
 
 format.bracket_spacing=false
 
@@ -100,6 +99,7 @@ suppress_type=$FlowFixMeProps
 suppress_type=$FlowFixMeState
 suppress_type=$FlowFixMeEmpty
 
+experimental.array_literal_providers=true
 inference_mode=constrain_writes
 
 [lints]
@@ -122,4 +122,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.187.1
+^0.194.0

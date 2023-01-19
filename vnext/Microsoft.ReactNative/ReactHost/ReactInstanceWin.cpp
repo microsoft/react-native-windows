@@ -42,16 +42,24 @@
 #ifndef CORE_ABI
 #include "Modules/AccessibilityInfoModule.h"
 #include "Modules/AlertModule.h"
+#endif
+#if !defined(CORE_ABI) || defined(USE_FABRIC)
 #include "Modules/Animated/NativeAnimatedModule.h"
+#endif
+#ifndef CORE_ABI
 #include "Modules/AppStateModule.h"
 #include "Modules/AppThemeModuleUwp.h"
 #include "Modules/ClipboardModule.h"
 #endif
 #include "Modules/DevSettingsModule.h"
 #ifndef CORE_ABI
-#include <Modules/ImageViewManagerModule.h>
 #include "Modules/DeviceInfoModule.h"
 #include "Modules/I18nManagerModule.h"
+#endif
+#if !defined(CORE_ABI) || defined(USE_FABRIC)
+#include <Modules/ImageViewManagerModule.h>
+#endif
+#ifndef CORE_ABI
 #include "Modules/LinkingManagerModule.h"
 #include "Modules/LogBoxModule.h"
 #include "Modules/NativeUIManager.h"
@@ -78,6 +86,7 @@
 #include <tuple>
 #include "ChakraRuntimeHolder.h"
 
+#include <Utils/Helpers.h>
 #include "CrashManager.h"
 #include "JsiApi.h"
 #include "ReactCoreInjection.h"
@@ -355,6 +364,17 @@ void ReactInstanceWin::LoadModules(
   registerTurboModule(
       L"NativeAnimatedModule",
       winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::NativeAnimatedModule>());
+
+#elif defined(CORE_ABI) && defined(USE_FABRIC)
+  if (Microsoft::ReactNative::IsFabricEnabled(m_reactContext->Properties())) {
+    registerTurboModule(
+        L"ImageLoader",
+        winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::ImageLoader>());
+
+    registerTurboModule(
+        L"NativeAnimatedModule",
+        winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::NativeAnimatedModule>());
+  }
 #endif
 
   registerTurboModule(
@@ -421,7 +441,9 @@ void ReactInstanceWin::Initialize() noexcept {
           devSettings->useWebDebugger = m_useWebDebugger;
           devSettings->useFastRefresh = m_isFastReloadEnabled;
           devSettings->bundleRootPath = BundleRootPath();
-
+          devSettings->platformName =
+              winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::GetPlatformName(
+                  strongThis->m_reactContext->Properties());
           devSettings->waitingForDebuggerCallback = GetWaitingForDebuggerCallback();
           devSettings->debuggerAttachCallback = GetDebuggerAttachCallback();
 
@@ -479,10 +501,20 @@ void ReactInstanceWin::Initialize() noexcept {
                       std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(winrt::to_string(tempPath));
                 }
               }
-            }
+
+              bool enableMultiThreadSupport{false};
+#ifdef USE_FABRIC
+              enableMultiThreadSupport = IsFabricEnabled(m_reactContext->Properties());
+#endif // USE_FABRIC
+
               devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
-                  devSettings, m_jsMessageThread.Load(), std::move(scriptStore), std::move(preparedScriptStore));
-              break;
+                  devSettings,
+                  m_jsMessageThread.Load(),
+                  std::move(scriptStore),
+                  std::move(preparedScriptStore),
+                  enableMultiThreadSupport);
+
+            } break;
 #endif // USE_V8
             case JSIEngine::Chakra:
 #ifndef CORE_ABI
@@ -541,7 +573,8 @@ void ReactInstanceWin::Initialize() noexcept {
 
             if (UseDeveloperSupport() && State() != ReactInstanceState::HasError) {
               folly::dynamic params = folly::dynamic::array(
-                  STRING(RN_PLATFORM),
+                  winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::GetPlatformName(
+                      m_reactContext->Properties()),
                   DebugBundlePath(),
                   SourceBundleHost(),
                   SourceBundlePort(),

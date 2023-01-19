@@ -70,11 +70,11 @@ class WebSocketBlobTest extends React.Component<{}, State> {
     });
   };
 
-  _socketIsConnected = () => {
+  _socketIsConnected = (): boolean => {
     return this.state.socketState === 1; //'OPEN'
   };
 
-  _socketIsDisconnected = () => {
+  _socketIsDisconnected = (): boolean => {
     return this.state.socketState === 3; //'CLOSED'
   };
 
@@ -107,7 +107,7 @@ class WebSocketBlobTest extends React.Component<{}, State> {
     this._sendBinary(this.state.testMessage);
   };
 
-  _receivedTestExpectedResponse = () => {
+  _receivedTestExpectedResponse = (): boolean => {
     // Can't iterate through Blob response. Blob.arrayBuffer() not supported.
     return (
       this.state.lastMessage?.size === this.state.testExpectedResponse.length

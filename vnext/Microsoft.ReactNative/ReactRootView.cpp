@@ -206,11 +206,11 @@ void ReactRootView::UninitRootView() noexcept {
     }
   }
 
-  if (m_touchEventHandler != nullptr) {
+  if (m_touchEventHandler) {
     m_touchEventHandler->RemoveTouchHandlers();
   }
 
-  if (!m_previewKeyboardEventHandlerOnRoot) {
+  if (m_previewKeyboardEventHandlerOnRoot) {
     m_previewKeyboardEventHandlerOnRoot->unhook();
   }
 

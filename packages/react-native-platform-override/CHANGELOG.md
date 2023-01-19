@@ -1,8 +1,88 @@
 # Change Log - react-native-platform-override
 
-This log was last generated on Sat, 15 Oct 2022 05:11:59 GMT and should not be manually modified.
+This log was last generated on Wed, 11 Jan 2023 06:15:30 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.9.0
+
+Wed, 11 Jan 2023 06:15:30 GMT
+
+### Minor changes
+
+- integrate 12/2/22 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.13
+- Bump @react-native-windows/package-utils to v0.0.0-canary.39
+- Bump @rnw-scripts/jest-unittest-config to v1.5.0
+- Bump @rnw-scripts/just-task to v2.3.5
+
+## 1.8.5
+
+Tue, 13 Dec 2022 06:15:26 GMT
+
+### Patches
+
+- Standardize on the repository field in package.json (dannyvv@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.12
+- Bump @react-native-windows/package-utils to v0.0.0-canary.38
+- Bump @rnw-scripts/eslint-config to v1.1.15
+- Bump @rnw-scripts/jest-unittest-config to v1.4.3
+- Bump @rnw-scripts/just-task to v2.3.4
+- Bump @rnw-scripts/ts-config to v2.0.3
+
+## 1.8.4
+
+Sat, 10 Dec 2022 06:15:31 GMT
+
+### Patches
+
+- Remove work around for broken Utilities import in core (30809111+acoates-ms@users.noreply.github.com)
+
+## 1.8.3
+
+Fri, 02 Dec 2022 06:19:04 GMT
+
+### Patches
+
+- Integrate 10/10 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.11
+- Bump @react-native-windows/package-utils to v0.0.0-canary.37
+- Bump @rnw-scripts/jest-unittest-config to v1.4.2
+- Bump @rnw-scripts/just-task to v2.3.3
+
+## 1.8.2
+
+Wed, 16 Nov 2022 06:16:01 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.10
+- Bump @react-native-windows/package-utils to v0.0.0-canary.36
+- Bump @rnw-scripts/just-task to v2.3.2
+
+## 1.8.1
+
+Sat, 12 Nov 2022 06:17:23 GMT
+
+### Patches
+
+- Integrate 10/10 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.9
+- Bump @react-native-windows/package-utils to v0.0.0-canary.35
+- Bump @rnw-scripts/jest-unittest-config to v1.4.1
+- Bump @rnw-scripts/just-task to v2.3.1
+
+## 1.8.0
+
+Thu, 10 Nov 2022 06:17:11 GMT
+
+### Minor changes
+
+- integration 9/26/22 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.8
+- Bump @react-native-windows/package-utils to v0.0.0-canary.34
+- Bump @rnw-scripts/jest-unittest-config to v1.4.0
+- Bump @rnw-scripts/just-task to v2.3.0
 
 ## 1.7.1
 

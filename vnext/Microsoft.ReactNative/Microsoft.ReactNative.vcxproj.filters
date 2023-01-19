@@ -65,6 +65,9 @@
     <ClCompile Include="Modules\Animated\AnimatedNode.cpp">
       <Filter>Modules\Animated</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\Animated\AnimatedPlatformConfig.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
     <ClCompile Include="Modules\Animated\AnimationDriver.cpp">
       <Filter>Modules\Animated</Filter>
     </ClCompile>
@@ -269,9 +272,6 @@
     <ClCompile Include="Utils\AccessibilityUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Utils\Helpers.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
     <ClCompile Include="Utils\LocalBundleReader.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
@@ -412,6 +412,9 @@
     <ClInclude Include="Modules\Animated\AnimatedNode.h">
       <Filter>Modules\Animated</Filter>
     </ClInclude>
+    <ClInclude Include="Modules\Animated\AnimatedPlatformConfig.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
     <ClInclude Include="Modules\Animated\AnimatedNodeType.h">
       <Filter>Modules\Animated</Filter>
     </ClInclude>
@@ -419,6 +422,9 @@
       <Filter>Modules\Animated</Filter>
     </ClInclude>
     <ClInclude Include="Modules\Animated\AnimationType.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\AnimationUtils.h">
       <Filter>Modules\Animated</Filter>
     </ClInclude>
     <ClInclude Include="Modules\Animated\CalculatedAnimationDriver.h">

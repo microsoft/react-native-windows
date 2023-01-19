@@ -66,10 +66,11 @@ facebook::react::SharedEventEmitter EventEmitterForComponent(
   return nullptr;
 }
 
-CompositionEventHandler::CompositionEventHandler(const Mso::React::IReactContext &context) : m_context(&context) {}
+CompositionEventHandler::CompositionEventHandler(const winrt::Microsoft::ReactNative::ReactContext &context)
+    : m_context(context) {}
 
 CompositionEventHandler::CompositionEventHandler(
-    const Mso::React::IReactContext &context,
+    const winrt::Microsoft::ReactNative::ReactContext &context,
     const winrt::Microsoft::ReactNative::CompositionRootView &CompositionRootView)
     : CompositionEventHandler(context) {
   m_compRootView = CompositionRootView;
@@ -108,8 +109,8 @@ void CompositionEventHandler::ScrollWheel(
     facebook::react::SurfaceId surfaceId,
     facebook::react::Point pt,
     uint32_t delta) {
-  if (std::shared_ptr<FabricUIManager> fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
-          winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))) {
+  if (std::shared_ptr<FabricUIManager> fabricuiManager =
+          ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties())) {
     facebook::react::Point ptLocal;
 
     auto rootComponentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(surfaceId);
@@ -302,8 +303,8 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
   }
 
   std::vector<ReactTaggedView> hoveredViews;
-  std::shared_ptr<FabricUIManager> fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
-      winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()));
+  std::shared_ptr<FabricUIManager> fabricuiManager =
+      ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties());
   auto &viewRegistry = fabricuiManager->GetViewRegistry();
   for (auto &view : eventPathViews) {
     auto componentViewDescriptor = viewRegistry.componentViewDescriptorWithTag(view->tag());
@@ -376,8 +377,8 @@ void CompositionEventHandler::MouseMove(
   auto x = GET_X_LPARAM(lParam);
   auto y = GET_Y_LPARAM(lParam);
 
-  if (std::shared_ptr<FabricUIManager> fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
-          winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))) {
+  if (std::shared_ptr<FabricUIManager> fabricuiManager =
+          ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties())) {
     facebook::react::Point ptLocal;
 
     auto rootComponentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(surfaceId);
@@ -431,8 +432,8 @@ void CompositionEventHandler::PointerPressed(
 
   const auto eventType = TouchEventType::Start;
 
-  if (std::shared_ptr<FabricUIManager> fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
-          winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))) {
+  if (std::shared_ptr<FabricUIManager> fabricuiManager =
+          ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties())) {
     facebook::react::Point ptLocal;
 
     auto rootComponentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(surfaceId);
@@ -514,8 +515,8 @@ void CompositionEventHandler::ButtonDown(
   auto y = GET_Y_LPARAM(lParam);
   const auto eventType = TouchEventType::Start;
 
-  if (std::shared_ptr<FabricUIManager> fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
-          winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))) {
+  if (std::shared_ptr<FabricUIManager> fabricuiManager =
+          ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties())) {
     facebook::react::Point ptLocal;
 
     auto rootComponentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(surfaceId);
@@ -583,8 +584,8 @@ void CompositionEventHandler::PointerUp(
 
   const auto eventType = TouchEventType::Start;
 
-  if (std::shared_ptr<FabricUIManager> fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
-          winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))) {
+  if (std::shared_ptr<FabricUIManager> fabricuiManager =
+          ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties())) {
     facebook::react::Point ptLocal;
 
     auto rootComponentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(surfaceId);
@@ -624,8 +625,8 @@ void CompositionEventHandler::ButtonUp(
   auto x = GET_X_LPARAM(lParam);
   auto y = GET_Y_LPARAM(lParam);
 
-  if (std::shared_ptr<FabricUIManager> fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
-          winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))) {
+  if (std::shared_ptr<FabricUIManager> fabricuiManager =
+          ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties())) {
     facebook::react::Point ptLocal;
 
     auto rootComponentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(surfaceId);
@@ -726,8 +727,7 @@ void CompositionEventHandler::DispatchTouchEvent(
     facebook::react::SurfaceId surfaceId,
     TouchEventType eventType,
     PointerId pointerId) {
-  auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
-      winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()));
+  auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties());
 
   if (!fabricuiManager)
     return;

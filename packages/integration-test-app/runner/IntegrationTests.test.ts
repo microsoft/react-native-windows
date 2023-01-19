@@ -26,9 +26,6 @@ registerTests([
     // https://github.com/facebook/react-native/commit/61346d303a44b643b6029835018518d48c285a69
     skip('TimersTest'),
 
-    // Our builtin implementation doens't implement mergeItems
-    skip('AsyncStorageTest'),
-
     // ref.measure returns bad results for us (#5934)
     skip('LayoutEventsTest'),
 

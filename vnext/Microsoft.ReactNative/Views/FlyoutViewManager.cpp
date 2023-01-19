@@ -17,6 +17,7 @@
 #include <UI.Xaml.Media.h>
 #include <Utils/Helpers.h>
 #include <Utils/PropertyHandlerUtils.h>
+#include <XamlHelper.h>
 
 #ifdef USE_WINUI3
 namespace winrt::Microsoft::UI::Xaml::Controls::Primitives {
@@ -122,7 +123,7 @@ class FlyoutShadowNode : public ShadowNodeBase {
   winrt::Popup GetFlyoutParentPopup() const;
   winrt::FlyoutPresenter GetFlyoutPresenter() const;
   void OnShowFlyout();
-  void LogErrorAndClose(const string &error);
+  void LogErrorAndClose(const std::string &error);
   xaml::FrameworkElement m_targetElement = nullptr;
   winrt::Flyout m_flyout = nullptr;
   bool m_isLightDismissEnabled = true;

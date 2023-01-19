@@ -15,10 +15,6 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)AsyncStorage\AsyncStorageManager.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)AsyncStorage\FollyDynamicConverter.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)AsyncStorage\KeyValueStorage.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)AsyncStorage\StorageFileIO.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)BaseScriptStoreImpl.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ChakraRuntimeHolder.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CxxMessageQueue.cpp" />
@@ -40,17 +36,15 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)LayoutAnimation.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Logging.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MemoryMappedBuffer.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\AsyncStorageModule.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\AsyncStorageModuleWin32.cpp">
-      <ExcludedFromBuild Condition="'$(ApplicationType)' == ''">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\BlobModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\CxxModuleUtilities.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\ExceptionsManagerModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\FileReaderModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\HttpModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\I18nModule.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\NetworkingModule.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\NetworkingModule.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\PlatformConstantsModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\SourceCodeModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\StatusBarManagerModule.cpp" />
@@ -76,10 +70,6 @@
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\include\Shared\cdebug.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)AbiSafe.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorageModule.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\AsyncStorageManager.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\FollyDynamicConverter.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\KeyValueStorage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CppRuntimeOptions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)HermesSamplingProfiler.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)HermesShim.h" />
@@ -114,8 +104,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Networking\WinRTTypes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Networking\WinRTWebSocketResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)RuntimeOptions.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\AsyncStorageModuleWin32.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\StorageFileIO.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)BaseScriptStoreImpl.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)BatchingMessageQueueThread.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntimeHolder.h" />
@@ -160,6 +148,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)V8JSIRuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)WebSocketJSExecutorFactory.h" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\ReactRootViewTagGenerator.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Utils\ImageUtils.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Utils\Helpers.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)tracing\rnw.wprp" />
@@ -203,6 +193,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\YogaStylableProps.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\BatchedEventQueue.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\ComponentDescriptor.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\CoreFeatures.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventBeat.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventDispatcher.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventEmitter.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />

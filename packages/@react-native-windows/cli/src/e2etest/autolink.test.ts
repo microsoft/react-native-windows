@@ -139,9 +139,6 @@ test('one invalid cpp autolink dependency', () => {
         platforms: {
           windows: {},
         },
-        assets: [],
-        hooks: {},
-        params: [],
       },
     },
     {
@@ -167,9 +164,6 @@ test('one invalid cs autolink dependency', () => {
         platforms: {
           windows: {},
         },
-        assets: [],
-        hooks: {},
-        params: [],
       },
     },
     {
@@ -203,9 +197,6 @@ test('one valid cpp autolink dependency', () => {
             ],
           },
         },
-        assets: [],
-        hooks: {},
-        params: [],
       },
     },
     {
@@ -243,9 +234,6 @@ test('one valid cs autolink dependency', () => {
             ],
           },
         },
-        assets: [],
-        hooks: {},
-        params: [],
       },
     },
     {
@@ -430,9 +418,6 @@ test('Indirect autolink dependency', () => {
             ],
           },
         },
-        assets: [],
-        hooks: {},
-        params: [],
       },
     },
     {

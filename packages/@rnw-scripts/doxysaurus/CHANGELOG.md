@@ -1,8 +1,74 @@
 # Change Log - @rnw-scripts/doxysaurus
 
-This log was last generated on Sat, 15 Oct 2022 05:11:59 GMT and should not be manually modified.
+This log was last generated on Wed, 11 Jan 2023 06:15:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.4.0
+
+Wed, 11 Jan 2023 06:15:29 GMT
+
+### Minor changes
+
+- integrate 12/2/22 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.13
+- Bump @rnw-scripts/jest-unittest-config to v1.5.0
+- Bump @rnw-scripts/just-task to v2.3.5
+
+## 0.3.4
+
+Tue, 13 Dec 2022 06:15:23 GMT
+
+### Patches
+
+- Standardize on the repository field in package.json (dannyvv@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.12
+- Bump @rnw-scripts/eslint-config to v1.1.15
+- Bump @rnw-scripts/jest-unittest-config to v1.4.3
+- Bump @rnw-scripts/just-task to v2.3.4
+- Bump @rnw-scripts/ts-config to v2.0.3
+
+## 0.3.3
+
+Fri, 02 Dec 2022 06:19:03 GMT
+
+### Patches
+
+- Integrate 10/10 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.11
+- Bump @rnw-scripts/jest-unittest-config to v1.4.2
+- Bump @rnw-scripts/just-task to v2.3.3
+
+## 0.3.2
+
+Wed, 16 Nov 2022 06:16:01 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.10
+- Bump @rnw-scripts/just-task to v2.3.2
+
+## 0.3.1
+
+Sat, 12 Nov 2022 06:17:22 GMT
+
+### Patches
+
+- Integrate 10/10 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.9
+- Bump @rnw-scripts/jest-unittest-config to v1.4.1
+- Bump @rnw-scripts/just-task to v2.3.1
+
+## 0.3.0
+
+Thu, 10 Nov 2022 06:17:10 GMT
+
+### Minor changes
+
+- integration 9/26/22 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.8
+- Bump @rnw-scripts/jest-unittest-config to v1.4.0
+- Bump @rnw-scripts/just-task to v2.3.0
 
 ## 0.2.1
 

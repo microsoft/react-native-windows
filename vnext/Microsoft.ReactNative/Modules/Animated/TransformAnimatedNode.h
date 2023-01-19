@@ -5,6 +5,7 @@
 #include <JSValue.h>
 #include "AnimatedNode.h"
 #include "FacadeType.h"
+#include "JSValue.h"
 
 namespace Microsoft::ReactNative {
 struct TransformConfig {
@@ -21,6 +22,7 @@ class TransformAnimatedNode final : public AnimatedNode {
       const winrt::Microsoft::ReactNative::JSValueObject &config,
       const std::shared_ptr<NativeAnimatedNodeManager> &manager);
   std::unordered_map<FacadeType, int64_t> GetMapping();
+  void CollectViewUpdates(winrt::Microsoft::ReactNative::JSValueObject &props);
 
  private:
   std::vector<TransformConfig> m_transformConfigs;
@@ -33,5 +35,6 @@ class TransformAnimatedNode final : public AnimatedNode {
   static constexpr std::string_view s_animatedName{"animated"};
   static constexpr std::string_view s_nodeTagName{"nodeTag"};
   static constexpr std::string_view s_valueName{"value"};
+  static constexpr std::string_view s_transformPropName{"transform"};
 };
 } // namespace Microsoft::ReactNative

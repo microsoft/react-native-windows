@@ -156,6 +156,7 @@
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\callinvoker\ReactCommon\CallInvoker.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\callinvoker\ReactCommon\SchedulerPriority.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\LongLivedObject.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\bridging\CallbackWrapper.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboCxxModule.h" />

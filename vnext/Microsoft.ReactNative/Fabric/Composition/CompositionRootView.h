@@ -4,6 +4,7 @@
 
 #include "CompositionRootView.g.h"
 
+#include <ReactContext.h>
 #include <winrt/Microsoft.ReactNative.h>
 #include "CompositionEventHandler.h"
 #include "ReactHost/React.h"
@@ -14,21 +15,13 @@ namespace winrt::Microsoft::ReactNative::implementation {
 struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Microsoft::ReactNative::ICompositionRootView {
   CompositionRootView() noexcept;
 
-  // property ReactNativeHost
-  ReactNative::ReactNativeHost ReactNativeHost() noexcept;
-  void ReactNativeHost(ReactNative::ReactNativeHost const &value) noexcept;
-
-  // property ComponentName
-  hstring ComponentName() noexcept;
-  void ComponentName(hstring const &value) noexcept;
+  // property ReactViewHost
+  ReactNative::IReactViewHost ReactViewHost() noexcept;
+  void ReactViewHost(ReactNative::IReactViewHost const &value) noexcept;
 
   // property RootVisual
   winrt::Microsoft::ReactNative::Composition::IVisual RootVisual() noexcept;
   void RootVisual(winrt::Microsoft::ReactNative::Composition::IVisual const &value) noexcept;
-
-  // property InitialProps
-  ReactNative::JSValueArgWriter InitialProps() noexcept;
-  void InitialProps(ReactNative::JSValueArgWriter const &value) noexcept;
 
   // property Size
   winrt::Windows::Foundation::Size Size() noexcept;
@@ -37,8 +30,6 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
   // ScaleFactor (DPI)
   double ScaleFactor() noexcept;
   void ScaleFactor(double value) noexcept;
-
-  void ReloadView() noexcept;
 
   Windows::Foundation::Size Measure(Windows::Foundation::Size const &availableSize) const;
   Windows::Foundation::Size Arrange(Windows::Foundation::Size finalSize) const;
@@ -58,27 +49,21 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
 
  public: // IReactViewInstance UI-thread implementation
   void InitRootView(
-      Mso::CntPtr<Mso::React::IReactInstance> &&reactInstance,
-      Mso::React::ReactViewOptions &&viewOptions) noexcept;
+      winrt::Microsoft::ReactNative::IReactContext &&context,
+      winrt::Microsoft::ReactNative::ReactViewOptions &&viewOptions) noexcept;
   void UpdateRootView() noexcept;
   void UninitRootView() noexcept;
 
  private:
-  ReactNative::ReactNativeHost m_reactNativeHost{nullptr};
-  hstring m_componentName;
-  ReactNative::JSValueArgWriter m_initialPropsWriter;
-  bool m_isPerspectiveEnabled{true};
   bool m_isInitialized{false};
   bool m_isJSViewAttached{false};
   IReactDispatcher m_uiDispatcher{nullptr};
   int64_t m_rootTag{-1};
   double m_scaleFactor{1.0};
   winrt::Windows::Foundation::Size m_size;
-  std::unique_ptr<Mso::React::ReactOptions> m_reactOptions;
-  Mso::WeakPtr<Mso::React::IReactInstance> m_weakReactInstance;
-  Mso::CntPtr<Mso::React::IReactContext> m_context;
-  Mso::CntPtr<Mso::React::IReactViewHost> m_reactViewHost;
-  std::unique_ptr<Mso::React::ReactViewOptions> m_reactViewOptions;
+  winrt::Microsoft::ReactNative::ReactContext m_context;
+  winrt::Microsoft::ReactNative::IReactViewHost m_reactViewHost;
+  winrt::Microsoft::ReactNative::ReactViewOptions m_reactViewOptions;
   std::shared_ptr<::Microsoft::ReactNative::CompositionEventHandler> m_CompositionEventHandler;
   winrt::Microsoft::ReactNative::Composition::IVisual m_rootVisual{nullptr};
   void UpdateRootViewInternal() noexcept;
@@ -86,10 +71,7 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
   void EnsureLoadingUI() noexcept;
   void ShowInstanceLoaded() noexcept;
   void ShowInstanceError() noexcept;
-  void ShowInstanceWaiting() noexcept;
   void ShowInstanceLoading() noexcept;
-  Mso::React::IReactViewHost *ReactViewHost() noexcept;
-  void ReactViewHost(Mso::React::IReactViewHost *viewHost) noexcept;
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation

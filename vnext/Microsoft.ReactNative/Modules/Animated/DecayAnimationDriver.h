@@ -17,12 +17,14 @@ class DecayAnimationDriver : public CalculatedAnimationDriver {
       const std::shared_ptr<NativeAnimatedNodeManager> &manager);
 
  protected:
+  bool Update(double timeDeltaMs, bool restarting) override;
   std::tuple<float, double> GetValueAndVelocityForTime(double time) override;
   bool IsAnimationDone(double currentValue, std::optional<double> previousValue, double currentVelocity) override;
 
  private:
   double m_velocity{0};
   double m_deceleration{0};
+  double m_lastValue{0};
 
   static constexpr std::string_view s_velocityName{"velocity"};
   static constexpr std::string_view s_decelerationName{"deceleration"};

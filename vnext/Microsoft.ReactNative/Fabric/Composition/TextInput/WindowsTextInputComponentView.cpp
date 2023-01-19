@@ -782,6 +782,7 @@ void WindowsTextInputComponentView::updateLayoutMetrics(
   m_imgWidth = newWidth;
   m_imgHeight = newHeight;
 
+  UpdateCenterPropertySet();
   m_visual.Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});

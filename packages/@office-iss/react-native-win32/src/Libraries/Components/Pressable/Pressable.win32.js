@@ -8,21 +8,6 @@
  * @format
  */
 
-import * as React from 'react';
-import {useMemo, useState, useRef, useImperativeHandle} from 'react';
-import useAndroidRippleForView, {
-  type RippleConfig,
-} from './useAndroidRippleForView';
-import type {
-  AccessibilityActionEvent,
-  AccessibilityActionInfo,
-  AccessibilityRole,
-  AccessibilityState,
-  AccessibilityValue,
-} from '../View/ViewAccessibility';
-import {PressabilityDebugView} from '../../Pressability/PressabilityDebug';
-import usePressability from '../../Pressability/usePressability';
-import {type RectOrSize} from '../../StyleSheet/Rect';
 import type {
   LayoutEvent,
   MouseEvent,
@@ -32,6 +17,22 @@ import type {
   FocusEvent,
   KeyEvent, // Windows]
 } from '../../Types/CoreEventTypes';
+import type {
+  AccessibilityActionEvent,
+  AccessibilityActionInfo,
+  AccessibilityRole,
+  AccessibilityState,
+  AccessibilityValue,
+} from '../View/ViewAccessibility';
+
+import {PressabilityDebugView} from '../../Pressability/PressabilityDebug';
+import usePressability from '../../Pressability/usePressability';
+import {type RectOrSize} from '../../StyleSheet/Rect';
+import useAndroidRippleForView, {
+  type RippleConfig,
+} from './useAndroidRippleForView';
+import * as React from 'react';
+import {useImperativeHandle, useMemo, useRef, useState} from 'react';
 import type {HandledKeyboardEvent} from '../../Components/View/ViewPropTypes';
 import View from '../View/View';
 import TextInputState from '../TextInput/TextInputState';
@@ -70,7 +71,7 @@ type Props = $ReadOnly<{|
    * see https://reactnative.dev/docs/accessibility#accessibilitystate
    */
   'aria-busy'?: ?boolean,
-  'aria-checked'?: ?boolean,
+  'aria-checked'?: ?boolean | 'mixed',
   'aria-disabled'?: ?boolean,
   'aria-expanded'?: ?boolean,
   'aria-selected'?: ?boolean,
@@ -288,22 +289,6 @@ function Pressable(props: Props, forwardedRef): React.Node {
   const viewRef = useRef<React.ElementRef<typeof View> | null>(null);
   useImperativeHandle(forwardedRef, () => viewRef.current);
 
-  // [Windows
-  const _onBlur = (event: BlurEvent) => {
-    TextInputState.blurInput(viewRef.current);
-    if (props.onBlur) {
-      props.onBlur(event);
-    }
-  };
-
-  const _onFocus = (event: FocusEvent) => {
-    TextInputState.focusInput(viewRef.current);
-    if (props.onFocus) {
-      props.onFocus(event);
-    }
-  };
-  // Windows]
-
   const android_rippleConfig = useAndroidRippleForView(android_ripple, viewRef);
 
   const [pressed, setPressed] = usePressState(testOnly_pressed === true);
@@ -417,10 +402,6 @@ function Pressable(props: Props, forwardedRef): React.Node {
     <View
       {...restPropsWithDefaults}
       {...eventHandlers}
-      // [Windows
-      onBlur={_onBlur}
-      onFocus={_onFocus}
-      // Windows]
       ref={viewRef}
       style={typeof style === 'function' ? style({pressed}) : style}>
       {typeof children === 'function' ? children({pressed}) : children}

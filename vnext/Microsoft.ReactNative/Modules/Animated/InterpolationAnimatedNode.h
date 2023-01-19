@@ -17,9 +17,9 @@ class InterpolationAnimatedNode final : public ValueAnimatedNode {
   virtual void OnDetachedFromNode(int64_t animatedNodeTag) override;
   virtual void OnAttachToNode(int64_t animatedNodeTag) override;
 
-  static constexpr std::wstring_view ExtrapolateTypeIdentity = L"identity";
-  static constexpr std::wstring_view ExtrapolateTypeClamp = L"clamp";
-  static constexpr std::wstring_view ExtrapolateTypeExtend = L"extend";
+  static constexpr std::string_view ExtrapolateTypeIdentity = "identity";
+  static constexpr std::string_view ExtrapolateTypeClamp = "clamp";
+  static constexpr std::string_view ExtrapolateTypeExtend = "extend";
 
  private:
   comp::ExpressionAnimation CreateExpressionAnimation(const winrt::Compositor &compositor, ValueAnimatedNode &parent);
@@ -33,6 +33,8 @@ class InterpolationAnimatedNode final : public ValueAnimatedNode {
       const std::wstring &outputMax);
   winrt::hstring GetLeftExpression(const winrt::hstring &value, const winrt::hstring &leftInterpolateExpression);
   winrt::hstring GetRightExpression(const winrt::hstring &, const winrt::hstring &rightInterpolateExpression);
+
+  double InterpolateValue(double value);
 
   comp::ExpressionAnimation m_rawValueAnimation{nullptr};
   comp::ExpressionAnimation m_offsetAnimation{nullptr};

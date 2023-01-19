@@ -35,18 +35,29 @@ steps:
       configuration: ${{ parameters.configuration }}
       buildEnvironment: ${{ parameters.buildEnvironment }}
 
-  - script: $(Build.SourcesDirectory)\.ado\scripts\SetupLocalDumps.cmd cl
-    displayName: Set LocalDumps for cl.exe
-    workingDirectory: $(Build.SourcesDirectory)
-
-  - script: $(Build.SourcesDirectory)\.ado\scripts\SetupLocalDumps.cmd link
-    displayName: Set LocalDumps for link.exe
-    workingDirectory: $(Build.SourcesDirectory)
-
-  - script: $(Build.SourcesDirectory)\.ado\scripts\SetupLocalDumps.cmd msbuild
-    displayName: Set LocalDumps for msbuild.exe
-    workingDirectory: $(Build.SourcesDirectory)
+  - powershell: |
+        & reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\Windows Error Reporting" /s
+        & reg query "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\Windows Error Reporting" /s
+        & reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AeDebug" /s
+        Enable-WindowsErrorReporting
+    displayName: Check and enable Windows Error Reporting
 
   - powershell: |
-        Write-Host "##vso[task.setvariable variable=MSBUILDDEBUGPATH]$(Build.StagingDirectory)\CrashDumps"
+        Write-Host "##vso[task.setvariable variable=CrashDumpRootPath]$(Build.StagingDirectory)\CrashDumps"
+        New-Item -Path '$(Build.StagingDirectory)\CrashDumps' -ItemType Directory
+    displayName: Set CrashDumpRootPath
+
+  - powershell: |
+        Write-Host "##vso[task.setvariable variable=MSBUILDDEBUGPATH]$(CrashDumpRootPath)"
     displayName: Set MSBUILDDEBUGPATH
+
+  - powershell: |
+        Write-Host "##vso[task.setvariable variable=ProcDumpPath]$(Build.StagingDirectory)\Procdump"
+    displayName: Set ProcDumpPath
+
+  - task: PowerShell@2
+    displayName: Setup ProcDump as AeDebug
+    inputs:
+      targetType: filePath # filePath | inline
+      filePath: $(Build.SourcesDirectory)\.ado\scripts\RunProcDump.ps1
+      arguments: "-ProcDumpArgs @('-mm', '-i', '$(CrashDumpRootPath)') -ProcDumpInstallPath '$(ProcDumpPath)' -Verbose"

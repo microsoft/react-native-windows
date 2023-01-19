@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #pragma once
+#include <CppWinRTIncludes.h>
 #include <JSValue.h>
 #include <UI.Composition.h>
 #include <unordered_set>
@@ -12,13 +13,14 @@ using namespace comp;
 }
 
 namespace Microsoft::ReactNative {
+typedef std::function<void(double)> ValueListenerCallback;
+
 class ValueAnimatedNode : public AnimatedNode {
  public:
   ValueAnimatedNode(
       int64_t tag,
       const winrt::Microsoft::ReactNative::JSValueObject &config,
       const std::shared_ptr<NativeAnimatedNodeManager> &manager);
-  ValueAnimatedNode(int64_t tag, const std::shared_ptr<NativeAnimatedNodeManager> &manager);
   double Value();
   double RawValue();
   void RawValue(double value);
@@ -26,6 +28,9 @@ class ValueAnimatedNode : public AnimatedNode {
   void Offset(double offset);
   void FlattenOffset();
   void ExtractOffset();
+  void OnValueUpdate();
+  void ValueListener(const ValueListenerCallback &callback);
+
   comp::CompositionPropertySet PropertySet() {
     return m_propertySet;
   };
@@ -42,7 +47,6 @@ class ValueAnimatedNode : public AnimatedNode {
 
  protected:
   comp::CompositionPropertySet m_propertySet{nullptr};
-
   static constexpr std::string_view s_inputName{"input"};
 
   static constexpr std::string_view s_jsValueName{"value"};
@@ -53,5 +57,8 @@ class ValueAnimatedNode : public AnimatedNode {
   std::unordered_set<int64_t> m_dependentPropsNodes{};
   std::unordered_set<int64_t> m_activeAnimations{};
   std::unordered_set<int64_t> m_activeTrackingNodes{};
+  double m_value{0.0};
+  double m_offset{0.0};
+  ValueListenerCallback m_valueListener{};
 };
 } // namespace Microsoft::ReactNative
