@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20221202-2018-dfbb63996",
+  "baseVersion": "0.0.0-20221214-2026-25a25ea23",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "c7af58fd30d2d5ad0171b068a4aa2ccc59d35783"
+      "baseHash": "3078c10e59be5ba72f885fa75ba8ca5fccf63747"
     },
     {
       "type": "derived",
@@ -98,7 +98,7 @@
       "type": "patch",
       "file": "src/babel-plugin-codegen/GenerateViewConfigJs.js",
       "baseFile": "packages/react-native-codegen/src/generators/components/GenerateViewConfigJs.js",
-      "baseHash": "8988306644c4d71ef27159a93e0722f999a96167",
+      "baseHash": "9a5a7e8ab112e03b54953607953a09b8b372a1de",
       "issue": 5430
     },
     {
@@ -112,7 +112,7 @@
       "type": "patch",
       "file": "src/babel-plugin-codegen/package.json",
       "baseFile": "packages/babel-plugin-codegen/package.json",
-      "baseHash": "e6151216a4159d51461db6ca7677a8fa7ef30a13",
+      "baseHash": "709b8cc211129e1d3188b689b8af7df1653a064b",
       "issue": 5430
     },
     {
@@ -174,13 +174,6 @@
       "file": "src/Libraries/Alert/NativeDialogManagerWindows.js"
     },
     {
-      "type": "patch",
-      "file": "src/Libraries/Animated/nodes/AnimatedInterpolation.windows.js",
-      "baseFile": "Libraries/Animated/nodes/AnimatedInterpolation.js",
-      "baseHash": "7dae17d655423f7e6213c5e0b15984aa2c13f1fd",
-      "issue": 11018
-    },
-    {
       "type": "platform",
       "file": "src/Libraries/AppTheme/AppTheme.js"
     },
@@ -210,7 +203,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Button.windows.js",
       "baseFile": "Libraries/Components/Button.js",
-      "baseHash": "d640d294264a3e147125043c88381108c949158a"
+      "baseHash": "31731fd48736bfcd3c36eb60a242b187236e124b"
     },
     {
       "type": "copy",
@@ -285,10 +278,17 @@
       "baseHash": "bde271c753be96e28b5f1b539d0d9a0cbeee77ab"
     },
     {
+      "type": "derived",
+      "file": "src/Libraries/Components/ScrollView/ScrollView.windows.js",
+      "baseFile": "Libraries/Components/ScrollView/ScrollView.js",
+      "baseHash": "3f6e4ed14ff4a94e97873e0eb7c6a77c2cc33e2a",
+      "issue": 0
+    },
+    {
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "6ea39d9b574afdfeda40969a192df3a342320082"
+      "baseHash": "7305b4ef570eb19e8f4238e252d8c788ce974b16"
     },
     {
       "type": "patch",
@@ -323,13 +323,13 @@
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/TouchableOpacity.windows.js",
       "baseFile": "Libraries/Components/Touchable/TouchableOpacity.js",
-      "baseHash": "c29a39f9a6a5804a68e753126e9d1c1b63983bbe"
+      "baseHash": "c02e7007d14d024c9093da26815a9a0ca94b0c1b"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/TouchableWithoutFeedback.windows.js",
       "baseFile": "Libraries/Components/Touchable/TouchableWithoutFeedback.js",
-      "baseHash": "08509c3728ada67754e7aefa1d0c00b56e06eb21"
+      "baseHash": "e66d46f759afeb7058d65dbab52c9802f6320f6c"
     },
     {
       "type": "patch",
@@ -342,7 +342,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/View.windows.js",
       "baseFile": "Libraries/Components/View/View.js",
-      "baseHash": "7945214eb22374ea322b95d12cf8d68a4cf321e4"
+      "baseHash": "e1e15345be1d7794284bca007299ca5814969983"
     },
     {
       "type": "patch",
@@ -368,14 +368,42 @@
       "type": "copy",
       "file": "src/Libraries/DevToolsSettings/DevToolsSettingsManager.windows.js",
       "baseFile": "Libraries/DevToolsSettings/DevToolsSettingsManager.android.js",
-      "baseHash": "cfac368d69ef306cf0af8072366008af3d925049"
+      "baseHash": "1c9eb481e8ed077fa650e3ea34837e2a31310366"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Image/Image.windows.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseHash": "9187c9a894ef6e8f00acd01dea1fd36a52e390f7",
+      "baseHash": "7d73c2d79bc09080618747146ebbba9b9da7dbca",
       "issue": 4590
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/LogBox/UI/LogBoxInspectorCodeFrame.windows.js",
+      "baseFile": "Libraries/LogBox/UI/LogBoxInspectorCodeFrame.js",
+      "baseHash": "dff994bb88b8c91090c381c871e6dc83d2511004",
+      "issue": 0
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/LogBox/UI/LogBoxInspectorHeader.windows.js",
+      "baseFile": "Libraries/LogBox/UI/LogBoxInspectorHeader.js",
+      "baseHash": "e7ceb23d0449269b419414000fb5938898418a67",
+      "issue": 0
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/LogBox/UI/LogBoxInspectorReactFrames.windows.js",
+      "baseFile": "Libraries/LogBox/UI/LogBoxInspectorReactFrames.js",
+      "baseHash": "04c1210d0198315af8358b22a81dc74dc76ef752",
+      "issue": 0
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/LogBox/UI/LogBoxInspectorStackFrame.windows.js",
+      "baseFile": "Libraries/LogBox/UI/LogBoxInspectorStackFrame.js",
+      "baseHash": "663d3325298404d7c012a6aa53e833eb5fc2ec76",
+      "issue": 0
     },
     {
       "type": "derived",
@@ -414,7 +442,7 @@
       "type": "patch",
       "file": "src/Libraries/Pressability/Pressability.windows.js",
       "baseFile": "Libraries/Pressability/Pressability.js",
-      "baseHash": "bf6fd4d0e38e5d8b6fd8395503cf452fa08a5fc5",
+      "baseHash": "341cc5f4f57c16994ee78c06819a70dd2e993bba",
       "issue": 4379
     },
     {
@@ -437,7 +465,7 @@
       "type": "derived",
       "file": "src/Libraries/Text/Text.windows.js",
       "baseFile": "Libraries/Text/Text.js",
-      "baseHash": "abdf0022b453823f9f4a8627519ba54f5fcad841"
+      "baseHash": "6aa0c6611ba260bf235610429481a638e61e5279"
     },
     {
       "type": "patch",

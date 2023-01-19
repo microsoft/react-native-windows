@@ -10,10 +10,11 @@
 
 'use strict';
 import type {
-  PropTypeAnnotation,
-  EventTypeShape,
   ComponentShape,
+  EventTypeShape,
+  PropTypeAnnotation,
 } from '../../CodegenSchema';
+import type {SchemaType} from '../../CodegenSchema';
 
 const j = require('jscodeshift');
 
@@ -276,7 +277,7 @@ function buildViewConfig(
 
   const bubblingEventNames = component.events
     .filter(event => event.bubblingType === 'bubble')
-    .reduce((bubblingEvents, event) => {
+    .reduce((bubblingEvents: Array<any>, event) => {
       // We add in the deprecated paper name so that it is in the view config.
       // This means either the old event name or the new event name can fire
       // and be sent to the listener until the old top level name is removed.
@@ -301,7 +302,7 @@ function buildViewConfig(
 
   const directEventNames = component.events
     .filter(event => event.bubblingType === 'direct')
-    .reduce((directEvents, event) => {
+    .reduce((directEvents: Array<any>, event) => {
       // We add in the deprecated paper name so that it is in the view config.
       // This means either the old event name or the new event name can fire
       // and be sent to the listener until the old top level name is removed.

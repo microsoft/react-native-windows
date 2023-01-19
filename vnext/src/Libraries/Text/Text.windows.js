@@ -211,6 +211,7 @@ const Text: React.AbstractComponent<
     default: accessible,
   });
 
+  // $FlowFixMe[underconstrained-implicit-instantiation]
   style = flattenStyle(style);
 
   if (typeof style?.fontWeight === 'number') {
@@ -274,7 +275,8 @@ const Text: React.AbstractComponent<
         styleProps.borderTopWidth)
     ) {
       let textStyleProps = Array.isArray(styleProps)
-        ? flattenStyle(styleProps)
+        ? // $FlowFixMe[underconstrained-implicit-instantiation]
+          flattenStyle(styleProps)
         : styleProps;
       let {
         margin,

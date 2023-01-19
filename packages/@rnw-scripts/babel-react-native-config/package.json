@@ -11,12 +11,12 @@
   },
   "dependencies": {
     "@babel/core": "^7.14.0",
-    "metro-react-native-babel-preset": "^0.72.1"
+    "metro-react-native-babel-preset": "^0.73.7"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "eslint": "^8.19.0",
-    "metro-react-native-babel-preset": "^0.72.1",
+    "metro-react-native-babel-preset": "^0.73.7",
     "prettier": "^2.4.1"
   },
   "engines": {

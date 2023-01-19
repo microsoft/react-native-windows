@@ -1549,6 +1549,8 @@ protected:
 public:
   virtual void setConsolePatchSettings(jsi::Runtime &rt, jsi::String newConsolePatchSettings) = 0;
   virtual std::optional<jsi::String> getConsolePatchSettings(jsi::Runtime &rt) = 0;
+  virtual void setProfilingSettings(jsi::Runtime &rt, jsi::String newProfilingSettings) = 0;
+  virtual std::optional<jsi::String> getProfilingSettings(jsi::Runtime &rt) = 0;
 
 };
 
@@ -1585,6 +1587,22 @@ private:
 
       return bridging::callFromJs<std::optional<jsi::String>>(
           rt, &T::getConsolePatchSettings, jsInvoker_, instance_);
+    }
+    void setProfilingSettings(jsi::Runtime &rt, jsi::String newProfilingSettings) override {
+      static_assert(
+          bridging::getParameterCount(&T::setProfilingSettings) == 2,
+          "Expected setProfilingSettings(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::setProfilingSettings, jsInvoker_, instance_, std::move(newProfilingSettings));
+    }
+    std::optional<jsi::String> getProfilingSettings(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::getProfilingSettings) == 1,
+          "Expected getProfilingSettings(...) to have 1 parameters");
+
+      return bridging::callFromJs<std::optional<jsi::String>>(
+          rt, &T::getProfilingSettings, jsInvoker_, instance_);
     }
 
   private:
@@ -3060,11 +3078,11 @@ public:
   virtual void blur(jsi::Runtime &rt, std::optional<double> reactTag) = 0;
   virtual void findSubviewIn(jsi::Runtime &rt, std::optional<double> reactTag, jsi::Array point, jsi::Function callback) = 0;
   virtual void dispatchViewManagerCommand(jsi::Runtime &rt, std::optional<double> reactTag, double commandID, std::optional<jsi::Array> commandArgs) = 0;
-  virtual void measure(jsi::Runtime &rt, std::optional<double> reactTag, jsi::Function callback) = 0;
-  virtual void measureInWindow(jsi::Runtime &rt, std::optional<double> reactTag, jsi::Function callback) = 0;
+  virtual void measure(jsi::Runtime &rt, double reactTag, jsi::Function callback) = 0;
+  virtual void measureInWindow(jsi::Runtime &rt, double reactTag, jsi::Function callback) = 0;
   virtual void viewIsDescendantOf(jsi::Runtime &rt, std::optional<double> reactTag, std::optional<double> ancestorReactTag, jsi::Function callback) = 0;
-  virtual void measureLayout(jsi::Runtime &rt, std::optional<double> reactTag, std::optional<double> ancestorReactTag, jsi::Function errorCallback, jsi::Function callback) = 0;
-  virtual void measureLayoutRelativeToParent(jsi::Runtime &rt, std::optional<double> reactTag, jsi::Function errorCallback, jsi::Function callback) = 0;
+  virtual void measureLayout(jsi::Runtime &rt, double reactTag, double ancestorReactTag, jsi::Function errorCallback, jsi::Function callback) = 0;
+  virtual void measureLayoutRelativeToParent(jsi::Runtime &rt, double reactTag, jsi::Function errorCallback, jsi::Function callback) = 0;
   virtual void setJSResponder(jsi::Runtime &rt, std::optional<double> reactTag, bool blockNativeResponder) = 0;
   virtual void clearJSResponder(jsi::Runtime &rt) = 0;
   virtual void configureNextLayoutAnimation(jsi::Runtime &rt, jsi::Object config, jsi::Function callback, jsi::Function errorCallback) = 0;
@@ -3177,7 +3195,7 @@ private:
       return bridging::callFromJs<void>(
           rt, &T::dispatchViewManagerCommand, jsInvoker_, instance_, std::move(reactTag), std::move(commandID), std::move(commandArgs));
     }
-    void measure(jsi::Runtime &rt, std::optional<double> reactTag, jsi::Function callback) override {
+    void measure(jsi::Runtime &rt, double reactTag, jsi::Function callback) override {
       static_assert(
           bridging::getParameterCount(&T::measure) == 3,
           "Expected measure(...) to have 3 parameters");
@@ -3185,7 +3203,7 @@ private:
       return bridging::callFromJs<void>(
           rt, &T::measure, jsInvoker_, instance_, std::move(reactTag), std::move(callback));
     }
-    void measureInWindow(jsi::Runtime &rt, std::optional<double> reactTag, jsi::Function callback) override {
+    void measureInWindow(jsi::Runtime &rt, double reactTag, jsi::Function callback) override {
       static_assert(
           bridging::getParameterCount(&T::measureInWindow) == 3,
           "Expected measureInWindow(...) to have 3 parameters");
@@ -3201,7 +3219,7 @@ private:
       return bridging::callFromJs<void>(
           rt, &T::viewIsDescendantOf, jsInvoker_, instance_, std::move(reactTag), std::move(ancestorReactTag), std::move(callback));
     }
-    void measureLayout(jsi::Runtime &rt, std::optional<double> reactTag, std::optional<double> ancestorReactTag, jsi::Function errorCallback, jsi::Function callback) override {
+    void measureLayout(jsi::Runtime &rt, double reactTag, double ancestorReactTag, jsi::Function errorCallback, jsi::Function callback) override {
       static_assert(
           bridging::getParameterCount(&T::measureLayout) == 5,
           "Expected measureLayout(...) to have 5 parameters");
@@ -3209,7 +3227,7 @@ private:
       return bridging::callFromJs<void>(
           rt, &T::measureLayout, jsInvoker_, instance_, std::move(reactTag), std::move(ancestorReactTag), std::move(errorCallback), std::move(callback));
     }
-    void measureLayoutRelativeToParent(jsi::Runtime &rt, std::optional<double> reactTag, jsi::Function errorCallback, jsi::Function callback) override {
+    void measureLayoutRelativeToParent(jsi::Runtime &rt, double reactTag, jsi::Function errorCallback, jsi::Function callback) override {
       static_assert(
           bridging::getParameterCount(&T::measureLayoutRelativeToParent) == 4,
           "Expected measureLayoutRelativeToParent(...) to have 4 parameters");
@@ -3963,6 +3981,76 @@ private:
   Delegate delegate_;
 };
 
+class JSI_EXPORT NativePerformanceCxxSpecJSI : public TurboModule {
+protected:
+  NativePerformanceCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
+
+public:
+  virtual void mark(jsi::Runtime &rt, jsi::String name, double startTime, double duration) = 0;
+  virtual void clearMarks(jsi::Runtime &rt, std::optional<jsi::String> markName) = 0;
+  virtual void measure(jsi::Runtime &rt, jsi::String name, double startTime, double endTime, std::optional<double> duration, std::optional<jsi::String> startMark, std::optional<jsi::String> endMark) = 0;
+  virtual void clearMeasures(jsi::Runtime &rt, std::optional<jsi::String> measureName) = 0;
+
+};
+
+template <typename T>
+class JSI_EXPORT NativePerformanceCxxSpec : public TurboModule {
+public:
+  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.get(rt, propName);
+  }
+
+protected:
+  NativePerformanceCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
+    : TurboModule("NativePerformanceCxx", jsInvoker),
+      delegate_(static_cast<T*>(this), jsInvoker) {}
+
+private:
+  class Delegate : public NativePerformanceCxxSpecJSI {
+  public:
+    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
+      NativePerformanceCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
+
+    void mark(jsi::Runtime &rt, jsi::String name, double startTime, double duration) override {
+      static_assert(
+          bridging::getParameterCount(&T::mark) == 4,
+          "Expected mark(...) to have 4 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::mark, jsInvoker_, instance_, std::move(name), std::move(startTime), std::move(duration));
+    }
+    void clearMarks(jsi::Runtime &rt, std::optional<jsi::String> markName) override {
+      static_assert(
+          bridging::getParameterCount(&T::clearMarks) == 2,
+          "Expected clearMarks(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::clearMarks, jsInvoker_, instance_, std::move(markName));
+    }
+    void measure(jsi::Runtime &rt, jsi::String name, double startTime, double endTime, std::optional<double> duration, std::optional<jsi::String> startMark, std::optional<jsi::String> endMark) override {
+      static_assert(
+          bridging::getParameterCount(&T::measure) == 7,
+          "Expected measure(...) to have 7 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::measure, jsInvoker_, instance_, std::move(name), std::move(startTime), std::move(endTime), std::move(duration), std::move(startMark), std::move(endMark));
+    }
+    void clearMeasures(jsi::Runtime &rt, std::optional<jsi::String> measureName) override {
+      static_assert(
+          bridging::getParameterCount(&T::clearMeasures) == 2,
+          "Expected clearMeasures(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::clearMeasures, jsInvoker_, instance_, std::move(measureName));
+    }
+
+  private:
+    T *instance_;
+  };
+
+  Delegate delegate_;
+};
+
 #pragma mark - NativePerformanceObserverCxxBaseRawPerformanceEntry
 
 template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6>
@@ -4025,8 +4113,8 @@ public:
   virtual void startReporting(jsi::Runtime &rt, jsi::String entryType) = 0;
   virtual void stopReporting(jsi::Runtime &rt, jsi::String entryType) = 0;
   virtual jsi::Array getPendingEntries(jsi::Runtime &rt) = 0;
+  virtual jsi::Array popPendingEntries(jsi::Runtime &rt) = 0;
   virtual void setOnPerformanceEntryCallback(jsi::Runtime &rt, std::optional<jsi::Function> callback) = 0;
-  virtual void logEntryForDebug(jsi::Runtime &rt, jsi::Object entry) = 0;
 
 };
 
@@ -4072,6 +4160,14 @@ private:
       return bridging::callFromJs<jsi::Array>(
           rt, &T::getPendingEntries, jsInvoker_, instance_);
     }
+    jsi::Array popPendingEntries(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::popPendingEntries) == 1,
+          "Expected popPendingEntries(...) to have 1 parameters");
+
+      return bridging::callFromJs<jsi::Array>(
+          rt, &T::popPendingEntries, jsInvoker_, instance_);
+    }
     void setOnPerformanceEntryCallback(jsi::Runtime &rt, std::optional<jsi::Function> callback) override {
       static_assert(
           bridging::getParameterCount(&T::setOnPerformanceEntryCallback) == 2,
@@ -4079,14 +4175,6 @@ private:
 
       return bridging::callFromJs<void>(
           rt, &T::setOnPerformanceEntryCallback, jsInvoker_, instance_, std::move(callback));
-    }
-    void logEntryForDebug(jsi::Runtime &rt, jsi::Object entry) override {
-      static_assert(
-          bridging::getParameterCount(&T::logEntryForDebug) == 2,
-          "Expected logEntryForDebug(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::logEntryForDebug, jsInvoker_, instance_, std::move(entry));
     }
 
   private:
@@ -4466,49 +4554,6 @@ private:
 
       return bridging::callFromJs<void>(
           rt, &T::setString, jsInvoker_, instance_, std::move(content));
-    }
-
-  private:
-    T *instance_;
-  };
-
-  Delegate delegate_;
-};
-
-class JSI_EXPORT NativeDatePickerAndroidCxxSpecJSI : public TurboModule {
-protected:
-  NativeDatePickerAndroidCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
-
-public:
-  virtual jsi::Value open(jsi::Runtime &rt, jsi::Object options) = 0;
-
-};
-
-template <typename T>
-class JSI_EXPORT NativeDatePickerAndroidCxxSpec : public TurboModule {
-public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
-  }
-
-protected:
-  NativeDatePickerAndroidCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("DatePickerAndroid", jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
-
-private:
-  class Delegate : public NativeDatePickerAndroidCxxSpecJSI {
-  public:
-    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativeDatePickerAndroidCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
-
-    jsi::Value open(jsi::Runtime &rt, jsi::Object options) override {
-      static_assert(
-          bridging::getParameterCount(&T::open) == 2,
-          "Expected open(...) to have 2 parameters");
-
-      return bridging::callFromJs<jsi::Value>(
-          rt, &T::open, jsInvoker_, instance_, std::move(options));
     }
 
   private:

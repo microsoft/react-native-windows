@@ -250,6 +250,7 @@ const API = {
       }
       // $FlowFixMe
       API.queueOperation(
+        // $FlowFixMe[incompatible-call]
         nativeOps.startAnimatingNode,
         animationId,
         nodeTag,

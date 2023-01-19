@@ -37,6 +37,7 @@ type NativeAppThemeEventDefinitions = {
   highContrastChanged: [AppThemeData],
 };
 
+// $FlowFixMe[underconstrained-implicit-instantiation]
 const _notifHandlers = new Map();
 
 if (NativeAppTheme) {

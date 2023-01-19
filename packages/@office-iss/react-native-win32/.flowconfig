@@ -10,8 +10,10 @@
 ; initRNLibraries build step
 <PROJECT_ROOT>/index.js
 <PROJECT_ROOT>/Libraries/Alert/Alert.js
+<PROJECT_ROOT>/Libraries/Components/Button.js
 <PROJECT_ROOT>/Libraries/Components/Pressable/Pressable.js
 <PROJECT_ROOT>/Libraries/Components/SafeAreaView/SafeAreaView.js
+<PROJECT_ROOT>/Libraries/Components/ScrollView/ScrollView.js
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInput.js
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInputState.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/Touchable.js
@@ -29,6 +31,11 @@
 <PROJECT_ROOT>/Libraries/Types/CoreEventTypes.js
 <PROJECT_ROOT>/Libraries/Utilities/DeviceInfo.js
 <PROJECT_ROOT>/Libraries/Utilities/Dimensions.js
+<PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorCodeFrame.js
+<PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorHeader.js
+<PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorStackFrame.js
+<PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorReactFrames.js
+<PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxStyle.js
 
 ; Ignore react-native files in node_modules since they are copied into project root
 .*/node_modules/react-native/.*
@@ -100,7 +107,9 @@ suppress_type=$FlowFixMeState
 suppress_type=$FlowFixMeEmpty
 
 experimental.array_literal_providers=true
-inference_mode=constrain_writes
+inference_mode=experimental.lti
+
+sharedmemory.hash_table_pow=21
 
 [lints]
 sketchy-null-number=warn
@@ -122,4 +131,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.194.0
+^0.195.2

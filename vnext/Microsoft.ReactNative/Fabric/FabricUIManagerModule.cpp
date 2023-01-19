@@ -24,6 +24,7 @@
 #include <react/renderer/components/text/TextComponentDescriptor.h>
 #include <react/renderer/components/view/ViewComponentDescriptor.h>
 #include <react/renderer/core/CoreFeatures.h>
+#include <react/renderer/core/DynamicPropsUtilities.h>
 #include <react/renderer/core/EventBeat.h>
 #include <react/renderer/scheduler/Scheduler.h>
 #include <react/renderer/scheduler/SchedulerToolbox.h>
@@ -438,6 +439,10 @@ void FabricUIManager::schedulerDidSetIsJSResponder(
     facebook::react::ShadowView const &shadowView,
     bool isJSResponder,
     bool blockNativeResponder) {}
+
+void FabricUIManager::setNativeProps_DEPRECATED(
+    const facebook::react::ShadowView &shadowView,
+    facebook::react::Props::Shared props) {}
 
 void FabricUIManager::schedulerDidSendAccessibilityEvent(
     const facebook::react::ShadowView &shadowView,
