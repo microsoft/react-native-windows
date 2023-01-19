@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.14.0",
-    "metro-react-native-babel-preset": "^0.72.1"
+    "metro-react-native-babel-preset": "0.73.5"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",
