@@ -3242,9 +3242,9 @@ appdirsjs@^1.2.4:
   integrity sha512-D8wJNkqMCeQs3kLasatELsddox/Xqkhp+J07iXGyL54fVN7oc+nmNfYzGuCs1IEP6uBw+TfpuO3JKwc+lECy4w==
 
 applicationinsights@^2.3.1:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/applicationinsights/-/applicationinsights-2.4.0.tgz#3ee69bbfb26b7d605f9dfd2cf07eb3bef752616d"
-  integrity sha512-7jjwXxszDTOiQ/Fvar0YqNRfNpahoA6nz99j+Ohgb5phVluTekfO3sZ32bgxbDI9608qOdvGelWtn0yxDiqvxw==
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/applicationinsights/-/applicationinsights-2.4.1.tgz#4de4c4dd3c7c4a44445cfbf3d15808fc0dcc423d"
+  integrity sha512-0n0Ikd0gzSm460xm+M0UTWIwXrhrH/0bqfZatcJjYObWyefxfAxapGEyNnSGd1Tg90neHz+Yhf+Ff/zgvPiQYA==
   dependencies:
     "@azure/core-auth" "^1.4.0"
     "@azure/core-rest-pipeline" "^1.10.0"
