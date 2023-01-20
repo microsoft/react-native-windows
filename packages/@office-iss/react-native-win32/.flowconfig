@@ -100,6 +100,7 @@ suppress_type=$FlowFixMeState
 suppress_type=$FlowFixMeEmpty
 
 inference_mode=constrain_writes
+sharedmemory.hash_table_pow=21
 
 [lints]
 sketchy-null-number=warn
