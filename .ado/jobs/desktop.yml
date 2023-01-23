@@ -112,7 +112,7 @@ jobs:
                 displayName: Update Desktop.IntegrationTests.Filter to exclude RNTester integration tests
 
             - ${{ if eq(matrix.UseFabric, true) }}:
-              -template: ../templates/enable-fabric-experimental-feature.yml
+              - template: ../templates/enable-fabric-experimental-feature.yml
 
             - template: ../templates/msbuild-sln.yml
               parameters:
