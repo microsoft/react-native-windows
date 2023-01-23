@@ -2262,10 +2262,10 @@
   resolved "https://registry.yarnpkg.com/@reactions/component/-/component-2.0.2.tgz#40f8c1c2c37baabe57a0c944edb9310dc1ec6642"
   integrity sha1-QPjBwsN7qr5XoMlE7bkxDcHsZkI=
 
-"@rnx-kit/babel-preset-metro-react-native@^1.0.17":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/babel-preset-metro-react-native/-/babel-preset-metro-react-native-1.1.0.tgz#ce341c4e8d16f67abcc9be282ac2193280d2a324"
-  integrity sha512-HJYNodzUIlFZF6CuDgouK4v6w3mPmhHqAPx0IBG90z2j1XVnLLFj5g5I4B3oKUFDS1uxquDVwYCA6NFdyNAn4Q==
+"@rnx-kit/babel-preset-metro-react-native@^1.1.4":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/babel-preset-metro-react-native/-/babel-preset-metro-react-native-1.1.4.tgz#7c526987208547614f7fc43ed6e001b183083dd7"
+  integrity sha512-ev82sa8Q5Z4a7kQ9pfCKYvpPpPesn0bgOFX8mNx5Gb3uZENb1i1oqySsmw1Qrrf/1KCMi4DKXOI7KezUl8Kf4g==
   dependencies:
     babel-plugin-const-enum "^1.0.0"
 
@@ -2286,11 +2286,11 @@
     find-up "^5.0.0"
 
 "@rnx-kit/metro-config@^1.2.27":
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-config/-/metro-config-1.3.3.tgz#1a50f3f1597b64f0d1b33a31594e6557913e6bf9"
-  integrity sha512-s6UXYbGNRGzoOfkwiPYlBFnMJyAGmac1gNnIgdO+7XVyX/gein/IzD/lhGvg8H3H7vKSl0R1N2mX6bNzAlpGcw==
+  version "1.3.4"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-config/-/metro-config-1.3.4.tgz#7b37ad8a14aa7681d79ee810c15a08f89a69a974"
+  integrity sha512-+SMpTuZifbsTauUilGx8gk+QYbsU+fVwKkIzf/Hbw9IrtZ7E/C1LUbZWDVi/SuKdhx2qVHQRRcNPKXo+ZZaTXg==
   dependencies:
-    "@rnx-kit/babel-preset-metro-react-native" "^1.0.17"
+    "@rnx-kit/babel-preset-metro-react-native" "^1.1.4"
     "@rnx-kit/console" "^1.0.0"
     "@rnx-kit/tools-node" "^1.3.0"
     "@rnx-kit/tools-workspaces" "^0.1.3"
