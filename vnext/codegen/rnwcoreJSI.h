@@ -4105,6 +4105,40 @@ struct NativePerformanceObserverCxxBaseRawPerformanceEntryBridging {
   }
 };
 
+
+#pragma mark - NativePerformanceObserverCxxBaseGetPendingEntriesResult
+
+template <typename P0, typename P1>
+struct NativePerformanceObserverCxxBaseGetPendingEntriesResult {
+  P0 entries;
+  P1 droppedEntriesCount;
+  bool operator==(const NativePerformanceObserverCxxBaseGetPendingEntriesResult &other) const {
+    return entries == other.entries && droppedEntriesCount == other.droppedEntriesCount;
+  }
+};
+
+template <typename P0, typename P1>
+struct NativePerformanceObserverCxxBaseGetPendingEntriesResultBridging {
+  static NativePerformanceObserverCxxBaseGetPendingEntriesResult<P0, P1> fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    NativePerformanceObserverCxxBaseGetPendingEntriesResult<P0, P1> result{
+      bridging::fromJs<P0>(rt, value.getProperty(rt, "entries"), jsInvoker),
+      bridging::fromJs<P1>(rt, value.getProperty(rt, "droppedEntriesCount"), jsInvoker)};
+    return result;
+  }
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const NativePerformanceObserverCxxBaseGetPendingEntriesResult<P0, P1> &value) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "entries", bridging::toJs(rt, value.entries));
+    result.setProperty(rt, "droppedEntriesCount", bridging::toJs(rt, value.droppedEntriesCount));
+    return result;
+  }
+};
+
 class JSI_EXPORT NativePerformanceObserverCxxSpecJSI : public TurboModule {
 protected:
   NativePerformanceObserverCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
@@ -4112,8 +4146,7 @@ protected:
 public:
   virtual void startReporting(jsi::Runtime &rt, jsi::String entryType) = 0;
   virtual void stopReporting(jsi::Runtime &rt, jsi::String entryType) = 0;
-  virtual jsi::Array getPendingEntries(jsi::Runtime &rt) = 0;
-  virtual jsi::Array popPendingEntries(jsi::Runtime &rt) = 0;
+  virtual jsi::Object popPendingEntries(jsi::Runtime &rt) = 0;
   virtual void setOnPerformanceEntryCallback(jsi::Runtime &rt, std::optional<jsi::Function> callback) = 0;
 
 };
@@ -4152,20 +4185,12 @@ private:
       return bridging::callFromJs<void>(
           rt, &T::stopReporting, jsInvoker_, instance_, std::move(entryType));
     }
-    jsi::Array getPendingEntries(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::getPendingEntries) == 1,
-          "Expected getPendingEntries(...) to have 1 parameters");
-
-      return bridging::callFromJs<jsi::Array>(
-          rt, &T::getPendingEntries, jsInvoker_, instance_);
-    }
-    jsi::Array popPendingEntries(jsi::Runtime &rt) override {
+    jsi::Object popPendingEntries(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::popPendingEntries) == 1,
           "Expected popPendingEntries(...) to have 1 parameters");
 
-      return bridging::callFromJs<jsi::Array>(
+      return bridging::callFromJs<jsi::Object>(
           rt, &T::popPendingEntries, jsInvoker_, instance_);
     }
     void setOnPerformanceEntryCallback(jsi::Runtime &rt, std::optional<jsi::Function> callback) override {
