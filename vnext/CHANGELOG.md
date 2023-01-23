@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 26 Dec 2022 16:12:01 GMT and should not be manually modified.
+This log was last generated on Mon, 23 Jan 2023 16:11:43 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.70.11
+
+Mon, 23 Jan 2023 16:11:43 GMT
+
+### Patches
+
+- Promote 0.70 to legacy (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.70.3
+- Bump @react-native-windows/virtualized-list to v0.70.1
+- Bump @react-native-windows/codegen to v0.70.1
 
 ## 0.70.10
 
