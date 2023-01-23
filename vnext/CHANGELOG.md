@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 16 Jan 2023 16:13:32 GMT and should not be manually modified.
+This log was last generated on Mon, 23 Jan 2023 16:16:58 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.0
+
+Mon, 23 Jan 2023 16:16:58 GMT
+
+### Patches
+
+- Revert 10863 (34109996+chiaramooney@users.noreply.github.com)
+- [Image] Fix svg rendering (#11009) (email not defined)
+- Promote 0.71 to latest (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.71.0
+- Bump @react-native-windows/codegen to v0.71.0
 
 ## 0.71.0-preview.4
 

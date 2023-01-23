@@ -1,8 +1,20 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Mon, 26 Dec 2022 16:17:38 GMT and should not be manually modified.
+This log was last generated on Mon, 23 Jan 2023 16:16:57 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.0
+
+Mon, 23 Jan 2023 16:16:57 GMT
+
+### Patches
+
+- Promote 0.71 to latest (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/codegen to v0.71.0
+- Bump @react-native-windows/fs to v0.71.0
+- Bump @react-native-windows/package-utils to v0.71.0
+- Bump @react-native-windows/telemetry to v0.71.0
 
 ## 0.71.0-preview.2
 

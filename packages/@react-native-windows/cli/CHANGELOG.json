@@ -2,6 +2,45 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 23 Jan 2023 16:16:57 GMT",
+      "tag": "@react-native-windows/cli_v0.71.0",
+      "version": "0.71.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "2f48e8f6c7d8e0c17332146a91d1a3d7b4530bd5",
+            "comment": "Promote 0.71 to latest"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.71.0",
+            "commit": "2f48e8f6c7d8e0c17332146a91d1a3d7b4530bd5"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/fs to v0.71.0",
+            "commit": "2f48e8f6c7d8e0c17332146a91d1a3d7b4530bd5"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/package-utils to v0.71.0",
+            "commit": "2f48e8f6c7d8e0c17332146a91d1a3d7b4530bd5"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.71.0",
+            "commit": "2f48e8f6c7d8e0c17332146a91d1a3d7b4530bd5"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 26 Dec 2022 16:17:38 GMT",
       "tag": "@react-native-windows/cli_v0.71.0-preview.2",
       "version": "0.71.0-preview.2",
