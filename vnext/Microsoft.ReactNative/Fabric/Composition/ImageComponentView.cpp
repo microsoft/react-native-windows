@@ -16,6 +16,7 @@
 #include <Fabric/FabricUIManagerModule.h>
 #include <Utils/ImageUtils.h>
 #include <shcore.h>
+#include <winrt/Windows.Graphics.Effects.h>
 #include <winrt/Windows.UI.Composition.h>
 #include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/Windows.Web.Http.h>
@@ -83,7 +84,7 @@ void ImageComponentView::didReceiveImage(const winrt::com_ptr<IWICBitmap> &wicbm
     imageEventEmitter->onLoadEnd();
   }
 
-  // TODO - handle m_props.tintColor, imageProps.resizeMode, imageProps.capInsets, imageProps.blurRadius
+  // TODO - handle imageProps.capInsets
 
 #ifdef DEBUG
   auto uiDispatcher = m_context.UIDispatcher();
@@ -112,7 +113,9 @@ void ImageComponentView::updateProps(
 
   updateBorderProps(oldImageProps, newImageProps);
 
-  if (oldImageProps.backgroundColor != newImageProps.backgroundColor) {
+  if (oldImageProps.backgroundColor != newImageProps.backgroundColor ||
+      oldImageProps.blurRadius != newImageProps.blurRadius || oldImageProps.tintColor != newImageProps.tintColor ||
+      oldImageProps.resizeMode != newImageProps.resizeMode) {
     m_drawingSurface = nullptr; // TODO dont need to recreate the surface just to redraw...
   }
 
@@ -203,8 +206,24 @@ void ImageComponentView::ensureDrawingSurface() noexcept {
   winrt::check_hresult(m_wicbmp->GetSize(&width, &height));
 
   if (!m_drawingSurface && m_wicbmp) {
+    winrt::Windows::Foundation::Size drawingSurfaceSize{static_cast<float>(width), static_cast<float>(height)};
+
+    const auto imageProps = std::static_pointer_cast<const facebook::react::ImageProps>(m_props);
+    const auto frame{m_layoutMetrics.getContentFrame().size};
+
+    if (imageProps->resizeMode == facebook::react::ImageResizeMode::Repeat) {
+      drawingSurfaceSize = {frame.width, frame.height};
+    } else if (imageProps->blurRadius > 0) {
+      // https://learn.microsoft.com/en-us/windows/win32/direct2d/gaussian-blur#output-bitmap
+      // The following equation that can be used to compute the output bitmap:
+      // Output bitmap growth (X and Y) = (StandardDeviation(DIPs)*3 + StandardDeviation(DIPs)*3)*((User DPI)/96)
+      // Where StandardDeviation(DIPs)*3 is equivalent to the blur radius.
+      const auto bmpGrowth{imageProps->blurRadius * 2 * m_layoutMetrics.pointScaleFactor};
+      drawingSurfaceSize = {drawingSurfaceSize.Width + bmpGrowth, drawingSurfaceSize.Height + bmpGrowth};
+    }
+
     m_drawingSurface = m_compContext.CreateDrawingSurface(
-        {static_cast<float>(width), static_cast<float>(height)},
+        drawingSurfaceSize,
         winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
         winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
 
@@ -212,8 +231,7 @@ void ImageComponentView::ensureDrawingSurface() noexcept {
 
     auto surfaceBrush = m_compContext.CreateSurfaceBrush(m_drawingSurface);
 
-    const auto &imageProps = *std::static_pointer_cast<const facebook::react::ImageProps>(m_props);
-    switch (imageProps.resizeMode) {
+    switch (imageProps->resizeMode) {
       case facebook::react::ImageResizeMode::Stretch:
         surfaceBrush.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::Fill);
         break;
@@ -223,16 +241,24 @@ void ImageComponentView::ensureDrawingSurface() noexcept {
       case facebook::react::ImageResizeMode::Contain:
         surfaceBrush.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::Uniform);
         break;
-      case facebook::react::ImageResizeMode::Center:
-        surfaceBrush.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::None);
-        break;
       case facebook::react::ImageResizeMode::Repeat:
-        surfaceBrush.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::UniformToFill);
-        // TODO - Hook up repeat
+        // TODO - set AlignmentRatio back to 0.5f when switching between resizeModes once we no longer recreate the
+        // drawing surface on prop changes.
+        surfaceBrush.HorizontalAlignmentRatio(0.0f);
+        surfaceBrush.VerticalAlignmentRatio(0.0f);
+        // Repeat and Center use the same Stretch logic, so we can fallthrough here.
+        [[fallthrough]];
+      case facebook::react::ImageResizeMode::Center: {
+        surfaceBrush.Stretch(
+            (height < frame.height && width < frame.width)
+                ? winrt::Microsoft::ReactNative::Composition::CompositionStretch::None
+                : winrt::Microsoft::ReactNative::Composition::CompositionStretch::Uniform);
         break;
+      }
       default:
         assert(false);
     }
+
     m_visual.Brush(surfaceBrush);
   }
 }
@@ -250,8 +276,6 @@ void ImageComponentView::DrawImage() noexcept {
   m_drawingSurface.as(drawingSurfaceInterop);
 
   if (CheckForDeviceRemoved(drawingSurfaceInterop->BeginDraw(d2dDeviceContext.put(), &offset))) {
-    const auto &paragraphProps = *std::static_pointer_cast<const facebook::react::ImageProps>(m_props);
-
     winrt::com_ptr<ID2D1Bitmap1> bitmap;
     winrt::check_hresult(d2dDeviceContext->CreateBitmapFromWicBitmap(m_wicbmp.get(), nullptr, bitmap.put()));
 
@@ -260,24 +284,81 @@ void ImageComponentView::DrawImage() noexcept {
       d2dDeviceContext->Clear(m_props->backgroundColor.AsD2DColor());
     }
 
-    UINT width, height;
-    winrt::check_hresult(m_wicbmp->GetSize(&width, &height));
+    const auto imageProps = std::static_pointer_cast<const facebook::react::ImageProps>(m_props);
 
-    D2D1_RECT_F rect = D2D1::RectF(
-        static_cast<float>(offset.x / m_layoutMetrics.pointScaleFactor),
-        static_cast<float>(offset.y / m_layoutMetrics.pointScaleFactor),
-        static_cast<float>((offset.x + width) / m_layoutMetrics.pointScaleFactor),
-        static_cast<float>((offset.y + height) / m_layoutMetrics.pointScaleFactor));
+    bool useEffects{
+        imageProps->blurRadius > 0 || isColorMeaningful(imageProps->tintColor) ||
+        imageProps->resizeMode == facebook::react::ImageResizeMode::Repeat};
 
-    const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
-    float oldDpiX, oldDpiY;
-    d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
-    d2dDeviceContext->SetDpi(dpi, dpi);
+    if (useEffects) {
+      winrt::com_ptr<ID2D1Effect> bitmapEffects;
+      winrt::check_hresult(d2dDeviceContext->CreateEffect(CLSID_D2D1BitmapSource, bitmapEffects.put()));
+      winrt::check_hresult(bitmapEffects->SetValue(D2D1_BITMAPSOURCE_PROP_WIC_BITMAP_SOURCE, m_wicbmp.get()));
 
-    d2dDeviceContext->DrawBitmap(bitmap.get(), rect);
+      if (imageProps->blurRadius > 0) {
+        winrt::com_ptr<ID2D1Effect> gaussianBlurEffect;
+        winrt::check_hresult(d2dDeviceContext->CreateEffect(CLSID_D2D1GaussianBlur, gaussianBlurEffect.put()));
+        // https://learn.microsoft.com/en-us/windows/win32/direct2d/gaussian-blur#effect-properties
+        // You can compute the blur radius of the kernel by multiplying the standard deviation by 3 (radius multiplier).
+        constexpr float radiusMultiplier = 3;
+        winrt::check_hresult(gaussianBlurEffect->SetValue(
+            D2D1_GAUSSIANBLUR_PROP_STANDARD_DEVIATION, (imageProps->blurRadius) / radiusMultiplier));
+        gaussianBlurEffect->SetInputEffect(0, bitmapEffects.get());
+        bitmapEffects.copy_from(gaussianBlurEffect.get());
+      }
 
-    // Restore old dpi setting
-    d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
+      if (isColorMeaningful(imageProps->tintColor)) {
+        winrt::com_ptr<ID2D1Effect> tintColorEffect;
+        winrt::check_hresult(d2dDeviceContext->CreateEffect(CLSID_D2D1Flood, tintColorEffect.put()));
+        winrt::check_hresult(tintColorEffect->SetValue(D2D1_FLOOD_PROP_COLOR, imageProps->tintColor.AsD2DColor()));
+
+        winrt::com_ptr<ID2D1Effect> compositeEffect;
+        winrt::check_hresult(d2dDeviceContext->CreateEffect(CLSID_D2D1Composite, compositeEffect.put()));
+        winrt::check_hresult(compositeEffect->SetValue(D2D1_COMPOSITE_PROP_MODE, D2D1_COMPOSITE_MODE_SOURCE_IN));
+        compositeEffect->SetInputEffect(0, bitmapEffects.get());
+        compositeEffect->SetInputEffect(1, tintColorEffect.get());
+
+        bitmapEffects.copy_from(compositeEffect.get());
+      }
+
+      if (imageProps->resizeMode == facebook::react::ImageResizeMode::Repeat) {
+        winrt::com_ptr<ID2D1Effect> borderEffect;
+        winrt::check_hresult(d2dDeviceContext->CreateEffect(CLSID_D2D1Border, borderEffect.put()));
+        winrt::check_hresult(borderEffect->SetValue(D2D1_BORDER_PROP_EDGE_MODE_X, D2D1_BORDER_EDGE_MODE_WRAP));
+        winrt::check_hresult(borderEffect->SetValue(D2D1_BORDER_PROP_EDGE_MODE_Y, D2D1_BORDER_EDGE_MODE_WRAP));
+        borderEffect->SetInputEffect(0, bitmapEffects.get());
+
+        d2dDeviceContext->DrawImage(borderEffect.get());
+      } else {
+        winrt::com_ptr<ID2D1Image> image;
+        bitmapEffects->GetOutput(image.put());
+
+        D2D1_RECT_F imageBounds;
+        winrt::check_hresult(d2dDeviceContext->GetImageLocalBounds(image.get(), &imageBounds));
+
+        d2dDeviceContext->DrawImage(
+            bitmapEffects.get(), {static_cast<float>(offset.x), static_cast<float>(offset.y)}, imageBounds);
+      }
+    } else {
+      UINT width, height;
+      winrt::check_hresult(m_wicbmp->GetSize(&width, &height));
+
+      D2D1_RECT_F rect = D2D1::RectF(
+          static_cast<float>(offset.x / m_layoutMetrics.pointScaleFactor),
+          static_cast<float>(offset.y / m_layoutMetrics.pointScaleFactor),
+          static_cast<float>((offset.x + width) / m_layoutMetrics.pointScaleFactor),
+          static_cast<float>((offset.y + height) / m_layoutMetrics.pointScaleFactor));
+
+      const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
+      float oldDpiX, oldDpiY;
+      d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
+      d2dDeviceContext->SetDpi(dpi, dpi);
+
+      d2dDeviceContext->DrawBitmap(bitmap.get(), rect);
+
+      // Restore old dpi setting
+      d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
+    }
 
     // Our update is done. EndDraw never indicates rendering device removed, so any
     // failure here is unexpected and, therefore, fatal.
