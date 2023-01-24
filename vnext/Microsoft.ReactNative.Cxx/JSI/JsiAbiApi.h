@@ -134,11 +134,11 @@ struct JsiAbiRuntime : facebook::jsi::Runtime {
   bool hasProperty(const facebook::jsi::Object &obj, const facebook::jsi::PropNameID &name) override;
   bool hasProperty(const facebook::jsi::Object &obj, const facebook::jsi::String &name) override;
   void setPropertyValue(
-      facebook::jsi::Object &obj,
+      const facebook::jsi::Object &obj,
       const facebook::jsi::PropNameID &name,
       const facebook::jsi::Value &value) override;
   void setPropertyValue(
-      facebook::jsi::Object &obj,
+      const facebook::jsi::Object &obj,
       const facebook::jsi::String &name,
       const facebook::jsi::Value &value) override;
 
@@ -150,14 +150,14 @@ struct JsiAbiRuntime : facebook::jsi::Runtime {
   facebook::jsi::Array getPropertyNames(const facebook::jsi::Object &obj) override;
 
   facebook::jsi::WeakObject createWeakObject(const facebook::jsi::Object &obj) override;
-  facebook::jsi::Value lockWeakObject(facebook::jsi::WeakObject &weakObj) override;
+  facebook::jsi::Value lockWeakObject(const facebook::jsi::WeakObject &weakObj) override;
 
   facebook::jsi::Array createArray(size_t length) override;
   size_t size(const facebook::jsi::Array &arr) override;
   size_t size(const facebook::jsi::ArrayBuffer &arrayBuffer) override;
   uint8_t *data(const facebook::jsi::ArrayBuffer &arrayBuffer) override;
   facebook::jsi::Value getValueAtIndex(const facebook::jsi::Array &arr, size_t i) override;
-  void setValueAtIndexImpl(facebook::jsi::Array &arr, size_t i, const facebook::jsi::Value &value) override;
+  void setValueAtIndexImpl(const facebook::jsi::Array &arr, size_t i, const facebook::jsi::Value &value) override;
 
   facebook::jsi::Function createFunctionFromHostFunction(
       const facebook::jsi::PropNameID &name,

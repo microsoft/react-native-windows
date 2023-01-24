@@ -440,10 +440,6 @@ void FabricUIManager::schedulerDidSetIsJSResponder(
     bool isJSResponder,
     bool blockNativeResponder) {}
 
-void FabricUIManager::setNativeProps_DEPRECATED(
-    const facebook::react::ShadowView &shadowView,
-    facebook::react::Props::Shared props) {}
-
 void FabricUIManager::schedulerDidSendAccessibilityEvent(
     const facebook::react::ShadowView &shadowView,
     std::string const &eventType) {

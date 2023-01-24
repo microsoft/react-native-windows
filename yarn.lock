@@ -2254,12 +2254,7 @@
   resolved "https://registry.yarnpkg.com/@react-native/js-polyfills/-/js-polyfills-0.72.0.tgz#23a95ff19d4940ffb9d8febfb7917c0d28e3100c"
   integrity sha512-XLu3uHowlGcgoYsizgw1dAfB3htxty9OiNAmiZBHmXS5gPIFwBHUosO0baUoZjKK5WNm/endL6v46wMzXtTacg==
 
-"@react-native/normalize-color@*":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@react-native/normalize-color/-/normalize-color-2.1.0.tgz#939b87a9849e81687d3640c5efa2a486ac266f91"
-  integrity sha512-Z1jQI2NpdFJCVgpY+8Dq/Bt3d+YUi1928Q+/CZm/oh66fzM0RUl54vvuXlPJKybH4pdCZey1eDTPaLHkMPNgWA==
-
-"@react-native/normalize-colors@^0.72.0":
+"@react-native/normalize-colors@*", "@react-native/normalize-colors@^0.72.0":
   version "0.72.0"
   resolved "https://registry.yarnpkg.com/@react-native/normalize-colors/-/normalize-colors-0.72.0.tgz#14294b7ed3c1d92176d2a00df48456e8d7d62212"
   integrity sha512-285lfdqSXaqKuBbbtP9qL2tDrfxdOFtIMvkKadtleRQkdOxx+uzGvFr82KHmc/sSiMtfXGp7JnFYWVh4sFl7Yw==
@@ -4946,12 +4941,12 @@ depd@^1.1.2:
   resolved "https://registry.yarnpkg.com/depd/-/depd-1.1.2.tgz#9bcd52e14c097763e749b274c4346ed2e560b5a9"
   integrity sha1-m81S4UwJd2PnSbJ0xDRu0uVgtak=
 
-deprecated-react-native-prop-types@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/deprecated-react-native-prop-types/-/deprecated-react-native-prop-types-3.0.1.tgz#a275f84cd8519cd1665e8df3c99e9067d57a23ec"
-  integrity sha512-J0jCJcsk4hMlIb7xwOZKLfMpuJn6l8UtrPEzzQV5ewz5gvKNYakhBuq9h2rWX7YwHHJZFhU5W8ye7dB9oN8VcQ==
+deprecated-react-native-prop-types@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/deprecated-react-native-prop-types/-/deprecated-react-native-prop-types-4.0.0.tgz#544845e32f3220bc676f18c0b846d673399c45cb"
+  integrity sha512-q0kk77qFPC4adlnZH7cv9lfbHALeaTkl7wT1uNERc+e0Os3KcBKKy1rVliTE8sfey6TP6OPzoIXpr9OPidvvHw==
   dependencies:
-    "@react-native/normalize-color" "*"
+    "@react-native/normalize-colors" "*"
     invariant "*"
     prop-types "*"
 
@@ -5930,10 +5925,10 @@ flatted@^3.1.0:
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.2.5.tgz#76c8584f4fc843db64702a6bd04ab7a8bd666da3"
   integrity sha512-WIWGi2L3DyTUvUrwRKgGi9TwxQMUEqPOPQBVi71R96jZXJdFskXEmf54BoZaS1kknGODoIGASGEzBUYdyMCBJg==
 
-flow-bin@^0.195.2:
-  version "0.195.2"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.195.2.tgz#373b3e0a8bc3a8e5df510365419fd7d3904e6a5a"
-  integrity sha512-GKwUBzIjpiJEspa0xPMlqz+8z25qg9Xx2SJFHwYrvMlR7JhSHTMoP4zEpwnY8qmBEH8NE+sw5rA/jRLJoEJeCg==
+flow-bin@^0.196.3:
+  version "0.196.3"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.196.3.tgz#b6df48986a2629f2c6a26fb79d73fc07c8056af0"
+  integrity sha512-pmvjlksi1CvkSnDHpcfhDFj/KC3hwSgE2OpzvugW57dfgqfHzqX1UfZIcScGWM5AmP/IeOsQCW383k3zIbEnrA==
 
 flow-parser@0.*, flow-parser@^0.185.0:
   version "0.185.2"
@@ -9968,10 +9963,10 @@ react-native-xaml@^0.0.70:
     "@types/react-native" "*"
     typescript "^4.4.3"
 
-react-native@0.0.0-20221214-2026-25a25ea23:
-  version "0.0.0-20221214-2026-25a25ea23"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-20221214-2026-25a25ea23.tgz#11eb16801e287b3cdb81abe20c3a1601f82cab47"
-  integrity sha512-co0zCR4BkPTPKpx8meCtJQlwON71o4XsEOsNRPWqeQoWsvIJoXCIs0aWAakpOeWNuyyQ7U1Stu+R9r8EqCODZg==
+react-native@0.0.0-20221228-2020-ad953f6f4:
+  version "0.0.0-20221228-2020-ad953f6f4"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-20221228-2020-ad953f6f4.tgz#e7fbb8ee539c62900dab4fb53d68439ff170e2f4"
+  integrity sha512-7pGA605KQ6O3E8SI0To0wnq/uf8nlM7tmnTSl84kzJcPcXevuOii3027pYVanOkEJ9XNvID/s3SkuCZtauSypg==
   dependencies:
     "@jest/create-cache-key-function" "^29.2.1"
     "@react-native-community/cli" "10.0.0"
@@ -9985,7 +9980,7 @@ react-native@0.0.0-20221214-2026-25a25ea23:
     abort-controller "^3.0.0"
     anser "^1.4.9"
     base64-js "^1.1.2"
-    deprecated-react-native-prop-types "^3.0.1"
+    deprecated-react-native-prop-types "^4.0.0"
     event-target-shim "^5.0.1"
     invariant "^2.2.4"
     jest-environment-node "^29.2.1"
