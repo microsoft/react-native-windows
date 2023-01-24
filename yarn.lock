@@ -1476,11 +1476,11 @@
     strip-ansi "^6.0.0"
 
 "@jest/create-cache-key-function@^29.0.3", "@jest/create-cache-key-function@^29.2.1":
-  version "29.3.1"
-  resolved "https://registry.yarnpkg.com/@jest/create-cache-key-function/-/create-cache-key-function-29.3.1.tgz#3a0970ea595ab3d9507244edbcef14d6b016cdc9"
-  integrity sha512-4i+E+E40gK13K78ffD/8cy4lSSqeWwyXeTZoq16tndiCP12hC8uQsPJdIu5C6Kf22fD8UbBk71so7s/6VwpUOQ==
+  version "29.4.0"
+  resolved "https://registry.yarnpkg.com/@jest/create-cache-key-function/-/create-cache-key-function-29.4.0.tgz#f90999474d13c85ee2c7c3f1e3015f2b65380f59"
+  integrity sha512-RmQicJx9z6izyunr/9m7ncJc2NbvIdcrC2VGXl0A7fHsh6aMO38nC8353bzitg5RuEERoVV2pbbLMlhcBL67KQ==
   dependencies:
-    "@jest/types" "^29.3.1"
+    "@jest/types" "^29.4.0"
 
 "@jest/environment@^29.3.0", "@jest/environment@^29.3.1", "@jest/environment@^29.4.0":
   version "29.4.0"
