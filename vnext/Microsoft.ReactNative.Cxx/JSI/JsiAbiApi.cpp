@@ -529,14 +529,14 @@ bool JsiAbiRuntime::hasProperty(const Object &obj, const String &name) try {
   throw;
 }
 
-void JsiAbiRuntime::setPropertyValue(Object &obj, const PropNameID &name, const Value &value) try {
+void JsiAbiRuntime::setPropertyValue(const Object &obj, const PropNameID &name, const Value &value) try {
   m_runtime.SetProperty(AsJsiObjectRef(obj), AsJsiPropertyIdRef(name), AsJsiValueRef(value));
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
 }
 
-void JsiAbiRuntime::setPropertyValue(Object &obj, const String &name, const Value &value) try {
+void JsiAbiRuntime::setPropertyValue(const Object &obj, const String &name, const Value &value) try {
   // TODO: delete propertyId
   auto propertyId = m_runtime.CreatePropertyIdFromString(AsJsiStringRef(name));
   m_runtime.SetProperty(AsJsiObjectRef(obj), propertyId, AsJsiValueRef(value));
@@ -594,7 +594,7 @@ WeakObject JsiAbiRuntime::createWeakObject(const Object &obj) try {
   throw;
 }
 
-Value JsiAbiRuntime::lockWeakObject(WeakObject &weakObj) try {
+Value JsiAbiRuntime::lockWeakObject(const WeakObject &weakObj) try {
   return MakeValue(m_runtime.LockWeakObject(AsJsiWeakObjectRef(weakObj)));
 } catch (hresult_error const &) {
   RethrowJsiError();
@@ -640,7 +640,7 @@ Value JsiAbiRuntime::getValueAtIndex(const Array &arr, size_t i) try {
   throw;
 }
 
-void JsiAbiRuntime::setValueAtIndexImpl(Array &arr, size_t i, const Value &value) try {
+void JsiAbiRuntime::setValueAtIndexImpl(const Array &arr, size_t i, const Value &value) try {
   m_runtime.SetValueAtIndex(AsJsiObjectRef(arr), static_cast<uint32_t>(i), AsJsiValueRef(value));
 } catch (hresult_error const &) {
   RethrowJsiError();
