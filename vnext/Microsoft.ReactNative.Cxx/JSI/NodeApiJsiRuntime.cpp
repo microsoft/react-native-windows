@@ -178,11 +178,11 @@ struct NapiJsiRuntime : facebook::jsi::Runtime {
   bool hasProperty(const facebook::jsi::Object &obj, const facebook::jsi::PropNameID &name) override;
   bool hasProperty(const facebook::jsi::Object &obj, const facebook::jsi::String &name) override;
   void setPropertyValue(
-      facebook::jsi::Object &obj,
+      const facebook::jsi::Object &obj,
       const facebook::jsi::PropNameID &name,
       const facebook::jsi::Value &value) override;
   void setPropertyValue(
-      facebook::jsi::Object &obj,
+      const facebook::jsi::Object &obj,
       const facebook::jsi::String &name,
       const facebook::jsi::Value &value) override;
 
@@ -197,7 +197,7 @@ struct NapiJsiRuntime : facebook::jsi::Runtime {
   facebook::jsi::Array getPropertyNames(const facebook::jsi::Object &obj) override;
 
   facebook::jsi::WeakObject createWeakObject(const facebook::jsi::Object &obj) override;
-  facebook::jsi::Value lockWeakObject(facebook::jsi::WeakObject &weakObj) override;
+  facebook::jsi::Value lockWeakObject(const facebook::jsi::WeakObject &weakObj) override;
 
   facebook::jsi::Array createArray(size_t length) override;
   size_t size(const facebook::jsi::Array &arr) override;
@@ -207,7 +207,7 @@ struct NapiJsiRuntime : facebook::jsi::Runtime {
   // The returned buffer pointer does not count as a reference to ArrayBuffer for the purpose of garbage collection.
   uint8_t *data(const facebook::jsi::ArrayBuffer &arrBuff) override;
   facebook::jsi::Value getValueAtIndex(const facebook::jsi::Array &arr, size_t index) override;
-  void setValueAtIndexImpl(facebook::jsi::Array &arr, size_t index, const facebook::jsi::Value &value) override;
+  void setValueAtIndexImpl(const facebook::jsi::Array &arr, size_t index, const facebook::jsi::Value &value) override;
 
   facebook::jsi::Function createFunctionFromHostFunction(
       const facebook::jsi::PropNameID &name,
@@ -902,13 +902,13 @@ bool NapiJsiRuntime::hasProperty(const Object &obj, const String &name) {
   return HasProperty(GetNapiValue(obj), GetNapiValue(name));
 }
 
-void NapiJsiRuntime::setPropertyValue(Object &obj, const PropNameID &name, const Value &value) {
+void NapiJsiRuntime::setPropertyValue(const Object &obj, const PropNameID &name, const Value &value) {
   EnvScope scope{m_env};
 
   SetProperty(GetNapiValue(obj), GetNapiValue(name), GetNapiValue(value));
 }
 
-void NapiJsiRuntime::setPropertyValue(Object &obj, const String &name, const Value &value) {
+void NapiJsiRuntime::setPropertyValue(const Object &obj, const String &name, const Value &value) {
   EnvScope scope{m_env};
 
   SetProperty(GetNapiValue(obj), GetNapiValue(name), GetNapiValue(value));
@@ -980,7 +980,7 @@ WeakObject NapiJsiRuntime::createWeakObject(const Object &obj) {
   return MakePointer<WeakObject>(weakRef);
 }
 
-Value NapiJsiRuntime::lockWeakObject(WeakObject &weakObject) {
+Value NapiJsiRuntime::lockWeakObject(const WeakObject &weakObject) {
   EnvScope scope{m_env};
   napi_value value = GetNapiValue(weakObject);
 
@@ -1031,7 +1031,7 @@ Value NapiJsiRuntime::getValueAtIndex(const Array &arr, size_t index) {
   return ToJsiValue(result);
 }
 
-void NapiJsiRuntime::setValueAtIndexImpl(Array &arr, size_t index, const Value &value) {
+void NapiJsiRuntime::setValueAtIndexImpl(const Array &arr, size_t index, const Value &value) {
   EnvScope scope{m_env};
 
   SetElement(GetNapiValue(arr), static_cast<uint32_t>(index), GetNapiValue(value));
