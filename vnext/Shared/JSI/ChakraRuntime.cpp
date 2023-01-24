@@ -585,7 +585,10 @@ facebook::jsi::Value ChakraRuntime::getValueAtIndex(const facebook::jsi::Array &
   return ToJsiValue(GetIndexedProperty(GetJsRef(arr), static_cast<int>(index)));
 }
 
-void ChakraRuntime::setValueAtIndexImpl(const facebook::jsi::Array &arr, size_t index, const facebook::jsi::Value &value) {
+void ChakraRuntime::setValueAtIndexImpl(
+    const facebook::jsi::Array &arr,
+    size_t index,
+    const facebook::jsi::Value &value) {
   assert(isArray(arr));
   assert(index <= static_cast<size_t>((std::numeric_limits<int>::max)()));
 
