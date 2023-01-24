@@ -6,11 +6,11 @@ namespace winrt::Microsoft::ReactNative::implementation {
 struct CompositionRootView;
 
 class CompositionRootAutomationProvider : public winrt::implements<
-                                          CompositionRootAutomationProvider,
-                                          IInspectable,
-                                          IRawElementProviderFragmentRoot,
-                                          IRawElementProviderFragment,
-                                          IRawElementProviderSimple> {
+                                              CompositionRootAutomationProvider,
+                                              IInspectable,
+                                              IRawElementProviderFragmentRoot,
+                                              IRawElementProviderFragment,
+                                              IRawElementProviderSimple> {
  public:
   // inherited via IRawElementProviderFragmentRoot
   virtual HRESULT __stdcall ElementProviderFromPoint(double x, double y, IRawElementProviderFragment **pRetVal)
@@ -31,9 +31,9 @@ class CompositionRootAutomationProvider : public winrt::implements<
   virtual HRESULT __stdcall GetPropertyValue(PROPERTYID propertyId, VARIANT *pRetVal) override;
   virtual HRESULT __stdcall get_HostRawElementProvider(IRawElementProviderSimple **pRetVal) override;
 
-
   CompositionRootAutomationProvider(
-      winrt::weak_ref<winrt::Microsoft::ReactNative::implementation::CompositionRootView> &&weakRootControl, HWND hwnd) noexcept;
+      winrt::weak_ref<winrt::Microsoft::ReactNative::implementation::CompositionRootView> &&weakRootControl,
+      HWND hwnd) noexcept;
 
  private:
   winrt::weak_ref<winrt::Microsoft::ReactNative::implementation::CompositionRootView> m_weakRootControl;
