@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20221214-2026-25a25ea23",
+  "baseVersion": "0.0.0-20221228-2020-ad953f6f4",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "3078c10e59be5ba72f885fa75ba8ca5fccf63747"
+      "baseHash": "807cd5e0f16c0017315c057e2bec13b5e389e697"
     },
     {
       "type": "derived",
@@ -56,8 +56,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/Button.win32.js",
       "baseFile": "Libraries/Components/Button.js",
-      "baseHash": "31731fd48736bfcd3c36eb60a242b187236e124b",
-      "issue": 0
+      "baseHash": "31731fd48736bfcd3c36eb60a242b187236e124b"
     },
     {
       "type": "platform",
@@ -109,8 +108,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/ScrollView/ScrollView.win32.js",
       "baseFile": "Libraries/Components/ScrollView/ScrollView.js",
-      "baseHash": "3f6e4ed14ff4a94e97873e0eb7c6a77c2cc33e2a",
-      "issue": 0
+      "baseHash": "3f6e4ed14ff4a94e97873e0eb7c6a77c2cc33e2a"
     },
     {
       "type": "platform",
@@ -296,8 +294,7 @@
       "type": "derived",
       "file": "src/Libraries/LogBox/UI/LogBoxInspectorCodeFrame.win32.js",
       "baseFile": "Libraries/LogBox/UI/LogBoxInspectorCodeFrame.js",
-      "baseHash": "dff994bb88b8c91090c381c871e6dc83d2511004",
-      "issue": 0
+      "baseHash": "dff994bb88b8c91090c381c871e6dc83d2511004"
     },
     {
       "type": "patch",
@@ -310,8 +307,7 @@
       "type": "derived",
       "file": "src/Libraries/LogBox/UI/LogBoxInspectorReactFrames.win32.js",
       "baseFile": "Libraries/LogBox/UI/LogBoxInspectorReactFrames.js",
-      "baseHash": "04c1210d0198315af8358b22a81dc74dc76ef752",
-      "issue": 0
+      "baseHash": "04c1210d0198315af8358b22a81dc74dc76ef752"
     },
     {
       "type": "derived",
@@ -331,7 +327,7 @@
       "type": "derived",
       "file": "src/Libraries/NativeComponent/BaseViewConfig.win32.js",
       "baseFile": "Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "e7e0d3f2af900c894dd233ec3a7bb9d1e7306bbd"
+      "baseHash": "991726f54a5cd6887db874c10f5ad3d2e90d5210"
     },
     {
       "type": "derived",

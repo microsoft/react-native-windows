@@ -446,14 +446,14 @@ bool ChakraRuntime::hasProperty(const facebook::jsi::Object &obj, const facebook
 }
 
 void ChakraRuntime::setPropertyValue(
-    facebook::jsi::Object &object,
+    const facebook::jsi::Object &object,
     const facebook::jsi::PropNameID &name,
     const facebook::jsi::Value &value) {
   SetProperty(GetJsRef(object), GetJsRef(name), ToJsValueRef(value));
 }
 
 void ChakraRuntime::setPropertyValue(
-    facebook::jsi::Object &object,
+    const facebook::jsi::Object &object,
     const facebook::jsi::String &name,
     const facebook::jsi::Value &value) {
   SetProperty(GetJsRef(object), GetPropertyIdFromString(GetJsRef(name)), ToJsValueRef(value));
@@ -545,7 +545,7 @@ facebook::jsi::WeakObject ChakraRuntime::createWeakObject(const facebook::jsi::O
   return make<facebook::jsi::WeakObject>(CloneChakraPointerValue(getPointerValue(object)));
 }
 
-facebook::jsi::Value ChakraRuntime::lockWeakObject(facebook::jsi::WeakObject &weakObject) {
+facebook::jsi::Value ChakraRuntime::lockWeakObject(const facebook::jsi::WeakObject &weakObject) {
   // We need to make a copy of the ChakraObjectRef held within weakObj's
   // member PointerValue for the returned jsi::Value here.
   return ToJsiValue(GetJsRef(weakObject));
@@ -585,7 +585,10 @@ facebook::jsi::Value ChakraRuntime::getValueAtIndex(const facebook::jsi::Array &
   return ToJsiValue(GetIndexedProperty(GetJsRef(arr), static_cast<int>(index)));
 }
 
-void ChakraRuntime::setValueAtIndexImpl(facebook::jsi::Array &arr, size_t index, const facebook::jsi::Value &value) {
+void ChakraRuntime::setValueAtIndexImpl(
+    const facebook::jsi::Array &arr,
+    size_t index,
+    const facebook::jsi::Value &value) {
   assert(isArray(arr));
   assert(index <= static_cast<size_t>((std::numeric_limits<int>::max)()));
 
