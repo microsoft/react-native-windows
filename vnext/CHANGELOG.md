@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 20 Jan 2023 06:17:55 GMT and should not be manually modified.
+This log was last generated on Tue, 24 Jan 2023 06:12:44 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.606
+
+Tue, 24 Jan 2023 06:12:44 GMT
+
+### Changes
+
+- [Fabric][Image] Add tintColor, blurRadius, and resizeMode = repeat (email not defined)
 
 ## 0.0.0-canary.605
 

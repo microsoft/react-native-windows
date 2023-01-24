@@ -52,7 +52,7 @@ steps:
       workingDirectory: $(System.DefaultWorkingDirectory)/ReactWindows
 
   - ${{ if eq(parameters.codesignBinaries, true) }}:
-    - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@1
+    - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@2
       displayName: '${{ parameters.outputPackage }} CodeSign Binaries'
       inputs:
         ConnectedServiceName: ReactNativeSigning
@@ -102,7 +102,7 @@ steps:
       buildProperties: version=${{ parameters.packageVersion }};id=${{ parameters.outputPackage }};${{ parameters.buildProperties }}
 
   - ${{ if eq(parameters.codesignNuget, true) }}:
-    - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@1
+    - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@2
       displayName: '${{ parameters.outputPackage }} CodeSign NuGet'
       inputs:
         ConnectedServiceName: ReactNativeSigning

@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 24 Jan 2023 06:12:44 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.606",
+      "version": "0.0.0-canary.606",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "3cd21c2d15da8fa1ed916b6f9643e0648679a366",
+            "comment": "[Fabric][Image] Add tintColor, blurRadius, and resizeMode = repeat"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 20 Jan 2023 06:17:55 GMT",
       "tag": "react-native-windows_v0.0.0-canary.605",
       "version": "0.0.0-canary.605",

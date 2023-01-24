@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "[Fabric][Image] Add tintColor, blurRadius, and resizeMode = repeat",
-  "packageName": "react-native-windows",
-  "email": "email not defined",
-  "dependentChangeType": "patch"
-}
