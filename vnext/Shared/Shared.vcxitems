@@ -281,6 +281,7 @@
       <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionHwndHost.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\Composition\CompositionRootAutomationProvider.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\Composition\CompositionRootView.cpp">
       <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionRootView.idl</DependentUpon>
       <SubType>Code</SubType>
