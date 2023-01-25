@@ -50,9 +50,9 @@ parameters:
           - Name: X86Release
             BuildConfiguration: Release
             BuildPlatform: x86
-          - X64DebugFabric:
-            BuildConfiguration: Debug
-            BuildPlatform: x64
+          - X86ReleaseFabric:
+            BuildConfiguration: Release
+            BuildPlatform: x86
             UseFabric: true            
 
 jobs:
