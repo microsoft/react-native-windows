@@ -1,6 +1,7 @@
 #pragma once
 
 #include <UIAutomation.h>
+#include <inspectable.h>
 
 namespace winrt::Microsoft::ReactNative::implementation {
 struct CompositionRootView;
