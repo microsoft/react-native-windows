@@ -59,10 +59,6 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
 
  private:
   IInspectable m_compositionUiaProvider{nullptr};
-  ReactNative::ReactNativeHost m_reactNativeHost{nullptr};
-  hstring m_componentName;
-  ReactNative::JSValueArgWriter m_initialPropsWriter;
-  bool m_isPerspectiveEnabled{true};
   bool m_isInitialized{false};
   bool m_isJSViewAttached{false};
   IReactDispatcher m_uiDispatcher{nullptr};
