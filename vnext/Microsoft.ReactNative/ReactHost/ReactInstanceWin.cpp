@@ -504,7 +504,7 @@ void ReactInstanceWin::Initialize() noexcept {
 
               bool enableMultiThreadSupport{false};
 #ifdef USE_FABRIC
-              enableMultiThreadSupport = IsFabricEnabled(m_reactContext->Properties());
+              enableMultiThreadSupport = Microsoft::ReactNative::IsFabricEnabled(m_reactContext->Properties());
 #endif // USE_FABRIC
 
               devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
