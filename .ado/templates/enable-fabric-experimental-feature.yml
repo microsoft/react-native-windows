@@ -1,0 +1,13 @@
+steps:
+  - powershell: |
+      [xml] $experimentalFeatures = Get-Content vnext\ExperimentalFeatures.props
+      $nsm = New-Object Xml.XmlNamespaceManager($experimentalFeatures.NameTable)
+      $nsm.AddNamespace('ns', $experimentalFeatures.DocumentElement.NamespaceURI)
+
+      $xmlNode = $experimentalFeatures.CreateElement("PropertyGroup");
+      $xmlNode.InnerXml = "<UseFabric>true</UseFabric>"
+
+      $experimentalFeatures.DocumentElement.AppendChild($xmlNode);
+
+      $experimentalFeatures.Save("vnext\ExperimentalFeatures.props")
+    displayName: Enable UseFabric experimental feature
