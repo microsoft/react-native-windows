@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 25 Jan 2023 06:12:28 GMT and should not be manually modified.
+This log was last generated on Thu, 26 Jan 2023 06:12:17 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.608
+
+Thu, 26 Jan 2023 06:12:17 GMT
+
+### Changes
+
+- Fix desktop dll build when fabric is enabled (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.607
 
