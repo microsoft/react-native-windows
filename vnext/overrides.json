@@ -378,6 +378,18 @@
     },
     {
       "type": "derived",
+      "file": "src/Libraries/Lists/VirtualizedList.windows.js",
+      "baseFile": "Libraries/Lists/VirtualizedList.js",
+      "baseHash": "de1136359cf78fa3f2593388924893c36c526650"
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/Lists/VirtualizedListProps.windows.js",
+      "baseFile": "Libraries/Lists/VirtualizedListProps.js",
+      "baseHash": "de1136359cf78fa3f2593388924893c36c526650"
+    },
+    {
+      "type": "derived",
       "file": "src/Libraries/LogBox/UI/LogBoxInspectorCodeFrame.windows.js",
       "baseFile": "Libraries/LogBox/UI/LogBoxInspectorCodeFrame.js",
       "baseHash": "dff994bb88b8c91090c381c871e6dc83d2511004"
