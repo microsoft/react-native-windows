@@ -42,13 +42,6 @@ void ModalHostViewEventEmitter::onOrientationChange(OnOrientationChange event) c
   });
 }
 
-void DatePickerEventEmitter::onChange(OnChange event) const {
-  dispatchEvent("change", [event=std::move(event)](jsi::Runtime &runtime) {
-    auto payload = jsi::Object(runtime);
-    payload.setProperty(runtime, "timestamp", event.timestamp);
-    return payload;
-  });
-}
 void AndroidDrawerLayoutEventEmitter::onDrawerSlide(OnDrawerSlide event) const {
   dispatchEvent("drawerSlide", [event=std::move(event)](jsi::Runtime &runtime) {
     auto payload = jsi::Object(runtime);

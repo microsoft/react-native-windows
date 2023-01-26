@@ -127,4 +127,4 @@ const RCTNetworking = {
   },
 };
 
-module.exports = RCTNetworking;
+export default (new RCTNetworking(): RCTNetworking);

@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20221228-2020-ad953f6f4",
+  "baseVersion": "0.0.0-20230111-2023-573734f4e",
   "overrides": [
     {
       "type": "derived",
@@ -19,7 +19,7 @@
       "type": "derived",
       "file": "src/index.win32.js",
       "baseFile": "index.js",
-      "baseHash": "7da90f6b0172d5a9c302184c7247680804c328b7"
+      "baseHash": "70bbf5c1d4a00ae247ab2dfb811db3deee2f584c"
     },
     {
       "type": "platform",
@@ -35,7 +35,7 @@
       "type": "derived",
       "file": "src/Libraries/Animated/NativeAnimatedHelper.win32.js",
       "baseFile": "Libraries/Animated/NativeAnimatedHelper.js",
-      "baseHash": "dffef42e9c8a4a5e9849892b7de7a3141c5e96bd",
+      "baseHash": "70731169e44a70b01e7191f35b3894b9d72e68a7",
       "issue": 11041
     },
     {
@@ -70,6 +70,7 @@
       "type": "copy",
       "file": "src/Libraries/Components/DatePicker/DatePickerIOS.win32.js",
       "baseFile": "Libraries/Components/DatePicker/DatePickerIOS.android.js",
+      "baseVersion": "0.0.0-20221228-2020-ad953f6f4",
       "baseHash": "cd7c18ed335735df871f69424d498b82b920a298",
       "issue": 4378
     },
@@ -282,13 +283,13 @@
       "type": "patch",
       "file": "src/Libraries/Inspector/Inspector.win32.js",
       "baseFile": "Libraries/Inspector/Inspector.js",
-      "baseHash": "012b5d37e2c8803715cde491bd6376dd44604886"
+      "baseHash": "49413d7b12477405e583062a1ab7e50e8ea0fefc"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Inspector/InspectorOverlay.win32.js",
       "baseFile": "Libraries/Inspector/InspectorOverlay.js",
-      "baseHash": "8e651cd19c7df62ddac099802abacf73f5f430dd"
+      "baseHash": "0c8c439f7a26ce8de799de20629fbf855c1ec416"
     },
     {
       "type": "derived",
@@ -327,13 +328,13 @@
       "type": "derived",
       "file": "src/Libraries/NativeComponent/BaseViewConfig.win32.js",
       "baseFile": "Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "991726f54a5cd6887db874c10f5ad3d2e90d5210"
+      "baseHash": "3c1918ff2ab3e43b4900e9b1e8549537d273d575"
     },
     {
       "type": "derived",
       "file": "src/Libraries/Network/RCTNetworking.win32.js",
       "baseFile": "Libraries/Network/RCTNetworking.android.js",
-      "baseHash": "8177420114e343900c5242c18e875588430c6928",
+      "baseHash": "67d0d4757fcd7a1c2c0f6de642f713f0fa300e28",
       "issue": 4318
     },
     {
@@ -410,7 +411,7 @@
       "type": "patch",
       "file": "src/Libraries/StyleSheet/StyleSheet.win32.js",
       "baseFile": "Libraries/StyleSheet/StyleSheet.js",
-      "baseHash": "b3075a13a629f20b347a9d9bca13df99c556fc93"
+      "baseHash": "3890079b44726e5c6d01b3067360cdfa1960e7e8"
     },
     {
       "type": "derived",
@@ -443,7 +444,7 @@
       "type": "derived",
       "file": "src/Libraries/Utilities/Dimensions.win32.js",
       "baseFile": "Libraries/Utilities/Dimensions.js",
-      "baseHash": "229c098c2540cd0cb003976a22c1028ca76f0f98"
+      "baseHash": "c37d2da5361a472af0c97e7c7a3ceba573b73d73"
     },
     {
       "type": "platform",

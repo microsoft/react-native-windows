@@ -63,16 +63,6 @@ class JSI_EXPORT ActivityIndicatorViewEventEmitter : public ViewEventEmitter {
 
   
 };
-class JSI_EXPORT DatePickerEventEmitter : public ViewEventEmitter {
- public:
-  using ViewEventEmitter::ViewEventEmitter;
-
-  struct OnChange {
-      Float timestamp;
-    };
-
-  void onChange(OnChange value) const;
-};
 class JSI_EXPORT AndroidDrawerLayoutEventEmitter : public ViewEventEmitter {
  public:
   using ViewEventEmitter::ViewEventEmitter;
