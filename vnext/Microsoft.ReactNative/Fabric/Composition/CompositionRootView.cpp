@@ -144,6 +144,14 @@ void CompositionRootView::ScaleFactor(double value) noexcept {
   m_scaleFactor = value;
 }
 
+IInspectable CompositionRootView::GetUiaProvider(uint64_t hwnd) noexcept {
+  if (m_compositionUiaProvider == nullptr) {
+    m_compositionUiaProvider =
+        winrt::make<CompositionRootAutomationProvider>(this->get_weak(), reinterpret_cast<HWND>(hwnd));
+  }
+  return m_compositionUiaProvider;
+}
+
 winrt::Microsoft::ReactNative::Composition::IVisual CompositionRootView::GetVisual() const noexcept {
   return m_rootVisual;
 }

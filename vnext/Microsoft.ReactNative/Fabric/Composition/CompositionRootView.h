@@ -7,6 +7,7 @@
 #include <ReactContext.h>
 #include <winrt/Microsoft.ReactNative.h>
 #include "CompositionEventHandler.h"
+#include "CompositionRootAutomationProvider.h"
 #include "ReactHost/React.h"
 #include "Views/ICompositionRootView.h"
 
@@ -34,6 +35,8 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
   Windows::Foundation::Size Measure(Windows::Foundation::Size const &availableSize) const;
   Windows::Foundation::Size Arrange(Windows::Foundation::Size finalSize) const;
 
+  IInspectable GetUiaProvider(uint64_t hWnd) noexcept;
+
   int64_t SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept;
   void OnScrollWheel(Windows::Foundation::Point point, int32_t delta) noexcept;
 
@@ -55,6 +58,7 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
   void UninitRootView() noexcept;
 
  private:
+  IInspectable m_compositionUiaProvider{nullptr};
   bool m_isInitialized{false};
   bool m_isJSViewAttached{false};
   IReactDispatcher m_uiDispatcher{nullptr};

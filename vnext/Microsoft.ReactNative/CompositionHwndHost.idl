@@ -28,6 +28,8 @@ namespace Microsoft.ReactNative
     IReactViewHost ReactViewHost { get; set; };
 
     Int64 TranslateMessage(UInt32 msg, UInt64 wParam, Int64 lParam);
+
+    Object UiaProvider { get; };
   }
 
 } // namespace Microsoft.ReactNative

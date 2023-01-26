@@ -14,6 +14,7 @@
 #include "../../../../vnext/codegen/NativeDeviceInfoSpec.g.h"
 
 #include <DispatcherQueue.h>
+#include <UIAutomation.h>
 #include <windows.ui.composition.interop.h>
 
 #include <winrt/Microsoft.ReactNative.Composition.h>
@@ -350,6 +351,19 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
       WINRT_ASSERT(windowData);
       SetProp(hwnd, WindowDataProperty, reinterpret_cast<HANDLE>(windowData));
       break;
+    }
+    case WM_GETOBJECT: {
+      if (lparam == UiaRootObjectId) {
+        auto windowData = WindowData::GetFromWindow(hwnd);
+        if (!windowData->m_windowInited)
+          break;
+
+        auto hwndHost = windowData->m_CompositionHwndHost;
+        winrt::com_ptr<IRawElementProviderSimple> spReps;
+        hwndHost.UiaProvider().as(spReps);
+        LRESULT lResult = UiaReturnRawElementProvider(hwnd, wparam, lparam, spReps.get());
+        return lResult;
+      }
     }
   }
 

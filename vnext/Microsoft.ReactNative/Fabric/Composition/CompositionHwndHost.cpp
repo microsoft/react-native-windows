@@ -14,6 +14,8 @@
 #include "CompositionContextHelper.h"
 #include "ReactNativeHost.h"
 
+#include "CompositionRootView.h"
+
 WINUSERAPI UINT WINAPI GetDpiForWindow(_In_ HWND hwnd);
 
 namespace winrt::Microsoft::ReactNative::implementation {
@@ -140,6 +142,11 @@ winrt::Windows::UI::Composition::Compositor CompositionHwndHost::Compositor() co
 
   return winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::InnerCompositor(
       compositionContext);
+}
+
+IInspectable CompositionHwndHost::UiaProvider() noexcept {
+  auto compRootView = winrt::get_self<implementation::CompositionRootView>(m_compRootView);
+  return compRootView->GetUiaProvider(reinterpret_cast<uint64_t>(m_hwnd));
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation
