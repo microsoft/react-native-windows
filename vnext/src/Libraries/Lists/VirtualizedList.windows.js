@@ -157,7 +157,7 @@ export default class VirtualizedList extends StateSafePureComponent<
   scrollToEnd(params?: ?{animated?: ?boolean, ...}) {
     const animated = params ? params.animated : true;
     const veryLast = this.props.getItemCount(this.props.data) - 1;
-    const frame = this.__getFrameMetricsApprox(veryLast, this.props);
+    const frame = this.__getFrameMetricsApprox(veryLast, this.props, /* useRawMetrics: */ true);
     const offset = Math.max(
       0,
       frame.offset +
@@ -369,8 +369,27 @@ export default class VirtualizedList extends StateSafePureComponent<
   }
 
   // $FlowFixMe[missing-local-annot]
-  _getScrollMetrics = () => {
-    return this._scrollMetrics;
+  _getScrollMetrics = (inverted: boolean) => {
+    // Windows-only: Invert scroll metrics when inverted prop is
+    // set to retain monotonically increasing layout assumptions
+    // in the direction of increasing scroll offsets.
+    let scrollMetrics = this._scrollMetrics;
+    if (inverted) {
+      const {
+        contentLength,
+        dOffset,
+        offset,
+        velocity,
+        visibleLength,
+      } = scrollMetrics;
+      scrollMetrics = {
+        ...scrollMetrics,
+        dOffset: dOffset * -1,
+        offset: contentLength - offset - visibleLength,
+        velocity: velocity * -1,
+      };
+    }
+    return scrollMetrics;
   };
 
   hasMore(): boolean {
@@ -580,7 +599,7 @@ export default class VirtualizedList extends StateSafePureComponent<
       //   where the list is shorter than the visible area)
       if (
         props.initialScrollIndex &&
-        !this._scrollMetrics.offset &&
+        !offset &&
         Math.abs(distanceFromEnd) >= Number.EPSILON
       ) {
         return cellsAroundViewport.last >= getItemCount(data)
@@ -594,7 +613,7 @@ export default class VirtualizedList extends StateSafePureComponent<
         windowSizeOrDefault(props.windowSize),
         cellsAroundViewport,
         this.__getFrameMetricsApprox,
-        this._scrollMetrics,
+        this._getScrollMetrics(props.inverted),
       );
       invariant(
         newCellsAroundViewport.last < getItemCount(data),
@@ -812,6 +831,12 @@ export default class VirtualizedList extends StateSafePureComponent<
         ? styles.horizontallyInverted
         : styles.verticallyInverted
       : null;
+    // Windows-only: Reverse the layout of items via flex
+    const containerInversionStyle = this.props.inverted
+      ? this.props.horizontal
+        ? styles.horizontallyReversed
+        : styles.verticallyReversed
+      : null;
     const cells: Array<any | React.Node> = [];
     const stickyIndicesFromProps = new Set(this.props.stickyHeaderIndices);
     const stickyHeaderIndices = [];
@@ -913,7 +938,10 @@ export default class VirtualizedList extends StateSafePureComponent<
           cells.push(
             <View
               key={`$spacer-${section.first}`}
-              style={{[spacerKey]: spacerSize}}
+              // Windows-only: ensure View cannot be anchor target
+              overflowAnchor='none'
+              // Windows-only: ensure spacers render last
+              style={{[spacerKey]: spacerSize, zIndex: 1e6}}
             />,
           );
         } else {
@@ -969,6 +997,11 @@ export default class VirtualizedList extends StateSafePureComponent<
     // 4. Render the ScrollView
     const scrollProps = {
       ...this.props,
+      // Windows-only: Pass through inverted container styles
+      contentContainerStyle: StyleSheet.compose(
+        containerInversionStyle,
+        this.props.contentContainerStyle,
+      ),
       onContentSizeChange: this._onContentSizeChange,
       onLayout: this._onLayout,
       onScroll: this._onScroll,
@@ -995,7 +1028,7 @@ export default class VirtualizedList extends StateSafePureComponent<
       <VirtualizedListContextProvider
         value={{
           cellKey: null,
-          getScrollMetrics: this._getScrollMetrics,
+          getScrollMetrics: () => this._getScrollMetrics(this.props.inverted),
           horizontal: horizontalOrDefault(this.props.horizontal),
           getOutermostParentListRef: this._getOutermostParentListRef,
           registerAsNestedChild: this._registerAsNestedChild,
@@ -1129,7 +1162,7 @@ export default class VirtualizedList extends StateSafePureComponent<
     this._fillRateHelper.computeBlankness(
       this.props,
       this.state.cellsAroundViewport,
-      this._scrollMetrics,
+      this._getScrollMetrics(this.props.inverted),
     );
   }
 
@@ -1328,7 +1361,7 @@ export default class VirtualizedList extends StateSafePureComponent<
     const framesInLayout = [];
     const itemCount = this.props.getItemCount(this.props.data);
     for (let ii = 0; ii < itemCount; ii++) {
-      const frame = this.__getFrameMetricsApprox(ii, this.props);
+      const frame = this.__getFrameMetricsApprox(ii, this.props, /* useRawMetrics: */ true);
       /* $FlowFixMe[prop-missing] (>=0.68.0 site=react_native_fb) This comment
        * suppresses an error found when Flow v0.68 was deployed. To see the
        * error delete this comment and run Flow. */
@@ -1368,7 +1401,8 @@ export default class VirtualizedList extends StateSafePureComponent<
             styles.debugOverlayBase,
             styles.debugOverlayFrameLast,
             {
-              top: windowTop * normalize,
+              // Windows-only: Invert the position of the render window offset
+              top: (this.props.inverted ? this._scrollMetrics.contentLength - windowLen - windowTop : windowTop) * normalize,
               height: windowLen * normalize,
             },
           ]}
@@ -1412,7 +1446,7 @@ export default class VirtualizedList extends StateSafePureComponent<
   _maybeCallOnEndReached() {
     const {data, getItemCount, onEndReached, onEndReachedThreshold} =
       this.props;
-    const {contentLength, visibleLength, offset} = this._scrollMetrics;
+    const {contentLength, visibleLength, offset} = this._getScrollMetrics(this.props.inverted);
     let distanceFromEnd = contentLength - visibleLength - offset;
 
     // Especially when oERT is zero it's necessary to 'floor' very small distanceFromEnd values to be 0
@@ -1560,7 +1594,7 @@ export default class VirtualizedList extends StateSafePureComponent<
 
   _scheduleCellsToRenderUpdate() {
     const {first, last} = this.state.cellsAroundViewport;
-    const {offset, visibleLength, velocity} = this._scrollMetrics;
+    const {offset, visibleLength, velocity} = this._getScrollMetrics(this.props.inverted);
     const itemCount = this.props.getItemCount(this.props.data);
     let hiPri = false;
     const onEndReachedThreshold = onEndReachedThresholdOrDefault(
@@ -1708,15 +1742,26 @@ export default class VirtualizedList extends StateSafePureComponent<
   __getFrameMetricsApprox: (
     index: number,
     props: FrameMetricProps,
+    useRawMetrics?: boolean,
   ) => {
     length: number,
     offset: number,
     ...
-  } = (index, props) => {
+  } = (index, props, useRawMetrics) => {
     const frame = this._getFrameMetrics(index, props);
     if (frame && frame.index === index) {
-      // check for invalid frames due to row re-ordering
-      return frame;
+      // Windows-only: Raw metrics are requested for scroll commands. Metrics
+      // returned from __getFrameMetrics are assumed to be inverted. To convert back
+      // to raw metrics, subtract the offset and length from the content length.
+      return props.inverted && useRawMetrics
+        ? {
+            ...frame,
+            offset: Math.max(
+              0,
+              this._scrollMetrics.contentLength - frame.offset - frame.length,
+            ),
+          }
+        : frame;
     } else {
       const {data, getItemCount, getItemLayout} = props;
       invariant(
@@ -1727,9 +1772,21 @@ export default class VirtualizedList extends StateSafePureComponent<
         !getItemLayout,
         'Should not have to estimate frames when a measurement metrics function is provided',
       );
+
+      // Windows-only: Raw metrics are requested for scroll commands. Metrics
+      // returned from _getFrameMetrics are assumed to be inverted. To compute
+      // approximate raw metrics, subtract the computed average offset from
+      // the content length.
+      const offset =
+        props.inverted && useRawMetrics
+          ? Math.max(
+              0,
+              this._scrollMetrics - this._averageCellLength * (index + 1),
+            )
+          : this._averageCellLength * index;
       return {
         length: this._averageCellLength,
-        offset: this._averageCellLength * index,
+        offset,
       };
     }
   };
@@ -1750,7 +1807,14 @@ export default class VirtualizedList extends StateSafePureComponent<
       'Tried to get frame for out of range index ' + index,
     );
     const item = getItem(data, index);
-    const frame = item && this._frames[this._keyExtractor(item, index, props)];
+    let frame = item && this._frames[this._keyExtractor(item, index, props)];
+    // Windows-only: Convert to inverted offsets from raw layout
+    if (frame && props.inverted) {
+      frame = {
+        ...frame,
+        offset: this._scrollMetrics.contentLength - frame.offset - frame.length,
+      };
+    }
     if (!frame || frame.index !== index) {
       if (getItemLayout) {
         /* $FlowFixMe[prop-missing] (>=0.63.0 site=react_native_fb) This comment
@@ -1828,7 +1892,7 @@ export default class VirtualizedList extends StateSafePureComponent<
     this._viewabilityTuples.forEach(tuple => {
       tuple.viewabilityHelper.onUpdate(
         props,
-        this._scrollMetrics.offset,
+        this._getScrollMetrics(props.inverted).offset,
         this._scrollMetrics.visibleLength,
         this._getFrameMetrics,
         this._createViewToken,
@@ -1841,10 +1905,16 @@ export default class VirtualizedList extends StateSafePureComponent<
 
 const styles = StyleSheet.create({
   verticallyInverted: {
-    transform: [{scaleY: -1}],
+    /* Windows-only: do not use transform-based inversion */
   },
   horizontallyInverted: {
-    transform: [{scaleX: -1}],
+    /* Windows-only: do not use transform-based inversion */
+  },
+  verticallyReversed: {
+    flexDirection: 'column-reverse',
+  },
+  horizontallyReversed: {
+    flexDirection: 'row-reverse',
   },
   debug: {
     flex: 1,

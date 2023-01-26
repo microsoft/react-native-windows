@@ -274,6 +274,7 @@
    getItemCount: RequiredProps['getItemCount'],
    getItem: RequiredProps['getItem'],
    getItemLayout?: OptionalProps['getItemLayout'],
+   inverted: OptionalProps['inverted'],
    keyExtractor?: OptionalProps['keyExtractor'],
    ...
  };
