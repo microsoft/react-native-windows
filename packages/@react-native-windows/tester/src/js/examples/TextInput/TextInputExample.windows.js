@@ -15,6 +15,7 @@ const React = require('react');
 const {Text, TextInput, View, StyleSheet, Switch} = require('react-native');
 
 const TextInputSharedExamples = require('./TextInputSharedExamples');
+const {useState} = React;
 
 import type {RNTesterModuleExample} from '../../types/RNTesterTypes';
 
