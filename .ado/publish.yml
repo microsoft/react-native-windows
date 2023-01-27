@@ -117,21 +117,27 @@ jobs:
         X64Debug:
           BuildConfiguration: Debug
           BuildPlatform: x64
+          UseFabric: false
         X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
+          UseFabric: false
         X86Debug:
           BuildConfiguration: Debug
           BuildPlatform: x86
+          UseFabric: false
         X86Release:
           BuildConfiguration: Release
           BuildPlatform: x86
+          UseFabric: false
         ARM64Debug:
           BuildConfiguration: Debug
           BuildPlatform: ARM64
+          UseFabric: false
         ARM64Release:
           BuildConfiguration: Release
           BuildPlatform: ARM64
+          UseFabric: false
         X64DebugFabric:
           BuildConfiguration: Debug
           BuildPlatform: x64
@@ -175,7 +181,7 @@ jobs:
         parameters:
           ${{ if eq(variables['buildConfiguration.UseFabric'], true) }}:
             artifactName: DesktopFabric
-          ${{ if neq(variables['buildConfiguration.UseFabric'], true) }}:
+          ${{ if eq(variables['buildConfiguration.UseFabric'], false) }}:
             artifactName: Desktop
           buildPlatform: $(BuildPlatform)
           buildConfiguration: $(BuildConfiguration)
