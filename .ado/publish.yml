@@ -316,6 +316,8 @@ jobs:
   - job: RNWNuget
     dependsOn:
       - RnwNpmPublish
+      - ${{ each matrix in parameters.desktopBuildMatrix }}:
+        - RnwNativeBuildDesktop${{ matrix.Name }}
       - RnwNativeBuildDesktop
       - RnwNativeBuildUniversal
       - RnwNativeBuildWinAppSDK
