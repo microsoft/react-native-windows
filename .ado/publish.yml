@@ -166,7 +166,7 @@ jobs:
         - template: templates/prepare-build-env.yml
           parameters:
             platform: ${{ matrix.BuildPlatform }}
-            configuration: ${{ matrixBuildConfiguration }}
+            configuration: ${{ matrix.BuildConfiguration }}
             buildEnvironment: Publish
 
         - template: templates/apply-published-version-vars.yml
@@ -179,7 +179,7 @@ jobs:
             solutionDir: vnext
             solutionName: ReactWindows-Desktop.sln
             buildPlatform: ${{ matrix.BuildPlatform }}
-            buildConfiguration: ${{ matrixBuildConfiguration }}
+            buildConfiguration: ${{ matrix.BuildConfiguration }}
 
         - template: templates/publish-build-artifacts.yml
           parameters:
@@ -188,7 +188,7 @@ jobs:
             ${{ if eq(matrix.UseFabric, false) }}:
               artifactName: Desktop
             buildPlatform: ${{ matrix.BuildPlatform }}
-            buildConfiguration: ${{ matrixBuildConfiguration }}
+            buildConfiguration: ${{ matrix.BuildConfiguration }}
             contents: |
               React.Windows.Desktop\**
               React.Windows.Desktop.DLL\**
