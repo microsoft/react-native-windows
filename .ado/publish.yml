@@ -179,9 +179,9 @@ jobs:
 
       - template: templates/publish-build-artifacts.yml
         parameters:
-          ${{ if eq(variables['buildConfiguration.UseFabric'], true) }}:
+          ${{ if eq(variables['UseFabric'], true) }}:
             artifactName: DesktopFabric
-          ${{ if eq(variables['buildConfiguration.UseFabric'], false) }}:
+          ${{ if eq(variables['UseFabric'], false) }}:
             artifactName: Desktop
           buildPlatform: $(BuildPlatform)
           buildConfiguration: $(BuildConfiguration)
