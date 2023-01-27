@@ -160,41 +160,41 @@ jobs:
       dependsOn: RnwNpmPublish
       pool: ${{ parameters.AgentPool.Large }}
 
-    steps:
-      - template: templates/prepare-js-env.yml
+      steps:
+        - template: templates/prepare-js-env.yml
 
-      - template: templates/prepare-build-env.yml
-        parameters:
-          platform: ${{ matrix.BuildPlatform }}
-          configuration: ${{ matrixBuildConfiguration }}
-          buildEnvironment: Publish
+        - template: templates/prepare-build-env.yml
+          parameters:
+            platform: ${{ matrix.BuildPlatform }}
+            configuration: ${{ matrixBuildConfiguration }}
+            buildEnvironment: Publish
 
-      - template: templates/apply-published-version-vars.yml
+        - template: templates/apply-published-version-vars.yml
 
-      - ${{ if eq(matrix.UseFabric, true) }}:
-        - template: templates/enable-fabric-experimental-feature.yml
+        - ${{ if eq(matrix.UseFabric, true) }}:
+          - template: templates/enable-fabric-experimental-feature.yml
 
-      - template: templates/msbuild-sln.yml
-        parameters:
-          solutionDir: vnext
-          solutionName: ReactWindows-Desktop.sln
-          buildPlatform: ${{ matrix.BuildPlatform }}
-          buildConfiguration: ${{ matrixBuildConfiguration }}
+        - template: templates/msbuild-sln.yml
+          parameters:
+            solutionDir: vnext
+            solutionName: ReactWindows-Desktop.sln
+            buildPlatform: ${{ matrix.BuildPlatform }}
+            buildConfiguration: ${{ matrixBuildConfiguration }}
 
-      - template: templates/publish-build-artifacts.yml
-        parameters:
-          ${{ if eq(matrix.UseFabric, true) }}:
-            artifactName: DesktopFabric
-          ${{ if eq(matrix.UseFabric, false) }}:
-            artifactName: Desktop
-          buildPlatform: ${{ matrix.BuildPlatform }}
-          buildConfiguration: ${{ matrixBuildConfiguration }}
-          contents: |
-            React.Windows.Desktop\**
-            React.Windows.Desktop.DLL\**
-            React.Windows.Desktop.Test.DLL\**
+        - template: templates/publish-build-artifacts.yml
+          parameters:
+            ${{ if eq(matrix.UseFabric, true) }}:
+              artifactName: DesktopFabric
+            ${{ if eq(matrix.UseFabric, false) }}:
+              artifactName: Desktop
+            buildPlatform: ${{ matrix.BuildPlatform }}
+            buildConfiguration: ${{ matrixBuildConfiguration }}
+            contents: |
+              React.Windows.Desktop\**
+              React.Windows.Desktop.DLL\**
+              React.Windows.Desktop.Test.DLL\**
 
-      - template: templates/component-governance.yml
+        - template: templates/component-governance.yml
 
   - job: RnwNativeBuildUniversal
     displayName: Build Universal
