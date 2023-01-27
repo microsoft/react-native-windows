@@ -167,8 +167,8 @@ jobs:
 
       - template: templates/apply-published-version-vars.yml
 
-      - ${{ if eq(variables['buildConfiguration.UseFabric'], true) }}:
-        - template: templates/enable-fabric-experimental-feature.yml
+      - template: templates/enable-fabric-experimental-feature.yml
+        condition: and(succeeded(), eq(variables.UseFabric, true))
 
       - template: templates/msbuild-sln.yml
         parameters:
@@ -178,11 +178,20 @@ jobs:
           buildConfiguration: $(BuildConfiguration)
 
       - template: templates/publish-build-artifacts.yml
+        condition: and(succeeded(), eq(variables.UseFabric, false))
         parameters:
-          ${{ if eq(variables['UseFabric'], true) }}:
-            artifactName: DesktopFabric
-          ${{ if eq(variables['UseFabric'], false) }}:
-            artifactName: Desktop
+          artifactName: Desktop
+          buildPlatform: $(BuildPlatform)
+          buildConfiguration: $(BuildConfiguration)
+          contents: |
+            React.Windows.Desktop\**
+            React.Windows.Desktop.DLL\**
+            React.Windows.Desktop.Test.DLL\**
+
+      - template: templates/publish-build-artifacts.yml
+        condition: and(succeeded(), eq(variables.UseFabric, true))
+        parameters:
+          artifactName: DesktopFabric
           buildPlatform: $(BuildPlatform)
           buildConfiguration: $(BuildConfiguration)
           contents: |
