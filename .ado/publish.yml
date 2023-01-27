@@ -161,7 +161,7 @@ jobs:
 
       - template: templates/apply-published-version-vars.yml
 
-      - ${{ if eq(Matrix.UseFabric, true) }}:
+      - ${{ if eq(variables['buildConfiguration.UseFabric'], true) }}:
         - template: templates/enable-fabric-experimental-feature.yml
 
       - template: templates/msbuild-sln.yml
@@ -173,9 +173,9 @@ jobs:
 
       - template: templates/publish-build-artifacts.yml
         parameters:
-          ${{ if eq(Matrix.UseFabric, true) }}:
+          ${{ if eq(variables['buildConfiguration.UseFabric'], true) }}:
             artifactName: DesktopFabric
-          ${{ if eq(Matrix.UseFabric, false) }}:
+          ${{ if eq(variables['buildConfiguration.UseFabric'], false) }}:
             artifactName: Desktop
           buildPlatform: $(BuildPlatform)
           buildConfiguration: $(BuildConfiguration)
