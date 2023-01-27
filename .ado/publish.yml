@@ -175,7 +175,7 @@ jobs:
         parameters:
           ${{ if eq(variables['buildConfiguration.UseFabric'], true) }}:
             artifactName: DesktopFabric
-          ${{ if eq(variables['buildConfiguration.UseFabric'], false) }}:
+          ${{ if neq(variables['buildConfiguration.UseFabric'], true) }}:
             artifactName: Desktop
           buildPlatform: $(BuildPlatform)
           buildConfiguration: $(BuildConfiguration)
