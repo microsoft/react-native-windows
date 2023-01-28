@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20221228-2020-ad953f6f4",
+  "baseVersion": "0.0.0-20230111-2023-573734f4e",
   "overrides": [
     {
       "type": "derived",
@@ -84,7 +84,7 @@
       "type": "patch",
       "file": "ReactCommon/Yoga.cpp",
       "baseFile": "ReactCommon/yoga/yoga/Yoga.cpp",
-      "baseHash": "f9bff8771c1f5f87f67c71a9fd5be43f9f043ec7",
+      "baseHash": "f70626842ace0ea83be9d7692e587b6864557a7a",
       "issue": 3994
     },
     {
@@ -98,7 +98,7 @@
       "type": "patch",
       "file": "src/babel-plugin-codegen/GenerateViewConfigJs.js",
       "baseFile": "packages/react-native-codegen/src/generators/components/GenerateViewConfigJs.js",
-      "baseHash": "9a5a7e8ab112e03b54953607953a09b8b372a1de",
+      "baseHash": "e3862539d6cba81a9bc8fb02e17c4145542a90df",
       "issue": 5430
     },
     {
@@ -119,7 +119,7 @@
       "type": "derived",
       "file": "src/index.windows.js",
       "baseFile": "index.js",
-      "baseHash": "7da90f6b0172d5a9c302184c7247680804c328b7"
+      "baseHash": "70bbf5c1d4a00ae247ab2dfb811db3deee2f584c"
     },
     {
       "type": "platform",
@@ -204,12 +204,6 @@
       "file": "src/Libraries/Components/Button.windows.js",
       "baseFile": "Libraries/Components/Button.js",
       "baseHash": "31731fd48736bfcd3c36eb60a242b187236e124b"
-    },
-    {
-      "type": "copy",
-      "file": "src/Libraries/Components/DatePicker/DatePickerIOS.windows.js",
-      "baseFile": "Libraries/Components/DatePicker/DatePickerIOS.android.js",
-      "baseHash": "cd7c18ed335735df871f69424d498b82b920a298"
     },
     {
       "type": "derived",
@@ -404,7 +398,7 @@
       "type": "derived",
       "file": "src/Libraries/NativeComponent/BaseViewConfig.windows.js",
       "baseFile": "Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "991726f54a5cd6887db874c10f5ad3d2e90d5210"
+      "baseHash": "3c1918ff2ab3e43b4900e9b1e8549537d273d575"
     },
     {
       "type": "platform",

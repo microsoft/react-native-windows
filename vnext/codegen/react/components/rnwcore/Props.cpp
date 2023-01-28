@@ -41,21 +41,6 @@ ActivityIndicatorViewProps::ActivityIndicatorViewProps(
     color(convertRawProp(context, rawProps, "color", sourceProps.color, {})),
     size(convertRawProp(context, rawProps, "size", sourceProps.size, {ActivityIndicatorViewSize::Small}))
       {}
-DatePickerProps::DatePickerProps(
-    const PropsParserContext &context,
-    const DatePickerProps &sourceProps,
-    const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
-
-    date(convertRawProp(context, rawProps, "date", sourceProps.date, {0.0})),
-    initialDate(convertRawProp(context, rawProps, "initialDate", sourceProps.initialDate, {0.0})),
-    locale(convertRawProp(context, rawProps, "locale", sourceProps.locale, {})),
-    maximumDate(convertRawProp(context, rawProps, "maximumDate", sourceProps.maximumDate, {0.0})),
-    minimumDate(convertRawProp(context, rawProps, "minimumDate", sourceProps.minimumDate, {0.0})),
-    minuteInterval(convertRawProp(context, rawProps, "minuteInterval", sourceProps.minuteInterval, {DatePickerMinuteInterval::MinuteInterval1})),
-    mode(convertRawProp(context, rawProps, "mode", sourceProps.mode, {DatePickerMode::Date})),
-    timeZoneOffsetInMinutes(convertRawProp(context, rawProps, "timeZoneOffsetInMinutes", sourceProps.timeZoneOffsetInMinutes, {0.0})),
-    pickerStyle(convertRawProp(context, rawProps, "pickerStyle", sourceProps.pickerStyle, {DatePickerPickerStyle::Spinner}))
-      {}
 AndroidDrawerLayoutProps::AndroidDrawerLayoutProps(
     const PropsParserContext &context,
     const AndroidDrawerLayoutProps &sourceProps,

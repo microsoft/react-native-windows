@@ -32,21 +32,6 @@ public:
 #endif
 };
 
-class DatePickerState {
-public:
-  DatePickerState() = default;
-
-#ifdef ANDROID
-  DatePickerState(DatePickerState const &previousState, folly::dynamic data){};
-  folly::dynamic getDynamic() const {
-    return {};
-  };
-  MapBuffer getMapBuffer() const {
-    return MapBufferBuilder::EMPTY();
-  };
-#endif
-};
-
 class AndroidDrawerLayoutState {
 public:
   AndroidDrawerLayoutState() = default;
