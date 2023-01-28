@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 28 Jan 2023 06:12:49 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.609",
+      "version": "0.0.0-canary.609",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "43490514c8e3e68c51c97dfc7d8206c6fd2b4af0",
+            "comment": "integrate 01/11/23"
+          },
+          {
+            "author": "adrum@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "1278becc973dc356521eb59549f08197d674952b",
+            "comment": "Add root UIA provider"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.159",
+            "commit": "43490514c8e3e68c51c97dfc7d8206c6fd2b4af0"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 26 Jan 2023 06:12:17 GMT",
       "tag": "react-native-windows_v0.0.0-canary.608",
       "version": "0.0.0-canary.608",
