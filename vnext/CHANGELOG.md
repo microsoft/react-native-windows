@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 26 Jan 2023 06:12:17 GMT and should not be manually modified.
+This log was last generated on Sat, 28 Jan 2023 06:12:49 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.609
+
+Sat, 28 Jan 2023 06:12:49 GMT
+
+### Changes
+
+- integrate 01/11/23 (tatianakapos@microsoft.com)
+- Add root UIA provider (adrum@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.159
 
 ## 0.0.0-canary.608
 
