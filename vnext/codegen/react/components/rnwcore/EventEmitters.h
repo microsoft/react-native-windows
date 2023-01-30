@@ -143,24 +143,6 @@ class JSI_EXPORT AndroidHorizontalScrollContentViewEventEmitter : public ViewEve
 
   
 };
-class JSI_EXPORT SliderEventEmitter : public ViewEventEmitter {
- public:
-  using ViewEventEmitter::ViewEventEmitter;
-
-  struct OnValueChange {
-      double value;
-    bool fromUser;
-    };
-
-  struct OnSlidingComplete {
-      double value;
-    bool fromUser;
-    };
-
-  void onValueChange(OnValueChange value) const;
-
-  void onSlidingComplete(OnSlidingComplete value) const;
-};
 class JSI_EXPORT AndroidSwitchEventEmitter : public ViewEventEmitter {
  public:
   using ViewEventEmitter::ViewEventEmitter;

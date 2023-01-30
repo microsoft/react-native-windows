@@ -14,7 +14,6 @@
 #include <react/renderer/components/view/ViewProps.h>
 #include <react/renderer/core/PropsParserContext.h>
 #include <react/renderer/graphics/Color.h>
-#include <react/renderer/imagemanager/primitives.h>
 #include <vector>
 
 namespace facebook {
@@ -339,29 +338,6 @@ class JSI_EXPORT AndroidHorizontalScrollContentViewProps final : public ViewProp
 #pragma mark - Props
 
   bool removeClippedSubviews{false};
-};
-
-class JSI_EXPORT SliderProps final : public ViewProps {
- public:
-  SliderProps() = default;
-  SliderProps(const PropsParserContext& context, const SliderProps &sourceProps, const RawProps &rawProps);
-
-#pragma mark - Props
-
-  bool disabled{false};
-  bool enabled{true};
-  ImageSource maximumTrackImage{};
-  SharedColor maximumTrackTintColor{};
-  double maximumValue{1.0};
-  ImageSource minimumTrackImage{};
-  SharedColor minimumTrackTintColor{};
-  double minimumValue{0.0};
-  double step{0.0};
-  std::string testID{""};
-  ImageSource thumbImage{};
-  SharedColor thumbTintColor{};
-  ImageSource trackImage{};
-  double value{0.0};
 };
 
 class JSI_EXPORT AndroidSwitchProps final : public ViewProps {
