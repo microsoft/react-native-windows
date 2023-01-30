@@ -129,9 +129,9 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public ShadowNode {
  protected:
   XamlView m_view;
   bool m_updating = false;
-  comp::CompositionPropertySet m_transformPS{nullptr};
   bool m_isFocusable = true;
   bool m_isAccessible = true;
+  comp::CompositionPropertySet m_transformPS{nullptr};
 
  public:
   double m_padding[(int)ShadowEdges::CountEdges] = INIT_UNDEFINED_EDGES;
