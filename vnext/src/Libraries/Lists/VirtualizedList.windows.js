@@ -561,7 +561,7 @@ export default class VirtualizedList extends StateSafePureComponent<
     );
     this._updateViewableItems(props, cellsAroundViewport);
 
-    const {contentLength, offset, visibleLength} = this._scrollMetrics;
+    const {contentLength, offset, visibleLength} = this._getScrollMetrics(props.inverted);
     const distanceFromEnd = contentLength - visibleLength - offset;
 
     // Wait until the scroll view metrics have been set up. And until then,
@@ -859,6 +859,7 @@ export default class VirtualizedList extends StateSafePureComponent<
           key="$header">
           <View
             onLayout={this._onLayoutHeader}
+            overflowAnchor="none"
             style={StyleSheet.compose(
               inversionStyle,
               this.props.ListHeaderComponentStyle,
@@ -980,6 +981,7 @@ export default class VirtualizedList extends StateSafePureComponent<
           cellKey={this._getFooterCellKey()}
           key="$footer">
           <View
+            overflowAnchor="none"
             onLayout={this._onLayoutFooter}
             style={StyleSheet.compose(
               inversionStyle,

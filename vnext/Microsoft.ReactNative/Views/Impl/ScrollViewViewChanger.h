@@ -7,6 +7,8 @@ namespace Microsoft::ReactNative {
 
 class ScrollViewViewChanger {
  public:
+  static xaml::DependencyProperty CanBeScrollAnchorProperty();
+
   void Horizontal(bool horizontal);
   void Inverted(bool inverted);
 

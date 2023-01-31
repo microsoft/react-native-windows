@@ -4,14 +4,30 @@
 #include "pch.h"
 
 #include <UI.Xaml.Controls.h>
-#include <Views/ViewViewManager.h>
+#include <winrt/Windows.UI.Xaml.Interop.h>
 #include "ScrollViewUWPImplementation.h"
 #include "ScrollViewViewChanger.h"
 #include "SnapPointManagingContentControl.h"
 
+namespace winrt {
+using namespace winrt::Windows::UI::Xaml::Interop;
+}
+
 namespace Microsoft::ReactNative {
 
 constexpr const double SCROLL_EPSILON = 1.0;
+
+const winrt::TypeName viewViewManagerTypeName{winrt::hstring{L"ViewViewManager"}, winrt::TypeKind::Metadata};
+
+/*static*/ xaml::DependencyProperty ScrollViewViewChanger::CanBeScrollAnchorProperty() {
+  static xaml::DependencyProperty s_canBeScrollAnchorProperty = xaml::DependencyProperty::RegisterAttached(
+      L"CanBeScrollAnchor",
+      winrt::xaml_typename<bool>(),
+      viewViewManagerTypeName,
+      winrt::PropertyMetadata(winrt::box_value(true)));
+
+  return s_canBeScrollAnchorProperty;
+}
 
 void ScrollViewViewChanger::Horizontal(bool horizontal) {
   m_horizontal = horizontal;
@@ -79,7 +95,7 @@ void ScrollViewViewChanger::UpdateScrollAnchoringEnabled(
     auto panel = snapPointManager->Content().as<xaml::Controls::Panel>();
     for (auto child : panel.Children()) {
       const auto childElement = child.as<xaml::UIElement>();
-      if (winrt::unbox_value<bool>(childElement.GetValue(ViewViewManager::CanBeScrollAnchorProperty()))) {
+      if (winrt::unbox_value<bool>(childElement.GetValue(CanBeScrollAnchorProperty()))) {
         if (enabled) {
           childElement.CanBeScrollAnchor(true);
         } else {
