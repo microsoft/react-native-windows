@@ -115,9 +115,16 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public ShadowNode {
     return m_onMouseEnterRegistered || m_onMouseLeaveRegistered;
   }
 
+  void IsAccessible(bool accessible);
+  bool IsAccessible();
+  void IsFocusable(bool focusable);
+  bool IsFocusable();
+
  protected:
   XamlView m_view;
   bool m_updating = false;
+  bool m_isFocusable = true;
+  bool m_isAccessible = true;
   comp::CompositionPropertySet m_transformPS{nullptr};
 
  public:
