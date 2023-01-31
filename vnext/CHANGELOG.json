@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 23 Jan 2023 16:11:43 GMT",
+      "tag": "react-native-windows_v0.70.11",
+      "version": "0.70.11",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "45b8d1276e749bf0b9488c64dbd5b94086305761",
+            "comment": "Promote 0.70 to legacy"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.70.3",
+            "commit": "45b8d1276e749bf0b9488c64dbd5b94086305761"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.70.1",
+            "commit": "45b8d1276e749bf0b9488c64dbd5b94086305761"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.70.1",
+            "commit": "45b8d1276e749bf0b9488c64dbd5b94086305761"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 26 Dec 2022 16:12:01 GMT",
       "tag": "react-native-windows_v0.70.10",
       "version": "0.70.10",

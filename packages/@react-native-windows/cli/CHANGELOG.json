@@ -2,6 +2,39 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 23 Jan 2023 16:11:43 GMT",
+      "tag": "@react-native-windows/cli_v0.70.3",
+      "version": "0.70.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "45b8d1276e749bf0b9488c64dbd5b94086305761",
+            "comment": "Promote 0.70 to legacy"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/fs to v0.70.1",
+            "commit": "45b8d1276e749bf0b9488c64dbd5b94086305761"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/package-utils to v0.70.1",
+            "commit": "45b8d1276e749bf0b9488c64dbd5b94086305761"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.70.2",
+            "commit": "45b8d1276e749bf0b9488c64dbd5b94086305761"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 28 Nov 2022 16:13:14 GMT",
       "tag": "@react-native-windows/cli_v0.70.2",
       "version": "0.70.2",

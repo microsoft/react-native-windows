@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.70.10",
+  "version": "0.70.11",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -26,8 +26,8 @@
     "@react-native-community/cli": "^9.0.0",
     "@react-native-community/cli-platform-android": "^9.0.0",
     "@react-native-community/cli-platform-ios": "^9.0.0",
-    "@react-native-windows/cli": "0.70.2",
-    "@react-native-windows/virtualized-list": "0.70.0",
+    "@react-native-windows/cli": "0.70.3",
+    "@react-native-windows/virtualized-list": "0.70.1",
     "@react-native/assets": "1.0.0",
     "@react-native/normalize-color": "2.0.0",
     "@react-native/polyfills": "2.0.0",
@@ -59,7 +59,7 @@
     "ws": "^6.1.4"
   },
   "devDependencies": {
-    "@react-native-windows/codegen": "0.70.0",
+    "@react-native-windows/codegen": "0.70.1",
     "@rnw-scripts/eslint-config": "1.1.13",
     "@rnw-scripts/jest-out-of-tree-snapshot-resolver": "^1.0.7",
     "@rnw-scripts/just-task": "2.2.5",
