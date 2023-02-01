@@ -5922,10 +5922,10 @@ flatted@^3.1.0:
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.2.5.tgz#76c8584f4fc843db64702a6bd04ab7a8bd666da3"
   integrity sha512-WIWGi2L3DyTUvUrwRKgGi9TwxQMUEqPOPQBVi71R96jZXJdFskXEmf54BoZaS1kknGODoIGASGEzBUYdyMCBJg==
 
-flow-bin@^0.196.3:
-  version "0.196.3"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.196.3.tgz#b6df48986a2629f2c6a26fb79d73fc07c8056af0"
-  integrity sha512-pmvjlksi1CvkSnDHpcfhDFj/KC3hwSgE2OpzvugW57dfgqfHzqX1UfZIcScGWM5AmP/IeOsQCW383k3zIbEnrA==
+flow-bin@^0.198.1:
+  version "0.198.2"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.198.2.tgz#e601121a411b4ec5889cc3567d2706369cc510a9"
+  integrity sha512-PML2zhAZVd8EgzDqS9oSJF+OxUtJ+YLEdVVsVO7d1BwnrXCgiVrLjxiQP8/hur820grzC51Xb2CI3J+ohH/bMg==
 
 flow-parser@0.*, flow-parser@^0.185.0:
   version "0.185.2"
@@ -9981,10 +9981,10 @@ react-native-xaml@^0.0.70:
     "@types/react-native" "*"
     typescript "^4.4.3"
 
-react-native@0.0.0-20230111-2023-573734f4e:
-  version "0.0.0-20230111-2023-573734f4e"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-20230111-2023-573734f4e.tgz#cb036733f157f0921b180b3db3046c471c03efcc"
-  integrity sha512-Z226hFnkbt1E8zV/5K7chiMcVKF9T0CCkSwoeE95JbNFoZ5pVv7sLajsIgUNyFMNjYmr5GBABA9Ji8Yl6EehQg==
+react-native@0.0.0-20230125-2022-6f7428e27:
+  version "0.0.0-20230125-2022-6f7428e27"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-20230125-2022-6f7428e27.tgz#ceb0444cca749ee240fa6d7819c39cee0c6c2383"
+  integrity sha512-KHhUnZu+pdJ6QL6mx8SZOMnO81ImYI16nKVRQIl/+kfrz/8n+sq1MyJ/BVhPw/HNoDghFEQ7iEOoWCA98QWwAA==
   dependencies:
     "@jest/create-cache-key-function" "^29.2.1"
     "@react-native-community/cli" "10.0.0"

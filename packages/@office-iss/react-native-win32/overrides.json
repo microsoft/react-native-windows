@@ -7,19 +7,19 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20230111-2023-573734f4e",
+  "baseVersion": "0.0.0-20230125-2022-6f7428e27",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "807cd5e0f16c0017315c057e2bec13b5e389e697"
+      "baseHash": "bbd7c2621c8c1c80792386a278d94fcdb702d4ed"
     },
     {
       "type": "derived",
       "file": "src/index.win32.js",
       "baseFile": "index.js",
-      "baseHash": "70bbf5c1d4a00ae247ab2dfb811db3deee2f584c"
+      "baseHash": "df21c820b0558eb40f1cf0269de18c3ddc38fdee"
     },
     {
       "type": "platform",
@@ -42,7 +42,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.win32.js",
       "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.js",
-      "baseHash": "8ed7c87f3165558abe517218143dc6f73d91cc46",
+      "baseHash": "09fc956afbcd13b4c7a39e4de762c0af57cb9b4f",
       "issue": 4578
     },
     {
@@ -95,13 +95,13 @@
       "type": "patch",
       "file": "src/Libraries/Components/SafeAreaView/SafeAreaView.win32.js",
       "baseFile": "Libraries/Components/SafeAreaView/SafeAreaView.js",
-      "baseHash": "bde271c753be96e28b5f1b539d0d9a0cbeee77ab"
+      "baseHash": "8982fc8b7295200e987eea3454adddc5d650896c"
     },
     {
       "type": "derived",
       "file": "src/Libraries/Components/ScrollView/ScrollView.win32.js",
       "baseFile": "Libraries/Components/ScrollView/ScrollView.js",
-      "baseHash": "3f6e4ed14ff4a94e97873e0eb7c6a77c2cc33e2a"
+      "baseHash": "7d162bb43bce3f9da78b7c304530b3f804d21658"
     },
     {
       "type": "platform",

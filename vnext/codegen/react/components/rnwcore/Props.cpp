@@ -9,7 +9,6 @@
  */
 
 #include <react/renderer/components/rnwcore/Props.h>
-#include <react/renderer/components/image/conversions.h>
 #include <react/renderer/core/PropsParserContext.h>
 #include <react/renderer/core/propsConversions.h>
 
@@ -113,26 +112,6 @@ AndroidHorizontalScrollContentViewProps::AndroidHorizontalScrollContentViewProps
     const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
 
     removeClippedSubviews(convertRawProp(context, rawProps, "removeClippedSubviews", sourceProps.removeClippedSubviews, {false}))
-      {}
-SliderProps::SliderProps(
-    const PropsParserContext &context,
-    const SliderProps &sourceProps,
-    const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
-
-    disabled(convertRawProp(context, rawProps, "disabled", sourceProps.disabled, {false})),
-    enabled(convertRawProp(context, rawProps, "enabled", sourceProps.enabled, {true})),
-    maximumTrackImage(convertRawProp(context, rawProps, "maximumTrackImage", sourceProps.maximumTrackImage, {})),
-    maximumTrackTintColor(convertRawProp(context, rawProps, "maximumTrackTintColor", sourceProps.maximumTrackTintColor, {})),
-    maximumValue(convertRawProp(context, rawProps, "maximumValue", sourceProps.maximumValue, {1.0})),
-    minimumTrackImage(convertRawProp(context, rawProps, "minimumTrackImage", sourceProps.minimumTrackImage, {})),
-    minimumTrackTintColor(convertRawProp(context, rawProps, "minimumTrackTintColor", sourceProps.minimumTrackTintColor, {})),
-    minimumValue(convertRawProp(context, rawProps, "minimumValue", sourceProps.minimumValue, {0.0})),
-    step(convertRawProp(context, rawProps, "step", sourceProps.step, {0.0})),
-    testID(convertRawProp(context, rawProps, "testID", sourceProps.testID, {""})),
-    thumbImage(convertRawProp(context, rawProps, "thumbImage", sourceProps.thumbImage, {})),
-    thumbTintColor(convertRawProp(context, rawProps, "thumbTintColor", sourceProps.thumbTintColor, {})),
-    trackImage(convertRawProp(context, rawProps, "trackImage", sourceProps.trackImage, {})),
-    value(convertRawProp(context, rawProps, "value", sourceProps.value, {0.0}))
       {}
 AndroidSwitchProps::AndroidSwitchProps(
     const PropsParserContext &context,

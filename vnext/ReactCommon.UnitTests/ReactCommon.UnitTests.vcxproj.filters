@@ -20,9 +20,6 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\scrollview\tests\ScrollViewTest.cpp">
       <Filter>react\renderer\components\scrollview\tests</Filter>
     </ClCompile>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\slider\tests\SliderTest.cpp">
-      <Filter>react\renderer\components\slider</Filter>
-    </ClCompile>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\image\tests\ImageTest.cpp">
       <Filter>react\renderer\components\image\tests</Filter>
     </ClCompile>
@@ -169,9 +166,6 @@
     </Filter>
     <Filter Include="react\renderer\components\scrollview\tests">
       <UniqueIdentifier>{22c1c33f-8ed6-4ce7-8975-77b223121724}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="react\renderer\components\slider">
-      <UniqueIdentifier>{b484cd0c-6734-4d82-a1c2-5eaf993d07d4}</UniqueIdentifier>
     </Filter>
     <Filter Include="react\renderer\components\text">
       <UniqueIdentifier>{65fd0ce2-cadd-42d0-8ffd-528d1303d3ed}</UniqueIdentifier>
