@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "[Image] Fix svg rendering (#11009)",
-  "packageName": "react-native-windows",
-  "email": "email not defined",
-  "dependentChangeType": "patch"
-}

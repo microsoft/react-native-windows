@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/cli",
-  "version": "0.71.0-preview.2",
+  "version": "0.71.0",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "repository": {
@@ -17,10 +17,10 @@
     "watch": "rnw-scripts watch"
   },
   "dependencies": {
-    "@react-native-windows/codegen": "0.71.0-preview.1",
-    "@react-native-windows/fs": "0.71.0-preview.1",
-    "@react-native-windows/package-utils": "0.71.0-preview.1",
-    "@react-native-windows/telemetry": "0.71.0-preview.2",
+    "@react-native-windows/codegen": "0.71.0",
+    "@react-native-windows/fs": "0.71.0",
+    "@react-native-windows/package-utils": "0.71.0",
+    "@react-native-windows/telemetry": "0.71.0",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
     "@xmldom/xmldom": "^0.7.7",
@@ -42,8 +42,8 @@
     "xpath": "^0.0.27"
   },
   "devDependencies": {
-    "@react-native-community/cli-doctor": "^10.0.0-alpha.0",
-    "@react-native-community/cli-types": "^10.0.0-alpha.0",
+    "@react-native-community/cli-doctor": "10.0.0",
+    "@react-native-community/cli-types": "10.0.0",
     "@rnw-scripts/eslint-config": "1.1.14",
     "@rnw-scripts/jest-unittest-config": "1.4.2",
     "@rnw-scripts/just-task": "2.3.3",
@@ -74,11 +74,11 @@
     "powershell"
   ],
   "beachball": {
-    "defaultNpmTag": "preview",
+    "defaultNpmTag": "latest",
     "disallowedChangeTypes": [
       "major",
       "minor",
-      "patch"
+      "prerelease"
     ]
   },
   "promoteRelease": true,

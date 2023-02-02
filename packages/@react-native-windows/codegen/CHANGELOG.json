@@ -2,6 +2,27 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Mon, 23 Jan 2023 16:16:57 GMT",
+      "tag": "@react-native-windows/codegen_v0.71.0",
+      "version": "0.71.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "2f48e8f6c7d8e0c17332146a91d1a3d7b4530bd5",
+            "comment": "Promote 0.71 to latest"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @react-native-windows/fs to v0.71.0",
+            "commit": "2f48e8f6c7d8e0c17332146a91d1a3d7b4530bd5"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 12 Dec 2022 16:16:50 GMT",
       "tag": "@react-native-windows/codegen_v0.71.0-preview.1",
       "version": "0.71.0-preview.1",
