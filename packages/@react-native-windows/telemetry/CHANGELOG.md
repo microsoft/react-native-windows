@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Sat, 28 Jan 2023 06:12:49 GMT and should not be manually modified.
+This log was last generated on Thu, 02 Feb 2023 06:13:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.60
+
+Thu, 02 Feb 2023 06:13:29 GMT
+
+### Changes
+
+- bump hermes version (tatianakapos@microsoft.com)
 
 ## 0.0.0-canary.59
 
