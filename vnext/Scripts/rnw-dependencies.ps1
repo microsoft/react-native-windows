@@ -12,7 +12,10 @@ param(
     [switch]$Enterprise = $false
 )
 
-$Verbose = $PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent;
+$Verbose = $false
+if ($PSCmdlet.MyInvocation.BoundParameters -ne $null) {
+    $Verbose = $PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent;
+}
 
 enum CheckId {
     All
