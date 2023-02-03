@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix Hermes sampling profiler",
+  "packageName": "react-native-windows",
+  "email": "vmoroz@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
