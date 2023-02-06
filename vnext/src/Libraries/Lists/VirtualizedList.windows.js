@@ -157,7 +157,11 @@ export default class VirtualizedList extends StateSafePureComponent<
   scrollToEnd(params?: ?{animated?: ?boolean, ...}) {
     const animated = params ? params.animated : true;
     const veryLast = this.props.getItemCount(this.props.data) - 1;
-    const frame = this.__getFrameMetricsApprox(veryLast, this.props, /* useRawMetrics: */ true);
+    const frame = this.__getFrameMetricsApprox(
+      veryLast,
+      this.props,
+      /* useRawMetrics: */ true,
+    );
     const offset = Math.max(
       0,
       frame.offset +
@@ -375,13 +379,8 @@ export default class VirtualizedList extends StateSafePureComponent<
     // in the direction of increasing scroll offsets.
     let scrollMetrics = this._scrollMetrics;
     if (inverted) {
-      const {
-        contentLength,
-        dOffset,
-        offset,
-        velocity,
-        visibleLength,
-      } = scrollMetrics;
+      const {contentLength, dOffset, offset, velocity, visibleLength} =
+        scrollMetrics;
       scrollMetrics = {
         ...scrollMetrics,
         dOffset: dOffset * -1,
@@ -940,7 +939,7 @@ export default class VirtualizedList extends StateSafePureComponent<
             <View
               key={`$spacer-${section.first}`}
               // Windows-only: ensure View cannot be anchor target
-              overflowAnchor='none'
+              overflowAnchor="none"
               // Windows-only: ensure spacers render last
               style={{[spacerKey]: spacerSize, zIndex: 1e6}}
             />,
@@ -1363,7 +1362,11 @@ export default class VirtualizedList extends StateSafePureComponent<
     const framesInLayout = [];
     const itemCount = this.props.getItemCount(this.props.data);
     for (let ii = 0; ii < itemCount; ii++) {
-      const frame = this.__getFrameMetricsApprox(ii, this.props, /* useRawMetrics: */ true);
+      const frame = this.__getFrameMetricsApprox(
+        ii,
+        this.props,
+        /* useRawMetrics: */ true,
+      );
       /* $FlowFixMe[prop-missing] (>=0.68.0 site=react_native_fb) This comment
        * suppresses an error found when Flow v0.68 was deployed. To see the
        * error delete this comment and run Flow. */
@@ -1404,7 +1407,10 @@ export default class VirtualizedList extends StateSafePureComponent<
             styles.debugOverlayFrameLast,
             {
               // Windows-only: Invert the position of the render window offset
-              top: (this.props.inverted ? this._scrollMetrics.contentLength - windowLen - windowTop : windowTop) * normalize,
+              top:
+                (this.props.inverted
+                  ? this._scrollMetrics.contentLength - windowLen - windowTop
+                  : windowTop) * normalize,
               height: windowLen * normalize,
             },
           ]}
@@ -1448,7 +1454,9 @@ export default class VirtualizedList extends StateSafePureComponent<
   _maybeCallOnEndReached() {
     const {data, getItemCount, onEndReached, onEndReachedThreshold} =
       this.props;
-    const {contentLength, visibleLength, offset} = this._getScrollMetrics(this.props.inverted);
+    const {contentLength, visibleLength, offset} = this._getScrollMetrics(
+      this.props.inverted,
+    );
     let distanceFromEnd = contentLength - visibleLength - offset;
 
     // Especially when oERT is zero it's necessary to 'floor' very small distanceFromEnd values to be 0
@@ -1596,7 +1604,9 @@ export default class VirtualizedList extends StateSafePureComponent<
 
   _scheduleCellsToRenderUpdate() {
     const {first, last} = this.state.cellsAroundViewport;
-    const {offset, visibleLength, velocity} = this._getScrollMetrics(this.props.inverted);
+    const {offset, visibleLength, velocity} = this._getScrollMetrics(
+      this.props.inverted,
+    );
     const itemCount = this.props.getItemCount(this.props.data);
     let hiPri = false;
     const onEndReachedThreshold = onEndReachedThresholdOrDefault(
