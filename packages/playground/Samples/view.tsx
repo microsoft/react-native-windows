@@ -5,17 +5,7 @@
  */
 
 import React from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Switch,
-  Text,
-  View,
-  TextInput,
-  Image,
-  Button,
-  TouchableHighlight,
-} from 'react-native';
+import {AppRegistry, StyleSheet, Switch, Text, View} from 'react-native';
 
 export default class Bootstrap extends React.Component<
   {},
