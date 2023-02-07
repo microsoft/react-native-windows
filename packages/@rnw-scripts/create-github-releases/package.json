@@ -43,7 +43,7 @@
     "@types/yargs": "^16.0.0",
     "eslint": "^8.19.0",
     "prettier": "^2.4.1",
-    "typescript": "^4.4.4"
+    "typescript": "^4.9.5"
   },
   "files": [
     "bin.js",
