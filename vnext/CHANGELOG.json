@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 26 Dec 2022 16:12:17 GMT",
+      "tag": "react-native-windows_v0.69.17",
+      "version": "0.69.17",
+      "comments": {
+        "patch": [
+          {
+            "author": "jurocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "7800e70cdef6afff2df1e8e701708ac3c2016846",
+            "comment": "Test Access-Control-Request-Headers (#11031)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 19 Dec 2022 16:12:47 GMT",
       "tag": "react-native-windows_v0.69.16",
       "version": "0.69.16",
