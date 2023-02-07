@@ -2,7 +2,7 @@
 import React from 'react'
 import { StyleSheet, Text, TouchableHighlight } from 'react-native';
 import { ViewWin32 } from '../ViewWin32';
-import { Cursor, IKeyboardEvent, IHandledKeyboardEvent } from '../ViewWin32.Props';
+import { Cursor, IKeyboardEvent, IHandledKeyboardEvent } from '../ViewPropTypes.win32';
 
 const styles = StyleSheet.create({
   border: {
@@ -29,61 +29,38 @@ interface IFocusableComponentState {
   hasFocus: boolean;
 }
 
-class FocusMoverTestComponent extends React.Component<{}, IFocusableComponentState> {
-  private _focusTarget: ViewWin32 = null;
-  private readonly _labeledBy: React.RefObject<ViewWin32>;
+function FocusMoverTestComponent() {
+  const [hasFocus, setHasFocus] = React.useState<boolean>(false);
 
-  public constructor(props) {
-    super(props);
-    this.state = {
-      hasFocus: false,
-    };
-    this._labeledBy = React.createRef<ViewWin32>();
-  }
-  public render() {
-    return (
-      <ViewWin32>
-        <ViewWin32 ref={this._labeledBy} accessibilityLabel="separate label for test" accessibilityItemType="Comment" />
-      <ViewWin32 style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', marginVertical: 5 }}>
-        <TouchableHighlight onPress={this._onPress}>
-          <ViewWin32 accessibilityLabeledBy={this._labeledBy} style={styles.blackbox} />
-        </TouchableHighlight>
-        <ViewWin32
-          ref={this._setRef}
-          focusable
-          style={this.state.hasFocus ? { backgroundColor: '#aee8fcff' } : { backgroundColor: '#00000000' }}
-          onFocus={this._onFocus}
-          onBlur={this._onBlur}
-          enableFocusRing={false}
-        >
-          <Text>{this.state.hasFocus ? 'Focus: Yes' : 'Focus: No'}</Text>
-        </ViewWin32>
-      </ViewWin32>
-      </ViewWin32>
-    );
-  }
+  const labelId = React.useId();
 
-  private readonly _setRef = (ref: ViewWin32) => {
-    this._focusTarget = ref;
-  };
-
-  private readonly _onPress = () => {
-    if (this._focusTarget !== undefined) {
-      this._focusTarget.focus();
+  const ref = React.useRef<ViewWin32>(null);
+  const onBtnPress = () => {
+    if (ref.current) {
+      ref.current.focus();
     }
   };
 
-  private readonly _onFocus = () => {
-    this.setState({
-      hasFocus: true,
-    });
-  };
-
-  private readonly _onBlur = () => {
-    this.setState({
-      hasFocus: false,
-    });
-  };
+  return (
+    <ViewWin32>
+      <ViewWin32 nativeID={labelId} accessibilityLabel="separate label for test" accessibilityItemType="Comment" />
+    <ViewWin32 style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', marginVertical: 5 }}>
+      <TouchableHighlight onPress={onBtnPress}>
+        <ViewWin32 accessibilityLabelledBy={labelId} style={styles.blackbox} />
+      </TouchableHighlight>
+      <ViewWin32
+        ref={ref}
+        focusable
+        style={hasFocus ? { backgroundColor: '#aee8fcff' } : { backgroundColor: '#00000000' }}
+        onFocus={() => setHasFocus(true)}
+        onBlur={() => setHasFocus(false)}
+        enableFocusRing={false}
+      >
+        <Text>{hasFocus ? 'Focus: Yes' : 'Focus: No'}</Text>
+      </ViewWin32>
+    </ViewWin32>
+    </ViewWin32>
+  );
 }
 
 interface IKeyboardableComponentState {

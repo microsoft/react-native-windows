@@ -379,12 +379,12 @@ const SingleSelectionItemComponent: React.FunctionComponent<ISelectionItemCompon
 
 const AccessibilityControlsExample: React.FunctionComponent = _props => {
   const listLength = 3;
-  const controlsRef = React.useRef<ViewWin32>(null);
+  const listNativeId = React.useId();
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [keyTargetHasFocus, setKeyTargetHasFocus] = React.useState(false);
   return (
     <View>      
-      <ViewWin32 accessible accessibilityRole="list" ref={controlsRef}>
+      <ViewWin32 accessible accessibilityRole="list" nativeID={listNativeId}>
       <SingleSelectionItemComponent
             value={"Label A"}
             color="#aee8fcff"
@@ -416,7 +416,7 @@ const AccessibilityControlsExample: React.FunctionComponent = _props => {
         accessible
         focusable
         accessibilityActions={[{ name: 'Select' }]}
-        accessibilityControls={controlsRef}
+        accessibilityControls={listNativeId}
         style={[styles.box, {width:'50%'}, keyTargetHasFocus ? styles.border : {}]}
         keyDownEvents={handledNativeKeyboardEvents}
         onFocus={() => {setKeyTargetHasFocus(true)}}

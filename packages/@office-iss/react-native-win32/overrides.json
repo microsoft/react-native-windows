@@ -158,6 +158,12 @@
       "file": "src/Libraries/Components/Touchable/TouchableNativeFeedback.Props.ts"
     },
     {
+      "type": "derived",
+      "file": "src/Libraries/Components/Touchable/TouchableNativeFeedback.win32.d.ts",
+      "baseFile": "Libraries/Components/Touchable/TouchableNativeFeedback.d.ts",
+      "baseHash": "b38a2d4fb0c6a08c3ada7748fffded9949c97c2a"
+    },
+    {
       "type": "platform",
       "file": "src/Libraries/Components/Touchable/TouchableNativeFeedback.win32.tsx"
     },
@@ -190,11 +196,35 @@
       "baseHash": "e1e15345be1d7794284bca007299ca5814969983"
     },
     {
+      "type": "derived",
+      "file": "src/Libraries/Components/View/ViewAccessibility.win32.d.ts",
+      "baseFile": "Libraries/Components/View/ViewAccessibility.d.ts",
+      "baseHash": "a9a7bfcff4be91484ad8bb17680c4ec225a28f0e"
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/Components/View/ViewAccessibility.win32.js",
+      "baseFile": "Libraries/Components/View/ViewAccessibility.js",
+      "baseHash": "d12245b45ccdc5f473ba9484b5ec994cb45dae75"
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/Components/View/ViewPropTypes.win32.d.ts",
+      "baseFile": "Libraries/Components/View/ViewPropTypes.d.ts",
+      "baseHash": "567b5fd7cc602357daa075d728220ffca0f6c2ac"
+    },
+    {
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewPropTypes.win32.js",
       "baseFile": "Libraries/Components/View/ViewPropTypes.js",
       "baseHash": "6ef6e875149d8c9c6da9b72703890736dd665463",
       "issue": 6240
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/Components/View/ViewWin32.d.ts",
+      "baseFile": "Libraries/Components/View/View.d.ts",
+      "baseHash": "c71957187cbae0b40995198a2d7a18d5cae6d662"
     },
     {
       "type": "platform",
@@ -418,6 +448,12 @@
       "baseFile": "Libraries/Types/CoreEventTypes.js",
       "baseHash": "7fe2b87cf49f4674d731d07f0883bab2f5cfc356",
       "issue": 6240
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/Utilities/AcessibilityMapping.win32.js",
+      "baseFile": "Libraries/Utilities/AcessibilityMapping.js",
+      "baseHash": "7a662ddd93c6cd0a7193e3002120aeb196991340"
     },
     {
       "type": "copy",

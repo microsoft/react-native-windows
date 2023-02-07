@@ -5,12 +5,6 @@
 *        need to also be added to index.win32.js
 */
 
-export type { 
-      AccessibilityActionInfo,
-      AccessibilityActionName,
-      AccessibilityState
-} from './Components/View/ViewWin32.Props';
-export * from './Components/View/ViewWin32.Props';
 export * from './Components/View/ViewWin32';
 export * from './Components/Text/TextWin32.Props';
 export * from './Components/Text/TextWin32';

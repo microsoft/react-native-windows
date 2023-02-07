@@ -26,7 +26,7 @@ import {
   ITransitions,
 } from './TouchableWin32.Types';
 import { ViewWin32 } from '../View/ViewWin32';
-import { IKeyboardEvent } from '../View/ViewWin32.Props';
+import { IKeyboardEvent } from '../View/ViewPropTypes.win32';
 
 const BoundingDimensions = require('./BoundingDimensions');
 const Position = require('./Position');
@@ -568,14 +568,14 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
     }
   };
 
-  private readonly _onMouseEnter = () => {
+  private readonly _onMouseEnter = (mouseEvent) => {
     this.setState({ isHovered: true });
-    this.props.onMouseEnter && this.props.onMouseEnter();
+    this.props.onMouseEnter && this.props.onMouseEnter(mouseEvent);
   };
 
-  private readonly _onMouseLeave = () => {
+  private readonly _onMouseLeave = (mouseEvent) => {
     this.setState({ isHovered: false });
-    this.props.onMouseLeave && this.props.onMouseLeave();
+    this.props.onMouseLeave && this.props.onMouseLeave(mouseEvent);
   };
 
   private readonly _onFocus = (ev: NativeSyntheticEvent<{}>) => {

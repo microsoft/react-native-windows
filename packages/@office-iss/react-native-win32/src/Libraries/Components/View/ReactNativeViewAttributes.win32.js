@@ -35,21 +35,40 @@ const UIView = {
   collapsable: true,
   needsOffscreenAlphaCompositing: true,
   style: ReactNativeStyleAttributes,
-  // [Windows
+  // [Win32
   accessibilityAccessKey: true,
-  alwaysShowToolTip: true,
-  enableFocusRing: true,
+  accessibilityAnnotation: true,
+  accessibilityControls: true,
+  accessibilityDescribedBy: true,
+  accessibilityDescription: true,
+  accessibilityItemType: true,
+  accessibilityLevel: true,
+  accessibilityPositionInSet: true,
+  accessibilitySetSize: true,
+  animationClass: true,
   cursor: true,
-  textStyle: true, // Once we flush out our JS theming story this property will no longer be needed
-  tooltip: true,
-  tabIndex: true,
-  onMouseEnter: true,
-  onMouseLeave: true,
+  draggedTypes: true,
+  enableFocusRing: true,
+  focusable: true,
+  keyDownEvents: true,
+  keyUpEvents: true,
+  onBlur: true,
+  onBlurCapture: true,
   onDragEnter: true,
   onDragLeave: true,
   onDrop: true,
-  draggedTypes: true,
-  // Windows]
+  onFocus: true,
+  onFocusCapture: true,
+  onKeyDown: true,
+  onKeyDownCapture: true,
+  onKeyUp: true,
+  onKeyUpCapture: true,
+  onMouseEnter: true,
+  onMouseLeave: true,
+  tabIndex: true,
+  textStyle: true, // Once we flush out our JS theming story this property will no longer be needed
+  tooltip: true,
+  // Win32]
 };
 
 const RCTView = {
