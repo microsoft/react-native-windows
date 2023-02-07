@@ -125,7 +125,7 @@
     },
     {
       "type": "derived",
-      "file": "src/Libraries/Components/TextInput/TextInput.win32.tsx",
+      "file": "src/Libraries/Components/TextInput/TextInput.win32.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
       "baseHash": "7305b4ef570eb19e8f4238e252d8c788ce974b16"
     },
@@ -154,18 +154,16 @@
       "issue": 0
     },
     {
-      "type": "platform",
-      "file": "src/Libraries/Components/Touchable/TouchableNativeFeedback.Props.ts"
-    },
-    {
       "type": "derived",
       "file": "src/Libraries/Components/Touchable/TouchableNativeFeedback.win32.d.ts",
       "baseFile": "Libraries/Components/Touchable/TouchableNativeFeedback.d.ts",
       "baseHash": "b38a2d4fb0c6a08c3ada7748fffded9949c97c2a"
     },
     {
-      "type": "platform",
-      "file": "src/Libraries/Components/Touchable/TouchableNativeFeedback.win32.tsx"
+      "type": "derived",
+      "file": "src/Libraries/Components/Touchable/TouchableNativeFeedback.win32.js",
+      "baseFile": "Libraries/Components/Touchable/TouchableNativeFeedback.js",
+      "baseHash": "d28c8ae97892811292cd9624a4a05525a1e2e1a3"
     },
     {
       "type": "platform",
@@ -228,11 +226,7 @@
     },
     {
       "type": "platform",
-      "file": "src/Libraries/Components/View/ViewWin32.Props.ts"
-    },
-    {
-      "type": "platform",
-      "file": "src/Libraries/Components/View/ViewWin32.tsx"
+      "file": "src/Libraries/Components/View/ViewWin32.js"
     },
     {
       "type": "patch",
