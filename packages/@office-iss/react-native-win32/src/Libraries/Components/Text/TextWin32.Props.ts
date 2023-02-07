@@ -1,5 +1,5 @@
 import RN = require('react-native');
-import { IKeyboardEvent, IHandledKeyboardEvent } from '../View/ViewPropTypes.win32';
+import type { IKeyboardEvent, IHandledKeyboardEvent } from '../View/ViewPropTypes.win32';
 
 /**
  * Role-based text style names.

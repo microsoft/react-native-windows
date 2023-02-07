@@ -11,7 +11,7 @@
 'use strict';
 
 import React from 'react'
-import { NativeSyntheticEvent, StyleProp, UIManager, ViewStyle } from 'react-native';
+import { NativeSyntheticEvent, StyleProp, UIManager, ViewStyle, ViewWin32 } from 'react-native';
 
 import { ITouchableWin32Props, ITouchableWin32State } from './TouchableWin32.Props';
 import {
@@ -25,7 +25,6 @@ import {
   IStateConditions,
   ITransitions,
 } from './TouchableWin32.Types';
-import { ViewWin32 } from '../View/ViewWin32';
 import { IKeyboardEvent } from '../View/ViewPropTypes.win32';
 
 const BoundingDimensions = require('./BoundingDimensions');

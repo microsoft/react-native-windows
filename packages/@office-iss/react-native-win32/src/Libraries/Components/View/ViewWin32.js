@@ -2,10 +2,14 @@
  * Copyright: Microsoft 2015
  *
  * RN-specific implementation of the cross-platform View abstraction.
+ * 
+ * @flow strict-local
+ * @format
  */
 
 import * as React from 'react';
 import {useCallback, useRef, useLayoutEffect} from 'react';
+import type {ElementRef} from 'react';
 import type {ViewProps} from './ViewPropTypes';
 
 import View from './View';
@@ -21,7 +25,7 @@ import warnOnce from '../../Utilities/warnOnce';
 
 const ViewWin32: React.AbstractComponent<
   ViewProps,
-  React.ElementRef<typeof View>,
+  any,
 > = React.forwardRef(
   (
     {
@@ -32,7 +36,6 @@ const ViewWin32: React.AbstractComponent<
     }: ViewProps,
     forwardedRef,
   ) => {
-
 
     /**
      * Process accessibility refs into node handles after initial DOM render, before sent across the bridge.
@@ -72,7 +75,7 @@ const ViewWin32: React.AbstractComponent<
     /**
      * Set up the forwarding ref to enable adding the focus method.
      */
-    const focusRef = useRef<React.ElementRef<typeof View | null>(null);
+    const focusRef = useRef(null);
 
     const setLocalRef = useCallback(
       (instance : View | null) => {
@@ -94,10 +97,10 @@ const ViewWin32: React.AbstractComponent<
     [focusRef],
     );
 
-    const setNativeRef = useMergeRefs<View | ({
+    const setNativeRef = useMergeRefs<View | null>({
       setLocalRef,
       forwardedRef,
-    })<null;
+    });
 
     return <View ref={setNativeRef}
     {...rest}

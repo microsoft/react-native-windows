@@ -1,8 +1,7 @@
 'use strict';
 import React from 'react'
 import { StyleSheet, Text, TouchableHighlight } from 'react-native';
-import { ViewWin32 } from '../ViewWin32';
-import { Cursor, IKeyboardEvent, IHandledKeyboardEvent } from '../ViewPropTypes.win32';
+import { Cursor, IKeyboardEvent, IHandledKeyboardEvent, ViewWin32 } from '@office-iss/react-native-win32';
 
 const styles = StyleSheet.create({
   border: {

@@ -1,6 +1,6 @@
 import React from 'react'
 import RN = require('react-native');
-import { ITextWin32Props } from './TextWin32.Props';
+import type { ITextWin32Props } from './TextWin32.Props';
 
 /**
  * All of TOrigin except Key from TUse
