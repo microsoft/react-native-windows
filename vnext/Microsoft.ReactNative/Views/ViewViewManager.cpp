@@ -402,7 +402,7 @@ bool ViewViewManager::UpdateProperty(
     } else if (propertyName == "focusable") {
       pViewShadowNode->IsFocusable(propertyValue.AsBoolean());
     } else if (propertyName == "enableFocusRing") {
-        pViewShadowNode->EnableFocusRing(propertyValue.AsBoolean());
+      pViewShadowNode->EnableFocusRing(propertyValue.AsBoolean());
     } else if (propertyName == "tabIndex") {
       auto tabIndex = propertyValue.AsInt64();
       if (tabIndex == static_cast<int32_t>(tabIndex)) {
