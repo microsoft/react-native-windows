@@ -3,19 +3,20 @@
 
 #include "pch.h"
 
-#include <memory>
-#include <mutex>
+#include "HermesRuntimeHolder.h"
 
 #include <JSI/decorator.h>
 #include <cxxreact/MessageQueueThread.h>
 #include <cxxreact/SystraceSection.h>
 #include <hermes/hermes.h>
-#include "HermesRuntimeHolder.h"
 #include "HermesShim.h"
 
 #if defined(HERMES_ENABLE_DEBUGGER)
 #include <hermes/inspector/chrome/Registration.h>
 #endif
+
+#include <memory>
+#include <mutex>
 
 using namespace facebook;
 using namespace Microsoft::ReactNative;
@@ -24,8 +25,7 @@ namespace React {
 using namespace winrt::Microsoft::ReactNative;
 }
 
-namespace facebook {
-namespace react {
+namespace facebook::react {
 
 React::ReactPropertyId<React::ReactNonAbiValue<std::shared_ptr<HermesRuntimeHolder>>>
 HermesRuntimeHolderProperty() noexcept {
@@ -35,16 +35,6 @@ HermesRuntimeHolderProperty() noexcept {
 }
 
 namespace {
-
-std::unique_ptr<facebook::hermes::HermesRuntime> makeHermesRuntimeSystraced(bool enableDefaultCrashHandler) {
-  SystraceSection s("HermesExecutorFactory::makeHermesRuntimeSystraced");
-  if (enableDefaultCrashHandler) {
-    return HermesShim::makeHermesRuntimeWithWER();
-  } else {
-    auto runtimeConfig = ::hermes::vm::RuntimeConfig();
-    return HermesShim::makeHermesRuntime(runtimeConfig);
-  }
-}
 
 #ifdef HERMES_ENABLE_DEBUGGER
 class HermesExecutorRuntimeAdapter final : public facebook::hermes::inspector::RuntimeAdapter {
@@ -82,10 +72,19 @@ class HermesExecutorRuntimeAdapter final : public facebook::hermes::inspector::R
 };
 #endif
 
+std::shared_ptr<HermesShim> makeHermesShimSystraced(bool enableDefaultCrashHandler) {
+  SystraceSection s("HermesExecutorFactory::makeHermesRuntimeSystraced");
+  if (enableDefaultCrashHandler) {
+    return HermesShim::makeWithWER();
+  } else {
+    return HermesShim::make();
+  }
+}
+
 } // namespace
 
 void HermesRuntimeHolder::crashHandler(int fileDescriptor) noexcept {
-  HermesShim::hermesCrashHandler(*m_hermesRuntime, fileDescriptor);
+  m_hermesShim->dumpCrashData(fileDescriptor);
 }
 
 void HermesRuntimeHolder::teardown() noexcept {
@@ -101,19 +100,9 @@ facebook::react::JSIEngineOverride HermesRuntimeHolder::getRuntimeType() noexcep
 }
 
 std::shared_ptr<jsi::Runtime> HermesRuntimeHolder::getRuntime() noexcept {
-  return getHermesRuntime();
-}
-
-std::shared_ptr<facebook::hermes::HermesRuntime> HermesRuntimeHolder::getHermesRuntime() noexcept {
-  std::call_once(m_once_flag, [this]() { initRuntime(); });
-
-  if (!m_hermesRuntime)
-    std::terminate();
-
-  // Make sure that the runtime instance is not consumed from multiple threads.
-  if (m_own_thread_id != std::this_thread::get_id())
-    std::terminate();
-
+  std::call_once(m_onceFlag, [this]() { initRuntime(); });
+  VerifyElseCrash(m_hermesRuntime);
+  VerifyElseCrashSz(m_ownThreadId == std::this_thread::get_id(), "Must be accessed from JS thread.");
   return m_hermesRuntime;
 }
 
@@ -124,11 +113,11 @@ HermesRuntimeHolder::HermesRuntimeHolder(
 
 void HermesRuntimeHolder::initRuntime() noexcept {
   auto devSettings = m_weakDevSettings.lock();
-  if (!devSettings)
-    std::terminate();
+  VerifyElseCrash(devSettings);
 
-  m_hermesRuntime = makeHermesRuntimeSystraced(devSettings->enableDefaultCrashHandler);
-  m_own_thread_id = std::this_thread::get_id();
+  m_hermesShim = makeHermesShimSystraced(devSettings->enableDefaultCrashHandler);
+  m_hermesRuntime = m_hermesShim->getRuntime();
+  m_ownThreadId = std::this_thread::get_id();
 
 #ifdef HERMES_ENABLE_DEBUGGER
   if (devSettings->useDirectDebugger) {
@@ -158,5 +147,12 @@ void HermesRuntimeHolder::storeTo(
   propertyBag.Set(HermesRuntimeHolderProperty(), holder);
 }
 
-} // namespace react
-} // namespace facebook
+void HermesRuntimeHolder::addToProfiling() const noexcept {
+  m_hermesShim->addToProfiling();
+}
+
+void HermesRuntimeHolder::removeFromProfiling() const noexcept {
+  m_hermesShim->removeFromProfiling();
+}
+
+} // namespace facebook::react
