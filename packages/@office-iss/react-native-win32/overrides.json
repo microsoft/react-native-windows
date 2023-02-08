@@ -157,7 +157,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/Touchable/TouchableNativeFeedback.win32.js",
       "baseFile": "Libraries/Components/Touchable/TouchableNativeFeedback.js",
-      "baseHash": "d28c8ae97892811292cd9624a4a05525a1e2e1a3"
+      "baseHash": "1fa12a85dc06cdb1093dbe2b54cf3569312b7cc4"
     },
     {
       "type": "platform",
@@ -191,13 +191,13 @@
       "type": "derived",
       "file": "src/Libraries/Components/View/ViewAccessibility.win32.d.ts",
       "baseFile": "Libraries/Components/View/ViewAccessibility.d.ts",
-      "baseHash": "a9a7bfcff4be91484ad8bb17680c4ec225a28f0e"
+      "baseHash": "fb6095450277c96f033749633af10b42a184e07c"
     },
     {
       "type": "derived",
       "file": "src/Libraries/Components/View/ViewAccessibility.win32.js",
       "baseFile": "Libraries/Components/View/ViewAccessibility.js",
-      "baseHash": "d12245b45ccdc5f473ba9484b5ec994cb45dae75"
+      "baseHash": "b8dca610ae67781f86534eab2373f2a3eb29fca3"
     },
     {
       "type": "derived",
