@@ -1,5 +1,4 @@
-module.exports = {
-  preset: '@rnx-kit/jest-preset',
+module.exports = require('@rnx-kit/jest-preset')("win32", {
   verbose: true,
   snapshotResolver: './jest-snapshot-resolver.js',
   transform: {
@@ -7,7 +6,6 @@ module.exports = {
       '<rootDir>/jest/assetFileTransformer.js',
   },
   transformIgnorePatterns: ['jest-runner'],
-  setupFiles: ['./jest/setup.js'],
   fakeTimers: {
     enableGlobally: true,
     legacyFakeTimers: true,
@@ -36,4 +34,4 @@ module.exports = {
     '/vendor/',
     '<rootDir>/Libraries/react-native/',
   ],
-};
+});

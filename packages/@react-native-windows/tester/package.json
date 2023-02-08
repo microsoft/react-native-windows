@@ -33,7 +33,7 @@
     "react-native": "0.0.0-20230125-2022-6f7428e27",
     "react-native-platform-override": "^1.9.0",
     "react-native-windows": "^0.0.0-canary.611",
-    "typescript": "^4.4.4"
+    "typescript": "^4.9.5"
   },
   "engines": {
     "node": ">= 14"
