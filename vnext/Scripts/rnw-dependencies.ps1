@@ -12,7 +12,12 @@ param(
     [switch]$Enterprise = $false
 )
 
-$Verbose = $PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent;
+$ShellInvocation = ($PSCmdlet.MyInvocation.BoundParameters -ne $null);
+
+$Verbose = $false
+if ($ShellInvocation) {
+    $Verbose = $PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent;
+}
 
 enum CheckId {
     All
@@ -519,8 +524,9 @@ function IsElevated {
 }
 
 if (!($NoPrompt) -and !(IsElevated)) {
-    Write-Host "rnw-dependencies - this script must run elevated. Exiting.";
-    exit 1;
+    Write-Host "rnw-dependencies - this script must run elevated.";
+    if (!$ShellInvocation) { Read-Host 'Press Enter to exit' }
+    exit 1
 }
 
 $NeedsRerun = 0;
@@ -631,9 +637,11 @@ if ($NeedsRerun -ne 0) {
     } else {
         Write-Warning "Some dependencies are not met. Re-run with -Verbose for details, or use -Install to install them.";
     }
+    if (!$ShellInvocation) { Read-Host 'Press Enter to exit' }
     exit 1;
 } else {
     Write-Host "All mandatory requirements met.";
     $Tags | Out-File $MarkerFile;
+    if (!$ShellInvocation) { Read-Host 'Press Enter to exit' }
     exit 0;
 }
