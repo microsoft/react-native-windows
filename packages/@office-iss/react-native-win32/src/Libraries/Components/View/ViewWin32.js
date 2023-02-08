@@ -9,7 +9,6 @@
 
 import * as React from 'react';
 import {useCallback, useRef, useLayoutEffect} from 'react';
-import type {ElementRef} from 'react';
 import type {ViewProps} from './ViewPropTypes';
 
 import View from './View';
@@ -22,7 +21,10 @@ import warnOnce from '../../Utilities/warnOnce';
  * Basic View component with additional Win32 specific functionality
  */
 
-const ViewWin32: React.AbstractComponent<ViewProps, any> = React.forwardRef(
+const ViewWin32: React.AbstractComponent<
+  ViewProps,
+  React.ElementRef<typeof View>,
+> = React.forwardRef(
   (
     {
       accessibilityLabeledBy,
@@ -39,15 +41,15 @@ const ViewWin32: React.AbstractComponent<ViewProps, any> = React.forwardRef(
      * RN core moved these properties to use NativeID instead of Refs, so this is only kept for back compat
      */
 
-    const [labeledByTarget, setLabeledByTarget] = React.useState<number | null>(
-      null,
-    );
-    const [describedByTarget, setDescribedByTarget] = React.useState<
-      number | null,
+    const [labeledByTarget, setLabeledByTarget] = React.useState<
+      number | null | void,
     >(null);
-    const [controlsTarget, setControlsTarget] = React.useState<number | null>(
-      null,
-    );
+    const [describedByTarget, setDescribedByTarget] = React.useState<
+      number | null | void,
+    >(null);
+    const [controlsTarget, setControlsTarget] = React.useState<
+      number | null | void,
+    >(null);
 
     useLayoutEffect(() => {
       if (
@@ -66,12 +68,16 @@ const ViewWin32: React.AbstractComponent<ViewProps, any> = React.forwardRef(
       if (
         typeof accessibilityDescribedBy !== 'string' &&
         accessibilityDescribedBy !== undefined &&
+        // $FlowFixMe[incompatible-use] - Using accessibilityDescribedBy as Ref for backcompat, not typed
+        // $FlowFixMe[prop-missing]
         accessibilityDescribedBy.current !== null
       ) {
         warnOnce(
           'accessibilityDescribedByRef',
           'accessibilityDescribedBy should be specfied as a string matching the nativeID of the target component.  Support of specifying accessibilityDescribedBy using a ref is deprecated and will be removed in a future release',
         );
+        // $FlowFixMe[incompatible-use] - Using accessibilityDescribedBy as Ref for backcompat, not typed
+        // $FlowFixMe[prop-missing]
         setDescribedByTarget(findNodeHandle(accessibilityDescribedBy.current));
       }
     }, [accessibilityDescribedBy]);
@@ -80,12 +86,16 @@ const ViewWin32: React.AbstractComponent<ViewProps, any> = React.forwardRef(
       if (
         typeof accessibilityControls !== 'string' &&
         accessibilityControls !== undefined &&
+        // $FlowFixMe[incompatible-use] - Using accessibilityControls as Ref for backcompat, not typed
+        // $FlowFixMe[prop-missing]
         accessibilityControls.current !== null
       ) {
         warnOnce(
           'accessibilityControlsRef',
           'accessibilityControls should be specfied as a string matching the nativeID of the target component.  Support of specifying accessibilityControls using a ref is deprecated and will be removed in a future release',
         );
+        // $FlowFixMe[incompatible-use] - Using accessibilityControls as Ref for backcompat, not typed
+        // $FlowFixMe[prop-missing]
         setControlsTarget(findNodeHandle(accessibilityControls.current));
       }
     }, [accessibilityControls]);
@@ -93,15 +103,16 @@ const ViewWin32: React.AbstractComponent<ViewProps, any> = React.forwardRef(
     /**
      * Set up the forwarding ref to enable adding the focus method.
      */
-    const focusRef = useRef(null);
+    const focusRef = useRef<typeof View | null>(null);
 
     const setLocalRef = useCallback(
-      (instance: View | null) => {
+      (instance: typeof View | null) => {
         focusRef.current = instance;
         /**
          * Add focus() as a callable function to the forwarded reference.
          */
         if (instance) {
+          // $FlowFixMe[prop-missing] - TODO - focus on a component should already call into TextInputState.focus.. once we remove the refs required for legacy accessibility*By ref support
           instance.focus = () => {
             UIManager.dispatchViewManagerCommand(
               findNodeHandle(instance),
@@ -114,7 +125,8 @@ const ViewWin32: React.AbstractComponent<ViewProps, any> = React.forwardRef(
       [focusRef],
     );
 
-    const setNativeRef = useMergeRefs<View | null>({
+    // $FlowFixMe
+    const setNativeRef = useMergeRefs<typeof View | null>({
       setLocalRef,
       forwardedRef,
     });
@@ -130,9 +142,10 @@ const ViewWin32: React.AbstractComponent<ViewProps, any> = React.forwardRef(
           ? {accessibilityLabeledBy: labeledByTarget}
           : {})}
         {...(describedByTarget !== null
-          ? {accessibilityDescribedBy: describedByTarget}
-          : {})}
-        {...(typeof accessibilityDescribedBy === 'string'
+          ? // $FlowFixMe[exponential-spread]
+            {accessibilityDescribedBy: describedByTarget}
+          : // $FlowFixMe[exponential-spread]
+          typeof accessibilityDescribedBy === 'string'
           ? {accessibilityDescribedBy}
           : {})}
         {...(typeof accessibilityControls === 'string'
