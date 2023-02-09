@@ -5,7 +5,10 @@
  */
 
 import type * as React from 'react';
+
 import type {ViewProps} from '../View/ViewPropTypes';
+import type {Constructor} from '../../../types/private/Utilities';
+import type {NativeMethods} from '../../../types/public/ReactNativeTypes';
 
 export interface IPopupProps extends ViewProps {
   isOpen?: boolean;

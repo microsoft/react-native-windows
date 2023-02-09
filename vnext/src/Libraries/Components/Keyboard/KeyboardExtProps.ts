@@ -6,7 +6,7 @@
 
 'use strict';
 
-import RN from 'react-native';
+import {NativeSyntheticEvent} from 'react-native';
 
 // Enum already part of public API
 // eslint-disable-next-line no-restricted-syntax
@@ -43,7 +43,7 @@ export interface IHandledKeyboardEvent {
   handledEventPhase?: HandledEventPhase;
 }
 
-export type IKeyboardEvent = RN.NativeSyntheticEvent<INativeKeyboardEvent>;
+export type IKeyboardEvent = NativeSyntheticEvent<INativeKeyboardEvent>;
 
 export interface IKeyboardProps {
   onKeyDown?: (args: IKeyboardEvent) => void;

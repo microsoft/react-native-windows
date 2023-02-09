@@ -4,6 +4,9 @@
  * @format
  */
 import type * as React from 'react';
+
+import type {Constructor} from '../../../types/private/Utilities';
+import type {NativeMethods} from '../../../types/public/ReactNativeTypes';
 import type {ViewProps} from '../View/ViewPropTypes';
 
 export type Placement =
