@@ -213,11 +213,15 @@
     },
     {
       "type": "platform",
-      "file": "src/Libraries/Components/Flyout/Flyout.tsx"
+      "file": "src/Libraries/Components/Flyout/Flyout.d.ts"
     },
     {
       "type": "platform",
-      "file": "src/Libraries/Components/Flyout/FlyoutProps.ts"
+      "file": "src/Libraries/Components/Flyout/Flyout.js"
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/Components/Flyout/FlyoutNativeComponent.js"
     },
     {
       "type": "platform",
@@ -241,11 +245,15 @@
     },
     {
       "type": "platform",
-      "file": "src/Libraries/Components/Popup/Popup.tsx"
+      "file": "src/Libraries/Components/Popup/Popup.d.ts"
     },
     {
       "type": "platform",
-      "file": "src/Libraries/Components/Popup/PopupProps.ts"
+      "file": "src/Libraries/Components/Popup/Popup.js"
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/Components/Popup/PopupNativeComponent.js"
     },
     {
       "type": "patch",

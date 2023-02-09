@@ -3,8 +3,8 @@
  * Licensed under the MIT License.
  * @format
  */
-import React from 'react';
-import {ViewProps} from 'react-native';
+import type * as React from 'react';
+import type {ViewProps} from '../View/ViewPropTypes';
 
 export type Placement =
   | 'top'
@@ -45,3 +45,8 @@ export interface IFlyoutProps extends ViewProps {
   target?: React.ReactNode;
   verticalOffset?: number;
 }
+
+declare class FlyoutComponent extends React.Component<IFlyoutProps> {}
+declare const FlyoutBase: Constructor<NativeMethods> & typeof FlyoutComponent;
+
+export class Flyout extends FlyoutBase {}
