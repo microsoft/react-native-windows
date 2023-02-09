@@ -10,26 +10,9 @@ import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNati
 import type {HostComponent} from 'react-native/Libraries/Renderer/shims/ReactNativeTypes';
 import type {ViewProps} from '../View/ViewPropTypes';
 
-type Placement =
-  | 'top'
-  | 'bottom'
-  | 'left'
-  | 'right'
-  | 'full'
-  | 'top-edge-aligned-left'
-  | 'top-edge-aligned-right'
-  | 'bottom-edge-aligned-left'
-  | 'bottom-edge-aligned-right'
-  | 'left-edge-aligned-top'
-  | 'right-edge-aligned-top'
-  | 'left-edge-aligned-bottom'
-  | 'right-edge-aligned-bottom';
-
-type ShowMode =
-  | 'auto'
-  | 'standard'
-  | 'transient'
-  | 'transient-with-dismiss-on-pointer-move-away';
+type DismissEvent = $ReadOnly<{|
+  isOpen?: boolean;
+|}>;
 
 type NativeProps = $ReadOnly<{|
   ...ViewProps,
@@ -46,11 +29,36 @@ type NativeProps = $ReadOnly<{|
   isOverlayEnabled?: boolean,
 
   isOpen?: boolean;
-  onDismiss?: (isOpen: boolean) => void;
-  placement?: Placement;
-  showMode?: ShowMode;
-  target?: number;
-  verticalOffset?: number;
+  onDismiss?: ?DirectEventHandler<DismissEvent>;
+  placement?: WithDefault<
+  $ReadOnlyArray<
+  'top'
+  | 'bottom'
+  | 'left'
+  | 'right'
+  | 'full'
+  | 'top-edge-aligned-left'
+  | 'top-edge-aligned-right'
+  | 'bottom-edge-aligned-left'
+  | 'bottom-edge-aligned-right'
+  | 'left-edge-aligned-top'
+  | 'right-edge-aligned-top'
+  | 'left-edge-aligned-bottom'
+  | 'right-edge-aligned-bottom',
+  >,
+  'top',
+>;
+  showMode?: WithDefault<
+  $ReadOnlyArray<
+  'auto'
+  | 'standard'
+  | 'transient'
+  | 'transient-with-dismiss-on-pointer-move-away',
+  >,
+  'auto',
+>;
+  target?: Int32;
+  verticalOffset?: Double;
 
   // Events
 |}>;

@@ -11,6 +11,10 @@ import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNati
 import type {HostComponent} from 'react-native/Libraries/Renderer/shims/ReactNativeTypes';
 import type {ViewProps} from '../View/ViewPropTypes';
 
+type DismissEvent = $ReadOnly<{|
+  isOpen?: boolean;
+|}>;
+
 type NativeProps = $ReadOnly<{|
   ...ViewProps,
 
@@ -27,14 +31,14 @@ type NativeProps = $ReadOnly<{|
    */
   autoFocus?: boolean;
   
-  horizontalOffset?: number;
-  verticalOffset?: number;
+  horizontalOffset?: Double;
+  verticalOffset?: Double;
   
   /**
    * Sets a React element to use as an anchor point. When set, the popup will be positioned relative to it.
    */
-  target?: number;
-  onDismiss?: () => void;
+  target?: Int32;
+  onDismiss?: ?DirectEventHandler<DismissEvent>;
   testID?: string;
   
 |}>;
