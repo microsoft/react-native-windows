@@ -6,7 +6,7 @@
  */
 
 import type {ColorValue} from '../../StyleSheet/StyleSheet';
-import type {Double} from '../../Types/CodegenTypes';
+import type {Double, DirectEventHandler, Int32} from '../../Types/CodegenTypes';
 import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
 import type {HostComponent} from 'react-native/Libraries/Renderer/shims/ReactNativeTypes';
 import type {ViewProps} from '../View/ViewPropTypes';
