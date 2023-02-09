@@ -82,16 +82,14 @@ bool ControlViewManager::UpdateProperty(
       }
     } else if (propertyName == "focusable") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
-        IsFocusable(propertyValue.AsBoolean());
-        control.IsTabStop(propertyValue.AsBoolean());
+        nodeToUpdate->IsFocusable(propertyValue.AsBoolean());
       } else if (propertyValue.IsNull()) {
-        control.ClearValue(TAB_STOP_PROPERTY());
-        IsFocusable(false);
+        nodeToUpdate->IsFocusable(false);
       }
     } else {
       if (propertyName == "accessible") {
         if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
-          IsAccessible(propertyValue.AsBoolean());
+          nodeToUpdate->IsAccessible(propertyValue.AsBoolean());
         }
       }
       ret = Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
@@ -108,11 +106,13 @@ bool ControlViewManager::UpdateProperty(
 void ControlViewManager::OnPropertiesUpdated(ShadowNodeBase *node) {
   auto control(node->GetView().as<xaml::Controls::Control>());
 
-  if (IsAccessible() != IsFocusable()) {
-    control.IsTabStop(false);
-    xaml::Automation::AutomationProperties::SetAccessibilityView(
-        control, xaml::Automation::Peers::AccessibilityView::Raw);
-  }
+  // If developer specifies either the accessible and focusable prop to be false
+  // remove accessibility and keyboard focus for component.
+  const auto isTabStop = (node->IsAccessible() && node->IsFocusable());
+  const auto accessibilityView =
+      isTabStop ? xaml::Automation::Peers::AccessibilityView::Content : xaml::Automation::Peers::AccessibilityView::Raw;
+  control.IsTabStop(isTabStop);
+  xaml::Automation::AutomationProperties::SetAccessibilityView(control, accessibilityView);
 }
 
 void ControlViewManager::OnViewCreated(XamlView view) {
@@ -121,19 +121,6 @@ void ControlViewManager::OnViewCreated(XamlView view) {
   if (auto control = view.try_as<xaml::Controls::IControl7>()) {
     control.CornerRadius({0, 0, 0, 0});
   }
-}
-
-void ControlViewManager::IsAccessible(bool accessible) {
-  m_isAccessible = accessible;
-}
-bool ControlViewManager::IsAccessible() {
-  return m_isAccessible;
-}
-void ControlViewManager::IsFocusable(bool focusable) {
-  m_isFocusable = focusable;
-}
-bool ControlViewManager::IsFocusable() {
-  return m_isFocusable;
 }
 
 } // namespace Microsoft::ReactNative
