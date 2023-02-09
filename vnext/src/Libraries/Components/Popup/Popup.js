@@ -20,34 +20,33 @@ const styles = StyleSheet.create({
 type Props = $ReadOnly<{|
   ...ViewProps,
 
-  isOpen?: boolean;
+  isOpen?: boolean,
 
   /**
    * Configures the Popup with a transparent backdrop.
    */
-  isLightDismissEnabled?: boolean;
-  
+  isLightDismissEnabled?: boolean,
+
   /**
    * Sets whether the Popup will automatically receive focus when opened.
    * Defaults to true. Always true when isLightDismissEnabled === true.
    */
-  autoFocus?: boolean;
-  
-  horizontalOffset?: number;
-  verticalOffset?: number;
-  
+  autoFocus?: boolean,
+
+  horizontalOffset?: number,
+  verticalOffset?: number,
+
   /**
    * Sets a React element to use as an anchor point. When set, the popup will be positioned relative to it.
    */
-  target?: React.ReactNode;
-  onDismiss?: () => void;
-  testID?: string;
-  
+  target?: React.ReactNode,
+  onDismiss?: () => void,
+  testID?: string,
 |}>;
 
 type State = $ReadOnly<{|
-  target?: number | null;
-  targetRef?: React.ReactNode;
+  target?: number | null,
+  targetRef?: React.ReactNode,
 |}>;
 
 /**
@@ -59,10 +58,7 @@ type State = $ReadOnly<{|
  * @keyword popup
  */
 export class Popup extends React.Component<Props, State> {
-  static getDerivedStateFromProps(
-    nextProps: Props,
-    prevState: State,
-  ): State {
+  static getDerivedStateFromProps(nextProps: Props, prevState: State): State {
     // Check if we're given a new target property; we need to resolve it to a node handle before render
     if (prevState.targetRef !== nextProps.target) {
       // Map the 'target' property to a node tag to use in the native layer

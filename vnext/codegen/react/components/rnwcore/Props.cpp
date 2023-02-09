@@ -63,8 +63,8 @@ RCTFlyoutProps::RCTFlyoutProps(
     shouldConstrainToRootBounds(convertRawProp(context, rawProps, "shouldConstrainToRootBounds", sourceProps.shouldConstrainToRootBounds, {false})),
     isOverlayEnabled(convertRawProp(context, rawProps, "isOverlayEnabled", sourceProps.isOverlayEnabled, {false})),
     isOpen(convertRawProp(context, rawProps, "isOpen", sourceProps.isOpen, {false})),
-    placement(convertRawProp(context, rawProps, "placement", sourceProps.placement, {static_cast<RCTFlyoutPlacementMask>(RCTFlyoutPlacement::Top)})),
-    showMode(convertRawProp(context, rawProps, "showMode", sourceProps.showMode, {static_cast<RCTFlyoutShowModeMask>(RCTFlyoutShowMode::Auto)})),
+    placement(convertRawProp(context, rawProps, "placement", sourceProps.placement, {})),
+    showMode(convertRawProp(context, rawProps, "showMode", sourceProps.showMode, {})),
     target(convertRawProp(context, rawProps, "target", sourceProps.target, {0})),
     verticalOffset(convertRawProp(context, rawProps, "verticalOffset", sourceProps.verticalOffset, {0.0}))
       {}
