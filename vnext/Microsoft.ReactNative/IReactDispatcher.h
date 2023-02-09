@@ -38,6 +38,7 @@ struct ReactDispatcher : implements<ReactDispatcher, IReactDispatcher, Mso::Reac
   static void SetUIThreadDispatcher(IReactPropertyBag const &properties) noexcept;
 
   static IReactPropertyName JSDispatcherProperty() noexcept;
+  static IReactDispatcher GetJSDispatcher(IReactPropertyBag const &properties) noexcept;
   static IReactPropertyName JSDispatcherTaskStartingEventName() noexcept;
   static IReactPropertyName JSDispatcherIdleWaitStartingEventName() noexcept;
   static IReactPropertyName JSDispatcherIdleWaitCompletedEventName() noexcept;
