@@ -42,13 +42,6 @@ void ModalHostViewEventEmitter::onOrientationChange(OnOrientationChange event) c
   });
 }
 
-void DatePickerEventEmitter::onChange(OnChange event) const {
-  dispatchEvent("change", [event=std::move(event)](jsi::Runtime &runtime) {
-    auto payload = jsi::Object(runtime);
-    payload.setProperty(runtime, "timestamp", event.timestamp);
-    return payload;
-  });
-}
 void AndroidDrawerLayoutEventEmitter::onDrawerSlide(OnDrawerSlide event) const {
   dispatchEvent("drawerSlide", [event=std::move(event)](jsi::Runtime &runtime) {
     auto payload = jsi::Object(runtime);
@@ -95,22 +88,6 @@ void PullToRefreshViewEventEmitter::onRefresh(OnRefresh event) const {
 }
 
 
-void SliderEventEmitter::onValueChange(OnValueChange event) const {
-  dispatchEvent("valueChange", [event=std::move(event)](jsi::Runtime &runtime) {
-    auto payload = jsi::Object(runtime);
-    payload.setProperty(runtime, "value", event.value);
-payload.setProperty(runtime, "fromUser", event.fromUser);
-    return payload;
-  });
-}
-void SliderEventEmitter::onSlidingComplete(OnSlidingComplete event) const {
-  dispatchEvent("slidingComplete", [event=std::move(event)](jsi::Runtime &runtime) {
-    auto payload = jsi::Object(runtime);
-    payload.setProperty(runtime, "value", event.value);
-payload.setProperty(runtime, "fromUser", event.fromUser);
-    return payload;
-  });
-}
 void AndroidSwitchEventEmitter::onChange(OnChange event) const {
   dispatchEvent("change", [event=std::move(event)](jsi::Runtime &runtime) {
     auto payload = jsi::Object(runtime);

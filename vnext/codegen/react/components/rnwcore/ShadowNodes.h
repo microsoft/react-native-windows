@@ -30,17 +30,6 @@ using ActivityIndicatorViewShadowNode = ConcreteViewShadowNode<
     ActivityIndicatorViewEventEmitter,
     ActivityIndicatorViewState>;
 
-JSI_EXPORT extern const char DatePickerComponentName[];
-
-/*
- * `ShadowNode` for <DatePicker> component.
- */
-using DatePickerShadowNode = ConcreteViewShadowNode<
-    DatePickerComponentName,
-    DatePickerProps,
-    DatePickerEventEmitter,
-    DatePickerState>;
-
 JSI_EXPORT extern const char AndroidDrawerLayoutComponentName[];
 
 /*

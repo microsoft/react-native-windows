@@ -31,13 +31,20 @@ struct PerformanceObserverSpec_RawPerformanceEntry {
     std::optional<double> interactionId;
 };
 
+REACT_STRUCT(PerformanceObserverSpec_GetPendingEntriesResult)
+struct PerformanceObserverSpec_GetPendingEntriesResult {
+    REACT_FIELD(entries)
+    std::vector<PerformanceObserverSpec_RawPerformanceEntry> entries;
+    REACT_FIELD(droppedEntriesCount)
+    double droppedEntriesCount;
+};
+
 struct PerformanceObserverSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
       Method<void(std::string) noexcept>{0, L"startReporting"},
       Method<void(std::string) noexcept>{1, L"stopReporting"},
-      SyncMethod<std::vector<PerformanceObserverSpec_RawPerformanceEntry>() noexcept>{2, L"getPendingEntries"},
+      SyncMethod<PerformanceObserverSpec_GetPendingEntriesResult() noexcept>{2, L"popPendingEntries"},
       Method<void(Callback<>) noexcept>{3, L"setOnPerformanceEntryCallback"},
-      Method<void(PerformanceObserverSpec_RawPerformanceEntry) noexcept>{4, L"logEntryForDebug"},
   };
 
   template <class TModule>
@@ -56,19 +63,14 @@ struct PerformanceObserverSpec : winrt::Microsoft::ReactNative::TurboModuleSpec 
           "    REACT_METHOD(stopReporting) static void stopReporting(std::string entryType) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
-          "getPendingEntries",
-          "    REACT_SYNC_METHOD(getPendingEntries) std::vector<PerformanceObserverSpec_RawPerformanceEntry> getPendingEntries() noexcept { /* implementation */ }\n"
-          "    REACT_SYNC_METHOD(getPendingEntries) static std::vector<PerformanceObserverSpec_RawPerformanceEntry> getPendingEntries() noexcept { /* implementation */ }\n");
+          "popPendingEntries",
+          "    REACT_SYNC_METHOD(popPendingEntries) PerformanceObserverSpec_GetPendingEntriesResult popPendingEntries() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(popPendingEntries) static PerformanceObserverSpec_GetPendingEntriesResult popPendingEntries() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "setOnPerformanceEntryCallback",
           "    REACT_METHOD(setOnPerformanceEntryCallback) void setOnPerformanceEntryCallback(std::function<void()> const & callback) noexcept { /* implementation */ }\n"
           "    REACT_METHOD(setOnPerformanceEntryCallback) static void setOnPerformanceEntryCallback(std::function<void()> const & callback) noexcept { /* implementation */ }\n");
-    REACT_SHOW_METHOD_SPEC_ERRORS(
-          4,
-          "logEntryForDebug",
-          "    REACT_METHOD(logEntryForDebug) void logEntryForDebug(PerformanceObserverSpec_RawPerformanceEntry && entry) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(logEntryForDebug) static void logEntryForDebug(PerformanceObserverSpec_RawPerformanceEntry && entry) noexcept { /* implementation */ }\n");
   }
 };
 

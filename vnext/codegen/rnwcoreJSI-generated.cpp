@@ -442,11 +442,21 @@ static jsi::Value __hostFunction_NativeDevToolsSettingsManagerCxxSpecJSI_getCons
   auto result = static_cast<NativeDevToolsSettingsManagerCxxSpecJSI *>(&turboModule)->getConsolePatchSettings(rt);
   return result ? jsi::Value(std::move(*result)) : jsi::Value::null();
 }
+static jsi::Value __hostFunction_NativeDevToolsSettingsManagerCxxSpecJSI_setProfilingSettings(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeDevToolsSettingsManagerCxxSpecJSI *>(&turboModule)->setProfilingSettings(rt, args[0].asString(rt));
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeDevToolsSettingsManagerCxxSpecJSI_getProfilingSettings(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  auto result = static_cast<NativeDevToolsSettingsManagerCxxSpecJSI *>(&turboModule)->getProfilingSettings(rt);
+  return result ? jsi::Value(std::move(*result)) : jsi::Value::null();
+}
 
 NativeDevToolsSettingsManagerCxxSpecJSI::NativeDevToolsSettingsManagerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
   : TurboModule("DevToolsSettingsManager", jsInvoker) {
   methodMap_["setConsolePatchSettings"] = MethodMetadata {1, __hostFunction_NativeDevToolsSettingsManagerCxxSpecJSI_setConsolePatchSettings};
   methodMap_["getConsolePatchSettings"] = MethodMetadata {0, __hostFunction_NativeDevToolsSettingsManagerCxxSpecJSI_getConsolePatchSettings};
+  methodMap_["setProfilingSettings"] = MethodMetadata {1, __hostFunction_NativeDevToolsSettingsManagerCxxSpecJSI_setProfilingSettings};
+  methodMap_["getProfilingSettings"] = MethodMetadata {0, __hostFunction_NativeDevToolsSettingsManagerCxxSpecJSI_getProfilingSettings};
 }
 static jsi::Value __hostFunction_NativeJSCHeapCaptureCxxSpecJSI_captureComplete(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeJSCHeapCaptureCxxSpecJSI *>(&turboModule)->captureComplete(rt, args[0].asString(rt), args[1].isNull() || args[1].isUndefined() ? std::nullopt : std::make_optional(args[1].asString(rt)));
@@ -916,11 +926,11 @@ static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_dispatchViewManagerCo
   return jsi::Value::undefined();
 }
 static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_measure(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->measure(rt, args[0].isNull() || args[0].isUndefined() ? std::nullopt : std::make_optional(args[0].asNumber()), args[1].asObject(rt).asFunction(rt));
+  static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->measure(rt, args[0].asNumber(), args[1].asObject(rt).asFunction(rt));
   return jsi::Value::undefined();
 }
 static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_measureInWindow(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->measureInWindow(rt, args[0].isNull() || args[0].isUndefined() ? std::nullopt : std::make_optional(args[0].asNumber()), args[1].asObject(rt).asFunction(rt));
+  static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->measureInWindow(rt, args[0].asNumber(), args[1].asObject(rt).asFunction(rt));
   return jsi::Value::undefined();
 }
 static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_viewIsDescendantOf(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
@@ -928,11 +938,11 @@ static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_viewIsDescendantOf(js
   return jsi::Value::undefined();
 }
 static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_measureLayout(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->measureLayout(rt, args[0].isNull() || args[0].isUndefined() ? std::nullopt : std::make_optional(args[0].asNumber()), args[1].isNull() || args[1].isUndefined() ? std::nullopt : std::make_optional(args[1].asNumber()), args[2].asObject(rt).asFunction(rt), args[3].asObject(rt).asFunction(rt));
+  static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->measureLayout(rt, args[0].asNumber(), args[1].asNumber(), args[2].asObject(rt).asFunction(rt), args[3].asObject(rt).asFunction(rt));
   return jsi::Value::undefined();
 }
 static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_measureLayoutRelativeToParent(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->measureLayoutRelativeToParent(rt, args[0].isNull() || args[0].isUndefined() ? std::nullopt : std::make_optional(args[0].asNumber()), args[1].asObject(rt).asFunction(rt), args[2].asObject(rt).asFunction(rt));
+  static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->measureLayoutRelativeToParent(rt, args[0].asNumber(), args[1].asObject(rt).asFunction(rt), args[2].asObject(rt).asFunction(rt));
   return jsi::Value::undefined();
 }
 static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_setJSResponder(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
@@ -1139,6 +1149,30 @@ NativeVibrationCxxSpecJSI::NativeVibrationCxxSpecJSI(std::shared_ptr<CallInvoker
   methodMap_["vibrateByPattern"] = MethodMetadata {2, __hostFunction_NativeVibrationCxxSpecJSI_vibrateByPattern};
   methodMap_["cancel"] = MethodMetadata {0, __hostFunction_NativeVibrationCxxSpecJSI_cancel};
 }
+static jsi::Value __hostFunction_NativePerformanceCxxSpecJSI_mark(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativePerformanceCxxSpecJSI *>(&turboModule)->mark(rt, args[0].asString(rt), args[1].asNumber(), args[2].asNumber());
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativePerformanceCxxSpecJSI_clearMarks(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativePerformanceCxxSpecJSI *>(&turboModule)->clearMarks(rt, count < 0 || args[0].isNull() || args[0].isUndefined() ? std::nullopt : std::make_optional(args[0].asString(rt)));
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativePerformanceCxxSpecJSI_measure(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativePerformanceCxxSpecJSI *>(&turboModule)->measure(rt, args[0].asString(rt), args[1].asNumber(), args[2].asNumber(), count < 3 || args[3].isNull() || args[3].isUndefined() ? std::nullopt : std::make_optional(args[3].asNumber()), count < 4 || args[4].isNull() || args[4].isUndefined() ? std::nullopt : std::make_optional(args[4].asString(rt)), count < 5 || args[5].isNull() || args[5].isUndefined() ? std::nullopt : std::make_optional(args[5].asString(rt)));
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativePerformanceCxxSpecJSI_clearMeasures(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativePerformanceCxxSpecJSI *>(&turboModule)->clearMeasures(rt, count < 0 || args[0].isNull() || args[0].isUndefined() ? std::nullopt : std::make_optional(args[0].asString(rt)));
+  return jsi::Value::undefined();
+}
+
+NativePerformanceCxxSpecJSI::NativePerformanceCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("NativePerformanceCxx", jsInvoker) {
+  methodMap_["mark"] = MethodMetadata {3, __hostFunction_NativePerformanceCxxSpecJSI_mark};
+  methodMap_["clearMarks"] = MethodMetadata {1, __hostFunction_NativePerformanceCxxSpecJSI_clearMarks};
+  methodMap_["measure"] = MethodMetadata {6, __hostFunction_NativePerformanceCxxSpecJSI_measure};
+  methodMap_["clearMeasures"] = MethodMetadata {1, __hostFunction_NativePerformanceCxxSpecJSI_clearMeasures};
+}
 static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_startReporting(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->startReporting(rt, args[0].asString(rt));
   return jsi::Value::undefined();
@@ -1147,15 +1181,11 @@ static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_stopReporti
   static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->stopReporting(rt, args[0].asString(rt));
   return jsi::Value::undefined();
 }
-static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_getPendingEntries(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->getPendingEntries(rt);
+static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_popPendingEntries(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->popPendingEntries(rt);
 }
 static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_setOnPerformanceEntryCallback(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->setOnPerformanceEntryCallback(rt, count < 0 || args[0].isNull() || args[0].isUndefined() ? std::nullopt : std::make_optional(args[0].asObject(rt).asFunction(rt)));
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_logEntryForDebug(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->logEntryForDebug(rt, args[0].asObject(rt));
   return jsi::Value::undefined();
 }
 
@@ -1163,9 +1193,8 @@ NativePerformanceObserverCxxSpecJSI::NativePerformanceObserverCxxSpecJSI(std::sh
   : TurboModule("NativePerformanceObserverCxx", jsInvoker) {
   methodMap_["startReporting"] = MethodMetadata {1, __hostFunction_NativePerformanceObserverCxxSpecJSI_startReporting};
   methodMap_["stopReporting"] = MethodMetadata {1, __hostFunction_NativePerformanceObserverCxxSpecJSI_stopReporting};
-  methodMap_["getPendingEntries"] = MethodMetadata {0, __hostFunction_NativePerformanceObserverCxxSpecJSI_getPendingEntries};
+  methodMap_["popPendingEntries"] = MethodMetadata {0, __hostFunction_NativePerformanceObserverCxxSpecJSI_popPendingEntries};
   methodMap_["setOnPerformanceEntryCallback"] = MethodMetadata {1, __hostFunction_NativePerformanceObserverCxxSpecJSI_setOnPerformanceEntryCallback};
-  methodMap_["logEntryForDebug"] = MethodMetadata {1, __hostFunction_NativePerformanceObserverCxxSpecJSI_logEntryForDebug};
 }
 static jsi::Value __hostFunction_NativeWebSocketModuleCxxSpecJSI_connect(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeWebSocketModuleCxxSpecJSI *>(&turboModule)->connect(rt, args[0].asString(rt), args[1].isNull() || args[1].isUndefined() ? std::nullopt : std::make_optional(args[1].asObject(rt).asArray(rt)), args[2].asObject(rt), args[3].asNumber());
@@ -1315,14 +1344,6 @@ NativeClipboardCxxSpecJSI::NativeClipboardCxxSpecJSI(std::shared_ptr<CallInvoker
   methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeClipboardCxxSpecJSI_getConstants};
   methodMap_["getString"] = MethodMetadata {0, __hostFunction_NativeClipboardCxxSpecJSI_getString};
   methodMap_["setString"] = MethodMetadata {1, __hostFunction_NativeClipboardCxxSpecJSI_setString};
-}
-static jsi::Value __hostFunction_NativeDatePickerAndroidCxxSpecJSI_open(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeDatePickerAndroidCxxSpecJSI *>(&turboModule)->open(rt, args[0].asObject(rt));
-}
-
-NativeDatePickerAndroidCxxSpecJSI::NativeDatePickerAndroidCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("DatePickerAndroid", jsInvoker) {
-  methodMap_["open"] = MethodMetadata {1, __hostFunction_NativeDatePickerAndroidCxxSpecJSI_open};
 }
 static jsi::Value __hostFunction_NativeKeyboardObserverCxxSpecJSI_addListener(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeKeyboardObserverCxxSpecJSI *>(&turboModule)->addListener(rt, args[0].asString(rt));
