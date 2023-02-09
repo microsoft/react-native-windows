@@ -98,15 +98,19 @@ function checkFilesForChanges(
 
 function writeMapToFiles(map: Map<string, string>, outputDir: string) {
   let success = true;
+  outputDir = path.relative(process.cwd(), outputDir);
 
   // This ensures that we delete any generated files from modules that have been deleted
-  const allExistingFiles = globby.sync([
-    `${outputDir}/**`,
-    `${outputDir}/**/.*`,
-  ]);
+  const allExistingFiles = globby.sync(
+    [`${outputDir}/**`, `${outputDir}/**/.*`],
+    {absolute: true},
+  );
 
+  const allGeneratedFiles = [...map.keys()].map(_ => path.normalize(_)).sort();
   allExistingFiles.forEach(existingFile => {
-    if (!map.has(path.normalize(existingFile))) {
+    console.log('checking  ', existingFile);
+    if (!allGeneratedFiles.includes(path.normalize(existingFile))) {
+      console.log('del ', existingFile);
       fs.unlinkSync(existingFile);
     }
   });
