@@ -435,7 +435,7 @@ module.exports = {
       .ColorGradientWin32;
   },
   get ViewWin32(): any {
-    return require('./Libraries/Components/View/ViewWin32').ViewWin32;
+    return require('./Libraries/Components/View/ViewWin32');
   },
   get TextWin32(): any {
     return require('./Libraries/Components/Text/TextWin32').TextWin32;

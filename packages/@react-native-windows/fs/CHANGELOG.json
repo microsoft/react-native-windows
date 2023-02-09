@@ -2,6 +2,21 @@
   "name": "@react-native-windows/fs",
   "entries": [
     {
+      "date": "Thu, 09 Feb 2023 06:16:42 GMT",
+      "tag": "@react-native-windows/fs_v0.0.0-canary.14",
+      "version": "0.0.0-canary.14",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/fs",
+            "commit": "5b8e65a0caaa771a5e2108c884e1b244af1bb4e9",
+            "comment": "Bump typescript version"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 11 Jan 2023 06:15:31 GMT",
       "tag": "@react-native-windows/fs_v0.0.0-canary.13",
       "version": "0.0.0-canary.13",

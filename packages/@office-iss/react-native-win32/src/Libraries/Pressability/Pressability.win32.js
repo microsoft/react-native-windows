@@ -602,7 +602,7 @@ export default class Pressability {
           (event.nativeEvent.code === 'Space' ||
             event.nativeEvent.code === 'Enter' ||
             event.nativeEvent.code === 'GamepadA') &&
-          event.defaultPrevented != true
+          event.defaultPrevented !== true
         ) {
           const {onPressOut, onPress} = this._config;
           // $FlowFixMe: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of passing KeyEvents instead
@@ -619,7 +619,7 @@ export default class Pressability {
           (event.nativeEvent.code === 'Space' ||
             event.nativeEvent.code === 'Enter' ||
             event.nativeEvent.code === 'GamepadA') &&
-          event.defaultPrevented != true
+          event.defaultPrevented !== true
         ) {
           const {onPressIn} = this._config;
           // $FlowFixMe: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of passing KeyEvents instead
