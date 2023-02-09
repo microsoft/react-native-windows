@@ -626,15 +626,6 @@ static void StyleYogaNode(
       YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
       SetYogaUnitValueHelper(yogaNode, result, YGNodeStyleSetMaxHeight, YGNodeStyleSetMaxHeightPercent);
-    } else if (key == "rowGap") {
-      float result = NumberOrDefault(value, 0.0f /*default*/);
-      YGNodeStyleSetGap(yogaNode, YGGutterRow, result);
-    } else if (key == "columnGap") {
-      float result = NumberOrDefault(value, 0.0f /*default*/);
-      YGNodeStyleSetGap(yogaNode, YGGutterColumn, result);
-    } else if (key == "gap") {
-      float result = NumberOrDefault(value, 0.0f /*default*/);
-      YGNodeStyleSetGap(yogaNode, YGGutterAll, result);
     } else if (key == "margin") {
       YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
