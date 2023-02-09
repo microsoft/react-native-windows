@@ -4,15 +4,9 @@
 #include "HermesShim.h"
 #include "Crash.h"
 
-#if _M_IX86
-#define SYMBOL_PREFIX "_"
-#else
-#define SYMBOL_PREFIX
-#endif
-
 #define DECLARE_SYMBOL(symbol, importedSymbol) \
   decltype(&importedSymbol) s_##symbol{};      \
-  constexpr const char symbol##Symbol[] = SYMBOL_PREFIX #importedSymbol;
+  constexpr const char symbol##Symbol[] = #importedSymbol;
 
 #define INIT_SYMBOL(symbol)                                                                            \
   s_##symbol = reinterpret_cast<decltype(s_##symbol)>(GetProcAddress(s_hermesModule, symbol##Symbol)); \
