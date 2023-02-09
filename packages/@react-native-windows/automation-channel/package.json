@@ -33,7 +33,7 @@
     "react": "18.2.0",
     "react-native": "0.71.0",
     "react-native-windows": "0.71.0",
-    "typescript": "^4.4.4"
+    "typescript": "^4.9.5"
   },
   "files": [
     "lib-commonjs",
