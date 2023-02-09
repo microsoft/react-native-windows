@@ -25,16 +25,23 @@ const fs = require('fs');
 option('production');
 option('clean');
 
-task('codegen', () => {
+function codegen(test) {
   execSync(
-    'react-native-windows-codegen --files Libraries/**/*Native*.js --namespace Microsoft::ReactNativeSpecs --libraryName rnwcore --modulesWindows --modulesCxx',
+    `react-native-windows-codegen --files Libraries/**/*Native*.js --namespace Microsoft::ReactNativeSpecs --libraryName rnwcore --modulesWindows --modulesCxx${
+      test ? ' --test' : ''
+    }`,
     {env: process.env},
   );
   execSync(
-    'react-native-windows-codegen --files Microsoft.ReactNative.IntegrationTests/**/*Native*.js --namespace Microsoft::ReactNativeIntegrationTestSpecs --libraryName msrnIntegrationTests --modulesCxx --outputDirectory Microsoft.ReactNative.IntegrationTests/codegen',
+    `react-native-windows-codegen --files Microsoft.ReactNative.IntegrationTests/**/*Native*.js --namespace Microsoft::ReactNativeIntegrationTestSpecs --libraryName msrnIntegrationTests --modulesCxx --outputDirectory Microsoft.ReactNative.IntegrationTests/codegen${
+      test ? ' --test' : ''
+    }`,
     {env: process.env},
   );
-});
+}
+
+task('codegen', () => codegen(false));
+task('codegen:check', () => codegen(true));
 
 task('copyReadmeAndLicenseFromRoot', () => {
   fs.copyFileSync(
@@ -62,4 +69,4 @@ task(
 
 task('clean', series('cleanRNLibraries'));
 
-task('lint', series('eslint', 'flow-check'));
+task('lint', series('eslint', 'codegen:check', 'flow-check'));

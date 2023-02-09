@@ -5,7 +5,7 @@
  * @ts-check
  */
 
-const {task, series} = require('just-scripts');
+const {task, series, parallel} = require('just-scripts');
 const fs = require('fs');
 const {execSync} = require('child_process');
 
@@ -14,6 +14,12 @@ require('@rnw-scripts/just-task');
 
 task('codegen', () => {
   execSync('npx react-native codegen-windows --logging', {env: process.env});
+});
+
+task('codegen:check', () => {
+  execSync('npx react-native codegen-windows --logging --check', {
+    env: process.env,
+  });
 });
 
 task('prepareBundle', () => {
