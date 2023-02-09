@@ -6,6 +6,7 @@
 #include "HermesRuntimeHolder.h"
 
 #include <JSI/decorator.h>
+#include <crash/verifyElseCrash.h>
 #include <cxxreact/MessageQueueThread.h>
 #include <cxxreact/SystraceSection.h>
 #include <hermes/hermes.h>
