@@ -114,6 +114,7 @@ function writeMapToFiles(map: Map<string, string>, outputDir: string) {
   const allGeneratedFiles = [...map.keys()].map(_ => path.normalize(_)).sort();
   allExistingFiles.forEach(existingFile => {
     if (!allGeneratedFiles.includes(path.normalize(existingFile))) {
+      console.log('Deleting ', existingFile);
       fs.unlinkSync(existingFile);
     }
   });
@@ -130,6 +131,7 @@ function writeMapToFiles(map: Map<string, string>, outputDir: string) {
         }
       }
 
+      console.log('Writing ', fileName);
       fs.writeFileSync(fileName, contents);
     } catch (error) {
       success = false;
