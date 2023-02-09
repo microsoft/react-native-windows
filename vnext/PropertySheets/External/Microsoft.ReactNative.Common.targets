@@ -26,8 +26,9 @@
 
       RestoreProjectStyle=PackagesConfig    - Required to use the packages.config mechanism
       RestorePackagesConfig=true            - Required to use the packages.config mechanism
+      RestoreUseStaticGraphEvaluation=false - Override setting from Microsoft.ReactNative.Common.props
     -->
-    <MSBuild Projects="$(MSBuildProjectFile)" Targets="Restore" Properties="RestoreProjectStyle=PackagesConfig;RestorePackagesConfig=true" />
+    <MSBuild Projects="$(MSBuildProjectFile)" Targets="Restore" Properties="RestoreProjectStyle=PackagesConfig;RestorePackagesConfig=true;RestoreUseStaticGraphEvaluation=false" />
   </Target>
 
 </Project>
