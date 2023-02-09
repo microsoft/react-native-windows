@@ -10,6 +10,15 @@
 
 namespace Microsoft::ReactNative {
 
+NativeAnimatedModule::NativeAnimatedModule() {}
+
+NativeAnimatedModule::~NativeAnimatedModule() {
+  // To make sure that we destroy active animation operations on UI thread.
+  if (m_context && !m_context.UIDispatcher().HasThreadAccess()) {
+    m_context.UIDispatcher().Post([nodesManager = std::move(m_nodesManager)]() mutable { nodesManager = nullptr; });
+  }
+}
+
 void NativeAnimatedModule::Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
   m_context = reactContext;
   m_nodesManager = std::make_shared<NativeAnimatedNodeManager>(reactContext);

@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.0.0-20230125-2022-6f7428e27",
+  "baseVersion": "0.0.0-20230201-2114-a0800ffc7",
   "overrides": [
     {
       "type": "patch",
@@ -52,7 +52,7 @@
       "type": "patch",
       "file": "src/js/examples/View/ViewExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/View/ViewExample.js",
-      "baseHash": "0cc57b18957499a6cf7bdbe528be942e634e036a"
+      "baseHash": "56c28ce021350f077b1f27843c5d996fe2d1fe9c"
     },
     {
       "type": "copy",

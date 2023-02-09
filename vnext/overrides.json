@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20230125-2022-6f7428e27",
+  "baseVersion": "0.0.0-20230201-2114-a0800ffc7",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "bbd7c2621c8c1c80792386a278d94fcdb702d4ed"
+      "baseHash": "83e72b7e7299c8c056a76893b684247836e1934a"
     },
     {
       "type": "derived",
@@ -98,14 +98,14 @@
       "type": "patch",
       "file": "src/babel-plugin-codegen/GenerateViewConfigJs.js",
       "baseFile": "packages/react-native-codegen/src/generators/components/GenerateViewConfigJs.js",
-      "baseHash": "52a2f2a7f1e113f25a41f8f2f805f6e269d15a5c",
+      "baseHash": "5eac953690e0c735aea066e3c3a92a751da6f00d",
       "issue": 5430
     },
     {
       "type": "patch",
       "file": "src/babel-plugin-codegen/index.js",
       "baseFile": "packages/babel-plugin-codegen/index.js",
-      "baseHash": "dcee030f739cc0047038da7e94ec3be58145f25f",
+      "baseHash": "b0bebaa61feb2808e94aef543978f9f47b0c90b0",
       "issue": 5430
     },
     {
