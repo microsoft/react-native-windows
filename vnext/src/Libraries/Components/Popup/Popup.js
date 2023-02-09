@@ -59,7 +59,7 @@ type State = $ReadOnly<{|
  * @keyword popup
  */
 export class Popup extends React.Component<Props, State> {
-  public static getDerivedStateFromProps(
+  static getDerivedStateFromProps(
     nextProps: Props,
     prevState: State,
   ): State {
@@ -81,7 +81,7 @@ export class Popup extends React.Component<Props, State> {
     this.state = {target: undefined, targetRef: null};
   }
 
-  public render(): React.Node {
+  render(): React.Node {
     const props = {...this.props};
     props.style = [styles.rctPopup, this.props.style];
 
