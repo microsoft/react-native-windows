@@ -11,7 +11,7 @@ import type {HostComponent} from 'react-native/Libraries/Renderer/shims/ReactNat
 import type {ViewProps} from '../View/ViewPropTypes';
 
 type DismissEvent = $ReadOnly<{|
-  isOpen?: boolean;
+  isOpen?: boolean,
 |}>;
 
 type NativeProps = $ReadOnly<{|
@@ -28,37 +28,37 @@ type NativeProps = $ReadOnly<{|
    */
   isOverlayEnabled?: boolean,
 
-  isOpen?: boolean;
-  onDismiss?: ?DirectEventHandler<DismissEvent>;
+  isOpen?: boolean,
+  onDismiss?: ?DirectEventHandler<DismissEvent>,
   placement?: WithDefault<
-  $ReadOnlyArray<
-  'top'
-  | 'bottom'
-  | 'left'
-  | 'right'
-  | 'full'
-  | 'top-edge-aligned-left'
-  | 'top-edge-aligned-right'
-  | 'bottom-edge-aligned-left'
-  | 'bottom-edge-aligned-right'
-  | 'left-edge-aligned-top'
-  | 'right-edge-aligned-top'
-  | 'left-edge-aligned-bottom'
-  | 'right-edge-aligned-bottom',
+    $ReadOnlyArray<
+      | 'top'
+      | 'bottom'
+      | 'left'
+      | 'right'
+      | 'full'
+      | 'top-edge-aligned-left'
+      | 'top-edge-aligned-right'
+      | 'bottom-edge-aligned-left'
+      | 'bottom-edge-aligned-right'
+      | 'left-edge-aligned-top'
+      | 'right-edge-aligned-top'
+      | 'left-edge-aligned-bottom'
+      | 'right-edge-aligned-bottom',
+    >,
+    'top',
   >,
-  'top',
->;
   showMode?: WithDefault<
-  $ReadOnlyArray<
-  'auto'
-  | 'standard'
-  | 'transient'
-  | 'transient-with-dismiss-on-pointer-move-away',
+    $ReadOnlyArray<
+      | 'auto'
+      | 'standard'
+      | 'transient'
+      | 'transient-with-dismiss-on-pointer-move-away',
+    >,
+    'auto',
   >,
-  'auto',
->;
-  target?: Int32;
-  verticalOffset?: Double;
+  target?: Int32,
+  verticalOffset?: Double,
 
   // Events
 |}>;

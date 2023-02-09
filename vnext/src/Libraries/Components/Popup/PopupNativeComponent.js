@@ -12,35 +12,34 @@ import type {HostComponent} from 'react-native/Libraries/Renderer/shims/ReactNat
 import type {ViewProps} from '../View/ViewPropTypes';
 
 type DismissEvent = $ReadOnly<{|
-  isOpen?: boolean;
+  isOpen?: boolean,
 |}>;
 
 type NativeProps = $ReadOnly<{|
   ...ViewProps,
 
-  isOpen?: boolean;
+  isOpen?: boolean,
 
   /**
    * Configures the Popup with a transparent backdrop.
    */
-  isLightDismissEnabled?: boolean;
-  
+  isLightDismissEnabled?: boolean,
+
   /**
    * Sets whether the Popup will automatically receive focus when opened.
    * Defaults to true. Always true when isLightDismissEnabled === true.
    */
-  autoFocus?: boolean;
-  
-  horizontalOffset?: Double;
-  verticalOffset?: Double;
-  
+  autoFocus?: boolean,
+
+  horizontalOffset?: Double,
+  verticalOffset?: Double,
+
   /**
    * Sets a React element to use as an anchor point. When set, the popup will be positioned relative to it.
    */
-  target?: Int32;
-  onDismiss?: ?DirectEventHandler<DismissEvent>;
-  testID?: string;
-  
+  target?: Int32,
+  onDismiss?: ?DirectEventHandler<DismissEvent>,
+  testID?: string,
 |}>;
 
 type NativeType = HostComponent<NativeProps>;

@@ -47,12 +47,12 @@ type Props = $ReadOnly<{|
    */
   isOverlayEnabled?: boolean,
 
-  isOpen?: boolean;
-  onDismiss?: (isOpen: boolean) => void;
-  placement?: Placement;
-  showMode?: ShowMode;
-  target?: React.ReactNode;
-  verticalOffset?: number;
+  isOpen?: boolean,
+  onDismiss?: (isOpen: boolean) => void,
+  placement?: Placement,
+  showMode?: ShowMode,
+  target?: React.ReactNode,
+  verticalOffset?: number,
 
   // Events
 |}>;
@@ -64,8 +64,8 @@ const styles = StyleSheet.create({
 });
 
 type State = $ReadOnly<{|
-  target?: number | null;
-  targetRef?: React.ReactNode;
+  target?: number | null,
+  targetRef?: React.ReactNode,
 |}>;
 
 /**
@@ -77,10 +77,7 @@ type State = $ReadOnly<{|
  * @keyword flyout
  */
 export class Flyout extends React.Component<Props, State> {
-  static getDerivedStateFromProps(
-    nextProps: Props,
-    prevState: State,
-  ): State {
+  static getDerivedStateFromProps(nextProps: Props, prevState: State): State {
     // Check if we're given a new target property; we need to resolve it to a node handle before render
     if (prevState.targetRef !== nextProps.target) {
       // Map the 'target' property to a node tag to use in the native layer
