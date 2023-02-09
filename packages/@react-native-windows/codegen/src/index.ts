@@ -108,9 +108,7 @@ function writeMapToFiles(map: Map<string, string>, outputDir: string) {
 
   const allGeneratedFiles = [...map.keys()].map(_ => path.normalize(_)).sort();
   allExistingFiles.forEach(existingFile => {
-    console.log('checking  ', existingFile);
     if (!allGeneratedFiles.includes(path.normalize(existingFile))) {
-      console.log('del ', existingFile);
       fs.unlinkSync(existingFile);
     }
   });
