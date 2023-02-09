@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Implement rowGap, columnGap and gap flex properties (#10969)",
-  "packageName": "react-native-windows",
-  "email": "26607885+chrisglein@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
