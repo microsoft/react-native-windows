@@ -14,6 +14,7 @@
 #include <react/renderer/components/view/ViewProps.h>
 #include <react/renderer/core/PropsParserContext.h>
 #include <react/renderer/graphics/Color.h>
+#include <react/renderer/imagemanager/primitives.h>
 #include <vector>
 
 namespace facebook {
@@ -182,6 +183,117 @@ class JSI_EXPORT ActivityIndicatorViewProps final : public ViewProps {
   ActivityIndicatorViewSize size{ActivityIndicatorViewSize::Small};
 };
 
+enum class DatePickerMinuteInterval { MinuteInterval1 = 1, MinuteInterval2 = 2, MinuteInterval3 = 3, MinuteInterval4 = 4, MinuteInterval5 = 5, MinuteInterval6 = 6, MinuteInterval10 = 10, MinuteInterval12 = 12, MinuteInterval15 = 15, MinuteInterval20 = 20, MinuteInterval30 = 30 };
+
+static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, DatePickerMinuteInterval &result) {
+  assert(value.hasType<int>());
+  auto integerValue = (int)value;
+  switch (integerValue) {
+    case 1:
+      result = DatePickerMinuteInterval::MinuteInterval1;
+      return;
+    case 2:
+      result = DatePickerMinuteInterval::MinuteInterval2;
+      return;
+    case 3:
+      result = DatePickerMinuteInterval::MinuteInterval3;
+      return;
+    case 4:
+      result = DatePickerMinuteInterval::MinuteInterval4;
+      return;
+    case 5:
+      result = DatePickerMinuteInterval::MinuteInterval5;
+      return;
+    case 6:
+      result = DatePickerMinuteInterval::MinuteInterval6;
+      return;
+    case 10:
+      result = DatePickerMinuteInterval::MinuteInterval10;
+      return;
+    case 12:
+      result = DatePickerMinuteInterval::MinuteInterval12;
+      return;
+    case 15:
+      result = DatePickerMinuteInterval::MinuteInterval15;
+      return;
+    case 20:
+      result = DatePickerMinuteInterval::MinuteInterval20;
+      return;
+    case 30:
+      result = DatePickerMinuteInterval::MinuteInterval30;
+      return;
+  }
+  abort();
+}
+
+static inline std::string toString(const DatePickerMinuteInterval &value) {
+  switch (value) {
+    case DatePickerMinuteInterval::MinuteInterval1: return "1";
+    case DatePickerMinuteInterval::MinuteInterval2: return "2";
+    case DatePickerMinuteInterval::MinuteInterval3: return "3";
+    case DatePickerMinuteInterval::MinuteInterval4: return "4";
+    case DatePickerMinuteInterval::MinuteInterval5: return "5";
+    case DatePickerMinuteInterval::MinuteInterval6: return "6";
+    case DatePickerMinuteInterval::MinuteInterval10: return "10";
+    case DatePickerMinuteInterval::MinuteInterval12: return "12";
+    case DatePickerMinuteInterval::MinuteInterval15: return "15";
+    case DatePickerMinuteInterval::MinuteInterval20: return "20";
+    case DatePickerMinuteInterval::MinuteInterval30: return "30";
+  }
+}
+enum class DatePickerMode { Date, Time, Datetime };
+
+static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, DatePickerMode &result) {
+  auto string = (std::string)value;
+  if (string == "date") { result = DatePickerMode::Date; return; }
+  if (string == "time") { result = DatePickerMode::Time; return; }
+  if (string == "datetime") { result = DatePickerMode::Datetime; return; }
+  abort();
+}
+
+static inline std::string toString(const DatePickerMode &value) {
+  switch (value) {
+    case DatePickerMode::Date: return "date";
+    case DatePickerMode::Time: return "time";
+    case DatePickerMode::Datetime: return "datetime";
+  }
+}
+enum class DatePickerPickerStyle { Compact, Spinner, Inline };
+
+static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, DatePickerPickerStyle &result) {
+  auto string = (std::string)value;
+  if (string == "compact") { result = DatePickerPickerStyle::Compact; return; }
+  if (string == "spinner") { result = DatePickerPickerStyle::Spinner; return; }
+  if (string == "inline") { result = DatePickerPickerStyle::Inline; return; }
+  abort();
+}
+
+static inline std::string toString(const DatePickerPickerStyle &value) {
+  switch (value) {
+    case DatePickerPickerStyle::Compact: return "compact";
+    case DatePickerPickerStyle::Spinner: return "spinner";
+    case DatePickerPickerStyle::Inline: return "inline";
+  }
+}
+
+class JSI_EXPORT DatePickerProps final : public ViewProps {
+ public:
+  DatePickerProps() = default;
+  DatePickerProps(const PropsParserContext& context, const DatePickerProps &sourceProps, const RawProps &rawProps);
+
+#pragma mark - Props
+
+  Float date{0.0};
+  Float initialDate{0.0};
+  std::string locale{};
+  Float maximumDate{0.0};
+  Float minimumDate{0.0};
+  DatePickerMinuteInterval minuteInterval{DatePickerMinuteInterval::MinuteInterval1};
+  DatePickerMode mode{DatePickerMode::Date};
+  Float timeZoneOffsetInMinutes{0.0};
+  DatePickerPickerStyle pickerStyle{DatePickerPickerStyle::Spinner};
+};
+
 enum class AndroidDrawerLayoutKeyboardDismissMode { None, OnDrag };
 
 static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, AndroidDrawerLayoutKeyboardDismissMode &result) {
@@ -338,6 +450,29 @@ class JSI_EXPORT AndroidHorizontalScrollContentViewProps final : public ViewProp
 #pragma mark - Props
 
   bool removeClippedSubviews{false};
+};
+
+class JSI_EXPORT SliderProps final : public ViewProps {
+ public:
+  SliderProps() = default;
+  SliderProps(const PropsParserContext& context, const SliderProps &sourceProps, const RawProps &rawProps);
+
+#pragma mark - Props
+
+  bool disabled{false};
+  bool enabled{true};
+  ImageSource maximumTrackImage{};
+  SharedColor maximumTrackTintColor{};
+  double maximumValue{1.0};
+  ImageSource minimumTrackImage{};
+  SharedColor minimumTrackTintColor{};
+  double minimumValue{0.0};
+  double step{0.0};
+  std::string testID{""};
+  ImageSource thumbImage{};
+  SharedColor thumbTintColor{};
+  ImageSource trackImage{};
+  double value{0.0};
 };
 
 class JSI_EXPORT AndroidSwitchProps final : public ViewProps {

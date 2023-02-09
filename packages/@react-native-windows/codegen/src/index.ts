@@ -65,17 +65,20 @@ function checkFilesForChanges(
 ): boolean {
   let hasChanges = false;
 
-  outputDir = path.relative(process.cwd(), outputDir);
-
+  outputDir = path.resolve(outputDir);
+  const globbyDir = outputDir.replace(/\\/g, '/');
   const allExistingFiles = globby
-    .sync([`${outputDir}/**`, `${outputDir}/**/.*`], {absolute: true})
-    .map(_ => path.normalize(_))
-    .sort();
+    .sync([`${globbyDir}/**`, `${globbyDir}/**/.*`], {absolute: true})
+    .map(_ => path.normalize(_));
   const allGeneratedFiles = [...map.keys()].map(_ => path.normalize(_)).sort();
 
   if (
     allExistingFiles.length !== allGeneratedFiles.length ||
-    !allExistingFiles.every((val, index) => val === allGeneratedFiles[index])
+    !allGeneratedFiles.every(filepath =>
+      allExistingFiles.includes(
+        path.normalize(path.resolve(process.cwd(), filepath)),
+      ),
+    )
   )
     return true;
 
@@ -98,11 +101,13 @@ function checkFilesForChanges(
 
 function writeMapToFiles(map: Map<string, string>, outputDir: string) {
   let success = true;
-  outputDir = path.relative(process.cwd(), outputDir);
+
+  outputDir = path.resolve(outputDir);
+  const globbyDir = outputDir.replace(/\\/g, '/');
 
   // This ensures that we delete any generated files from modules that have been deleted
   const allExistingFiles = globby.sync(
-    [`${outputDir}/**`, `${outputDir}/**/.*`],
+    [`${globbyDir}/**`, `${globbyDir}/**/.*`],
     {absolute: true},
   );
 

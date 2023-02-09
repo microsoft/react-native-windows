@@ -14,6 +14,7 @@ namespace facebook {
 namespace react {
 
 extern const char ActivityIndicatorViewComponentName[] = "ActivityIndicatorView";
+extern const char DatePickerComponentName[] = "DatePicker";
 extern const char AndroidDrawerLayoutComponentName[] = "AndroidDrawerLayout";
 extern const char AndroidSwipeRefreshLayoutComponentName[] = "AndroidSwipeRefreshLayout";
 extern const char PullToRefreshViewComponentName[] = "PullToRefreshView";

@@ -24,11 +24,11 @@ struct UIManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
       Method<void(std::optional<double>) noexcept>{6, L"blur"},
       Method<void(std::optional<double>, std::vector<double>, Callback<double, double, double, double, double>) noexcept>{7, L"findSubviewIn"},
       Method<void(std::optional<double>, double, std::optional<::React::JSValueArray>) noexcept>{8, L"dispatchViewManagerCommand"},
-      Method<void(double, Callback<double, double, double, double, double, double>) noexcept>{9, L"measure"},
-      Method<void(double, Callback<double, double, double, double>) noexcept>{10, L"measureInWindow"},
+      Method<void(std::optional<double>, Callback<double, double, double, double, double, double>) noexcept>{9, L"measure"},
+      Method<void(std::optional<double>, Callback<double, double, double, double>) noexcept>{10, L"measureInWindow"},
       Method<void(std::optional<double>, std::optional<double>, Callback<std::vector<bool>>) noexcept>{11, L"viewIsDescendantOf"},
-      Method<void(double, double, Callback<::React::JSValue>, Callback<double, double, double, double>) noexcept>{12, L"measureLayout"},
-      Method<void(double, Callback<::React::JSValue>, Callback<double, double, double, double>) noexcept>{13, L"measureLayoutRelativeToParent"},
+      Method<void(std::optional<double>, std::optional<double>, Callback<::React::JSValue>, Callback<double, double, double, double>) noexcept>{12, L"measureLayout"},
+      Method<void(std::optional<double>, Callback<::React::JSValue>, Callback<double, double, double, double>) noexcept>{13, L"measureLayoutRelativeToParent"},
       Method<void(std::optional<double>, bool) noexcept>{14, L"setJSResponder"},
       Method<void() noexcept>{15, L"clearJSResponder"},
       Method<void(::React::JSValue, Callback<>, Callback<::React::JSValue>) noexcept>{16, L"configureNextLayoutAnimation"},
@@ -94,13 +94,13 @@ struct UIManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           9,
           "measure",
-          "    REACT_METHOD(measure) void measure(double reactTag, std::function<void(double, double, double, double, double, double)> const & callback) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(measure) static void measure(double reactTag, std::function<void(double, double, double, double, double, double)> const & callback) noexcept { /* implementation */ }\n");
+          "    REACT_METHOD(measure) void measure(std::optional<double> reactTag, std::function<void(double, double, double, double, double, double)> const & callback) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(measure) static void measure(std::optional<double> reactTag, std::function<void(double, double, double, double, double, double)> const & callback) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           10,
           "measureInWindow",
-          "    REACT_METHOD(measureInWindow) void measureInWindow(double reactTag, std::function<void(double, double, double, double)> const & callback) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(measureInWindow) static void measureInWindow(double reactTag, std::function<void(double, double, double, double)> const & callback) noexcept { /* implementation */ }\n");
+          "    REACT_METHOD(measureInWindow) void measureInWindow(std::optional<double> reactTag, std::function<void(double, double, double, double)> const & callback) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(measureInWindow) static void measureInWindow(std::optional<double> reactTag, std::function<void(double, double, double, double)> const & callback) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           11,
           "viewIsDescendantOf",
@@ -109,13 +109,13 @@ struct UIManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           12,
           "measureLayout",
-          "    REACT_METHOD(measureLayout) void measureLayout(double reactTag, double ancestorReactTag, std::function<void(::React::JSValue const &)> const & errorCallback, std::function<void(double, double, double, double)> const & callback) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(measureLayout) static void measureLayout(double reactTag, double ancestorReactTag, std::function<void(::React::JSValue const &)> const & errorCallback, std::function<void(double, double, double, double)> const & callback) noexcept { /* implementation */ }\n");
+          "    REACT_METHOD(measureLayout) void measureLayout(std::optional<double> reactTag, std::optional<double> ancestorReactTag, std::function<void(::React::JSValue const &)> const & errorCallback, std::function<void(double, double, double, double)> const & callback) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(measureLayout) static void measureLayout(std::optional<double> reactTag, std::optional<double> ancestorReactTag, std::function<void(::React::JSValue const &)> const & errorCallback, std::function<void(double, double, double, double)> const & callback) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           13,
           "measureLayoutRelativeToParent",
-          "    REACT_METHOD(measureLayoutRelativeToParent) void measureLayoutRelativeToParent(double reactTag, std::function<void(::React::JSValue const &)> const & errorCallback, std::function<void(double, double, double, double)> const & callback) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(measureLayoutRelativeToParent) static void measureLayoutRelativeToParent(double reactTag, std::function<void(::React::JSValue const &)> const & errorCallback, std::function<void(double, double, double, double)> const & callback) noexcept { /* implementation */ }\n");
+          "    REACT_METHOD(measureLayoutRelativeToParent) void measureLayoutRelativeToParent(std::optional<double> reactTag, std::function<void(::React::JSValue const &)> const & errorCallback, std::function<void(double, double, double, double)> const & callback) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(measureLayoutRelativeToParent) static void measureLayoutRelativeToParent(std::optional<double> reactTag, std::function<void(::React::JSValue const &)> const & errorCallback, std::function<void(double, double, double, double)> const & callback) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           14,
           "setJSResponder",
