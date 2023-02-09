@@ -669,4 +669,27 @@ export type ViewProps = $ReadOnly<{|
    * See https://reactnative.dev/docs/view#removeclippedsubviews
    */
   removeClippedSubviews?: ?boolean,
+
+  /**
+   * Specifies the nativeID of the associated label text. When the assistive technology focuses on the component with this props, the text is read aloud.
+   *
+   * @platform win32
+   */
+  accessibilityDescribedBy?: ?string,
+
+  /**
+   * Legacy property replaced by accessibilityLabelledBy - here for backwards compat
+   *
+   * @platform win32
+   * @deprecated
+   */
+  // $FlowFixMe[unclear-type]
+  accessibilityLabeledBy?: any,
+
+  /**
+   * Specifies the nativeID of the control that controls this one.
+   *
+   * @platform win32
+   */
+  accessibilityControls?: ?string,
 |}>;

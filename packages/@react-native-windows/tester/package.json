@@ -33,7 +33,7 @@
     "react-native": "0.71.0",
     "react-native-platform-override": "^1.8.3",
     "react-native-windows": "0.71.0",
-    "typescript": "^4.4.4"
+    "typescript": "^4.9.5"
   },
   "engines": {
     "node": ">= 14"
