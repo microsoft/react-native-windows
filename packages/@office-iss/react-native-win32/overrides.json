@@ -119,7 +119,7 @@
     },
     {
       "type": "derived",
-      "file": "src/Libraries/Components/TextInput/TextInput.win32.tsx",
+      "file": "src/Libraries/Components/TextInput/TextInput.win32.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
       "baseHash": "5de06cf785aabebe8a0bb7331389a5320d7f38c0"
     },
@@ -148,12 +148,16 @@
       "issue": 0
     },
     {
-      "type": "platform",
-      "file": "src/Libraries/Components/Touchable/TouchableNativeFeedback.Props.ts"
+      "type": "derived",
+      "file": "src/Libraries/Components/Touchable/TouchableNativeFeedback.win32.d.ts",
+      "baseFile": "Libraries/Components/Touchable/TouchableNativeFeedback.d.ts",
+      "baseHash": "b38a2d4fb0c6a08c3ada7748fffded9949c97c2a"
     },
     {
-      "type": "platform",
-      "file": "src/Libraries/Components/Touchable/TouchableNativeFeedback.win32.tsx"
+      "type": "derived",
+      "file": "src/Libraries/Components/Touchable/TouchableNativeFeedback.win32.js",
+      "baseFile": "Libraries/Components/Touchable/TouchableNativeFeedback.js",
+      "baseHash": "1fa12a85dc06cdb1093dbe2b54cf3569312b7cc4"
     },
     {
       "type": "platform",
@@ -184,6 +188,24 @@
       "baseHash": "91864d8f5518fa50da710f545ecdf5727248c45a"
     },
     {
+      "type": "derived",
+      "file": "src/Libraries/Components/View/ViewAccessibility.win32.d.ts",
+      "baseFile": "Libraries/Components/View/ViewAccessibility.d.ts",
+      "baseHash": "fb6095450277c96f033749633af10b42a184e07c"
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/Components/View/ViewAccessibility.win32.js",
+      "baseFile": "Libraries/Components/View/ViewAccessibility.js",
+      "baseHash": "b8dca610ae67781f86534eab2373f2a3eb29fca3"
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/Components/View/ViewPropTypes.win32.d.ts",
+      "baseFile": "Libraries/Components/View/ViewPropTypes.d.ts",
+      "baseHash": "567b5fd7cc602357daa075d728220ffca0f6c2ac"
+    },
+    {
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewPropTypes.win32.js",
       "baseFile": "Libraries/Components/View/ViewPropTypes.js",
@@ -191,12 +213,14 @@
       "issue": 6240
     },
     {
-      "type": "platform",
-      "file": "src/Libraries/Components/View/ViewWin32.Props.ts"
+      "type": "derived",
+      "file": "src/Libraries/Components/View/ViewWin32.d.ts",
+      "baseFile": "Libraries/Components/View/View.d.ts",
+      "baseHash": "c71957187cbae0b40995198a2d7a18d5cae6d662"
     },
     {
       "type": "platform",
-      "file": "src/Libraries/Components/View/ViewWin32.tsx"
+      "file": "src/Libraries/Components/View/ViewWin32.js"
     },
     {
       "type": "patch",
@@ -394,6 +418,12 @@
       "baseFile": "Libraries/Types/CoreEventTypes.js",
       "baseHash": "7fe2b87cf49f4674d731d07f0883bab2f5cfc356",
       "issue": 6240
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/Utilities/AcessibilityMapping.win32.js",
+      "baseFile": "Libraries/Utilities/AcessibilityMapping.js",
+      "baseHash": "7a662ddd93c6cd0a7193e3002120aeb196991340"
     },
     {
       "type": "copy",

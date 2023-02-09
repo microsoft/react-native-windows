@@ -4,12 +4,12 @@
     "baseUrl": ".",
     "outDir": ".",
     "rootDir": "src",
-    "paths": {
-      "Utilities": ["./types/Utilities.d.ts"],
-    },
-
+    "moduleSuffixes": [".win32", ".native", ""],
     // Not clean
     "strict": false,
+    "paths": {
+      "react-native": ["."] // this mapping is relative to "baseUrl"
+    }
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist", "lib"]
