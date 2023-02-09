@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/fs
 
-This log was last generated on Wed, 11 Jan 2023 06:15:31 GMT and should not be manually modified.
+This log was last generated on Thu, 09 Feb 2023 06:16:42 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.14
+
+Thu, 09 Feb 2023 06:16:42 GMT
+
+### Changes
+
+- Bump typescript version (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.13
 

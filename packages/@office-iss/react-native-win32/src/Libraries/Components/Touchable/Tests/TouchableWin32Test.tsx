@@ -5,7 +5,7 @@ import {NativeSyntheticEvent, StyleSheet, Text, ViewStyle } from 'react-native';
 import {Insets} from 'react-native/types/public/Insets';
 import { TextWin32 } from '../../Text/TextWin32';
 import { ViewWin32 } from '../../View/ViewWin32';
-import { IViewWin32Props, IKeyboardEvent } from '../../View/ViewWin32.Props';
+import { IViewWin32Props, IKeyboardEvent } from '../../View/ViewPropTypes.win32';
 import { TouchableWin32 } from '../TouchableWin32';
 import { IPressEvent, IRenderChild } from '../TouchableWin32.Types';
 import { ITouchableWin32State } from '../TouchableWin32.Props';
@@ -263,12 +263,12 @@ class TouchableWin32HighlightComponent extends React.Component<ITouchableWin32Hi
   private readonly _touchableHandleKeyPressDown = (ev: IKeyboardEvent) => {
     this.props.onKeyPressDown && this.props.onKeyPressDown(ev);
   }
-  private readonly _mouseEnter = (): void => {
-    this.props.onMouseEnter && this.props.onMouseEnter();
+  private readonly _mouseEnter = (mouseEvent): void => {
+    this.props.onMouseEnter && this.props.onMouseEnter(mouseEvent);
     this.setState({ isMouseIn: true });
   };
-  private readonly _mouseLeave = (): void => {
-    this.props.onMouseLeave && this.props.onMouseLeave();
+  private readonly _mouseLeave = (mouseEvent): void => {
+    this.props.onMouseLeave && this.props.onMouseLeave(mouseEvent);
     this.setState({ isMouseIn: false });
   };
   private readonly _onFocus = (ev: NativeSyntheticEvent<{}>): void => {
