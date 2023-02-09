@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/format-files
 
-This log was last generated on Wed, 11 Jan 2023 06:15:31 GMT and should not be manually modified.
+This log was last generated on Thu, 09 Feb 2023 06:16:43 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.7
+
+Thu, 09 Feb 2023 06:16:43 GMT
+
+### Patches
+
+- Bump typescript version (30809111+acoates-ms@users.noreply.github.com)
 
 ## 1.1.6
 

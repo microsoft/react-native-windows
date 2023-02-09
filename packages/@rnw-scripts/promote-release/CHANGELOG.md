@@ -1,8 +1,19 @@
 # Change Log - @rnw-scripts/promote-release
 
-This log was last generated on Wed, 11 Jan 2023 06:15:31 GMT and should not be manually modified.
+This log was last generated on Thu, 09 Feb 2023 06:16:44 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.1.8
+
+Thu, 09 Feb 2023 06:16:44 GMT
+
+### Patches
+
+- Bump typescript version (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.43
+- Bump @react-native-windows/fs to v0.0.0-canary.14
+- Bump @react-native-windows/package-utils to v0.0.0-canary.40
 
 ## 2.1.7
 

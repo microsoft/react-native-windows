@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Ensure NativeAnimatedNodeManager is destroyed on UI thread",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}
