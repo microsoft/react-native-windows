@@ -57,7 +57,7 @@ void SwitchComponentView::updateProps(
 
 void SwitchComponentView::updateState(
     facebook::react::State::Shared const &state,
-    facebook::react::State::Shared const &oldState) noexcept { }
+    facebook::react::State::Shared const &oldState) noexcept {}
 
 void SwitchComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
