@@ -64,7 +64,7 @@
 
   <PropertyGroup Label="NuGet" Condition="'$(MSBuildProjectExtension)' == '.vcxproj'">
     <!--See https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#restore-target-->
-    <RestoreUseStaticGraphEvaluation Condition="'$(BuildingInsideVisualStudio)' == 'true'">true</RestoreUseStaticGraphEvaluation>
+    <RestoreUseStaticGraphEvaluation Condition="'$(BuildingInsideVisualStudio)' == 'true' AND '$(DisableRestoreUseStaticGraphEvaluation)' != 'true'">true</RestoreUseStaticGraphEvaluation>
   </PropertyGroup>
 
 </Project>
