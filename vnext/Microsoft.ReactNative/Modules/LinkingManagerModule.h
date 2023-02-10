@@ -22,10 +22,10 @@ struct LinkingManager {
   void Initialize(React::ReactContext const &reactContext) noexcept;
 
   REACT_METHOD(canOpenURL)
-  static winrt::fire_and_forget canOpenURL(std::string url, ::React::ReactPromise<bool> result) noexcept;
+  static winrt::fire_and_forget canOpenURL(std::wstring url, ::React::ReactPromise<bool> result) noexcept;
 
   REACT_METHOD(openURL)
-  void openURL(std::string &&url, ::React::ReactPromise<void> &&result) noexcept;
+  void openURL(std::wstring &&url, ::React::ReactPromise<void> &&result) noexcept;
 
   REACT_METHOD(openSettings)
   static void openSettings(::React::ReactPromise<void> &&result) noexcept;
