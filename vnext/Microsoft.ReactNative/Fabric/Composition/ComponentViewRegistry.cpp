@@ -54,7 +54,7 @@ namespace Microsoft::ReactNative {
       view = std::make_shared<WindowsTextInputComponentView>(compContext, tag, m_context);
     }
     else if (componentHandle == facebook::react::SwitchShadowNode::Handle()) {
-       view = std::make_shared<SwitchComponentView>(compContext, tag);
+       view = std::make_shared<SwitchComponentView>(compContext, tag, m_context);
     }
     else {
       view = std::make_shared<CompositionViewComponentView>(compContext, tag);

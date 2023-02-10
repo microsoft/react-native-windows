@@ -5,14 +5,12 @@
 #pragma once
 
 #include <Fabric/ComponentView.h>
+#include <Microsoft.ReactNative.Cxx/ReactContext.h>
 
 #include "CompositionViewComponentView.h"
 
-//#pragma warning(push)
-//#pragma warning(disable : 4305)
-//#include <react/renderer/components/scrollview/ScrollViewProps.h>
-//#pragma warning(pop)
-//#include <winrt/Windows.UI.Composition.interactions.h>
+#include <react/components/rnwcore/ShadowNodes.h>
+
 
 namespace Microsoft::ReactNative {
 
@@ -23,15 +21,16 @@ struct SwitchComponentView : CompositionBaseComponentView {
   using Super = CompositionBaseComponentView;
   SwitchComponentView(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-      facebook::react::Tag tag);
+      facebook::react::Tag tag,
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
   std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept
       override;
   void mountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept override;
   void unmountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept override;
+  void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept override;
   void updateProps(facebook::react::Props::Shared const &props, facebook::react::Props::Shared const &oldProps) noexcept
       override;
-  void updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept override;
   void updateState(facebook::react::State::Shared const &state, facebook::react::State::Shared const &oldState) noexcept
       override;
   void updateLayoutMetrics(
@@ -44,25 +43,18 @@ struct SwitchComponentView : CompositionBaseComponentView {
 
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt) const noexcept override;
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
+  int64_t SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept override;
 
  private:
   void ensureVisual() noexcept;
-  void updateContentVisualSize() noexcept;
+  void Draw() noexcept;
+  void ensureDrawingSurface() noexcept;
 
   facebook::react::Size m_contentSize;
   winrt::Microsoft::ReactNative::Composition::SpriteVisual m_visual{nullptr};
-
+  winrt::Microsoft::ReactNative::ReactContext m_context;
   facebook::react::SharedViewProps m_props;
-  //float m_zoomFactor{1.0f};
-  //bool m_isScrollingFromInertia = false;
-  //bool m_isScrolling = false;
-  //bool m_isHorizontal = false;
-  //bool m_isScrollingEnabled = true;
-  //bool m_changeViewAfterLoaded = false;
-  //bool m_dismissKeyboardOnDrag = false;
-
- private:
-  //bool shouldBeControl() const noexcept;
+  winrt::Microsoft::ReactNative::Composition::ICompositionDrawingSurface m_drawingSurface;
 };
 
 } // namespace Microsoft::ReactNative

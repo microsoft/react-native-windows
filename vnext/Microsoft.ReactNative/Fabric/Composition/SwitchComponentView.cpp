@@ -6,24 +6,15 @@
 
 #include "SwitchComponentView.h"
 
-//#include <UI.Xaml.Controls.h>
-//#include <Utils/ValueUtils.h>
-
-//#pragma warning(push)
-//#pragma warning(disable : 4305)
-//#include <react/renderer/components/scrollview/ScrollViewShadowNode.h>
-//#pragma warning(pop)
-//
-//#include <windows.ui.composition.interop.h>
-//
-//#include <unicode.h>
-
 namespace Microsoft::ReactNative {
 
 SwitchComponentView::SwitchComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-    facebook::react::Tag tag)
-    : Super(compContext, tag) {}
+    facebook::react::Tag tag,
+    winrt::Microsoft::ReactNative::ReactContext const &reactContext)
+    : Super(compContext, tag), m_context(reactContext) {
+  m_props = std::make_shared<facebook::react::SwitchProps const>();
+}
 
 std::vector<facebook::react::ComponentDescriptorProvider>
 SwitchComponentView::supplementalComponentDescriptorProviders() noexcept {
@@ -31,151 +22,229 @@ SwitchComponentView::supplementalComponentDescriptorProviders() noexcept {
 }
 
 void SwitchComponentView::mountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept {
-  // ensureVisual();
-
-  // m_children.insert(std::next(m_children.begin(), index), &childComponentView);
-  // const_cast<IComponentView &>(childComponentView).parent(this);
-
-  // m_visual.InsertAt(static_cast<const CompositionBaseComponentView &>(childComponentView).Visual(), index);
+  assert(false);
 }
 
 void SwitchComponentView::unmountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept {
-  // m_children.erase(std::next(m_children.begin(), index));
+  assert(false);
+}
 
-  // m_visual.Remove(static_cast<const CompositionBaseComponentView &>(childComponentView).Visual());
-  // const_cast<IComponentView &>(childComponentView).parent(nullptr);
+void SwitchComponentView::handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept {
+  if (commandName == "setValue") {
+    // TODO
+  } else {
+    Super::handleCommand(commandName, arg);
+  }
 }
 
 void SwitchComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
-  // const auto &newViewProps = *std::static_pointer_cast<const facebook::react::ScrollViewProps>(props);
-  // const auto &oldViewProps = *std::static_pointer_cast<const facebook::react::ScrollViewProps>(oldProps);
+   const auto &oldViewProps = *std::static_pointer_cast<const facebook::react::SwitchProps>(m_props);
+   const auto &newViewProps = *std::static_pointer_cast<const facebook::react::SwitchProps>(props);
 
-  //  ensureVisual();
-  //
-  //  if (!oldProps || oldViewProps.backgroundColor != newViewProps.backgroundColor) {
-  //    if (newViewProps.backgroundColor) {
-  //      m_visual.Brush(m_compContext.CreateColorBrush((*newViewProps.backgroundColor).m_color));
-  //    } else {
-  //      m_visual.Brush(m_compContext.CreateColorBrush({0, 0, 0, 0}));
-  //    }
-  //  }
-  //
-  //  m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
+   ensureVisual();
+
+    if (oldViewProps.backgroundColor != newViewProps.backgroundColor ||
+       oldViewProps.thumbTintColor != newViewProps.thumbTintColor ||
+      oldViewProps.value != newViewProps.value ||
+      oldViewProps.disabled != newViewProps.disabled) {
+     m_drawingSurface = nullptr;
+    }
+  
+    m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
   }
-
-  void SwitchComponentView::updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {}
 
   void SwitchComponentView::updateState(
       facebook::react::State::Shared const &state, facebook::react::State::Shared const &oldState) noexcept {
-    // const auto &newState = *std::static_pointer_cast<facebook::react::ScrollViewShadowNode::ConcreteState
-    // const>(state);
-
-    // m_contentSize = newState.getData().getContentSize();
-    // updateContentVisualSize();
+    // TODO?
   }
 
   void SwitchComponentView::updateLayoutMetrics(
       facebook::react::LayoutMetrics const &layoutMetrics,
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
     // Set Position & Size Properties
-    // ensureVisual();
+     ensureVisual();
 
-    // if ((layoutMetrics.displayType != m_layoutMetrics.displayType)) {
-    //   m_visual.IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
-    // }
+     if ((layoutMetrics.displayType != m_layoutMetrics.displayType)) {
+       m_visual.IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
+     }
 
-    //// m_needsBorderUpdate = true;
-    // m_layoutMetrics = layoutMetrics;
+     updateBorderLayoutMetrics(layoutMetrics, *m_props);
+     m_layoutMetrics = layoutMetrics;
 
-    // UpdateCenterPropertySet();
-    // m_visual.Size(
-    //     {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
-    //      layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
-    // m_visual.Offset({
-    //     layoutMetrics.frame.origin.x * layoutMetrics.pointScaleFactor,
-    //     layoutMetrics.frame.origin.y * layoutMetrics.pointScaleFactor,
-    //     0.0f,
-    // });
-    // updateContentVisualSize();
-  }
-
-  void SwitchComponentView::updateContentVisualSize() noexcept {
-    // m_visual.ContentSize(
-    //     {std::max(m_contentSize.width, m_layoutMetrics.frame.size.width) * m_layoutMetrics.pointScaleFactor,
-    //      std::max(m_contentSize.height, m_layoutMetrics.frame.size.height) * m_layoutMetrics.pointScaleFactor});
+     UpdateCenterPropertySet();
+     m_visual.Size(
+         {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
+          layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
+     m_visual.Offset({
+         layoutMetrics.frame.origin.x * layoutMetrics.pointScaleFactor,
+         layoutMetrics.frame.origin.y * layoutMetrics.pointScaleFactor,
+         0.0f,
+     });
   }
 
   void SwitchComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
-    // m_element.FinalizeProperties();
+     ensureDrawingSurface();
+  }
+
+  void SwitchComponentView::Draw() noexcept {
+    // Begin our update of the surface pixels. If this is our first update, we are required
+    // to specify the entire surface, which nullptr is shorthand for (but, as it works out,
+    // any time we make an update we touch the entire surface, so we always pass nullptr).
+    winrt::com_ptr<ID2D1DeviceContext> d2dDeviceContext;
+    POINT offset;
+
+    winrt::com_ptr<Composition::ICompositionDrawingSurfaceInterop> drawingSurfaceInterop;
+    m_drawingSurface.as(drawingSurfaceInterop);
+
+    if (CheckForDeviceRemoved(drawingSurfaceInterop->BeginDraw(d2dDeviceContext.put(), &offset))) {
+      const auto switchProps = std::static_pointer_cast<const facebook::react::SwitchProps>(m_props);
+
+      d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
+      if (m_props->backgroundColor) {
+        d2dDeviceContext->Clear(m_props->backgroundColor.AsD2DColor());
+      }
+
+      float offsetX = static_cast<float>(offset.x / m_layoutMetrics.pointScaleFactor);
+      float offsetY = static_cast<float>(offset.y / m_layoutMetrics.pointScaleFactor);
+
+      // https://github.com/microsoft/microsoft-ui-xaml/blob/main/dev/CommonStyles/ToggleSwitch_themeresources.xaml
+      constexpr float thumbMargin = 3.0f;
+      constexpr float thumbRadius = 7.0f;
+      constexpr float trackWidth = 40.0f;
+      constexpr float trackHeight = 20.0f;
+      constexpr float trackCornerRadius = 10.0f;
+
+      auto frame{m_layoutMetrics.frame.size};
+      float trackMarginX = (frame.width - trackWidth) / 2;
+      float trackMarginY = (frame.height - trackHeight) / 2;
+
+      D2D1_RECT_F trackRect = D2D1::RectF(
+          offsetX + trackMarginX,
+          offsetY + trackMarginY,
+          offsetX + trackMarginX + trackWidth,
+          offsetY + trackMarginY + trackHeight);
+
+      // switchProps->value = false
+      float thumbX = trackRect.left + thumbMargin + thumbRadius;
+
+      if (switchProps->value) {
+        thumbX = trackRect.right - thumbMargin - thumbRadius;
+      }
+
+      winrt::com_ptr<ID2D1SolidColorBrush> defaultBrush;
+
+      D2D1_COLOR_F defaultColor = switchProps->disabled ? facebook::react::greyColor().AsD2DColor()
+                                                        : facebook::react::blackColor().AsD2DColor();
+
+      winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(defaultColor, defaultBrush.put()));
+
+      winrt::com_ptr<ID2D1SolidColorBrush> thumbBrush;
+      if (!switchProps->disabled && switchProps->thumbTintColor) {
+        winrt::check_hresult(
+            d2dDeviceContext->CreateSolidColorBrush(switchProps->thumbTintColor.AsD2DColor(), thumbBrush.put()));
+      } else {
+        thumbBrush = defaultBrush;
+      }
+
+      const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
+      float oldDpiX, oldDpiY;
+      d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
+      d2dDeviceContext->SetDpi(dpi, dpi);
+
+      // switch thumb
+      D2D1_POINT_2F thumbCenter = D2D1 ::Point2F(thumbX, (trackRect.top + trackRect.bottom) / 2);
+      D2D1_ELLIPSE thumb = D2D1::Ellipse(thumbCenter, thumbRadius, thumbRadius);
+      d2dDeviceContext->FillEllipse(thumb, thumbBrush.get());
+
+      // switch track
+      D2D1_ROUNDED_RECT track = D2D1::RoundedRect(trackRect, trackCornerRadius, trackCornerRadius);
+      d2dDeviceContext->DrawRoundedRectangle(track, defaultBrush.get());
+
+      // Restore old dpi setting
+      d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
+
+      // Our update is done. EndDraw never indicates rendering device removed, so any
+      // failure here is unexpected and, therefore, fatal.
+      winrt::check_hresult(drawingSurfaceInterop->EndDraw());
+    }
   }
 
   void SwitchComponentView::prepareForRecycle() noexcept {}
+
   facebook::react::Props::Shared SwitchComponentView::props() noexcept {
-    assert(false);
-    return {};
+    return m_props;
   }
 
   void SwitchComponentView::ensureVisual() noexcept {
-    // if (!m_visual) {
-    //   m_visual = m_compContext.CreateScrollerVisual();
-    //   m_scrollPositionChangedRevoker = m_visual.ScrollPositionChanged(
-    //       winrt::auto_revoke,
-    //       [this](
-    //           winrt::IInspectable const & /*sender*/,
-    //           winrt::Microsoft::ReactNative::Composition::ScrollPositionChangedArgs const &args) {
-    //         auto eventEmitter = GetEventEmitter();
-    //         if (eventEmitter) {
-    //           facebook::react::ScrollViewMetrics scrollMetrics;
-    //           scrollMetrics.containerSize.height = m_layoutMetrics.frame.size.height;
-    //           scrollMetrics.containerSize.width = m_layoutMetrics.frame.size.width;
-    //           scrollMetrics.contentOffset.x = args.Position().x / m_layoutMetrics.pointScaleFactor;
-    //           scrollMetrics.contentOffset.y = args.Position().y / m_layoutMetrics.pointScaleFactor;
-    //           scrollMetrics.zoomScale = 1.0;
-    //           scrollMetrics.contentSize.height = std::max(m_contentSize.height, m_layoutMetrics.frame.size.height);
-    //           scrollMetrics.contentSize.width = std::max(m_contentSize.width, m_layoutMetrics.frame.size.width);
-    //           std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(eventEmitter)
-    //               ->onScroll(scrollMetrics);
-    //         }
-    //       });
-    // }
+    if (!m_visual) {
+      m_visual = m_compContext.CreateSpriteVisual();
+    }
+  }
+
+  void SwitchComponentView::ensureDrawingSurface() noexcept {
+    if (!m_drawingSurface) {
+      winrt::Windows::Foundation::Size surfaceSize = {
+          m_layoutMetrics.frame.size.width * m_layoutMetrics.pointScaleFactor,
+          m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor};
+      m_drawingSurface = m_compContext.CreateDrawingSurface(
+          surfaceSize,
+          winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
+          winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
+
+      Draw();
+
+      auto surfaceBrush = m_compContext.CreateSurfaceBrush(m_drawingSurface);
+
+      m_visual.Brush(surfaceBrush);
+    }
   }
 
   facebook::react::Tag SwitchComponentView::hitTest(facebook::react::Point pt, facebook::react::Point & localPt)
       const noexcept {
-    // facebook::react::Point ptViewport{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
+    facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
 
-    // facebook::react::Point ptContent{
-    //     ptViewport.x + m_visual.ScrollPosition().x / m_layoutMetrics.pointScaleFactor,
-    //     ptViewport.y + m_visual.ScrollPosition().y / m_layoutMetrics.pointScaleFactor};
-
-    // facebook::react::Tag targetTag;
-    // if ((m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
-    //      m_props->pointerEvents == facebook::react::PointerEventsMode::BoxNone) &&
-    //     std::any_of(m_children.rbegin(), m_children.rend(), [&targetTag, &ptContent, &localPt](auto child) {
-    //       targetTag = static_cast<const CompositionBaseComponentView *>(child)->hitTest(ptContent, localPt);
-    //       return targetTag != -1;
-    //     }))
-    //   return targetTag;
-
-    // if ((m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
-    //      m_props->pointerEvents == facebook::react::PointerEventsMode::BoxOnly) &&
-    //     ptViewport.x >= 0 && ptViewport.x <= m_layoutMetrics.frame.size.width && ptViewport.y >= 0 &&
-    //     ptViewport.y <= m_layoutMetrics.frame.size.height) {
-    //   localPt = ptViewport;
-    //   return this->tag();
-    // }
+    if ((m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
+         m_props->pointerEvents == facebook::react::PointerEventsMode::BoxOnly) &&
+        ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
+        ptLocal.y <= m_layoutMetrics.frame.size.height) {
+      localPt = ptLocal;
+      return tag();
+    }
 
     return -1;
   }
 
    facebook::react::SharedTouchEventEmitter SwitchComponentView::touchEventEmitter() noexcept {
-    return {};
+    return m_eventEmitter;
    }
   
    winrt::Microsoft::ReactNative::Composition::IVisual SwitchComponentView::Visual() const noexcept {
      return m_visual;
+   }
+
+   int64_t SwitchComponentView::SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
+     switch (msg) {
+       case WM_LBUTTONDOWN:
+       case WM_POINTERDOWN:
+       {
+         const auto switchProps = std::static_pointer_cast<const facebook::react::SwitchProps>(m_props);
+
+         if (!switchProps->disabled && m_eventEmitter) {
+           auto switchEventEmitter = std::static_pointer_cast<facebook::react::SwitchEventEmitter const>(m_eventEmitter);
+           
+           facebook::react::SwitchEventEmitter::OnChange args;
+           args.value = !(switchProps->value);
+           args.target = tag();
+
+           switchEventEmitter->onChange(args);
+          }
+          break;
+       }
+     }
+
+     return 0;
    }
 
 } // namespace Microsoft::ReactNative
