@@ -143,11 +143,10 @@ const styles = StyleSheet.create({
     fontSize: 12,
     includeFontPadding: false,
     lineHeight: 20,
-    // $FlowFixMe[underconstrained-implicit-instantiation]
     fontFamily: Platform.select({
       android: 'monospace',
       ios: 'Menlo',
-      windows: 'sans-serif',
+      windows: 'Consolas',
     }),
   },
   fileText: {
@@ -157,11 +156,10 @@ const styles = StyleSheet.create({
     fontSize: 12,
     includeFontPadding: false,
     lineHeight: 16,
-    // $FlowFixMe[underconstrained-implicit-instantiation]
     fontFamily: Platform.select({
       android: 'monospace',
       ios: 'Menlo',
-      windows: 'sans-serif',
+      windows: 'Consolas',
     }),
   },
 });

@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     fontFamily: Platform.select({
       android: 'monospace',
       ios: 'Menlo',
-      windows: 'sans-serif',
+      win32: 'Consolas',
     }),
   },
   location: {
