@@ -4,11 +4,12 @@
  * @format
  */
 
-import {Constructor} from '../../../types/private/Utilities';
-import {NativeMethods} from '../../../types/public/ReactNativeTypes';
-import {ColorValue, StyleProp} from '../../StyleSheet/StyleSheet';
-import {ViewStyle} from '../../StyleSheet/StyleSheetTypes';
-import {ViewProps} from '../View/ViewPropTypes';
+import type * as React from 'react';
+import type {Constructor} from '../../../types/private/Utilities';
+import type {NativeMethods} from '../../../types/public/ReactNativeTypes';
+import type {ColorValue, StyleProp} from '../../StyleSheet/StyleSheet';
+import type {ViewStyle} from '../../StyleSheet/StyleSheetTypes';
+import type {ViewProps} from '../View/ViewPropTypes';
 
 export interface GlyphStyle extends ViewStyle {
   color?: ColorValue | undefined;
