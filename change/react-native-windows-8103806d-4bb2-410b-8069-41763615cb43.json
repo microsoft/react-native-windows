@@ -1,6 +1,6 @@
 {
-  "type": "prerelease",
-  "comment": "Drop RestoreUseStaticGraphEvaluation",
+  "type": "patch",
+  "comment": "Allow disabling static graph restore under VS (#11186)",
   "packageName": "react-native-windows",
   "email": "julio.rocha@microsoft.com",
   "dependentChangeType": "patch"
