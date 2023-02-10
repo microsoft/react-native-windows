@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Convert flyout and popup to flow",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

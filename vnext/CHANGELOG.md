@@ -1,8 +1,21 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 09 Feb 2023 06:16:44 GMT and should not be manually modified.
+This log was last generated on Fri, 10 Feb 2023 06:15:30 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.613
+
+Fri, 10 Feb 2023 06:15:30 GMT
+
+### Changes
+
+- Drop RestoreUseStaticGraphEvaluation (julio.rocha@microsoft.com)
+- Convert flyout and popup to flow (30809111+acoates-ms@users.noreply.github.com)
+- Fix Hermes sampling profiler (vmoroz@users.noreply.github.com)
+- Update generated code (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.162
+- Bump @react-native-windows/codegen to v0.0.0-canary.50
 
 ## 0.0.0-canary.612
 

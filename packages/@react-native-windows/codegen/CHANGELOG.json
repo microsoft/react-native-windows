@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Fri, 10 Feb 2023 06:15:30 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.50",
+      "version": "0.0.0-canary.50",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "6a6a622535f81ef0f588bade0a7efc5383fc0924",
+            "comment": "codegen-windows --check always fails"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 09 Feb 2023 06:16:42 GMT",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.49",
       "version": "0.0.0-canary.49",

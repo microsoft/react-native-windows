@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Thu, 09 Feb 2023 06:16:42 GMT and should not be manually modified.
+This log was last generated on Fri, 10 Feb 2023 06:15:30 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.50
+
+Fri, 10 Feb 2023 06:15:30 GMT
+
+### Changes
+
+- codegen-windows --check always fails (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.49
 

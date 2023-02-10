@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Fri, 10 Feb 2023 06:15:30 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.62",
+      "version": "0.0.0-canary.62",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmoroz@users.noreply.github.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "08f6ac504296a5750e926bef08a81918aa347c83",
+            "comment": "Use latest Hermes ABI-safe API"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 09 Feb 2023 06:16:43 GMT",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.61",
       "version": "0.0.0-canary.61",

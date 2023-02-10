@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Use latest Hermes ABI-safe API",
-  "packageName": "@react-native-windows/telemetry",
-  "email": "vmoroz@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

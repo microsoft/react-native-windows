@@ -2,6 +2,51 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 10 Feb 2023 06:15:30 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.613",
+      "version": "0.0.0-canary.613",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "868cc0271217f49b364af0be51f4b3d076d19012",
+            "comment": "Drop RestoreUseStaticGraphEvaluation"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "684d5f32ce0e6e117d43d7a30a92a3d5a22ec6fa",
+            "comment": "Convert flyout and popup to flow"
+          },
+          {
+            "author": "vmoroz@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "08f6ac504296a5750e926bef08a81918aa347c83",
+            "comment": "Fix Hermes sampling profiler"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "6a6a622535f81ef0f588bade0a7efc5383fc0924",
+            "comment": "Update generated code"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.162",
+            "commit": "868cc0271217f49b364af0be51f4b3d076d19012"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.50",
+            "commit": "868cc0271217f49b364af0be51f4b3d076d19012"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 09 Feb 2023 06:16:44 GMT",
       "tag": "react-native-windows_v0.0.0-canary.612",
       "version": "0.0.0-canary.612",
