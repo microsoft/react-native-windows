@@ -18,7 +18,7 @@ struct ReactId {
 };
 
 template <typename T>
-inline typename T asEnum(winrt::Microsoft::ReactNative::JSValue const &obj) {
+inline T asEnum(winrt::Microsoft::ReactNative::JSValue const &obj) {
   return static_cast<T>(obj.AsInt64());
 }
 

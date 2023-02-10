@@ -250,6 +250,7 @@ ReactInstanceWin::ReactInstanceWin(
                                                                onDestroyed = m_options.OnInstanceDestroyed,
                                                                reactContext = m_reactContext]() noexcept {
         whenLoaded.TryCancel(); // It only has an effect if whenLoaded was not set before
+        facebook::react::HermesRuntimeHolder::storeTo(ReactPropertyBag(reactContext->Properties()), nullptr);
         if (onDestroyed) {
           onDestroyed.Get()->Invoke(reactContext);
         }
@@ -463,10 +464,14 @@ void ReactInstanceWin::Initialize() noexcept {
           std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
 
           switch (m_options.JsiEngine()) {
-            case JSIEngine::Hermes:
-              devSettings->jsiRuntimeHolder =
+            case JSIEngine::Hermes: {
+              auto hermesRuntimeHolder =
                   std::make_shared<facebook::react::HermesRuntimeHolder>(devSettings, m_jsMessageThread.Load());
+              facebook::react::HermesRuntimeHolder::storeTo(
+                  ReactPropertyBag(m_reactContext->Properties()), hermesRuntimeHolder);
+              devSettings->jsiRuntimeHolder = hermesRuntimeHolder;
               break;
+            }
             case JSIEngine::V8:
 #if defined(USE_V8)
             {
