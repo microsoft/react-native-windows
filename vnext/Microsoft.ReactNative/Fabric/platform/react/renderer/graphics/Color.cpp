@@ -56,7 +56,6 @@ SharedColor whiteColor() {
   return color;
 }
 
-
 SharedColor greyColor() {
   static SharedColor color = colorFromComponents(ColorComponents{133, 133, 133, 1});
   return color;

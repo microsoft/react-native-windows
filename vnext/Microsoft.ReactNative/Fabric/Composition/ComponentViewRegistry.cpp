@@ -29,63 +29,58 @@
 
 namespace Microsoft::ReactNative {
 
-  void ComponentViewRegistry::Initialize(winrt::Microsoft::ReactNative::ReactContext const& reactContext) noexcept {
-    m_context = reactContext;
-  }
+void ComponentViewRegistry::Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
+  m_context = reactContext;
+}
 
-  ComponentViewDescriptor const& ComponentViewRegistry::dequeueComponentViewWithComponentHandle(
+ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithComponentHandle(
     facebook::react::ComponentHandle componentHandle,
     facebook::react::Tag tag,
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext& compContext) noexcept {
-    // TODO implement recycled components like core does
+    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext) noexcept {
+  // TODO implement recycled components like core does
 
-    std::shared_ptr<CompositionBaseComponentView> view;
+  std::shared_ptr<CompositionBaseComponentView> view;
 
-    if (componentHandle == facebook::react::ParagraphShadowNode::Handle()) {
-      view = std::make_shared<ParagraphComponentView>(compContext, tag);
-    }
-    else if (componentHandle == facebook::react::ScrollViewShadowNode::Handle()) {
-      view = std::make_shared<ScrollViewComponentView>(compContext, tag);
-    }
-    else if (componentHandle == facebook::react::ImageShadowNode::Handle()) {
-      view = std::make_shared<ImageComponentView>(compContext, tag, m_context);
-    }
-    else if (componentHandle == facebook::react::WindowsTextInputShadowNode::Handle()) {
-      view = std::make_shared<WindowsTextInputComponentView>(compContext, tag, m_context);
-    }
-    else if (componentHandle == facebook::react::SwitchShadowNode::Handle()) {
-       view = std::make_shared<SwitchComponentView>(compContext, tag, m_context);
-    }
-    else {
-      view = std::make_shared<CompositionViewComponentView>(compContext, tag);
-    }
-
-    auto it = m_registry.insert({ tag, ComponentViewDescriptor{view} });
-    return it.first->second;
+  if (componentHandle == facebook::react::ParagraphShadowNode::Handle()) {
+    view = std::make_shared<ParagraphComponentView>(compContext, tag);
+  } else if (componentHandle == facebook::react::ScrollViewShadowNode::Handle()) {
+    view = std::make_shared<ScrollViewComponentView>(compContext, tag);
+  } else if (componentHandle == facebook::react::ImageShadowNode::Handle()) {
+    view = std::make_shared<ImageComponentView>(compContext, tag, m_context);
+  } else if (componentHandle == facebook::react::WindowsTextInputShadowNode::Handle()) {
+    view = std::make_shared<WindowsTextInputComponentView>(compContext, tag, m_context);
+  } else if (componentHandle == facebook::react::SwitchShadowNode::Handle()) {
+    view = std::make_shared<SwitchComponentView>(compContext, tag, m_context);
+  } else {
+    view = std::make_shared<CompositionViewComponentView>(compContext, tag);
   }
 
-  ComponentViewDescriptor const& ComponentViewRegistry::componentViewDescriptorWithTag(
+  auto it = m_registry.insert({tag, ComponentViewDescriptor{view}});
+  return it.first->second;
+}
+
+ComponentViewDescriptor const &ComponentViewRegistry::componentViewDescriptorWithTag(
     facebook::react::Tag tag) const noexcept {
-    auto iterator = m_registry.find(tag);
-    assert(iterator != m_registry.end());
-    return iterator->second;
-  }
+  auto iterator = m_registry.find(tag);
+  assert(iterator != m_registry.end());
+  return iterator->second;
+}
 
-  std::shared_ptr<IComponentView> ComponentViewRegistry::findComponentViewWithTag(
+std::shared_ptr<IComponentView> ComponentViewRegistry::findComponentViewWithTag(
     facebook::react::Tag tag) const noexcept {
-    auto iterator = m_registry.find(tag);
-    if (iterator == m_registry.end()) {
-      return nullptr;
-    }
-    return iterator->second.view;
+  auto iterator = m_registry.find(tag);
+  if (iterator == m_registry.end()) {
+    return nullptr;
   }
+  return iterator->second.view;
+}
 
-  void ComponentViewRegistry::enqueueComponentViewWithComponentHandle(
+void ComponentViewRegistry::enqueueComponentViewWithComponentHandle(
     facebook::react::ComponentHandle componentHandle,
     facebook::react::Tag tag,
     ComponentViewDescriptor componentViewDescriptor) noexcept {
-    assert(m_registry.find(tag) != m_registry.end());
+  assert(m_registry.find(tag) != m_registry.end());
 
-    m_registry.erase(tag);
-  }
+  m_registry.erase(tag);
+}
 } // namespace Microsoft::ReactNative

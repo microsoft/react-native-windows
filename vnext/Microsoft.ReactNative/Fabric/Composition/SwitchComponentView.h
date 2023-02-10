@@ -11,13 +11,11 @@
 
 #include <react/components/rnwcore/ShadowNodes.h>
 
-
 namespace Microsoft::ReactNative {
 
 struct SwitchComponentView;
 
 struct SwitchComponentView : CompositionBaseComponentView {
-
   using Super = CompositionBaseComponentView;
   SwitchComponentView(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
