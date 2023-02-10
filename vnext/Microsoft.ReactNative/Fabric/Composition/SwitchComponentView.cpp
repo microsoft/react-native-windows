@@ -31,7 +31,8 @@ void SwitchComponentView::unmountChildComponentView(const IComponentView &childC
 
 void SwitchComponentView::handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept {
   if (commandName == "setValue") {
-    // TODO
+    // TODO - Current implementation always aligns with JS value
+    // This will be needed when we move to using WinUI controls
   } else {
     Super::handleCommand(commandName, arg);
   }
@@ -56,9 +57,7 @@ void SwitchComponentView::updateProps(
 
 void SwitchComponentView::updateState(
     facebook::react::State::Shared const &state,
-    facebook::react::State::Shared const &oldState) noexcept {
-  bool wat = false;
-}
+    facebook::react::State::Shared const &oldState) noexcept { }
 
 void SwitchComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
