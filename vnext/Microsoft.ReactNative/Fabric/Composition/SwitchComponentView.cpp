@@ -57,7 +57,7 @@ void SwitchComponentView::updateProps(
 void SwitchComponentView::updateState(
     facebook::react::State::Shared const &state,
     facebook::react::State::Shared const &oldState) noexcept {
-  // TODO?
+  bool wat = false;
 }
 
 void SwitchComponentView::updateLayoutMetrics(
@@ -70,7 +70,6 @@ void SwitchComponentView::updateLayoutMetrics(
     m_visual.IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
   }
 
-  updateBorderLayoutMetrics(layoutMetrics, *m_props);
   m_layoutMetrics = layoutMetrics;
 
   UpdateCenterPropertySet();
