@@ -65,10 +65,10 @@ fire_and_forget openUrlAsync(std::wstring url, ::React::ReactPromise<void> resul
     if (co_await Launcher::LaunchUriAsync(uri)) {
       result.Resolve();
     } else {
-      result.Reject(("Unable to open URL: " + url).c_str());
+      result.Reject(("Unable to open URL: " + Utf16ToUtf8(url)).c_str());
     }
   } catch (winrt::hresult_error &e) {
-    result.Reject(("Unable to open URL: " + url + "error: " + winrt::to_string(e.message())).c_str());
+    result.Reject(("Unable to open URL: " + Utf16ToUtf8(url) + "error: " + winrt::to_string(e.message())).c_str());
   }
 }
 
