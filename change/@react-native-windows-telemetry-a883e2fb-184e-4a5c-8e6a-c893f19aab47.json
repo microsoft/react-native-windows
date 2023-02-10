@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix Hermes sampling profiler (#11033)",
+  "packageName": "@react-native-windows/telemetry",
+  "email": "vmoroz@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
