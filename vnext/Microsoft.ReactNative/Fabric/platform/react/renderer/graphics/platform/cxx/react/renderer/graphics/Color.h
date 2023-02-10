@@ -119,6 +119,7 @@ ColorComponents colorComponentsFromColor(SharedColor const &color);
 SharedColor clearColor();
 SharedColor blackColor();
 SharedColor whiteColor();
+SharedColor greyColor();
 
 } // namespace react
 } // namespace facebook
