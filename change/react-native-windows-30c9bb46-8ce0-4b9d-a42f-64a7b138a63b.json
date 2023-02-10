@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "[Fabric] Add initial Switch implementation",
+  "packageName": "react-native-windows",
+  "email": "email not defined",
+  "dependentChangeType": "patch"
+}
