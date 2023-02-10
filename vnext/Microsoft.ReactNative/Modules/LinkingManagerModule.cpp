@@ -60,7 +60,7 @@ LinkingManager::~LinkingManager() noexcept {
 
 fire_and_forget openUrlAsync(std::wstring url, ::React::ReactPromise<void> result) noexcept {
   try {
-    winrt::Windows::Foundation::Uri uri(Utf8ToUtf16(url));
+    winrt::Windows::Foundation::Uri uri(url);
 
     if (co_await Launcher::LaunchUriAsync(uri)) {
       result.Resolve();
