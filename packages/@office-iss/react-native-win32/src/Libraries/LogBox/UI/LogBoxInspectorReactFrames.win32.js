@@ -158,19 +158,21 @@ const componentStyles = StyleSheet.create({
     paddingRight: 10,
   },
   frameName: {
-    // $FlowFixMe[underconstrained-implicit-instantiation]
-    fontFamily: Platform.select({android: 'monospace', ios: 'Menlo', win32: 'Consolas'}),
+    fontFamily: Platform.select({
+      android: 'monospace',
+      ios: 'Menlo',
+      win32: 'Consolas', // Win32
+    }),
     color: LogBoxStyle.getTextColor(1),
     fontSize: 14,
     includeFontPadding: false,
     lineHeight: 18,
   },
   bracket: {
-    // $FlowFixMe[underconstrained-implicit-instantiation]
     fontFamily: Platform.select({
       android: 'monospace',
       ios: 'Menlo',
-      win32: 'Consolas',
+      win32: 'Consolas', // Win32
     }),
     color: LogBoxStyle.getTextColor(0.4),
     fontSize: 14,

@@ -157,11 +157,10 @@ const styles = StyleSheet.create({
     fontSize: 12,
     includeFontPadding: false,
     lineHeight: 16,
-    // $FlowFixMe[underconstrained-implicit-instantiation]
     fontFamily: Platform.select({
       android: 'monospace',
       ios: 'Menlo',
-      win32: 'Consolas',
+      win32: 'Consolas', // Win32
     }),
   },
 });
