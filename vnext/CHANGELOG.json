@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 11 Feb 2023 06:14:16 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.614",
+      "version": "0.0.0-canary.614",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "c52417a02de57cffb10ae28ae3ead8defc9ac663",
+            "comment": "[Fabric] Add initial Switch implementation"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 10 Feb 2023 06:15:30 GMT",
       "tag": "react-native-windows_v0.0.0-canary.613",
       "version": "0.0.0-canary.613",

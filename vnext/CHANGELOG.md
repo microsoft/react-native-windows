@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 10 Feb 2023 06:15:30 GMT and should not be manually modified.
+This log was last generated on Sat, 11 Feb 2023 06:14:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.614
+
+Sat, 11 Feb 2023 06:14:16 GMT
+
+### Changes
+
+- [Fabric] Add initial Switch implementation (email not defined)
 
 ## 0.0.0-canary.613
 
