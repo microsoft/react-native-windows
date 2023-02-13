@@ -15,6 +15,10 @@ namespace Microsoft::ReactNative {
 
 const PointerId MOUSE_POINTER_ID = 1; // TODO ensure this is something that does not conflict with pointer point IDs.
 
+bool IsMousePointerEvent(const facebook::react::PointerEvent &pointerEvent) {
+  return pointerEvent.pointerId == MOUSE_POINTER_ID;
+}
+
 bool IsViewListeningToEvent(IComponentView *view, facebook::react::ViewEvents::Offset eventType) {
   if (view) {
     auto const &viewProps = *std::static_pointer_cast<facebook::react::ViewProps const>(view->props());
@@ -345,10 +349,6 @@ void CompositionEventHandler::UpdateActiveTouch(
   // activeTouch.touch.altKey = false;
 
   // activeTouch.touch.isPrimary = true;
-}
-
-bool IsMousePointerEvent(const facebook::react::PointerEvent &pointerEvent) {
-  return pointerEvent.pointerId == MOUSE_POINTER_ID;
 }
 
 facebook::react::PointerEvent CreatePointerEventFromIncompleteHoverData(
