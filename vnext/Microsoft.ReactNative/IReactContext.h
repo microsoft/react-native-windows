@@ -23,6 +23,7 @@ struct ReactSettingsSnapshot : winrt::implements<ReactSettingsSnapshot, IReactSe
   uint16_t SourceBundlePort() const noexcept;
   bool RequestInlineSourceMap() const noexcept;
   hstring JavaScriptBundleFile() const noexcept;
+  hstring BundleAppId() const noexcept;
 
  public:
   // Internal accessor for within the Microsoft.ReactNative dll to allow calling into internal methods
