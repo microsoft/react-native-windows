@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 23 Jan 2023 16:16:57 GMT and should not be manually modified.
+This log was last generated on Mon, 13 Feb 2023 16:16:01 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.1
+
+Mon, 13 Feb 2023 16:16:01 GMT
+
+### Patches
+
+- Fix react-native-win32 typescript definitions (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.71.0
 

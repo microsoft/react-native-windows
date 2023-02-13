@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/fs
 
-This log was last generated on Mon, 23 Jan 2023 16:16:57 GMT and should not be manually modified.
+This log was last generated on Mon, 13 Feb 2023 16:16:02 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.1
+
+Mon, 13 Feb 2023 16:16:02 GMT
+
+### Patches
+
+- Bump typescript version (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.71.0
 

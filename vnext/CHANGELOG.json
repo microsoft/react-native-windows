@@ -2,6 +2,57 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 13 Feb 2023 16:16:02 GMT",
+      "tag": "react-native-windows_v0.71.1",
+      "version": "0.71.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "cd24ccc53f1001d780f4b4a285aabf147eff08d4",
+            "comment": "Refactor Code"
+          },
+          {
+            "author": "26607885+chrisglein@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "cfef0689e65e56d5c8e1efd721e11b3276e050b9",
+            "comment": "Implement rowGap, columnGap and gap flex properties (#10969)"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6babfc3a40ad8a1fb405f109a15058a249224c5b",
+            "comment": "Allow disabling static graph restore under VS (#11186)"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b887e15ce901cc1fc026cf3a878e6b0d0a3f5873",
+            "comment": "Include types folder in published npm package"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a4a46758a541168c71f38eefa27e96ffc53625c1",
+            "comment": "Revert \"Implement rowGap, columnGap and gap flex properties (#10969)\""
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.71.1",
+            "commit": "6babfc3a40ad8a1fb405f109a15058a249224c5b"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.71.1",
+            "commit": "6babfc3a40ad8a1fb405f109a15058a249224c5b"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 23 Jan 2023 16:16:58 GMT",
       "tag": "react-native-windows_v0.71.0",
       "version": "0.71.0",

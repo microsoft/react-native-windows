@@ -2,6 +2,21 @@
   "name": "@react-native-windows/fs",
   "entries": [
     {
+      "date": "Mon, 13 Feb 2023 16:16:02 GMT",
+      "tag": "@react-native-windows/fs_v0.71.1",
+      "version": "0.71.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/fs",
+            "commit": "b887e15ce901cc1fc026cf3a878e6b0d0a3f5873",
+            "comment": "Bump typescript version"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 23 Jan 2023 16:16:57 GMT",
       "tag": "@react-native-windows/fs_v0.71.0",
       "version": "0.71.0",

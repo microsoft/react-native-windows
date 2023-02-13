@@ -1,8 +1,22 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 23 Jan 2023 16:16:58 GMT and should not be manually modified.
+This log was last generated on Mon, 13 Feb 2023 16:16:02 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.1
+
+Mon, 13 Feb 2023 16:16:02 GMT
+
+### Patches
+
+- Refactor Code (34109996+chiaramooney@users.noreply.github.com)
+- Implement rowGap, columnGap and gap flex properties (#10969) (26607885+chrisglein@users.noreply.github.com)
+- Allow disabling static graph restore under VS (#11186) (julio.rocha@microsoft.com)
+- Include types folder in published npm package (30809111+acoates-ms@users.noreply.github.com)
+- Revert "Implement rowGap, columnGap and gap flex properties (#10969)" (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.71.1
+- Bump @react-native-windows/codegen to v0.71.1
 
 ## 0.71.0
 

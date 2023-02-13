@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Revert \"Implement rowGap, columnGap and gap flex properties (#10969)\"",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
