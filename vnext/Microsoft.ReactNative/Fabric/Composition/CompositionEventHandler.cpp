@@ -241,7 +241,9 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
       facebook::react::SharedTouchEventEmitter eventEmitter = componentView->touchEventEmitter();
       if (eventEmitter) {
         eventEmitter->onPointerEnter(event);
-        eventEmitter->onMouseEnter(event);
+        if (IsMousePointerEvent(event)) {
+          eventEmitter->onMouseEnter(event);
+        }
       }
     }
 
@@ -300,7 +302,9 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
     facebook::react::SharedTouchEventEmitter eventEmitter = componentView->touchEventEmitter();
     if (eventEmitter) {
       eventEmitter->onPointerLeave(event);
-      eventEmitter->onMouseLeave(event);
+      if (IsMousePointerEvent(event)) {
+        eventEmitter->onMouseLeave(event);
+      }
     }
   }
 
@@ -341,6 +345,10 @@ void CompositionEventHandler::UpdateActiveTouch(
   // activeTouch.touch.altKey = false;
 
   // activeTouch.touch.isPrimary = true;
+}
+
+bool IsMousePointerEvent(const facebook::react::PointerEvent &pointerEvent) {
+  return pointerEvent.pointerId == MOUSE_POINTER_ID;
 }
 
 facebook::react::PointerEvent CreatePointerEventFromIncompleteHoverData(
