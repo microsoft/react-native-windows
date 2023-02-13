@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 13 Feb 2023 16:11:38 GMT and should not be manually modified.
+This log was last generated on Mon, 13 Feb 2023 23:52:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.69.19
+
+Mon, 13 Feb 2023 23:52:41 GMT
+
+### Patches
+
+- Fix Hermes sampling profiler (#11033) (vmoroz@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.69.6
 
 ## 0.69.18
 

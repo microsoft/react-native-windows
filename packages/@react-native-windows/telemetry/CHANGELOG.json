@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Mon, 13 Feb 2023 23:52:41 GMT",
+      "tag": "@react-native-windows/telemetry_v0.69.4",
+      "version": "0.69.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmoroz@users.noreply.github.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "e66d818db6b533c7f6d8f7f5cd2430d0e08e2163",
+            "comment": "Fix Hermes sampling profiler (#11033)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 14 Nov 2022 16:12:41 GMT",
       "tag": "@react-native-windows/telemetry_v0.69.3",
       "version": "0.69.3",

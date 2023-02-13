@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Mon, 28 Nov 2022 16:13:21 GMT and should not be manually modified.
+This log was last generated on Mon, 13 Feb 2023 23:52:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.69.6
+
+Mon, 13 Feb 2023 23:52:41 GMT
+
+### Patches
+
+- Bump @react-native-windows/telemetry to v0.69.4
 
 ## 0.69.5
 

@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Mon, 14 Nov 2022 16:12:41 GMT and should not be manually modified.
+This log was last generated on Mon, 13 Feb 2023 23:52:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.69.4
+
+Mon, 13 Feb 2023 23:52:41 GMT
+
+### Patches
+
+- Fix Hermes sampling profiler (#11033) (vmoroz@users.noreply.github.com)
 
 ## 0.69.3
 
