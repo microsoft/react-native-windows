@@ -18,9 +18,7 @@ const PointerId MOUSE_POINTER_ID = 1; // TODO ensure this is something that does
 bool IsViewListeningToEvent(IComponentView *view, facebook::react::ViewEvents::Offset eventType) {
   if (view) {
     auto const &viewProps = *std::static_pointer_cast<facebook::react::ViewProps const>(view->props());
-    return true;
-    // TODO why arn't the events bits being set?
-    // return viewProps.events[eventType];
+    return viewProps.events[eventType];
   }
   return false;
 }
@@ -234,7 +232,8 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
     auto componentView = *itComponentView;
     bool shouldEmitEvent = componentView != nullptr &&
         (hasParentEnterListener ||
-         IsViewListeningToEvent(componentView, facebook::react::ViewEvents::Offset::PointerEnter));
+         IsViewListeningToEvent(componentView, facebook::react::ViewEvents::Offset::PointerEnter) ||
+         IsViewListeningToEvent(componentView, facebook::react::ViewEvents::Offset::MouseEnter));
 
     if (shouldEmitEvent &&
         std::find(currentlyHoveredViews.begin(), currentlyHoveredViews.end(), componentView) ==
@@ -242,6 +241,7 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
       facebook::react::SharedTouchEventEmitter eventEmitter = componentView->touchEventEmitter();
       if (eventEmitter) {
         eventEmitter->onPointerEnter(event);
+        eventEmitter->onMouseEnter(event);
       }
     }
 
@@ -280,7 +280,8 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
 
     bool shouldEmitEvent = componentView != nullptr &&
         (hasParentLeaveListener ||
-         IsViewListeningToEvent(componentView, facebook::react::ViewEvents::Offset::PointerLeave));
+         IsViewListeningToEvent(componentView, facebook::react::ViewEvents::Offset::PointerLeave) ||
+         IsViewListeningToEvent(componentView, facebook::react::ViewEvents::Offset::MouseLeave));
 
     if (shouldEmitEvent &&
         std::find(eventPathViews.begin(), eventPathViews.end(), componentView) == eventPathViews.end()) {
@@ -299,6 +300,7 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
     facebook::react::SharedTouchEventEmitter eventEmitter = componentView->touchEventEmitter();
     if (eventEmitter) {
       eventEmitter->onPointerLeave(event);
+      eventEmitter->onMouseLeave(event);
     }
   }
 
