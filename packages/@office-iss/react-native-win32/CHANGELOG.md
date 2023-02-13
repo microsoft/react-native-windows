@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 19 Dec 2022 16:12:47 GMT and should not be manually modified.
+This log was last generated on Mon, 13 Feb 2023 16:11:38 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.69.6
+
+Mon, 13 Feb 2023 16:11:38 GMT
+
+### Patches
+
+- Backport Focusable/Accessible Changes to 0.69 (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.69.5
 

@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 26 Dec 2022 16:12:17 GMT and should not be manually modified.
+This log was last generated on Mon, 13 Feb 2023 16:11:38 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.69.18
+
+Mon, 13 Feb 2023 16:11:38 GMT
+
+### Patches
+
+- Backport Focusable/Accessible Changes to 0.69 (34109996+chiaramooney@users.noreply.github.com)
+- Allow disabling static graph restore under VS (#11186) (julio.rocha@microsoft.com)
 
 ## 0.69.17
 
