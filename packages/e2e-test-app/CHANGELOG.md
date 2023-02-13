@@ -1,8 +1,16 @@
 # Change Log - e2e-test-app
 
-This log was last generated on Mon, 26 Dec 2022 16:09:55 GMT and should not be manually modified.
+This log was last generated on Mon, 13 Feb 2023 16:10:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Mon, 13 Feb 2023 16:10:18 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.68.27
 
 ## 0.0.0
 
