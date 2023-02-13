@@ -11,7 +11,7 @@ namespace Microsoft::JSI {
 // a. lazily create a JSI Runtime on the first call to getRuntime
 // b. subsequent calls to getRuntime should return the Runtime created in (a)
 
-// Note :: All calls to getRuntime() should happen on the same thread unless you are sure that
+// Note: all calls to getRuntime() should happen on the same thread unless you are sure that
 // the underlying Runtime instance is thread safe.
 
 struct RuntimeHolderLazyInit {
@@ -21,7 +21,7 @@ struct RuntimeHolderLazyInit {
   virtual void teardown() noexcept {};
 
   // You can call this when a crash happens to attempt recording additional data
-  // The fd supplied is a raw file stream an implementation might write JSON to
+  // The fileDescriptor supplied is a raw file stream an implementation might write JSON to.
   virtual void crashHandler(int fileDescriptor) noexcept {};
 };
 

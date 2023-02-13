@@ -124,4 +124,8 @@ void ReactDispatcher::InvokeElsePost(Mso::DispatchTask &&task) const noexcept {
   return jsThreadDispatcherProperty;
 }
 
+/*static*/ IReactDispatcher ReactDispatcher::GetJSDispatcher(IReactPropertyBag const &properties) noexcept {
+  return properties.Get(JSDispatcherProperty()).try_as<IReactDispatcher>();
+}
+
 } // namespace winrt::Microsoft::ReactNative::implementation
