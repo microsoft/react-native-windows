@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 23 Jan 2023 16:11:43 GMT and should not be manually modified.
+This log was last generated on Mon, 13 Feb 2023 16:11:58 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.70.12
+
+Mon, 13 Feb 2023 16:11:58 GMT
+
+### Patches
+
+- Refactor Code (34109996+chiaramooney@users.noreply.github.com)
+- Allow disabling static graph restore under VS (#11186) (julio.rocha@microsoft.com)
 
 ## 0.70.11
 

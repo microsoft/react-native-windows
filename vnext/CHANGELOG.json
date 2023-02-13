@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 13 Feb 2023 16:11:58 GMT",
+      "tag": "react-native-windows_v0.70.12",
+      "version": "0.70.12",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "8ed2a96b62d9e48e0824b3a94438c8a192dd5506",
+            "comment": "Refactor Code"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "904a39067ed5db1cb911f7af213a5c528d6146ce",
+            "comment": "Allow disabling static graph restore under VS (#11186)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 23 Jan 2023 16:11:43 GMT",
       "tag": "react-native-windows_v0.70.11",
       "version": "0.70.11",
