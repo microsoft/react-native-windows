@@ -406,7 +406,8 @@ void CompositionEventHandler::MouseMove(
     facebook::react::PointerEvent pointerEvent = CreatePointerEventFromIncompleteHoverData(ptScaled, ptLocal);
 
     auto handler = [targetView, &pointerEvent](std::vector<IComponentView *> &eventPathViews) {
-      facebook::react::SharedTouchEventEmitter eventEmitter = targetView ? targetView->touchEventEmitterAtPoint(pointerEvent.offsetPoint) : nullptr;
+      facebook::react::SharedTouchEventEmitter eventEmitter =
+          targetView ? targetView->touchEventEmitterAtPoint(pointerEvent.offsetPoint) : nullptr;
       bool hasMoveEventListeners =
           IsAnyViewInPathListeningToEvent(eventPathViews, facebook::react::ViewEvents::Offset::PointerMove) ||
           IsAnyViewInPathListeningToEvent(eventPathViews, facebook::react::ViewEvents::Offset::PointerMoveCapture);

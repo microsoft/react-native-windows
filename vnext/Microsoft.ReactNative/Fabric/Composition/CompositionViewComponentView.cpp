@@ -1039,7 +1039,8 @@ facebook::react::SharedTouchEventEmitter CompositionBaseComponentView::touchEven
   return m_eventEmitter;
 }
 
-facebook::react::SharedTouchEventEmitter CompositionBaseComponentView::touchEventEmitterAtPoint(facebook::react::Point /*pt*/) noexcept {
+facebook::react::SharedTouchEventEmitter CompositionBaseComponentView::touchEventEmitterAtPoint(
+    facebook::react::Point /*pt*/) noexcept {
   return m_eventEmitter;
 }
 
