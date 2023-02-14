@@ -138,10 +138,8 @@ struct WindowData {
           host.InstanceSettings().UseDeveloperSupport(true);
 
           host.PackageProviders().Append(winrt::make<CompReactPackageProvider>());
-          winrt::Microsoft::ReactNative::ReactPropertyBag(host.InstanceSettings().Properties())
-              .Set(
-                  winrt::Microsoft::ReactNative::ReactPropertyId<uint64_t>(L"RootHwndForDevUI"),
-                  reinterpret_cast<uint64_t>(hwnd));
+          winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetTopLevelWindowHandle(
+              host.InstanceSettings().Properties(), reinterpret_cast<uint64_t>(hwnd));
 
           // Nudge the ReactNativeHost to create the instance and wrapping context
           host.ReloadInstance();
