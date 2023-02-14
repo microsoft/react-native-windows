@@ -344,10 +344,6 @@ facebook::react::Tag ScrollViewComponentView::hitTest(facebook::react::Point pt,
   return -1;
 }
 
-facebook::react::SharedTouchEventEmitter ScrollViewComponentView::touchEventEmitter() noexcept {
-  return m_eventEmitter;
-}
-
 winrt::Microsoft::ReactNative::Composition::IVisual ScrollViewComponentView::Visual() const noexcept {
   return m_visual;
 }

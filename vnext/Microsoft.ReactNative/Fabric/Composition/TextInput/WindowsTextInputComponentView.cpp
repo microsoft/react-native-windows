@@ -1048,10 +1048,6 @@ facebook::react::Tag WindowsTextInputComponentView::hitTest(facebook::react::Poi
   return -1;
 }
 
-facebook::react::SharedTouchEventEmitter WindowsTextInputComponentView::touchEventEmitter() noexcept {
-  return m_eventEmitter;
-}
-
 void WindowsTextInputComponentView::ensureVisual() noexcept {
   if (!m_visual) {
     HrEnsureRichEd20Loaded();

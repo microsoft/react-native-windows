@@ -136,7 +136,25 @@ facebook::react::Tag ParagraphComponentView::hitTest(facebook::react::Point pt, 
   return -1;
 }
 
-facebook::react::SharedTouchEventEmitter ParagraphComponentView::touchEventEmitter() noexcept {
+facebook::react::SharedTouchEventEmitter ParagraphComponentView::touchEventEmitterAtPoint(facebook::react::Point pt) noexcept {
+
+  if (m_attributedStringBox.getValue().getFragments().size()) {
+      BOOL isTrailingHit = false;
+      BOOL isInside = false;
+      DWRITE_HIT_TEST_METRICS metrics;
+      winrt::check_hresult(m_textLayout->HitTestPoint(pt.x, pt.y, &isTrailingHit, &isInside, &metrics));
+      if (isInside) {
+        uint32_t textPosition = metrics.textPosition;
+
+        for (auto fragment : m_attributedStringBox.getValue().getFragments()) {
+          if (textPosition < fragment.string.length()) {
+            return std::static_pointer_cast<const facebook::react::TouchEventEmitter>(fragment.parentShadowView.eventEmitter);
+          }
+          textPosition -= static_cast<uint32_t>(fragment.string.length());
+      }
+    }
+  }
+
   return m_eventEmitter;
 }
 

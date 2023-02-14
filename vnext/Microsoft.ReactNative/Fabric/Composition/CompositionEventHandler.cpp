@@ -215,7 +215,7 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
   if (targetView != nullptr && previousTargetTag != targetView->tag()) {
     bool shouldEmitOverEvent =
         IsAnyViewInPathListeningToEvent(eventPathViews, facebook::react::ViewEvents::Offset::PointerOver);
-    facebook::react::SharedTouchEventEmitter eventEmitter = targetView->touchEventEmitter();
+    facebook::react::SharedTouchEventEmitter eventEmitter = targetView->touchEventEmitterAtPoint(event.offsetPoint);
     if (shouldEmitOverEvent && eventEmitter != nullptr) {
       eventEmitter->onPointerOver(event);
     }
@@ -361,7 +361,7 @@ facebook::react::PointerEvent CreatePointerEventFromIncompleteHoverData(
 
   pointerEvent.clientPoint = ptScaled;
   pointerEvent.screenPoint = ptScaled;
-  // pointerEvent.offsetPoint = ptLocal;
+  pointerEvent.offsetPoint = ptLocal;
   pointerEvent.width = 1.0;
   pointerEvent.height = 1.0;
   pointerEvent.tiltX = 0;
@@ -406,7 +406,7 @@ void CompositionEventHandler::MouseMove(
     facebook::react::PointerEvent pointerEvent = CreatePointerEventFromIncompleteHoverData(ptScaled, ptLocal);
 
     auto handler = [targetView, &pointerEvent](std::vector<IComponentView *> &eventPathViews) {
-      facebook::react::SharedTouchEventEmitter eventEmitter = targetView ? targetView->touchEventEmitter() : nullptr;
+      facebook::react::SharedTouchEventEmitter eventEmitter = targetView ? targetView->touchEventEmitterAtPoint(pointerEvent.offsetPoint) : nullptr;
       bool hasMoveEventListeners =
           IsAnyViewInPathListeningToEvent(eventPathViews, facebook::react::ViewEvents::Offset::PointerMove) ||
           IsAnyViewInPathListeningToEvent(eventPathViews, facebook::react::ViewEvents::Offset::PointerMoveCapture);
@@ -546,7 +546,7 @@ void CompositionEventHandler::ButtonDown(
 
     auto componentView = targetComponentView;
     while (componentView) {
-      if (auto eventEmitter = componentView->touchEventEmitter()) {
+      if (auto eventEmitter = componentView->touchEventEmitterAtPoint(ptLocal)) {
         activeTouch.eventEmitter = eventEmitter;
         activeTouch.touch.target = componentView->tag();
         // activeTouch.componentView = componentView;
@@ -695,7 +695,7 @@ facebook::react::PointerEvent CompositionEventHandler::CreatePointerEventFromAct
   event.pointerType = PointerTypeCStringFromUITouchType(activeTouch.touchType);
   event.clientPoint = touch.pagePoint;
   event.screenPoint = touch.screenPoint;
-  // event.offsetPoint = touch.offsetPoint;
+  event.offsetPoint = touch.offsetPoint;
 
   event.pressure = touch.force;
   if (activeTouch.touchType == UITouchType::Mouse) {

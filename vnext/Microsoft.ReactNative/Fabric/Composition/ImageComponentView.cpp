@@ -396,10 +396,6 @@ facebook::react::Tag ImageComponentView::hitTest(facebook::react::Point pt, face
   return -1;
 }
 
-facebook::react::SharedTouchEventEmitter ImageComponentView::touchEventEmitter() noexcept {
-  return m_eventEmitter;
-}
-
 void ImageComponentView::ensureVisual() noexcept {
   if (!m_visual) {
     m_visual = m_compContext.CreateSpriteVisual();
