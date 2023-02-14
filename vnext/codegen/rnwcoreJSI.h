@@ -4144,8 +4144,8 @@ protected:
   NativePerformanceObserverCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
 
 public:
-  virtual void startReporting(jsi::Runtime &rt, jsi::String entryType) = 0;
-  virtual void stopReporting(jsi::Runtime &rt, jsi::String entryType) = 0;
+  virtual void startReporting(jsi::Runtime &rt, double entryType) = 0;
+  virtual void stopReporting(jsi::Runtime &rt, double entryType) = 0;
   virtual jsi::Object popPendingEntries(jsi::Runtime &rt) = 0;
   virtual void setOnPerformanceEntryCallback(jsi::Runtime &rt, std::optional<jsi::Function> callback) = 0;
 
@@ -4169,7 +4169,7 @@ private:
     Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
       NativePerformanceObserverCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
 
-    void startReporting(jsi::Runtime &rt, jsi::String entryType) override {
+    void startReporting(jsi::Runtime &rt, double entryType) override {
       static_assert(
           bridging::getParameterCount(&T::startReporting) == 2,
           "Expected startReporting(...) to have 2 parameters");
@@ -4177,7 +4177,7 @@ private:
       return bridging::callFromJs<void>(
           rt, &T::startReporting, jsInvoker_, instance_, std::move(entryType));
     }
-    void stopReporting(jsi::Runtime &rt, jsi::String entryType) override {
+    void stopReporting(jsi::Runtime &rt, double entryType) override {
       static_assert(
           bridging::getParameterCount(&T::stopReporting) == 2,
           "Expected stopReporting(...) to have 2 parameters");
@@ -5618,6 +5618,7 @@ public:
   virtual jsi::Object getConstants(jsi::Runtime &rt) = 0;
   virtual void voidFunc(jsi::Runtime &rt) = 0;
   virtual bool getBool(jsi::Runtime &rt, bool arg) = 0;
+  virtual double getEnum(jsi::Runtime &rt, double arg) = 0;
   virtual double getNumber(jsi::Runtime &rt, double arg) = 0;
   virtual jsi::String getString(jsi::Runtime &rt, jsi::String arg) = 0;
   virtual jsi::Array getArray(jsi::Runtime &rt, jsi::Array arg) = 0;
@@ -5671,6 +5672,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::getBool, jsInvoker_, instance_, std::move(arg));
+    }
+    double getEnum(jsi::Runtime &rt, double arg) override {
+      static_assert(
+          bridging::getParameterCount(&T::getEnum) == 2,
+          "Expected getEnum(...) to have 2 parameters");
+
+      return bridging::callFromJs<double>(
+          rt, &T::getEnum, jsInvoker_, instance_, std::move(arg));
     }
     double getNumber(jsi::Runtime &rt, double arg) override {
       static_assert(
