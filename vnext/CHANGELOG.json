@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 15 Feb 2023 06:22:15 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.615",
+      "version": "0.0.0-canary.615",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d61980e7b6a1d8d8dd6f3076054029b6501624ee",
+            "comment": "LogBox should be using a monospace font"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "6a5dde478be654eae050cbe66f3d4c7adf719830",
+            "comment": "Allow some usage of wstring when using spec files"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "73f4657cff355e71a52a0441eafaad9017b94019",
+            "comment": "[Fabric] MouseEnter/Leave events to align with paper"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 11 Feb 2023 06:14:16 GMT",
       "tag": "react-native-windows_v0.0.0-canary.614",
       "version": "0.0.0-canary.614",
