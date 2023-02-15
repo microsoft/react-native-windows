@@ -1035,6 +1035,15 @@ void CompositionBaseComponentView::EnsureTransformMatrixFacade() noexcept {
       .StartAnimation(L"TransformMatrix", expression);
 }
 
+facebook::react::SharedTouchEventEmitter CompositionBaseComponentView::touchEventEmitter() noexcept {
+  return m_eventEmitter;
+}
+
+facebook::react::SharedTouchEventEmitter CompositionBaseComponentView::touchEventEmitterAtPoint(
+    facebook::react::Point /*pt*/) noexcept {
+  return m_eventEmitter;
+}
+
 CompositionViewComponentView::CompositionViewComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag)
@@ -1157,10 +1166,6 @@ facebook::react::Tag CompositionViewComponentView::hitTest(facebook::react::Poin
   }
 
   return -1;
-}
-
-facebook::react::SharedTouchEventEmitter CompositionViewComponentView::touchEventEmitter() noexcept {
-  return m_eventEmitter;
 }
 
 bool CompositionViewComponentView::ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept {

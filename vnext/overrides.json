@@ -81,6 +81,30 @@
       "issue": 9791
     },
     {
+      "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/primitives.h",
+      "baseFile": "ReactCommon/react/renderer/components/view/primitives.h",
+      "baseHash": "ca98e8845881b0f78c6c06e96eccb515e49a4b6e"
+    },
+    {
+      "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/TouchEventEmitter.cpp",
+      "baseFile": "ReactCommon/react/renderer/components/view/TouchEventEmitter.cpp",
+      "baseHash": "a8524dc7a5a1e2d79880cf5f2f9c6cb7e014b197"
+    },
+    {
+      "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/TouchEventEmitter.h",
+      "baseFile": "ReactCommon/react/renderer/components/view/TouchEventEmitter.h",
+      "baseHash": "e8e2327d4c67082922c849a3726f73543e314eca"
+    },
+    {
+      "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/ViewProps.cpp",
+      "baseFile": "ReactCommon/react/renderer/components/view/ViewProps.cpp",
+      "baseHash": "89b0c87d483455cb33fffed3ce7d50e7f8171619"
+    },
+    {
       "type": "patch",
       "file": "ReactCommon/Yoga.cpp",
       "baseFile": "ReactCommon/yoga/yoga/Yoga.cpp",
