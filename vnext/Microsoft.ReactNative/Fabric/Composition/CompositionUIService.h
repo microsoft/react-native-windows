@@ -14,6 +14,9 @@ struct CompositionUIService : CompositionUIServiceT<CompositionUIService> {
       const ICompositionContext &compositionContext) noexcept;
 
   static ICompositionContext GetCompositionContext(const IReactPropertyBag &properties) noexcept;
+
+  static uint64_t GetTopLevelWindowHandle(const IReactPropertyBag &properties) noexcept;
+  static void SetTopLevelWindowHandle(const IReactPropertyBag &properties, uint64_t windowHandle) noexcept;
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
