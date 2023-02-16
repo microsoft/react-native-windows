@@ -49,6 +49,9 @@ struct ReactCoreInjection : ReactCoreInjectionT<ReactCoreInjection> {
 
   static void SetPlatformNameOverride(IReactPropertyBag const &properties, winrt::hstring const &platformName) noexcept;
   static std::string GetPlatformName(IReactPropertyBag const &properties) noexcept;
+
+  static uint64_t GetTopLevelWindowId(const IReactPropertyBag &properties) noexcept;
+  static void SetTopLevelWindowId(const IReactPropertyBag &properties, uint64_t windowId) noexcept;
 };
 
 struct ReactViewHost : public winrt::implements<ReactViewHost, IReactViewHost> {

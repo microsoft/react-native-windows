@@ -20,15 +20,5 @@ namespace Microsoft.ReactNative.Composition
     DOC_STRING(
       "Sets the CompositionContext for this react instance.  This can be created using @CompositionContextHelper.CreateContext")
     static void SetCompositionContext(Microsoft.ReactNative.IReactPropertyBag properties, ICompositionContext compositionContext);
-    
-    DOC_STRING(
-      "Gets the window handle HWND (as an UInt64) for the active top level application window.")
-    static UInt64 GetTopLevelWindowHandle(Microsoft.ReactNative.IReactPropertyBag properties);
-
-    DOC_STRING(
-      "Sets the window handle HWND (as an UInt64) for the active top level application window."
-      "This must be manually provided to the @ReactInstanceSettings object when using ReactNativeWindows"
-      "without XAML for certain APIs work correctly.")
-    static void SetTopLevelWindowHandle(Microsoft.ReactNative.IReactPropertyBag properties, UInt64 windowHandle);
   }
 } // namespace Microsoft.ReactNative.Composition

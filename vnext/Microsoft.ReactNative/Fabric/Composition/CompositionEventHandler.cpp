@@ -7,6 +7,8 @@
 
 #include <Fabric/Composition/CompositionViewComponentView.h>
 #include <Fabric/FabricUIManagerModule.h>
+#include <IReactContext.h>
+#include <Views/DevMenu.h>
 #include <Views/ShadowNodeBase.h>
 #include <windows.h>
 #include <windowsx.h>
@@ -161,6 +163,27 @@ int64_t CompositionEventHandler::SendMessage(
         auto result = focusedComponent->SendMessage(msg, wParam, lParam);
         if (result)
           return result;
+      }
+
+      if (msg == WM_KEYDOWN && wParam == VkKeyScanA('d')) {
+        BYTE bKeys[256];
+        if (GetKeyboardState(bKeys)) {
+          bool fShift = false;
+          if (bKeys[VK_LSHIFT] & 0x80)
+            fShift = true;
+          if (bKeys[VK_RSHIFT] & 0x80)
+            fShift = true;
+          bool fCtrl = false;
+          if (bKeys[VK_LCONTROL] & 0x80)
+            fCtrl = true;
+          if (bKeys[VK_RCONTROL] & 0x80)
+            fCtrl = true;
+          if (fShift && fCtrl) {
+            auto contextSelf = winrt::get_self<React::implementation::ReactContext>(m_context.Handle());
+            Microsoft::ReactNative::DevMenuManager::Show(
+                Mso::CntPtr<Mso::React::IReactContext>(&contextSelf->GetInner()));
+          }
+        }
       }
       return 0;
     }

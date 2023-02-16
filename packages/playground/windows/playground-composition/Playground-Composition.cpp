@@ -138,7 +138,7 @@ struct WindowData {
           host.InstanceSettings().UseDeveloperSupport(true);
 
           host.PackageProviders().Append(winrt::make<CompReactPackageProvider>());
-          winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetTopLevelWindowHandle(
+          winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
               host.InstanceSettings().Properties(), reinterpret_cast<uint64_t>(hwnd));
 
           // Nudge the ReactNativeHost to create the instance and wrapping context
