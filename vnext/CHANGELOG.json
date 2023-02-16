@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 16 Feb 2023 06:15:04 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.616",
+      "version": "0.0.0-canary.616",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "3144125239c7c5bb8c37b7dce1d2be86fc0a69aa",
+            "comment": "[Fabric] Fix Alert crash when not using XAML"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 15 Feb 2023 06:22:15 GMT",
       "tag": "react-native-windows_v0.0.0-canary.615",
       "version": "0.0.0-canary.615",
