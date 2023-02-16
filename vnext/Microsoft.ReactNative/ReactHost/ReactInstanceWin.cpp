@@ -35,8 +35,8 @@
 #include "DynamicWriter.h"
 #ifndef CORE_ABI
 #include "ConfigureBundlerDlg.h"
-#include "DevMenu.h"
 #endif
+#include "DevMenu.h"
 #include "IReactContext.h"
 #include "IReactDispatcher.h"
 #ifndef CORE_ABI

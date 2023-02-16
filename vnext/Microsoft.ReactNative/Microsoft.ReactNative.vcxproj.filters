@@ -188,9 +188,6 @@
     <ClCompile Include="Views\ControlViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
-    <ClCompile Include="Views\DevMenu.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
     <ClCompile Include="Views\DynamicAutomationPeer.cpp">
       <Filter>Views</Filter>
     </ClCompile>

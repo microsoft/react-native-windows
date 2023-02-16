@@ -7,12 +7,12 @@
 
 #include <winrt/Windows.ApplicationModel.DataTransfer.h>
 #include "HermesSamplingProfiler.h"
+#include "Modules/DevSettingsModule.h"
+#include "IReactDispatcher.h"
 
 #ifndef CORE_ABI
 #include <XamlUtils.h>
 #include "DevMenuControl.h"
-#include "IReactDispatcher.h"
-#include "Modules/DevSettingsModule.h"
 #include "UI.Xaml.Controls.Primitives.h"
 #include "UI.Xaml.Controls.h"
 #include "UI.Xaml.Input.h"
@@ -293,7 +293,7 @@ struct InAppXamlDevMenu : public IDevMenu, public std::enable_shared_from_this<I
     m_flyout.ShowAt(root.as<xaml::FrameworkElement>());
   }
 
-  void Hide() noexcept override {
+  void Hide() noexcept {
     if (!m_flyout)
       return;
     m_flyout.Hide();
@@ -436,7 +436,7 @@ std::shared_ptr<IDevMenu> GetOrCreateDevMenu(Mso::CntPtr<Mso::React::IReactConte
 }
 
 /*static*/ void DevMenuManager::Show(Mso::CntPtr<Mso::React::IReactContext> const &reactContext) noexcept {
-  if (!Mso::React::ReactOptions::UseDeveloperSupport(m_context->Properties()))
+  if (!Mso::React::ReactOptions::UseDeveloperSupport(reactContext->Properties()))
     return;
 
   if (auto devMenu = GetOrCreateDevMenu(reactContext)) {
