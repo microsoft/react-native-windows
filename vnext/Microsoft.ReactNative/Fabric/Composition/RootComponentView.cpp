@@ -13,10 +13,9 @@ namespace Microsoft::ReactNative {
 RootComponentView::RootComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag)
-    : Super(compContext, tag) {
-}
+    : Super(compContext, tag) {}
 
-RootComponentView* RootComponentView::rootComponentView() noexcept {
+RootComponentView *RootComponentView::rootComponentView() noexcept {
   return this;
 }
 
@@ -37,7 +36,7 @@ void RootComponentView::SetFocusedComponent(IComponentView *value) noexcept {
   m_focusedComponent = value;
 }
 
-IComponentView* NavigateFocusHelper(IComponentView& view, winrt::Microsoft::ReactNative::FocusNavigationReason reason) {
+IComponentView *NavigateFocusHelper(IComponentView &view, winrt::Microsoft::ReactNative::FocusNavigationReason reason) {
   if (reason == winrt::Microsoft::ReactNative::FocusNavigationReason::First) {
     if (view.focusable()) {
       return &view;
@@ -46,16 +45,13 @@ IComponentView* NavigateFocusHelper(IComponentView& view, winrt::Microsoft::Reac
   IComponentView *toFocus = nullptr;
 
   Mso::Functor<bool(::Microsoft::ReactNative::IComponentView & v)> fn =
-      [reason, &toFocus](::Microsoft::ReactNative::IComponentView &v) noexcept -> bool {
-    return (toFocus = NavigateFocusHelper(v, reason));
-  };
+      [reason, &toFocus](::Microsoft::ReactNative::IComponentView &v) noexcept
+      -> bool { return (toFocus = NavigateFocusHelper(v, reason)); };
 
-  if (view.runOnChildren(
-          reason == winrt::Microsoft::ReactNative::FocusNavigationReason::First,
-          fn)) {
+  if (view.runOnChildren(reason == winrt::Microsoft::ReactNative::FocusNavigationReason::First, fn)) {
     return toFocus;
   }
-  
+
   if (reason == winrt::Microsoft::ReactNative::FocusNavigationReason::Last) {
     if (view.focusable()) {
       return &view;
@@ -65,24 +61,24 @@ IComponentView* NavigateFocusHelper(IComponentView& view, winrt::Microsoft::Reac
   return nullptr;
 }
 
-bool RootComponentView::NavigateFocus(
-    const winrt::Microsoft::ReactNative::FocusNavigationRequest& request) noexcept {
-      
-      if (request.Reason() == winrt::Microsoft::ReactNative::FocusNavigationReason::Restore) {
-        // No-op for now
-        return m_focusedComponent != nullptr;
-      }
+bool RootComponentView::NavigateFocus(const winrt::Microsoft::ReactNative::FocusNavigationRequest &request) noexcept {
+  if (request.Reason() == winrt::Microsoft::ReactNative::FocusNavigationReason::Restore) {
+    // No-op for now
+    return m_focusedComponent != nullptr;
+  }
 
-      auto view = NavigateFocusHelper(*this, request.Reason());
-      if (view) {
+  auto view = NavigateFocusHelper(*this, request.Reason());
+  if (view) {
     SetFocusedComponent(view);
-      }
-      return view != nullptr;
-    }
+  }
+  return view != nullptr;
+}
 
 bool RootComponentView::TryMoveFocus(bool next) noexcept {
   if (!m_focusedComponent) {
-    return NavigateFocus(winrt::Microsoft::ReactNative::FocusNavigationRequest(next ? winrt::Microsoft::ReactNative::FocusNavigationReason::First : winrt::Microsoft::ReactNative::FocusNavigationReason::Last));
+    return NavigateFocus(winrt::Microsoft::ReactNative::FocusNavigationRequest(
+        next ? winrt::Microsoft::ReactNative::FocusNavigationReason::First
+             : winrt::Microsoft::ReactNative::FocusNavigationReason::Last));
   }
 
   Mso::Functor<bool(IComponentView &)> fn = [currentlyFocused = m_focusedComponent](IComponentView &view) noexcept {

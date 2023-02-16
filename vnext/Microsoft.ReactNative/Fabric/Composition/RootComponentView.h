@@ -22,14 +22,13 @@ struct RootComponentView : CompositionViewComponentView {
   ::Microsoft::ReactNative::IComponentView *GetFocusedComponent() noexcept;
   void SetFocusedComponent(::Microsoft::ReactNative::IComponentView *value) noexcept;
 
-  bool NavigateFocus(
-      const winrt::Microsoft::ReactNative::FocusNavigationRequest& request) noexcept;
+  bool NavigateFocus(const winrt::Microsoft::ReactNative::FocusNavigationRequest &request) noexcept;
 
   bool TryMoveFocus(bool next) noexcept;
 
-  RootComponentView* rootComponentView() noexcept override;
+  RootComponentView *rootComponentView() noexcept override;
 
-private:
+ private:
   ::Microsoft::ReactNative::IComponentView *m_focusedComponent = nullptr;
 };
 
