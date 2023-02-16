@@ -121,24 +121,20 @@ ScrollViewComponentView::supplementalComponentDescriptorProviders() noexcept {
   return {};
 }
 
-void ScrollViewComponentView::mountChildComponentView(
-    const IComponentView &childComponentView,
-    uint32_t index) noexcept {
+void ScrollViewComponentView::mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
   ensureVisual();
 
   m_children.insert(std::next(m_children.begin(), index), &childComponentView);
-  const_cast<IComponentView &>(childComponentView).parent(this);
+  childComponentView.parent(this);
 
-  m_visual.InsertAt(static_cast<const CompositionBaseComponentView &>(childComponentView).Visual(), index);
+  m_visual.InsertAt(static_cast<CompositionBaseComponentView &>(childComponentView).Visual(), index);
 }
 
-void ScrollViewComponentView::unmountChildComponentView(
-    const IComponentView &childComponentView,
-    uint32_t index) noexcept {
+void ScrollViewComponentView::unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
   m_children.erase(std::next(m_children.begin(), index));
 
-  m_visual.Remove(static_cast<const CompositionBaseComponentView &>(childComponentView).Visual());
-  const_cast<IComponentView &>(childComponentView).parent(nullptr);
+  m_visual.Remove(static_cast<CompositionBaseComponentView &>(childComponentView).Visual());
+  childComponentView.parent(nullptr);
 }
 
 void ScrollViewComponentView::updateProps(

@@ -23,6 +23,7 @@
 #include <Fabric/Composition/CompositionViewComponentView.h>
 #include <Fabric/Composition/ImageComponentView.h>
 #include <Fabric/Composition/ParagraphComponentView.h>
+#include <Fabric/Composition/RootComponentView.h>
 #include <Fabric/Composition/ScrollViewComponentView.h>
 #include <Fabric/Composition/SwitchComponentView.h>
 #include <Fabric/Composition/TextInput/WindowsTextInputComponentView.h>
@@ -51,6 +52,8 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
     view = std::make_shared<WindowsTextInputComponentView>(compContext, tag, m_context);
   } else if (componentHandle == facebook::react::SwitchShadowNode::Handle()) {
     view = std::make_shared<SwitchComponentView>(compContext, tag, m_context);
+  } else if (componentHandle == facebook::react::RootShadowNode::Handle()) {
+    view = std::make_shared<RootComponentView>(compContext, tag);
   } else {
     view = std::make_shared<CompositionViewComponentView>(compContext, tag);
   }
