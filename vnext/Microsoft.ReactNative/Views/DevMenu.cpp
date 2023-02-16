@@ -7,8 +7,8 @@
 
 #include <winrt/Windows.ApplicationModel.DataTransfer.h>
 #include "HermesSamplingProfiler.h"
-#include "Modules/DevSettingsModule.h"
 #include "IReactDispatcher.h"
+#include "Modules/DevSettingsModule.h"
 
 #ifndef CORE_ABI
 #include <XamlUtils.h>
