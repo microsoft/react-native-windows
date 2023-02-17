@@ -17,7 +17,7 @@
 #ifndef CORE_ABI
 
 #ifdef USE_FABRIC
-#include <Fabric/Composition/CompositionUIService.h>
+#include <ReactCoreInjection.h>
 #include <Shobjidl.h>
 #include <Utils/Helpers.h>
 #include <winrt/Windows.UI.Popups.h>
@@ -93,8 +93,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
 
     auto msg = winrt::Windows::UI::Popups::MessageDialog(winrt::to_hstring(ss.str()), L"React Native Error");
     auto hwnd = reinterpret_cast<HWND>(
-        winrt::Microsoft::ReactNative::Composition::implementation::CompositionUIService::GetTopLevelWindowHandle(
-            m_propBag.Handle()));
+        winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::GetTopLevelWindowId(m_propBag.Handle()));
     auto initializeWithWindow{msg.as<::IInitializeWithWindow>()};
     initializeWithWindow->Initialize(hwnd);
     msg.Commands().Append(

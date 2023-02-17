@@ -14,11 +14,6 @@ static const ReactPropertyId<ICompositionContext> &CompositionContextPropertyId(
   return prop;
 }
 
-static const ReactPropertyId<uint64_t> &TopLevelHwndPropertyId() noexcept {
-  static const ReactPropertyId<uint64_t> prop{L"ReactNative.Composition", L"TopLevelHwnd"};
-  return prop;
-}
-
 void CompositionUIService::SetCompositionContext(
     IReactPropertyBag const &properties,
     ICompositionContext const &compositionContext) noexcept {
@@ -27,16 +22,6 @@ void CompositionUIService::SetCompositionContext(
 
 ICompositionContext CompositionUIService::GetCompositionContext(const IReactPropertyBag &properties) noexcept {
   return ReactPropertyBag(properties).Get(CompositionContextPropertyId());
-}
-
-uint64_t CompositionUIService::GetTopLevelWindowHandle(const IReactPropertyBag &properties) noexcept {
-  return ReactPropertyBag(properties).Get(TopLevelHwndPropertyId()).value_or(0);
-}
-
-void CompositionUIService::SetTopLevelWindowHandle(
-    const IReactPropertyBag &properties,
-    uint64_t windowHandle) noexcept {
-  ReactPropertyBag(properties).Set(TopLevelHwndPropertyId(), windowHandle);
 }
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

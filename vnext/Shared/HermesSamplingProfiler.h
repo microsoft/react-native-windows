@@ -5,6 +5,7 @@
 
 #include <ReactHost/React.h>
 #include <atomic>
+#include <future>
 #include <string>
 
 namespace Microsoft::ReactNative {

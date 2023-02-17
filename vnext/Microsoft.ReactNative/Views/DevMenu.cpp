@@ -2,10 +2,17 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
+
 #include "DevMenu.h"
-#include "DevMenuControl.h"
+
+#include <winrt/Windows.ApplicationModel.DataTransfer.h>
+#include "HermesSamplingProfiler.h"
 #include "IReactDispatcher.h"
 #include "Modules/DevSettingsModule.h"
+
+#ifndef CORE_ABI
+#include <XamlUtils.h>
+#include "DevMenuControl.h"
 #include "UI.Xaml.Controls.Primitives.h"
 #include "UI.Xaml.Controls.h"
 #include "UI.Xaml.Input.h"
@@ -14,13 +21,38 @@
 #include "Views/KeyboardEventHandler.h"
 #include "winrt/Windows.UI.Core.h"
 #include "winrt/Windows.UI.Xaml.Interop.h"
+#endif // CORE_ABI
 
-#include <winrt/Windows.ApplicationModel.DataTransfer.h>
-#include "HermesSamplingProfiler.h"
+#if defined(CORE_ABI) || defined(USE_FABRIC)
+#include <ReactCoreInjection.h>
+#include <Shobjidl.h>
+#include "winrt/Windows.UI.Popups.h"
+#endif
 
 using namespace winrt::Windows::ApplicationModel;
 
 namespace Microsoft::ReactNative {
+
+struct IDevMenu {
+  virtual void Show() noexcept = 0;
+};
+
+#ifndef CORE_ABI
+bool IsCtrlShiftD(winrt::Windows::System::VirtualKey key) noexcept {
+  return (
+      key == winrt::Windows::System::VirtualKey::D &&
+      KeyboardHelper::IsModifiedKeyPressed(
+          winrt::CoreWindow::GetForCurrentThread(), winrt::Windows::System::VirtualKey::Shift) &&
+      KeyboardHelper::IsModifiedKeyPressed(
+          winrt::CoreWindow::GetForCurrentThread(), winrt::Windows::System::VirtualKey::Control));
+}
+#endif // CORE_ABI
+
+React::ReactPropertyId<React::ReactNonAbiValue<std::shared_ptr<IDevMenu>>> DevMenuImplProperty() noexcept {
+  static React::ReactPropertyId<React::ReactNonAbiValue<std::shared_ptr<IDevMenu>>> propId{
+      L"ReactNative.DevMenuManager", L"DevMenuImpl"};
+  return propId;
+}
 
 React::ReactPropertyId<React::ReactNonAbiValue<std::shared_ptr<DevMenuManager>>> DevMenuManagerProperty() noexcept {
   static React::ReactPropertyId<React::ReactNonAbiValue<std::shared_ptr<DevMenuManager>>> propId{
@@ -34,25 +66,310 @@ React::ReactPropertyId<React::ReactNonAbiValue<Mso::VoidFunctor>> ConfigureBundl
   return propId;
 }
 
-/*static*/ void DevMenuManager::InitDevMenu(
-    Mso::CntPtr<Mso::React::IReactContext> const &reactContext,
-    Mso::VoidFunctor &&configureBundler) noexcept {
-  auto devMenu = std::make_shared<DevMenuManager>(reactContext);
-  devMenu->Init();
-  React::ReactPropertyBag(reactContext->Properties()).Set(DevMenuManagerProperty(), devMenu);
-  React::ReactPropertyBag(reactContext->Properties()).Set(ConfigureBundlerProperty(), std::move(configureBundler));
+void ToggleDirectDebugger(Mso::CntPtr<Mso::React::IReactContext> const &reactContext) noexcept {
+  Mso::React::ReactOptions::SetUseDirectDebugger(
+      reactContext->Properties(), !Mso::React::ReactOptions::UseDirectDebugger(reactContext->Properties()));
+  DevSettings::Reload(React::ReactPropertyBag(reactContext->Properties()));
 }
 
-bool IsCtrlShiftD(winrt::Windows::System::VirtualKey key) noexcept {
-  return (
-      key == winrt::Windows::System::VirtualKey::D &&
-      KeyboardHelper::IsModifiedKeyPressed(
-          winrt::CoreWindow::GetForCurrentThread(), winrt::Windows::System::VirtualKey::Shift) &&
-      KeyboardHelper::IsModifiedKeyPressed(
-          winrt::CoreWindow::GetForCurrentThread(), winrt::Windows::System::VirtualKey::Control));
+const wchar_t *DirectDebuggerLabel(Mso::CntPtr<Mso::React::IReactContext> const &reactContext) noexcept {
+  return Mso::React::ReactOptions::UseDirectDebugger(reactContext->Properties()) ? L"Disable Direct Debugging"
+                                                                                 : L"Enable Direct Debugging";
 }
+
+void ToggleBreakOnNextLine(Mso::CntPtr<Mso::React::IReactContext> const &reactContext) noexcept {
+  Mso::React::ReactOptions::SetDebuggerBreakOnNextLine(
+      reactContext->Properties(), !Mso::React::ReactOptions::DebuggerBreakOnNextLine(reactContext->Properties()));
+  DevSettings::Reload(React::ReactPropertyBag(reactContext->Properties()));
+}
+
+const wchar_t *BreakOnNextLineLabel(Mso::CntPtr<Mso::React::IReactContext> const &reactContext) noexcept {
+  return Mso::React::ReactOptions::DebuggerBreakOnNextLine(reactContext->Properties()) ? L"Disable Break on First Line"
+                                                                                       : L"Enable Break on First Line";
+}
+
+void ToggleFastRefresh(Mso::CntPtr<Mso::React::IReactContext> const &reactContext) noexcept {
+  Mso::React::ReactOptions::SetUseFastRefresh(
+      reactContext->Properties(), !Mso::React::ReactOptions::UseFastRefresh(reactContext->Properties()));
+  DevSettings::Reload(React::ReactPropertyBag(reactContext->Properties()));
+}
+
+winrt::fire_and_forget ToggleHermesProfiler(Mso::CntPtr<Mso::React::IReactContext> const &reactContext) noexcept {
+  if (!Microsoft::ReactNative::HermesSamplingProfiler::IsStarted()) {
+    Microsoft::ReactNative::HermesSamplingProfiler::Start(reactContext);
+  } else {
+    auto traceFilePath = co_await Microsoft::ReactNative::HermesSamplingProfiler::Stop(reactContext);
+    auto uiDispatcher = React::implementation::ReactDispatcher::GetUIDispatcher(reactContext->Properties());
+    uiDispatcher.Post([traceFilePath]() {
+      DataTransfer::DataPackage data;
+      data.SetText(winrt::to_hstring(traceFilePath));
+      DataTransfer::Clipboard::SetContentWithOptions(data, nullptr);
+    });
+  }
+}
+
+const wchar_t *FastRefreshLabel(Mso::CntPtr<Mso::React::IReactContext> const &reactContext) noexcept {
+  return Mso::React::ReactOptions::UseFastRefresh(reactContext->Properties()) ? L"Disable Fast Refresh"
+                                                                              : L"Enable Fast Refresh";
+}
+
+const wchar_t *HermesProfilerLabel(Mso::CntPtr<Mso::React::IReactContext> const &reactContext) noexcept {
+  return !Microsoft::ReactNative::HermesSamplingProfiler::IsStarted() ? L"Start Hermes sampling profiler"
+                                                                      : L"Stop and copy trace path to clipboard";
+}
+
+#ifndef CORE_ABI
+struct InAppXamlDevMenu : public IDevMenu, public std::enable_shared_from_this<InAppXamlDevMenu> {
+  InAppXamlDevMenu(Mso::CntPtr<Mso::React::IReactContext> const &reactContext) : m_context(reactContext) {}
+
+ private:
+  void Show() noexcept override {
+    winrt::Microsoft::ReactNative::DevMenuControl devMenu{};
+
+    devMenu.RemoteDebugText().Text(
+        Mso::React::ReactOptions::UseWebDebugger(m_context->Properties()) ? L"Disable Remote JS Debugging"
+                                                                          : L"Enable Remote JS Debugging");
+    devMenu.RemoteDebugDesc().Text(
+        L"When enabled runs the JS remotely in VSCode or Chrome based on what you attach to the packager.  This means that the JS may run with a different JS engine than it runs in on in the real application, in addition synchronous native module calls, and JSI native modules will not work.");
+
+    devMenu.FastRefreshText().Text(FastRefreshLabel(m_context));
+    if (Mso::React::ReactOptions::JsiEngine(m_context->Properties()) == Mso::React::JSIEngine::Hermes) {
+      devMenu.SamplingProfilerText().Text(HermesProfilerLabel(m_context));
+      devMenu.SamplingProfilerIcon().Glyph(
+          !Microsoft::ReactNative::HermesSamplingProfiler::IsStarted() ? L"\ue1e5" : L"\ue15b");
+
+      std::ostringstream os;
+      if (Microsoft::ReactNative::HermesSamplingProfiler::IsStarted()) {
+        os << "Hermes Sampling profiler is running!";
+      } else {
+        os << "Click to start.";
+      }
+
+      auto lastTraceFilePath = Microsoft::ReactNative::HermesSamplingProfiler::GetLastTraceFilePath();
+      if (!lastTraceFilePath.empty()) {
+        os << std::endl
+           << "Samples from last invocation are stored at " << lastTraceFilePath.c_str()
+           << "  (path copied to clipboard).";
+        os << std::endl << "Navigate to \"edge:\\tracing\" and load the trace file.";
+      }
+
+      devMenu.SamplingProfilerDescText().Text(winrt::to_hstring(os.str()));
+    }
+
+    devMenu.DirectDebugText().Text(DirectDebuggerLabel(m_context));
+    devMenu.DirectDebugDesc().Text(
+        L"If using Chakra, this will allow Visual Studio to be attached directly to the application using \"Script Debugging\" to debug the JS running directly in this app.\nIf using V8/Hermes, this will enable standard JS debugging tools such as VSCode to attach to the application.");
+
+    devMenu.BreakOnNextLineText().Text(BreakOnNextLineLabel(m_context));
+
+    m_reloadJSRevoker = devMenu.Reload().Click(
+        winrt::auto_revoke,
+        [wkThis = weak_from_this()](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
+          if (auto strongThis = wkThis.lock()) {
+            strongThis->Hide();
+            DevSettings::Reload(React::ReactPropertyBag(strongThis->m_context->Properties()));
+          }
+        });
+
+    m_remoteDebugJSRevoker = devMenu.RemoteDebug().Click(
+        winrt::auto_revoke,
+        [wkThis = weak_from_this()](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
+          if (auto strongThis = wkThis.lock()) {
+            strongThis->Hide();
+            Mso::React::ReactOptions::SetUseWebDebugger(
+                strongThis->m_context->Properties(),
+                !Mso::React::ReactOptions::UseWebDebugger(strongThis->m_context->Properties()));
+            DevSettings::Reload(React::ReactPropertyBag(strongThis->m_context->Properties()));
+          }
+        });
+
+    m_directDebuggingRevoker = devMenu.DirectDebug().Click(
+        winrt::auto_revoke,
+        [wkThis = weak_from_this()](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
+          if (auto strongThis = wkThis.lock()) {
+            strongThis->Hide();
+            ToggleDirectDebugger(strongThis->m_context);
+          }
+        });
+
+    m_breakOnNextLineRevoker = devMenu.BreakOnNextLine().Click(
+        winrt::auto_revoke,
+        [wkThis = weak_from_this()](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
+          if (auto strongThis = wkThis.lock()) {
+            strongThis->Hide();
+            ToggleBreakOnNextLine(strongThis->m_context);
+          }
+        });
+
+    m_fastRefreshRevoker = devMenu.FastRefresh().Click(
+        winrt::auto_revoke,
+        [wkThis = weak_from_this()](auto & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
+          if (auto strongThis = wkThis.lock()) {
+            strongThis->Hide();
+            ToggleFastRefresh(strongThis->m_context);
+          }
+        });
+
+    if (Mso::React::ReactOptions::JsiEngine(m_context->Properties()) == Mso::React::JSIEngine::Hermes) {
+      m_samplingProfilerRevoker = devMenu.SamplingProfiler().Click(
+          winrt::auto_revoke,
+          [wkThis = weak_from_this()](auto & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
+            if (auto strongThis = wkThis.lock()) {
+              strongThis->Hide();
+              ToggleHermesProfiler(strongThis->m_context);
+            }
+          });
+    } else {
+      devMenu.SamplingProfiler().Visibility(xaml::Visibility::Collapsed);
+    }
+
+    m_toggleInspectorRevoker = devMenu.Inspector().Click(
+        winrt::auto_revoke,
+        [wkThis = weak_from_this()](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
+          if (auto strongThis = wkThis.lock()) {
+            strongThis->Hide();
+            DevSettings::ToggleElementInspector(*(strongThis->m_context));
+          }
+        });
+
+    m_configBundlerRevoker = devMenu.ConfigBundler().Click(
+        winrt::auto_revoke,
+        [wkThis = weak_from_this()](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
+          if (auto strongThis = wkThis.lock()) {
+            strongThis->Hide();
+            React::ReactPropertyBag(strongThis->m_context->Properties()).Get(ConfigureBundlerProperty())();
+          }
+        });
+    // Only show Configure Bundler when connected to a bundler
+    devMenu.ConfigBundler().Visibility(
+        (Mso::React::ReactOptions::UseFastRefresh(m_context->Properties()) ||
+         Mso::React::ReactOptions::UseWebDebugger(m_context->Properties()))
+            ? xaml::Visibility::Visible
+            : xaml::Visibility::Collapsed);
+
+    m_cancelRevoker = devMenu.Cancel().Click(
+        winrt::auto_revoke,
+        [wkThis = weak_from_this()](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) {
+          if (auto strongThis = wkThis.lock()) {
+            strongThis->Hide();
+          }
+        });
+
+    m_flyout = xaml::Controls::Flyout{};
+    m_flyout.Content(devMenu);
+    if (Is19H1OrHigher()) {
+      // ShouldConstrainToRootBounds added in 19H1
+      m_flyout.ShouldConstrainToRootBounds(false);
+    }
+
+    xaml::UIElement root{nullptr};
+    auto xamlRoot = React::XamlUIService::GetXamlRoot(m_context->Properties());
+    if (xamlRoot) {
+      m_flyout.XamlRoot(xamlRoot);
+      root = xamlRoot.Content();
+    } else {
+      auto window = xaml::Window::Current();
+      root = window.Content();
+    }
+
+    m_flyout.LightDismissOverlayMode(xaml::Controls::LightDismissOverlayMode::On);
+    devMenu.XYFocusKeyboardNavigation(xaml::Input::XYFocusKeyboardNavigationMode::Enabled);
+
+    auto style = xaml::Style(winrt::xaml_typename<xaml::Controls::FlyoutPresenter>());
+    style.Setters().Append(xaml::Setter(
+        xaml::Controls::ScrollViewer::HorizontalScrollBarVisibilityProperty(),
+        winrt::box_value(xaml::Controls::ScrollBarVisibility::Disabled)));
+    style.Setters().Append(xaml::Setter(
+        xaml::Controls::ScrollViewer::VerticalScrollBarVisibilityProperty(),
+        winrt::box_value(xaml::Controls::ScrollBarVisibility::Disabled)));
+    style.Setters().Append(xaml::Setter(
+        xaml::Controls::ScrollViewer::HorizontalScrollModeProperty(),
+        winrt::box_value(xaml::Controls::ScrollMode::Disabled)));
+    style.Setters().Append(xaml::Setter(
+        xaml::Controls::ScrollViewer::VerticalScrollModeProperty(),
+        winrt::box_value(xaml::Controls::ScrollMode::Disabled)));
+
+    m_flyout.FlyoutPresenterStyle(style);
+    m_flyout.ShowAt(root.as<xaml::FrameworkElement>());
+  }
+
+  void Hide() noexcept {
+    if (!m_flyout)
+      return;
+    m_flyout.Hide();
+    m_flyout = nullptr;
+  }
+
+ private:
+  const Mso::CntPtr<Mso::React::IReactContext> m_context;
+  xaml::Controls::Flyout m_flyout{nullptr};
+  xaml::Controls::Button::Click_revoker m_remoteDebugJSRevoker{};
+  xaml::Controls::Button::Click_revoker m_cancelRevoker{};
+  xaml::Controls::Button::Click_revoker m_toggleInspectorRevoker{};
+  xaml::Controls::Button::Click_revoker m_configBundlerRevoker{};
+  xaml::Controls::Button::Click_revoker m_reloadJSRevoker{};
+  xaml::Controls::Button::Click_revoker m_fastRefreshRevoker{};
+  xaml::Controls::Button::Click_revoker m_directDebuggingRevoker{};
+  xaml::Controls::Button::Click_revoker m_breakOnNextLineRevoker{};
+  xaml::Controls::Button::Click_revoker m_samplingProfilerRevoker{};
+};
+#endif // CORE_ABI
+
+#if defined(CORE_ABI) || defined(USE_FABRIC)
+struct WindowsPopupMenuDevMenu : public IDevMenu, public std::enable_shared_from_this<WindowsPopupMenuDevMenu> {
+  WindowsPopupMenuDevMenu(Mso::CntPtr<Mso::React::IReactContext> const &reactContext) : m_context(reactContext) {}
+
+  void Show() noexcept override {
+    m_menu = winrt::Windows::UI::Popups::PopupMenu();
+
+    auto hwnd =
+        winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::GetTopLevelWindowId(m_context->Properties());
+    if (hwnd) {
+      auto initializeWithWindow{m_menu.as<::IInitializeWithWindow>()};
+      initializeWithWindow->Initialize(reinterpret_cast<HWND>(hwnd));
+    }
+
+    m_menu.Commands().Append(winrt::Windows::UI::Popups::UICommand(
+        L"Reload", [reactContext = m_context](winrt::Windows::UI::Popups::IUICommand const &) {
+          DevSettings::Reload(React::ReactPropertyBag(reactContext->Properties()));
+        }));
+
+    m_menu.Commands().Append(winrt::Windows::UI::Popups::UICommand(
+        DirectDebuggerLabel(m_context),
+        [context = m_context](winrt::Windows::UI::Popups::IUICommand const &) { ToggleDirectDebugger(context); }));
+
+    m_menu.Commands().Append(winrt::Windows::UI::Popups::UICommand(
+        BreakOnNextLineLabel(m_context),
+        [context = m_context](winrt::Windows::UI::Popups::IUICommand const &) { ToggleBreakOnNextLine(context); }));
+
+    m_menu.Commands().Append(winrt::Windows::UI::Popups::UICommand(
+        FastRefreshLabel(m_context),
+        [context = m_context](winrt::Windows::UI::Popups::IUICommand const &) { ToggleFastRefresh(context); }));
+
+    m_menu.Commands().Append(winrt::Windows::UI::Popups::UICommand(
+        L"Toggle Inspector", [context = m_context](winrt::Windows::UI::Popups::IUICommand const &) {
+          DevSettings::ToggleElementInspector(*context);
+        }));
+
+    if (Mso::React::ReactOptions::JsiEngine(m_context->Properties()) == Mso::React::JSIEngine::Hermes) {
+      m_menu.Commands().Append(winrt::Windows::UI::Popups::UICommand(
+          HermesProfilerLabel(m_context),
+          [context = m_context](winrt::Windows::UI::Popups::IUICommand const &) { ToggleHermesProfiler(context); }));
+    }
+
+    m_menu.ShowAsync({0, 0});
+  }
+
+ private:
+  winrt::Windows::UI::Popups::PopupMenu m_menu{nullptr};
+  const Mso::CntPtr<Mso::React::IReactContext> m_context;
+};
+#endif // defined(CORE_ABI) || defined(USE_FABRIC)
+
+DevMenuManager::DevMenuManager(Mso::CntPtr<Mso::React::IReactContext> const &reactContext) : m_context(reactContext) {}
 
 void DevMenuManager::Init() noexcept {
+#ifndef CORE_ABI
   auto uiDispatcher = React::implementation::ReactDispatcher::GetUIDispatcher(m_context->Properties());
   uiDispatcher.Post([weakThis = weak_from_this()]() {
     if (auto strongThis = weakThis.lock()) {
@@ -65,7 +382,7 @@ void DevMenuManager::Init() noexcept {
             strongThis->m_keyDownRevoker = rootContent.KeyDown(
                 winrt::auto_revoke, [context](const auto & /*sender*/, const xaml::Input::KeyRoutedEventArgs &args) {
                   if (IsCtrlShiftD(args.Key())) {
-                    DevMenuManager::Show(context->Properties());
+                    DevMenuManager::Show(context);
                   }
                 });
             return;
@@ -77,233 +394,57 @@ void DevMenuManager::Init() noexcept {
         strongThis->m_coreDispatcherAKARevoker = coreWindow.Dispatcher().AcceleratorKeyActivated(
             winrt::auto_revoke, [context](const auto & /*sender*/, const winrt::AcceleratorKeyEventArgs &args) {
               if (IsCtrlShiftD(args.VirtualKey())) {
-                DevMenuManager::Show(context->Properties());
+                DevMenuManager::Show(context);
               }
             });
       }
     }
   });
+#endif // CORE_ABI
 }
 
-/*static*/ void DevMenuManager::Show(React::IReactPropertyBag const &properties) noexcept {
-  (*React::ReactPropertyBag(properties).Get(DevMenuManagerProperty()))->CreateAndShowUI();
+/*static*/ void DevMenuManager::InitDevMenu(
+    Mso::CntPtr<Mso::React::IReactContext> const &reactContext,
+    Mso::VoidFunctor &&configureBundler) noexcept {
+  auto devMenuManager = std::make_shared<DevMenuManager>(reactContext);
+  devMenuManager->Init();
+  React::ReactPropertyBag(reactContext->Properties()).Set(DevMenuManagerProperty(), devMenuManager);
+  React::ReactPropertyBag(reactContext->Properties()).Set(ConfigureBundlerProperty(), std::move(configureBundler));
 }
 
-/*static*/ void DevMenuManager::Hide(React::IReactPropertyBag const &properties) noexcept {
-  (*React::ReactPropertyBag(properties).Get(DevMenuManagerProperty()))->Hide();
+std::shared_ptr<IDevMenu> GetOrCreateDevMenu(Mso::CntPtr<Mso::React::IReactContext> const &reactContext) noexcept {
+  return React::ReactPropertyBag(reactContext->Properties())
+      .GetOrCreate(
+          DevMenuImplProperty(),
+          [reactContext]() -> std::shared_ptr<IDevMenu> {
+#ifndef CORE_ABI
+            if (xaml::TryGetCurrentApplication()) {
+              auto devMenu = std::make_shared<InAppXamlDevMenu>(reactContext);
+              return devMenu;
+            } else
+#endif // CORE_ABI
+
+#if defined(CORE_ABI) || defined(USE_FABRIC)
+            {
+              auto devMenu = std::make_shared<WindowsPopupMenuDevMenu>(reactContext);
+              return devMenu;
+            }
+#endif
+            return nullptr;
+          })
+      .Value();
 }
 
-DevMenuManager::DevMenuManager(Mso::CntPtr<Mso::React::IReactContext> const &reactContext) : m_context(reactContext) {}
-
-void DevMenuManager::CreateAndShowUI() noexcept {
-  if (!Mso::React::ReactOptions::UseDeveloperSupport(m_context->Properties()))
+/*static*/ void DevMenuManager::Show(Mso::CntPtr<Mso::React::IReactContext> const &reactContext) noexcept {
+  if (!Mso::React::ReactOptions::UseDeveloperSupport(reactContext->Properties()))
     return;
 
-  winrt::Microsoft::ReactNative::DevMenuControl devMenu{};
-
-  devMenu.RemoteDebugText().Text(
-      Mso::React::ReactOptions::UseWebDebugger(m_context->Properties()) ? L"Disable Remote JS Debugging"
-                                                                        : L"Enable Remote JS Debugging");
-  devMenu.RemoteDebugDesc().Text(
-      L"When enabled runs the JS remotely in VSCode or Chrome based on what you attach to the packager.  This means that the JS may run with a different JS engine than it runs in on in the real application, in addition synchronous native module calls, and JSI native modules will not work.");
-
-  devMenu.FastRefreshText().Text(
-      Mso::React::ReactOptions::UseFastRefresh(m_context->Properties()) ? L"Disable Fast Refresh"
-                                                                        : L"Enable Fast Refresh");
-  if (Mso::React::ReactOptions::JsiEngine(m_context->Properties()) == Mso::React::JSIEngine::Hermes) {
-    devMenu.SamplingProfilerText().Text(
-        !Microsoft::ReactNative::HermesSamplingProfiler::IsStarted() ? L"Start Hermes sampling profiler"
-                                                                     : L"Stop and copy trace path to clipboard");
-    devMenu.SamplingProfilerIcon().Glyph(
-        !Microsoft::ReactNative::HermesSamplingProfiler::IsStarted() ? L"\ue1e5" : L"\ue15b");
-
-    std::ostringstream os;
-    if (Microsoft::ReactNative::HermesSamplingProfiler::IsStarted()) {
-      os << "Hermes Sampling profiler is running!";
-    } else {
-      os << "Click to start.";
-    }
-
-    auto lastTraceFilePath = Microsoft::ReactNative::HermesSamplingProfiler::GetLastTraceFilePath();
-    if (!lastTraceFilePath.empty()) {
-      os << std::endl
-         << "Samples from last invocation are stored at " << lastTraceFilePath.c_str()
-         << "  (path copied to clipboard).";
-      os << std::endl << "Navigate to \"edge:\\tracing\" and load the trace file.";
-    }
-
-    devMenu.SamplingProfilerDescText().Text(winrt::to_hstring(os.str()));
+  if (auto devMenu = GetOrCreateDevMenu(reactContext)) {
+    devMenu->Show();
   }
-
-  devMenu.DirectDebugText().Text(
-      Mso::React::ReactOptions::UseDirectDebugger(m_context->Properties()) ? L"Disable Direct Debugging"
-                                                                           : L"Enable Direct Debugging");
-  devMenu.DirectDebugDesc().Text(
-      L"If using Chakra, this will allow Visual Studio to be attached directly to the application using \"Script Debugging\" to debug the JS running directly in this app.\nIf using V8/Hermes, this will enable standard JS debugging tools such as VSCode to attach to the application.");
-
-  devMenu.BreakOnNextLineText().Text(
-      Mso::React::ReactOptions::DebuggerBreakOnNextLine(m_context->Properties()) ? L"Disable Break on First Line"
-                                                                                 : L"Enable Break on First Line");
-
-  m_reloadJSRevoker = devMenu.Reload().Click(
-      winrt::auto_revoke,
-      [wkThis = weak_from_this()](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
-        if (auto strongThis = wkThis.lock()) {
-          strongThis->Hide();
-          DevSettings::Reload(React::ReactPropertyBag(strongThis->m_context->Properties()));
-        }
-      });
-
-  m_remoteDebugJSRevoker = devMenu.RemoteDebug().Click(
-      winrt::auto_revoke,
-      [wkThis = weak_from_this()](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
-        if (auto strongThis = wkThis.lock()) {
-          strongThis->Hide();
-          Mso::React::ReactOptions::SetUseWebDebugger(
-              strongThis->m_context->Properties(),
-              !Mso::React::ReactOptions::UseWebDebugger(strongThis->m_context->Properties()));
-          DevSettings::Reload(React::ReactPropertyBag(strongThis->m_context->Properties()));
-        }
-      });
-
-  m_directDebuggingRevoker = devMenu.DirectDebug().Click(
-      winrt::auto_revoke,
-      [wkThis = weak_from_this()](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
-        if (auto strongThis = wkThis.lock()) {
-          strongThis->Hide();
-          Mso::React::ReactOptions::SetUseDirectDebugger(
-              strongThis->m_context->Properties(),
-              !Mso::React::ReactOptions::UseDirectDebugger(strongThis->m_context->Properties()));
-          DevSettings::Reload(React::ReactPropertyBag(strongThis->m_context->Properties()));
-        }
-      });
-
-  m_breakOnNextLineRevoker = devMenu.BreakOnNextLine().Click(
-      winrt::auto_revoke,
-      [wkThis = weak_from_this()](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
-        if (auto strongThis = wkThis.lock()) {
-          strongThis->Hide();
-          Mso::React::ReactOptions::SetDebuggerBreakOnNextLine(
-              strongThis->m_context->Properties(),
-              !Mso::React::ReactOptions::DebuggerBreakOnNextLine(strongThis->m_context->Properties()));
-          DevSettings::Reload(React::ReactPropertyBag(strongThis->m_context->Properties()));
-        }
-      });
-
-  m_fastRefreshRevoker = devMenu.FastRefresh().Click(
-      winrt::auto_revoke,
-      [wkThis = weak_from_this()](auto & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
-        if (auto strongThis = wkThis.lock()) {
-          strongThis->Hide();
-          Mso::React::ReactOptions::SetUseFastRefresh(
-              strongThis->m_context->Properties(),
-              !Mso::React::ReactOptions::UseFastRefresh(strongThis->m_context->Properties()));
-          DevSettings::Reload(React::ReactPropertyBag(strongThis->m_context->Properties()));
-        }
-      });
-
-  if (Mso::React::ReactOptions::JsiEngine(m_context->Properties()) == Mso::React::JSIEngine::Hermes) {
-    m_samplingProfilerRevoker = devMenu.SamplingProfiler().Click(
-        winrt::auto_revoke,
-        [wkThis = weak_from_this()](auto & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept
-        -> winrt::fire_and_forget {
-          if (auto strongThis = wkThis.lock()) {
-            strongThis->Hide();
-            if (!Microsoft::ReactNative::HermesSamplingProfiler::IsStarted()) {
-              Microsoft::ReactNative::HermesSamplingProfiler::Start(strongThis->m_context);
-            } else {
-              auto traceFilePath = co_await Microsoft::ReactNative::HermesSamplingProfiler::Stop(strongThis->m_context);
-              auto uiDispatcher =
-                  React::implementation::ReactDispatcher::GetUIDispatcher(strongThis->m_context->Properties());
-              uiDispatcher.Post([traceFilePath]() {
-                DataTransfer::DataPackage data;
-                data.SetText(winrt::to_hstring(traceFilePath));
-                DataTransfer::Clipboard::SetContentWithOptions(data, nullptr);
-              });
-            }
-          }
-        });
-  } else {
-    devMenu.SamplingProfiler().Visibility(xaml::Visibility::Collapsed);
-  }
-
-  m_toggleInspectorRevoker = devMenu.Inspector().Click(
-      winrt::auto_revoke,
-      [wkThis = weak_from_this()](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
-        if (auto strongThis = wkThis.lock()) {
-          strongThis->Hide();
-          DevSettings::ToggleElementInspector(*(strongThis->m_context));
-        }
-      });
-
-  m_configBundlerRevoker = devMenu.ConfigBundler().Click(
-      winrt::auto_revoke,
-      [wkThis = weak_from_this()](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
-        if (auto strongThis = wkThis.lock()) {
-          strongThis->Hide();
-          React::ReactPropertyBag(strongThis->m_context->Properties()).Get(ConfigureBundlerProperty())();
-        }
-      });
-  // Only show Configure Bundler when connected to a bundler
-  devMenu.ConfigBundler().Visibility(
-      (Mso::React::ReactOptions::UseFastRefresh(m_context->Properties()) ||
-       Mso::React::ReactOptions::UseWebDebugger(m_context->Properties()))
-          ? xaml::Visibility::Visible
-          : xaml::Visibility::Collapsed);
-
-  m_cancelRevoker = devMenu.Cancel().Click(
-      winrt::auto_revoke, [wkThis = weak_from_this()](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) {
-        if (auto strongThis = wkThis.lock()) {
-          strongThis->Hide();
-        }
-      });
-
-  m_flyout = xaml::Controls::Flyout{};
-  m_flyout.Content(devMenu);
-  if (Is19H1OrHigher()) {
-    // ShouldConstrainToRootBounds added in 19H1
-    m_flyout.ShouldConstrainToRootBounds(false);
-  }
-
-  xaml::UIElement root{nullptr};
-  auto xamlRoot = React::XamlUIService::GetXamlRoot(m_context->Properties());
-  if (xamlRoot) {
-    m_flyout.XamlRoot(xamlRoot);
-    root = xamlRoot.Content();
-  } else {
-    auto window = xaml::Window::Current();
-    root = window.Content();
-  }
-
-  m_flyout.LightDismissOverlayMode(xaml::Controls::LightDismissOverlayMode::On);
-  devMenu.XYFocusKeyboardNavigation(xaml::Input::XYFocusKeyboardNavigationMode::Enabled);
-
-  auto style = xaml::Style(winrt::xaml_typename<xaml::Controls::FlyoutPresenter>());
-  style.Setters().Append(xaml::Setter(
-      xaml::Controls::ScrollViewer::HorizontalScrollBarVisibilityProperty(),
-      winrt::box_value(xaml::Controls::ScrollBarVisibility::Disabled)));
-  style.Setters().Append(xaml::Setter(
-      xaml::Controls::ScrollViewer::VerticalScrollBarVisibilityProperty(),
-      winrt::box_value(xaml::Controls::ScrollBarVisibility::Disabled)));
-  style.Setters().Append(xaml::Setter(
-      xaml::Controls::ScrollViewer::HorizontalScrollModeProperty(),
-      winrt::box_value(xaml::Controls::ScrollMode::Disabled)));
-  style.Setters().Append(xaml::Setter(
-      xaml::Controls::ScrollViewer::VerticalScrollModeProperty(),
-      winrt::box_value(xaml::Controls::ScrollMode::Disabled)));
-
-  m_flyout.FlyoutPresenterStyle(style);
-  m_flyout.ShowAt(root.as<xaml::FrameworkElement>());
 
   // Notify instance that dev menu is shown -- This is used to trigger a connection to dev tools
-  m_context->CallJSFunction("RCTNativeAppEventEmitter", "emit", folly::dynamic::array("RCTDevMenuShown"));
-}
-
-void DevMenuManager::Hide() noexcept {
-  if (!m_flyout)
-    return;
-  m_flyout.Hide();
-  m_flyout = nullptr;
+  reactContext->CallJSFunction("RCTNativeAppEventEmitter", "emit", folly::dynamic::array("RCTDevMenuShown"));
 }
 
 } // namespace Microsoft::ReactNative

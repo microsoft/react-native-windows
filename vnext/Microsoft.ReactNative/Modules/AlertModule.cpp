@@ -15,7 +15,7 @@
 #include "Utils/Helpers.h"
 
 #ifdef USE_FABRIC
-#include <Fabric/Composition/CompositionUIService.h>
+#include <ReactCoreInjection.h>
 #include <Shobjidl.h>
 #include <winrt/Windows.UI.Popups.h>
 #endif
@@ -187,7 +187,7 @@ void Alert::ProcessPendingAlertRequestsMessageDialog() noexcept {
     messageDialog.CancelCommandIndex(0xffffffff /* -1 doesn't allow cancelation of message dialog */);
   }
 
-  auto hwnd = winrt::Microsoft::ReactNative::Composition::implementation::CompositionUIService::GetTopLevelWindowHandle(
+  auto hwnd = winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::GetTopLevelWindowId(
       m_context.Properties().Handle());
   if (hwnd) {
     auto initializeWithWindow{messageDialog.as<::IInitializeWithWindow>()};

@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "[Fabric] Fix Alert crash when not using XAML",
+  "comment": "[Fabric] Fix debug menu crash when not using Xaml",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
   "dependentChangeType": "patch"

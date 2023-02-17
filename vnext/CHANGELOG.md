@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 15 Feb 2023 06:22:15 GMT and should not be manually modified.
+This log was last generated on Thu, 16 Feb 2023 06:15:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.616
+
+Thu, 16 Feb 2023 06:15:04 GMT
+
+### Changes
+
+- [Fabric] Fix Alert crash when not using XAML (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.615
 
