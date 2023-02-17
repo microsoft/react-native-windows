@@ -19,6 +19,7 @@
 #include <react/renderer/components/text/TextShadowNode.h>
 #include <react/renderer/components/view/ViewShadowNode.h>
 
+#include <Fabric/Composition/ActivityIndicatorComponentView.h>
 #include <Fabric/Composition/CompositionHelpers.h>
 #include <Fabric/Composition/CompositionViewComponentView.h>
 #include <Fabric/Composition/ImageComponentView.h>
@@ -51,6 +52,8 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
     view = std::make_shared<WindowsTextInputComponentView>(compContext, tag, m_context);
   } else if (componentHandle == facebook::react::SwitchShadowNode::Handle()) {
     view = std::make_shared<SwitchComponentView>(compContext, tag, m_context);
+  } else if (componentHandle == facebook::react::ActivityIndicatorViewShadowNode::Handle()) {
+    view = std::make_shared<ActivityIndicatorComponentView>(compContext, tag, m_context);
   } else {
     view = std::make_shared<CompositionViewComponentView>(compContext, tag);
   }
