@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "[Fabric] Conditionally exclude fabric files from Shared.vcxitems",
+  "packageName": "react-native-windows",
+  "email": "email not defined",
+  "dependentChangeType": "patch"
+}
