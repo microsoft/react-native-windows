@@ -7,6 +7,7 @@
 #include <UI.Xaml.Markup.h>
 #include <UI.Xaml.Media.h>
 #include <Utils/ValueUtils.h>
+#include <windows.foundation.h>
 #include <winrt/Windows.UI.ViewManagement.h>
 #include "Unicode.h"
 #include "XamlUtils.h"
@@ -315,11 +316,18 @@ REACTWINDOWS_API_(winrt::TimeSpan) TimeSpanFromMs(double ms) {
 
 // C# provides System.Uri.TryCreate, but no native equivalent seems to exist
 winrt::Uri UriTryCreate(winrt::param::hstring const &uri) {
-  try {
-    return winrt::Uri(uri);
-  } catch (...) {
-    return winrt::Uri(nullptr);
+  auto factory = winrt::
+      get_activation_factory<winrt::Windows::Foundation::Uri, winrt::Windows::Foundation::IUriRuntimeClassFactory>();
+  auto abiFactory = static_cast<ABI::Windows::Foundation::IUriRuntimeClassFactory *>(winrt::get_abi(factory));
+
+  const winrt::hstring &localUri = uri;
+  winrt::Windows::Foundation::Uri returnValue{nullptr};
+  if (FAILED(abiFactory->CreateUri(
+          static_cast<HSTRING>(winrt::get_abi(localUri)),
+          reinterpret_cast<ABI::Windows::Foundation::IUriRuntimeClass **>(winrt::put_abi(returnValue))))) {
+    return winrt::Windows::Foundation::Uri{nullptr};
   }
+  return returnValue;
 }
 
 bool IsValidOptionalColorValue(const winrt::Microsoft::ReactNative::JSValue &v) {
