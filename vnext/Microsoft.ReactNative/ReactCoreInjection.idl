@@ -92,6 +92,16 @@ DOC_STRING("Settings per each IReactViewHost associated with an IReactHost insta
 
     DOC_STRING("Override platform name. This will change the platform used when requesting bundles from metro. Default: \"windows\"")
     static void SetPlatformNameOverride(IReactPropertyBag properties, String platformName);
+    
+    DOC_STRING(
+      "Gets the window handle HWND (as an UInt64) for the active top level application window.")
+    static UInt64 GetTopLevelWindowId(IReactPropertyBag properties);
+
+    DOC_STRING(
+      "Sets the window handle HWND (as an UInt64) for the active top level application window."
+      "This must be manually provided to the @ReactInstanceSettings object when using ReactNativeWindows"
+      "without XAML for certain APIs work correctly.")
+    static void SetTopLevelWindowId(IReactPropertyBag properties, UInt64 windowId);
   }
 
 

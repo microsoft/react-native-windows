@@ -556,7 +556,6 @@
     <ClCompile Include="Views\ActivityIndicatorViewManager.cpp" />
     <ClCompile Include="Views\ConfigureBundlerDlg.cpp" />
     <ClCompile Include="Views\ControlViewManager.cpp" />
-    <ClCompile Include="Views\DevMenu.cpp" />
     <ClCompile Include="Views\DynamicAutomationPeer.cpp" />
     <ClCompile Include="Views\DynamicAutomationProperties.cpp" />
     <ClCompile Include="Views\DynamicValueProvider.cpp" />
