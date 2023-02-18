@@ -16,7 +16,7 @@ import type {
   NativeModuleSchema,
   Nullable,
   SchemaType,
-} from 'react-native-tscodegen';
+} from '@react-native/codegen/lib/CodegenSchema';
 
 interface CodegenNativeModuleSchema extends NativeModuleSchema {
   optionalTurboModule?: boolean;
@@ -214,8 +214,8 @@ export function generateTypeScript(
     if (nativeModule.type === 'NativeModule') {
       console.log(`Generating ${preferredModuleName}Spec.g.ts`);
 
-      const aliasCode = Object.keys(nativeModule.aliases)
-        .map(name => translateAlias(name, nativeModule.aliases[name]))
+      const aliasCode = Object.keys(nativeModule.aliasMap)
+        .map(name => translateAlias(name, nativeModule.aliasMap[name]))
         .join('');
 
       const constantType = tryGetConstantType(nativeModule);

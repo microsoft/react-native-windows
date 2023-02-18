@@ -10,7 +10,7 @@ import type {
   NativeModuleFunctionTypeAnnotation,
   NativeModulePropertyShape,
   NativeModuleSchema,
-} from 'react-native-tscodegen';
+} from '@react-native/codegen/lib/CodegenSchema';
 import {AliasMap} from './AliasManaging';
 import {translateArgs, translateSpecArgs} from './ParamTypes';
 import {translateImplReturnType, translateSpecReturnType} from './ReturnTypes';
