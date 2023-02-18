@@ -15,7 +15,7 @@ import type {
   NativeModuleParamTypeAnnotation,
   NativeModuleUnionTypeAnnotation,
   Nullable,
-} from 'react-native-tscodegen';
+} from '@react-native/codegen/lib/CodegenSchema';
 import {
   AliasMap,
   getAliasCppName,
