@@ -131,27 +131,6 @@
       "issue": 4054
     },
     {
-      "type": "patch",
-      "file": "src/babel-plugin-codegen/GenerateViewConfigJs.js",
-      "baseFile": "packages/react-native-codegen/src/generators/components/GenerateViewConfigJs.js",
-      "baseHash": "5eac953690e0c735aea066e3c3a92a751da6f00d",
-      "issue": 5430
-    },
-    {
-      "type": "patch",
-      "file": "src/babel-plugin-codegen/index.js",
-      "baseFile": "packages/babel-plugin-codegen/index.js",
-      "baseHash": "b0bebaa61feb2808e94aef543978f9f47b0c90b0",
-      "issue": 5430
-    },
-    {
-      "type": "patch",
-      "file": "src/babel-plugin-codegen/package.json",
-      "baseFile": "packages/babel-plugin-codegen/package.json",
-      "baseHash": "709b8cc211129e1d3188b689b8af7df1653a064b",
-      "issue": 5430
-    },
-    {
       "type": "derived",
       "file": "src/index.windows.js",
       "baseFile": "index.js",

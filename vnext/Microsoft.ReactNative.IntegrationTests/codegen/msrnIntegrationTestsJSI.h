@@ -15,7 +15,8 @@
 namespace facebook {
 namespace react {
 
-class JSI_EXPORT NativeMySimpleTurboModuleCxxCxxSpecJSI : public TurboModule {
+
+  class JSI_EXPORT NativeMySimpleTurboModuleCxxCxxSpecJSI : public TurboModule {
 protected:
   NativeMySimpleTurboModuleCxxCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
 
@@ -148,7 +149,8 @@ private:
   Delegate delegate_;
 };
 
-class JSI_EXPORT NativeMyTrivialTurboModuleCxxSpecJSI : public TurboModule {
+
+  class JSI_EXPORT NativeMyTrivialTurboModuleCxxSpecJSI : public TurboModule {
 protected:
   NativeMyTrivialTurboModuleCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
 
