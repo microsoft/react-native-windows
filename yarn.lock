@@ -1643,7 +1643,7 @@
     "@types/yargs" "^16.0.0"
     chalk "^4.0.0"
 
-"@jest/types@^29.2.1", "@jest/types@^29.3.1", "@jest/types@^29.4.2", "@jest/types@^29.4.3":
+"@jest/types@^29.2.1", "@jest/types@^29.3.1", "@jest/types@^29.4.3":
   version "29.4.3"
   resolved "https://registry.yarnpkg.com/@jest/types/-/types-29.4.3.tgz#9069145f4ef09adf10cec1b2901b2d390031431f"
   integrity sha512-bPYfw8V65v17m2Od1cv44FH+SiKW7w2Xu7trhcdTLUmSv85rfKsP+qXSjO4KGJr4dtPSzl/gvslZBXctf1qGEA==
@@ -3883,9 +3883,9 @@ bcrypt-pbkdf@^1.0.0:
     tweetnacl "^0.14.3"
 
 beachball@^2.20.0:
-  version "2.31.10"
-  resolved "https://registry.yarnpkg.com/beachball/-/beachball-2.31.10.tgz#6252352c1ab4395f50e6aca1e49e695aa78387f6"
-  integrity sha512-niUkGlEsV2PsC0URKYb5d5lMFcfOxlSPApxGE7yQdNOGg1MD6lTaycDZTlNNuUZBgTqjy3XoEU919lZRTfyN0g==
+  version "2.31.11"
+  resolved "https://registry.yarnpkg.com/beachball/-/beachball-2.31.11.tgz#66cb7f27c6045186af41ad1c7bd8a783c1308877"
+  integrity sha512-FQh5bwTLN4ZcTQS8AMS4YgHq9AdtrHw1TKp2YR5X+kSL1tZZST/BQNpnSqO10r9U+5Gcn7X1zSMXOZoCZH1kiA==
   dependencies:
     cosmiconfig "^7.0.0"
     execa "^5.0.0"
