@@ -1643,7 +1643,7 @@
     "@types/yargs" "^16.0.0"
     chalk "^4.0.0"
 
-"@jest/types@^29.2.1", "@jest/types@^29.3.1", "@jest/types@^29.4.2", "@jest/types@^29.4.3":
+"@jest/types@^29.2.1", "@jest/types@^29.3.1", "@jest/types@^29.4.3":
   version "29.4.3"
   resolved "https://registry.yarnpkg.com/@jest/types/-/types-29.4.3.tgz#9069145f4ef09adf10cec1b2901b2d390031431f"
   integrity sha512-bPYfw8V65v17m2Od1cv44FH+SiKW7w2Xu7trhcdTLUmSv85rfKsP+qXSjO4KGJr4dtPSzl/gvslZBXctf1qGEA==
@@ -2243,9 +2243,9 @@
   integrity sha512-xWQthnyKd+H22TBqeJUTFebsyWAAwzUb7EQCT8F/WMZsS1sv5UG+2cM/cU9/2HEbVZgxHYuLIi915WznjKPvlg==
 
 "@react-native/gradle-plugin@^0.72.2":
-  version "0.72.2"
-  resolved "https://registry.yarnpkg.com/@react-native/gradle-plugin/-/gradle-plugin-0.72.2.tgz#387d3a91658f0a6a345474416e4b8e5ff18ee1d2"
-  integrity sha512-cmnLrIzcerjj5mm2w1o1vfoweGXSpXk+TNVjQvIAPRWl8JxYkWkJNbDOoLy1hhtGz1hKY00vD5h9m/cBxwKkQQ==
+  version "0.72.4"
+  resolved "https://registry.yarnpkg.com/@react-native/gradle-plugin/-/gradle-plugin-0.72.4.tgz#d830abb25d1c4bbfc68faf4260496006475a52b6"
+  integrity sha512-jkx7FzGY1GWY6WffHuwrdbKxGHcN2nJFTrS/G4KeoFFbX9vbqa+vI69wWV3R2+hEuVERMJkdI3AUVIoTWbSmFQ==
 
 "@react-native/js-polyfills@^0.72.0":
   version "0.72.0"
