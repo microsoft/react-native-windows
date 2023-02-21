@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 15 Feb 2023 06:22:16 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.182",
+      "version": "0.0.0-canary.182",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "d61980e7b6a1d8d8dd6f3076054029b6501624ee",
+            "comment": "LogBox should be using a monospace font"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 09 Feb 2023 06:16:41 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.181",
       "version": "0.0.0-canary.181",

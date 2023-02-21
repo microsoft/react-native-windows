@@ -1,8 +1,26 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 11 Feb 2023 06:14:16 GMT and should not be manually modified.
+This log was last generated on Thu, 16 Feb 2023 06:15:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.616
+
+Thu, 16 Feb 2023 06:15:04 GMT
+
+### Changes
+
+- [Fabric] Fix Alert crash when not using XAML (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.615
+
+Wed, 15 Feb 2023 06:22:15 GMT
+
+### Changes
+
+- LogBox should be using a monospace font (30809111+acoates-ms@users.noreply.github.com)
+- Allow some usage of wstring when using spec files (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] MouseEnter/Leave events to align with paper (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.614
 

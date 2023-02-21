@@ -214,10 +214,6 @@ facebook::react::Tag SwitchComponentView::hitTest(facebook::react::Point pt, fac
   return -1;
 }
 
-facebook::react::SharedTouchEventEmitter SwitchComponentView::touchEventEmitter() noexcept {
-  return m_eventEmitter;
-}
-
 winrt::Microsoft::ReactNative::Composition::IVisual SwitchComponentView::Visual() const noexcept {
   return m_visual;
 }

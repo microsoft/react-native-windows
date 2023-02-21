@@ -33,6 +33,8 @@ struct CompositionBaseComponentView : public IComponentView {
   IComponentView *parent() const noexcept override;
   void onFocusLost() noexcept override;
   void onFocusGained() noexcept override;
+  facebook::react::SharedTouchEventEmitter touchEventEmitter() noexcept override;
+  facebook::react::SharedTouchEventEmitter touchEventEmitterAtPoint(facebook::react::Point pt) noexcept override;
 
   facebook::react::Tag tag() const noexcept override;
 
@@ -96,7 +98,6 @@ struct CompositionViewComponentView : public CompositionBaseComponentView {
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
   void finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept override;
   void prepareForRecycle() noexcept override;
-  facebook::react::SharedTouchEventEmitter touchEventEmitter() noexcept override;
 
   facebook::react::Props::Shared props() noexcept override;
 

@@ -47,6 +47,7 @@ struct IComponentView {
   virtual RECT getClientRect() const noexcept = 0;
   virtual void onFocusLost() noexcept = 0;
   virtual void onFocusGained() noexcept = 0;
+  virtual facebook::react::SharedTouchEventEmitter touchEventEmitterAtPoint(facebook::react::Point pt) noexcept = 0;
   virtual facebook::react::SharedTouchEventEmitter touchEventEmitter() noexcept = 0;
   virtual facebook::react::Tag tag() const noexcept = 0;
   virtual facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt) const noexcept = 0;

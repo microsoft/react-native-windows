@@ -6,7 +6,7 @@
 
 'use strict';
 
-import type {SchemaType} from 'react-native-tscodegen';
+import type {SchemaType} from '@react-native/codegen/lib/CodegenSchema';
 import {AliasMap, setPreferredModuleName} from './AliasManaging';
 import {createAliasMap, generateAliases} from './AliasGen';
 import {generateValidateConstants} from './ValidateConstants';
@@ -71,7 +71,7 @@ export function createNM2Generator({
         console.log(`Generating Native${preferredModuleName}Spec.g.h`);
 
         // copy all explicit to a map
-        const aliases: AliasMap = createAliasMap(nativeModule.aliases);
+        const aliases: AliasMap = createAliasMap(nativeModule.aliasMap);
 
         // prepare methods
         const methods = generateValidateMethods(nativeModule, aliases);
