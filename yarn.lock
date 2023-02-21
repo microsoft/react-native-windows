@@ -2216,9 +2216,9 @@
     eslint-plugin-react-native "^4.0.0"
 
 "@react-native/eslint-plugin-specs@^0.72.1":
-  version "0.72.1"
-  resolved "https://registry.yarnpkg.com/@react-native/eslint-plugin-specs/-/eslint-plugin-specs-0.72.1.tgz#6af0f25d9347f6500d8de433a44b07b2306ffff8"
-  integrity sha512-6YCMEnO7lXhEC7l8ZbgQsh+udlxTacBjYJqPnLpCEp7uDHmOf6L39qHwvXO5Im0Ch5mQtBF9pLxUapXlie331A==
+  version "0.72.2"
+  resolved "https://registry.yarnpkg.com/@react-native/eslint-plugin-specs/-/eslint-plugin-specs-0.72.2.tgz#020d04ad8fa109d7a134379998943d682dba1646"
+  integrity sha512-a69Kfg5JtVQDp6keo4dXfgUliT3r5WKCrHwbFeVNiTqX3k/0DuKbF7wUOxpqZdZa3XyS1/w5euDsWKCbeBnVKg==
   dependencies:
     "@babel/core" "^7.20.0"
     "@babel/eslint-parser" "^7.19.0"
