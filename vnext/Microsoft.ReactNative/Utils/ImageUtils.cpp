@@ -3,7 +3,6 @@
 
 #include "pch.h"
 #include "ImageUtils.h"
-#include "ValueUtils.h"
 
 #include <Shared/cdebug.h>
 #include <Utils/CppWinrtLessExceptions.h>
@@ -137,6 +136,22 @@ winrt::IAsyncOperation<winrt::IRandomAccessStream> GetImageMemoryStreamAsync(Rea
     default: // ImageSourceType::Uri
       co_return nullptr;
   }
+}
+
+// C# provides System.Uri.TryCreate, but no native equivalent seems to exist
+winrt::Uri UriTryCreate(winrt::param::hstring const &uri) {
+  auto factory = winrt::
+      get_activation_factory<winrt::Windows::Foundation::Uri, winrt::Windows::Foundation::IUriRuntimeClassFactory>();
+  auto abiFactory = static_cast<ABI::Windows::Foundation::IUriRuntimeClassFactory *>(winrt::get_abi(factory));
+
+  const winrt::hstring &localUri = uri;
+  winrt::Windows::Foundation::Uri returnValue{nullptr};
+  if (FAILED(abiFactory->CreateUri(
+          static_cast<HSTRING>(winrt::get_abi(localUri)),
+          reinterpret_cast<ABI::Windows::Foundation::IUriRuntimeClass **>(winrt::put_abi(returnValue))))) {
+    return winrt::Windows::Foundation::Uri{nullptr};
+  }
+  return returnValue;
 }
 
 } // namespace Microsoft::ReactNative

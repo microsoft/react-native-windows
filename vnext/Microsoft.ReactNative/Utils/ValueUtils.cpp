@@ -314,22 +314,6 @@ REACTWINDOWS_API_(winrt::TimeSpan) TimeSpanFromMs(double ms) {
   return dur;
 }
 
-// C# provides System.Uri.TryCreate, but no native equivalent seems to exist
-winrt::Uri UriTryCreate(winrt::param::hstring const &uri) {
-  auto factory = winrt::
-      get_activation_factory<winrt::Windows::Foundation::Uri, winrt::Windows::Foundation::IUriRuntimeClassFactory>();
-  auto abiFactory = static_cast<ABI::Windows::Foundation::IUriRuntimeClassFactory *>(winrt::get_abi(factory));
-
-  const winrt::hstring &localUri = uri;
-  winrt::Windows::Foundation::Uri returnValue{nullptr};
-  if (FAILED(abiFactory->CreateUri(
-          static_cast<HSTRING>(winrt::get_abi(localUri)),
-          reinterpret_cast<ABI::Windows::Foundation::IUriRuntimeClass **>(winrt::put_abi(returnValue))))) {
-    return winrt::Windows::Foundation::Uri{nullptr};
-  }
-  return returnValue;
-}
-
 bool IsValidOptionalColorValue(const winrt::Microsoft::ReactNative::JSValue &v) {
   return v.Type() == winrt::Microsoft::ReactNative::JSValueType::Null || IsValidColorValue(v);
 }
