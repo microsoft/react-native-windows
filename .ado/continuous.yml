@@ -15,7 +15,7 @@ stages:
         variables:
           - template: variables/vs2019.yml
         pool:
-          vmImage: rnw-img-vs2022
+          vmImage: windows-2019
         steps:
           - template: templates/configure-git.yml
 

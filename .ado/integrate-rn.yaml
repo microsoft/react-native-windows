@@ -14,7 +14,7 @@ variables:
   - group: RNW Secrets
 
 pool:
-  vmImage: $(VmImage)
+  vmImage: windows-2019
 
 jobs:
   - job: IntegrateRN

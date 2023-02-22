@@ -18,7 +18,7 @@ stages:
         variables:
           - template: variables/vs2019.yml
         pool:
-          vmImage: rnw-img-node16
+          vmImage: windows-2019
         steps:
           - task: powershell@2
             name: checkPayload
