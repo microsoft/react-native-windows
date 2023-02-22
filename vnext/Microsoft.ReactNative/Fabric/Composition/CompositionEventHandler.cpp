@@ -197,7 +197,7 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
   auto itCurrentlyHoveredViews = m_currentlyHoveredViewsPerPointer.find(pointerId);
   if (itCurrentlyHoveredViews != m_currentlyHoveredViewsPerPointer.end()) {
     for (auto &taggedView : itCurrentlyHoveredViews->second) {
-      if (auto &view = taggedView.view()) {
+      if (auto view = taggedView.view()) {
         currentlyHoveredViews.push_back(view.get());
       }
     }

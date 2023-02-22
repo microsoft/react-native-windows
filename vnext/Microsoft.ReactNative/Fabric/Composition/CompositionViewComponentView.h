@@ -65,6 +65,8 @@ struct CompositionBaseComponentView : public IComponentView {
       const facebook::react::ViewProps &viewProps) noexcept;
   void UpdateCenterPropertySet() noexcept;
 
+  // STICK UiaProvider here? Unify RootView UIA object creation, create nav helper, implement fragment methods
+  IInspectable m_uiaProvider;
   winrt::Microsoft::ReactNative::Composition::ICompositionContext m_compContext;
   comp::CompositionPropertySet m_centerPropSet{nullptr};
   const facebook::react::Tag m_tag;

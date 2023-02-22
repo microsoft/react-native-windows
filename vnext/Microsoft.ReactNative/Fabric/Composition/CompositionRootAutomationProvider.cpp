@@ -119,6 +119,13 @@ HRESULT __stdcall CompositionRootAutomationProvider::Navigate(
 
   *pRetVal = nullptr;
 
+  if (!m_weakRootControl)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  auto strongRootControl = m_weakRootControl.get();
+
+
+
   return S_OK;
 }
 

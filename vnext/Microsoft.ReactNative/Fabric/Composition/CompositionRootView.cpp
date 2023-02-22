@@ -145,6 +145,7 @@ void CompositionRootView::ScaleFactor(double value) noexcept {
 }
 
 IInspectable CompositionRootView::GetUiaProvider(uint64_t hwnd) noexcept {
+  // ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties())
   if (m_compositionUiaProvider == nullptr) {
     m_compositionUiaProvider =
         winrt::make<CompositionRootAutomationProvider>(this->get_weak(), reinterpret_cast<HWND>(hwnd));
