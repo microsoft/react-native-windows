@@ -2,6 +2,57 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Wed, 22 Feb 2023 06:14:08 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.51",
+      "version": "0.0.0-canary.51",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "aaf48a309a2725bb12a1ed99f341bbfdcdf1ab64",
+            "comment": "Fix code to handle newer version of @react-native/codegen"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 10 Feb 2023 06:15:30 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.50",
+      "version": "0.0.0-canary.50",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "6a6a622535f81ef0f588bade0a7efc5383fc0924",
+            "comment": "codegen-windows --check always fails"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 09 Feb 2023 06:16:42 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.49",
+      "version": "0.0.0-canary.49",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "5b8e65a0caaa771a5e2108c884e1b244af1bb4e9",
+            "comment": "Bump typescript version"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.14",
+            "commit": "e539adbf420cf18f03070ad00cd3137dfbfab850"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 11 Jan 2023 06:15:29 GMT",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.48",
       "version": "0.0.0-canary.48",

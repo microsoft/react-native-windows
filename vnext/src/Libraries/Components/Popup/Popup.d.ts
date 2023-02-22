@@ -4,8 +4,11 @@
  * @format
  */
 
-import React from 'react';
-import {ViewProps} from 'react-native';
+import type * as React from 'react';
+
+import type {ViewProps} from '../View/ViewPropTypes';
+import type {Constructor} from '../../../types/private/Utilities';
+import type {NativeMethods} from '../../../types/public/ReactNativeTypes';
 
 export interface IPopupProps extends ViewProps {
   isOpen?: boolean;
@@ -31,3 +34,8 @@ export interface IPopupProps extends ViewProps {
   onDismiss?: () => void;
   testID?: string;
 }
+
+declare class PopupComponent extends React.Component<IPopupProps> {}
+declare const PopupBase: Constructor<NativeMethods> & typeof PopupComponent;
+
+export class Popup extends PopupBase {}

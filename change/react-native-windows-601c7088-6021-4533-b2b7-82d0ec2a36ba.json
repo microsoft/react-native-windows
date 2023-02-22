@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add root UIA provider",
-  "packageName": "react-native-windows",
-  "email": "adrum@microsoft.com",
-  "dependentChangeType": "patch"
-}

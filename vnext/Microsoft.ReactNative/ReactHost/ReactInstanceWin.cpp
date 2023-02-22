@@ -35,8 +35,8 @@
 #include "DynamicWriter.h"
 #ifndef CORE_ABI
 #include "ConfigureBundlerDlg.h"
-#include "DevMenu.h"
 #endif
+#include "DevMenu.h"
 #include "IReactContext.h"
 #include "IReactDispatcher.h"
 #ifndef CORE_ABI
@@ -255,6 +255,7 @@ ReactInstanceWin::ReactInstanceWin(
                                                                onDestroyed = m_options.OnInstanceDestroyed,
                                                                reactContext = m_reactContext]() noexcept {
         whenLoaded.TryCancel(); // It only has an effect if whenLoaded was not set before
+        facebook::react::HermesRuntimeHolder::storeTo(ReactPropertyBag(reactContext->Properties()), nullptr);
         if (onDestroyed) {
           onDestroyed.Get()->Invoke(reactContext);
         }
@@ -402,11 +403,13 @@ void ReactInstanceWin::Initialize() noexcept {
 #ifndef CORE_ABI
   // InitUIManager uses m_legacyReactInstance
   InitUIManager();
+#endif
 
   Microsoft::ReactNative::DevMenuManager::InitDevMenu(m_reactContext, [weakReactHost = m_weakReactHost]() noexcept {
+#ifndef CORE_ABI
     Microsoft::ReactNative::ShowConfigureBundlerDialog(weakReactHost);
+#endif // CORE_ABI
   });
-#endif
 
   m_uiQueue->Post([this, weakThis = Mso::WeakPtr{this}]() noexcept {
     // Objects that must be created on the UI thread
@@ -446,16 +449,12 @@ void ReactInstanceWin::Initialize() noexcept {
                   strongThis->m_reactContext->Properties());
           devSettings->waitingForDebuggerCallback = GetWaitingForDebuggerCallback();
           devSettings->debuggerAttachCallback = GetDebuggerAttachCallback();
-
-#ifndef CORE_ABI
           devSettings->showDevMenuCallback = [weakThis]() noexcept {
             if (auto strongThis = weakThis.GetStrongPtr()) {
-              strongThis->m_uiQueue->Post([context = strongThis->m_reactContext]() {
-                Microsoft::ReactNative::DevMenuManager::Show(context->Properties());
-              });
+              strongThis->m_uiQueue->Post(
+                  [context = strongThis->m_reactContext]() { Microsoft::ReactNative::DevMenuManager::Show(context); });
             }
           };
-#endif
 
 #ifdef CORE_ABI
           std::vector<facebook::react::NativeModuleDescription> cxxModules;
@@ -484,10 +483,14 @@ void ReactInstanceWin::Initialize() noexcept {
           std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
 
           switch (m_options.JsiEngine()) {
-            case JSIEngine::Hermes:
-              devSettings->jsiRuntimeHolder =
+            case JSIEngine::Hermes: {
+              auto hermesRuntimeHolder =
                   std::make_shared<facebook::react::HermesRuntimeHolder>(devSettings, m_jsMessageThread.Load());
+              facebook::react::HermesRuntimeHolder::storeTo(
+                  ReactPropertyBag(m_reactContext->Properties()), hermesRuntimeHolder);
+              devSettings->jsiRuntimeHolder = hermesRuntimeHolder;
               break;
+            }
             case JSIEngine::V8:
 #if defined(USE_V8)
             {

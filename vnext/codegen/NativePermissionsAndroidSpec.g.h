@@ -13,18 +13,12 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(PermissionsAndroidSpec_requestMultiplePermissions_returnType)
-struct PermissionsAndroidSpec_requestMultiplePermissions_returnType {
-    REACT_FIELD(permission)
-    ::React::JSValue permission;
-};
-
 struct PermissionsAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
       Method<void(std::string, Promise<bool>) noexcept>{0, L"checkPermission"},
       Method<void(std::string, Promise<std::string>) noexcept>{1, L"requestPermission"},
       Method<void(std::string, Promise<bool>) noexcept>{2, L"shouldShowRequestPermissionRationale"},
-      Method<void(std::vector<std::string>, Promise<PermissionsAndroidSpec_requestMultiplePermissions_returnType>) noexcept>{3, L"requestMultiplePermissions"},
+      Method<void(std::vector<std::string>, Promise<::React::JSValue>) noexcept>{3, L"requestMultiplePermissions"},
   };
 
   template <class TModule>
@@ -49,8 +43,8 @@ struct PermissionsAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "requestMultiplePermissions",
-          "    REACT_METHOD(requestMultiplePermissions) void requestMultiplePermissions(std::vector<std::string> const & permissions, ::React::ReactPromise<PermissionsAndroidSpec_requestMultiplePermissions_returnType> &&result) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(requestMultiplePermissions) static void requestMultiplePermissions(std::vector<std::string> const & permissions, ::React::ReactPromise<PermissionsAndroidSpec_requestMultiplePermissions_returnType> &&result) noexcept { /* implementation */ }\n");
+          "    REACT_METHOD(requestMultiplePermissions) void requestMultiplePermissions(std::vector<std::string> const & permissions, ::React::ReactPromise<::React::JSValue> &&result) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(requestMultiplePermissions) static void requestMultiplePermissions(std::vector<std::string> const & permissions, ::React::ReactPromise<::React::JSValue> &&result) noexcept { /* implementation */ }\n");
   }
 };
 

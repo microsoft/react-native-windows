@@ -5,7 +5,7 @@
 
 import type {HostComponent} from '../../Renderer/shims/ReactNativeTypes';
 
-const requireNativeComponent = require('../../ReactNative/requireNativeComponent');
+import requireNativeComponent from '../../ReactNative/requireNativeComponent';
 import codegenNativeCommands from '../../Utilities/codegenNativeCommands';
 import type {TextInputNativeCommands} from './TextInputNativeCommands';
 type NativeType = HostComponent<mixed>;

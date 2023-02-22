@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20221228-2020-ad953f6f4",
+  "baseVersion": "0.0.0-20230201-2114-a0800ffc7",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "807cd5e0f16c0017315c057e2bec13b5e389e697"
+      "baseHash": "83e72b7e7299c8c056a76893b684247836e1934a"
     },
     {
       "type": "derived",
@@ -81,45 +81,60 @@
       "issue": 9791
     },
     {
+      "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/primitives.h",
+      "baseFile": "ReactCommon/react/renderer/components/view/primitives.h",
+      "baseHash": "ca98e8845881b0f78c6c06e96eccb515e49a4b6e"
+    },
+    {
+      "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/TouchEventEmitter.cpp",
+      "baseFile": "ReactCommon/react/renderer/components/view/TouchEventEmitter.cpp",
+      "baseHash": "a8524dc7a5a1e2d79880cf5f2f9c6cb7e014b197"
+    },
+    {
+      "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/TouchEventEmitter.h",
+      "baseFile": "ReactCommon/react/renderer/components/view/TouchEventEmitter.h",
+      "baseHash": "e8e2327d4c67082922c849a3726f73543e314eca"
+    },
+    {
+      "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/ViewProps.cpp",
+      "baseFile": "ReactCommon/react/renderer/components/view/ViewProps.cpp",
+      "baseHash": "89b0c87d483455cb33fffed3ce7d50e7f8171619"
+    },
+    {
+      "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/ViewProps.h",
+      "baseFile": "ReactCommon/react/renderer/components/view/ViewProps.h",
+      "baseHash": "5811facf6c8989391eea091492a2afeca519e03b"
+    },
+    {
+      "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/ViewShadowNode.cpp",
+      "baseFile": "ReactCommon/react/renderer/components/view/ViewShadowNode.cpp",
+      "baseHash": "796ce7138b317d8565da1773f25d1e672805695c"
+    },
+    {
       "type": "patch",
       "file": "ReactCommon/Yoga.cpp",
       "baseFile": "ReactCommon/yoga/yoga/Yoga.cpp",
-      "baseHash": "f9bff8771c1f5f87f67c71a9fd5be43f9f043ec7",
+      "baseHash": "b5a24126e78c7c7ec2fc79ab7a5183ae34abf24e",
       "issue": 3994
     },
     {
       "type": "copy",
       "directory": "ReactCopies/IntegrationTests",
       "baseDirectory": "IntegrationTests",
-      "baseHash": "a85e8eac3cfec05bc3687a8a87c501277375e80e",
+      "baseHash": "edfffae3bd41f59460368f76486d185fb0b08905",
       "issue": 4054
-    },
-    {
-      "type": "patch",
-      "file": "src/babel-plugin-codegen/GenerateViewConfigJs.js",
-      "baseFile": "packages/react-native-codegen/src/generators/components/GenerateViewConfigJs.js",
-      "baseHash": "9a5a7e8ab112e03b54953607953a09b8b372a1de",
-      "issue": 5430
-    },
-    {
-      "type": "patch",
-      "file": "src/babel-plugin-codegen/index.js",
-      "baseFile": "packages/babel-plugin-codegen/index.js",
-      "baseHash": "dcee030f739cc0047038da7e94ec3be58145f25f",
-      "issue": 5430
-    },
-    {
-      "type": "patch",
-      "file": "src/babel-plugin-codegen/package.json",
-      "baseFile": "packages/babel-plugin-codegen/package.json",
-      "baseHash": "709b8cc211129e1d3188b689b8af7df1653a064b",
-      "issue": 5430
     },
     {
       "type": "derived",
       "file": "src/index.windows.js",
       "baseFile": "index.js",
-      "baseHash": "7da90f6b0172d5a9c302184c7247680804c328b7"
+      "baseHash": "df21c820b0558eb40f1cf0269de18c3ddc38fdee"
     },
     {
       "type": "platform",
@@ -189,7 +204,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.windows.js",
       "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.js",
-      "baseHash": "8ed7c87f3165558abe517218143dc6f73d91cc46",
+      "baseHash": "09fc956afbcd13b4c7a39e4de762c0af57cb9b4f",
       "issue": 4578
     },
     {
@@ -206,12 +221,6 @@
       "baseHash": "31731fd48736bfcd3c36eb60a242b187236e124b"
     },
     {
-      "type": "copy",
-      "file": "src/Libraries/Components/DatePicker/DatePickerIOS.windows.js",
-      "baseFile": "Libraries/Components/DatePicker/DatePickerIOS.android.js",
-      "baseHash": "cd7c18ed335735df871f69424d498b82b920a298"
-    },
-    {
       "type": "derived",
       "file": "src/Libraries/Components/DrawerAndroid/DrawerLayoutAndroid.windows.js",
       "baseFile": "Libraries/Components/DrawerAndroid/DrawerLayoutAndroid.ios.js",
@@ -219,11 +228,15 @@
     },
     {
       "type": "platform",
-      "file": "src/Libraries/Components/Flyout/Flyout.tsx"
+      "file": "src/Libraries/Components/Flyout/Flyout.d.ts"
     },
     {
       "type": "platform",
-      "file": "src/Libraries/Components/Flyout/FlyoutProps.ts"
+      "file": "src/Libraries/Components/Flyout/Flyout.js"
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/Components/Flyout/FlyoutNativeComponent.js"
     },
     {
       "type": "platform",
@@ -247,11 +260,15 @@
     },
     {
       "type": "platform",
-      "file": "src/Libraries/Components/Popup/Popup.tsx"
+      "file": "src/Libraries/Components/Popup/Popup.d.ts"
     },
     {
       "type": "platform",
-      "file": "src/Libraries/Components/Popup/PopupProps.ts"
+      "file": "src/Libraries/Components/Popup/Popup.js"
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/Components/Popup/PopupNativeComponent.js"
     },
     {
       "type": "patch",
@@ -275,13 +292,13 @@
       "type": "derived",
       "file": "src/Libraries/Components/SafeAreaView/SafeAreaView.windows.js",
       "baseFile": "Libraries/Components/SafeAreaView/SafeAreaView.js",
-      "baseHash": "bde271c753be96e28b5f1b539d0d9a0cbeee77ab"
+      "baseHash": "8982fc8b7295200e987eea3454adddc5d650896c"
     },
     {
       "type": "derived",
       "file": "src/Libraries/Components/ScrollView/ScrollView.windows.js",
       "baseFile": "Libraries/Components/ScrollView/ScrollView.js",
-      "baseHash": "3f6e4ed14ff4a94e97873e0eb7c6a77c2cc33e2a"
+      "baseHash": "7d162bb43bce3f9da78b7c304530b3f804d21658"
     },
     {
       "type": "patch",
@@ -404,7 +421,7 @@
       "type": "derived",
       "file": "src/Libraries/NativeComponent/BaseViewConfig.windows.js",
       "baseFile": "Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "991726f54a5cd6887db874c10f5ad3d2e90d5210"
+      "baseHash": "3c1918ff2ab3e43b4900e9b1e8549537d273d575"
     },
     {
       "type": "platform",

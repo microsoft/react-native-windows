@@ -63,16 +63,6 @@ class JSI_EXPORT ActivityIndicatorViewEventEmitter : public ViewEventEmitter {
 
   
 };
-class JSI_EXPORT DatePickerEventEmitter : public ViewEventEmitter {
- public:
-  using ViewEventEmitter::ViewEventEmitter;
-
-  struct OnChange {
-      Float timestamp;
-    };
-
-  void onChange(OnChange value) const;
-};
 class JSI_EXPORT AndroidDrawerLayoutEventEmitter : public ViewEventEmitter {
  public:
   using ViewEventEmitter::ViewEventEmitter;
@@ -101,6 +91,16 @@ class JSI_EXPORT AndroidDrawerLayoutEventEmitter : public ViewEventEmitter {
 
   void onDrawerClose(OnDrawerClose value) const;
 };
+class JSI_EXPORT RCTFlyoutEventEmitter : public ViewEventEmitter {
+ public:
+  using ViewEventEmitter::ViewEventEmitter;
+
+  struct OnDismiss {
+      bool isOpen;
+    };
+
+  void onDismiss(OnDismiss value) const;
+};
 class JSI_EXPORT PLYIconEventEmitter : public ViewEventEmitter {
  public:
   using ViewEventEmitter::ViewEventEmitter;
@@ -108,6 +108,16 @@ class JSI_EXPORT PLYIconEventEmitter : public ViewEventEmitter {
   
 
   
+};
+class JSI_EXPORT RCTPopupEventEmitter : public ViewEventEmitter {
+ public:
+  using ViewEventEmitter::ViewEventEmitter;
+
+  struct OnDismiss {
+      bool isOpen;
+    };
+
+  void onDismiss(OnDismiss value) const;
 };
 class JSI_EXPORT AndroidProgressBarEventEmitter : public ViewEventEmitter {
  public:
@@ -152,24 +162,6 @@ class JSI_EXPORT AndroidHorizontalScrollContentViewEventEmitter : public ViewEve
   
 
   
-};
-class JSI_EXPORT SliderEventEmitter : public ViewEventEmitter {
- public:
-  using ViewEventEmitter::ViewEventEmitter;
-
-  struct OnValueChange {
-      double value;
-    bool fromUser;
-    };
-
-  struct OnSlidingComplete {
-      double value;
-    bool fromUser;
-    };
-
-  void onValueChange(OnValueChange value) const;
-
-  void onSlidingComplete(OnSlidingComplete value) const;
 };
 class JSI_EXPORT AndroidSwitchEventEmitter : public ViewEventEmitter {
  public:

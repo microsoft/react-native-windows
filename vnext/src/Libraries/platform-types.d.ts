@@ -5,11 +5,9 @@
 *        need to also be added to index.windows.js
 */
 
-export * from './Components/Flyout/FlyoutProps';
-export * from './Components/Flyout/Flyout';
-export * from './Components/Glyph/Glyph';
-export * from './Components/Popup/PopupProps';
-export * from './Components/Popup/Popup';
+export {Flyout, IFlyoutProps, Placement, ShowMode} from './Components/Flyout/Flyout';
+export {Glyph, GlyphProps, GlyphStyle} from './Components/Glyph/Glyph';
+export {IPopupProps, Popup} from './Components/Popup/Popup';
 export * from './Components/Keyboard/KeyboardExt';
 export * from './Components/Keyboard/KeyboardExtProps';
 export * from './Components/View/ViewWindowsProps';

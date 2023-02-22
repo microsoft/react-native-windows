@@ -28,17 +28,13 @@ ParagraphComponentView::supplementalComponentDescriptorProviders() noexcept {
   return {};
 }
 
-void ParagraphComponentView::mountChildComponentView(
-    const IComponentView &childComponentView,
-    uint32_t index) noexcept {
-  auto v = static_cast<const ParagraphComponentView &>(childComponentView);
+void ParagraphComponentView::mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
+  // auto v = static_cast<ParagraphComponentView &>(childComponentView);
   assert(false);
   // m_element.Children().InsertAt(index, v.Element());
 }
 
-void ParagraphComponentView::unmountChildComponentView(
-    const IComponentView &childComponentView,
-    uint32_t index) noexcept {
+void ParagraphComponentView::unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
   assert(false);
   // m_element.Children().RemoveAt(index);
 }
@@ -63,7 +59,9 @@ void ParagraphComponentView::updateProps(
   m_props = std::static_pointer_cast<facebook::react::ParagraphProps const>(props);
 }
 
-void ParagraphComponentView::updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {}
+void ParagraphComponentView::updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {
+  Super::updateEventEmitter(eventEmitter);
+}
 
 void ParagraphComponentView::updateState(
     facebook::react::State::Shared const &state,
@@ -104,8 +102,7 @@ void ParagraphComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMas
 }
 void ParagraphComponentView::prepareForRecycle() noexcept {}
 facebook::react::Props::Shared ParagraphComponentView::props() noexcept {
-  assert(false);
-  return {};
+  return m_props;
 }
 
 facebook::react::Tag ParagraphComponentView::hitTest(facebook::react::Point pt, facebook::react::Point &localPt)
@@ -135,7 +132,26 @@ facebook::react::Tag ParagraphComponentView::hitTest(facebook::react::Point pt, 
   return -1;
 }
 
-facebook::react::SharedTouchEventEmitter ParagraphComponentView::touchEventEmitter() noexcept {
+facebook::react::SharedTouchEventEmitter ParagraphComponentView::touchEventEmitterAtPoint(
+    facebook::react::Point pt) noexcept {
+  if (m_attributedStringBox.getValue().getFragments().size()) {
+    BOOL isTrailingHit = false;
+    BOOL isInside = false;
+    DWRITE_HIT_TEST_METRICS metrics;
+    winrt::check_hresult(m_textLayout->HitTestPoint(pt.x, pt.y, &isTrailingHit, &isInside, &metrics));
+    if (isInside) {
+      uint32_t textPosition = metrics.textPosition;
+
+      for (auto fragment : m_attributedStringBox.getValue().getFragments()) {
+        if (textPosition < fragment.string.length()) {
+          return std::static_pointer_cast<const facebook::react::TouchEventEmitter>(
+              fragment.parentShadowView.eventEmitter);
+        }
+        textPosition -= static_cast<uint32_t>(fragment.string.length());
+      }
+    }
+  }
+
   return m_eventEmitter;
 }
 

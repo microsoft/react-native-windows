@@ -12,17 +12,10 @@
 
 const React = require('react');
 
-const {
-  Text,
-  TextInput,
-  View,
-  StyleSheet,
-  Slider,
-  Switch,
-} = require('react-native');
-const {useState} = React;
+const {Text, TextInput, View, StyleSheet, Switch} = require('react-native');
 
 const TextInputSharedExamples = require('./TextInputSharedExamples');
+const {useState} = React;
 
 import type {RNTesterModuleExample} from '../../types/RNTesterTypes';
 
@@ -58,8 +51,8 @@ class AutogrowingTextInputExample extends React.Component<{...}> {
     /* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was found
      * when making Flow check .android.js files. */
     this.state = {
-      width: 100,
       multiline: true,
+      fullWidth: true,
       text: '',
       contentSize: {
         width: 0,
@@ -86,16 +79,16 @@ class AutogrowingTextInputExample extends React.Component<{...}> {
     const {style, multiline, ...props} = this.props;
     return (
       <View>
-        <Text>Width:</Text>
-        <Slider
-          value={100}
-          minimumValue={0}
-          maximumValue={100}
-          step={10}
+        <Text>Full width:</Text>
+        <Switch
           /* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was
            * found when making Flow check .android.js files. */
-          onValueChange={value => this.setState({width: value})}
+          value={this.state.fullWidth}
+          /* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was
+           * found when making Flow check .android.js files. */
+          onValueChange={value => this.setState({fullWidth: value})}
         />
+
         <Text>Multiline:</Text>
         <Switch
           /* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was
@@ -105,6 +98,7 @@ class AutogrowingTextInputExample extends React.Component<{...}> {
            * found when making Flow check .android.js files. */
           onValueChange={value => this.setState({multiline: value})}
         />
+
         <Text>TextInput:</Text>
         {/* $FlowFixMe(>=0.122.0 site=react_native_android_fb) This comment
          * suppresses an error found when Flow v0.122.0 was deployed. To see
@@ -115,7 +109,7 @@ class AutogrowingTextInputExample extends React.Component<{...}> {
           multiline={this.state.multiline}
           /* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was
            * found when making Flow check .android.js files. */
-          style={[style, {width: this.state.width + '%'}]}
+          style={[style, {width: this.state.fullWidth ? '100%' : '50%'}]}
           /* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was
            * found when making Flow check .android.js files. */
           onChangeText={value => this.setState({text: value})}

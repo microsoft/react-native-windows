@@ -10,8 +10,15 @@
 #include <UI.Xaml.Media.h>
 #include <UI.Xaml.Shapes.h>
 #include <Utils/ValueUtils.h>
+#include <XamlUtils.h>
 #include <winrt/Windows.UI.ViewManagement.h>
 #include "Utils/Helpers.h"
+
+#ifdef USE_FABRIC
+#include <ReactCoreInjection.h>
+#include <Shobjidl.h>
+#include <winrt/Windows.UI.Popups.h>
+#endif
 
 namespace Microsoft::ReactNative {
 
@@ -29,9 +36,7 @@ void Alert::showAlert(
   });
 }
 
-void Alert::ProcessPendingAlertRequests() noexcept {
-  if (pendingAlerts.empty())
-    return;
+void Alert::ProcessPendingAlertRequestsXaml() noexcept {
   const auto &pendingAlert = pendingAlerts.front();
   const auto &args = pendingAlert.args;
   const auto &result = pendingAlert.result;
@@ -142,6 +147,80 @@ void Alert::ProcessPendingAlertRequests() noexcept {
       });
 }
 
+#ifdef USE_FABRIC
+void Alert::ProcessPendingAlertRequestsMessageDialog() noexcept {
+  const auto &pendingAlert = pendingAlerts.front();
+  const auto &args = pendingAlert.args;
+  const auto &result = pendingAlert.result;
+  auto jsDispatcher = m_context.JSDispatcher();
+
+  auto cancelable = args.cancelable.value_or(true);
+  auto messageDialog = winrt::Windows::UI::Popups::MessageDialog(
+      winrt::to_hstring(args.message.value_or(std::string{})), winrt::to_hstring(args.title.value_or(std::string{})));
+
+  if (args.buttonPositive) {
+    auto uicommand = winrt::Windows::UI::Popups::UICommand(winrt::to_hstring(args.buttonPositive.value()));
+    uicommand.Id(winrt::box_value(m_constants.buttonPositive));
+    messageDialog.Commands().Append(uicommand);
+    if (args.defaultButton.value_or(0) == m_constants.buttonPositive) {
+      messageDialog.DefaultCommandIndex(messageDialog.Commands().Size() - 1);
+    }
+  }
+  if (args.buttonNegative) {
+    auto uicommand = winrt::Windows::UI::Popups::UICommand(winrt::to_hstring(args.buttonNegative.value()));
+    uicommand.Id(winrt::box_value(m_constants.buttonNegative));
+    messageDialog.Commands().Append(uicommand);
+    if (args.defaultButton.value_or(0) == m_constants.buttonNegative) {
+      messageDialog.DefaultCommandIndex(messageDialog.Commands().Size() - 1);
+    }
+  }
+  if (args.buttonNeutral) {
+    auto uicommand = winrt::Windows::UI::Popups::UICommand(winrt::to_hstring(args.buttonNeutral.value()));
+    uicommand.Id(winrt::box_value(m_constants.buttonNeutral));
+    messageDialog.Commands().Append(uicommand);
+    if (args.defaultButton.value_or(0) == m_constants.buttonNeutral) {
+      messageDialog.DefaultCommandIndex(messageDialog.Commands().Size() - 1);
+    }
+  }
+
+  if (!args.cancelable.value_or(true)) {
+    messageDialog.CancelCommandIndex(0xffffffff /* -1 doesn't allow cancelation of message dialog */);
+  }
+
+  auto hwnd = winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::GetTopLevelWindowId(
+      m_context.Properties().Handle());
+  if (hwnd) {
+    auto initializeWithWindow{messageDialog.as<::IInitializeWithWindow>()};
+    initializeWithWindow->Initialize(reinterpret_cast<HWND>(hwnd));
+  }
+
+  auto asyncOp = messageDialog.ShowAsync();
+  asyncOp.Completed(
+      [jsDispatcher, result, this](
+          const winrt::IAsyncOperation<winrt::Windows::UI::Popups::IUICommand> &asyncOp, winrt::AsyncStatus status) {
+        auto uicommand = asyncOp.GetResults();
+        jsDispatcher.Post(
+            [id = uicommand.Id(), result, this] { result(m_constants.buttonClicked, winrt::unbox_value<int>(id)); });
+        pendingAlerts.pop();
+        ProcessPendingAlertRequests();
+      });
+}
+#endif
+
+void Alert::ProcessPendingAlertRequests() noexcept {
+  if (pendingAlerts.empty())
+    return;
+
+  if (xaml::TryGetCurrentApplication()) {
+    ProcessPendingAlertRequestsXaml();
+  }
+#ifdef USE_FABRIC
+  else {
+    // If we dont have xaml loaded, fallback to using MessageDialog
+    ProcessPendingAlertRequestsMessageDialog();
+  }
+#endif
+}
 Alert::Constants Alert::GetConstants() noexcept {
   return m_constants;
 }

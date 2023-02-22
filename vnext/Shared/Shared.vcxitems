@@ -150,6 +150,7 @@
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\ReactRootViewTagGenerator.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Utils\ImageUtils.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Utils\Helpers.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Views\DevMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)tracing\rnw.wprp" />
@@ -200,6 +201,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventEmitter.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventListener.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventTarget.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventLogger.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventQueue.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventQueueProcessor.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\LayoutableShadowNode.cpp" />
@@ -269,7 +271,9 @@
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\Composition\CompositionEventHandler.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\Composition\CompositionHelpers.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\Composition\ImageComponentView.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\Composition\SwitchComponentView.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\Composition\ParagraphComponentView.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\Composition\RootComponentView.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\Composition\ScrollViewComponentView.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\Composition\CompositionViewComponentView.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\Composition\TextInput\WindowsTextInputComponentView.cpp" />

@@ -17,7 +17,6 @@ namespace facebook {
 namespace react {
 
 using ActivityIndicatorViewComponentDescriptor = ConcreteComponentDescriptor<ActivityIndicatorViewShadowNode>;
-using DatePickerComponentDescriptor = ConcreteComponentDescriptor<DatePickerShadowNode>;
 using AndroidDrawerLayoutComponentDescriptor = ConcreteComponentDescriptor<AndroidDrawerLayoutShadowNode>;
 using AndroidSwipeRefreshLayoutComponentDescriptor = ConcreteComponentDescriptor<AndroidSwipeRefreshLayoutShadowNode>;
 using PullToRefreshViewComponentDescriptor = ConcreteComponentDescriptor<PullToRefreshViewShadowNode>;

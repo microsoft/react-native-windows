@@ -1,8 +1,87 @@
 # Change Log - @react-native-windows/automation-channel
 
-This log was last generated on Thu, 26 Jan 2023 06:12:17 GMT and should not be manually modified.
+This log was last generated on Wed, 22 Feb 2023 06:14:08 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.9.5
+
+Wed, 22 Feb 2023 06:14:08 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.617
+
+## 0.9.4
+
+Thu, 16 Feb 2023 06:15:04 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.616
+
+## 0.9.3
+
+Wed, 15 Feb 2023 06:22:16 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.615
+
+## 0.9.2
+
+Sat, 11 Feb 2023 06:14:16 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.614
+
+## 0.9.1
+
+Fri, 10 Feb 2023 06:15:31 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.613
+
+## 0.9.0
+
+Thu, 09 Feb 2023 06:16:41 GMT
+
+### Minor changes
+
+- integrate 2/1/23 (tatianakapos@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.612
+
+### Patches
+
+- Bump typescript version (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.8.0
+
+Thu, 02 Feb 2023 06:13:29 GMT
+
+### Minor changes
+
+- integrate 1/25/23 (tatianakapos@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.611
+
+## 0.7.1
+
+Tue, 31 Jan 2023 06:12:59 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.610
+
+## 0.7.0
+
+Sat, 28 Jan 2023 06:12:48 GMT
+
+### Minor changes
+
+- integrate 01/11/23 (tatianakapos@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.609
 
 ## 0.6.7
 

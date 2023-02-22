@@ -1,8 +1,81 @@
 # Change Log - @react-native-windows/automation-commands
 
-This log was last generated on Thu, 26 Jan 2023 06:12:17 GMT and should not be manually modified.
+This log was last generated on Wed, 22 Feb 2023 06:14:08 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.58
+
+Wed, 22 Feb 2023 06:14:08 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.9.5
+
+## 0.1.57
+
+Thu, 16 Feb 2023 06:15:04 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.9.4
+
+## 0.1.56
+
+Wed, 15 Feb 2023 06:22:16 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.9.3
+
+## 0.1.55
+
+Sat, 11 Feb 2023 06:14:16 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.9.2
+
+## 0.1.54
+
+Fri, 10 Feb 2023 06:15:31 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.9.1
+
+## 0.1.53
+
+Thu, 09 Feb 2023 06:16:42 GMT
+
+### Patches
+
+- Bump typescript version (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/automation-channel to v0.9.0
+
+## 0.1.52
+
+Thu, 02 Feb 2023 06:13:29 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.8.0
+
+## 0.1.51
+
+Tue, 31 Jan 2023 06:12:59 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.7.1
+
+## 0.1.50
+
+Sat, 28 Jan 2023 06:12:49 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.7.0
 
 ## 0.1.49
 

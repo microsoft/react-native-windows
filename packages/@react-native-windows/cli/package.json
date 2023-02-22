@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/cli",
-  "version": "0.0.0-canary.158",
+  "version": "0.0.0-canary.163",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "repository": {
@@ -17,10 +17,10 @@
     "watch": "rnw-scripts watch"
   },
   "dependencies": {
-    "@react-native-windows/codegen": "0.0.0-canary.48",
-    "@react-native-windows/fs": "^0.0.0-canary.13",
-    "@react-native-windows/package-utils": "^0.0.0-canary.39",
-    "@react-native-windows/telemetry": "^0.0.0-canary.58",
+    "@react-native-windows/codegen": "0.0.0-canary.51",
+    "@react-native-windows/fs": "^0.0.0-canary.14",
+    "@react-native-windows/package-utils": "^0.0.0-canary.40",
+    "@react-native-windows/telemetry": "^0.0.0-canary.62",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
     "@xmldom/xmldom": "^0.7.7",
@@ -64,7 +64,7 @@
     "eslint": "^8.19.0",
     "jest": "^29.2.1",
     "prettier": "^2.4.1",
-    "typescript": "^4.4.4"
+    "typescript": "^4.9.5"
   },
   "peerDependencies": {
     "react-native": "*"

@@ -1,8 +1,42 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Fri, 20 Jan 2023 06:17:54 GMT and should not be manually modified.
+This log was last generated on Fri, 10 Feb 2023 06:15:30 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.62
+
+Fri, 10 Feb 2023 06:15:30 GMT
+
+### Changes
+
+- Use latest Hermes ABI-safe API (vmoroz@users.noreply.github.com)
+
+## 0.0.0-canary.61
+
+Thu, 09 Feb 2023 06:16:43 GMT
+
+### Changes
+
+- integrate 2/1/23 (tatianakapos@microsoft.com)
+- Bump typescript version (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.14
+
+## 0.0.0-canary.60
+
+Thu, 02 Feb 2023 06:13:29 GMT
+
+### Changes
+
+- bump hermes version (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.59
+
+Sat, 28 Jan 2023 06:12:49 GMT
+
+### Changes
+
+- integrate 01/11/23 (tatianakapos@microsoft.com)
 
 ## 0.0.0-canary.58
 

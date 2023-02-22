@@ -11,7 +11,7 @@ import type {
   NativeModuleObjectTypeAnnotation,
   NamedShape,
   Nullable,
-} from 'react-native-tscodegen';
+} from '@react-native/codegen/lib/CodegenSchema';
 import {AliasMap, getAliasCppName} from './AliasManaging';
 import {translateField} from './ObjectTypes';
 

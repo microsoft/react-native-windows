@@ -2,6 +2,78 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 15 Feb 2023 06:22:16 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.182",
+      "version": "0.0.0-canary.182",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "d61980e7b6a1d8d8dd6f3076054029b6501624ee",
+            "comment": "LogBox should be using a monospace font"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 09 Feb 2023 06:16:41 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.181",
+      "version": "0.0.0-canary.181",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "5b8e65a0caaa771a5e2108c884e1b244af1bb4e9",
+            "comment": "Fix typescript definition, move some files from TS -> flow"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "4872e779fd40b8b0c906f34d3718e2444454d86c",
+            "comment": "integrate 2/1/23"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump react-native-platform-override to v1.9.1",
+            "commit": "e539adbf420cf18f03070ad00cd3137dfbfab850"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 02 Feb 2023 06:13:29 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.180",
+      "version": "0.0.0-canary.180",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "88f5ad05bac71082107038217525e42997ab0749",
+            "comment": "integrate 1/25/23"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 28 Jan 2023 06:12:48 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.179",
+      "version": "0.0.0-canary.179",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "43490514c8e3e68c51c97dfc7d8206c6fd2b4af0",
+            "comment": "integrate 01/11/23"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 25 Jan 2023 06:12:28 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.178",
       "version": "0.0.0-canary.178",

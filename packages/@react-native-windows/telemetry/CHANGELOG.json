@@ -2,6 +2,78 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Fri, 10 Feb 2023 06:15:30 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.62",
+      "version": "0.0.0-canary.62",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmoroz@users.noreply.github.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "08f6ac504296a5750e926bef08a81918aa347c83",
+            "comment": "Use latest Hermes ABI-safe API"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 09 Feb 2023 06:16:43 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.61",
+      "version": "0.0.0-canary.61",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "4872e779fd40b8b0c906f34d3718e2444454d86c",
+            "comment": "integrate 2/1/23"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "5b8e65a0caaa771a5e2108c884e1b244af1bb4e9",
+            "comment": "Bump typescript version"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/telemetry",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.14",
+            "commit": "e539adbf420cf18f03070ad00cd3137dfbfab850"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 02 Feb 2023 06:13:29 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.60",
+      "version": "0.0.0-canary.60",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "88f5ad05bac71082107038217525e42997ab0749",
+            "comment": "bump hermes version"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 28 Jan 2023 06:12:49 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.59",
+      "version": "0.0.0-canary.59",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "43490514c8e3e68c51c97dfc7d8206c6fd2b4af0",
+            "comment": "integrate 01/11/23"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 20 Jan 2023 06:17:54 GMT",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.58",
       "version": "0.0.0-canary.58",

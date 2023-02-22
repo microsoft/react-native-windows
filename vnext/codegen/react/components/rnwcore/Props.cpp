@@ -9,7 +9,6 @@
  */
 
 #include <react/renderer/components/rnwcore/Props.h>
-#include <react/renderer/components/image/conversions.h>
 #include <react/renderer/core/PropsParserContext.h>
 #include <react/renderer/core/propsConversions.h>
 
@@ -41,21 +40,6 @@ ActivityIndicatorViewProps::ActivityIndicatorViewProps(
     color(convertRawProp(context, rawProps, "color", sourceProps.color, {})),
     size(convertRawProp(context, rawProps, "size", sourceProps.size, {ActivityIndicatorViewSize::Small}))
       {}
-DatePickerProps::DatePickerProps(
-    const PropsParserContext &context,
-    const DatePickerProps &sourceProps,
-    const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
-
-    date(convertRawProp(context, rawProps, "date", sourceProps.date, {0.0})),
-    initialDate(convertRawProp(context, rawProps, "initialDate", sourceProps.initialDate, {0.0})),
-    locale(convertRawProp(context, rawProps, "locale", sourceProps.locale, {})),
-    maximumDate(convertRawProp(context, rawProps, "maximumDate", sourceProps.maximumDate, {0.0})),
-    minimumDate(convertRawProp(context, rawProps, "minimumDate", sourceProps.minimumDate, {0.0})),
-    minuteInterval(convertRawProp(context, rawProps, "minuteInterval", sourceProps.minuteInterval, {DatePickerMinuteInterval::MinuteInterval1})),
-    mode(convertRawProp(context, rawProps, "mode", sourceProps.mode, {DatePickerMode::Date})),
-    timeZoneOffsetInMinutes(convertRawProp(context, rawProps, "timeZoneOffsetInMinutes", sourceProps.timeZoneOffsetInMinutes, {0.0})),
-    pickerStyle(convertRawProp(context, rawProps, "pickerStyle", sourceProps.pickerStyle, {DatePickerPickerStyle::Spinner}))
-      {}
 AndroidDrawerLayoutProps::AndroidDrawerLayoutProps(
     const PropsParserContext &context,
     const AndroidDrawerLayoutProps &sourceProps,
@@ -68,6 +52,22 @@ AndroidDrawerLayoutProps::AndroidDrawerLayoutProps(
     drawerLockMode(convertRawProp(context, rawProps, "drawerLockMode", sourceProps.drawerLockMode, {AndroidDrawerLayoutDrawerLockMode::Unlocked})),
     statusBarBackgroundColor(convertRawProp(context, rawProps, "statusBarBackgroundColor", sourceProps.statusBarBackgroundColor, {}))
       {}
+RCTFlyoutProps::RCTFlyoutProps(
+    const PropsParserContext &context,
+    const RCTFlyoutProps &sourceProps,
+    const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
+
+    horizontalOffset(convertRawProp(context, rawProps, "horizontalOffset", sourceProps.horizontalOffset, {0.0})),
+    isLightDismissEnabled(convertRawProp(context, rawProps, "isLightDismissEnabled", sourceProps.isLightDismissEnabled, {false})),
+    autoFocus(convertRawProp(context, rawProps, "autoFocus", sourceProps.autoFocus, {false})),
+    shouldConstrainToRootBounds(convertRawProp(context, rawProps, "shouldConstrainToRootBounds", sourceProps.shouldConstrainToRootBounds, {false})),
+    isOverlayEnabled(convertRawProp(context, rawProps, "isOverlayEnabled", sourceProps.isOverlayEnabled, {false})),
+    isOpen(convertRawProp(context, rawProps, "isOpen", sourceProps.isOpen, {false})),
+    placement(convertRawProp(context, rawProps, "placement", sourceProps.placement, {})),
+    showMode(convertRawProp(context, rawProps, "showMode", sourceProps.showMode, {})),
+    target(convertRawProp(context, rawProps, "target", sourceProps.target, {0})),
+    verticalOffset(convertRawProp(context, rawProps, "verticalOffset", sourceProps.verticalOffset, {0.0}))
+      {}
 PLYIconProps::PLYIconProps(
     const PropsParserContext &context,
     const PLYIconProps &sourceProps,
@@ -78,6 +78,19 @@ PLYIconProps::PLYIconProps(
     fontUri(convertRawProp(context, rawProps, "fontUri", sourceProps.fontUri, {})),
     glyph(convertRawProp(context, rawProps, "glyph", sourceProps.glyph, {})),
     colorEnabled(convertRawProp(context, rawProps, "colorEnabled", sourceProps.colorEnabled, {false}))
+      {}
+RCTPopupProps::RCTPopupProps(
+    const PropsParserContext &context,
+    const RCTPopupProps &sourceProps,
+    const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
+
+    isOpen(convertRawProp(context, rawProps, "isOpen", sourceProps.isOpen, {false})),
+    isLightDismissEnabled(convertRawProp(context, rawProps, "isLightDismissEnabled", sourceProps.isLightDismissEnabled, {false})),
+    autoFocus(convertRawProp(context, rawProps, "autoFocus", sourceProps.autoFocus, {false})),
+    horizontalOffset(convertRawProp(context, rawProps, "horizontalOffset", sourceProps.horizontalOffset, {0.0})),
+    verticalOffset(convertRawProp(context, rawProps, "verticalOffset", sourceProps.verticalOffset, {0.0})),
+    target(convertRawProp(context, rawProps, "target", sourceProps.target, {0})),
+    testID(convertRawProp(context, rawProps, "testID", sourceProps.testID, {}))
       {}
 AndroidProgressBarProps::AndroidProgressBarProps(
     const PropsParserContext &context,
@@ -128,26 +141,6 @@ AndroidHorizontalScrollContentViewProps::AndroidHorizontalScrollContentViewProps
     const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
 
     removeClippedSubviews(convertRawProp(context, rawProps, "removeClippedSubviews", sourceProps.removeClippedSubviews, {false}))
-      {}
-SliderProps::SliderProps(
-    const PropsParserContext &context,
-    const SliderProps &sourceProps,
-    const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
-
-    disabled(convertRawProp(context, rawProps, "disabled", sourceProps.disabled, {false})),
-    enabled(convertRawProp(context, rawProps, "enabled", sourceProps.enabled, {true})),
-    maximumTrackImage(convertRawProp(context, rawProps, "maximumTrackImage", sourceProps.maximumTrackImage, {})),
-    maximumTrackTintColor(convertRawProp(context, rawProps, "maximumTrackTintColor", sourceProps.maximumTrackTintColor, {})),
-    maximumValue(convertRawProp(context, rawProps, "maximumValue", sourceProps.maximumValue, {1.0})),
-    minimumTrackImage(convertRawProp(context, rawProps, "minimumTrackImage", sourceProps.minimumTrackImage, {})),
-    minimumTrackTintColor(convertRawProp(context, rawProps, "minimumTrackTintColor", sourceProps.minimumTrackTintColor, {})),
-    minimumValue(convertRawProp(context, rawProps, "minimumValue", sourceProps.minimumValue, {0.0})),
-    step(convertRawProp(context, rawProps, "step", sourceProps.step, {0.0})),
-    testID(convertRawProp(context, rawProps, "testID", sourceProps.testID, {""})),
-    thumbImage(convertRawProp(context, rawProps, "thumbImage", sourceProps.thumbImage, {})),
-    thumbTintColor(convertRawProp(context, rawProps, "thumbTintColor", sourceProps.thumbTintColor, {})),
-    trackImage(convertRawProp(context, rawProps, "trackImage", sourceProps.trackImage, {})),
-    value(convertRawProp(context, rawProps, "value", sourceProps.value, {0.0}))
       {}
 AndroidSwitchProps::AndroidSwitchProps(
     const PropsParserContext &context,

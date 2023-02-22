@@ -6,7 +6,7 @@
 
 'use strict';
 
-import type {NativeModuleObjectTypeAnnotation} from 'react-native-tscodegen';
+import type {NativeModuleObjectTypeAnnotation} from '@react-native/codegen/lib/CodegenSchema';
 
 let preferredModuleName: string = '';
 

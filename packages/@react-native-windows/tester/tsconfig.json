@@ -3,6 +3,10 @@
   "compilerOptions": {
     "rootDir": "src",
     "outDir": ".",
+    "moduleSuffixes": [".windows", ".native", ""],
+    "paths": {
+      "react-native": ["../../vnext"] // this mapping is relative to "baseUrl"
+    },
   },
   "include": ["src"],
   "exclude": ["node_modules"],
