@@ -6033,6 +6033,33 @@ private:
 };
 
 
+#pragma mark - SampleTurboModuleEnumInt
+
+enum SampleTurboModuleEnumInt { A, B };
+
+template <>
+struct Bridging<SampleTurboModuleEnumInt> {
+  static SampleTurboModuleEnumInt fromJs(jsi::Runtime &rt, const jsi::Value &rawValue, const std::shared_ptr<CallInvoker> &jsInvoker) {
+    double value = (double)rawValue.asNumber();
+    if (value == 23) {
+      return SampleTurboModuleEnumInt::A;
+    } else if (value == 42) {
+      return SampleTurboModuleEnumInt::B;
+    } else {
+      throw jsi::JSError(rt, "No appropriate enum member found for value");
+    }
+  }
+
+  static jsi::Value toJs(jsi::Runtime &rt, SampleTurboModuleEnumInt value, const std::shared_ptr<CallInvoker> &jsInvoker) {
+    if (value == SampleTurboModuleEnumInt::A) {
+      return bridging::toJs(rt, 23);
+    } else if (value == SampleTurboModuleEnumInt::B) {
+      return bridging::toJs(rt, 42);
+    } else {
+      throw jsi::JSError(rt, "No appropriate enum member found for enum value");
+    }
+  }
+};
   class JSI_EXPORT NativeSampleTurboModuleCxxSpecJSI : public TurboModule {
 protected:
   NativeSampleTurboModuleCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
@@ -6041,7 +6068,7 @@ public:
   virtual jsi::Object getConstants(jsi::Runtime &rt) = 0;
   virtual void voidFunc(jsi::Runtime &rt) = 0;
   virtual bool getBool(jsi::Runtime &rt, bool arg) = 0;
-  virtual double getEnum(jsi::Runtime &rt, double arg) = 0;
+  virtual int getEnum(jsi::Runtime &rt, int arg) = 0;
   virtual double getNumber(jsi::Runtime &rt, double arg) = 0;
   virtual jsi::String getString(jsi::Runtime &rt, jsi::String arg) = 0;
   virtual jsi::Array getArray(jsi::Runtime &rt, jsi::Array arg) = 0;
@@ -6096,12 +6123,12 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::getBool, jsInvoker_, instance_, std::move(arg));
     }
-    double getEnum(jsi::Runtime &rt, double arg) override {
+    int getEnum(jsi::Runtime &rt, int arg) override {
       static_assert(
           bridging::getParameterCount(&T::getEnum) == 2,
           "Expected getEnum(...) to have 2 parameters");
 
-      return bridging::callFromJs<double>(
+      return bridging::callFromJs<int>(
           rt, &T::getEnum, jsInvoker_, instance_, std::move(arg));
     }
     double getNumber(jsi::Runtime &rt, double arg) override {
