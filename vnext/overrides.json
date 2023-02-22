@@ -105,6 +105,18 @@
       "baseHash": "aa0da12bb0688b67ac8a7295f8113419ec2277ab"
     },
     {
+      "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/ViewProps.h",
+      "baseFile": "ReactCommon/react/renderer/components/view/ViewProps.h",
+      "baseHash": "5811facf6c8989391eea091492a2afeca519e03b"
+    },
+    {
+      "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/ViewShadowNode.cpp",
+      "baseFile": "ReactCommon/react/renderer/components/view/ViewShadowNode.cpp",
+      "baseHash": "796ce7138b317d8565da1773f25d1e672805695c"
+    },
+    {
       "type": "patch",
       "file": "ReactCommon/Yoga.cpp",
       "baseFile": "ReactCommon/yoga/yoga/Yoga.cpp",

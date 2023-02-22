@@ -11,6 +11,7 @@
 #include <unicode.h>
 #include <winrt/Windows.UI.h>
 #include "../CompositionHelpers.h"
+#include "../RootComponentView.h"
 #include "WindowsTextInputShadowNode.h"
 #include "WindowsTextInputState.h"
 #include "guid/msoGuid.h"
@@ -214,7 +215,7 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Set the focus to the text window
   void TxSetFocus() override {
-    SetFocusedComponent(m_outer);
+    m_outer->rootComponentView()->SetFocusedComponent(m_outer);
     // assert(false);
     // TODO focus
   }
@@ -540,7 +541,7 @@ void WindowsTextInputComponentView::handleCommand(std::string const &commandName
   }
 }
 
-int64_t WindowsTextInputComponentView::SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
+int64_t WindowsTextInputComponentView::sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
   if (m_textServices) {
     LRESULT lresult;
     DrawBlock db(*this);
@@ -549,7 +550,7 @@ int64_t WindowsTextInputComponentView::SendMessage(uint32_t msg, uint64_t wParam
       return lresult;
     }
   }
-  return Super::SendMessage(msg, wParam, lParam);
+  return Super::sendMessage(msg, wParam, lParam);
 }
 
 std::vector<facebook::react::ComponentDescriptorProvider>
@@ -558,22 +559,22 @@ WindowsTextInputComponentView::supplementalComponentDescriptorProviders() noexce
 }
 
 void WindowsTextInputComponentView::parent(IComponentView *parent) noexcept {
-  Super::parent(parent);
-
-  if (!parent && GetFocusedComponent() == this) {
-    SetFocusedComponent(nullptr); // TODO need move focus logic - where should focus go?
+  if (!parent && rootComponentView()->GetFocusedComponent() == this) {
+    rootComponentView()->SetFocusedComponent(nullptr); // TODO need move focus logic - where should focus go?
   }
+
+  Super::parent(parent);
 }
 
 void WindowsTextInputComponentView::mountChildComponentView(
-    const IComponentView &childComponentView,
+    IComponentView &childComponentView,
     uint32_t index) noexcept {
   assert(false);
   // m_element.Children().InsertAt(index, v.Element());
 }
 
 void WindowsTextInputComponentView::unmountChildComponentView(
-    const IComponentView &childComponentView,
+    IComponentView &childComponentView,
     uint32_t index) noexcept {
   assert(false);
   // m_element.Children().RemoveAt(index);
@@ -581,12 +582,16 @@ void WindowsTextInputComponentView::unmountChildComponentView(
 
 void WindowsTextInputComponentView::onFocusLost() noexcept {
   Super::onFocusLost();
-  SendMessage(WM_KILLFOCUS, 0, 0);
+  sendMessage(WM_KILLFOCUS, 0, 0);
 }
 
 void WindowsTextInputComponentView::onFocusGained() noexcept {
   Super::onFocusGained();
-  SendMessage(WM_SETFOCUS, 0, 0);
+  sendMessage(WM_SETFOCUS, 0, 0);
+}
+
+bool WindowsTextInputComponentView::focusable() const noexcept {
+  return m_props->focusable;
 }
 
 void WindowsTextInputComponentView::updateProps(

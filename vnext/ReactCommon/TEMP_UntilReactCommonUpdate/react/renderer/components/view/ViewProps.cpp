@@ -228,6 +228,8 @@ ViewProps::ViewProps(
                     "nativeForegroundAndroid",
                     sourceProps.nativeForeground,
                     {})),
+#endif // [Windows]
+      , // [Windows]
       focusable(
           CoreFeatures::enablePropIteratorSetter ? sourceProps.focusable
                                                  : convertRawProp(
@@ -235,7 +237,8 @@ ViewProps::ViewProps(
                                                        rawProps,
                                                        "focusable",
                                                        sourceProps.focusable,
-                                                       {})),
+                                                       {}))
+#ifdef ANDROID // [Windows]
       hasTVPreferredFocus(
           CoreFeatures::enablePropIteratorSetter
               ? sourceProps.hasTVPreferredFocus
@@ -343,7 +346,9 @@ void ViewProps::setProp(
     RAW_SET_PROP_SWITCH_CASE_BASIC(elevation);
     RAW_SET_PROP_SWITCH_CASE(nativeBackground, "nativeBackgroundAndroid");
     RAW_SET_PROP_SWITCH_CASE(nativeForeground, "nativeForegroundAndroid");
+#endif // [Windows]
     RAW_SET_PROP_SWITCH_CASE_BASIC(focusable);
+#ifdef ANDROID // [Windows]
     RAW_SET_PROP_SWITCH_CASE_BASIC(hasTVPreferredFocus);
     RAW_SET_PROP_SWITCH_CASE_BASIC(needsOffscreenAlphaCompositing);
     RAW_SET_PROP_SWITCH_CASE_BASIC(renderToHardwareTextureAndroid);
