@@ -60,11 +60,11 @@ ImageComponentView::supplementalComponentDescriptorProviders() noexcept {
   return {};
 }
 
-void ImageComponentView::mountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept {
+void ImageComponentView::mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
   assert(false);
 }
 
-void ImageComponentView::unmountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept {
+void ImageComponentView::unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
   assert(false);
 }
 
@@ -404,6 +404,10 @@ void ImageComponentView::ensureVisual() noexcept {
 
 winrt::Microsoft::ReactNative::Composition::IVisual ImageComponentView::Visual() const noexcept {
   return m_visual;
+}
+
+bool ImageComponentView::focusable() const noexcept {
+  return m_props->focusable;
 }
 
 } // namespace Microsoft::ReactNative

@@ -16,26 +16,6 @@
 
 namespace Microsoft::ReactNative {
 
-// TODO where should we store focus - a more complete focus management needs to be added in the future
-static CompositionBaseComponentView *g_focusedComponent = nullptr;
-
-CompositionBaseComponentView *GetFocusedComponent() noexcept {
-  return g_focusedComponent;
-}
-void SetFocusedComponent(CompositionBaseComponentView *value) noexcept {
-  if (g_focusedComponent == value)
-    return;
-
-  if (g_focusedComponent) {
-    g_focusedComponent->onFocusLost();
-  }
-
-  if (value)
-    value->onFocusGained();
-
-  g_focusedComponent = value;
-}
-
 CompositionBaseComponentView::CompositionBaseComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag)
@@ -45,12 +25,39 @@ facebook::react::Tag CompositionBaseComponentView::tag() const noexcept {
   return m_tag;
 }
 
+RootComponentView *CompositionBaseComponentView::rootComponentView() noexcept {
+  if (m_parent)
+    return m_parent->rootComponentView();
+
+  assert(false);
+  return nullptr;
+}
+
+const std::vector<IComponentView *> &CompositionBaseComponentView::children() const noexcept {
+  return m_children;
+}
+
 void CompositionBaseComponentView::parent(IComponentView *parent) noexcept {
   m_parent = parent;
 }
 
 IComponentView *CompositionBaseComponentView::parent() const noexcept {
   return m_parent;
+}
+
+bool CompositionBaseComponentView::runOnChildren(bool forward, Mso::Functor<bool(IComponentView &)> &fn) noexcept {
+  if (forward) {
+    for (auto it = m_children.begin(); it != m_children.end(); ++it) {
+      if (fn(**it))
+        return true;
+    }
+  } else {
+    for (auto it = m_children.rbegin(); it != m_children.rend(); ++it) {
+      if (fn(**it))
+        return true;
+    }
+  }
+  return false;
 }
 
 void CompositionBaseComponentView::onFocusLost() noexcept {}
@@ -66,7 +73,7 @@ void CompositionBaseComponentView::handleCommand(std::string const &commandName,
   assert(false); // Unhandled command
 }
 
-int64_t CompositionBaseComponentView::SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
+int64_t CompositionBaseComponentView::sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
   return 0;
 }
 
@@ -1044,6 +1051,10 @@ facebook::react::SharedTouchEventEmitter CompositionBaseComponentView::touchEven
   return m_eventEmitter;
 }
 
+bool CompositionBaseComponentView::focusable() const noexcept {
+  return false;
+}
+
 CompositionViewComponentView::CompositionViewComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag)
@@ -1059,26 +1070,26 @@ CompositionViewComponentView::supplementalComponentDescriptorProviders() noexcep
 }
 
 void CompositionViewComponentView::mountChildComponentView(
-    const IComponentView &childComponentView,
+    IComponentView &childComponentView,
     uint32_t index) noexcept {
   m_children.insert(std::next(m_children.begin(), index), &childComponentView);
 
   indexOffsetForBorder(index);
 
-  const_cast<IComponentView &>(childComponentView).parent(this);
+  childComponentView.parent(this);
 
-  m_visual.InsertAt(static_cast<const CompositionBaseComponentView &>(childComponentView).Visual(), index);
+  m_visual.InsertAt(static_cast<CompositionBaseComponentView &>(childComponentView).Visual(), index);
 }
 
 void CompositionViewComponentView::unmountChildComponentView(
-    const IComponentView &childComponentView,
+    IComponentView &childComponentView,
     uint32_t index) noexcept {
   m_children.erase(std::next(m_children.begin(), index));
 
   indexOffsetForBorder(index);
 
-  const_cast<IComponentView &>(childComponentView).parent(nullptr);
-  m_visual.Remove(static_cast<const CompositionBaseComponentView &>(childComponentView).Visual());
+  childComponentView.parent(nullptr);
+  m_visual.Remove(static_cast<CompositionBaseComponentView &>(childComponentView).Visual());
 }
 
 void CompositionViewComponentView::updateProps(
@@ -1217,6 +1228,60 @@ facebook::react::Props::Shared CompositionViewComponentView::props() noexcept {
 
 winrt::Microsoft::ReactNative::Composition::IVisual CompositionViewComponentView::Visual() const noexcept {
   return m_visual;
+}
+
+bool CompositionViewComponentView::focusable() const noexcept {
+  return m_props->focusable;
+}
+
+bool walkTree(IComponentView &view, bool forward, Mso::Functor<bool(IComponentView &)> &fn) noexcept {
+  if (forward) {
+    if (fn(view)) {
+      return true;
+    }
+
+    for (auto it = view.children().begin(); it != view.children().end(); ++it) {
+      if (fn(**it))
+        return true;
+    }
+
+    auto parent = view.parent();
+    if (parent) {
+      auto &parentsChildren = parent->children();
+      auto itNextView = std::find(parentsChildren.begin(), parentsChildren.end(), &view);
+      assert(itNextView != parentsChildren.end());
+      auto index = std::distance(parentsChildren.begin(), itNextView);
+      for (auto it = parentsChildren.begin() + index + 1; it != parentsChildren.end(); ++it) {
+        if (walkTree(**it, true, fn))
+          return true;
+      }
+    }
+
+  } else {
+    auto parent = view.parent();
+    if (parent) {
+      auto &parentsChildren = parent->children();
+      auto itNextView = std::find(parentsChildren.rbegin(), parentsChildren.rend(), &view);
+      assert(itNextView != parentsChildren.rend());
+      auto index = std::distance(parentsChildren.rbegin(), itNextView);
+      for (auto it = parentsChildren.rbegin() + index + 1; it != parentsChildren.rend(); ++it) {
+        if (fn(**it))
+          return true;
+        if (walkTree(**it, false, fn))
+          return true;
+      }
+    }
+
+    for (auto it = view.children().rbegin(); it != view.children().rend(); ++it) {
+      if (fn(**it))
+        return true;
+    }
+
+    if (fn(view)) {
+      return true;
+    }
+  }
+  return false;
 }
 
 } // namespace Microsoft::ReactNative

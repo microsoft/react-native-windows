@@ -31,8 +31,8 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
 
   std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept
       override;
-  void mountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept override;
-  void unmountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept override;
+  void mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
+  void unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
   void updateProps(facebook::react::Props::Shared const &props, facebook::react::Props::Shared const &oldProps) noexcept
       override;
   void updateState(facebook::react::State::Shared const &state, facebook::react::State::Shared const &oldState) noexcept
@@ -44,13 +44,14 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
   void prepareForRecycle() noexcept override;
   facebook::react::Props::Shared props() noexcept override;
   void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept override;
-  int64_t SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept override;
+  int64_t sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept override;
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt) const noexcept override;
   void parent(IComponentView *parent) noexcept override;
   void OnRenderingDeviceLost() noexcept override;
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
   void onFocusLost() noexcept override;
   void onFocusGained() noexcept override;
+  bool focusable() const noexcept override;
 
  private:
   struct DrawBlock {

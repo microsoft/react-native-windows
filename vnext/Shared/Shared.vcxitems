@@ -273,6 +273,7 @@
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\Composition\ImageComponentView.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\Composition\SwitchComponentView.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\Composition\ParagraphComponentView.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\Composition\RootComponentView.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\Composition\ScrollViewComponentView.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\Composition\CompositionViewComponentView.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\Composition\TextInput\WindowsTextInputComponentView.cpp" />
