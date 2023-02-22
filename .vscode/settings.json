@@ -13,7 +13,8 @@
     "*.ipp": "cpp",
     "filesystem": "cpp",
     "locale": "cpp",
-    "regex": "cpp"
+    "regex": "cpp",
+    "utility": "cpp"
   },
   "search.exclude": {
     "**/dist/**/*.js": true,
