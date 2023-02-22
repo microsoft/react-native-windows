@@ -102,7 +102,7 @@
       "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/ViewProps.cpp",
       "baseFile": "ReactCommon/react/renderer/components/view/ViewProps.cpp",
-      "baseHash": "89b0c87d483455cb33fffed3ce7d50e7f8171619"
+      "baseHash": "aa0da12bb0688b67ac8a7295f8113419ec2277ab"
     },
     {
       "type": "patch",
