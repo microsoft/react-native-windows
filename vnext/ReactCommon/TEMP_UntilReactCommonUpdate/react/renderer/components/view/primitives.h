@@ -89,6 +89,8 @@ struct HostPlatformViewEvents {
   enum class Offset : std::size_t {
     Focus = 0,
     Blur = 1,
+    KeyUp = 2,
+    KeyDown = 3,
   };
   
   constexpr bool operator[](const Offset offset) const {

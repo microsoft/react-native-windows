@@ -278,6 +278,7 @@
     <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\TransformAnimatedNode.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\ValueAnimatedNode.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\Modules\ImageViewManagerModule.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\Utils\KeyboardUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABI\MessageQueueShim.h">

@@ -7,6 +7,7 @@
 #include "CompositionViewComponentView.h"
 
 #include <UI.Xaml.Controls.h>
+#include <Utils/KeyboardUtils.h>
 #include <Utils/ValueUtils.h>
 #include <Views/FrameworkElementTransferProperties.h>
 #include <winrt/Windows.UI.Composition.h>
@@ -86,6 +87,33 @@ void CompositionBaseComponentView::handleCommand(std::string const &commandName,
 }
 
 int64_t CompositionBaseComponentView::sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
+  if (msg == WM_KEYUP || msg == WM_KEYDOWN) {
+    facebook::react::KeyboardEvent event;
+    BYTE bKeys[256];
+    if (GetKeyboardState(bKeys)) {
+      if (bKeys[VK_LSHIFT] & 0x80 || bKeys[VK_RSHIFT] & 0x80) {
+        event.shiftKey = true;
+      }
+      if (bKeys[VK_LCONTROL] & 0x80 || bKeys[VK_RCONTROL] & 0x80) {
+        event.ctrlKey = true;
+      }
+      if (bKeys[VK_LMENU] & 0x80 || bKeys[VK_RMENU] & 0x80) {
+        event.altKey = true;
+      }
+
+      event.metaKey = (GetKeyState(VK_LWIN) < 0) || (GetKeyState(VK_RWIN) < 0);
+    }
+
+    event.key = FromVirtualKey(
+        static_cast<winrt::Windows::System::VirtualKey>(wParam), event.shiftKey, !!(GetKeyState(VK_CAPITAL) & 1));
+    event.code = CodeFromVirtualKey(static_cast<winrt::Windows::System::VirtualKey>(wParam));
+    if (msg == WM_KEYUP) {
+      m_eventEmitter->onKeyUp(event);
+    } else {
+      m_eventEmitter->onKeyDown(event);
+    }
+  }
+
   return 0;
 }
 

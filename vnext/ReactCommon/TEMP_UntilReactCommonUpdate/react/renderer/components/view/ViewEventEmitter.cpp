@@ -124,4 +124,36 @@ void ViewEventEmitter::onBlur() const {
   dispatchEvent("blur");
 }
 
+// [Windows]
+static jsi::Value keyboardEventPayload(
+    jsi::Runtime &runtime,
+    KeyboardEvent const &event) {
+  auto object = jsi::Object(runtime);
+  object.setProperty(runtime, "altKey", event.altKey);
+  object.setProperty(runtime, "ctrlKey", event.ctrlKey);
+  object.setProperty(runtime, "metaKey", event.metaKey);
+  object.setProperty(runtime, "shiftKey", event.shiftKey);
+  object.setProperty(runtime, "key", event.key);
+  object.setProperty(runtime, "code", event.code);
+  return object;
+}
+
+// [Windows]
+void ViewEventEmitter::onKeyUp(KeyboardEvent const &event) const {
+  dispatchEvent(
+    "keyUp",
+    [event](jsi::Runtime &runtime) {
+      return keyboardEventPayload(runtime, event);
+    });
+}
+
+// [Windows]
+void ViewEventEmitter::onKeyDown(KeyboardEvent const &event) const {
+    dispatchEvent(
+    "keyDown",
+    [event](jsi::Runtime &runtime) {
+      return keyboardEventPayload(runtime, event);
+    });
+}
+
 } // namespace facebook::react
