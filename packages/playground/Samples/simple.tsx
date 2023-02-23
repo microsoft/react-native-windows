@@ -3,19 +3,46 @@
  * Licensed under the MIT License.
  * @format
  */
-import React from 'react';
-import {AppRegistry, View} from 'react-native';
+import React, {useState} from 'react';
+import {AppRegistry, StyleSheet, Text, TouchableHighlight, View} from 'react-native';
 
-export default class Bootstrap extends React.Component {
-  render() {
-    return (
-      <View
-        accessible={true}
-        style={{borderRadius: 30, width: 60, height: 60, margin: 10}}>
-        <View style={{backgroundColor: 'magenta', width: 60, height: 60}} />
+const Bootstrap = () => {
+  const [count, setCount] = useState(0);
+  const onPress = () => setCount(count + 1);
+
+  return (
+    <View style={styles.container}>
+      <TouchableHighlight disabled={true} onPress={onPress}>
+        <View style={styles.button}>
+          <Text>Touch Here</Text>
+        </View>
+      </TouchableHighlight>
+      <View style={styles.countContainer}>
+        <Text style={styles.countText}>{count || null}</Text>
       </View>
+    </View>
     );
-  }
-}
+  };
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      paddingHorizontal: 10,
+    },
+    button: {
+      alignItems: 'center',
+      backgroundColor: '#DDDDDD',
+      padding: 10,
+    },
+    countContainer: {
+      alignItems: 'center',
+      padding: 10,
+    },
+    countText: {
+      color: '#FF00FF',
+    },
+  });
+  
 
 AppRegistry.registerComponent('Bootstrap', () => Bootstrap);
