@@ -71,6 +71,56 @@ void ActivityIndicatorComponentView::finalizeUpdates(RNComponentViewUpdateMask u
 }
 
 void ActivityIndicatorComponentView::Draw() noexcept {
+  // Begin our update of the surface pixels. If this is our first update, we are required
+  // to specify the entire surface, which nullptr is shorthand for (but, as it works out,
+  // any time we make an update we touch the entire surface, so we always pass nullptr).
+  winrt::com_ptr<ID2D1DeviceContext> d2dDeviceContext;
+  POINT offset;
+  
+  winrt::com_ptr<Composition::ICompositionDrawingSurfaceInterop> drawingSurfaceInterop;
+  m_drawingSurface.as(drawingSurfaceInterop);
+
+  if (CheckForDeviceRemoved(drawingSurfaceInterop->BeginDraw(d2dDeviceContext.put(), &offset))) {
+    const auto activityIndicatorProps = std::static_pointer_cast<const facebook::react::ActivityIndicatorViewProps>(m_props);
+    
+    d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
+    if (m_props->backgroundColor) {
+      d2dDeviceContext->Clear(m_props->backgroundColor.AsD2DColor());
+    }
+
+    float offsetX = static_cast<float>(offset.x / m_layoutMetrics.pointScaleFactor);
+    float offsetY = static_cast<float>(offset.y / m_layoutMetrics.pointScaleFactor);
+
+    // default numbers
+    constexpr float width = 32.0f;
+    constexpr float height = 32.0f;
+
+    auto frame{m_layoutMetrics.frame.size};
+    float trackMarginX = frame.width / 2;
+    float trackMarginY = frame.height / 2;
+
+    // default brush
+    winrt::com_ptr<ID2D1SolidColorBrush> defaultBrush;
+    winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(facebook::react::greyColor().AsD2DColor(), defaultBrush.put()));
+
+    // set DPI?
+    const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
+    float oldDpiX, oldDpiY;
+    d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
+    d2dDeviceContext->SetDpi(dpi, dpi);
+
+    D2D1_POINT_2F ellipseCenter = D2D1 ::Point2F(trackMarginX, trackMarginY);
+    D2D1_ELLIPSE ellipse = D2D1::Ellipse(ellipseCenter, width, width);
+    d2dDeviceContext->FillEllipse(ellipse, defaultBrush.get());
+
+    // Restore old dpi setting
+    d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
+
+    // Our update is done. EndDraw never indicates rendering device removed, so any
+    // failure here is unexpected and, therefore, fatal.
+    winrt::check_hresult(drawingSurfaceInterop->EndDraw());
+
+  }
 
 }
 
@@ -87,10 +137,34 @@ void ActivityIndicatorComponentView::ensureVisual() noexcept {
 }
 
 void ActivityIndicatorComponentView::ensureDrawingSurface() noexcept {
+  if (!m_drawingSurface) {
+    winrt::Windows::Foundation::Size surfaceSize = {
+        m_layoutMetrics.frame.size.width * m_layoutMetrics.pointScaleFactor,
+        m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor};
+    m_drawingSurface = m_compContext.CreateDrawingSurface(
+        surfaceSize,
+        winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
+        winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
 
+    Draw();
+
+    auto surfaceBrush = m_compContext.CreateSurfaceBrush(m_drawingSurface);
+
+    m_visual.Brush(surfaceBrush);
+  }
 }
 
 facebook::react::Tag ActivityIndicatorComponentView::hitTest(facebook::react::Point pt, facebook::react::Point &localPt) const noexcept {
+
+  facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
+
+  if ((m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
+       m_props->pointerEvents == facebook::react::PointerEventsMode::BoxOnly) &&
+      ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
+      ptLocal.y <= m_layoutMetrics.frame.size.height) {
+    localPt = ptLocal;
+    return tag();
+  }
 
   return -1;
 }
