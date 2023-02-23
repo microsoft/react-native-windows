@@ -46,7 +46,6 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
   void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept override;
   int64_t sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept override;
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt) const noexcept override;
-  void parent(IComponentView *parent) noexcept override;
   void OnRenderingDeviceLost() noexcept override;
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
   void onFocusLost() noexcept override;
