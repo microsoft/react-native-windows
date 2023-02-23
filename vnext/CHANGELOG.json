@@ -2,6 +2,29 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 23 Feb 2023 06:13:41 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.618",
+      "version": "0.0.0-canary.618",
+      "comments": {
+        "none": [
+          {
+            "author": "aeulitz@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a0435af6bb6cfd6d7be3454f77277feedf745943",
+            "comment": "sequentialize ETW init"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c7951ca14185b7f9cb69092ae1151ea00a1e97c3",
+            "comment": "[Fabric] Keyboard focus loop"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 22 Feb 2023 06:14:08 GMT",
       "tag": "react-native-windows_v0.0.0-canary.617",
       "version": "0.0.0-canary.617",
