@@ -75,7 +75,9 @@ jobs:
           
           timeoutInMinutes: 60
           cancelTimeoutInMinutes: 5
-          pool: $(AgentPool.Medium)
+          pool:
+            name: $(AgentPool.Medium)
+            demands: ImageOverride -equals $(VmImage)
 
           steps:
             - checkout: self

@@ -295,7 +295,9 @@ jobs:
             variables:
               - template: ../variables/vs2019.yml
 
-            pool: $(AgentPool.Medium)
+            pool:
+              name: $(AgentPool.Medium)
+              demands: ImageOverride -equals $(VmImage)
             timeoutInMinutes: 60
             cancelTimeoutInMinutes: 5
 

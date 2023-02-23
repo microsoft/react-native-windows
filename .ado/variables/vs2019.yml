@@ -1,5 +1,5 @@
 variables:
-  VmImage: windows-2019
+  VmImage: rnw-img-node16
   AgentPool.Medium: rnw-pool-4
   AgentPool.Large: rnw-pool-8
   MSBuildVersion: 16.0
