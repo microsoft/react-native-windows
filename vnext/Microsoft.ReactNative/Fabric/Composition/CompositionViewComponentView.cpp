@@ -12,8 +12,8 @@
 #include <winrt/Windows.UI.Composition.h>
 #include "CompositionContextHelper.h"
 #include "CompositionHelpers.h"
-#include "d2d1helper.h"
 #include "RootComponentView.h"
+#include "d2d1helper.h"
 
 namespace Microsoft::ReactNative {
 
@@ -68,9 +68,13 @@ bool CompositionBaseComponentView::runOnChildren(bool forward, Mso::Functor<bool
   return false;
 }
 
-void CompositionBaseComponentView::onFocusLost() noexcept {m_eventEmitter->onBlur();}
+void CompositionBaseComponentView::onFocusLost() noexcept {
+  m_eventEmitter->onBlur();
+}
 
-void CompositionBaseComponentView::onFocusGained() noexcept {m_eventEmitter->onFocus();}
+void CompositionBaseComponentView::onFocusGained() noexcept {
+  m_eventEmitter->onFocus();
+}
 
 void CompositionBaseComponentView::updateEventEmitter(
     facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {
@@ -981,7 +985,6 @@ void CompositionBaseComponentView::updateBorderLayoutMetrics(
 
   if (m_layoutMetrics != layoutMetrics) {
     m_needsBorderUpdate = true;
-
   }
 }
 
