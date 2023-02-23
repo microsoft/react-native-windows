@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Fix code to handle newer version of @react-native/codegen",
+  "comment": "[Fabric] Implement onFocus and onBlur",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
   "dependentChangeType": "patch"

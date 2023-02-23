@@ -228,6 +228,8 @@ ViewProps::ViewProps(
                     "nativeForegroundAndroid",
                     sourceProps.nativeForeground,
                     {})),
+#endif // [Windows]
+      , // [Windows]
       focusable(
           CoreFeatures::enablePropIteratorSetter ? sourceProps.focusable
                                                  : convertRawProp(
@@ -235,7 +237,8 @@ ViewProps::ViewProps(
                                                        rawProps,
                                                        "focusable",
                                                        sourceProps.focusable,
-                                                       {})),
+                                                       {}))
+#ifdef ANDROID // [Windows]
       hasTVPreferredFocus(
           CoreFeatures::enablePropIteratorSetter
               ? sourceProps.hasTVPreferredFocus
@@ -277,6 +280,19 @@ ViewProps::ViewProps(
       fromRawValue(context, value, res);                \
     }                                                   \
     events[offset] = res;                               \
+    return;                                             \
+  }
+
+// [Windows]
+#define HOST_PLATFORM_VIEW_EVENT_CASE(eventType)                      \
+  case CONSTEXPR_RAW_PROPS_KEY_HASH("on" #eventType): { \
+    const auto offset = HostPlatformViewEvents::Offset::eventType;  \
+    HostPlatformViewEvents defaultViewEvents{};                     \
+    bool res = defaultViewEvents[offset];               \
+    if (value.hasValue()) {                             \
+      fromRawValue(context, value, res);                \
+    }                                                   \
+    platformEvents[offset] = res;                               \
     return;                                             \
   }
 
@@ -336,12 +352,16 @@ void ViewProps::setProp(
     VIEW_EVENT_CASE(TouchCancel);
     VIEW_EVENT_CASE(MouseEnter); // [Windows]
     VIEW_EVENT_CASE(MouseLeave); // [Windows]
+    HOST_PLATFORM_VIEW_EVENT_CASE(Focus); // [Windows]
+    HOST_PLATFORM_VIEW_EVENT_CASE(Blur); // [Windows]
 
 #ifdef ANDROID
     RAW_SET_PROP_SWITCH_CASE_BASIC(elevation, {});
     RAW_SET_PROP_SWITCH_CASE(nativeBackground, "nativeBackgroundAndroid", {});
     RAW_SET_PROP_SWITCH_CASE(nativeForeground, "nativeForegroundAndroid", {});
+#endif // [Windows]
     RAW_SET_PROP_SWITCH_CASE_BASIC(focusable, false);
+#ifdef ANDROID // [Windows]
     RAW_SET_PROP_SWITCH_CASE_BASIC(hasTVPreferredFocus, false);
     RAW_SET_PROP_SWITCH_CASE_BASIC(needsOffscreenAlphaCompositing, false);
     RAW_SET_PROP_SWITCH_CASE_BASIC(renderToHardwareTextureAndroid, false);

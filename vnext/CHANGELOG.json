@@ -2,6 +2,62 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 23 Feb 2023 06:13:41 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.618",
+      "version": "0.0.0-canary.618",
+      "comments": {
+        "none": [
+          {
+            "author": "aeulitz@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a0435af6bb6cfd6d7be3454f77277feedf745943",
+            "comment": "sequentialize ETW init"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c7951ca14185b7f9cb69092ae1151ea00a1e97c3",
+            "comment": "[Fabric] Keyboard focus loop"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 22 Feb 2023 06:14:08 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.617",
+      "version": "0.0.0-canary.617",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "aaf48a309a2725bb12a1ed99f341bbfdcdf1ab64",
+            "comment": "Fix code to handle newer version of @react-native/codegen"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "154825f3c5ad093e25d2d00defadcad235b7fd4a",
+            "comment": "[Fabric] Fix debug menu crash when not using Xaml"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.163",
+            "commit": "64ec04bf3cbc45c43dc977e38b6ecf526200873a"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.51",
+            "commit": "64ec04bf3cbc45c43dc977e38b6ecf526200873a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 16 Feb 2023 06:15:04 GMT",
       "tag": "react-native-windows_v0.0.0-canary.616",
       "version": "0.0.0-canary.616",

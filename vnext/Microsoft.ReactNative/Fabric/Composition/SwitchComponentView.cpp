@@ -21,11 +21,11 @@ SwitchComponentView::supplementalComponentDescriptorProviders() noexcept {
   return {};
 }
 
-void SwitchComponentView::mountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept {
+void SwitchComponentView::mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
   assert(false);
 }
 
-void SwitchComponentView::unmountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept {
+void SwitchComponentView::unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
   assert(false);
 }
 
@@ -218,7 +218,7 @@ winrt::Microsoft::ReactNative::Composition::IVisual SwitchComponentView::Visual(
   return m_visual;
 }
 
-int64_t SwitchComponentView::SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
+int64_t SwitchComponentView::sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
   switch (msg) {
     case WM_LBUTTONDOWN:
     case WM_POINTERDOWN: {
@@ -238,6 +238,10 @@ int64_t SwitchComponentView::SendMessage(uint32_t msg, uint64_t wParam, int64_t 
   }
 
   return 0;
+}
+
+bool SwitchComponentView::focusable() const noexcept {
+  return m_props->focusable;
 }
 
 } // namespace Microsoft::ReactNative

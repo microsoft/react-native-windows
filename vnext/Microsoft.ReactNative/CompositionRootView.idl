@@ -10,6 +10,36 @@ import "ReactNativeHost.idl";
 
 namespace Microsoft.ReactNative
 {
+  [experimental]
+  DOC_STRING("sdf")
+  enum FocusNavigationReason
+  {
+    Restore,
+    First,
+    Last,
+  };
+
+  [default_interface]
+  [webhosthidden]
+  [experimental]
+  DOC_STRING("Argument type for @CompositionRootView.NavigateFocus.")
+  runtimeclass FocusNavigationRequest {
+    DOC_STRING("Creates new instance of @FocusNavigationRequest")
+        FocusNavigationRequest(FocusNavigationReason reason);
+
+    DOC_STRING("The reason the @CompositionRootView is getting focus.")
+    FocusNavigationReason Reason {get;set;};
+  };
+
+  [default_interface]
+  [webhosthidden]
+  [experimental]
+  DOC_STRING("Provides result from a @CompositionRootView.NavigateFocus method call.")
+  runtimeclass FocusNavigationResult {
+    DOC_STRING("Gets a value that indicates whether the focus successfully moved.")
+    Boolean WasFocusMoved {get;};
+  };
+
   [default_interface]
   [webhosthidden]
   [experimental]
@@ -31,6 +61,9 @@ namespace Microsoft.ReactNative
 
     DOC_STRING("ScaleFactor for this windows (DPI/96)")
     Double ScaleFactor {get; set;};
+
+    DOC_STRING("Move focus to this @CompositionRootView")
+    FocusNavigationResult NavigateFocus(FocusNavigationRequest request);
 
     Windows.Foundation.Size Measure(Windows.Foundation.Size availableSize);
     Windows.Foundation.Size Arrange(Windows.Foundation.Size availableSize);

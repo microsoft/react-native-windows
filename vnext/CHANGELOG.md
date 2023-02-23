@@ -1,8 +1,27 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 16 Feb 2023 06:15:04 GMT and should not be manually modified.
+This log was last generated on Thu, 23 Feb 2023 06:13:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.618
+
+Thu, 23 Feb 2023 06:13:41 GMT
+
+### Changes
+
+- [Fabric] Keyboard focus loop (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.617
+
+Wed, 22 Feb 2023 06:14:08 GMT
+
+### Changes
+
+- Fix code to handle newer version of @react-native/codegen (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Fix debug menu crash when not using Xaml (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.163
+- Bump @react-native-windows/codegen to v0.0.0-canary.51
 
 ## 0.0.0-canary.616
 
