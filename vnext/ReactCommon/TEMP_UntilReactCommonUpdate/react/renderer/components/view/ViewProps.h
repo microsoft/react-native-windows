@@ -77,6 +77,8 @@ class ViewProps : public YogaStylableProps, public AccessibilityProps {
 
   ViewEvents events{};
 
+  HostPlatformViewEvents platformEvents{}; // [Windows]
+
   bool collapsable{true};
 
   bool removeClippedSubviews{false};

@@ -12,6 +12,7 @@
 #include <winrt/Windows.UI.Composition.h>
 #include "CompositionContextHelper.h"
 #include "CompositionHelpers.h"
+#include "RootComponentView.h"
 #include "d2d1helper.h"
 
 namespace Microsoft::ReactNative {
@@ -38,6 +39,13 @@ const std::vector<IComponentView *> &CompositionBaseComponentView::children() co
 }
 
 void CompositionBaseComponentView::parent(IComponentView *parent) noexcept {
+  if (!parent) {
+    auto root = rootComponentView();
+    if (root->GetFocusedComponent() == this) {
+      root->SetFocusedComponent(nullptr); // TODO need move focus logic - where should focus go?
+    }
+  }
+
   m_parent = parent;
 }
 
@@ -60,9 +68,13 @@ bool CompositionBaseComponentView::runOnChildren(bool forward, Mso::Functor<bool
   return false;
 }
 
-void CompositionBaseComponentView::onFocusLost() noexcept {}
+void CompositionBaseComponentView::onFocusLost() noexcept {
+  m_eventEmitter->onBlur();
+}
 
-void CompositionBaseComponentView::onFocusGained() noexcept {}
+void CompositionBaseComponentView::onFocusGained() noexcept {
+  m_eventEmitter->onFocus();
+}
 
 void CompositionBaseComponentView::updateEventEmitter(
     facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {
@@ -971,9 +983,8 @@ void CompositionBaseComponentView::updateBorderLayoutMetrics(
     Visual().as<Composition::IVisualInterop>()->SetClippingPath(pathGeometry.get());
   }
 
-  if (m_needsBorderUpdate || m_layoutMetrics != layoutMetrics) {
-    m_needsBorderUpdate = false;
-    UpdateSpecialBorderLayers(layoutMetrics, viewProps);
+  if (m_layoutMetrics != layoutMetrics) {
+    m_needsBorderUpdate = true;
   }
 }
 
@@ -1219,7 +1230,12 @@ void CompositionViewComponentView::updateLayoutMetrics(
   });
 }
 
-void CompositionViewComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {}
+void CompositionViewComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
+  if (m_needsBorderUpdate) {
+    m_needsBorderUpdate = false;
+    UpdateSpecialBorderLayers(m_layoutMetrics, *m_props);
+  }
+}
 
 void CompositionViewComponentView::prepareForRecycle() noexcept {}
 facebook::react::Props::Shared CompositionViewComponentView::props() noexcept {

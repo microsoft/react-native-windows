@@ -558,14 +558,6 @@ WindowsTextInputComponentView::supplementalComponentDescriptorProviders() noexce
   return {};
 }
 
-void WindowsTextInputComponentView::parent(IComponentView *parent) noexcept {
-  if (!parent && rootComponentView()->GetFocusedComponent() == this) {
-    rootComponentView()->SetFocusedComponent(nullptr); // TODO need move focus logic - where should focus go?
-  }
-
-  Super::parent(parent);
-}
-
 void WindowsTextInputComponentView::mountChildComponentView(
     IComponentView &childComponentView,
     uint32_t index) noexcept {
