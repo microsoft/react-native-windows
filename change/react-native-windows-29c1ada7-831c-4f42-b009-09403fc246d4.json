@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "sequentialize ETW init",
-  "packageName": "react-native-windows",
-  "email": "aeulitz@microsoft.com",
-  "dependentChangeType": "none"
-}

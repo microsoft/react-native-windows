@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 22 Feb 2023 06:14:08 GMT and should not be manually modified.
+This log was last generated on Thu, 23 Feb 2023 06:13:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.618
+
+Thu, 23 Feb 2023 06:13:41 GMT
+
+### Changes
+
+- [Fabric] Keyboard focus loop (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.617
 
