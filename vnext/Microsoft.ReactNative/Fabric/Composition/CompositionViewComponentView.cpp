@@ -979,9 +979,9 @@ void CompositionBaseComponentView::updateBorderLayoutMetrics(
     Visual().as<Composition::IVisualInterop>()->SetClippingPath(pathGeometry.get());
   }
 
-  if (m_needsBorderUpdate || m_layoutMetrics != layoutMetrics) {
-    m_needsBorderUpdate = false;
-    UpdateSpecialBorderLayers(layoutMetrics, viewProps);
+  if (m_layoutMetrics != layoutMetrics) {
+    m_needsBorderUpdate = true;
+
   }
 }
 
@@ -1227,7 +1227,12 @@ void CompositionViewComponentView::updateLayoutMetrics(
   });
 }
 
-void CompositionViewComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {}
+void CompositionViewComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
+  if (m_needsBorderUpdate) {
+    m_needsBorderUpdate = false;
+    UpdateSpecialBorderLayers(m_layoutMetrics, *m_props);
+  }
+}
 
 void CompositionViewComponentView::prepareForRecycle() noexcept {}
 facebook::react::Props::Shared CompositionViewComponentView::props() noexcept {
