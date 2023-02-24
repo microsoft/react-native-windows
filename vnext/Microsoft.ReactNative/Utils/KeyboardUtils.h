@@ -4,6 +4,7 @@
 #pragma once
 
 #include <winrt/Windows.System.h>
+#include <CppWinRTIncludes.h>
 
 namespace Microsoft::ReactNative {
 
