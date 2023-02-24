@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Move `@typescript-eslint/eslint-plugin` to `devDependencies` so they don't get installed by consumers",
+  "packageName": "@react-native-windows/codegen",
+  "email": "4123478+tido64@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
