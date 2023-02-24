@@ -3,8 +3,8 @@
 
 #pragma once
 
-#include <winrt/Windows.System.h>
 #include <CppWinRTIncludes.h>
+#include <winrt/Windows.System.h>
 
 namespace Microsoft::ReactNative {
 
@@ -12,4 +12,4 @@ bool IsModifiedKeyPressed(winrt::CoreWindow const &coreWindow, winrt::Windows::S
 std::string FromVirtualKey(winrt::Windows::System::VirtualKey virtualKey, bool fShift, bool fCaps);
 std::string CodeFromVirtualKey(winrt::Windows::System::VirtualKey virtualKey);
 
-} // Microsoft::ReactNative
+} // namespace Microsoft::ReactNative

@@ -5,6 +5,10 @@
 
 #include <winrt/Windows.UI.Core.h>
 
+#ifdef USE_WINUI3
+#include <winrt/Microsoft.UI.Input.h>
+#endif
+
 namespace Microsoft::ReactNative {
 
 // Should align to
@@ -347,10 +351,9 @@ static const std::string GetOrUnidentified(
 std::string FromVirtualKey(winrt::Windows::System::VirtualKey virtualKey, bool fShift, bool fCaps) {
   int vk = static_cast<int>(virtualKey);
 
-	// Windows doesn't define Virtual Keys for 0-9 and A-Z, they're just aligned to their ASCII representation (in 
-	// uppercase, for the alphabet VKs).  See WinUser.h
-	if ((vk >= '0' && vk <= '9') || (vk >= 'A' && vk <= 'Z'))
-	{
+  // Windows doesn't define Virtual Keys for 0-9 and A-Z, they're just aligned to their ASCII representation (in
+  // uppercase, for the alphabet VKs).  See WinUser.h
+  if ((vk >= '0' && vk <= '9') || (vk >= 'A' && vk <= 'Z')) {
     auto c = static_cast<char>(vk);
     if ((fShift == fCaps) && std::isalpha(c)) {
       c = static_cast<char>(std::tolower(c));
@@ -362,9 +365,7 @@ std::string FromVirtualKey(winrt::Windows::System::VirtualKey virtualKey, bool f
   return GetOrUnidentified(virtualKey, g_virtualKeyToKey);
 }
 
-bool IsModifiedKeyPressed(
-    winrt::CoreWindow const &coreWindow,
-    winrt::Windows::System::VirtualKey virtualKey) {
+bool IsModifiedKeyPressed(winrt::CoreWindow const &coreWindow, winrt::Windows::System::VirtualKey virtualKey) {
 #ifndef USE_WINUI3
 #if USE_FABRIC
   if (!coreWindow) {
@@ -379,7 +380,7 @@ bool IsModifiedKeyPressed(
 }
 
 inline winrt::Windows::System::VirtualKey GetLeftOrRightModifiedKey(
-    const winrt::CoreWindow & coreWindow,
+    const winrt::CoreWindow &coreWindow,
     winrt::Windows::System::VirtualKey leftKey,
     winrt::Windows::System::VirtualKey rightKey) {
   return IsModifiedKeyPressed(coreWindow, leftKey) ? leftKey : rightKey;
@@ -412,4 +413,4 @@ std::string CodeFromVirtualKey(winrt::Windows::System::VirtualKey virtualKey) {
   return GetOrUnidentified(virtualKey, g_virtualKeyToCode);
 }
 
-} // Microsoft::ReactNative
+} // namespace Microsoft::ReactNative
