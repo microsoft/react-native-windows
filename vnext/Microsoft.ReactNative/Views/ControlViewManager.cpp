@@ -86,15 +86,14 @@ bool ControlViewManager::UpdateProperty(
       } else if (propertyValue.IsNull()) {
         nodeToUpdate->IsFocusable(false);
       }
+    } else if (propertyName == "disabled") {
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
+        nodeToUpdate->IsDisable(propertyValue.AsBoolean());
+      }
     } else {
       if (propertyName == "accessible") {
         if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
           nodeToUpdate->IsAccessible(propertyValue.AsBoolean());
-        }
-      }
-      if (propertyName == "disabled") {
-        if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
-          nodeToUpdate->IsDisable(propertyValue.AsBoolean());
         }
       }
       ret = Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
