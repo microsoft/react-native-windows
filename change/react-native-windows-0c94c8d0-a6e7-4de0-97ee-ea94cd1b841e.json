@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Adds collapsable prop to Paper VM for View",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}

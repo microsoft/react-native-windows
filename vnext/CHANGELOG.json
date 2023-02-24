@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 24 Feb 2023 06:14:52 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.619",
+      "version": "0.0.0-canary.619",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "7a6f87d2d16b2f453fd6c3f5c29472a4e953dfaf",
+            "comment": "Adds collapsable prop to Paper VM for View"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a0c6f2fa08f7a80d7f501a709d8f0af369baf9ef",
+            "comment": "[Fabric] Implement onFocus and onBlur"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "3bd847156b67707e85a6a1afd331475abbc0c789",
+            "comment": "Reduce some exceptions being thrown in some normal use cases"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 23 Feb 2023 06:13:41 GMT",
       "tag": "react-native-windows_v0.0.0-canary.618",
       "version": "0.0.0-canary.618",

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Reduce some exceptions being thrown in some normal use cases",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
