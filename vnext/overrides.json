@@ -100,6 +100,18 @@
     },
     {
       "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/ViewEventEmitter.cpp",
+      "baseFile": "ReactCommon/react/renderer/components/view/ViewEventEmitter.cpp",
+      "baseHash": "0c19260b4d84d078e6991f67d94df14a32e71017"
+    },
+    {
+      "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/ViewEventEmitter.h",
+      "baseFile": "ReactCommon/react/renderer/components/view/ViewEventEmitter.h",
+      "baseHash": "a373fca9d1a593bf6cb5717c394ffba91baddf40"
+    },
+    {
+      "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/ViewProps.cpp",
       "baseFile": "ReactCommon/react/renderer/components/view/ViewProps.cpp",
       "baseHash": "aa0da12bb0688b67ac8a7295f8113419ec2277ab"

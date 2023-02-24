@@ -82,6 +82,33 @@ inline static bool operator!=(ViewEvents const &lhs, ViewEvents const &rhs) {
   return lhs.bits != rhs.bits;
 }
 
+// [Windows]
+struct HostPlatformViewEvents {
+  std::bitset<32> bits{};
+
+  enum class Offset : std::size_t {
+    Focus = 0,
+    Blur = 1,
+  };
+  
+  constexpr bool operator[](const Offset offset) const {
+    return bits[static_cast<std::size_t>(offset)];
+  }
+
+  std::bitset<32>::reference operator[](const Offset offset) {
+    return bits[static_cast<std::size_t>(offset)];
+  }
+  };
+
+
+inline static bool operator==(HostPlatformViewEvents const &lhs, HostPlatformViewEvents const &rhs) {
+  return lhs.bits == rhs.bits;
+}
+
+inline static bool operator!=(HostPlatformViewEvents const &lhs, HostPlatformViewEvents const &rhs) {
+  return lhs.bits != rhs.bits;
+}
+
 enum class BackfaceVisibility : uint8_t { Auto, Visible, Hidden };
 
 enum class BorderCurve : uint8_t { Circular, Continuous };

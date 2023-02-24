@@ -56,6 +56,8 @@ void ViewShadowNode::initialize() noexcept {
       viewProps.importantForAccessibility != ImportantForAccessibility::Auto ||
       viewProps.removeClippedSubviews;
 
+  formsStackingContext = formsStackingContext || viewProps.platformEvents.bits.any(); // [Windows]
+
 #ifdef ANDROID
   formsStackingContext = formsStackingContext || viewProps.elevation != 0;
 #endif

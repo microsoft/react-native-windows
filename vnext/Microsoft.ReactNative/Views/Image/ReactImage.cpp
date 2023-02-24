@@ -12,7 +12,6 @@
 #include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/Windows.Web.Http.h>
 
-#include <Utils/ValueUtils.h>
 #include <Views/DynamicAutomationPeer.h>
 #include "Unicode.h"
 #include "XamlView.h"
