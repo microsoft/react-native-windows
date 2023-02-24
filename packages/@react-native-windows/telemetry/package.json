@@ -19,8 +19,6 @@
   },
   "dependencies": {
     "@react-native-windows/fs": "0.70.1",
-    "@typescript-eslint/eslint-plugin": "^5.20.0",
-    "@typescript-eslint/parser": "^5.20.0",
     "@xmldom/xmldom": "^0.7.7",
     "applicationinsights": "^2.3.1",
     "ci-info": "^3.2.0",
@@ -38,6 +36,8 @@
     "@types/jest": "^26.0.20",
     "@types/node": "^14.14.22",
     "@types/semver": "^7.3.3",
+    "@typescript-eslint/eslint-plugin": "^5.20.0",
+    "@typescript-eslint/parser": "^5.20.0",
     "babel-jest": "^26.3.0",
     "eslint": "^7.32.0",
     "jest": "^26.6.3",
