@@ -15,10 +15,10 @@ import renderPropsFile from './renderPropsFile';
 
 const {argv} = yargs
   .check(args => {
-    if (args._.length === 1 && semver.valid(<string>args._[0])) {
+    if (args._.length === 2 && semver.valid(<string>args._[0])) {
       return true;
     } else {
-      throw new Error('Usage: stamp-version <version>');
+      throw new Error('Usage: stamp-version <version> <commitid>');
     }
   })
   .showHelpOnFail(false);
@@ -32,7 +32,11 @@ const {argv} = yargs
  * Rewrites PackageVersion.g.props
  */
 async function setPackageVersionProps(version: string) {
-  const propsStr = await renderPropsFile(version);
+  const commitId =
+    process.env.BUILD_SOURCEVERSION ?? // Azure DevOps Pipelines
+    process.env.GITHUB_SHA ?? // GitHub Actions
+    'developer-build';
+  const propsStr = await renderPropsFile(version, commitId);
 
   const rnwPackage = await findRepoPackage('react-native-windows');
   const propsPath = path.join(

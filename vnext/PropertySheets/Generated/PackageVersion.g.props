@@ -15,5 +15,6 @@
     <ReactNativeWindowsMinor>0</ReactNativeWindowsMinor>
     <ReactNativeWindowsPatch>0</ReactNativeWindowsPatch>
     <ReactNativeWindowsCanary>true</ReactNativeWindowsCanary>
+    <ReactNativeWindowsCommitId>a4b3e985d2361263dabf3155e3b2411f20213eb8</ReactNativeWindowsCommitId>
   </PropertyGroup>
 </Project>
