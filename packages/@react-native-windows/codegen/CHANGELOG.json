@@ -2,6 +2,27 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Sat, 25 Feb 2023 06:13:35 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.52",
+      "version": "0.0.0-canary.52",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "4123478+tido64@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "beaa9c1b1f6ef2b6d8a4e1b6caea07168818a1d1",
+            "comment": "Move `@typescript-eslint/eslint-plugin` to `devDependencies` so they don't get installed by consumers"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.15",
+            "commit": "97bbe423f10f6ebc28c0f317b8854c293fd878a8"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 22 Feb 2023 06:14:08 GMT",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.51",
       "version": "0.0.0-canary.51",

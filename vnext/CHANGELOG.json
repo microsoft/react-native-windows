@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 25 Feb 2023 06:13:36 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.620",
+      "version": "0.0.0-canary.620",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.164",
+            "commit": "97bbe423f10f6ebc28c0f317b8854c293fd878a8"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.52",
+            "commit": "97bbe423f10f6ebc28c0f317b8854c293fd878a8"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.9.2",
+            "commit": "97bbe423f10f6ebc28c0f317b8854c293fd878a8"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 24 Feb 2023 06:14:52 GMT",
       "tag": "react-native-windows_v0.0.0-canary.619",
       "version": "0.0.0-canary.619",
