@@ -1,8 +1,18 @@
 # Change Log - @react-native-windows/package-utils
 
-This log was last generated on Mon, 13 Feb 2023 16:16:02 GMT and should not be manually modified.
+This log was last generated on Mon, 27 Feb 2023 16:15:27 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.2
+
+Mon, 27 Feb 2023 16:15:27 GMT
+
+### Patches
+
+- Move `@typescript-eslint/eslint-plugin` to `devDependencies` so they don't get installed by consumers (4123478+tido64@users.noreply.github.com)
+- Bump @react-native-windows/find-repo-root to v0.71.2
+- Bump @react-native-windows/fs to v0.71.2
 
 ## 0.71.1
 
