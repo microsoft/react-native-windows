@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "[0.67] Fix CI by using our VM images rather than windows-2019",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}

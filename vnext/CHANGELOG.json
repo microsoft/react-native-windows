@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 27 Feb 2023 16:09:43 GMT",
+      "tag": "react-native-windows_v0.67.18",
+      "version": "0.67.18",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "49b092ff6364c28ba266326b60e465f9dd2fa5e5",
+            "comment": "[0.67] Fix CI by using our VM images rather than windows-2019"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 28 Nov 2022 16:10:31 GMT",
       "tag": "react-native-windows_v0.67.17",
       "version": "0.67.17",
