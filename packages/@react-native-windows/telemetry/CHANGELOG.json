@@ -2,6 +2,27 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Mon, 27 Feb 2023 16:12:00 GMT",
+      "tag": "@react-native-windows/telemetry_v0.69.5",
+      "version": "0.69.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "4123478+tido64@users.noreply.github.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "c7e8fa57a50b66627bc20f0c3206cf64b2bc0564",
+            "comment": "Move `@typescript-eslint/eslint-plugin` to `devDependencies` so they don't get installed by consumers"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/telemetry",
+            "comment": "Bump @react-native-windows/fs to v0.69.2",
+            "commit": "c7e8fa57a50b66627bc20f0c3206cf64b2bc0564"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 13 Feb 2023 23:52:41 GMT",
       "tag": "@react-native-windows/telemetry_v0.69.4",
       "version": "0.69.4",

@@ -2,6 +2,33 @@
   "name": "@react-native-windows/package-utils",
   "entries": [
     {
+      "date": "Mon, 27 Feb 2023 16:11:59 GMT",
+      "tag": "@react-native-windows/package-utils_v0.69.2",
+      "version": "0.69.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "4123478+tido64@users.noreply.github.com",
+            "package": "@react-native-windows/package-utils",
+            "commit": "c7e8fa57a50b66627bc20f0c3206cf64b2bc0564",
+            "comment": "Move `@typescript-eslint/eslint-plugin` to `devDependencies` so they don't get installed by consumers"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.69.2",
+            "commit": "c7e8fa57a50b66627bc20f0c3206cf64b2bc0564"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @react-native-windows/fs to v0.69.2",
+            "commit": "c7e8fa57a50b66627bc20f0c3206cf64b2bc0564"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 12 Sep 2022 18:49:08 GMT",
       "tag": "@react-native-windows/package-utils_v0.69.1",
       "version": "0.69.1",

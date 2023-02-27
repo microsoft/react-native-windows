@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Mon, 13 Feb 2023 23:52:41 GMT and should not be manually modified.
+This log was last generated on Mon, 27 Feb 2023 16:12:00 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.69.5
+
+Mon, 27 Feb 2023 16:12:00 GMT
+
+### Patches
+
+- Move `@typescript-eslint/eslint-plugin` to `devDependencies` so they don't get installed by consumers (4123478+tido64@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.69.2
 
 ## 0.69.4
 
