@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 13 Feb 2023 16:11:58 GMT and should not be manually modified.
+This log was last generated on Mon, 27 Feb 2023 16:12:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.70.13
+
+Mon, 27 Feb 2023 16:12:18 GMT
+
+### Patches
+
+- sequentialize ETW init (aeulitz@microsoft.com)
+- Bump @react-native-windows/cli to v0.70.4
+- Bump @react-native-windows/virtualized-list to v0.70.2
+- Bump @react-native-windows/codegen to v0.70.2
 
 ## 0.70.12
 

@@ -2,6 +2,27 @@
   "name": "@react-native-windows/find-repo-root",
   "entries": [
     {
+      "date": "Mon, 27 Feb 2023 16:12:17 GMT",
+      "tag": "@react-native-windows/find-repo-root_v0.70.2",
+      "version": "0.70.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "4123478+tido64@users.noreply.github.com",
+            "package": "@react-native-windows/find-repo-root",
+            "commit": "adf4872ea50c4aa2978bda86cbd9aa0001118332",
+            "comment": "Move `@typescript-eslint/eslint-plugin` to `devDependencies` so they don't get installed by consumers"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/find-repo-root",
+            "comment": "Bump @react-native-windows/fs to v0.70.2",
+            "commit": "1ed3be1c151cf86991ee3c566d11390c0c7f8b53"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 23 Jan 2023 16:11:43 GMT",
       "tag": "@react-native-windows/find-repo-root_v0.70.1",
       "version": "0.70.1",

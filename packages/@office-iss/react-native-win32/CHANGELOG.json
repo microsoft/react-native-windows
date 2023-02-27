@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 27 Feb 2023 16:12:18 GMT",
+      "tag": "@office-iss/react-native-win32_v0.70.6",
+      "version": "0.70.6",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.70.2",
+            "commit": "1ed3be1c151cf86991ee3c566d11390c0c7f8b53"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 23 Jan 2023 16:11:42 GMT",
       "tag": "@office-iss/react-native-win32_v0.70.5",
       "version": "0.70.5",
