@@ -354,6 +354,8 @@ void ViewProps::setProp(
     VIEW_EVENT_CASE(MouseLeave); // [Windows]
     HOST_PLATFORM_VIEW_EVENT_CASE(Focus); // [Windows]
     HOST_PLATFORM_VIEW_EVENT_CASE(Blur); // [Windows]
+    HOST_PLATFORM_VIEW_EVENT_CASE(KeyUp); // [Windows]
+    HOST_PLATFORM_VIEW_EVENT_CASE(KeyDown); // [Windows]
 
 #ifdef ANDROID
     RAW_SET_PROP_SWITCH_CASE_BASIC(elevation, {});
