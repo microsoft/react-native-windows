@@ -180,10 +180,10 @@ bool ShadowNodeBase::IsFocusable() {
 }
 
 void ShadowNodeBase::IsDisable(bool disable) {
-  m_isDisable = disable;
+  m_isDisabled = disable;
 }
 bool ShadowNodeBase::IsDisable() {
-  return m_isDisable;
+  return m_isDisabled;
 }
 
 

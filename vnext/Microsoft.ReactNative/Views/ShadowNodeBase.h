@@ -133,7 +133,7 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public ShadowNode {
   bool m_updating = false;
   bool m_isFocusable = true;
   bool m_isAccessible = true;
-  bool m_isDisable = false;
+  bool m_isDisabled = false;
   comp::CompositionPropertySet m_transformPS{nullptr};
 
  public:

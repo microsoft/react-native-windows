@@ -602,7 +602,7 @@ void ViewViewManager::SyncFocusableAndAccessible(ViewShadowNode *pViewShadowNode
     const auto isAccessible = pViewShadowNode->IsAccessible();
     const auto isPressable = pViewShadowNode->OnClick();
     const auto isDisabled = pViewShadowNode->IsDisable();
-    const auto isTabStop = (isDisabled ? false : ((isPressable && isFocusable && isAccessible) || (!isPressable && (isFocusable || isAccessible))));
+    const auto isTabStop = (!isDisabled : ((isPressable && isFocusable && isAccessible) || (!isPressable && (isFocusable || isAccessible))));
     const auto accessibilityView = isTabStop ? xaml::Automation::Peers::AccessibilityView::Content
                                              : xaml::Automation::Peers::AccessibilityView::Raw;
     pViewShadowNode->GetControl().IsTabStop(isTabStop);
