@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Keyboard event's key property will now correctly switch between lower and upper case based on Shift/CapsLock state",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

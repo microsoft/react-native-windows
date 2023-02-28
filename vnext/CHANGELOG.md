@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 25 Feb 2023 06:13:36 GMT and should not be manually modified.
+This log was last generated on Tue, 28 Feb 2023 06:14:14 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.621
+
+Tue, 28 Feb 2023 06:14:14 GMT
+
+### Changes
+
+- Remove an unneeded force include from yoga/utils.cpp (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Implement onKeyUp and onKeyDown (30809111+acoates-ms@users.noreply.github.com)
+- Keyboard event's key property will now correctly switch between lower and upper case based on Shift/CapsLock state (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.620
 

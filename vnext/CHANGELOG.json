@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 28 Feb 2023 06:14:14 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.621",
+      "version": "0.0.0-canary.621",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c6842b3b1998a06ff1615c94022d7d3688c7be82",
+            "comment": "Remove an unneeded force include from yoga/utils.cpp"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a4b3e985d2361263dabf3155e3b2411f20213eb8",
+            "comment": "[Fabric] Implement onKeyUp and onKeyDown"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a4b3e985d2361263dabf3155e3b2411f20213eb8",
+            "comment": "Keyboard event's key property will now correctly switch between lower and upper case based on Shift/CapsLock state"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 25 Feb 2023 06:13:36 GMT",
       "tag": "react-native-windows_v0.0.0-canary.620",
       "version": "0.0.0-canary.620",
