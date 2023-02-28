@@ -22,6 +22,15 @@ struct FocusEvent {
   int target;
 };
 
+struct KeyboardEvent {
+  bool altKey{false};
+  bool ctrlKey{false};
+  bool metaKey{false};
+  bool shiftKey{false};
+  std::string key{};
+  std::string code{};
+};
+
 class ViewEventEmitter;
 
 using SharedViewEventEmitter = std::shared_ptr<const ViewEventEmitter>;
@@ -45,6 +54,9 @@ class ViewEventEmitter : public TouchEventEmitter {
 
   void onFocus() const; // [Windows]
   void onBlur() const; // [Windows]
+
+  void onKeyUp(KeyboardEvent const &event) const; // [Windows]
+  void onKeyDown(KeyboardEvent const &event) const; // [Windows]
 
  private:
   /*
