@@ -130,10 +130,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\logger\react_native_log.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\reactperflogger\reactperflogger\BridgeNativeModulePerfLogger.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\log.cpp" />
-    <!-- We should ideally upstream a fix for missing stdexcept, but Yoga hasn't been accepting PRs as of May 2020 -->
-    <ClCompile Include="$(YogaDir)\yoga\Utils.cpp">
-      <ForcedIncludeFiles>stdexcept;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-    </ClCompile>
+    <ClCompile Include="$(YogaDir)\yoga\Utils.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\YGConfig.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\YGEnums.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\YGLayout.cpp" />

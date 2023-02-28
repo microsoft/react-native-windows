@@ -123,6 +123,11 @@ LRESULT CompositionHwndHost::TranslateMessage(int msg, uint64_t wParam, int64_t 
   return 0;
 }
 
+winrt::Microsoft::ReactNative::FocusNavigationResult CompositionHwndHost::NavigateFocus(
+    const winrt::Microsoft::ReactNative::FocusNavigationRequest &request) noexcept {
+  return m_compRootView.NavigateFocus(request);
+}
+
 ReactNative::IReactViewHost CompositionHwndHost::ReactViewHost() const noexcept {
   return m_reactViewHost ? m_reactViewHost : m_compRootView.ReactViewHost();
 }

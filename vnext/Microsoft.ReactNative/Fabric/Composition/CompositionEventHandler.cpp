@@ -5,13 +5,15 @@
 
 #include "CompositionEventHandler.h"
 
-#include <Fabric/Composition/CompositionViewComponentView.h>
 #include <Fabric/FabricUIManagerModule.h>
 #include <IReactContext.h>
 #include <Views/DevMenu.h>
 #include <Views/ShadowNodeBase.h>
 #include <windows.h>
 #include <windowsx.h>
+#include "CompositionRootView.h"
+#include "CompositionViewComponentView.h"
+#include "RootComponentView.h"
 
 namespace Microsoft::ReactNative {
 
@@ -82,6 +84,18 @@ CompositionEventHandler::CompositionEventHandler(
 
 CompositionEventHandler::~CompositionEventHandler() {}
 
+facebook::react::SurfaceId CompositionEventHandler::SurfaceId() noexcept {
+  return static_cast<facebook::react::SurfaceId>(
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(m_compRootView)->GetTag());
+}
+
+::Microsoft::ReactNative::RootComponentView &CompositionEventHandler::RootComponentView() noexcept {
+  auto rootComponentViewDescriptor = (::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties()))
+                                         ->GetViewRegistry()
+                                         .componentViewDescriptorWithTag(SurfaceId());
+  return static_cast<::Microsoft::ReactNative::RootComponentView &>(*(rootComponentViewDescriptor.view));
+}
+
 // For DM
 /*
 void CompositionEventHandler::PointerDown(facebook::react::SurfaceId surfaceId, uint32_t pointerId) {
@@ -94,8 +108,7 @@ void CompositionEventHandler::PointerDown(facebook::react::SurfaceId surfaceId, 
 
 
   auto rootComponentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(surfaceId);
-  auto tag = static_cast<CompositionBaseComponentView &>(*rootComponentViewDescriptor.view)
-                 .hitTest({pp.Position().X, pp.Position().Y}, ptLocal);
+  auto tag = rootComponentViewDescriptor.view->hitTest({pp.Position().X, pp.Position().Y}, ptLocal);
 
   if (tag != -1) {
   auto hitComponentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(tag);
@@ -109,48 +122,38 @@ void CompositionEventHandler::PointerDown(facebook::react::SurfaceId surfaceId, 
 }
 */
 
-void CompositionEventHandler::ScrollWheel(
-    facebook::react::SurfaceId surfaceId,
-    facebook::react::Point pt,
-    uint32_t delta) {
+void CompositionEventHandler::ScrollWheel(facebook::react::Point pt, uint32_t delta) {
   if (std::shared_ptr<FabricUIManager> fabricuiManager =
           ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties())) {
     facebook::react::Point ptLocal;
 
-    auto rootComponentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(surfaceId);
-
-    static_cast<CompositionBaseComponentView &>(*rootComponentViewDescriptor.view)
-        .ScrollWheel(
-            {static_cast<float>(pt.x / m_compRootView.ScaleFactor()),
-             static_cast<float>(pt.y / m_compRootView.ScaleFactor())},
-            delta);
+    RootComponentView().ScrollWheel(
+        {static_cast<float>(pt.x / m_compRootView.ScaleFactor()),
+         static_cast<float>(pt.y / m_compRootView.ScaleFactor())},
+        delta);
   }
 }
 
-int64_t CompositionEventHandler::SendMessage(
-    facebook::react::SurfaceId surfaceId,
-    uint32_t msg,
-    uint64_t wParam,
-    int64_t lParam) noexcept {
+int64_t CompositionEventHandler::SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
   switch (msg) {
     case WM_LBUTTONDOWN: {
-      ButtonDown(surfaceId, msg, wParam, lParam);
+      ButtonDown(msg, wParam, lParam);
       return 0;
     }
     case WM_POINTERDOWN: {
-      PointerPressed(surfaceId, msg, wParam, lParam);
+      PointerPressed(msg, wParam, lParam);
       return 0;
     }
     case WM_LBUTTONUP: {
-      ButtonUp(surfaceId, msg, wParam, lParam);
+      ButtonUp(msg, wParam, lParam);
       return 0;
     }
     case WM_POINTERUP: {
-      PointerUp(surfaceId, msg, wParam, lParam);
+      PointerUp(msg, wParam, lParam);
       return 0;
     }
     case WM_MOUSEMOVE: {
-      MouseMove(surfaceId, msg, wParam, lParam);
+      MouseMove(msg, wParam, lParam);
       return 0;
     }
     case WM_KEYDOWN:
@@ -159,29 +162,33 @@ int64_t CompositionEventHandler::SendMessage(
     case WM_SYSCHAR:
     case WM_SYSKEYDOWN:
     case WM_SYSKEYUP: {
-      if (auto focusedComponent = GetFocusedComponent()) {
-        auto result = focusedComponent->SendMessage(msg, wParam, lParam);
+      // TODO full bubbling of events
+      if (auto focusedComponent = RootComponentView().GetFocusedComponent()) {
+        auto result = focusedComponent->sendMessage(msg, wParam, lParam);
         if (result)
           return result;
       }
 
-      if (msg == WM_KEYDOWN && wParam == VkKeyScanA('d')) {
-        BYTE bKeys[256];
-        if (GetKeyboardState(bKeys)) {
-          bool fShift = false;
-          if (bKeys[VK_LSHIFT] & 0x80)
-            fShift = true;
-          if (bKeys[VK_RSHIFT] & 0x80)
-            fShift = true;
-          bool fCtrl = false;
-          if (bKeys[VK_LCONTROL] & 0x80)
-            fCtrl = true;
-          if (bKeys[VK_RCONTROL] & 0x80)
-            fCtrl = true;
-          if (fShift && fCtrl) {
-            auto contextSelf = winrt::get_self<React::implementation::ReactContext>(m_context.Handle());
-            Microsoft::ReactNative::DevMenuManager::Show(
-                Mso::CntPtr<Mso::React::IReactContext>(&contextSelf->GetInner()));
+      BYTE bKeys[256];
+      if (GetKeyboardState(bKeys)) {
+        bool fShift = false;
+        if (bKeys[VK_LSHIFT] & 0x80)
+          fShift = true;
+        if (bKeys[VK_RSHIFT] & 0x80)
+          fShift = true;
+        bool fCtrl = false;
+        if (bKeys[VK_LCONTROL] & 0x80)
+          fCtrl = true;
+        if (bKeys[VK_RCONTROL] & 0x80)
+          fCtrl = true;
+        if (msg == WM_KEYDOWN && wParam == VkKeyScanA('d') && fShift && fCtrl) {
+          auto contextSelf = winrt::get_self<React::implementation::ReactContext>(m_context.Handle());
+          Microsoft::ReactNative::DevMenuManager::Show(
+              Mso::CntPtr<Mso::React::IReactContext>(&contextSelf->GetInner()));
+        }
+        if (msg == WM_KEYDOWN && wParam == VK_TAB) {
+          if (RootComponentView().TryMoveFocus(!fShift)) {
+            return 1;
           }
         }
       }
@@ -249,8 +256,8 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
   // We only want to emit events to JS if there is a view that is currently listening to said event
   // so we only send those event to the JS side if the element which has been entered is itself listening,
   // or if one of its parents is listening in case those listeners care about the capturing phase. Adding the ability
-  // for native to distingusih between capturing listeners and not could be an optimization to futher reduce the number
-  // of events we send to JS
+  // for native to distingusih between capturing listeners and not could be an optimization to futher reduce the
+  // number of events we send to JS
   bool hasParentEnterListener = false;
 
   for (auto itComponentView = eventPathViews.rbegin(); itComponentView != eventPathViews.rend();
@@ -303,7 +310,8 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
 
   bool hasParentLeaveListener = false;
   for (auto itComponentView = currentlyHoveredViews.rbegin(); itComponentView != currentlyHoveredViews.rend();
-       itComponentView++) { //  for (RCTReactTaggedView *taggedView in [currentlyHoveredViews reverseObjectEnumerator])
+       itComponentView++) { //  for (RCTReactTaggedView *taggedView in [currentlyHoveredViews
+                            //  reverseObjectEnumerator])
                             //  {
     auto componentView = *itComponentView;
 
@@ -400,11 +408,7 @@ facebook::react::PointerEvent CreatePointerEventFromIncompleteHoverData(
   return pointerEvent;
 }
 
-void CompositionEventHandler::MouseMove(
-    facebook::react::SurfaceId surfaceId,
-    uint32_t msg,
-    uint64_t wParam,
-    int64_t lParam) {
+void CompositionEventHandler::MouseMove(uint32_t msg, uint64_t wParam, int64_t lParam) {
   int pointerId = MOUSE_POINTER_ID; // TODO pointerId
 
   auto x = GET_X_LPARAM(lParam);
@@ -414,11 +418,9 @@ void CompositionEventHandler::MouseMove(
           ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties())) {
     facebook::react::Point ptLocal;
 
-    auto rootComponentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(surfaceId);
     facebook::react::Point ptScaled = {
         static_cast<float>(x / m_compRootView.ScaleFactor()), static_cast<float>(y / m_compRootView.ScaleFactor())};
-    auto tag =
-        static_cast<CompositionBaseComponentView &>(*rootComponentViewDescriptor.view).hitTest(ptScaled, ptLocal);
+    auto tag = RootComponentView().hitTest(ptScaled, ptLocal);
 
     if (tag == -1)
       return;
@@ -443,11 +445,7 @@ void CompositionEventHandler::MouseMove(
   }
 }
 
-void CompositionEventHandler::PointerPressed(
-    facebook::react::SurfaceId surfaceId,
-    uint32_t msg,
-    uint64_t wParam,
-    int64_t lParam) {
+void CompositionEventHandler::PointerPressed(uint32_t msg, uint64_t wParam, int64_t lParam) {
   POINTER_INFO pi;
   PointerId pointerId = GET_POINTERID_WPARAM(wParam);
   GetPointerInfo(pointerId, &pi);
@@ -470,19 +468,17 @@ void CompositionEventHandler::PointerPressed(
           ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties())) {
     facebook::react::Point ptLocal;
 
-    auto rootComponentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(surfaceId);
     facebook::react::Point ptScaled = {
         static_cast<float>(pt.x / m_compRootView.ScaleFactor()),
         static_cast<float>(pt.y / m_compRootView.ScaleFactor())};
-    auto tag =
-        static_cast<CompositionBaseComponentView &>(*rootComponentViewDescriptor.view).hitTest(ptScaled, ptLocal);
+    auto tag = RootComponentView().hitTest(ptScaled, ptLocal);
 
     if (tag == -1)
       return;
 
     IComponentView *targetComponentView =
         fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(tag).view.get();
-    static_cast<CompositionBaseComponentView *>(targetComponentView)->SendMessage(msg, wParam, lParam);
+    static_cast<CompositionBaseComponentView *>(targetComponentView)->sendMessage(msg, wParam, lParam);
 
     ActiveTouch activeTouch{0};
     switch (pi.pointerType) {
@@ -524,15 +520,11 @@ void CompositionEventHandler::PointerPressed(
 
     m_activeTouches.emplace(pointerId, activeTouch);
 
-    DispatchTouchEvent(surfaceId, eventType, pointerId);
+    DispatchTouchEvent(eventType, pointerId);
   }
 }
 
-void CompositionEventHandler::ButtonDown(
-    facebook::react::SurfaceId surfaceId,
-    uint32_t msg,
-    uint64_t wParam,
-    int64_t lParam) {
+void CompositionEventHandler::ButtonDown(uint32_t msg, uint64_t wParam, int64_t lParam) {
   PointerId pointerId = MOUSE_POINTER_ID;
 
   auto staleTouch = std::find_if(m_activeTouches.begin(), m_activeTouches.end(), [pointerId](const auto &pair) {
@@ -553,17 +545,16 @@ void CompositionEventHandler::ButtonDown(
           ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties())) {
     facebook::react::Point ptLocal;
 
-    auto rootComponentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(surfaceId);
     facebook::react::Point ptScaled = {
         static_cast<float>(x / m_compRootView.ScaleFactor()), static_cast<float>(y / m_compRootView.ScaleFactor())};
-    auto tag = rootComponentViewDescriptor.view->hitTest(ptScaled, ptLocal);
+    auto tag = RootComponentView().hitTest(ptScaled, ptLocal);
 
     if (tag == -1)
       return;
 
     IComponentView *targetComponentView =
         fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(tag).view.get();
-    static_cast<CompositionBaseComponentView *>(targetComponentView)->SendMessage(msg, wParam, lParam);
+    static_cast<CompositionBaseComponentView *>(targetComponentView)->sendMessage(msg, wParam, lParam);
 
     ActiveTouch activeTouch{0};
     activeTouch.touchType = UITouchType::Mouse;
@@ -593,15 +584,11 @@ void CompositionEventHandler::ButtonDown(
 
     m_activeTouches.emplace(pointerId, activeTouch);
 
-    DispatchTouchEvent(surfaceId, eventType, pointerId);
+    DispatchTouchEvent(eventType, pointerId);
   }
 }
 
-void CompositionEventHandler::PointerUp(
-    facebook::react::SurfaceId surfaceId,
-    uint32_t msg,
-    uint64_t wParam,
-    int64_t lParam) {
+void CompositionEventHandler::PointerUp(uint32_t msg, uint64_t wParam, int64_t lParam) {
   POINTER_INFO pi;
   PointerId pointerId = GET_POINTERID_WPARAM(wParam);
   GetPointerInfo(pointerId, &pi);
@@ -622,30 +609,24 @@ void CompositionEventHandler::PointerUp(
           ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties())) {
     facebook::react::Point ptLocal;
 
-    auto rootComponentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(surfaceId);
     facebook::react::Point ptScaled = {
         static_cast<float>(pt.x / m_compRootView.ScaleFactor()),
         static_cast<float>(pt.y / m_compRootView.ScaleFactor())};
-    auto tag =
-        static_cast<CompositionBaseComponentView &>(*rootComponentViewDescriptor.view).hitTest(ptScaled, ptLocal);
+    auto tag = RootComponentView().hitTest(ptScaled, ptLocal);
 
     if (tag == -1)
       return;
 
     auto targetComponentView = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(tag).view;
-    std::static_pointer_cast<CompositionBaseComponentView>(targetComponentView)->SendMessage(msg, wParam, lParam);
+    std::static_pointer_cast<CompositionBaseComponentView>(targetComponentView)->sendMessage(msg, wParam, lParam);
 
     UpdateActiveTouch(activeTouch->second, ptScaled, ptLocal);
-    DispatchTouchEvent(surfaceId, TouchEventType::End, pointerId);
+    DispatchTouchEvent(TouchEventType::End, pointerId);
     m_activeTouches.erase(pointerId);
   }
 }
 
-void CompositionEventHandler::ButtonUp(
-    facebook::react::SurfaceId surfaceId,
-    uint32_t msg,
-    uint64_t wParam,
-    int64_t lParam) {
+void CompositionEventHandler::ButtonUp(uint32_t msg, uint64_t wParam, int64_t lParam) {
   int pointerId = MOUSE_POINTER_ID;
 
   auto activeTouch = std::find_if(m_activeTouches.begin(), m_activeTouches.end(), [pointerId](const auto &pair) {
@@ -663,20 +644,18 @@ void CompositionEventHandler::ButtonUp(
           ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties())) {
     facebook::react::Point ptLocal;
 
-    auto rootComponentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(surfaceId);
     facebook::react::Point ptScaled = {
         static_cast<float>(x / m_compRootView.ScaleFactor()), static_cast<float>(y / m_compRootView.ScaleFactor())};
-    auto tag =
-        static_cast<CompositionBaseComponentView &>(*rootComponentViewDescriptor.view).hitTest(ptScaled, ptLocal);
+    auto tag = RootComponentView().hitTest(ptScaled, ptLocal);
 
     if (tag == -1)
       return;
 
     auto targetComponentView = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(tag).view;
-    std::static_pointer_cast<CompositionBaseComponentView>(targetComponentView)->SendMessage(msg, wParam, lParam);
+    std::static_pointer_cast<CompositionBaseComponentView>(targetComponentView)->sendMessage(msg, wParam, lParam);
 
     UpdateActiveTouch(activeTouch->second, ptScaled, ptLocal);
-    DispatchTouchEvent(surfaceId, TouchEventType::End, pointerId);
+    DispatchTouchEvent(TouchEventType::End, pointerId);
     m_activeTouches.erase(pointerId);
   }
 }
@@ -757,10 +736,7 @@ facebook::react::PointerEvent CompositionEventHandler::CreatePointerEventFromAct
 }
 
 // If we have events that include multiple pointer updates, we should change arg from pointerId to vector<pointerId>
-void CompositionEventHandler::DispatchTouchEvent(
-    facebook::react::SurfaceId surfaceId,
-    TouchEventType eventType,
-    PointerId pointerId) {
+void CompositionEventHandler::DispatchTouchEvent(TouchEventType eventType, PointerId pointerId) {
   auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties());
 
   if (!fabricuiManager)
@@ -791,9 +767,8 @@ void CompositionEventHandler::DispatchTouchEvent(
         eventType == TouchEventType::Cancel;
     if (!shouldLeave) {
       const auto &viewRegistry = fabricuiManager->GetViewRegistry();
-      auto rootComponentViewDescriptor = viewRegistry.componentViewDescriptorWithTag(surfaceId);
       facebook::react::Point ptLocal;
-      auto targetTag = rootComponentViewDescriptor.view->hitTest(pointerEvent.clientPoint, ptLocal);
+      auto targetTag = RootComponentView().hitTest(pointerEvent.clientPoint, ptLocal);
       auto targetComponentViewDescriptor = viewRegistry.componentViewDescriptorWithTag(targetTag);
       targetView = FindClosestFabricManagedTouchableView(targetComponentViewDescriptor.view.get());
     }

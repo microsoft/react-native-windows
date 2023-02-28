@@ -28,17 +28,13 @@ ParagraphComponentView::supplementalComponentDescriptorProviders() noexcept {
   return {};
 }
 
-void ParagraphComponentView::mountChildComponentView(
-    const IComponentView &childComponentView,
-    uint32_t index) noexcept {
-  auto v = static_cast<const ParagraphComponentView &>(childComponentView);
+void ParagraphComponentView::mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
+  // auto v = static_cast<ParagraphComponentView &>(childComponentView);
   assert(false);
   // m_element.Children().InsertAt(index, v.Element());
 }
 
-void ParagraphComponentView::unmountChildComponentView(
-    const IComponentView &childComponentView,
-    uint32_t index) noexcept {
+void ParagraphComponentView::unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
   assert(false);
   // m_element.Children().RemoveAt(index);
 }
