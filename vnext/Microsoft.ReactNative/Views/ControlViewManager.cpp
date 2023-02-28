@@ -101,8 +101,8 @@ bool ControlViewManager::UpdateProperty(
     }
   }
   if (finalizeBorderRadius && control.try_as<xaml::Controls::IControl7>()) {
-      // Control.CornerRadius is only supported on >= RS5, setting borderRadius on Controls have no effect < RS5
-      UpdateCornerRadiusOnElement(nodeToUpdate, control);
+    // Control.CornerRadius is only supported on >= RS5, setting borderRadius on Controls have no effect < RS5
+    UpdateCornerRadiusOnElement(nodeToUpdate, control);
   }
   return ret;
 }

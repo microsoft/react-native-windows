@@ -465,9 +465,10 @@ void ViewViewManager::OnPropertiesUpdated(ShadowNodeBase *node) {
 
   // If component is focusable, it should be a ViewControl.
   // If component is a View with accessible set to true, the component should be focusable, thus we need a ViewControl.
-  bool shouldBeControl = 
-      viewShadowNode->IsDisable() ? false : ((viewShadowNode->IsFocusable() || (viewShadowNode->IsAccessible() && !viewShadowNode->OnClick())));
-      
+  bool shouldBeControl = viewShadowNode->IsDisable()
+      ? false
+      : ((viewShadowNode->IsFocusable() || (viewShadowNode->IsAccessible() && !viewShadowNode->OnClick())));
+
   if (auto view = viewShadowNode->GetView().try_as<xaml::UIElement>()) {
     // If we have DynamicAutomationProperties, we need a ViewControl with a
     // DynamicAutomationPeer
@@ -602,7 +603,9 @@ void ViewViewManager::SyncFocusableAndAccessible(ViewShadowNode *pViewShadowNode
     const auto isAccessible = pViewShadowNode->IsAccessible();
     const auto isPressable = pViewShadowNode->OnClick();
     const auto isDisabled = pViewShadowNode->IsDisable();
-    const auto isTabStop = (!isDisabled : ((isPressable && isFocusable && isAccessible) || (!isPressable && (isFocusable || isAccessible))));
+    const auto isTabStop =
+        (!isDisabled
+         : ((isPressable && isFocusable && isAccessible) || (!isPressable && (isFocusable || isAccessible))));
     const auto accessibilityView = isTabStop ? xaml::Automation::Peers::AccessibilityView::Content
                                              : xaml::Automation::Peers::AccessibilityView::Raw;
     pViewShadowNode->GetControl().IsTabStop(isTabStop);

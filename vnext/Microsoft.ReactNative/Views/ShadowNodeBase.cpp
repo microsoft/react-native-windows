@@ -186,5 +186,4 @@ bool ShadowNodeBase::IsDisable() {
   return m_isDisabled;
 }
 
-
 } // namespace Microsoft::ReactNative
