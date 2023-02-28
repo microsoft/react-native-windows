@@ -30,6 +30,7 @@ void ControlViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJS
   Super::GetNativeProps(writer);
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"tabIndex", L"number");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"focusable", L"boolean");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"disabled", L"boolean");
 }
 void ControlViewManager::TransferProperties(const XamlView &oldView, const XamlView &newView) {
   TransferProperty(oldView, newView, xaml::Controls::Control::FontSizeProperty());

@@ -376,6 +376,7 @@ void ViewViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSVal
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"focusable", L"boolean");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"enableFocusRing", L"boolean");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"tabIndex", L"number");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"disabled", L"boolean");
 }
 
 bool ViewViewManager::UpdateProperty(
@@ -419,8 +420,6 @@ bool ViewViewManager::UpdateProperty(
       pViewShadowNode->IsFocusable(propertyValue.AsBoolean());
     } else if (propertyName == "enableFocusRing") {
       pViewShadowNode->EnableFocusRing(propertyValue.AsBoolean());
-    } else if (propertyName == "disabled") {
-      pViewShadowNode->IsDisable(propertyValue.AsBoolean());
     } else if (propertyName == "tabIndex") {
       auto resetTabIndex = true;
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64 ||
@@ -437,6 +436,9 @@ bool ViewViewManager::UpdateProperty(
     } else {
       if (propertyName == "accessible") {
         pViewShadowNode->IsAccessible(propertyValue.AsBoolean());
+      }
+      if (propertyName == "disabled") {
+        pViewShadowNode->IsDisable(propertyValue.AsBoolean());
       }
       ret = Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
     }
