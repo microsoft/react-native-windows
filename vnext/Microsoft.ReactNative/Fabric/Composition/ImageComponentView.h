@@ -36,8 +36,8 @@ struct ImageComponentView : CompositionBaseComponentView {
 
   std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept
       override;
-  void mountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept override;
-  void unmountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept override;
+  void mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
+  void unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
   void updateProps(facebook::react::Props::Shared const &props, facebook::react::Props::Shared const &oldProps) noexcept
       override;
   void updateState(facebook::react::State::Shared const &state, facebook::react::State::Shared const &oldState) noexcept
@@ -52,6 +52,7 @@ struct ImageComponentView : CompositionBaseComponentView {
 
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt) const noexcept override;
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
+  bool focusable() const noexcept override;
 
  private:
   struct WindowsImageResponseObserver : facebook::react::ImageResponseObserver {

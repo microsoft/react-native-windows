@@ -124,9 +124,6 @@ class HandledKeyboardEventHandler {
 struct KeyboardHelper {
   static std::vector<HandledKeyboardEvent> FromJS(winrt::Microsoft::ReactNative::JSValue const &obj);
   static HandledKeyboardEvent CreateKeyboardEvent(HandledEventPhase phase, xaml::Input::KeyRoutedEventArgs const &args);
-  static std::string FromVirtualKey(winrt::Windows::System::VirtualKey key, bool shiftDown, bool capLocked);
-  static std::string CodeFromVirtualKey(winrt::Windows::System::VirtualKey key);
-  static bool IsModifiedKeyPressed(winrt::CoreWindow const &coreWindow, winrt::Windows::System::VirtualKey virtualKey);
   static bool IsModifiedKeyLocked(winrt::CoreWindow const &coreWindow, winrt::Windows::System::VirtualKey virtualKey);
   static bool ShouldMarkKeyboardHandled(
       std::vector<HandledKeyboardEvent> const &handledEvents,

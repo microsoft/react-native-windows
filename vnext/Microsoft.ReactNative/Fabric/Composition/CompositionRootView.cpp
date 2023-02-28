@@ -3,6 +3,7 @@
 #include "pch.h"
 #include "CompositionRootView.h"
 #include "CompositionRootView.g.cpp"
+#include "FocusNavigationRequest.g.cpp"
 
 #include <DynamicWriter.h>
 #include <Fabric/FabricUIManagerModule.h>
@@ -18,6 +19,7 @@
 #include "CompositionContextHelper.h"
 #include "CompositionHelpers.h"
 #include "ReactNativeHost.h"
+#include "RootComponentView.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
@@ -181,8 +183,7 @@ int64_t CompositionRootView::SendMessage(uint32_t msg, uint64_t wParam, int64_t 
     return 0;
 
   if (m_CompositionEventHandler) {
-    auto result =
-        m_CompositionEventHandler->SendMessage(static_cast<facebook::react::SurfaceId>(m_rootTag), msg, wParam, lParam);
+    auto result = m_CompositionEventHandler->SendMessage(msg, wParam, lParam);
     if (result)
       return result;
   }
@@ -195,8 +196,7 @@ void CompositionRootView::OnScrollWheel(Windows::Foundation::Point point, int32_
     return;
 
   if (m_CompositionEventHandler) {
-    m_CompositionEventHandler->ScrollWheel(
-        static_cast<facebook::react::SurfaceId>(m_rootTag), {point.X, point.Y}, delta);
+    m_CompositionEventHandler->ScrollWheel({point.X, point.Y}, delta);
   }
 }
 
@@ -362,6 +362,19 @@ Windows::Foundation::Size CompositionRootView::Arrange(Windows::Foundation::Size
     }
   }
   return finalSize;
+}
+
+winrt::Microsoft::ReactNative::FocusNavigationResult CompositionRootView::NavigateFocus(
+    const winrt::Microsoft::ReactNative::FocusNavigationRequest &request) noexcept {
+  if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
+          winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties()))) {
+    auto rootComponentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(
+        static_cast<facebook::react::SurfaceId>(m_rootTag));
+    auto view = static_cast<::Microsoft::ReactNative::RootComponentView &>(*rootComponentViewDescriptor.view);
+    return winrt::make<winrt::Microsoft::ReactNative::implementation::FocusNavigationResult>(
+        view.NavigateFocus(request));
+  }
+  return winrt::make<winrt::Microsoft::ReactNative::implementation::FocusNavigationResult>(false);
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

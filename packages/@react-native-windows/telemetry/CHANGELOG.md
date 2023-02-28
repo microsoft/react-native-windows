@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Fri, 10 Feb 2023 06:15:30 GMT and should not be manually modified.
+This log was last generated on Sat, 25 Feb 2023 06:13:36 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.63
+
+Sat, 25 Feb 2023 06:13:36 GMT
+
+### Changes
+
+- Move `@typescript-eslint/eslint-plugin` to `devDependencies` so they don't get installed by consumers (4123478+tido64@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.15
 
 ## 0.0.0-canary.62
 

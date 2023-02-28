@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/cli",
-  "version": "0.0.0-canary.162",
+  "version": "0.0.0-canary.164",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "repository": {
@@ -17,12 +17,10 @@
     "watch": "rnw-scripts watch"
   },
   "dependencies": {
-    "@react-native-windows/codegen": "0.0.0-canary.50",
-    "@react-native-windows/fs": "^0.0.0-canary.14",
-    "@react-native-windows/package-utils": "^0.0.0-canary.40",
-    "@react-native-windows/telemetry": "^0.0.0-canary.62",
-    "@typescript-eslint/eslint-plugin": "^5.30.5",
-    "@typescript-eslint/parser": "^5.30.5",
+    "@react-native-windows/codegen": "0.0.0-canary.52",
+    "@react-native-windows/fs": "^0.0.0-canary.15",
+    "@react-native-windows/package-utils": "^0.0.0-canary.41",
+    "@react-native-windows/telemetry": "^0.0.0-canary.63",
     "@xmldom/xmldom": "^0.7.7",
     "chalk": "^4.1.0",
     "cli-spinners": "^2.2.0",
@@ -60,6 +58,8 @@
     "@types/uuid": "^8.3.0",
     "@types/xml-parser": "^1.2.29",
     "@types/xmldom": "^0.1.30",
+    "@typescript-eslint/eslint-plugin": "^5.30.5",
+    "@typescript-eslint/parser": "^5.30.5",
     "babel-jest": "^29.3.0",
     "eslint": "^8.19.0",
     "jest": "^29.2.1",
