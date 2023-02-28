@@ -15,10 +15,10 @@ import renderPropsFile from './renderPropsFile';
 
 const {argv} = yargs
   .check(args => {
-    if (args._.length === 2 && semver.valid(<string>args._[0])) {
+    if (args._.length === 1 && semver.valid(<string>args._[0])) {
       return true;
     } else {
-      throw new Error('Usage: stamp-version <version> <commitid>');
+      throw new Error('Usage: stamp-version <version>');
     }
   })
   .showHelpOnFail(false);
