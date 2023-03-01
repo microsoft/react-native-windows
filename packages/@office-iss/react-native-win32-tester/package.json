@@ -13,12 +13,13 @@
   "dependencies": {
     "@react-native/tester": "0.0.1",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
-    "@typescript-eslint/parser": "^5.30.5"
+    "@typescript-eslint/parser": "^5.30.5",
+    "flow-enums-runtime": "^0.0.5"
   },
   "peerDependencies": {
     "@office-iss/react-native-win32": "^0.0.0-canary.183",
     "react": "18.0.0",
-    "react-native": "0.0.0-20230201-2114-a0800ffc7"
+    "react-native": "0.0.0-20230213-2113-f7e35d4ef"
   },
   "devDependencies": {
     "@office-iss/react-native-win32": "^0.0.0-canary.183",
@@ -29,7 +30,7 @@
     "@types/node": "^14.14.22",
     "eslint": "^8.19.0",
     "just-scripts": "^1.3.3",
-    "react-native": "0.0.0-20230201-2114-a0800ffc7",
+    "react-native": "0.0.0-20230213-2113-f7e35d4ef",
     "react-native-platform-override": "^1.9.2",
     "typescript": "^4.9.5"
   },
