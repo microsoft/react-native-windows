@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add commitid to product version of binaries",
-  "packageName": "react-native-windows",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch"
-}
