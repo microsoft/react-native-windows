@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20230213-2113-f7e35d4ef",
+  "baseVersion": "0.0.0-20230228-2111-32d03c250",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "76313b5f12d8963cd8fd5d4c2c9bca2098e677ed"
+      "baseHash": "bf1e694b9b12d0817c203f45ce7ceea80c1993c0"
     },
     {
       "type": "derived",
@@ -35,7 +35,7 @@
       "type": "derived",
       "file": "src/Libraries/Animated/NativeAnimatedHelper.win32.js",
       "baseFile": "Libraries/Animated/NativeAnimatedHelper.js",
-      "baseHash": "70731169e44a70b01e7191f35b3894b9d72e68a7",
+      "baseHash": "38e4960f0e3abf809b327396645722e66c277ff9",
       "issue": 11041
     },
     {
@@ -299,13 +299,13 @@
       "type": "patch",
       "file": "src/Libraries/Inspector/Inspector.win32.js",
       "baseFile": "Libraries/Inspector/Inspector.js",
-      "baseHash": "49413d7b12477405e583062a1ab7e50e8ea0fefc"
+      "baseHash": "db933614c0c15f0ce69907e37baae6b31dd39867"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Inspector/InspectorOverlay.win32.js",
       "baseFile": "Libraries/Inspector/InspectorOverlay.js",
-      "baseHash": "0c8c439f7a26ce8de799de20629fbf855c1ec416"
+      "baseHash": "e4137335e108a5c562966fae485f98ef99a55efc"
     },
     {
       "type": "derived",
@@ -427,7 +427,7 @@
       "type": "patch",
       "file": "src/Libraries/StyleSheet/StyleSheet.win32.js",
       "baseFile": "Libraries/StyleSheet/StyleSheet.js",
-      "baseHash": "3890079b44726e5c6d01b3067360cdfa1960e7e8"
+      "baseHash": "b279b836217a0870546010c935fb53e6a889f0dd"
     },
     {
       "type": "derived",

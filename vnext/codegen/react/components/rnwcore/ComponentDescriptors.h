@@ -22,6 +22,7 @@ using AndroidSwipeRefreshLayoutComponentDescriptor = ConcreteComponentDescriptor
 using PullToRefreshViewComponentDescriptor = ConcreteComponentDescriptor<PullToRefreshViewShadowNode>;
 using AndroidHorizontalScrollContentViewComponentDescriptor = ConcreteComponentDescriptor<AndroidHorizontalScrollContentViewShadowNode>;
 using SwitchComponentDescriptor = ConcreteComponentDescriptor<SwitchShadowNode>;
+using TraceUpdateOverlayComponentDescriptor = ConcreteComponentDescriptor<TraceUpdateOverlayShadowNode>;
 using UnimplementedNativeViewComponentDescriptor = ConcreteComponentDescriptor<UnimplementedNativeViewShadowNode>;
 
 } // namespace react

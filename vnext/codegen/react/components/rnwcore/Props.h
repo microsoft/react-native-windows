@@ -420,6 +420,16 @@ class JSI_EXPORT InputAccessoryProps final : public ViewProps {
   SharedColor backgroundColor{};
 };
 
+class JSI_EXPORT TraceUpdateOverlayProps final : public ViewProps {
+ public:
+  TraceUpdateOverlayProps() = default;
+  TraceUpdateOverlayProps(const PropsParserContext& context, const TraceUpdateOverlayProps &sourceProps, const RawProps &rawProps);
+
+#pragma mark - Props
+
+  
+};
+
 class JSI_EXPORT UnimplementedNativeViewProps final : public ViewProps {
  public:
   UnimplementedNativeViewProps() = default;
