@@ -628,6 +628,54 @@ struct CompCaretVisual : winrt::implements<CompCaretVisual, winrt::Microsoft::Re
   winrt::Windows::UI::Composition::Compositor m_compositor{nullptr};
 };
 
+struct CompFocusVisual : winrt::implements<CompFocusVisual, winrt::Microsoft::ReactNative::Composition::IFocusVisual> {
+  CompFocusVisual(winrt::Windows::UI::Composition::Compositor const &compositor)
+      : m_compVisual(compositor.CreateSpriteVisual()), m_brush(compositor.CreateNineGridBrush()) {
+    m_visual = winrt::make<Composition::CompSpriteVisual>(m_compVisual);
+
+    m_compVisual.Opacity(1.0f);
+    m_compVisual.RelativeSizeAdjustment({1, 1});
+    
+    m_brush.Source(compositor.CreateColorBrush(winrt::Windows::UI::Colors::Black()));
+    m_brush.IsCenterHollow(true);
+  }
+
+  winrt::Microsoft::ReactNative::Composition::IVisual InnerVisual() const noexcept {
+    return m_visual;
+  }
+  
+  bool IsFocused() const noexcept {
+    return m_compVisual.Brush() != nullptr;
+  }
+
+  void IsFocused(bool value) noexcept {
+    if (value) {
+      m_compVisual.Brush(m_brush);
+    } else {
+      m_compVisual.Brush(nullptr);
+    }
+  }
+  
+  float ScaleFactor() const noexcept {
+    return m_scaleFactor;
+  }
+
+  void ScaleFactor(float scaleFactor) noexcept {
+    if (m_scaleFactor == scaleFactor) {
+      return;
+    }
+    m_scaleFactor = scaleFactor;
+    auto inset = 2 * scaleFactor;
+    m_brush.SetInsets(inset, inset, inset, inset);
+  }
+
+ private:
+  float m_scaleFactor{0};
+  const winrt::Windows::UI::Composition::CompositionNineGridBrush m_brush;
+  const winrt::Windows::UI::Composition::SpriteVisual m_compVisual;
+  winrt::Microsoft::ReactNative::Composition::IVisual m_visual{nullptr};
+};
+
 struct CompContext : winrt::implements<
                          CompContext,
                          winrt::Microsoft::ReactNative::Composition::ICompositionContext,
@@ -734,6 +782,10 @@ struct CompContext : winrt::implements<
 
   winrt::Microsoft::ReactNative::Composition::ICaretVisual CreateCaretVisual() noexcept {
     return winrt::make<Composition::CompCaretVisual>(m_compositor);
+  }
+
+  winrt::Microsoft::ReactNative::Composition::IFocusVisual CreateFocusVisual() noexcept {
+    return winrt::make<Composition::CompFocusVisual>(m_compositor);
   }
 
   winrt::Windows::UI::Composition::CompositionGraphicsDevice CompositionGraphicsDevice() noexcept {

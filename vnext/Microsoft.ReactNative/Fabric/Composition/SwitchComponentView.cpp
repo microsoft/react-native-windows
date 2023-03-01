@@ -75,11 +75,6 @@ void SwitchComponentView::updateLayoutMetrics(
   m_visual.Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
-  m_visual.Offset({
-      layoutMetrics.frame.origin.x * layoutMetrics.pointScaleFactor,
-      layoutMetrics.frame.origin.y * layoutMetrics.pointScaleFactor,
-      0.0f,
-  });
 }
 
 void SwitchComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
@@ -178,6 +173,7 @@ facebook::react::Props::Shared SwitchComponentView::props() noexcept {
 void SwitchComponentView::ensureVisual() noexcept {
   if (!m_visual) {
     m_visual = m_compContext.CreateSpriteVisual();
+    OuterVisual().InsertAt(m_visual, 0);
   }
 }
 

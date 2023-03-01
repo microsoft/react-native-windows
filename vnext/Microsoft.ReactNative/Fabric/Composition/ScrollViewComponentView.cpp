@@ -187,7 +187,7 @@ void ScrollViewComponentView::updateLayoutMetrics(
   ensureVisual();
 
   if ((layoutMetrics.displayType != m_layoutMetrics.displayType)) {
-    m_visual.IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
+    OuterVisual().IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
   }
 
   // m_needsBorderUpdate = true;
@@ -197,11 +197,6 @@ void ScrollViewComponentView::updateLayoutMetrics(
   m_visual.Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
-  m_visual.Offset({
-      layoutMetrics.frame.origin.x * layoutMetrics.pointScaleFactor,
-      layoutMetrics.frame.origin.y * layoutMetrics.pointScaleFactor,
-      0.0f,
-  });
   updateContentVisualSize();
 }
 
@@ -309,6 +304,7 @@ void ScrollViewComponentView::ensureVisual() noexcept {
                 ->onScroll(scrollMetrics);
           }
         });
+    OuterVisual().InsertAt(m_visual, 0);
   }
 }
 

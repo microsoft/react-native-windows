@@ -209,7 +209,7 @@ void FabricUIManager::startSurface(
         facebook::react::RootShadowNode::Handle(), surfaceId, self->m_compContext);
 
     self->m_surfaceRegistry.at(surfaceId).rootVisual.InsertAt(
-        static_cast<const CompositionBaseComponentView &>(*rootComponentViewDescriptor.view).Visual(), 0);
+        static_cast<const CompositionBaseComponentView &>(*rootComponentViewDescriptor.view).OuterVisual(), 0);
   });
 
   facebook::react::LayoutContext context;

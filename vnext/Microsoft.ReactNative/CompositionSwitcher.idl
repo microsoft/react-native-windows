@@ -103,6 +103,15 @@ namespace Microsoft.ReactNative.Composition
 
   [webhosthidden]
   [experimental]
+  interface IFocusVisual
+  {
+    IVisual InnerVisual { get; };
+    Boolean IsFocused { get; set; };
+    Single ScaleFactor { get; set; };
+  }
+
+  [webhosthidden]
+  [experimental]
   interface ICompositionContext
   {
     ICompositionDrawingSurface CreateDrawingSurface(Windows.Foundation.Size surfaceSize,
@@ -112,6 +121,7 @@ namespace Microsoft.ReactNative.Composition
     SpriteVisual CreateSpriteVisual();
     ScrollVisual CreateScrollerVisual();
     ICaretVisual CreateCaretVisual();
+    IFocusVisual CreateFocusVisual();
     IDropShadow CreateDropShadow();
     IBrush CreateColorBrush(Windows.UI.Color color);
     SurfaceBrush CreateSurfaceBrush(ICompositionDrawingSurface surface);

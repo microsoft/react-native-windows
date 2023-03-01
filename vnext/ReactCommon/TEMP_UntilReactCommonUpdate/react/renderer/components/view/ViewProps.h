@@ -78,6 +78,7 @@ class ViewProps : public YogaStylableProps, public AccessibilityProps {
   ViewEvents events{};
 
   HostPlatformViewEvents platformEvents{}; // [Windows]
+  bool enableFocusRing{true}; // [Windows]
 
   bool collapsable{true};
 

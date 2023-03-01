@@ -22,6 +22,8 @@ struct CompositionBaseComponentView : public IComponentView {
       facebook::react::Tag tag);
 
   virtual winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept = 0;
+  // Visual that should be parented to this ComponentView's parent
+  virtual winrt::Microsoft::ReactNative::Composition::IVisual OuterVisual() const noexcept;
   void updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept override;
   const facebook::react::SharedViewEventEmitter &GetEventEmitter() const noexcept;
   void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept override;
@@ -75,7 +77,14 @@ struct CompositionBaseComponentView : public IComponentView {
   facebook::react::LayoutMetrics m_layoutMetrics;
   bool m_needsBorderUpdate{false};
   bool m_hasTransformMatrixFacade{false};
+  bool m_enableFocusVisual{false};
   uint8_t m_numBorderVisuals{0};
+
+private:
+  void showFocusVisual(bool show) noexcept;
+  winrt::Microsoft::ReactNative::Composition::IFocusVisual m_focusVisual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::IVisual m_outerVisual{nullptr};
+
 };
 
 struct CompositionViewComponentView : public CompositionBaseComponentView {
