@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 28 Feb 2023 06:14:14 GMT and should not be manually modified.
+This log was last generated on Wed, 01 Mar 2023 06:13:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.622
+
+Wed, 01 Mar 2023 06:13:04 GMT
+
+### Changes
+
+- Add commitid to product version of binaries (dannyvv@microsoft.com)
 
 ## 0.0.0-canary.621
 

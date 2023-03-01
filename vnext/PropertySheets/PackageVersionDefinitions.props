@@ -15,6 +15,7 @@
         RNW_MAJOR=$(ReactNativeWindowsMajor);
         RNW_MINOR=$(ReactNativeWindowsMinor);
         RNW_PATCH=$(ReactNativeWindowsPatch);
+        RNW_COMMITID=$(ReactNativeWindowsCommitId);
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
 
@@ -31,6 +32,7 @@
         RNW_MAJOR=$(ReactNativeWindowsMajor);
         RNW_MINOR=$(ReactNativeWindowsMinor);
         RNW_PATCH=$(ReactNativeWindowsPatch);
+        RNW_COMMITID=$(ReactNativeWindowsCommitId);
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
 
