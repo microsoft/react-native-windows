@@ -15,5 +15,6 @@
     <ReactNativeWindowsMinor>69</ReactNativeWindowsMinor>
     <ReactNativeWindowsPatch>20</ReactNativeWindowsPatch>
     <ReactNativeWindowsCanary>false</ReactNativeWindowsCanary>
+    <ReactNativeWindowsCommitId>c7e8fa57a50b66627bc20f0c3206cf64b2bc0564</ReactNativeWindowsCommitId>
   </PropertyGroup>
 </Project>
