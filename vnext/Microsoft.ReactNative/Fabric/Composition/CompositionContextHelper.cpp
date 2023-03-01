@@ -635,7 +635,7 @@ struct CompFocusVisual : winrt::implements<CompFocusVisual, winrt::Microsoft::Re
 
     m_compVisual.Opacity(1.0f);
     m_compVisual.RelativeSizeAdjustment({1, 1});
-    
+
     m_brush.Source(compositor.CreateColorBrush(winrt::Windows::UI::Colors::Black()));
     m_brush.IsCenterHollow(true);
   }
@@ -643,7 +643,7 @@ struct CompFocusVisual : winrt::implements<CompFocusVisual, winrt::Microsoft::Re
   winrt::Microsoft::ReactNative::Composition::IVisual InnerVisual() const noexcept {
     return m_visual;
   }
-  
+
   bool IsFocused() const noexcept {
     return m_compVisual.Brush() != nullptr;
   }
@@ -655,7 +655,7 @@ struct CompFocusVisual : winrt::implements<CompFocusVisual, winrt::Microsoft::Re
       m_compVisual.Brush(nullptr);
     }
   }
-  
+
   float ScaleFactor() const noexcept {
     return m_scaleFactor;
   }

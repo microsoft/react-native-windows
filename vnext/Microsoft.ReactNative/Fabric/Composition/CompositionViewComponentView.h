@@ -80,11 +80,10 @@ struct CompositionBaseComponentView : public IComponentView {
   bool m_enableFocusVisual{false};
   uint8_t m_numBorderVisuals{0};
 
-private:
+ private:
   void showFocusVisual(bool show) noexcept;
   winrt::Microsoft::ReactNative::Composition::IFocusVisual m_focusVisual{nullptr};
   winrt::Microsoft::ReactNative::Composition::IVisual m_outerVisual{nullptr};
-
 };
 
 struct CompositionViewComponentView : public CompositionBaseComponentView {

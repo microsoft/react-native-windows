@@ -22,7 +22,8 @@ CompositionBaseComponentView::CompositionBaseComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag)
     : m_tag(tag), m_compContext(compContext) {
-  m_outerVisual = compContext.CreateSpriteVisual(); // TODO could be a raw ContainerVisual
+  m_outerVisual = compContext.CreateSpriteVisual(); // TODO could be a raw ContainerVisual if we had a
+                                                    // CreateContainerVisual in ICompositionContext
   m_focusVisual = compContext.CreateFocusVisual();
   m_outerVisual.InsertAt(m_focusVisual.InnerVisual(), 0);
 }
@@ -1050,7 +1051,6 @@ void CompositionBaseComponentView::updateBorderLayoutMetrics(
       layoutMetrics.frame.origin.y * layoutMetrics.pointScaleFactor,
       0.0f,
   });
-
 }
 
 void CompositionBaseComponentView::indexOffsetForBorder(uint32_t &index) const noexcept {
@@ -1311,8 +1311,7 @@ bool CompositionViewComponentView::focusable() const noexcept {
   return m_props->focusable;
 }
 
-IComponentView* lastDeepChild(IComponentView& view) noexcept
-{
+IComponentView *lastDeepChild(IComponentView &view) noexcept {
   auto current = &view;
   while (current) {
     auto children = current->children();
@@ -1351,10 +1350,9 @@ bool walkTree(IComponentView &view, bool forward, Mso::Functor<bool(IComponentVi
     }
 
   } else {
-
     auto current = &view;
     auto parent = current->parent();
-    while(parent) {
+    while (parent) {
       auto &parentsChildren = parent->children();
       auto itNextView = std::find(parentsChildren.rbegin(), parentsChildren.rend(), current);
       assert(itNextView != parentsChildren.rend());
@@ -1373,7 +1371,6 @@ bool walkTree(IComponentView &view, bool forward, Mso::Functor<bool(IComponentVi
       current = parent;
       parent = current->parent();
     }
-
   }
   return false;
 }
