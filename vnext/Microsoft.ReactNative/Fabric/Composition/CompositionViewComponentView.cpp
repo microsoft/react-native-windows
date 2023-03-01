@@ -92,6 +92,12 @@ void CompositionBaseComponentView::updateEventEmitter(
 }
 
 void CompositionBaseComponentView::handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept {
+  if (commandName == "focus") {
+    if (auto root = rootComponentView()) {
+      root->SetFocusedComponent(this);
+    }
+    return;
+  }
   assert(false); // Unhandled command
 }
 

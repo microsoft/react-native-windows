@@ -127,13 +127,13 @@ void ScrollViewComponentView::mountChildComponentView(IComponentView &childCompo
   m_children.insert(std::next(m_children.begin(), index), &childComponentView);
   childComponentView.parent(this);
 
-  m_visual.InsertAt(static_cast<CompositionBaseComponentView &>(childComponentView).Visual(), index);
+  m_visual.InsertAt(static_cast<CompositionBaseComponentView &>(childComponentView).OuterVisual(), index);
 }
 
 void ScrollViewComponentView::unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
   m_children.erase(std::next(m_children.begin(), index));
 
-  m_visual.Remove(static_cast<CompositionBaseComponentView &>(childComponentView).Visual());
+  m_visual.Remove(static_cast<CompositionBaseComponentView &>(childComponentView).OuterVisual());
   childComponentView.parent(nullptr);
 }
 
