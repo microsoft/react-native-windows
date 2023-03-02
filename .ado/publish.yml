@@ -293,7 +293,7 @@ jobs:
     steps:
       - template: templates/checkout-shallow.yml
 
-      - template: templates/yarn-install.yml
+      - template: templates/prepare-js-env.yml
 
       - template: templates/apply-published-version-vars.yml
 
