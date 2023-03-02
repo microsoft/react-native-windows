@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 01 Mar 2023 06:13:04 GMT and should not be manually modified.
+This log was last generated on Thu, 02 Mar 2023 06:14:24 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.623
+
+Thu, 02 Mar 2023 06:14:24 GMT
+
+### Changes
+
+- Resolved nits (email not defined)
+- Integrate 2/13 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.165
+- Bump @react-native-windows/codegen to v0.0.0-canary.53
+- Bump react-native-platform-override to v1.9.3
 
 ## 0.0.0-canary.622
 

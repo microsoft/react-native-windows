@@ -1,8 +1,19 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Sat, 25 Feb 2023 06:13:36 GMT and should not be manually modified.
+This log was last generated on Thu, 02 Mar 2023 06:14:24 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.3.18
+
+Thu, 02 Mar 2023 06:14:24 GMT
+
+### Patches
+
+- Merge branch 'YajurG-8875' of https://github.com/YajurG/react-native-windows into YajurG-8875 (email not defined)
+- Bump @react-native-windows/fs to v0.0.0-canary.16
+- Bump @react-native-windows/telemetry to v0.0.0-canary.64
+- Bump @react-native-windows/cli to v0.0.0-canary.165
 
 ## 1.3.17
 

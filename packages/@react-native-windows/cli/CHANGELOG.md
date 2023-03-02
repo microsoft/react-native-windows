@@ -1,8 +1,20 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Sat, 25 Feb 2023 06:13:35 GMT and should not be manually modified.
+This log was last generated on Thu, 02 Mar 2023 06:14:21 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.165
+
+Thu, 02 Mar 2023 06:14:21 GMT
+
+### Changes
+
+- Merge branch 'YajurG-8875' of https://github.com/YajurG/react-native-windows into YajurG-8875 (email not defined)
+- Bump @react-native-windows/codegen to v0.0.0-canary.53
+- Bump @react-native-windows/fs to v0.0.0-canary.16
+- Bump @react-native-windows/package-utils to v0.0.0-canary.42
+- Bump @react-native-windows/telemetry to v0.0.0-canary.64
 
 ## 0.0.0-canary.164
 
