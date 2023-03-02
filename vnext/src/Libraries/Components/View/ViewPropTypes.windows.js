@@ -465,6 +465,8 @@ type WindowsViewProps = $ReadOnly<{|
 
   tabIndex?: ?number,
 
+  disabled?: ?boolean,
+
   accessibilityPosInSet?: ?number,
   accessibilitySetSize?: ?number,
 
