@@ -52,6 +52,7 @@ void SwitchComponentView::updateProps(
     m_drawingSurface = nullptr;
   }
 
+  updateBorderProps(oldViewProps, newViewProps);
   m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
 }
 
@@ -66,9 +67,10 @@ void SwitchComponentView::updateLayoutMetrics(
   ensureVisual();
 
   if ((layoutMetrics.displayType != m_layoutMetrics.displayType)) {
-    m_visual.IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
+    OuterVisual().IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
   }
 
+  updateBorderLayoutMetrics(layoutMetrics, *m_props);
   m_layoutMetrics = layoutMetrics;
 
   UpdateCenterPropertySet();

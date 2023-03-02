@@ -192,6 +192,10 @@ struct CompVisual : public winrt::implements<
   }
 
   void SetClippingPath(ID2D1Geometry *clippingPath) noexcept {
+    if (!clippingPath) {
+      m_visual.Clip(nullptr);
+      return;
+    }
     auto geometry = winrt::make<GeometrySource>(clippingPath);
     auto path = winrt::Windows::UI::Composition::CompositionPath(geometry);
     auto pathgeo = m_visual.Compositor().CreatePathGeometry(path);
@@ -512,6 +516,10 @@ struct CompScrollerVisual : winrt::Microsoft::ReactNative::Composition::implemen
   }
 
   void SetClippingPath(ID2D1Geometry *clippingPath) noexcept {
+    if (!clippingPath) {
+      m_visual.Clip(nullptr);
+      return;
+    }
     auto geometry = winrt::make<GeometrySource>(clippingPath);
     auto path = winrt::Windows::UI::Composition::CompositionPath(geometry);
     auto pathgeo = m_visual.Compositor().CreatePathGeometry(path);

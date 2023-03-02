@@ -24,8 +24,8 @@ ScrollViewComponentView::ScrollViewComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag)
     : Super(compContext, tag) {
-  // static auto const defaultProps = std::make_shared<facebook::react::TextProps const>();
-  // m_props = defaultProps;
+  static auto const defaultProps = std::make_shared<facebook::react::ScrollViewProps const>();
+  m_props = defaultProps;
 
   // m_element.Content(m_contentPanel);
 
@@ -127,13 +127,13 @@ void ScrollViewComponentView::mountChildComponentView(IComponentView &childCompo
   m_children.insert(std::next(m_children.begin(), index), &childComponentView);
   childComponentView.parent(this);
 
-  m_visual.InsertAt(static_cast<CompositionBaseComponentView &>(childComponentView).OuterVisual(), index);
+  m_scrollVisual.InsertAt(static_cast<CompositionBaseComponentView &>(childComponentView).OuterVisual(), index);
 }
 
 void ScrollViewComponentView::unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
   m_children.erase(std::next(m_children.begin(), index));
 
-  m_visual.Remove(static_cast<CompositionBaseComponentView &>(childComponentView).OuterVisual());
+  m_scrollVisual.Remove(static_cast<CompositionBaseComponentView &>(childComponentView).OuterVisual());
   childComponentView.parent(nullptr);
 }
 
@@ -141,15 +141,15 @@ void ScrollViewComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
   const auto &newViewProps = *std::static_pointer_cast<const facebook::react::ScrollViewProps>(props);
-  const auto &oldViewProps = *std::static_pointer_cast<const facebook::react::ScrollViewProps>(oldProps);
+  const auto &oldViewProps = *std::static_pointer_cast<const facebook::react::ScrollViewProps>(m_props);
 
   ensureVisual();
 
   if (!oldProps || oldViewProps.backgroundColor != newViewProps.backgroundColor) {
     if (newViewProps.backgroundColor) {
-      m_visual.Brush(m_compContext.CreateColorBrush((*newViewProps.backgroundColor).m_color));
+      m_scrollVisual.Brush(m_compContext.CreateColorBrush((*newViewProps.backgroundColor).m_color));
     } else {
-      m_visual.Brush(m_compContext.CreateColorBrush({0, 0, 0, 0}));
+      m_scrollVisual.Brush(m_compContext.CreateColorBrush({0, 0, 0, 0}));
     }
   }
 
@@ -166,6 +166,8 @@ void ScrollViewComponentView::updateProps(
     m_needsBorderUpdate = true;
   }
   */
+
+  updateBorderProps(oldViewProps, newViewProps);
   m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
 }
 
@@ -191,17 +193,21 @@ void ScrollViewComponentView::updateLayoutMetrics(
   }
 
   // m_needsBorderUpdate = true;
+  updateBorderLayoutMetrics(layoutMetrics, *m_props);
   m_layoutMetrics = layoutMetrics;
 
   UpdateCenterPropertySet();
   m_visual.Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
+  m_scrollVisual.Size(
+      {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
+       layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
   updateContentVisualSize();
 }
 
 void ScrollViewComponentView::updateContentVisualSize() noexcept {
-  m_visual.ContentSize(
+  m_scrollVisual.ContentSize(
       {std::max(m_contentSize.width, m_layoutMetrics.frame.size.width) * m_layoutMetrics.pointScaleFactor,
        std::max(m_contentSize.height, m_layoutMetrics.frame.size.height) * m_layoutMetrics.pointScaleFactor});
 }
@@ -264,8 +270,8 @@ bool ScrollViewComponentView::ScrollWheel(facebook::react::Point pt, int32_t del
   facebook::react::Point ptViewport{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
 
   facebook::react::Point ptContent{
-      ptViewport.x + m_visual.ScrollPosition().x / m_layoutMetrics.pointScaleFactor,
-      ptViewport.y + m_visual.ScrollPosition().y / m_layoutMetrics.pointScaleFactor};
+      ptViewport.x + m_scrollVisual.ScrollPosition().x / m_layoutMetrics.pointScaleFactor,
+      ptViewport.y + m_scrollVisual.ScrollPosition().y / m_layoutMetrics.pointScaleFactor};
 
   if (std::any_of(m_children.rbegin(), m_children.rend(), [ptContent, delta](auto child) {
         return const_cast<CompositionBaseComponentView *>(static_cast<const CompositionBaseComponentView *>(child))
@@ -275,7 +281,7 @@ bool ScrollViewComponentView::ScrollWheel(facebook::react::Point pt, int32_t del
 
   if (ptViewport.x >= 0 && ptViewport.x <= m_layoutMetrics.frame.size.width && ptViewport.y >= 0 &&
       ptViewport.y <= m_layoutMetrics.frame.size.height) {
-    m_visual.ScrollBy({0, static_cast<float>(-delta), 0});
+    m_scrollVisual.ScrollBy({0, static_cast<float>(-delta), 0});
     return true;
   }
 
@@ -284,8 +290,10 @@ bool ScrollViewComponentView::ScrollWheel(facebook::react::Point pt, int32_t del
 
 void ScrollViewComponentView::ensureVisual() noexcept {
   if (!m_visual) {
-    m_visual = m_compContext.CreateScrollerVisual();
-    m_scrollPositionChangedRevoker = m_visual.ScrollPositionChanged(
+    m_visual = m_compContext.CreateSpriteVisual();
+    m_scrollVisual = m_compContext.CreateScrollerVisual();
+    m_visual.InsertAt(m_scrollVisual, 0);
+    m_scrollPositionChangedRevoker = m_scrollVisual.ScrollPositionChanged(
         winrt::auto_revoke,
         [this](
             winrt::IInspectable const & /*sender*/,
@@ -313,8 +321,8 @@ facebook::react::Tag ScrollViewComponentView::hitTest(facebook::react::Point pt,
   facebook::react::Point ptViewport{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
 
   facebook::react::Point ptContent{
-      ptViewport.x + m_visual.ScrollPosition().x / m_layoutMetrics.pointScaleFactor,
-      ptViewport.y + m_visual.ScrollPosition().y / m_layoutMetrics.pointScaleFactor};
+      ptViewport.x + m_scrollVisual.ScrollPosition().x / m_layoutMetrics.pointScaleFactor,
+      ptViewport.y + m_scrollVisual.ScrollPosition().y / m_layoutMetrics.pointScaleFactor};
 
   facebook::react::Tag targetTag;
   if ((m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||

@@ -56,6 +56,8 @@ void ParagraphComponentView::updateProps(
     updateTextAlignment(newViewProps.textAttributes.alignment);
   }
 
+  updateBorderProps(oldViewProps, newViewProps);
+
   m_props = std::static_pointer_cast<facebook::react::ParagraphProps const>(props);
 }
 
@@ -84,6 +86,7 @@ void ParagraphComponentView::updateLayoutMetrics(
     OuterVisual().IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
   }
 
+  updateBorderLayoutMetrics(layoutMetrics, *m_props);
   m_layoutMetrics = layoutMetrics;
 
   UpdateCenterPropertySet();

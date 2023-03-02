@@ -98,6 +98,12 @@ void CompositionBaseComponentView::handleCommand(std::string const &commandName,
     }
     return;
   }
+  if (commandName == "blur") {
+    if (auto root = rootComponentView()) {
+      root->SetFocusedComponent(nullptr); // Todo store this component as previously focused element
+    }
+    return;
+  }
   assert(false); // Unhandled command
 }
 
