@@ -2255,9 +2255,9 @@
   integrity sha512-xWQthnyKd+H22TBqeJUTFebsyWAAwzUb7EQCT8F/WMZsS1sv5UG+2cM/cU9/2HEbVZgxHYuLIi915WznjKPvlg==
 
 "@react-native/gradle-plugin@^0.72.2":
-  version "0.72.4"
-  resolved "https://registry.yarnpkg.com/@react-native/gradle-plugin/-/gradle-plugin-0.72.4.tgz#d830abb25d1c4bbfc68faf4260496006475a52b6"
-  integrity sha512-jkx7FzGY1GWY6WffHuwrdbKxGHcN2nJFTrS/G4KeoFFbX9vbqa+vI69wWV3R2+hEuVERMJkdI3AUVIoTWbSmFQ==
+  version "0.72.5"
+  resolved "https://registry.yarnpkg.com/@react-native/gradle-plugin/-/gradle-plugin-0.72.5.tgz#91a92180da2c914d3582d8a32ebd23cbc4ae9e2a"
+  integrity sha512-2FwDmJvAUKnsbenIxxA261fGfE8KCIJZtVYr8tOmAzupXDAF4FI7KUIwF9ZBPPLcj6SG83xXPqvctHI7n5csww==
 
 "@react-native/js-polyfills@^0.72.0":
   version "0.72.1"
