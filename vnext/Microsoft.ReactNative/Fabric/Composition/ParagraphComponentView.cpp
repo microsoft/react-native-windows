@@ -211,8 +211,7 @@ void ParagraphComponentView::updateVisualBrush() noexcept {
     contraints.maximumSize.height =
         m_layoutMetrics.frame.size.height - m_layoutMetrics.contentInsets.top - m_layoutMetrics.contentInsets.bottom;
 
-    facebook::react::TextLayoutManager::GetTextLayout(
-        m_attributedStringBox, {} /*TODO*/, contraints, m_textLayout);
+    facebook::react::TextLayoutManager::GetTextLayout(m_attributedStringBox, {} /*TODO*/, contraints, m_textLayout);
     requireNewBrush = true;
   }
 
