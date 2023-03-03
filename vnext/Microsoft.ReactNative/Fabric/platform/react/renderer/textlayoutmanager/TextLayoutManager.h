@@ -64,13 +64,18 @@ class TextLayoutManager {
       AttributedStringBox attributedStringBox,
       ParagraphAttributes paragraphAttributes,
       LayoutConstraints layoutConstraints,
-      const std::optional<TextAlignment> &textAlignment,
       winrt::com_ptr<IDWriteTextLayout> &spTextLayout) noexcept;
 
 #pragma endregion
 
  private:
+  static winrt::hstring GetTransformedText(AttributedStringBox const &attributedStringBox);
+
   ContextContainer::Shared m_contextContainer;
+#pragma warning(push)
+#pragma warning(disable : 5028)
+  TextMeasureCache m_measureCache{};
+#pragma warning(pop)
 };
 
 } // namespace react

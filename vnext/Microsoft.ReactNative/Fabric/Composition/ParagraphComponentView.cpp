@@ -211,13 +211,8 @@ void ParagraphComponentView::updateVisualBrush() noexcept {
     contraints.maximumSize.height =
         m_layoutMetrics.frame.size.height - m_layoutMetrics.contentInsets.top - m_layoutMetrics.contentInsets.bottom;
 
-    // TODO Figure out how to get text alignment not through m_props and only use StringBox and ParagraphAttributes
-    // instead
-    const auto &paragraphProps = *std::static_pointer_cast<const facebook::react::ParagraphProps>(m_props);
-    const std::optional<facebook::react::TextAlignment> &textAlignment = m_props->textAttributes.alignment;
-
     facebook::react::TextLayoutManager::GetTextLayout(
-        m_attributedStringBox, {} /*TODO*/, contraints, textAlignment, m_textLayout);
+        m_attributedStringBox, {} /*TODO*/, contraints, m_textLayout);
     requireNewBrush = true;
   }
 
