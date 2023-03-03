@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20230201-2114-a0800ffc7",
+  "baseVersion": "0.0.0-20230213-2113-f7e35d4ef",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "83e72b7e7299c8c056a76893b684247836e1934a"
+      "baseHash": "76313b5f12d8963cd8fd5d4c2c9bca2098e677ed"
     },
     {
       "type": "derived",
@@ -100,15 +100,39 @@
     },
     {
       "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/ViewEventEmitter.cpp",
+      "baseFile": "ReactCommon/react/renderer/components/view/ViewEventEmitter.cpp",
+      "baseHash": "0c19260b4d84d078e6991f67d94df14a32e71017"
+    },
+    {
+      "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/ViewEventEmitter.h",
+      "baseFile": "ReactCommon/react/renderer/components/view/ViewEventEmitter.h",
+      "baseHash": "a373fca9d1a593bf6cb5717c394ffba91baddf40"
+    },
+    {
+      "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/ViewProps.cpp",
       "baseFile": "ReactCommon/react/renderer/components/view/ViewProps.cpp",
-      "baseHash": "89b0c87d483455cb33fffed3ce7d50e7f8171619"
+      "baseHash": "aa0da12bb0688b67ac8a7295f8113419ec2277ab"
+    },
+    {
+      "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/ViewProps.h",
+      "baseFile": "ReactCommon/react/renderer/components/view/ViewProps.h",
+      "baseHash": "5811facf6c8989391eea091492a2afeca519e03b"
+    },
+    {
+      "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/ViewShadowNode.cpp",
+      "baseFile": "ReactCommon/react/renderer/components/view/ViewShadowNode.cpp",
+      "baseHash": "796ce7138b317d8565da1773f25d1e672805695c"
     },
     {
       "type": "patch",
       "file": "ReactCommon/Yoga.cpp",
       "baseFile": "ReactCommon/yoga/yoga/Yoga.cpp",
-      "baseHash": "b5a24126e78c7c7ec2fc79ab7a5183ae34abf24e",
+      "baseHash": "88b516c46db69d75f30a8f4b390dbdd1ae9363bf",
       "issue": 3994
     },
     {
@@ -122,7 +146,7 @@
       "type": "derived",
       "file": "src/index.windows.js",
       "baseFile": "index.js",
-      "baseHash": "df21c820b0558eb40f1cf0269de18c3ddc38fdee"
+      "baseHash": "287445ef805383901c37da6026f8cf423ab0f078"
     },
     {
       "type": "platform",
@@ -333,7 +357,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/TouchableWithoutFeedback.windows.js",
       "baseFile": "Libraries/Components/Touchable/TouchableWithoutFeedback.js",
-      "baseHash": "e66d46f759afeb7058d65dbab52c9802f6320f6c"
+      "baseHash": "e4c1120a4e8338914b6ad5639811ef2b09b391cc"
     },
     {
       "type": "patch",

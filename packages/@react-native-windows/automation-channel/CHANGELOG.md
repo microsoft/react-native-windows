@@ -1,8 +1,66 @@
 # Change Log - @react-native-windows/automation-channel
 
-This log was last generated on Thu, 16 Feb 2023 06:15:04 GMT and should not be manually modified.
+This log was last generated on Thu, 02 Mar 2023 06:14:21 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.9.11
+
+Thu, 02 Mar 2023 06:14:21 GMT
+
+### Patches
+
+- Merge branch 'YajurG-8875' of https://github.com/YajurG/react-native-windows into YajurG-8875 (email not defined)
+- Integrate 2/13 (34109996+chiaramooney@users.noreply.github.com)
+- Bump react-native-windows to v0.0.0-canary.623
+
+## 0.9.10
+
+Wed, 01 Mar 2023 06:13:04 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.622
+
+## 0.9.9
+
+Tue, 28 Feb 2023 06:14:14 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.621
+
+## 0.9.8
+
+Sat, 25 Feb 2023 06:13:36 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.620
+
+## 0.9.7
+
+Fri, 24 Feb 2023 06:14:52 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.619
+
+## 0.9.6
+
+Thu, 23 Feb 2023 06:13:42 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.618
+
+## 0.9.5
+
+Wed, 22 Feb 2023 06:14:08 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.617
 
 ## 0.9.4
 

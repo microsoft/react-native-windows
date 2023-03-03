@@ -32,4 +32,6 @@ winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::IR
 winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::IRandomAccessStream>
 GetImageInlineDataAsync(ReactImageSource source);
 
+winrt::Windows::Foundation::Uri UriTryCreate(winrt::param::hstring const &uri);
+
 } // namespace Microsoft::ReactNative

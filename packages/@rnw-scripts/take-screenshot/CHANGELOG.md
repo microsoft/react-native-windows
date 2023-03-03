@@ -1,8 +1,25 @@
 # Change Log - @rnw-scripts/take-screenshot
 
-This log was last generated on Thu, 09 Feb 2023 06:16:44 GMT and should not be manually modified.
+This log was last generated on Thu, 02 Mar 2023 06:14:23 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.10
+
+Thu, 02 Mar 2023 06:14:23 GMT
+
+### Patches
+
+- Merge branch 'YajurG-8875' of https://github.com/YajurG/react-native-windows into YajurG-8875 (email not defined)
+- Bump @react-native-windows/fs to v0.0.0-canary.16
+
+## 1.1.9
+
+Sat, 25 Feb 2023 06:13:36 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.15
 
 ## 1.1.8
 

@@ -18,7 +18,7 @@
 #include "UI.Xaml.Input.h"
 #include "UI.Xaml.Markup.h"
 #include "Utils/Helpers.h"
-#include "Views/KeyboardEventHandler.h"
+#include "Utils/KeyboardUtils.h"
 #include "winrt/Windows.UI.Core.h"
 #include "winrt/Windows.UI.Xaml.Interop.h"
 #endif // CORE_ABI
@@ -41,10 +41,8 @@ struct IDevMenu {
 bool IsCtrlShiftD(winrt::Windows::System::VirtualKey key) noexcept {
   return (
       key == winrt::Windows::System::VirtualKey::D &&
-      KeyboardHelper::IsModifiedKeyPressed(
-          winrt::CoreWindow::GetForCurrentThread(), winrt::Windows::System::VirtualKey::Shift) &&
-      KeyboardHelper::IsModifiedKeyPressed(
-          winrt::CoreWindow::GetForCurrentThread(), winrt::Windows::System::VirtualKey::Control));
+      IsModifiedKeyPressed(winrt::CoreWindow::GetForCurrentThread(), winrt::Windows::System::VirtualKey::Shift) &&
+      IsModifiedKeyPressed(winrt::CoreWindow::GetForCurrentThread(), winrt::Windows::System::VirtualKey::Control));
 }
 #endif // CORE_ABI
 

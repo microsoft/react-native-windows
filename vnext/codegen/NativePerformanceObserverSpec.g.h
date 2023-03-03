@@ -41,8 +41,8 @@ struct PerformanceObserverSpec_GetPendingEntriesResult {
 
 struct PerformanceObserverSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(std::string) noexcept>{0, L"startReporting"},
-      Method<void(std::string) noexcept>{1, L"stopReporting"},
+      Method<void(double) noexcept>{0, L"startReporting"},
+      Method<void(double) noexcept>{1, L"stopReporting"},
       SyncMethod<PerformanceObserverSpec_GetPendingEntriesResult() noexcept>{2, L"popPendingEntries"},
       Method<void(Callback<>) noexcept>{3, L"setOnPerformanceEntryCallback"},
   };
@@ -54,13 +54,13 @@ struct PerformanceObserverSpec : winrt::Microsoft::ReactNative::TurboModuleSpec 
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "startReporting",
-          "    REACT_METHOD(startReporting) void startReporting(std::string entryType) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(startReporting) static void startReporting(std::string entryType) noexcept { /* implementation */ }\n");
+          "    REACT_METHOD(startReporting) void startReporting(double entryType) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(startReporting) static void startReporting(double entryType) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "stopReporting",
-          "    REACT_METHOD(stopReporting) void stopReporting(std::string entryType) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(stopReporting) static void stopReporting(std::string entryType) noexcept { /* implementation */ }\n");
+          "    REACT_METHOD(stopReporting) void stopReporting(double entryType) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(stopReporting) static void stopReporting(double entryType) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "popPendingEntries",

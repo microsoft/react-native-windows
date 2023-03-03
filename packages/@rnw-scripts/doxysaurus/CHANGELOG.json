@@ -2,6 +2,42 @@
   "name": "@rnw-scripts/doxysaurus",
   "entries": [
     {
+      "date": "Thu, 02 Mar 2023 06:14:23 GMT",
+      "tag": "@rnw-scripts/doxysaurus_v0.4.3",
+      "version": "0.4.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "email not defined",
+            "package": "@rnw-scripts/doxysaurus",
+            "commit": "cb93a6cb140ed8652dfccbc4e3b587be4897230b",
+            "comment": "Merge branch 'YajurG-8875' of https://github.com/YajurG/react-native-windows into YajurG-8875"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/doxysaurus",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.16",
+            "commit": "cb93a6cb140ed8652dfccbc4e3b587be4897230b"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 25 Feb 2023 06:13:36 GMT",
+      "tag": "@rnw-scripts/doxysaurus_v0.4.2",
+      "version": "0.4.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/doxysaurus",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.15",
+            "commit": "97bbe423f10f6ebc28c0f317b8854c293fd878a8"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 09 Feb 2023 06:16:43 GMT",
       "tag": "@rnw-scripts/doxysaurus_v0.4.1",
       "version": "0.4.1",
