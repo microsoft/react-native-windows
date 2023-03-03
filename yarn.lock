@@ -2206,9 +2206,9 @@
   integrity sha512-KrwSpS1tKI70wuKl68DwJZYEvXktDHdZMG0k2AXD/rJVSlB23/X2CB2cutVR0HwNMJIal9HOUOBB2rVfa6UGtQ==
 
 "@react-native/codegen@*", "@react-native/codegen@^0.72.1":
-  version "0.72.2"
-  resolved "https://registry.yarnpkg.com/@react-native/codegen/-/codegen-0.72.2.tgz#bce80c7a0a3757653d5e274dbc1a6e22f9ce29a4"
-  integrity sha512-gdW5sa5/KWmqtrWBBQYWJtbAfI+37/0ENjP9/MLO58v1/YT3Y/bjT0dYAOBzQabNnKEWWy0U/W7wqZCsmDXW3A==
+  version "0.72.3"
+  resolved "https://registry.yarnpkg.com/@react-native/codegen/-/codegen-0.72.3.tgz#963ee3f45723012401d23249b83c5d6f1db6c1a4"
+  integrity sha512-SsSiUeGm4n9/utbgnXTBSHKK9GyjSKxkhpQ9SMaOEwaXS8RaRnmerQu96FNa1fqMts63dDOwgTszUCu1KlUj3Q==
   dependencies:
     "@babel/parser" "^7.20.0"
     flow-parser "^0.185.0"
