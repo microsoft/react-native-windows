@@ -501,7 +501,7 @@ function EnsureChocoForInstall {
     Write-Verbose "Checking for Choco...";
     try {
         $chocoCmd = (Get-Command choco -ErrorAction Stop);
-        if (chocoCmd -ne $null) {
+        if ($chocoCmd -ne $null) {
             Write-Verbose "Choco found.";
             return;
         }
