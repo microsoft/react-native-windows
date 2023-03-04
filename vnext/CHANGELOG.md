@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 02 Mar 2023 06:14:24 GMT and should not be manually modified.
+This log was last generated on Sat, 04 Mar 2023 06:13:14 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.624
+
+Sat, 04 Mar 2023 06:13:14 GMT
+
+### Changes
+
+- [Fabric] Conditionally exclude fabric files from Shared.vcxitems (email not defined)
 
 ## 0.0.0-canary.623
 

@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 04 Mar 2023 06:13:14 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.624",
+      "version": "0.0.0-canary.624",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "ab4ee3cb6900cae9276a9a2f3eb9f9337127bea6",
+            "comment": "[Fabric] Conditionally exclude fabric files from Shared.vcxitems"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 02 Mar 2023 06:14:24 GMT",
       "tag": "react-native-windows_v0.0.0-canary.623",
       "version": "0.0.0-canary.623",
