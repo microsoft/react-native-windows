@@ -301,7 +301,6 @@ void ParagraphComponentView::DrawText() noexcept {
   m_drawingSurface.as(drawingSurfaceInterop);
 
   if (CheckForDeviceRemoved(drawingSurfaceInterop->BeginDraw(d2dDeviceContext.put(), &offset))) {
-
     d2dDeviceContext->Clear(
         m_props->backgroundColor ? m_props->backgroundColor.AsD2DColor() : D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
     assert(d2dDeviceContext->GetUnitMode() == D2D1_UNIT_MODE_DIPS);
@@ -401,7 +400,6 @@ void ParagraphComponentView::DrawText() noexcept {
 
         // DWrite doesn't handle background hightlight colors, so we manually draw the background color for ranges
         if (facebook::react::isColorMeaningful(fragment.textAttributes.backgroundColor)) {
-
           UINT32 actualHitTestCount = 0;
           if (range.length > 0) {
             m_textLayout->HitTestTextRange(
