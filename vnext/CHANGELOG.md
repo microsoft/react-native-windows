@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 27 Feb 2023 16:12:00 GMT and should not be manually modified.
+This log was last generated on Mon, 06 Mar 2023 16:10:28 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.69.21
+
+Mon, 06 Mar 2023 16:10:28 GMT
+
+### Patches
+
+- Add commitid to product version of binaries (#11316) (dannyvv@microsoft.com)
 
 ## 0.69.20
 
