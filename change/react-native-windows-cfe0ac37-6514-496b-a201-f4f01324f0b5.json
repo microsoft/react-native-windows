@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Fix minor border issue",
+  "comment": "[Fabric] Fix minor border issue",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
   "dependentChangeType": "patch"
