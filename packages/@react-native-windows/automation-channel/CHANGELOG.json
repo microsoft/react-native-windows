@@ -2,6 +2,48 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Sat, 04 Mar 2023 06:13:15 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.9.12",
+      "version": "0.9.12",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.624",
+            "commit": "ab4ee3cb6900cae9276a9a2f3eb9f9337127bea6"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 02 Mar 2023 06:14:21 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.9.11",
+      "version": "0.9.11",
+      "comments": {
+        "patch": [
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "cb93a6cb140ed8652dfccbc4e3b587be4897230b",
+            "comment": "Merge branch 'YajurG-8875' of https://github.com/YajurG/react-native-windows into YajurG-8875"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "4fa93ab9d50346f3efe9914a0ccf1d7b587547c7",
+            "comment": "Integrate 2/13"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.623",
+            "commit": "cb93a6cb140ed8652dfccbc4e3b587be4897230b"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 01 Mar 2023 06:13:04 GMT",
       "tag": "@react-native-windows/automation-channel_v0.9.10",
       "version": "0.9.10",

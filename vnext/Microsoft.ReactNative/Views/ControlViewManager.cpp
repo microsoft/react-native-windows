@@ -30,6 +30,7 @@ void ControlViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJS
   Super::GetNativeProps(writer);
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"tabIndex", L"number");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"focusable", L"boolean");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"disabled", L"boolean");
 }
 void ControlViewManager::TransferProperties(const XamlView &oldView, const XamlView &newView) {
   TransferProperty(oldView, newView, xaml::Controls::Control::FontSizeProperty());
@@ -86,6 +87,10 @@ bool ControlViewManager::UpdateProperty(
       } else if (propertyValue.IsNull()) {
         nodeToUpdate->IsFocusable(false);
       }
+    } else if (propertyName == "disabled") {
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
+        nodeToUpdate->IsDisable(propertyValue.AsBoolean());
+      }
     } else {
       if (propertyName == "accessible") {
         if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
@@ -95,7 +100,6 @@ bool ControlViewManager::UpdateProperty(
       ret = Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
     }
   }
-
   if (finalizeBorderRadius && control.try_as<xaml::Controls::IControl7>()) {
     // Control.CornerRadius is only supported on >= RS5, setting borderRadius on Controls have no effect < RS5
     UpdateCornerRadiusOnElement(nodeToUpdate, control);
@@ -124,7 +128,7 @@ void ControlViewManager::OnPropertiesUpdated(ShadowNodeBase *node) {
 
   // If developer specifies either the accessible and focusable prop to be false
   // remove accessibility and keyboard focus for component.
-  const auto isTabStop = (node->IsAccessible() && node->IsFocusable());
+  const auto isTabStop = !node->IsDisable() && (node->IsAccessible() && node->IsFocusable());
   const auto accessibilityView =
       isTabStop ? xaml::Automation::Peers::AccessibilityView::Content : xaml::Automation::Peers::AccessibilityView::Raw;
   control.IsTabStop(isTabStop);

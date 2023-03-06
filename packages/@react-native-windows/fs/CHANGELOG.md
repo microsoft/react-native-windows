@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/fs
 
-This log was last generated on Sat, 25 Feb 2023 06:13:35 GMT and should not be manually modified.
+This log was last generated on Thu, 02 Mar 2023 06:14:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.16
+
+Thu, 02 Mar 2023 06:14:22 GMT
+
+### Changes
+
+- Merge branch 'YajurG-8875' of https://github.com/YajurG/react-native-windows into YajurG-8875 (email not defined)
 
 ## 0.0.0-canary.15
 

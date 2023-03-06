@@ -376,6 +376,7 @@ void ViewViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSVal
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"focusable", L"boolean");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"enableFocusRing", L"boolean");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"tabIndex", L"number");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"disabled", L"boolean");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"collapsable", L"boolean");
 }
 
@@ -437,6 +438,9 @@ bool ViewViewManager::UpdateProperty(
       if (propertyName == "accessible") {
         pViewShadowNode->IsAccessible(propertyValue.AsBoolean());
       }
+      if (propertyName == "disabled") {
+        pViewShadowNode->IsDisable(propertyValue.AsBoolean());
+      }
       ret = Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
     }
   }
@@ -462,8 +466,10 @@ void ViewViewManager::OnPropertiesUpdated(ShadowNodeBase *node) {
 
   // If component is focusable, it should be a ViewControl.
   // If component is a View with accessible set to true, the component should be focusable, thus we need a ViewControl.
-  bool shouldBeControl =
-      (viewShadowNode->IsFocusable() || (viewShadowNode->IsAccessible() && !viewShadowNode->OnClick()));
+  bool shouldBeControl = viewShadowNode->IsDisable()
+      ? false
+      : ((viewShadowNode->IsFocusable() || (viewShadowNode->IsAccessible() && !viewShadowNode->OnClick())));
+
   if (auto view = viewShadowNode->GetView().try_as<xaml::UIElement>()) {
     // If we have DynamicAutomationProperties, we need a ViewControl with a
     // DynamicAutomationPeer
@@ -597,8 +603,10 @@ void ViewViewManager::SyncFocusableAndAccessible(ViewShadowNode *pViewShadowNode
     const auto isFocusable = pViewShadowNode->IsFocusable();
     const auto isAccessible = pViewShadowNode->IsAccessible();
     const auto isPressable = pViewShadowNode->OnClick();
+    const auto isDisabled = pViewShadowNode->IsDisable();
     const auto isTabStop =
-        (isPressable && isFocusable && isAccessible) || (!isPressable && (isFocusable || isAccessible));
+        (!isDisabled &&
+         ((isPressable && isFocusable && isAccessible) || (!isPressable && (isFocusable || isAccessible))));
     const auto accessibilityView = isTabStop ? xaml::Automation::Peers::AccessibilityView::Content
                                              : xaml::Automation::Peers::AccessibilityView::Raw;
     pViewShadowNode->GetControl().IsTabStop(isTabStop);
