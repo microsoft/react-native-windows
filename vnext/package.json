@@ -80,13 +80,8 @@
     "metro-config": "0.73.7",
     "prettier": "^2.4.1",
     "react": "18.2.0",
-<<<<<<< HEAD
     "react-native": "0.0.0-20230228-2111-32d03c250",
-    "react-native-platform-override": "^1.9.2",
-=======
-    "react-native": "0.0.0-20230213-2113-f7e35d4ef",
     "react-native-platform-override": "^1.9.3",
->>>>>>> f4eb20b353f0065e58ee741e9e2cb4a137478820
     "react-refresh": "^0.4.0",
     "typescript": "^4.9.5"
   },
