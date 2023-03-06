@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 06 Mar 2023 16:09:29 GMT",
+      "tag": "react-native-windows_v0.68.29",
+      "version": "0.68.29",
+      "comments": {
+        "patch": [
+          {
+            "author": "dannyvv@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "93b20e19688fed1734ed216ff6844e1682482cef",
+            "comment": "Add commitid to product version of binaries (#11316)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 27 Feb 2023 16:10:14 GMT",
       "tag": "react-native-windows_v0.68.28",
       "version": "0.68.28",
