@@ -18,7 +18,7 @@ struct Appearance : std::enable_shared_from_this<Appearance> {
   REACT_INIT(Initialize)
   void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
-  REACT_SYNC_METHOD(setColorScheme)
+  REACT_METHOD(setColorScheme)
   void setColorScheme(std::string style) noexcept;
 
   REACT_SYNC_METHOD(getColorScheme)
