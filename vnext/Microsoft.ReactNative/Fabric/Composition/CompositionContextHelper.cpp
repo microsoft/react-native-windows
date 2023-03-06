@@ -241,6 +241,14 @@ struct CompVisual : public winrt::implements<
     m_visual.RelativeSizeAdjustment(relativeSizeAdjustment);
   }
 
+  winrt::Microsoft::ReactNative::Composition::BackfaceVisibility BackfaceVisibility() {
+    return static_cast<winrt::Microsoft::ReactNative::Composition::BackfaceVisibility>(m_visual.BackfaceVisibility());
+  }
+
+  void BackfaceVisibility(winrt::Microsoft::ReactNative::Composition::BackfaceVisibility value) {
+    m_visual.BackfaceVisibility(static_cast<winrt::Windows::UI::Composition::CompositionBackfaceVisibility>(value));
+  }
+
  private:
   winrt::Windows::UI::Composition::Visual m_visual;
 };
@@ -325,6 +333,14 @@ struct CompSpriteVisual : winrt::Microsoft::ReactNative::Composition::implementa
       winrt::Windows::Foundation::Numerics::float2 relativeSizeAdjustment) noexcept {
     m_visual.Size(size);
     m_visual.RelativeSizeAdjustment(relativeSizeAdjustment);
+  }
+
+  winrt::Microsoft::ReactNative::Composition::BackfaceVisibility BackfaceVisibility() {
+    return static_cast<winrt::Microsoft::ReactNative::Composition::BackfaceVisibility>(m_visual.BackfaceVisibility());
+  }
+
+  void BackfaceVisibility(winrt::Microsoft::ReactNative::Composition::BackfaceVisibility value) {
+    m_visual.BackfaceVisibility(static_cast<winrt::Windows::UI::Composition::CompositionBackfaceVisibility>(value));
   }
 
   void SetClippingPath(ID2D1Geometry *clippingPath) noexcept {
@@ -509,6 +525,14 @@ struct CompScrollerVisual : winrt::Microsoft::ReactNative::Composition::implemen
       winrt::Windows::Foundation::Numerics::float2 relativeSizeAdjustment) noexcept {
     m_visual.Size(size);
     m_visual.RelativeSizeAdjustment(relativeSizeAdjustment);
+  }
+
+  winrt::Microsoft::ReactNative::Composition::BackfaceVisibility BackfaceVisibility() {
+    return static_cast<winrt::Microsoft::ReactNative::Composition::BackfaceVisibility>(m_visual.BackfaceVisibility());
+  }
+
+  void BackfaceVisibility(winrt::Microsoft::ReactNative::Composition::BackfaceVisibility value) {
+    m_visual.BackfaceVisibility(static_cast<winrt::Windows::UI::Composition::CompositionBackfaceVisibility>(value));
   }
 
   void SetClippingPath(ID2D1Geometry *clippingPath) noexcept {
