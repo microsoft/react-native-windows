@@ -52,10 +52,6 @@ class HermesExecutorRuntimeAdapter final : public facebook::hermes::inspector::R
     return *m_runtime;
   }
 
-  facebook::hermes::debugger::Debugger &getDebugger() override {
-    return m_hermesRuntime.getDebugger();
-  }
-
   void tickleJs() override {
     // The queue will ensure that runtime_ is still valid when this
     // gets invoked.
@@ -91,7 +87,7 @@ void HermesRuntimeHolder::crashHandler(int fileDescriptor) noexcept {
 void HermesRuntimeHolder::teardown() noexcept {
 #ifdef HERMES_ENABLE_DEBUGGER
   if (auto devSettings = m_weakDevSettings.lock(); devSettings && devSettings->useDirectDebugger) {
-    facebook::hermes::inspector::chrome::disableDebugging(*m_hermesRuntime);
+    facebook::hermes::inspector::chrome::disableDebugging(m_debugToken);
   }
 #endif
 }
@@ -123,7 +119,7 @@ void HermesRuntimeHolder::initRuntime() noexcept {
 #ifdef HERMES_ENABLE_DEBUGGER
   if (devSettings->useDirectDebugger) {
     auto adapter = std::make_unique<HermesExecutorRuntimeAdapter>(m_hermesRuntime, *m_hermesRuntime, m_jsQueue);
-    facebook::hermes::inspector::chrome::enableDebugging(
+    m_debugToken = facebook::hermes::inspector::chrome::enableDebugging(
         std::move(adapter),
         devSettings->debuggerRuntimeName.empty() ? "Hermes React Native" : devSettings->debuggerRuntimeName);
   }
