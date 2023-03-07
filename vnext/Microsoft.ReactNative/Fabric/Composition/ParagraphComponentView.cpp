@@ -45,6 +45,8 @@ void ParagraphComponentView::updateProps(
   const auto &oldViewProps = *std::static_pointer_cast<const facebook::react::ParagraphProps>(m_props);
   const auto &newViewProps = *std::static_pointer_cast<const facebook::react::ParagraphProps>(props);
 
+  ensureVisual();
+
   if (oldViewProps.textAttributes.foregroundColor != newViewProps.textAttributes.foregroundColor) {
     m_requireRedraw = true;
   }
@@ -79,8 +81,6 @@ void ParagraphComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
     facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
   // Set Position & Size Properties
-
-  ensureVisual();
 
   if ((layoutMetrics.displayType != m_layoutMetrics.displayType)) {
     OuterVisual().IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
@@ -300,6 +300,17 @@ void ParagraphComponentView::DrawText() noexcept {
   m_drawingSurface.as(drawingSurfaceInterop);
 
   if (CheckForDeviceRemoved(drawingSurfaceInterop->BeginDraw(d2dDeviceContext.put(), &offset))) {
+    d2dDeviceContext->Clear(
+        m_props->backgroundColor ? m_props->backgroundColor.AsD2DColor() : D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
+    assert(d2dDeviceContext->GetUnitMode() == D2D1_UNIT_MODE_DIPS);
+    const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
+    float oldDpiX, oldDpiY;
+    d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
+    d2dDeviceContext->SetDpi(dpi, dpi);
+
+    float offsetX = static_cast<float>(offset.x / m_layoutMetrics.pointScaleFactor);
+    float offsetY = static_cast<float>(offset.y / m_layoutMetrics.pointScaleFactor);
+
     const auto &paragraphProps = *std::static_pointer_cast<const facebook::react::ParagraphProps>(m_props);
 
     // Create a solid color brush for the text. A more sophisticated application might want
@@ -339,7 +350,7 @@ void ParagraphComponentView::DrawText() noexcept {
     }
 
     if (!isnan(paragraphProps.opacity)) {
-      brush->SetOpacity(paragraphProps.opacity);
+      m_visual.Opacity(paragraphProps.opacity);
     }
 
     // Create color effects for individual text fragments.
@@ -385,17 +396,65 @@ void ParagraphComponentView::DrawText() noexcept {
           fragmentBrush->SetOpacity(fragment.textAttributes.opacity);
         }
         m_textLayout->SetDrawingEffect(fragmentBrush.get(), range);
+
+        // DWrite doesn't handle background hightlight colors, so we manually draw the background color for ranges
+        if (facebook::react::isColorMeaningful(fragment.textAttributes.backgroundColor)) {
+          UINT32 actualHitTestCount = 0;
+          if (range.length > 0) {
+            m_textLayout->HitTestTextRange(
+                range.startPosition,
+                range.length,
+                0, // x
+                0, // y
+                NULL,
+                0, // metrics count
+                &actualHitTestCount);
+          }
+
+          // Allocate enough room to return all hit-test metrics.
+          std::vector<DWRITE_HIT_TEST_METRICS> hitTestMetrics(actualHitTestCount);
+          if (range.length > 0) {
+            m_textLayout->HitTestTextRange(
+                range.startPosition,
+                range.length,
+                0, // x
+                0, // y
+                &hitTestMetrics[0],
+                static_cast<UINT32>(hitTestMetrics.size()),
+                &actualHitTestCount);
+          }
+
+          // Draw the selection ranges behind the text.
+          if (actualHitTestCount > 0) {
+            // Note that an ideal layout will return fractional values,
+            // so you may see slivers between the selection ranges due
+            // to the per-primitive antialiasing of the edges unless
+            // it is disabled (better for performance anyway).
+            auto oldAliasMode = d2dDeviceContext->GetAntialiasMode();
+            d2dDeviceContext->SetAntialiasMode(D2D1_ANTIALIAS_MODE_ALIASED);
+
+            winrt::com_ptr<ID2D1SolidColorBrush> textHighlightBrush;
+            winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(
+                fragment.textAttributes.backgroundColor.AsD2DColor(), textHighlightBrush.put()));
+
+            for (size_t i = 0; i < actualHitTestCount; ++i) {
+              const DWRITE_HIT_TEST_METRICS &htm = hitTestMetrics[i];
+
+              const D2D1_RECT_F rect = {
+                  std::round(htm.left + offsetX),
+                  std::round(htm.top + offsetY),
+                  std::round(htm.left + htm.width + offsetX),
+                  std::round(htm.top + htm.height + offsetY)};
+
+              d2dDeviceContext->FillRectangle(rect, textHighlightBrush.get());
+            }
+            d2dDeviceContext->SetAntialiasMode(oldAliasMode);
+          }
+        }
       }
 
       position += length;
     }
-
-    d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
-    assert(d2dDeviceContext->GetUnitMode() == D2D1_UNIT_MODE_DIPS);
-    const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
-    float oldDpiX, oldDpiY;
-    d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
-    d2dDeviceContext->SetDpi(dpi, dpi);
 
     // Draw the line of text at the specified offset, which corresponds to the top-left
     // corner of our drawing surface. Notice we don't call BeginDraw on the D2D device
