@@ -75,7 +75,7 @@ void Appearance::InitOnUIThread(const Mso::React::IReactContext &context) noexce
   pb.Set(AppearanceCurrentThemePropertyId(), theme);
 }
 
-void Appearance::setColorScheme(std::string style) noexcept{
+void Appearance::setColorScheme(std::string style) noexcept {
   // no-op
 }
 
