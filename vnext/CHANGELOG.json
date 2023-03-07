@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 07 Mar 2023 06:13:31 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.625",
+      "version": "0.0.0-canary.625",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "56f7a47ad2a88f0799724a361db2c4568b63a681",
+            "comment": "[Fabric] Adds text measure caching. Add support for lineHeight, letterSpacing, maximumNumberOfLines and textTransform"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 04 Mar 2023 06:13:14 GMT",
       "tag": "react-native-windows_v0.0.0-canary.624",
       "version": "0.0.0-canary.624",
