@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 04 Mar 2023 06:13:14 GMT and should not be manually modified.
+This log was last generated on Tue, 07 Mar 2023 06:13:31 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.625
+
+Tue, 07 Mar 2023 06:13:31 GMT
+
+### Changes
+
+- [Fabric] Adds text measure caching. Add support for lineHeight, letterSpacing, maximumNumberOfLines and textTransform (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.624
 
