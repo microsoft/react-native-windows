@@ -1214,6 +1214,23 @@ void CompositionViewComponentView::updateProps(
     m_visual.Shadow(shadow);
   }
 
+  if (oldViewProps.backfaceVisibility != newViewProps.backfaceVisibility) {
+    static_assert(
+        static_cast<facebook::react::BackfaceVisibility>(
+            winrt::Microsoft::ReactNative::Composition::BackfaceVisibility::Inherit) ==
+        facebook::react::BackfaceVisibility::Auto);
+    static_assert(
+        static_cast<facebook::react::BackfaceVisibility>(
+            winrt::Microsoft::ReactNative::Composition::BackfaceVisibility::Visible) ==
+        facebook::react::BackfaceVisibility::Visible);
+    static_assert(
+        static_cast<facebook::react::BackfaceVisibility>(
+            winrt::Microsoft::ReactNative::Composition::BackfaceVisibility::Hidden) ==
+        facebook::react::BackfaceVisibility::Hidden);
+    m_visual.BackfaceVisibility(
+        static_cast<winrt::Microsoft::ReactNative::Composition::BackfaceVisibility>(newViewProps.backfaceVisibility));
+  }
+
   // Transform - TODO doesn't handle multiple of the same kind of transform -- Doesn't handle hittesting updates
   if (oldViewProps.transform != newViewProps.transform) {
     winrt::Windows::Foundation::Numerics::float4x4 transformMatrix;
