@@ -183,6 +183,14 @@ ViewProps::ViewProps(
           CoreFeatures::enablePropIteratorSetter
               ? sourceProps.events
               : convertRawProp(context, rawProps, sourceProps.events, {})),
+      enableFocusRing(
+          CoreFeatures::enablePropIteratorSetter ? sourceProps.enableFocusRing
+                                                 : convertRawProp(
+                                                       context,
+                                                       rawProps,
+                                                       "enableFocusRing",
+                                                       sourceProps.enableFocusRing,
+                                                       true)),
       collapsable(
           CoreFeatures::enablePropIteratorSetter ? sourceProps.collapsable
                                                  : convertRawProp(
