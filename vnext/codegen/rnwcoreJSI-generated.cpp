@@ -1174,11 +1174,11 @@ NativePerformanceCxxSpecJSI::NativePerformanceCxxSpecJSI(std::shared_ptr<CallInv
   methodMap_["clearMeasures"] = MethodMetadata {1, __hostFunction_NativePerformanceCxxSpecJSI_clearMeasures};
 }
 static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_startReporting(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->startReporting(rt, args[0].asString(rt));
+  static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->startReporting(rt, args[0].asNumber());
   return jsi::Value::undefined();
 }
 static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_stopReporting(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->stopReporting(rt, args[0].asString(rt));
+  static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->stopReporting(rt, args[0].asNumber());
   return jsi::Value::undefined();
 }
 static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_popPendingEntries(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
@@ -1660,6 +1660,9 @@ static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_voidFunc(jsi:
 static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getBool(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->getBool(rt, args[0].asBool());
 }
+static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getEnum(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->getEnum(rt, args[0].asNumber());
+}
 static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getNumber(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->getNumber(rt, args[0].asNumber());
 }
@@ -1694,6 +1697,7 @@ NativeSampleTurboModuleCxxSpecJSI::NativeSampleTurboModuleCxxSpecJSI(std::shared
   methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getConstants};
   methodMap_["voidFunc"] = MethodMetadata {0, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_voidFunc};
   methodMap_["getBool"] = MethodMetadata {1, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getBool};
+  methodMap_["getEnum"] = MethodMetadata {1, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getEnum};
   methodMap_["getNumber"] = MethodMetadata {1, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getNumber};
   methodMap_["getString"] = MethodMetadata {1, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getString};
   methodMap_["getArray"] = MethodMetadata {1, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getArray};

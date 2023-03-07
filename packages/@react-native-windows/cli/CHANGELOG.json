@@ -2,6 +2,45 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Thu, 02 Mar 2023 06:14:21 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.165",
+      "version": "0.0.0-canary.165",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/cli",
+            "commit": "cb93a6cb140ed8652dfccbc4e3b587be4897230b",
+            "comment": "Merge branch 'YajurG-8875' of https://github.com/YajurG/react-native-windows into YajurG-8875"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.53",
+            "commit": "cb93a6cb140ed8652dfccbc4e3b587be4897230b"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.16",
+            "commit": "cb93a6cb140ed8652dfccbc4e3b587be4897230b"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/package-utils to v0.0.0-canary.42",
+            "commit": "cb93a6cb140ed8652dfccbc4e3b587be4897230b"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.64",
+            "commit": "cb93a6cb140ed8652dfccbc4e3b587be4897230b"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 25 Feb 2023 06:13:35 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.164",
       "version": "0.0.0-canary.164",

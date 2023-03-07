@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.14.0",
+    "babel-plugin-transform-flow-enums": "^0.0.2",
     "metro-react-native-babel-preset": "^0.73.7"
   },
   "devDependencies": {

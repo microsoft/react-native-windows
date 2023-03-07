@@ -2,6 +2,90 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 07 Mar 2023 06:13:31 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.625",
+      "version": "0.0.0-canary.625",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "56f7a47ad2a88f0799724a361db2c4568b63a681",
+            "comment": "[Fabric] Adds text measure caching. Add support for lineHeight, letterSpacing, maximumNumberOfLines and textTransform"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 04 Mar 2023 06:13:14 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.624",
+      "version": "0.0.0-canary.624",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "ab4ee3cb6900cae9276a9a2f3eb9f9337127bea6",
+            "comment": "[Fabric] Conditionally exclude fabric files from Shared.vcxitems"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 02 Mar 2023 06:14:24 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.623",
+      "version": "0.0.0-canary.623",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "cb93a6cb140ed8652dfccbc4e3b587be4897230b",
+            "comment": "Resolved nits"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "4fa93ab9d50346f3efe9914a0ccf1d7b587547c7",
+            "comment": "Integrate 2/13"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.165",
+            "commit": "cb93a6cb140ed8652dfccbc4e3b587be4897230b"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.53",
+            "commit": "cb93a6cb140ed8652dfccbc4e3b587be4897230b"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.9.3",
+            "commit": "cb93a6cb140ed8652dfccbc4e3b587be4897230b"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 01 Mar 2023 06:13:04 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.622",
+      "version": "0.0.0-canary.622",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "dannyvv@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "87e36a8a9b65ae3b3c4f9aab2537155680455910",
+            "comment": "Add commitid to product version of binaries"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 28 Feb 2023 06:14:14 GMT",
       "tag": "react-native-windows_v0.0.0-canary.621",
       "version": "0.0.0-canary.621",
