@@ -178,6 +178,13 @@ InputAccessoryProps::InputAccessoryProps(
 
     backgroundColor(convertRawProp(context, rawProps, "backgroundColor", sourceProps.backgroundColor, {}))
       {}
+TraceUpdateOverlayProps::TraceUpdateOverlayProps(
+    const PropsParserContext &context,
+    const TraceUpdateOverlayProps &sourceProps,
+    const RawProps &rawProps): ViewProps(context, sourceProps, rawProps)
+
+    
+      {}
 UnimplementedNativeViewProps::UnimplementedNativeViewProps(
     const PropsParserContext &context,
     const UnimplementedNativeViewProps &sourceProps,

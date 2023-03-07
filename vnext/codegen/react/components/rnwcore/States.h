@@ -107,6 +107,21 @@ public:
 #endif
 };
 
+class TraceUpdateOverlayState {
+public:
+  TraceUpdateOverlayState() = default;
+
+#ifdef ANDROID
+  TraceUpdateOverlayState(TraceUpdateOverlayState const &previousState, folly::dynamic data){};
+  folly::dynamic getDynamic() const {
+    return {};
+  };
+  MapBuffer getMapBuffer() const {
+    return MapBufferBuilder::EMPTY();
+  };
+#endif
+};
+
 class UnimplementedNativeViewState {
 public:
   UnimplementedNativeViewState() = default;
