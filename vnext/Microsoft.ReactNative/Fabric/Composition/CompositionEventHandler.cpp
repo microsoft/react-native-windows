@@ -156,7 +156,7 @@ int64_t CompositionEventHandler::SendMessage(uint32_t msg, uint64_t wParam, int6
       MouseMove(msg, wParam, lParam);
       return 0;
     }
-    case WM_CHAR: 
+    case WM_CHAR:
     case WM_SYSCHAR: {
       // TODO full bubbling of events
       if (auto focusedComponent = RootComponentView().GetFocusedComponent()) {
