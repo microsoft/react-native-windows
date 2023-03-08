@@ -156,10 +156,17 @@ int64_t CompositionEventHandler::SendMessage(uint32_t msg, uint64_t wParam, int6
       MouseMove(msg, wParam, lParam);
       return 0;
     }
+    case WM_CHAR: 
+    case WM_SYSCHAR: {
+      // TODO full bubbling of events
+      if (auto focusedComponent = RootComponentView().GetFocusedComponent()) {
+        auto result = focusedComponent->sendMessage(msg, wParam, lParam);
+        if (result)
+          return result;
+      }
+    }
     case WM_KEYDOWN:
     case WM_KEYUP:
-    case WM_CHAR:
-    case WM_SYSCHAR:
     case WM_SYSKEYDOWN:
     case WM_SYSKEYUP: {
       // TODO full bubbling of events
@@ -186,10 +193,11 @@ int64_t CompositionEventHandler::SendMessage(uint32_t msg, uint64_t wParam, int6
           Microsoft::ReactNative::DevMenuManager::Show(
               Mso::CntPtr<Mso::React::IReactContext>(&contextSelf->GetInner()));
         }
-        if (msg == WM_KEYDOWN && wParam == VK_TAB) {
-          if (RootComponentView().TryMoveFocus(!fShift)) {
-            return 1;
+        if (!fCtrl && msg == WM_KEYDOWN && wParam == VK_TAB) {
+          if (!RootComponentView().TryMoveFocus(!fShift)) {
+            // TODO notify rootview that host should move focus
           }
+          return 1;
         }
       }
       return 0;
