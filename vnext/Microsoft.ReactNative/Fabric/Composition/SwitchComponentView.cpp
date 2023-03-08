@@ -158,11 +158,11 @@ void SwitchComponentView::Draw() noexcept {
     winrt::com_ptr<ID2D1SolidColorBrush> trackBrush;
     if (!switchProps->disabled && switchProps->onTintColor && switchProps->value) {
       winrt::check_hresult(
-        d2dDeviceContext->CreateSolidColorBrush(switchProps->onTintColor.AsD2DColor(), trackBrush.put()));
+          d2dDeviceContext->CreateSolidColorBrush(switchProps->onTintColor.AsD2DColor(), trackBrush.put()));
       d2dDeviceContext->FillRoundedRectangle(track, trackBrush.get());
     } else if (!switchProps->disabled && switchProps->tintColor && !switchProps->value) {
       winrt::check_hresult(
-        d2dDeviceContext->CreateSolidColorBrush(switchProps->tintColor.AsD2DColor(), trackBrush.put()));
+          d2dDeviceContext->CreateSolidColorBrush(switchProps->tintColor.AsD2DColor(), trackBrush.put()));
       d2dDeviceContext->FillRoundedRectangle(track, trackBrush.get());
     }
 
