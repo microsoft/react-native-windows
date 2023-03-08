@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 07 Mar 2023 06:13:31 GMT and should not be manually modified.
+This log was last generated on Wed, 08 Mar 2023 06:14:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.626
+
+Wed, 08 Mar 2023 06:14:10 GMT
+
+### Changes
+
+- Fix API Gaps (34109996+chiaramooney@users.noreply.github.com)
+- [Fabric] Add support for backgroundColor on text and text fragments (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Add support for backface visibility (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Fix minor border issue (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] add support for enableFocusRing (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.625
 

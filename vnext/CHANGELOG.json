@@ -2,6 +2,45 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 08 Mar 2023 06:14:10 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.626",
+      "version": "0.0.0-canary.626",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7bcdfb05e54c7a9d0a7467b023a816d3df96e848",
+            "comment": "Fix API Gaps"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "9f5b1ab7c2acb007ff9e34482d87b412bda1ee78",
+            "comment": "[Fabric] Add support for backgroundColor on text and text fragments"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "5354434ba4a2ae97257deaba2ef52b3507be9df8",
+            "comment": "[Fabric] Add support for backface visibility"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "55ce594706649d6318b6ce00d1faa34ab3c35720",
+            "comment": "[Fabric] Fix minor border issue"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "3d99dfe121042057d97214dadbd6036c6d236607",
+            "comment": "[Fabric] add support for enableFocusRing"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 07 Mar 2023 06:13:31 GMT",
       "tag": "react-native-windows_v0.0.0-canary.625",
       "version": "0.0.0-canary.625",
