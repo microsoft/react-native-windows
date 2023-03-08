@@ -56,8 +56,6 @@ IsValidColorValue(const winrt::Microsoft::ReactNative::JSValue &v);
 REACTWINDOWS_API_(winrt::Windows::Foundation::TimeSpan)
 TimeSpanFromMs(double ms);
 
-winrt::Uri UriTryCreate(winrt::param::hstring const &uri);
-
 winrt::Windows::UI::Color ColorFromNumber(DWORD argb) noexcept;
 
 bool IsValidOptionalColorValue(const winrt::Microsoft::ReactNative::JSValue &v);

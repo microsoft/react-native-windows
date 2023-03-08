@@ -2,6 +2,63 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 02 Mar 2023 06:14:20 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.184",
+      "version": "0.0.0-canary.184",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "4fa93ab9d50346f3efe9914a0ccf1d7b587547c7",
+            "comment": "Integrate 2/13"
+          },
+          {
+            "author": "email not defined",
+            "package": "@office-iss/react-native-win32",
+            "commit": "cb93a6cb140ed8652dfccbc4e3b587be4897230b",
+            "comment": "Merge branch 'YajurG-8875' of https://github.com/YajurG/react-native-windows into YajurG-8875"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump react-native-platform-override to v1.9.3",
+            "commit": "cb93a6cb140ed8652dfccbc4e3b587be4897230b"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 25 Feb 2023 06:13:36 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.183",
+      "version": "0.0.0-canary.183",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump react-native-platform-override to v1.9.2",
+            "commit": "97bbe423f10f6ebc28c0f317b8854c293fd878a8"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 15 Feb 2023 06:22:16 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.182",
+      "version": "0.0.0-canary.182",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "d61980e7b6a1d8d8dd6f3076054029b6501624ee",
+            "comment": "LogBox should be using a monospace font"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 09 Feb 2023 06:16:41 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.181",
       "version": "0.0.0-canary.181",

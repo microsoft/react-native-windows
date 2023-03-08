@@ -14,10 +14,6 @@ namespace Microsoft::ReactNative {
 struct CompositionBaseComponentView;
 struct CompContext;
 
-// TODO replace with proper FocusManager - does it need to be per rootview?
-CompositionBaseComponentView *GetFocusedComponent() noexcept;
-void SetFocusedComponent(CompositionBaseComponentView *value) noexcept;
-
 struct CompositionBaseComponentView : public IComponentView {
   static constexpr size_t SpecialBorderLayerCount = 8;
 
@@ -26,18 +22,25 @@ struct CompositionBaseComponentView : public IComponentView {
       facebook::react::Tag tag);
 
   virtual winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept = 0;
+  // Visual that should be parented to this ComponentView's parent
+  virtual winrt::Microsoft::ReactNative::Composition::IVisual OuterVisual() const noexcept;
   void updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept override;
   const facebook::react::SharedViewEventEmitter &GetEventEmitter() const noexcept;
   void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept override;
+  RootComponentView *rootComponentView() noexcept override;
+  const std::vector<IComponentView *> &children() const noexcept override;
   void parent(IComponentView *parent) noexcept override;
   IComponentView *parent() const noexcept override;
+  bool runOnChildren(bool forward, Mso::Functor<bool(IComponentView &)> &fn) noexcept override;
   void onFocusLost() noexcept override;
   void onFocusGained() noexcept override;
-
+  bool focusable() const noexcept override;
+  facebook::react::SharedTouchEventEmitter touchEventEmitter() noexcept override;
+  facebook::react::SharedTouchEventEmitter touchEventEmitterAtPoint(facebook::react::Point pt) noexcept override;
   facebook::react::Tag tag() const noexcept override;
+  int64_t sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept override;
 
   virtual bool ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept;
-  virtual int64_t SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept;
   RECT getClientRect() const noexcept override;
 
   void indexOffsetForBorder(uint32_t &index) const noexcept;
@@ -69,12 +72,18 @@ struct CompositionBaseComponentView : public IComponentView {
   comp::CompositionPropertySet m_centerPropSet{nullptr};
   const facebook::react::Tag m_tag;
   facebook::react::SharedViewEventEmitter m_eventEmitter;
-  std::vector<const IComponentView *> m_children;
+  std::vector<IComponentView *> m_children;
   IComponentView *m_parent{nullptr};
   facebook::react::LayoutMetrics m_layoutMetrics;
   bool m_needsBorderUpdate{false};
   bool m_hasTransformMatrixFacade{false};
+  bool m_enableFocusVisual{false};
   uint8_t m_numBorderVisuals{0};
+
+ private:
+  void showFocusVisual(bool show) noexcept;
+  winrt::Microsoft::ReactNative::Composition::IFocusVisual m_focusVisual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::IVisual m_outerVisual{nullptr};
 };
 
 struct CompositionViewComponentView : public CompositionBaseComponentView {
@@ -85,8 +94,8 @@ struct CompositionViewComponentView : public CompositionBaseComponentView {
 
   std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept
       override;
-  void mountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept override;
-  void unmountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept override;
+  void mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
+  void unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
   void updateProps(facebook::react::Props::Shared const &props, facebook::react::Props::Shared const &oldProps) noexcept
       override;
   void updateState(facebook::react::State::Shared const &state, facebook::react::State::Shared const &oldState) noexcept
@@ -96,7 +105,7 @@ struct CompositionViewComponentView : public CompositionBaseComponentView {
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
   void finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept override;
   void prepareForRecycle() noexcept override;
-  facebook::react::SharedTouchEventEmitter touchEventEmitter() noexcept override;
+  bool focusable() const noexcept override;
 
   facebook::react::Props::Shared props() noexcept override;
 

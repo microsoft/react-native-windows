@@ -2,6 +2,36 @@
   "name": "@react-native-windows/fs",
   "entries": [
     {
+      "date": "Thu, 02 Mar 2023 06:14:22 GMT",
+      "tag": "@react-native-windows/fs_v0.0.0-canary.16",
+      "version": "0.0.0-canary.16",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/fs",
+            "commit": "cb93a6cb140ed8652dfccbc4e3b587be4897230b",
+            "comment": "Merge branch 'YajurG-8875' of https://github.com/YajurG/react-native-windows into YajurG-8875"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 25 Feb 2023 06:13:35 GMT",
+      "tag": "@react-native-windows/fs_v0.0.0-canary.15",
+      "version": "0.0.0-canary.15",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "4123478+tido64@users.noreply.github.com",
+            "package": "@react-native-windows/fs",
+            "commit": "beaa9c1b1f6ef2b6d8a4e1b6caea07168818a1d1",
+            "comment": "Move `@typescript-eslint/eslint-plugin` to `devDependencies` so they don't get installed by consumers"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 09 Feb 2023 06:16:42 GMT",
       "tag": "@react-native-windows/fs_v0.0.0-canary.14",
       "version": "0.0.0-canary.14",

@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20230201-2114-a0800ffc7",
+  "baseVersion": "0.0.0-20230228-2111-32d03c250",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "83e72b7e7299c8c056a76893b684247836e1934a"
+      "baseHash": "bf1e694b9b12d0817c203f45ce7ceea80c1993c0"
     },
     {
       "type": "derived",
@@ -49,8 +49,8 @@
     {
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/ImageRequest.cpp",
-      "baseFile": "ReactCommon/react/renderer/imagemanager/platform/ios/ImageRequest.cpp",
-      "baseHash": "f227c50397e2edf5deb496b7b1953df5ea1dc800"
+      "baseFile": "ReactCommon/react/renderer/imagemanager/platform/ios/react/renderer/imagemanager/ImageRequest.cpp",
+      "baseHash": "1c2613db5bd1cbbadbab5f5357186ffc73d6bd90"
     },
     {
       "type": "patch",
@@ -70,7 +70,7 @@
       "type": "patch",
       "file": "Microsoft.ReactNative/Fabric/platform/react/renderer/graphics/conversions.h",
       "baseFile": "ReactCommon/react/renderer/graphics/conversions.h",
-      "baseHash": "58ac74f1fc271c4a810df60e1b592e653a0c066a",
+      "baseHash": "d5e35921ee76c23fbc395434b4a515bd98c185bf",
       "issue": 7821
     },
     {
@@ -81,10 +81,58 @@
       "issue": 9791
     },
     {
+      "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/primitives.h",
+      "baseFile": "ReactCommon/react/renderer/components/view/primitives.h",
+      "baseHash": "ca98e8845881b0f78c6c06e96eccb515e49a4b6e"
+    },
+    {
+      "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/TouchEventEmitter.cpp",
+      "baseFile": "ReactCommon/react/renderer/components/view/TouchEventEmitter.cpp",
+      "baseHash": "a8524dc7a5a1e2d79880cf5f2f9c6cb7e014b197"
+    },
+    {
+      "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/TouchEventEmitter.h",
+      "baseFile": "ReactCommon/react/renderer/components/view/TouchEventEmitter.h",
+      "baseHash": "e8e2327d4c67082922c849a3726f73543e314eca"
+    },
+    {
+      "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/ViewEventEmitter.cpp",
+      "baseFile": "ReactCommon/react/renderer/components/view/ViewEventEmitter.cpp",
+      "baseHash": "0c19260b4d84d078e6991f67d94df14a32e71017"
+    },
+    {
+      "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/ViewEventEmitter.h",
+      "baseFile": "ReactCommon/react/renderer/components/view/ViewEventEmitter.h",
+      "baseHash": "a373fca9d1a593bf6cb5717c394ffba91baddf40"
+    },
+    {
+      "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/ViewProps.cpp",
+      "baseFile": "ReactCommon/react/renderer/components/view/ViewProps.cpp",
+      "baseHash": "aa0da12bb0688b67ac8a7295f8113419ec2277ab"
+    },
+    {
+      "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/ViewProps.h",
+      "baseFile": "ReactCommon/react/renderer/components/view/ViewProps.h",
+      "baseHash": "5811facf6c8989391eea091492a2afeca519e03b"
+    },
+    {
+      "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/ViewShadowNode.cpp",
+      "baseFile": "ReactCommon/react/renderer/components/view/ViewShadowNode.cpp",
+      "baseHash": "796ce7138b317d8565da1773f25d1e672805695c"
+    },
+    {
       "type": "patch",
       "file": "ReactCommon/Yoga.cpp",
       "baseFile": "ReactCommon/yoga/yoga/Yoga.cpp",
-      "baseHash": "b5a24126e78c7c7ec2fc79ab7a5183ae34abf24e",
+      "baseHash": "0aa8c33d956464711a4eaf0a311937159d8115c7",
       "issue": 3994
     },
     {
@@ -95,31 +143,10 @@
       "issue": 4054
     },
     {
-      "type": "patch",
-      "file": "src/babel-plugin-codegen/GenerateViewConfigJs.js",
-      "baseFile": "packages/react-native-codegen/src/generators/components/GenerateViewConfigJs.js",
-      "baseHash": "5eac953690e0c735aea066e3c3a92a751da6f00d",
-      "issue": 5430
-    },
-    {
-      "type": "patch",
-      "file": "src/babel-plugin-codegen/index.js",
-      "baseFile": "packages/babel-plugin-codegen/index.js",
-      "baseHash": "b0bebaa61feb2808e94aef543978f9f47b0c90b0",
-      "issue": 5430
-    },
-    {
-      "type": "patch",
-      "file": "src/babel-plugin-codegen/package.json",
-      "baseFile": "packages/babel-plugin-codegen/package.json",
-      "baseHash": "709b8cc211129e1d3188b689b8af7df1653a064b",
-      "issue": 5430
-    },
-    {
       "type": "derived",
       "file": "src/index.windows.js",
       "baseFile": "index.js",
-      "baseHash": "df21c820b0558eb40f1cf0269de18c3ddc38fdee"
+      "baseHash": "287445ef805383901c37da6026f8cf423ab0f078"
     },
     {
       "type": "platform",
@@ -330,7 +357,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/TouchableWithoutFeedback.windows.js",
       "baseFile": "Libraries/Components/Touchable/TouchableWithoutFeedback.js",
-      "baseHash": "e66d46f759afeb7058d65dbab52c9802f6320f6c"
+      "baseHash": "e4c1120a4e8338914b6ad5639811ef2b09b391cc"
     },
     {
       "type": "patch",

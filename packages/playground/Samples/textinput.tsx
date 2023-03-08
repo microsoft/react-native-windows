@@ -15,7 +15,7 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 
-import type {EventSubscription} from 'react-native';
+import type {EventSubscription} from 'react-native/Libraries/vendor/emitter/EventEmitter';
 
 export default class Bootstrap extends React.Component<{}, any> {
   didShowEmitterSubscription = {} as EventSubscription;

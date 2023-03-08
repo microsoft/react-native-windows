@@ -56,6 +56,7 @@ const View: React.AbstractComponent<
       'aria-valuenow': ariaValueNow,
       'aria-valuetext': ariaValueText,
       focusable,
+      disabled,
       id,
       importantForAccessibility,
       nativeID,
@@ -205,6 +206,7 @@ const View: React.AbstractComponent<
               }
               accessibilityLabel={ariaLabel ?? accessibilityLabel}
               focusable={tabIndex !== undefined ? !tabIndex : focusable}
+              disabled={disabled}
               accessibilityState={_accessibilityState}
               accessibilityRole={
                 role ? getAccessibilityRoleFromRole(role) : accessibilityRole

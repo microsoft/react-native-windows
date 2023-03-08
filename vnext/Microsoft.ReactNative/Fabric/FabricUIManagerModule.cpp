@@ -209,7 +209,7 @@ void FabricUIManager::startSurface(
         facebook::react::RootShadowNode::Handle(), surfaceId, self->m_compContext);
 
     self->m_surfaceRegistry.at(surfaceId).rootVisual.InsertAt(
-        static_cast<const CompositionBaseComponentView &>(*rootComponentViewDescriptor.view).Visual(), 0);
+        static_cast<const CompositionBaseComponentView &>(*rootComponentViewDescriptor.view).OuterVisual(), 0);
   });
 
   facebook::react::LayoutContext context;
@@ -372,7 +372,7 @@ void FabricUIManager::performTransaction(facebook::react::MountingCoordinator::S
       });
 }
 
-void FabricUIManager::initiateTransaction(facebook::react::MountingCoordinator::Shared const &mountingCoordinator) {
+void FabricUIManager::initiateTransaction(facebook::react::MountingCoordinator::Shared mountingCoordinator) {
   if (m_transactionInFlight) {
     m_followUpTransactionRequired = true;
     return;
@@ -386,8 +386,7 @@ void FabricUIManager::initiateTransaction(facebook::react::MountingCoordinator::
   } while (m_followUpTransactionRequired);
 }
 
-void FabricUIManager::schedulerDidFinishTransaction(
-    facebook::react::MountingCoordinator::Shared const &mountingCoordinator) {
+void FabricUIManager::schedulerDidFinishTransaction(facebook::react::MountingCoordinator::Shared mountingCoordinator) {
   // Should cache this locally
 
   if (m_context.UIDispatcher().HasThreadAccess()) {

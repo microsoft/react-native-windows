@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #pragma once
+#include <Fabric/Composition/RootComponentView.h>
 #include <Fabric/ReactTaggedView.h>
 #include <IReactInstance.h>
 #include <JSValue.h>
@@ -33,16 +34,19 @@ class CompositionEventHandler {
       const winrt::Microsoft::ReactNative::CompositionRootView &CompositionRootView);
   virtual ~CompositionEventHandler();
 
-  int64_t SendMessage(facebook::react::SurfaceId surfaceId, uint32_t msg, uint64_t wParam, int64_t lParam) noexcept;
-  void ScrollWheel(facebook::react::SurfaceId surfaceId, facebook::react::Point pt, uint32_t delta);
+  int64_t SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept;
+  void ScrollWheel(facebook::react::Point pt, uint32_t delta);
   void RemoveTouchHandlers();
 
  private:
-  void ButtonDown(facebook::react::SurfaceId surfaceId, uint32_t msg, uint64_t wParam, int64_t lParam);
-  void PointerPressed(facebook::react::SurfaceId surfaceId, uint32_t msg, uint64_t wParam, int64_t lParam);
-  void ButtonUp(facebook::react::SurfaceId surfaceId, uint32_t msg, uint64_t wParam, int64_t lParam);
-  void PointerUp(facebook::react::SurfaceId surfaceId, uint32_t msg, uint64_t wParam, int64_t lParam);
-  void MouseMove(facebook::react::SurfaceId surfaceId, uint32_t msg, uint64_t wParam, int64_t lParam);
+  void ButtonDown(uint32_t msg, uint64_t wParam, int64_t lParam);
+  void PointerPressed(uint32_t msg, uint64_t wParam, int64_t lParam);
+  void ButtonUp(uint32_t msg, uint64_t wParam, int64_t lParam);
+  void PointerUp(uint32_t msg, uint64_t wParam, int64_t lParam);
+  void MouseMove(uint32_t msg, uint64_t wParam, int64_t lParam);
+
+  facebook::react::SurfaceId SurfaceId() noexcept;
+  RootComponentView &RootComponentView() noexcept;
 
   enum class UITouchType {
     Mouse,
@@ -50,7 +54,7 @@ class CompositionEventHandler {
     Touch,
   };
   enum class TouchEventType { Start = 0, End, Move, Cancel, CaptureLost, PointerEntered, PointerExited, PointerMove };
-  void DispatchTouchEvent(facebook::react::SurfaceId surfaceId, TouchEventType eventType, PointerId pointerId);
+  void DispatchTouchEvent(TouchEventType eventType, PointerId pointerId);
   void HandleIncomingPointerEvent(
       facebook::react::PointerEvent &pe,
       IComponentView *targetView,

@@ -2,4 +2,4 @@
 // Licensed under the MIT License.
 
 // RN has some weird include directory redirections..this forwards the include to the right place
-#include <react/renderer/components/textinput/iostextinput/TextInputProps.h>
+#include <react/renderer/components/textinput/iostextinput/react/renderer/components/iostextinput/TextInputProps.h>

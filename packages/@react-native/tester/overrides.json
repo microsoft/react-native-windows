@@ -1,11 +1,11 @@
 {
-  "baseVersion": "0.0.0-20230201-2114-a0800ffc7",
+  "baseVersion": "0.0.0-20230228-2111-32d03c250",
   "overrides": [
     {
       "type": "copy",
       "directory": "js",
       "baseDirectory": "packages/rn-tester/js",
-      "baseHash": "8c8fc7bb6e62ec55e6ae09a550a35b43380d076c",
+      "baseHash": "89146541877eaa19942d2c99d98bb7c17d7e2219",
       "issue": 4054
     },
     {
@@ -26,7 +26,7 @@
       "type": "copy",
       "file": "NativeCxxModuleExample/NativeCxxModuleExample.js",
       "baseFile": "packages/rn-tester/NativeCxxModuleExample/NativeCxxModuleExample.js",
-      "baseHash": "7e18320a3b9b04a23312c0ca558179e108ed9caf",
+      "baseHash": "c5d4140480badfed3d3a0a83952e179b9e8fa3bc",
       "issue": 4054
     },
     {
@@ -40,7 +40,8 @@
       "type": "copy",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
-      "baseHash": "4d629b95f56686e8e1d066b78a3f140972885f49",
+      "baseVersion": "0.0.0-20230213-2113-f7e35d4ef",
+      "baseHash": "3b803653bf2bd26a16f9f734273bf92d7c998b6b",
       "issue": 4054
     }
   ]
