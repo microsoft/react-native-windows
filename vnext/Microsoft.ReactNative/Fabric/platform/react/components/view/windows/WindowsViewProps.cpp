@@ -19,19 +19,18 @@ WindowsViewProps::WindowsViewProps(
     bool shouldSetRawProps)
     : windowsEvents(sourceProps.windowsEvents),
       focusable(sourceProps.focusable),
-      enableFocusRing(sourceProps.enableFocusRing)
-      {}
+      enableFocusRing(sourceProps.enableFocusRing) {}
 
-#define WINDOWS_VIEW_EVENT_CASE(eventType)                      \
-  case CONSTEXPR_RAW_PROPS_KEY_HASH("on" #eventType): { \
-    const auto offset = WindowsViewEvents::Offset::eventType;  \
-    WindowsViewEvents defaultViewEvents{};                     \
-    bool res = defaultViewEvents[offset];               \
-    if (value.hasValue()) {                             \
-      fromRawValue(context, value, res);                \
-    }                                                   \
-    windowsEvents[offset] = res;                               \
-    return;                                             \
+#define WINDOWS_VIEW_EVENT_CASE(eventType)                    \
+  case CONSTEXPR_RAW_PROPS_KEY_HASH("on" #eventType): {       \
+    const auto offset = WindowsViewEvents::Offset::eventType; \
+    WindowsViewEvents defaultViewEvents{};                    \
+    bool res = defaultViewEvents[offset];                     \
+    if (value.hasValue()) {                                   \
+      fromRawValue(context, value, res);                      \
+    }                                                         \
+    windowsEvents[offset] = res;                              \
+    return;                                                   \
   }
 
 void WindowsViewProps::setProp(
@@ -39,7 +38,6 @@ void WindowsViewProps::setProp(
     RawPropsPropNameHash hash,
     const char *propName,
     RawValue const &value) {
-
   static auto defaults = WindowsViewProps{};
 
   switch (hash) {
@@ -52,11 +50,11 @@ void WindowsViewProps::setProp(
   }
 }
 
-/*static*/ bool WindowsViewProps::requiresFormsStackingContext(const WindowsViewProps& props) noexcept {
+/*static*/ bool WindowsViewProps::requiresFormsStackingContext(const WindowsViewProps &props) noexcept {
   return props.windowsEvents.bits.any();
 }
 
-/*static*/ bool WindowsViewProps::requiresFormsView(const WindowsViewProps& props) noexcept {
+/*static*/ bool WindowsViewProps::requiresFormsView(const WindowsViewProps &props) noexcept {
   return props.focusable;
 }
 

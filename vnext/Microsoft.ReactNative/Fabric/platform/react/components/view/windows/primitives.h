@@ -20,7 +20,7 @@ struct WindowsViewEvents {
     KeyUp = 2,
     KeyDown = 3,
   };
-  
+
   constexpr bool operator[](const Offset offset) const {
     return bits[static_cast<std::size_t>(offset)];
   }
@@ -28,7 +28,7 @@ struct WindowsViewEvents {
   std::bitset<32>::reference operator[](const Offset offset) {
     return bits[static_cast<std::size_t>(offset)];
   }
-  };
+};
 
 inline static bool operator==(WindowsViewEvents const &lhs, WindowsViewEvents const &rhs) {
   return lhs.bits == rhs.bits;
