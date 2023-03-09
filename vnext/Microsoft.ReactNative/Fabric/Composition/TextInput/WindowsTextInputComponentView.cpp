@@ -542,6 +542,18 @@ void WindowsTextInputComponentView::handleCommand(std::string const &commandName
 }
 
 int64_t WindowsTextInputComponentView::sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
+  // Do not forward tab keys into the TextInput, since we want that to do the tab loop instead.  This aligns with WinUI
+  // behavior We do forward Ctrl+Tab to the textinput.
+  if (((msg == WM_KEYDOWN || msg == WM_KEYUP) && wParam == VK_TAB) || (msg == WM_CHAR && wParam == '\t')) {
+    BYTE bKeys[256];
+    if (GetKeyboardState(bKeys)) {
+      bool fCtrl = false;
+      if (!(bKeys[VK_LCONTROL] & 0x80 || bKeys[VK_RCONTROL] & 0x80)) {
+        return 0;
+      }
+    }
+  }
+
   if (m_textServices) {
     LRESULT lresult;
     DrawBlock db(*this);
