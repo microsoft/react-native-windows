@@ -111,6 +111,7 @@
         $(ReactNativeWindowsDir)Shared;
         $(ReactNativeWindowsDir)Shared\tracing;
         $(ReactNativeWindowsDir)include\Shared;
+        $(ReactNativeDir)\ReactCommon\react\renderer\graphics\platform\cxx;
         $(YogaDir);
         $(GeneratedFilesDir);
         %(AdditionalIncludeDirectories)
