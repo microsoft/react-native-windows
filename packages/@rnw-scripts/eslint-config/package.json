@@ -9,7 +9,7 @@
     "directory": "packages/@rnw-scripts/eslint-config"
   },
   "dependencies": {
-    "@babel/core": "^7.14.0",
+    "@babel/core": "^7.20.0",
     "@babel/eslint-parser": "^7.18.2",
     "@react-native-community/eslint-config": "3.0.3",
     "eslint-config-prettier": "^8.5.0"

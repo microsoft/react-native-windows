@@ -15,7 +15,7 @@
     "react-native-codegen": "^0.72.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.14.0"
+    "@babel/core": "^7.20.0"
   },
   "license": "MIT"
 }
