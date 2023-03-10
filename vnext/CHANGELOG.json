@@ -2,6 +2,45 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 10 Mar 2023 06:14:16 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.627",
+      "version": "0.0.0-canary.627",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "93b1c7873fe0cdc28361ad7682d8405ab1b350b6",
+            "comment": "[Fabric] Clean up a bunch of include redirect files"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "936e715589bba35ed448f079131d82456a084e48",
+            "comment": "[Fabric] TextInput shouldn't block the tab loop"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b08df300cd010f7fd2fb933876a38a923dbbec6b",
+            "comment": "[Fabric] Add implementation of ScrollView.scrollto"
+          },
+          {
+            "author": "helenistic@meta.com",
+            "package": "react-native-windows",
+            "commit": "275b1fb14e381a72d73c542b9812f870b58eb531",
+            "comment": "Add submitBehavior prop to Paper VM for TextInput"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7f3903e83ac7d36e6f6ed442f7b54cbade0a5cbc",
+            "comment": "[Fabric] Move Windows specific properties out of ViewProps into HostPlatformViewProps"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 08 Mar 2023 06:14:10 GMT",
       "tag": "react-native-windows_v0.0.0-canary.626",
       "version": "0.0.0-canary.626",

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add submitBehavior prop to Paper VM for TextInput",
-  "packageName": "react-native-windows",
-  "email": "helenistic@meta.com",
-  "dependentChangeType": "patch"
-}
