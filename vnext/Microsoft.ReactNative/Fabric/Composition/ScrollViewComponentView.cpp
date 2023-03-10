@@ -293,7 +293,7 @@ void ScrollViewComponentView::handleCommand(std::string const &commandName, foll
     auto x = arg[0].asDouble();
     auto y = arg[1].asDouble();
     auto animate = arg[2].asBool();
-    m_visual.TryUpdatePosition({static_cast<float>(x), static_cast<float>(y), 0.0f}, animate);
+    m_scrollVisual.TryUpdatePosition({static_cast<float>(x), static_cast<float>(y), 0.0f}, animate);
   } else if (commandName == "flashScrollIndicators") {
     // No-op for now
   } else if (commandName == "scrollToEnd") {
