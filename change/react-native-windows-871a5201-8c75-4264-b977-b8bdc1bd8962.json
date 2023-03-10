@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "integrate RN 3/8/23",
+  "packageName": "react-native-windows",
+  "email": "tatianakapos@microsoft.com",
+  "dependentChangeType": "patch"
+}
