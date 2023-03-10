@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20230228-2111-32d03c250",
+  "baseVersion": "0.0.0-20230308-2111-d41e95fb1",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "bf1e694b9b12d0817c203f45ce7ceea80c1993c0"
+      "baseHash": "5a64dc6294bdb475c9725d6924993128b50f9196"
     },
     {
       "type": "derived",
@@ -42,7 +42,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.win32.js",
       "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.js",
-      "baseHash": "09fc956afbcd13b4c7a39e4de762c0af57cb9b4f",
+      "baseHash": "163927cc271b53109f06eaf5fc6d30a9af8cb27e",
       "issue": 4578
     },
     {
@@ -127,7 +127,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "7305b4ef570eb19e8f4238e252d8c788ce974b16"
+      "baseHash": "67f133655ca2a4cb62a1723ae5623895b7a647c0"
     },
     {
       "type": "patch",
@@ -197,7 +197,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/View/ViewAccessibility.win32.d.ts",
       "baseFile": "Libraries/Components/View/ViewAccessibility.d.ts",
-      "baseHash": "a9a7bfcff4be91484ad8bb17680c4ec225a28f0e"
+      "baseHash": "e1fb452bb78657766b57f092f1021b388b5e7e4b"
     },
     {
       "type": "derived",
@@ -209,7 +209,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/View/ViewPropTypes.win32.d.ts",
       "baseFile": "Libraries/Components/View/ViewPropTypes.d.ts",
-      "baseHash": "567b5fd7cc602357daa075d728220ffca0f6c2ac"
+      "baseHash": "91d96e475fc55da6c6456a240edbd650c1ca4a26"
     },
     {
       "type": "patch",

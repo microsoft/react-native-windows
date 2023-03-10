@@ -24,7 +24,7 @@ struct LongLivedJsiRuntime : facebook::react::LongLivedObject {
   }
 
  public: // LongLivedObject overrides
-  void allowRelease() override {
+  void allowRelease() {
     if (auto longLivedObjectCollection = longLivedObjectCollection_.lock()) {
       if (longLivedObjectCollection != nullptr) {
         longLivedObjectCollection->remove(this);
