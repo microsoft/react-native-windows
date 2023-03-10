@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.71.0",
+  "baseVersion": "0.71.4",
   "overrides": [
     {
       "type": "derived",
@@ -112,7 +112,7 @@
       "type": "patch",
       "file": "src/babel-plugin-codegen/package.json",
       "baseFile": "packages/babel-plugin-codegen/package.json",
-      "baseHash": "1aeac132f50c4aee1f50953b4f0691a5bc763b81",
+      "baseHash": "7713b41f56e7f0b5f1338b996b9643da445942b6",
       "issue": 5430
     },
     {
@@ -318,13 +318,13 @@
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/TouchableOpacity.windows.js",
       "baseFile": "Libraries/Components/Touchable/TouchableOpacity.js",
-      "baseHash": "7bbb5ce77e21e6badbe532a414d6168d68ea63e5"
+      "baseHash": "c29a39f9a6a5804a68e753126e9d1c1b63983bbe"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/TouchableWithoutFeedback.windows.js",
       "baseFile": "Libraries/Components/Touchable/TouchableWithoutFeedback.js",
-      "baseHash": "7cead5e4af7bb5b49450b8e39c7f92515ba99398"
+      "baseHash": "d7be1850e258e963133040fe1b65f0a55628b6a1"
     },
     {
       "type": "patch",

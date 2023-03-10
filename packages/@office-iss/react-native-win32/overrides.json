@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.71.0",
+  "baseVersion": "0.71.4",
   "overrides": [
     {
       "type": "derived",
@@ -191,7 +191,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/View/ViewAccessibility.win32.d.ts",
       "baseFile": "Libraries/Components/View/ViewAccessibility.d.ts",
-      "baseHash": "fb6095450277c96f033749633af10b42a184e07c"
+      "baseHash": "a9a7bfcff4be91484ad8bb17680c4ec225a28f0e"
     },
     {
       "type": "derived",
