@@ -1071,6 +1071,11 @@ void CompositionBaseComponentView::indexOffsetForBorder(uint32_t &index) const n
 
 void CompositionBaseComponentView::OnRenderingDeviceLost() noexcept {}
 
+std::vector<facebook::react::ComponentDescriptorProvider>
+CompositionBaseComponentView::supplementalComponentDescriptorProviders() noexcept {
+  return {};
+}
+
 comp::CompositionPropertySet CompositionBaseComponentView::EnsureCenterPointPropertySet() noexcept {
   if (m_centerPropSet == nullptr) {
     auto compositor =
@@ -1151,11 +1156,6 @@ CompositionViewComponentView::CompositionViewComponentView(
   m_props = defaultProps;
   m_visual = m_compContext.CreateSpriteVisual();
   OuterVisual().InsertAt(m_visual, 0);
-}
-
-std::vector<facebook::react::ComponentDescriptorProvider>
-CompositionViewComponentView::supplementalComponentDescriptorProviders() noexcept {
-  return {};
 }
 
 void CompositionViewComponentView::mountChildComponentView(
