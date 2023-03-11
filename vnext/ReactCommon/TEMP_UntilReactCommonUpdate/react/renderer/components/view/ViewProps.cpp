@@ -25,6 +25,7 @@ ViewProps::ViewProps(
     bool shouldSetRawProps)
     : YogaStylableProps(context, sourceProps, rawProps, shouldSetRawProps),
       AccessibilityProps(context, sourceProps, rawProps),
+      HostPlatformViewProps(context, sourceProps, rawProps, shouldSetRawProps), // [Windows]
       opacity(
           CoreFeatures::enablePropIteratorSetter ? sourceProps.opacity
                                                  : convertRawProp(
@@ -183,14 +184,6 @@ ViewProps::ViewProps(
           CoreFeatures::enablePropIteratorSetter
               ? sourceProps.events
               : convertRawProp(context, rawProps, sourceProps.events, {})),
-      enableFocusRing(
-          CoreFeatures::enablePropIteratorSetter ? sourceProps.enableFocusRing
-                                                 : convertRawProp(
-                                                       context,
-                                                       rawProps,
-                                                       "enableFocusRing",
-                                                       sourceProps.enableFocusRing,
-                                                       true)),
       collapsable(
           CoreFeatures::enablePropIteratorSetter ? sourceProps.collapsable
                                                  : convertRawProp(
@@ -236,8 +229,6 @@ ViewProps::ViewProps(
                     "nativeForegroundAndroid",
                     sourceProps.nativeForeground,
                     {})),
-#endif // [Windows]
-      , // [Windows]
       focusable(
           CoreFeatures::enablePropIteratorSetter ? sourceProps.focusable
                                                  : convertRawProp(
@@ -245,8 +236,7 @@ ViewProps::ViewProps(
                                                        rawProps,
                                                        "focusable",
                                                        sourceProps.focusable,
-                                                       {}))
-#ifdef ANDROID // [Windows]
+                                                       {})),
       hasTVPreferredFocus(
           CoreFeatures::enablePropIteratorSetter
               ? sourceProps.hasTVPreferredFocus
@@ -291,19 +281,6 @@ ViewProps::ViewProps(
     return;                                             \
   }
 
-// [Windows]
-#define HOST_PLATFORM_VIEW_EVENT_CASE(eventType)                      \
-  case CONSTEXPR_RAW_PROPS_KEY_HASH("on" #eventType): { \
-    const auto offset = HostPlatformViewEvents::Offset::eventType;  \
-    HostPlatformViewEvents defaultViewEvents{};                     \
-    bool res = defaultViewEvents[offset];               \
-    if (value.hasValue()) {                             \
-      fromRawValue(context, value, res);                \
-    }                                                   \
-    platformEvents[offset] = res;                               \
-    return;                                             \
-  }
-
 void ViewProps::setProp(
     const PropsParserContext &context,
     RawPropsPropNameHash hash,
@@ -314,6 +291,7 @@ void ViewProps::setProp(
   // reuse the same values.
   YogaStylableProps::setProp(context, hash, propName, value);
   AccessibilityProps::setProp(context, hash, propName, value);
+  HostPlatformViewProps::setProp(context, hash, propName, value); // [Windows]
 
   static auto defaults = ViewProps{};
 
@@ -362,18 +340,12 @@ void ViewProps::setProp(
     VIEW_EVENT_CASE(TouchCancel);
     VIEW_EVENT_CASE(MouseEnter); // [Windows]
     VIEW_EVENT_CASE(MouseLeave); // [Windows]
-    HOST_PLATFORM_VIEW_EVENT_CASE(Focus); // [Windows]
-    HOST_PLATFORM_VIEW_EVENT_CASE(Blur); // [Windows]
-    HOST_PLATFORM_VIEW_EVENT_CASE(KeyUp); // [Windows]
-    HOST_PLATFORM_VIEW_EVENT_CASE(KeyDown); // [Windows]
 
 #ifdef ANDROID
     RAW_SET_PROP_SWITCH_CASE_BASIC(elevation);
     RAW_SET_PROP_SWITCH_CASE(nativeBackground, "nativeBackgroundAndroid");
     RAW_SET_PROP_SWITCH_CASE(nativeForeground, "nativeForegroundAndroid");
-#endif // [Windows]
     RAW_SET_PROP_SWITCH_CASE_BASIC(focusable);
-#ifdef ANDROID // [Windows]
     RAW_SET_PROP_SWITCH_CASE_BASIC(hasTVPreferredFocus);
     RAW_SET_PROP_SWITCH_CASE_BASIC(needsOffscreenAlphaCompositing);
     RAW_SET_PROP_SWITCH_CASE_BASIC(renderToHardwareTextureAndroid);
