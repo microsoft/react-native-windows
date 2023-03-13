@@ -8,16 +8,29 @@
 #include "ViewManagersProvider.h"
 #endif
 #include "winrt/Microsoft.ReactNative.h"
+#ifdef USE_FABRIC
+#include <Fabric/WindowsComponentDescriptorRegistry.h>
+#endif
 
 namespace winrt::Microsoft::ReactNative {
 
-struct ReactPackageBuilder : winrt::implements<ReactPackageBuilder, IReactPackageBuilder> {
+struct ReactPackageBuilder : winrt::implements<
+                                 ReactPackageBuilder,
+                                 IReactPackageBuilder
+#ifdef USE_FABRIC
+                                 ,
+                                 IReactPackageBuilderFabric
+#endif
+                                 > {
   ReactPackageBuilder(
       std::shared_ptr<NativeModulesProvider> const &modulesProvider,
 #ifndef CORE_ABI
       std::shared_ptr<ViewManagersProvider> const &viewManagersProvider,
 #endif
       std::shared_ptr<TurboModulesProvider> const &turboModulesProvider,
+#ifdef USE_FABRIC
+      std::shared_ptr<::Microsoft::ReactNative::WindowsComponentDescriptorRegistry> const &componentRegistry,
+#endif
       bool isWebDebugging) noexcept;
 
  public: // IReactPackageBuilder
@@ -27,12 +40,22 @@ struct ReactPackageBuilder : winrt::implements<ReactPackageBuilder, IReactPackag
 #endif
   void AddTurboModule(hstring const &moduleName, ReactModuleProvider const &moduleProvider) noexcept;
 
+#ifdef USE_FABRIC
+  // IReactPackageBuilderFabric
+  void AddViewComponent(IViewComponentDescriptor const &descriptor) noexcept;
+#endif // USE_FABRIC
+
  private:
   std::shared_ptr<NativeModulesProvider> m_modulesProvider;
 #ifndef CORE_ABI
   std::shared_ptr<ViewManagersProvider> m_viewManagersProvider;
 #endif
   std::shared_ptr<TurboModulesProvider> m_turboModulesProvider;
+
+#ifdef USE_FABRIC
+  std::shared_ptr<::Microsoft::ReactNative::WindowsComponentDescriptorRegistry> m_componentRegistry;
+#endif
+
   const bool m_isWebDebugging;
 };
 

@@ -23,6 +23,72 @@
 #include "NativeModules.h"
 #include "ReactPropertyBag.h"
 
+struct CustomProps : winrt::implements<CustomProps, winrt::Microsoft::ReactNative::IComponentProps> {
+  void SetProp(uint32_t hash, winrt::hstring propName, winrt::Microsoft::ReactNative::IJSValueReader value) noexcept {
+    if (propName == L"label") {
+      if (!value) {
+        label.clear();
+      } else {
+        label = winrt::to_string(value.GetString());
+      }
+    }
+  }
+
+  std::string label;
+};
+
+struct CustomComponent
+    : winrt::implements<CustomComponent, winrt::Microsoft::ReactNative::Composition::ICompositionViewComponent> {
+  void Initialize(winrt::Microsoft::ReactNative::Composition::ICompositionContext context) noexcept {
+    m_compContext = context;
+  }
+
+  bool HandleCommand(winrt::hstring commandName, winrt::Microsoft::ReactNative::IJSValueReader args) noexcept {
+    return false;
+  }
+
+  void UpdateProps(winrt::Microsoft::ReactNative::IComponentProps props) noexcept {
+    auto customProps = props.as<CustomProps>();
+  }
+
+  void UpdateLayoutMetrics(winrt::Microsoft::ReactNative::Composition::LayoutMetrics metrics) noexcept {
+    m_visual.Size({metrics.Frame.Width, metrics.Frame.Height});
+  }
+
+  void FinalizeUpdates() noexcept {}
+
+  winrt::Microsoft::ReactNative::Composition::IVisual CreateVisual() noexcept {
+    m_visual = m_compContext.CreateSpriteVisual();
+    m_visual.Brush(m_compContext.CreateColorBrush(winrt::Windows::UI::Colors::Green()));
+    return m_visual;
+  }
+
+  uint64_t SendMessage(uint32_t Msg, uint64_t WParam, int64_t LParam) noexcept {
+    return 0;
+  }
+
+ private:
+  winrt::Microsoft::ReactNative::Composition::SpriteVisual m_visual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::ICompositionContext m_compContext;
+};
+
+struct CustomNativeComponentDescriptor : winrt::implements<
+                                             CustomNativeComponentDescriptor,
+                                             winrt::Microsoft::ReactNative::IViewComponentDescriptor,
+                                             winrt::Microsoft::ReactNative::ICompositionViewComponentDescriptor> {
+  winrt::hstring ComponentName() const noexcept {
+    return L"MyCustomComponent";
+  }
+
+  winrt::Microsoft::ReactNative::IComponentProps CreateProps(winrt::Microsoft::ReactNative::ViewProps props) {
+    return winrt::make<CustomProps>();
+  }
+
+  winrt::Microsoft::ReactNative::Composition::ICompositionViewComponent CreateViewComponent() {
+    return winrt::make<CustomComponent>();
+  }
+};
+
 // Work around crash in DeviceInfo when running outside of XAML environment
 // TODO rework built-in DeviceInfo to allow it to be driven without use of HWNDs or XamlApps
 REACT_MODULE(DeviceInfo)
@@ -57,6 +123,9 @@ struct CompReactPackageProvider
  public: // IReactPackageProvider
   void CreatePackage(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept {
     packageBuilder.AddTurboModule(L"DeviceInfo", winrt::Microsoft::ReactNative::MakeModuleProvider<DeviceInfo>());
+
+    packageBuilder.as<winrt::Microsoft::ReactNative::IReactPackageBuilderFabric>().AddViewComponent(
+        winrt::make<CustomNativeComponentDescriptor>().as<winrt::Microsoft::ReactNative::IViewComponentDescriptor>());
   }
 };
 
@@ -208,16 +277,28 @@ struct WindowData {
     return FALSE;
   }
 
-  static constexpr std::wstring_view g_bundleFiles[] = {LR"(Samples\rntester)",     LR"(Samples\accessible)",
-                                                        LR"(Samples\callbackTest)", LR"(Samples\calculator)",
-                                                        LR"(Samples\click)",        LR"(Samples\customViewManager)",
-                                                        LR"(Samples\control)",      LR"(Samples\flexbox)",
-                                                        LR"(Samples\focusTest)",    LR"(Samples\geosample)",
-                                                        LR"(Samples\image)",        LR"(Samples\index)",
-                                                        LR"(Samples\mouse)",        LR"(Samples\scrollViewSnapSample)",
-                                                        LR"(Samples\simple)",       LR"(Samples\text)",
-                                                        LR"(Samples\textinput)",    LR"(Samples\ticTacToe)",
-                                                        LR"(Samples\view)",         LR"(Samples\debugTest01)"};
+  static constexpr std::wstring_view g_bundleFiles[] = {
+      LR"(Samples\rntester)",
+      LR"(Samples\accessible)",
+      LR"(Samples\callbackTest)",
+      LR"(Samples\calculator)",
+      LR"(Samples\click)",
+      LR"(Samples\customViewManager)",
+      LR"(Samples\control)",
+      LR"(Samples\flexbox)",
+      LR"(Samples\focusTest)",
+      LR"(Samples\geosample)",
+      LR"(Samples\image)",
+      LR"(Samples\index)",
+      LR"(Samples\nativeFabricComponent)",
+      LR"(Samples\mouse)",
+      LR"(Samples\scrollViewSnapSample)",
+      LR"(Samples\simple)",
+      LR"(Samples\text)",
+      LR"(Samples\textinput)",
+      LR"(Samples\ticTacToe)",
+      LR"(Samples\view)",
+      LR"(Samples\debugTest01)"};
 
   static INT_PTR CALLBACK Bundle(HWND hwnd, UINT message, WPARAM wparam, LPARAM /*lparam*/) noexcept {
     switch (message) {

@@ -1,0 +1,18 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+import "ViewComponentDescriptor.idl";
+
+#include "DocString.h"
+
+namespace Microsoft.ReactNative
+{
+  [webhosthidden]
+  [experimental]
+  DOC_STRING("TODO")
+  interface IReactPackageBuilderFabric
+  {
+    DOC_STRING("TODO.")
+    void AddViewComponent(IViewComponentDescriptor component);
+  };
+} // namespace Microsoft.ReactNative

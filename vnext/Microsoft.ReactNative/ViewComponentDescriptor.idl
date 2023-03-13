@@ -1,0 +1,29 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+#include "DocString.h"
+import "ViewProps.idl";
+import "CompositionViewComponent.idl";
+
+namespace Microsoft.ReactNative
+{
+  // TODO add IComponentDescriptor and ILayoutComponentDescriptor as needed when/if we need to support custom components which are not views
+
+  [webhosthidden]
+  [experimental]
+  DOC_STRING("Interface to implement custom view component properties")
+  interface IViewComponentDescriptor
+  {
+    String ComponentName{ get; };
+    IComponentProps CreateProps(ViewProps props);
+  };
+
+  [webhosthidden]
+  [experimental]
+  DOC_STRING("Interface to implement custom view component properties")
+  interface ICompositionViewComponentDescriptor
+  {
+    Microsoft.ReactNative.Composition.ICompositionViewComponent CreateViewComponent();
+  };
+
+} // namespace Microsoft.ReactNative

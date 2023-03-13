@@ -4,6 +4,10 @@
 #include "pch.h"
 #include "ReactPackageBuilder.h"
 
+#ifdef USE_FABRIC
+#include <Fabric/AbiViewComponentDescriptor.h>
+#endif
+
 namespace winrt::Microsoft::ReactNative {
 
 //===========================================================================
@@ -16,12 +20,19 @@ ReactPackageBuilder::ReactPackageBuilder(
     std::shared_ptr<ViewManagersProvider> const &viewManagersProvider,
 #endif
     std::shared_ptr<TurboModulesProvider> const &turboModulesProvider,
+#ifdef USE_FABRIC
+    std::shared_ptr<::Microsoft::ReactNative::WindowsComponentDescriptorRegistry> const &componentRegistry,
+#endif
     bool isWebDebugging) noexcept
     : m_modulesProvider{modulesProvider},
 #ifndef CORE_ABI
       m_viewManagersProvider{viewManagersProvider},
 #endif
       m_turboModulesProvider{turboModulesProvider},
+#ifdef USE_FABRIC
+      m_componentRegistry{componentRegistry},
+#endif
+
       m_isWebDebugging{isWebDebugging} {
 }
 
@@ -46,4 +57,9 @@ void ReactPackageBuilder::AddTurboModule(
     m_turboModulesProvider->AddModuleProvider(moduleName, moduleProvider, true);
 }
 
+#ifdef USE_FABRIC
+void ReactPackageBuilder::AddViewComponent(IViewComponentDescriptor const &descriptor) noexcept {
+  m_componentRegistry->Add(descriptor);
+}
+#endif
 } // namespace winrt::Microsoft::ReactNative

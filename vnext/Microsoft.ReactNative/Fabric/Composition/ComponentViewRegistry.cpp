@@ -19,6 +19,7 @@
 #include <react/renderer/components/text/TextShadowNode.h>
 #include <react/renderer/components/view/ViewShadowNode.h>
 
+#include <Fabric/Composition/AbiCompositionViewComponentView.h>
 #include <Fabric/Composition/CompositionHelpers.h>
 #include <Fabric/Composition/CompositionViewComponentView.h>
 #include <Fabric/Composition/ImageComponentView.h>
@@ -27,6 +28,7 @@
 #include <Fabric/Composition/ScrollViewComponentView.h>
 #include <Fabric/Composition/SwitchComponentView.h>
 #include <Fabric/Composition/TextInput/WindowsTextInputComponentView.h>
+#include <Fabric/WindowsComponentDescriptorRegistry.h>
 
 namespace Microsoft::ReactNative {
 
@@ -42,7 +44,9 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
 
   std::shared_ptr<CompositionBaseComponentView> view;
 
-  if (componentHandle == facebook::react::ParagraphShadowNode::Handle()) {
+  if (componentHandle == facebook::react::ViewShadowNode::Handle()) {
+    view = std::make_shared<CompositionViewComponentView>(compContext, tag);
+  } else if (componentHandle == facebook::react::ParagraphShadowNode::Handle()) {
     view = std::make_shared<ParagraphComponentView>(compContext, tag);
   } else if (componentHandle == facebook::react::ScrollViewShadowNode::Handle()) {
     view = std::make_shared<ScrollViewComponentView>(compContext, tag);
@@ -54,8 +58,17 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
     view = std::make_shared<SwitchComponentView>(compContext, tag, m_context);
   } else if (componentHandle == facebook::react::RootShadowNode::Handle()) {
     view = std::make_shared<RootComponentView>(compContext, tag);
-  } else {
+  } else if (
+      componentHandle == facebook::react::RawTextShadowNode::Handle() ||
+      componentHandle == facebook::react::TextShadowNode::Handle()) {
+    // Review - Why do we get asked for ComponentViews for Text/RawText... do these get used?
     view = std::make_shared<CompositionViewComponentView>(compContext, tag);
+  } else {
+    auto descriptor = WindowsComponentDescriptorRegistry::FromProperties(m_context.Properties())->GetDescriptor(componentHandle);
+    view = std::make_shared<AbiCompositionViewComponentView>(
+        compContext,
+        tag,
+        descriptor.as<winrt::Microsoft::ReactNative::ICompositionViewComponentDescriptor>().CreateViewComponent());
   }
 
   auto it = m_registry.insert({tag, ComponentViewDescriptor{view}});

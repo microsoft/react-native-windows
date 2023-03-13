@@ -1,0 +1,44 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+#include "DocString.h"
+import "ViewProps.idl";
+import "IJSValueReader.idl";
+import "CompositionSwitcher.idl";
+
+namespace Microsoft.ReactNative.Composition
+{
+  [webhosthidden]
+  [experimental]
+  struct LayoutMetrics
+  {
+    Windows.Foundation.Rect Frame;
+    Single PointScaleFactor;
+  };
+
+  [webhosthidden]
+  [experimental] DOC_STRING(
+      "Interface to implement custom view component properties")
+  interface ICompositionViewComponent
+  {
+    void Initialize(ICompositionContext context);
+
+    // Will probably need this eventually... but lets see.
+    // void SetViewComponent(ViewHandle handle);
+
+    // TODO should make an event args, with a handled bit instead of return value
+    Boolean HandleCommand(String commandName, Microsoft.ReactNative.IJSValueReader args);
+
+    // We'll call updateBorderProps before this
+    // TODO -void UpdateEventEmitter(IEventEmitter emitter);
+    void UpdateProps(Microsoft.ReactNative.IComponentProps props);
+    void UpdateLayoutMetrics(LayoutMetrics metrics);
+    // TODO - void UpdateState(...);
+    void FinalizeUpdates();
+
+    IVisual CreateVisual();
+
+    Int64 SendMessage(UInt32 Msg, UInt64 WParam, Int64 LParam);
+  };
+
+} // namespace Microsoft.ReactNative
