@@ -155,11 +155,15 @@
     <Midl Include="..\Microsoft.ReactNative\JsiApi.idl" />
     <Midl Include="..\Microsoft.ReactNative\RedBoxHandler.idl" />
     <Midl Include="..\Microsoft.ReactNative\QuirkSettings.idl" />
-    <Midl Condition="'$(UseFabric)' == 'true'" Include="..\Microsoft.ReactNative\CompositionHwndHost.idl" />
     <Midl Condition="'$(UseFabric)' == 'true'" Include="..\Microsoft.ReactNative\CompositionContext.idl" />
+    <Midl Condition="'$(UseFabric)' == 'true'" Include="..\Microsoft.ReactNative\CompositionHwndHost.idl" />
+    <Midl Condition="'$(UseFabric)' == 'true'" Include="..\Microsoft.ReactNative\CompositionRootView.idl" />
     <Midl Condition="'$(UseFabric)' == 'true'" Include="..\Microsoft.ReactNative\CompositionSwitcher.idl" />
     <Midl Condition="'$(UseFabric)' == 'true'" Include="..\Microsoft.ReactNative\CompositionUIService.idl" />
-    <Midl Condition="'$(UseFabric)' == 'true'" Include="..\Microsoft.ReactNative\CompositionRootView.idl" />
+    <Midl Condition="'$(UseFabric)' == 'true'" Include="..\Microsoft.ReactNative\CompositionViewComponent.idl" />
+    <Midl Condition="'$(UseFabric)' == 'true'" Include="..\Microsoft.ReactNative\IReactPackageBuilderFabric.idl" />
+    <Midl Condition="'$(UseFabric)' == 'true'" Include="..\Microsoft.ReactNative\ViewComponentDescriptor.idl" />
+    <Midl Condition="'$(UseFabric)' == 'true'" Include="..\Microsoft.ReactNative\ViewProps.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Microsoft.ReactNative\IReactDispatcher.cpp">

@@ -92,13 +92,13 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
 
   auto turboModulesProvider = std::make_shared<TurboModulesProvider>();
 
-  auto componentregistry = std::make_shared<::Microsoft::ReactNative::WindowsComponentDescriptorRegistry>();
 #ifdef USE_FABRIC
+  auto componentregistry = std::make_shared<::Microsoft::ReactNative::WindowsComponentDescriptorRegistry>();
   auto componentDescriptorRegistry = std::make_shared<facebook::react::ComponentDescriptorProviderRegistry>();
-#endif
 
   ::Microsoft::ReactNative::WindowsComponentDescriptorRegistry::AddToProperties(
       ReactPropertyBag(m_instanceSettings.Properties()), componentregistry);
+#endif
 
   m_packageBuilder = make<ReactPackageBuilder>(
       modulesProvider,

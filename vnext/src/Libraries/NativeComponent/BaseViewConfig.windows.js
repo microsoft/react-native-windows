@@ -321,6 +321,9 @@ const validAttributesForNonEventProps = {
 
   direction: true,
 
+  enableFocusRing: true, // [Windows]
+  focusable: true, // [Windows]
+
   style: ReactNativeStyleAttributes,
 };
 
