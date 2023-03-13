@@ -64,7 +64,8 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
     // Review - Why do we get asked for ComponentViews for Text/RawText... do these get used?
     view = std::make_shared<CompositionViewComponentView>(compContext, tag);
   } else {
-    auto descriptor = WindowsComponentDescriptorRegistry::FromProperties(m_context.Properties())->GetDescriptor(componentHandle);
+    auto descriptor =
+        WindowsComponentDescriptorRegistry::FromProperties(m_context.Properties())->GetDescriptor(componentHandle);
     view = std::make_shared<AbiCompositionViewComponentView>(
         compContext,
         tag,

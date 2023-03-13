@@ -4,10 +4,10 @@
 
 #pragma once
 
+#include <Fabric/AbiViewProps.h>
 #include <Fabric/ComponentView.h>
 #include <Microsoft.ReactNative.Cxx/ReactContext.h>
 #include "CompositionViewComponentView.h"
-#include <Fabric/AbiViewProps.h>
 
 #include <react/components/rnwcore/ShadowNodes.h>
 

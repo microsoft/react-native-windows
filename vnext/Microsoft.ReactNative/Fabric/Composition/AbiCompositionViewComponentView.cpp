@@ -45,7 +45,6 @@ void AbiCompositionViewComponentView::updateProps(
   m_userComponent.UpdateProps(newViewProps.UserProps());
 
   m_props = std::static_pointer_cast<AbiViewProps const>(props);
-
 }
 
 void AbiCompositionViewComponentView::updateLayoutMetrics(
@@ -70,8 +69,7 @@ void AbiCompositionViewComponentView::updateLayoutMetrics(
 
 void AbiCompositionViewComponentView::updateState(
     facebook::react::State::Shared const &state,
-    facebook::react::State::Shared const &oldState) noexcept {
-}
+    facebook::react::State::Shared const &oldState) noexcept {}
 
 void AbiCompositionViewComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
   m_userComponent.FinalizeUpdates();
@@ -86,11 +84,10 @@ bool AbiCompositionViewComponentView::focusable() const noexcept {
   return m_props->focusable;
 }
 
-  std::vector<facebook::react::ComponentDescriptorProvider>
+std::vector<facebook::react::ComponentDescriptorProvider>
 AbiCompositionViewComponentView::supplementalComponentDescriptorProviders() noexcept {
   return {};
 }
-
 
 void AbiCompositionViewComponentView::prepareForRecycle() noexcept {}
 facebook::react::Props::Shared AbiCompositionViewComponentView::props() noexcept {

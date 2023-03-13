@@ -7,21 +7,20 @@ import "IJSValueReader.idl";
 namespace Microsoft.ReactNative {
   [webhosthidden]
   [experimental]
-  DOC_STRING("Interface to implement custom view component properties")
+  DOC_STRING("Interface to implement custom view component properties.")
   interface IComponentProps
   {
     // TODO add an exported method to get the matching hash for a propname?
     // TODO or remove the hash from the interface?
-    DOC_STRING("TODO write docs")
+    DOC_STRING("This method will be called for each property that comes from JavaScript.  It is up to an individual implementation to store the values of properties for access within @Composition.ICompositionViewComponent.UpdateProps.  Properties that are part of ViewProps can be accessed from the @ViewProps object, and so do not need to be stored.")
     void SetProp(UInt32 hash, String propName, IJSValueReader value);
   };
 
   [default_interface]
   [webhosthidden]
-  DOC_STRING("Provides access to properties on ViewProps.")
+  DOC_STRING("Provides access to the properties on standard ViewProps.")
   runtimeclass ViewProps
   {
-    DOC_STRING("TODO.")
     Single Opacity { get; };
 
     // TODO add accessors to all the properties on ViewProps

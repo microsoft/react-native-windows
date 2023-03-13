@@ -4,14 +4,14 @@
 
 #include "WindowsComponentDescriptorRegistry.h"
 
+#include <Fabric/AbiViewComponentDescriptor.h>
+#include <Fabric/Composition/TextInput/WindowsTextInputComponentDescriptor.h>
+#include <react/components/rnwcore/ComponentDescriptors.h>
 #include <react/renderer/components/image/ImageComponentDescriptor.h>
 #include <react/renderer/components/text/ParagraphComponentDescriptor.h>
 #include <react/renderer/components/text/RawTextComponentDescriptor.h>
 #include <react/renderer/components/text/TextComponentDescriptor.h>
 #include <react/renderer/components/view/ViewComponentDescriptor.h>
-#include <react/components/rnwcore/ComponentDescriptors.h>
-#include <Fabric/Composition/TextInput/WindowsTextInputComponentDescriptor.h>
-#include <Fabric/AbiViewComponentDescriptor.h>
 
 #pragma warning(push)
 #pragma warning(disable : 4305)
@@ -53,10 +53,9 @@ WindowsComponentDescriptorRegistry::WindowsComponentDescriptorRegistry()
 
 void WindowsComponentDescriptorRegistry::Add(
     winrt::Microsoft::ReactNative::IViewComponentDescriptor const &descriptor) noexcept {
-
   m_descriptorFlavors.emplace_back(std::make_shared<std::string>(winrt::to_string(descriptor.ComponentName())));
   auto handle = reinterpret_cast<facebook::react::ComponentHandle>(
-           facebook::react::ComponentName(m_descriptorFlavors.back()->c_str()));
+      facebook::react::ComponentName(m_descriptorFlavors.back()->c_str()));
   m_userDescriptorsByName.emplace(m_descriptorFlavors.back(), descriptor);
   m_userDescriptorsByHandle.emplace(handle, descriptor);
   m_componentDescriptorRegistry->add(
@@ -91,6 +90,5 @@ WindowsComponentDescriptorRegistry::GetProviderRegistry() const noexcept {
     const winrt::Microsoft::ReactNative::ReactPropertyBag &props) noexcept {
   return props.Get(WindowsComponentDescriptorRegistryProperty()).Value();
 }
-
 
 } // namespace Microsoft::ReactNative

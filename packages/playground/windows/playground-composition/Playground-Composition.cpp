@@ -24,6 +24,8 @@
 #include "ReactPropertyBag.h"
 
 struct CustomProps : winrt::implements<CustomProps, winrt::Microsoft::ReactNative::IComponentProps> {
+  CustomProps(winrt::Microsoft::ReactNative::ViewProps props) : m_props(props) {}
+
   void SetProp(uint32_t hash, winrt::hstring propName, winrt::Microsoft::ReactNative::IJSValueReader value) noexcept {
     if (propName == L"label") {
       if (!value) {
@@ -35,6 +37,7 @@ struct CustomProps : winrt::implements<CustomProps, winrt::Microsoft::ReactNativ
   }
 
   std::string label;
+  winrt::Microsoft::ReactNative::ViewProps m_props;
 };
 
 struct CustomComponent
@@ -81,7 +84,7 @@ struct CustomNativeComponentDescriptor : winrt::implements<
   }
 
   winrt::Microsoft::ReactNative::IComponentProps CreateProps(winrt::Microsoft::ReactNative::ViewProps props) {
-    return winrt::make<CustomProps>();
+    return winrt::make<CustomProps>(props);
   }
 
   winrt::Microsoft::ReactNative::Composition::ICompositionViewComponent CreateViewComponent() {

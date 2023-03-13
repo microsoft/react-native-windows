@@ -25,8 +25,8 @@ winrt::Microsoft::ReactNative::IComponentProps AbiViewProps::UserProps() const n
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
-UserViewProps::UserViewProps(std::shared_ptr<::Microsoft::ReactNative::AbiViewProps const> viewProps) noexcept: m_viewProps(viewProps) {
-}
+UserViewProps::UserViewProps(std::shared_ptr<::Microsoft::ReactNative::AbiViewProps const> viewProps) noexcept
+    : m_viewProps(viewProps) {}
 
 float UserViewProps::Opacity() noexcept {
   return m_viewProps->opacity;

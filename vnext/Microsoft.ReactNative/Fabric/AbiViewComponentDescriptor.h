@@ -3,10 +3,10 @@
 
 #pragma once
 
+#include <react/renderer/components/view/ConcreteViewShadowNode.h>
 #include <react/renderer/core/ComponentDescriptor.h>
 #include "AbiViewProps.h"
 #include "winrt/Microsoft.ReactNative.h"
-#include <react/renderer/components/view/ConcreteViewShadowNode.h>
 
 namespace Microsoft::ReactNative {
 
@@ -18,10 +18,8 @@ class AbiViewState {
 };
 
 // Need to replace ConcreteShadowNode template usage with a specific impl that can have a different name per type
-using AbiViewShadowNode = facebook::react::ConcreteViewShadowNode<
-    AbiViewComponentName,
-    AbiViewProps,
-    facebook::react::ViewEventEmitter, AbiViewState>;
+using AbiViewShadowNode = facebook::react::
+    ConcreteViewShadowNode<AbiViewComponentName, AbiViewProps, facebook::react::ViewEventEmitter, AbiViewState>;
 
 class AbiViewComponentDescriptor : public facebook::react::ComponentDescriptor {
   using ShadowNodeT = AbiViewShadowNode;
@@ -32,13 +30,11 @@ class AbiViewComponentDescriptor : public facebook::react::ComponentDescriptor {
   using ConcreteProps = typename ShadowNodeT::ConcreteProps;
   using SharedConcreteProps = typename ShadowNodeT::SharedConcreteProps;
   using ConcreteEventEmitter = typename ShadowNodeT::ConcreteEventEmitter;
-  using SharedConcreteEventEmitter =
-      typename ShadowNodeT::SharedConcreteEventEmitter;
+  using SharedConcreteEventEmitter = typename ShadowNodeT::SharedConcreteEventEmitter;
   using ConcreteState = typename ShadowNodeT::ConcreteState;
   using ConcreteStateData = typename ShadowNodeT::ConcreteState::Data;
 
-  AbiViewComponentDescriptor(
-      facebook::react::ComponentDescriptorParameters const &parameters);
+  AbiViewComponentDescriptor(facebook::react::ComponentDescriptorParameters const &parameters);
 
   facebook::react::ComponentHandle getComponentHandle() const override;
   facebook::react::ComponentName getComponentName() const override;
@@ -53,8 +49,7 @@ class AbiViewComponentDescriptor : public facebook::react::ComponentDescriptor {
   void appendChild(
       const facebook::react::ShadowNode::Shared &parentShadowNode,
       const facebook::react::ShadowNode::Shared &childShadowNode) const override;
-  virtual facebook::react::Props::Shared
-  cloneProps(
+  virtual facebook::react::Props::Shared cloneProps(
       const facebook::react::PropsParserContext &context,
       const facebook::react::Props::Shared &props,
       const facebook::react::RawProps &rawProps) const override;
@@ -89,7 +84,7 @@ class AbiViewComponentDescriptor : public facebook::react::ComponentDescriptor {
    */
   virtual void adopt(facebook::react::ShadowNode::Unshared const &shadowNode) const;
 
-private: 
+ private:
   winrt::Microsoft::ReactNative::IViewComponentDescriptor m_userDescriptor;
 };
 

@@ -9,10 +9,10 @@ namespace Microsoft.ReactNative
 {
   [webhosthidden]
   [experimental]
-  DOC_STRING("TODO")
+  DOC_STRING("Provides ability to register custom ViewComponents when running fabric.  Methods on this interface will eventually be moved onto @IReactPackageProvider once fabric ships.")
   interface IReactPackageBuilderFabric
   {
-    DOC_STRING("TODO.")
+    DOC_STRING("Registers a custom native view component.")
     void AddViewComponent(IViewComponentDescriptor component);
   };
 } // namespace Microsoft.ReactNative

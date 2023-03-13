@@ -18,26 +18,36 @@ namespace Microsoft.ReactNative.Composition
 
   [webhosthidden]
   [experimental] DOC_STRING(
-      "Interface to implement custom view component properties")
+      "Interface to implement a custom view component based on View")
   interface ICompositionViewComponent
   {
+     DOC_STRING("Called once to provide a @ICompositionContext that can be used to create Visuals")
     void Initialize(ICompositionContext context);
 
-    // Will probably need this eventually... but lets see.
+    // Will probably need this eventually... but lets see. -- would probably add it to the Initialize call
     // void SetViewComponent(ViewHandle handle);
 
     // TODO should make an event args, with a handled bit instead of return value
+    DOC_STRING("Called when a command is run against this component.  If the command is handled this function should return true.")
     Boolean HandleCommand(String commandName, Microsoft.ReactNative.IJSValueReader args);
 
-    // We'll call updateBorderProps before this
     // TODO -void UpdateEventEmitter(IEventEmitter emitter);
+
+    DOC_STRING("Called whenever the properties change.")
     void UpdateProps(Microsoft.ReactNative.IComponentProps props);
+
+    DOC_STRING("Called whenever the layout metrics change.")
     void UpdateLayoutMetrics(LayoutMetrics metrics);
+
     // TODO - void UpdateState(...);
+
+    DOC_STRING("Called on any update, after props, layout, and state have been updated.")
     void FinalizeUpdates();
 
+    DOC_STRING("This visual will be added to the visual tree, and should be used to display this component.")
     IVisual CreateVisual();
 
+    DOC_STRING("Used to handle native input into this component.")
     Int64 SendMessage(UInt32 Msg, UInt64 WParam, Int64 LParam);
   };
 

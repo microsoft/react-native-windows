@@ -35,7 +35,7 @@ struct UserViewProps : ViewPropsT<UserViewProps> {
 
   float Opacity() noexcept;
 
-private:
+ private:
   std::shared_ptr<::Microsoft::ReactNative::AbiViewProps const> m_viewProps;
 };
 

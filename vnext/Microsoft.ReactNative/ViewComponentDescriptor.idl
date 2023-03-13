@@ -11,16 +11,19 @@ namespace Microsoft.ReactNative
 
   [webhosthidden]
   [experimental]
-  DOC_STRING("Interface to implement custom view component properties")
+  DOC_STRING("Interface to describe a custom view component.  Expected to implement @ICompositionViewComponentDescriptor in addition to this interface.")
   interface IViewComponentDescriptor
   {
+    DOC_STRING("The name of the component being implemented.  This would align with the call to codegenNativeComponent in JavaScript.")
     String ComponentName{ get; };
+
+    DOC_STRING("Create an implementation of your custom Props type that will be passed to your components @Composition.ICompositionViewComponent.UpdateProps method.")
     IComponentProps CreateProps(ViewProps props);
   };
 
   [webhosthidden]
   [experimental]
-  DOC_STRING("Interface to implement custom view component properties")
+  DOC_STRING("Interface to add to a descriptor a factory method to create a @Composition.ICompositionViewComponent.")
   interface ICompositionViewComponentDescriptor
   {
     Microsoft.ReactNative.Composition.ICompositionViewComponent CreateViewComponent();
