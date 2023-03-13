@@ -15,11 +15,11 @@
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
     "react": "18.2.0",
-    "react-native": "0.71.0",
+    "react-native": "0.71.4",
     "react-native-windows": "0.71.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.14.0",
+    "@babel/core": "^7.20.0",
     "@babel/eslint-parser": "^7.18.2",
     "@babel/runtime": "^7.8.4",
     "@react-native-windows/codegen": "0.71.2",
