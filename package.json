@@ -42,6 +42,7 @@
   "resolutions": {
     "kind-of": "6.0.3",
     "glob-parent": "^5.1.2",
+    "hermes-engine": "~0.10.0",
     "loader-utils": "2.0.3",
     "node-notifier": "^9.0.0",
     "set-value": "^4.0.1",
