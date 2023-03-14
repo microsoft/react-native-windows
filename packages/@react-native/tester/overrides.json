@@ -237,7 +237,7 @@
       "file": "js/examples/Performance/PerformanceApiExample.js",
       "baseFile": "packages/rn-tester/js/examples/Performance/PerformanceApiExample.js",
       "baseHash": "67b2570ff084861f4d3f05e06951cd231106e5d6",
-      "issue": 4054
+      "issue": 11373
     },
     {
       "type": "copy",
