@@ -2263,6 +2263,13 @@
   resolved "https://registry.yarnpkg.com/@react-native/assets/-/assets-1.0.0.tgz#c6f9bf63d274bafc8e970628de24986b30a55c8e"
   integrity sha512-KrwSpS1tKI70wuKl68DwJZYEvXktDHdZMG0k2AXD/rJVSlB23/X2CB2cutVR0HwNMJIal9HOUOBB2rVfa6UGtQ==
 
+"@react-native/babel-plugin-codegen@0.72.3":
+  version "0.72.3"
+  resolved "https://registry.yarnpkg.com/@react-native/babel-plugin-codegen/-/babel-plugin-codegen-0.72.3.tgz#c984073369a29eb15fb9235f8076d5f6c617cb61"
+  integrity sha512-Mtb7YPeOAIFc1XL4LPqahXQ9tVN8qPK92Qhpd+Vcj2bviWf5xvoMmC5bNDbIdHd6UifhmzfVoHRLSAfW79s1rQ==
+  dependencies:
+    "@react-native/codegen" "*"
+
 "@react-native/codegen@*", "@react-native/codegen@^0.72.2":
   version "0.72.3"
   resolved "https://registry.yarnpkg.com/@react-native/codegen/-/codegen-0.72.3.tgz#963ee3f45723012401d23249b83c5d6f1db6c1a4"

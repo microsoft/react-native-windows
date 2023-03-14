@@ -135,6 +135,21 @@ const bubblingEventTypes = {
       bubbled: 'onPointerOut',
     },
   },
+
+  
+  
+  topKeyDown: {// [Windows]
+    phasedRegistrationNames: {
+      captured: 'onKeyDownCapture',
+      bubbled: 'onKeyDown',
+    },
+  },
+  topKeyUp: {// [Windows]
+    phasedRegistrationNames: {
+      captured: 'onKeyUpCapture',
+      bubbled: 'onKeyUp',
+    },
+  },
 };
 
 const directEventTypes = {
@@ -167,6 +182,9 @@ const directEventTypes = {
   topMouseLeave: {
     registrationName: 'onMouseLeave',
   },
+  topClick: {
+    registrationName: 'onClick',
+  }
   // Windows]
 };
 
@@ -321,6 +339,18 @@ const validAttributesForNonEventProps = {
 
   direction: true,
 
+  accessibilityLiveRegion: true, // [Windows]
+  accessibilityPosInSet: true, // [Windows]
+  accessibilitySetSize: true, // [Windows]
+  disabled: true, // [Windows]
+  focusable: true, // [Windows]
+  keyDownEvents: true, // [Windows]
+  keyUpEvents: true, // [Windows]
+  tabIndex: true, // [Windows]
+  tooltip: true, // [Windows]
+  onClick: true, // [Windows]
+  enableFocusRing: true, // [Windows]
+
   style: ReactNativeStyleAttributes,
 };
 
@@ -371,6 +401,10 @@ const validAttributesForEventProps = {
   // Mouse enter/leave events
   onMouseEnter: true,
   onMouseLeave: true,
+
+  onKeyDown: true,
+  onKeyUp: true,
+  onPointerCancelCapture: true
   // Windows]
   // [Windows
 };

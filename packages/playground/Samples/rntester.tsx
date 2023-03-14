@@ -16,6 +16,15 @@
 */
 require('react-native');
 
+const nativeComponentRegistry = require('react-native/Libraries/NativeComponent/NativeComponentRegistry');
+nativeComponentRegistry.setRuntimeConfigProvider((name) => {
+  return {
+    native: false,
+    strict: false,
+    verify: true,
+  };
+});
+
 require('@react-native-windows/tester/js/RNTesterApp');
 
 export {};

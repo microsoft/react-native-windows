@@ -29,6 +29,7 @@
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-typescript": "^7.8.3",
     "@babel/runtime": "^7.8.4",
+    "@react-native/babel-plugin-codegen": "0.72.3",
     "@react-native-windows/automation": "^0.3.49",
     "@react-native-windows/automation-commands": "^0.1.69",
     "@rnw-scripts/babel-node-config": "2.2.0",
