@@ -31,8 +31,10 @@ WindowsComponentDescriptorRegistryProperty() noexcept {
 
 WindowsComponentDescriptorRegistry::WindowsComponentDescriptorRegistry()
     : m_componentDescriptorRegistry(std::make_shared<facebook::react::ComponentDescriptorProviderRegistry>()) {
-  m_componentDescriptorRegistry->add(facebook::react::concreteComponentDescriptorProvider<
-                                     facebook::react::ActivityIndicatorViewComponentDescriptor>());
+  /*
+m_componentDescriptorRegistry->add(facebook::react::concreteComponentDescriptorProvider<
+                                   facebook::react::ActivityIndicatorViewComponentDescriptor>());
+                                   */
   m_componentDescriptorRegistry->add(
       facebook::react::concreteComponentDescriptorProvider<facebook::react::ImageComponentDescriptor>());
   m_componentDescriptorRegistry->add(

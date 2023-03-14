@@ -28,6 +28,7 @@
 #include <Fabric/Composition/ScrollViewComponentView.h>
 #include <Fabric/Composition/SwitchComponentView.h>
 #include <Fabric/Composition/TextInput/WindowsTextInputComponentView.h>
+#include <Fabric/Composition/UnimplementedNativeViewComponentView.h>
 #include <Fabric/WindowsComponentDescriptorRegistry.h>
 
 namespace Microsoft::ReactNative {
@@ -63,6 +64,8 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
       componentHandle == facebook::react::TextShadowNode::Handle()) {
     // Review - Why do we get asked for ComponentViews for Text/RawText... do these get used?
     view = std::make_shared<CompositionViewComponentView>(compContext, tag);
+  } else if (componentHandle == facebook::react::UnimplementedNativeViewShadowNode::Handle()) {
+    view = std::make_shared<UnimplementedNativeViewComponentView>(compContext, tag);
   } else {
     auto descriptor =
         WindowsComponentDescriptorRegistry::FromProperties(m_context.Properties())->GetDescriptor(componentHandle);

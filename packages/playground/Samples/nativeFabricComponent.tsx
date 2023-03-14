@@ -9,6 +9,7 @@ import {AppRegistry, View} from 'react-native';
 import {
   setRuntimeConfigProvider,
   get,
+  // @ts-ignore - NativeComponentRegistry is internal and has no types.  Need it for now since we have no viewmanager for this component
 } from 'react-native/Libraries/NativeComponent/NativeComponentRegistry';
 
 // Since MyCustomComponent does not have a ViewManager, we need to override the config provider
