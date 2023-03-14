@@ -113,8 +113,10 @@ class AsyncEventBeat final : public facebook::react::EventBeat {
 std::shared_ptr<facebook::react::ComponentDescriptorProviderRegistry const> sharedProviderRegistry() {
   static auto providerRegistry = []() -> std::shared_ptr<facebook::react::ComponentDescriptorProviderRegistry> {
     auto providerRegistry = std::make_shared<facebook::react::ComponentDescriptorProviderRegistry>();
+    /*
     providerRegistry->add(facebook::react::concreteComponentDescriptorProvider<
                           facebook::react::ActivityIndicatorViewComponentDescriptor>());
+                          */
     providerRegistry->add(
         facebook::react::concreteComponentDescriptorProvider<facebook::react::ImageComponentDescriptor>());
     providerRegistry->add(

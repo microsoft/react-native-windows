@@ -23,11 +23,6 @@ ParagraphComponentView::ParagraphComponentView(
   m_props = defaultProps;
 }
 
-std::vector<facebook::react::ComponentDescriptorProvider>
-ParagraphComponentView::supplementalComponentDescriptorProviders() noexcept {
-  return {};
-}
-
 void ParagraphComponentView::mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
   // auto v = static_cast<ParagraphComponentView &>(childComponentView);
   assert(false);
