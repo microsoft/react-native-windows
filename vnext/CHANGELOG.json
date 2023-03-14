@@ -2,6 +2,36 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 14 Mar 2023 05:13:40 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.629",
+      "version": "0.0.0-canary.629",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "aabc006ccccc81182e51d6f01794b1e83c6074e7",
+            "comment": "[Fabric] Add visuals for fallback when a native component isn't registered"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 11 Mar 2023 06:14:57 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.628",
+      "version": "0.0.0-canary.628",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ed343d0eb4c51aacfeed63940737f3359c4a581c",
+            "comment": "Fix build from merge conflict"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 10 Mar 2023 06:14:16 GMT",
       "tag": "react-native-windows_v0.0.0-canary.627",
       "version": "0.0.0-canary.627",

@@ -565,11 +565,6 @@ int64_t WindowsTextInputComponentView::sendMessage(uint32_t msg, uint64_t wParam
   return Super::sendMessage(msg, wParam, lParam);
 }
 
-std::vector<facebook::react::ComponentDescriptorProvider>
-WindowsTextInputComponentView::supplementalComponentDescriptorProviders() noexcept {
-  return {};
-}
-
 void WindowsTextInputComponentView::mountChildComponentView(
     IComponentView &childComponentView,
     uint32_t index) noexcept {
