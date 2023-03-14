@@ -95,7 +95,7 @@ msrn::IReactPackageBuilder TestController::CreateReactPackageBuilder() {
       nativeModulesProvider,
       turboModulesProvider,
 #ifdef USE_FABRIC
-      {},
+      std::shared_ptr<::Microsoft::ReactNative::WindowsComponentDescriptorRegistry>{},
 #endif
       true);
 }
