@@ -36,7 +36,7 @@ body:
       label: CLI version
       description: |
         Run the command `npx react-native --version` in your terminal and copy the results here
-      value: "npx react-native --version"
+      value: "npx react-native -v"
     id: cli
   - type: textarea
     validations:
