@@ -35,6 +35,8 @@ struct CompositionBaseComponentView : public IComponentView {
   void onFocusLost() noexcept override;
   void onFocusGained() noexcept override;
   bool focusable() const noexcept override;
+  std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept
+      override;
   facebook::react::SharedTouchEventEmitter touchEventEmitter() noexcept override;
   facebook::react::SharedTouchEventEmitter touchEventEmitterAtPoint(facebook::react::Point pt) noexcept override;
   facebook::react::Tag tag() const noexcept override;
@@ -92,8 +94,6 @@ struct CompositionViewComponentView : public CompositionBaseComponentView {
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag);
 
-  std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept
-      override;
   void mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
   void unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
   void updateProps(facebook::react::Props::Shared const &props, facebook::react::Props::Shared const &oldProps) noexcept

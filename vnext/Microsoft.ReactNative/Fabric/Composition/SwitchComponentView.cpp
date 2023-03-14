@@ -16,11 +16,6 @@ SwitchComponentView::SwitchComponentView(
   m_props = std::make_shared<facebook::react::SwitchProps const>();
 }
 
-std::vector<facebook::react::ComponentDescriptorProvider>
-SwitchComponentView::supplementalComponentDescriptorProviders() noexcept {
-  return {};
-}
-
 void SwitchComponentView::mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
   assert(false);
 }

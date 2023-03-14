@@ -116,11 +116,6 @@ ScrollViewComponentView::ScrollViewComponentView(
         */
 }
 
-std::vector<facebook::react::ComponentDescriptorProvider>
-ScrollViewComponentView::supplementalComponentDescriptorProviders() noexcept {
-  return {};
-}
-
 void ScrollViewComponentView::mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
   ensureVisual();
 
@@ -286,6 +281,23 @@ bool ScrollViewComponentView::ScrollWheel(facebook::react::Point pt, int32_t del
   }
 
   return false;
+}
+
+void ScrollViewComponentView::handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept {
+  if (commandName == "scrollTo") {
+    auto x = arg[0].asDouble();
+    auto y = arg[1].asDouble();
+    auto animate = arg[2].asBool();
+    m_scrollVisual.TryUpdatePosition({static_cast<float>(x), static_cast<float>(y), 0.0f}, animate);
+  } else if (commandName == "flashScrollIndicators") {
+    // No-op for now
+  } else if (commandName == "scrollToEnd") {
+    // No-op for now
+  } else if (commandName == "zoomToRect") {
+    // No-op for now
+  } else {
+    Super::handleCommand(commandName, arg);
+  }
 }
 
 void ScrollViewComponentView::ensureVisual() noexcept {
