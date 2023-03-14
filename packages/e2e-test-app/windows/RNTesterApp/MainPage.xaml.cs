@@ -1,6 +1,7 @@
 using AutomationChannel;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using TreeDumpLibrary;
 using Windows.Data.Json;
@@ -28,9 +29,30 @@ namespace RNTesterApp
 
             var handler = new CommandHandler();
             handler.BindOperation("DumpVisualTree", DumpVisualTree);
+            handler.BindOperation("ListErrors", ListErrors);
 
             var server = new Server(handler);
             var tsk = LoopServer(server);
+        }
+
+        JsonObject ListErrors(JsonValue payload)
+        {
+            JsonObject result = new JsonObject();
+            var app = Application.Current as App;
+            var jsonErrors = new JsonArray();
+            foreach (var err in app.ConsoleErrors)
+            {
+                jsonErrors.Append(JsonValue.CreateStringValue(err));
+            }
+            result.Add("errors", jsonErrors);
+            var jsonWarnings = new JsonArray();
+            foreach (var err in app.ConsoleWarnings)
+            {
+                jsonWarnings.Append(JsonValue.CreateStringValue(err));
+            }
+            result.Add("errors", jsonWarnings);
+            result.Add("warnings", jsonWarnings);
+            return result;
         }
 
         JsonObject DumpVisualTree(JsonValue payload)

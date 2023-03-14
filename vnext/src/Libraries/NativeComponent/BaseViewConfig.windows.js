@@ -136,15 +136,15 @@ const bubblingEventTypes = {
     },
   },
 
-  
-  
-  topKeyDown: {// [Windows]
+  topKeyDown: {
+    // [Windows]
     phasedRegistrationNames: {
       captured: 'onKeyDownCapture',
       bubbled: 'onKeyDown',
     },
   },
-  topKeyUp: {// [Windows]
+  topKeyUp: {
+    // [Windows]
     phasedRegistrationNames: {
       captured: 'onKeyUpCapture',
       bubbled: 'onKeyUp',
@@ -184,7 +184,7 @@ const directEventTypes = {
   },
   topClick: {
     registrationName: 'onClick',
-  }
+  },
   // Windows]
 };
 
@@ -404,7 +404,7 @@ const validAttributesForEventProps = {
 
   onKeyDown: true,
   onKeyUp: true,
-  onPointerCancelCapture: true
+  onPointerCancelCapture: true,
   // Windows]
   // [Windows
 };
