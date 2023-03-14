@@ -38,7 +38,7 @@ namespace Mso::React {
     return g_previousExceptionFilter(exceptionPointers);
   }
 
-  void on_sigabrt(int signum)
+  void __cdecl on_sigabrt(int signum)
   {
     CustomWERExceptionFilter(nullptr);
     signal(signum, SIG_DFL);
