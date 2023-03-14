@@ -5,6 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+// [Windows - see issue #11019, this file is an older version]
+
 #pragma once
 
 #include <memory>
