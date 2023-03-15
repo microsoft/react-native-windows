@@ -1,0 +1,9 @@
+/.vscode
+/node_modules
+/windows/RNTesterApp/Generated Files/
+/build
+/errorShots
+/reports
+/dist
+/windows/RNTesterApp/Bundle/
+msbuild.binlog
