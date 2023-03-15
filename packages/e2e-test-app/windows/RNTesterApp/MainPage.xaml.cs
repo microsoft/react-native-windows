@@ -40,18 +40,19 @@ namespace RNTesterApp
             JsonObject result = new JsonObject();
             var app = Application.Current as App;
             var jsonErrors = new JsonArray();
+            var jsonWarnings = new JsonArray();
             foreach (var err in app.ConsoleErrors)
             {
                 jsonErrors.Append(JsonValue.CreateStringValue(err));
             }
-            result.Add("errors", jsonErrors);
-            var jsonWarnings = new JsonArray();
             foreach (var err in app.ConsoleWarnings)
             {
                 jsonWarnings.Append(JsonValue.CreateStringValue(err));
             }
             result.Add("errors", jsonWarnings);
             result.Add("warnings", jsonWarnings);
+            app.ConsoleErrors.Clear();
+            app.ConsoleWarnings.Clear();
             return result;
         }
 
