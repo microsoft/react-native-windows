@@ -15,7 +15,9 @@ type ErrorsResult = {
   errors: string[];
 };
 
-export async function verifyNoErrorLogs(): Promise<void> {
+export async function verifyNoErrorLogs(
+  errorFilter?: (errors: string[]) => string[],
+): Promise<void> {
   if (!automationClient) {
     throw new Error('RPC client is not enabled');
   }
@@ -27,5 +29,7 @@ export async function verifyNoErrorLogs(): Promise<void> {
   }
 
   const result = response.result as ErrorsResult;
-  expect(result.errors.join('\n')).toBeFalsy();
+
+  const errors = errorFilter ? errorFilter(result.errors) : result.errors;
+  expect(errors.join('\n')).toBeFalsy();
 }

@@ -7,6 +7,7 @@
 
 import {app} from '@react-native-windows/automation';
 import {goToApiExample} from './RNTesterNavigation';
+import {verifyNoErrorLogs} from './Helpers';
 
 beforeAll(async () => {
   await goToApiExample('Mouse Click Events');
