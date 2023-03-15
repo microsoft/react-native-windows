@@ -55,11 +55,6 @@ ImageComponentView::ImageComponentView(
   m_props = defaultProps;
 }
 
-std::vector<facebook::react::ComponentDescriptorProvider>
-ImageComponentView::supplementalComponentDescriptorProviders() noexcept {
-  return {};
-}
-
 void ImageComponentView::mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
   assert(false);
 }
