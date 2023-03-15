@@ -1,0 +1,8 @@
+{
+        "WinUIPackageName": "Microsoft.UI.Xaml",
+        "WinUIPackageVersion": "2.7.0-prerelease.210913003",
+        "WindowsTargetPlatformVersion": "10.0",
+        "UseExperimentalNuGet": "false",
+        "UseHermes": "true",
+        "UseWinUI3": "false"
+      }
