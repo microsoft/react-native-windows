@@ -19,7 +19,7 @@ require('react-native');
 const nativeComponentRegistry = require('react-native/Libraries/NativeComponent/NativeComponentRegistry');
 nativeComponentRegistry.setRuntimeConfigProvider((name: string) => {
   return {
-    native: false,
+    native: true,
     strict: false,
     verify: true,
   };
