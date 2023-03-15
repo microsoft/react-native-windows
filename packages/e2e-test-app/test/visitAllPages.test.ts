@@ -45,7 +45,7 @@ describe('visitAllPages', () => {
     test(api, async () => {
       await goToApiExample(api);
 
-      if (api === 'InvalidPropsExample') {
+      if (api === 'Invalid Props') {
         // InvalidPropsExample shows an expected error
         await verifyNoErrorLogs((errors: string[]) => {
           const expectedInvalidPropError =
