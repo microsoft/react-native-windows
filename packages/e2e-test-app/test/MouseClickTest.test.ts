@@ -12,6 +12,10 @@ beforeAll(async () => {
   await goToApiExample('Mouse Click Events');
 });
 
+afterEach(async () => {
+  await verifyNoErrorLogs();
+});
+
 describe('Mouse Click Events', () => {
   beforeEach(async () => {
     await clearState();

@@ -13,7 +13,7 @@ beforeAll(async () => {
   await goToComponentExample('Button');
 });
 
-afterAll(async () => {
+afterEach(async () => {
   await verifyNoErrorLogs();
 });
 

@@ -43,14 +43,14 @@ namespace RNTesterApp
             var jsonWarnings = new JsonArray();
             foreach (var err in app.ConsoleErrors)
             {
-                jsonErrors.Append(JsonValue.CreateStringValue(err));
+                jsonErrors.Add(JsonValue.CreateStringValue(err));
             }
             foreach (var err in app.ConsoleWarnings)
             {
-                jsonWarnings.Append(JsonValue.CreateStringValue(err));
+                jsonWarnings.Add(JsonValue.CreateStringValue(err));
             }
-            result.Add("errors", jsonWarnings);
-            result.Add("warnings", jsonWarnings);
+            result["errors"] = jsonErrors;
+            result["warnings"] = jsonWarnings;
             app.ConsoleErrors.Clear();
             app.ConsoleWarnings.Clear();
             return result;
@@ -107,7 +107,12 @@ namespace RNTesterApp
         {
             while (true)
             {
-                await server.ProcessAllClientRequests(8603, TimeSpan.FromMilliseconds(50));
+                try
+                {
+                    await server.ProcessAllClientRequests(8603, TimeSpan.FromMilliseconds(50));
+                } catch( Exception ex)
+                {
+                }
             }
         }
 

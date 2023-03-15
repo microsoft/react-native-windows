@@ -14,7 +14,7 @@ beforeAll(async () => {
   await goToComponentExample('LegacyTextHitTestTest');
 });
 
-afterAll(async () => {
+afterEach(async () => {
   await verifyNoErrorLogs();
 });
 

@@ -13,7 +13,7 @@ beforeAll(async () => {
   await goToComponentExample('ScrollView');
 });
 
-afterAll(async () => {
+afterEach(async () => {
   await verifyNoErrorLogs();
 });
 
