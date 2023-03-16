@@ -5,7 +5,7 @@
   },
   "include": [
     "app",
-    "test",
+    "test", "index.ts",
   ],
   "exclude": [
     "node_modules"
