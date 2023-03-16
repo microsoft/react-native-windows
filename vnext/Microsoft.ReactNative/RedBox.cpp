@@ -57,11 +57,9 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
         m_errorInfo(std::move(errorInfo)) {}
 
   void Dismiss() noexcept {
-#ifdef USE_FABRIC
     if (m_popup) {
       m_popup.IsOpen(false);
     }
-#endif // USE_FABRIC
   }
 
   void Reload() noexcept {
