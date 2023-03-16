@@ -1,8 +1,8 @@
-// HelloComposition.cpp : Defines the entry point for the application.
+// RNTesterApp-Fabric.cpp : Defines the entry point for the application.
 //
 
 #include "pch.h"
-#include "HelloComposition.h"
+#include "RNTesterApp-Fabric.h"
 
 #include <windows.h>
 #include <windowsx.h>

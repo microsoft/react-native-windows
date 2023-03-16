@@ -1,14 +1,14 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by HelloComposition.rc
+// Used by RNTesterApp-Fabric.rc
 
 #define IDS_APP_TITLE			112
 
 #define IDR_MAINFRAME			128
-#define IDD_HELLOCOMPOSITION_DIALOG	113
-#define IDI_HELLOCOMPOSITION			117
+#define IDD_RNTESTERAPP_DIALOG	113
+#define IDI_RNTESTERAPP			117
 #define IDI_SMALL				118
-#define IDC_HELLOCOMPOSITION			119
+#define IDC_RNTESTERAPP			119
 #define IDC_MYICON				2
 #ifndef IDC_STATIC
 #define IDC_STATIC				-1
