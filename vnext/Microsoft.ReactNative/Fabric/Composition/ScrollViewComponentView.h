@@ -55,10 +55,8 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag);
 
-  std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept
-      override;
-  void mountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept override;
-  void unmountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept override;
+  void mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
+  void unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
   void updateProps(facebook::react::Props::Shared const &props, facebook::react::Props::Shared const &oldProps) noexcept
       override;
   void updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept override;
@@ -70,8 +68,8 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   void finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept override;
   void prepareForRecycle() noexcept override;
   facebook::react::Props::Shared props() noexcept override;
-  facebook::react::SharedTouchEventEmitter touchEventEmitter() noexcept override;
 
+  void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept override;
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt) const noexcept override;
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
 
@@ -83,7 +81,8 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   void updateContentVisualSize() noexcept;
 
   facebook::react::Size m_contentSize;
-  winrt::Microsoft::ReactNative::Composition::ScrollVisual m_visual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::IVisual m_visual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::ScrollVisual m_scrollVisual{nullptr};
   winrt::Microsoft::ReactNative::Composition::ScrollVisual::ScrollPositionChanged_revoker
       m_scrollPositionChangedRevoker{};
 

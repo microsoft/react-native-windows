@@ -11,6 +11,7 @@
 #include <unicode.h>
 #include <winrt/Windows.UI.h>
 #include "../CompositionHelpers.h"
+#include "../RootComponentView.h"
 #include "WindowsTextInputShadowNode.h"
 #include "WindowsTextInputState.h"
 #include "guid/msoGuid.h"
@@ -214,7 +215,7 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Set the focus to the text window
   void TxSetFocus() override {
-    SetFocusedComponent(m_outer);
+    m_outer->rootComponentView()->SetFocusedComponent(m_outer);
     // assert(false);
     // TODO focus
   }
@@ -540,7 +541,19 @@ void WindowsTextInputComponentView::handleCommand(std::string const &commandName
   }
 }
 
-int64_t WindowsTextInputComponentView::SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
+int64_t WindowsTextInputComponentView::sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
+  // Do not forward tab keys into the TextInput, since we want that to do the tab loop instead.  This aligns with WinUI
+  // behavior We do forward Ctrl+Tab to the textinput.
+  if (((msg == WM_KEYDOWN || msg == WM_KEYUP) && wParam == VK_TAB) || (msg == WM_CHAR && wParam == '\t')) {
+    BYTE bKeys[256];
+    if (GetKeyboardState(bKeys)) {
+      bool fCtrl = false;
+      if (!(bKeys[VK_LCONTROL] & 0x80 || bKeys[VK_RCONTROL] & 0x80)) {
+        return 0;
+      }
+    }
+  }
+
   if (m_textServices) {
     LRESULT lresult;
     DrawBlock db(*this);
@@ -549,31 +562,18 @@ int64_t WindowsTextInputComponentView::SendMessage(uint32_t msg, uint64_t wParam
       return lresult;
     }
   }
-  return Super::SendMessage(msg, wParam, lParam);
-}
-
-std::vector<facebook::react::ComponentDescriptorProvider>
-WindowsTextInputComponentView::supplementalComponentDescriptorProviders() noexcept {
-  return {};
-}
-
-void WindowsTextInputComponentView::parent(IComponentView *parent) noexcept {
-  Super::parent(parent);
-
-  if (!parent && GetFocusedComponent() == this) {
-    SetFocusedComponent(nullptr); // TODO need move focus logic - where should focus go?
-  }
+  return Super::sendMessage(msg, wParam, lParam);
 }
 
 void WindowsTextInputComponentView::mountChildComponentView(
-    const IComponentView &childComponentView,
+    IComponentView &childComponentView,
     uint32_t index) noexcept {
   assert(false);
   // m_element.Children().InsertAt(index, v.Element());
 }
 
 void WindowsTextInputComponentView::unmountChildComponentView(
-    const IComponentView &childComponentView,
+    IComponentView &childComponentView,
     uint32_t index) noexcept {
   assert(false);
   // m_element.Children().RemoveAt(index);
@@ -581,12 +581,16 @@ void WindowsTextInputComponentView::unmountChildComponentView(
 
 void WindowsTextInputComponentView::onFocusLost() noexcept {
   Super::onFocusLost();
-  SendMessage(WM_KILLFOCUS, 0, 0);
+  sendMessage(WM_KILLFOCUS, 0, 0);
 }
 
 void WindowsTextInputComponentView::onFocusGained() noexcept {
   Super::onFocusGained();
-  SendMessage(WM_SETFOCUS, 0, 0);
+  sendMessage(WM_SETFOCUS, 0, 0);
+}
+
+bool WindowsTextInputComponentView::focusable() const noexcept {
+  return m_props->focusable;
 }
 
 void WindowsTextInputComponentView::updateProps(
@@ -755,7 +759,7 @@ void WindowsTextInputComponentView::updateLayoutMetrics(
   // Set Position & Size Properties
 
   if ((layoutMetrics.displayType != m_layoutMetrics.displayType)) {
-    m_visual.IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
+    OuterVisual().IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
   }
 
   if ((layoutMetrics.pointScaleFactor != m_layoutMetrics.pointScaleFactor)) {
@@ -786,11 +790,6 @@ void WindowsTextInputComponentView::updateLayoutMetrics(
   m_visual.Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
-  m_visual.Offset({
-      layoutMetrics.frame.origin.x * layoutMetrics.pointScaleFactor,
-      layoutMetrics.frame.origin.y * layoutMetrics.pointScaleFactor,
-      0.0f,
-  });
 }
 
 // When we are notified by RichEdit that the text changed, we need to notify JS
@@ -1048,10 +1047,6 @@ facebook::react::Tag WindowsTextInputComponentView::hitTest(facebook::react::Poi
   return -1;
 }
 
-facebook::react::SharedTouchEventEmitter WindowsTextInputComponentView::touchEventEmitter() noexcept {
-  return m_eventEmitter;
-}
-
 void WindowsTextInputComponentView::ensureVisual() noexcept {
   if (!m_visual) {
     HrEnsureRichEd20Loaded();
@@ -1060,6 +1055,7 @@ void WindowsTextInputComponentView::ensureVisual() noexcept {
     winrt::com_ptr<IUnknown> spUnk;
     winrt::check_hresult(g_pfnCreateTextServices(nullptr, m_textHost.get(), spUnk.put()));
     spUnk.as(m_textServices);
+    OuterVisual().InsertAt(m_visual, 0);
   }
 
   if (!m_caretVisual) {

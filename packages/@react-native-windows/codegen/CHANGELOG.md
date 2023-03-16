@@ -1,8 +1,51 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Wed, 11 Jan 2023 06:15:29 GMT and should not be manually modified.
+This log was last generated on Thu, 02 Mar 2023 06:14:21 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.53
+
+Thu, 02 Mar 2023 06:14:21 GMT
+
+### Changes
+
+- Merge branch 'YajurG-8875' of https://github.com/YajurG/react-native-windows into YajurG-8875 (email not defined)
+- Bump @react-native-windows/fs to v0.0.0-canary.16
+
+## 0.0.0-canary.52
+
+Sat, 25 Feb 2023 06:13:35 GMT
+
+### Changes
+
+- Move `@typescript-eslint/eslint-plugin` to `devDependencies` so they don't get installed by consumers (4123478+tido64@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.15
+
+## 0.0.0-canary.51
+
+Wed, 22 Feb 2023 06:14:08 GMT
+
+### Changes
+
+- Fix code to handle newer version of @react-native/codegen (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.50
+
+Fri, 10 Feb 2023 06:15:30 GMT
+
+### Changes
+
+- codegen-windows --check always fails (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.49
+
+Thu, 09 Feb 2023 06:16:42 GMT
+
+### Changes
+
+- Bump typescript version (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.14
 
 ## 0.0.0-canary.48
 

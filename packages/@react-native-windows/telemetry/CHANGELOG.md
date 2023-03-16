@@ -1,8 +1,44 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Thu, 02 Feb 2023 06:13:29 GMT and should not be manually modified.
+This log was last generated on Thu, 02 Mar 2023 06:14:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.64
+
+Thu, 02 Mar 2023 06:14:22 GMT
+
+### Changes
+
+- Merge branch 'YajurG-8875' of https://github.com/YajurG/react-native-windows into YajurG-8875 (email not defined)
+- Bump @react-native-windows/fs to v0.0.0-canary.16
+
+## 0.0.0-canary.63
+
+Sat, 25 Feb 2023 06:13:36 GMT
+
+### Changes
+
+- Move `@typescript-eslint/eslint-plugin` to `devDependencies` so they don't get installed by consumers (4123478+tido64@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.15
+
+## 0.0.0-canary.62
+
+Fri, 10 Feb 2023 06:15:30 GMT
+
+### Changes
+
+- Use latest Hermes ABI-safe API (vmoroz@users.noreply.github.com)
+
+## 0.0.0-canary.61
+
+Thu, 09 Feb 2023 06:16:43 GMT
+
+### Changes
+
+- integrate 2/1/23 (tatianakapos@microsoft.com)
+- Bump typescript version (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.14
 
 ## 0.0.0-canary.60
 

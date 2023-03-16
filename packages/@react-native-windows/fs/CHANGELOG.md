@@ -1,8 +1,32 @@
 # Change Log - @react-native-windows/fs
 
-This log was last generated on Wed, 11 Jan 2023 06:15:31 GMT and should not be manually modified.
+This log was last generated on Thu, 02 Mar 2023 06:14:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.16
+
+Thu, 02 Mar 2023 06:14:22 GMT
+
+### Changes
+
+- Merge branch 'YajurG-8875' of https://github.com/YajurG/react-native-windows into YajurG-8875 (email not defined)
+
+## 0.0.0-canary.15
+
+Sat, 25 Feb 2023 06:13:35 GMT
+
+### Changes
+
+- Move `@typescript-eslint/eslint-plugin` to `devDependencies` so they don't get installed by consumers (4123478+tido64@users.noreply.github.com)
+
+## 0.0.0-canary.14
+
+Thu, 09 Feb 2023 06:16:42 GMT
+
+### Changes
+
+- Bump typescript version (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.13
 

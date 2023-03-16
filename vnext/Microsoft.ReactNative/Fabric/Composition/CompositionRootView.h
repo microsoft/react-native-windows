@@ -3,6 +3,8 @@
 #pragma once
 
 #include "CompositionRootView.g.h"
+#include <FocusNavigationRequest.g.h>
+#include <FocusNavigationResult.g.h>
 
 #include <ReactContext.h>
 #include <winrt/Microsoft.ReactNative.h>
@@ -12,6 +14,32 @@
 #include "Views/ICompositionRootView.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
+
+struct FocusNavigationRequest : FocusNavigationRequestT<FocusNavigationRequest> {
+  FocusNavigationRequest(winrt::Microsoft::ReactNative::FocusNavigationReason reason) : m_reason(reason) {}
+
+  winrt::Microsoft::ReactNative::FocusNavigationReason Reason() noexcept {
+    return m_reason;
+  }
+
+  void Reason(winrt::Microsoft::ReactNative::FocusNavigationReason reason) noexcept {
+    m_reason = reason;
+  }
+
+ private:
+  winrt::Microsoft::ReactNative::FocusNavigationReason m_reason;
+};
+
+struct FocusNavigationResult : FocusNavigationResultT<FocusNavigationResult> {
+  FocusNavigationResult(bool wasFocusMoved) : m_wasFocusMoved(wasFocusMoved) {}
+
+  bool WasFocusMoved() noexcept {
+    return m_wasFocusMoved;
+  }
+
+ private:
+  const bool m_wasFocusMoved;
+};
 
 struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Microsoft::ReactNative::ICompositionRootView {
   CompositionRootView() noexcept;
@@ -34,6 +62,9 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
 
   Windows::Foundation::Size Measure(Windows::Foundation::Size const &availableSize) const;
   Windows::Foundation::Size Arrange(Windows::Foundation::Size finalSize) const;
+
+  winrt::Microsoft::ReactNative::FocusNavigationResult NavigateFocus(
+      const winrt::Microsoft::ReactNative::FocusNavigationRequest &request) noexcept;
 
   IInspectable GetUiaProvider(uint64_t hWnd) noexcept;
 
@@ -82,4 +113,6 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
 
 namespace winrt::Microsoft::ReactNative::factory_implementation {
 struct CompositionRootView : CompositionRootViewT<CompositionRootView, implementation::CompositionRootView> {};
+struct FocusNavigationRequest
+    : FocusNavigationRequestT<FocusNavigationRequest, implementation::FocusNavigationRequest> {};
 } // namespace winrt::Microsoft::ReactNative::factory_implementation

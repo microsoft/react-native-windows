@@ -323,14 +323,14 @@ const renderItem = (item: ListRenderItemInfo<IListProps>) => (
   <ListItem label={item.item.label} level={item.item.level} setSize={item.item.setSize} positionInSet={item.item.positionInSet} />
 );
 
-const getItemLayout = (data: Array<IListProps>, index: number) => ({ length: 30, offset: 30 * index, index });
+const getItemLayout = (data: ArrayLike<IListProps>, index: number) => ({ length: 30, offset: 30 * index, index });
 
 const keyExtractor = (item: IListProps) => item.label.toString();
 
 interface IFlatListProps {
   renderItem: (item: ListRenderItemInfo<IListProps>) => JSX.Element;
   getItemLayout?: (
-    data: IListProps[],
+    data: ArrayLike<IListProps>,
     index: number
   ) => {
     length: number;
@@ -379,12 +379,12 @@ const SingleSelectionItemComponent: React.FunctionComponent<ISelectionItemCompon
 
 const AccessibilityControlsExample: React.FunctionComponent = _props => {
   const listLength = 3;
-  const controlsRef = React.useRef<ViewWin32>(null);
+  const listNativeId = React.useId();
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [keyTargetHasFocus, setKeyTargetHasFocus] = React.useState(false);
   return (
     <View>      
-      <ViewWin32 accessible accessibilityRole="list" ref={controlsRef}>
+      <ViewWin32 accessible accessibilityRole="list" nativeID={listNativeId}>
       <SingleSelectionItemComponent
             value={"Label A"}
             color="#aee8fcff"
@@ -416,7 +416,7 @@ const AccessibilityControlsExample: React.FunctionComponent = _props => {
         accessible
         focusable
         accessibilityActions={[{ name: 'Select' }]}
-        accessibilityControls={controlsRef}
+        accessibilityControls={listNativeId}
         style={[styles.box, {width:'50%'}, keyTargetHasFocus ? styles.border : {}]}
         keyDownEvents={handledNativeKeyboardEvents}
         onFocus={() => {setKeyTargetHasFocus(true)}}

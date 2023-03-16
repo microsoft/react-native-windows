@@ -16,8 +16,9 @@ namespace Microsoft::ReactNativeSpecs {
 struct AppearanceSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
       SyncMethod<std::optional<std::string>() noexcept>{0, L"getColorScheme"},
-      Method<void(std::string) noexcept>{1, L"addListener"},
-      Method<void(double) noexcept>{2, L"removeListeners"},
+      Method<void(std::string) noexcept>{1, L"setColorScheme"},
+      Method<void(std::string) noexcept>{2, L"addListener"},
+      Method<void(double) noexcept>{3, L"removeListeners"},
   };
 
   template <class TModule>
@@ -31,11 +32,16 @@ struct AppearanceSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
           "    REACT_SYNC_METHOD(getColorScheme) static std::optional<std::string> getColorScheme() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
+          "setColorScheme",
+          "    REACT_METHOD(setColorScheme) void setColorScheme(std::string colorScheme) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(setColorScheme) static void setColorScheme(std::string colorScheme) noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          2,
           "addListener",
           "    REACT_METHOD(addListener) void addListener(std::string eventName) noexcept { /* implementation */ }\n"
           "    REACT_METHOD(addListener) static void addListener(std::string eventName) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          2,
+          3,
           "removeListeners",
           "    REACT_METHOD(removeListeners) void removeListeners(double count) noexcept { /* implementation */ }\n"
           "    REACT_METHOD(removeListeners) static void removeListeners(double count) noexcept { /* implementation */ }\n");

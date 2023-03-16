@@ -370,9 +370,24 @@ struct MethodSignature {
     }
   }
 
+  template <class TInputArg, class TOtherInputArg>
+  static constexpr bool MatchInputArg() noexcept {
+    return std::is_same_v<TInputArg, TOtherInputArg>;
+  }
+
+  template <>
+  static constexpr bool MatchInputArg<std::wstring, std::string>() noexcept {
+    return true;
+  }
+
+  template <>
+  static constexpr bool MatchInputArg<std::string, std::wstring>() noexcept {
+    return true;
+  }
+
   template <class TOtherInputArgs, size_t... I>
   static constexpr bool MatchInputArgs(std::index_sequence<I...>) noexcept {
-    return (std::is_same_v<std::tuple_element_t<I, InputArgs>, std::tuple_element_t<I, TOtherInputArgs>> && ...);
+    return (MatchInputArg<std::tuple_element_t<I, InputArgs>, std::tuple_element_t<I, TOtherInputArgs>>() && ...);
   }
 
   template <class TOtherOutputCallbacks, size_t... I>

@@ -13,18 +13,27 @@ import {
   generateTypeScript,
   setOptionalTurboModule,
 } from './generators/GenerateTypeScript';
-import type {SchemaType} from 'react-native-tscodegen';
+import type {SchemaType} from '@react-native/codegen/lib/CodegenSchema';
+import type {Parser} from '@react-native/codegen/lib/parsers/parser';
 
 // Load @react-native/codegen from react-native
 const rnPath = path.dirname(require.resolve('react-native/package.json'));
 const rncodegenPath = path.dirname(
   require.resolve('@react-native/codegen/package.json', {paths: [rnPath]}),
 );
-const FlowParser = require(path.resolve(rncodegenPath, 'lib/parsers/flow'));
-const TypeScriptParser = require(path.resolve(
-  rncodegenPath,
-  'lib/parsers/typescript',
-));
+
+function getParser(isTypeScript: boolean): Parser {
+  if (isTypeScript) {
+    const fp = require(path.resolve(
+      rncodegenPath,
+      'lib/parsers/typescript/parser',
+    ));
+    return new fp.TypeScriptParser();
+  } else {
+    const fp = require(path.resolve(rncodegenPath, 'lib/parsers/flow/parser'));
+    return new fp.FlowParser();
+  }
+}
 
 const schemaValidator = require(path.resolve(
   rncodegenPath,
@@ -65,15 +74,20 @@ function checkFilesForChanges(
 ): boolean {
   let hasChanges = false;
 
+  outputDir = path.resolve(outputDir);
+  const globbyDir = outputDir.replace(/\\/g, '/');
   const allExistingFiles = globby
-    .sync(`${outputDir}/**`)
-    .map(_ => path.normalize(_))
-    .sort();
+    .sync([`${globbyDir}/**`, `${globbyDir}/**/.*`], {absolute: true})
+    .map(_ => path.normalize(_));
   const allGeneratedFiles = [...map.keys()].map(_ => path.normalize(_)).sort();
 
   if (
     allExistingFiles.length !== allGeneratedFiles.length ||
-    !allExistingFiles.every((val, index) => val === allGeneratedFiles[index])
+    !allGeneratedFiles.every(filepath =>
+      allExistingFiles.includes(
+        path.normalize(path.resolve(process.cwd(), filepath)),
+      ),
+    )
   )
     return true;
 
@@ -97,10 +111,19 @@ function checkFilesForChanges(
 function writeMapToFiles(map: Map<string, string>, outputDir: string) {
   let success = true;
 
+  outputDir = path.resolve(outputDir);
+  const globbyDir = outputDir.replace(/\\/g, '/');
+
   // This ensures that we delete any generated files from modules that have been deleted
-  const allExistingFiles = globby.sync(`${outputDir}/**`);
+  const allExistingFiles = globby.sync(
+    [`${globbyDir}/**`, `${globbyDir}/**/.*`],
+    {absolute: true},
+  );
+
+  const allGeneratedFiles = [...map.keys()].map(_ => path.normalize(_)).sort();
   allExistingFiles.forEach(existingFile => {
-    if (!map.has(path.normalize(existingFile))) {
+    if (!allGeneratedFiles.includes(path.normalize(existingFile))) {
+      console.log('Deleting ', existingFile);
       fs.unlinkSync(existingFile);
     }
   });
@@ -117,6 +140,7 @@ function writeMapToFiles(map: Map<string, string>, outputDir: string) {
         }
       }
 
+      console.log('Writing ', fileName);
       fs.writeFileSync(fileName, contents);
     } catch (error) {
       success = false;
@@ -132,15 +156,12 @@ export function parseFile(filename: string): SchemaType {
     const isTypeScript =
       path.extname(filename) === '.ts' || path.extname(filename) === '.tsx';
     const contents = fs.readFileSync(filename, 'utf8');
-    const schema = isTypeScript
-      ? TypeScriptParser.parseString(contents, filename)
-      : FlowParser.parseString(contents, filename);
+    const schema = getParser(isTypeScript).parseString(contents, filename);
     // there will be at most one turbo module per file
     const moduleName = Object.keys(schema.modules)[0];
     if (moduleName) {
       const spec = schema.modules[moduleName];
       if (spec.type === 'NativeModule') {
-        const contents = fs.readFileSync(filename, 'utf8');
         if (contents) {
           // This is a temporary implementation until such information is added to the schema in facebook/react-native
           if (contents.includes('TurboModuleRegistry.get<')) {

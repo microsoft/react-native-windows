@@ -499,6 +499,7 @@ export default class Pressability {
 
       onResponderGrant: (event: PressEvent): void => {
         event.persist();
+
         this._cancelPressOutDelayTimeout();
 
         this._responderID = event.currentTarget;
@@ -875,7 +876,7 @@ export default class Pressability {
     const {pageX, pageY, button} = getTouchFromPressEvent(event);
     this._touchActivatePosition = {pageX, pageY};
     this._touchActivateTime = Date.now();
-    if (onPressIn != null && button === 0) {
+    if (onPressIn != null && this._isDefaultPressButton(button)) {
       onPressIn(event);
     }
   }

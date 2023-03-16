@@ -55,16 +55,11 @@ ImageComponentView::ImageComponentView(
   m_props = defaultProps;
 }
 
-std::vector<facebook::react::ComponentDescriptorProvider>
-ImageComponentView::supplementalComponentDescriptorProviders() noexcept {
-  return {};
-}
-
-void ImageComponentView::mountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept {
+void ImageComponentView::mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
   assert(false);
 }
 
-void ImageComponentView::unmountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept {
+void ImageComponentView::unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
   assert(false);
 }
 
@@ -174,7 +169,7 @@ void ImageComponentView::updateLayoutMetrics(
   // Set Position & Size Properties
 
   if ((layoutMetrics.displayType != m_layoutMetrics.displayType)) {
-    m_visual.IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
+    OuterVisual().IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
   }
 
   updateBorderLayoutMetrics(layoutMetrics, *m_props);
@@ -185,11 +180,6 @@ void ImageComponentView::updateLayoutMetrics(
   m_visual.Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
-  m_visual.Offset({
-      layoutMetrics.frame.origin.x * layoutMetrics.pointScaleFactor,
-      layoutMetrics.frame.origin.y * layoutMetrics.pointScaleFactor,
-      0.0f,
-  });
 }
 
 void ImageComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {}
@@ -396,18 +386,19 @@ facebook::react::Tag ImageComponentView::hitTest(facebook::react::Point pt, face
   return -1;
 }
 
-facebook::react::SharedTouchEventEmitter ImageComponentView::touchEventEmitter() noexcept {
-  return m_eventEmitter;
-}
-
 void ImageComponentView::ensureVisual() noexcept {
   if (!m_visual) {
     m_visual = m_compContext.CreateSpriteVisual();
+    OuterVisual().InsertAt(m_visual, 0);
   }
 }
 
 winrt::Microsoft::ReactNative::Composition::IVisual ImageComponentView::Visual() const noexcept {
   return m_visual;
+}
+
+bool ImageComponentView::focusable() const noexcept {
+  return m_props->focusable;
 }
 
 } // namespace Microsoft::ReactNative

@@ -23,22 +23,13 @@ ParagraphComponentView::ParagraphComponentView(
   m_props = defaultProps;
 }
 
-std::vector<facebook::react::ComponentDescriptorProvider>
-ParagraphComponentView::supplementalComponentDescriptorProviders() noexcept {
-  return {};
-}
-
-void ParagraphComponentView::mountChildComponentView(
-    const IComponentView &childComponentView,
-    uint32_t index) noexcept {
-  auto v = static_cast<const ParagraphComponentView &>(childComponentView);
+void ParagraphComponentView::mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
+  // auto v = static_cast<ParagraphComponentView &>(childComponentView);
   assert(false);
   // m_element.Children().InsertAt(index, v.Element());
 }
 
-void ParagraphComponentView::unmountChildComponentView(
-    const IComponentView &childComponentView,
-    uint32_t index) noexcept {
+void ParagraphComponentView::unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
   assert(false);
   // m_element.Children().RemoveAt(index);
 }
@@ -48,6 +39,8 @@ void ParagraphComponentView::updateProps(
     facebook::react::Props::Shared const &oldProps) noexcept {
   const auto &oldViewProps = *std::static_pointer_cast<const facebook::react::ParagraphProps>(m_props);
   const auto &newViewProps = *std::static_pointer_cast<const facebook::react::ParagraphProps>(props);
+
+  ensureVisual();
 
   if (oldViewProps.textAttributes.foregroundColor != newViewProps.textAttributes.foregroundColor) {
     m_requireRedraw = true;
@@ -60,10 +53,14 @@ void ParagraphComponentView::updateProps(
     updateTextAlignment(newViewProps.textAttributes.alignment);
   }
 
+  updateBorderProps(oldViewProps, newViewProps);
+
   m_props = std::static_pointer_cast<facebook::react::ParagraphProps const>(props);
 }
 
-void ParagraphComponentView::updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {}
+void ParagraphComponentView::updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {
+  Super::updateEventEmitter(eventEmitter);
+}
 
 void ParagraphComponentView::updateState(
     facebook::react::State::Shared const &state,
@@ -80,23 +77,17 @@ void ParagraphComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
   // Set Position & Size Properties
 
-  ensureVisual();
-
   if ((layoutMetrics.displayType != m_layoutMetrics.displayType)) {
-    m_visual.IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
+    OuterVisual().IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
   }
 
+  updateBorderLayoutMetrics(layoutMetrics, *m_props);
   m_layoutMetrics = layoutMetrics;
 
   UpdateCenterPropertySet();
   m_visual.Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
-  m_visual.Offset({
-      layoutMetrics.frame.origin.x * layoutMetrics.pointScaleFactor,
-      layoutMetrics.frame.origin.y * layoutMetrics.pointScaleFactor,
-      0.0f,
-  });
 }
 void ParagraphComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
   ensureVisual();
@@ -104,8 +95,7 @@ void ParagraphComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMas
 }
 void ParagraphComponentView::prepareForRecycle() noexcept {}
 facebook::react::Props::Shared ParagraphComponentView::props() noexcept {
-  assert(false);
-  return {};
+  return m_props;
 }
 
 facebook::react::Tag ParagraphComponentView::hitTest(facebook::react::Point pt, facebook::react::Point &localPt)
@@ -135,13 +125,33 @@ facebook::react::Tag ParagraphComponentView::hitTest(facebook::react::Point pt, 
   return -1;
 }
 
-facebook::react::SharedTouchEventEmitter ParagraphComponentView::touchEventEmitter() noexcept {
+facebook::react::SharedTouchEventEmitter ParagraphComponentView::touchEventEmitterAtPoint(
+    facebook::react::Point pt) noexcept {
+  if (m_attributedStringBox.getValue().getFragments().size()) {
+    BOOL isTrailingHit = false;
+    BOOL isInside = false;
+    DWRITE_HIT_TEST_METRICS metrics;
+    winrt::check_hresult(m_textLayout->HitTestPoint(pt.x, pt.y, &isTrailingHit, &isInside, &metrics));
+    if (isInside) {
+      uint32_t textPosition = metrics.textPosition;
+
+      for (auto fragment : m_attributedStringBox.getValue().getFragments()) {
+        if (textPosition < fragment.string.length()) {
+          return std::static_pointer_cast<const facebook::react::TouchEventEmitter>(
+              fragment.parentShadowView.eventEmitter);
+        }
+        textPosition -= static_cast<uint32_t>(fragment.string.length());
+      }
+    }
+  }
+
   return m_eventEmitter;
 }
 
 void ParagraphComponentView::ensureVisual() noexcept {
   if (!m_visual) {
     m_visual = m_compContext.CreateSpriteVisual();
+    OuterVisual().InsertAt(m_visual, 0);
   }
 }
 
@@ -195,13 +205,7 @@ void ParagraphComponentView::updateVisualBrush() noexcept {
     contraints.maximumSize.height =
         m_layoutMetrics.frame.size.height - m_layoutMetrics.contentInsets.top - m_layoutMetrics.contentInsets.bottom;
 
-    // TODO Figure out how to get text alignment not through m_props and only use StringBox and ParagraphAttributes
-    // instead
-    const auto &paragraphProps = *std::static_pointer_cast<const facebook::react::ParagraphProps>(m_props);
-    const std::optional<facebook::react::TextAlignment> &textAlignment = m_props->textAttributes.alignment;
-
-    facebook::react::TextLayoutManager::GetTextLayout(
-        m_attributedStringBox, {} /*TODO*/, contraints, textAlignment, m_textLayout);
+    facebook::react::TextLayoutManager::GetTextLayout(m_attributedStringBox, {} /*TODO*/, contraints, m_textLayout);
     requireNewBrush = true;
   }
 
@@ -291,6 +295,17 @@ void ParagraphComponentView::DrawText() noexcept {
   m_drawingSurface.as(drawingSurfaceInterop);
 
   if (CheckForDeviceRemoved(drawingSurfaceInterop->BeginDraw(d2dDeviceContext.put(), &offset))) {
+    d2dDeviceContext->Clear(
+        m_props->backgroundColor ? m_props->backgroundColor.AsD2DColor() : D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
+    assert(d2dDeviceContext->GetUnitMode() == D2D1_UNIT_MODE_DIPS);
+    const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
+    float oldDpiX, oldDpiY;
+    d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
+    d2dDeviceContext->SetDpi(dpi, dpi);
+
+    float offsetX = static_cast<float>(offset.x / m_layoutMetrics.pointScaleFactor);
+    float offsetY = static_cast<float>(offset.y / m_layoutMetrics.pointScaleFactor);
+
     const auto &paragraphProps = *std::static_pointer_cast<const facebook::react::ParagraphProps>(m_props);
 
     // Create a solid color brush for the text. A more sophisticated application might want
@@ -330,7 +345,7 @@ void ParagraphComponentView::DrawText() noexcept {
     }
 
     if (!isnan(paragraphProps.opacity)) {
-      brush->SetOpacity(paragraphProps.opacity);
+      m_visual.Opacity(paragraphProps.opacity);
     }
 
     // Create color effects for individual text fragments.
@@ -376,17 +391,65 @@ void ParagraphComponentView::DrawText() noexcept {
           fragmentBrush->SetOpacity(fragment.textAttributes.opacity);
         }
         m_textLayout->SetDrawingEffect(fragmentBrush.get(), range);
+
+        // DWrite doesn't handle background hightlight colors, so we manually draw the background color for ranges
+        if (facebook::react::isColorMeaningful(fragment.textAttributes.backgroundColor)) {
+          UINT32 actualHitTestCount = 0;
+          if (range.length > 0) {
+            m_textLayout->HitTestTextRange(
+                range.startPosition,
+                range.length,
+                0, // x
+                0, // y
+                NULL,
+                0, // metrics count
+                &actualHitTestCount);
+          }
+
+          // Allocate enough room to return all hit-test metrics.
+          std::vector<DWRITE_HIT_TEST_METRICS> hitTestMetrics(actualHitTestCount);
+          if (range.length > 0) {
+            m_textLayout->HitTestTextRange(
+                range.startPosition,
+                range.length,
+                0, // x
+                0, // y
+                &hitTestMetrics[0],
+                static_cast<UINT32>(hitTestMetrics.size()),
+                &actualHitTestCount);
+          }
+
+          // Draw the selection ranges behind the text.
+          if (actualHitTestCount > 0) {
+            // Note that an ideal layout will return fractional values,
+            // so you may see slivers between the selection ranges due
+            // to the per-primitive antialiasing of the edges unless
+            // it is disabled (better for performance anyway).
+            auto oldAliasMode = d2dDeviceContext->GetAntialiasMode();
+            d2dDeviceContext->SetAntialiasMode(D2D1_ANTIALIAS_MODE_ALIASED);
+
+            winrt::com_ptr<ID2D1SolidColorBrush> textHighlightBrush;
+            winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(
+                fragment.textAttributes.backgroundColor.AsD2DColor(), textHighlightBrush.put()));
+
+            for (size_t i = 0; i < actualHitTestCount; ++i) {
+              const DWRITE_HIT_TEST_METRICS &htm = hitTestMetrics[i];
+
+              const D2D1_RECT_F rect = {
+                  std::round(htm.left + offsetX),
+                  std::round(htm.top + offsetY),
+                  std::round(htm.left + htm.width + offsetX),
+                  std::round(htm.top + htm.height + offsetY)};
+
+              d2dDeviceContext->FillRectangle(rect, textHighlightBrush.get());
+            }
+            d2dDeviceContext->SetAntialiasMode(oldAliasMode);
+          }
+        }
       }
 
       position += length;
     }
-
-    d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
-    assert(d2dDeviceContext->GetUnitMode() == D2D1_UNIT_MODE_DIPS);
-    const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
-    float oldDpiX, oldDpiY;
-    d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
-    d2dDeviceContext->SetDpi(dpi, dpi);
 
     // Draw the line of text at the specified offset, which corresponds to the top-left
     // corner of our drawing surface. Notice we don't call BeginDraw on the D2D device

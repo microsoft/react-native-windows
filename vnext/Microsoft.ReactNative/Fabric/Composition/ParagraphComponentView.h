@@ -22,10 +22,8 @@ struct ParagraphComponentView : CompositionBaseComponentView {
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag);
 
-  std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept
-      override;
-  void mountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept override;
-  void unmountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept override;
+  void mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
+  void unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
   void updateProps(facebook::react::Props::Shared const &props, facebook::react::Props::Shared const &oldProps) noexcept
       override;
   void updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept override;
@@ -39,7 +37,7 @@ struct ParagraphComponentView : CompositionBaseComponentView {
   facebook::react::Props::Shared props() noexcept override;
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt) const noexcept override;
   void OnRenderingDeviceLost() noexcept override;
-  facebook::react::SharedTouchEventEmitter touchEventEmitter() noexcept override;
+  facebook::react::SharedTouchEventEmitter touchEventEmitterAtPoint(facebook::react::Point pt) noexcept override;
 
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
 

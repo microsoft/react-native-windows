@@ -65,4 +65,11 @@ if ((argv.file && argv.files) || (!argv.file && !argv.files)) {
   process.exit(1);
 }
 
-runCodeGen(argv);
+const changesNecessary = runCodeGen(argv);
+
+if (argv.test && changesNecessary) {
+  console.error(
+    'There is a change in the output of codegen.  Rerun "react-native codegen-windows" to regenerate.',
+  );
+  process.exit(2);
+}

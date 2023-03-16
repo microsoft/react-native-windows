@@ -7,45 +7,51 @@
 #include "CompositionViewComponentView.h"
 
 #include <UI.Xaml.Controls.h>
+#include <Utils/KeyboardUtils.h>
 #include <Utils/ValueUtils.h>
 #include <Views/FrameworkElementTransferProperties.h>
 #include <winrt/Windows.UI.Composition.h>
 #include "CompositionContextHelper.h"
 #include "CompositionHelpers.h"
+#include "RootComponentView.h"
 #include "d2d1helper.h"
 
 namespace Microsoft::ReactNative {
 
-// TODO where should we store focus - a more complete focus management needs to be added in the future
-static CompositionBaseComponentView *g_focusedComponent = nullptr;
-
-CompositionBaseComponentView *GetFocusedComponent() noexcept {
-  return g_focusedComponent;
-}
-void SetFocusedComponent(CompositionBaseComponentView *value) noexcept {
-  if (g_focusedComponent == value)
-    return;
-
-  if (g_focusedComponent) {
-    g_focusedComponent->onFocusLost();
-  }
-
-  if (value)
-    value->onFocusGained();
-
-  g_focusedComponent = value;
-}
-
 CompositionBaseComponentView::CompositionBaseComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag)
-    : m_tag(tag), m_compContext(compContext) {}
+    : m_tag(tag), m_compContext(compContext) {
+  m_outerVisual = compContext.CreateSpriteVisual(); // TODO could be a raw ContainerVisual if we had a
+                                                    // CreateContainerVisual in ICompositionContext
+  m_focusVisual = compContext.CreateFocusVisual();
+  m_outerVisual.InsertAt(m_focusVisual.InnerVisual(), 0);
+}
 
 facebook::react::Tag CompositionBaseComponentView::tag() const noexcept {
   return m_tag;
 }
 
+RootComponentView *CompositionBaseComponentView::rootComponentView() noexcept {
+  if (m_parent)
+    return m_parent->rootComponentView();
+
+  assert(false);
+  return nullptr;
+}
+
+const std::vector<IComponentView *> &CompositionBaseComponentView::children() const noexcept {
+  return m_children;
+}
+
 void CompositionBaseComponentView::parent(IComponentView *parent) noexcept {
+  if (!parent) {
+    auto root = rootComponentView();
+    if (root->GetFocusedComponent() == this) {
+      root->SetFocusedComponent(nullptr); // TODO need move focus logic - where should focus go?
+    }
+  }
+
   m_parent = parent;
 }
 
@@ -53,9 +59,32 @@ IComponentView *CompositionBaseComponentView::parent() const noexcept {
   return m_parent;
 }
 
-void CompositionBaseComponentView::onFocusLost() noexcept {}
+bool CompositionBaseComponentView::runOnChildren(bool forward, Mso::Functor<bool(IComponentView &)> &fn) noexcept {
+  if (forward) {
+    for (auto it = m_children.begin(); it != m_children.end(); ++it) {
+      if (fn(**it))
+        return true;
+    }
+  } else {
+    for (auto it = m_children.rbegin(); it != m_children.rend(); ++it) {
+      if (fn(**it))
+        return true;
+    }
+  }
+  return false;
+}
 
-void CompositionBaseComponentView::onFocusGained() noexcept {}
+void CompositionBaseComponentView::onFocusLost() noexcept {
+  m_eventEmitter->onBlur();
+  showFocusVisual(false);
+}
+
+void CompositionBaseComponentView::onFocusGained() noexcept {
+  m_eventEmitter->onFocus();
+  if (m_enableFocusVisual) {
+    showFocusVisual(true);
+  }
+}
 
 void CompositionBaseComponentView::updateEventEmitter(
     facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {
@@ -63,10 +92,49 @@ void CompositionBaseComponentView::updateEventEmitter(
 }
 
 void CompositionBaseComponentView::handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept {
+  if (commandName == "focus") {
+    if (auto root = rootComponentView()) {
+      root->SetFocusedComponent(this);
+    }
+    return;
+  }
+  if (commandName == "blur") {
+    if (auto root = rootComponentView()) {
+      root->SetFocusedComponent(nullptr); // Todo store this component as previously focused element
+    }
+    return;
+  }
   assert(false); // Unhandled command
 }
 
-int64_t CompositionBaseComponentView::SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
+int64_t CompositionBaseComponentView::sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
+  if (msg == WM_KEYUP || msg == WM_KEYDOWN) {
+    facebook::react::KeyboardEvent event;
+    BYTE bKeys[256];
+    if (GetKeyboardState(bKeys)) {
+      if (bKeys[VK_LSHIFT] & 0x80 || bKeys[VK_RSHIFT] & 0x80) {
+        event.shiftKey = true;
+      }
+      if (bKeys[VK_LCONTROL] & 0x80 || bKeys[VK_RCONTROL] & 0x80) {
+        event.ctrlKey = true;
+      }
+      if (bKeys[VK_LMENU] & 0x80 || bKeys[VK_RMENU] & 0x80) {
+        event.altKey = true;
+      }
+
+      event.metaKey = (GetKeyState(VK_LWIN) < 0) || (GetKeyState(VK_RWIN) < 0);
+    }
+
+    event.key = FromVirtualKey(
+        static_cast<winrt::Windows::System::VirtualKey>(wParam), event.shiftKey, !!(GetKeyState(VK_CAPITAL) & 1));
+    event.code = CodeFromVirtualKey(static_cast<winrt::Windows::System::VirtualKey>(wParam));
+    if (msg == WM_KEYUP) {
+      m_eventEmitter->onKeyUp(event);
+    } else {
+      m_eventEmitter->onKeyDown(event);
+    }
+  }
+
   return 0;
 }
 
@@ -640,11 +708,11 @@ void DrawAllBorderLayers(
       spTextures[5],
       {borderWidths.left + borderRadii.bottomLeft,
        textureHeight - borderWidths.bottom,
-       textureWidth - (borderWidths.right + borderRadii.bottomLeft),
+       textureWidth - (borderWidths.right + borderRadii.bottomRight),
        textureHeight},
       {AnchorPosition::Left, AnchorPosition::Bottom},
       {borderWidths.left + borderRadii.bottomLeft, -borderWidths.bottom},
-      {-(borderWidths.right + borderRadii.bottomLeft + borderWidths.left + borderRadii.bottomLeft),
+      {-(borderWidths.right + borderRadii.bottomLeft + borderWidths.left + borderRadii.bottomRight),
        borderWidths.bottom},
       {1.0f, 0.0f},
       borderWidths.bottom,
@@ -933,6 +1001,19 @@ void CompositionBaseComponentView::UpdateSpecialBorderLayers(
   }
 }
 
+winrt::Microsoft::ReactNative::Composition::IVisual CompositionBaseComponentView::OuterVisual() const noexcept {
+  return m_outerVisual ? m_outerVisual : Visual();
+}
+
+void CompositionBaseComponentView::showFocusVisual(bool show) noexcept {
+  if (show) {
+    assert(m_enableFocusVisual);
+    m_focusVisual.IsFocused(true);
+  } else {
+    m_focusVisual.IsFocused(false);
+  }
+}
+
 void CompositionBaseComponentView::updateBorderProps(
     const facebook::react::ViewProps &oldViewProps,
     const facebook::react::ViewProps &newViewProps) noexcept {
@@ -940,6 +1021,11 @@ void CompositionBaseComponentView::updateBorderProps(
       !(oldViewProps.yogaStyle.border() == newViewProps.yogaStyle.border()) ||
       oldViewProps.borderStyles != newViewProps.borderStyles) {
     m_needsBorderUpdate = true;
+  }
+
+  m_enableFocusVisual = newViewProps.enableFocusRing;
+  if (!m_enableFocusVisual) {
+    showFocusVisual(false);
   }
 }
 
@@ -964,10 +1050,19 @@ void CompositionBaseComponentView::updateBorderLayoutMetrics(
     Visual().as<Composition::IVisualInterop>()->SetClippingPath(pathGeometry.get());
   }
 
-  if (m_needsBorderUpdate || m_layoutMetrics != layoutMetrics) {
-    m_needsBorderUpdate = false;
-    UpdateSpecialBorderLayers(layoutMetrics, viewProps);
+  if (m_layoutMetrics != layoutMetrics) {
+    m_needsBorderUpdate = true;
   }
+
+  m_focusVisual.ScaleFactor(layoutMetrics.pointScaleFactor);
+  OuterVisual().Size(
+      {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
+       layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
+  OuterVisual().Offset({
+      layoutMetrics.frame.origin.x * layoutMetrics.pointScaleFactor,
+      layoutMetrics.frame.origin.y * layoutMetrics.pointScaleFactor,
+      0.0f,
+  });
 }
 
 void CompositionBaseComponentView::indexOffsetForBorder(uint32_t &index) const noexcept {
@@ -975,6 +1070,11 @@ void CompositionBaseComponentView::indexOffsetForBorder(uint32_t &index) const n
 }
 
 void CompositionBaseComponentView::OnRenderingDeviceLost() noexcept {}
+
+std::vector<facebook::react::ComponentDescriptorProvider>
+CompositionBaseComponentView::supplementalComponentDescriptorProviders() noexcept {
+  return {};
+}
 
 comp::CompositionPropertySet CompositionBaseComponentView::EnsureCenterPointPropertySet() noexcept {
   if (m_centerPropSet == nullptr) {
@@ -1031,8 +1131,21 @@ void CompositionBaseComponentView::EnsureTransformMatrixFacade() noexcept {
           .CreateExpressionAnimation(
               L"Matrix4x4.CreateFromScale(PS.dpiScale3Inv) * Matrix4x4.CreateFromTranslation(PS.translation) * PS.transform * Matrix4x4.CreateFromScale(PS.dpiScale3)");
   expression.SetReferenceParameter(L"PS", centerPointPropSet);
-  winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::InnerVisual(Visual())
+  winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::InnerVisual(OuterVisual())
       .StartAnimation(L"TransformMatrix", expression);
+}
+
+facebook::react::SharedTouchEventEmitter CompositionBaseComponentView::touchEventEmitter() noexcept {
+  return m_eventEmitter;
+}
+
+facebook::react::SharedTouchEventEmitter CompositionBaseComponentView::touchEventEmitterAtPoint(
+    facebook::react::Point /*pt*/) noexcept {
+  return m_eventEmitter;
+}
+
+bool CompositionBaseComponentView::focusable() const noexcept {
+  return false;
 }
 
 CompositionViewComponentView::CompositionViewComponentView(
@@ -1042,34 +1155,30 @@ CompositionViewComponentView::CompositionViewComponentView(
   static auto const defaultProps = std::make_shared<facebook::react::ViewProps const>();
   m_props = defaultProps;
   m_visual = m_compContext.CreateSpriteVisual();
-}
-
-std::vector<facebook::react::ComponentDescriptorProvider>
-CompositionViewComponentView::supplementalComponentDescriptorProviders() noexcept {
-  return {};
+  OuterVisual().InsertAt(m_visual, 0);
 }
 
 void CompositionViewComponentView::mountChildComponentView(
-    const IComponentView &childComponentView,
+    IComponentView &childComponentView,
     uint32_t index) noexcept {
   m_children.insert(std::next(m_children.begin(), index), &childComponentView);
 
   indexOffsetForBorder(index);
 
-  const_cast<IComponentView &>(childComponentView).parent(this);
+  childComponentView.parent(this);
 
-  m_visual.InsertAt(static_cast<const CompositionBaseComponentView &>(childComponentView).Visual(), index);
+  m_visual.InsertAt(static_cast<CompositionBaseComponentView &>(childComponentView).OuterVisual(), index);
 }
 
 void CompositionViewComponentView::unmountChildComponentView(
-    const IComponentView &childComponentView,
+    IComponentView &childComponentView,
     uint32_t index) noexcept {
   m_children.erase(std::next(m_children.begin(), index));
 
   indexOffsetForBorder(index);
 
-  const_cast<IComponentView &>(childComponentView).parent(nullptr);
-  m_visual.Remove(static_cast<const CompositionBaseComponentView &>(childComponentView).Visual());
+  childComponentView.parent(nullptr);
+  m_visual.Remove(static_cast<CompositionBaseComponentView &>(childComponentView).OuterVisual());
 }
 
 void CompositionViewComponentView::updateProps(
@@ -1103,6 +1212,23 @@ void CompositionViewComponentView::updateProps(
     if (newViewProps.shadowColor)
       shadow.Color(newViewProps.shadowColor.AsWindowsColor());
     m_visual.Shadow(shadow);
+  }
+
+  if (oldViewProps.backfaceVisibility != newViewProps.backfaceVisibility) {
+    static_assert(
+        static_cast<facebook::react::BackfaceVisibility>(
+            winrt::Microsoft::ReactNative::Composition::BackfaceVisibility::Inherit) ==
+        facebook::react::BackfaceVisibility::Auto);
+    static_assert(
+        static_cast<facebook::react::BackfaceVisibility>(
+            winrt::Microsoft::ReactNative::Composition::BackfaceVisibility::Visible) ==
+        facebook::react::BackfaceVisibility::Visible);
+    static_assert(
+        static_cast<facebook::react::BackfaceVisibility>(
+            winrt::Microsoft::ReactNative::Composition::BackfaceVisibility::Hidden) ==
+        facebook::react::BackfaceVisibility::Hidden);
+    m_visual.BackfaceVisibility(
+        static_cast<winrt::Microsoft::ReactNative::Composition::BackfaceVisibility>(newViewProps.backfaceVisibility));
   }
 
   // Transform - TODO doesn't handle multiple of the same kind of transform -- Doesn't handle hittesting updates
@@ -1159,10 +1285,6 @@ facebook::react::Tag CompositionViewComponentView::hitTest(facebook::react::Poin
   return -1;
 }
 
-facebook::react::SharedTouchEventEmitter CompositionViewComponentView::touchEventEmitter() noexcept {
-  return m_eventEmitter;
-}
-
 bool CompositionViewComponentView::ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept {
   facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
 
@@ -1185,7 +1307,7 @@ void CompositionViewComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
   // Set Position & Size Properties
   if ((layoutMetrics.displayType != m_layoutMetrics.displayType)) {
-    m_visual.IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
+    OuterVisual().IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
   }
 
   updateBorderLayoutMetrics(layoutMetrics, *m_props);
@@ -1196,14 +1318,14 @@ void CompositionViewComponentView::updateLayoutMetrics(
   m_visual.Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
-  m_visual.Offset({
-      layoutMetrics.frame.origin.x * layoutMetrics.pointScaleFactor,
-      layoutMetrics.frame.origin.y * layoutMetrics.pointScaleFactor,
-      0.0f,
-  });
 }
 
-void CompositionViewComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {}
+void CompositionViewComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
+  if (m_needsBorderUpdate) {
+    m_needsBorderUpdate = false;
+    UpdateSpecialBorderLayers(m_layoutMetrics, *m_props);
+  }
+}
 
 void CompositionViewComponentView::prepareForRecycle() noexcept {}
 facebook::react::Props::Shared CompositionViewComponentView::props() noexcept {
@@ -1212,6 +1334,74 @@ facebook::react::Props::Shared CompositionViewComponentView::props() noexcept {
 
 winrt::Microsoft::ReactNative::Composition::IVisual CompositionViewComponentView::Visual() const noexcept {
   return m_visual;
+}
+
+bool CompositionViewComponentView::focusable() const noexcept {
+  return m_props->focusable;
+}
+
+IComponentView *lastDeepChild(IComponentView &view) noexcept {
+  auto current = &view;
+  while (current) {
+    auto children = current->children();
+    auto itLastChild = children.rbegin();
+    if (itLastChild == children.rend()) {
+      break;
+    }
+    current = *itLastChild;
+  }
+  return current;
+}
+
+bool walkTree(IComponentView &view, bool forward, Mso::Functor<bool(IComponentView &)> &fn) noexcept {
+  if (forward) {
+    if (fn(view)) {
+      return true;
+    }
+
+    for (auto it = view.children().begin(); it != view.children().end(); ++it) {
+      if (fn(**it))
+        return true;
+    }
+
+    auto current = &view;
+    auto parent = current->parent();
+    while (parent) {
+      auto &parentsChildren = parent->children();
+      auto itNextView = std::find(parentsChildren.begin(), parentsChildren.end(), current);
+      assert(itNextView != parentsChildren.end());
+      ++itNextView;
+      if (itNextView != parentsChildren.end()) {
+        return walkTree(**itNextView, true, fn);
+      }
+      current = parent;
+      parent = current->parent();
+    }
+
+  } else {
+    auto current = &view;
+    auto parent = current->parent();
+    while (parent) {
+      auto &parentsChildren = parent->children();
+      auto itNextView = std::find(parentsChildren.rbegin(), parentsChildren.rend(), current);
+      assert(itNextView != parentsChildren.rend());
+      auto index = std::distance(parentsChildren.rbegin(), itNextView);
+      ++itNextView;
+      if (itNextView != parentsChildren.rend()) {
+        auto lastChild = lastDeepChild(**itNextView);
+        if (fn(*lastChild))
+          return true;
+        return walkTree(*lastChild, false, fn);
+      }
+
+      if (fn(*parent)) {
+        return true;
+      }
+      current = parent;
+      parent = current->parent();
+    }
+  }
+  return false;
 }
 
 } // namespace Microsoft::ReactNative

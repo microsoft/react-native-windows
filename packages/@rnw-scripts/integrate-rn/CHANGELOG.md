@@ -1,8 +1,43 @@
 # Change Log - @rnw-scripts/integrate-rn
 
-This log was last generated on Wed, 11 Jan 2023 06:15:30 GMT and should not be manually modified.
+This log was last generated on Thu, 02 Mar 2023 06:14:23 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.4.3
+
+Thu, 02 Mar 2023 06:14:23 GMT
+
+### Patches
+
+- Merge branch 'YajurG-8875' of https://github.com/YajurG/react-native-windows into YajurG-8875 (email not defined)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.45
+- Bump @react-native-windows/fs to v0.0.0-canary.16
+- Bump @react-native-windows/package-utils to v0.0.0-canary.42
+- Bump react-native-platform-override to v1.9.3
+
+## 1.4.2
+
+Sat, 25 Feb 2023 06:13:36 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.44
+- Bump @react-native-windows/fs to v0.0.0-canary.15
+- Bump @react-native-windows/package-utils to v0.0.0-canary.41
+- Bump react-native-platform-override to v1.9.2
+
+## 1.4.1
+
+Thu, 09 Feb 2023 06:16:43 GMT
+
+### Patches
+
+- Bump typescript version (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.43
+- Bump @react-native-windows/fs to v0.0.0-canary.14
+- Bump @react-native-windows/package-utils to v0.0.0-canary.40
+- Bump react-native-platform-override to v1.9.1
 
 ## 1.4.0
 

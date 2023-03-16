@@ -245,6 +245,25 @@ class JSI_EXPORT AndroidDrawerLayoutProps final : public ViewProps {
   SharedColor statusBarBackgroundColor{};
 };
 
+class JSI_EXPORT RCTFlyoutProps final : public ViewProps {
+ public:
+  RCTFlyoutProps() = default;
+  RCTFlyoutProps(const PropsParserContext& context, const RCTFlyoutProps &sourceProps, const RawProps &rawProps);
+
+#pragma mark - Props
+
+  double horizontalOffset{0.0};
+  bool isLightDismissEnabled{false};
+  bool autoFocus{false};
+  bool shouldConstrainToRootBounds{false};
+  bool isOverlayEnabled{false};
+  bool isOpen{false};
+  std::string placement{};
+  std::string showMode{};
+  int target{0};
+  double verticalOffset{0.0};
+};
+
 class JSI_EXPORT PLYIconProps final : public ViewProps {
  public:
   PLYIconProps() = default;
@@ -257,6 +276,22 @@ class JSI_EXPORT PLYIconProps final : public ViewProps {
   std::string fontUri{};
   std::string glyph{};
   bool colorEnabled{false};
+};
+
+class JSI_EXPORT RCTPopupProps final : public ViewProps {
+ public:
+  RCTPopupProps() = default;
+  RCTPopupProps(const PropsParserContext& context, const RCTPopupProps &sourceProps, const RawProps &rawProps);
+
+#pragma mark - Props
+
+  bool isOpen{false};
+  bool isLightDismissEnabled{false};
+  bool autoFocus{false};
+  double horizontalOffset{0.0};
+  double verticalOffset{0.0};
+  int target{0};
+  std::string testID{};
 };
 
 class JSI_EXPORT AndroidProgressBarProps final : public ViewProps {
@@ -383,6 +418,16 @@ class JSI_EXPORT InputAccessoryProps final : public ViewProps {
 #pragma mark - Props
 
   SharedColor backgroundColor{};
+};
+
+class JSI_EXPORT TraceUpdateOverlayProps final : public ViewProps {
+ public:
+  TraceUpdateOverlayProps() = default;
+  TraceUpdateOverlayProps(const PropsParserContext& context, const TraceUpdateOverlayProps &sourceProps, const RawProps &rawProps);
+
+#pragma mark - Props
+
+  
 };
 
 class JSI_EXPORT UnimplementedNativeViewProps final : public ViewProps {

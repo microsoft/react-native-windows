@@ -91,6 +91,16 @@ class JSI_EXPORT AndroidDrawerLayoutEventEmitter : public ViewEventEmitter {
 
   void onDrawerClose(OnDrawerClose value) const;
 };
+class JSI_EXPORT RCTFlyoutEventEmitter : public ViewEventEmitter {
+ public:
+  using ViewEventEmitter::ViewEventEmitter;
+
+  struct OnDismiss {
+      bool isOpen;
+    };
+
+  void onDismiss(OnDismiss value) const;
+};
 class JSI_EXPORT PLYIconEventEmitter : public ViewEventEmitter {
  public:
   using ViewEventEmitter::ViewEventEmitter;
@@ -98,6 +108,16 @@ class JSI_EXPORT PLYIconEventEmitter : public ViewEventEmitter {
   
 
   
+};
+class JSI_EXPORT RCTPopupEventEmitter : public ViewEventEmitter {
+ public:
+  using ViewEventEmitter::ViewEventEmitter;
+
+  struct OnDismiss {
+      bool isOpen;
+    };
+
+  void onDismiss(OnDismiss value) const;
 };
 class JSI_EXPORT AndroidProgressBarEventEmitter : public ViewEventEmitter {
  public:
@@ -166,6 +186,14 @@ class JSI_EXPORT SwitchEventEmitter : public ViewEventEmitter {
   void onChange(OnChange value) const;
 };
 class JSI_EXPORT InputAccessoryEventEmitter : public ViewEventEmitter {
+ public:
+  using ViewEventEmitter::ViewEventEmitter;
+
+  
+
+  
+};
+class JSI_EXPORT TraceUpdateOverlayEventEmitter : public ViewEventEmitter {
  public:
   using ViewEventEmitter::ViewEventEmitter;
 
