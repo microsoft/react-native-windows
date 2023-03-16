@@ -3,7 +3,6 @@
 
 #include "pch.h"
 #include "HelloComposition.h"
-#include "CompositionHost.h"
 
 #include <windows.h>
 #include <windowsx.h>
