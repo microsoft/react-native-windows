@@ -103,7 +103,6 @@
   </ItemDefinitionGroup>
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
-    <ClInclude Include="CompositionHost.h" />
     <ClInclude Include="HelloComposition.h" />
     <ClInclude Include="microsoft.ui.composition.effects_impl.h" />
     <ClInclude Include="resource.h" />
@@ -111,7 +110,6 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CompositionHost.cpp" />
     <ClCompile Include="HelloComposition.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

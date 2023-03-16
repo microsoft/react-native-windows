@@ -24,9 +24,6 @@
     <ClInclude Include="HelloComposition.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CompositionHost.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="microsoft.ui.composition.effects_impl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -36,9 +33,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HelloComposition.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CompositionHost.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
