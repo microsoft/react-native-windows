@@ -228,7 +228,7 @@ struct WindowData {
         }
 
         static constexpr std::wstring_view g_bundleFiles[] = {
-            LR"(Samples/rntester)"};
+            LR"(Samples\rntester)"};
 
         static INT_PTR CALLBACK Bundle(HWND hwnd, UINT message, WPARAM wparam, LPARAM /*lparam*/) noexcept {
                 switch (message) {
