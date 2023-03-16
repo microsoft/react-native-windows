@@ -1,8 +1,115 @@
 # Change Log - @react-native-windows/automation
 
-This log was last generated on Thu, 16 Feb 2023 06:15:04 GMT and should not be manually modified.
+This log was last generated on Tue, 14 Mar 2023 05:13:40 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.3.50
+
+Tue, 14 Mar 2023 05:13:40 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.9.17
+
+## 0.3.49
+
+Sat, 11 Mar 2023 06:14:58 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.9.16
+
+## 0.3.48
+
+Fri, 10 Mar 2023 06:14:16 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.9.15
+
+## 0.3.47
+
+Wed, 08 Mar 2023 06:14:11 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.9.14
+
+## 0.3.46
+
+Tue, 07 Mar 2023 06:13:31 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.9.13
+
+## 0.3.45
+
+Sat, 04 Mar 2023 06:13:15 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.9.12
+
+## 0.3.44
+
+Thu, 02 Mar 2023 06:14:21 GMT
+
+### Patches
+
+- Merge branch 'YajurG-8875' of https://github.com/YajurG/react-native-windows into YajurG-8875 (email not defined)
+- Bump @react-native-windows/automation-channel to v0.9.11
+- Bump @react-native-windows/fs to v0.0.0-canary.16
+
+## 0.3.43
+
+Wed, 01 Mar 2023 06:13:04 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.9.10
+
+## 0.3.42
+
+Tue, 28 Feb 2023 06:14:14 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.9.9
+
+## 0.3.41
+
+Sat, 25 Feb 2023 06:13:36 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.9.8
+- Bump @react-native-windows/fs to v0.0.0-canary.15
+
+## 0.3.40
+
+Fri, 24 Feb 2023 06:14:52 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.9.7
+
+## 0.3.39
+
+Thu, 23 Feb 2023 06:13:42 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.9.6
+
+## 0.3.38
+
+Wed, 22 Feb 2023 06:14:08 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.9.5
 
 ## 0.3.37
 

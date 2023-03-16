@@ -24,9 +24,11 @@
 #include <Fabric/Composition/CompositionViewComponentView.h>
 #include <Fabric/Composition/ImageComponentView.h>
 #include <Fabric/Composition/ParagraphComponentView.h>
+#include <Fabric/Composition/RootComponentView.h>
 #include <Fabric/Composition/ScrollViewComponentView.h>
 #include <Fabric/Composition/SwitchComponentView.h>
 #include <Fabric/Composition/TextInput/WindowsTextInputComponentView.h>
+#include <Fabric/Composition/UnimplementedNativeViewComponentView.h>
 
 namespace Microsoft::ReactNative {
 
@@ -54,6 +56,10 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
     view = std::make_shared<SwitchComponentView>(compContext, tag, m_context);
   } else if (componentHandle == facebook::react::ActivityIndicatorViewShadowNode::Handle()) {
     view = std::make_shared<ActivityIndicatorComponentView>(compContext, tag, m_context);
+  } else if (componentHandle == facebook::react::RootShadowNode::Handle()) {
+    view = std::make_shared<RootComponentView>(compContext, tag);
+  } else if (componentHandle == facebook::react::UnimplementedNativeViewShadowNode::Handle()) {
+    view = std::make_shared<UnimplementedNativeViewComponentView>(compContext, tag);
   } else {
     view = std::make_shared<CompositionViewComponentView>(compContext, tag);
   }

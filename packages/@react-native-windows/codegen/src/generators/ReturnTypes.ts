@@ -9,7 +9,7 @@
 import type {
   NativeModuleReturnTypeAnnotation,
   Nullable,
-} from 'react-native-tscodegen';
+} from '@react-native/codegen/lib/CodegenSchema';
 import {AliasMap} from './AliasManaging';
 import {translateFieldOrReturnType} from './ObjectTypes';
 

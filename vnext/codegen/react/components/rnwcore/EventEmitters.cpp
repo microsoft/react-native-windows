@@ -14,21 +14,21 @@ namespace facebook {
 namespace react {
 
 void ModalHostViewEventEmitter::onRequestClose(OnRequestClose event) const {
-  dispatchEvent("requestClose", [event=std::move(event)](jsi::Runtime &runtime) {
+  dispatchEvent("requestClose", [](jsi::Runtime &runtime) {
     auto payload = jsi::Object(runtime);
     
     return payload;
   });
 }
 void ModalHostViewEventEmitter::onShow(OnShow event) const {
-  dispatchEvent("show", [event=std::move(event)](jsi::Runtime &runtime) {
+  dispatchEvent("show", [](jsi::Runtime &runtime) {
     auto payload = jsi::Object(runtime);
     
     return payload;
   });
 }
 void ModalHostViewEventEmitter::onDismiss(OnDismiss event) const {
-  dispatchEvent("dismiss", [event=std::move(event)](jsi::Runtime &runtime) {
+  dispatchEvent("dismiss", [](jsi::Runtime &runtime) {
     auto payload = jsi::Object(runtime);
     
     return payload;
@@ -57,14 +57,14 @@ void AndroidDrawerLayoutEventEmitter::onDrawerStateChanged(OnDrawerStateChanged 
   });
 }
 void AndroidDrawerLayoutEventEmitter::onDrawerOpen(OnDrawerOpen event) const {
-  dispatchEvent("drawerOpen", [event=std::move(event)](jsi::Runtime &runtime) {
+  dispatchEvent("drawerOpen", [](jsi::Runtime &runtime) {
     auto payload = jsi::Object(runtime);
     
     return payload;
   });
 }
 void AndroidDrawerLayoutEventEmitter::onDrawerClose(OnDrawerClose event) const {
-  dispatchEvent("drawerClose", [event=std::move(event)](jsi::Runtime &runtime) {
+  dispatchEvent("drawerClose", [](jsi::Runtime &runtime) {
     auto payload = jsi::Object(runtime);
     
     return payload;
@@ -87,14 +87,14 @@ void RCTPopupEventEmitter::onDismiss(OnDismiss event) const {
 }
 
 void AndroidSwipeRefreshLayoutEventEmitter::onRefresh(OnRefresh event) const {
-  dispatchEvent("refresh", [event=std::move(event)](jsi::Runtime &runtime) {
+  dispatchEvent("refresh", [](jsi::Runtime &runtime) {
     auto payload = jsi::Object(runtime);
     
     return payload;
   });
 }
 void PullToRefreshViewEventEmitter::onRefresh(OnRefresh event) const {
-  dispatchEvent("refresh", [event=std::move(event)](jsi::Runtime &runtime) {
+  dispatchEvent("refresh", [](jsi::Runtime &runtime) {
     auto payload = jsi::Object(runtime);
     
     return payload;
@@ -118,6 +118,7 @@ payload.setProperty(runtime, "target", event.target);
     return payload;
   });
 }
+
 
 
 

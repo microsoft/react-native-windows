@@ -25,6 +25,9 @@ struct CompositionHwndHost : CompositionHwndHostT<CompositionHwndHost> {
 
   winrt::Windows::UI::Composition::Visual RootVisual() const noexcept;
 
+  winrt::Microsoft::ReactNative::FocusNavigationResult NavigateFocus(
+      const winrt::Microsoft::ReactNative::FocusNavigationRequest &request) noexcept;
+
   LRESULT TranslateMessage(int msg, uint64_t wParam, int64_t lParam) noexcept;
 
  private:

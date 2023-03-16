@@ -323,14 +323,14 @@ const renderItem = (item: ListRenderItemInfo<IListProps>) => (
   <ListItem label={item.item.label} level={item.item.level} setSize={item.item.setSize} positionInSet={item.item.positionInSet} />
 );
 
-const getItemLayout = (data: Array<IListProps>, index: number) => ({ length: 30, offset: 30 * index, index });
+const getItemLayout = (data: ArrayLike<IListProps>, index: number) => ({ length: 30, offset: 30 * index, index });
 
 const keyExtractor = (item: IListProps) => item.label.toString();
 
 interface IFlatListProps {
   renderItem: (item: ListRenderItemInfo<IListProps>) => JSX.Element;
   getItemLayout?: (
-    data: IListProps[],
+    data: ArrayLike<IListProps>,
     index: number
   ) => {
     length: number;

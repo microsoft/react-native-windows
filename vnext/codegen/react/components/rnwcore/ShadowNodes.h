@@ -85,6 +85,17 @@ using SwitchShadowNode = ConcreteViewShadowNode<
     SwitchEventEmitter,
     SwitchState>;
 
+JSI_EXPORT extern const char TraceUpdateOverlayComponentName[];
+
+/*
+ * `ShadowNode` for <TraceUpdateOverlay> component.
+ */
+using TraceUpdateOverlayShadowNode = ConcreteViewShadowNode<
+    TraceUpdateOverlayComponentName,
+    TraceUpdateOverlayProps,
+    TraceUpdateOverlayEventEmitter,
+    TraceUpdateOverlayState>;
+
 JSI_EXPORT extern const char UnimplementedNativeViewComponentName[];
 
 /*

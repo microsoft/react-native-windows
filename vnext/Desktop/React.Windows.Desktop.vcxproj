@@ -109,6 +109,7 @@
         "$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactHost";
         "$(ReactNativeWindowsDir)Microsoft.ReactNative\Views";
         "$(ReactNativeWindowsDir)codegen";
+        $(ReactNativeDir)\ReactCommon\react\renderer\graphics\platform\cxx;
         %(AdditionalIncludeDirectories);
       </AdditionalIncludeDirectories>
       <AdditionalOptions>%(AdditionalOptions) /Zc:strictStrings /bigobj</AdditionalOptions>
@@ -278,6 +279,7 @@
     <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\TransformAnimatedNode.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\ValueAnimatedNode.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\Modules\ImageViewManagerModule.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\Utils\KeyboardUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABI\MessageQueueShim.h">
