@@ -41,5 +41,8 @@ namespace Microsoft.ReactNative
 
     DOC_STRING("See @ReactInstanceSettings.JavaScriptBundleFile.")
     String JavaScriptBundleFile { get; set; };
+
+    DOC_STRING("See @ReactInstanceSettings.BundleAppId.")
+    String BundleAppId { get; set; };
   }
 } // namespace Microsoft.ReactNative

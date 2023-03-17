@@ -450,6 +450,7 @@ void ReactInstanceWin::Initialize() noexcept {
           devSettings->waitingForDebuggerCallback = GetWaitingForDebuggerCallback();
           devSettings->debuggerAttachCallback = GetDebuggerAttachCallback();
           devSettings->enableDefaultCrashHandler = m_options.EnableDefaultCrashHandler();
+          devSettings->bundleAppId = BundleAppId();
           devSettings->showDevMenuCallback = [weakThis]() noexcept {
             if (auto strongThis = weakThis.GetStrongPtr()) {
               strongThis->m_uiQueue->Post(
@@ -1159,6 +1160,10 @@ JSIEngine ReactInstanceWin::JsiEngine() const noexcept {
 
 std::string ReactInstanceWin::JavaScriptBundleFile() const noexcept {
   return m_options.Identity;
+}
+
+std::string ReactInstanceWin::BundleAppId() const noexcept {
+  return m_options.DeveloperSettings.BundleAppId;
 }
 
 bool ReactInstanceWin::UseDeveloperSupport() const noexcept {

@@ -319,6 +319,8 @@ namespace Microsoft.ReactNative.Managed.UnitTests
 
     public string JavaScriptBundleFile => throw new NotImplementedException();
 
+    public string BundleAppId => throw new NotImplementedException();
+
     public string SourceBundleHost => throw new NotImplementedException();
 
     public ushort SourceBundlePort => throw new NotImplementedException();
