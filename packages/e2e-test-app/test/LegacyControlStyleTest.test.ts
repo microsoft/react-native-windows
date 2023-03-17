@@ -8,9 +8,14 @@
 import {app} from '@react-native-windows/automation';
 import {dumpVisualTree} from '@react-native-windows/automation-commands';
 import {goToComponentExample} from './RNTesterNavigation';
+import {verifyNoErrorLogs} from './Helpers';
 
 beforeAll(async () => {
   await goToComponentExample('LegacyControlStyleTest');
+});
+
+afterEach(async () => {
+  await verifyNoErrorLogs();
 });
 
 describe('LegacyControlStyleTest', () => {
