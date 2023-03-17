@@ -91,6 +91,9 @@ struct ReactApplication : NoDefaultCtorReactApplication_base<ReactApplication, x
   hstring JavaScriptBundleFile() noexcept;
   void JavaScriptBundleFile(hstring const &value) noexcept;
 
+  hstring BundleAppId() noexcept;
+  void BundleAppId(hstring const &value) noexcept;
+
   void OnActivated(Windows::ApplicationModel::Activation::IActivatedEventArgs const &e);
   void OnLaunched(activation::LaunchActivatedEventArgs const &e);
   void OnSuspending(IInspectable const &, Windows::ApplicationModel::SuspendingEventArgs const &);

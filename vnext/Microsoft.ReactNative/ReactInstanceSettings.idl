@@ -106,6 +106,12 @@ namespace Microsoft.ReactNative
     String JavaScriptBundleFile { get; set; };
 
     DOC_STRING(
+      "The name of the app passed to the packager server via the 'app' query parameter. "
+      "This is useful when bundling multiple applications from the same packager instance. "
+      "If no value is set, the parameter will not be passed.")
+    String BundleAppId { get; set; };
+
+    DOC_STRING(
       "Controls whether the instance JavaScript runs in a remote environment such as within a browser.\n"
       "By default, this is using a browser navigated to http://localhost:8081/debugger-ui served by Metro/Haul.\n"
       "Debugging will start as soon as the react native instance is loaded.")

@@ -120,6 +120,11 @@ namespace Microsoft.ReactNative
       "The `.bundle` extension will be appended to the end, when looking for the bundle file.")
     String JavaScriptBundleFile { get; };
 
+    DOC_STRING(
+      "A read-only snapshot of the @ReactInstanceSettings.BundleAppId property value "
+      "at the time when the React instance was created.\n"
+      "The name of the app passed to the packager server via the 'app' query parameter.")
+    String BundleAppId { get; };
   }
 
   [webhosthidden]

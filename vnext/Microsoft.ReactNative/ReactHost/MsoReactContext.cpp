@@ -93,6 +93,13 @@ std::string ReactSettingsSnapshot::JavaScriptBundleFile() const noexcept {
   return {};
 }
 
+std::string ReactSettingsSnapshot::BundleAppId() const noexcept {
+  if (auto instance = m_reactInstance.GetStrongPtr()) {
+    return instance->BundleAppId();
+  }
+  return {};
+}
+
 JSIEngine ReactSettingsSnapshot::JsiEngine() const noexcept {
   if (auto instance = m_reactInstance.GetStrongPtr()) {
     return instance->JsiEngine();
