@@ -67,15 +67,14 @@ struct CompReactPackageProvider
 WCHAR szTitle[MAX_LOADSTRING];                  // The title bar text
 WCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
 
-// Forward declarations of functions included in this code module:
-LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
-INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
-
 winrt::Windows::System::DispatcherQueueController g_dispatcherQueueController{nullptr};
 winrt::Windows::UI::Composition::Compositor g_compositor{nullptr};
 
 constexpr auto WindowDataProperty = L"WindowData";
+constexpr PCWSTR c_windowClassName = L"MS_REACTNATIVE_RNTESTER_COMPOSITION";
 
+// Forward declarations of functions included in this code module:
+LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 int RunRNTester(int showCmd, bool useWebDebugger);
 
 struct WindowData {
@@ -165,44 +164,11 @@ struct WindowData {
                 return 0;
         }
 
-        LRESULT OnCommand(HWND hwnd, int id, HWND /* hwndCtl*/, UINT) {
-                switch (id) {
-                        case IDM_ABOUT:
-                          DialogBox(s_instance, MAKEINTRESOURCE(IDD_ABOUTBOX), hwnd, &About);
-                          break;
-                        case IDM_EXIT:
-                          PostQuitMessage(0);
-                          break;
-                        case IDM_REFRESH:
-                          Host().ReloadInstance();
-                          break;
-                }
-
-                return 0;
-        }
-
         LRESULT TranslateMessage(UINT message, WPARAM wparam, LPARAM lparam) noexcept {
                 if (m_CompositionHwndHost) {
                         return static_cast<LRESULT>(m_CompositionHwndHost.TranslateMessage(message, wparam, lparam));
                 }
                 return 0;
-        }
-
-        /// Message handler for about box.
-        static INT_PTR CALLBACK About(HWND hwnd, UINT message, WPARAM wparam, LPARAM /* lparam */) noexcept {
-                switch (message) {
-                        case WM_INITDIALOG:
-                          return TRUE;
-
-                        case WM_COMMAND:
-                          if (LOWORD(wparam) == IDOK || LOWORD(wparam) == IDCANCEL) {
-                            EndDialog(hwnd, LOWORD(wparam));
-                            return TRUE;
-                          }
-                          break;
-                }
-
-                return FALSE;
         }
 
 };
@@ -225,10 +191,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
 
         switch (message) {
-                case WM_COMMAND: {
-                        return WindowData::GetFromWindow(hWnd)->OnCommand(
-                            hWnd, LOWORD(wParam), reinterpret_cast<HWND>(lParam), HIWORD(wParam));
-                }
                 case WM_DESTROY: {
                         delete WindowData::GetFromWindow(hWnd);
                         SetProp(hWnd, WindowDataProperty, 0);
@@ -259,8 +221,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
         return DefWindowProc(hWnd, message, wParam, lParam);
 }
-
-constexpr PCWSTR c_windowClassName = L"MS_REACTNATIVE_RNTESTER_COMPOSITION";
 
 int RunRNTester(int showCmd, bool useWebDebugger) {
         constexpr PCWSTR appName = L"React Native Tester (Composition)";
@@ -332,24 +292,4 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
 
         g_compositor = winrt::Windows::UI::Composition::Compositor();
         return RunRNTester(showCmd, false);
-}
-
-// Message handler for about box.
-INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
-{
-	UNREFERENCED_PARAMETER(lParam);
-	switch (message)
-	{
-	case WM_INITDIALOG:
-		return (INT_PTR)TRUE;
-
-	case WM_COMMAND:
-		if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
-		{
-			EndDialog(hDlg, LOWORD(wParam));
-			return (INT_PTR)TRUE;
-		}
-		break;
-	}
-	return (INT_PTR)FALSE;
 }
