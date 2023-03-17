@@ -82,7 +82,7 @@ struct WindowData {
         static HINSTANCE s_instance;
         static constexpr uint16_t defaultDebuggerPort = 9229;
 
-        std::wstring m_bundleFile;
+        std::wstring m_bundleFile = LR"(Samples\rntester)";
         bool m_windowInited{false};
         winrt::Microsoft::ReactNative::CompositionHwndHost m_CompositionHwndHost{nullptr};
         winrt::Microsoft::ReactNative::ReactNativeHost m_host{nullptr};
@@ -123,10 +123,51 @@ struct WindowData {
                 return m_instanceSettings;
         }
 
+        LRESULT RenderApp(HWND hwnd) {
+                PCWSTR appName = L"RNTesterApp";
+
+                WCHAR workingDir[MAX_PATH];
+                GetCurrentDirectory(MAX_PATH, workingDir);
+
+                auto host = Host();
+                // Disable until we have a 3rd party story for custom components
+                // RegisterAutolinkedNativeModulePackages(host.PackageProviders()); // Includes any
+                // autolinked modules
+
+                host.InstanceSettings().JavaScriptBundleFile(m_bundleFile);
+
+                host.InstanceSettings().UseWebDebugger(m_useWebDebugger);
+                host.InstanceSettings().UseDirectDebugger(m_useDirectDebugger);
+                host.InstanceSettings().BundleRootPath(
+                    std::wstring(L"file:").append(workingDir).append(L"\\Bundle\\").c_str());
+                host.InstanceSettings().DebuggerBreakOnNextLine(m_breakOnNextLine);
+                host.InstanceSettings().UseFastRefresh(m_fastRefreshEnabled);
+                host.InstanceSettings().DebuggerPort(m_debuggerPort);
+                host.InstanceSettings().UseDeveloperSupport(true);
+
+                host.PackageProviders().Append(winrt::make<CompReactPackageProvider>());
+                winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
+                    host.InstanceSettings().Properties(), reinterpret_cast<uint64_t>(hwnd));
+
+                // Nudge the ReactNativeHost to create the instance and wrapping context
+                host.ReloadInstance();
+
+                winrt::Microsoft::ReactNative::ReactViewOptions viewOptions;
+                viewOptions.ComponentName(appName);
+                m_CompositionHwndHost.ReactViewHost(
+                    winrt::Microsoft::ReactNative::ReactCoreInjection::MakeViewHost(host, viewOptions));
+
+                auto windowData = WindowData::GetFromWindow(hwnd);
+                if (!windowData->m_windowInited) {
+                    m_CompositionHwndHost.Initialize((uint64_t)hwnd);
+                    windowData->m_windowInited = true;
+                }
+                return 0;
+        }
+
         LRESULT OnCommand(HWND hwnd, int id, HWND /* hwndCtl*/, UINT) {
                 switch (id) {
                         case IDM_OPENJSFILE: {
-                          DialogBox(s_instance, MAKEINTRESOURCE(IDD_OPENJSBUNDLEBOX), hwnd, &Bundle);
 
                           if (!m_bundleFile.empty()) {
                             PCWSTR appName = L"RNTesterApp";
@@ -219,40 +260,6 @@ struct WindowData {
                           if (LOWORD(wparam) == IDOK || LOWORD(wparam) == IDCANCEL) {
                             EndDialog(hwnd, LOWORD(wparam));
                             return TRUE;
-                          }
-                          break;
-                }
-
-                return FALSE;
-        }
-
-        static constexpr std::wstring_view g_bundleFiles[] = {
-            LR"(Samples\rntester)"};
-
-        static INT_PTR CALLBACK Bundle(HWND hwnd, UINT message, WPARAM wparam, LPARAM /*lparam*/) noexcept {
-                switch (message) {
-                        case WM_INITDIALOG: {
-                          HWND hwndListBox = GetDlgItem(hwnd, IDC_JSBUNDLELIST);
-                          for (int i = 0; i < _countof(g_bundleFiles); i++) {
-                            SendMessage(
-                                hwndListBox, LB_ADDSTRING, 0, reinterpret_cast<LPARAM>(g_bundleFiles[i].data()));
-                          }
-                          return TRUE;
-                        }
-                        case WM_COMMAND:
-                          switch (LOWORD(wparam)) {
-                            case IDOK: {
-                              HWND hwndListBox = GetDlgItem(hwnd, IDC_JSBUNDLELIST);
-                              int selectedItem = static_cast<int>(SendMessage(hwndListBox, LB_GETCURSEL, 0, 0));
-                              if (0 <= selectedItem && selectedItem < _countof(g_bundleFiles)) {
-                                auto self = GetFromWindow(GetParent(hwnd));
-                                self->m_bundleFile = g_bundleFiles[selectedItem];
-                              }
-                            }
-                              [[fallthrough]];
-                            case IDCANCEL:
-                              EndDialog(hwnd, LOWORD(wparam));
-                              return TRUE;
                           }
                           break;
                 }
@@ -367,18 +374,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                         auto windowData = static_cast<WindowData *>(cs->lpCreateParams);
                         WINRT_ASSERT(windowData);
                         SetProp(hWnd, WindowDataProperty, reinterpret_cast<HANDLE>(windowData));
-                        CreateWindow(
-                            TEXT("button"),
-                            TEXT("Add element"),
-                            WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON,
-                            12,
-                            12,
-                            100,
-                            50,
-                            hWnd,
-                            (HMENU)BTN_ADD,
-                            nullptr,
-                            nullptr);
                         break;
                 }
                 case WM_GETOBJECT: {
@@ -426,6 +421,7 @@ int RunRNTester(int showCmd, bool useWebDebugger) {
         ShowWindow(hwnd, showCmd);
         UpdateWindow(hwnd);
         SetFocus(hwnd);
+        WindowData::GetFromWindow(hwnd)->RenderApp(hwnd);
 
         HACCEL hAccelTable = LoadAccelerators(WindowData::s_instance, MAKEINTRESOURCE(IDC_RNTESTER_COMPOSITION));
 
@@ -436,7 +432,6 @@ int RunRNTester(int showCmd, bool useWebDebugger) {
                         DispatchMessage(&msg);
                 }
         }
-
         return (int)msg.wParam;
 }
 
