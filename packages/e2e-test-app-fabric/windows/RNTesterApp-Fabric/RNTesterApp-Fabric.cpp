@@ -167,60 +167,6 @@ struct WindowData {
 
         LRESULT OnCommand(HWND hwnd, int id, HWND /* hwndCtl*/, UINT) {
                 switch (id) {
-                        case IDM_OPENJSFILE: {
-
-                          if (!m_bundleFile.empty()) {
-                            PCWSTR appName = L"RNTesterApp";
-
-                            WCHAR workingDir[MAX_PATH];
-                            GetCurrentDirectory(MAX_PATH, workingDir);
-
-                            auto host = Host();
-                            // Disable until we have a 3rd party story for custom components
-                            // RegisterAutolinkedNativeModulePackages(host.PackageProviders()); // Includes any
-                            // autolinked modules
-
-                            host.InstanceSettings().JavaScriptBundleFile(m_bundleFile);
-
-                            host.InstanceSettings().UseWebDebugger(m_useWebDebugger);
-                            host.InstanceSettings().UseDirectDebugger(m_useDirectDebugger);
-                            host.InstanceSettings().BundleRootPath(
-                                std::wstring(L"file:").append(workingDir).append(L"\\Bundle\\").c_str());
-                            host.InstanceSettings().DebuggerBreakOnNextLine(m_breakOnNextLine);
-                            host.InstanceSettings().UseFastRefresh(m_fastRefreshEnabled);
-                            host.InstanceSettings().DebuggerPort(m_debuggerPort);
-                            host.InstanceSettings().UseDeveloperSupport(true);
-
-                            host.PackageProviders().Append(winrt::make<CompReactPackageProvider>());
-                            winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
-                                host.InstanceSettings().Properties(), reinterpret_cast<uint64_t>(hwnd));
-
-                            // Nudge the ReactNativeHost to create the instance and wrapping context
-                            host.ReloadInstance();
-
-                            winrt::Microsoft::ReactNative::ReactViewOptions viewOptions;
-                            viewOptions.ComponentName(appName);
-                            m_CompositionHwndHost.ReactViewHost(
-                                winrt::Microsoft::ReactNative::ReactCoreInjection::MakeViewHost(host, viewOptions));
-
-                            auto windowData = WindowData::GetFromWindow(hwnd);
-                            if (!windowData->m_windowInited) {
-                              m_CompositionHwndHost.Initialize((uint64_t)hwnd);
-                              windowData->m_windowInited = true;
-                            }
-                          }
-
-                          break;
-                        }
-                        case IDM_NEWWINDOW: {
-                          std::thread rnTesterThread{([]() {
-                            // For subsequent RN windows do not use the web debugger by default,
-                            // since one instance can be connected to it at a time.
-                            RunRNTester(SW_SHOW, false);
-                          })};
-                          rnTesterThread.detach();
-                          break;
-                        }
                         case IDM_ABOUT:
                           DialogBox(s_instance, MAKEINTRESOURCE(IDD_ABOUTBOX), hwnd, &About);
                           break;
@@ -229,14 +175,6 @@ struct WindowData {
                           break;
                         case IDM_REFRESH:
                           Host().ReloadInstance();
-                          break;
-                        case IDM_SETTINGS:
-                          DialogBoxParam(
-                              s_instance,
-                              MAKEINTRESOURCE(IDD_SETTINGSBOX),
-                              hwnd,
-                              &Settings,
-                              reinterpret_cast<INT_PTR>(this));
                           break;
                 }
 
@@ -267,78 +205,6 @@ struct WindowData {
                 return FALSE;
         }
 
-        static INT_PTR CALLBACK Settings(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) noexcept {
-                switch (message) {
-                        case WM_INITDIALOG: {
-                          auto boolToCheck = [](bool b) { return b ? BST_CHECKED : BST_UNCHECKED; };
-                          auto self = reinterpret_cast<WindowData *>(lparam);
-                          CheckDlgButton(hwnd, IDC_WEBDEBUGGER, boolToCheck(self->m_useWebDebugger));
-                          CheckDlgButton(hwnd, IDC_FASTREFRESH, boolToCheck(self->m_fastRefreshEnabled));
-                          CheckDlgButton(hwnd, IDC_DIRECTDEBUGGER, boolToCheck(self->m_useDirectDebugger));
-                          CheckDlgButton(hwnd, IDC_BREAKONNEXTLINE, boolToCheck(self->m_breakOnNextLine));
-
-                          auto portEditControl = GetDlgItem(hwnd, IDC_DEBUGGERPORT);
-                          //SetWindowTextW(portEditControl, std::to_wstring(self->m_debuggerPort).c_str());
-                          //SendMessageW(portEditControl, (UINT)EM_SETLIMITTEXT, (WPARAM)5, (LPARAM)0);
-
-                          auto cmbEngines = GetDlgItem(hwnd, IDC_JSENGINE);
-                          //SendMessageW(cmbEngines, (UINT)CB_ADDSTRING, (WPARAM)0, (LPARAM)TEXT("Chakra"));
-                          //SendMessageW(cmbEngines, (UINT)CB_ADDSTRING, (WPARAM)0, (LPARAM)TEXT("Hermes"));
-                          //SendMessageW(cmbEngines, (UINT)CB_ADDSTRING, (WPARAM)0, (LPARAM)TEXT("V8"));
-                          // SendMessageW(cmbEngines, CB_SETCURSEL, (WPARAM) static_cast<int32_t>(self->m_jsEngine),
-                          // (LPARAM)0);
-
-                          auto cmbTheme = GetDlgItem(hwnd, IDC_THEME);
-                          //SendMessageW(cmbTheme, CB_ADDSTRING, 0, (LPARAM)L"Default");
-                          //SendMessageW(cmbTheme, CB_ADDSTRING, 0, (LPARAM)L"Light");
-                          //SendMessageW(cmbTheme, CB_ADDSTRING, 0, (LPARAM)L"Dark");
-                          //ComboBox_SetCurSel(cmbTheme, static_cast<int>(self->m_theme));
-
-                          return TRUE;
-                        }
-                        case WM_COMMAND: {
-                          switch (LOWORD(wparam)) {
-                            case IDOK: {
-                              auto self = GetFromWindow(GetParent(hwnd));
-                              self->m_useWebDebugger = IsDlgButtonChecked(hwnd, IDC_WEBDEBUGGER) == BST_CHECKED;
-                              self->m_fastRefreshEnabled = IsDlgButtonChecked(hwnd, IDC_FASTREFRESH) == BST_CHECKED;
-                              self->m_useDirectDebugger = IsDlgButtonChecked(hwnd, IDC_DIRECTDEBUGGER) == BST_CHECKED;
-                              self->m_breakOnNextLine = IsDlgButtonChecked(hwnd, IDC_BREAKONNEXTLINE) == BST_CHECKED;
-
-                              auto themeComboBox = GetDlgItem(hwnd, IDC_THEME);
-
-                              WCHAR buffer[6] = {};
-                              auto portEditControl = GetDlgItem(hwnd, IDC_DEBUGGERPORT);
-                              //GetWindowTextW(portEditControl, buffer, ARRAYSIZE(buffer));
-
-                              try {
-                                auto port = std::stoi(buffer);
-                                if (port > UINT16_MAX)
-                                  port = defaultDebuggerPort;
-                                self->m_debuggerPort = static_cast<uint16_t>(port);
-                              } catch (const std::out_of_range &) {
-                                self->m_debuggerPort = defaultDebuggerPort;
-                              } catch (const std::invalid_argument &) {
-                                // Don't update the debugger port if the new value can't be parsed
-                                // (E.g. includes letters or symbols).
-                              }
-
-                              // auto cmbEngines = GetDlgItem(hwnd, IDC_JSENGINE);
-                              // int itemIndex = (int)SendMessageW(cmbEngines, (UINT)CB_GETCURSEL, (WPARAM)0,
-                              // (LPARAM)0); self->m_jsEngine =
-                              // static_cast<Microsoft::ReactNative::JSIEngine>(itemIndex);
-                            }
-                              [[fallthrough]];
-                            case IDCANCEL:
-                              EndDialog(hwnd, LOWORD(wparam));
-                              return true;
-                          }
-                          break;
-                        }
-                }
-
-                return FALSE;
-        }
 };
 
 extern "C" IMAGE_DOS_HEADER __ImageBase;
