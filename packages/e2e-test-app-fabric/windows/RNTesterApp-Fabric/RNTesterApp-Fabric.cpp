@@ -4,18 +4,10 @@
 #include "pch.h"
 #include "RNTesterApp-Fabric.h"
 
-#include <windows.h>
-#include <windowsx.h>
-
-#include <memory>
-
-#include <winrt/Windows.Foundation.Collections.h>
-
 #include "../../../../vnext/codegen/NativeDeviceInfoSpec.g.h"
 
 #include <DispatcherQueue.h>
 #include <UIAutomation.h>
-#include <windows.ui.composition.interop.h>
 
 #include <winrt/Microsoft.ReactNative.Composition.h>
 #include <winrt/Windows.UI.Composition.Desktop.h>
