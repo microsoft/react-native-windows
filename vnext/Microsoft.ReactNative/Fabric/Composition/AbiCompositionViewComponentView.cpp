@@ -14,13 +14,19 @@ namespace Microsoft::ReactNative {
 AbiCompositionViewComponentView::AbiCompositionViewComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
-    winrt::Microsoft::ReactNative::Composition::ICompositionViewComponent userComponent)
-    : Super(compContext, tag), m_userComponent(userComponent) {
+    winrt::Microsoft::ReactNative::IReactViewComponentBuilder builder)
+    : Super(compContext, tag), m_builder(builder) {
   static auto const defaultProps = std::make_shared<AbiViewProps const>();
   m_props = defaultProps;
-  userComponent.Initialize(compContext);
-  m_visual = userComponent.CreateVisual();
+  m_handle = Builder().CreateView(compContext);
+  m_visual = Builder().CreateVisual(m_handle);
   OuterVisual().InsertAt(m_visual, 0);
+}
+
+winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder &
+AbiCompositionViewComponentView::Builder() noexcept
+{
+  return *winrt::get_self<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder>(m_builder);
 }
 
 void AbiCompositionViewComponentView::mountChildComponentView(
@@ -42,7 +48,7 @@ void AbiCompositionViewComponentView::updateProps(
   const auto &newViewProps = *std::static_pointer_cast<const AbiViewProps>(props);
 
   updateBorderProps(oldViewProps, newViewProps);
-  m_userComponent.UpdateProps(newViewProps.UserProps());
+  Builder().UpdateProps(m_handle, newViewProps.UserProps());
 
   m_props = std::static_pointer_cast<AbiViewProps const>(props);
 }
@@ -57,12 +63,13 @@ void AbiCompositionViewComponentView::updateLayoutMetrics(
   updateBorderLayoutMetrics(layoutMetrics, *m_props);
 
   winrt::Microsoft::ReactNative::Composition::LayoutMetrics lm;
-  m_userComponent.UpdateLayoutMetrics(
-      {{layoutMetrics.frame.origin.x,
-        layoutMetrics.frame.origin.y,
-        layoutMetrics.frame.size.width,
-        layoutMetrics.frame.size.height},
-       layoutMetrics.pointScaleFactor});
+  Builder().UpdateLayoutMetrics(
+          m_handle,
+          {{layoutMetrics.frame.origin.x,
+            layoutMetrics.frame.origin.y,
+            layoutMetrics.frame.size.width,
+            layoutMetrics.frame.size.height},
+           layoutMetrics.pointScaleFactor});
 
   m_layoutMetrics = layoutMetrics;
 }
@@ -72,7 +79,7 @@ void AbiCompositionViewComponentView::updateState(
     facebook::react::State::Shared const &oldState) noexcept {}
 
 void AbiCompositionViewComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
-  m_userComponent.FinalizeUpdates();
+  Builder().FinalizeUpdates(m_handle);
 
   if (m_needsBorderUpdate) {
     m_needsBorderUpdate = false;

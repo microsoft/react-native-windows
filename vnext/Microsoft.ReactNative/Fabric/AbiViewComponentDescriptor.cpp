@@ -17,11 +17,10 @@ extern const char AbiViewComponentName[] = "AbiView";
 AbiViewComponentDescriptor::AbiViewComponentDescriptor(facebook::react::ComponentDescriptorParameters const &parameters)
     : ComponentDescriptor(parameters) {
   auto flavor = std::static_pointer_cast<std::string const>(this->flavor_);
-  m_userDescriptor =
-      WindowsComponentDescriptorRegistry::FromProperties(
-          parameters.contextContainer->at<winrt::Microsoft::ReactNative::ReactContext>("MSRN.ReactContext")
-              .Properties())
-          ->GetDescriptor(flavor);
+  m_builder = WindowsComponentDescriptorRegistry::FromProperties(
+                  parameters.contextContainer->at<winrt::Microsoft::ReactNative::ReactContext>("MSRN.ReactContext")
+                      .Properties())
+                  ->GetDescriptor(flavor);
 
   rawPropsParser_.prepare<ConcreteProps>();
 }
@@ -84,8 +83,9 @@ facebook::react::Props::Shared AbiViewComponentDescriptor::cloneProps(
   // auto shadowNodeProps = std::make_shared<ShadowNodeT::Props>(context, rawProps, props);
   auto shadowNodeProps = std::make_shared<AbiViewProps>(
       context, props ? static_cast<AbiViewProps const &>(*props) : AbiViewProps(), rawProps);
-  auto userProps = m_userDescriptor.CreateProps(
-      winrt::make<winrt::Microsoft::ReactNative::implementation::UserViewProps>(shadowNodeProps));
+  auto userProps =
+      winrt::get_self<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder>(m_builder)
+          ->CreateProps(winrt::make<winrt::Microsoft::ReactNative::implementation::UserViewProps>(shadowNodeProps));
   shadowNodeProps->SetUserProps(userProps);
 
   rawProps.iterateOverValues(

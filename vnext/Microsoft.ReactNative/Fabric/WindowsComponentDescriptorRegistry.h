@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <Fabric/Composition/ReactCompositionViewComponentBuilder.h>
 #include <ReactPropertyBag.h>
 #include <react/renderer/componentregistry/ComponentDescriptorProviderRegistry.h>
 
@@ -12,11 +13,15 @@ namespace Microsoft::ReactNative {
 struct WindowsComponentDescriptorRegistry {
   WindowsComponentDescriptorRegistry();
 
-  void Add(winrt::Microsoft::ReactNative::IViewComponentDescriptor const &descriptor) noexcept;
+  void Add(
+      winrt::hstring componentName,
+      winrt::Microsoft::ReactNative::ReactViewComponentProvider const &provider) noexcept;
   std::shared_ptr<facebook::react::ComponentDescriptorProviderRegistry> GetProviderRegistry() const noexcept;
-  winrt::Microsoft::ReactNative::IViewComponentDescriptor GetDescriptor(
+
+  winrt::Microsoft::ReactNative::IReactViewComponentBuilder GetDescriptor(
       std::shared_ptr<std::string const> &flavor) const noexcept;
-  winrt::Microsoft::ReactNative::IViewComponentDescriptor GetDescriptor(
+
+  winrt::Microsoft::ReactNative::IReactViewComponentBuilder GetDescriptor(
       facebook::react::ComponentHandle handle) const noexcept;
 
   static void AddToProperties(
@@ -26,12 +31,13 @@ struct WindowsComponentDescriptorRegistry {
       const winrt::Microsoft::ReactNative::ReactPropertyBag &props) noexcept;
 
  private:
-  std::map<std::shared_ptr<const std::string>, winrt::Microsoft::ReactNative::IViewComponentDescriptor const>
-      m_userDescriptorsByName;
-  std::map<facebook::react::ComponentHandle, winrt::Microsoft::ReactNative::IViewComponentDescriptor const>
-      m_userDescriptorsByHandle;
   std::vector<std::shared_ptr<const std::string>> m_descriptorFlavors;
   std::shared_ptr<facebook::react::ComponentDescriptorProviderRegistry> m_componentDescriptorRegistry;
+
+  std::map<std::shared_ptr<const std::string>, winrt::Microsoft::ReactNative::IReactViewComponentBuilder const>
+      m_builderByName;
+  std::map<facebook::react::ComponentHandle, winrt::Microsoft::ReactNative::IReactViewComponentBuilder const>
+      m_builderByHandle;
 };
 
 } // namespace Microsoft::ReactNative

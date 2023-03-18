@@ -40,15 +40,9 @@ struct CustomProps : winrt::implements<CustomProps, winrt::Microsoft::ReactNativ
   winrt::Microsoft::ReactNative::ViewProps m_props;
 };
 
-struct CustomComponent
-    : winrt::implements<CustomComponent, winrt::Microsoft::ReactNative::Composition::ICompositionViewComponent> {
-  void Initialize(winrt::Microsoft::ReactNative::Composition::ICompositionContext context) noexcept {
-    m_compContext = context;
-  }
-
-  bool HandleCommand(winrt::hstring commandName, winrt::Microsoft::ReactNative::IJSValueReader args) noexcept {
-    return false;
-  }
+struct CustomComponent : winrt::implements<CustomComponent, winrt::IInspectable> {
+  CustomComponent(winrt::Microsoft::ReactNative::Composition::ICompositionContext compContext)
+      : m_compContext(compContext) {}
 
   void UpdateProps(winrt::Microsoft::ReactNative::IComponentProps props) noexcept {
     auto customProps = props.as<CustomProps>();
@@ -58,38 +52,40 @@ struct CustomComponent
     m_visual.Size({metrics.Frame.Width, metrics.Frame.Height});
   }
 
-  void FinalizeUpdates() noexcept {}
-
   winrt::Microsoft::ReactNative::Composition::IVisual CreateVisual() noexcept {
     m_visual = m_compContext.CreateSpriteVisual();
     m_visual.Brush(m_compContext.CreateColorBrush(winrt::Windows::UI::Colors::Green()));
     return m_visual;
   }
 
-  uint64_t SendMessage(uint32_t Msg, uint64_t WParam, int64_t LParam) noexcept {
-    return 0;
+  static void RegisterViewComponent(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) {
+    packageBuilder.as<winrt::Microsoft::ReactNative::IReactPackageBuilderFabric>().AddViewComponent(
+        L"MyCustomComponent", [](winrt::Microsoft::ReactNative::IReactViewComponentBuilder const &builder) noexcept {
+          builder.SetCreateProps(
+              [](winrt::Microsoft::ReactNative::ViewProps props) noexcept { return winrt::make<CustomProps>(props); });
+          auto compBuilder =
+              builder.as<winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder>();
+          compBuilder.SetCreateView(
+              [](winrt::Microsoft::ReactNative::Composition::ICompositionContext context) noexcept {
+            return winrt::make<CustomComponent>(context);
+          });
+          compBuilder.SetPropsUpdater(
+              [](winrt::IInspectable handle, winrt::Microsoft::ReactNative::IComponentProps props) noexcept {
+                handle.as<CustomComponent>()->UpdateProps(props);
+              });
+          compBuilder.SetLayoutMetricsUpdater(
+              [](winrt::IInspectable handle,
+                 winrt::Microsoft::ReactNative::Composition::LayoutMetrics metrics) noexcept {
+                handle.as<CustomComponent>()->UpdateLayoutMetrics(metrics);
+              });
+          compBuilder.SetVisualCreator(
+              [](winrt::IInspectable handle) noexcept { return handle.as<CustomComponent>()->CreateVisual(); });
+        });
   }
 
  private:
   winrt::Microsoft::ReactNative::Composition::SpriteVisual m_visual{nullptr};
   winrt::Microsoft::ReactNative::Composition::ICompositionContext m_compContext;
-};
-
-struct CustomNativeComponentDescriptor : winrt::implements<
-                                             CustomNativeComponentDescriptor,
-                                             winrt::Microsoft::ReactNative::IViewComponentDescriptor,
-                                             winrt::Microsoft::ReactNative::ICompositionViewComponentDescriptor> {
-  winrt::hstring ComponentName() const noexcept {
-    return L"MyCustomComponent";
-  }
-
-  winrt::Microsoft::ReactNative::IComponentProps CreateProps(winrt::Microsoft::ReactNative::ViewProps props) {
-    return winrt::make<CustomProps>(props);
-  }
-
-  winrt::Microsoft::ReactNative::Composition::ICompositionViewComponent CreateViewComponent() {
-    return winrt::make<CustomComponent>();
-  }
 };
 
 // Work around crash in DeviceInfo when running outside of XAML environment
@@ -127,8 +123,7 @@ struct CompReactPackageProvider
   void CreatePackage(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept {
     packageBuilder.AddTurboModule(L"DeviceInfo", winrt::Microsoft::ReactNative::MakeModuleProvider<DeviceInfo>());
 
-    packageBuilder.as<winrt::Microsoft::ReactNative::IReactPackageBuilderFabric>().AddViewComponent(
-        winrt::make<CustomNativeComponentDescriptor>().as<winrt::Microsoft::ReactNative::IViewComponentDescriptor>());
+    CustomComponent::RegisterViewComponent(packageBuilder);
   }
 };
 

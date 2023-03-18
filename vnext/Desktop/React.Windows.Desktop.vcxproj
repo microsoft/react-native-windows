@@ -160,9 +160,9 @@
     <Midl Condition="'$(UseFabric)' == 'true'" Include="..\Microsoft.ReactNative\CompositionRootView.idl" />
     <Midl Condition="'$(UseFabric)' == 'true'" Include="..\Microsoft.ReactNative\CompositionSwitcher.idl" />
     <Midl Condition="'$(UseFabric)' == 'true'" Include="..\Microsoft.ReactNative\CompositionUIService.idl" />
-    <Midl Condition="'$(UseFabric)' == 'true'" Include="..\Microsoft.ReactNative\CompositionViewComponent.idl" />
+    <Midl Condition="'$(UseFabric)' == 'true'" Include="..\Microsoft.ReactNative\IReactCompositionViewComponentBuilder.idl" />
     <Midl Condition="'$(UseFabric)' == 'true'" Include="..\Microsoft.ReactNative\IReactPackageBuilderFabric.idl" />
-    <Midl Condition="'$(UseFabric)' == 'true'" Include="..\Microsoft.ReactNative\ViewComponentDescriptor.idl" />
+    <Midl Condition="'$(UseFabric)' == 'true'" Include="..\Microsoft.ReactNative\IReactViewComponentBuilder.idl" />
     <Midl Condition="'$(UseFabric)' == 'true'" Include="..\Microsoft.ReactNative\ViewProps.idl" />
   </ItemGroup>
   <ItemGroup>

@@ -54,12 +54,16 @@ m_componentDescriptorRegistry->add(facebook::react::concreteComponentDescriptorP
 }
 
 void WindowsComponentDescriptorRegistry::Add(
-    winrt::Microsoft::ReactNative::IViewComponentDescriptor const &descriptor) noexcept {
-  m_descriptorFlavors.emplace_back(std::make_shared<std::string>(winrt::to_string(descriptor.ComponentName())));
+    winrt::hstring componentName,
+    winrt::Microsoft::ReactNative::ReactViewComponentProvider const &provider) noexcept {
+  auto builder = winrt::make<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder>();
+  provider(builder);
+
+  m_descriptorFlavors.emplace_back(std::make_shared<std::string>(winrt::to_string(componentName)));
   auto handle = reinterpret_cast<facebook::react::ComponentHandle>(
       facebook::react::ComponentName(m_descriptorFlavors.back()->c_str()));
-  m_userDescriptorsByName.emplace(m_descriptorFlavors.back(), descriptor);
-  m_userDescriptorsByHandle.emplace(handle, descriptor);
+  m_builderByName.emplace(m_descriptorFlavors.back(), builder);
+  m_builderByHandle.emplace(handle, builder);
   m_componentDescriptorRegistry->add(
       {handle,
        m_descriptorFlavors.back()->c_str(),
@@ -67,14 +71,14 @@ void WindowsComponentDescriptorRegistry::Add(
        &facebook::react::concreteComponentDescriptorConstructor<AbiViewComponentDescriptor>});
 }
 
-winrt::Microsoft::ReactNative::IViewComponentDescriptor WindowsComponentDescriptorRegistry::GetDescriptor(
+winrt::Microsoft::ReactNative::IReactViewComponentBuilder WindowsComponentDescriptorRegistry::GetDescriptor(
     std::shared_ptr<std::string const> &flavor) const noexcept {
-  return m_userDescriptorsByName.at(flavor);
+  return m_builderByName.at(flavor);
 }
 
-winrt::Microsoft::ReactNative::IViewComponentDescriptor WindowsComponentDescriptorRegistry::GetDescriptor(
+winrt::Microsoft::ReactNative::IReactViewComponentBuilder WindowsComponentDescriptorRegistry::GetDescriptor(
     facebook::react::ComponentHandle handle) const noexcept {
-  return m_userDescriptorsByHandle.at(handle);
+  return m_builderByHandle.at(handle);
 }
 
 std::shared_ptr<facebook::react::ComponentDescriptorProviderRegistry>

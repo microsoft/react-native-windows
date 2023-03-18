@@ -85,7 +85,7 @@ class AbiViewComponentDescriptor : public facebook::react::ComponentDescriptor {
   virtual void adopt(facebook::react::ShadowNode::Unshared const &shadowNode) const;
 
  private:
-  winrt::Microsoft::ReactNative::IViewComponentDescriptor m_userDescriptor;
+  winrt::Microsoft::ReactNative::IReactViewComponentBuilder m_builder;
 };
 
 } // namespace Microsoft::ReactNative

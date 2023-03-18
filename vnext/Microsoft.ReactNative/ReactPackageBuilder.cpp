@@ -58,8 +58,10 @@ void ReactPackageBuilder::AddTurboModule(
 }
 
 #ifdef USE_FABRIC
-void ReactPackageBuilder::AddViewComponent(IViewComponentDescriptor const &descriptor) noexcept {
-  m_componentRegistry->Add(descriptor);
+void ReactPackageBuilder::AddViewComponent(
+    winrt::hstring componentName,
+    ReactViewComponentProvider const &viewComponentProvider) noexcept {
+  m_componentRegistry->Add(componentName, viewComponentProvider);
 }
 #endif
 } // namespace winrt::Microsoft::ReactNative

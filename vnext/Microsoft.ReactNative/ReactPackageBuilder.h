@@ -42,7 +42,7 @@ struct ReactPackageBuilder : winrt::implements<
 
 #ifdef USE_FABRIC
   // IReactPackageBuilderFabric
-  void AddViewComponent(IViewComponentDescriptor const &descriptor) noexcept;
+  void AddViewComponent(winrt::hstring componentName, ReactViewComponentProvider const &viewComponentProvider) noexcept;
 #endif // USE_FABRIC
 
  private:

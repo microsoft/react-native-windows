@@ -70,9 +70,7 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
     auto descriptor =
         WindowsComponentDescriptorRegistry::FromProperties(m_context.Properties())->GetDescriptor(componentHandle);
     view = std::make_shared<AbiCompositionViewComponentView>(
-        compContext,
-        tag,
-        descriptor.as<winrt::Microsoft::ReactNative::ICompositionViewComponentDescriptor>().CreateViewComponent());
+        compContext, tag, descriptor.as<winrt::Microsoft::ReactNative::IReactViewComponentBuilder>());
   }
 
   auto it = m_registry.insert({tag, ComponentViewDescriptor{view}});

@@ -9,6 +9,8 @@
 #include <Microsoft.ReactNative.Cxx/ReactContext.h>
 #include "CompositionViewComponentView.h"
 
+#include <Fabric/Composition/ReactCompositionViewComponentBuilder.h>
+
 #include <react/components/rnwcore/ShadowNodes.h>
 
 namespace Microsoft::ReactNative {
@@ -18,7 +20,7 @@ struct AbiCompositionViewComponentView : CompositionBaseComponentView {
   AbiCompositionViewComponentView(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
-      winrt::Microsoft::ReactNative::Composition::ICompositionViewComponent userComponent);
+      winrt::Microsoft::ReactNative::IReactViewComponentBuilder builder);
 
   void mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
   void unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
@@ -41,7 +43,10 @@ struct AbiCompositionViewComponentView : CompositionBaseComponentView {
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
 
  private:
-  winrt::Microsoft::ReactNative::Composition::ICompositionViewComponent m_userComponent;
+  winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder& Builder() noexcept;
+
+  winrt::IInspectable m_handle;
+  winrt::Microsoft::ReactNative::IReactViewComponentBuilder m_builder;
   std::shared_ptr<AbiViewProps const> m_props;
   winrt::Microsoft::ReactNative::Composition::IVisual m_visual{nullptr};
 };
