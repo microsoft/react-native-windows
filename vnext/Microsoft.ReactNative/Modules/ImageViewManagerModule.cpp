@@ -37,14 +37,15 @@ winrt::com_ptr<IWICBitmapSource> wicBitmapSourceFromStream(
 winrt::fire_and_forget GetImageSizeAsync(
     std::string uriString,
     winrt::Microsoft::ReactNative::JSValue &&headers,
-    Mso::Functor<void(int32_t width, int32_t height)> successCallback,
-    Mso::Functor<void()> errorCallback
+    Mso::Functor<void(int32_t width, int32_t height, bool succeeded)> callback
 #ifdef USE_FABRIC
     ,
     bool useFabric
 #endif // USE_FABRIC
 ) {
   bool succeeded{false};
+  int32_t width{};
+  int32_t height{};
 
   try {
     ReactImageSource source;
@@ -75,15 +76,17 @@ winrt::fire_and_forget GetImageSizeAsync(
         co_await bitmap.SetSourceAsync(memoryStream);
       }
       if (bitmap) {
-        successCallback(bitmap.PixelWidth(), bitmap.PixelHeight());
+        width = bitmap.PixelWidth();
+        height = bitmap.PixelHeight();
         succeeded = true;
       }
 #ifdef USE_FABRIC
     } else {
-      UINT width, height;
+      UINT bmpWidth, bmpHeight;
       auto wicBmpSource = wicBitmapSourceFromStream(memoryStream);
-      if (SUCCEEDED(wicBmpSource->GetSize(&width, &height))) {
-        successCallback(width, height);
+      if (SUCCEEDED(wicBmpSource->GetSize(&bmpWidth, &bmpHeight))) {
+        width = static_cast<int32_t>(bmpWidth);
+        height = static_cast<int32_t>(bmpHeight);
         succeeded = true;
       }
     }
@@ -91,8 +94,7 @@ winrt::fire_and_forget GetImageSizeAsync(
   } catch (winrt::hresult_error const &) {
   }
 
-  if (!succeeded)
-    errorCallback();
+  callback(width, height, succeeded);
 
   co_return;
 }
@@ -107,13 +109,14 @@ void ImageLoader::getSize(std::string uri, React::ReactPromise<std::vector<doubl
         GetImageSizeAsync(
             std::move(uri),
             {},
-            [result, context](double width, double height) noexcept {
-              context.JSDispatcher().Post([result = std::move(result), width, height]() noexcept {
-                result.Resolve(std::vector<double>{width, height});
-              });
-            },
-            [result, context]() noexcept {
-              context.JSDispatcher().Post([result = std::move(result)]() noexcept { result.Reject("Failed"); });
+            [result = std::move(result), context](double width, double height, bool succeeded) noexcept {
+              if (succeeded) {
+                context.JSDispatcher().Post([result = std::move(result), width, height]() noexcept {
+                  result.Resolve(std::vector<double>{width, height});
+                });
+              } else {
+                context.JSDispatcher().Post([result = std::move(result)]() noexcept { result.Reject("Failed"); });
+              }
             }
 #ifdef USE_FABRIC
             ,
@@ -135,14 +138,15 @@ void ImageLoader::getSizeWithHeaders(
     GetImageSizeAsync(
         std::move(uri),
         std::move(headers),
-        [result, context](double width, double height) noexcept {
-          context.JSDispatcher().Post([result = std::move(result), width, height]() noexcept {
-            result.Resolve(
-                Microsoft::ReactNativeSpecs::ImageLoaderIOSSpec_getSizeWithHeaders_returnType{width, height});
-          });
-        },
-        [result, context]() noexcept {
-          context.JSDispatcher().Post([result = std::move(result)]() noexcept { result.Reject("Failed"); });
+        [result = std::move(result), context](double width, double height, bool succeeded) noexcept {
+          if (succeeded) {
+            context.JSDispatcher().Post([result = std::move(result), width, height]() noexcept {
+              result.Resolve(
+                  Microsoft::ReactNativeSpecs::ImageLoaderIOSSpec_getSizeWithHeaders_returnType{width, height});
+            });
+          } else {
+            context.JSDispatcher().Post([result = std::move(result)]() noexcept { result.Reject("Failed"); });
+          }
         }
 #ifdef USE_FABRIC
         ,
