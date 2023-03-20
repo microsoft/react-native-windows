@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Avoid copying ReactPromise in ImageLoader module",
+  "packageName": "react-native-windows",
+  "email": "ericroz@meta.com",
+  "dependentChangeType": "patch"
+}
