@@ -313,6 +313,12 @@
       "baseHash": "7d162bb43bce3f9da78b7c304530b3f804d21658"
     },
     {
+      "type": "derived",
+      "file": "src/Libraries/Components/ScrollView/ScrollViewNativeComponent.windows.js",
+      "baseFile": "Libraries/Components/ScrollView/ScrollViewNativeComponent.js",
+      "baseHash": "2687db4c3ff9516440a308bb9da23b0421a8f49b"
+    },
+    {
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
