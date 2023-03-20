@@ -9,7 +9,7 @@
 
 import type * as React from 'react';
 import {Constructor} from 'react-native/types/private/Utilities';
-import {ViewProps} from './ViewPropTypes';
+import {ViewProps} from './ViewPropTypes.win32';
 import {NativeMethods} from 'react-native/types/public/ReactNativeTypes';
 
 /**
