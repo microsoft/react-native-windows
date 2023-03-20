@@ -47,7 +47,7 @@ const Bootstrap = () => {
         borderWidth: 2,
         gap: 5,
       }}>
-      <MyCustomComponent label="test" style={{width: 50, height: 50}} />
+      <MyCustomComponent label="test" style={{width: 500, height: 500}} />
     </View>
   );
 };

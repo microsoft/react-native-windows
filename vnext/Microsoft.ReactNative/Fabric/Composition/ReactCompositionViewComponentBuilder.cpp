@@ -51,46 +51,45 @@ void ReactCompositionViewComponentBuilder::SetMessageHandler(MessageHandler impl
   m_messageHandler = impl;
 }
 
-winrt::IInspectable ReactCompositionViewComponentBuilder::CreateView(ICompositionContext context) noexcept
-{
+winrt::Windows::Foundation::IInspectable ReactCompositionViewComponentBuilder::CreateView(
+    ICompositionContext context) noexcept {
   return m_createView(context);
 }
 
 bool ReactCompositionViewComponentBuilder::HandeCommand(
-  winrt::IInspectable handle,
-  winrt::hstring commandName,
-  IJSValueReader args) noexcept
-{
+    winrt::Windows::Foundation::IInspectable handle,
+    winrt::hstring commandName,
+    IJSValueReader args) noexcept {
   if (!m_commandHandler) {
     return false;
   }
   return m_commandHandler(handle, commandName, args);
 }
 
-void ReactCompositionViewComponentBuilder::UpdateProps(winrt::IInspectable handle, IComponentProps props) noexcept
-{
+void ReactCompositionViewComponentBuilder::UpdateProps(
+    winrt::Windows::Foundation::IInspectable handle,
+    IComponentProps props) noexcept {
   m_propsUpdater(handle, props);
 }
 
 void ReactCompositionViewComponentBuilder::UpdateLayoutMetrics(
-  winrt::IInspectable handle,
-  Composition::LayoutMetrics metrics) noexcept
-{
+    winrt::Windows::Foundation::IInspectable handle,
+    Composition::LayoutMetrics metrics) noexcept {
   m_layoutMetricsUpdater(handle, metrics);
 }
 
-void ReactCompositionViewComponentBuilder::FinalizeUpdates(winrt::IInspectable handle) noexcept {
+void ReactCompositionViewComponentBuilder::FinalizeUpdates(winrt::Windows::Foundation::IInspectable handle) noexcept {
   if (m_finalizer) {
     m_finalizer(handle);
   }
 }
 
-IVisual ReactCompositionViewComponentBuilder::CreateVisual(winrt::IInspectable handle) noexcept {
+IVisual ReactCompositionViewComponentBuilder::CreateVisual(winrt::Windows::Foundation::IInspectable handle) noexcept {
   return m_visualCreator(handle);
 }
 
 int64_t ReactCompositionViewComponentBuilder::SendMessage(
-  winrt::IInspectable handle,
+    winrt::Windows::Foundation::IInspectable handle,
     uint32_t msg,
     uint64_t wparam,
     int64_t lparam) noexcept {

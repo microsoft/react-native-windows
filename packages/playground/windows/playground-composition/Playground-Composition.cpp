@@ -19,6 +19,7 @@
 
 #include <winrt/Microsoft.ReactNative.Composition.h>
 #include <winrt/Windows.UI.Composition.Desktop.h>
+#include <winrt/Windows.UI.Composition.h>
 
 #include "NativeModules.h"
 #include "ReactPropertyBag.h"
@@ -54,8 +55,53 @@ struct CustomComponent : winrt::implements<CustomComponent, winrt::IInspectable>
 
   winrt::Microsoft::ReactNative::Composition::IVisual CreateVisual() noexcept {
     m_visual = m_compContext.CreateSpriteVisual();
-    m_visual.Brush(m_compContext.CreateColorBrush(winrt::Windows::UI::Colors::Green()));
+    m_visual.Brush(m_compContext.CreateColorBrush(winrt::Windows::UI::Colors::White()));
+
+    auto compositor =
+        winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerCompositor(m_compContext);
+
+    m_spotlight = compositor.CreateSpotLight();
+    m_spotlight.InnerConeAngleInDegrees(50.0f);
+    m_spotlight.InnerConeColor(winrt::Windows::UI::Colors::FloralWhite());
+    m_spotlight.InnerConeIntensity(5.0f);
+    m_spotlight.OuterConeAngleInDegrees(0.0f);
+    m_spotlight.ConstantAttenuation(1.0f);
+    m_spotlight.LinearAttenuation(0.253f);
+    m_spotlight.QuadraticAttenuation(0.58f);
+    m_spotlight.CoordinateSpace(
+        winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerVisual(m_visual));
+    m_spotlight.Targets().Add(
+        winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerVisual(m_visual));
+
+    auto animation = compositor.CreateVector3KeyFrameAnimation();
+    auto easeIn = compositor.CreateCubicBezierEasingFunction({0.5f, 0.0f}, {1.0f, 1.0f});
+    animation.InsertKeyFrame(0.00f, {100.0f, 100.0f, 35.0f});
+    animation.InsertKeyFrame(0.25f, {300.0f, 200.0f, 75.0f}, easeIn);
+    animation.InsertKeyFrame(0.50f, {050.0f, 300.0f, 15.0f}, easeIn);
+    animation.InsertKeyFrame(0.75f, {300.0f, 050.0f, 75.0f}, easeIn);
+    animation.InsertKeyFrame(1.00f, {100.0f, 100.0f, 35.0f}, easeIn);
+    animation.Duration(std::chrono::milliseconds(4000));
+    animation.IterationBehavior(winrt::Windows::UI::Composition::AnimationIterationBehavior::Forever);
+
+    m_spotlight.StartAnimation(L"Offset", animation);
+
     return m_visual;
+  }
+
+  // TODO - Once we get more complete native eventing we can move spotlight based on pointer position
+  int64_t SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
+    if (msg == WM_MOUSEMOVE) {
+      auto x = GET_X_LPARAM(lParam);
+      auto y = GET_Y_LPARAM(lParam);
+
+      m_spotlight.Offset({(float)x, (float)y, 15.0f});
+
+      // m_propSet.InsertVector2(L"Position", {x, y});
+      //  TODO expose coordinate translation methods
+      //  TODO convert x/y into local coordinates
+    }
+
+    return 0;
   }
 
   static void RegisterViewComponent(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) {
@@ -67,23 +113,31 @@ struct CustomComponent : winrt::implements<CustomComponent, winrt::IInspectable>
               builder.as<winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder>();
           compBuilder.SetCreateView(
               [](winrt::Microsoft::ReactNative::Composition::ICompositionContext context) noexcept {
-            return winrt::make<CustomComponent>(context);
-          });
-          compBuilder.SetPropsUpdater(
-              [](winrt::IInspectable handle, winrt::Microsoft::ReactNative::IComponentProps props) noexcept {
-                handle.as<CustomComponent>()->UpdateProps(props);
+                return winrt::make<CustomComponent>(context);
               });
+          compBuilder.SetPropsUpdater([](winrt::Windows::Foundation::IInspectable handle,
+                                         winrt::Microsoft::ReactNative::IComponentProps props) noexcept {
+            handle.as<CustomComponent>()->UpdateProps(props);
+          });
           compBuilder.SetLayoutMetricsUpdater(
-              [](winrt::IInspectable handle,
+              [](winrt::Windows::Foundation::IInspectable handle,
                  winrt::Microsoft::ReactNative::Composition::LayoutMetrics metrics) noexcept {
                 handle.as<CustomComponent>()->UpdateLayoutMetrics(metrics);
               });
-          compBuilder.SetVisualCreator(
-              [](winrt::IInspectable handle) noexcept { return handle.as<CustomComponent>()->CreateVisual(); });
+          compBuilder.SetVisualCreator([](winrt::Windows::Foundation::IInspectable handle) noexcept {
+            return handle.as<CustomComponent>()->CreateVisual();
+          });
+          compBuilder.SetMessageHandler(
+              [](winrt::Windows::Foundation::IInspectable handle,
+                 uint32_t Msg,
+                 uint64_t WParam,
+                 int64_t LParam) noexcept { return handle.as<CustomComponent>()->SendMessage(Msg, WParam, LParam); });
         });
   }
 
  private:
+  winrt::Windows::UI::Composition::SpotLight m_spotlight{nullptr};
+
   winrt::Microsoft::ReactNative::Composition::SpriteVisual m_visual{nullptr};
   winrt::Microsoft::ReactNative::Composition::ICompositionContext m_compContext;
 };

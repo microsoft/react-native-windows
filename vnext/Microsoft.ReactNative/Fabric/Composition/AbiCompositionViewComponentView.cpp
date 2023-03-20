@@ -24,8 +24,7 @@ AbiCompositionViewComponentView::AbiCompositionViewComponentView(
 }
 
 winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder &
-AbiCompositionViewComponentView::Builder() noexcept
-{
+AbiCompositionViewComponentView::Builder() noexcept {
   return *winrt::get_self<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder>(m_builder);
 }
 
@@ -64,12 +63,12 @@ void AbiCompositionViewComponentView::updateLayoutMetrics(
 
   winrt::Microsoft::ReactNative::Composition::LayoutMetrics lm;
   Builder().UpdateLayoutMetrics(
-          m_handle,
-          {{layoutMetrics.frame.origin.x,
-            layoutMetrics.frame.origin.y,
-            layoutMetrics.frame.size.width,
-            layoutMetrics.frame.size.height},
-           layoutMetrics.pointScaleFactor});
+      m_handle,
+      {{layoutMetrics.frame.origin.x,
+        layoutMetrics.frame.origin.y,
+        layoutMetrics.frame.size.width,
+        layoutMetrics.frame.size.height},
+       layoutMetrics.pointScaleFactor});
 
   m_layoutMetrics = layoutMetrics;
 }
@@ -89,6 +88,10 @@ void AbiCompositionViewComponentView::finalizeUpdates(RNComponentViewUpdateMask 
 
 bool AbiCompositionViewComponentView::focusable() const noexcept {
   return m_props->focusable;
+}
+
+int64_t AbiCompositionViewComponentView::sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
+  return Builder().SendMessage(m_handle, msg, wParam, lParam);
 }
 
 std::vector<facebook::react::ComponentDescriptorProvider>

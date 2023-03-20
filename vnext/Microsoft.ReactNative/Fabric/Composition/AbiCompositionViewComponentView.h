@@ -36,6 +36,7 @@ struct AbiCompositionViewComponentView : CompositionBaseComponentView {
   void finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept override;
   void prepareForRecycle() noexcept override;
   bool focusable() const noexcept override;
+  int64_t sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept override;
   std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept
       override;
   facebook::react::Props::Shared props() noexcept override;
@@ -43,7 +44,7 @@ struct AbiCompositionViewComponentView : CompositionBaseComponentView {
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
 
  private:
-  winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder& Builder() noexcept;
+  winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder &Builder() noexcept;
 
   winrt::IInspectable m_handle;
   winrt::Microsoft::ReactNative::IReactViewComponentBuilder m_builder;
