@@ -73,7 +73,7 @@ struct WindowData {
         static HINSTANCE s_instance;
         static constexpr uint16_t defaultDebuggerPort = 9229;
 
-        std::wstring m_bundleFile = LR"(Samples\rntester)";
+        std::wstring m_bundleFile = LR"(index)";
         bool m_windowInited{false};
         winrt::Microsoft::ReactNative::CompositionHwndHost m_CompositionHwndHost{nullptr};
         winrt::Microsoft::ReactNative::ReactNativeHost m_host{nullptr};
