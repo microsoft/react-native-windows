@@ -17,8 +17,15 @@
 #include <windows.ui.composition.interop.h>
 
 #include <unicode.h>
+#include "CompositionDynamicAutomationProvider.h"
 
 namespace Microsoft::ReactNative {
+
+std::shared_ptr<ScrollViewComponentView> ScrollViewComponentView::Create(
+    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    facebook::react::Tag tag) noexcept {
+  return std::shared_ptr<ScrollViewComponentView>(new ScrollViewComponentView(compContext, tag));
+}
 
 ScrollViewComponentView::ScrollViewComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
@@ -342,6 +349,15 @@ facebook::react::Tag ScrollViewComponentView::hitTest(facebook::react::Point pt,
 
 winrt::Microsoft::ReactNative::Composition::IVisual ScrollViewComponentView::Visual() const noexcept {
   return m_visual;
+}
+
+winrt::IInspectable ScrollViewComponentView::EnsureUiaProvider() noexcept {
+  if (m_uiaProvider == nullptr) {
+    // m_uiaProvider = winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>(
+    //    shared_from_this());
+    // TODO:
+  }
+  return m_uiaProvider;
 }
 
 } // namespace Microsoft::ReactNative

@@ -21,6 +21,7 @@
 #include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/Windows.Web.Http.h>
 #include "CompositionHelpers.h"
+#include "CompositionDynamicAutomationProvider.h"
 
 extern "C" HRESULT WINAPI WICCreateImagingFactory_Proxy(UINT SDKVersion, IWICImagingFactory **ppIWICImagingFactory);
 
@@ -408,6 +409,21 @@ winrt::Microsoft::ReactNative::Composition::IVisual ImageComponentView::Visual()
 
 bool ImageComponentView::focusable() const noexcept {
   return m_props->focusable;
+}
+
+std::shared_ptr<ImageComponentView> ImageComponentView::Create(
+    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    facebook::react::Tag tag,
+    winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
+  return std::shared_ptr<ImageComponentView>(new ImageComponentView(compContext, tag, reactContext));
+}
+
+winrt::IInspectable ImageComponentView::EnsureUiaProvider() noexcept {
+  if (m_uiaProvider == nullptr) {
+    m_uiaProvider = winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>(
+        shared_from_this());
+  }
+  return m_uiaProvider;
 }
 
 } // namespace Microsoft::ReactNative

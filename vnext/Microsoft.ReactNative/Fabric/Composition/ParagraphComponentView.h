@@ -18,9 +18,10 @@ namespace Microsoft::ReactNative {
 
 struct ParagraphComponentView : CompositionBaseComponentView {
   using Super = CompositionBaseComponentView;
-  ParagraphComponentView(
+
+  [[nodiscard]] static std::shared_ptr<ParagraphComponentView> Create(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-      facebook::react::Tag tag);
+      facebook::react::Tag tag) noexcept;
 
   std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept
       override;
@@ -43,7 +44,13 @@ struct ParagraphComponentView : CompositionBaseComponentView {
 
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
 
+  winrt::IInspectable EnsureUiaProvider() noexcept override;
+
  private:
+  ParagraphComponentView(
+      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      facebook::react::Tag tag);
+
   void ensureVisual() noexcept;
   void updateVisualBrush() noexcept;
   void DrawText() noexcept;

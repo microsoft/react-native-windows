@@ -51,9 +51,12 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
 */
 
   using Super = CompositionBaseComponentView;
-  ScrollViewComponentView(
+
+  [[nodiscard]] static std::shared_ptr<ScrollViewComponentView> Create(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-      facebook::react::Tag tag);
+      facebook::react::Tag tag) noexcept;
+
+  winrt::IInspectable EnsureUiaProvider() noexcept override;
 
   std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept
       override;
@@ -78,6 +81,10 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   bool ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept override;
 
  private:
+  ScrollViewComponentView(
+      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      facebook::react::Tag tag);
+
   void ensureVisual() noexcept;
   void updateContentVisualSize() noexcept;
 

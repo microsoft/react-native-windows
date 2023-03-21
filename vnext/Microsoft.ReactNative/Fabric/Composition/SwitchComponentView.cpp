@@ -5,6 +5,7 @@
 #pragma once
 
 #include "SwitchComponentView.h"
+#include "CompositionDynamicAutomationProvider.h"
 
 namespace Microsoft::ReactNative {
 
@@ -14,6 +15,13 @@ SwitchComponentView::SwitchComponentView(
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
     : Super(compContext, tag), m_context(reactContext) {
   m_props = std::make_shared<facebook::react::SwitchProps const>();
+}
+
+std::shared_ptr<SwitchComponentView> SwitchComponentView::Create(
+    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    facebook::react::Tag tag,
+    winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
+  return std::shared_ptr<SwitchComponentView>(new SwitchComponentView(compContext, tag, reactContext));
 }
 
 std::vector<facebook::react::ComponentDescriptorProvider>
@@ -242,6 +250,14 @@ int64_t SwitchComponentView::sendMessage(uint32_t msg, uint64_t wParam, int64_t 
 
 bool SwitchComponentView::focusable() const noexcept {
   return m_props->focusable;
+}
+
+winrt::IInspectable SwitchComponentView::EnsureUiaProvider() noexcept {
+  if (m_uiaProvider == nullptr) {
+    m_uiaProvider = winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>(
+        shared_from_this());
+  }
+  return m_uiaProvider;
 }
 
 } // namespace Microsoft::ReactNative

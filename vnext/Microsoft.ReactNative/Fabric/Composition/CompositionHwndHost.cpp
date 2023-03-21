@@ -15,6 +15,7 @@
 #include "ReactNativeHost.h"
 
 #include "CompositionRootView.h"
+#include "CompositionRootAutomationProvider.h"
 
 WINUSERAPI UINT WINAPI GetDpiForWindow(_In_ HWND hwnd);
 
@@ -151,7 +152,12 @@ winrt::Windows::UI::Composition::Compositor CompositionHwndHost::Compositor() co
 
 IInspectable CompositionHwndHost::UiaProvider() noexcept {
   auto compRootView = winrt::get_self<implementation::CompositionRootView>(m_compRootView);
-  return compRootView->GetUiaProvider(reinterpret_cast<uint64_t>(m_hwnd));
+  auto provider = compRootView->GetUiaProvider();
+  auto pRootProvider = static_cast<CompositionRootAutomationProvider*>(provider.as<IRawElementProviderSimple>().get());
+  if (pRootProvider != nullptr) {
+    pRootProvider->SetHwnd(m_hwnd);
+  }
+  return provider;
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

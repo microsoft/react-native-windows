@@ -2,7 +2,8 @@
 
 #include <UIAutomation.h>
 #include <inspectable.h>
-#include <Fabric/ComponentView.h>
+#include <Fabric/Composition/CompositionViewComponentView.h>
+#include <Fabric/ReactTaggedView.h>
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
@@ -10,10 +11,10 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
   CompositionDynamicAutomationProvider,
   IInspectable,
   IRawElementProviderFragment,
-  IRawElementProviderSimple2> {
+  IRawElementProviderSimple> {
 
 public:
-  CompositionDynamicAutomationProvider(const std::shared_ptr<IComponentView>& componentView) noexcept;
+  CompositionDynamicAutomationProvider(const std::shared_ptr<::Microsoft::ReactNative::CompositionBaseComponentView>& componentView) noexcept;
 
   // inherited via IRawElementProviderFragment
   virtual HRESULT __stdcall Navigate(NavigateDirection direction, IRawElementProviderFragment **pRetVal) override;
@@ -28,12 +29,11 @@ public:
   virtual HRESULT __stdcall GetPatternProvider(PATTERNID patternId, IUnknown **pRetVal) override;
   virtual HRESULT __stdcall GetPropertyValue(PROPERTYID propertyId, VARIANT *pRetVal) override;
   virtual HRESULT __stdcall get_HostRawElementProvider(IRawElementProviderSimple **pRetVal) override;
-  virtual HRESULT __stdcall ShowContextMenu() noexcept override;
+  // virtual HRESULT __stdcall ShowContextMenu() noexcept override;
 
 
 private:
-
-  ReactTaggedView m_view;
+  ::Microsoft::ReactNative::ReactTaggedView m_view;
 
 };
 

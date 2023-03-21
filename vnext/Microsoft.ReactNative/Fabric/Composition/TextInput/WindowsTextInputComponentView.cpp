@@ -15,6 +15,7 @@
 #include "WindowsTextInputShadowNode.h"
 #include "WindowsTextInputState.h"
 #include "guid/msoGuid.h"
+#include <Fabric/Composition/CompositionDynamicAutomationProvider.h>
 
 // convert a BSTR to a std::string.
 std::string &BstrToStdString(const BSTR bstr, std::string &dst, int cp = CP_UTF8) {
@@ -1072,6 +1073,22 @@ void WindowsTextInputComponentView::ensureVisual() noexcept {
 
 winrt::Microsoft::ReactNative::Composition::IVisual WindowsTextInputComponentView::Visual() const noexcept {
   return m_visual;
+}
+
+winrt::IInspectable WindowsTextInputComponentView::EnsureUiaProvider() noexcept {
+  if (m_uiaProvider == nullptr) {
+    m_uiaProvider = winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>(
+        shared_from_this());
+  }
+  return m_uiaProvider;
+}
+
+std::shared_ptr<WindowsTextInputComponentView> WindowsTextInputComponentView::Create(
+    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    facebook::react::Tag tag,
+    winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
+  return std::shared_ptr<WindowsTextInputComponentView>(
+      new WindowsTextInputComponentView(compContext, tag, reactContext));
 }
 
 } // namespace Microsoft::ReactNative

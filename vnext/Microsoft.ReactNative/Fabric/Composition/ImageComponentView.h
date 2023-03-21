@@ -29,10 +29,11 @@ struct WindowsImageResponseObserver;
 
 struct ImageComponentView : CompositionBaseComponentView {
   using Super = CompositionBaseComponentView;
-  ImageComponentView(
+
+  [[nodiscard]] static std::shared_ptr<ImageComponentView> Create(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
-      winrt::Microsoft::ReactNative::ReactContext const &reactContext);
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
   std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept
       override;
@@ -54,7 +55,14 @@ struct ImageComponentView : CompositionBaseComponentView {
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
   bool focusable() const noexcept override;
 
+  winrt::IInspectable EnsureUiaProvider() noexcept override;
+
  private:
+  ImageComponentView(
+      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      facebook::react::Tag tag,
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext);
+
   struct WindowsImageResponseObserver : facebook::react::ImageResponseObserver {
    public:
     WindowsImageResponseObserver(std::shared_ptr<ImageComponentView> image);

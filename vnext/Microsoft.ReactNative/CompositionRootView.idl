@@ -70,7 +70,7 @@ namespace Microsoft.ReactNative
 
     Int64 SendMessage(UInt32 Msg, UInt64 WParam, Int64 LParam);
 
-    Object GetUiaProvider(UInt64 hwnd);
+    Object GetUiaProvider();
 
     //void OnPointerPressed(PointerPressedArgs args);
     //void OnMouseUp(Windows.Foundation.Point point);

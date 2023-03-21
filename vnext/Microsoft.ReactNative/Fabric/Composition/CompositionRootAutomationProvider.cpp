@@ -1,20 +1,17 @@
 #include "pch.h"
 #include "CompositionRootAutomationProvider.h"
 
-#include "Fabric/Composition/CompositionRootView.h"
-
 namespace winrt::Microsoft::ReactNative::implementation {
 
 CompositionRootAutomationProvider::CompositionRootAutomationProvider(
-    winrt::weak_ref<winrt::Microsoft::ReactNative::implementation::CompositionRootView> &&weakRootControl,
-    HWND hwnd) noexcept
-    : m_weakRootControl{std::move(weakRootControl)}, m_hwnd{hwnd} {}
+    const std::shared_ptr<::Microsoft::ReactNative::RootComponentView> &componentView) noexcept
+    : m_view{componentView} {}
 
 // Implementations should return NULL for a top-level element that is hosted in a window. Other elements should return
 // an array that contains UiaAppendRuntimeId (defined in Uiautomationcoreapi.h), followed by a value that is unique
 // within an instance of the fragment.
 //
-// We'll use the View pointer as our identifier for those situations
+// We'll use the react tag as our identifier for those situations
 HRESULT __stdcall CompositionRootAutomationProvider::GetRuntimeId(SAFEARRAY **pRetVal) {
   if (pRetVal == nullptr)
     return E_POINTER;
@@ -111,6 +108,10 @@ HRESULT __stdcall CompositionRootAutomationProvider::GetFocus(IRawElementProvide
   return S_OK;
 }
 
+void CompositionRootAutomationProvider::SetHwnd(HWND hwnd) noexcept {
+  m_hwnd = hwnd;
+}
+
 HRESULT __stdcall CompositionRootAutomationProvider::Navigate(
     NavigateDirection direction,
     IRawElementProviderFragment **pRetVal) {
@@ -119,12 +120,33 @@ HRESULT __stdcall CompositionRootAutomationProvider::Navigate(
 
   *pRetVal = nullptr;
 
-  if (!m_weakRootControl)
+  auto strongRootControl = m_view.view();
+
+  if (!strongRootControl)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  auto strongRootControl = m_weakRootControl.get();
+  winrt::IInspectable uiaProvider{nullptr};
 
+  switch (direction)
+  {
+    case NavigateDirection_LastChild:
+      __fallthrough;
+    case NavigateDirection_FirstChild: {
+      auto children = strongRootControl->children();
+      auto index = direction == NavigateDirection_FirstChild ? 0 : children.size() - 1;
+      if (!children.empty()) {
+        uiaProvider =
+            static_cast<::Microsoft::ReactNative::CompositionBaseComponentView *>(children[index])->EnsureUiaProvider();
+      }
+    }
+    break;
+  }
 
+  if (uiaProvider != nullptr) {
+    winrt::com_ptr<IRawElementProviderFragment> spReps;
+    uiaProvider.as(spReps);
+    *pRetVal = spReps.detach();
+  }
 
   return S_OK;
 }

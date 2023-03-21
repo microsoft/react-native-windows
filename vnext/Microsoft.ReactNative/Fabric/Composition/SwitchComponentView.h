@@ -17,10 +17,11 @@ struct SwitchComponentView;
 
 struct SwitchComponentView : CompositionBaseComponentView {
   using Super = CompositionBaseComponentView;
-  SwitchComponentView(
+
+  [[nodiscard]] static std::shared_ptr<SwitchComponentView> Create(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
-      winrt::Microsoft::ReactNative::ReactContext const &reactContext);
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
   std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept
       override;
@@ -43,7 +44,14 @@ struct SwitchComponentView : CompositionBaseComponentView {
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
   int64_t sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept override;
 
+  winrt::IInspectable EnsureUiaProvider() noexcept override;
+
  private:
+  SwitchComponentView(
+      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      facebook::react::Tag tag,
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext);
+
   void ensureVisual() noexcept;
   void Draw() noexcept;
   void ensureDrawingSurface() noexcept;
