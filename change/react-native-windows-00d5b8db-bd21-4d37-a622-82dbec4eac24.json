@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "CrashManager should also handle SIGABRT",
+  "packageName": "react-native-windows",
+  "email": "tudor.mihai@microsoft.com",
+  "dependentChangeType": "patch"
+}

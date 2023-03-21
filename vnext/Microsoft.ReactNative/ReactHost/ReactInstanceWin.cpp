@@ -449,6 +449,7 @@ void ReactInstanceWin::Initialize() noexcept {
                   strongThis->m_reactContext->Properties());
           devSettings->waitingForDebuggerCallback = GetWaitingForDebuggerCallback();
           devSettings->debuggerAttachCallback = GetDebuggerAttachCallback();
+          devSettings->enableDefaultCrashHandler = m_options.EnableDefaultCrashHandler();
           devSettings->bundleAppId = BundleAppId();
           devSettings->showDevMenuCallback = [weakThis]() noexcept {
             if (auto strongThis = weakThis.GetStrongPtr()) {
