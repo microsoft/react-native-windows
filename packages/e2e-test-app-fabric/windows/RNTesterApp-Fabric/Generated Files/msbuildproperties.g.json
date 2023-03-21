@@ -1,12 +1,8 @@
 {
         "WinUIPackageName": "Microsoft.UI.Xaml",
-<<<<<<< HEAD
         "WinUIPackageVersion": "2.7.0-prerelease.210913003",
-=======
-        "WinUIPackageVersion": "2.7.0",
->>>>>>> 2b4e2ea8b (Shift File Names)
         "WindowsTargetPlatformVersion": "10.0",
         "UseExperimentalNuGet": "false",
         "UseHermes": "true",
         "UseWinUI3": "false"
-      }
+}

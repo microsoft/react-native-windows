@@ -2,38 +2,7 @@
 // Microsoft Visual C++ generated include file.
 // Used by RNTesterApp-Fabric.rc
 
-#define IDS_APP_TITLE			112
-
-#define IDR_MAINFRAME			128
-#define IDD_RNTESTERAPP_DIALOG	113
-#define IDI_RNTESTERAPP			117
-#define IDI_SMALL				118
-#define IDC_RNTESTERAPP			119
-#define IDC_MYICON				2
-#ifndef IDC_STATIC
-#define IDC_STATIC				-1
-#endif
 #define IDC_RNTESTER_COMPOSITION 100
-#define IDD_ABOUTBOX 100
-#define IDC_WEBDEBUGGER 100
-#define IDC_JSBUNDLELIST 100
-#define IDM_ABOUT 100
-#define IDD_SETTINGSBOX 101
-#define IDC_FASTREFRESH 101
-#define IDM_EXIT 101
-#define IDD_OPENJSBUNDLEBOX 102
-#define IDM_OPENJSFILE 102
-#define IDC_DIRECTDEBUGGER 103
-#define IDM_SETTINGS 103
-#define IDC_BREAKONNEXTLINE 104
-#define IDM_REFRESH 104
-#define IDC_JSENGINE 105
-#define IDM_NEWWINDOW 105
-#define IDC_DEBUGGERPORT 106
-#define IDC_DEBUGGERPORTLABEL 107
-#define IDC_THEME 109
-#define IDC_THEMELABEL 110
-#define IDC_JSENGINELABEL 111
 #define IDI_ICON1 1008
 // Next default values for new objects
 //
