@@ -2031,12 +2031,12 @@
     serve-static "^1.13.1"
 
 "@react-native-community/cli-doctor@^10.0.0":
-  version "10.2.0"
-  resolved "https://registry.yarnpkg.com/@react-native-community/cli-doctor/-/cli-doctor-10.2.0.tgz#6050030eea9200ce3c35de360cf8455e126b4d45"
-  integrity sha512-yLxJazUmNSPslHxeeev0gLvsK0nQan8BmGWbtqPz2WwbIbD89vbytC7G96OxiQXr46iWEWAwEJiTTdgA7jlA5Q==
+  version "10.2.1"
+  resolved "https://registry.yarnpkg.com/@react-native-community/cli-doctor/-/cli-doctor-10.2.1.tgz#b6b7a3f0f9cef1a05f1adc6393eb29c6f8f2972c"
+  integrity sha512-IwhdSD+mtgWdxg2eMr0fpkn08XN7r70DC1riGSmqK/DXNyWBzIZlCkDN+/TwlaUEsiFk6LQTjgCiqZSMpmDrsg==
   dependencies:
     "@react-native-community/cli-config" "^10.1.1"
-    "@react-native-community/cli-platform-ios" "^10.2.0"
+    "@react-native-community/cli-platform-ios" "^10.2.1"
     "@react-native-community/cli-tools" "^10.1.1"
     chalk "^4.1.2"
     command-exists "^1.2.8"
@@ -2108,10 +2108,10 @@
     glob "^7.1.3"
     ora "^5.4.1"
 
-"@react-native-community/cli-platform-ios@^10.2.0":
-  version "10.2.0"
-  resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-ios/-/cli-platform-ios-10.2.0.tgz#be21c0e3bbf17358d540cc23e5556bf679f6322e"
-  integrity sha512-hIPK3iL/mL+0ChXmQ9uqqzNOKA48H+TAzg+hrxQLll/6dNMxDeK9/wZpktcsh8w+CyhqzKqVernGcQs7tPeKGw==
+"@react-native-community/cli-platform-ios@^10.2.1":
+  version "10.2.1"
+  resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-ios/-/cli-platform-ios-10.2.1.tgz#2e6bd2cb6d48cbb8720d7b7265bb1bab80745f72"
+  integrity sha512-hz4zu4Y6eyj7D0lnZx8Mf2c2si8y+zh/zUTgCTaPPLzQD8jSZNNBtUUiA1cARm2razpe8marCZ1QbTMAGbf3mg==
   dependencies:
     "@react-native-community/cli-tools" "^10.1.1"
     chalk "^4.1.2"
