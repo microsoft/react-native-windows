@@ -69,13 +69,17 @@ bool ReactCompositionViewComponentBuilder::HandeCommand(
 void ReactCompositionViewComponentBuilder::UpdateProps(
     winrt::Windows::Foundation::IInspectable handle,
     IComponentProps props) noexcept {
-  m_propsUpdater(handle, props);
+  if (m_propsUpdater) {
+    m_propsUpdater(handle, props);
+  }
 }
 
 void ReactCompositionViewComponentBuilder::UpdateLayoutMetrics(
     winrt::Windows::Foundation::IInspectable handle,
     Composition::LayoutMetrics metrics) noexcept {
-  m_layoutMetricsUpdater(handle, metrics);
+  if (m_layoutMetricsUpdater) {
+    m_layoutMetricsUpdater(handle, metrics);
+  }
 }
 
 void ReactCompositionViewComponentBuilder::FinalizeUpdates(winrt::Windows::Foundation::IInspectable handle) noexcept {

@@ -83,10 +83,11 @@ facebook::react::Props::Shared AbiViewComponentDescriptor::cloneProps(
   // auto shadowNodeProps = std::make_shared<ShadowNodeT::Props>(context, rawProps, props);
   auto shadowNodeProps = std::make_shared<AbiViewProps>(
       context, props ? static_cast<AbiViewProps const &>(*props) : AbiViewProps(), rawProps);
+  auto viewProps = winrt::make<winrt::Microsoft::ReactNative::implementation::UserViewProps>(shadowNodeProps);
   auto userProps =
       winrt::get_self<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder>(m_builder)
-          ->CreateProps(winrt::make<winrt::Microsoft::ReactNative::implementation::UserViewProps>(shadowNodeProps));
-  shadowNodeProps->SetUserProps(userProps);
+          ->CreateProps(viewProps);
+  shadowNodeProps->SetUserProps(userProps, viewProps);
 
   rawProps.iterateOverValues(
       [&](facebook::react::RawPropsPropNameHash hash, const char *propName, facebook::react::RawValue const &fn) {

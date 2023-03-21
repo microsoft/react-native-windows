@@ -373,6 +373,7 @@ void FabricUIManager::schedulerDidRequestPreliminaryViewAllocation(
   // the Java boundary.
   // TODO: We should do some perf tests to see if this is worth doing.
 
+  /* -- No sense doing this until we recycle views... since this just throws away the view currently
   if (m_context.UIDispatcher().HasThreadAccess()) {
     m_registry.dequeueComponentViewWithComponentHandle(shadowView.getComponentHandle(), surfaceId, m_compContext);
   } else {
@@ -381,6 +382,7 @@ void FabricUIManager::schedulerDidRequestPreliminaryViewAllocation(
           self->m_registry.dequeueComponentViewWithComponentHandle(componentHandle, surfaceId, self->m_compContext);
         });
   }
+  */
 }
 
 void FabricUIManager::schedulerDidDispatchCommand(
