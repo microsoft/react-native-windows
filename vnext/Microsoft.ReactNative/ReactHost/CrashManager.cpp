@@ -5,6 +5,7 @@
 #include "ReactInstanceWin.h"
 
 #include <winrt/Windows.Storage.h>
+#include <csignal>
 
 #include <WerApi.h>
 
@@ -14,7 +15,7 @@ namespace Mso::React {
 // That should be saved so that if needed it can be called after the new unhandled exception has finished executing.
 // This allows the Windows Error Reporting system to process the error and upload the data for processing.
 static LPTOP_LEVEL_EXCEPTION_FILTER g_previousExceptionFilter = nullptr;
-
+static _crt_signal_t g_previousSignalHandler = SIG_ERR;
 static std::wstring g_logFileName;
 static bool g_WERExceptionFilterWasCalled{false}; // Prevent recursion in the custom handler
 
@@ -29,7 +30,16 @@ extern "C" LONG WINAPI CustomWERExceptionFilter(LPEXCEPTION_POINTERS const excep
 
   CrashManager::OnUnhandledException();
 
+  if (exceptionPointers == nullptr) {
+    return EXCEPTION_EXECUTE_HANDLER;
+  }
+
   return g_previousExceptionFilter(exceptionPointers);
+}
+
+void __cdecl on_sigabrt(int signum) {
+  CustomWERExceptionFilter(nullptr);
+  signal(signum, SIG_DFL);
 }
 
 void InternalRegisterCustomHandler() noexcept {
@@ -47,6 +57,8 @@ void InternalRegisterCustomHandler() noexcept {
   VerifySucceededElseCrash(::WerRegisterFile(g_logFileName.c_str(), WerRegFileTypeOther, WER_FILE_ANONYMOUS_DATA));
 
   g_previousExceptionFilter = ::SetUnhandledExceptionFilter(CustomWERExceptionFilter);
+
+  g_previousSignalHandler = signal(SIGABRT, &on_sigabrt);
 }
 
 void InternalUnregisterCustomHandler() noexcept {
@@ -55,6 +67,10 @@ void InternalUnregisterCustomHandler() noexcept {
   if (g_previousExceptionFilter) {
     ::SetUnhandledExceptionFilter(g_previousExceptionFilter);
     g_previousExceptionFilter = nullptr;
+  }
+
+  if (g_previousSignalHandler != SIG_ERR) {
+    signal(SIGABRT, g_previousSignalHandler);
   }
 }
 
