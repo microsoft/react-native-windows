@@ -7,9 +7,14 @@
 
 import {app} from '@react-native-windows/automation';
 import {goToComponentExample} from './RNTesterNavigation';
+import {verifyNoErrorLogs} from './Helpers';
 
 beforeAll(async () => {
   await goToComponentExample('LegacyTextInputTest');
+});
+
+afterEach(async () => {
+  await verifyNoErrorLogs();
 });
 
 describe('LegacyTextInputTest', () => {

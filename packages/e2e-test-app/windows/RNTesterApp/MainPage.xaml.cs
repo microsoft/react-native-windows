@@ -1,6 +1,7 @@
 using AutomationChannel;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using TreeDumpLibrary;
 using Windows.Data.Json;
@@ -28,9 +29,31 @@ namespace RNTesterApp
 
             var handler = new CommandHandler();
             handler.BindOperation("DumpVisualTree", DumpVisualTree);
+            handler.BindOperation("ListErrors", ListErrors);
 
             var server = new Server(handler);
             var tsk = LoopServer(server);
+        }
+
+        JsonObject ListErrors(JsonValue payload)
+        {
+            JsonObject result = new JsonObject();
+            var app = Application.Current as App;
+            var jsonErrors = new JsonArray();
+            var jsonWarnings = new JsonArray();
+            foreach (var err in app.ConsoleErrors)
+            {
+                jsonErrors.Add(JsonValue.CreateStringValue(err));
+            }
+            foreach (var err in app.ConsoleWarnings)
+            {
+                jsonWarnings.Add(JsonValue.CreateStringValue(err));
+            }
+            result["errors"] = jsonErrors;
+            result["warnings"] = jsonWarnings;
+            app.ConsoleErrors.Clear();
+            app.ConsoleWarnings.Clear();
+            return result;
         }
 
         JsonObject DumpVisualTree(JsonValue payload)
@@ -84,7 +107,12 @@ namespace RNTesterApp
         {
             while (true)
             {
-                await server.ProcessAllClientRequests(8603, TimeSpan.FromMilliseconds(50));
+                try
+                {
+                    await server.ProcessAllClientRequests(8603, TimeSpan.FromMilliseconds(50));
+                } catch( Exception ex)
+                {
+                }
             }
         }
 

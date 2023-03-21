@@ -43,6 +43,7 @@ struct DevSettings {
   std::string sourceBundleHost;
   std::string debugBundlePath;
   std::string platformName{STRING(RN_PLATFORM)};
+  std::string bundleAppId;
   std::function<void()> liveReloadCallback;
   std::function<void(std::string)> errorCallback;
   std::function<void()> waitingForDebuggerCallback;
