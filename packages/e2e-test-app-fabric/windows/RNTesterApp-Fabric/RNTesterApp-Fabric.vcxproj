@@ -104,7 +104,6 @@
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
     <ClInclude Include="RNTesterApp-Fabric.h" />
-    <ClInclude Include="microsoft.ui.composition.effects_impl.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="targetver.h" />
