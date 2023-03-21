@@ -579,6 +579,19 @@ struct CompScrollerVisual : winrt::Microsoft::ReactNative::Composition::implemen
     m_interactionTracker.TryUpdatePositionBy(offset);
   };
 
+  void TryUpdatePosition(winrt::Windows::Foundation::Numerics::float3 const &position, bool animate) noexcept {
+    if (animate) {
+      auto compositor = m_visual.Compositor();
+      auto cubicBezier = compositor.CreateCubicBezierEasingFunction({0.17f, 0.67f}, {1.0f, 1.0f});
+      auto kfa = compositor.CreateVector3KeyFrameAnimation();
+      kfa.Duration(std::chrono::seconds{1});
+      kfa.InsertKeyFrame(1.0f, position, cubicBezier);
+      m_interactionTracker.TryUpdatePositionWithAnimation(kfa);
+    } else {
+      m_interactionTracker.TryUpdatePosition(position);
+    }
+  }
+
  private:
   void FireScrollPositionChanged(winrt::Windows::Foundation::Numerics::float2 position) {
     m_scrollPositionChangedEvent(*this, winrt::make<CompScrollPositionChangedArgs>(position));

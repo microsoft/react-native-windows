@@ -455,12 +455,12 @@ void ScrollViewManager::GetExportedCustomDirectEventTypeConstants(
     const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
   Super::GetExportedCustomDirectEventTypeConstants(writer);
 
-  writer.WritePropertyName(L"topScrollBeginMomentum");
+  writer.WritePropertyName(L"topMomentumScrollBegin");
   writer.WriteObjectBegin();
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"registrationName", L"onMomentumScrollBegin");
   writer.WriteObjectEnd();
 
-  writer.WritePropertyName(L"topScrollEndMomentum");
+  writer.WritePropertyName(L"topMomentumScrollEnd");
   writer.WriteObjectBegin();
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"registrationName", L"onMomentumScrollEnd");
   writer.WriteObjectEnd();

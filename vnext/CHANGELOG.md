@@ -1,8 +1,36 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 08 Mar 2023 06:14:10 GMT and should not be manually modified.
+This log was last generated on Tue, 14 Mar 2023 05:13:40 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.629
+
+Tue, 14 Mar 2023 05:13:40 GMT
+
+### Changes
+
+- [Fabric] Add visuals for fallback when a native component isn't registered (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.628
+
+Sat, 11 Mar 2023 06:14:57 GMT
+
+### Changes
+
+- Fix build from merge conflict (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.627
+
+Fri, 10 Mar 2023 06:14:16 GMT
+
+### Changes
+
+- [Fabric] Clean up a bunch of include redirect files (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] TextInput shouldn't block the tab loop (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Add implementation of ScrollView.scrollto (30809111+acoates-ms@users.noreply.github.com)
+- Add submitBehavior prop to Paper VM for TextInput (helenistic@meta.com)
+- [Fabric] Move Windows specific properties out of ViewProps into HostPlatformViewProps (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.626
 
