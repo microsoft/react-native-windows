@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 06 Mar 2023 16:10:38 GMT and should not be manually modified.
+This log was last generated on Tue, 21 Mar 2023 20:51:40 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.70.15
+
+Tue, 21 Mar 2023 20:51:40 GMT
+
+### Patches
+
+- CrashManager should also handle SIGABRT (tudor.mihai@microsoft.com)
 
 ## 0.70.14
 
