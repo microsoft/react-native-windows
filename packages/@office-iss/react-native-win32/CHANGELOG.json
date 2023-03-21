@@ -2,6 +2,27 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Tue, 21 Mar 2023 20:58:57 GMT",
+      "tag": "@office-iss/react-native-win32_v0.71.3",
+      "version": "0.71.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "bfb3ea19d6e4083835b911a754c6b7865d7c6755",
+            "comment": "Align dependencies with react-native@0.71.4"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "d9c335fbddd0fe3f1b3646dd72cffa49ba622ca9",
+            "comment": "Minor TS type updates"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 13 Feb 2023 16:16:01 GMT",
       "tag": "@office-iss/react-native-win32_v0.71.1",
       "version": "0.71.1",

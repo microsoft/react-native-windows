@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Mon, 27 Feb 2023 16:15:26 GMT and should not be manually modified.
+This log was last generated on Tue, 21 Mar 2023 20:58:57 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.3
+
+Tue, 21 Mar 2023 20:58:57 GMT
+
+### Patches
+
+- Align dependencies with react-native@0.71.4 (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.71.2
 

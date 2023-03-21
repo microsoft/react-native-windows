@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 06 Mar 2023 16:14:41 GMT and should not be manually modified.
+This log was last generated on Tue, 21 Mar 2023 20:58:57 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.4
+
+Tue, 21 Mar 2023 20:58:57 GMT
+
+### Patches
+
+- CrashManager should also handle SIGABRT (tudor.mihai@microsoft.com)
+- Fix RedBox Dismiss (30809111+acoates-ms@users.noreply.github.com)
+- RN Peer dependency should be ^0.71 (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.71.3
 
 ## 0.71.3
 

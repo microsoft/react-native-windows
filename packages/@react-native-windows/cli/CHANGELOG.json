@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Tue, 21 Mar 2023 20:58:57 GMT",
+      "tag": "@react-native-windows/cli_v0.71.3",
+      "version": "0.71.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "bfb3ea19d6e4083835b911a754c6b7865d7c6755",
+            "comment": "Align dependencies with react-native@0.71.4"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 27 Feb 2023 16:15:26 GMT",
       "tag": "@react-native-windows/cli_v0.71.2",
       "version": "0.71.2",

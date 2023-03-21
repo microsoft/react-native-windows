@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 21 Mar 2023 20:58:57 GMT",
+      "tag": "react-native-windows_v0.71.4",
+      "version": "0.71.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "tudor.mihai@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6906a8ebfb3f1c36dfdcaa421fde1824e5171e98",
+            "comment": "CrashManager should also handle SIGABRT"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "2cde4b403c94877e209de83c81e06372d684c184",
+            "comment": "Fix RedBox Dismiss"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "bfb3ea19d6e4083835b911a754c6b7865d7c6755",
+            "comment": "RN Peer dependency should be ^0.71"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.71.3",
+            "commit": "6906a8ebfb3f1c36dfdcaa421fde1824e5171e98"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 06 Mar 2023 16:14:41 GMT",
       "tag": "react-native-windows_v0.71.3",
       "version": "0.71.3",
