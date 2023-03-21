@@ -113,7 +113,7 @@ struct WindowData {
 
   LRESULT OnCommand(HWND hwnd, int id, HWND /* hwndCtl*/, UINT) {
     switch (id) {
-      case 102: {
+      case IDM_OPENJSFILE: {
         DialogBox(s_instance, MAKEINTRESOURCE(IDD_OPENJSBUNDLEBOX), hwnd, &Bundle);
 
         if (!m_bundleFile.empty()) {
