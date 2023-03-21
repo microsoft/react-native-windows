@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Verify JS ViewConfig and ViewManager ViewConfigs align",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

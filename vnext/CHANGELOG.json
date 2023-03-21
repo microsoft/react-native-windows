@@ -2,6 +2,63 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 21 Mar 2023 21:21:54 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.630",
+      "version": "0.0.0-canary.630",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tudor.mihai@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "94c638560965be5e431120eb3642f76c01d77b87",
+            "comment": "CrashManager should also handle SIGABRT"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "5733b4e0885c2e06de73f4a0554f5a4f239ed772",
+            "comment": "Fix RedBox Dismiss"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "03701dc0305d7ff3f8b33f4d97368a9ef83bd557",
+            "comment": "Verify JS ViewConfig and ViewManager ViewConfigs align"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "11f34031547db56b5f6f0657082465777cbcb1bc",
+            "comment": "Adds BundleAppId to ReactInstanceSettings"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.166",
+            "commit": "94c638560965be5e431120eb3642f76c01d77b87"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.54",
+            "commit": "94c638560965be5e431120eb3642f76c01d77b87"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.6",
+            "commit": "94c638560965be5e431120eb3642f76c01d77b87"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.9.4",
+            "commit": "94c638560965be5e431120eb3642f76c01d77b87"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 14 Mar 2023 05:13:40 GMT",
       "tag": "react-native-windows_v0.0.0-canary.629",
       "version": "0.0.0-canary.629",

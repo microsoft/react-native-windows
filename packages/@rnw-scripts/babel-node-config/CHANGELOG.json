@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/babel-node-config",
   "entries": [
     {
+      "date": "Tue, 21 Mar 2023 21:21:54 GMT",
+      "tag": "@rnw-scripts/babel-node-config_v2.2.1",
+      "version": "2.2.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@rnw-scripts/babel-node-config",
+            "commit": "03701dc0305d7ff3f8b33f4d97368a9ef83bd557",
+            "comment": "Stop E2E tests from having huge amounts of babel warnings"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 11 Jan 2023 06:15:29 GMT",
       "tag": "@rnw-scripts/babel-node-config_v2.2.0",
       "version": "2.2.0",
