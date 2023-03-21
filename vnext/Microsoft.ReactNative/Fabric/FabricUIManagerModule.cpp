@@ -220,14 +220,6 @@ void FabricUIManager::constraintSurfaceLayout(
 
 void FabricUIManager::didMountComponentsWithRootTag(facebook::react::SurfaceId surfaceId) noexcept {}
 
-struct RemoveDeleteMetadata {
-  facebook::react::Tag tag;
-  facebook::react::Tag parentTag;
-  int index;
-  bool shouldRemove;
-  bool shouldDelete;
-};
-
 void FabricUIManager::RCTPerformMountInstructions(
     facebook::react::ShadowViewMutationList const &mutations,
     // facebook::react::RCTComponentViewRegistry* registry,
