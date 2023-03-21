@@ -25,13 +25,11 @@
 #pragma pop_macro("GetCurrentTime")
 
 // C RunTime Header Files
-#include <stdlib.h>
 #include <malloc.h>
 #include <memory.h>
+#include <stdlib.h>
 #include <tchar.h>
-
 
 // reference additional headers your program requires here
 #include <unknwn.h>
 #include <winrt/base.h>
-
