@@ -24,9 +24,6 @@
     <ClInclude Include="RNTesterApp-Fabric.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="microsoft.ui.composition.effects_impl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
