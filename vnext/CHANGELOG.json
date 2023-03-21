@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 21 Mar 2023 20:25:07 GMT",
+      "tag": "react-native-windows_v0.69.22",
+      "version": "0.69.22",
+      "comments": {
+        "patch": [
+          {
+            "author": "tudor.mihai@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "81b0dc4a3af48f114aea78419f7a9605f4d4e39c",
+            "comment": "CrashManager should also handle SIGABRT"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 06 Mar 2023 16:10:28 GMT",
       "tag": "react-native-windows_v0.69.21",
       "version": "0.69.21",
