@@ -2330,11 +2330,12 @@
   integrity sha512-285lfdqSXaqKuBbbtP9qL2tDrfxdOFtIMvkKadtleRQkdOxx+uzGvFr82KHmc/sSiMtfXGp7JnFYWVh4sFl7Yw==
 
 "@react-native/virtualized-lists@^0.72.1":
-  version "0.72.2"
-  resolved "https://registry.yarnpkg.com/@react-native/virtualized-lists/-/virtualized-lists-0.72.2.tgz#3f5cbd1e08a9e08a9b022532a6012e7f140d6fa4"
-  integrity sha512-hSdrrKN02rCSu6mUkX8OdWoepKNu/m6nWUQieuzjMkBvCAhm+QVbpM204UrEAeEDuJU7UeAKg8JRzyi3RC0Sig==
+  version "0.72.3"
+  resolved "https://registry.yarnpkg.com/@react-native/virtualized-lists/-/virtualized-lists-0.72.3.tgz#e64ee9816914e42a9249e174886e29703390896e"
+  integrity sha512-lrI3M2xMR7GBaLHLLXHa3hTpiX7KqoUbDRY3rCDnRqW0Bmf+wn/lXrzy6ok1qCjbbGZ5oZqy0XHSlwa+LOYQcA==
   dependencies:
     invariant "^2.2.4"
+    nullthrows "^1.1.1"
 
 "@reactions/component@^2.0.2":
   version "2.0.2"
