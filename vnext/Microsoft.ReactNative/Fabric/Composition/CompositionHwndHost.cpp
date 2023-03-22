@@ -73,12 +73,15 @@ double CompositionHwndHost::ScaleFactor() noexcept {
 void CompositionHwndHost::UpdateSize() noexcept {
   RECT rc;
   if (GetClientRect(m_hwnd, &rc)) {
-    winrt::Windows::Foundation::Size size{
-        static_cast<float>((rc.right - rc.left) / ScaleFactor()),
-        static_cast<float>((rc.bottom - rc.top) / ScaleFactor())};
-    m_compRootView.Size(size);
-    m_compRootView.Measure(size);
-    m_compRootView.Arrange(size);
+    if (m_height != (rc.bottom - rc.top) || m_width != (rc.right - rc.left)) {
+      m_height = rc.bottom - rc.top;
+      m_width = rc.right - rc.left;
+      winrt::Windows::Foundation::Size size{
+          static_cast<float>(m_width / ScaleFactor()), static_cast<float>(m_height / ScaleFactor())};
+      m_compRootView.Size(size);
+      m_compRootView.Measure(size);
+      m_compRootView.Arrange(size);
+    }
   }
 }
 
