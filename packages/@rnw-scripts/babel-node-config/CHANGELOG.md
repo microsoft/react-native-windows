@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/babel-node-config
 
-This log was last generated on Wed, 11 Jan 2023 06:15:29 GMT and should not be manually modified.
+This log was last generated on Tue, 21 Mar 2023 21:21:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.2.1
+
+Tue, 21 Mar 2023 21:21:54 GMT
+
+### Patches
+
+- Stop E2E tests from having huge amounts of babel warnings (30809111+acoates-ms@users.noreply.github.com)
 
 ## 2.2.0
 

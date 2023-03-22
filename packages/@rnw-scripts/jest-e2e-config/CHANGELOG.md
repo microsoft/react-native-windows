@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/jest-e2e-config
 
-This log was last generated on Wed, 11 Jan 2023 06:15:30 GMT and should not be manually modified.
+This log was last generated on Tue, 21 Mar 2023 21:21:55 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.4.1
+
+Tue, 21 Mar 2023 21:21:55 GMT
+
+### Patches
+
+- Bump @rnw-scripts/babel-node-config to v2.2.1
 
 ## 1.4.0
 

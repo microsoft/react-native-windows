@@ -17,21 +17,21 @@
     "flow-enums-runtime": "^0.0.5"
   },
   "peerDependencies": {
-    "@office-iss/react-native-win32": "^0.0.0-canary.185",
+    "@office-iss/react-native-win32": "^0.0.0-canary.187",
     "react": "18.0.0",
     "react-native": "0.0.0-20230228-2111-32d03c250"
   },
   "devDependencies": {
-    "@office-iss/react-native-win32": "^0.0.0-canary.185",
+    "@office-iss/react-native-win32": "^0.0.0-canary.187",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.1.15",
-    "@rnw-scripts/just-task": "2.3.5",
+    "@rnw-scripts/just-task": "2.3.6",
     "@rnw-scripts/ts-config": "2.0.3",
     "@types/node": "^14.14.22",
     "eslint": "^8.19.0",
     "just-scripts": "^1.3.3",
     "react-native": "0.0.0-20230228-2111-32d03c250",
-    "react-native-platform-override": "^1.9.3",
+    "react-native-platform-override": "^1.9.4",
     "typescript": "^4.9.5"
   },
   "engines": {

@@ -1,0 +1,23 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+import "ViewProps.idl";
+
+#include "DocString.h"
+
+namespace Microsoft.ReactNative
+{
+  [experimental]
+  DOC_STRING("A delegate that creates a @IComponentProps object for an instance of @ViewProps. See @IReactViewComponentBuilder.SetCreateProps")
+  delegate IComponentProps ViewPropsFactory(ViewProps props);
+
+  [webhosthidden]
+  [experimental]
+  DOC_STRING(".")
+  interface IReactViewComponentBuilder
+  {
+    DOC_STRING("Create an implementation of your custom Props type that will be passed to your components @Composition.ICompositionViewComponent.UpdateProps method.")
+    void SetCreateProps(ViewPropsFactory impl);
+  };
+
+} // namespace Microsoft.ReactNative

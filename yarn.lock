@@ -2266,9 +2266,9 @@
     "@react-native/codegen" "*"
 
 "@react-native/codegen@*", "@react-native/codegen@^0.72.2":
-  version "0.72.3"
-  resolved "https://registry.yarnpkg.com/@react-native/codegen/-/codegen-0.72.3.tgz#963ee3f45723012401d23249b83c5d6f1db6c1a4"
-  integrity sha512-SsSiUeGm4n9/utbgnXTBSHKK9GyjSKxkhpQ9SMaOEwaXS8RaRnmerQu96FNa1fqMts63dDOwgTszUCu1KlUj3Q==
+  version "0.72.4"
+  resolved "https://registry.yarnpkg.com/@react-native/codegen/-/codegen-0.72.4.tgz#b2a6aef870bb8f5bb7eed521aa0cda10eb15cf40"
+  integrity sha512-Yg18PSRrA7rtnucMNl1gQEpbydxJ9cNR+OghLHMBimwYWZYqHTBmnvfwB7Gg0CxPLBJivFA/MKyJSd9aagNfWA==
   dependencies:
     "@babel/parser" "^7.20.0"
     flow-parser "^0.185.0"
@@ -2315,9 +2315,9 @@
   integrity sha512-xWQthnyKd+H22TBqeJUTFebsyWAAwzUb7EQCT8F/WMZsS1sv5UG+2cM/cU9/2HEbVZgxHYuLIi915WznjKPvlg==
 
 "@react-native/gradle-plugin@^0.72.4":
-  version "0.72.5"
-  resolved "https://registry.yarnpkg.com/@react-native/gradle-plugin/-/gradle-plugin-0.72.5.tgz#91a92180da2c914d3582d8a32ebd23cbc4ae9e2a"
-  integrity sha512-2FwDmJvAUKnsbenIxxA261fGfE8KCIJZtVYr8tOmAzupXDAF4FI7KUIwF9ZBPPLcj6SG83xXPqvctHI7n5csww==
+  version "0.72.6"
+  resolved "https://registry.yarnpkg.com/@react-native/gradle-plugin/-/gradle-plugin-0.72.6.tgz#14571c9ed8faa49189be01d406504a866069a4af"
+  integrity sha512-XBIAxwogpd3zlH3YwnFCkeEMAQvS/efYmW9YIKBtqzmiNGhxESlj4pHf7ds44VOufU+HVL4UvLLVfvMYVkb1fQ==
 
 "@react-native/js-polyfills@^0.72.1":
   version "0.72.1"
@@ -2330,11 +2330,12 @@
   integrity sha512-285lfdqSXaqKuBbbtP9qL2tDrfxdOFtIMvkKadtleRQkdOxx+uzGvFr82KHmc/sSiMtfXGp7JnFYWVh4sFl7Yw==
 
 "@react-native/virtualized-lists@^0.72.1":
-  version "0.72.2"
-  resolved "https://registry.yarnpkg.com/@react-native/virtualized-lists/-/virtualized-lists-0.72.2.tgz#3f5cbd1e08a9e08a9b022532a6012e7f140d6fa4"
-  integrity sha512-hSdrrKN02rCSu6mUkX8OdWoepKNu/m6nWUQieuzjMkBvCAhm+QVbpM204UrEAeEDuJU7UeAKg8JRzyi3RC0Sig==
+  version "0.72.3"
+  resolved "https://registry.yarnpkg.com/@react-native/virtualized-lists/-/virtualized-lists-0.72.3.tgz#e64ee9816914e42a9249e174886e29703390896e"
+  integrity sha512-lrI3M2xMR7GBaLHLLXHa3hTpiX7KqoUbDRY3rCDnRqW0Bmf+wn/lXrzy6ok1qCjbbGZ5oZqy0XHSlwa+LOYQcA==
   dependencies:
     invariant "^2.2.4"
+    nullthrows "^1.1.1"
 
 "@reactions/component@^2.0.2":
   version "2.0.2"
@@ -8750,9 +8751,9 @@ metro-react-native-babel-preset@0.75.1:
     react-refresh "^0.4.0"
 
 metro-react-native-babel-preset@^0.73.7:
-  version "0.73.8"
-  resolved "https://registry.yarnpkg.com/metro-react-native-babel-preset/-/metro-react-native-babel-preset-0.73.8.tgz#04908f264f5d99c944ae20b5b11f659431328431"
-  integrity sha512-spNrcQJTbQntEIqJnCA6yL4S+dzV9fXCk7U+Rm7yJasZ4o4Frn7jP23isu7FlZIp1Azx1+6SbP7SgQM+IP5JgQ==
+  version "0.73.9"
+  resolved "https://registry.yarnpkg.com/metro-react-native-babel-preset/-/metro-react-native-babel-preset-0.73.9.tgz#ef54637dd20f025197beb49e71309a9c539e73e2"
+  integrity sha512-AoD7v132iYDV4K78yN2OLgTPwtAKn0XlD2pOhzyBxiI8PeXzozhbKyPV7zUOJUPETj+pcEVfuYj5ZN/8+bhbCw==
   dependencies:
     "@babel/core" "^7.20.0"
     "@babel/plugin-proposal-async-generator-functions" "^7.0.0"
@@ -10052,9 +10053,9 @@ prettier-linter-helpers@^1.0.0:
     fast-diff "^1.1.2"
 
 prettier@^2.4.1:
-  version "2.8.5"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.8.5.tgz#3dd8ae1ebddc4f6aa419c9b64d8c8319a7e0d982"
-  integrity sha512-3gzuxrHbKUePRBB4ZeU08VNkUcqEHaUaouNt0m7LGP4Hti/NuB07C7PPTM/LkWqXoJYJn2McEo5+kxPNrtQkLQ==
+  version "2.8.6"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.8.6.tgz#5c174b29befd507f14b83e3c19f83fdc0e974b71"
+  integrity sha512-mtuzdiBbHwPEgl7NxWlqOkithPyp4VN93V7VeHVWBF+ad3I5avc0RVDT4oImXQy9H/AqxA2NSQH8pSxHW6FYbQ==
 
 pretty-format@^26.5.2, pretty-format@^26.6.2:
   version "26.6.2"
