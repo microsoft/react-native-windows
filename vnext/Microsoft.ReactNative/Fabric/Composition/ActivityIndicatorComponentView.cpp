@@ -20,13 +20,23 @@ ActivityIndicatorComponentView::supplementalComponentDescriptorProviders() noexc
   return {};
 }
 
-void ActivityIndicatorComponentView::mountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept {
+void ActivityIndicatorComponentView::mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
   assert(false);
 }
 
-void ActivityIndicatorComponentView::unmountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept {
+void ActivityIndicatorComponentView::unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
   assert(false);
 }
+
+void ActivityIndicatorComponentView::handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept {
+  if (commandName == "setValue") {
+    // TODO - Current implementation always aligns with JS value
+    // This will be needed when we move to using WinUI controls
+  } else {
+    Super::handleCommand(commandName, arg);
+  }
+}
+
 
 void ActivityIndicatorComponentView::updateProps(
     facebook::react::Props::Shared const &props,
@@ -35,7 +45,7 @@ void ActivityIndicatorComponentView::updateProps(
   const auto &newViewProps = *std::static_pointer_cast<const facebook::react::ActivityIndicatorViewProps>(props);
 
   ensureVisual();
-
+  updateBorderProps(oldViewProps, newViewProps);
   m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
 }
 
@@ -53,6 +63,7 @@ void ActivityIndicatorComponentView::updateLayoutMetrics(
     m_visual.IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
   }
 
+  updateBorderLayoutMetrics(layoutMetrics, *m_props);
   m_layoutMetrics = layoutMetrics;
 
   UpdateCenterPropertySet();
@@ -101,7 +112,7 @@ void ActivityIndicatorComponentView::Draw() noexcept {
 
     // default brush
     winrt::com_ptr<ID2D1SolidColorBrush> defaultBrush;
-    winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(facebook::react::greyColor().AsD2DColor(), defaultBrush.put()));
+    winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(facebook::react::blackColor().AsD2DColor(), defaultBrush.put()));
 
     // set DPI?
     const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
@@ -109,10 +120,15 @@ void ActivityIndicatorComponentView::Draw() noexcept {
     d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
     d2dDeviceContext->SetDpi(dpi, dpi);
 
+    // TEST DRAWING
     D2D1_POINT_2F ellipseCenter = D2D1 ::Point2F(trackMarginX, trackMarginY);
     D2D1_ELLIPSE ellipse = D2D1::Ellipse(ellipseCenter, width, width);
     d2dDeviceContext->FillEllipse(ellipse, defaultBrush.get());
 
+    D2D1_RECT_F trackRect = D2D1::RectF(10.0f, 10.0f, 10.0f, 10.0f);
+    D2D1_ROUNDED_RECT track = D2D1::RoundedRect(trackRect, 10.0f, 10.0f);
+    d2dDeviceContext->DrawRoundedRectangle(track, defaultBrush.get());
+    
     // Restore old dpi setting
     d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
 
@@ -133,6 +149,7 @@ facebook::react::Props::Shared ActivityIndicatorComponentView::props() noexcept 
 void ActivityIndicatorComponentView::ensureVisual() noexcept {
   if (!m_visual) {
     m_visual = m_compContext.CreateSpriteVisual();
+    OuterVisual().InsertAt(m_visual, 0);
   }
 }
 
@@ -173,8 +190,12 @@ winrt::Microsoft::ReactNative::Composition::IVisual ActivityIndicatorComponentVi
   return m_visual;
 }
 
-int64_t ActivityIndicatorComponentView::SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
-  return 0;
+winrt::Microsoft::ReactNative::Composition::IVisual ActivityIndicatorComponentView::OuterVisual() const noexcept {
+  return m_visual;
+}
+
+bool ActivityIndicatorComponentView::focusable() const noexcept {
+  return false;
 }
 
 
