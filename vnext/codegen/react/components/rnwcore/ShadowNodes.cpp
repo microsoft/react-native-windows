@@ -19,6 +19,7 @@ extern const char AndroidSwipeRefreshLayoutComponentName[] = "AndroidSwipeRefres
 extern const char PullToRefreshViewComponentName[] = "PullToRefreshView";
 extern const char AndroidHorizontalScrollContentViewComponentName[] = "AndroidHorizontalScrollContentView";
 extern const char SwitchComponentName[] = "Switch";
+extern const char TraceUpdateOverlayComponentName[] = "TraceUpdateOverlay";
 extern const char UnimplementedNativeViewComponentName[] = "UnimplementedNativeView";
 
 } // namespace react

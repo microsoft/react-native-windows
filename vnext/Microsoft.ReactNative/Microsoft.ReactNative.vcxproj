@@ -111,6 +111,7 @@
         $(ReactNativeWindowsDir)Shared;
         $(ReactNativeWindowsDir)Shared\tracing;
         $(ReactNativeWindowsDir)include\Shared;
+        $(ReactNativeDir)\ReactCommon\react\renderer\graphics\platform\cxx;
         $(YogaDir);
         $(GeneratedFilesDir);
         %(AdditionalIncludeDirectories)
@@ -317,6 +318,7 @@
     </ClInclude>
     <ClInclude Include="Utils\AccessibilityUtils.h" />
     <ClInclude Include="Utils\Helpers.h" />
+    <ClInclude Include="Utils\KeyboardUtils.h" />
     <ClInclude Include="Utils\LocalBundleReader.h" />
     <ClInclude Include="Utils\PropertyHandlerUtils.h" />
     <ClInclude Include="Utils\PropertyUtils.h" />
@@ -547,6 +549,7 @@
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="Utils\AccessibilityUtils.cpp" />
+    <ClCompile Include="Utils\KeyboardUtils.cpp" />
     <ClCompile Include="Utils\LocalBundleReader.cpp" />
     <ClCompile Include="Utils\ResourceBrushUtils.cpp" />
     <ClCompile Include="Utils\UwpPreparedScriptStore.cpp" />
@@ -712,6 +715,7 @@
         RNW_MAJOR=$(ReactNativeWindowsMajor);
         RNW_MINOR=$(ReactNativeWindowsMinor);
         RNW_PATCH=$(ReactNativeWindowsPatch);
+        RNW_COMMITID=$(ReactNativeWindowsCommitId);
         _UNICODE;
         UNICODE;
         %(PreprocessorDefinitions)

@@ -824,6 +824,7 @@ void TextInputViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::I
   React::WriteProperty(writer, L"selectionColor", L"Color");
   React::WriteProperty(writer, L"selectTextOnFocus", L"boolean");
   React::WriteProperty(writer, L"spellCheck", L"boolean");
+  React::WriteProperty(writer, L"submitBehavior", L"string");
   React::WriteProperty(writer, L"text", L"string");
   React::WriteProperty(writer, L"mostRecentEventCount", L"int");
   React::WriteProperty(writer, L"secureTextEntry", L"boolean");

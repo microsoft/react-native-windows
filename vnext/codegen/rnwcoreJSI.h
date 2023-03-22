@@ -3733,6 +3733,7 @@ protected:
 
 public:
   virtual std::optional<jsi::String> getColorScheme(jsi::Runtime &rt) = 0;
+  virtual void setColorScheme(jsi::Runtime &rt, jsi::String colorScheme) = 0;
   virtual void addListener(jsi::Runtime &rt, jsi::String eventName) = 0;
   virtual void removeListeners(jsi::Runtime &rt, double count) = 0;
 
@@ -3763,6 +3764,14 @@ private:
 
       return bridging::callFromJs<std::optional<jsi::String>>(
           rt, &T::getColorScheme, jsInvoker_, instance_);
+    }
+    void setColorScheme(jsi::Runtime &rt, jsi::String colorScheme) override {
+      static_assert(
+          bridging::getParameterCount(&T::setColorScheme) == 2,
+          "Expected setColorScheme(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::setColorScheme, jsInvoker_, instance_, std::move(colorScheme));
     }
     void addListener(jsi::Runtime &rt, jsi::String eventName) override {
       static_assert(
@@ -4329,9 +4338,8 @@ protected:
 
 public:
   virtual void mark(jsi::Runtime &rt, jsi::String name, double startTime, double duration) = 0;
-  virtual void clearMarks(jsi::Runtime &rt, std::optional<jsi::String> markName) = 0;
   virtual void measure(jsi::Runtime &rt, jsi::String name, double startTime, double endTime, std::optional<double> duration, std::optional<jsi::String> startMark, std::optional<jsi::String> endMark) = 0;
-  virtual void clearMeasures(jsi::Runtime &rt, std::optional<jsi::String> measureName) = 0;
+  virtual jsi::Object getSimpleMemoryInfo(jsi::Runtime &rt) = 0;
 
 };
 
@@ -4361,14 +4369,6 @@ private:
       return bridging::callFromJs<void>(
           rt, &T::mark, jsInvoker_, instance_, std::move(name), std::move(startTime), std::move(duration));
     }
-    void clearMarks(jsi::Runtime &rt, std::optional<jsi::String> markName) override {
-      static_assert(
-          bridging::getParameterCount(&T::clearMarks) == 2,
-          "Expected clearMarks(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::clearMarks, jsInvoker_, instance_, std::move(markName));
-    }
     void measure(jsi::Runtime &rt, jsi::String name, double startTime, double endTime, std::optional<double> duration, std::optional<jsi::String> startMark, std::optional<jsi::String> endMark) override {
       static_assert(
           bridging::getParameterCount(&T::measure) == 7,
@@ -4377,13 +4377,13 @@ private:
       return bridging::callFromJs<void>(
           rt, &T::measure, jsInvoker_, instance_, std::move(name), std::move(startTime), std::move(endTime), std::move(duration), std::move(startMark), std::move(endMark));
     }
-    void clearMeasures(jsi::Runtime &rt, std::optional<jsi::String> measureName) override {
+    jsi::Object getSimpleMemoryInfo(jsi::Runtime &rt) override {
       static_assert(
-          bridging::getParameterCount(&T::clearMeasures) == 2,
-          "Expected clearMeasures(...) to have 2 parameters");
+          bridging::getParameterCount(&T::getSimpleMemoryInfo) == 1,
+          "Expected getSimpleMemoryInfo(...) to have 1 parameters");
 
-      return bridging::callFromJs<void>(
-          rt, &T::clearMeasures, jsInvoker_, instance_, std::move(measureName));
+      return bridging::callFromJs<jsi::Object>(
+          rt, &T::getSimpleMemoryInfo, jsInvoker_, instance_);
     }
 
   private:
@@ -4522,10 +4522,14 @@ protected:
   NativePerformanceObserverCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
 
 public:
-  virtual void startReporting(jsi::Runtime &rt, jsi::String entryType) = 0;
-  virtual void stopReporting(jsi::Runtime &rt, jsi::String entryType) = 0;
+  virtual void startReporting(jsi::Runtime &rt, double entryType) = 0;
+  virtual void stopReporting(jsi::Runtime &rt, double entryType) = 0;
   virtual jsi::Object popPendingEntries(jsi::Runtime &rt) = 0;
   virtual void setOnPerformanceEntryCallback(jsi::Runtime &rt, std::optional<jsi::Function> callback) = 0;
+  virtual void logRawEntry(jsi::Runtime &rt, jsi::Object entry) = 0;
+  virtual jsi::Array getEventCounts(jsi::Runtime &rt) = 0;
+  virtual void setDurationThreshold(jsi::Runtime &rt, double entryType, double durationThreshold) = 0;
+  virtual void clearEntries(jsi::Runtime &rt, double entryType, std::optional<jsi::String> entryName) = 0;
 
 };
 
@@ -4547,7 +4551,7 @@ private:
     Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
       NativePerformanceObserverCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
 
-    void startReporting(jsi::Runtime &rt, jsi::String entryType) override {
+    void startReporting(jsi::Runtime &rt, double entryType) override {
       static_assert(
           bridging::getParameterCount(&T::startReporting) == 2,
           "Expected startReporting(...) to have 2 parameters");
@@ -4555,7 +4559,7 @@ private:
       return bridging::callFromJs<void>(
           rt, &T::startReporting, jsInvoker_, instance_, std::move(entryType));
     }
-    void stopReporting(jsi::Runtime &rt, jsi::String entryType) override {
+    void stopReporting(jsi::Runtime &rt, double entryType) override {
       static_assert(
           bridging::getParameterCount(&T::stopReporting) == 2,
           "Expected stopReporting(...) to have 2 parameters");
@@ -4578,6 +4582,38 @@ private:
 
       return bridging::callFromJs<void>(
           rt, &T::setOnPerformanceEntryCallback, jsInvoker_, instance_, std::move(callback));
+    }
+    void logRawEntry(jsi::Runtime &rt, jsi::Object entry) override {
+      static_assert(
+          bridging::getParameterCount(&T::logRawEntry) == 2,
+          "Expected logRawEntry(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::logRawEntry, jsInvoker_, instance_, std::move(entry));
+    }
+    jsi::Array getEventCounts(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::getEventCounts) == 1,
+          "Expected getEventCounts(...) to have 1 parameters");
+
+      return bridging::callFromJs<jsi::Array>(
+          rt, &T::getEventCounts, jsInvoker_, instance_);
+    }
+    void setDurationThreshold(jsi::Runtime &rt, double entryType, double durationThreshold) override {
+      static_assert(
+          bridging::getParameterCount(&T::setDurationThreshold) == 3,
+          "Expected setDurationThreshold(...) to have 3 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::setDurationThreshold, jsInvoker_, instance_, std::move(entryType), std::move(durationThreshold));
+    }
+    void clearEntries(jsi::Runtime &rt, double entryType, std::optional<jsi::String> entryName) override {
+      static_assert(
+          bridging::getParameterCount(&T::clearEntries) == 3,
+          "Expected clearEntries(...) to have 3 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::clearEntries, jsInvoker_, instance_, std::move(entryType), std::move(entryName));
     }
 
   private:
@@ -6033,6 +6069,33 @@ private:
 };
 
 
+#pragma mark - SampleTurboModuleEnumInt
+
+enum SampleTurboModuleEnumInt { A, B };
+
+template <>
+struct Bridging<SampleTurboModuleEnumInt> {
+  static SampleTurboModuleEnumInt fromJs(jsi::Runtime &rt, const jsi::Value &rawValue, const std::shared_ptr<CallInvoker> &jsInvoker) {
+    double value = (double)rawValue.asNumber();
+    if (value == 23) {
+      return SampleTurboModuleEnumInt::A;
+    } else if (value == 42) {
+      return SampleTurboModuleEnumInt::B;
+    } else {
+      throw jsi::JSError(rt, "No appropriate enum member found for value");
+    }
+  }
+
+  static jsi::Value toJs(jsi::Runtime &rt, SampleTurboModuleEnumInt value, const std::shared_ptr<CallInvoker> &jsInvoker) {
+    if (value == SampleTurboModuleEnumInt::A) {
+      return bridging::toJs(rt, 23);
+    } else if (value == SampleTurboModuleEnumInt::B) {
+      return bridging::toJs(rt, 42);
+    } else {
+      throw jsi::JSError(rt, "No appropriate enum member found for enum value");
+    }
+  }
+};
   class JSI_EXPORT NativeSampleTurboModuleCxxSpecJSI : public TurboModule {
 protected:
   NativeSampleTurboModuleCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
@@ -6041,6 +6104,7 @@ public:
   virtual jsi::Object getConstants(jsi::Runtime &rt) = 0;
   virtual void voidFunc(jsi::Runtime &rt) = 0;
   virtual bool getBool(jsi::Runtime &rt, bool arg) = 0;
+  virtual int getEnum(jsi::Runtime &rt, int arg) = 0;
   virtual double getNumber(jsi::Runtime &rt, double arg) = 0;
   virtual jsi::String getString(jsi::Runtime &rt, jsi::String arg) = 0;
   virtual jsi::Array getArray(jsi::Runtime &rt, jsi::Array arg) = 0;
@@ -6094,6 +6158,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::getBool, jsInvoker_, instance_, std::move(arg));
+    }
+    int getEnum(jsi::Runtime &rt, int arg) override {
+      static_assert(
+          bridging::getParameterCount(&T::getEnum) == 2,
+          "Expected getEnum(...) to have 2 parameters");
+
+      return bridging::callFromJs<int>(
+          rt, &T::getEnum, jsInvoker_, instance_, std::move(arg));
     }
     double getNumber(jsi::Runtime &rt, double arg) override {
       static_assert(

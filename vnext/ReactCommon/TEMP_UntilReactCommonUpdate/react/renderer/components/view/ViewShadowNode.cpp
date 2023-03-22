@@ -60,11 +60,15 @@ void ViewShadowNode::initialize() noexcept {
   formsStackingContext = formsStackingContext || viewProps.elevation != 0;
 #endif
 
+  formsStackingContext = formsStackingContext || HostPlatformViewProps::requiresFormsStackingContext(viewProps); // [Windows]
+
   bool formsView = formsStackingContext ||
       isColorMeaningful(viewProps.backgroundColor) ||
       isColorMeaningful(viewProps.foregroundColor) ||
       !(viewProps.yogaStyle.border() == YGStyle::Edges{}) ||
       !viewProps.testId.empty();
+
+  formsView = formsView || HostPlatformViewProps::requiresFormsView(viewProps); // [Windows]
 
 #ifdef ANDROID
   formsView = formsView || viewProps.nativeBackground.has_value() ||
@@ -73,8 +77,6 @@ void ViewShadowNode::initialize() noexcept {
       viewProps.needsOffscreenAlphaCompositing ||
       viewProps.renderToHardwareTextureAndroid;
 #endif
-
-  formsView = formsView || viewProps.focusable; // [Windows]
 
   if (formsView) {
     traits_.set(ShadowNodeTraits::Trait::FormsView);

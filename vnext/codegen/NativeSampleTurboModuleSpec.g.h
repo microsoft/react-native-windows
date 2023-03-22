@@ -30,15 +30,16 @@ struct SampleTurboModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
       Method<void() noexcept>{0, L"voidFunc"},
       SyncMethod<bool(bool) noexcept>{1, L"getBool"},
-      SyncMethod<double(double) noexcept>{2, L"getNumber"},
-      SyncMethod<std::string(std::string) noexcept>{3, L"getString"},
-      SyncMethod<::React::JSValueArray(::React::JSValueArray) noexcept>{4, L"getArray"},
-      SyncMethod<::React::JSValue(::React::JSValue) noexcept>{5, L"getObject"},
-      SyncMethod<::React::JSValue(::React::JSValue) noexcept>{6, L"getUnsafeObject"},
-      SyncMethod<double(double) noexcept>{7, L"getRootTag"},
-      SyncMethod<::React::JSValue(double, std::string, ::React::JSValue) noexcept>{8, L"getValue"},
-      Method<void(Callback<std::string>) noexcept>{9, L"getValueWithCallback"},
-      Method<void(bool, Promise<std::string>) noexcept>{10, L"getValueWithPromise"},
+      SyncMethod<double(double) noexcept>{2, L"getEnum"},
+      SyncMethod<double(double) noexcept>{3, L"getNumber"},
+      SyncMethod<std::string(std::string) noexcept>{4, L"getString"},
+      SyncMethod<::React::JSValueArray(::React::JSValueArray) noexcept>{5, L"getArray"},
+      SyncMethod<::React::JSValue(::React::JSValue) noexcept>{6, L"getObject"},
+      SyncMethod<::React::JSValue(::React::JSValue) noexcept>{7, L"getUnsafeObject"},
+      SyncMethod<double(double) noexcept>{8, L"getRootTag"},
+      SyncMethod<::React::JSValue(double, std::string, ::React::JSValue) noexcept>{9, L"getValue"},
+      Method<void(Callback<std::string>) noexcept>{10, L"getValueWithCallback"},
+      Method<void(bool, Promise<std::string>) noexcept>{11, L"getValueWithPromise"},
   };
 
   template <class TModule>
@@ -64,46 +65,51 @@ struct SampleTurboModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
           "    REACT_SYNC_METHOD(getBool) static bool getBool(bool arg) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
+          "getEnum",
+          "    REACT_SYNC_METHOD(getEnum) double getEnum(double arg) noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(getEnum) static double getEnum(double arg) noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          3,
           "getNumber",
           "    REACT_SYNC_METHOD(getNumber) double getNumber(double arg) noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(getNumber) static double getNumber(double arg) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          3,
+          4,
           "getString",
           "    REACT_SYNC_METHOD(getString) std::string getString(std::string arg) noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(getString) static std::string getString(std::string arg) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          4,
+          5,
           "getArray",
           "    REACT_SYNC_METHOD(getArray) ::React::JSValueArray getArray(::React::JSValueArray && arg) noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(getArray) static ::React::JSValueArray getArray(::React::JSValueArray && arg) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          5,
+          6,
           "getObject",
           "    REACT_SYNC_METHOD(getObject) ::React::JSValue getObject(::React::JSValue && arg) noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(getObject) static ::React::JSValue getObject(::React::JSValue && arg) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          6,
+          7,
           "getUnsafeObject",
           "    REACT_SYNC_METHOD(getUnsafeObject) ::React::JSValue getUnsafeObject(::React::JSValue && arg) noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(getUnsafeObject) static ::React::JSValue getUnsafeObject(::React::JSValue && arg) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          7,
+          8,
           "getRootTag",
           "    REACT_SYNC_METHOD(getRootTag) double getRootTag(double arg) noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(getRootTag) static double getRootTag(double arg) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          8,
+          9,
           "getValue",
           "    REACT_SYNC_METHOD(getValue) ::React::JSValue getValue(double x, std::string y, ::React::JSValue && z) noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(getValue) static ::React::JSValue getValue(double x, std::string y, ::React::JSValue && z) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          9,
+          10,
           "getValueWithCallback",
           "    REACT_METHOD(getValueWithCallback) void getValueWithCallback(std::function<void(std::string)> const & callback) noexcept { /* implementation */ }\n"
           "    REACT_METHOD(getValueWithCallback) static void getValueWithCallback(std::function<void(std::string)> const & callback) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          10,
+          11,
           "getValueWithPromise",
           "    REACT_METHOD(getValueWithPromise) void getValueWithPromise(bool error, ::React::ReactPromise<std::string> &&result) noexcept { /* implementation */ }\n"
           "    REACT_METHOD(getValueWithPromise) static void getValueWithPromise(bool error, ::React::ReactPromise<std::string> &&result) noexcept { /* implementation */ }\n");

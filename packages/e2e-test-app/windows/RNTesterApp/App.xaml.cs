@@ -3,6 +3,7 @@
 
 using Microsoft.ReactNative;
 using System;
+using System.Collections.Generic;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Graphics.Display;
@@ -44,6 +45,14 @@ namespace RNTesterApp
             InstanceSettings.UseDeveloperSupport = false;
 #endif
 
+            InstanceSettings.NativeLogger = (LogLevel level, String message) => {
+                if (level == LogLevel.Error || level == LogLevel.Fatal) {
+                    ConsoleErrors.Add(message);
+                } else if (level == LogLevel.Warning) {
+                    ConsoleWarnings.Add(message);
+                }
+            };
+
             Microsoft.ReactNative.Managed.AutolinkedNativeModules.RegisterAutolinkedNativeModulePackages(PackageProviders); // Includes any autolinked modules
 
             PackageProviders.Add(new Microsoft.ReactNative.Managed.ReactPackageProvider());
@@ -51,6 +60,9 @@ namespace RNTesterApp
 
             this.InitializeComponent();
         }
+
+        public List<string> ConsoleErrors = new List<string>();
+        public List<string> ConsoleWarnings = new List<string>();
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points

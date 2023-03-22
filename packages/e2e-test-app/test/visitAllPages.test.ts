@@ -6,6 +6,11 @@
  */
 
 import {goToApiExample, goToComponentExample} from './RNTesterNavigation';
+import {verifyNoErrorLogs} from './Helpers';
+
+afterEach(async () => {
+  await verifyNoErrorLogs();
+});
 
 type RNTesterExampleModule = {
   title: string;
@@ -36,6 +41,19 @@ describe('visitAllPages', () => {
     if (api === 'Transforms')
       // disable until either transformExample uses units, or that isn't an error
       continue;
-    test(api, async () => await goToApiExample(api));
+
+    test(api, async () => {
+      await goToApiExample(api);
+
+      if (api === 'Invalid Props') {
+        // InvalidPropsExample shows an expected error
+        await verifyNoErrorLogs((errors: string[]) => {
+          const expectedInvalidPropError =
+            "Value '' for width is invalid. Cannot be converted to YGValue. Did you forget the %? Otherwise, simply use integer value.";
+          expect(errors).toContain(expectedInvalidPropError);
+          return errors.filter(err => err !== expectedInvalidPropError);
+        });
+      }
+    });
   }
 });

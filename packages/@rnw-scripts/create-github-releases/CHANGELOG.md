@@ -1,8 +1,37 @@
 # Change Log - @rnw-scripts/create-github-releases
 
-This log was last generated on Thu, 09 Feb 2023 06:16:43 GMT and should not be manually modified.
+This log was last generated on Tue, 21 Mar 2023 21:21:55 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.4.11
+
+Tue, 21 Mar 2023 21:21:55 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.46
+- Bump @react-native-windows/fs to v0.0.0-canary.17
+- Bump @rnw-scripts/just-task to v2.3.6
+
+## 1.4.10
+
+Thu, 02 Mar 2023 06:14:22 GMT
+
+### Patches
+
+- Merge branch 'YajurG-8875' of https://github.com/YajurG/react-native-windows into YajurG-8875 (email not defined)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.45
+- Bump @react-native-windows/fs to v0.0.0-canary.16
+
+## 1.4.9
+
+Sat, 25 Feb 2023 06:13:36 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.44
+- Bump @react-native-windows/fs to v0.0.0-canary.15
 
 ## 1.4.8
 

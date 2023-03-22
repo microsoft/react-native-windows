@@ -27,6 +27,7 @@
 #include <Fabric/Composition/ScrollViewComponentView.h>
 #include <Fabric/Composition/SwitchComponentView.h>
 #include <Fabric/Composition/TextInput/WindowsTextInputComponentView.h>
+#include <Fabric/Composition/UnimplementedNativeViewComponentView.h>
 
 namespace Microsoft::ReactNative {
 
@@ -54,6 +55,8 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
     view = SwitchComponentView::Create(compContext, tag, m_context);
   } else if (componentHandle == facebook::react::RootShadowNode::Handle()) {
     view = RootComponentView::Create(compContext, tag);
+  } else if (componentHandle == facebook::react::UnimplementedNativeViewShadowNode::Handle()) {
+    view = UnimplementedNativeViewComponentView::Create(compContext, tag);
   } else {
     view = CompositionViewComponentView::Create(compContext, tag);
   }

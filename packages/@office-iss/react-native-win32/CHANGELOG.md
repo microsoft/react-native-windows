@@ -1,8 +1,43 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Wed, 15 Feb 2023 06:22:16 GMT and should not be manually modified.
+This log was last generated on Tue, 21 Mar 2023 21:21:55 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.186
+
+Tue, 21 Mar 2023 21:21:55 GMT
+
+### Changes
+
+- Bump @rnw-scripts/just-task to v2.3.6
+- Bump react-native-platform-override to v1.9.4
+
+## 0.0.0-canary.185
+
+Wed, 08 Mar 2023 06:14:10 GMT
+
+### Changes
+
+- Fix API Gaps (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.184
+
+Thu, 02 Mar 2023 06:14:20 GMT
+
+### Changes
+
+- Integrate 2/13 (34109996+chiaramooney@users.noreply.github.com)
+- Merge branch 'YajurG-8875' of https://github.com/YajurG/react-native-windows into YajurG-8875 (email not defined)
+- Bump react-native-platform-override to v1.9.3
+
+## 0.0.0-canary.183
+
+Sat, 25 Feb 2023 06:13:36 GMT
+
+### Changes
+
+- Bump react-native-platform-override to v1.9.2
 
 ## 0.0.0-canary.182
 

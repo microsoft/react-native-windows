@@ -179,4 +179,11 @@ bool ShadowNodeBase::IsFocusable() {
   return m_isFocusable;
 }
 
+void ShadowNodeBase::IsDisable(bool disable) {
+  m_isDisabled = disable;
+}
+bool ShadowNodeBase::IsDisable() {
+  return m_isDisabled;
+}
+
 } // namespace Microsoft::ReactNative

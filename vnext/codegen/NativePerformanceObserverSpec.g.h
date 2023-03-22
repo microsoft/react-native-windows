@@ -41,10 +41,14 @@ struct PerformanceObserverSpec_GetPendingEntriesResult {
 
 struct PerformanceObserverSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(std::string) noexcept>{0, L"startReporting"},
-      Method<void(std::string) noexcept>{1, L"stopReporting"},
+      Method<void(double) noexcept>{0, L"startReporting"},
+      Method<void(double) noexcept>{1, L"stopReporting"},
       SyncMethod<PerformanceObserverSpec_GetPendingEntriesResult() noexcept>{2, L"popPendingEntries"},
       Method<void(Callback<>) noexcept>{3, L"setOnPerformanceEntryCallback"},
+      Method<void(PerformanceObserverSpec_RawPerformanceEntry) noexcept>{4, L"logRawEntry"},
+      SyncMethod<::React::JSValueArray() noexcept>{5, L"getEventCounts"},
+      Method<void(double, double) noexcept>{6, L"setDurationThreshold"},
+      Method<void(double, std::string) noexcept>{7, L"clearEntries"},
   };
 
   template <class TModule>
@@ -54,13 +58,13 @@ struct PerformanceObserverSpec : winrt::Microsoft::ReactNative::TurboModuleSpec 
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "startReporting",
-          "    REACT_METHOD(startReporting) void startReporting(std::string entryType) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(startReporting) static void startReporting(std::string entryType) noexcept { /* implementation */ }\n");
+          "    REACT_METHOD(startReporting) void startReporting(double entryType) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(startReporting) static void startReporting(double entryType) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "stopReporting",
-          "    REACT_METHOD(stopReporting) void stopReporting(std::string entryType) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(stopReporting) static void stopReporting(std::string entryType) noexcept { /* implementation */ }\n");
+          "    REACT_METHOD(stopReporting) void stopReporting(double entryType) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(stopReporting) static void stopReporting(double entryType) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "popPendingEntries",
@@ -71,6 +75,26 @@ struct PerformanceObserverSpec : winrt::Microsoft::ReactNative::TurboModuleSpec 
           "setOnPerformanceEntryCallback",
           "    REACT_METHOD(setOnPerformanceEntryCallback) void setOnPerformanceEntryCallback(std::function<void()> const & callback) noexcept { /* implementation */ }\n"
           "    REACT_METHOD(setOnPerformanceEntryCallback) static void setOnPerformanceEntryCallback(std::function<void()> const & callback) noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          4,
+          "logRawEntry",
+          "    REACT_METHOD(logRawEntry) void logRawEntry(PerformanceObserverSpec_RawPerformanceEntry && entry) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(logRawEntry) static void logRawEntry(PerformanceObserverSpec_RawPerformanceEntry && entry) noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          5,
+          "getEventCounts",
+          "    REACT_SYNC_METHOD(getEventCounts) ::React::JSValueArray getEventCounts() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(getEventCounts) static ::React::JSValueArray getEventCounts() noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          6,
+          "setDurationThreshold",
+          "    REACT_METHOD(setDurationThreshold) void setDurationThreshold(double entryType, double durationThreshold) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(setDurationThreshold) static void setDurationThreshold(double entryType, double durationThreshold) noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          7,
+          "clearEntries",
+          "    REACT_METHOD(clearEntries) void clearEntries(double entryType, std::string entryName) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(clearEntries) static void clearEntries(double entryType, std::string entryName) noexcept { /* implementation */ }\n");
   }
 };
 
