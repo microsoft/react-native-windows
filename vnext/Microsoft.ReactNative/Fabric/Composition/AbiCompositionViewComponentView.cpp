@@ -23,6 +23,13 @@ AbiCompositionViewComponentView::AbiCompositionViewComponentView(
   OuterVisual().InsertAt(m_visual, 0);
 }
 
+std::shared_ptr<AbiCompositionViewComponentView> AbiCompositionViewComponentView::Create(
+    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    facebook::react::Tag tag,
+    winrt::Microsoft::ReactNative::IReactViewComponentBuilder builder) noexcept {
+  return std::shared_ptr<AbiCompositionViewComponentView>(new AbiCompositionViewComponentView(compContext, tag, builder));
+}
+
 winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder &
 AbiCompositionViewComponentView::Builder() noexcept {
   return *winrt::get_self<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder>(m_builder);
@@ -122,6 +129,15 @@ facebook::react::Tag AbiCompositionViewComponentView::hitTest(
   }
 
   return -1;
+}
+
+
+winrt::IInspectable AbiCompositionViewComponentView::EnsureUiaProvider() noexcept {
+  if (m_uiaProvider == nullptr) {
+    m_uiaProvider = winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>(
+        shared_from_this());    
+  }
+  return m_uiaProvider;
 }
 
 } // namespace Microsoft::ReactNative
