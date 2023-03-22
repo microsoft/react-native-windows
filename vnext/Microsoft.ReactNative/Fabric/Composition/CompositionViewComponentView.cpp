@@ -1073,11 +1073,6 @@ void CompositionBaseComponentView::indexOffsetForBorder(uint32_t &index) const n
 
 void CompositionBaseComponentView::OnRenderingDeviceLost() noexcept {}
 
-std::vector<facebook::react::ComponentDescriptorProvider>
-CompositionBaseComponentView::supplementalComponentDescriptorProviders() noexcept {
-  return {};
-}
-
 comp::CompositionPropertySet CompositionBaseComponentView::EnsureCenterPointPropertySet() noexcept {
   if (m_centerPropSet == nullptr) {
     auto compositor =
