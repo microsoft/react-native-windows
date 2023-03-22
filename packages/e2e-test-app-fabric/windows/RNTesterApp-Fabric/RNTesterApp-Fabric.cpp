@@ -51,7 +51,8 @@ struct CompReactPackageProvider
     : winrt::implements<CompReactPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
  public: // IReactPackageProvider
   void CreatePackage(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept {
-    packageBuilder.AddTurboModule(L"DeviceInfo", winrt::Microsoft::ReactNative::MakeModuleProvider<DeviceInfo>());
+    AddAttributedModules(packageBuilder, true);
+    packageBuilder.AddModule(L"DeviceInfo", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<DeviceInfo>());
   }
 };
 
