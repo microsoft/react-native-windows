@@ -2342,6 +2342,36 @@
   resolved "https://registry.yarnpkg.com/@reactions/component/-/component-2.0.2.tgz#40f8c1c2c37baabe57a0c944edb9310dc1ec6642"
   integrity sha1-QPjBwsN7qr5XoMlE7bkxDcHsZkI=
 
+"@rnw-scripts/babel-node-config@2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@rnw-scripts/babel-node-config/-/babel-node-config-2.2.0.tgz#4bd701f50f6111f343e0038a46ac5cd5243fa4fd"
+  integrity sha512-lwhB2X8qQ3wu6sG0eC6Dzuk8qtFje9A/NS/GJnMNZKDNF4pIJlr/Lv+j/hU8x8RScXgGRZXuOAufKAawgY4Lfw==
+
+"@rnw-scripts/jest-e2e-config@1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@rnw-scripts/jest-e2e-config/-/jest-e2e-config-1.4.0.tgz#50381b221e3dfb887b38bdc71c876f9d9b9290b4"
+  integrity sha512-nRrPh5X4WNfu94aL7mU1D5Xzt3SUCWkk/B6/GTXiBjLuTUCewS5dbkH1OzdPa/5fapIFdyl2iP221Lvs1z4bnA==
+  dependencies:
+    "@rnw-scripts/babel-node-config" "2.2.0"
+
+"@rnw-scripts/jest-unittest-config@1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@rnw-scripts/jest-unittest-config/-/jest-unittest-config-1.5.0.tgz#847e18747f3a342870612fe54de2ceeff1e4f9b9"
+  integrity sha512-q4PTJ8TcxfO3WP5BG8blQ5IKi4dk0/NMOjnWMV+71O4zgeBh77jAIlpk9j7HBiM63cX2usKkQsDap/DL49Gl3g==
+  dependencies:
+    "@rnw-scripts/babel-node-config" "2.2.0"
+
+"@rnw-scripts/just-task@2.3.5":
+  version "2.3.5"
+  resolved "https://registry.yarnpkg.com/@rnw-scripts/just-task/-/just-task-2.3.5.tgz#428841b0ecab52bbc195d6aa3bf3fec20bb5ef5c"
+  integrity sha512-aPpTSx0xlRSIVp+1GOBVTFimEp+is0E5YaGYMISRNAE0BkQkQVADChADrGaoJ1sI5cAcFhKyNnOXuVvsDF88hw==
+  dependencies:
+    "@rnw-scripts/jest-e2e-config" "1.4.0"
+    "@rnw-scripts/jest-unittest-config" "1.5.0"
+    depcheck "^1.4.1"
+    glob "^7.1.6"
+    just-scripts "^1.3.3"
+
 "@rnx-kit/babel-preset-metro-react-native@^1.1.4":
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/@rnx-kit/babel-preset-metro-react-native/-/babel-preset-metro-react-native-1.1.4.tgz#7c526987208547614f7fc43ed6e001b183083dd7"
