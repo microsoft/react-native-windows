@@ -58,8 +58,6 @@ struct CompositionBaseComponentView : public IComponentView, public std::enable_
   comp::CompositionPropertySet EnsureCenterPointPropertySet() noexcept;
   void EnsureTransformMatrixFacade() noexcept;
 
-  virtual winrt::IInspectable EnsureUiaProvider() noexcept = 0;
-
  protected:
   std::array<winrt::Microsoft::ReactNative::Composition::SpriteVisual, SpecialBorderLayerCount>
   FindSpecialBorderLayers() const noexcept;

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CompositionRootAutomationProvider.h"
+#include "UiaHelpers.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
@@ -105,6 +106,23 @@ HRESULT __stdcall CompositionRootAutomationProvider::GetFocus(IRawElementProvide
 
   *pRetVal = nullptr;
 
+  auto strongView = m_view.view();
+
+  if (strongView == nullptr) {
+    return UIA_E_ELEMENTNOTAVAILABLE;
+  }
+
+  auto rootCV = std::static_pointer_cast<::Microsoft::ReactNative::RootComponentView>(strongView);
+  auto focusedComponent = rootCV->GetFocusedComponent();
+
+  if (focusedComponent)
+  {
+    auto focusedUiaProvider = focusedComponent->EnsureUiaProvider();
+    winrt::com_ptr<IRawElementProviderFragment> spFragment;
+    focusedUiaProvider.as(spFragment);
+    *pRetVal = spFragment.detach();
+  }
+
   return S_OK;
 }
 
@@ -118,36 +136,13 @@ HRESULT __stdcall CompositionRootAutomationProvider::Navigate(
   if (pRetVal == nullptr)
     return E_POINTER;
 
-  *pRetVal = nullptr;
-
-  auto strongRootControl = m_view.view();
-
-  if (!strongRootControl)
-    return UIA_E_ELEMENTNOTAVAILABLE;
-
-  winrt::IInspectable uiaProvider{nullptr};
-
-  switch (direction)
+  // Fragment roots do not enable navigation to a parent or siblings; navigation among fragment roots is handled by the
+  // default window providers. Elements in fragments must navigate only to other elements within that fragment.
+  if (direction == NavigateDirection_FirstChild || direction == NavigateDirection_LastChild)
   {
-    case NavigateDirection_LastChild:
-      __fallthrough;
-    case NavigateDirection_FirstChild: {
-      auto children = strongRootControl->children();
-      auto index = direction == NavigateDirection_FirstChild ? 0 : children.size() - 1;
-      if (!children.empty()) {
-        uiaProvider =
-            static_cast<::Microsoft::ReactNative::CompositionBaseComponentView *>(children[index])->EnsureUiaProvider();
-      }
-    }
-    break;
+    return UiaNavigateHelper(m_view, direction, *pRetVal);
   }
-
-  if (uiaProvider != nullptr) {
-    winrt::com_ptr<IRawElementProviderFragment> spReps;
-    uiaProvider.as(spReps);
-    *pRetVal = spReps.detach();
-  }
-
+  *pRetVal = nullptr;
   return S_OK;
 }
 

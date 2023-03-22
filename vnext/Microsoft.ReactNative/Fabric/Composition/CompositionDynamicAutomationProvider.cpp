@@ -8,6 +8,7 @@
 #include <atlsafe.h>
 #pragma warning(pop)
 #include "RootComponentView.h"
+#include "UiaHelpers.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
@@ -22,66 +23,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::Navigate(
   if (pRetVal == nullptr)
     return E_POINTER;
 
-  *pRetVal = nullptr;
-
- auto strongView = m_view.view();
-
-  if (!strongView)
-    return UIA_E_ELEMENTNOTAVAILABLE;
-
-  winrt::IInspectable uiaProvider{nullptr};
-
-  switch (direction) {
-     case NavigateDirection_Parent:
-     {
-       auto pParentCV = static_cast<::Microsoft::ReactNative::CompositionBaseComponentView *>(strongView->parent());
-       if (pParentCV != nullptr) {
-         uiaProvider = pParentCV->EnsureUiaProvider();
-       }
-     } break;
-
-    case NavigateDirection_LastChild:
-      __fallthrough;
-
-    case NavigateDirection_FirstChild: {
-      auto children = strongView->children();
-      auto index = direction == NavigateDirection_FirstChild ? 0 : children.size() - 1;
-      if (!children.empty()) {
-        uiaProvider = static_cast<::Microsoft::ReactNative::CompositionBaseComponentView *>(children[index])->EnsureUiaProvider();
-      }
-    } break;
-
-    case NavigateDirection_NextSibling: {
-      auto pParentCV = static_cast<::Microsoft::ReactNative::CompositionBaseComponentView *>(strongView->parent());
-      if (pParentCV != nullptr) {
-        auto children = pParentCV->children();
-        auto it = std::find(children.begin(), children.end(), strongView.get());
-        if (++it != children.end()) {
-          uiaProvider = static_cast<::Microsoft::ReactNative::CompositionBaseComponentView *>(*it)->EnsureUiaProvider();
-        }
-      }
-    } break;
-
-    case NavigateDirection_PreviousSibling: {
-      auto pParentCV = static_cast<::Microsoft::ReactNative::CompositionBaseComponentView *>(strongView->parent());
-      if (pParentCV != nullptr) {
-        auto children = pParentCV->children();
-        auto it = std::find(children.rbegin(), children.rend(), strongView.get());
-        if (++it != children.rend()) {
-          uiaProvider = static_cast<::Microsoft::ReactNative::CompositionBaseComponentView *>(*it)->EnsureUiaProvider();
-        }
-      }
-    } break;
-
-  }
-
-  if (uiaProvider != nullptr) {
-    winrt::com_ptr<IRawElementProviderFragment> spReps;
-    uiaProvider.as(spReps);
-    *pRetVal = spReps.detach();
-  }
-
-  return S_OK;
+  return UiaNavigateHelper(m_view, direction, *pRetVal);
 }
 
 // Implementations should return NULL for a top-level element that is hosted in a window. Other elements should return
@@ -178,7 +120,7 @@ long GetControlType(const std::string& role) noexcept
 {
   if (role == "adjustable") {
     return UIA_SliderControlTypeId;
-  } else if (role == "alert" || role == "group" || role == "search" || role == "timer") {
+  } else if (role == "alert" || role == "group" || role == "search" || role == "timer" || role.empty()) {
     return UIA_GroupControlTypeId;
   } else if (role == "button" || role == "imagebutton" || role == "keyboardkey" || role == "switch" || role == "togglebutton") {
     return UIA_ButtonControlTypeId;
@@ -230,7 +172,7 @@ long GetControlType(const std::string& role) noexcept
   } else if (role == "treeitem") {
     return UIA_TreeItemControlTypeId;
   }
-  // TODO: error?
+  assert(false);
   return UIA_GroupControlTypeId;
 }
 

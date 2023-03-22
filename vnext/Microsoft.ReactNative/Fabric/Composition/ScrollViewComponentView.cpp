@@ -369,9 +369,7 @@ winrt::Microsoft::ReactNative::Composition::IVisual ScrollViewComponentView::Vis
 
 winrt::IInspectable ScrollViewComponentView::EnsureUiaProvider() noexcept {
   if (m_uiaProvider == nullptr) {
-    // m_uiaProvider = winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>(
-    //    shared_from_this());
-    // TODO:
+    // ScrollViewProps doesn't inherit from ViewProps so the current impl can't used DynamicAutomationProvider
   }
   return m_uiaProvider;
 }

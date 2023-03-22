@@ -1157,6 +1157,7 @@ CompositionViewComponentView::CompositionViewComponentView(
   static auto const defaultProps = std::make_shared<facebook::react::ViewProps const>();
   m_props = defaultProps;
   m_visual = m_compContext.CreateSpriteVisual();
+  OuterVisual().InsertAt(m_visual, 0);
 }
 
 std::shared_ptr<CompositionViewComponentView> CompositionViewComponentView::Create(
