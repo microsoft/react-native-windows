@@ -8,6 +8,7 @@
 
 #include <Fabric/DWriteHelpers.h>
 #include "Unicode.h"
+#include "CompositionDynamicAutomationProvider.h"
 
 namespace Microsoft::ReactNative {
 
@@ -18,6 +19,12 @@ UnimplementedNativeViewComponentView::UnimplementedNativeViewComponentView(
   static auto const defaultProps = std::make_shared<facebook::react::UnimplementedNativeViewProps const>();
   m_props = defaultProps;
   m_visual = compContext.CreateSpriteVisual();
+}
+
+std::shared_ptr<UnimplementedNativeViewComponentView> UnimplementedNativeViewComponentView::Create(
+    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    facebook::react::Tag tag) noexcept {
+  return std::shared_ptr<UnimplementedNativeViewComponentView>(new UnimplementedNativeViewComponentView(compContext, tag));
 }
 
 void UnimplementedNativeViewComponentView::mountChildComponentView(
@@ -155,6 +162,14 @@ facebook::react::Tag UnimplementedNativeViewComponentView::hitTest(
   }
 
   return -1;
+}
+
+winrt::IInspectable UnimplementedNativeViewComponentView::EnsureUiaProvider() noexcept {
+  if (m_uiaProvider == nullptr) {
+    m_uiaProvider = winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>(
+        shared_from_this());
+  }
+  return m_uiaProvider;
 }
 
 } // namespace Microsoft::ReactNative

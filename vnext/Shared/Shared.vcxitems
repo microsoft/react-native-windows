@@ -47,6 +47,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionRootAutomationProvider.cpp">
       <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionDynamicAutomationProvider.cpp">
+      <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionRootView.cpp">
       <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
       <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionRootView.idl</DependentUpon>
@@ -186,6 +189,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionHelpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionHwndHost.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionRootAutomationProvider.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionDynamicAutomationProvider.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionRootView.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionUIService.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionViewComponentView.h" />

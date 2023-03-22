@@ -218,6 +218,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionRootAutomationProvider.cpp">
       <Filter>Source Files\Fabric\Composition</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionDynamicAutomationProvider.cpp">
+      <Filter>Source Files\Fabric\Composition</Filter>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionRootView.cpp">
       <Filter>Source Files\Fabric\Composition</Filter>
     </ClCompile>
@@ -244,6 +247,7 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\RootComponentView.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\components\view\windows\WindowsViewProps.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\UnimplementedNativeViewComponentView.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
@@ -676,6 +680,9 @@
       <Filter>Header Files\Fabric\Composition</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionRootAutomationProvider.h">
+      <Filter>Header Files\Fabric\Composition</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionDynamicAutomationProvider.h">
       <Filter>Header Files\Fabric\Composition</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionRootView.h">

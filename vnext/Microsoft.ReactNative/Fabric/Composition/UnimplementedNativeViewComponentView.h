@@ -15,9 +15,10 @@ namespace Microsoft::ReactNative {
 
 struct UnimplementedNativeViewComponentView : CompositionBaseComponentView {
   using Super = CompositionBaseComponentView;
-  UnimplementedNativeViewComponentView(
+
+  [[nodiscard]] static std::shared_ptr<UnimplementedNativeViewComponentView> Create(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-      facebook::react::Tag tag);
+      facebook::react::Tag tag) noexcept;
 
   void mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
   void unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
@@ -37,7 +38,12 @@ struct UnimplementedNativeViewComponentView : CompositionBaseComponentView {
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
   winrt::Microsoft::ReactNative::Composition::IVisual OuterVisual() const noexcept override;
 
+  winrt::IInspectable EnsureUiaProvider() noexcept override;
+
  private:
+  UnimplementedNativeViewComponentView(
+      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      facebook::react::Tag tag);
   std::shared_ptr<facebook::react::UnimplementedNativeViewProps const> m_props;
   winrt::Microsoft::ReactNative::Composition::SpriteVisual m_visual{nullptr};
 };
