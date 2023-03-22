@@ -1,0 +1,87 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+#include "DocString.h"
+import "CompositionSwitcher.idl";
+import "IJSValueReader.idl";
+import "ViewProps.idl";
+
+namespace Microsoft.ReactNative.Composition
+{
+  [webhosthidden]
+  [experimental]
+  struct LayoutMetrics {
+    Windows.Foundation.Rect Frame;
+    Single PointScaleFactor;
+  };
+
+  [experimental]
+  DOC_STRING("Provides a factory method to create an instance of a ViewComponent. See @IReactCompositionViewComponentBuilder.SetCreateView")
+  delegate Object CompositionComponentFactory(ICompositionContext context);
+
+  // TODO should make an event args, with a handled bit instead of return value
+  [experimental]
+  DOC_STRING("A delegate that handles commands for an instance of a ViewComponent. See @IReactCompositionViewComponentBuilder.SetCommandHandler")
+  delegate Boolean CommandHandler(Object handle, String commandName, Microsoft.ReactNative.IJSValueReader args);
+
+  [experimental]
+  DOC_STRING("A delegate that updates the properties for an instance of a ViewComponent. See @IReactCompositionViewComponentBuilder.SetPropsUpdater")
+  delegate void PropsUpdater(Object handle, Microsoft.ReactNative.IComponentProps props);
+
+  [experimental]
+  DOC_STRING("A delegate that updates the @LayoutMetrics for an instance of a ViewComponent. See @IReactCompositionViewComponentBuilder.SetLayoutMetricsUpdater")
+  delegate void LayoutMetricsUpdater(Object handle, LayoutMetrics metrics);
+
+  [experimental]
+  DOC_STRING("A delegate that finalizes the updates for an instance of a ViewComponent. See @IReactCompositionViewComponentBuilder.SetUpdateFinalizer")
+  delegate void UpdateFinalizer(Object handle);
+
+  [experimental]
+  DOC_STRING("A delegate that creates the @IVisual for an instance of a ViewComponent. See @IReactCompositionViewComponentBuilder.SetVisualCreator")
+  delegate IVisual VisualCreator(Object handle);
+
+  [experimental]
+  DOC_STRING("A delegate that handles input messages for an instance of a ViewComponent. See @IReactCompositionViewComponentBuilder.SetMessageHandler")
+  delegate Int64 MessageHandler(Object handle, UInt32 Msg, UInt64 WParam, Int64 LParam);
+
+  [webhosthidden]
+  [experimental]
+  DOC_STRING(".")
+  interface IReactCompositionViewComponentBuilder
+  {
+    // (ICompositionContext) => Handle
+    void SetCreateView(CompositionComponentFactory impl);
+
+    DOC_STRING("Called when a command is run against this component.  If the command is handled this function should return true.")
+    // (Object handle, String commandName, Microsoft.ReactNative.IJSValueReader args) => bool
+    void SetCommandHandler(CommandHandler commandHandler);
+
+    // TODO -void UpdateEventEmitter(IEventEmitter emitter);
+
+    DOC_STRING("Called whenever the properties change.")
+    // (Object handle, Microsoft.ReactNative.IComponentProps props) => void
+    void SetPropsUpdater(PropsUpdater impl);
+
+    DOC_STRING("Called whenever the layout metrics change.")
+    // (Object handle, LayoutMetrics metrics) => void
+    void SetLayoutMetricsUpdater(LayoutMetricsUpdater impl);
+
+    // TODO - void UpdateState(...);
+
+    DOC_STRING("Called on any update, after props, layout, and state have been updated.")
+    // (Object handle) => void
+    void SetUpdateFinalizer(UpdateFinalizer impl);
+
+    DOC_STRING("This visual will be added to the visual tree, and should be used to display this component.")
+    // (Object handle) => IVisual
+    void SetVisualCreator(VisualCreator impl);
+
+    DOC_STRING("Used to handle native input into this component.")
+    // (Object handle, UInt32 Msg, UInt64 WParam, Int64 LParam) => Int64
+    void SetMessageHandler(MessageHandler impl);
+  };
+
+
+
+
+} // namespace Microsoft.ReactNative

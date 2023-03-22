@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Verify JS ViewConfig and ViewManager ViewConfigs align",
+  "comment": "[Fabric] Beginning of custom component interfaces",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
   "dependentChangeType": "patch"

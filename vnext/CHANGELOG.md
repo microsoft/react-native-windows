@@ -1,8 +1,23 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 14 Mar 2023 05:13:40 GMT and should not be manually modified.
+This log was last generated on Tue, 21 Mar 2023 21:21:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.630
+
+Tue, 21 Mar 2023 21:21:54 GMT
+
+### Changes
+
+- CrashManager should also handle SIGABRT (tudor.mihai@microsoft.com)
+- Fix RedBox Dismiss (30809111+acoates-ms@users.noreply.github.com)
+- Verify JS ViewConfig and ViewManager ViewConfigs align (30809111+acoates-ms@users.noreply.github.com)
+- Adds BundleAppId to ReactInstanceSettings (erozell@outlook.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.166
+- Bump @react-native-windows/codegen to v0.0.0-canary.54
+- Bump @rnw-scripts/just-task to v2.3.6
+- Bump react-native-platform-override to v1.9.4
 
 ## 0.0.0-canary.629
 

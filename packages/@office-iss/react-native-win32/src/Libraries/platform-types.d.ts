@@ -6,6 +6,7 @@
 */
 
 export {ViewWin32} from './Components/View/ViewWin32';
+export {IViewWin32Props} from './Components/View/ViewPropTypes.win32';
 export {TextWin32TextStyle, ITextWin32Props } from './Components/Text/TextWin32.Props';
 export {TextWin32} from './Components/Text/TextWin32';
 export {IButtonWin32Props, IButtonWin32Style} from './Components/Button/ButtonWin32.Props';

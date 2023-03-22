@@ -43,6 +43,8 @@ struct CompositionHwndHost : CompositionHwndHostT<CompositionHwndHost> {
   HWND m_hwnd;
   winrt::Microsoft::ReactNative::CompositionRootView m_compRootView{nullptr};
   winrt::Windows::UI::Composition::Desktop::DesktopWindowTarget m_target{nullptr};
+  LONG m_height{0};
+  LONG m_width{0};
 
   // Store locally if set before we have a rootview
   ReactNative::IReactViewHost m_reactViewHost{nullptr};

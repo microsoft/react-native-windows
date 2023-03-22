@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Stop E2E tests from having huge amounts of babel warnings",
-  "packageName": "@rnw-scripts/babel-node-config",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
