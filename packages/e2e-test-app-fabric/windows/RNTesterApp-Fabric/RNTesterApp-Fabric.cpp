@@ -68,7 +68,7 @@ constexpr PCWSTR c_windowClassName = L"MS_REACTNATIVE_RNTESTER_COMPOSITION";
 
 // Forward declarations of functions included in this code module:
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
-int RunRNTester(int showCmd, bool useWebDebugger);
+int RunRNTester(int showCmd);
 
 struct WindowData {
   static HINSTANCE s_instance;
@@ -211,7 +211,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
   return DefWindowProc(hWnd, message, wParam, lParam);
 }
 
-int RunRNTester(int showCmd, bool useWebDebugger) {
+int RunRNTester(int showCmd) {
   constexpr PCWSTR appName = L"React Native Tester (Composition)";
 
   auto windowData = std::make_unique<WindowData>(winrt::Microsoft::ReactNative::CompositionHwndHost());
@@ -280,5 +280,5 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
           winrt::put_abi(g_dispatcherQueueController))));
 
   g_compositor = winrt::Windows::UI::Composition::Compositor();
-  return RunRNTester(showCmd, false);
+  return RunRNTester(showCmd);
 }
