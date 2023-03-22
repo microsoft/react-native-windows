@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "UiaHelpers.h"
-#include <inspectable.h>
 #include <Fabric/Composition/CompositionViewComponentView.h>
+#include <inspectable.h>
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
@@ -9,9 +9,8 @@ HRESULT UiaNavigateHelper(
     ::Microsoft::ReactNative::ReactTaggedView &view,
     NavigateDirection direction,
     IRawElementProviderFragment *&retVal) noexcept {
-  
   retVal = nullptr;
-  
+
   auto spComponentView = view.view();
 
   if (!spComponentView)
@@ -20,13 +19,12 @@ HRESULT UiaNavigateHelper(
   winrt::IInspectable uiaProvider{nullptr};
 
   switch (direction) {
-     case NavigateDirection_Parent:
-     {
-       auto pParentCV = static_cast<::Microsoft::ReactNative::CompositionBaseComponentView *>(spComponentView->parent());
-       if (pParentCV != nullptr) {
-         uiaProvider = pParentCV->EnsureUiaProvider();
-       }
-     } break;
+    case NavigateDirection_Parent: {
+      auto pParentCV = static_cast<::Microsoft::ReactNative::CompositionBaseComponentView *>(spComponentView->parent());
+      if (pParentCV != nullptr) {
+        uiaProvider = pParentCV->EnsureUiaProvider();
+      }
+    } break;
 
     case NavigateDirection_LastChild:
       __fallthrough;
@@ -35,7 +33,8 @@ HRESULT UiaNavigateHelper(
       auto children = spComponentView->children();
       auto index = direction == NavigateDirection_FirstChild ? 0 : children.size() - 1;
       if (!children.empty()) {
-        uiaProvider = static_cast<::Microsoft::ReactNative::CompositionBaseComponentView *>(children[index])->EnsureUiaProvider();
+        uiaProvider =
+            static_cast<::Microsoft::ReactNative::CompositionBaseComponentView *>(children[index])->EnsureUiaProvider();
       }
     } break;
 
@@ -60,7 +59,6 @@ HRESULT UiaNavigateHelper(
         }
       }
     } break;
-
   }
 
   if (uiaProvider != nullptr) {
@@ -71,4 +69,4 @@ HRESULT UiaNavigateHelper(
   return S_OK;
 }
 
-}
+} // namespace winrt::Microsoft::ReactNative::implementation

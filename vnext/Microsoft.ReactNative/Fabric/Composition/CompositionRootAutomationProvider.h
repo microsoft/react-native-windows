@@ -1,9 +1,9 @@
 #pragma once
 
-#include <UIAutomation.h>
-#include <inspectable.h>
 #include <Fabric/Composition/RootComponentView.h>
 #include <Fabric/ReactTaggedView.h>
+#include <UIAutomation.h>
+#include <inspectable.h>
 
 namespace winrt::Microsoft::ReactNative::implementation {
 struct CompositionRootView;
@@ -34,7 +34,8 @@ class CompositionRootAutomationProvider : public winrt::implements<
   virtual HRESULT __stdcall GetPropertyValue(PROPERTYID propertyId, VARIANT *pRetVal) override;
   virtual HRESULT __stdcall get_HostRawElementProvider(IRawElementProviderSimple **pRetVal) override;
 
-  CompositionRootAutomationProvider(const std::shared_ptr<::Microsoft::ReactNative::RootComponentView>& componentView) noexcept;
+  CompositionRootAutomationProvider(
+      const std::shared_ptr<::Microsoft::ReactNative::RootComponentView> &componentView) noexcept;
   void SetHwnd(HWND hwnd) noexcept;
 
  private:

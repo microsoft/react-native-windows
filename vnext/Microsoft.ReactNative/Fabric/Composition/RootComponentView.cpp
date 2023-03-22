@@ -6,8 +6,8 @@
 
 #include "RootComponentView.h"
 
-#include "CompositionRootView.h"
 #include "CompositionRootAutomationProvider.h"
+#include "CompositionRootView.h"
 
 namespace Microsoft::ReactNative {
 
@@ -103,7 +103,8 @@ bool RootComponentView::TryMoveFocus(bool next) noexcept {
 
 winrt::IInspectable RootComponentView::EnsureUiaProvider() noexcept {
   if (m_uiaProvider == nullptr) {
-    m_uiaProvider = winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionRootAutomationProvider>(getPtr());
+    m_uiaProvider =
+        winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionRootAutomationProvider>(getPtr());
   }
   return m_uiaProvider;
 }

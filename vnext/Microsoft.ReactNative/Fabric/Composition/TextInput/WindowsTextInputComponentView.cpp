@@ -6,6 +6,7 @@
 
 #include "WindowsTextInputComponentView.h"
 
+#include <Fabric/Composition/CompositionDynamicAutomationProvider.h>
 #include <Utils/ValueUtils.h>
 #include <tom.h>
 #include <unicode.h>
@@ -15,7 +16,6 @@
 #include "WindowsTextInputShadowNode.h"
 #include "WindowsTextInputState.h"
 #include "guid/msoGuid.h"
-#include <Fabric/Composition/CompositionDynamicAutomationProvider.h>
 
 // convert a BSTR to a std::string.
 std::string &BstrToStdString(const BSTR bstr, std::string &dst, int cp = CP_UTF8) {

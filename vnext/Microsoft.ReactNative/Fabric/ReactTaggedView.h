@@ -15,10 +15,8 @@ namespace Microsoft::ReactNative {
  * changed from the one provided at initalization time (i.e. recycled).
  */
 struct ReactTaggedView {
-  ReactTaggedView(const std::shared_ptr<IComponentView>& componentView) 
-    : m_view(componentView)
-    , m_tag(componentView->tag()) {
-  }
+  ReactTaggedView(const std::shared_ptr<IComponentView> &componentView)
+      : m_view(componentView), m_tag(componentView->tag()) {}
 
   std::shared_ptr<IComponentView> view() noexcept {
     auto strongView = m_view.lock();

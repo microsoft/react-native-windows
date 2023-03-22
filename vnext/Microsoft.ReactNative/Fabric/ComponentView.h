@@ -5,11 +5,11 @@
 #pragma once
 
 #include <functional/functor.h>
+#include <inspectable.h>
 #include <react/renderer/componentregistry/ComponentDescriptorProvider.h>
 #include <react/renderer/components/view/TouchEventEmitter.h>
 #include <react/renderer/components/view/ViewProps.h>
 #include <react/renderer/core/LayoutMetrics.h>
-#include <inspectable.h>
 
 namespace Microsoft::ReactNative {
 

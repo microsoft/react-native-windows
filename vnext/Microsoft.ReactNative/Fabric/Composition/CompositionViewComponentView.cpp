@@ -16,7 +16,6 @@
 #include "CompositionHelpers.h"
 #include "RootComponentView.h"
 #include "d2d1helper.h"
-#include "CompositionDynamicAutomationProvider.h"
 
 namespace Microsoft::ReactNative {
 

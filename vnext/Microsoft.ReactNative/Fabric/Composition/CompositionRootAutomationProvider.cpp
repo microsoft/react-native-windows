@@ -115,8 +115,7 @@ HRESULT __stdcall CompositionRootAutomationProvider::GetFocus(IRawElementProvide
   auto rootCV = std::static_pointer_cast<::Microsoft::ReactNative::RootComponentView>(strongView);
   auto focusedComponent = rootCV->GetFocusedComponent();
 
-  if (focusedComponent)
-  {
+  if (focusedComponent) {
     auto focusedUiaProvider = focusedComponent->EnsureUiaProvider();
     winrt::com_ptr<IRawElementProviderFragment> spFragment;
     focusedUiaProvider.as(spFragment);
@@ -138,8 +137,7 @@ HRESULT __stdcall CompositionRootAutomationProvider::Navigate(
 
   // Fragment roots do not enable navigation to a parent or siblings; navigation among fragment roots is handled by the
   // default window providers. Elements in fragments must navigate only to other elements within that fragment.
-  if (direction == NavigateDirection_FirstChild || direction == NavigateDirection_LastChild)
-  {
+  if (direction == NavigateDirection_FirstChild || direction == NavigateDirection_LastChild) {
     return UiaNavigateHelper(m_view, direction, *pRetVal);
   }
   *pRetVal = nullptr;

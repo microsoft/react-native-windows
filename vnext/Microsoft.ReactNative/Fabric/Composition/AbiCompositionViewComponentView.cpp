@@ -28,7 +28,8 @@ std::shared_ptr<AbiCompositionViewComponentView> AbiCompositionViewComponentView
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::IReactViewComponentBuilder builder) noexcept {
-  return std::shared_ptr<AbiCompositionViewComponentView>(new AbiCompositionViewComponentView(compContext, tag, builder));
+  return std::shared_ptr<AbiCompositionViewComponentView>(
+      new AbiCompositionViewComponentView(compContext, tag, builder));
 }
 
 winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder &
@@ -131,7 +132,6 @@ facebook::react::Tag AbiCompositionViewComponentView::hitTest(
 
   return -1;
 }
-
 
 winrt::IInspectable AbiCompositionViewComponentView::EnsureUiaProvider() noexcept {
   if (m_uiaProvider == nullptr) {

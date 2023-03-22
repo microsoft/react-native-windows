@@ -1,8 +1,8 @@
 #pragma once
 
 #include <Fabric/ComponentView.h>
-#include <UIAutomation.h>
 #include <Fabric/ReactTaggedView.h>
+#include <UIAutomation.h>
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
@@ -13,4 +13,4 @@ UiaNavigateHelper(
     NavigateDirection direction,
     IRawElementProviderFragment *&retVal) noexcept;
 
-}
+} // namespace winrt::Microsoft::ReactNative::implementation

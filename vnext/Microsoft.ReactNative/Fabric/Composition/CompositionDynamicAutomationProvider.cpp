@@ -19,7 +19,6 @@ CompositionDynamicAutomationProvider::CompositionDynamicAutomationProvider(
 HRESULT __stdcall CompositionDynamicAutomationProvider::Navigate(
     NavigateDirection direction,
     IRawElementProviderFragment **pRetVal) {
-
   if (pRetVal == nullptr)
     return E_POINTER;
 
@@ -116,13 +115,14 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
   return S_OK;
 }
 
-long GetControlType(const std::string& role) noexcept
-{
+long GetControlType(const std::string &role) noexcept {
   if (role == "adjustable") {
     return UIA_SliderControlTypeId;
   } else if (role == "alert" || role == "group" || role == "search" || role == "timer" || role.empty()) {
     return UIA_GroupControlTypeId;
-  } else if (role == "button" || role == "imagebutton" || role == "keyboardkey" || role == "switch" || role == "togglebutton") {
+  } else if (
+      role == "button" || role == "imagebutton" || role == "keyboardkey" || role == "switch" ||
+      role == "togglebutton") {
     return UIA_ButtonControlTypeId;
   } else if (role == "checkbox") {
     return UIA_CheckBoxControlTypeId;
@@ -214,7 +214,8 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
   return S_OK;
 }
 
-HRESULT __stdcall CompositionDynamicAutomationProvider::get_HostRawElementProvider(IRawElementProviderSimple **pRetVal) {
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_HostRawElementProvider(
+    IRawElementProviderSimple **pRetVal) {
   if (pRetVal == nullptr)
     return E_POINTER;
 
@@ -223,4 +224,4 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_HostRawElementProvid
   return S_OK;
 }
 
-}
+} // namespace winrt::Microsoft::ReactNative::implementation

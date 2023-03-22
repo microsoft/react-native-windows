@@ -17,8 +17,8 @@ struct RootComponentView : CompositionViewComponentView {
   using Super = CompositionViewComponentView;
 
   [[nodiscard]] static std::shared_ptr<RootComponentView> Create(
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-    facebook::react::Tag tag) noexcept;
+      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      facebook::react::Tag tag) noexcept;
 
   std::shared_ptr<RootComponentView> getPtr();
 
@@ -34,7 +34,7 @@ struct RootComponentView : CompositionViewComponentView {
   winrt::IInspectable EnsureUiaProvider() noexcept override;
 
  private:
-   RootComponentView(
+  RootComponentView(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag);
   ::Microsoft::ReactNative::IComponentView *m_focusedComponent = nullptr;

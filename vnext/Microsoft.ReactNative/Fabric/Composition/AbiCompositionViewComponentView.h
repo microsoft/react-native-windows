@@ -22,7 +22,7 @@ struct AbiCompositionViewComponentView : CompositionBaseComponentView {
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::IReactViewComponentBuilder builder) noexcept;
-      
+
   winrt::IInspectable EnsureUiaProvider() noexcept override;
 
   void mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
@@ -51,7 +51,7 @@ struct AbiCompositionViewComponentView : CompositionBaseComponentView {
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::IReactViewComponentBuilder builder);
-      
+
   winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder &Builder() noexcept;
 
   winrt::IInspectable m_handle;

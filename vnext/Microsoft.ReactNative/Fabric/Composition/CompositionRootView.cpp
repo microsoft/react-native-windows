@@ -364,7 +364,7 @@ Windows::Foundation::Size CompositionRootView::Arrange(Windows::Foundation::Size
   return finalSize;
 }
 
-::Microsoft::ReactNative::RootComponentView * CompositionRootView::GetComponentView() noexcept {
+::Microsoft::ReactNative::RootComponentView *CompositionRootView::GetComponentView() noexcept {
   if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
           winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties()))) {
     auto rootComponentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(

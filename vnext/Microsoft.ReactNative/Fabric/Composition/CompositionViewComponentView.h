@@ -14,7 +14,8 @@ namespace Microsoft::ReactNative {
 struct CompositionBaseComponentView;
 struct CompContext;
 
-struct CompositionBaseComponentView : public IComponentView, public std::enable_shared_from_this<CompositionBaseComponentView> {
+struct CompositionBaseComponentView : public IComponentView,
+                                      public std::enable_shared_from_this<CompositionBaseComponentView> {
   static constexpr size_t SpecialBorderLayerCount = 8;
 
   CompositionBaseComponentView(

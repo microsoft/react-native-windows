@@ -11,8 +11,8 @@
 #include <react/renderer/components/text/ParagraphState.h>
 #include <unicode.h>
 #include <winrt/Microsoft.ReactNative.Composition.h>
-#include "CompositionHelpers.h"
 #include "CompositionDynamicAutomationProvider.h"
+#include "CompositionHelpers.h"
 
 namespace Microsoft::ReactNative {
 
