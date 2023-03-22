@@ -7,6 +7,7 @@
 #include "AbiCompositionViewComponentView.h"
 
 #include <Fabric/DWriteHelpers.h>
+#include "CompositionDynamicAutomationProvider.h"
 #include "Unicode.h"
 
 namespace Microsoft::ReactNative {
@@ -135,7 +136,7 @@ facebook::react::Tag AbiCompositionViewComponentView::hitTest(
 winrt::IInspectable AbiCompositionViewComponentView::EnsureUiaProvider() noexcept {
   if (m_uiaProvider == nullptr) {
     m_uiaProvider = winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>(
-        shared_from_this());    
+        shared_from_this());
   }
   return m_uiaProvider;
 }

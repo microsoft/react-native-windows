@@ -18,7 +18,7 @@ namespace Microsoft::ReactNative {
 struct AbiCompositionViewComponentView : CompositionBaseComponentView {
   using Super = CompositionBaseComponentView;
 
-  [[nodiscard]] static std::shared_ptr<AbiCompositionViewComponentView> Create
+  [[nodiscard]] static std::shared_ptr<AbiCompositionViewComponentView> Create(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::IReactViewComponentBuilder builder) noexcept;
