@@ -15,7 +15,7 @@
 #include "NativeModules.h"
 #include "ReactPropertyBag.h"
 
-#define MAX_LOADSTRING 100
+constexpr size_t MAX_LOADSTRING = 100;
 
 // Work around crash in DeviceInfo when running outside of XAML environment
 // TODO rework built-in DeviceInfo to allow it to be driven without use of HWNDs or XamlApps
@@ -148,7 +148,7 @@ struct WindowData {
 
     auto windowData = WindowData::GetFromWindow(hwnd);
     if (!windowData->m_windowInited) {
-      m_CompositionHwndHost.Initialize((uint64_t)hwnd);
+      m_CompositionHwndHost.Initialize(static_cast<uint64_t>(hwnd));
       windowData->m_windowInited = true;
     }
     return 0;
@@ -246,7 +246,7 @@ int RunRNTester(int showCmd) {
       DispatchMessage(&msg);
     }
   }
-  return (int)msg.wParam;
+  return static_cast<int>(msg.wParam);
 }
 
 _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR /* commandLine */, int showCmd) {
