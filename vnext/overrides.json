@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20230228-2111-32d03c250",
+  "baseVersion": "0.0.0-20230308-2111-d41e95fb1",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "bf1e694b9b12d0817c203f45ce7ceea80c1993c0"
+      "baseHash": "5a64dc6294bdb475c9725d6924993128b50f9196"
     },
     {
       "type": "derived",
@@ -26,7 +26,7 @@
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputShadowNode.cpp",
       "baseFile": "ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputShadowNode.cpp",
-      "baseHash": "a77bd96f21f87bf83bdfd968743064e76d9a0f49"
+      "baseHash": "0046f71f7d5b8d7674237fa8710d30b75d3cb0ee"
     },
     {
       "type": "derived",
@@ -54,6 +54,13 @@
     },
     {
       "type": "patch",
+      "file": "Microsoft.ReactNative/Fabric/platform/react/renderer/core/graphicsConversions.h",
+      "baseFile": "ReactCommon/react/renderer/core/graphicsConversions.h",
+      "baseHash": "d5e35921ee76c23fbc395434b4a515bd98c185bf",
+      "issue": 7821
+    },
+    {
+      "type": "patch",
       "file": "Microsoft.ReactNative/Fabric/platform/react/renderer/graphics/Color.cpp",
       "baseFile": "ReactCommon/react/renderer/graphics/Color.cpp",
       "baseHash": "986dfaef4c6a5b57369c1383231cdeb5d69dd4ab",
@@ -64,13 +71,6 @@
       "file": "Microsoft.ReactNative/Fabric/platform/react/renderer/graphics/Color.h",
       "baseFile": "ReactCommon/react/renderer/graphics/Color.cpp",
       "baseHash": "986dfaef4c6a5b57369c1383231cdeb5d69dd4ab",
-      "issue": 7821
-    },
-    {
-      "type": "patch",
-      "file": "Microsoft.ReactNative/Fabric/platform/react/renderer/graphics/conversions.h",
-      "baseFile": "ReactCommon/react/renderer/graphics/conversions.h",
-      "baseHash": "d5e35921ee76c23fbc395434b4a515bd98c185bf",
       "issue": 7821
     },
     {
@@ -114,7 +114,7 @@
       "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/ViewProps.cpp",
       "baseFile": "ReactCommon/react/renderer/components/view/ViewProps.cpp",
-      "baseHash": "aa0da12bb0688b67ac8a7295f8113419ec2277ab"
+      "baseHash": "1e21524058484af4970c06ff333f7a5d56cd6e65"
     },
     {
       "type": "derived",
@@ -216,7 +216,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.windows.js",
       "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.js",
-      "baseHash": "09fc956afbcd13b4c7a39e4de762c0af57cb9b4f",
+      "baseHash": "163927cc271b53109f06eaf5fc6d30a9af8cb27e",
       "issue": 4578
     },
     {
@@ -298,7 +298,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/RefreshControl/RefreshControl.windows.js",
       "baseFile": "Libraries/Components/RefreshControl/RefreshControl.js",
-      "baseHash": "c69a48c6e060332232cc8056528d1edb4b2e4f87"
+      "baseHash": "7e6b0a8088ba49a28360a88fd59c08e8c0965130"
     },
     {
       "type": "derived",
@@ -322,7 +322,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "7305b4ef570eb19e8f4238e252d8c788ce974b16"
+      "baseHash": "67f133655ca2a4cb62a1723ae5623895b7a647c0"
     },
     {
       "type": "patch",
