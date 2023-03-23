@@ -15,11 +15,6 @@ ActivityIndicatorComponentView::ActivityIndicatorComponentView(
   m_props = std::make_shared<facebook::react::ActivityIndicatorViewProps const>();
 }
 
-std::vector<facebook::react::ComponentDescriptorProvider>
-ActivityIndicatorComponentView::supplementalComponentDescriptorProviders() noexcept {
-  return {};
-}
-
 void ActivityIndicatorComponentView::mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
   assert(false);
 }
@@ -121,13 +116,14 @@ void ActivityIndicatorComponentView::Draw() noexcept {
     d2dDeviceContext->SetDpi(dpi, dpi);
 
     // TEST DRAWING
-    D2D1_POINT_2F ellipseCenter = D2D1 ::Point2F(trackMarginX, trackMarginY);
-    D2D1_ELLIPSE ellipse = D2D1::Ellipse(ellipseCenter, width, width);
-    d2dDeviceContext->FillEllipse(ellipse, defaultBrush.get());
+// 
+    //D2D1_POINT_2F ellipseCenter = D2D1 ::Point2F(trackMarginX, trackMarginY);
+    //D2D1_ELLIPSE ellipse = D2D1::Ellipse(ellipseCenter, width, width);
+    //d2dDeviceContext->FillEllipse(ellipse, defaultBrush.get());
 
-    D2D1_RECT_F trackRect = D2D1::RectF(10.0f, 10.0f, 10.0f, 10.0f);
-    D2D1_ROUNDED_RECT track = D2D1::RoundedRect(trackRect, 10.0f, 10.0f);
-    d2dDeviceContext->DrawRoundedRectangle(track, defaultBrush.get());
+    //D2D1_RECT_F trackRect = D2D1::RectF(10.0f, 10.0f, 10.0f, 10.0f);
+    //D2D1_ROUNDED_RECT track = D2D1::RoundedRect(trackRect, 10.0f, 10.0f);
+    //d2dDeviceContext->DrawRoundedRectangle(track, defaultBrush.get());
     
     // Restore old dpi setting
     d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
