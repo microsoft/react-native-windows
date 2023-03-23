@@ -15,7 +15,7 @@
 #include "NativeModules.h"
 #include "ReactPropertyBag.h"
 
-#define MAX_LOADSTRING 100
+constexpr size_t MAX_LOADSTRING = 100;
 
 // Work around crash in DeviceInfo when running outside of XAML environment
 // TODO rework built-in DeviceInfo to allow it to be driven without use of HWNDs or XamlApps
