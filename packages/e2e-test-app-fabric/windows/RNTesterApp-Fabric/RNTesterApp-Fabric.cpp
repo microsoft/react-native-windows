@@ -247,7 +247,7 @@ int RunRNTester(int showCmd) {
       DispatchMessage(&msg);
     }
   }
-  return (int)msg.wParam;
+  return static_cast<int>(msg.wParam);
 }
 
 _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR /* commandLine */, int showCmd) {
