@@ -15,7 +15,7 @@
 #include "NativeModules.h"
 #include "ReactPropertyBag.h"
 
-#define MAX_LOADSTRING 100
+constexpr size_t MAX_LOADSTRING = 100;
 #define BTN_ADD 1000
 
 // Work around crash in DeviceInfo when running outside of XAML environment
