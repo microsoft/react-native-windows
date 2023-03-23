@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "integrate RN 3/8/23",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "tatianakapos@microsoft.com",
+  "dependentChangeType": "patch"
+}
