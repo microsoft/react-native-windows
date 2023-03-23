@@ -16,7 +16,6 @@
 #include "ReactPropertyBag.h"
 
 #define MAX_LOADSTRING 100
-#define BTN_ADD 1000
 
 // Work around crash in DeviceInfo when running outside of XAML environment
 // TODO rework built-in DeviceInfo to allow it to be driven without use of HWNDs or XamlApps
