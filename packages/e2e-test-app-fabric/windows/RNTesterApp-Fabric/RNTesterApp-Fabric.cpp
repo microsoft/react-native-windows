@@ -149,7 +149,7 @@ struct WindowData {
 
     auto windowData = WindowData::GetFromWindow(hwnd);
     if (!windowData->m_windowInited) {
-      m_CompositionHwndHost.Initialize((uint64_t)hwnd);
+      m_CompositionHwndHost.Initialize(static_cast<uint64_t>(hwnd));
       windowData->m_windowInited = true;
     }
     return 0;
