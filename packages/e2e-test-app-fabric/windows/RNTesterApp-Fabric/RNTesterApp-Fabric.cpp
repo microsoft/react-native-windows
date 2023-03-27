@@ -70,8 +70,8 @@ LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 int RunRNTester(int showCmd);
 
 struct WindowData {
-  static HINSTANCE s_instance;
-  static constexpr uint16_t defaultDebuggerPort = 9229;
+  static HINSTANCE s_instance{NULL};
+  static constexpr uint16_t defaultDebuggerPort{9229};
 
   std::wstring m_bundleFile = LR"(index)";
   bool m_windowInited{false};
