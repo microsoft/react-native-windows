@@ -184,6 +184,14 @@ jobs:
                 buildLogDirectory: $(BuildLogDirectory)
                 workingDirectory: packages/e2e-test-app-fabric
 
+            - template: ../templates/msbuild-sln.yml
+              parameters:
+                solutionDir: packages/e2e-test-app-fabric/windows
+                solutionName: RNTesterApp-Fabric.sln
+                buildPlatform: ${{ matrix.BuildPlatform}}
+                buildConfiguration: Debug
+                warnAsError: false
+
             - task: CopyFiles@2
               displayName: Copy RNTesterApp artifacts
               inputs:
