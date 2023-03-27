@@ -143,3 +143,62 @@ jobs:
             - template: ../templates/upload-build-logs.yml
               parameters:
                 buildLogDirectory: '$(BuildLogDirectory)'
+  - ${{ each config in parameters.buildMatrix }}:
+    - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
+      - ${{ each matrix in config.Matrix }}:
+        - job: E2ETestFabric${{ matrix.Name }}
+          displayName: E2E Test App Fabric ${{ matrix.Name }}
+
+          variables: [template: ../variables/windows.yml]
+          pool: ${{ parameters.AgentPool.Medium }}
+          timeoutInMinutes: 60 # how long to run the job before automatically cancelling
+          cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+
+          steps:
+            - template: ../templates/checkout-shallow.yml
+
+            - template: ../templates/prepare-js-env.yml
+
+            - template: ../templates/prepare-build-env.yml
+              parameters:
+                platform: ${{ matrix.BuildPlatform }}
+                configuration: Release
+                buildEnvironment: ${{ config.buildEnvironment }}
+
+            - powershell: |
+                Write-Host "##vso[task.setvariable variable=BuildLogDirectory]$(Build.BinariesDirectory)\${{ parameters.BuildPlatform }}\BuildLogs"
+              displayName: Set BuildLogDirectory
+
+            - template: ../templates/set-experimental-feature.yml
+              parameters:
+                package: packages/e2e-test-app-fabric
+                feature: UseHermes
+                value: ${{ matrix.UseHermes }}
+
+            - template: ../templates/run-windows-with-certificates.yml
+              parameters:
+                buildEnvironment: ${{ parameters.BuildEnvironment }}
+                certificateName: reactUWPTestAppEncodedKey
+                buildConfiguration: Release
+                buildPlatform: ${{ matrix.BuildPlatform }}
+                buildLogDirectory: $(BuildLogDirectory)
+                workingDirectory: packages/e2e-test-app-fabric
+
+            - task: CopyFiles@2
+              displayName: Copy RNTesterApp artifacts
+              inputs:
+                sourceFolder: $(Build.SourcesDirectory)/packages/e2e-test-app-fabic/windows/RNTesterApp
+                targetFolder: $(Build.StagingDirectory)/RNTesterApp
+                contents: AppPackages\**
+              condition: failed()
+
+            - task: PublishPipelineArtifact@1
+              displayName: "Publish Artifact: RNTesterApp Fabric"
+              inputs:
+                artifactName: RNTesterApp-Fabric-${{ matrix.Name }}-$(System.JobAttempt)
+                targetPath: $(Build.StagingDirectory)/RNTesterApp
+              condition: failed()
+
+            - template: ../templates/upload-build-logs.yml
+              parameters:
+                buildLogDirectory: '$(BuildLogDirectory)'
