@@ -2,6 +2,72 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 23 Mar 2023 05:13:37 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.188",
+      "version": "0.0.0-canary.188",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "9ee8e4c86b17115a03c18cafdef56f4f3078596c",
+            "comment": "integrate RN 3/8/23"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 22 Mar 2023 05:14:41 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.187",
+      "version": "0.0.0-canary.187",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "16364605b2af12d0b11bb7d6920c82798f656c0b",
+            "comment": "Minor TS type updates"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 21 Mar 2023 21:21:55 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.186",
+      "version": "0.0.0-canary.186",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.6",
+            "commit": "94c638560965be5e431120eb3642f76c01d77b87"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump react-native-platform-override to v1.9.4",
+            "commit": "94c638560965be5e431120eb3642f76c01d77b87"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 08 Mar 2023 06:14:10 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.185",
+      "version": "0.0.0-canary.185",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "7bcdfb05e54c7a9d0a7467b023a816d3df96e848",
+            "comment": "Fix API Gaps"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 02 Mar 2023 06:14:20 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.184",
       "version": "0.0.0-canary.184",

@@ -542,6 +542,18 @@ void WindowsTextInputComponentView::handleCommand(std::string const &commandName
 }
 
 int64_t WindowsTextInputComponentView::sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
+  // Do not forward tab keys into the TextInput, since we want that to do the tab loop instead.  This aligns with WinUI
+  // behavior We do forward Ctrl+Tab to the textinput.
+  if (((msg == WM_KEYDOWN || msg == WM_KEYUP) && wParam == VK_TAB) || (msg == WM_CHAR && wParam == '\t')) {
+    BYTE bKeys[256];
+    if (GetKeyboardState(bKeys)) {
+      bool fCtrl = false;
+      if (!(bKeys[VK_LCONTROL] & 0x80 || bKeys[VK_RCONTROL] & 0x80)) {
+        return 0;
+      }
+    }
+  }
+
   if (m_textServices) {
     LRESULT lresult;
     DrawBlock db(*this);
@@ -551,11 +563,6 @@ int64_t WindowsTextInputComponentView::sendMessage(uint32_t msg, uint64_t wParam
     }
   }
   return Super::sendMessage(msg, wParam, lParam);
-}
-
-std::vector<facebook::react::ComponentDescriptorProvider>
-WindowsTextInputComponentView::supplementalComponentDescriptorProviders() noexcept {
-  return {};
 }
 
 void WindowsTextInputComponentView::mountChildComponentView(
@@ -752,7 +759,7 @@ void WindowsTextInputComponentView::updateLayoutMetrics(
   // Set Position & Size Properties
 
   if ((layoutMetrics.displayType != m_layoutMetrics.displayType)) {
-    m_visual.IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
+    OuterVisual().IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
   }
 
   if ((layoutMetrics.pointScaleFactor != m_layoutMetrics.pointScaleFactor)) {
@@ -783,11 +790,6 @@ void WindowsTextInputComponentView::updateLayoutMetrics(
   m_visual.Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
-  m_visual.Offset({
-      layoutMetrics.frame.origin.x * layoutMetrics.pointScaleFactor,
-      layoutMetrics.frame.origin.y * layoutMetrics.pointScaleFactor,
-      0.0f,
-  });
 }
 
 // When we are notified by RichEdit that the text changed, we need to notify JS
@@ -1053,6 +1055,7 @@ void WindowsTextInputComponentView::ensureVisual() noexcept {
     winrt::com_ptr<IUnknown> spUnk;
     winrt::check_hresult(g_pfnCreateTextServices(nullptr, m_textHost.get(), spUnk.put()));
     spUnk.as(m_textServices);
+    OuterVisual().InsertAt(m_visual, 0);
   }
 
   if (!m_caretVisual) {

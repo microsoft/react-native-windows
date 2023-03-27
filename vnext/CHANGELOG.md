@@ -1,8 +1,88 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 04 Mar 2023 06:13:14 GMT and should not be manually modified.
+This log was last generated on Fri, 24 Mar 2023 05:13:44 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.632
+
+Fri, 24 Mar 2023 05:13:44 GMT
+
+### Changes
+
+- Fixes occasional crash in hit testing (ericroz@meta.com)
+
+## 0.0.0-canary.631
+
+Thu, 23 Mar 2023 05:13:37 GMT
+
+### Changes
+
+- integrate RN 3/8/23 (tatianakapos@microsoft.com)
+- [Fabric] Beginning of custom component interfaces (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.630
+
+Tue, 21 Mar 2023 21:21:54 GMT
+
+### Changes
+
+- CrashManager should also handle SIGABRT (tudor.mihai@microsoft.com)
+- Fix RedBox Dismiss (30809111+acoates-ms@users.noreply.github.com)
+- Verify JS ViewConfig and ViewManager ViewConfigs align (30809111+acoates-ms@users.noreply.github.com)
+- Adds BundleAppId to ReactInstanceSettings (erozell@outlook.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.166
+- Bump @react-native-windows/codegen to v0.0.0-canary.54
+- Bump @rnw-scripts/just-task to v2.3.6
+- Bump react-native-platform-override to v1.9.4
+
+## 0.0.0-canary.629
+
+Tue, 14 Mar 2023 05:13:40 GMT
+
+### Changes
+
+- [Fabric] Add visuals for fallback when a native component isn't registered (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.628
+
+Sat, 11 Mar 2023 06:14:57 GMT
+
+### Changes
+
+- Fix build from merge conflict (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.627
+
+Fri, 10 Mar 2023 06:14:16 GMT
+
+### Changes
+
+- [Fabric] Clean up a bunch of include redirect files (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] TextInput shouldn't block the tab loop (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Add implementation of ScrollView.scrollto (30809111+acoates-ms@users.noreply.github.com)
+- Add submitBehavior prop to Paper VM for TextInput (helenistic@meta.com)
+- [Fabric] Move Windows specific properties out of ViewProps into HostPlatformViewProps (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.626
+
+Wed, 08 Mar 2023 06:14:10 GMT
+
+### Changes
+
+- Fix API Gaps (34109996+chiaramooney@users.noreply.github.com)
+- [Fabric] Add support for backgroundColor on text and text fragments (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Add support for backface visibility (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Fix minor border issue (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] add support for enableFocusRing (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.625
+
+Tue, 07 Mar 2023 06:13:31 GMT
+
+### Changes
+
+- [Fabric] Adds text measure caching. Add support for lineHeight, letterSpacing, maximumNumberOfLines and textTransform (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.624
 

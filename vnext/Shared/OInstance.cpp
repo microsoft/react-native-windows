@@ -259,7 +259,7 @@ InstanceImpl::InstanceImpl(
       m_devManager(std::move(devManager)),
       m_innerInstance(std::move(instance)) {
   // Temp set the logmarker here
-  facebook::react::ReactMarker::logTaggedMarker = logMarker;
+  facebook::react::ReactMarker::logTaggedMarkerImpl = logMarker;
 
 #ifdef ENABLE_ETW_TRACING
   // TODO :: Find a better place to initialize ETW once per process.
@@ -447,6 +447,7 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
           m_devSettings->sourceBundlePort,
           m_devSettings->debugBundlePath.empty() ? jsBundleRelativePath : m_devSettings->debugBundlePath,
           m_devSettings->platformName,
+          m_devSettings->bundleAppId,
           true /* dev */,
           m_devSettings->useFastRefresh,
           m_devSettings->inlineSourceMap,
@@ -468,6 +469,7 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
           m_devSettings->sourceBundlePort,
           m_devSettings->debugBundlePath.empty() ? jsBundleRelativePath : m_devSettings->debugBundlePath,
           m_devSettings->platformName,
+          m_devSettings->bundleAppId,
           /*dev*/ true,
           /*hot*/ false,
           m_devSettings->inlineSourceMap,
@@ -604,6 +606,7 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
             m_devSettings->sourceBundlePort,
             m_devSettings->debugBundlePath,
             m_devSettings->platformName,
+            m_devSettings->bundleAppId,
             true /*dev*/,
             m_devSettings->useFastRefresh,
             m_devSettings->inlineSourceMap,

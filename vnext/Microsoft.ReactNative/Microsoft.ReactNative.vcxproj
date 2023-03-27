@@ -111,6 +111,7 @@
         $(ReactNativeWindowsDir)Shared;
         $(ReactNativeWindowsDir)Shared\tracing;
         $(ReactNativeWindowsDir)include\Shared;
+        $(ReactNativeDir)\ReactCommon\react\renderer\graphics\platform\cxx;
         $(YogaDir);
         $(GeneratedFilesDir);
         %(AdditionalIncludeDirectories)
@@ -435,35 +436,7 @@
       <DependentUpon>DevMenuControl.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="DynamicReader.cpp">
-      <DependentUpon>IJSValueReader.idl</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="DynamicWriter.cpp">
-      <DependentUpon>IJSValueWriter.idl</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="JSDispatcherWriter.cpp">
-      <DependentUpon>IJSValueWriter.idl</DependentUpon>
-    </ClCompile>
     <ClCompile Include="GlyphViewManager.cpp" />
-    <ClCompile Include="IReactDispatcher.cpp">
-      <DependentUpon>IReactDispatcher.idl</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="IReactModuleBuilder.cpp">
-      <DependentUpon>IReactModuleBuilder.idl</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="IReactNotificationService.cpp">
-      <DependentUpon>IReactNotificationService.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="JsiApi.cpp">
-      <DependentUpon>JsiApi.idl</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="JsiReader.cpp">
-      <DependentUpon>IJSValueReader.idl</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="JsiWriter.cpp">
-      <DependentUpon>IJSValueWriter.idl</DependentUpon>
-    </ClCompile>
     <ClCompile Include="Modules\AccessibilityInfoModule.cpp" />
     <ClCompile Include="Modules\AlertModule.cpp" />
     <ClCompile Include="Modules\Animated\AdditionAnimatedNode.cpp" />
@@ -494,7 +467,6 @@
     <ClCompile Include="Modules\ClipboardModule.cpp" />
     <ClCompile Include="Modules\CreateModules.cpp" />
     <ClCompile Include="Modules\DeviceInfoModule.cpp" />
-    <ClCompile Include="Modules\DevSettingsModule.cpp" />
     <ClCompile Include="Modules\I18nManagerModule.cpp" />
     <ClCompile Include="Modules\ImageViewManagerModule.cpp" />
     <ClCompile Include="Modules\LinkingManagerModule.cpp" />
@@ -502,14 +474,10 @@
     <ClCompile Include="Modules\NativeUIManager.cpp" />
     <ClCompile Include="Modules\TimingModule.cpp" />
     <ClCompile Include="Modules\PaperUIManagerModule.cpp" />
-    <ClCompile Include="NativeModulesProvider.cpp" />
     <ClCompile Include="ReactPointerEventArgs.cpp">
       <DependentUpon>ReactPointerEventArgs.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="RedBoxErrorInfo.cpp" />
-    <ClCompile Include="RedBoxErrorFrameInfo.cpp" />
-    <ClCompile Include="TurboModulesProvider.cpp" />
     <ClCompile Include="Pch\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -517,36 +485,6 @@
       <DependentUpon>ReactApplication.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
-    <ClCompile Include="IReactContext.cpp">
-      <DependentUpon>IReactContext.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="ReactHost\AsyncActionQueue.cpp" />
-    <ClCompile Include="ReactHost\JSBundle.cpp" />
-    <ClCompile Include="ReactHost\JSBundle_Win32.cpp" />
-    <ClCompile Include="ReactHost\JSCallInvokerScheduler.cpp" />
-    <ClCompile Include="ReactHost\MsoUtils.cpp" />
-    <ClCompile Include="ReactHost\MsoReactContext.cpp" />
-    <ClCompile Include="ReactHost\ReactErrorProvider.cpp" />
-    <ClCompile Include="ReactHost\ReactHost.cpp" />
-    <ClCompile Include="ReactHost\ReactInstanceWin.cpp" />
-    <ClCompile Include="ReactHost\CrashManager.cpp" />
-    <ClCompile Include="ReactCoreInjection.cpp">
-      <DependentUpon>ReactCoreInjection.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="ReactInstanceSettings.cpp">
-      <DependentUpon>ReactInstanceSettings.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="RedBoxHandler.cpp">
-      <DependentUpon>RedBoxHandler.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="ReactNativeHost.cpp">
-      <DependentUpon>ReactNativeHost.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
     <ClCompile Include="Utils\AccessibilityUtils.cpp" />
     <ClCompile Include="Utils\KeyboardUtils.cpp" />
     <ClCompile Include="Utils\LocalBundleReader.cpp" />
@@ -611,24 +549,12 @@
       <DependentUpon>XamlUIService.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="ReactPackageBuilder.cpp">
-      <DependentUpon>IReactPackageBuilder.idl</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="IReactPropertyBag.cpp">
-      <DependentUpon>IReactPropertyBag.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
     <ClCompile Include="ReactRootView.cpp">
       <DependentUpon>ReactRootView.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="RedBox.cpp" />
     <ClCompile Include="ReactSupport.cpp" />
     <ClCompile Include="TestHook.cpp" />
-    <ClCompile Include="QuirkSettings.cpp">
-      <DependentUpon>QuirkSettings.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
     <ClCompile Include="ViewManagersProvider.cpp" />
     <ClCompile Include="XamlHelper.cpp">
       <DependentUpon>XamlHelper.idl</DependentUpon>
@@ -636,11 +562,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Midl Condition="'$(UseFabric)' == 'true'" Include="CompositionHwndHost.idl" />
-    <Midl Condition="'$(UseFabric)' == 'true'" Include="CompositionContext.idl" />
-    <Midl Condition="'$(UseFabric)' == 'true'" Include="CompositionSwitcher.idl" />
-    <Midl Condition="'$(UseFabric)' == 'true'" Include="CompositionUIService.idl" />
-    <Midl Condition="'$(UseFabric)' == 'true'" Include="CompositionRootView.idl" />
     <Midl Include="CoreAppPage.idl">
       <DependentUpon>CoreAppPage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -651,34 +572,9 @@
       <SubType>Code</SubType>
     </Midl>
     <Midl Include="DocString.idl" />
-    <Midl Include="IReactNonAbiValue.idl" />
-    <Midl Include="IJSValueReader.idl" />
-    <Midl Include="IJSValueWriter.idl" />
-    <Midl Include="IReactDispatcher.idl" />
-    <Midl Include="IReactNotificationService.idl" />
-    <Midl Include="IReactPropertyBag.idl" />
-    <Midl Include="IReactModuleBuilder.idl" />
-    <Midl Include="IReactPackageBuilder.idl" />
-    <Midl Include="IReactPackageProvider.idl" />
     <Midl Include="IViewManager.idl" />
     <Midl Include="IViewManagerCore.idl" />
-    <Midl Include="JsiApi.idl" />
     <Midl Include="ReactApplication.idl" />
-    <Midl Include="IReactContext.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="ReactCoreInjection.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="ReactInstanceSettings.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="RedBoxHandler.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="ReactNativeHost.idl">
-      <SubType>Designer</SubType>
-    </Midl>
     <Midl Include="Views\cppwinrt\AccessibilityAction.idl" />
     <Midl Include="Views\cppwinrt\Effects.idl" />
     <Midl Include="Views\cppwinrt\DynamicAutomationPeer.idl" />
@@ -690,9 +586,6 @@
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="ReactRootView.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="QuirkSettings.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="XamlHelper.idl" />

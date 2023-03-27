@@ -6,7 +6,10 @@
 #include "pch.h"
 
 #include <Fabric/DWriteHelpers.h>
+#include <Utils/TransformableText.h>
 #include <dwrite.h>
+#include <dwrite_1.h>
+#include <react/renderer/telemetry/TransactionTelemetry.h>
 #include "TextLayoutManager.h"
 
 #include <unicode.h>
@@ -17,7 +20,6 @@ void TextLayoutManager::GetTextLayout(
     AttributedStringBox attributedStringBox,
     ParagraphAttributes paragraphAttributes,
     LayoutConstraints layoutConstraints,
-    const std::optional<TextAlignment> &textAlignment,
     winrt::com_ptr<IDWriteTextLayout> &spTextLayout) noexcept {
   if (attributedStringBox.getValue().isEmpty())
     return;
@@ -45,9 +47,23 @@ void TextLayoutManager::GetTextLayout(
       L"",
       spTextFormat.put()));
 
+  if (!isnan(outerFragment.textAttributes.lineHeight)) {
+    winrt::check_hresult(spTextFormat->SetLineSpacing(
+        DWRITE_LINE_SPACING_METHOD_UNIFORM,
+        outerFragment.textAttributes.lineHeight,
+        // Recommended ratio of baseline to lineSpacing is 80%
+        // https://learn.microsoft.com/en-us/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getlinespacing
+        // It is possible we need to load full font metrics to calculate a better baseline value.
+        // For a particular font, you can determine what lineSpacing and baseline should be by examing a
+        // DWRITE_FONT_METRICS method available from the GetMetrics method of IDWriteFont or IDWriteFontFace. For normal
+        // behavior, you'd set lineSpacing to the sum of ascent, descent and lineGap (adjusted for the em size, of
+        // course), and baseline to the ascent value.
+        outerFragment.textAttributes.lineHeight * 0.8f));
+  }
+
   DWRITE_TEXT_ALIGNMENT alignment = DWRITE_TEXT_ALIGNMENT_LEADING;
-  if (textAlignment) {
-    switch (*textAlignment) {
+  if (outerFragment.textAttributes.alignment) {
+    switch (*outerFragment.textAttributes.alignment) {
       case facebook::react::TextAlignment::Center:
         alignment = DWRITE_TEXT_ALIGNMENT_CENTER;
         break;
@@ -70,11 +86,11 @@ void TextLayoutManager::GetTextLayout(
   }
   winrt::check_hresult(spTextFormat->SetTextAlignment(alignment));
 
-  auto str = Microsoft::Common::Unicode::Utf8ToUtf16(attributedStringBox.getValue().getString());
+  auto str = GetTransformedText(attributedStringBox);
 
   winrt::check_hresult(Microsoft::ReactNative::DWriteFactory()->CreateTextLayout(
       str.c_str(), // The string to be laid out and formatted.
-      static_cast<UINT32>(str.length()), // The length of the string.
+      static_cast<UINT32>(str.size()), // The length of the string.
       spTextFormat.get(), // The text format to apply to the string (contains font information, etc).
       layoutConstraints.maximumSize.width, // The width of the layout box.
       layoutConstraints.maximumSize.height, // The height of the layout box.
@@ -104,6 +120,11 @@ void TextLayoutManager::GetTextLayout(
     winrt::check_hresult(spTextLayout->SetFontStyle(fragmentStyle, range));
     winrt::check_hresult(spTextLayout->SetFontSize(attributes.fontSize, range));
 
+    if (!isnan(attributes.letterSpacing)) {
+      winrt::check_hresult(
+          spTextLayout.as<IDWriteTextLayout1>()->SetCharacterSpacing(0, attributes.letterSpacing, 0, range));
+    }
+
     position += length;
   }
 }
@@ -111,18 +132,50 @@ void TextLayoutManager::GetTextLayout(
 TextMeasurement TextLayoutManager::measure(
     AttributedStringBox attributedStringBox,
     ParagraphAttributes paragraphAttributes,
-    LayoutConstraints layoutConstraints) const {
-  winrt::com_ptr<IDWriteTextLayout> spTextLayout;
+    LayoutConstraints layoutConstraints,
+    std::shared_ptr<void> /* hostTextStorage */) const {
+  TextMeasurement measurement{};
+  auto &attributedString = attributedStringBox.getValue();
+  measurement = m_measureCache.get(
+      {attributedString, paragraphAttributes, layoutConstraints}, [&](TextMeasureCacheKey const &key) {
+        auto telemetry = TransactionTelemetry::threadLocalTelemetry();
+        if (telemetry) {
+          telemetry->willMeasureText();
+        }
 
-  GetTextLayout(attributedStringBox, paragraphAttributes, layoutConstraints, TextAlignment::Left, spTextLayout);
+        winrt::com_ptr<IDWriteTextLayout> spTextLayout;
 
-  TextMeasurement tm{};
-  if (spTextLayout) {
-    DWRITE_TEXT_METRICS dtm{};
-    winrt::check_hresult(spTextLayout->GetMetrics(&dtm));
-    tm.size = {dtm.width, dtm.height};
-  }
-  return tm;
+        GetTextLayout(attributedStringBox, paragraphAttributes, layoutConstraints, spTextLayout);
+
+        if (spTextLayout) {
+          auto maxHeight = std::numeric_limits<float>().max();
+          if (paragraphAttributes.maximumNumberOfLines > 0) {
+            std::vector<DWRITE_LINE_METRICS> lineMetrics;
+            uint32_t actualLineCount;
+            spTextLayout->GetLineMetrics(nullptr, 0, &actualLineCount);
+            lineMetrics.resize(static_cast<size_t>(actualLineCount));
+            winrt::check_hresult(spTextLayout->GetLineMetrics(lineMetrics.data(), actualLineCount, &actualLineCount));
+            maxHeight = 0;
+            const auto count =
+                std::min(static_cast<uint32_t>(paragraphAttributes.maximumNumberOfLines), actualLineCount);
+            for (uint32_t i = 0; i < count; ++i) {
+              maxHeight += lineMetrics[i].height;
+            }
+          }
+
+          DWRITE_TEXT_METRICS dtm{};
+          winrt::check_hresult(spTextLayout->GetMetrics(&dtm));
+          measurement.size = {dtm.width, std::min(dtm.height, maxHeight)};
+        }
+
+        if (telemetry) {
+          telemetry->didMeasureText();
+        }
+
+        return measurement;
+      });
+
+  return measurement;
 }
 
 /**
@@ -145,8 +198,45 @@ LinesMeasurements TextLayoutManager::measureLines(
   return {};
 }
 
+std::shared_ptr<void> TextLayoutManager::getHostTextStorage(
+    AttributedString attributedString,
+    ParagraphAttributes paragraphAttributes,
+    LayoutConstraints layoutConstraints) const {
+  return nullptr;
+}
+
 void *TextLayoutManager::getNativeTextLayoutManager() const {
   return (void *)this;
+}
+
+Microsoft::ReactNative::TextTransform ConvertTextTransform(std::optional<TextTransform> const &transform) {
+  if (transform) {
+    switch (transform.value()) {
+      case TextTransform::Capitalize:
+        return Microsoft::ReactNative::TextTransform::Capitalize;
+      case TextTransform::Lowercase:
+        return Microsoft::ReactNative::TextTransform::Lowercase;
+      case TextTransform::Uppercase:
+        return Microsoft::ReactNative::TextTransform::Uppercase;
+      case TextTransform::None:
+        return Microsoft::ReactNative::TextTransform::None;
+      default:
+        break;
+    }
+  }
+
+  return Microsoft::ReactNative::TextTransform::Undefined;
+}
+
+winrt::hstring TextLayoutManager::GetTransformedText(AttributedStringBox const &attributedStringBox) {
+  winrt::hstring result{};
+  for (const auto &fragment : attributedStringBox.getValue().getFragments()) {
+    result = result +
+        Microsoft::ReactNative::TransformableText::TransformText(
+                 winrt::hstring{Microsoft::Common::Unicode::Utf8ToUtf16(fragment.string)},
+                 ConvertTextTransform(fragment.textAttributes.textTransform));
+  }
+  return result;
 }
 
 } // namespace facebook::react

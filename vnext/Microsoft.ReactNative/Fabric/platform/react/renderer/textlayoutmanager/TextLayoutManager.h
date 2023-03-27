@@ -36,7 +36,8 @@ class TextLayoutManager {
   TextMeasurement measure(
       AttributedStringBox attributedStringBox,
       ParagraphAttributes paragraphAttributes,
-      LayoutConstraints layoutConstraints) const;
+      LayoutConstraints layoutConstraints,
+      std::shared_ptr<void> /* hostTextStorage */) const;
 
   /*
    * Measures lines of `attributedString` using native text rendering
@@ -44,6 +45,11 @@ class TextLayoutManager {
    */
   LinesMeasurements measureLines(AttributedString attributedString, ParagraphAttributes paragraphAttributes, Size size)
       const;
+
+  std::shared_ptr<void> getHostTextStorage(
+      AttributedString attributedString,
+      ParagraphAttributes paragraphAttributes,
+      LayoutConstraints layoutConstraints) const;
 
   /**
    * Measures an AttributedString on the platform, as identified by some
@@ -64,13 +70,18 @@ class TextLayoutManager {
       AttributedStringBox attributedStringBox,
       ParagraphAttributes paragraphAttributes,
       LayoutConstraints layoutConstraints,
-      const std::optional<TextAlignment> &textAlignment,
       winrt::com_ptr<IDWriteTextLayout> &spTextLayout) noexcept;
 
 #pragma endregion
 
  private:
+  static winrt::hstring GetTransformedText(AttributedStringBox const &attributedStringBox);
+
   ContextContainer::Shared m_contextContainer;
+#pragma warning(push)
+#pragma warning(disable : 5028)
+  TextMeasureCache m_measureCache{};
+#pragma warning(pop)
 };
 
 } // namespace react

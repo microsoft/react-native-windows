@@ -1,0 +1,23 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+import "IReactViewComponentBuilder.idl";
+
+#include "DocString.h"
+
+namespace Microsoft.ReactNative
+{
+  [experimental]
+  DOC_STRING("Provides information about a custom view component. See @IReactPackageBuilderFabric.AddViewComponent")
+  delegate void ReactViewComponentProvider(IReactViewComponentBuilder viewComponentBuilder);
+
+  [webhosthidden]
+  [experimental]
+  DOC_STRING("Provides ability to register custom ViewComponents when running fabric.  Methods on this interface will eventually be moved onto @IReactPackageProvider once fabric ships.")
+  interface IReactPackageBuilderFabric
+  {
+    DOC_STRING("Registers a custom native view component.")
+    void AddViewComponent(String componentName, ReactViewComponentProvider componentProvider);
+  };
+
+} // namespace Microsoft.ReactNative

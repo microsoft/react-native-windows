@@ -14,7 +14,9 @@
     "filesystem": "cpp",
     "locale": "cpp",
     "regex": "cpp",
-    "utility": "cpp"
+    "utility": "cpp",
+    "ratio": "cpp",
+    "memory": "cpp"
   },
   "search.exclude": {
     "**/dist/**/*.js": true,

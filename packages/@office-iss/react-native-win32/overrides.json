@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20230213-2113-f7e35d4ef",
+  "baseVersion": "0.0.0-20230308-2111-d41e95fb1",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "76313b5f12d8963cd8fd5d4c2c9bca2098e677ed"
+      "baseHash": "5a64dc6294bdb475c9725d6924993128b50f9196"
     },
     {
       "type": "derived",
@@ -35,14 +35,14 @@
       "type": "derived",
       "file": "src/Libraries/Animated/NativeAnimatedHelper.win32.js",
       "baseFile": "Libraries/Animated/NativeAnimatedHelper.js",
-      "baseHash": "70731169e44a70b01e7191f35b3894b9d72e68a7",
+      "baseHash": "38e4960f0e3abf809b327396645722e66c277ff9",
       "issue": 11041
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.win32.js",
       "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.js",
-      "baseHash": "09fc956afbcd13b4c7a39e4de762c0af57cb9b4f",
+      "baseHash": "163927cc271b53109f06eaf5fc6d30a9af8cb27e",
       "issue": 4578
     },
     {
@@ -127,7 +127,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "7305b4ef570eb19e8f4238e252d8c788ce974b16"
+      "baseHash": "67f133655ca2a4cb62a1723ae5623895b7a647c0"
     },
     {
       "type": "patch",
@@ -197,7 +197,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/View/ViewAccessibility.win32.d.ts",
       "baseFile": "Libraries/Components/View/ViewAccessibility.d.ts",
-      "baseHash": "a9a7bfcff4be91484ad8bb17680c4ec225a28f0e"
+      "baseHash": "e1fb452bb78657766b57f092f1021b388b5e7e4b"
     },
     {
       "type": "derived",
@@ -209,7 +209,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/View/ViewPropTypes.win32.d.ts",
       "baseFile": "Libraries/Components/View/ViewPropTypes.d.ts",
-      "baseHash": "567b5fd7cc602357daa075d728220ffca0f6c2ac"
+      "baseHash": "91d96e475fc55da6c6456a240edbd650c1ca4a26"
     },
     {
       "type": "patch",
@@ -299,13 +299,13 @@
       "type": "patch",
       "file": "src/Libraries/Inspector/Inspector.win32.js",
       "baseFile": "Libraries/Inspector/Inspector.js",
-      "baseHash": "49413d7b12477405e583062a1ab7e50e8ea0fefc"
+      "baseHash": "db933614c0c15f0ce69907e37baae6b31dd39867"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Inspector/InspectorOverlay.win32.js",
       "baseFile": "Libraries/Inspector/InspectorOverlay.js",
-      "baseHash": "0c8c439f7a26ce8de799de20629fbf855c1ec416"
+      "baseHash": "e4137335e108a5c562966fae485f98ef99a55efc"
     },
     {
       "type": "derived",
@@ -427,7 +427,7 @@
       "type": "patch",
       "file": "src/Libraries/StyleSheet/StyleSheet.win32.js",
       "baseFile": "Libraries/StyleSheet/StyleSheet.js",
-      "baseHash": "3890079b44726e5c6d01b3067360cdfa1960e7e8"
+      "baseHash": "b279b836217a0870546010c935fb53e6a889f0dd"
     },
     {
       "type": "derived",
