@@ -187,8 +187,8 @@ jobs:
             - task: CopyFiles@2
               displayName: Copy RNTesterApp artifacts
               inputs:
-                sourceFolder: $(Build.SourcesDirectory)/packages/e2e-test-app-fabic/windows/RNTesterApp
-                targetFolder: $(Build.StagingDirectory)/RNTesterApp
+                sourceFolder: $(Build.SourcesDirectory)/packages/e2e-test-app-fabic/windows/RNTesterApp-Fabric
+                targetFolder: $(Build.StagingDirectory)/RNTesterApp-Fabric
                 contents: AppPackages\**
               condition: failed()
 
@@ -196,7 +196,7 @@ jobs:
               displayName: "Publish Artifact: RNTesterApp Fabric"
               inputs:
                 artifactName: RNTesterApp-Fabric-${{ matrix.Name }}-$(System.JobAttempt)
-                targetPath: $(Build.StagingDirectory)/RNTesterApp
+                targetPath: $(Build.StagingDirectory)/RNTesterApp-Fabric
               condition: failed()
 
             - template: ../templates/upload-build-logs.yml
