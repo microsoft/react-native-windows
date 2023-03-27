@@ -6023,11 +6023,6 @@ flatted@^3.1.0:
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.2.5.tgz#76c8584f4fc843db64702a6bd04ab7a8bd666da3"
   integrity sha512-WIWGi2L3DyTUvUrwRKgGi9TwxQMUEqPOPQBVi71R96jZXJdFskXEmf54BoZaS1kknGODoIGASGEzBUYdyMCBJg==
 
-flow-bin@^0.201.0:
-  version "0.201.0"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.201.0.tgz#bc8d7c3687526313d7a24dd920873a0273148d81"
-  integrity sha512-fqx6CMOhX9Xm4mN+tq/c7sqcm8aHFV1ipbLz2ZCzoNcPuUNZPoSVYm4p0qZqH0HyzMMEP1OWlU7dIkuSJ02cpg==
-
 flow-bin@^0.202.0:
   version "0.202.1"
   resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.202.1.tgz#3ae3c7449e4ff4a3510b0bbdc55fba44b1c41b8b"
