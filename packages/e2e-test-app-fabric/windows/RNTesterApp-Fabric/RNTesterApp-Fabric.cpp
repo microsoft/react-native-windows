@@ -19,6 +19,7 @@ constexpr size_t MAX_LOADSTRING = 100;
 
 // Work around crash in DeviceInfo when running outside of XAML environment
 // TODO rework built-in DeviceInfo to allow it to be driven without use of HWNDs or XamlApps
+// Issue Tracking #11414
 REACT_MODULE(DeviceInfo)
 struct DeviceInfo {
   using ModuleSpec = Microsoft::ReactNativeSpecs::DeviceInfoSpec;
@@ -64,16 +65,17 @@ winrt::Windows::UI::Composition::Compositor g_compositor{nullptr};
 
 constexpr auto WindowDataProperty = L"WindowData";
 constexpr PCWSTR c_windowClassName = L"MS_REACTNATIVE_RNTESTER_COMPOSITION";
+constexpr PCWSTR appName = L"RNTesterApp";
 
 // Forward declarations of functions included in this code module:
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 int RunRNTester(int showCmd);
 
 struct WindowData {
-  static HINSTANCE s_instance{NULL};
+  static HINSTANCE s_instance;
   static constexpr uint16_t defaultDebuggerPort{9229};
 
-  std::wstring m_bundleFile = LR"(index)";
+  std::wstring m_bundleFile = L"index";
   bool m_windowInited{false};
   winrt::Microsoft::ReactNative::CompositionHwndHost m_CompositionHwndHost{nullptr};
   winrt::Microsoft::ReactNative::ReactNativeHost m_host{nullptr};
@@ -115,8 +117,6 @@ struct WindowData {
   }
 
   LRESULT RenderApp(HWND hwnd) {
-    PCWSTR appName = L"RNTesterApp";
-
     WCHAR workingDir[MAX_PATH];
     GetCurrentDirectory(MAX_PATH, workingDir);
 
@@ -149,7 +149,7 @@ struct WindowData {
 
     auto windowData = WindowData::GetFromWindow(hwnd);
     if (!windowData->m_windowInited) {
-      m_CompositionHwndHost.Initialize(static_cast<uint64_t>(hwnd));
+      m_CompositionHwndHost.Initialize((uint64_t)(hwnd));
       windowData->m_windowInited = true;
     }
     return 0;
@@ -166,11 +166,6 @@ struct WindowData {
 extern "C" IMAGE_DOS_HEADER __ImageBase;
 HINSTANCE WindowData::s_instance = reinterpret_cast<HINSTANCE>(&__ImageBase);
 
-//
-//  FUNCTION: WndProc(HWND, UINT, WPARAM, LPARAM)
-//
-//  PURPOSE: Processes messages for the main window.
-//
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
   auto windowData = WindowData::GetFromWindow(hWnd);
   if (windowData) {
@@ -212,7 +207,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 }
 
 int RunRNTester(int showCmd) {
-  constexpr PCWSTR appName = L"React Native Tester (Composition)";
+ 
 
   auto windowData = std::make_unique<WindowData>(winrt::Microsoft::ReactNative::CompositionHwndHost());
   HWND hwnd = CreateWindow(
@@ -259,7 +254,7 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   wcex.cbWndExtra = sizeof(WindowData *);
   wcex.hInstance = WindowData::s_instance;
   wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
-  wcex.hbrBackground = static_cast<HBRUSH>(COLOR_WINDOW + 1);
+  wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
   wcex.lpszMenuName = MAKEINTRESOURCEW(IDC_RNTESTER_COMPOSITION);
   wcex.lpszClassName = c_windowClassName;
   wcex.hIcon = LoadIconW(instance, MAKEINTRESOURCEW(IDI_ICON1));

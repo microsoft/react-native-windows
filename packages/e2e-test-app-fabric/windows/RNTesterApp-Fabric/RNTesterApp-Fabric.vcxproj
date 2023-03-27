@@ -5,7 +5,7 @@
       <CppWinRTOptimized>true</CppWinRTOptimized>
       <MinimalCoreWin>true</MinimalCoreWin>
     <ProjectGuid>{3719BE61-52D1-4F42-8A4C-E575BA16E65F}</ProjectGuid>
-    <ProjectName>RNTesterApp</ProjectName>
+    <ProjectName>RNTesterApp-Fabric</ProjectName>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>RNTesterApp</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
