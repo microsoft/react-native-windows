@@ -222,7 +222,6 @@ int RunRNTester(int showCmd) {
       windowData.get());
 
   WINRT_VERIFY(hwnd);
-  winrt::check_win32(!hwnd);
 
   windowData.release();
 
