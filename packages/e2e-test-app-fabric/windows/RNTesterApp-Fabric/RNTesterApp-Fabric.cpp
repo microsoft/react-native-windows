@@ -207,8 +207,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 }
 
 int RunRNTester(int showCmd) {
- 
-
   auto windowData = std::make_unique<WindowData>(winrt::Microsoft::ReactNative::CompositionHwndHost());
   HWND hwnd = CreateWindow(
       c_windowClassName,
