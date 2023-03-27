@@ -259,7 +259,7 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   wcex.cbWndExtra = sizeof(WindowData *);
   wcex.hInstance = WindowData::s_instance;
   wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
-  wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+  wcex.hbrBackground = static_cast<HBRUSH>(COLOR_WINDOW + 1);
   wcex.lpszMenuName = MAKEINTRESOURCEW(IDC_RNTESTER_COMPOSITION);
   wcex.lpszClassName = c_windowClassName;
   wcex.hIcon = LoadIconW(instance, MAKEINTRESOURCEW(IDI_ICON1));
