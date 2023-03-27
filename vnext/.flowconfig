@@ -61,13 +61,11 @@
 ; Ignore "BUCK" generated dirs
 <PROJECT_ROOT>/\.buckd/
 
-<<<<<<< Upstream
 ; Flow doesn't support platforms
 .*/packages/react-native/Libraries/Utilities/LoadingView.js
-=======
+
 ; Ignore the src folder - flow files are combined with ones from react-native into the root Libraries folder
 .*/vnext/src/.*
->>>>>>> Override
 
 .*/node_modules/resolve/test/resolver/malformed_package_json/package\.json$
 
@@ -98,17 +96,11 @@ module.file_ext=.windows.js
 
 munge_underscores=true
 
-<<<<<<< Upstream
-module.name_mapper='^react-native$' -> '<PROJECT_ROOT>/packages/react-native/index.js'
-module.name_mapper='^react-native/\(.*\)$' -> '<PROJECT_ROOT>/packages/react-native\1'
-module.name_mapper='^@?[./a-zA-Z0-9$_-]+\.\(bmp\|gif\|jpg\|jpeg\|png\|psd\|svg\|webp\|m4v\|mov\|mp4\|mpeg\|mpg\|webm\|aac\|aiff\|caf\|m4a\|mp3\|wav\|html\|pdf\)$' -> '<PROJECT_ROOT>/packages/react-native/Libraries/Image/RelativeImageStub'
-=======
-module.name_mapper='^react-native$' -> '<PROJECT_ROOT>/index.windows.js'
+module.name_mapper='^react-native$' -> '<PROJECT_ROOT>/packages/react-native/index.windows.js'
 module.name_mapper='^react-native-windows$' -> '<PROJECT_ROOT>/index.windows.js'
-module.name_mapper='^react-native/\(.*\)$' -> '<PROJECT_ROOT>/\1'
+module.name_mapper='^react-native/\(.*\)$' -> '<PROJECT_ROOT>/packages/react-native\1'
 module.name_mapper='^react-native-windows/\(.*\)$' -> '<PROJECT_ROOT>/\1'
-module.name_mapper='^@?[./a-zA-Z0-9$_-]+\.\(bmp\|gif\|jpg\|jpeg\|png\|psd\|svg\|webp\|m4v\|mov\|mp4\|mpeg\|mpg\|webm\|aac\|aiff\|caf\|m4a\|mp3\|wav\|html\|pdf\)$' -> '<PROJECT_ROOT>/Libraries/Image/RelativeImageStub'
->>>>>>> Override
+module.name_mapper='^@?[./a-zA-Z0-9$_-]+\.\(bmp\|gif\|jpg\|jpeg\|png\|psd\|svg\|webp\|m4v\|mov\|mp4\|mpeg\|mpg\|webm\|aac\|aiff\|caf\|m4a\|mp3\|wav\|html\|pdf\)$' -> '<PROJECT_ROOT>/packages/react-native/Libraries/Image/RelativeImageStub'
 
 suppress_type=$FlowIssue
 suppress_type=$FlowFixMe
@@ -116,14 +108,8 @@ suppress_type=$FlowFixMeProps
 suppress_type=$FlowFixMeState
 suppress_type=$FlowFixMeEmpty
 
-<<<<<<< Upstream
-=======
-experimental.array_literal_providers=true
-inference_mode=experimental.lti
-
 sharedmemory.hash_table_pow=21
 
->>>>>>> Override
 [lints]
 sketchy-null-number=warn
 sketchy-null-mixed=warn
