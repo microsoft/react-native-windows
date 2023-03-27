@@ -105,6 +105,7 @@ struct WindowData {
 
     return m_host;
   }
+
   winrt::Microsoft::ReactNative::ReactInstanceSettings InstanceSettings() noexcept {
     if (!m_instanceSettings) {
       m_instanceSettings = winrt::Microsoft::ReactNative::ReactInstanceSettings();
