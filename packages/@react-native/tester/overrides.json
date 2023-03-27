@@ -233,7 +233,7 @@
       "issue": 4054
     },
     {
-      "type": "derived",
+      "type": "copy",
       "file": "js/examples/Performance/PerformanceApiExample.js",
       "baseFile": "packages/rn-tester/js/examples/Performance/PerformanceApiExample.js",
       "baseHash": "79acc41d2fa365104d4cb15c5b178a4765158cee",

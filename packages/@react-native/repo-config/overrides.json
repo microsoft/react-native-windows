@@ -4,9 +4,8 @@
     {
       "type": "copy",
       "file": "package.json",
-      "baseFile": "repo-config/package.json",
-      "baseVersion": "0.0.0-20230308-2111-d41e95fb1",
-      "baseHash": "680d8666e009bc6267cf80fa218a4745f5de2756"
+      "baseFile": "package.json",
+      "baseHash": "50c9e35b8af70b1ce27733d938b82fa42254ac2b"
     }
   ]
 }
