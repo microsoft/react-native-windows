@@ -2,9 +2,9 @@ module.exports = {
   project: {
     windows: {
       sourceDir: 'windows',
-      solutionFile: 'HelloComposition.sln',
+      solutionFile: 'RNTesterApp-Fabric.sln',
       project: {
-        projectFile: 'HelloComposition\\HelloComposition.vcxproj',
+        projectFile: 'RNTesterApp-Fabric\\RNTesterApp-Fabric.vcxproj',
       },
     },
   },

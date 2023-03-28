@@ -21,7 +21,7 @@
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HelloComposition.h">
+    <ClInclude Include="RNTesterApp-Fabric.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="microsoft.ui.composition.effects_impl.h">
@@ -32,7 +32,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="HelloComposition.cpp">
+    <ClCompile Include="RNTesterApp-Fabric.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
@@ -40,7 +40,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="HelloComposition.rc">
+    <ResourceCompile Include="RNTesterApp-Fabric.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
@@ -48,7 +48,7 @@
     <Image Include="small.ico">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="HelloComposition.ico">
+    <Image Include="RNTesterApp-Fabric.ico">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

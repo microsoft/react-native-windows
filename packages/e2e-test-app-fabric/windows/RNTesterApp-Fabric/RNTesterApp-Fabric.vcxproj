@@ -5,7 +5,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{3719BE61-52D1-4F42-8A4C-E575BA16E65F}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>HelloComposition</RootNamespace>
+    <RootNamespace>RNTesterApp</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>17.0</MinimumVisualStudioVersion>
@@ -103,14 +103,14 @@
   </ItemDefinitionGroup>
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
-    <ClInclude Include="HelloComposition.h" />
+    <ClInclude Include="RNTesterApp-Fabric.h" />
     <ClInclude Include="microsoft.ui.composition.effects_impl.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="HelloComposition.cpp" />
+    <ClCompile Include="RNTesterApp-Fabric.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -119,10 +119,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="HelloComposition.rc" />
+    <ResourceCompile Include="RNTesterApp-Fabric.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="HelloComposition.ico" />
+    <Image Include="RNTesterApp-Fabric.ico" />
     <Image Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
