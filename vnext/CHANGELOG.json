@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 28 Mar 2023 05:13:53 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.633",
+      "version": "0.0.0-canary.633",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "alicemagicassociation@gmail.com",
+            "package": "react-native-windows",
+            "commit": "cd9ba2df182e00968c44ef1ae6248e2468c2a3e3",
+            "comment": "Fix typo in rnw-dependencies.ps1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 24 Mar 2023 05:13:44 GMT",
       "tag": "react-native-windows_v0.0.0-canary.632",
       "version": "0.0.0-canary.632",
