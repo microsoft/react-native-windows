@@ -50,8 +50,6 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
   void onFocusGained() noexcept override;
   bool focusable() const noexcept override;
 
-  winrt::IInspectable EnsureUiaProvider() noexcept override;
-
  private:
   WindowsTextInputComponentView(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,

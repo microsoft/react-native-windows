@@ -118,23 +118,27 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
 long GetControlType(const std::string &role) noexcept {
   if (role == "adjustable") {
     return UIA_SliderControlTypeId;
-  } else if (role == "alert" || role == "group" || role == "search" || role == "timer" || role.empty()) {
+  } else if (role == "group" || role == "search" || role == "timer" || role.empty()) {
     return UIA_GroupControlTypeId;
   } else if (
-      role == "button" || role == "imagebutton" || role == "keyboardkey" || role == "switch" ||
+      role == "button" || role == "imagebutton" || role == "switch" ||
       role == "togglebutton") {
     return UIA_ButtonControlTypeId;
   } else if (role == "checkbox") {
     return UIA_CheckBoxControlTypeId;
   } else if (role == "combobox") {
     return UIA_ComboBoxControlTypeId;
-  } else if (role == "header" || role == "summary" || role == "text") {
+  } else if (role == "alert" || role == "header" || role == "summary" || role == "text") {
     return UIA_TextControlTypeId;
   } else if (role == "image") {
     return UIA_ImageControlTypeId;
+  } else if (role == "keyboardkey") {
+    return UIA_CustomControlTypeId;
   } else if (role == "link") {
     return UIA_HyperlinkControlTypeId;
-  } else if (role == "list") {
+  }
+  // list and listitem were added by RNW to better support UIA Control Types
+  else if (role == "list") {
     return UIA_ListControlTypeId;
   } else if (role == "listitem") {
     return UIA_ListItemControlTypeId;

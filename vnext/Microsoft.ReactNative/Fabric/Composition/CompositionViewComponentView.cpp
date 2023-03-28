@@ -1411,7 +1411,7 @@ bool walkTree(IComponentView &view, bool forward, Mso::Functor<bool(IComponentVi
   return false;
 }
 
-winrt::IInspectable CompositionViewComponentView::EnsureUiaProvider() noexcept {
+winrt::IInspectable CompositionBaseComponentView::EnsureUiaProvider() noexcept {
   if (m_uiaProvider == nullptr) {
     m_uiaProvider = winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>(
         shared_from_this());

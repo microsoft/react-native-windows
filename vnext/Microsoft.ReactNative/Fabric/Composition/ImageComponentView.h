@@ -53,8 +53,6 @@ struct ImageComponentView : CompositionBaseComponentView {
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
   bool focusable() const noexcept override;
 
-  winrt::IInspectable EnsureUiaProvider() noexcept override;
-
  private:
   ImageComponentView(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,

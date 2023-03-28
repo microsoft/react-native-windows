@@ -165,12 +165,4 @@ facebook::react::Tag UnimplementedNativeViewComponentView::hitTest(
   return -1;
 }
 
-winrt::IInspectable UnimplementedNativeViewComponentView::EnsureUiaProvider() noexcept {
-  if (m_uiaProvider == nullptr) {
-    m_uiaProvider = winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>(
-        shared_from_this());
-  }
-  return m_uiaProvider;
-}
-
 } // namespace Microsoft::ReactNative

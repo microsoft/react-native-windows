@@ -245,12 +245,4 @@ bool SwitchComponentView::focusable() const noexcept {
   return m_props->focusable;
 }
 
-winrt::IInspectable SwitchComponentView::EnsureUiaProvider() noexcept {
-  if (m_uiaProvider == nullptr) {
-    m_uiaProvider = winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>(
-        shared_from_this());
-  }
-  return m_uiaProvider;
-}
-
 } // namespace Microsoft::ReactNative

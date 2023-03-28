@@ -367,12 +367,4 @@ winrt::Microsoft::ReactNative::Composition::IVisual ScrollViewComponentView::Vis
   return m_visual;
 }
 
-winrt::IInspectable ScrollViewComponentView::EnsureUiaProvider() noexcept {
-  if (m_uiaProvider == nullptr) {
-    m_uiaProvider = winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>(
-        shared_from_this());
-  }
-  return m_uiaProvider;
-}
-
 } // namespace Microsoft::ReactNative

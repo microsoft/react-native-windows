@@ -42,8 +42,6 @@ struct ParagraphComponentView : CompositionBaseComponentView {
 
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
 
-  winrt::IInspectable EnsureUiaProvider() noexcept override;
-
  private:
   ParagraphComponentView(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,

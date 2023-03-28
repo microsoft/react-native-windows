@@ -59,6 +59,8 @@ struct CompositionBaseComponentView : public IComponentView,
   comp::CompositionPropertySet EnsureCenterPointPropertySet() noexcept;
   void EnsureTransformMatrixFacade() noexcept;
 
+  winrt::IInspectable EnsureUiaProvider() noexcept override;
+
  protected:
   std::array<winrt::Microsoft::ReactNative::Composition::SpriteVisual, SpecialBorderLayerCount>
   FindSpecialBorderLayers() const noexcept;
@@ -116,8 +118,6 @@ struct CompositionViewComponentView : public CompositionBaseComponentView {
   bool ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept override;
 
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
-
-  winrt::IInspectable EnsureUiaProvider() noexcept override;
 
  protected:
   CompositionViewComponentView(

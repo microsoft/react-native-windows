@@ -38,8 +38,6 @@ struct UnimplementedNativeViewComponentView : CompositionBaseComponentView {
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
   winrt::Microsoft::ReactNative::Composition::IVisual OuterVisual() const noexcept override;
 
-  winrt::IInspectable EnsureUiaProvider() noexcept override;
-
  private:
   UnimplementedNativeViewComponentView(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,

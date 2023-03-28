@@ -42,8 +42,6 @@ struct SwitchComponentView : CompositionBaseComponentView {
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
   int64_t sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept override;
 
-  winrt::IInspectable EnsureUiaProvider() noexcept override;
-
  private:
   SwitchComponentView(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,

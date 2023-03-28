@@ -1070,14 +1070,6 @@ winrt::Microsoft::ReactNative::Composition::IVisual WindowsTextInputComponentVie
   return m_visual;
 }
 
-winrt::IInspectable WindowsTextInputComponentView::EnsureUiaProvider() noexcept {
-  if (m_uiaProvider == nullptr) {
-    m_uiaProvider = winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>(
-        shared_from_this());
-  }
-  return m_uiaProvider;
-}
-
 std::shared_ptr<WindowsTextInputComponentView> WindowsTextInputComponentView::Create(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,

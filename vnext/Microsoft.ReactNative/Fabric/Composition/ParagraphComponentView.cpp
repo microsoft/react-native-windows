@@ -476,14 +476,6 @@ winrt::Microsoft::ReactNative::Composition::IVisual ParagraphComponentView::Visu
   return m_visual;
 }
 
-winrt::IInspectable ParagraphComponentView::EnsureUiaProvider() noexcept {
-  if (m_uiaProvider == nullptr) {
-    m_uiaProvider = winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>(
-        shared_from_this());
-  }
-  return m_uiaProvider;
-}
-
 std::shared_ptr<ParagraphComponentView> ParagraphComponentView::Create(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag) noexcept {
