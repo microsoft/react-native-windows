@@ -175,15 +175,6 @@ jobs:
                 feature: UseHermes
                 value: ${{ matrix.UseHermes }}
 
-            - template: ../templates/run-windows-with-certificates.yml
-              parameters:
-                buildEnvironment: ${{ parameters.BuildEnvironment }}
-                certificateName: reactUWPTestAppEncodedKey
-                buildConfiguration: Release
-                buildPlatform: ${{ matrix.BuildPlatform }}
-                buildLogDirectory: $(BuildLogDirectory)
-                workingDirectory: packages/e2e-test-app-fabric
-
             - template: ../templates/msbuild-sln.yml
               parameters:
                 solutionDir: packages/e2e-test-app-fabric/windows
