@@ -151,14 +151,28 @@ void SwitchComponentView::Draw() noexcept {
     d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
     d2dDeviceContext->SetDpi(dpi, dpi);
 
+    // switch track - outline
+    D2D1_ROUNDED_RECT track = D2D1::RoundedRect(trackRect, trackCornerRadius, trackCornerRadius);
+    if ((!switchProps->onTintColor && switchProps->value) || (!switchProps->tintColor && !switchProps->value)) {
+      d2dDeviceContext->DrawRoundedRectangle(track, defaultBrush.get());
+    }
+
+    // switch track - fill
+    winrt::com_ptr<ID2D1SolidColorBrush> trackBrush;
+    if (!switchProps->disabled && switchProps->onTintColor && switchProps->value) {
+      winrt::check_hresult(
+          d2dDeviceContext->CreateSolidColorBrush(switchProps->onTintColor.AsD2DColor(), trackBrush.put()));
+      d2dDeviceContext->FillRoundedRectangle(track, trackBrush.get());
+    } else if (!switchProps->disabled && switchProps->tintColor && !switchProps->value) {
+      winrt::check_hresult(
+          d2dDeviceContext->CreateSolidColorBrush(switchProps->tintColor.AsD2DColor(), trackBrush.put()));
+      d2dDeviceContext->FillRoundedRectangle(track, trackBrush.get());
+    }
+
     // switch thumb
     D2D1_POINT_2F thumbCenter = D2D1 ::Point2F(thumbX, (trackRect.top + trackRect.bottom) / 2);
     D2D1_ELLIPSE thumb = D2D1::Ellipse(thumbCenter, thumbRadius, thumbRadius);
     d2dDeviceContext->FillEllipse(thumb, thumbBrush.get());
-
-    // switch track
-    D2D1_ROUNDED_RECT track = D2D1::RoundedRect(trackRect, trackCornerRadius, trackCornerRadius);
-    d2dDeviceContext->DrawRoundedRectangle(track, defaultBrush.get());
 
     // Restore old dpi setting
     d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);

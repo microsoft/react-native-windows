@@ -2,6 +2,57 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 28 Mar 2023 05:13:53 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.633",
+      "version": "0.0.0-canary.633",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "alicemagicassociation@gmail.com",
+            "package": "react-native-windows",
+            "commit": "cd9ba2df182e00968c44ef1ae6248e2468c2a3e3",
+            "comment": "Fix typo in rnw-dependencies.ps1"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 24 Mar 2023 05:13:44 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.632",
+      "version": "0.0.0-canary.632",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ericroz@meta.com",
+            "package": "react-native-windows",
+            "commit": "6d7b213cc722894cca023cad29860febef1a2864",
+            "comment": "Fixes occasional crash in hit testing"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 23 Mar 2023 05:13:37 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.631",
+      "version": "0.0.0-canary.631",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "9ee8e4c86b17115a03c18cafdef56f4f3078596c",
+            "comment": "integrate RN 3/8/23"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ce7e8700aee095084d00aeabd52221adf09e732f",
+            "comment": "[Fabric] Beginning of custom component interfaces"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 21 Mar 2023 21:21:54 GMT",
       "tag": "react-native-windows_v0.0.0-canary.630",
       "version": "0.0.0-canary.630",

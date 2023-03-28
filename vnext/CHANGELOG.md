@@ -1,8 +1,33 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 21 Mar 2023 21:21:54 GMT and should not be manually modified.
+This log was last generated on Tue, 28 Mar 2023 05:13:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.633
+
+Tue, 28 Mar 2023 05:13:53 GMT
+
+### Changes
+
+- Fix typo in rnw-dependencies.ps1 (alicemagicassociation@gmail.com)
+
+## 0.0.0-canary.632
+
+Fri, 24 Mar 2023 05:13:44 GMT
+
+### Changes
+
+- Fixes occasional crash in hit testing (ericroz@meta.com)
+
+## 0.0.0-canary.631
+
+Thu, 23 Mar 2023 05:13:37 GMT
+
+### Changes
+
+- integrate RN 3/8/23 (tatianakapos@microsoft.com)
+- [Fabric] Beginning of custom component interfaces (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.630
 
