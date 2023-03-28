@@ -118,11 +118,9 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
 long GetControlType(const std::string &role) noexcept {
   if (role == "adjustable") {
     return UIA_SliderControlTypeId;
-  } else if (role == "group" || role == "search" || role == "timer" || role.empty()) {
+  } else if (role == "group" || role == "search" || role == "radiogroup" || role == "timer" || role.empty()) {
     return UIA_GroupControlTypeId;
-  } else if (
-      role == "button" || role == "imagebutton" || role == "switch" ||
-      role == "togglebutton") {
+  } else if (role == "button" || role == "imagebutton" || role == "switch" || role == "togglebutton") {
     return UIA_ButtonControlTypeId;
   } else if (role == "checkbox") {
     return UIA_CheckBoxControlTypeId;
@@ -157,8 +155,6 @@ long GetControlType(const std::string &role) noexcept {
     return UIA_ProgressBarControlTypeId;
   } else if (role == "radio") {
     return UIA_RadioButtonControlTypeId;
-  } else if (role == "radiogroup") {
-    return UIA_ListControlTypeId;
   } else if (role == "scrollbar") {
     return UIA_ScrollBarControlTypeId;
   } else if (role == "spinbutton") {
