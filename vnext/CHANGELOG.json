@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 29 Mar 2023 05:13:53 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.634",
+      "version": "0.0.0-canary.634",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "8fc0f9143733f9bed6bbe6e111f48e223a90fc36",
+            "comment": "add switch 'trackColor' for Fabric"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 28 Mar 2023 05:13:53 GMT",
       "tag": "react-native-windows_v0.0.0-canary.633",
       "version": "0.0.0-canary.633",
