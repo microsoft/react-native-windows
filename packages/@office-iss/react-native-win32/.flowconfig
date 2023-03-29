@@ -111,7 +111,6 @@ suppress_type=$FlowFixMeEmpty
 
 sharedmemory.hash_table_pow=21
 
->>>>>>> Override
 [lints]
 sketchy-null-number=warn
 sketchy-null-mixed=warn
