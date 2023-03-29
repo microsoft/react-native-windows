@@ -712,11 +712,8 @@
       <Filter>Header Files\Fabric\platform\react\renderer\textlayoutmanager</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\RootComponentView.h" />
-<<<<<<< HEAD
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\AbiViewProps.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\AbiViewComponentDescriptor.h" />
-=======
->>>>>>> 6ef0b8b20 (Save State: App builds and deploys, loads JS when metro started in playground directory)
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)tracing\rnw.wprp">
