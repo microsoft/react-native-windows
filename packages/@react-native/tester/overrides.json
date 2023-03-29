@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.0.0-20230308-2111-d41e95fb1",
+  "baseVersion": "0.0.0-20230316-2109-b2fda3eca",
   "overrides": [
     {
       "type": "copy",
@@ -12,14 +12,14 @@
       "type": "copy",
       "directory": "js/components",
       "baseDirectory": "packages/rn-tester/js/components",
-      "baseHash": "acef952990d8696391f5c73080a2c2c10c1369ff",
+      "baseHash": "673a2f0c5cf1d3faac0a85f1c6aacd6d86a34de5",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/Accessibility",
       "baseDirectory": "packages/rn-tester/js/examples/Accessibility",
-      "baseHash": "c3fe78ced9afbdfd32fc4cb83cba1a9abba6ca4c",
+      "baseHash": "05d4590305c405ae5127d5ca8986b1faf935dbae",
       "issue": 4054
     },
     {
@@ -124,7 +124,7 @@
       "type": "copy",
       "directory": "js/examples/Experimental",
       "baseDirectory": "packages/rn-tester/js/examples/Experimental",
-      "baseHash": "573469b8853480f769ff6393a30f50df250f60cd",
+      "baseHash": "c8177378da52791adf4b4924c250be209b08a7b1",
       "issue": 4054
     },
     {
@@ -233,10 +233,10 @@
       "issue": 4054
     },
     {
-      "type": "derived",
+      "type": "copy",
       "file": "js/examples/Performance/PerformanceApiExample.js",
       "baseFile": "packages/rn-tester/js/examples/Performance/PerformanceApiExample.js",
-      "baseHash": "67b2570ff084861f4d3f05e06951cd231106e5d6",
+      "baseHash": "cd0e79d1feb0d29963d5dc314296087e016de605",
       "issue": 11373
     },
     {
@@ -369,7 +369,7 @@
       "type": "copy",
       "directory": "js/examples/TextInput",
       "baseDirectory": "packages/rn-tester/js/examples/TextInput",
-      "baseHash": "2e01f100f5720121cd4a405d14bc4cceca576a30",
+      "baseHash": "616460aef95464b63bff2b7832074a00908429ce",
       "issue": 4054
     },
     {
@@ -481,7 +481,7 @@
       "type": "copy",
       "file": "NativeComponentExample/js/MyNativeView.js",
       "baseFile": "packages/rn-tester/NativeComponentExample/js/MyNativeView.js",
-      "baseHash": "4f0a62b83f1255a34ae0089bdcb1cb7dbba8cb26",
+      "baseHash": "70ed7f47f4da11a509a9cdc63d0e2f6bff7b1a43",
       "issue": 4054
     },
     {
@@ -509,6 +509,7 @@
       "type": "copy",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
+      "baseVersion": "0.0.0-20230308-2111-d41e95fb1",
       "baseHash": "3b803653bf2bd26a16f9f734273bf92d7c998b6b",
       "issue": 4054
     }

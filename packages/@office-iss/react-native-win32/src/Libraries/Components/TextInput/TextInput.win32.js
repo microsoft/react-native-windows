@@ -338,6 +338,9 @@ type IOSProps = $ReadOnly<{|
   /**
    * Give the keyboard and the system information about the
    * expected semantic meaning for the content that users enter.
+   * `autoComplete` property accomplishes same behavior and is recommended as its supported by both platforms.
+   * Avoid using both `autoComplete` and `textContentType`, you can use `Platform.select` for differing platform behaviors.
+   * For backwards compatibility, when both set, `textContentType` takes precedence on iOS.
    * @platform ios
    */
   textContentType?: ?TextContentType,
@@ -544,14 +547,6 @@ export type Props = $ReadOnly<{|
   ...$Diff<ViewProps, $ReadOnly<{|style: ?ViewStyleProp|}>>,
   ...IOSProps,
   ...AndroidProps,
-
-  /**
-   * String to be read by screenreaders to indicate an error state. The acceptable parameters
-   * of accessibilityErrorMessage is a string. Setting accessibilityInvalid to true activates
-   * the error message. Setting accessibilityInvalid to false removes the error message.
-   */
-  accessibilityErrorMessage?: ?Stringish,
-  accessibilityInvalid?: ?boolean,
 
   /**
    * Can tell `TextInput` to automatically capitalize certain characters.
