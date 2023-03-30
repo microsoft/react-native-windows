@@ -17,10 +17,13 @@ namespace Microsoft::ReactNative {
 
 struct AbiCompositionViewComponentView : CompositionBaseComponentView {
   using Super = CompositionBaseComponentView;
-  AbiCompositionViewComponentView(
+
+  [[nodiscard]] static std::shared_ptr<AbiCompositionViewComponentView> Create(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
-      winrt::Microsoft::ReactNative::IReactViewComponentBuilder builder);
+      winrt::Microsoft::ReactNative::IReactViewComponentBuilder builder) noexcept;
+
+  winrt::IInspectable EnsureUiaProvider() noexcept override;
 
   void mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
   void unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
@@ -44,6 +47,11 @@ struct AbiCompositionViewComponentView : CompositionBaseComponentView {
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
 
  private:
+  AbiCompositionViewComponentView(
+      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      facebook::react::Tag tag,
+      winrt::Microsoft::ReactNative::IReactViewComponentBuilder builder);
+
   winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder &Builder() noexcept;
 
   winrt::IInspectable m_handle;

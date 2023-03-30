@@ -1,24 +1,20 @@
 #pragma once
 
-#include <Fabric/Composition/RootComponentView.h>
+#include <Fabric/Composition/CompositionViewComponentView.h>
 #include <Fabric/ReactTaggedView.h>
 #include <UIAutomation.h>
 #include <inspectable.h>
 
 namespace winrt::Microsoft::ReactNative::implementation {
-struct CompositionRootView;
 
-class CompositionRootAutomationProvider : public winrt::implements<
-                                              CompositionRootAutomationProvider,
-                                              IInspectable,
-                                              IRawElementProviderFragmentRoot,
-                                              IRawElementProviderFragment,
-                                              IRawElementProviderSimple> {
+class CompositionDynamicAutomationProvider : public winrt::implements<
+                                                 CompositionDynamicAutomationProvider,
+                                                 IInspectable,
+                                                 IRawElementProviderFragment,
+                                                 IRawElementProviderSimple> {
  public:
-  // inherited via IRawElementProviderFragmentRoot
-  virtual HRESULT __stdcall ElementProviderFromPoint(double x, double y, IRawElementProviderFragment **pRetVal)
-      override;
-  virtual HRESULT __stdcall GetFocus(IRawElementProviderFragment **pRetVal) override;
+  CompositionDynamicAutomationProvider(
+      const std::shared_ptr<::Microsoft::ReactNative::CompositionBaseComponentView> &componentView) noexcept;
 
   // inherited via IRawElementProviderFragment
   virtual HRESULT __stdcall Navigate(NavigateDirection direction, IRawElementProviderFragment **pRetVal) override;
@@ -28,19 +24,15 @@ class CompositionRootAutomationProvider : public winrt::implements<
   virtual HRESULT __stdcall SetFocus(void) override;
   virtual HRESULT __stdcall get_FragmentRoot(IRawElementProviderFragmentRoot **pRetVal) override;
 
-  // inherited via IRawElementProviderSimple
+  // inherited via IRawElementProviderSimple2
   virtual HRESULT __stdcall get_ProviderOptions(ProviderOptions *pRetVal) override;
   virtual HRESULT __stdcall GetPatternProvider(PATTERNID patternId, IUnknown **pRetVal) override;
   virtual HRESULT __stdcall GetPropertyValue(PROPERTYID propertyId, VARIANT *pRetVal) override;
   virtual HRESULT __stdcall get_HostRawElementProvider(IRawElementProviderSimple **pRetVal) override;
-
-  CompositionRootAutomationProvider(
-      const std::shared_ptr<::Microsoft::ReactNative::RootComponentView> &componentView) noexcept;
-  void SetHwnd(HWND hwnd) noexcept;
+  // virtual HRESULT __stdcall ShowContextMenu() noexcept override;
 
  private:
   ::Microsoft::ReactNative::ReactTaggedView m_view;
-  HWND m_hwnd{nullptr};
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation

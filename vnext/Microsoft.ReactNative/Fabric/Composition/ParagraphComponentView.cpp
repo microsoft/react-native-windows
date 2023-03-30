@@ -11,6 +11,7 @@
 #include <react/renderer/components/text/ParagraphState.h>
 #include <unicode.h>
 #include <winrt/Microsoft.ReactNative.Composition.h>
+#include "CompositionDynamicAutomationProvider.h"
 #include "CompositionHelpers.h"
 
 namespace Microsoft::ReactNative {
@@ -473,6 +474,12 @@ void ParagraphComponentView::DrawText() noexcept {
 
 winrt::Microsoft::ReactNative::Composition::IVisual ParagraphComponentView::Visual() const noexcept {
   return m_visual;
+}
+
+std::shared_ptr<ParagraphComponentView> ParagraphComponentView::Create(
+    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    facebook::react::Tag tag) noexcept {
+  return std::shared_ptr<ParagraphComponentView>(new ParagraphComponentView(compContext, tag));
 }
 
 } // namespace Microsoft::ReactNative

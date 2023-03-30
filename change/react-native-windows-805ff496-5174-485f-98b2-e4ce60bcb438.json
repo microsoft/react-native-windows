@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add UIA Navigate to Fabric Providers",
+  "packageName": "react-native-windows",
+  "email": "adrum@microsoft.com",
+  "dependentChangeType": "patch"
+}
