@@ -17,8 +17,15 @@
 #include <windows.ui.composition.interop.h>
 
 #include <unicode.h>
+#include "CompositionDynamicAutomationProvider.h"
 
 namespace Microsoft::ReactNative {
+
+std::shared_ptr<ScrollViewComponentView> ScrollViewComponentView::Create(
+    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    facebook::react::Tag tag) noexcept {
+  return std::shared_ptr<ScrollViewComponentView>(new ScrollViewComponentView(compContext, tag));
+}
 
 ScrollViewComponentView::ScrollViewComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,

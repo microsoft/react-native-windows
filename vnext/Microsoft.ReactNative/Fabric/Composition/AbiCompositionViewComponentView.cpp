@@ -7,6 +7,7 @@
 #include "AbiCompositionViewComponentView.h"
 
 #include <Fabric/DWriteHelpers.h>
+#include "CompositionDynamicAutomationProvider.h"
 #include "Unicode.h"
 
 namespace Microsoft::ReactNative {
@@ -21,6 +22,14 @@ AbiCompositionViewComponentView::AbiCompositionViewComponentView(
   m_handle = Builder().CreateView(compContext);
   m_visual = Builder().CreateVisual(m_handle);
   OuterVisual().InsertAt(m_visual, 0);
+}
+
+std::shared_ptr<AbiCompositionViewComponentView> AbiCompositionViewComponentView::Create(
+    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    facebook::react::Tag tag,
+    winrt::Microsoft::ReactNative::IReactViewComponentBuilder builder) noexcept {
+  return std::shared_ptr<AbiCompositionViewComponentView>(
+      new AbiCompositionViewComponentView(compContext, tag, builder));
 }
 
 winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder &
@@ -122,6 +131,14 @@ facebook::react::Tag AbiCompositionViewComponentView::hitTest(
   }
 
   return -1;
+}
+
+winrt::IInspectable AbiCompositionViewComponentView::EnsureUiaProvider() noexcept {
+  if (m_uiaProvider == nullptr) {
+    m_uiaProvider = winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>(
+        shared_from_this());
+  }
+  return m_uiaProvider;
 }
 
 } // namespace Microsoft::ReactNative

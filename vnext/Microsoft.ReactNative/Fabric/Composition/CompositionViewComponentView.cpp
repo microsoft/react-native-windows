@@ -12,6 +12,7 @@
 #include <Views/FrameworkElementTransferProperties.h>
 #include <winrt/Windows.UI.Composition.h>
 #include "CompositionContextHelper.h"
+#include "CompositionDynamicAutomationProvider.h"
 #include "CompositionHelpers.h"
 #include "RootComponentView.h"
 #include "d2d1helper.h"
@@ -1158,6 +1159,12 @@ CompositionViewComponentView::CompositionViewComponentView(
   OuterVisual().InsertAt(m_visual, 0);
 }
 
+std::shared_ptr<CompositionViewComponentView> CompositionViewComponentView::Create(
+    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    facebook::react::Tag tag) noexcept {
+  return std::shared_ptr<CompositionViewComponentView>(new CompositionViewComponentView(compContext, tag));
+}
+
 void CompositionViewComponentView::mountChildComponentView(
     IComponentView &childComponentView,
     uint32_t index) noexcept {
@@ -1402,6 +1409,14 @@ bool walkTree(IComponentView &view, bool forward, Mso::Functor<bool(IComponentVi
     }
   }
   return false;
+}
+
+winrt::IInspectable CompositionBaseComponentView::EnsureUiaProvider() noexcept {
+  if (m_uiaProvider == nullptr) {
+    m_uiaProvider = winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>(
+        shared_from_this());
+  }
+  return m_uiaProvider;
 }
 
 } // namespace Microsoft::ReactNative

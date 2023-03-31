@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 29 Mar 2023 05:13:53 GMT and should not be manually modified.
+This log was last generated on Fri, 31 Mar 2023 05:13:52 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.635
+
+Fri, 31 Mar 2023 05:13:52 GMT
+
+### Changes
+
+- Suppresses auto-focus under certain conditions (erozell@outlook.com)
+- Fixes issue where Alert crashes (erozell@outlook.com)
+- Add UIA Navigate to Fabric Providers (adrum@microsoft.com)
+- Workaround fix for "missing-asset-registry-path" error to unblock PRs (jthysell@microsoft.com)
 
 ## 0.0.0-canary.634
 

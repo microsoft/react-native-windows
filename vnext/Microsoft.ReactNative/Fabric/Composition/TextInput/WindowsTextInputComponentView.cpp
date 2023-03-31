@@ -6,6 +6,7 @@
 
 #include "WindowsTextInputComponentView.h"
 
+#include <Fabric/Composition/CompositionDynamicAutomationProvider.h>
 #include <Utils/ValueUtils.h>
 #include <tom.h>
 #include <unicode.h>
@@ -1067,6 +1068,14 @@ void WindowsTextInputComponentView::ensureVisual() noexcept {
 
 winrt::Microsoft::ReactNative::Composition::IVisual WindowsTextInputComponentView::Visual() const noexcept {
   return m_visual;
+}
+
+std::shared_ptr<WindowsTextInputComponentView> WindowsTextInputComponentView::Create(
+    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    facebook::react::Tag tag,
+    winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
+  return std::shared_ptr<WindowsTextInputComponentView>(
+      new WindowsTextInputComponentView(compContext, tag, reactContext));
 }
 
 } // namespace Microsoft::ReactNative

@@ -6,6 +6,7 @@
 
 #include "RootComponentView.h"
 
+#include "CompositionRootAutomationProvider.h"
 #include "CompositionRootView.h"
 
 namespace Microsoft::ReactNative {
@@ -14,6 +15,12 @@ RootComponentView::RootComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag)
     : Super(compContext, tag) {}
+
+std::shared_ptr<RootComponentView> RootComponentView::Create(
+    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    facebook::react::Tag tag) noexcept {
+  return std::shared_ptr<RootComponentView>(new RootComponentView(compContext, tag));
+}
 
 RootComponentView *RootComponentView::rootComponentView() noexcept {
   return this;
@@ -92,6 +99,18 @@ bool RootComponentView::TryMoveFocus(bool next) noexcept {
   };
 
   return walkTree(*m_focusedComponent, next, fn);
+}
+
+winrt::IInspectable RootComponentView::EnsureUiaProvider() noexcept {
+  if (m_uiaProvider == nullptr) {
+    m_uiaProvider =
+        winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionRootAutomationProvider>(getPtr());
+  }
+  return m_uiaProvider;
+}
+
+std::shared_ptr<RootComponentView> RootComponentView::getPtr() {
+  return std::static_pointer_cast<RootComponentView>(shared_from_this());
 }
 
 } // namespace Microsoft::ReactNative

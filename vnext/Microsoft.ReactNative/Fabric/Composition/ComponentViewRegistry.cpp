@@ -46,30 +46,30 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
   std::shared_ptr<CompositionBaseComponentView> view;
 
   if (componentHandle == facebook::react::ViewShadowNode::Handle()) {
-    view = std::make_shared<CompositionViewComponentView>(compContext, tag);
+    view = CompositionViewComponentView::Create(compContext, tag);
   } else if (componentHandle == facebook::react::ParagraphShadowNode::Handle()) {
-    view = std::make_shared<ParagraphComponentView>(compContext, tag);
+    view = ParagraphComponentView::Create(compContext, tag);
   } else if (componentHandle == facebook::react::ScrollViewShadowNode::Handle()) {
-    view = std::make_shared<ScrollViewComponentView>(compContext, tag);
+    view = ScrollViewComponentView::Create(compContext, tag);
   } else if (componentHandle == facebook::react::ImageShadowNode::Handle()) {
-    view = std::make_shared<ImageComponentView>(compContext, tag, m_context);
+    view = ImageComponentView::Create(compContext, tag, m_context);
   } else if (componentHandle == facebook::react::WindowsTextInputShadowNode::Handle()) {
-    view = std::make_shared<WindowsTextInputComponentView>(compContext, tag, m_context);
+    view = WindowsTextInputComponentView::Create(compContext, tag, m_context);
   } else if (componentHandle == facebook::react::SwitchShadowNode::Handle()) {
-    view = std::make_shared<SwitchComponentView>(compContext, tag, m_context);
+    view = SwitchComponentView::Create(compContext, tag, m_context);
   } else if (componentHandle == facebook::react::RootShadowNode::Handle()) {
-    view = std::make_shared<RootComponentView>(compContext, tag);
+    view = RootComponentView::Create(compContext, tag);
   } else if (
       componentHandle == facebook::react::RawTextShadowNode::Handle() ||
       componentHandle == facebook::react::TextShadowNode::Handle()) {
     // Review - Why do we get asked for ComponentViews for Text/RawText... do these get used?
-    view = std::make_shared<CompositionViewComponentView>(compContext, tag);
+    view = CompositionViewComponentView::Create(compContext, tag);
   } else if (componentHandle == facebook::react::UnimplementedNativeViewShadowNode::Handle()) {
-    view = std::make_shared<UnimplementedNativeViewComponentView>(compContext, tag);
+    view = UnimplementedNativeViewComponentView::Create(compContext, tag);
   } else {
     auto descriptor =
         WindowsComponentDescriptorRegistry::FromProperties(m_context.Properties())->GetDescriptor(componentHandle);
-    view = std::make_shared<AbiCompositionViewComponentView>(
+    view = AbiCompositionViewComponentView::Create(
         compContext, tag, descriptor.as<winrt::Microsoft::ReactNative::IReactViewComponentBuilder>());
   }
 

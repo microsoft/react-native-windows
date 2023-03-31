@@ -103,6 +103,13 @@ void Alert::ProcessPendingAlertRequestsXaml() noexcept {
       });
 
       dialog.Closed([=](auto &&, auto &&) { xamlRoot.Changed(rootChangedToken); });
+    } else if (IsXamlIsland()) {
+      // We cannot show a ContentDialog in a XAML Island unless it is assigned a
+      // XamlRoot instance. In such cases, we just treat the alert as dismissed.
+      jsDispatcher.Post([result, this] { result(m_constants.dismissed, m_constants.buttonNeutral); });
+      pendingAlerts.pop();
+      ProcessPendingAlertRequests();
+      return;
     }
   }
 
