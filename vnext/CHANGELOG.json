@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 31 Mar 2023 05:13:52 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.635",
+      "version": "0.0.0-canary.635",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "fecd9a48a88318de204d29c85ef0ecdd6c467c3c",
+            "comment": "Suppresses auto-focus under certain conditions"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "340db7344bdf8c8b7f842ac5e369882aae5a1c29",
+            "comment": "Fixes issue where Alert crashes"
+          },
+          {
+            "author": "adrum@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "fdcbab5075c75c81b9a90d348cf26af0e281478f",
+            "comment": "Add UIA Navigate to Fabric Providers"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "19c140bb859d3833a8da4223fd107547ae9aecd3",
+            "comment": "Workaround fix for \"missing-asset-registry-path\" error to unblock PRs"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 29 Mar 2023 05:13:53 GMT",
       "tag": "react-native-windows_v0.0.0-canary.634",
       "version": "0.0.0-canary.634",
