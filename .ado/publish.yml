@@ -62,7 +62,13 @@ jobs:
       - template: templates/prepare-env.yml
 
       - powershell: |
-          Write-Error "Stopping because commit message contains ***NO_CI***."
+          Write-Host "Stopping because commit message contains ***NO_CI***."
+          $uri = "https://dev.azure.com/microsoft/ReactNative/_apis/build/builds/$(Build.BuildId)?api-version=5.1"
+          $json = @{status="Cancelling"} | ConvertTo-Json -Compress
+          $build = Invoke-RestMethod -Uri $uri -Method Patch -Headers @{Authorization = "Bearer $(System.AccessToken)"} -ContentType "application/json" -Body $json
+          Write-Host $build
+          Write-Host "Waiting 60 seconds for build cancellation..."
+          Start-Sleep -Seconds 60
         displayName: Stop pipeline if latest commit message contains ***NO_CI***
         condition: and(${{ parameters.stopOnNoCI }}, contains(variables['Build.SourceVersionMessage'], '***NO_CI***'))
 
