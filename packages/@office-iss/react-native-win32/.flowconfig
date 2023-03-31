@@ -61,6 +61,8 @@
 ; Ignore "BUCK" generated dirs
 <PROJECT_ROOT>/\.buckd/
 
+; Flow doesn't support platforms
+.*/packages/react-native/Libraries/Utilities/LoadingView.js
 ; Ignore the src folder - flow files are combined with ones from react-native into the root Libraries folder
 .*/react-native-win32/src/.*
 
@@ -81,6 +83,7 @@
 [libs]
 interface.js
 flow/
+flow-typed/
 
 [options]
 enums=true
@@ -100,7 +103,7 @@ munge_underscores=true
 module.name_mapper='^react-native$' -> '<PROJECT_ROOT>/index.win32.js'
 module.name_mapper='^@office-iss/react-native-win32$' -> '<PROJECT_ROOT>/index.win32.js'
 module.name_mapper='^react-native/\(.*\)$' -> '<PROJECT_ROOT>/\1'
-module.name_mapper='^@office-iss/react-native-win32/\(.*\)$' -> '<PROJECT_ROOT>/\1'
+module.name_mapper='^@office-iss/react-native-win32/\(.*\)$' -> '<PROJECT_ROOT>\/1'
 module.name_mapper='^@?[./a-zA-Z0-9$_-]+\.\(bmp\|gif\|jpg\|jpeg\|png\|psd\|svg\|webp\|m4v\|mov\|mp4\|mpeg\|mpg\|webm\|aac\|aiff\|caf\|m4a\|mp3\|wav\|html\|pdf\)$' -> '<PROJECT_ROOT>/Libraries/Image/RelativeImageStub'
 
 suppress_type=$FlowIssue
@@ -109,8 +112,6 @@ suppress_type=$FlowFixMeProps
 suppress_type=$FlowFixMeState
 suppress_type=$FlowFixMeEmpty
 
-experimental.array_literal_providers=true
-inference_mode=experimental.lti
 
 sharedmemory.hash_table_pow=21
 
@@ -134,4 +135,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.201.0
+^0.202.0

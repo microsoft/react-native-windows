@@ -1095,14 +1095,6 @@ NativeDevLoadingViewCxxSpecJSI::NativeDevLoadingViewCxxSpecJSI(std::shared_ptr<C
   methodMap_["showMessage"] = MethodMetadata {3, __hostFunction_NativeDevLoadingViewCxxSpecJSI_showMessage};
   methodMap_["hide"] = MethodMetadata {0, __hostFunction_NativeDevLoadingViewCxxSpecJSI_hide};
 }
-static jsi::Value __hostFunction_NativeDevSplitBundleLoaderCxxSpecJSI_loadBundle(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeDevSplitBundleLoaderCxxSpecJSI *>(&turboModule)->loadBundle(rt, args[0].asString(rt));
-}
-
-NativeDevSplitBundleLoaderCxxSpecJSI::NativeDevSplitBundleLoaderCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("DevSplitBundleLoader", jsInvoker) {
-  methodMap_["loadBundle"] = MethodMetadata {1, __hostFunction_NativeDevSplitBundleLoaderCxxSpecJSI_loadBundle};
-}
 static jsi::Value __hostFunction_NativePlatformConstantsAndroidCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativePlatformConstantsAndroidCxxSpecJSI *>(&turboModule)->getConstants(rt);
 }
