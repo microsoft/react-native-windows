@@ -82,7 +82,7 @@
       },
       "Microsoft.UI.Xaml": {
         "type": "Transitive",
-        "resolved": "2.7.0",
+        "resolved": "2.8.0",
         "contentHash": "dB4im13tfmMgL/V3Ei+3kD2rUF+/lTxAmR4gjJ45l577eljHfdo/KUrxpq/3I1Vp6e5GCDG1evDaEGuDxypLMg=="
       },
       "Microsoft.Windows.SDK.BuildTools": {
@@ -307,7 +307,7 @@
         "dependencies": {
           "Common": "[1.0.0, )",
           "Folly": "[1.0.0, )",
-          "Microsoft.UI.Xaml": "[2.7.0, )",
+          "Microsoft.UI.Xaml": "[2.8.0, )",
           "Microsoft.Windows.SDK.BuildTools": "[10.0.22000.194, )",
           "ReactCommon": "[1.0.0, )",
           "ReactNative.Hermes.Windows": "[0.0.0-2302.1001-19052299, )",

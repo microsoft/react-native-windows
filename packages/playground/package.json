@@ -10,7 +10,7 @@
     "windows": "react-native run-windows"
   },
   "dependencies": {
-    "@react-native-picker/picker": "2.2.0",
+    "@react-native-picker/picker": "2.4.9",
     "@react-native-windows/tester": "0.0.1",
     "@typescript-eslint/eslint-plugin": "^5.21.0",
     "@typescript-eslint/parser": "^5.21.0",

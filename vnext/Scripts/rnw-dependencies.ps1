@@ -376,7 +376,7 @@ $requirements = @(
     },
     @{
         Id=[CheckId]::WindowsVersion;
-        Name = 'Windows version >= 10.0.16299.0';
+        Name = 'Windows version >= 10.0.17763.0';
         Tags = @('appDev');
         Valid = { ($v.Major -eq 10 -and $v.Minor -eq 0 -and $v.Build -ge 16299); }
     },
