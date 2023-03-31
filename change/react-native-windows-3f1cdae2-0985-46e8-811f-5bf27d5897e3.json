@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Suppresses auto-focus under certain conditions",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
