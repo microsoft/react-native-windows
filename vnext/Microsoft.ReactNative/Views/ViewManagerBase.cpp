@@ -295,6 +295,8 @@ bool ViewManagerBase::UpdateProperty(
       }
     }
   } else if (TryUpdateMouseEvents(nodeToUpdate, propertyName, propertyValue)) {
+  } else if (propertyName == "overflow") {
+    nodeToUpdate->m_overflowHidden = propertyValue.AsString() == "hidden";
   } else {
     return false;
   }
@@ -374,6 +376,16 @@ void ViewManagerBase::SetLayoutProps(
 
   fe.Width(width);
   fe.Height(height);
+
+  // Modifying the `overflow` prop will always result in the Yoga node setting
+  // `YGNodeHasNewLayout`, so we can reliably update the Clip from this method.
+  if (nodeToUpdate.m_overflowHidden) {
+    winrt::RectangleGeometry clipGeometry;
+    clipGeometry.Rect(winrt::Rect(0, 0, width, height));
+    fe.Clip(clipGeometry);
+  } else {
+    fe.ClearValue(xaml::UIElement::ClipProperty());
+  }
 }
 
 YGMeasureFunc ViewManagerBase::GetYogaCustomMeasureFunc() const {
