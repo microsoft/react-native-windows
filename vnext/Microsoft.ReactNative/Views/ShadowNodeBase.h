@@ -147,7 +147,7 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public ShadowNode {
   PointerEventsKind m_pointerEvents = PointerEventsKind::Auto;
 
   // Layout
-  ShadowNodeLayout m_layout;
+  ShadowNodeLayout m_layout{};
 
   // Support Keyboard
  public:
