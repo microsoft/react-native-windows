@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 04 Apr 2023 05:14:38 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.637",
+      "version": "0.0.0-canary.637",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "9a9d35dd1c6f2c2d4171e42761a36de88d94521e",
+            "comment": "Allow ABIViewManagers to use `overflow: hidden`"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 01 Apr 2023 05:15:15 GMT",
       "tag": "react-native-windows_v0.0.0-canary.636",
       "version": "0.0.0-canary.636",

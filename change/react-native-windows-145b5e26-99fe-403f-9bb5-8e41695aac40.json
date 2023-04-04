@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Allow ABIViewManagers to use `overflow: hidden`",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}
