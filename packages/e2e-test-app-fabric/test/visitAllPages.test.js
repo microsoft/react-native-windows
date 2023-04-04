@@ -6,11 +6,11 @@
  */
 
 //import {goToApiExample, goToComponentExample} from './RNTesterNavigation';
-//import {verifyNoErrorLogs} from './Helpers';
+import {verifyNoErrorLogs} from './Helpers';
 
-/*afterEach(async () => {
+afterEach(async () => {
   await verifyNoErrorLogs();
-});*/
+});
 
 type RNTesterExampleModule = {
   title: string;
