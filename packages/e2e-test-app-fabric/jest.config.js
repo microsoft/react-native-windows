@@ -23,7 +23,7 @@ module.exports = {
   roots: ['<rootDir>/test/'],
 
   // The test environment that will be used for testing
-  //testEnvironment: '@react-native-windows/automation',
+  testEnvironment: '@react-native-windows/automation',
 
   // The pattern or patterns Jest uses to detect test files
   testRegex: '.*\\.test\\.js$',
@@ -44,7 +44,7 @@ module.exports = {
 
   // An array of regexp pattern strings that are matched against all source file paths before transformation.
   // If the file path matches any of the patterns, it will not be transformed.
-  transformIgnorePatterns: ['jest-runner'],
+  transformIgnorePatterns: ['jest-runner', 'node_modules\\\\safe-buffer'],
 
   // Specifies the maximum number of workers the worker-pool will spawn for running tests.
   maxWorkers: 1,
@@ -54,10 +54,10 @@ module.exports = {
 
   // A list of paths to modules that run some code to configure or set up the testing framework
   // before each test file in the suite is executed
-  //setupFilesAfterEnv: ['react-native-windows/jest/setup', './jest.setup.js'],
+  setupFilesAfterEnv: ['react-native-windows/jest/setup', './jest.setup.js'],
 
-  /*testEnvironmentOptions: {
-    app: 'RNTesterApp',
+  testEnvironmentOptions: {
+    app: `windows\\Debug\\RNTesterApp-Fabric.exe`,
     enableAutomationChannel: true,
-  },*/
+  },
 };
