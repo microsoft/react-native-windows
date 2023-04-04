@@ -1,5 +1,5 @@
 {
-  "name": "@react-native/monorepo",
+  "name": "@react-native/repo-config",
   "private": true,
   "version": "1000.0.0",
   "description": "A framework for building native apps using React",
