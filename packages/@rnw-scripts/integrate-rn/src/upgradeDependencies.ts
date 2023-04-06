@@ -322,8 +322,7 @@ function syncDevDependencies(
   const devDependencies = Object.entries(pkg.devDependencies || {});
   const newRNDevDevDeps =
     reactNativePackageDiff.newPackage.devDependencies || {};
-  const newRepoConfigDeps =
-    repoConfigPackageDiff.newPackage.devDependencies || {};
+  const newRepoConfigDeps = repoConfigPackageDiff.newPackage.dependencies || {};
 
   for (const [dependency, version] of devDependencies) {
     if (pkg.outOfTreePlatform && newRNDevDevDeps.hasOwnProperty(dependency)) {
