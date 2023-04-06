@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20230327-2119-d9f7c4c18",
+  "baseVersion": "0.0.0-20230404-2109-62c4da142",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "3150906be58084896af68c6c9f8a8dd063766581"
+      "baseHash": "241d0d49a4d24294ec5c48f3672c3c800136f24d"
     },
     {
       "type": "derived",
@@ -380,7 +380,7 @@
       "type": "patch",
       "file": "src/Libraries/Pressability/Pressability.win32.js",
       "baseFile": "packages/react-native/Libraries/Pressability/Pressability.js",
-      "baseHash": "6bc21b9d2a0fd8592b112a0c3752070d6c1fd079",
+      "baseHash": "9b1c05c59ddcf30c6b5938ff8ed26ec7633ebdce",
       "issue": 6240
     },
     {

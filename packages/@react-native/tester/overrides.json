@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.0.0-20230327-2119-d9f7c4c18",
+  "baseVersion": "0.0.0-20230404-2109-62c4da142",
   "overrides": [
     {
       "type": "copy",
@@ -411,7 +411,7 @@
       "type": "copy",
       "directory": "js/examples/TurboModule",
       "baseDirectory": "packages/rn-tester/js/examples/TurboModule",
-      "baseHash": "cdfbc975c5f1d9f9f58019537d08233ba882cccd",
+      "baseHash": "38d31568a005c506a11c075d595de33514cd58ad",
       "issue": 4054
     },
     {
@@ -481,7 +481,7 @@
       "type": "copy",
       "file": "NativeComponentExample/js/MyNativeView.js",
       "baseFile": "packages/rn-tester/NativeComponentExample/js/MyNativeView.js",
-      "baseHash": "70ed7f47f4da11a509a9cdc63d0e2f6bff7b1a43",
+      "baseHash": "a04bb09fc3730aa5af4ceb7545363309138e1d51",
       "issue": 4054
     },
     {
@@ -495,7 +495,7 @@
       "type": "copy",
       "file": "NativeCxxModuleExample/NativeCxxModuleExample.js",
       "baseFile": "packages/rn-tester/NativeCxxModuleExample/NativeCxxModuleExample.js",
-      "baseHash": "b6630148ec54ab1f40ab2c3fd1ef6f7783efe48a",
+      "baseHash": "ef2023f9ece5c2dea3a3b2261eafb3149d50b526",
       "issue": 4054
     },
     {
@@ -509,7 +509,7 @@
       "type": "copy",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
-      "baseHash": "cb1c9235cb581969965d5d7c84e631e158a8a783",
+      "baseHash": "55c63583e66e55e08d3931d703d8a77e7beaa517",
       "issue": 4054
     }
   ]
