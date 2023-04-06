@@ -2361,7 +2361,7 @@
     "@babel/preset-typescript" "^7.0.0"
     find-up "^5.0.0"
 
-"@rnx-kit/metro-config@^1.2.27":
+"@rnx-kit/metro-config@^1.3.5":
   version "1.3.5"
   resolved "https://registry.yarnpkg.com/@rnx-kit/metro-config/-/metro-config-1.3.5.tgz#b255db53cd48ac4ff76a12c212f7a9ddf09df333"
   integrity sha512-8KI7sIaj1ExpH2Et37CXwy+ajdqRqXloGbHYSE4RYvda+PSJ/guU9+moY5NXaRujJtwOFA8qk3/nDvx2suMDeA==
@@ -2371,10 +2371,10 @@
     "@rnx-kit/tools-node" "^1.3.0"
     "@rnx-kit/tools-workspaces" "^0.1.3"
 
-"@rnx-kit/metro-plugin-duplicates-checker@^1.2.15":
-  version "1.2.16"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-plugin-duplicates-checker/-/metro-plugin-duplicates-checker-1.2.16.tgz#5e20e17e53ed6ca5a613978be325abf1bc826905"
-  integrity sha512-fcXQbmDA7es7aSqZH0whVXyoPGgA7yy8I8193K18TRCHF6U1LoK/ZnjHAaHTzrcyq2NhrpwkDWwFoDTCFjYWjw==
+"@rnx-kit/metro-plugin-duplicates-checker@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-plugin-duplicates-checker/-/metro-plugin-duplicates-checker-2.1.0.tgz#22ae1a9f676aced666354f2ace67bd201ff287c1"
+  integrity sha512-YPCa73Arl6ICHRuq2Ccb76prf4tFDico10ymkRACkKCHf+6xaLcOL/VooNrd6TlXM1uoQMpzTcs+gVS4QpnDgA==
   dependencies:
     "@rnx-kit/console" "^1.0.11"
     "@rnx-kit/tools-node" "^1.2.7"
