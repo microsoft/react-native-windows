@@ -14,6 +14,66 @@ bool isColorMeaningful(SharedColor const &color) noexcept {
   return colorComponentsFromColor(color).alpha > 0;
 }
 
+struct string_hash {
+  using is_transparent = void;
+  [[nodiscard]] size_t operator()(const char* txt) const {
+    return std::hash<std::string_view>{}(txt);
+  }
+  [[nodiscard]] size_t operator()(std::string_view txt) const {
+    return std::hash<std::string_view>{}(txt);
+  }
+  [[nodiscard]] size_t operator()(const std::string& txt) const {
+    return std::hash<std::string>{}(txt);
+  }
+};
+
+winrt::Windows::UI::Color ResolvePlatformColor(Color const * const color) {
+  // These are all the light-theme values. Which is better than no values
+  // Arguably only the right-most platform colors should be respected, and 
+  // Button should be updated to use those instead, assuming that still 
+  // holds up in high contrast and such.
+  static std::unordered_map<std::string, winrt::Windows::UI::Color, string_hash, std::equal_to<>> s_windowsColors = {
+    {"SolidBackgroundFillColorBaseBrush", { 0xFF, 0xF3, 0xF3, 0xF3 }}, // SolidBackgroundFillColorBase
+    {"ButtonBackgroundPressed", { 0x4D, 0xF9, 0xF9, 0xF9 }}, // ControlFillColorTertiary
+    {"ButtonForegroundPressed", { 0x9E, 0x00, 0x00, 0x00 }}, // TextFillColorSecondary
+    {"ButtonForegroundPointerOver", { 0xE4, 0x00, 0x00, 0x00 }}, // TextFillColorPrimaryBrush
+    {"ButtonBackground", { 0xB3, 0xFF, 0xFF, 0xFF }}, // ControlFillColorDefault
+    {"ButtonBorderBrush", { 0x29, 0x00, 0x00, 0x00 }}, // gradient from ControlStrokeColorSecondary to ControlStrokeColorDefault
+    {"ButtonForeground", { 0xE4, 0x00, 0x00, 0x00 }}, // TextFillColorPrimary
+    {"ButtonBackgroundDisabled", { 0x4D, 0xF9, 0xF9, 0xF9 }}, // ControlFillColorDisabled
+    {"ButtonBorderBrushDisabled", { 0x0F, 0x00, 0x00, 0x00 }}, // ControlStrokeColorDefault
+    {"ButtonForegroundDisabled", { 0x5C, 0x00, 0x00, 0x00 }}, // TextFillColorDisabled
+    {"ButtonBackgroundPointerOver", { 0x80, 0xF9, 0xF9, 0xF9 }}, // ControlFillColorSecondary
+    {"ButtonBorderBrushPointerOver", { 0x66, 0x00, 0x00, 0x00 }}, // gradient from ControlStrokeColorOnAccentSecondary to ControlStrokeColorOnAccentDefault
+    {"ButtonBorderBrushPressed", { 0x00, 0xFF, 0xFF, 0xFF }}, // ControlFillColorTransparent
+  };
+
+  if (!color->m_platformColor.empty()) {
+    auto result = s_windowsColors.find(color->m_platformColor);
+    if (result != s_windowsColors.end()) {
+      return result->second;
+    }
+    else {
+      OutputDebugStringA(color->m_platformColor.c_str());
+    }
+  }
+
+  return color->m_color;
+}
+
+D2D1::ColorF SharedColor::AsD2DColor() const {
+  winrt::Windows::UI::Color color = ResolvePlatformColor(m_color.get());
+  return {
+      color.R / 255.0f,
+      color.G / 255.0f,
+      color.B / 255.0f,
+      color.A / 255.0f };
+}
+
+winrt::Windows::UI::Color SharedColor::AsWindowsColor() const {
+  return ResolvePlatformColor(m_color.get());
+}
+
 #ifndef CORE_ABI
 xaml::Media::Brush SharedColor::AsWindowsBrush() const {
   if (!m_color)
