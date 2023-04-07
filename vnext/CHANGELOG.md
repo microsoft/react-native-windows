@@ -1,8 +1,91 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 14 Mar 2023 05:13:40 GMT and should not be manually modified.
+This log was last generated on Fri, 07 Apr 2023 05:13:15 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.638
+
+Fri, 07 Apr 2023 05:13:15 GMT
+
+### Changes
+
+- Initialize layout values to zero (erozell@outlook.com)
+
+## 0.0.0-canary.637
+
+Tue, 04 Apr 2023 05:14:38 GMT
+
+### Changes
+
+- Allow ABIViewManagers to use `overflow: hidden` (erozell@outlook.com)
+
+## 0.0.0-canary.636
+
+Sat, 01 Apr 2023 05:15:15 GMT
+
+### Changes
+
+- Integrate 3/22/23 (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.635
+
+Fri, 31 Mar 2023 05:13:52 GMT
+
+### Changes
+
+- Suppresses auto-focus under certain conditions (erozell@outlook.com)
+- Fixes issue where Alert crashes (erozell@outlook.com)
+- Add UIA Navigate to Fabric Providers (adrum@microsoft.com)
+- Workaround fix for "missing-asset-registry-path" error to unblock PRs (jthysell@microsoft.com)
+
+## 0.0.0-canary.634
+
+Wed, 29 Mar 2023 05:13:53 GMT
+
+### Changes
+
+- add switch 'trackColor' for Fabric (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.633
+
+Tue, 28 Mar 2023 05:13:53 GMT
+
+### Changes
+
+- Fix typo in rnw-dependencies.ps1 (alicemagicassociation@gmail.com)
+
+## 0.0.0-canary.632
+
+Fri, 24 Mar 2023 05:13:44 GMT
+
+### Changes
+
+- Fixes occasional crash in hit testing (ericroz@meta.com)
+
+## 0.0.0-canary.631
+
+Thu, 23 Mar 2023 05:13:37 GMT
+
+### Changes
+
+- integrate RN 3/8/23 (tatianakapos@microsoft.com)
+- [Fabric] Beginning of custom component interfaces (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.630
+
+Tue, 21 Mar 2023 21:21:54 GMT
+
+### Changes
+
+- CrashManager should also handle SIGABRT (tudor.mihai@microsoft.com)
+- Fix RedBox Dismiss (30809111+acoates-ms@users.noreply.github.com)
+- Verify JS ViewConfig and ViewManager ViewConfigs align (30809111+acoates-ms@users.noreply.github.com)
+- Adds BundleAppId to ReactInstanceSettings (erozell@outlook.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.166
+- Bump @react-native-windows/codegen to v0.0.0-canary.54
+- Bump @rnw-scripts/just-task to v2.3.6
+- Bump react-native-platform-override to v1.9.4
 
 ## 0.0.0-canary.629
 

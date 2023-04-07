@@ -24,10 +24,10 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
   friend CompTextHost;
 
   using Super = CompositionBaseComponentView;
-  WindowsTextInputComponentView(
+  [[nodiscard]] static std::shared_ptr<WindowsTextInputComponentView> Create(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
-      winrt::Microsoft::ReactNative::ReactContext const &reactContext);
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
   void mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
   void unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
@@ -51,6 +51,11 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
   bool focusable() const noexcept override;
 
  private:
+  WindowsTextInputComponentView(
+      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      facebook::react::Tag tag,
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext);
+
   struct DrawBlock {
     DrawBlock(WindowsTextInputComponentView &view);
     ~DrawBlock();

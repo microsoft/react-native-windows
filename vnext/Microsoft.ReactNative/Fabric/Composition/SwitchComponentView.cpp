@@ -5,6 +5,7 @@
 #pragma once
 
 #include "SwitchComponentView.h"
+#include "CompositionDynamicAutomationProvider.h"
 
 namespace Microsoft::ReactNative {
 
@@ -14,6 +15,13 @@ SwitchComponentView::SwitchComponentView(
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
     : Super(compContext, tag), m_context(reactContext) {
   m_props = std::make_shared<facebook::react::SwitchProps const>();
+}
+
+std::shared_ptr<SwitchComponentView> SwitchComponentView::Create(
+    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    facebook::react::Tag tag,
+    winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
+  return std::shared_ptr<SwitchComponentView>(new SwitchComponentView(compContext, tag, reactContext));
 }
 
 void SwitchComponentView::mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
@@ -143,14 +151,28 @@ void SwitchComponentView::Draw() noexcept {
     d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
     d2dDeviceContext->SetDpi(dpi, dpi);
 
+    // switch track - outline
+    D2D1_ROUNDED_RECT track = D2D1::RoundedRect(trackRect, trackCornerRadius, trackCornerRadius);
+    if ((!switchProps->onTintColor && switchProps->value) || (!switchProps->tintColor && !switchProps->value)) {
+      d2dDeviceContext->DrawRoundedRectangle(track, defaultBrush.get());
+    }
+
+    // switch track - fill
+    winrt::com_ptr<ID2D1SolidColorBrush> trackBrush;
+    if (!switchProps->disabled && switchProps->onTintColor && switchProps->value) {
+      winrt::check_hresult(
+          d2dDeviceContext->CreateSolidColorBrush(switchProps->onTintColor.AsD2DColor(), trackBrush.put()));
+      d2dDeviceContext->FillRoundedRectangle(track, trackBrush.get());
+    } else if (!switchProps->disabled && switchProps->tintColor && !switchProps->value) {
+      winrt::check_hresult(
+          d2dDeviceContext->CreateSolidColorBrush(switchProps->tintColor.AsD2DColor(), trackBrush.put()));
+      d2dDeviceContext->FillRoundedRectangle(track, trackBrush.get());
+    }
+
     // switch thumb
     D2D1_POINT_2F thumbCenter = D2D1 ::Point2F(thumbX, (trackRect.top + trackRect.bottom) / 2);
     D2D1_ELLIPSE thumb = D2D1::Ellipse(thumbCenter, thumbRadius, thumbRadius);
     d2dDeviceContext->FillEllipse(thumb, thumbBrush.get());
-
-    // switch track
-    D2D1_ROUNDED_RECT track = D2D1::RoundedRect(trackRect, trackCornerRadius, trackCornerRadius);
-    d2dDeviceContext->DrawRoundedRectangle(track, defaultBrush.get());
 
     // Restore old dpi setting
     d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);

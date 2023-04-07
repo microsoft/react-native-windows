@@ -10,17 +10,17 @@
 
 #include <react/components/rnwcore/ShadowNodes.h>
 
-
 namespace Microsoft::ReactNative {
 
 struct ActivityIndicatorComponentView;
 
 struct ActivityIndicatorComponentView : CompositionBaseComponentView {
   using Super = CompositionBaseComponentView;
-  ActivityIndicatorComponentView(
+
+  [[nodiscard]] static std::shared_ptr<ActivityIndicatorComponentView> Create(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
-      winrt::Microsoft::ReactNative::ReactContext const &reactContext);
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
   void mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
   void unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
@@ -42,10 +42,15 @@ struct ActivityIndicatorComponentView : CompositionBaseComponentView {
   winrt::Microsoft::ReactNative::Composition::IVisual OuterVisual() const noexcept override;
 
  private:
+  ActivityIndicatorComponentView(
+      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      facebook::react::Tag tag,
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext);
+
   void ensureVisual() noexcept;
   void Draw() noexcept;
   void ensureDrawingSurface() noexcept;
-  
+
   facebook::react::Size m_contentSize;
   winrt::Microsoft::ReactNative::Composition::SpriteVisual m_visual{nullptr};
   winrt::Microsoft::ReactNative::ReactContext m_context;

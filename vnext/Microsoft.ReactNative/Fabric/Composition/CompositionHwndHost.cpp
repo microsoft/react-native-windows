@@ -14,6 +14,7 @@
 #include "CompositionContextHelper.h"
 #include "ReactNativeHost.h"
 
+#include "CompositionRootAutomationProvider.h"
 #include "CompositionRootView.h"
 
 WINUSERAPI UINT WINAPI GetDpiForWindow(_In_ HWND hwnd);
@@ -72,12 +73,15 @@ double CompositionHwndHost::ScaleFactor() noexcept {
 void CompositionHwndHost::UpdateSize() noexcept {
   RECT rc;
   if (GetClientRect(m_hwnd, &rc)) {
-    winrt::Windows::Foundation::Size size{
-        static_cast<float>((rc.right - rc.left) / ScaleFactor()),
-        static_cast<float>((rc.bottom - rc.top) / ScaleFactor())};
-    m_compRootView.Size(size);
-    m_compRootView.Measure(size);
-    m_compRootView.Arrange(size);
+    if (m_height != (rc.bottom - rc.top) || m_width != (rc.right - rc.left)) {
+      m_height = rc.bottom - rc.top;
+      m_width = rc.right - rc.left;
+      winrt::Windows::Foundation::Size size{
+          static_cast<float>(m_width / ScaleFactor()), static_cast<float>(m_height / ScaleFactor())};
+      m_compRootView.Size(size);
+      m_compRootView.Measure(size);
+      m_compRootView.Arrange(size);
+    }
   }
 }
 
@@ -151,7 +155,12 @@ winrt::Windows::UI::Composition::Compositor CompositionHwndHost::Compositor() co
 
 IInspectable CompositionHwndHost::UiaProvider() noexcept {
   auto compRootView = winrt::get_self<implementation::CompositionRootView>(m_compRootView);
-  return compRootView->GetUiaProvider(reinterpret_cast<uint64_t>(m_hwnd));
+  auto provider = compRootView->GetUiaProvider();
+  auto pRootProvider = static_cast<CompositionRootAutomationProvider *>(provider.as<IRawElementProviderSimple>().get());
+  if (pRootProvider != nullptr) {
+    pRootProvider->SetHwnd(m_hwnd);
+  }
+  return provider;
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

@@ -132,7 +132,8 @@ void TextLayoutManager::GetTextLayout(
 TextMeasurement TextLayoutManager::measure(
     AttributedStringBox attributedStringBox,
     ParagraphAttributes paragraphAttributes,
-    LayoutConstraints layoutConstraints) const {
+    LayoutConstraints layoutConstraints,
+    std::shared_ptr<void> /* hostTextStorage */) const {
   TextMeasurement measurement{};
   auto &attributedString = attributedStringBox.getValue();
   measurement = m_measureCache.get(
@@ -195,6 +196,13 @@ LinesMeasurements TextLayoutManager::measureLines(
     Size size) const {
   assert(false);
   return {};
+}
+
+std::shared_ptr<void> TextLayoutManager::getHostTextStorage(
+    AttributedString attributedString,
+    ParagraphAttributes paragraphAttributes,
+    LayoutConstraints layoutConstraints) const {
+  return nullptr;
 }
 
 void *TextLayoutManager::getNativeTextLayoutManager() const {

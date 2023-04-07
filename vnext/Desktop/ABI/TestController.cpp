@@ -91,7 +91,13 @@ msrn::IReactModuleBuilder TestController::CreateReactModuleBuilder(msrn::IReactC
 msrn::IReactPackageBuilder TestController::CreateReactPackageBuilder() {
   auto nativeModulesProvider = std::make_shared<msrn::NativeModulesProvider>();
   auto turboModulesProvider = std::make_shared<msrn::TurboModulesProvider>();
-  return make<msrn::ReactPackageBuilder>(nativeModulesProvider, turboModulesProvider, true);
+  return make<msrn::ReactPackageBuilder>(
+      nativeModulesProvider,
+      turboModulesProvider,
+#ifdef USE_FABRIC
+      std::shared_ptr<::Microsoft::ReactNative::WindowsComponentDescriptorRegistry>{},
+#endif
+      true);
 }
 
 msrn::IRedBoxErrorFrameInfo

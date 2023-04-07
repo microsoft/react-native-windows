@@ -15,11 +15,23 @@ ActivityIndicatorComponentView::ActivityIndicatorComponentView(
   m_props = std::make_shared<facebook::react::ActivityIndicatorViewProps const>();
 }
 
-void ActivityIndicatorComponentView::mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
+std::shared_ptr<ActivityIndicatorComponentView> ActivityIndicatorComponentView::Create(
+    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    facebook::react::Tag tag,
+    winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
+  return std::shared_ptr<ActivityIndicatorComponentView>(
+      new ActivityIndicatorComponentView(compContext, tag, reactContext));
+}
+
+void ActivityIndicatorComponentView::mountChildComponentView(
+    IComponentView &childComponentView,
+    uint32_t index) noexcept {
   assert(false);
 }
 
-void ActivityIndicatorComponentView::unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
+void ActivityIndicatorComponentView::unmountChildComponentView(
+    IComponentView &childComponentView,
+    uint32_t index) noexcept {
   assert(false);
 }
 
@@ -31,7 +43,6 @@ void ActivityIndicatorComponentView::handleCommand(std::string const &commandNam
     Super::handleCommand(commandName, arg);
   }
 }
-
 
 void ActivityIndicatorComponentView::updateProps(
     facebook::react::Props::Shared const &props,
@@ -82,13 +93,14 @@ void ActivityIndicatorComponentView::Draw() noexcept {
   // any time we make an update we touch the entire surface, so we always pass nullptr).
   winrt::com_ptr<ID2D1DeviceContext> d2dDeviceContext;
   POINT offset;
-  
+
   winrt::com_ptr<Composition::ICompositionDrawingSurfaceInterop> drawingSurfaceInterop;
   m_drawingSurface.as(drawingSurfaceInterop);
 
   if (CheckForDeviceRemoved(drawingSurfaceInterop->BeginDraw(d2dDeviceContext.put(), &offset))) {
-    const auto activityIndicatorProps = std::static_pointer_cast<const facebook::react::ActivityIndicatorViewProps>(m_props);
-    
+    const auto activityIndicatorProps =
+        std::static_pointer_cast<const facebook::react::ActivityIndicatorViewProps>(m_props);
+
     d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
     if (m_props->backgroundColor) {
       d2dDeviceContext->Clear(m_props->backgroundColor.AsD2DColor());
@@ -107,7 +119,8 @@ void ActivityIndicatorComponentView::Draw() noexcept {
 
     // default brush
     winrt::com_ptr<ID2D1SolidColorBrush> defaultBrush;
-    winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(facebook::react::blackColor().AsD2DColor(), defaultBrush.put()));
+    winrt::check_hresult(
+        d2dDeviceContext->CreateSolidColorBrush(facebook::react::blackColor().AsD2DColor(), defaultBrush.put()));
 
     // set DPI?
     const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
@@ -116,24 +129,22 @@ void ActivityIndicatorComponentView::Draw() noexcept {
     d2dDeviceContext->SetDpi(dpi, dpi);
 
     // TEST DRAWING
-// 
-    //D2D1_POINT_2F ellipseCenter = D2D1 ::Point2F(trackMarginX, trackMarginY);
-    //D2D1_ELLIPSE ellipse = D2D1::Ellipse(ellipseCenter, width, width);
-    //d2dDeviceContext->FillEllipse(ellipse, defaultBrush.get());
+    //
+    // D2D1_POINT_2F ellipseCenter = D2D1 ::Point2F(trackMarginX, trackMarginY);
+    // D2D1_ELLIPSE ellipse = D2D1::Ellipse(ellipseCenter, width, width);
+    // d2dDeviceContext->FillEllipse(ellipse, defaultBrush.get());
 
-    //D2D1_RECT_F trackRect = D2D1::RectF(10.0f, 10.0f, 10.0f, 10.0f);
-    //D2D1_ROUNDED_RECT track = D2D1::RoundedRect(trackRect, 10.0f, 10.0f);
-    //d2dDeviceContext->DrawRoundedRectangle(track, defaultBrush.get());
-    
+    // D2D1_RECT_F trackRect = D2D1::RectF(10.0f, 10.0f, 10.0f, 10.0f);
+    // D2D1_ROUNDED_RECT track = D2D1::RoundedRect(trackRect, 10.0f, 10.0f);
+    // d2dDeviceContext->DrawRoundedRectangle(track, defaultBrush.get());
+
     // Restore old dpi setting
     d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
 
     // Our update is done. EndDraw never indicates rendering device removed, so any
     // failure here is unexpected and, therefore, fatal.
     winrt::check_hresult(drawingSurfaceInterop->EndDraw());
-
   }
-
 }
 
 void ActivityIndicatorComponentView::prepareForRecycle() noexcept {}
@@ -167,8 +178,8 @@ void ActivityIndicatorComponentView::ensureDrawingSurface() noexcept {
   }
 }
 
-facebook::react::Tag ActivityIndicatorComponentView::hitTest(facebook::react::Point pt, facebook::react::Point &localPt) const noexcept {
-
+facebook::react::Tag ActivityIndicatorComponentView::hitTest(facebook::react::Point pt, facebook::react::Point &localPt)
+    const noexcept {
   facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
 
   if ((m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
@@ -193,6 +204,5 @@ winrt::Microsoft::ReactNative::Composition::IVisual ActivityIndicatorComponentVi
 bool ActivityIndicatorComponentView::focusable() const noexcept {
   return false;
 }
-
 
 } // namespace Microsoft::ReactNative

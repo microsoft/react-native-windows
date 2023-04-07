@@ -36,7 +36,8 @@ class TextLayoutManager {
   TextMeasurement measure(
       AttributedStringBox attributedStringBox,
       ParagraphAttributes paragraphAttributes,
-      LayoutConstraints layoutConstraints) const;
+      LayoutConstraints layoutConstraints,
+      std::shared_ptr<void> /* hostTextStorage */) const;
 
   /*
    * Measures lines of `attributedString` using native text rendering
@@ -44,6 +45,11 @@ class TextLayoutManager {
    */
   LinesMeasurements measureLines(AttributedString attributedString, ParagraphAttributes paragraphAttributes, Size size)
       const;
+
+  std::shared_ptr<void> getHostTextStorage(
+      AttributedString attributedString,
+      ParagraphAttributes paragraphAttributes,
+      LayoutConstraints layoutConstraints) const;
 
   /**
    * Measures an AttributedString on the platform, as identified by some

@@ -2,6 +2,207 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 07 Apr 2023 05:13:15 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.638",
+      "version": "0.0.0-canary.638",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "f24abc102cb212dcabe93fddd8c5b3937c4f92de",
+            "comment": "Initialize layout values to zero"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 04 Apr 2023 05:14:38 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.637",
+      "version": "0.0.0-canary.637",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "9a9d35dd1c6f2c2d4171e42761a36de88d94521e",
+            "comment": "Allow ABIViewManagers to use `overflow: hidden`"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 01 Apr 2023 05:15:15 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.636",
+      "version": "0.0.0-canary.636",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "25d51e62ec75240d3d175adabc940d2f6d3a0ce2",
+            "comment": "Integrate 3/22/23"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 31 Mar 2023 05:13:52 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.635",
+      "version": "0.0.0-canary.635",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "fecd9a48a88318de204d29c85ef0ecdd6c467c3c",
+            "comment": "Suppresses auto-focus under certain conditions"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "340db7344bdf8c8b7f842ac5e369882aae5a1c29",
+            "comment": "Fixes issue where Alert crashes"
+          },
+          {
+            "author": "adrum@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "fdcbab5075c75c81b9a90d348cf26af0e281478f",
+            "comment": "Add UIA Navigate to Fabric Providers"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "19c140bb859d3833a8da4223fd107547ae9aecd3",
+            "comment": "Workaround fix for \"missing-asset-registry-path\" error to unblock PRs"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 29 Mar 2023 05:13:53 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.634",
+      "version": "0.0.0-canary.634",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "8fc0f9143733f9bed6bbe6e111f48e223a90fc36",
+            "comment": "add switch 'trackColor' for Fabric"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 28 Mar 2023 05:13:53 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.633",
+      "version": "0.0.0-canary.633",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "alicemagicassociation@gmail.com",
+            "package": "react-native-windows",
+            "commit": "cd9ba2df182e00968c44ef1ae6248e2468c2a3e3",
+            "comment": "Fix typo in rnw-dependencies.ps1"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 24 Mar 2023 05:13:44 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.632",
+      "version": "0.0.0-canary.632",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ericroz@meta.com",
+            "package": "react-native-windows",
+            "commit": "6d7b213cc722894cca023cad29860febef1a2864",
+            "comment": "Fixes occasional crash in hit testing"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 23 Mar 2023 05:13:37 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.631",
+      "version": "0.0.0-canary.631",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "9ee8e4c86b17115a03c18cafdef56f4f3078596c",
+            "comment": "integrate RN 3/8/23"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ce7e8700aee095084d00aeabd52221adf09e732f",
+            "comment": "[Fabric] Beginning of custom component interfaces"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 21 Mar 2023 21:21:54 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.630",
+      "version": "0.0.0-canary.630",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tudor.mihai@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "94c638560965be5e431120eb3642f76c01d77b87",
+            "comment": "CrashManager should also handle SIGABRT"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "5733b4e0885c2e06de73f4a0554f5a4f239ed772",
+            "comment": "Fix RedBox Dismiss"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "03701dc0305d7ff3f8b33f4d97368a9ef83bd557",
+            "comment": "Verify JS ViewConfig and ViewManager ViewConfigs align"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "11f34031547db56b5f6f0657082465777cbcb1bc",
+            "comment": "Adds BundleAppId to ReactInstanceSettings"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.166",
+            "commit": "94c638560965be5e431120eb3642f76c01d77b87"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.54",
+            "commit": "94c638560965be5e431120eb3642f76c01d77b87"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.6",
+            "commit": "94c638560965be5e431120eb3642f76c01d77b87"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.9.4",
+            "commit": "94c638560965be5e431120eb3642f76c01d77b87"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 14 Mar 2023 05:13:40 GMT",
       "tag": "react-native-windows_v0.0.0-canary.629",
       "version": "0.0.0-canary.629",

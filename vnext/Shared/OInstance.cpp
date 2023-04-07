@@ -259,7 +259,7 @@ InstanceImpl::InstanceImpl(
       m_devManager(std::move(devManager)),
       m_innerInstance(std::move(instance)) {
   // Temp set the logmarker here
-  facebook::react::ReactMarker::logTaggedMarker = logMarker;
+  facebook::react::ReactMarker::logTaggedMarkerImpl = logMarker;
 
 #ifdef ENABLE_ETW_TRACING
   // TODO :: Find a better place to initialize ETW once per process.

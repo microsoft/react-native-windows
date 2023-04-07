@@ -146,12 +146,12 @@ void CompositionRootView::ScaleFactor(double value) noexcept {
   m_scaleFactor = value;
 }
 
-IInspectable CompositionRootView::GetUiaProvider(uint64_t hwnd) noexcept {
-  if (m_compositionUiaProvider == nullptr) {
-    m_compositionUiaProvider =
-        winrt::make<CompositionRootAutomationProvider>(this->get_weak(), reinterpret_cast<HWND>(hwnd));
-  }
-  return m_compositionUiaProvider;
+winrt::IInspectable CompositionRootView::GetUiaProvider() noexcept {
+  auto componentView = GetComponentView();
+  if (componentView == nullptr)
+    return nullptr;
+
+  return componentView->EnsureUiaProvider();
 }
 
 winrt::Microsoft::ReactNative::Composition::IVisual CompositionRootView::GetVisual() const noexcept {
@@ -364,15 +364,21 @@ Windows::Foundation::Size CompositionRootView::Arrange(Windows::Foundation::Size
   return finalSize;
 }
 
-winrt::Microsoft::ReactNative::FocusNavigationResult CompositionRootView::NavigateFocus(
-    const winrt::Microsoft::ReactNative::FocusNavigationRequest &request) noexcept {
+::Microsoft::ReactNative::RootComponentView *CompositionRootView::GetComponentView() noexcept {
   if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
           winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties()))) {
     auto rootComponentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(
         static_cast<facebook::react::SurfaceId>(m_rootTag));
-    auto view = static_cast<::Microsoft::ReactNative::RootComponentView &>(*rootComponentViewDescriptor.view);
+    return static_cast<::Microsoft::ReactNative::RootComponentView *>(rootComponentViewDescriptor.view.get());
+  }
+  return nullptr;
+}
+
+winrt::Microsoft::ReactNative::FocusNavigationResult CompositionRootView::NavigateFocus(
+    const winrt::Microsoft::ReactNative::FocusNavigationRequest &request) noexcept {
+  if (auto view = GetComponentView()) {
     return winrt::make<winrt::Microsoft::ReactNative::implementation::FocusNavigationResult>(
-        view.NavigateFocus(request));
+        view->NavigateFocus(request));
   }
   return winrt::make<winrt::Microsoft::ReactNative::implementation::FocusNavigationResult>(false);
 }

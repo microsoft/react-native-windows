@@ -1,8 +1,81 @@
 # Change Log - @react-native-windows/automation-commands
 
-This log was last generated on Tue, 14 Mar 2023 05:13:40 GMT and should not be manually modified.
+This log was last generated on Fri, 07 Apr 2023 05:13:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.79
+
+Fri, 07 Apr 2023 05:13:16 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.10.7
+
+## 0.1.78
+
+Tue, 04 Apr 2023 05:14:38 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.10.6
+
+## 0.1.77
+
+Sat, 01 Apr 2023 05:15:16 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.10.5
+
+## 0.1.76
+
+Fri, 31 Mar 2023 05:13:53 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.10.4
+
+## 0.1.75
+
+Wed, 29 Mar 2023 05:13:53 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.10.3
+
+## 0.1.74
+
+Tue, 28 Mar 2023 05:13:54 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.10.2
+
+## 0.1.73
+
+Fri, 24 Mar 2023 05:13:44 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.10.1
+
+## 0.1.72
+
+Thu, 23 Mar 2023 05:13:37 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.10.0
+
+## 0.1.71
+
+Tue, 21 Mar 2023 21:21:55 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.9.18
+- Bump @rnw-scripts/just-task to v2.3.6
 
 ## 0.1.70
 

@@ -1,8 +1,83 @@
 # Change Log - @react-native-windows/automation-channel
 
-This log was last generated on Tue, 14 Mar 2023 05:13:40 GMT and should not be manually modified.
+This log was last generated on Fri, 07 Apr 2023 05:13:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.10.7
+
+Fri, 07 Apr 2023 05:13:16 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.638
+
+## 0.10.6
+
+Tue, 04 Apr 2023 05:14:38 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.637
+
+## 0.10.5
+
+Sat, 01 Apr 2023 05:15:15 GMT
+
+### Patches
+
+- Integrate 3/22/23 (tatianakapos@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.636
+
+## 0.10.4
+
+Fri, 31 Mar 2023 05:13:53 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.635
+
+## 0.10.3
+
+Wed, 29 Mar 2023 05:13:53 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.634
+
+## 0.10.2
+
+Tue, 28 Mar 2023 05:13:54 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.633
+
+## 0.10.1
+
+Fri, 24 Mar 2023 05:13:44 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.632
+
+## 0.10.0
+
+Thu, 23 Mar 2023 05:13:37 GMT
+
+### Minor changes
+
+- integrate RN 3/8/23 (tatianakapos@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.631
+
+## 0.9.18
+
+Tue, 21 Mar 2023 21:21:55 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.3.6
+- Bump react-native-windows to v0.0.0-canary.630
 
 ## 0.9.17
 
