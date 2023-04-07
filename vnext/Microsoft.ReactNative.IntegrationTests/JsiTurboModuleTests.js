@@ -76,6 +76,12 @@ mySimpleTurboModule
   .getValueWithPromise(/*error:*/ false)
   .then(value =>
     mySimpleTurboModule.logAction('getValueWithPromise result resolve', value),
+  )
+  .catch(err =>
+    mySimpleTurboModule.logAction(
+      'getValueWithPromise result reject',
+      err.message,
+    ),
   );
 
 mySimpleTurboModule

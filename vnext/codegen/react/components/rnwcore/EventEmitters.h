@@ -14,7 +14,6 @@
 
 namespace facebook {
 namespace react {
-
 class JSI_EXPORT ModalHostViewEventEmitter : public ViewEventEmitter {
  public:
   using ViewEventEmitter::ViewEventEmitter;
@@ -209,6 +208,5 @@ class JSI_EXPORT UnimplementedNativeViewEventEmitter : public ViewEventEmitter {
 
   
 };
-
 } // namespace react
 } // namespace facebook

@@ -6143,6 +6143,12 @@ public:
   virtual jsi::Object getValue(jsi::Runtime &rt, double x, jsi::String y, jsi::Object z) = 0;
   virtual void getValueWithCallback(jsi::Runtime &rt, jsi::Function callback) = 0;
   virtual jsi::Value getValueWithPromise(jsi::Runtime &rt, bool error) = 0;
+  virtual void voidFuncThrows(jsi::Runtime &rt) = 0;
+  virtual jsi::Object getObjectThrows(jsi::Runtime &rt, jsi::Object arg) = 0;
+  virtual jsi::Value promiseThrows(jsi::Runtime &rt) = 0;
+  virtual void voidFuncAssert(jsi::Runtime &rt) = 0;
+  virtual jsi::Object getObjectAssert(jsi::Runtime &rt, jsi::Object arg) = 0;
+  virtual jsi::Value promiseAssert(jsi::Runtime &rt) = 0;
 
 };
 
@@ -6267,6 +6273,54 @@ private:
 
       return bridging::callFromJs<jsi::Value>(
           rt, &T::getValueWithPromise, jsInvoker_, instance_, std::move(error));
+    }
+    void voidFuncThrows(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::voidFuncThrows) == 1,
+          "Expected voidFuncThrows(...) to have 1 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::voidFuncThrows, jsInvoker_, instance_);
+    }
+    jsi::Object getObjectThrows(jsi::Runtime &rt, jsi::Object arg) override {
+      static_assert(
+          bridging::getParameterCount(&T::getObjectThrows) == 2,
+          "Expected getObjectThrows(...) to have 2 parameters");
+
+      return bridging::callFromJs<jsi::Object>(
+          rt, &T::getObjectThrows, jsInvoker_, instance_, std::move(arg));
+    }
+    jsi::Value promiseThrows(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::promiseThrows) == 1,
+          "Expected promiseThrows(...) to have 1 parameters");
+
+      return bridging::callFromJs<jsi::Value>(
+          rt, &T::promiseThrows, jsInvoker_, instance_);
+    }
+    void voidFuncAssert(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::voidFuncAssert) == 1,
+          "Expected voidFuncAssert(...) to have 1 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::voidFuncAssert, jsInvoker_, instance_);
+    }
+    jsi::Object getObjectAssert(jsi::Runtime &rt, jsi::Object arg) override {
+      static_assert(
+          bridging::getParameterCount(&T::getObjectAssert) == 2,
+          "Expected getObjectAssert(...) to have 2 parameters");
+
+      return bridging::callFromJs<jsi::Object>(
+          rt, &T::getObjectAssert, jsInvoker_, instance_, std::move(arg));
+    }
+    jsi::Value promiseAssert(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::promiseAssert) == 1,
+          "Expected promiseAssert(...) to have 1 parameters");
+
+      return bridging::callFromJs<jsi::Value>(
+          rt, &T::promiseAssert, jsInvoker_, instance_);
     }
 
   private:
