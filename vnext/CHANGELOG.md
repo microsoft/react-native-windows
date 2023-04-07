@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 04 Apr 2023 05:14:38 GMT and should not be manually modified.
+This log was last generated on Fri, 07 Apr 2023 05:13:15 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.638
+
+Fri, 07 Apr 2023 05:13:15 GMT
+
+### Changes
+
+- Initialize layout values to zero (erozell@outlook.com)
 
 ## 0.0.0-canary.637
 
