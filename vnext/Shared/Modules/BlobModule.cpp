@@ -36,7 +36,6 @@ using winrt::Microsoft::ReactNative::IReactPropertyBag;
 using winrt::Microsoft::ReactNative::ReactNonAbiValue;
 using winrt::Microsoft::ReactNative::ReactPropertyBag;
 using winrt::Microsoft::ReactNative::ReactPropertyId;
-using winrt::Windows::Foundation::GuidHelper;
 using winrt::Windows::Foundation::IInspectable;
 using winrt::Windows::Foundation::Uri;
 using winrt::Windows::Security::Cryptography::CryptographicBuffer;
