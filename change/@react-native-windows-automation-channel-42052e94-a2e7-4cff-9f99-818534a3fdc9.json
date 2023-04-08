@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "integrate rn 0.0.0-20230404-2109-62c4da142",
-  "packageName": "@react-native-windows/automation-channel",
-  "email": "tatianakapos@microsoft.com",
-  "dependentChangeType": "patch"
-}
