@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 07 Apr 2023 05:13:15 GMT and should not be manually modified.
+This log was last generated on Sat, 08 Apr 2023 05:13:12 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.639
+
+Sat, 08 Apr 2023 05:13:12 GMT
+
+### Changes
+
+- Ensure ReactNativeWindowsDir is set in Directory.Build.props (jthysell@microsoft.com)
+- integrate rn 0.0.0-20230404-2109-62c4da142 (tatianakapos@microsoft.com)
 
 ## 0.0.0-canary.638
 

@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 08 Apr 2023 05:13:12 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.639",
+      "version": "0.0.0-canary.639",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "8c2e0c3a5195278a22f8b6a17fe88ea7661aa1ea",
+            "comment": "Ensure ReactNativeWindowsDir is set in Directory.Build.props"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "9e4665f9f54d645c4d7f6ccce991a935ca63f156",
+            "comment": "integrate rn 0.0.0-20230404-2109-62c4da142"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 07 Apr 2023 05:13:15 GMT",
       "tag": "react-native-windows_v0.0.0-canary.638",
       "version": "0.0.0-canary.638",
