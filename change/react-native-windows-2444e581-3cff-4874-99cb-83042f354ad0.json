@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Ensure ReactNativeWindowsDir is set in Directory.Build.props",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}

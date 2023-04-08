@@ -347,7 +347,8 @@ void FabricUIManager::initiateTransaction(facebook::react::MountingCoordinator::
   } while (m_followUpTransactionRequired);
 }
 
-void FabricUIManager::schedulerDidFinishTransaction(facebook::react::MountingCoordinator::Shared mountingCoordinator) {
+void FabricUIManager::schedulerDidFinishTransaction(
+    const facebook::react::MountingCoordinator::Shared &mountingCoordinator) {
   // Should cache this locally
 
   if (m_context.UIDispatcher().HasThreadAccess()) {
