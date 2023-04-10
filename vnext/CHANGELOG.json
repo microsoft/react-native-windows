@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 10 Apr 2023 15:13:52 GMT",
+      "tag": "react-native-windows_v0.71.5",
+      "version": "0.71.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "155f448c38ce8d5669cc92a3bb141678905bf000",
+            "comment": "Ensure ReactNativeWindowsDir is set in Directory.Build.props"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 21 Mar 2023 20:58:57 GMT",
       "tag": "react-native-windows_v0.71.4",
       "version": "0.71.4",
