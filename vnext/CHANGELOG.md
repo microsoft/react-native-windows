@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 21 Mar 2023 20:51:40 GMT and should not be manually modified.
+This log was last generated on Mon, 10 Apr 2023 15:09:35 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.70.16
+
+Mon, 10 Apr 2023 15:09:35 GMT
+
+### Patches
+
+- Ensure ReactNativeWindowsDir is set in Directory.Build.props (jthysell@microsoft.com)
 
 ## 0.70.15
 
