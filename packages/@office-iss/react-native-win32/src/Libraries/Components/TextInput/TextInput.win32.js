@@ -338,6 +338,9 @@ type IOSProps = $ReadOnly<{|
   /**
    * Give the keyboard and the system information about the
    * expected semantic meaning for the content that users enter.
+   * `autoComplete` property accomplishes same behavior and is recommended as its supported by both platforms.
+   * Avoid using both `autoComplete` and `textContentType`, you can use `Platform.select` for differing platform behaviors.
+   * For backwards compatibility, when both set, `textContentType` takes precedence on iOS.
    * @platform ios
    */
   textContentType?: ?TextContentType,
