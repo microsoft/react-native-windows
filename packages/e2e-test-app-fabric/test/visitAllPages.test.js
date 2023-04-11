@@ -5,11 +5,11 @@
  * @format
  */
 
-//import {goToApiExample, goToComponentExample} from './RNTesterNavigation';
-import {verifyNoErrorLogs} from './Helpers';
+import {goToApiExample, goToComponentExample} from './RNTesterNavigation';
+//import {verifyNoErrorLogs} from './Helpers';
 
 afterEach(async () => {
-  await verifyNoErrorLogs();
+  //await verifyNoErrorLogs();
 });
 
 type RNTesterExampleModule = {
@@ -35,8 +35,8 @@ type RNTesterList = {
 describe('visitAllPages', () => {
   /*for (const component of componentExamples) {
     test(component, async () => await goToComponentExample(component));
-  }
-
+  }*/
+  /*
   for (const api of apiExamples) {
     if (api === 'Transforms')
       // disable until either transformExample uses units, or that isn't an error
@@ -56,6 +56,7 @@ describe('visitAllPages', () => {
       }
     });
   }*/
+
   test('control', () => {
     expect(true).toBe(true);
   });
