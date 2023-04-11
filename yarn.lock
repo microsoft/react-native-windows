@@ -8216,10 +8216,10 @@ merge2@^1.2.3, merge2@^1.3.0, merge2@^1.4.1:
   resolved "https://registry.yarnpkg.com/merge2/-/merge2-1.4.1.tgz#4368892f885e907455a6fd7dc55c0c9d404990ae"
   integrity sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==
 
-metro-babel-register@0.73.8:
-  version "0.73.8"
-  resolved "https://registry.yarnpkg.com/metro-babel-register/-/metro-babel-register-0.73.8.tgz#cad359153795a361f5dd3189b9e7cedf21d577e6"
-  integrity sha512-hKTvDjtah/FmV9uMKzsNjTRPmLtFNW9XMCSVuY1NwN70MIkjyXy388cB85kzCn0rfBUfQ9kFWZnrjT+FLA6iYg==
+metro-babel-register@0.73.9:
+  version "0.73.9"
+  resolved "https://registry.yarnpkg.com/metro-babel-register/-/metro-babel-register-0.73.9.tgz#c564a2129fa14d53504beefc5890e053d13c2864"
+  integrity sha512-/jExlE2u/m/m4KNi04bSi+7tmxu0hSKfJq9yWykQVktMDQopt0uW0+eWNMnWe/QOvV/RuE6XoSzTkFx1Gvos5g==
   dependencies:
     "@babel/core" "^7.20.0"
     "@babel/plugin-proposal-nullish-coalescing-operator" "^7.0.0"
@@ -8311,10 +8311,10 @@ metro-inspector-proxy@0.73.9:
     ws "^7.5.1"
     yargs "^17.5.1"
 
-metro-memory-fs@0.73.8:
-  version "0.73.8"
-  resolved "https://registry.yarnpkg.com/metro-memory-fs/-/metro-memory-fs-0.73.8.tgz#089e09dd0dce598186f440bfae282dc795ec262b"
-  integrity sha512-DsN7MBiI0pv7o0vwcsKhYVd3Um7PS9B7t4Uw9ChIzthtYYv8mYS6imIMa+3SQoZY0vFEGLbnPAQfU95u7Iw6xQ==
+metro-memory-fs@0.73.9:
+  version "0.73.9"
+  resolved "https://registry.yarnpkg.com/metro-memory-fs/-/metro-memory-fs-0.73.9.tgz#417dc71876f5d5dd821329ca2b1caadda2c1c82a"
+  integrity sha512-ddmJFt3sTtqpgTKNNE+7FonNBgB3xOCZs0+fPBpQT67howCVo9EUMA+JsqJ2PuDqImqcRanewfKl02i98y/GMg==
 
 metro-minify-terser@0.73.9:
   version "0.73.9"
