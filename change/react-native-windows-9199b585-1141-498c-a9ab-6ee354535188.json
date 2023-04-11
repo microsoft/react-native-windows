@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Sync dependencies with react-native 0.71.6",
+  "packageName": "react-native-windows",
+  "email": "4123478+tido64@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
