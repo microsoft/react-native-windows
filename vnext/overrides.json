@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.71.4",
+  "baseVersion": "0.71.6",
   "overrides": [
     {
       "type": "derived",
@@ -283,7 +283,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "5de06cf785aabebe8a0bb7331389a5320d7f38c0"
+      "baseHash": "b59411676fb68eb715dc9b33991accf7f5ec4bbe"
     },
     {
       "type": "patch",
