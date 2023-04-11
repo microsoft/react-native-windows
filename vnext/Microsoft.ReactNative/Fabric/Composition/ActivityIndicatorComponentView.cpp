@@ -20,14 +20,19 @@ std::shared_ptr<ActivityIndicatorComponentView> ActivityIndicatorComponentView::
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
-  return std::shared_ptr<ActivityIndicatorComponentView>(new ActivityIndicatorComponentView(compContext, tag, reactContext));
+  return std::shared_ptr<ActivityIndicatorComponentView>(
+      new ActivityIndicatorComponentView(compContext, tag, reactContext));
 }
 
-void ActivityIndicatorComponentView::mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
+void ActivityIndicatorComponentView::mountChildComponentView(
+    IComponentView &childComponentView,
+    uint32_t index) noexcept {
   assert(false);
 }
 
-void ActivityIndicatorComponentView::unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
+void ActivityIndicatorComponentView::unmountChildComponentView(
+    IComponentView &childComponentView,
+    uint32_t index) noexcept {
   assert(false);
 }
 
@@ -90,20 +95,20 @@ void ActivityIndicatorComponentView::Draw() noexcept {
   m_drawingSurface.as(drawingSurfaceInterop);
 
   if (CheckForDeviceRemoved(drawingSurfaceInterop->BeginDraw(d2dDeviceContext.put(), &offset))) {
-    const auto activityIndicatorProps = std::static_pointer_cast<const facebook::react::ActivityIndicatorViewProps>(m_props);
+    const auto activityIndicatorProps =
+        std::static_pointer_cast<const facebook::react::ActivityIndicatorViewProps>(m_props);
 
     d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
 
     float offsetX = static_cast<float>(offset.x / m_layoutMetrics.pointScaleFactor);
     float offsetY = static_cast<float>(offset.y / m_layoutMetrics.pointScaleFactor);
 
-
     const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
     float oldDpiX, oldDpiY;
     d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
     d2dDeviceContext->SetDpi(dpi, dpi);
 
-    // MY CODE SLAY ---------------------------------------------------------------------
+    // constants
     constexpr float radiusSmall = 8.0f;
     constexpr float radiusLarge = 16.0f;
     constexpr float ringWidth = 2.0f;
@@ -112,18 +117,20 @@ void ActivityIndicatorComponentView::Draw() noexcept {
     winrt::com_ptr<ID2D1SolidColorBrush> defaultBrush;
     winrt::check_hresult(
         d2dDeviceContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::LightGray), defaultBrush.put()));
-    
-    // get colors
+
+    // get loading colors
     winrt::com_ptr<ID2D1SolidColorBrush> circleBrush;
-    if(activityIndicatorProps->color){
-      winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(activityIndicatorProps->color.AsD2DColor(), circleBrush.put()));
-    } else{
+    if (activityIndicatorProps->color) {
+      winrt::check_hresult(
+          d2dDeviceContext->CreateSolidColorBrush(activityIndicatorProps->color.AsD2DColor(), circleBrush.put()));
+    } else {
       circleBrush = defaultBrush;
     }
 
     // draw ring - this isn't visable in Paper version but may be helpful when animating
     D2D1_ELLIPSE ring;
-    if(activityIndicatorProps->size == facebook::react::ActivityIndicatorViewSize::Small){ // (TODO: figure out why the size is always small? )
+    if (activityIndicatorProps->size ==
+        facebook::react::ActivityIndicatorViewSize::Small) { // (TODO: figure out why the size is always small? )
       D2D1_POINT_2F center = D2D1 ::Point2F(offsetX + radiusSmall + ringWidth, offsetY + radiusSmall + ringWidth);
       ring = D2D1::Ellipse(center, radiusSmall, radiusSmall);
     } else {
@@ -134,7 +141,8 @@ void ActivityIndicatorComponentView::Draw() noexcept {
 
     // draw loading circles
     D2D1_ELLIPSE circle1, circle2, circle3, circle4, circle5;
-    circle1 = D2D1::Ellipse(D2D1::Point2F((offsetX + radiusSmall + ringWidth), (offsetY + ringWidth)), ringWidth, ringWidth);
+    circle1 =
+        D2D1::Ellipse(D2D1::Point2F((offsetX + radiusSmall + ringWidth), (offsetY + ringWidth)), ringWidth, ringWidth);
     circle2 = D2D1::Ellipse(
         D2D1::Point2F(
             (offsetX + radiusSmall + ringWidth) + (radiusSmall)*cos(305.0f * 3.14159f / 180.0f),
@@ -152,19 +160,16 @@ void ActivityIndicatorComponentView::Draw() noexcept {
         ringWidth,
         ringWidth);
     circle5 = D2D1::Ellipse(
-            D2D1::Point2F(
-                (offsetX + radiusSmall + ringWidth) + (radiusSmall)*cos(150.0f * 3.14159f / 180.0f),
-                (offsetY + radiusSmall + ringWidth) + (radiusSmall)*sin(150.0f * 3.14159f / 180.0f)),
-            ringWidth,
-            ringWidth);
+        D2D1::Point2F(
+            (offsetX + radiusSmall + ringWidth) + (radiusSmall)*cos(150.0f * 3.14159f / 180.0f),
+            (offsetY + radiusSmall + ringWidth) + (radiusSmall)*sin(150.0f * 3.14159f / 180.0f)),
+        ringWidth,
+        ringWidth);
     d2dDeviceContext->FillEllipse(circle1, circleBrush.get());
     d2dDeviceContext->FillEllipse(circle2, circleBrush.get());
     d2dDeviceContext->FillEllipse(circle3, circleBrush.get());
     d2dDeviceContext->FillEllipse(circle4, circleBrush.get());
     d2dDeviceContext->FillEllipse(circle5, circleBrush.get());
-
-
-    // UNSLAY -------------------------------------------------------------------------------
 
     // Restore old dpi setting
     d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
@@ -223,10 +228,6 @@ facebook::react::Tag ActivityIndicatorComponentView::hitTest(facebook::react::Po
 
 winrt::Microsoft::ReactNative::Composition::IVisual ActivityIndicatorComponentView::Visual() const noexcept {
   return m_visual;
-}
-
-int64_t ActivityIndicatorComponentView::sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
-  return 0;
 }
 
 bool ActivityIndicatorComponentView::focusable() const noexcept {

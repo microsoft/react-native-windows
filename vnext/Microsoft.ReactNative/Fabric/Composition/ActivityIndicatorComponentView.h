@@ -39,7 +39,6 @@ struct ActivityIndicatorComponentView : CompositionBaseComponentView {
 
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt) const noexcept override;
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
-  int64_t sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept override;
 
  private:
   ActivityIndicatorComponentView(
