@@ -106,14 +106,14 @@ void ActivityIndicatorComponentView::Draw() noexcept {
     // MY CODE SLAY ---------------------------------------------------------------------
     constexpr float radiusSmall = 8.0f;
     constexpr float radiusLarge = 16.0f;
-    constexpr float ringWidth = 1.0f;
+    constexpr float ringWidth = 2.0f;
 
     // create defaultBrush (TODO: figure out light/dark theme)
     winrt::com_ptr<ID2D1SolidColorBrush> defaultBrush;
-    winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::DimGray), defaultBrush.put()));
+    winrt::check_hresult(
+        d2dDeviceContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::LightGray), defaultBrush.put()));
     
     // get colors
-
     winrt::com_ptr<ID2D1SolidColorBrush> circleBrush;
     if(activityIndicatorProps->color){
       winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(activityIndicatorProps->color.AsD2DColor(), circleBrush.put()));
@@ -121,17 +121,48 @@ void ActivityIndicatorComponentView::Draw() noexcept {
       circleBrush = defaultBrush;
     }
 
-    // draw outercircle
-    D2D1_ELLIPSE outerCircle;
-    if(activityIndicatorProps->size == facebook::react::ActivityIndicatorViewSize::Small){ // (TODO: figure out why the size is always small)
-      D2D1_POINT_2F center = D2D1 ::Point2F(offsetX + radiusSmall, offsetY + radiusSmall);
-      outerCircle = D2D1::Ellipse(center, radiusSmall, radiusSmall);
+    // draw ring - this isn't visable in Paper version but may be helpful when animating
+    D2D1_ELLIPSE ring;
+    if(activityIndicatorProps->size == facebook::react::ActivityIndicatorViewSize::Small){ // (TODO: figure out why the size is always small? )
+      D2D1_POINT_2F center = D2D1 ::Point2F(offsetX + radiusSmall + ringWidth, offsetY + radiusSmall + ringWidth);
+      ring = D2D1::Ellipse(center, radiusSmall, radiusSmall);
     } else {
       D2D1_POINT_2F center = D2D1 ::Point2F(offsetX + radiusLarge, offsetY + radiusLarge);
-      outerCircle = D2D1::Ellipse(center, radiusLarge, radiusLarge);
+      ring = D2D1::Ellipse(center, radiusLarge, radiusLarge);
     }
+    d2dDeviceContext->DrawEllipse(ring, defaultBrush.get(), ringWidth);
 
-    d2dDeviceContext->FillEllipse(outerCircle, circleBrush.get());
+    // draw loading circles
+    D2D1_ELLIPSE circle1, circle2, circle3, circle4, circle5;
+    circle1 = D2D1::Ellipse(D2D1::Point2F((offsetX + radiusSmall + ringWidth), (offsetY + ringWidth)), ringWidth, ringWidth);
+    circle2 = D2D1::Ellipse(
+        D2D1::Point2F(
+            (offsetX + radiusSmall + ringWidth) + (radiusSmall)*cos(305.0f * 3.14159f / 180.0f),
+            (offsetY + radiusSmall + ringWidth) + (radiusSmall)*sin(305.0f * 3.14159f / 180.0f)),
+        ringWidth,
+        ringWidth);
+    circle3 = D2D1::Ellipse(
+        D2D1::Point2F(offsetX + radiusSmall + ringWidth + radiusSmall, offsetY + radiusSmall + ringWidth),
+        ringWidth,
+        ringWidth);
+    circle4 = D2D1::Ellipse(
+        D2D1::Point2F(
+            (offsetX + radiusSmall + ringWidth) + (radiusSmall)*cos(105.0f * 3.14159f / 180.0f),
+            (offsetY + radiusSmall + ringWidth) + (radiusSmall)*sin(105.0f * 3.14159f / 180.0f)),
+        ringWidth,
+        ringWidth);
+    circle5 = D2D1::Ellipse(
+            D2D1::Point2F(
+                (offsetX + radiusSmall + ringWidth) + (radiusSmall)*cos(150.0f * 3.14159f / 180.0f),
+                (offsetY + radiusSmall + ringWidth) + (radiusSmall)*sin(150.0f * 3.14159f / 180.0f)),
+            ringWidth,
+            ringWidth);
+    d2dDeviceContext->FillEllipse(circle1, circleBrush.get());
+    d2dDeviceContext->FillEllipse(circle2, circleBrush.get());
+    d2dDeviceContext->FillEllipse(circle3, circleBrush.get());
+    d2dDeviceContext->FillEllipse(circle4, circleBrush.get());
+    d2dDeviceContext->FillEllipse(circle5, circleBrush.get());
+
 
     // UNSLAY -------------------------------------------------------------------------------
 
