@@ -59,7 +59,7 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
   } else if (componentHandle == facebook::react::SwitchShadowNode::Handle()) {
     view = SwitchComponentView::Create(compContext, tag, m_context);
   } else if (componentHandle == facebook::react::ActivityIndicatorViewShadowNode::Handle()) {
-    view = ActivityIndicatorComponentView::Create(compContext, tag);
+    view = ActivityIndicatorComponentView::Create(compContext, tag, m_context);
   } else if (componentHandle == facebook::react::RootShadowNode::Handle()) {
     view = RootComponentView::Create(compContext, tag);
   } else if (
