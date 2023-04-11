@@ -11,6 +11,9 @@
 // React Native
 #include <cxxreact/CxxModule.h>
 
+// Boost Libraries
+#include <boost/uuid/uuid_generators.hpp>
+
 // Windows API
 #include <winrt/base.h>
 
@@ -26,6 +29,7 @@ namespace Microsoft::React {
 class MemoryBlobPersistor final : public IBlobPersistor {
   std::unordered_map<std::string, std::vector<uint8_t>> m_blobs;
   std::mutex m_mutex;
+  boost::uuids::random_generator m_guidGenerator;
 
  public:
 #pragma region IBlobPersistor
