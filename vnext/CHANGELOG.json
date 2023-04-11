@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 11 Apr 2023 05:13:26 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.640",
+      "version": "0.0.0-canary.640",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "0a5309293c171a86716f4d025945ef867067cb3c",
+            "comment": "Use Boost GUID generator"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 08 Apr 2023 05:13:12 GMT",
       "tag": "react-native-windows_v0.0.0-canary.639",
       "version": "0.0.0-canary.639",

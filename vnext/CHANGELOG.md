@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 08 Apr 2023 05:13:12 GMT and should not be manually modified.
+This log was last generated on Tue, 11 Apr 2023 05:13:26 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.640
+
+Tue, 11 Apr 2023 05:13:26 GMT
+
+### Changes
+
+- Use Boost GUID generator (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.639
 
