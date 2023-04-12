@@ -26,7 +26,7 @@ module.exports = {
   testEnvironment: '@react-native-windows/automation',
 
   // The pattern or patterns Jest uses to detect test files
-  testRegex: '.*\\.test\\.js$',
+  testRegex: '.*\\.test\\.ts$',
 
   // Default timeout of a test in milliseconds
   testTimeout: 70000,
@@ -59,5 +59,21 @@ module.exports = {
   testEnvironmentOptions: {
     app: `windows\\Debug\\RNTesterApp-Fabric.exe`,
     enableAutomationChannel: false,
+    winAppDriverBin: 'D:\\WindowsApplicationDriver\\WinAppDriver.exe',
   },
+
+  moduleFileExtensions: [
+    'js',
+    'windows.js',
+    'android.js',
+    'mjs',
+    'cjs',
+    'jsx',
+    'ts',
+    'windows.ts',
+    'tsx',
+    'windows.tsx',
+    'json',
+    'node',
+  ],
 };

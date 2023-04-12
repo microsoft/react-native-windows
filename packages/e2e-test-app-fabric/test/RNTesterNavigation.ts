@@ -11,8 +11,8 @@ import {app} from '@react-native-windows/automation';
  * Visit an example on the RNTester Components tab
  */
 export async function goToComponentExample(example: string) {
-  const componentsTabButton = await app.findElementByTestID('components-tab');
-  await componentsTabButton.click();
+  //const componentsTabButton = await app.findElementByTestID('components-tab');
+  //await componentsTabButton.click();
   await goToExample(example);
 }
 
