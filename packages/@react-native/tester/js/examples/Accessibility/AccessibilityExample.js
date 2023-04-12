@@ -40,6 +40,9 @@ const mixedCheckboxImageSource = require('./mixed.png');
 const {createRef} = require('react');
 
 const styles = StyleSheet.create({
+  sectionContainer: {
+    rowGap: 20,
+  },
   default: {
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#0f0f0f',
@@ -103,7 +106,7 @@ const styles = StyleSheet.create({
 class AccessibilityExample extends React.Component<{}> {
   render(): React.Node {
     return (
-      <View>
+      <View style={styles.sectionContainer}>
         <RNTesterBlock title="TextView without label">
           <Text>
             Text's accessibilityLabel is the raw text itself unless it is set
@@ -284,7 +287,7 @@ class AccessibilityExample extends React.Component<{}> {
 class AutomaticContentGrouping extends React.Component<{}> {
   render(): React.Node {
     return (
-      <View>
+      <View style={styles.sectionContainer}>
         <RNTesterBlock title="The parent and the children have a different role">
           <TouchableNativeFeedback accessible={true} accessibilityRole="button">
             <View accessible={false}>
@@ -731,7 +734,7 @@ class AccessibilityRoleAndStateExample extends React.Component<{}> {
     ];
 
     return (
-      <>
+      <View style={styles.sectionContainer}>
         <RNTesterBlock title="ScrollView with grid role">
           <ScrollView accessibilityRole="grid" style={styles.scrollView}>
             {content}
@@ -876,12 +879,11 @@ class AccessibilityRoleAndStateExample extends React.Component<{}> {
             </View>
             <ExpandableElementExample />
             <SelectionExample />
-            <RNTesterBlock title="Nested checkbox with delayed state change">
-              <NestedCheckBox />
-            </RNTesterBlock>
+            <Text>Nested checkbox with delayed state change</Text>
+            <NestedCheckBox />
           </View>
         </RNTesterBlock>
-      </>
+      </View>
     );
   }
 }
@@ -889,7 +891,7 @@ class AccessibilityRoleAndStateExample extends React.Component<{}> {
 class AccessibilityActionsExample extends React.Component<{}> {
   render(): React.Node {
     return (
-      <View>
+      <View style={styles.sectionContainer}>
         <RNTesterBlock title="Non-touchable with activate action">
           <View
             accessible={true}
@@ -1293,7 +1295,7 @@ function SetAccessibilityFocusExample(props: {}): React.Node {
 class EnabledExamples extends React.Component<{}> {
   render(): React.Node {
     return (
-      <View>
+      <View style={styles.sectionContainer}>
         {Platform.OS === 'ios' ? (
           <>
             <RNTesterBlock title="isBoldTextEnabled()">
@@ -1357,7 +1359,7 @@ class EnabledExamples extends React.Component<{}> {
 class ImportantForAccessibilityExamples extends React.Component<{}> {
   render(): React.Node {
     return (
-      <View>
+      <View style={styles.sectionContainer}>
         <RNTesterBlock title="ImageBackground with importantForAccessibility=no-hide-descendants">
           <View style={styles.container}>
             <ImageBackground
@@ -1526,6 +1528,7 @@ function DisplayOptionStatusExample({
       notification,
       setStatusEnabled,
     );
+    // $FlowFixMe[unused-promise]
     optionChecker().then(isEnabled => {
       setStatusEnabled(isEnabled);
     });
@@ -1544,92 +1547,12 @@ function DisplayOptionStatusExample({
   );
 }
 
-function AccessibilityErrorWithButtons(): React.Node {
-  const [text, setText] = React.useState('');
-  const [error, setError] = React.useState<?string>(null);
-  const [accessibilityInvalid, setAccessibilityInvalid] = React.useState(false);
-  return (
-    <View>
-      <RNTesterBlock>
-        <TextInput
-          accessibilityErrorMessage={error}
-          accessibilityInvalid={accessibilityInvalid}
-          onChangeText={newText => {
-            setText(newText);
-            if (newText === 'Error') {
-              setError('the newText is: ' + newText);
-              setAccessibilityInvalid(true);
-            } else {
-              setError(null);
-              setAccessibilityInvalid(false);
-            }
-          }}
-          value={text}
-          style={styles.default}
-        />
-        <Button
-          onPress={() => {
-            setError('This error is set with Button onPress callback');
-          }}
-          title="Press to set an accessibilityErrorMessage to a non-empty value"
-        />
-        <Button
-          onPress={() => setAccessibilityInvalid(!accessibilityInvalid)}
-          title={`Press to set accessibilityInvalid to ${
-            accessibilityInvalid ? 'false' : 'true'
-          }`}
-        />
-        <Button
-          onPress={() => setError('')}
-          title={'Press to set an empty error message'}
-        />
-      </RNTesterBlock>
-    </View>
-  );
-}
-
-function AccessibilityErrorDoesNotClear(): React.Node {
-  const [text, setText] = React.useState('');
-  const [error, setError] = React.useState('');
-  const [accessibilityInvalid, setAccessibilityInvalid] = React.useState(false);
-  return (
-    <View>
-      <RNTesterBlock title="TextView without label">
-        <Text>Set an error, change textinput value and then announce it.</Text>
-        <TextInput
-          accessibilityErrorMessage={error}
-          accessibilityInvalid={accessibilityInvalid}
-          value={text}
-          onChangeText={newText => setText(newText)}
-          style={styles.default}
-        />
-        <Text>
-          The value of the accessibilityErrorMessage prop is{' '}
-          {error.length > 0 ? error : 'empty error'}
-        </Text>
-        <Button
-          onPress={() => {
-            setError('This is an error');
-          }}
-          title="sets accessibilityErrorMessage to 'This is an error'"
-        />
-        <Button
-          onPress={() => setAccessibilityInvalid(!accessibilityInvalid)}
-          title={`Press to set accessibilityInvalid to ${
-            accessibilityInvalid ? 'false' : 'true'
-          }`}
-        />
-      </RNTesterBlock>
-    </View>
-  );
-}
-
 function AccessibilityExpandedExample(): React.Node {
   const [expand, setExpanded] = React.useState(false);
   const expandAction = {name: 'expand'};
   const collapseAction = {name: 'collapse'};
   return (
-    <>
+    <View style={styles.sectionContainer}>
       <RNTesterBlock title="Collapse/Expanded state change (Paper)">
         <Text>
           The following component announces expanded/collapsed state correctly
@@ -1671,7 +1594,7 @@ function AccessibilityExpandedExample(): React.Node {
           </View>
         </TouchableWithoutFeedback>
       </RNTesterBlock>
-    </>
+    </View>
   );
 }
 
@@ -1764,18 +1687,6 @@ exports.examples = [
           style={styles.disabledImage}
         />
       );
-    },
-  },
-  {
-    title: 'accessibilityErrorMessage onChangeText or Button onPress',
-    render: function (): React.Node {
-      return <AccessibilityErrorWithButtons />;
-    },
-  },
-  {
-    title: 'accessibilityErrorMessage does not clear with text change',
-    render: function (): React.Node {
-      return <AccessibilityErrorDoesNotClear />;
     },
   },
   {

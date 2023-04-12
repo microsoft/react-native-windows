@@ -1,8 +1,24 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Thu, 23 Mar 2023 05:13:37 GMT and should not be manually modified.
+This log was last generated on Sat, 08 Apr 2023 05:13:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.190
+
+Sat, 08 Apr 2023 05:13:11 GMT
+
+### Changes
+
+- integrate rn 0.0.0-20230404-2109-62c4da142 (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.189
+
+Sat, 01 Apr 2023 05:15:15 GMT
+
+### Changes
+
+- Integrate 3/22/23 (tatianakapos@microsoft.com)
 
 ## 0.0.0-canary.188
 

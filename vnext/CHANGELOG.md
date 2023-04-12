@@ -1,8 +1,57 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 31 Mar 2023 05:13:52 GMT and should not be manually modified.
+This log was last generated on Wed, 12 Apr 2023 05:14:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.641
+
+Wed, 12 Apr 2023 05:14:59 GMT
+
+### Changes
+
+- Fix unintended fallthrough This was causing a WM_CHAR to fallthrough to WM_KEYDOWN and produce a duplicate `sendMessage` (26607885+chrisglein@users.noreply.github.com)
+
+## 0.0.0-canary.640
+
+Tue, 11 Apr 2023 05:13:26 GMT
+
+### Changes
+
+- Use Boost GUID generator (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.639
+
+Sat, 08 Apr 2023 05:13:12 GMT
+
+### Changes
+
+- Ensure ReactNativeWindowsDir is set in Directory.Build.props (jthysell@microsoft.com)
+- integrate rn 0.0.0-20230404-2109-62c4da142 (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.638
+
+Fri, 07 Apr 2023 05:13:15 GMT
+
+### Changes
+
+- Initialize layout values to zero (erozell@outlook.com)
+
+## 0.0.0-canary.637
+
+Tue, 04 Apr 2023 05:14:38 GMT
+
+### Changes
+
+- Allow ABIViewManagers to use `overflow: hidden` (erozell@outlook.com)
+
+## 0.0.0-canary.636
+
+Sat, 01 Apr 2023 05:15:15 GMT
+
+### Changes
+
+- Integrate 3/22/23 (tatianakapos@microsoft.com)
 
 ## 0.0.0-canary.635
 

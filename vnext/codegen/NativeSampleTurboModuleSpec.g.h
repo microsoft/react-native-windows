@@ -40,6 +40,12 @@ struct SampleTurboModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
       SyncMethod<::React::JSValue(double, std::string, ::React::JSValue) noexcept>{9, L"getValue"},
       Method<void(Callback<std::string>) noexcept>{10, L"getValueWithCallback"},
       Method<void(bool, Promise<std::string>) noexcept>{11, L"getValueWithPromise"},
+      Method<void() noexcept>{12, L"voidFuncThrows"},
+      SyncMethod<::React::JSValue(::React::JSValue) noexcept>{13, L"getObjectThrows"},
+      Method<void(Promise<void>) noexcept>{14, L"promiseThrows"},
+      Method<void() noexcept>{15, L"voidFuncAssert"},
+      SyncMethod<::React::JSValue(::React::JSValue) noexcept>{16, L"getObjectAssert"},
+      Method<void(Promise<void>) noexcept>{17, L"promiseAssert"},
   };
 
   template <class TModule>
@@ -113,6 +119,36 @@ struct SampleTurboModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
           "getValueWithPromise",
           "    REACT_METHOD(getValueWithPromise) void getValueWithPromise(bool error, ::React::ReactPromise<std::string> &&result) noexcept { /* implementation */ }\n"
           "    REACT_METHOD(getValueWithPromise) static void getValueWithPromise(bool error, ::React::ReactPromise<std::string> &&result) noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          12,
+          "voidFuncThrows",
+          "    REACT_METHOD(voidFuncThrows) void voidFuncThrows() noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(voidFuncThrows) static void voidFuncThrows() noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          13,
+          "getObjectThrows",
+          "    REACT_SYNC_METHOD(getObjectThrows) ::React::JSValue getObjectThrows(::React::JSValue && arg) noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(getObjectThrows) static ::React::JSValue getObjectThrows(::React::JSValue && arg) noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          14,
+          "promiseThrows",
+          "    REACT_METHOD(promiseThrows) void promiseThrows(::React::ReactPromise<void> &&result) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(promiseThrows) static void promiseThrows(::React::ReactPromise<void> &&result) noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          15,
+          "voidFuncAssert",
+          "    REACT_METHOD(voidFuncAssert) void voidFuncAssert() noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(voidFuncAssert) static void voidFuncAssert() noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          16,
+          "getObjectAssert",
+          "    REACT_SYNC_METHOD(getObjectAssert) ::React::JSValue getObjectAssert(::React::JSValue && arg) noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(getObjectAssert) static ::React::JSValue getObjectAssert(::React::JSValue && arg) noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          17,
+          "promiseAssert",
+          "    REACT_METHOD(promiseAssert) void promiseAssert(::React::ReactPromise<void> &&result) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(promiseAssert) static void promiseAssert(::React::ReactPromise<void> &&result) noexcept { /* implementation */ }\n");
   }
 };
 

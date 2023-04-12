@@ -412,11 +412,6 @@ bool ViewViewManager::UpdateProperty(
     } else if (TryUpdateMouseEvents(nodeToUpdate, propertyName, propertyValue)) {
     } else if (propertyName == "onClick") {
       pViewShadowNode->OnClick(propertyValue.AsBoolean());
-    } else if (propertyName == "overflow") {
-      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
-        bool clipChildren = propertyValue.AsString() == "hidden";
-        pPanel.ClipChildren(clipChildren);
-      }
     } else if (propertyName == "focusable") {
       pViewShadowNode->IsFocusable(propertyValue.AsBoolean());
     } else if (propertyName == "enableFocusRing") {
