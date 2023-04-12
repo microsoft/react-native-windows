@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add support for Fabric TextInput `multiline` - Uses TXTBIT_MULTILINE and TXTBIT_WORDWRAP",
+  "packageName": "react-native-windows",
+  "email": "26607885+chrisglein@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
