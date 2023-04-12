@@ -28,15 +28,26 @@ struct string_hash {
 };
 
 winrt::Windows::UI::Color ResolvePlatformColor(Color const * const color) {
-  // These are all the light-theme values. Which is better than no values
-  // Arguably only the right-most platform colors should be respected, and 
-  // Button should be updated to use those instead, assuming that still 
-  // holds up in high contrast and such.
+  // Issue #11489. These are all the light-theme values. Which is better than no values.
   static std::unordered_map<std::string, winrt::Windows::UI::Color, string_hash, std::equal_to<>> s_windowsColors = {
-    {"SolidBackgroundFillColorBaseBrush", { 0xFF, 0xF3, 0xF3, 0xF3 }}, // SolidBackgroundFillColorBase
+    {"SolidBackgroundFillColorBase", { 0xFF, 0xF3, 0xF3, 0xF3 }}, 
+    {"ControlFillColorDefault", { 0xB3, 0xFF, 0xFF, 0xFF }}, 
+    {"ControlFillColorSecondary", { 0x80, 0xF9, 0xF9, 0xF9 }}, 
+    {"ControlFillColorTertiary", { 0x4D, 0xF9, 0xF9, 0xF9 }}, 
+    {"ControlFillColorDisabled", { 0x4D, 0xF9, 0xF9, 0xF9 }}, 
+    {"ControlFillColorTransparent", { 0x00, 0xFF, 0xFF, 0xFF }}, 
+    {"ControlStrokeColorDefault", { 0x0F, 0x00, 0x00, 0x00 }}, 
+    {"ControlStrokeColorSecondary", { 0x29, 0x00, 0x00, 0x00 }}, 
+    {"ControlStrokeColorOnAccentSecondary", { 0x66, 0x00, 0x00, 0x00 }}, 
+    {"TextFillColorPrimary", { 0xE4, 0x00, 0x00, 0x00 }}, 
+    {"TextFillColorSecondary", { 0x9E, 0x00, 0x00, 0x00 }}, 
+    {"TextFillColorDisabled", { 0x5C, 0x00, 0x00, 0x00 }}, 
+    // Arguably only the control-agnostic platform colors should be respected, and 
+    // Button should be updated to use those instead, assuming that still holds up
+    // in high contrast and such.
     {"ButtonBackgroundPressed", { 0x4D, 0xF9, 0xF9, 0xF9 }}, // ControlFillColorTertiary
     {"ButtonForegroundPressed", { 0x9E, 0x00, 0x00, 0x00 }}, // TextFillColorSecondary
-    {"ButtonForegroundPointerOver", { 0xE4, 0x00, 0x00, 0x00 }}, // TextFillColorPrimaryBrush
+    {"ButtonForegroundPointerOver", { 0xE4, 0x00, 0x00, 0x00 }}, // TextFillColorPrimary
     {"ButtonBackground", { 0xB3, 0xFF, 0xFF, 0xFF }}, // ControlFillColorDefault
     {"ButtonBorderBrush", { 0x29, 0x00, 0x00, 0x00 }}, // gradient from ControlStrokeColorSecondary to ControlStrokeColorDefault
     {"ButtonForeground", { 0xE4, 0x00, 0x00, 0x00 }}, // TextFillColorPrimary
