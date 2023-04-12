@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 11 Apr 2023 05:13:26 GMT and should not be manually modified.
+This log was last generated on Wed, 12 Apr 2023 05:14:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.641
+
+Wed, 12 Apr 2023 05:14:59 GMT
+
+### Changes
+
+- Fix unintended fallthrough This was causing a WM_CHAR to fallthrough to WM_KEYDOWN and produce a duplicate `sendMessage` (26607885+chrisglein@users.noreply.github.com)
 
 ## 0.0.0-canary.640
 

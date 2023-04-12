@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix unintended fallthrough This was causing a WM_CHAR to fallthrough to WM_KEYDOWN and produce a duplicate `sendMessage`",
-  "packageName": "react-native-windows",
-  "email": "26607885+chrisglein@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 12 Apr 2023 05:14:59 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.641",
+      "version": "0.0.0-canary.641",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "26607885+chrisglein@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ca37eb7b34f8e40feb248ce35109ef82f09344d4",
+            "comment": "Fix unintended fallthrough This was causing a WM_CHAR to fallthrough to WM_KEYDOWN and produce a duplicate `sendMessage`"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 11 Apr 2023 05:13:26 GMT",
       "tag": "react-native-windows_v0.0.0-canary.640",
       "version": "0.0.0-canary.640",
