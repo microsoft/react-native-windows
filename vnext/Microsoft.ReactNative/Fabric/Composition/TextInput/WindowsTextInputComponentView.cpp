@@ -616,7 +616,9 @@ void WindowsTextInputComponentView::updateProps(
 
   if (oldTextInputProps.secureTextEntry != newTextInputProps.secureTextEntry) {
     propBitsMask |= TXTBIT_USEPASSWORD;
-    propBits |= TXTBIT_USEPASSWORD;
+    if (newTextInputProps.secureTextEntry) {
+      propBits |= TXTBIT_USEPASSWORD;
+    }
   }
 
   /*
