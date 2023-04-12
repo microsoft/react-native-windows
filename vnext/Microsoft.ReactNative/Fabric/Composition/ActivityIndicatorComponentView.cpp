@@ -37,12 +37,7 @@ void ActivityIndicatorComponentView::unmountChildComponentView(
 }
 
 void ActivityIndicatorComponentView::handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept {
-  if (commandName == "setValue") {
-    // TODO - Current implementation always aligns with JS value
-    // This will be needed when we move to using WinUI controls
-  } else {
-    Super::handleCommand(commandName, arg);
-  }
+  Super::handleCommand(commandName, arg);
 }
 
 void ActivityIndicatorComponentView::updateProps(
@@ -113,7 +108,7 @@ void ActivityIndicatorComponentView::Draw() noexcept {
     constexpr float radiusLarge = 16.0f;
     constexpr float ringWidth = 2.0f;
 
-    // create defaultBrush (TODO: figure out light/dark theme)
+    // create defaultBrush (#11489: figure out light/dark theme)
     winrt::com_ptr<ID2D1SolidColorBrush> defaultBrush;
     winrt::check_hresult(
         d2dDeviceContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::LightGray), defaultBrush.put()));
@@ -130,7 +125,7 @@ void ActivityIndicatorComponentView::Draw() noexcept {
     // draw ring - this isn't visable in Paper version but may be helpful when animating
     D2D1_ELLIPSE ring;
     if (activityIndicatorProps->size ==
-        facebook::react::ActivityIndicatorViewSize::Small) { // (TODO: figure out why the size is always small? )
+        facebook::react::ActivityIndicatorViewSize::Small) { // (#11162: figure out why the size is always small)
       D2D1_POINT_2F center = D2D1 ::Point2F(offsetX + radiusSmall + ringWidth, offsetY + radiusSmall + ringWidth);
       ring = D2D1::Ellipse(center, radiusSmall, radiusSmall);
     } else {
@@ -145,8 +140,8 @@ void ActivityIndicatorComponentView::Draw() noexcept {
         D2D1::Ellipse(D2D1::Point2F((offsetX + radiusSmall + ringWidth), (offsetY + ringWidth)), ringWidth, ringWidth);
     circle2 = D2D1::Ellipse(
         D2D1::Point2F(
-            (offsetX + radiusSmall + ringWidth) + (radiusSmall)*cos(305.0f * 3.14159f / 180.0f),
-            (offsetY + radiusSmall + ringWidth) + (radiusSmall)*sin(305.0f * 3.14159f / 180.0f)),
+            (offsetX + radiusSmall + ringWidth) + (radiusSmall)*cos(305.0f * static_cast<float>(M_PI) / 180.0f),
+            (offsetY + radiusSmall + ringWidth) + (radiusSmall)*sin(305.0f * static_cast<float>(M_PI) / 180.0f)),
         ringWidth,
         ringWidth);
     circle3 = D2D1::Ellipse(
@@ -155,14 +150,14 @@ void ActivityIndicatorComponentView::Draw() noexcept {
         ringWidth);
     circle4 = D2D1::Ellipse(
         D2D1::Point2F(
-            (offsetX + radiusSmall + ringWidth) + (radiusSmall)*cos(105.0f * 3.14159f / 180.0f),
-            (offsetY + radiusSmall + ringWidth) + (radiusSmall)*sin(105.0f * 3.14159f / 180.0f)),
+            (offsetX + radiusSmall + ringWidth) + (radiusSmall)*cos(105.0f * static_cast<float>(M_PI) / 180.0f),
+            (offsetY + radiusSmall + ringWidth) + (radiusSmall)*sin(105.0f * static_cast<float>(M_PI) / 180.0f)),
         ringWidth,
         ringWidth);
     circle5 = D2D1::Ellipse(
         D2D1::Point2F(
-            (offsetX + radiusSmall + ringWidth) + (radiusSmall)*cos(150.0f * 3.14159f / 180.0f),
-            (offsetY + radiusSmall + ringWidth) + (radiusSmall)*sin(150.0f * 3.14159f / 180.0f)),
+            (offsetX + radiusSmall + ringWidth) + (radiusSmall)*cos(150.0f * static_cast<float>(M_PI) / 180.0f),
+            (offsetY + radiusSmall + ringWidth) + (radiusSmall)*sin(150.0f * static_cast<float>(M_PI) / 180.0f)),
         ringWidth,
         ringWidth);
     d2dDeviceContext->FillEllipse(circle1, circleBrush.get());
