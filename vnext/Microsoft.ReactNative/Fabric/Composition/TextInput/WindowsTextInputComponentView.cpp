@@ -623,7 +623,9 @@ void WindowsTextInputComponentView::updateProps(
 
   if (oldTextInputProps.editable != newTextInputProps.editable) {
     propBitsMask |= TXTBIT_READONLY;
-    propBits |= TXTBIT_READONLY;
+    if (!newTextInputProps.editable) {
+      propBits |= TXTBIT_READONLY;
+    }
   }
 
   /*
