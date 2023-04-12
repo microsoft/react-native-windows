@@ -364,7 +364,7 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
   }
 
   //@cmember Get the character to display for password input
-  HRESULT TxGetPasswordChar(_Out_ TCHAR *pch) override {
+  HRESULT TxGetPasswordChar(_Out_ wchar_t *pch) override {
     *pch = L'\u2022';
     return S_OK;
   }
