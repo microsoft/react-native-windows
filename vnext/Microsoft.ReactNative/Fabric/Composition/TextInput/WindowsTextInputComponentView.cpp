@@ -616,7 +616,9 @@ void WindowsTextInputComponentView::updateProps(
 
   if (oldTextInputProps.multiline != newTextInputProps.multiline) {
     propBitsMask |= TXTBIT_MULTILINE | TXTBIT_WORDWRAP;
-    propBits |= TXTBIT_MULTILINE | TXTBIT_WORDWRAP;
+    if (newTextInputProps.multiline) {
+      propBits |= TXTBIT_MULTILINE | TXTBIT_WORDWRAP;
+    }
   }
 
   /*
