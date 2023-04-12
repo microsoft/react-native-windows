@@ -120,14 +120,14 @@
       "file": "src/Libraries/Components/TextInput/Tests/TextInputTest.tsx"
     },
     {
-      "type": "platform",
-      "file": "src/Libraries/Components/TextInput/TextInput.Types.win32.ts"
-    },
-    {
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
       "baseHash": "058fa050230bbb1710b64156f2e3680fc16aa252"
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/Components/TextInput/Win32TextInputNativeComponent.js"
     },
     {
       "type": "patch",
