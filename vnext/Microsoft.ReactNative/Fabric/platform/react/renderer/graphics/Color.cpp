@@ -64,9 +64,6 @@ winrt::Windows::UI::Color ResolvePlatformColor(Color const * const color) {
     if (result != s_windowsColors.end()) {
       return result->second;
     }
-    else {
-      OutputDebugStringA(color->m_platformColor.c_str());
-    }
   }
 
   return color->m_color;
