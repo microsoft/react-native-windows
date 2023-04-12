@@ -621,6 +621,11 @@ void WindowsTextInputComponentView::updateProps(
     }
   }
 
+  if (oldTextInputProps.editable != newTextInputProps.editable) {
+    propBitsMask |= TXTBIT_READONLY;
+    propBits |= TXTBIT_READONLY;
+  }
+
   /*
   if (oldTextInputProps.textAttributes.foregroundColor != newTextInputProps.textAttributes.foregroundColor) {
     if (newTextInputProps.textAttributes.foregroundColor)
@@ -659,10 +664,6 @@ void WindowsTextInputComponentView::updateProps(
 
   if (oldTextInputProps.placeholder != newTextInputProps.placeholder) {
     m_element.PlaceholderText(winrt::to_hstring(newTextInputProps.placeholder));
-  }
-
-  if (oldTextInputProps.editable != newTextInputProps.editable) {
-    m_element.IsReadOnly(!newTextInputProps.editable);
   }
 
   if (oldTextInputProps.selection.start != newTextInputProps.selection.start ||
