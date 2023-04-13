@@ -2,6 +2,27 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 13 Apr 2023 20:50:33 GMT",
+      "tag": "@office-iss/react-native-win32_v0.71.4",
+      "version": "0.71.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "cce2fa1d36c2c2f08c4f1cc9f51574d9fb557a08",
+            "comment": "Update TextInput.win32 to align with core"
+          },
+          {
+            "author": "4123478+tido64@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "3bf4e43731d6ea6da78fb1a4171553dfb9a7fc16",
+            "comment": "Sync dependencies with react-native 0.71.6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 21 Mar 2023 20:58:57 GMT",
       "tag": "@office-iss/react-native-win32_v0.71.3",
       "version": "0.71.3",

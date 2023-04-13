@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 10 Apr 2023 15:13:52 GMT and should not be manually modified.
+This log was last generated on Thu, 13 Apr 2023 20:50:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.6
+
+Thu, 13 Apr 2023 20:50:34 GMT
+
+### Patches
+
+- Use Boost GUID generator (#11470) (julio.rocha@microsoft.com)
+- Sync dependencies with react-native 0.71.6 (4123478+tido64@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.71.4
+- Bump @react-native-windows/codegen to v0.71.3
 
 ## 0.71.5
 

@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 13 Apr 2023 20:50:34 GMT",
+      "tag": "react-native-windows_v0.71.6",
+      "version": "0.71.6",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "860f65c46210b41e991c4c4fd6f0295199c11e93",
+            "comment": "Use Boost GUID generator (#11470)"
+          },
+          {
+            "author": "4123478+tido64@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "3bf4e43731d6ea6da78fb1a4171553dfb9a7fc16",
+            "comment": "Sync dependencies with react-native 0.71.6"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.71.4",
+            "commit": "cce2fa1d36c2c2f08c4f1cc9f51574d9fb557a08"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.71.3",
+            "commit": "cce2fa1d36c2c2f08c4f1cc9f51574d9fb557a08"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 10 Apr 2023 15:13:52 GMT",
       "tag": "react-native-windows_v0.71.5",
       "version": "0.71.5",
