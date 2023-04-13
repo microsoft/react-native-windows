@@ -1412,12 +1412,6 @@ function InternalTextInput(props: Props): React.Node {
   }
 
   const accessible = props.accessible !== false;
-
-  const accessibilityErrorMessage =
-    props.accessibilityInvalid === true
-      ? props.accessibilityErrorMessage
-      : null;
-
   const focusable = props.focusable !== false;
 
   const config = React.useMemo(
@@ -1543,7 +1537,6 @@ function InternalTextInput(props: Props): React.Node {
         ref={ref}
         {...otherProps}
         {...eventHandlers}
-        accessibilityErrorMessage={accessibilityErrorMessage}
         accessibilityState={_accessibilityState}
         accessible={accessible}
         submitBehavior={submitBehavior}
@@ -1595,7 +1588,6 @@ function InternalTextInput(props: Props): React.Node {
         ref={ref}
         {...otherProps}
         {...eventHandlers}
-        accessibilityErrorMessage={accessibilityErrorMessage}
         accessibilityState={_accessibilityState}
         accessibilityLabelledBy={_accessibilityLabelledBy}
         accessible={accessible}
