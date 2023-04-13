@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Tue, 21 Mar 2023 21:21:55 GMT and should not be manually modified.
+This log was last generated on Thu, 13 Apr 2023 05:14:28 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.55
+
+Thu, 13 Apr 2023 05:14:28 GMT
+
+### Changes
+
+- Fix RNW not being detected on case-sensitive file systems (4123478+tido64@users.noreply.github.com)
 
 ## 0.0.0-canary.54
 

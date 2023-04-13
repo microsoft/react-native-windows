@@ -2,6 +2,21 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Thu, 13 Apr 2023 05:14:29 GMT",
+      "tag": "react-native-windows-init_v1.3.20",
+      "version": "1.3.20",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.167",
+            "commit": "71ca215e58db4f6b9b79be31b1320ab4c05714f1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 21 Mar 2023 21:21:55 GMT",
       "tag": "react-native-windows-init_v1.3.19",
       "version": "1.3.19",
