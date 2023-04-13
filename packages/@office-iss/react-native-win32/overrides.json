@@ -114,14 +114,14 @@
       "file": "src/Libraries/Components/TextInput/Tests/TextInputTest.tsx"
     },
     {
-      "type": "platform",
-      "file": "src/Libraries/Components/TextInput/TextInput.Types.win32.ts"
-    },
-    {
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
       "baseHash": "b59411676fb68eb715dc9b33991accf7f5ec4bbe"
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/Components/TextInput/Win32TextInputNativeComponent.js"
     },
     {
       "type": "patch",
