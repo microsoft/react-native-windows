@@ -74,7 +74,7 @@
     "@rnw-scripts/just-task": "2.3.6",
     "@rnw-scripts/metro-dev-config": "0.0.0",
     "@rnx-kit/jest-preset": "^0.1.0",
-    "@types/node": "^14.14.22",
+    "@types/node": "^16.0.0",
     "@types/prop-types": "15.7.1",
     "@types/react": "^18.0.18",
     "eslint": "^8.19.0",
@@ -101,6 +101,6 @@
   },
   "promoteRelease": true,
   "engines": {
-    "node": ">= 14"
+    "node": ">= 16"
   }
 }
