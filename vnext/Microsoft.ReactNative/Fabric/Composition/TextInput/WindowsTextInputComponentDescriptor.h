@@ -75,6 +75,7 @@ class WindowsTextInputComponentDescriptor final : public ConcreteComponentDescri
             ((YGValue)theme[YGEdgeBottom]).value)),
         family);
   }
+  */
 
  protected:
   void adopt(ShadowNode::Unshared const &shadowNode) const override {
