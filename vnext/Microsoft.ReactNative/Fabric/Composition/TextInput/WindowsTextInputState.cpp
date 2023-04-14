@@ -40,22 +40,12 @@ WindowsTextInputState::WindowsTextInputState(WindowsTextInputState const &previo
       attributedString(previousState.attributedString),
       reactTreeAttributedString(previousState.reactTreeAttributedString),
       paragraphAttributes(previousState.paragraphAttributes),
-      defaultThemePaddingStart(data.getDefault(
-                                       "themePaddingStart",
-                                       previousState.defaultThemePaddingStart)
-                                   .getDouble()),
-      defaultThemePaddingEnd(data.getDefault(
-                                     "themePaddingEnd",
-                                     previousState.defaultThemePaddingEnd)
-                                 .getDouble()),
-      defaultThemePaddingTop(data.getDefault(
-                                     "themePaddingTop",
-                                     previousState.defaultThemePaddingTop)
-                                 .getDouble()),
-      defaultThemePaddingBottom(data.getDefault(
-                                        "themePaddingBottom",
-                                        previousState.defaultThemePaddingBottom)
-                                    .getDouble()){};
+      defaultThemePaddingStart(
+          data.getDefault("themePaddingStart", previousState.defaultThemePaddingStart).getDouble()),
+      defaultThemePaddingEnd(data.getDefault("themePaddingEnd", previousState.defaultThemePaddingEnd).getDouble()),
+      defaultThemePaddingTop(data.getDefault("themePaddingTop", previousState.defaultThemePaddingTop).getDouble()),
+      defaultThemePaddingBottom(
+          data.getDefault("themePaddingBottom", previousState.defaultThemePaddingBottom).getDouble()){};
 
 #ifdef ANDROID
 folly::dynamic AndroidTextInputState::getDynamic() const {
