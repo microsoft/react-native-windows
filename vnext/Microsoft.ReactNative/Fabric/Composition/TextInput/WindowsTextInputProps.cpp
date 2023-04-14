@@ -32,6 +32,7 @@ WindowsTextInputProps::WindowsTextInputProps(
       placeholderTextColor(
           convertRawProp(context, rawProps, "placeholderTextColor", sourceProps.placeholderTextColor, {})),
       scrollEnabled(convertRawProp(context, rawProps, "scrollEnabled", sourceProps.scrollEnabled, {true})),
+      cursorColor(convertRawProp(context, rawProps, "cursorColor", sourceProps.cursorColor, {})),
       selection(convertRawProp(context, rawProps, "selection", sourceProps.selection, {})),
       selectionColor(convertRawProp(context, rawProps, "selectionColor", sourceProps.selectionColor, {})),
       selectTextOnFocus(convertRawProp(context, rawProps, "selectTextOnFocus", sourceProps.selectTextOnFocus, {false})),

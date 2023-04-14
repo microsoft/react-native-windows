@@ -127,7 +127,7 @@ class TextInputShadowNode : public ShadowNodeBase {
   void dispatchTextInputChangeEvent(winrt::hstring newText);
   void registerEvents();
   void registerPreviewKeyDown();
-  void HideCaretIfNeeded();
+  void UpdateCaretColorOrHideIfNeeded();
   void setPasswordBoxPlaceholderForeground(
       xaml::Controls::PasswordBox passwordBox,
       const winrt::Microsoft::ReactNative::JSValue &color);
@@ -143,6 +143,8 @@ class TextInputShadowNode : public ShadowNodeBase {
   bool m_contextMenuHidden = false;
   bool m_hideCaret = false;
   bool m_shouldClearTextOnSubmit = false;
+
+  winrt::Microsoft::ReactNative::JSValue m_cursorColor;
 
   winrt::Microsoft::ReactNative::JSValue m_placeholderTextColor;
   std::vector<HandledKeyboardEvent> m_submitKeyEvents{};
@@ -260,7 +262,7 @@ void TextInputShadowNode::registerEvents() {
         control.as<xaml::Controls::PasswordBox>().SelectAll();
       }
     }
-    HideCaretIfNeeded();
+    UpdateCaretColorOrHideIfNeeded();
 
     folly::dynamic eventData = folly::dynamic::object("target", tag);
     if (!m_updating)
@@ -330,7 +332,7 @@ void TextInputShadowNode::registerEvents() {
             }
           });
     }
-    HideCaretIfNeeded();
+    UpdateCaretColorOrHideIfNeeded();
   });
 
   if (control.try_as<xaml::IUIElement7>()) {
@@ -448,14 +450,24 @@ bool TextInputShadowNode::IsTextBox() {
   return !!GetView().try_as<xaml::Controls::TextBox>();
 }
 
-// hacking solution to hide the caret
-void TextInputShadowNode::HideCaretIfNeeded() {
-  if (m_hideCaret) {
+// hacking solution to hide the caret or change its color
+void TextInputShadowNode::UpdateCaretColorOrHideIfNeeded() {
+  bool updateRequired = false;
+  xaml::Media::SolidColorBrush color;
+
+   if (m_hideCaret) {
+    updateRequired = true;
+    color = xaml::Media::SolidColorBrush(winrt::Colors::Transparent());
+   } else if (!m_cursorColor.IsNull()) {
+    updateRequired = true;
+    color = SolidColorBrushFrom(m_cursorColor);
+   }
+
+  if (updateRequired) {
     auto control = GetView().as<xaml::Controls::Control>();
     if (auto caret = FindCaret(control)) {
       caret.CompositeMode(xaml::Media::ElementCompositeMode::Inherit);
-      xaml::Media::SolidColorBrush transparentColor(winrt::Colors::Transparent());
-      caret.Fill(transparentColor);
+      caret.Fill(color);
     }
   }
 }
@@ -520,7 +532,7 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
     } else if (propertyName == "caretHidden") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
         m_hideCaret = propertyValue.AsBoolean();
-        HideCaretIfNeeded();
+        UpdateCaretColorOrHideIfNeeded();
       }
     } else if (propertyName == "focusable") {
       // parent class also sets isTabStop
@@ -580,6 +592,11 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
         control.ClearValue(
             isTextBox ? xaml::Controls::TextBox::PlaceholderTextProperty()
                       : xaml::Controls::PasswordBox::PlaceholderTextProperty());
+      }
+    } else if (propertyName == "cursorColor") {
+      m_cursorColor = nullptr;
+      if (IsValidColorValue(propertyValue)) {
+        m_cursorColor = propertyValue.Copy();
       }
     } else if (propertyName == "selectionColor") {
       if (IsValidColorValue(propertyValue)) {
@@ -822,6 +839,7 @@ void TextInputViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::I
   React::WriteProperty(writer, L"placeholder", L"string");
   React::WriteProperty(writer, L"placeholderTextColor", L"Color");
   React::WriteProperty(writer, L"scrollEnabled", L"boolean");
+  React::WriteProperty(writer, L"cursorColor", L"Color");
   React::WriteProperty(writer, L"selection", L"Map");
   React::WriteProperty(writer, L"selectionColor", L"Color");
   React::WriteProperty(writer, L"selectTextOnFocus", L"boolean");
