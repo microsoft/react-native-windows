@@ -1,6 +1,6 @@
 {
   "name": "@office-iss/react-native-win32",
-  "version": "0.0.0-canary.190",
+  "version": "0.0.0-canary.191",
   "description": "Implementation of react native on top of Office's Win32 platform.",
   "repository": {
     "type": "git",
@@ -17,9 +17,8 @@
     "flow-check": "flow check",
     "lint:fix": "rnw-scripts lint:fix",
     "lint": "rnw-scripts lint",
-    "run-win32-dev-web": "npx @office-iss/rex-win32@0.68.26-devmain.16206.10000 --bundle js/RNTesterApp --component RNTesterApp --basePath ./dist/win32/dev --jsEngine v8 --useDevMain --useWebDebugger",
-    "run-win32-devmain": "npx @office-iss/rex-win32@0.68.26-devmain.16206.10000 --bundle js/RNTesterApp --component RNTesterApp --basePath ./dist/win32/dev --jsEngine v8 --useDevMain",
-    "run-win32": "npx @office-iss/rex-win32@0.68.26-devmain.16206.10000 --bundle js/RNTesterApp --component RNTesterApp --basePath ./dist/win32/dev --jsEngine v8 --useWebDebugger",
+    "run-win32-devmain": "npx @office-iss/rex-win32@0.68.26-devmain.16206.10000 --bundle js/RNTesterApp --component RNTesterApp --basePath ./dist/win32/dev --jsEngine v8 --useDevMain --useDirectDebugger --useFastRefresh",
+    "run-win32": "npx @office-iss/rex-win32@0.68.26-devmain.16206.10000 --bundle js/RNTesterApp --component RNTesterApp --basePath ./dist/win32/dev --jsEngine v8 --useDirectDebugger --useFastRefresh",
     "start": "react-native start --projectRoot ../react-native-win32-tester",
     "test": "jest",
     "validate-overrides": "react-native-platform-override validate"

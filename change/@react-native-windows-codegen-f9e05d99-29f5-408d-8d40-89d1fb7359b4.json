@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix RNW not being detected on case-sensitive file systems",
-  "packageName": "@react-native-windows/codegen",
-  "email": "4123478+tido64@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
