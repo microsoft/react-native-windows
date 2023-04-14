@@ -1884,6 +1884,14 @@ static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_stopReporti
   );
   return jsi::Value::undefined();
 }
+static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_setIsBuffered(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->setIsBuffered(
+    rt,
+    args[0].asObject(rt).asArray(rt),
+    args[1].asBool()
+  );
+  return jsi::Value::undefined();
+}
 static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_popPendingEntries(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->popPendingEntries(
     rt
@@ -1936,6 +1944,7 @@ NativePerformanceObserverCxxSpecJSI::NativePerformanceObserverCxxSpecJSI(std::sh
   : TurboModule("NativePerformanceObserverCxx", jsInvoker) {
   methodMap_["startReporting"] = MethodMetadata {1, __hostFunction_NativePerformanceObserverCxxSpecJSI_startReporting};
   methodMap_["stopReporting"] = MethodMetadata {1, __hostFunction_NativePerformanceObserverCxxSpecJSI_stopReporting};
+  methodMap_["setIsBuffered"] = MethodMetadata {2, __hostFunction_NativePerformanceObserverCxxSpecJSI_setIsBuffered};
   methodMap_["popPendingEntries"] = MethodMetadata {0, __hostFunction_NativePerformanceObserverCxxSpecJSI_popPendingEntries};
   methodMap_["setOnPerformanceEntryCallback"] = MethodMetadata {1, __hostFunction_NativePerformanceObserverCxxSpecJSI_setOnPerformanceEntryCallback};
   methodMap_["logRawEntry"] = MethodMetadata {1, __hostFunction_NativePerformanceObserverCxxSpecJSI_logRawEntry};
