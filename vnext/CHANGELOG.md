@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 12 Apr 2023 05:14:59 GMT and should not be manually modified.
+This log was last generated on Thu, 13 Apr 2023 05:14:28 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.642
+
+Thu, 13 Apr 2023 05:14:28 GMT
+
+### Changes
+
+- Adds QuirkSetting for non-batched create view (erozell@outlook.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.167
+- Bump @react-native-windows/codegen to v0.0.0-canary.55
 
 ## 0.0.0-canary.641
 

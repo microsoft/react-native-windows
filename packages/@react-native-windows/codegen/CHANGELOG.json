@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Thu, 13 Apr 2023 05:14:28 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.55",
+      "version": "0.0.0-canary.55",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "4123478+tido64@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "0e9e464c8b9f73e941e502efcce11be1aeb5b663",
+            "comment": "Fix RNW not being detected on case-sensitive file systems"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 21 Mar 2023 21:21:55 GMT",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.54",
       "version": "0.0.0-canary.54",
