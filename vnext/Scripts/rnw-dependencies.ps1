@@ -412,7 +412,7 @@ $requirements = @(
     },
     @{
         Id=[CheckId]::Node;
-        Name = 'Node.js (LTS, >= 14.0)';
+        Name = 'Node.js (LTS, >= 16.0)';
         Tags = @('appDev');
         Valid = { CheckNode; }
         Install = { choco install -y nodejs-lts };
