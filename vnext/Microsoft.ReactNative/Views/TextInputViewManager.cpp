@@ -455,13 +455,13 @@ void TextInputShadowNode::UpdateCaretColorOrHideIfNeeded() {
   bool updateRequired = false;
   xaml::Media::SolidColorBrush color;
 
-   if (m_hideCaret) {
+  if (m_hideCaret) {
     updateRequired = true;
     color = xaml::Media::SolidColorBrush(winrt::Colors::Transparent());
-   } else if (!m_cursorColor.IsNull()) {
+  } else if (!m_cursorColor.IsNull()) {
     updateRequired = true;
     color = SolidColorBrushFrom(m_cursorColor);
-   }
+  }
 
   if (updateRequired) {
     auto control = GetView().as<xaml::Controls::Control>();
