@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 17 Apr 2023 15:09:54 GMT",
+      "tag": "react-native-windows_v0.69.24",
+      "version": "0.69.24",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6139c34cc334e411fe8e538dc3044f3767d56a80",
+            "comment": "Use Boost GUID generator (#11470)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 10 Apr 2023 15:09:14 GMT",
       "tag": "react-native-windows_v0.69.23",
       "version": "0.69.23",

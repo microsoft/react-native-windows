@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 10 Apr 2023 15:09:14 GMT and should not be manually modified.
+This log was last generated on Mon, 17 Apr 2023 15:09:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.69.24
+
+Mon, 17 Apr 2023 15:09:54 GMT
+
+### Patches
+
+- Use Boost GUID generator (#11470) (julio.rocha@microsoft.com)
 
 ## 0.69.23
 
