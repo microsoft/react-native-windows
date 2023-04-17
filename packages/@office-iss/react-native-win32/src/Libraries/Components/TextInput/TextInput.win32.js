@@ -1,44 +1,38 @@
 /**
- * This is a forked and slightly modified version of React Native's TextInput.
- * The fork is necessary as platform checks in the base implementation made the
- * control unusable on win32. In addition to cleaning up some of the code, this
- * fork also uses Typescript rather than Flow for type safety.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
- * More general documentation on this control can be found at
- * https://facebook.github.io/react-native/docs/textinput.html
- *
- * The original implementation can be found at
- * https://github.com/facebook/react-native/blob/1013a010492a7bef5ff58073a088ac924a986e9e/Libraries/Components/TextInput/TextInput.js
- *
- * This control does not support the full React Native TextInput interface yet.
- * Most of the work necessary to make that happen needs to happen on the native side.
- * Future work on the JS side may include:
- * 1. Expanded typings for some of the events
- * 2. Additional work to manage selection
- * 3. Any base/default styling work
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @flow strict-local
  * @format
  */
 
 import type {HostComponent} from '../../Renderer/shims/ReactNativeTypes';
-import {findNodeHandle} from '../../ReactNative/RendererProxy';
-import UIManager from '../../ReactNative/UIManager';
-import requireNativeComponent from '../../ReactNative/requireNativeComponent';
-import * as React from 'react';
-import TextAncestor from '../../Text/TextAncestor';
-import TextInputState from './TextInputState';
-import type {ViewProps} from '../View/ViewPropTypes';
 import type {
   PressEvent,
   ScrollEvent,
   SyntheticEvent,
 } from '../../Types/CoreEventTypes';
+import type {ViewProps} from '../View/ViewPropTypes';
+import type {TextInputType} from './TextInput.flow';
+
+import usePressability from '../../Pressability/usePressability';
+import flattenStyle from '../../StyleSheet/flattenStyle';
 import StyleSheet, {
   type ColorValue,
   type TextStyleProp,
   type ViewStyleProp,
 } from '../../StyleSheet/StyleSheet';
+import Text from '../../Text/Text';
+import TextAncestor from '../../Text/TextAncestor';
+import Platform from '../../Utilities/Platform';
+import useMergeRefs from '../../Utilities/useMergeRefs';
+import TextInputState from './TextInputState';
+import invariant from 'invariant';
+import nullthrows from 'nullthrows';
+import * as React from 'react';
+import {useCallback, useLayoutEffect, useRef, useState} from 'react';
 
 type ReactRefSetter<T> = {current: null | T, ...} | ((ref: null | T) => mixed);
 type TextInputInstance = React.ElementRef<HostComponent<mixed>> & {
@@ -47,6 +41,39 @@ type TextInputInstance = React.ElementRef<HostComponent<mixed>> & {
   +getNativeRef: () => ?React.ElementRef<HostComponent<mixed>>,
   +setSelection: (start: number, end: number) => void,
 };
+
+let AndroidTextInput;
+let AndroidTextInputCommands;
+let RCTSinglelineTextInputView;
+let RCTSinglelineTextInputNativeCommands;
+let RCTMultilineTextInputView;
+let RCTMultilineTextInputNativeCommands;
+let WindowsTextInput; // [Windows]
+let WindowsTextInputCommands; // [Windows]
+import type {KeyEvent} from '../../Types/CoreEventTypes'; // [Windows]
+
+// [Windows
+if (Platform.OS === 'android') {
+  AndroidTextInput = require('./AndroidTextInputNativeComponent').default;
+  AndroidTextInputCommands =
+    require('./AndroidTextInputNativeComponent').Commands;
+} else if (Platform.OS === 'ios') {
+  RCTSinglelineTextInputView =
+    require('./RCTSingelineTextInputNativeComponent').default;
+  RCTSinglelineTextInputNativeCommands =
+    require('./RCTSingelineTextInputNativeComponent').Commands;
+  RCTMultilineTextInputView =
+    require('./RCTMultilineTextInputNativeComponent').default;
+  RCTMultilineTextInputNativeCommands =
+    require('./RCTMultilineTextInputNativeComponent').Commands;
+}
+// [Windows
+else if (Platform.OS === 'win32') {
+  WindowsTextInput = require('./Win32TextInputNativeComponent').default;
+  WindowsTextInputCommands =
+    require('./Win32TextInputNativeComponent').Commands;
+}
+// Windows]
 
 export type ChangeEvent = SyntheticEvent<
   $ReadOnly<{|
@@ -540,10 +567,37 @@ type AndroidProps = $ReadOnly<{|
   underlineColorAndroid?: ?ColorValue,
 |}>;
 
+// [Windows
+
+type SubmitKeyEvent = $ReadOnly<{|
+  altKey?: ?boolean,
+  ctrlKey?: ?boolean,
+  metaKey?: ?boolean,
+  shiftKey?: ?boolean,
+  code: string,
+|}>;
+
+type WindowsProps = $ReadOnly<{|
+  /**
+   * If `true`, clears the text field synchronously before `onSubmitEditing` is emitted.
+   * @platform windows
+   */
+  clearTextOnSubmit?: ?boolean,
+
+  /**
+   * Configures keys that can be used to submit editing for the TextInput.
+   * @platform windows
+   */
+  submitKeyEvents?: ?$ReadOnlyArray<SubmitKeyEvent>,
+|}>;
+
+// Windows]
+
 export type Props = $ReadOnly<{|
   ...$Diff<ViewProps, $ReadOnly<{|style: ?ViewStyleProp|}>>,
   ...IOSProps,
   ...AndroidProps,
+  ...WindowsProps, // [Windows]
 
   /**
    * String to be read by screenreaders to indicate an error state. The acceptable parameters
@@ -944,215 +998,862 @@ export type Props = $ReadOnly<{|
    * unwanted edits without flicker.
    */
   value?: ?Stringish,
-
-  text?: ?Stringish, // Win32
 |}>;
 
-/*
-import {
-  TextInputProps,
-  NativeMethods,
-} from 'react-native';
-import {
-  IBlurEvent,
-  IChangeEvent,
-  IFocusEvent,
-} from './TextInput.Types.win32';
-import React from 'react'
+const emptyFunctionThatReturnsTrue = () => true;
 
-type RCTTextInputProps = TextInputProps & {
-  text: string;
-};
-*/
+/**
+ * A foundational component for inputting text into the app via a
+ * keyboard. Props provide configurability for several features, such as
+ * auto-correction, auto-capitalization, placeholder text, and different keyboard
+ * types, such as a numeric keypad.
+ *
+ * The simplest use case is to plop down a `TextInput` and subscribe to the
+ * `onChangeText` events to read the user input. There are also other events,
+ * such as `onSubmitEditing` and `onFocus` that can be subscribed to. A simple
+ * example:
+ *
+ * ```ReactNativeWebPlayer
+ * import React, { Component } from 'react';
+ * import { AppRegistry, TextInput } from 'react-native';
+ *
+ * export default class UselessTextInput extends Component {
+ *   constructor(props) {
+ *     super(props);
+ *     this.state = { text: 'Useless Placeholder' };
+ *   }
+ *
+ *   render() {
+ *     return (
+ *       <TextInput
+ *         style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+ *         onChangeText={(text) => this.setState({text})}
+ *         value={this.state.text}
+ *       />
+ *     );
+ *   }
+ * }
+ *
+ * // skip this line if using Create React Native App
+ * AppRegistry.registerComponent('AwesomeProject', () => UselessTextInput);
+ * ```
+ *
+ * Two methods exposed via the native element are .focus() and .blur() that
+ * will focus or blur the TextInput programmatically.
+ *
+ * Note that some props are only available with `multiline={true/false}`.
+ * Additionally, border styles that apply to only one side of the element
+ * (e.g., `borderBottomColor`, `borderLeftWidth`, etc.) will not be applied if
+ * `multiline=false`. To achieve the same effect, you can wrap your `TextInput`
+ * in a `View`:
+ *
+ * ```ReactNativeWebPlayer
+ * import React, { Component } from 'react';
+ * import { AppRegistry, View, TextInput } from 'react-native';
+ *
+ * class UselessTextInput extends Component {
+ *   render() {
+ *     return (
+ *       <TextInput
+ *         {...this.props} // Inherit any props passed to it; e.g., multiline, numberOfLines below
+ *         editable = {true}
+ *         maxLength = {40}
+ *       />
+ *     );
+ *   }
+ * }
+ *
+ * export default class UselessTextInputMultiline extends Component {
+ *   constructor(props) {
+ *     super(props);
+ *     this.state = {
+ *       text: 'Useless Multiline Placeholder',
+ *     };
+ *   }
+ *
+ *   // If you type something in the text box that is a color, the background will change to that
+ *   // color.
+ *   render() {
+ *     return (
+ *      <View style={{
+ *        backgroundColor: this.state.text,
+ *        borderBottomColor: '#000000',
+ *        borderBottomWidth: 1 }}
+ *      >
+ *        <UselessTextInput
+ *          multiline = {true}
+ *          numberOfLines = {4}
+ *          onChangeText={(text) => this.setState({text})}
+ *          value={this.state.text}
+ *        />
+ *      </View>
+ *     );
+ *   }
+ * }
+ *
+ * // skip these lines if using Create React Native App
+ * AppRegistry.registerComponent(
+ *  'AwesomeProject',
+ *  () => UselessTextInputMultiline
+ * );
+ * ```
+ *
+ * `TextInput` has by default a border at the bottom of its view. This border
+ * has its padding set by the background image provided by the system, and it
+ * cannot be changed. Solutions to avoid this is to either not set height
+ * explicitly, case in which the system will take care of displaying the border
+ * in the correct position, or to not display the border by setting
+ * `underlineColorAndroid` to transparent.
+ *
+ * Note that on Android performing text selection in input can change
+ * app's activity `windowSoftInputMode` param to `adjustResize`.
+ * This may cause issues with components that have position: 'absolute'
+ * while keyboard is active. To avoid this behavior either specify `windowSoftInputMode`
+ * in AndroidManifest.xml ( https://developer.android.com/guide/topics/manifest/activity-element.html )
+ * or control this param programmatically with native code.
+ *
+ */
+function InternalTextInput(props: Props): React.Node {
+  const {
+    'aria-busy': ariaBusy,
+    'aria-checked': ariaChecked,
+    'aria-disabled': ariaDisabled,
+    'aria-expanded': ariaExpanded,
+    'aria-selected': ariaSelected,
+    accessibilityState,
+    id,
+    tabIndex,
+    ...otherProps
+  } = props;
 
-// RCTTextInput is the native component that win32 understands
-const RCTTextInput = requireNativeComponent<Props>('RCTTextInput');
+  const inputRef = useRef<null | React.ElementRef<HostComponent<mixed>>>(null);
 
-// Adding typings on ViewManagers is problematic as available functionality is not known until
-// registration at runtime and would require native and js to always be in sync.
-const TextInputViewManager = UIManager.getViewManagerConfig('RCTTextInput');
+  // Android sends a "onTextChanged" event followed by a "onSelectionChanged" event, for
+  // the same "most recent event count".
+  // For controlled selection, that means that immediately after text is updated,
+  // a controlled component will pass in the *previous* selection, even if the controlled
+  // component didn't mean to modify the selection at all.
+  // Therefore, we ignore selections and pass them through until the selection event has
+  // been sent.
+  // Note that this mitigation is NOT needed for Fabric.
+  // discovered when upgrading react-hooks
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  let selection: ?Selection =
+    props.selection == null
+      ? null
+      : {
+          start: props.selection.start,
+          end: props.selection.end ?? props.selection.start,
+        };
 
-class TextInput extends React.Component<Props, {}> {
-  // TODO: Once the native side begins supporting programmatic selection
-  // this will become important for selection management
-  // private _lastNativeTextSelection: any;
+  const [mostRecentEventCount, setMostRecentEventCount] = useState<number>(0);
 
-  _rafID: AnimationFrameID;
+  const [lastNativeText, setLastNativeText] = useState<?Stringish>(props.value);
+  const [lastNativeSelectionState, setLastNativeSelection] = useState<{|
+    selection: ?Selection,
+    mostRecentEventCount: number,
+  |}>({selection, mostRecentEventCount});
 
-  _lastNativeText: ?Stringish;
-  _eventCount: number = 0;
+  const lastNativeSelection = lastNativeSelectionState.selection;
+  const lastNativeSelectionEventCount =
+    lastNativeSelectionState.mostRecentEventCount;
 
-  constructor(props: Props) {
-    super(props);
+  if (lastNativeSelectionEventCount < mostRecentEventCount) {
+    selection = null;
   }
 
-  /**
-   * On mount TextInput needs to register itself with TextInputState
-   * and conditionally request an animation frame for focus.
-   */
-  componentDidMount() {
-    this._lastNativeText = this.props.value;
-
-    // $FlowFixMe - // Win32
-    TextInputState.registerInput(this);
-
-    if (this.props.autoFocus === true) {
-      this._rafID = requestAnimationFrame(this.focus);
-    }
+  let viewCommands;
+  if (AndroidTextInputCommands) {
+    viewCommands = AndroidTextInputCommands;
+  }
+  // [Windows
+  else if (WindowsTextInputCommands) {
+    viewCommands = WindowsTextInputCommands;
+  }
+  // Windows]
+  else {
+    viewCommands =
+      props.multiline === true
+        ? RCTMultilineTextInputNativeCommands
+        : RCTSinglelineTextInputNativeCommands;
   }
 
-  /**
-   * This is an unfortunate consequence of having controlled TextInputs.
-   * Tree diffing reconciliation will not always send down text values
-   * This sets text explicitly.
-   */
-  componentDidUpdate() {
-    if (this._lastNativeText !== this._getText()) {
-      this._getText() && this.setNativeText(this._getText());
+  const text =
+    typeof props.value === 'string'
+      ? props.value
+      : typeof props.defaultValue === 'string'
+      ? props.defaultValue
+      : '';
+
+  // This is necessary in case native updates the text and JS decides
+  // that the update should be ignored and we should stick with the value
+  // that we have in JS.
+  useLayoutEffect(() => {
+    const nativeUpdate: {text?: string, selection?: Selection} = {};
+
+    if (lastNativeText !== props.value && typeof props.value === 'string') {
+      nativeUpdate.text = props.value;
+      setLastNativeText(props.value);
     }
 
-    return;
-  }
-
-  /**
-   * Pre-unmoun the TextInput should blur, unregister and clean up
-   * the animation frame for focus (edge cases)
-   */
-  componentWillUnmount() {
-    // blur
-    if (this.isFocused()) {
-      this.blur();
+    if (
+      selection &&
+      lastNativeSelection &&
+      (lastNativeSelection.start !== selection.start ||
+        lastNativeSelection.end !== selection.end)
+    ) {
+      nativeUpdate.selection = selection;
+      setLastNativeSelection({selection, mostRecentEventCount});
     }
 
-    // unregister
-    // $FlowFixMe - // Win32
-    TextInputState.unregisterInput(this);
-
-    // cancel animationFrame
-    if (this._rafID !== null) {
-      cancelAnimationFrame(this._rafID);
-    }
-    if (this._rafID) {
+    if (Object.keys(nativeUpdate).length === 0) {
       return;
     }
-    return;
-  }
 
-  render(): React.Node {
-    let {allowFontScaling, ...otherProps} = this.props;
-
-    allowFontScaling =
-      this.props.allowFontScaling === null ||
-      this.props.allowFontScaling === undefined
-        ? true
-        : this.props.allowFontScaling;
-
-    return (
-      <TextAncestor.Provider value={true}>
-        <RCTTextInput
-          {...otherProps}
-          allowFontScaling={allowFontScaling}
-          text={this._getText()}
-          onFocus={this._onFocus}
-          onBlur={this._onBlur}
-          onChange={this._onChange}
-        />
-      </TextAncestor.Provider>
-    );
-  }
-
-  /**
-   * Returns true if the TextInput is focused
-   */
-  isFocused(): boolean {
-    return TextInputState.currentlyFocusedInput() === this;
-  }
-
-  /**
-   * Focuses the TextInput
-   */
-  focus: () => void = (): void => {
-    // $FlowFixMe - // Win32
-    TextInputState.setFocusedTextInput(this);
-    UIManager.dispatchViewManagerCommand(
-      findNodeHandle(this),
-      TextInputViewManager.Commands.focus,
-      null,
-    );
-  };
-
-  /**
-   * Blurs the TextInput
-   */
-  blur: () => void = (): void => {
-    // $FlowFixMe - // Win32
-    TextInputState.blurTextInput(this);
-    UIManager.dispatchViewManagerCommand(
-      findNodeHandle(this),
-      TextInputViewManager.Commands.blur,
-      null,
-    );
-  };
-
-  /**
-   * Use clear for programmatic clearing of the text
-   */
-  clear: () => void = (): void => {
-    this.setNativeText('');
-  };
-
-  setEventCount: () => void = (): void => {
-    UIManager.dispatchViewManagerCommand(
-      findNodeHandle(this),
-      TextInputViewManager.Commands.setEventCount,
-      [this._eventCount],
-    );
-  };
-
-  setNativeText: (val: ?Stringish) => void = (val: ?Stringish): void => {
-    if (this._lastNativeText !== val) {
-      UIManager.dispatchViewManagerCommand(
-        findNodeHandle(this),
-        TextInputViewManager.Commands.setNativeText,
-        [val],
+    if (inputRef.current != null) {
+      viewCommands.setTextAndSelection(
+        inputRef.current,
+        mostRecentEventCount,
+        text,
+        selection?.start ?? -1,
+        selection?.end ?? -1,
       );
     }
-  };
+  }, [
+    mostRecentEventCount,
+    inputRef,
+    props.value,
+    props.defaultValue,
+    lastNativeText,
+    selection,
+    lastNativeSelection,
+    text,
+    viewCommands,
+  ]);
 
-  _getText = (): string | null => {
-    if (this.props.value != null && this.props.value != undefined) {
-      return this.props.value;
+  useLayoutEffect(() => {
+    const inputRefValue = inputRef.current;
+
+    if (inputRefValue != null) {
+      TextInputState.registerInput(inputRefValue);
+
+      return () => {
+        TextInputState.unregisterInput(inputRefValue);
+
+        if (TextInputState.currentlyFocusedInput() === inputRefValue) {
+          nullthrows(inputRefValue).blur();
+        }
+      };
     }
-    if (
-      this.props.defaultValue != null &&
-      this.props.defaultValue != undefined
-    ) {
-      return this.props.defaultValue;
+  }, [inputRef]);
+
+  const setLocalRef = useCallback(
+    (instance: TextInputInstance | null) => {
+      inputRef.current = instance;
+
+      /*
+      Hi reader from the future. I'm sorry for this.
+
+      This is a hack. Ideally we would forwardRef to the underlying
+      host component. However, since TextInput has it's own methods that can be
+      called as well, if we used the standard forwardRef then these
+      methods wouldn't be accessible and thus be a breaking change.
+
+      We have a couple of options of how to handle this:
+      - Return a new ref with everything we methods from both. This is problematic
+        because we need React to also know it is a host component which requires
+        internals of the class implementation of the ref.
+      - Break the API and have some other way to call one set of the methods or
+        the other. This is our long term approach as we want to eventually
+        get the methods on host components off the ref. So instead of calling
+        ref.measure() you might call ReactNative.measure(ref). This would hopefully
+        let the ref for TextInput then have the methods like `.clear`. Or we do it
+        the other way and make it TextInput.clear(textInputRef) which would be fine
+        too. Either way though is a breaking change that is longer term.
+      - Mutate this ref. :( Gross, but accomplishes what we need in the meantime
+        before we can get to the long term breaking change.
+      */
+      if (instance != null) {
+        // $FlowFixMe[incompatible-use] - See the explanation above.
+        Object.assign(instance, {
+          clear(): void {
+            if (inputRef.current != null) {
+              viewCommands.setTextAndSelection(
+                inputRef.current,
+                mostRecentEventCount,
+                '',
+                0,
+                0,
+              );
+            }
+          },
+          // TODO: Fix this returning true on null === null, when no input is focused
+          isFocused(): boolean {
+            return TextInputState.currentlyFocusedInput() === inputRef.current;
+          },
+          getNativeRef(): ?React.ElementRef<HostComponent<mixed>> {
+            return inputRef.current;
+          },
+          setSelection(start: number, end: number): void {
+            if (inputRef.current != null) {
+              viewCommands.setTextAndSelection(
+                inputRef.current,
+                mostRecentEventCount,
+                null,
+                start,
+                end,
+              );
+            }
+          },
+        });
+      }
+    },
+    [mostRecentEventCount, viewCommands],
+  );
+
+  const ref = useMergeRefs<TextInputInstance | null>(
+    setLocalRef,
+    props.forwardedRef,
+  );
+
+  const _onChange = (event: ChangeEvent) => {
+    const currentText = event.nativeEvent.text;
+    props.onChange && props.onChange(event);
+    props.onChangeText && props.onChangeText(currentText);
+
+    if (inputRef.current == null) {
+      // calling `props.onChange` or `props.onChangeText`
+      // may clean up the input itself. Exits here.
+      return;
     }
-    return null;
+
+    setLastNativeText(currentText);
+    // This must happen last, after we call setLastNativeText.
+    // Different ordering can cause bugs when editing AndroidTextInputs
+    // with multiple Fragments.
+    // We must update this so that controlled input updates work.
+    setMostRecentEventCount(event.nativeEvent.eventCount);
   };
 
-  _onChange = (e: ChangeEvent): void => {
-    const text = e.nativeEvent.text;
-    this._eventCount = e.nativeEvent.eventCount;
-    this.setEventCount();
+  const _onChangeSync = (event: ChangeEvent) => {
+    const currentText = event.nativeEvent.text;
+    props.unstable_onChangeSync && props.unstable_onChangeSync(event);
+    props.unstable_onChangeTextSync &&
+      props.unstable_onChangeTextSync(currentText);
 
-    this.props.onChange && this.props.onChange(e);
-    this.props.onChangeText && this.props.onChangeText(text);
-    this._lastNativeText = text;
+    if (inputRef.current == null) {
+      // calling `props.onChange` or `props.onChangeText`
+      // may clean up the input itself. Exits here.
+      return;
+    }
 
-    this.forceUpdate();
-    return;
+    setLastNativeText(currentText);
+    // This must happen last, after we call setLastNativeText.
+    // Different ordering can cause bugs when editing AndroidTextInputs
+    // with multiple Fragments.
+    // We must update this so that controlled input updates work.
+    setMostRecentEventCount(event.nativeEvent.eventCount);
   };
 
-  _onFocus = (e: FocusEvent): void => {
-    this.focus();
-    this.props.onFocus && this.props.onFocus(e);
+  const _onSelectionChange = (event: SelectionChangeEvent) => {
+    props.onSelectionChange && props.onSelectionChange(event);
+
+    if (inputRef.current == null) {
+      // calling `props.onSelectionChange`
+      // may clean up the input itself. Exits here.
+      return;
+    }
+
+    setLastNativeSelection({
+      selection: event.nativeEvent.selection,
+      mostRecentEventCount,
+    });
   };
 
-  _onBlur = (e: BlurEvent): void => {
-    this.props.onBlur && this.props.onBlur(e);
+  const _onFocus = (event: FocusEvent) => {
+    TextInputState.focusInput(inputRef.current);
+    if (props.onFocus) {
+      props.onFocus(event);
+    }
   };
+
+  const _onBlur = (event: BlurEvent) => {
+    TextInputState.blurInput(inputRef.current);
+    if (props.onBlur) {
+      props.onBlur(event);
+    }
+  };
+
+  const _onScroll = (event: ScrollEvent) => {
+    props.onScroll && props.onScroll(event);
+  };
+
+  let textInput = null;
+
+  const multiline = props.multiline ?? false;
+
+  let submitBehavior: SubmitBehavior;
+  if (props.submitBehavior != null) {
+    // `submitBehavior` is set explicitly
+    if (!multiline && props.submitBehavior === 'newline') {
+      // For single line text inputs, `'newline'` is not a valid option
+      submitBehavior = 'blurAndSubmit';
+    } else {
+      submitBehavior = props.submitBehavior;
+    }
+  } else if (multiline) {
+    if (props.blurOnSubmit === true) {
+      submitBehavior = 'blurAndSubmit';
+    } else {
+      submitBehavior = 'newline';
+    }
+  } else {
+    // Single line
+    if (props.blurOnSubmit !== false) {
+      submitBehavior = 'blurAndSubmit';
+    } else {
+      submitBehavior = 'submit';
+    }
+  }
+
+  const accessible = props.accessible !== false;
+
+  const accessibilityErrorMessage =
+    props.accessibilityInvalid === true
+      ? props.accessibilityErrorMessage
+      : null;
+
+  const focusable = props.focusable !== false;
+
+  const config = React.useMemo(
+    () => ({
+      onPress: (event: PressEvent) => {
+        if (props.editable !== false) {
+          if (inputRef.current != null) {
+            inputRef.current.focus();
+          }
+        }
+      },
+      onPressIn: props.onPressIn,
+      onPressOut: props.onPressOut,
+      cancelable:
+        Platform.OS === 'ios' ? !props.rejectResponderTermination : null,
+    }),
+    [
+      props.editable,
+      props.onPressIn,
+      props.onPressOut,
+      props.rejectResponderTermination,
+    ],
+  );
+
+  // Hide caret during test runs due to a flashing caret
+  // makes screenshot tests flakey
+  let caretHidden = props.caretHidden;
+  if (Platform.isTesting) {
+    caretHidden = true;
+  }
+
+  // TextInput handles onBlur and onFocus events
+  // so omitting onBlur and onFocus pressability handlers here.
+  const {onBlur, onFocus, ...eventHandlers} = usePressability(config) || {};
+  const eventPhase = Object.freeze({Capturing: 1, Bubbling: 3});
+  const _keyDown = (event: KeyEvent) => {
+    if (props.keyDownEvents && event.isPropagationStopped() !== true) {
+      // $FlowFixMe - keyDownEvents was already checked to not be undefined
+      for (const el of props.keyDownEvents) {
+        if (
+          event.nativeEvent.code == el.code &&
+          el.handledEventPhase == eventPhase.Bubbling
+        ) {
+          event.stopPropagation();
+        }
+      }
+    }
+    props.onKeyDown && props.onKeyDown(event);
+  };
+
+  const _keyUp = (event: KeyEvent) => {
+    if (props.keyUpEvents && event.isPropagationStopped() !== true) {
+      // $FlowFixMe - keyDownEvents was already checked to not be undefined
+      for (const el of props.keyUpEvents) {
+        if (event.nativeEvent.code == el.code && el.handledEventPhase == 3) {
+          event.stopPropagation();
+        }
+      }
+    }
+    props.onKeyUp && props.onKeyUp(event);
+  };
+
+  const _keyDownCapture = (event: KeyEvent) => {
+    if (props.keyDownEvents && event.isPropagationStopped() !== true) {
+      // $FlowFixMe - keyDownEvents was already checked to not be undefined
+      for (const el of props.keyDownEvents) {
+        if (event.nativeEvent.code == el.code && el.handledEventPhase == 1) {
+          event.stopPropagation();
+        }
+      }
+    }
+    props.onKeyDownCapture && props.onKeyDownCapture(event);
+  };
+
+  const _keyUpCapture = (event: KeyEvent) => {
+    if (props.keyUpEvents && event.isPropagationStopped() !== true) {
+      // $FlowFixMe - keyDownEvents was already checked to not be undefined
+      for (const el of props.keyUpEvents) {
+        if (event.nativeEvent.code == el.code && el.handledEventPhase == 1) {
+          event.stopPropagation();
+        }
+      }
+    }
+    props.onKeyUpCapture && props.onKeyUpCapture(event);
+  };
+
+  let _accessibilityState;
+  if (
+    accessibilityState != null ||
+    ariaBusy != null ||
+    ariaChecked != null ||
+    ariaDisabled != null ||
+    ariaExpanded != null ||
+    ariaSelected != null
+  ) {
+    _accessibilityState = {
+      busy: ariaBusy ?? accessibilityState?.busy,
+      checked: ariaChecked ?? accessibilityState?.checked,
+      disabled: ariaDisabled ?? accessibilityState?.disabled,
+      expanded: ariaExpanded ?? accessibilityState?.expanded,
+      selected: ariaSelected ?? accessibilityState?.selected,
+    };
+  }
+
+  // $FlowFixMe[underconstrained-implicit-instantiation]
+  let style = flattenStyle(props.style);
+
+  if (Platform.OS === 'ios') {
+    const RCTTextInputView =
+      props.multiline === true
+        ? RCTMultilineTextInputView
+        : RCTSinglelineTextInputView;
+
+    style = props.multiline === true ? [styles.multilineInput, style] : style;
+
+    const useOnChangeSync =
+      (props.unstable_onChangeSync || props.unstable_onChangeTextSync) &&
+      !(props.onChange || props.onChangeText);
+
+    textInput = (
+      <RCTTextInputView
+        // $FlowFixMe[incompatible-type] - Figure out imperative + forward refs.
+        ref={ref}
+        {...otherProps}
+        {...eventHandlers}
+        accessibilityErrorMessage={accessibilityErrorMessage}
+        accessibilityState={_accessibilityState}
+        accessible={accessible}
+        submitBehavior={submitBehavior}
+        caretHidden={caretHidden}
+        dataDetectorTypes={props.dataDetectorTypes}
+        focusable={tabIndex !== undefined ? !tabIndex : focusable}
+        mostRecentEventCount={mostRecentEventCount}
+        nativeID={id ?? props.nativeID}
+        onBlur={_onBlur}
+        onKeyPressSync={props.unstable_onKeyPressSync}
+        onChange={_onChange}
+        onChangeSync={useOnChangeSync === true ? _onChangeSync : null}
+        onContentSizeChange={props.onContentSizeChange}
+        onFocus={_onFocus}
+        onScroll={_onScroll}
+        onSelectionChange={_onSelectionChange}
+        onSelectionChangeShouldSetResponder={emptyFunctionThatReturnsTrue}
+        selection={selection}
+        style={style}
+        text={text}
+      />
+    );
+  } else if (Platform.OS === 'android') {
+    const autoCapitalize = props.autoCapitalize || 'sentences';
+    const _accessibilityLabelledBy =
+      props?.['aria-labelledby'] ?? props?.accessibilityLabelledBy;
+    const placeholder = props.placeholder ?? '';
+    let children = props.children;
+    const childCount = React.Children.count(children);
+    invariant(
+      !(props.value != null && childCount),
+      'Cannot specify both value and children.',
+    );
+    if (childCount > 1) {
+      children = <Text>{children}</Text>;
+    }
+
+    textInput = (
+      /* $FlowFixMe[prop-missing] the types for AndroidTextInput don't match up
+       * exactly with the props for TextInput. This will need to get fixed */
+      /* $FlowFixMe[incompatible-type] the types for AndroidTextInput don't
+       * match up exactly with the props for TextInput. This will need to get
+       * fixed */
+      /* $FlowFixMe[incompatible-type-arg] the types for AndroidTextInput don't
+       * match up exactly with the props for TextInput. This will need to get
+       * fixed */
+      <AndroidTextInput
+        // $FlowFixMe[incompatible-type] - Figure out imperative + forward refs.
+        ref={ref}
+        {...otherProps}
+        {...eventHandlers}
+        accessibilityErrorMessage={accessibilityErrorMessage}
+        accessibilityState={_accessibilityState}
+        accessibilityLabelledBy={_accessibilityLabelledBy}
+        accessible={accessible}
+        autoCapitalize={autoCapitalize}
+        submitBehavior={submitBehavior}
+        caretHidden={caretHidden}
+        children={children}
+        disableFullscreenUI={props.disableFullscreenUI}
+        focusable={tabIndex !== undefined ? !tabIndex : focusable}
+        mostRecentEventCount={mostRecentEventCount}
+        nativeID={id ?? props.nativeID}
+        numberOfLines={props.rows ?? props.numberOfLines}
+        onBlur={_onBlur}
+        onChange={_onChange}
+        onFocus={_onFocus}
+        /* $FlowFixMe[prop-missing] the types for AndroidTextInput don't match
+         * up exactly with the props for TextInput. This will need to get fixed
+         */
+        /* $FlowFixMe[incompatible-type-arg] the types for AndroidTextInput
+         * don't match up exactly with the props for TextInput. This will need
+         * to get fixed */
+        onScroll={_onScroll}
+        onSelectionChange={_onSelectionChange}
+        placeholder={placeholder}
+        selection={selection}
+        style={style}
+        text={text}
+        textBreakStrategy={props.textBreakStrategy}
+      />
+    );
+  } // [Windows
+  else if (Platform.OS === 'win32') {
+    textInput = (
+      <WindowsTextInput
+        // $FlowFixMe[incompatible-type] - Figure out imperative + forward refs.
+        ref={ref}
+        {...props}
+        accessible={accessible}
+        focusable={focusable}
+        dataDetectorTypes={props.dataDetectorTypes}
+        mostRecentEventCount={mostRecentEventCount}
+        onBlur={_onBlur}
+        onChange={_onChange}
+        onContentSizeChange={props.onContentSizeChange}
+        onFocus={_onFocus}
+        onScroll={_onScroll}
+        onSelectionChange={_onSelectionChange}
+        onSelectionChangeShouldSetResponder={emptyFunctionThatReturnsTrue}
+        selection={selection}
+        text={text}
+        onKeyDown={_keyDown}
+        onKeyDownCapture={_keyDownCapture}
+        onKeyUp={_keyUp}
+        onKeyUpCapture={_keyUpCapture}
+      />
+    );
+  } // Windows]
+  return (
+    <TextAncestor.Provider value={true}>{textInput}</TextAncestor.Provider>
+  );
 }
 
-module.exports = TextInput;
+const enterKeyHintToReturnTypeMap = {
+  enter: 'default',
+  done: 'done',
+  go: 'go',
+  next: 'next',
+  previous: 'previous',
+  search: 'search',
+  send: 'send',
+};
+
+const inputModeToKeyboardTypeMap = {
+  none: 'default',
+  text: 'default',
+  decimal: 'decimal-pad',
+  numeric: 'number-pad',
+  tel: 'phone-pad',
+  search: Platform.OS === 'ios' ? 'web-search' : 'default',
+  email: 'email-address',
+  url: 'url',
+};
+
+// Map HTML autocomplete values to Android autoComplete values
+const autoCompleteWebToAutoCompleteAndroidMap = {
+  'address-line1': 'postal-address-region',
+  'address-line2': 'postal-address-locality',
+  bday: 'birthdate-full',
+  'bday-day': 'birthdate-day',
+  'bday-month': 'birthdate-month',
+  'bday-year': 'birthdate-year',
+  'cc-csc': 'cc-csc',
+  'cc-exp': 'cc-exp',
+  'cc-exp-month': 'cc-exp-month',
+  'cc-exp-year': 'cc-exp-year',
+  'cc-number': 'cc-number',
+  country: 'postal-address-country',
+  'current-password': 'password',
+  email: 'email',
+  'honorific-prefix': 'name-prefix',
+  'honorific-suffix': 'name-suffix',
+  name: 'name',
+  'additional-name': 'name-middle',
+  'family-name': 'name-family',
+  'given-name': 'name-given',
+  'new-password': 'password-new',
+  off: 'off',
+  'one-time-code': 'sms-otp',
+  'postal-code': 'postal-code',
+  sex: 'gender',
+  'street-address': 'street-address',
+  tel: 'tel',
+  'tel-country-code': 'tel-country-code',
+  'tel-national': 'tel-national',
+  username: 'username',
+};
+
+// Map HTML autocomplete values to iOS textContentType values
+const autoCompleteWebToTextContentTypeMap = {
+  'address-line1': 'streetAddressLine1',
+  'address-line2': 'streetAddressLine2',
+  'cc-number': 'creditCardNumber',
+  'current-password': 'password',
+  country: 'countryName',
+  email: 'emailAddress',
+  name: 'name',
+  'additional-name': 'middleName',
+  'family-name': 'familyName',
+  'given-name': 'givenName',
+  nickname: 'nickname',
+  'honorific-prefix': 'namePrefix',
+  'honorific-suffix': 'nameSuffix',
+  'new-password': 'newPassword',
+  off: 'none',
+  'one-time-code': 'oneTimeCode',
+  organization: 'organizationName',
+  'organization-title': 'jobTitle',
+  'postal-code': 'postalCode',
+  'street-address': 'fullStreetAddress',
+  tel: 'telephoneNumber',
+  url: 'URL',
+  username: 'username',
+};
+
+const ExportedForwardRef: React.AbstractComponent<
+  React.ElementConfig<typeof InternalTextInput>,
+  TextInputInstance,
+> = React.forwardRef(function TextInput(
+  {
+    allowFontScaling = true,
+    rejectResponderTermination = true,
+    underlineColorAndroid = 'transparent',
+    autoComplete,
+    textContentType,
+    readOnly,
+    editable,
+    enterKeyHint,
+    returnKeyType,
+    inputMode,
+    showSoftInputOnFocus,
+    keyboardType,
+    ...restProps
+  },
+  forwardedRef: ReactRefSetter<TextInputInstance>,
+) {
+  // $FlowFixMe[underconstrained-implicit-instantiation]
+  let style = flattenStyle(restProps.style);
+
+  if (style?.verticalAlign != null) {
+    style.textAlignVertical =
+      verticalAlignToTextAlignVerticalMap[style.verticalAlign];
+    delete style.verticalAlign;
+  }
+
+  return (
+    <InternalTextInput
+      allowFontScaling={allowFontScaling}
+      rejectResponderTermination={rejectResponderTermination}
+      underlineColorAndroid={underlineColorAndroid}
+      editable={readOnly !== undefined ? !readOnly : editable}
+      returnKeyType={
+        enterKeyHint ? enterKeyHintToReturnTypeMap[enterKeyHint] : returnKeyType
+      }
+      keyboardType={
+        inputMode ? inputModeToKeyboardTypeMap[inputMode] : keyboardType
+      }
+      showSoftInputOnFocus={
+        inputMode == null ? showSoftInputOnFocus : inputMode !== 'none'
+      }
+      autoComplete={
+        Platform.OS === 'android'
+          ? // $FlowFixMe
+            autoCompleteWebToAutoCompleteAndroidMap[autoComplete] ??
+            autoComplete
+          : undefined
+      }
+      textContentType={
+        Platform.OS === 'ios' &&
+        autoComplete &&
+        autoComplete in autoCompleteWebToTextContentTypeMap
+          ? // $FlowFixMe
+            autoCompleteWebToTextContentTypeMap[autoComplete]
+          : textContentType
+      }
+      {...restProps}
+      forwardedRef={forwardedRef}
+      style={style}
+    />
+  );
+});
+
+ExportedForwardRef.displayName = 'TextInput';
+
+/**
+ * Switch to `deprecated-react-native-prop-types` for compatibility with future
+ * releases. This is deprecated and will be removed in the future.
+ */
+ExportedForwardRef.propTypes =
+  require('deprecated-react-native-prop-types').TextInputPropTypes;
+
+// $FlowFixMe[prop-missing]
+ExportedForwardRef.State = {
+  currentlyFocusedInput: TextInputState.currentlyFocusedInput,
+
+  currentlyFocusedField: TextInputState.currentlyFocusedField,
+  focusTextInput: TextInputState.focusTextInput,
+  blurTextInput: TextInputState.blurTextInput,
+};
+
+export type TextInputComponentStatics = $ReadOnly<{|
+  State: $ReadOnly<{|
+    currentlyFocusedInput: typeof TextInputState.currentlyFocusedInput,
+    currentlyFocusedField: typeof TextInputState.currentlyFocusedField,
+    focusTextInput: typeof TextInputState.focusTextInput,
+    blurTextInput: typeof TextInputState.blurTextInput,
+  |}>,
+|}>;
+
+const styles = StyleSheet.create({
+  multilineInput: {
+    // This default top inset makes RCTMultilineTextInputView seem as close as possible
+    // to single-line RCTSinglelineTextInputView defaults, using the system defaults
+    // of font size 17 and a height of 31 points.
+    paddingTop: 5,
+  },
+});
+
+const verticalAlignToTextAlignVerticalMap = {
+  auto: 'auto',
+  top: 'top',
+  bottom: 'bottom',
+  middle: 'center',
+};
+
+// $FlowFixMe[unclear-type] Unclear type. Using `any` type is not safe.
+module.exports = ((ExportedForwardRef: any): TextInputType);

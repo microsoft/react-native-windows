@@ -2,6 +2,99 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 13 Apr 2023 05:14:28 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.642",
+      "version": "0.0.0-canary.642",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "4defc3767937753e47c89ce56d738852f04d1d73",
+            "comment": "Adds QuirkSetting for non-batched create view"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.167",
+            "commit": "71ca215e58db4f6b9b79be31b1320ab4c05714f1"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.55",
+            "commit": "71ca215e58db4f6b9b79be31b1320ab4c05714f1"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 12 Apr 2023 05:14:59 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.641",
+      "version": "0.0.0-canary.641",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "26607885+chrisglein@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ca37eb7b34f8e40feb248ce35109ef82f09344d4",
+            "comment": "Fix unintended fallthrough This was causing a WM_CHAR to fallthrough to WM_KEYDOWN and produce a duplicate `sendMessage`"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 11 Apr 2023 05:13:26 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.640",
+      "version": "0.0.0-canary.640",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "0a5309293c171a86716f4d025945ef867067cb3c",
+            "comment": "Use Boost GUID generator"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 08 Apr 2023 05:13:12 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.639",
+      "version": "0.0.0-canary.639",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "8c2e0c3a5195278a22f8b6a17fe88ea7661aa1ea",
+            "comment": "Ensure ReactNativeWindowsDir is set in Directory.Build.props"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "9e4665f9f54d645c4d7f6ccce991a935ca63f156",
+            "comment": "integrate rn 0.0.0-20230404-2109-62c4da142"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 07 Apr 2023 05:13:15 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.638",
+      "version": "0.0.0-canary.638",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "f24abc102cb212dcabe93fddd8c5b3937c4f92de",
+            "comment": "Initialize layout values to zero"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 04 Apr 2023 05:14:38 GMT",
       "tag": "react-native-windows_v0.0.0-canary.637",
       "version": "0.0.0-canary.637",

@@ -160,7 +160,7 @@ async function upgradeReactNative(
 async function upgradeRepoConfig(
   newReactNativeVersion: string,
 ): Promise<PackageDiff> {
-  const origPackage = (await findRepoPackage('@react-native/repo-config'))!;
+  const origPackage = (await findRepoPackage('@react-native/monorepo'))!;
 
   const upgradeResults = await upgradeOverrides(
     path.join(origPackage.path, 'overrides.json'),
@@ -176,7 +176,7 @@ async function upgradeRepoConfig(
     );
   }
 
-  const newPackage = (await findRepoPackage('@react-native/repo-config'))!;
+  const newPackage = (await findRepoPackage('@react-native/monorepo'))!;
   return extractPackageDiff(origPackage.json, newPackage.json);
 }
 
