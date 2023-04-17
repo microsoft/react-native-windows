@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Enable secureTextEntry for Fabric - Supply password character - Set TXTBIT_USEPASSWORD - Fix problem when backspacing on short strings",
+  "packageName": "react-native-windows",
+  "email": "26607885+chrisglein@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
