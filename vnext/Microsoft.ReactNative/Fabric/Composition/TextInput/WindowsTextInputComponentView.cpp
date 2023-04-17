@@ -614,6 +614,13 @@ void WindowsTextInputComponentView::updateProps(
     propBits |= TXTBIT_CHARFORMATCHANGE;
   }
 
+  if (oldTextInputProps.multiline != newTextInputProps.multiline) {
+    propBitsMask |= TXTBIT_MULTILINE | TXTBIT_WORDWRAP;
+    if (newTextInputProps.multiline) {
+      propBits |= TXTBIT_MULTILINE | TXTBIT_WORDWRAP;
+    }
+  }
+
   /*
   if (oldTextInputProps.textAttributes.foregroundColor != newTextInputProps.textAttributes.foregroundColor) {
     if (newTextInputProps.textAttributes.foregroundColor)
@@ -657,13 +664,6 @@ void WindowsTextInputComponentView::updateProps(
   if (oldTextInputProps.editable != newTextInputProps.editable) {
     m_element.IsReadOnly(!newTextInputProps.editable);
   }
-
-
-    if (oldTextInputProps.multiline != newTextInputProps.multiline) {
-      m_element.TextWrapping(newTextInputProps.multiline ? xaml::TextWrapping::Wrap : xaml::TextWrapping::NoWrap);
-      m_element.AcceptsReturn(newTextInputProps.multiline);
-    }
-
 
   if (oldTextInputProps.selection.start != newTextInputProps.selection.start ||
       oldTextInputProps.selection.end != newTextInputProps.selection.end) {
