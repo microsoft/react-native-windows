@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 18 Apr 2023 05:12:59 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.643",
+      "version": "0.0.0-canary.643",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "26607885+chrisglein@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d1c012c1555d3d9e61083291300219fd5686c33b",
+            "comment": "Enable secureTextEntry for Fabric - Supply password character - Set TXTBIT_USEPASSWORD - Fix problem when backspacing on short strings"
+          },
+          {
+            "author": "26607885+chrisglein@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "23557897d68458c15ec3cc78d84a89d8460126f4",
+            "comment": "Add support for Fabric TextInput `multiline` - Uses TXTBIT_MULTILINE and TXTBIT_WORDWRAP"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 13 Apr 2023 05:14:28 GMT",
       "tag": "react-native-windows_v0.0.0-canary.642",
       "version": "0.0.0-canary.642",
