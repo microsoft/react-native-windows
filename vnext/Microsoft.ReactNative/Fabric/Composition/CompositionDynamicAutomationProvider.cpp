@@ -59,6 +59,27 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_BoundingRectangle(Ui
   if (pRetVal == nullptr)
     return E_POINTER;
 
+  auto hr = UiaGetBoundingRectangleHelper(m_view, *pRetVal);
+  if (FAILED(hr))
+    return hr;
+
+  winrt::com_ptr<IRawElementProviderFragmentRoot> spFragmentRoot = nullptr;
+  hr = get_FragmentRoot(spFragmentRoot.put());
+  if (FAILED(hr))
+    return hr;
+
+  auto spFragment = spFragmentRoot.try_as<IRawElementProviderFragment>();
+  if (spFragment == nullptr)
+    return E_FAIL;
+
+  UiaRect rect;
+  hr = spFragment->get_BoundingRectangle(&rect);
+  if (FAILED(hr))
+    return hr;
+
+  pRetVal->left += rect.left;
+  pRetVal->top += rect.top;
+
   return S_OK;
 }
 
@@ -89,10 +110,9 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_FragmentRoot(IRawEle
     return UIA_E_ELEMENTNOTAVAILABLE;
 
   auto uiaProvider = rootCV->EnsureUiaProvider();
-  if (uiaProvider != nullptr) {
-    winrt::com_ptr<IRawElementProviderFragmentRoot> spReps;
-    uiaProvider.as(spReps);
-    *pRetVal = spReps.detach();
+  auto spFragmentRoot = uiaProvider.try_as<IRawElementProviderFragmentRoot>();
+  if (spFragmentRoot) {
+    *pRetVal = spFragmentRoot.detach();
   }
 
   return S_OK;
@@ -184,6 +204,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
   if (strongView == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
+  // TODO
   auto props = std::static_pointer_cast<const facebook::react::ViewProps>(strongView->props());
   if (props == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
