@@ -6,9 +6,9 @@
 
 #include "RootComponentView.h"
 
+#include <Fabric/FabricUIManagerModule.h>
 #include "CompositionRootAutomationProvider.h"
 #include "CompositionRootView.h"
-#include <Fabric/FabricUIManagerModule.h>
 
 namespace Microsoft::ReactNative {
 
@@ -117,11 +117,9 @@ std::shared_ptr<RootComponentView> RootComponentView::getPtr() {
 }
 
 winrt::IInspectable RootComponentView::UiaProviderFromPoint(const POINT &ptPixels) noexcept {
-
   facebook::react::Point ptDips{
       static_cast<facebook::react::Float>(ptPixels.x) / m_layoutMetrics.pointScaleFactor,
-      static_cast<facebook::react::Float>(ptPixels.y) / m_layoutMetrics.pointScaleFactor
-  }; 
+      static_cast<facebook::react::Float>(ptPixels.y) / m_layoutMetrics.pointScaleFactor};
 
   facebook::react::Point localPt;
   auto tag = hitTest(ptDips, localPt, true);

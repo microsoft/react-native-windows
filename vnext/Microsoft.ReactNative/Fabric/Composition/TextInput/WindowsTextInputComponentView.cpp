@@ -1031,8 +1031,10 @@ void WindowsTextInputComponentView::DrawText() noexcept {
   m_needsRedraw = false;
 }
 
-facebook::react::Tag WindowsTextInputComponentView::hitTest(facebook::react::Point pt, facebook::react::Point &localPt, bool ignorePointerEvents)
-    const noexcept {
+facebook::react::Tag WindowsTextInputComponentView::hitTest(
+    facebook::react::Point pt,
+    facebook::react::Point &localPt,
+    bool ignorePointerEvents) const noexcept {
   facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
 
   facebook::react::Tag targetTag;

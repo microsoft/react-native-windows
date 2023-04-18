@@ -126,12 +126,12 @@ HRESULT __stdcall CompositionRootAutomationProvider::ElementProviderFromPoint(
   if (spRootView == nullptr) {
     return UIA_E_ELEMENTNOTAVAILABLE;
   }
-  
+
   if (m_hwnd == nullptr || !IsWindow(m_hwnd)) {
     // TODO
     return E_FAIL;
   }
-  
+
   POINT clientPoint{static_cast<LONG>(x), static_cast<LONG>(y)};
   ScreenToClient(m_hwnd, &clientPoint);
 

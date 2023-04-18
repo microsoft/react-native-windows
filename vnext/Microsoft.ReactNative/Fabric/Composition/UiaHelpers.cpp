@@ -69,8 +69,7 @@ HRESULT UiaNavigateHelper(
   return S_OK;
 }
 
-HRESULT UiaGetBoundingRectangleHelper(::Microsoft::ReactNative::ReactTaggedView &view, UiaRect &rect) noexcept
-{
+HRESULT UiaGetBoundingRectangleHelper(::Microsoft::ReactNative::ReactTaggedView &view, UiaRect &rect) noexcept {
   auto strongView = view.view();
 
   if (strongView == nullptr) {

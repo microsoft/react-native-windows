@@ -15,5 +15,4 @@ UiaNavigateHelper(
 
 HRESULT UiaGetBoundingRectangleHelper(::Microsoft::ReactNative::ReactTaggedView &view, UiaRect &rect) noexcept;
 
-
 } // namespace winrt::Microsoft::ReactNative::implementation

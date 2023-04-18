@@ -214,8 +214,10 @@ void SwitchComponentView::ensureDrawingSurface() noexcept {
   }
 }
 
-facebook::react::Tag SwitchComponentView::hitTest(facebook::react::Point pt, facebook::react::Point &localPt, bool ignorePointerEvents)
-    const noexcept {
+facebook::react::Tag SwitchComponentView::hitTest(
+    facebook::react::Point pt,
+    facebook::react::Point &localPt,
+    bool ignorePointerEvents) const noexcept {
   facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
 
   if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||

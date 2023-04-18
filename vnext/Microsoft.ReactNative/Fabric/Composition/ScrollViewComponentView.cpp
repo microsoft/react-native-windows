@@ -335,8 +335,10 @@ void ScrollViewComponentView::ensureVisual() noexcept {
   }
 }
 
-facebook::react::Tag ScrollViewComponentView::hitTest(facebook::react::Point pt, facebook::react::Point &localPt, bool ignorePointerEvents)
-    const noexcept {
+facebook::react::Tag ScrollViewComponentView::hitTest(
+    facebook::react::Point pt,
+    facebook::react::Point &localPt,
+    bool ignorePointerEvents) const noexcept {
   facebook::react::Point ptViewport{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
 
   facebook::react::Point ptContent{

@@ -362,14 +362,15 @@ facebook::react::Props::Shared ImageComponentView::props() noexcept {
   return m_props;
 }
 
-facebook::react::Tag ImageComponentView::hitTest(facebook::react::Point pt, facebook::react::Point &localPt, bool ignorePointerEvents)
-    const noexcept {
+facebook::react::Tag ImageComponentView::hitTest(
+    facebook::react::Point pt,
+    facebook::react::Point &localPt,
+    bool ignorePointerEvents) const noexcept {
   facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
 
   facebook::react::Tag targetTag;
 
-  if ((ignorePointerEvents ||
-       m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
+  if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
        m_props->pointerEvents == facebook::react::PointerEventsMode::BoxNone) &&
       std::any_of(m_children.rbegin(), m_children.rend(), [&targetTag, &ptLocal, &localPt](auto child) {
         targetTag = static_cast<const CompositionBaseComponentView *>(child)->hitTest(ptLocal, localPt);
