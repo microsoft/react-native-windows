@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 13 Apr 2023 05:14:28 GMT and should not be manually modified.
+This log was last generated on Tue, 18 Apr 2023 05:12:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.643
+
+Tue, 18 Apr 2023 05:12:59 GMT
+
+### Changes
+
+- Enable secureTextEntry for Fabric - Supply password character - Set TXTBIT_USEPASSWORD - Fix problem when backspacing on short strings (26607885+chrisglein@users.noreply.github.com)
+- Add support for Fabric TextInput `multiline` - Uses TXTBIT_MULTILINE and TXTBIT_WORDWRAP (26607885+chrisglein@users.noreply.github.com)
 
 ## 0.0.0-canary.642
 
