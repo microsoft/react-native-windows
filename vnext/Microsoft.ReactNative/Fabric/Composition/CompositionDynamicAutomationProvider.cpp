@@ -63,6 +63,9 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_BoundingRectangle(Ui
   if (FAILED(hr))
     return hr;
 
+  // Since get_BoundingRectangle needs to provide real screen coordinates back to the UIA client
+  // we'll use the FragmentRoot's origin to offset our rect because that should have been taken 
+  // into account already.
   winrt::com_ptr<IRawElementProviderFragmentRoot> spFragmentRoot = nullptr;
   hr = get_FragmentRoot(spFragmentRoot.put());
   if (FAILED(hr))
@@ -204,7 +207,6 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
   if (strongView == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  // TODO
   auto props = std::static_pointer_cast<const facebook::react::ViewProps>(strongView->props());
   if (props == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;

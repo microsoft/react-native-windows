@@ -128,7 +128,7 @@ HRESULT __stdcall CompositionRootAutomationProvider::ElementProviderFromPoint(
   }
 
   if (m_hwnd == nullptr || !IsWindow(m_hwnd)) {
-    // TODO
+    // TODO: Add support for non-HWND based hosting
     return E_FAIL;
   }
 
