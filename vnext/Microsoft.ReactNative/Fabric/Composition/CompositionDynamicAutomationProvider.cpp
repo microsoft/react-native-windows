@@ -64,7 +64,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_BoundingRectangle(Ui
     return hr;
 
   // Since get_BoundingRectangle needs to provide real screen coordinates back to the UIA client
-  // we'll use the FragmentRoot's origin to offset our rect because that should have been taken 
+  // we'll use the FragmentRoot's origin to offset our rect because that should have been taken
   // into account already.
   winrt::com_ptr<IRawElementProviderFragmentRoot> spFragmentRoot = nullptr;
   hr = get_FragmentRoot(spFragmentRoot.put());
