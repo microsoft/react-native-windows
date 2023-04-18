@@ -3,6 +3,7 @@
 
 #include "pch.h"
 
+#include <QuirkSettings.h>
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Input.h>
 #include <UI.Xaml.Media.h>
@@ -1138,7 +1139,26 @@ void NativeUIManager::findSubviewIn(
 
 void NativeUIManager::focus(int64_t reactTag) {
   if (auto shadowNode = static_cast<ShadowNodeBase *>(m_host->FindShadowNodeForTag(reactTag))) {
-    xaml::Input::FocusManager::TryFocusAsync(shadowNode->GetView(), winrt::FocusState::Programmatic);
+    const auto view = shadowNode->GetView();
+
+    // Only allow focus on an element with a XamlRoot that matches the current XamlRoot or that
+    // has a different CoreDispatcher for the XamlRoot, otherwise focusing the element will steal
+    // window focus, which is generally not desired behavior.
+    const auto properties = React::ReactPropertyBag(m_context.Properties());
+    if (winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetSuppressWindowFocusOnViewFocus(properties)) {
+      if (const auto uiElement = view.try_as<xaml::UIElement>()) {
+        if (const auto activeXamlRoot = React::XamlUIService::GetXamlRoot(properties.Handle())) {
+          const auto activeDispatcher = activeXamlRoot.Content() ? activeXamlRoot.Content().Dispatcher() : nullptr;
+          if (uiElement.XamlRoot() != activeXamlRoot && uiElement.Dispatcher() == activeDispatcher) {
+            const auto suppressedFocusMessage = L"Suppressed focus on view in XamlRoot not currently in focus.";
+            m_context.CallJSFunction(L"RCTLog", L"logToConsole", L"warn", suppressedFocusMessage);
+            return;
+          }
+        }
+      }
+    }
+
+    xaml::Input::FocusManager::TryFocusAsync(view, winrt::FocusState::Programmatic);
   }
 }
 

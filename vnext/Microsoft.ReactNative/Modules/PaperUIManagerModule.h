@@ -22,9 +22,11 @@ class NativeUIManager;
 struct UIManagerSettings {
   UIManagerSettings(
       const std::shared_ptr<facebook::react::MessageQueueThread> batchingUIMessageQueue,
+      const std::shared_ptr<facebook::react::MessageQueueThread> uiMessageQueue,
       std::vector<std::unique_ptr<IViewManager>> &&viewManagers);
   UIManagerSettings(UIManagerSettings const &) = delete;
   const std::shared_ptr<facebook::react::MessageQueueThread> batchingUIMessageQueue;
+  const std::shared_ptr<facebook::react::MessageQueueThread> uiMessageQueue;
   std::vector<std::unique_ptr<IViewManager>> viewManagers;
 };
 
@@ -175,6 +177,7 @@ struct UIManager final {
 
  private:
   std::shared_ptr<facebook::react::MessageQueueThread> m_batchingUIMessageQueue;
+  std::shared_ptr<facebook::react::MessageQueueThread> m_uiMessageQueue;
   std::shared_ptr<UIManagerModule> m_module;
   winrt::Microsoft::ReactNative::ReactContext m_context;
 };

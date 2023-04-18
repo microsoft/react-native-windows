@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Implement Fabric TextInput editable - Uses TXTBIT_READONLY",
+  "packageName": "react-native-windows",
+  "email": "26607885+chrisglein@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

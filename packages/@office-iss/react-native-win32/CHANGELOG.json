@@ -2,6 +2,51 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 13 Apr 2023 05:14:28 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.191",
+      "version": "0.0.0-canary.191",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "71ca215e58db4f6b9b79be31b1320ab4c05714f1",
+            "comment": "Update TextInput.win32 to align with core"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 08 Apr 2023 05:13:11 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.190",
+      "version": "0.0.0-canary.190",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "9e4665f9f54d645c4d7f6ccce991a935ca63f156",
+            "comment": "integrate rn 0.0.0-20230404-2109-62c4da142"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 01 Apr 2023 05:15:15 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.189",
+      "version": "0.0.0-canary.189",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "25d51e62ec75240d3d175adabc940d2f6d3a0ce2",
+            "comment": "Integrate 3/22/23"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 23 Mar 2023 05:13:37 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.188",
       "version": "0.0.0-canary.188",

@@ -364,9 +364,9 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
   }
 
   //@cmember Get the character to display for password input
-  HRESULT TxGetPasswordChar(_Out_ TCHAR *pch) override {
-    assert(false);
-    return {};
+  HRESULT TxGetPasswordChar(_Out_ wchar_t *pch) override {
+    *pch = L'\u2022';
+    return S_OK;
   }
 
   //@cmember Get the accelerator character
@@ -614,6 +614,27 @@ void WindowsTextInputComponentView::updateProps(
     propBits |= TXTBIT_CHARFORMATCHANGE;
   }
 
+  if (oldTextInputProps.secureTextEntry != newTextInputProps.secureTextEntry) {
+    propBitsMask |= TXTBIT_USEPASSWORD;
+    if (newTextInputProps.secureTextEntry) {
+      propBits |= TXTBIT_USEPASSWORD;
+    }
+  }
+
+  if (oldTextInputProps.multiline != newTextInputProps.multiline) {
+    propBitsMask |= TXTBIT_MULTILINE | TXTBIT_WORDWRAP;
+    if (newTextInputProps.multiline) {
+      propBits |= TXTBIT_MULTILINE | TXTBIT_WORDWRAP;
+    }
+  }
+
+  if (oldTextInputProps.editable != newTextInputProps.editable) {
+    propBitsMask |= TXTBIT_READONLY;
+    if (!newTextInputProps.editable) {
+      propBits |= TXTBIT_READONLY;
+    }
+  }
+
   /*
   if (oldTextInputProps.textAttributes.foregroundColor != newTextInputProps.textAttributes.foregroundColor) {
     if (newTextInputProps.textAttributes.foregroundColor)
@@ -653,17 +674,6 @@ void WindowsTextInputComponentView::updateProps(
   if (oldTextInputProps.placeholder != newTextInputProps.placeholder) {
     m_element.PlaceholderText(winrt::to_hstring(newTextInputProps.placeholder));
   }
-
-  if (oldTextInputProps.editable != newTextInputProps.editable) {
-    m_element.IsReadOnly(!newTextInputProps.editable);
-  }
-
-
-    if (oldTextInputProps.multiline != newTextInputProps.multiline) {
-      m_element.TextWrapping(newTextInputProps.multiline ? xaml::TextWrapping::Wrap : xaml::TextWrapping::NoWrap);
-      m_element.AcceptsReturn(newTextInputProps.multiline);
-    }
-
 
   if (oldTextInputProps.selection.start != newTextInputProps.selection.start ||
       oldTextInputProps.selection.end != newTextInputProps.selection.end) {
@@ -831,10 +841,10 @@ std::string WindowsTextInputComponentView::GetTextFromRichEdit() const noexcept 
   auto str = BstrToStdString(bstr);
 
   // JS gets confused by the \r\0 ending
-  if (*(str.end() - 1) == '\0') {
+  if (str.size() > 0 && *(str.end() - 1) == '\0') {
     str.pop_back();
   }
-  if (*(str.end() - 1) == '\r') {
+  if (str.size() > 0 && *(str.end() - 1) == '\r') {
     str.pop_back();
   }
   SysFreeString(bstr);

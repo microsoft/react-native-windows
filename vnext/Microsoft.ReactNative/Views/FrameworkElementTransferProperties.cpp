@@ -46,6 +46,7 @@ void TransferFrameworkElementProperties(const xaml::DependencyObject &oldView, c
   TransferProperty(oldView, newView, xaml::FrameworkElement::MaxHeightProperty());
   TransferProperty(oldView, newView, xaml::FrameworkElement::FlowDirectionProperty());
   TransferProperty(oldView, newView, xaml::Controls::Canvas::ZIndexProperty());
+  TransferProperty(oldView, newView, xaml::UIElement::ClipProperty());
 
   const auto oldUI = oldView.as<xaml::UIElement>();
   const auto left = winrt::Microsoft::ReactNative::ViewPanel::GetLeft(oldUI);
