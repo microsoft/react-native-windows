@@ -215,7 +215,7 @@ function CheckNode {
         $nodeVersion = (Get-Command node -ErrorAction Stop).Version;
         Write-Verbose "Node version found: $nodeVersion";
         $v = $nodeVersion.Major;
-        return ($v -ge 14) -and (($v % 2) -eq 0);
+        return ($v -ge 16) -and (($v % 2) -eq 0);
     } catch { Write-Debug $_ }
 
     Write-Verbose "Node not found.";
