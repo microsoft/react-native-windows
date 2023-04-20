@@ -85,12 +85,14 @@ const bubblingEventTypes = {
   },
 
   // Experimental/Work in Progress Pointer Events (not yet ready for use)
+  /*[Windows
   topClick: {
     phasedRegistrationNames: {
       captured: 'onClickCapture',
       bubbled: 'onClick',
     },
   },
+  Windows] */
   topPointerCancel: {
     phasedRegistrationNames: {
       captured: 'onPointerCancelCapture',
