@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 18 Apr 2023 05:12:59 GMT and should not be manually modified.
+This log was last generated on Wed, 19 Apr 2023 05:12:49 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.644
+
+Wed, 19 Apr 2023 05:12:49 GMT
+
+### Changes
+
+- Implement Fabric TextInput editable - Uses TXTBIT_READONLY (26607885+chrisglein@users.noreply.github.com)
 
 ## 0.0.0-canary.643
 
