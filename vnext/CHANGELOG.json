@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 19 Apr 2023 05:12:49 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.644",
+      "version": "0.0.0-canary.644",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "26607885+chrisglein@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7383c42723e87691c0f08c101a44cfe0a2a7c3e9",
+            "comment": "Implement Fabric TextInput editable - Uses TXTBIT_READONLY"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 18 Apr 2023 05:12:59 GMT",
       "tag": "react-native-windows_v0.0.0-canary.643",
       "version": "0.0.0-canary.643",
