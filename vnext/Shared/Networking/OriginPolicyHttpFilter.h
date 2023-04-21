@@ -45,7 +45,7 @@ class OriginPolicyHttpFilter
     winrt::hstring AllowedCredentials;
     std::set<std::wstring, CaseInsensitiveComparer> AllowedHeaders;
     std::set<std::wstring> AllowedMethods;
-    std::set<std::wstring> ExposedHeaders;
+    std::set<std::wstring, CaseInsensitiveComparer> ExposedHeaders;
     size_t MaxAge;
   };
 
