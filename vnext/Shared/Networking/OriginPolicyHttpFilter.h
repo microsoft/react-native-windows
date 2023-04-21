@@ -22,20 +22,20 @@ class OriginPolicyHttpFilter
     : public winrt::
           implements<OriginPolicyHttpFilter, winrt::Windows::Web::Http::Filters::IHttpFilter, IRedirectEventSource> {
  public:
-  struct ConstWcharComparer {
+  struct CaseInsensitiveComparer {
     bool operator()(const wchar_t *, const wchar_t *) const;
     bool operator()(const std::wstring &, const std::wstring &) const;
   };
 
  private:
-  static std::set<const wchar_t *, ConstWcharComparer> s_forbiddenMethods;
-  static std::set<const wchar_t *, ConstWcharComparer> s_simpleCorsMethods;
-  static std::set<const wchar_t *, ConstWcharComparer> s_simpleCorsRequestHeaderNames;
-  static std::set<const wchar_t *, ConstWcharComparer> s_simpleCorsResponseHeaderNames;
-  static std::set<const wchar_t *, ConstWcharComparer> s_simpleCorsContentTypeValues;
-  static std::set<const wchar_t *, ConstWcharComparer> s_corsForbiddenRequestHeaderNames;
-  static std::set<const wchar_t *, ConstWcharComparer> s_corsForbiddenRequestHeaderNamePrefixes;
-  static std::set<const wchar_t *, ConstWcharComparer> s_cookieSettingResponseHeaders;
+  static std::set<const wchar_t *, CaseInsensitiveComparer> s_forbiddenMethods;
+  static std::set<const wchar_t *, CaseInsensitiveComparer> s_simpleCorsMethods;
+  static std::set<const wchar_t *, CaseInsensitiveComparer> s_simpleCorsRequestHeaderNames;
+  static std::set<const wchar_t *, CaseInsensitiveComparer> s_simpleCorsResponseHeaderNames;
+  static std::set<const wchar_t *, CaseInsensitiveComparer> s_simpleCorsContentTypeValues;
+  static std::set<const wchar_t *, CaseInsensitiveComparer> s_corsForbiddenRequestHeaderNames;
+  static std::set<const wchar_t *, CaseInsensitiveComparer> s_corsForbiddenRequestHeaderNamePrefixes;
+  static std::set<const wchar_t *, CaseInsensitiveComparer> s_cookieSettingResponseHeaders;
 
   // NOTE: Assumes static origin through owning client/resource/module/(React) instance's lifetime.
   static winrt::Windows::Foundation::Uri s_origin;
@@ -43,7 +43,7 @@ class OriginPolicyHttpFilter
   struct AccessControlValues {
     winrt::hstring AllowedOrigin;
     winrt::hstring AllowedCredentials;
-    std::set<std::wstring, ConstWcharComparer> AllowedHeaders;
+    std::set<std::wstring, CaseInsensitiveComparer> AllowedHeaders;
     std::set<std::wstring> AllowedMethods;
     std::set<std::wstring> ExposedHeaders;
     size_t MaxAge;
