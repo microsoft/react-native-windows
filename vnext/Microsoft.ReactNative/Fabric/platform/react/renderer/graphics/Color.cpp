@@ -14,28 +14,15 @@ bool isColorMeaningful(SharedColor const &color) noexcept {
   return colorComponentsFromColor(color).alpha > 0;
 }
 
-struct string_hash {
-  using is_transparent = void;
-  [[nodiscard]] size_t operator()(const char* txt) const {
-    return std::hash<std::string_view>{}(txt);
-  }
-  [[nodiscard]] size_t operator()(std::string_view txt) const {
-    return std::hash<std::string_view>{}(txt);
-  }
-  [[nodiscard]] size_t operator()(const std::string& txt) const {
-    return std::hash<std::string>{}(txt);
-  }
-};
-
 winrt::Windows::UI::Color ResolvePlatformColor(Color const * const color) {
   // Issue #11489. These are all the light-theme values. Which is better than no values.
   // Where did these values come from? WinUI's common theme resources:
-    // https://github.com/microsoft/microsoft-ui-xaml/blob/7a33ad772d77d908aa6b316ec24e6d2eb3ebf571/dev/CommonStyles/Common_themeresources_any.xaml
-    // Specifically these are pulled from the "Light" ResourceDictionary. If any additional values
-    // are needed, they should be taken from that section (not "Dark" or "HighContrast").
-    // For control-specific values, they will be in a theme resource file for that control. Example:
-    // https://github.com/microsoft/microsoft-ui-xaml/blob/9052972906c8a0a1b6cb5d5c61b27d6d27cd7f11/dev/CommonStyles/Button_themeresources.xaml
-  static std::unordered_map<std::string, winrt::Windows::UI::Color, string_hash, std::equal_to<>> s_windowsColors = {
+  // https://github.com/microsoft/microsoft-ui-xaml/blob/7a33ad772d77d908aa6b316ec24e6d2eb3ebf571/dev/CommonStyles/Common_themeresources_any.xaml
+  // Specifically these are pulled from the "Light" ResourceDictionary. If any additional values
+  // are needed, they should be taken from that section (not "Dark" or "HighContrast").
+  // For control-specific values, they will be in a theme resource file for that control. Example:
+  // https://github.com/microsoft/microsoft-ui-xaml/blob/9052972906c8a0a1b6cb5d5c61b27d6d27cd7f11/dev/CommonStyles/Button_themeresources.xaml
+  static std::unordered_map<std::string, winrt::Windows::UI::Color, std::hash<std::string_view>, std::equal_to<>> s_windowsColors = {
     {"SolidBackgroundFillColorBase", { 0xFF, 0xF3, 0xF3, 0xF3 }}, 
     {"ControlFillColorDefault", { 0xB3, 0xFF, 0xFF, 0xFF }}, 
     {"ControlFillColorSecondary", { 0x80, 0xF9, 0xF9, 0xF9 }}, 
