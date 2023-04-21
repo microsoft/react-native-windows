@@ -10,6 +10,9 @@
 // Boost Library
 #include <boost/algorithm/string.hpp>
 
+// Boost Library
+#include <boost/algorithm/string.hpp>
+
 // Windows API
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Web.Http.h>
@@ -20,6 +23,7 @@ using namespace winrt::Windows::Web::Http;
 using Microsoft::React::Networking::OriginPolicyHttpFilter;
 using Microsoft::React::Networking::RequestArgs;
 using Microsoft::React::Networking::ResponseOperation;
+using std::wstring;
 using std::wstring;
 using winrt::Windows::Foundation::Uri;
 
