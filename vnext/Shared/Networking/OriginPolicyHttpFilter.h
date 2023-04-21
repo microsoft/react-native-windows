@@ -24,6 +24,7 @@ class OriginPolicyHttpFilter
  public:
   struct ConstWcharComparer {
     bool operator()(const wchar_t *, const wchar_t *) const;
+    bool operator()(const std::wstring &, const std::wstring &) const;
   };
 
  private:
@@ -42,7 +43,7 @@ class OriginPolicyHttpFilter
   struct AccessControlValues {
     winrt::hstring AllowedOrigin;
     winrt::hstring AllowedCredentials;
-    std::set<std::wstring> AllowedHeaders;
+    std::set<std::wstring, ConstWcharComparer> AllowedHeaders;
     std::set<std::wstring> AllowedMethods;
     std::set<std::wstring> ExposedHeaders;
     size_t MaxAge;

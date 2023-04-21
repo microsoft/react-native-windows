@@ -43,6 +43,10 @@ bool OriginPolicyHttpFilter::ConstWcharComparer::operator()(const wchar_t *a, co
   return _wcsicmp(a, b) < 0;
 }
 
+bool OriginPolicyHttpFilter::ConstWcharComparer::operator()(const wstring &a, const wstring &b) const {
+  return _wcsicmp(a.c_str(), b.c_str()) < 0;
+}
+
 #pragma endregion ConstWcharComparer
 
 // https://fetch.spec.whatwg.org/#forbidden-method
