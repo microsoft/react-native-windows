@@ -293,7 +293,7 @@ bool OriginPolicyHttpFilter::ConstWcharComparer::operator()(const wchar_t *a, co
 }
 
 /*static*/ OriginPolicyHttpFilter::AccessControlValues OriginPolicyHttpFilter::ExtractAccessControlValues(
-    winrt::Windows::Foundation::Collections::IMap<hstring, hstring> const &headers) {
+    IMap<hstring, hstring> const &headers) {
   using std::wregex;
   using std::wsregex_token_iterator;
 

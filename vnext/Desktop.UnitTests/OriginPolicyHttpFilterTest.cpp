@@ -7,6 +7,9 @@
 #include <Networking/WinRTTypes.h>
 #include "WinRTNetworkingMocks.h"
 
+// Boost Library
+#include <boost/algorithm/string.hpp>
+
 // Windows API
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Web.Http.h>
@@ -17,6 +20,7 @@ using namespace winrt::Windows::Web::Http;
 using Microsoft::React::Networking::OriginPolicyHttpFilter;
 using Microsoft::React::Networking::RequestArgs;
 using Microsoft::React::Networking::ResponseOperation;
+using std::wstring;
 using winrt::Windows::Foundation::Uri;
 
 namespace Microsoft::React::Test {
@@ -252,6 +256,51 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
     }
   }
 
+  TEST_METHOD(ValidatePreflightResponseHeadersCaseMismatchSucceeds) {
+    auto mockFilter = winrt::make<MockHttpBaseFilter>();
+    mockFilter.as<MockHttpBaseFilter>()->Mocks.SendRequestAsync =
+        [](HttpRequestMessage const &request) -> ResponseOperation {
+      HttpResponseMessage response{};
+
+      response.StatusCode(HttpStatusCode::Ok);
+      response.Headers().Insert(L"Access-Control-Allow-Origin", L"*");
+
+      // Return allowed headers as requested by client, in lower case.
+      // This tests case-insensitive preflight validation.
+      auto allowHeaders = boost::to_lower_copy(wstring{request.Headers().Lookup(L"Access-Control-Request-Headers")});
+      response.Headers().Insert(L"Access-Control-Allow-Headers", std::move(allowHeaders));
+
+      co_return response;
+    };
+
+    auto reqArgs = winrt::make<RequestArgs>();
+    auto request = HttpRequestMessage(HttpMethod::Get(), Uri{L"http://somehost"});
+    request.Properties().Insert(L"RequestArgs", reqArgs);
+    request.Headers().TryAppendWithoutValidation(L"ChangeMyCase", L"Value");
+    // Should implicitly set Conent-Length and Content-Type
+    request.Content(HttpStringContent{L"PreflightContent"});
+
+    auto filter = winrt::make<OriginPolicyHttpFilter>(mockFilter);
+    auto opFilter = filter.as<OriginPolicyHttpFilter>();
+
+    OriginPolicyHttpFilter::SetStaticOrigin("http://somehost");
+    try {
+      auto sendOp = opFilter->SendPreflightAsync(request);
+      sendOp.get();
+
+      auto response = sendOp.GetResults();
+      opFilter->ValidatePreflightResponse(request, response);
+
+      OriginPolicyHttpFilter::SetStaticOrigin({});
+      Assert::IsTrue(boost::iequals(
+          response.Headers().Lookup(L"Access-Control-Allow-Headers").c_str(),
+          L"ChangeMyCase, Content-Length, Content-Type"));
+    } catch (const winrt::hresult_error &e) {
+      OriginPolicyHttpFilter::SetStaticOrigin({});
+      Assert::Fail(e.message().c_str());
+    }
+  }
+
   TEST_METHOD(ValidatePreflightResponseMainAndContentHeadersSucceeds) {
     auto mockFilter = winrt::make<MockHttpBaseFilter>();
     mockFilter.as<MockHttpBaseFilter>()->Mocks.SendRequestAsync =
@@ -260,7 +309,9 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
 
       response.StatusCode(HttpStatusCode::Ok);
       response.Headers().Insert(L"Access-Control-Allow-Origin", L"*");
-      // Return allowed headers as requested by client
+      // Return allowed headers as requested by clientTODO
+      auto x = request.Headers().Lookup(L"Access-Control-Request-Headers");
+
       response.Headers().Insert(
           L"Access-Control-Allow-Headers", request.Headers().Lookup(L"Access-Control-Request-Headers"));
 
