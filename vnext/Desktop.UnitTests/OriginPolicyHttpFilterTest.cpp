@@ -310,8 +310,6 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
       response.StatusCode(HttpStatusCode::Ok);
       response.Headers().Insert(L"Access-Control-Allow-Origin", L"*");
       // Return allowed headers as requested by client
-      auto x = request.Headers().Lookup(L"Access-Control-Request-Headers");
-
       response.Headers().Insert(
           L"Access-Control-Allow-Headers", request.Headers().Lookup(L"Access-Control-Request-Headers"));
 
