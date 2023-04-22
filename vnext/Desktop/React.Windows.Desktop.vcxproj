@@ -88,7 +88,6 @@
         CORE_ABI - marks ABI elements that are shared between UWP and Win32 DLLs.
       -->
       <PreprocessorDefinitions>
-        ENABLE_BEAST=$(EnableBeast);
         BOOST_ASIO_HAS_IOCP;
         _WINSOCK_DEPRECATED_NO_WARNINGS;
         _WIN32_WINNT=$(WinVer);
@@ -163,9 +162,6 @@
     <ClCompile Include="Modules\TimingModule.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="BeastWebSocketResource.cpp">
-      <ExcludedFromBuild Condition="'$(EnableBeast)' == 0">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="WebSocketResourceFactory.cpp" />
   </ItemGroup>
@@ -256,7 +252,6 @@
     <ClInclude Include="JSBigStringResourceDll.h" />
     <ClInclude Include="Modules\TimingModule.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="BeastWebSocketResource.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.vcxproj">

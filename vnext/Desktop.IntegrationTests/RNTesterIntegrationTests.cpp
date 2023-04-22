@@ -26,7 +26,6 @@ TEST_MODULE_INITIALIZE(InitModule) {
   using Microsoft::React::SetRuntimeOptionBool;
 
   SetRuntimeOptionBool("WebSocket.AcceptSelfSigned", true);
-  SetRuntimeOptionBool("UseBeastWebSocket", false);
   SetRuntimeOptionBool("Blob.EnableModule", true);
 
   // WebSocketJSExecutor can't register native log hooks.

@@ -116,9 +116,6 @@
     <ClCompile Include="ABI\TestController.cpp">
       <Filter>ABI</Filter>
     </ClCompile>
-    <ClCompile Include="BeastWebSocketResource.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CxxReactWin32\JSBigString.cpp">
       <Filter>Source Files\CxxReactWin32</Filter>
     </ClCompile>
@@ -178,9 +175,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BeastWebSocketResource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="JSBigStringResourceDll.h">
       <Filter>Header Files</Filter>
     </ClInclude>
