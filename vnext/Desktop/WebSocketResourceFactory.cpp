@@ -15,14 +15,12 @@ namespace Microsoft::React::Networking {
 
 /*static*/
 shared_ptr<IWebSocketResource> IWebSocketResource::Make() {
-    std::vector<ChainValidationResult> certExceptions;
-    if (GetRuntimeOptionBool("WebSocket.AcceptSelfSigned")) {
-      certExceptions.emplace_back(
-          ChainValidationResult::Untrusted);
-      certExceptions.emplace_back(
-          ChainValidationResult::InvalidName);
-    }
-    return std::make_shared<WinRTWebSocketResource>(std::move(certExceptions));
+  std::vector<ChainValidationResult> certExceptions;
+  if (GetRuntimeOptionBool("WebSocket.AcceptSelfSigned")) {
+    certExceptions.emplace_back(ChainValidationResult::Untrusted);
+    certExceptions.emplace_back(ChainValidationResult::InvalidName);
+  }
+  return std::make_shared<WinRTWebSocketResource>(std::move(certExceptions));
 }
 
 #pragma endregion IWebSocketResource static members
