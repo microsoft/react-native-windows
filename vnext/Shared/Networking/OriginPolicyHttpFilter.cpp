@@ -37,22 +37,26 @@ namespace Microsoft::React::Networking {
 
 #pragma region OriginPolicyHttpFilter
 
-#pragma region ConstWcharComparer
+#pragma region CaseInsensitiveComparer
 
-bool OriginPolicyHttpFilter::ConstWcharComparer::operator()(const wchar_t *a, const wchar_t *b) const {
+bool OriginPolicyHttpFilter::CaseInsensitiveComparer::operator()(const wchar_t *a, const wchar_t *b) const {
   return _wcsicmp(a, b) < 0;
 }
 
-#pragma endregion ConstWcharComparer
+bool OriginPolicyHttpFilter::CaseInsensitiveComparer::operator()(const wstring &a, const wstring &b) const {
+  return _wcsicmp(a.c_str(), b.c_str()) < 0;
+}
+
+#pragma endregion CaseInsensitiveComparer
 
 // https://fetch.spec.whatwg.org/#forbidden-method
-/*static*/ set<const wchar_t *, OriginPolicyHttpFilter::ConstWcharComparer> OriginPolicyHttpFilter::s_forbiddenMethods =
-    {L"CONNECT", L"TRACE", L"TRACK"};
+/*static*/ set<const wchar_t *, OriginPolicyHttpFilter::CaseInsensitiveComparer>
+    OriginPolicyHttpFilter::s_forbiddenMethods = {L"CONNECT", L"TRACE", L"TRACK"};
 
-/*static*/ set<const wchar_t *, OriginPolicyHttpFilter::ConstWcharComparer>
+/*static*/ set<const wchar_t *, OriginPolicyHttpFilter::CaseInsensitiveComparer>
     OriginPolicyHttpFilter::s_simpleCorsMethods = {L"GET", L"HEAD", L"POST"};
 
-/*static*/ set<const wchar_t *, OriginPolicyHttpFilter::ConstWcharComparer>
+/*static*/ set<const wchar_t *, OriginPolicyHttpFilter::CaseInsensitiveComparer>
     OriginPolicyHttpFilter::s_simpleCorsRequestHeaderNames = {
         L"Accept",
         L"Accept-Language",
@@ -64,11 +68,11 @@ bool OriginPolicyHttpFilter::ConstWcharComparer::operator()(const wchar_t *a, co
         L"Viewport-Width",
         L"Width"};
 
-/*static*/ set<const wchar_t *, OriginPolicyHttpFilter::ConstWcharComparer>
+/*static*/ set<const wchar_t *, OriginPolicyHttpFilter::CaseInsensitiveComparer>
     OriginPolicyHttpFilter::s_simpleCorsResponseHeaderNames =
         {L"Cache-Control", L"Content-Language", L"Content-Type", L"Expires", L"Last-Modified", L"Pragma"};
 
-/*static*/ set<const wchar_t *, OriginPolicyHttpFilter::ConstWcharComparer>
+/*static*/ set<const wchar_t *, OriginPolicyHttpFilter::CaseInsensitiveComparer>
     OriginPolicyHttpFilter::s_simpleCorsContentTypeValues = {
         L"application/x-www-form-urlencoded",
         L"multipart/form-data",
@@ -76,7 +80,7 @@ bool OriginPolicyHttpFilter::ConstWcharComparer::operator()(const wchar_t *a, co
 
 // https://fetch.spec.whatwg.org/#forbidden-header-name
 // Chromium still bans "User-Agent" due to https://crbug.com/571722
-/*static*/ set<const wchar_t *, OriginPolicyHttpFilter::ConstWcharComparer>
+/*static*/ set<const wchar_t *, OriginPolicyHttpFilter::CaseInsensitiveComparer>
     OriginPolicyHttpFilter::s_corsForbiddenRequestHeaderNames = {
         L"Accept-Charset",
         L"Accept-Encoding",
@@ -99,13 +103,13 @@ bool OriginPolicyHttpFilter::ConstWcharComparer::operator()(const wchar_t *a, co
         L"Upgrade",
         L"Via"};
 
-/*static*/ set<const wchar_t *, OriginPolicyHttpFilter::ConstWcharComparer>
+/*static*/ set<const wchar_t *, OriginPolicyHttpFilter::CaseInsensitiveComparer>
     OriginPolicyHttpFilter::s_cookieSettingResponseHeaders = {
         L"Set-Cookie",
         L"Set-Cookie2", // Deprecated by the spec, but probably still used
 };
 
-/*static*/ set<const wchar_t *, OriginPolicyHttpFilter::ConstWcharComparer>
+/*static*/ set<const wchar_t *, OriginPolicyHttpFilter::CaseInsensitiveComparer>
     OriginPolicyHttpFilter::s_corsForbiddenRequestHeaderNamePrefixes = {L"Proxy-", L"Sec-"};
 
 /*static*/ Uri OriginPolicyHttpFilter::s_origin{nullptr};
@@ -293,7 +297,7 @@ bool OriginPolicyHttpFilter::ConstWcharComparer::operator()(const wchar_t *a, co
 }
 
 /*static*/ OriginPolicyHttpFilter::AccessControlValues OriginPolicyHttpFilter::ExtractAccessControlValues(
-    winrt::Windows::Foundation::Collections::IMap<hstring, hstring> const &headers) {
+    IMap<hstring, hstring> const &headers) {
   using std::wregex;
   using std::wsregex_token_iterator;
 
