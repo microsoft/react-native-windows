@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add cursorColor support to TextInput",
-  "packageName": "react-native-windows",
-  "email": "d@litsman.com",
-  "dependentChangeType": "patch"
-}

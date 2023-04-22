@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 19 Apr 2023 05:12:49 GMT and should not be manually modified.
+This log was last generated on Sat, 22 Apr 2023 05:13:57 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.645
+
+Sat, 22 Apr 2023 05:13:57 GMT
+
+### Changes
+
+- Use case-insensitive comparer for AllowedHeaders (julio.rocha@microsoft.com)
+- Add cursorColor support to TextInput (d@litsman.com)
 
 ## 0.0.0-canary.644
 
