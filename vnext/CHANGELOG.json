@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 24 Apr 2023 15:09:10 GMT",
+      "tag": "react-native-windows_v0.70.18",
+      "version": "0.70.18",
+      "comments": {
+        "patch": [
+          {
+            "author": "dev@rocha.red",
+            "package": "react-native-windows",
+            "commit": "38f7126fef83a55fbdabc7de4088b2fb22e21bef",
+            "comment": "Use case-insensitive comparison for CORS preflight responses (#11511)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 17 Apr 2023 15:10:15 GMT",
       "tag": "react-native-windows_v0.70.17",
       "version": "0.70.17",
