@@ -13,7 +13,7 @@
     "e2etest:debug": "jest --config ./jest.debug.config.js"
   },
   "dependencies": {
-    "@react-native-picker/picker": "2.2.0",
+    "@react-native-picker/picker": "2.4.10",
     "@react-native-windows/automation-channel": "^0.10.14",
     "@react-native-windows/tester": "0.0.1",
     "@typescript-eslint/eslint-plugin": "^5.21.0",
