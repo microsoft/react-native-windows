@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix bug in accessibilityRole where it loses its value",
+  "packageName": "react-native-windows",
+  "email": "helenistic@meta.com",
+  "dependentChangeType": "patch"
+}
