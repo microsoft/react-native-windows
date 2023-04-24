@@ -36,7 +36,7 @@
     "@rnw-scripts/ts-config": "2.0.3",
     "@types/chalk": "^2.2.0",
     "@types/jest": "^29.2.2",
-    "@types/node": "^14.14.22",
+    "@types/node": "^16.0.0",
     "@types/yargs": "16.0.0",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
@@ -66,6 +66,6 @@
   },
   "promoteRelease": true,
   "engines": {
-    "node": ">= 14"
+    "node": ">= 16"
   }
 }

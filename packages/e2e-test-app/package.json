@@ -40,7 +40,7 @@
     "@rnw-scripts/ts-config": "2.0.3",
     "@rnx-kit/jest-preset": "^0.1.0",
     "@types/jest": "^29.2.2",
-    "@types/node": "^14.14.22",
+    "@types/node": "^16.0.0",
     "@types/react": "^18.0.18",
     "babel-jest": "^29.3.0",
     "eslint": "^8.19.0",
@@ -52,6 +52,6 @@
     "typescript": "^4.9.5"
   },
   "engines": {
-    "node": ">= 14"
+    "node": ">= 16"
   }
 }

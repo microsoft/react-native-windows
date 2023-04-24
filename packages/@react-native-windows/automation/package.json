@@ -34,7 +34,7 @@
     "@rnw-scripts/just-task": "2.3.6",
     "@rnw-scripts/ts-config": "2.0.3",
     "@types/jest": "^29.2.2",
-    "@types/node": "^14.14.22",
+    "@types/node": "^16.0.0",
     "@types/readline-sync": "^1.4.4",
     "eslint": "^8.19.0",
     "prettier": "^2.4.1",
@@ -49,6 +49,6 @@
     "README.md"
   ],
   "engines": {
-    "node": ">= 14"
+    "node": ">= 16"
   }
 }

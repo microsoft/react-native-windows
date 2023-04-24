@@ -33,7 +33,7 @@
     "@rnw-scripts/just-task": "2.3.6",
     "@rnw-scripts/ts-config": "2.0.3",
     "@types/chalk": "^2.2.0",
-    "@types/node": "^14.14.22",
+    "@types/node": "^16.0.0",
     "@types/yargs": "^16.0.0",
     "eslint": "^8.19.0",
     "prettier": "^2.4.1",
@@ -44,7 +44,7 @@
     "lib-commonjs"
   ],
   "engines": {
-    "node": ">= 14"
+    "node": ">= 16"
   },
   "private": true
 }
