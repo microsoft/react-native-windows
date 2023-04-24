@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 11 Apr 2023 05:17:09 GMT and should not be manually modified.
+This log was last generated on Mon, 24 Apr 2023 15:09:03 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.68.33
+
+Mon, 24 Apr 2023 15:09:03 GMT
+
+### Patches
+
+- Use case-insensitive comparison for CORS preflight responses (#11511) (dev@rocha.red)
 
 ## 0.68.32
 
