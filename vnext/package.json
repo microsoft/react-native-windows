@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-canary.643",
+  "version": "0.0.0-canary.645",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -69,7 +69,7 @@
     "@rnw-scripts/just-task": "2.3.6",
     "@rnw-scripts/metro-dev-config": "0.0.0",
     "@rnx-kit/jest-preset": "^0.1.0",
-    "@types/node": "^14.14.22",
+    "@types/node": "^16.0.0",
     "@types/react": "^18.0.18",
     "eslint": "^8.19.0",
     "eslint-plugin-prettier": "^4.2.1",
@@ -144,6 +144,6 @@
   ],
   "promoteRelease": true,
   "engines": {
-    "node": ">= 14"
+    "node": ">= 16"
   }
 }

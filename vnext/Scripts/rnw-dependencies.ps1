@@ -215,7 +215,7 @@ function CheckNode {
         $nodeVersion = (Get-Command node -ErrorAction Stop).Version;
         Write-Verbose "Node version found: $nodeVersion";
         $v = $nodeVersion.Major;
-        return ($v -ge 14) -and (($v % 2) -eq 0);
+        return ($v -ge 16) -and (($v % 2) -eq 0);
     } catch { Write-Debug $_ }
 
     Write-Verbose "Node not found.";
@@ -412,7 +412,7 @@ $requirements = @(
     },
     @{
         Id=[CheckId]::Node;
-        Name = 'Node.js (LTS, >= 14.0)';
+        Name = 'Node.js (LTS, >= 16.0)';
         Tags = @('appDev');
         Valid = { CheckNode; }
         Install = { choco install -y nodejs-lts };

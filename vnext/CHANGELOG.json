@@ -2,6 +2,42 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 22 Apr 2023 05:13:57 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.645",
+      "version": "0.0.0-canary.645",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "84b7f820be4deceb26a7baed1a5897dee6d68316",
+            "comment": "Use case-insensitive comparer for AllowedHeaders"
+          },
+          {
+            "author": "d@litsman.com",
+            "package": "react-native-windows",
+            "commit": "f9c92c66362b897c92231c791803fc247076b944",
+            "comment": "Add cursorColor support to TextInput"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 19 Apr 2023 05:12:49 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.644",
+      "version": "0.0.0-canary.644",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "26607885+chrisglein@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7383c42723e87691c0f08c101a44cfe0a2a7c3e9",
+            "comment": "Implement Fabric TextInput editable - Uses TXTBIT_READONLY"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 18 Apr 2023 05:12:59 GMT",
       "tag": "react-native-windows_v0.0.0-canary.643",
       "version": "0.0.0-canary.643",
