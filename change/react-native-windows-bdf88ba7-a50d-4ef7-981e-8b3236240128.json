@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Use case-insensitive comparison for CORS preflight responses (#11511)",
-  "packageName": "react-native-windows",
-  "email": "dev@rocha.red",
-  "dependentChangeType": "patch"
-}
