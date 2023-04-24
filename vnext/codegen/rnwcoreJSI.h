@@ -4544,6 +4544,7 @@ protected:
 public:
   virtual void startReporting(jsi::Runtime &rt, double entryType) = 0;
   virtual void stopReporting(jsi::Runtime &rt, double entryType) = 0;
+  virtual void setIsBuffered(jsi::Runtime &rt, jsi::Array entryTypes, bool isBuffered) = 0;
   virtual jsi::Object popPendingEntries(jsi::Runtime &rt) = 0;
   virtual void setOnPerformanceEntryCallback(jsi::Runtime &rt, std::optional<jsi::Function> callback) = 0;
   virtual void logRawEntry(jsi::Runtime &rt, jsi::Object entry) = 0;
@@ -4587,6 +4588,14 @@ private:
 
       return bridging::callFromJs<void>(
           rt, &T::stopReporting, jsInvoker_, instance_, std::move(entryType));
+    }
+    void setIsBuffered(jsi::Runtime &rt, jsi::Array entryTypes, bool isBuffered) override {
+      static_assert(
+          bridging::getParameterCount(&T::setIsBuffered) == 3,
+          "Expected setIsBuffered(...) to have 3 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::setIsBuffered, jsInvoker_, instance_, std::move(entryTypes), std::move(isBuffered));
     }
     jsi::Object popPendingEntries(jsi::Runtime &rt) override {
       static_assert(

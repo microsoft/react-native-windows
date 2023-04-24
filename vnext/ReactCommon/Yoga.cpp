@@ -445,7 +445,7 @@ YOGA_EXPORT void YGNodeMarkDirty(const YGNodeRef node) {
   YGAssertWithNode(
       node,
       node->hasMeasureFunc(),
-      "Only leaf nodes with custom measure functions"
+      "Only leaf nodes with custom measure functions "
       "should manually mark themselves as dirty");
 
   node->markDirtyAndPropagate();
