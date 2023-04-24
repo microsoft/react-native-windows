@@ -103,6 +103,7 @@ class WindowsTextInputProps final : public ViewProps, public BaseTextProps {
   std::string placeholder{};
   SharedColor placeholderTextColor{};
   bool scrollEnabled{true};
+  SharedColor cursorColor{};
   CompWindowsTextInputSelectionStruct selection{};
   SharedColor selectionColor{};
   bool selectTextOnFocus{false};
