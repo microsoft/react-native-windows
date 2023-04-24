@@ -16,7 +16,7 @@
     <ResolveNuGetPackages>false</ResolveNuGetPackages>
 
     <!-- https://github.com/NuGet/Home/issues/10511#issuecomment-778400668 -->
-    <AssetTargetFallback>$(AssetTargetFallback);uap10.0.17763.0</AssetTargetFallback>
+    <AssetTargetFallback>$(AssetTargetFallback);uap10.0.17763</AssetTargetFallback>
 
     <!--
       Avoid Visual Studio error message:
