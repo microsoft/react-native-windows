@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Update V8 version to be one with matching JSI version",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

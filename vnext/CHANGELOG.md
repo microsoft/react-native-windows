@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 24 Apr 2023 15:13:33 GMT and should not be manually modified.
+This log was last generated on Tue, 25 Apr 2023 23:09:17 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.8
+
+Tue, 25 Apr 2023 23:09:17 GMT
+
+### Patches
+
+- Update V8 version to be one with matching JSI version (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.71.7
 

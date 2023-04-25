@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 25 Apr 2023 23:09:17 GMT",
+      "tag": "react-native-windows_v0.71.8",
+      "version": "0.71.8",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b5e7ba6012efa021816448f0801316467368cde5",
+            "comment": "Update V8 version to be one with matching JSI version"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Apr 2023 15:13:33 GMT",
       "tag": "react-native-windows_v0.71.7",
       "version": "0.71.7",
