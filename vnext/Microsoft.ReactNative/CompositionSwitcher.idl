@@ -75,6 +75,13 @@ namespace Microsoft.ReactNative.Composition
 
   [webhosthidden]
   [experimental]
+  runtimeclass ShapeVisual: IVisual
+  {
+    void Shapes();
+  }
+
+  [webhosthidden]
+  [experimental]
   runtimeclass ScrollPositionChangedArgs
   {
     Windows.Foundation.Numerics.Vector2 Position { get; };
@@ -90,6 +97,13 @@ namespace Microsoft.ReactNative.Composition
     Windows.Foundation.Numerics.Vector3 ScrollPosition { get; };
     void ScrollBy(Windows.Foundation.Numerics.Vector3 offset);
     void TryUpdatePosition(Windows.Foundation.Numerics.Vector3 position, Boolean animate);
+  }
+
+  [webhosthidden]
+  [experimental]
+  runtimeclass ActivityVisual : IVisual
+  {
+    void Test();
   }
 
   [webhosthidden]
@@ -128,7 +142,9 @@ namespace Microsoft.ReactNative.Composition
       Windows.Graphics.DirectX.DirectXAlphaMode alphaMode);
 
     SpriteVisual CreateSpriteVisual();
+    ShapeVisual CreateShapeVisual();
     ScrollVisual CreateScrollerVisual();
+    ActivityVisual CreateActivityVisual();
     ICaretVisual CreateCaretVisual();
     IFocusVisual CreateFocusVisual();
     IDropShadow CreateDropShadow();

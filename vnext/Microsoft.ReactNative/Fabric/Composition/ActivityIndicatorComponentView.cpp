@@ -6,6 +6,10 @@
 #include "ActivityIndicatorComponentView.h"
 #include "CompositionDynamicAutomationProvider.h"
 
+#include <Windows.h>
+#include <Windows.UI.Composition.h>
+#include "CompositionContextHelper.h"
+
 namespace Microsoft::ReactNative {
 
 ActivityIndicatorComponentView::ActivityIndicatorComponentView(
@@ -184,6 +188,9 @@ facebook::react::Props::Shared ActivityIndicatorComponentView::props() noexcept 
 void ActivityIndicatorComponentView::ensureVisual() noexcept {
   if (!m_visual) {
     m_visual = m_compContext.CreateSpriteVisual();
+    auto circle = m_compContext.CreateActivityVisual(); //creates COM control
+  
+    OuterVisual().InsertAt(circle, 0);
     OuterVisual().InsertAt(m_visual, 0);
   }
 }
