@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Upgrade to WinUI 2.8",
-  "packageName": "react-native-windows",
-  "email": "34109996+chiaramooney@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
