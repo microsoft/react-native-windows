@@ -45,20 +45,6 @@ class WindowsTextInputState final {
   ParagraphAttributes paragraphAttributes{};
 
   /**
-   * Default TextAttributes used if we need to construct a new Fragment.
-   * Only used if text is inserted into an AttributedString with no existing
-   * Fragments.
-   */
-  TextAttributes defaultTextAttributes;
-
-  /**
-   * Default parent ShadowView used if we need to construct a new Fragment.
-   * Only used if text is inserted into an AttributedString with no existing
-   * Fragments.
-   */
-  ShadowView defaultParentShadowView;
-
-  /**
    * Communicates Android theme padding back to the ShadowNode / Component
    * Descriptor for layout.
    */
@@ -72,8 +58,6 @@ class WindowsTextInputState final {
       AttributedString attributedString,
       AttributedString reactTreeAttributedString,
       ParagraphAttributes paragraphAttributes,
-      TextAttributes defaultTextAttributes,
-      ShadowView defaultParentShadowView,
       float defaultThemePaddingStart,
       float defaultThemePaddingEnd,
       float defaultThemePaddingTop,

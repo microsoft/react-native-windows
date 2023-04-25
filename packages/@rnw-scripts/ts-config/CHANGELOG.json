@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/ts-config",
   "entries": [
     {
+      "date": "Tue, 25 Apr 2023 05:17:02 GMT",
+      "tag": "@rnw-scripts/ts-config_v2.0.4",
+      "version": "2.0.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@rnw-scripts/ts-config",
+            "commit": "6a15837a441c23df1e2fb4c1257bc835a49539f2",
+            "comment": "Update Node to 16"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 13 Dec 2022 06:15:26 GMT",
       "tag": "@rnw-scripts/ts-config_v2.0.3",
       "version": "2.0.3",

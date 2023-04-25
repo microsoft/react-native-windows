@@ -1,8 +1,41 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 18 Apr 2023 05:12:59 GMT and should not be manually modified.
+This log was last generated on Tue, 25 Apr 2023 05:17:02 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.646
+
+Tue, 25 Apr 2023 05:17:02 GMT
+
+### Changes
+
+- Integrate 4/13 (34109996+chiaramooney@users.noreply.github.com)
+- Upgrade to WinUI 2.8 (34109996+chiaramooney@users.noreply.github.com)
+- Update Node to 16 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.168
+- Bump @react-native-windows/codegen to v0.0.0-canary.56
+- Bump @rnw-scripts/eslint-config to v1.1.16
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.2
+- Bump @rnw-scripts/just-task to v2.3.7
+- Bump react-native-platform-override to v1.9.5
+
+## 0.0.0-canary.645
+
+Sat, 22 Apr 2023 05:13:57 GMT
+
+### Changes
+
+- Use case-insensitive comparer for AllowedHeaders (julio.rocha@microsoft.com)
+- Add cursorColor support to TextInput (d@litsman.com)
+
+## 0.0.0-canary.644
+
+Wed, 19 Apr 2023 05:12:49 GMT
+
+### Changes
+
+- Implement Fabric TextInput editable - Uses TXTBIT_READONLY (26607885+chrisglein@users.noreply.github.com)
 
 ## 0.0.0-canary.643
 
