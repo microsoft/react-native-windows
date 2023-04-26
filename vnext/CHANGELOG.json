@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 26 Apr 2023 05:13:36 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.647",
+      "version": "0.0.0-canary.647",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "26607885+chrisglein@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "f6d9f968299ed2605acb5eb7017e4ee3c4bccc72",
+            "comment": "Resolve some XAML style colors in Fabric"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 25 Apr 2023 05:17:02 GMT",
       "tag": "react-native-windows_v0.0.0-canary.646",
       "version": "0.0.0-canary.646",
