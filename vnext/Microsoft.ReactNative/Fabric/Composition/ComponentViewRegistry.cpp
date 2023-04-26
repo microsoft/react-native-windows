@@ -58,7 +58,7 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
   } else if (componentHandle == facebook::react::SwitchShadowNode::Handle()) {
     view = SwitchComponentView::Create(compContext, tag, m_context);
   } else if (componentHandle == facebook::react::RootShadowNode::Handle()) {
-    view = RootComponentView::Create(compContext, tag);
+    view = RootComponentView::Create(compContext, tag, m_context);
   } else if (
       componentHandle == facebook::react::RawTextShadowNode::Handle() ||
       componentHandle == facebook::react::TextShadowNode::Handle()) {

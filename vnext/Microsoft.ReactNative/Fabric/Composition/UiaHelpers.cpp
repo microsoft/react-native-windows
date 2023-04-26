@@ -61,11 +61,28 @@ HRESULT UiaNavigateHelper(
     } break;
   }
 
-  if (uiaProvider != nullptr) {
-    winrt::com_ptr<IRawElementProviderFragment> spFragment;
-    uiaProvider.as(spFragment);
+  auto spFragment = uiaProvider.try_as<IRawElementProviderFragment>();
+  if (spFragment != nullptr) {
     retVal = spFragment.detach();
   }
+
+  return S_OK;
+}
+
+HRESULT UiaGetBoundingRectangleHelper(::Microsoft::ReactNative::ReactTaggedView &view, UiaRect &rect) noexcept {
+  auto strongView = view.view();
+
+  if (strongView == nullptr) {
+    return UIA_E_ELEMENTNOTAVAILABLE;
+  }
+
+  auto clientRect = strongView->getClientRect();
+
+  rect.left = clientRect.left;
+  rect.top = clientRect.top;
+  rect.width = clientRect.right - clientRect.left;
+  rect.height = clientRect.bottom - clientRect.top;
+
   return S_OK;
 }
 
