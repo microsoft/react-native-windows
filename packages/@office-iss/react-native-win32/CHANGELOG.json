@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 27 Apr 2023 19:11:54 GMT",
+      "tag": "@office-iss/react-native-win32_v0.71.5",
+      "version": "0.71.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "e748385ceaa8d5c642fbf3cc6b008a53c088ba55",
+            "comment": "Fix ref's on ViewWin32 (enables ViewWin32.focus() calls to work again)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 13 Apr 2023 20:50:33 GMT",
       "tag": "@office-iss/react-native-win32_v0.71.4",
       "version": "0.71.4",
