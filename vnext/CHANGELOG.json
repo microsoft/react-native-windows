@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 27 Apr 2023 05:12:48 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.648",
+      "version": "0.0.0-canary.648",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "adrum@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "1badc96a5990cee74d15292b17beb276765aea07",
+            "comment": "working impl of getBoundingRect and ElementProviderFromPoint"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 26 Apr 2023 05:13:36 GMT",
       "tag": "react-native-windows_v0.0.0-canary.647",
       "version": "0.0.0-canary.647",

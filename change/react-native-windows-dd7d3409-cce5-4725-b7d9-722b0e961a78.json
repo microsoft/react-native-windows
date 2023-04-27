@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "working impl of getBoundingRect and ElementProviderFromPoint",
-  "packageName": "react-native-windows",
-  "email": "adrum@microsoft.com",
-  "dependentChangeType": "patch"
-}
