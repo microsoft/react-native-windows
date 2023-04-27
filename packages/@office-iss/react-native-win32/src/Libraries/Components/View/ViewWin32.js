@@ -14,8 +14,8 @@ import type {ViewProps} from './ViewPropTypes';
 import View from './View';
 import {findNodeHandle} from '../../ReactNative/RendererProxy';
 import UIManager from '../../ReactNative/UIManager';
-import useMergeRefs from '../../Utilities/useMergeRefs';
 import warnOnce from '../../Utilities/warnOnce';
+import setAndForwardRef from '../../Utilities/setAndForwardRef';
 
 /**
  * Basic View component with additional Win32 specific functionality
@@ -126,9 +126,9 @@ const ViewWin32: React.AbstractComponent<
     );
 
     // $FlowFixMe
-    const setNativeRef = useMergeRefs<typeof View | null>({
+    const setNativeRef = setAndForwardRef<typeof View | null>({
+      getForwardedRef: () => forwardedRef,
       setLocalRef,
-      forwardedRef,
     });
 
     return (
