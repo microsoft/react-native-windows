@@ -125,9 +125,9 @@ facebook::react::Props::Shared ActivityIndicatorComponentView::props() noexcept 
 void ActivityIndicatorComponentView::ensureVisual() noexcept {
   if (!m_visual) {
     m_visual = m_compContext.CreateSpriteVisual();
-    auto circle = m_compContext.CreateActivityVisual(); // creates COM control
+    m_ActivityIndicatorVisual = m_compContext.CreateActivityVisual(); // creates COM control
 
-    OuterVisual().InsertAt(circle, 0);
+    OuterVisual().InsertAt(m_ActivityIndicatorVisual, 0);
     OuterVisual().InsertAt(m_visual, 0);
   }
 }
@@ -143,6 +143,12 @@ void ActivityIndicatorComponentView::ensureDrawingSurface() noexcept {
         winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
 
     Draw();
+
+    // update color if needed
+    const auto activityIndicatorProps = std::static_pointer_cast<const facebook::react::ActivityIndicatorViewProps>(m_props);
+    if (activityIndicatorProps->color) {
+      m_ActivityIndicatorVisual.updateColor(activityIndicatorProps->color.AsWindowsColor());
+    }
 
     auto surfaceBrush = m_compContext.CreateSurfaceBrush(m_drawingSurface);
 

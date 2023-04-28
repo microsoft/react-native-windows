@@ -733,6 +733,8 @@ struct CompActivityVisual : winrt::Microsoft::ReactNative::Composition::implemen
   float m_ringWidth = 2.0f;
   float m_centerX = m_radiusSmall + m_ringWidth;
   float m_centerY = m_radiusSmall + m_ringWidth;
+  std::vector<winrt::Windows::UI::Composition::CompositionSpriteShape> spriteVisuals;
+  
 
   CompActivityVisual(winrt::Windows::UI::Composition::ShapeVisual const &visual) : m_visual(visual) {
     auto compositor = m_visual.Compositor();
@@ -744,6 +746,17 @@ struct CompActivityVisual : winrt::Microsoft::ReactNative::Composition::implemen
       m_visual.Children().InsertAtTop(loadingCircle);
     }
   }
+
+  void updateColor(winrt::Windows::UI::Color color) noexcept {
+    // Change the color of each SpriteVisual
+    for (auto &spriteVisual : spriteVisuals) {
+      auto colorBrush = m_visual.Compositor().CreateColorBrush(color);
+      // Set the new color brush on the SpriteVisual
+      spriteVisual.FillBrush(colorBrush);
+    }
+
+  }
+  
 
   winrt::Windows::UI::Composition::ShapeVisual createLoadingCircle(
       winrt::Windows::UI::Composition::Compositor compositor,
@@ -759,7 +772,10 @@ struct CompActivityVisual : winrt::Microsoft::ReactNative::Composition::implemen
     auto circleShape = compositor.CreateShapeVisual();
     circleShape.Shapes().Append(spriteShape);
     circleShape.Size({100.0f, 100.0f});
+    circleShape.Opacity(0.0f);
+    spriteVisuals.push_back(spriteShape);
 
+ 
     // Create an OpacityAnimation
     auto opacityAnimation = compositor.CreateScalarKeyFrameAnimation();
     opacityAnimation.Duration(std::chrono::seconds(2));
@@ -793,12 +809,6 @@ struct CompActivityVisual : winrt::Microsoft::ReactNative::Composition::implemen
     spriteShape.StartAnimation(L"Offset", animation);
 
     return circleShape;
-  }
-
-  void SetupPathAndAnimation(
-      winrt::Windows::UI::Composition::Compositor c,
-      winrt::Windows::UI::Composition::CompositionContainerShape shapeContainer) {
-    // Empty for now!
   }
 
   winrt::Windows::UI::Composition::Visual InnerVisual() const noexcept {
@@ -899,6 +909,7 @@ struct CompActivityVisual : winrt::Microsoft::ReactNative::Composition::implemen
   }
 
  private:
+  
   winrt::Windows::Foundation::Numerics::float2 m_contentSize{0};
   winrt::Windows::Foundation::Numerics::float2 m_visualSize{0};
   winrt::Windows::UI::Composition::ShapeVisual m_visual{nullptr};
