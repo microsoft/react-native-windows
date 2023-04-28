@@ -5,11 +5,11 @@
 #include "Composition.CompositionContextHelper.g.cpp"
 #endif
 
+#include <Composition.ActivityVisual.g.h>
 #include <Composition.ScrollPositionChangedArgs.g.h>
 #include <Composition.ScrollVisual.g.h>
-#include <Composition.ActivityVisual.g.h>
-#include <Composition.SpriteVisual.g.h>
 #include <Composition.ShapeVisual.g.h>
+#include <Composition.SpriteVisual.g.h>
 #include <Composition.SurfaceBrush.g.h>
 #include <Windows.Graphics.Interop.h>
 #include <windows.ui.composition.interop.h>
@@ -410,7 +410,7 @@ struct CompShapeVisual : winrt::Microsoft::ReactNative::Composition::implementat
     m_visual.Opacity(opacity);
   }
 
-  void Shapes() noexcept { // TODO: Actually figure this method out 
+  void Shapes() noexcept { // TODO: Actually figure this method out
     auto shapes = m_visual.Shapes();
   }
 
@@ -726,101 +726,73 @@ struct CompScrollerVisual : winrt::Microsoft::ReactNative::Composition::implemen
 
 struct CompActivityVisual : winrt::Microsoft::ReactNative::Composition::implementation::
                                 ActivityVisualT<CompActivityVisual, ICompositionVisual, IVisualInterop> {
-
-  public:
-    // constants
-    float radiusSmall = 8.0f;
-    float radiusLarge = 16.0f;
-    float ringWidth = 2.0f;
-    float centerX = radiusSmall + ringWidth; // ToDo: Figure out real offset
-    float centerY = radiusSmall + ringWidth; // ToDo: Figure out real offset
-    
+ public:
+  // constants
+  float m_radiusSmall = 8.0f;
+  float m_radiusLarge = 16.0f;
+  float m_ringWidth = 2.0f;
+  float m_centerX = m_radiusSmall + m_ringWidth;
+  float m_centerY = m_radiusSmall + m_ringWidth;
 
   CompActivityVisual(winrt::Windows::UI::Composition::ShapeVisual const &visual) : m_visual(visual) {
     auto compositor = m_visual.Compositor();
     m_contentVisual = compositor.CreateShapeVisual();
 
-    // Need this so we can add multiple shapes to a sprite
-    auto shapeContainer = compositor.CreateContainerShape();
+    // Create loading circles
+    for (int i = 0; i < 4; i++) {
+      auto loadingCircle = createLoadingCircle(compositor, i * 200);
+      m_visual.Children().InsertAtTop(loadingCircle);
+    }
+  }
 
-    ////// create an ellipse shape object
+  winrt::Windows::UI::Composition::ShapeVisual createLoadingCircle(
+      winrt::Windows::UI::Composition::Compositor compositor,
+      int delay) {
+    // Create circle
     auto ellipse = compositor.CreateEllipseGeometry();
-    ellipse.Radius({radiusSmall, radiusSmall});
-
-    ////// create a CompositionSpriteShape object and set its geometry to the ellipse
+    ellipse.Radius({m_ringWidth, m_ringWidth});
     auto spriteShape = compositor.CreateSpriteShape();
     spriteShape.Geometry(ellipse);
-    spriteShape.Offset(winrt::Windows::Foundation::Numerics::float2(centerX, centerY));
-
-    ////// set the fill color of the CompositionSpriteShape object
-    auto spriteVisualBrush = compositor.CreateColorBrush(winrt::Windows::UI::Colors::Red());
+    spriteShape.Offset(winrt::Windows::Foundation::Numerics::float2(m_centerX, m_centerY + m_radiusSmall));
+    auto spriteVisualBrush = compositor.CreateColorBrush(winrt::Windows::UI::Colors::LightGray());
     spriteShape.FillBrush(spriteVisualBrush);
-
-    ////// set the shape object as the geometry of the ShapeVisual
     auto circleShape = compositor.CreateShapeVisual();
     circleShape.Shapes().Append(spriteShape);
     circleShape.Size({100.0f, 100.0f});
 
+    // Create an OpacityAnimation
+    auto opacityAnimation = compositor.CreateScalarKeyFrameAnimation();
+    opacityAnimation.Duration(std::chrono::seconds(2));
+    opacityAnimation.IterationBehavior(winrt::Windows::UI::Composition::AnimationIterationBehavior::Forever);
+    opacityAnimation.DelayTime(std::chrono::milliseconds(650 + delay));
 
-    auto circleShape2 = createLoadingCircle(compositor,0);
-    //auto circleShape3 = createLoadingCircle(compositor,20500);
-    //auto circleShape4 = createLoadingCircle(compositor,10080000);
-
-
-    m_visual.Children().InsertAtTop(circleShape);
-    m_visual.Children().InsertAtTop(circleShape2);
-    //m_visual.Children().InsertAtTop(circleShape3);
-    //m_visual.Children().InsertAtTop(circleShape4);
-
-  }
-
-  winrt::Windows::UI::Composition::ShapeVisual createLoadingCircle(
-      winrt::Windows::UI::Composition::Compositor compositor, int delay) {
-    // creeate another circle
-    auto ellipse2 = compositor.CreateEllipseGeometry();
-    ellipse2.Radius({ringWidth, ringWidth});
-    auto spriteShape2 = compositor.CreateSpriteShape();
-    spriteShape2.Geometry(ellipse2);
-    spriteShape2.Offset(winrt::Windows::Foundation::Numerics::float2(centerX, centerY + radiusSmall));
-    auto spriteVisualBrush2 = compositor.CreateColorBrush(winrt::Windows::UI::Colors::Blue());
-    spriteShape2.FillBrush(spriteVisualBrush2);
-    auto circleShape2 = compositor.CreateShapeVisual();
-    circleShape2.Shapes().Append(spriteShape2);
-    circleShape2.Size({100.0f, 100.0f});
-
-    // testing animation -------------------------------------------------------------------------------------
+    opacityAnimation.InsertKeyFrame(0.0f, 0.0f); // Initial opacity (fully transparent)
+    opacityAnimation.InsertKeyFrame(0.5f, 1.0f); // Intermediate opacity (fully opaque)
+    opacityAnimation.InsertKeyFrame(1.0f, 0.0f); // Intermediate opacity (fully opaque)
+    opacityAnimation.InsertKeyFrame(0.0f, 0.0f); // Final opacity (fully transparent)
 
     // create an animation for the Scale property of the ShapeVisual
     auto animation = compositor.CreateVector2KeyFrameAnimation();
-    animation.Duration(std::chrono::seconds(3));
+    animation.Duration(std::chrono::seconds(2));
     animation.Direction(winrt::Windows::UI::Composition::AnimationDirection::Normal);
-    // Run animation forever
     animation.IterationBehavior(winrt::Windows::UI::Composition::AnimationIterationBehavior::Forever);
-    animation.DelayTime(winrt::Windows::Foundation::TimeSpan(delay));
+    animation.DelayTime(std::chrono::milliseconds(delay));
     animation.DelayBehavior(winrt::Windows::UI::Composition::AnimationDelayBehavior::SetInitialValueAfterDelay);
 
-    // Create an OpacityAnimation
-    auto opacityAnimation = compositor.CreateScalarKeyFrameAnimation();
-    opacityAnimation.InsertKeyFrame(0.0f, 0.0f);
-    opacityAnimation.InsertKeyFrame(1.0f, 1.0f);
-    opacityAnimation.Duration(std::chrono::seconds(2));
-    opacityAnimation.IterationBehavior(winrt::Windows::UI::Composition::AnimationIterationBehavior::Forever);
-    circleShape2.StartAnimation(L"Opacity", opacityAnimation);
-
     // create path animation
-    for (float angle = 0.0f; angle < 2.0f * static_cast<float>(M_PI); angle += 0.1f) { // keyframe progress goes from
-                                                                                       // 0-1
-      float x = centerX + radiusSmall * cos(angle);
-      float y = centerY + radiusSmall * sin(angle);
+    float progress = 2.0f * static_cast<float>(M_PI); // specifies the end of the keyframe progress
+    for (float angle = 0.0f; angle < progress; angle += 0.1f) {
+      float x = m_centerX + m_radiusSmall * cos(angle);
+      float y = m_centerY + m_radiusSmall * sin(angle);
       animation.InsertKeyFrame(
-          angle / (2.0f * static_cast<float>(M_PI)),
-          winrt::Windows::Foundation::Numerics::float2(
-              x, y)); // angle / (2.0f * static_cast<float>(M_PI)) specifys the key-frame progress
+          angle / (2.0f * static_cast<float>(M_PI)), winrt::Windows::Foundation::Numerics::float2(x, y));
     }
-    spriteShape2.StartAnimation(L"Offset", animation);
 
-    //spriteShape2.StartAnimation(L"Opacity", opacityAnimation);
-    return circleShape2;
+    // run animations
+    circleShape.StartAnimation(L"Opacity", opacityAnimation);
+    spriteShape.StartAnimation(L"Offset", animation);
+
+    return circleShape;
   }
 
   void SetupPathAndAnimation(
@@ -1128,7 +1100,7 @@ struct CompContext : winrt::implements<
     return winrt::make<Composition::CompSpriteVisual>(m_compositor.CreateSpriteVisual());
   }
 
-  winrt::Microsoft::ReactNative::Composition::ShapeVisual CreateShapeVisual() noexcept { //my code
+  winrt::Microsoft::ReactNative::Composition::ShapeVisual CreateShapeVisual() noexcept { // my code
     return winrt::make<Composition::CompShapeVisual>(m_compositor.CreateShapeVisual());
   }
 

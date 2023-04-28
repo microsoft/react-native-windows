@@ -6,8 +6,8 @@
 #include "ActivityIndicatorComponentView.h"
 #include "CompositionDynamicAutomationProvider.h"
 
-#include <Windows.h>
 #include <Windows.UI.Composition.h>
+#include <Windows.h>
 #include "CompositionContextHelper.h"
 
 namespace Microsoft::ReactNative {
@@ -107,69 +107,6 @@ void ActivityIndicatorComponentView::Draw() noexcept {
     d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
     d2dDeviceContext->SetDpi(dpi, dpi);
 
-    // constants
-    constexpr float radiusSmall = 8.0f;
-    constexpr float radiusLarge = 16.0f;
-    constexpr float ringWidth = 2.0f;
-
-    // create defaultBrush (#11489: figure out light/dark theme)
-    winrt::com_ptr<ID2D1SolidColorBrush> defaultBrush;
-    winrt::check_hresult(
-        d2dDeviceContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::LightGray), defaultBrush.put()));
-
-    // get loading colors
-    winrt::com_ptr<ID2D1SolidColorBrush> circleBrush;
-    if (activityIndicatorProps->color) {
-      winrt::check_hresult(
-          d2dDeviceContext->CreateSolidColorBrush(activityIndicatorProps->color.AsD2DColor(), circleBrush.put()));
-    } else {
-      circleBrush = defaultBrush;
-    }
-
-    // draw ring - this isn't visable in Paper version but may be helpful when animating
-    D2D1_ELLIPSE ring;
-    if (activityIndicatorProps->size ==
-        facebook::react::ActivityIndicatorViewSize::Small) { // (#11162: figure out why the size is always small)
-      D2D1_POINT_2F center = D2D1 ::Point2F(offsetX + radiusSmall + ringWidth, offsetY + radiusSmall + ringWidth);
-      ring = D2D1::Ellipse(center, radiusSmall, radiusSmall);
-    } else {
-      D2D1_POINT_2F center = D2D1 ::Point2F(offsetX + radiusLarge, offsetY + radiusLarge);
-      ring = D2D1::Ellipse(center, radiusLarge, radiusLarge);
-    }
-    d2dDeviceContext->DrawEllipse(ring, defaultBrush.get(), ringWidth);
-
-    // draw loading circles
-    D2D1_ELLIPSE circle1, circle2, circle3, circle4, circle5;
-    circle1 =
-        D2D1::Ellipse(D2D1::Point2F((offsetX + radiusSmall + ringWidth), (offsetY + ringWidth)), ringWidth, ringWidth);
-    circle2 = D2D1::Ellipse(
-        D2D1::Point2F(
-            (offsetX + radiusSmall + ringWidth) + (radiusSmall)*cos(305.0f * static_cast<float>(M_PI) / 180.0f),
-            (offsetY + radiusSmall + ringWidth) + (radiusSmall)*sin(305.0f * static_cast<float>(M_PI) / 180.0f)),
-        ringWidth,
-        ringWidth);
-    circle3 = D2D1::Ellipse(
-        D2D1::Point2F(offsetX + radiusSmall + ringWidth + radiusSmall, offsetY + radiusSmall + ringWidth),
-        ringWidth,
-        ringWidth);
-    circle4 = D2D1::Ellipse(
-        D2D1::Point2F(
-            (offsetX + radiusSmall + ringWidth) + (radiusSmall)*cos(105.0f * static_cast<float>(M_PI) / 180.0f),
-            (offsetY + radiusSmall + ringWidth) + (radiusSmall)*sin(105.0f * static_cast<float>(M_PI) / 180.0f)),
-        ringWidth,
-        ringWidth);
-    circle5 = D2D1::Ellipse(
-        D2D1::Point2F(
-            (offsetX + radiusSmall + ringWidth) + (radiusSmall)*cos(150.0f * static_cast<float>(M_PI) / 180.0f),
-            (offsetY + radiusSmall + ringWidth) + (radiusSmall)*sin(150.0f * static_cast<float>(M_PI) / 180.0f)),
-        ringWidth,
-        ringWidth);
-    d2dDeviceContext->FillEllipse(circle1, circleBrush.get());
-    d2dDeviceContext->FillEllipse(circle2, circleBrush.get());
-    d2dDeviceContext->FillEllipse(circle3, circleBrush.get());
-    d2dDeviceContext->FillEllipse(circle4, circleBrush.get());
-    d2dDeviceContext->FillEllipse(circle5, circleBrush.get());
-
     // Restore old dpi setting
     d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
 
@@ -188,8 +125,8 @@ facebook::react::Props::Shared ActivityIndicatorComponentView::props() noexcept 
 void ActivityIndicatorComponentView::ensureVisual() noexcept {
   if (!m_visual) {
     m_visual = m_compContext.CreateSpriteVisual();
-    auto circle = m_compContext.CreateActivityVisual(); //creates COM control
-  
+    auto circle = m_compContext.CreateActivityVisual(); // creates COM control
+
     OuterVisual().InsertAt(circle, 0);
     OuterVisual().InsertAt(m_visual, 0);
   }
