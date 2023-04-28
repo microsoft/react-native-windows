@@ -8,7 +8,7 @@
  */
 
 import * as React from 'react';
-import { useLayoutEffect} from 'react';
+import {useLayoutEffect} from 'react';
 import type {ViewProps} from './ViewPropTypes';
 
 import View from './View';
