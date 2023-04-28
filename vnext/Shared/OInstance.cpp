@@ -103,8 +103,8 @@ class OJSIExecutorFactory : public JSExecutorFactory {
     auto turboModuleManager = std::make_shared<TurboModuleManager>(turboModuleRegistry_, jsCallInvoker_);
 
     // TODO: The binding here should also add the proxys that convert cxxmodules into turbomodules
-    // [@vmoroz] Note, that we must not use the RN TurboCxxModule.h code because it uses global LongLivedObjectCollection
-    // instance that prevents us from using multiple RN instance in the same process.
+    // [@vmoroz] Note, that we must not use the RN TurboCxxModule.h code because it uses global
+    // LongLivedObjectCollection instance that prevents us from using multiple RN instance in the same process.
     auto binding = [turboModuleManager](const std::string &name) -> std::shared_ptr<TurboModule> {
       return turboModuleManager->getModule(name);
     };

@@ -141,7 +141,7 @@ class BlobTest extends React.Component<{...}, State> {
       'AAPAAAADgAAAAYAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' +
       'AAAAAAAAAAAAAAAAAACAAAABgAAAAcAAAAPAAAAD4AAAB/AAAA/4AAAf/AAAP/8A' +
       'AP//wAP/',
-      // cspell:enable
+    // cspell:enable
   };
 
   _get = () => {

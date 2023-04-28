@@ -53,12 +53,12 @@ struct ConditionVariable {
 
     // For the very first time here we use duration provided by user.
     // If we get here again, then it means that the condition_variable was woken up
-    // due to sporatic wakeups, and we have to recalculate the wait duration.
+    // due to sporadic wakeups, and we have to recalculate the wait duration.
     if (waitTimePoint.ShouldUpdateWaitDuration) {
       using namespace std::chrono;
       auto timeLeft = duration_cast<milliseconds>(waitTimePoint.WaitUntil - system_clock::now());
       // Make sure that we do not have negative duration because we waited beyond the target time point,
-      // or because system_clock::now() gave inacccurate time due to internal implementation.
+      // or because system_clock::now() gave inaccurate time due to internal implementation.
       waitTimePoint.WaitDuration = std::max(timeLeft, milliseconds{0});
     }
 

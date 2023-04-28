@@ -97,7 +97,7 @@ static
 
   Converts variable arguments into the arg list format
 
-  Use a lamba function to generate a unique function providing storage of
+  Use a lambda function to generate a unique function providing storage of
   _fIgnore_ (for in-proc based assert management) and unique break address.
 */
 #define MsoAssertSzTagProcInline2(dwTag, szFile, iLine, wzAnnotation, szFmt, ...)                               \

@@ -20,8 +20,7 @@ struct JSCallInvokerScheduler
 
  public:
   // IDispatchQueueScheduler
-  // cspell:disable-next-line
-  void IntializeScheduler(Mso::WeakPtr<IDispatchQueueService> &&queue) noexcept override;
+  void InitializeScheduler(Mso::WeakPtr<IDispatchQueueService> &&queue) noexcept override;
   bool HasThreadAccess() noexcept override;
   bool IsSerial() noexcept override;
   void Post() noexcept override;
