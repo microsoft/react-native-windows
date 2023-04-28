@@ -314,12 +314,12 @@ test('Hyphen and dashes', async () => {
   const memberDef = await parse(`
     |<memberdef>
     |  <briefdescription>
-        |<para>Dashes: hypen: - ndash: <ndash/> mdash: <mdash/></para>
+        |<para>Dashes: hyphen: - ndash: <ndash/> mdash: <mdash/></para>
     |  </briefdescription>
     |</memberdef>`);
 
   const text = toMarkdown(memberDef.briefdescription);
-  expect(text).toBe(t(`Dashes: hypen: - ndash: &ndash; mdash: &mdash;`));
+  expect(text).toBe(t(`Dashes: hyphen: - ndash: &ndash; mdash: &mdash;`));
 });
 
 test('Horizontal ruler', async () => {

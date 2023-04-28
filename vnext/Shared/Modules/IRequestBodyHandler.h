@@ -32,7 +32,7 @@ struct IRequestBodyHandler {
   /// Returns the {@link RequestBody} for the JS body payload.
   /// </summary>
   /// <param name="data">
-  /// Incoming folly object containing the blob metadada.
+  /// Incoming folly object containing the blob metadata.
   /// Structure:
   /// "blob"  - folly object info
   ///   "blobId"  - Blob unique identifier

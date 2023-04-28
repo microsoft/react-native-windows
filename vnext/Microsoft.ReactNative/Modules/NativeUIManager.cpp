@@ -1069,9 +1069,9 @@ void NativeUIManager::measureLayout(
     const auto &target = static_cast<ShadowNodeBase &>(shadowNode);
     const auto &ancestor = static_cast<ShadowNodeBase &>(ancestorNode);
     const auto targetElement = target.GetView().as<xaml::FrameworkElement>();
-    const auto ancenstorElement = ancestor.GetView().as<xaml::FrameworkElement>();
+    const auto ancestorElement = ancestor.GetView().as<xaml::FrameworkElement>();
 
-    const auto ancestorTransform = targetElement.TransformToVisual(ancenstorElement);
+    const auto ancestorTransform = targetElement.TransformToVisual(ancestorElement);
     const auto width = static_cast<float>(targetElement.ActualWidth());
     const auto height = static_cast<float>(targetElement.ActualHeight());
     const auto transformedBounds = ancestorTransform.TransformBounds(winrt::Rect(0, 0, width, height));

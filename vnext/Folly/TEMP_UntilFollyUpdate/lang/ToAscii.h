@@ -30,7 +30,7 @@ namespace folly {
 
 //  to_ascii_alphabet
 //
-//  Used implicity by to_ascii_lower and to_ascii_upper below.
+//  Used implicitly by to_ascii_lower and to_ascii_upper below.
 //
 //  This alphabet translates digits to 0-9,a-z or 0-9,A-Z. The largest supported
 //  base is 36; operator() presumes an argument less than that.

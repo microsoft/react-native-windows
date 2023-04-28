@@ -12,7 +12,7 @@ namespace Microsoft::ReactNative {
  * Lightweight wrapper class around a ComponentView with a react tag which registers a
  * constant react tag at initialization time for a stable hash and provides the
  * underlying view to a caller if that underlying view's react tag has not
- * changed from the one provided at initalization time (i.e. recycled).
+ * changed from the one provided at initialization time (i.e. recycled).
  */
 struct ReactTaggedView {
   ReactTaggedView(const std::shared_ptr<IComponentView> &componentView)

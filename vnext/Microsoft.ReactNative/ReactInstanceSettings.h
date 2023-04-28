@@ -79,7 +79,7 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   void UseFastRefresh(bool value) noexcept;
 
   //! Should the instance monitor for changes to the JS and reload the instance when a change is
-  //! detected.  Generally its prefered to use FastFreshed instead of this.  But if there is some
+  //! detected.  Generally its preferred to use FastFreshed instead of this.  But if there is some
   //! issue with hot reloading in your app, then this can be used instead
   bool UseLiveReload() noexcept;
   void UseLiveReload(bool value) noexcept;

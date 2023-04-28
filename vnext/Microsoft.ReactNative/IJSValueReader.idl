@@ -43,8 +43,8 @@ namespace Microsoft.ReactNative
     "The `Microsoft.ReactNative.Cxx` and `Microsoft.ReactNative.Managed` projects offer "
     "serializer/deserializer functions for many standard types. Use them directly or to define "
     "serializer/deserializer functions for your types.")
-  // TODO: [vmorozov] Add a reference to serializer and deserializer functions for some standard types.
-  // TODO: [vmorozov] Add a reference to usage examples.
+  // TODO: [@vmoroz] Add a reference to serializer and deserializer functions for some standard types.
+  // TODO: [@vmoroz] Add a reference to usage examples.
   interface IJSValueReader
   {
     DOC_STRING("Gets the type of the current value.")

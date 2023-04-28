@@ -184,7 +184,7 @@ struct ReactOptions {
   //! Identity of the SDX. Must uniquely describe the SDX across the installed product.
   std::string Identity;
 
-  //! List of names of Cxx modules that all ReactIntances hosting this SDX should be configured with.
+  //! List of names of Cxx modules that all ReactInstances hosting this SDX should be configured with.
   //!
   //! In addition to this list, there are following hardcoded modules.
   //!
@@ -198,7 +198,7 @@ struct ReactOptions {
   //! ExceptionsManager: Implemented by facebook::react::ExceptionsManagerModule
   std::vector<std::string> CxxModuleNames;
 
-  //! List of names of Java modules that all ReactIntances hosting this SDX should be configured with.
+  //! List of names of Java modules that all ReactInstances hosting this SDX should be configured with.
   std::vector<std::string> JavaModuleNames;
 
   //! (Optional) Name of the registered IDataServiceProvider to use when creating data services
@@ -340,7 +340,7 @@ struct ReactOptions {
   OnReactInstanceDestroyedCallback OnInstanceDestroyed;
 };
 
-//! IReactHost manages a RactNative instance.
+//! IReactHost manages a ReactNative instance.
 MSO_GUID(IReactHost, "2a2474ff-264f-449a-9852-0463e6ac6bbf")
 struct DECLSPEC_NOVTABLE IReactHost : IUnknown {
   //! Returns a copy of react options.

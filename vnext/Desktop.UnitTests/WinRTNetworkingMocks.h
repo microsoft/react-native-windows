@@ -18,7 +18,7 @@ namespace Microsoft::React::Test {
 
 /// <summary>
 //  Mocks winrt::Windows::Networking::Sockets::MessageWebSocket.
-//  Behavior can be mocked per each interface mehtod.
+//  Behavior can be mocked per each interface method.
 /// </summary>
 struct MockMessageWebSocket : public winrt::implements<
                                   MockMessageWebSocket,

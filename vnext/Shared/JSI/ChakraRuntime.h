@@ -370,7 +370,7 @@ class ChakraRuntime : public facebook::jsi::Runtime, public ChakraApi, ChakraApi
       const std::string &sourceURL,
       JsValueRef *result) = 0;
 
-  enum class PropertyAttibutes {
+  enum class PropertyAttributes {
     None = 0,
     ReadOnly = 1 << 1,
     DontEnum = 1 << 2,
@@ -379,15 +379,15 @@ class ChakraRuntime : public facebook::jsi::Runtime, public ChakraApi, ChakraApi
     DontEnumAndFrozen = DontEnum | Frozen,
   };
 
-  friend constexpr PropertyAttibutes operator&(PropertyAttibutes left, PropertyAttibutes right) {
-    return (PropertyAttibutes)((int)left & (int)right);
+  friend constexpr PropertyAttributes operator&(PropertyAttributes left, PropertyAttributes right) {
+    return (PropertyAttributes)((int)left & (int)right);
   }
 
-  friend constexpr bool operator!(PropertyAttibutes attrs) {
-    return attrs == PropertyAttibutes::None;
+  friend constexpr bool operator!(PropertyAttributes attrs) {
+    return attrs == PropertyAttributes::None;
   }
 
-  JsValueRef CreatePropertyDescriptor(JsValueRef value, PropertyAttibutes attrs);
+  JsValueRef CreatePropertyDescriptor(JsValueRef value, PropertyAttributes attrs);
 
   // The number of arguments that we keep on stack.
   // We use heap if we have more argument.

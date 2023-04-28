@@ -41,7 +41,7 @@ struct Selection {
 };
 } // namespace Microsoft::ReactNative
 
-// Such code is better to move to a seperate parser layer
+// Such code is better to move to a separate parser layer
 template <>
 struct json_type_traits<Microsoft::ReactNative::Selection> {
   static Microsoft::ReactNative::Selection parseJson(const winrt::Microsoft::ReactNative::JSValue &json) {
@@ -610,9 +610,9 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
                       : xaml::Controls::PasswordBox::SelectionHighlightColorProperty());
     } else if (propertyName == "keyboardType") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
-        auto inputScopeNameVaue = parseKeyboardType(propertyValue, isTextBox);
+        auto inputScopeNameValue = parseKeyboardType(propertyValue, isTextBox);
         auto scope = xaml::Input::InputScope();
-        auto scopeName = xaml::Input::InputScopeName(inputScopeNameVaue);
+        auto scopeName = xaml::Input::InputScopeName(inputScopeNameValue);
         auto names = scope.Names();
         names.Append(scopeName);
         control.SetValue(
@@ -693,7 +693,7 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
               if (propertyValue.AsString() == "characters") {
                 textBox.CharacterCasing(xaml::Controls::CharacterCasing::Upper);
               } else { // anything else turns off autoCap (should be "None" but
-                       // we don't support "words"/"senetences" yet)
+                       // we don't support "words"/"sentences" yet)
                 textBox.CharacterCasing(xaml::Controls::CharacterCasing::Normal);
               }
             } else if (propertyValue.IsNull())
@@ -964,7 +964,7 @@ void TextInputViewManager::TransferProperties(const XamlView &oldView, const Xam
           xaml::Controls::TextBox::SelectionHighlightColorProperty(),
           xaml::Controls::PasswordBox::SelectionHighlightColorProperty());
       newView.as<xaml::Controls::PasswordBox>().Password(oldView.as<xaml::Controls::TextBox>().Text());
-      // Since both focasable/editable affect isEnabled for PasswordBox, if the oldView is enabled we still need to
+      // Since both focusable/editable affect isEnabled for PasswordBox, if the oldView is enabled we still need to
       // check isReadOnly
       if (oldView.as<xaml::Controls::TextBox>().IsEnabled()) {
         newView.as<xaml::Controls::PasswordBox>().IsEnabled(!oldView.as<xaml::Controls::TextBox>().IsReadOnly());
@@ -988,7 +988,7 @@ void TextInputViewManager::TransferProperties(const XamlView &oldView, const Xam
           xaml::Controls::PasswordBox::SelectionHighlightColorProperty(),
           xaml::Controls::TextBox::SelectionHighlightColorProperty());
       newView.as<xaml::Controls::TextBox>().Text(oldView.as<xaml::Controls::PasswordBox>().Password());
-      // Since both focasable/editable affect isEnabled for PasswordBox, if the oldView is enabled we still need to
+      // Since both focusable/editable affect isEnabled for PasswordBox, if the oldView is enabled we still need to
       // check isReadOnly
       if (oldView.as<xaml::Controls::PasswordBox>().IsEnabled()) {
         newView.as<xaml::Controls::TextBox>().IsReadOnly(!oldView.as<xaml::Controls::PasswordBox>().IsEnabled());

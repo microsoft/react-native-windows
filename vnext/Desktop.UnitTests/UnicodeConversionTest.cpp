@@ -33,7 +33,7 @@ TEST_CLASS (UnicodeConversionTest) {
   TEST_METHOD(Utf8ToUtf16InvalidCharacterTest) {
     // In UTF-8, cc must the first byte of a two byte sequence, but 22 cannot be
     // the second byte of a two byte sequence (in fact, it is the double quote
-    // ASCII character). To prevent over comsumption attacks, we test that 22 is
+    // ASCII character). To prevent over consumption attacks, we test that 22 is
     // not swallowed/omitted after the string is converted to UTF-16. For more
     // information on overconsumption attacks, see
     // http://websec.github.io/unicode-security-guide/character-transformations/#overconsumption
@@ -65,7 +65,7 @@ TEST_CLASS (UnicodeConversionTest) {
     // cannot be the second two bytes of a surrogate pair (in fact, it is the
     // double quote ASCII character). To prevent over consumption attacks, we
     // test that 0022 is not swallowed/omitted after the string is converted to
-    // UTF-8. For more information on overconsumption attaks, see
+    // UTF-8. For more information on overconsumption attacks, see
     // http://websec.github.io/unicode-security-guide/character-transformations/#overconsumption
     constexpr const char16_t *const invalidUtf16 = u"\xD801\x0022";
     Assert::IsTrue(Utf16ToUtf8(invalidUtf16) == "\xef\xbf\xbd\x22");

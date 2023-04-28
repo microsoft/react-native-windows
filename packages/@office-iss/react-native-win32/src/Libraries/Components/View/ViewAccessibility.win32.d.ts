@@ -401,7 +401,7 @@ export interface AccessibilityPropsWin32 {
 
   /**
    * accessibilityDescription provides more detailed information specific to the element (i.e. last edit date, full location for a file)
-   * while accessibilityHint provides infomation on what will happen when they perform an action.
+   * while accessibilityHint provides information on what will happen when they perform an action.
    * @platform win32
    *
    */

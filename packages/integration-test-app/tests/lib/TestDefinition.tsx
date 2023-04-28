@@ -15,7 +15,7 @@ const TestModule: {markTestPassed: (passed: boolean) => void} =
 export type TestFunction = (() => void) | (() => Promise<void>);
 
 /**
- * Define a new synchronus or asynchronus test function. The test may be failed
+ * Define a new synchronous or asynchronous test function. The test may be failed
  * by throwing
  */
 export const functionTest = Object.assign(

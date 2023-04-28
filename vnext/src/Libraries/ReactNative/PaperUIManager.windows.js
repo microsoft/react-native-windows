@@ -107,8 +107,8 @@ UIManagerJS.hasViewManagerConfig = (viewManagerName: string) =>
 // instead of `UIManager.getViewManagerConfig()` off UIManager.js.
 // This is a workaround for now.
 // [Windows - This is incompatible with running UIManager as a JSI object.
-//            getViewManagerConfig is implemented on the JSI object, so we dont
-//            need to hook this unless we are runnign in webdebugger
+//            getViewManagerConfig is implemented on the JSI object, so we don't
+//            need to hook this unless we are running in webdebugger
 if (!global.nativeCallSyncHook)
   // $FlowFixMe
   NativeUIManager.getViewManagerConfig = UIManagerJS.getViewManagerConfig;

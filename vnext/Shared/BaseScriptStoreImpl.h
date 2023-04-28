@@ -73,7 +73,7 @@ class BasePreparedScriptStoreImpl : public facebook::jsi::PreparedScriptStore {
 };
 
 // Dead simple script store implementation assuming that the script url is a
-// local filesystam path and assuming the script version is the script size, but
+// local filesystem path and assuming the script version is the script size, but
 // with extension point to provide custom version provider.
 class BaseScriptStoreImpl : public facebook::jsi::ScriptStore {
  public:

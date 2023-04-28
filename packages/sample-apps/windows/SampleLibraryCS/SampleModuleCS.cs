@@ -215,9 +215,9 @@ namespace SampleLibraryCS
         [ReactMethod]
         public async void NegateAsyncPromise(int x, IReactPromise<int> result)
         {
-            bool isPosititve = await Task.Run(() => x >= 0);
+            bool isPositive = await Task.Run(() => x >= 0);
             Debug.WriteLine($"{nameof(SampleModuleCS)}.{nameof(NegateAsyncPromise)}({x})");
-            if (isPosititve)
+            if (isPositive)
             {
                 result.Resolve(-x);
             }

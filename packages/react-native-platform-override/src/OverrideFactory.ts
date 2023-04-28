@@ -49,7 +49,7 @@ export default interface OverrideFactory {
 }
 
 /**
- * Conrete implementation of an OverrideFactory
+ * Concrete implementation of an OverrideFactory
  */
 export class OverrideFactoryImpl implements OverrideFactory {
   private readonly reactRepo: ReactFileRepository;

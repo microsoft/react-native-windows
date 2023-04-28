@@ -167,13 +167,13 @@ void ApplyArguments(ReactNative::ReactNativeHost const &host, std::wstring const
 /// <param name="e">Details about the launch request and process.</param>
 void ReactApplication::OnCreate(Windows::ApplicationModel::Activation::IActivatedEventArgs const &e) {
   bool isPrelaunchActivated = false;
-  if (auto prelauchActivatedArgs = e.try_as<Windows::ApplicationModel::Activation::IPrelaunchActivatedEventArgs>()) {
-    isPrelaunchActivated = prelauchActivatedArgs.PrelaunchActivated();
+  if (auto prelaunchActivatedArgs = e.try_as<Windows::ApplicationModel::Activation::IPrelaunchActivatedEventArgs>()) {
+    isPrelaunchActivated = prelaunchActivatedArgs.PrelaunchActivated();
   }
 
   hstring args;
-  if (auto lauchActivatedArgs = e.try_as<activation::ILaunchActivatedEventArgs>()) {
-    args = lauchActivatedArgs.Arguments();
+  if (auto launchActivatedArgs = e.try_as<activation::ILaunchActivatedEventArgs>()) {
+    args = launchActivatedArgs.Arguments();
   }
 
   Frame rootFrame{nullptr};

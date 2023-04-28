@@ -9,13 +9,13 @@ import {PassThrough} from 'stream';
 import {MarkdownLogger, ConsoleLogger} from '../logger';
 
 let outStream: NodeJS.WritableStream;
-let loggerOuptput: string;
+let loggerOutput: string;
 
 beforeEach(() => {
-  loggerOuptput = '';
+  loggerOutput = '';
   outStream = new PassThrough();
   outStream.on('data', chunk => {
-    loggerOuptput += chunk;
+    loggerOutput += chunk;
   });
 });
 
@@ -32,7 +32,7 @@ test('Markdown Output', () => {
 
   logger.close();
 
-  expect(loggerOuptput).toBe(`### ℹ Commits: foo
+  expect(loggerOutput).toBe(`### ℹ Commits: foo
 ### ✅ Dependencies updated
 ### ⚠ Out of date overrides
 \`\`\`
@@ -43,7 +43,7 @@ test('Markdown Output', () => {
 });
 
 beforeEach(() => {
-  loggerOuptput = '';
+  loggerOutput = '';
 });
 
 test('Console Output', () => {
@@ -59,7 +59,7 @@ test('Console Output', () => {
 
   logger.close();
 
-  expect(stripAnsiColors(loggerOuptput)).toMatch(
+  expect(stripAnsiColors(loggerOutput)).toMatch(
     new RegExp(`. Commits: foo
 - Updating dependencies
 . Dependencies updated

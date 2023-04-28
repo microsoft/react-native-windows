@@ -12,7 +12,7 @@ import path from 'path';
 import {WritableFileRepository} from './FileRepository';
 
 /**
- * Allows reading phsyical files based on a passed in directory
+ * Allows reading physical files based on a passed in directory
  */
 export default class FileSystemRepository implements WritableFileRepository {
   private readonly baseDir: string;

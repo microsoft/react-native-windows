@@ -29,7 +29,7 @@ JSValue TakeJSValue(IJSValueWriter const &writer) noexcept;
 // JSValueObject declaration.
 //==============================================================================
 
-//! JSValueObject is based on std::map and has a custom constructor with std::intializer_list.
+//! JSValueObject is based on std::map and has a custom constructor with std::initializer_list.
 //! It is possible to write: JSValueObject{{"X", 4}, {"Y", 5}} and assign it to JSValue.
 //! It uses the std::less<> comparison algorithm that allows an efficient
 //! key lookup using std::string_view that does not allocate memory for the std::string key.
@@ -103,7 +103,7 @@ bool operator!=(JSValueObject const &left, JSValueObject const &right) noexcept;
 // JSValueArray declaration.
 //==============================================================================
 
-//! JSValueArray is based on std::vector<JSValue> and has a custom constructor with std::intializer_list.
+//! JSValueArray is based on std::vector<JSValue> and has a custom constructor with std::initializer_list.
 //! It is possible to write: JSValueArray{"X", 42, nullptr, true} and assign it to JSValue.
 struct JSValueArray : std::vector<JSValue> {
   //! Default constructor.

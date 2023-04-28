@@ -221,7 +221,7 @@ XamlView ViewManagerBase::CreateView(int64_t tag, const winrt::Microsoft::ReactN
   // Set the tag if the element type supports it
   SetTag(view, tag);
 
-  // In Debug, set the element name to the tag for convienent
+  // In Debug, set the element name to the tag for convenient
   // searching within VisualStudio's Live Visual Tree pane
 #ifdef DEBUG
   auto element = view.try_as<xaml::FrameworkElement>();
