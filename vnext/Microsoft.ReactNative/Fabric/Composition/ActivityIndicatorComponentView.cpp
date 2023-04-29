@@ -12,20 +12,20 @@
 
 namespace Microsoft::ReactNative {
 
-ActivityIndicatorComponentView::ActivityIndicatorComponentView(
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-    facebook::react::Tag tag,
-    winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : Super(compContext, tag), m_context(reactContext) {
-  m_props = std::make_shared<facebook::react::ActivityIndicatorViewProps const>();
-}
-
 std::shared_ptr<ActivityIndicatorComponentView> ActivityIndicatorComponentView::Create(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
   return std::shared_ptr<ActivityIndicatorComponentView>(
       new ActivityIndicatorComponentView(compContext, tag, reactContext));
+}
+
+ActivityIndicatorComponentView::ActivityIndicatorComponentView(
+    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    facebook::react::Tag tag,
+    winrt::Microsoft::ReactNative::ReactContext const &reactContext)
+    : Super(compContext, tag), m_context(reactContext) {
+  m_props = std::make_shared<facebook::react::ActivityIndicatorViewProps const>();
 }
 
 void ActivityIndicatorComponentView::mountChildComponentView(
@@ -149,18 +149,19 @@ void ActivityIndicatorComponentView::ensureDrawingSurface() noexcept {
   }
 }
 
-facebook::react::Tag ActivityIndicatorComponentView::hitTest(facebook::react::Point pt, facebook::react::Point &localPt)
-    const noexcept {
+facebook::react::Tag ActivityIndicatorComponentView::hitTest(
+    facebook::react::Point pt,
+    facebook::react::Point &localPt,
+    bool ignorePointerEvents) const noexcept {
   facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
 
-  if ((m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
+  if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
        m_props->pointerEvents == facebook::react::PointerEventsMode::BoxOnly) &&
       ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
       ptLocal.y <= m_layoutMetrics.frame.size.height) {
     localPt = ptLocal;
     return tag();
   }
-
   return -1;
 }
 
