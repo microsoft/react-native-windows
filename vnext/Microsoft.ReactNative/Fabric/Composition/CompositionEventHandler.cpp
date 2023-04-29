@@ -164,6 +164,7 @@ int64_t CompositionEventHandler::SendMessage(uint32_t msg, uint64_t wParam, int6
         if (result)
           return result;
       }
+      break;
     }
     case WM_KEYDOWN:
     case WM_KEYUP:

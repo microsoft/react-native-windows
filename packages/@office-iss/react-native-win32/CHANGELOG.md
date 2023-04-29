@@ -1,8 +1,37 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Sat, 01 Apr 2023 05:15:15 GMT and should not be manually modified.
+This log was last generated on Tue, 25 Apr 2023 05:16:56 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.192
+
+Tue, 25 Apr 2023 05:16:56 GMT
+
+### Changes
+
+- Update Node to 16 (34109996+chiaramooney@users.noreply.github.com)
+- Integrate 4/13 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.1.16
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.2
+- Bump @rnw-scripts/just-task to v2.3.7
+- Bump react-native-platform-override to v1.9.5
+
+## 0.0.0-canary.191
+
+Thu, 13 Apr 2023 05:14:28 GMT
+
+### Changes
+
+- Update TextInput.win32 to align with core (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.190
+
+Sat, 08 Apr 2023 05:13:11 GMT
+
+### Changes
+
+- integrate rn 0.0.0-20230404-2109-62c4da142 (tatianakapos@microsoft.com)
 
 ## 0.0.0-canary.189
 

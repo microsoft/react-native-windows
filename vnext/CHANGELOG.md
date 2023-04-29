@@ -1,8 +1,101 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 07 Apr 2023 05:13:15 GMT and should not be manually modified.
+This log was last generated on Thu, 27 Apr 2023 05:12:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.648
+
+Thu, 27 Apr 2023 05:12:48 GMT
+
+### Changes
+
+- working impl of getBoundingRect and ElementProviderFromPoint (adrum@microsoft.com)
+
+## 0.0.0-canary.647
+
+Wed, 26 Apr 2023 05:13:36 GMT
+
+### Changes
+
+- Resolve some XAML style colors in Fabric (26607885+chrisglein@users.noreply.github.com)
+
+## 0.0.0-canary.646
+
+Tue, 25 Apr 2023 05:17:02 GMT
+
+### Changes
+
+- Integrate 4/13 (34109996+chiaramooney@users.noreply.github.com)
+- Upgrade to WinUI 2.8 (34109996+chiaramooney@users.noreply.github.com)
+- Update Node to 16 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.168
+- Bump @react-native-windows/codegen to v0.0.0-canary.56
+- Bump @rnw-scripts/eslint-config to v1.1.16
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.2
+- Bump @rnw-scripts/just-task to v2.3.7
+- Bump react-native-platform-override to v1.9.5
+
+## 0.0.0-canary.645
+
+Sat, 22 Apr 2023 05:13:57 GMT
+
+### Changes
+
+- Use case-insensitive comparer for AllowedHeaders (julio.rocha@microsoft.com)
+- Add cursorColor support to TextInput (d@litsman.com)
+
+## 0.0.0-canary.644
+
+Wed, 19 Apr 2023 05:12:49 GMT
+
+### Changes
+
+- Implement Fabric TextInput editable - Uses TXTBIT_READONLY (26607885+chrisglein@users.noreply.github.com)
+
+## 0.0.0-canary.643
+
+Tue, 18 Apr 2023 05:12:59 GMT
+
+### Changes
+
+- Enable secureTextEntry for Fabric - Supply password character - Set TXTBIT_USEPASSWORD - Fix problem when backspacing on short strings (26607885+chrisglein@users.noreply.github.com)
+- Add support for Fabric TextInput `multiline` - Uses TXTBIT_MULTILINE and TXTBIT_WORDWRAP (26607885+chrisglein@users.noreply.github.com)
+
+## 0.0.0-canary.642
+
+Thu, 13 Apr 2023 05:14:28 GMT
+
+### Changes
+
+- Adds QuirkSetting for non-batched create view (erozell@outlook.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.167
+- Bump @react-native-windows/codegen to v0.0.0-canary.55
+
+## 0.0.0-canary.641
+
+Wed, 12 Apr 2023 05:14:59 GMT
+
+### Changes
+
+- Fix unintended fallthrough This was causing a WM_CHAR to fallthrough to WM_KEYDOWN and produce a duplicate `sendMessage` (26607885+chrisglein@users.noreply.github.com)
+
+## 0.0.0-canary.640
+
+Tue, 11 Apr 2023 05:13:26 GMT
+
+### Changes
+
+- Use Boost GUID generator (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.639
+
+Sat, 08 Apr 2023 05:13:12 GMT
+
+### Changes
+
+- Ensure ReactNativeWindowsDir is set in Directory.Build.props (jthysell@microsoft.com)
+- integrate rn 0.0.0-20230404-2109-62c4da142 (tatianakapos@microsoft.com)
 
 ## 0.0.0-canary.638
 

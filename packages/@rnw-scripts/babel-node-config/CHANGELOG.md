@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/babel-node-config
 
-This log was last generated on Tue, 21 Mar 2023 21:21:54 GMT and should not be manually modified.
+This log was last generated on Tue, 25 Apr 2023 05:16:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.2.2
+
+Tue, 25 Apr 2023 05:16:59 GMT
+
+### Patches
+
+- Update Node to 16 (34109996+chiaramooney@users.noreply.github.com)
 
 ## 2.2.1
 

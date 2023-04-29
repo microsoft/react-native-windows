@@ -13,4 +13,6 @@ UiaNavigateHelper(
     NavigateDirection direction,
     IRawElementProviderFragment *&retVal) noexcept;
 
+HRESULT UiaGetBoundingRectangleHelper(::Microsoft::ReactNative::ReactTaggedView &view, UiaRect &rect) noexcept;
+
 } // namespace winrt::Microsoft::ReactNative::implementation

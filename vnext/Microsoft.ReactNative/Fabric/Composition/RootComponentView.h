@@ -18,7 +18,8 @@ struct RootComponentView : CompositionViewComponentView {
 
   [[nodiscard]] static std::shared_ptr<RootComponentView> Create(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-      facebook::react::Tag tag) noexcept;
+      facebook::react::Tag tag,
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
   std::shared_ptr<RootComponentView> getPtr();
 
@@ -33,11 +34,15 @@ struct RootComponentView : CompositionViewComponentView {
 
   winrt::IInspectable EnsureUiaProvider() noexcept override;
 
+  winrt::IInspectable UiaProviderFromPoint(const POINT &ptPixels) noexcept;
+
  private:
   RootComponentView(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-      facebook::react::Tag tag);
+      facebook::react::Tag tag,
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext);
   ::Microsoft::ReactNative::IComponentView *m_focusedComponent = nullptr;
+  winrt::Microsoft::ReactNative::ReactContext m_context;
 };
 
 } // namespace Microsoft::ReactNative

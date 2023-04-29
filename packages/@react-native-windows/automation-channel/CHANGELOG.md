@@ -1,8 +1,94 @@
 # Change Log - @react-native-windows/automation-channel
 
-This log was last generated on Fri, 07 Apr 2023 05:13:16 GMT and should not be manually modified.
+This log was last generated on Thu, 27 Apr 2023 05:12:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.10.17
+
+Thu, 27 Apr 2023 05:12:48 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.648
+
+## 0.10.16
+
+Wed, 26 Apr 2023 05:13:36 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.647
+
+## 0.10.15
+
+Tue, 25 Apr 2023 05:16:57 GMT
+
+### Patches
+
+- Update Node to 16 (34109996+chiaramooney@users.noreply.github.com)
+- Integrate 4/13 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.1.16
+- Bump @rnw-scripts/just-task to v2.3.7
+- Bump @rnw-scripts/ts-config to v2.0.4
+- Bump react-native-windows to v0.0.0-canary.646
+
+## 0.10.14
+
+Sat, 22 Apr 2023 05:13:57 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.645
+
+## 0.10.13
+
+Wed, 19 Apr 2023 05:12:49 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.644
+
+## 0.10.12
+
+Tue, 18 Apr 2023 05:12:59 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.643
+
+## 0.10.11
+
+Thu, 13 Apr 2023 05:14:29 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.642
+
+## 0.10.10
+
+Wed, 12 Apr 2023 05:14:59 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.641
+
+## 0.10.9
+
+Tue, 11 Apr 2023 05:13:26 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.640
+
+## 0.10.8
+
+Sat, 08 Apr 2023 05:13:12 GMT
+
+### Patches
+
+- integrate rn 0.0.0-20230404-2109-62c4da142 (tatianakapos@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.639
 
 ## 0.10.7
 

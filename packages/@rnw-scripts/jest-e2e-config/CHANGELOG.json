@@ -2,6 +2,27 @@
   "name": "@rnw-scripts/jest-e2e-config",
   "entries": [
     {
+      "date": "Tue, 25 Apr 2023 05:17:00 GMT",
+      "tag": "@rnw-scripts/jest-e2e-config_v1.4.2",
+      "version": "1.4.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@rnw-scripts/jest-e2e-config",
+            "commit": "6a15837a441c23df1e2fb4c1257bc835a49539f2",
+            "comment": "Update Node to 16"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/jest-e2e-config",
+            "comment": "Bump @rnw-scripts/babel-node-config to v2.2.2",
+            "commit": "39f99ed6163a15559a4b23ed52e27c8cddb68e94"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 21 Mar 2023 21:21:55 GMT",
       "tag": "@rnw-scripts/jest-e2e-config_v1.4.1",
       "version": "1.4.1",

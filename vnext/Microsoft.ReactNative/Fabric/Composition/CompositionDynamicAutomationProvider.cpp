@@ -59,6 +59,30 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_BoundingRectangle(Ui
   if (pRetVal == nullptr)
     return E_POINTER;
 
+  auto hr = UiaGetBoundingRectangleHelper(m_view, *pRetVal);
+  if (FAILED(hr))
+    return hr;
+
+  // Since get_BoundingRectangle needs to provide real screen coordinates back to the UIA client
+  // we'll use the FragmentRoot's origin to offset our rect because that should have been taken
+  // into account already.
+  winrt::com_ptr<IRawElementProviderFragmentRoot> spFragmentRoot = nullptr;
+  hr = get_FragmentRoot(spFragmentRoot.put());
+  if (FAILED(hr))
+    return hr;
+
+  auto spFragment = spFragmentRoot.try_as<IRawElementProviderFragment>();
+  if (spFragment == nullptr)
+    return E_FAIL;
+
+  UiaRect rect;
+  hr = spFragment->get_BoundingRectangle(&rect);
+  if (FAILED(hr))
+    return hr;
+
+  pRetVal->left += rect.left;
+  pRetVal->top += rect.top;
+
   return S_OK;
 }
 
@@ -89,10 +113,9 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_FragmentRoot(IRawEle
     return UIA_E_ELEMENTNOTAVAILABLE;
 
   auto uiaProvider = rootCV->EnsureUiaProvider();
-  if (uiaProvider != nullptr) {
-    winrt::com_ptr<IRawElementProviderFragmentRoot> spReps;
-    uiaProvider.as(spReps);
-    *pRetVal = spReps.detach();
+  auto spFragmentRoot = uiaProvider.try_as<IRawElementProviderFragmentRoot>();
+  if (spFragmentRoot) {
+    *pRetVal = spFragmentRoot.detach();
   }
 
   return S_OK;

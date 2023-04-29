@@ -8,25 +8,25 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20230321-2153-7b86e3aae",
+  "baseVersion": "0.0.0-20230414-2146-adb210306",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "5809dbf6ba753657688e76c63f9114c2e0efbfd8"
+      "baseHash": "241d0d49a4d24294ec5c48f3672c3c800136f24d"
     },
     {
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputComponentDescriptor.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputComponentDescriptor.h",
-      "baseHash": "0e8bc2d76cda863ed7986747546d2b96af876ada"
+      "baseHash": "c58e2ac1a01ba7e851a692540436e65df5dbee4b"
     },
     {
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputShadowNode.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputShadowNode.cpp",
-      "baseHash": "0046f71f7d5b8d7674237fa8710d30b75d3cb0ee"
+      "baseHash": "5dd10ee0d0206ef8b308bd084af63783eb8b3a40"
     },
     {
       "type": "derived",
@@ -38,13 +38,13 @@
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputState.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputState.cpp",
-      "baseHash": "55fcbb61a35c89bec6b5fb1d0307f97778c0bc72"
+      "baseHash": "bc0b4e730bb0e4d9a42be60e4a9d929f1d74e6d2"
     },
     {
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputState.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputState.h",
-      "baseHash": "c945b4b95344c40d5505dec2debd8e9ceda09015"
+      "baseHash": "b7e302f4ddc1bcf40b613def823f654d1c383e01"
     },
     {
       "type": "derived",
@@ -84,19 +84,19 @@
       "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/primitives.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/primitives.h",
-      "baseHash": "ca98e8845881b0f78c6c06e96eccb515e49a4b6e"
+      "baseHash": "645446ec80be372d9070e7aefcc3a32c2ee14929"
     },
     {
       "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/TouchEventEmitter.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/TouchEventEmitter.cpp",
-      "baseHash": "a8524dc7a5a1e2d79880cf5f2f9c6cb7e014b197"
+      "baseHash": "cd5750fe3fabc8aceee83ac0fb02710594bfb18f"
     },
     {
       "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/TouchEventEmitter.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/TouchEventEmitter.h",
-      "baseHash": "e8e2327d4c67082922c849a3726f73543e314eca"
+      "baseHash": "88338d719f98bc2881820a420b73cc97736b61aa"
     },
     {
       "type": "derived",
@@ -114,32 +114,32 @@
       "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/ViewProps.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/ViewProps.cpp",
-      "baseHash": "1e21524058484af4970c06ff333f7a5d56cd6e65"
+      "baseHash": "62f69ee138e5d81f3911ec792684ca25dbaf4fbf"
     },
     {
       "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/ViewProps.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/ViewProps.h",
-      "baseHash": "5811facf6c8989391eea091492a2afeca519e03b"
+      "baseHash": "4149c834747609907fad273a9e6eeb67a72e8b41"
     },
     {
       "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/ViewShadowNode.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/ViewShadowNode.cpp",
-      "baseHash": "796ce7138b317d8565da1773f25d1e672805695c"
+      "baseHash": "35abc78c3a5cbc76b5564812d23a50c9e33e2a2f"
     },
     {
       "type": "patch",
       "file": "ReactCommon/Yoga.cpp",
       "baseFile": "packages/react-native/ReactCommon/yoga/yoga/Yoga.cpp",
-      "baseHash": "0aa8c33d956464711a4eaf0a311937159d8115c7",
+      "baseHash": "96b4d59674ffcbfbc9a648b1e862d2ddfc2e2691",
       "issue": 3994
     },
     {
       "type": "copy",
       "directory": "ReactCopies/IntegrationTests",
       "baseDirectory": "IntegrationTests",
-      "baseHash": "edfffae3bd41f59460368f76486d185fb0b08905",
+      "baseHash": "acc9ffec863e44024d52ccaafc999a16fd88ec12",
       "issue": 4054
     },
     {
@@ -388,7 +388,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewPropTypes.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewPropTypes.js",
-      "baseHash": "6ef6e875149d8c9c6da9b72703890736dd665463"
+      "baseHash": "f876c5954f1ab6471fec28f146f4aff61442dd15"
     },
     {
       "type": "platform",
@@ -439,7 +439,7 @@
       "type": "derived",
       "file": "src/Libraries/NativeComponent/BaseViewConfig.windows.js",
       "baseFile": "packages/react-native/Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "3c1918ff2ab3e43b4900e9b1e8549537d273d575"
+      "baseHash": "f810cc5f609a5812784688bf31126c27af8d5e03"
     },
     {
       "type": "platform",
@@ -472,7 +472,7 @@
       "type": "patch",
       "file": "src/Libraries/Pressability/Pressability.windows.js",
       "baseFile": "packages/react-native/Libraries/Pressability/Pressability.js",
-      "baseHash": "6bc21b9d2a0fd8592b112a0c3752070d6c1fd079",
+      "baseHash": "9b1c05c59ddcf30c6b5938ff8ed26ec7633ebdce",
       "issue": 4379
     },
     {
