@@ -83,39 +83,6 @@ void ActivityIndicatorComponentView::finalizeUpdates(RNComponentViewUpdateMask u
   ensureDrawingSurface();
 }
 
-void ActivityIndicatorComponentView::Draw() noexcept {
-  // Begin our update of the surface pixels. If this is our first update, we are required
-  // to specify the entire surface, which nullptr is shorthand for (but, as it works out,
-  // any time we make an update we touch the entire surface, so we always pass nullptr).
-  winrt::com_ptr<ID2D1DeviceContext> d2dDeviceContext;
-  POINT offset;
-
-  winrt::com_ptr<Composition::ICompositionDrawingSurfaceInterop> drawingSurfaceInterop;
-  m_drawingSurface.as(drawingSurfaceInterop);
-
-  if (CheckForDeviceRemoved(drawingSurfaceInterop->BeginDraw(d2dDeviceContext.put(), &offset))) {
-    const auto activityIndicatorProps =
-        std::static_pointer_cast<const facebook::react::ActivityIndicatorViewProps>(m_props);
-
-    d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
-
-    float offsetX = static_cast<float>(offset.x / m_layoutMetrics.pointScaleFactor);
-    float offsetY = static_cast<float>(offset.y / m_layoutMetrics.pointScaleFactor);
-
-    const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
-    float oldDpiX, oldDpiY;
-    d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
-    d2dDeviceContext->SetDpi(dpi, dpi);
-
-    // Restore old dpi setting
-    d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
-
-    // Our update is done. EndDraw never indicates rendering device removed, so any
-    // failure here is unexpected and, therefore, fatal.
-    winrt::check_hresult(drawingSurfaceInterop->EndDraw());
-  }
-}
-
 void ActivityIndicatorComponentView::prepareForRecycle() noexcept {}
 
 facebook::react::Props::Shared ActivityIndicatorComponentView::props() noexcept {
@@ -142,10 +109,36 @@ void ActivityIndicatorComponentView::ensureDrawingSurface() noexcept {
         winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
         winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
 
-    Draw();
+    // Begin our update of the surface pixels. If this is our first update, we are required
+    // to specify the entire surface, which nullptr is shorthand for (but, as it works out,
+    // any time we make an update we touch the entire surface, so we always pass nullptr).
+    winrt::com_ptr<ID2D1DeviceContext> d2dDeviceContext;
+    POINT offset;
+
+    winrt::com_ptr<Composition::ICompositionDrawingSurfaceInterop> drawingSurfaceInterop;
+    m_drawingSurface.as(drawingSurfaceInterop);
+
+    if (CheckForDeviceRemoved(drawingSurfaceInterop->BeginDraw(d2dDeviceContext.put(), &offset))) {
+      const auto activityIndicatorProps =
+          std::static_pointer_cast<const facebook::react::ActivityIndicatorViewProps>(m_props);
+
+      d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
+      const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
+      float oldDpiX, oldDpiY;
+      d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
+      d2dDeviceContext->SetDpi(dpi, dpi);
+
+      // Restore old dpi setting
+      d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
+
+      // Our update is done. EndDraw never indicates rendering device removed, so any
+      // failure here is unexpected and, therefore, fatal.
+      winrt::check_hresult(drawingSurfaceInterop->EndDraw());
+    }
 
     // update color if needed
-    const auto activityIndicatorProps = std::static_pointer_cast<const facebook::react::ActivityIndicatorViewProps>(m_props);
+    const auto activityIndicatorProps =
+        std::static_pointer_cast<const facebook::react::ActivityIndicatorViewProps>(m_props);
     if (activityIndicatorProps->color) {
       m_ActivityIndicatorVisual.updateColor(activityIndicatorProps->color.AsWindowsColor());
     }
