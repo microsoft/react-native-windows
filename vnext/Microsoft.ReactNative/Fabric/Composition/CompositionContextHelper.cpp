@@ -369,7 +369,6 @@ struct CompSpriteVisual : winrt::Microsoft::ReactNative::Composition::implementa
   winrt::Windows::UI::Composition::SpriteVisual m_visual;
 };
 
-// my code ---------------------------------------------------------------------------------------
 struct CompShapeVisual : winrt::Microsoft::ReactNative::Composition::implementation::
                              ShapeVisualT<CompShapeVisual, ICompositionVisual, IVisualInterop> {
   CompShapeVisual(winrt::Windows::UI::Composition::ShapeVisual const &visual) : m_visual(visual) {}
@@ -1105,7 +1104,7 @@ struct CompContext : winrt::implements<
     return winrt::make<Composition::CompSpriteVisual>(m_compositor.CreateSpriteVisual());
   }
 
-  winrt::Microsoft::ReactNative::Composition::ShapeVisual CreateShapeVisual() noexcept { // my code
+  winrt::Microsoft::ReactNative::Composition::ShapeVisual CreateShapeVisual() noexcept {
     return winrt::make<Composition::CompShapeVisual>(m_compositor.CreateShapeVisual());
   }
 
