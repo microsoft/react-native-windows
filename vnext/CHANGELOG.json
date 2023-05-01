@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 01 May 2023 20:57:17 GMT",
+      "tag": "react-native-windows_v0.71.9",
+      "version": "0.71.9",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "5ca839de41a8974b9c14f82250a271e29d874553",
+            "comment": "Minor bump of folly to bring in clang fix"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 25 Apr 2023 23:09:17 GMT",
       "tag": "react-native-windows_v0.71.8",
       "version": "0.71.8",

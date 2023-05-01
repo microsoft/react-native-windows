@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 25 Apr 2023 23:09:17 GMT and should not be manually modified.
+This log was last generated on Mon, 01 May 2023 20:57:17 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.9
+
+Mon, 01 May 2023 20:57:17 GMT
+
+### Patches
+
+- Minor bump of folly to bring in clang fix (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.71.8
 
