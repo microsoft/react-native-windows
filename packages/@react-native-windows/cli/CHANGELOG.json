@@ -2,6 +2,45 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 01 May 2023 16:43:57 GMT",
+      "tag": "@react-native-windows/cli_v0.72.0-preview.1",
+      "version": "0.72.0-preview.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "6c01774188f98145e5dd501361321aee9dc0f0ba",
+            "comment": "Promote 0.72 to preview"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.72.0-preview.1",
+            "commit": "6c01774188f98145e5dd501361321aee9dc0f0ba"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/fs to v0.72.0-preview.1",
+            "commit": "6c01774188f98145e5dd501361321aee9dc0f0ba"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/package-utils to v0.72.0-preview.1",
+            "commit": "6c01774188f98145e5dd501361321aee9dc0f0ba"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.72.0-preview.1",
+            "commit": "6c01774188f98145e5dd501361321aee9dc0f0ba"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 21 Mar 2023 21:21:55 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.166",
       "version": "0.0.0-canary.166",
