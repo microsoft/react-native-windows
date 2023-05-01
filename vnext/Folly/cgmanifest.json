@@ -6,7 +6,7 @@
                 "Type": "git",
                 "Git": {
                   "RepositoryUrl": "https://github.com/facebook/folly",
-                  "CommitHash": "2aa28128d1f7a04b41521367f0b615f782814089"
+                  "CommitHash": "6ed36117cdc4831f3a3951e013ae76b405e88e15"
                 }
             },
             "DevelopmentDependency": false
