@@ -20,8 +20,8 @@
   <Import Project="$(MSBuildThisFileDirectory)NuGet.Cpp.props" />
 
   <PropertyGroup Label="Desktop">
-    <!-- See https://docs.microsoft.com/en-us/cpp/porting/modifying-winver-and-win32-winnt -->
-    <WinVer>_WIN32_WINNT_WINBLUE</WinVer>
+    <!-- See https://learn.microsoft.com/en-us/cpp/porting/modifying-winver-and-win32-winnt -->
+    <WinVer Condition="'$(WinVer)' == ''">_WIN32_WINNT_WIN10</WinVer>
     <EnableBeast Condition="'$(EnableBeast)' == ''">0</EnableBeast>
   </PropertyGroup>
 
