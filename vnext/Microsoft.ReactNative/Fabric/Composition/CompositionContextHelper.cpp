@@ -409,7 +409,7 @@ struct CompShapeVisual : winrt::Microsoft::ReactNative::Composition::implementat
     m_visual.Opacity(opacity);
   }
 
-  void Shapes() noexcept { // TODO: Actually figure this method out
+  void Shapes() noexcept {
     auto shapes = m_visual.Shapes();
   }
 
@@ -773,7 +773,7 @@ struct CompActivityVisual : winrt::Microsoft::ReactNative::Composition::implemen
     opacityAnimation.InsertKeyFrame(1.0f, 0.0f); // Intermediate opacity (fully opaque)
     opacityAnimation.InsertKeyFrame(0.0f, 0.0f); // Final opacity (fully transparent)
 
-    // create an animation for the Scale property of the ShapeVisual
+    // create an animation for the Offset property of the ShapeVisual
     auto animation = compositor.CreateVector2KeyFrameAnimation();
     animation.Duration(std::chrono::seconds(2));
     animation.Direction(winrt::Windows::UI::Composition::AnimationDirection::Normal);
@@ -832,8 +832,6 @@ struct CompActivityVisual : winrt::Microsoft::ReactNative::Composition::implemen
   void Opacity(float opacity) noexcept {
     m_visual.Opacity(opacity);
   }
-
-  void Test() noexcept {}
 
   void Scale(winrt::Windows::Foundation::Numerics::float3 const &scale) noexcept {
     m_visual.Scale(scale);
@@ -895,12 +893,9 @@ struct CompActivityVisual : winrt::Microsoft::ReactNative::Composition::implemen
   }
 
  private:
-  winrt::Windows::Foundation::Numerics::float2 m_contentSize{0};
   winrt::Windows::Foundation::Numerics::float2 m_visualSize{0};
   winrt::Windows::UI::Composition::ShapeVisual m_visual{nullptr};
   winrt::Windows::UI::Composition::ShapeVisual m_contentVisual{nullptr};
-  winrt::Windows::UI::Composition::Interactions::InteractionTracker m_interactionTracker{nullptr};
-  winrt::Windows::UI::Composition::Interactions::VisualInteractionSource m_visualInteractionSource{nullptr};
   std::vector<winrt::Windows::UI::Composition::CompositionSpriteShape> m_spriteVisuals;
 
   // constants

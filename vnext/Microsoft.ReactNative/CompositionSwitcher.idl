@@ -103,7 +103,6 @@ namespace Microsoft.ReactNative.Composition
   [experimental]
   runtimeclass ActivityVisual : IVisual
   {
-    void Test();
     void updateColor(Windows.UI.Color color);
   }
 
