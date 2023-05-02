@@ -75,13 +75,6 @@ namespace Microsoft.ReactNative.Composition
 
   [webhosthidden]
   [experimental]
-  runtimeclass ShapeVisual: IVisual
-  {
-    void Shapes();
-  }
-
-  [webhosthidden]
-  [experimental]
   runtimeclass ScrollPositionChangedArgs
   {
     Windows.Foundation.Numerics.Vector2 Position { get; };

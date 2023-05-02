@@ -8,7 +8,6 @@
 #include <Composition.ActivityVisual.g.h>
 #include <Composition.ScrollPositionChangedArgs.g.h>
 #include <Composition.ScrollVisual.g.h>
-#include <Composition.ShapeVisual.g.h>
 #include <Composition.SpriteVisual.g.h>
 #include <Composition.SurfaceBrush.g.h>
 #include <Windows.Graphics.Interop.h>
@@ -369,112 +368,6 @@ struct CompSpriteVisual : winrt::Microsoft::ReactNative::Composition::implementa
   winrt::Windows::UI::Composition::SpriteVisual m_visual;
 };
 
-struct CompShapeVisual : winrt::Microsoft::ReactNative::Composition::implementation::
-                             ShapeVisualT<CompShapeVisual, ICompositionVisual, IVisualInterop> {
-  CompShapeVisual(winrt::Windows::UI::Composition::ShapeVisual const &visual) : m_visual(visual) {}
-
-  winrt::Windows::UI::Composition::Visual InnerVisual() const noexcept override {
-    return m_visual;
-  }
-
-  void InsertAt(const winrt::Microsoft::ReactNative::Composition::IVisual &visual, uint32_t index) noexcept {
-    auto containerChildren = m_visual.Children();
-    auto compVisual = winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerVisual(visual);
-    if (index == 0) {
-      containerChildren.InsertAtBottom(compVisual);
-      return;
-    }
-    auto insertAfter = containerChildren.First();
-    for (uint32_t i = 1; i < index; i++)
-      insertAfter.MoveNext();
-    containerChildren.InsertAbove(compVisual, insertAfter.Current());
-  }
-
-  void Remove(const winrt::Microsoft::ReactNative::Composition::IVisual &visual) noexcept {
-    auto compVisual = winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerVisual(visual);
-    auto containerChildren = m_visual.Children();
-    containerChildren.Remove(compVisual);
-  }
-
-  winrt::Microsoft::ReactNative::Composition::IVisual GetAt(uint32_t index) noexcept {
-    auto containerChildren = m_visual.as<winrt::Windows::UI::Composition::ContainerVisual>().Children();
-    auto it = containerChildren.First();
-    for (uint32_t i = 0; i < index; i++)
-      it.MoveNext();
-    return winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::CreateVisual(
-        it.Current());
-  }
-
-  void Opacity(float opacity) noexcept {
-    m_visual.Opacity(opacity);
-  }
-
-  void Shapes() noexcept {
-    auto shapes = m_visual.Shapes();
-  }
-
-  void Scale(winrt::Windows::Foundation::Numerics::float3 const &scale) noexcept {
-    m_visual.Scale(scale);
-  }
-
-  void TransformMatrix(winrt::Windows::Foundation::Numerics::float4x4 const &transform) noexcept {
-    m_visual.TransformMatrix(transform);
-  }
-
-  void RotationAngle(float rotation) noexcept {
-    m_visual.RotationAngle(rotation);
-  }
-
-  void IsVisible(bool isVisible) noexcept {
-    m_visual.IsVisible(isVisible);
-  }
-
-  void Size(winrt::Windows::Foundation::Numerics::float2 const &size) noexcept {
-    m_visual.Size(size);
-  }
-
-  void Offset(winrt::Windows::Foundation::Numerics::float3 const &offset) noexcept {
-    m_visual.Offset(offset);
-  }
-
-  void Offset(
-      winrt::Windows::Foundation::Numerics::float3 offset,
-      winrt::Windows::Foundation::Numerics::float3 relativeAdjustment) noexcept {
-    m_visual.Offset(offset);
-    m_visual.RelativeOffsetAdjustment(relativeAdjustment);
-  }
-
-  void RelativeSizeWithOffset(
-      winrt::Windows::Foundation::Numerics::float2 size,
-      winrt::Windows::Foundation::Numerics::float2 relativeSizeAdjustment) noexcept {
-    m_visual.Size(size);
-    m_visual.RelativeSizeAdjustment(relativeSizeAdjustment);
-  }
-
-  winrt::Microsoft::ReactNative::Composition::BackfaceVisibility BackfaceVisibility() {
-    return static_cast<winrt::Microsoft::ReactNative::Composition::BackfaceVisibility>(m_visual.BackfaceVisibility());
-  }
-
-  void BackfaceVisibility(winrt::Microsoft::ReactNative::Composition::BackfaceVisibility value) {
-    m_visual.BackfaceVisibility(static_cast<winrt::Windows::UI::Composition::CompositionBackfaceVisibility>(value));
-  }
-
-  void SetClippingPath(ID2D1Geometry *clippingPath) noexcept {
-    if (!clippingPath) {
-      m_visual.Clip(nullptr);
-      return;
-    }
-    auto geometry = winrt::make<GeometrySource>(clippingPath);
-    auto path = winrt::Windows::UI::Composition::CompositionPath(geometry);
-    auto pathgeo = m_visual.Compositor().CreatePathGeometry(path);
-    auto clip = m_visual.Compositor().CreateGeometricClip(pathgeo);
-    m_visual.Clip(clip);
-  }
-
- private:
-  winrt::Windows::UI::Composition::ShapeVisual m_visual;
-};
-
 struct CompScrollPositionChangedArgs
     : winrt::Microsoft::ReactNative::Composition::implementation::ScrollPositionChangedArgsT<
           CompScrollPositionChangedArgs> {
@@ -725,9 +618,9 @@ struct CompScrollerVisual : winrt::Microsoft::ReactNative::Composition::implemen
 
 struct CompActivityVisual : winrt::Microsoft::ReactNative::Composition::implementation::
                                 ActivityVisualT<CompActivityVisual, ICompositionVisual, IVisualInterop> {
-  CompActivityVisual(winrt::Windows::UI::Composition::ShapeVisual const &visual) : m_visual(visual) {
+  CompActivityVisual(winrt::Windows::UI::Composition::SpriteVisual const &visual) : m_visual(visual) {
     auto compositor = m_visual.Compositor();
-    m_contentVisual = compositor.CreateShapeVisual();
+    m_contentVisual = compositor.CreateSpriteVisual();
 
     // Create loading circles
     for (int i = 0; i < 4; i++) {
@@ -894,8 +787,8 @@ struct CompActivityVisual : winrt::Microsoft::ReactNative::Composition::implemen
 
  private:
   winrt::Windows::Foundation::Numerics::float2 m_visualSize{0};
-  winrt::Windows::UI::Composition::ShapeVisual m_visual{nullptr};
-  winrt::Windows::UI::Composition::ShapeVisual m_contentVisual{nullptr};
+  winrt::Windows::UI::Composition::SpriteVisual m_visual{nullptr};
+  winrt::Windows::UI::Composition::SpriteVisual m_contentVisual{nullptr};
   std::vector<winrt::Windows::UI::Composition::CompositionSpriteShape> m_spriteVisuals;
 
   // constants
@@ -1099,16 +992,12 @@ struct CompContext : winrt::implements<
     return winrt::make<Composition::CompSpriteVisual>(m_compositor.CreateSpriteVisual());
   }
 
-  winrt::Microsoft::ReactNative::Composition::ShapeVisual CreateShapeVisual() noexcept {
-    return winrt::make<Composition::CompShapeVisual>(m_compositor.CreateShapeVisual());
-  }
-
   winrt::Microsoft::ReactNative::Composition::ScrollVisual CreateScrollerVisual() noexcept {
     return winrt::make<Composition::CompScrollerVisual>(m_compositor.CreateSpriteVisual());
   }
 
   winrt::Microsoft::ReactNative::Composition::ActivityVisual CreateActivityVisual() noexcept {
-    return winrt::make<Composition::CompActivityVisual>(m_compositor.CreateShapeVisual());
+    return winrt::make<Composition::CompActivityVisual>(m_compositor.CreateSpriteVisual());
   }
 
   winrt::Microsoft::ReactNative::Composition::IDropShadow CreateDropShadow() noexcept {
