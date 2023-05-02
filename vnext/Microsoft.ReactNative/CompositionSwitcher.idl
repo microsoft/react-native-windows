@@ -93,6 +93,13 @@ namespace Microsoft.ReactNative.Composition
   }
 
   [webhosthidden]
+  [experimental]
+  runtimeclass ActivityVisual : IVisual
+  {
+    void updateColor(Windows.UI.Color color);
+  }
+
+  [webhosthidden]
   [uuid("a74bfffc-7f2d-432f-8291-654782ab0d52")] // uuid needed for empty interfaces
   [version(1)]
   [experimental]
@@ -129,6 +136,7 @@ namespace Microsoft.ReactNative.Composition
 
     SpriteVisual CreateSpriteVisual();
     ScrollVisual CreateScrollerVisual();
+    ActivityVisual CreateActivityVisual();
     ICaretVisual CreateCaretVisual();
     IFocusVisual CreateFocusVisual();
     IDropShadow CreateDropShadow();

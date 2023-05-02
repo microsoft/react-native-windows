@@ -86,6 +86,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\SwitchComponentView.cpp">
       <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\ActivityIndicatorComponentView.cpp">
+      <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TextInput\WindowsTextInputComponentView.cpp">
       <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
