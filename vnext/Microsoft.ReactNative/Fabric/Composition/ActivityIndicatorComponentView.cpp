@@ -47,12 +47,17 @@ void ActivityIndicatorComponentView::handleCommand(std::string const &commandNam
 void ActivityIndicatorComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
-  const auto &oldViewProps = *std::static_pointer_cast<const facebook::react::ActivityIndicatorViewProps>(m_props);
-  const auto &newViewProps = *std::static_pointer_cast<const facebook::react::ActivityIndicatorViewProps>(props);
+  const auto oldViewProps = std::static_pointer_cast<const facebook::react::ActivityIndicatorViewProps>(m_props);
+  const auto newViewProps = std::static_pointer_cast<const facebook::react::ActivityIndicatorViewProps>(props);
 
   ensureVisual();
 
-  updateBorderProps(oldViewProps, newViewProps);
+  // update color if needed
+  if (newViewProps->color && (!oldProps || newViewProps->color != oldViewProps->color)) {
+    m_ActivityIndicatorVisual.updateColor(newViewProps->color.AsWindowsColor());
+  }
+
+  updateBorderProps(*oldViewProps, *newViewProps);
   m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
 }
 
@@ -79,9 +84,7 @@ void ActivityIndicatorComponentView::updateLayoutMetrics(
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
 }
 
-void ActivityIndicatorComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
-  ensureDrawingSurface();
-}
+void ActivityIndicatorComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {}
 
 void ActivityIndicatorComponentView::prepareForRecycle() noexcept {}
 
@@ -96,56 +99,6 @@ void ActivityIndicatorComponentView::ensureVisual() noexcept {
 
     OuterVisual().InsertAt(m_ActivityIndicatorVisual, 0);
     OuterVisual().InsertAt(m_visual, 0);
-  }
-}
-
-void ActivityIndicatorComponentView::ensureDrawingSurface() noexcept {
-  if (!m_drawingSurface) {
-    winrt::Windows::Foundation::Size surfaceSize = {
-        m_layoutMetrics.frame.size.width * m_layoutMetrics.pointScaleFactor,
-        m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor};
-    m_drawingSurface = m_compContext.CreateDrawingSurface(
-        surfaceSize,
-        winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
-        winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
-
-    // Begin our update of the surface pixels. If this is our first update, we are required
-    // to specify the entire surface, which nullptr is shorthand for (but, as it works out,
-    // any time we make an update we touch the entire surface, so we always pass nullptr).
-    winrt::com_ptr<ID2D1DeviceContext> d2dDeviceContext;
-    POINT offset;
-
-    winrt::com_ptr<Composition::ICompositionDrawingSurfaceInterop> drawingSurfaceInterop;
-    m_drawingSurface.as(drawingSurfaceInterop);
-
-    if (CheckForDeviceRemoved(drawingSurfaceInterop->BeginDraw(d2dDeviceContext.put(), &offset))) {
-      const auto activityIndicatorProps =
-          std::static_pointer_cast<const facebook::react::ActivityIndicatorViewProps>(m_props);
-
-      d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
-      const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
-      float oldDpiX, oldDpiY;
-      d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
-      d2dDeviceContext->SetDpi(dpi, dpi);
-
-      // Restore old dpi setting
-      d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
-
-      // Our update is done. EndDraw never indicates rendering device removed, so any
-      // failure here is unexpected and, therefore, fatal.
-      winrt::check_hresult(drawingSurfaceInterop->EndDraw());
-    }
-
-    // update color if needed
-    const auto activityIndicatorProps =
-        std::static_pointer_cast<const facebook::react::ActivityIndicatorViewProps>(m_props);
-    if (activityIndicatorProps->color) {
-      m_ActivityIndicatorVisual.updateColor(activityIndicatorProps->color.AsWindowsColor());
-    }
-
-    auto surfaceBrush = m_compContext.CreateSurfaceBrush(m_drawingSurface);
-
-    m_visual.Brush(surfaceBrush);
   }
 }
 

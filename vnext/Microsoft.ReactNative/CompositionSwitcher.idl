@@ -142,7 +142,6 @@ namespace Microsoft.ReactNative.Composition
       Windows.Graphics.DirectX.DirectXAlphaMode alphaMode);
 
     SpriteVisual CreateSpriteVisual();
-    ShapeVisual CreateShapeVisual();
     ScrollVisual CreateScrollerVisual();
     ActivityVisual CreateActivityVisual();
     ICaretVisual CreateCaretVisual();
