@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "Export ITouchableWin32State",
+  "comment": "Backport Node 16",
   "packageName": "@office-iss/react-native-win32",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "email": "34109996+chiaramooney@users.noreply.github.com",
   "dependentChangeType": "patch"
 }
