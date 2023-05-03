@@ -19,13 +19,8 @@
     "@typescript-eslint/eslint-plugin": "^5.21.0",
     "@typescript-eslint/parser": "^5.21.0",
     "react": "18.2.0",
-<<<<<<< HEAD
     "react-native": "0.72.0-rc.1",
     "react-native-windows": "0.72.0-preview.1",
-=======
-    "react-native": "0.0.0-20230321-2153-7b86e3aae",
-    "react-native-windows": "0.72.0-preview.1",
->>>>>>> 0ce3cc6ccbb774acf0157ce20825fedb0cd02cec
     "react-native-xaml": "^0.0.74"
   },
   "devDependencies": {
