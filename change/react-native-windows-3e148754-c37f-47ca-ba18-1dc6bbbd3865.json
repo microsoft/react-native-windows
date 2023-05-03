@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "add default static activityIndicator",
-  "packageName": "react-native-windows",
-  "email": "tatianakapos@microsoft.com",
-  "dependentChangeType": "patch"
-}

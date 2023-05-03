@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 03 May 2023 19:30:16 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.193",
+      "version": "0.0.0-canary.193",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "027b991e266e5612f475dcba176a233b43e746d7",
+            "comment": "Simplify ViewWin32 focus, now devmain properly implements UIManger.focus"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 25 Apr 2023 05:16:56 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.192",
       "version": "0.0.0-canary.192",

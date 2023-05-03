@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Tue, 25 Apr 2023 05:16:56 GMT and should not be manually modified.
+This log was last generated on Wed, 03 May 2023 19:30:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.193
+
+Wed, 03 May 2023 19:30:16 GMT
+
+### Changes
+
+- Simplify ViewWin32 focus, now devmain properly implements UIManger.focus (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.192
 
