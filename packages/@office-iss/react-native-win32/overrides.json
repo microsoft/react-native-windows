@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20230321-2153-7b86e3aae",
+  "baseVersion": "0.72.0-rc.1",
   "overrides": [
     {
       "type": "derived",
@@ -191,7 +191,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/View.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/View/View.js",
-      "baseHash": "a5ff7c1a8aeb920613c2e39aa00278af7902cfed"
+      "baseHash": "e1e15345be1d7794284bca007299ca5814969983"
     },
     {
       "type": "derived",
@@ -232,7 +232,7 @@
       "type": "patch",
       "file": "src/Libraries/Core/ReactNativeVersionCheck.win32.js",
       "baseFile": "packages/react-native/Libraries/Core/ReactNativeVersionCheck.js",
-      "baseHash": "a7a9ebb513e71e59d61124f358c8cb9c8846e2eb",
+      "baseHash": "299f108de804f8dbf20613d14d87568043ab51d6",
       "issue": 5170
     },
     {
@@ -380,7 +380,7 @@
       "type": "patch",
       "file": "src/Libraries/Pressability/Pressability.win32.js",
       "baseFile": "packages/react-native/Libraries/Pressability/Pressability.js",
-      "baseHash": "6bc21b9d2a0fd8592b112a0c3752070d6c1fd079",
+      "baseHash": "bdee896f3fa0f42952998101f8c77087c3f7c4bd",
       "issue": 6240
     },
     {

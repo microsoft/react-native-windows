@@ -97,7 +97,7 @@ function NestedListExample(): React.Node {
   );
 
   return (
-    <RNTesterPage noScroll={true}>
+    <RNTesterPage noSpacer={true} noScroll={true}>
       <Text style={styles.debugText}>
         <Text style={styles.debugTextHeader}>Outer Viewable:{'\n'}</Text>
         {outerItems
