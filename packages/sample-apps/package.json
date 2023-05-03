@@ -22,7 +22,7 @@
     "@babel/core": "^7.20.0",
     "@babel/eslint-parser": "^7.19.0",
     "@babel/runtime": "^7.8.4",
-    "@react-native-windows/codegen": "0.72.0-preview.0",
+    "@react-native-windows/codegen": "0.72.0-preview.1",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.1.15",
     "@rnw-scripts/just-task": "2.3.6",
