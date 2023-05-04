@@ -8,20 +8,19 @@
  * @flow strict-local
  */
 
- 'use strict';
+'use strict';
 
- import type {ColorSchemeName} from './NativeAppearance';
- 
- import Appearance from './Appearance';
- import {useSyncExternalStore} from 'react';
- 
- export default function useColorScheme(): ?ColorSchemeName {
-   return useSyncExternalStore(
-     callback => {
-       const appearanceSubscription = Appearance.addChangeListener(callback);
-       return () => appearanceSubscription.remove();
-     },
-     () => Appearance.getColorScheme(),
-   );
- }
- 
+import type {ColorSchemeName} from './NativeAppearance';
+
+import Appearance from './Appearance';
+import {useSyncExternalStore} from 'react';
+
+export default function useColorScheme(): ?ColorSchemeName {
+  return useSyncExternalStore(
+    callback => {
+      const appearanceSubscription = Appearance.addChangeListener(callback);
+      return () => appearanceSubscription.remove();
+    },
+    () => Appearance.getColorScheme(),
+  );
+}

@@ -360,7 +360,7 @@ $requiredFreeSpaceGB = 15;
 $requirements = @(
     @{
         Id=[CheckId]::FreeSpace;
-        Name = "Free space on $drive`: > $requiredFreeSpaceGB GB";
+        Name = "Free space on current drive > $requiredFreeSpaceGB GB";
         Tags = @('appDev');
         Valid = { $drive.Free/1GB -gt $requiredFreeSpaceGB; }
         HasVerboseOutput = $true;
