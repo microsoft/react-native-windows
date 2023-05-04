@@ -59,7 +59,7 @@ class AbiViewComponentDescriptor : public facebook::react::ComponentDescriptor {
       const facebook::react::Props::Shared &props,
       const facebook::react::Props::Shared &newProps) const override;
   virtual facebook::react::State::Shared createInitialState(
-      facebook::react::ShadowNodeFragment const &fragment,
+      facebook::react::Props::Shared const &props,
       facebook::react::ShadowNodeFamily::Shared const &family) const override;
   virtual facebook::react::State::Shared createState(
       facebook::react::ShadowNodeFamily const &family,

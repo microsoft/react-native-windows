@@ -27,7 +27,7 @@ class WindowsTextInputComponentDescriptor final : public ConcreteComponentDescri
 
   /*
     virtual State::Shared createInitialState(
-        ShadowNodeFragment const &fragment,
+        facebook::react::Props::Shared const &props,
         ShadowNodeFamily::Shared const &family) const override {
       int surfaceId = family->getSurfaceId();
 
