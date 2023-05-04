@@ -2,6 +2,51 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Thu, 04 May 2023 20:58:54 GMT",
+      "tag": "@react-native-windows/cli_v0.72.0-preview.2",
+      "version": "0.72.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "24fa0f13c7523c9ab499b0d8c9514cb7dc369ad3",
+            "comment": "Backport Node 16"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "9b326ff3b91871e8c70ef55f870753e31be8f603",
+            "comment": "Avoid having to launch PowerShell for every react-native config query"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.72.0-preview.2",
+            "commit": "24fa0f13c7523c9ab499b0d8c9514cb7dc369ad3"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/fs to v0.72.0-preview.2",
+            "commit": "24fa0f13c7523c9ab499b0d8c9514cb7dc369ad3"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/package-utils to v0.72.0-preview.2",
+            "commit": "24fa0f13c7523c9ab499b0d8c9514cb7dc369ad3"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.72.0-preview.2",
+            "commit": "24fa0f13c7523c9ab499b0d8c9514cb7dc369ad3"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 01 May 2023 16:43:57 GMT",
       "tag": "@react-native-windows/cli_v0.72.0-preview.1",
       "version": "0.72.0-preview.1",
