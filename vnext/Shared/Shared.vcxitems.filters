@@ -266,7 +266,6 @@
     <ClCompile Include="$(NodeApiJsiDir)src\ApiLoaders\HermesApi.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\V8RuntimeHolder.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SafeLoadLibrary.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Hasher.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Networking\DefaultBlobResource.cpp">
       <Filter>Source Files\Networking</Filter>
     </ClCompile>
@@ -713,9 +712,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)BaseFileReaderResource.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\core\graphicsConversions.h">
-      <Filter>Header Files\Fabric\platform\react\renderer\core</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)HermesRuntimeHolder.h">
       <Filter>Hermes</Filter>
