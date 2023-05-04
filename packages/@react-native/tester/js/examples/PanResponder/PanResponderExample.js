@@ -99,7 +99,10 @@ class PanResponderExample extends React.Component<Props, State> {
 
   render(): React.Node {
     return (
-      <RNTesterPage noScroll={true} title="Basic gesture handling">
+      <RNTesterPage
+        noSpacer={true}
+        noScroll={true}
+        title="Basic gesture handling">
         <View style={styles.container}>
           <View
             ref={circle => {

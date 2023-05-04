@@ -19,6 +19,9 @@ parameters:
           - Name: X64Hermes
             BuildPlatform: x64
             UseHermes: true
+          - Name: X86Hermes
+            BuildPlatform: x86
+            UseHermes: true
       - BuildEnvironment: Continuous
         Matrix:
           - Name: X64Chakra
