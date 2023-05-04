@@ -24,7 +24,7 @@ test('Verify list of health checks aligns with rnw-dependencies', async () => {
     {stdio: 'pipe'},
   );
   const deps = rnwDeps.toString().trim().split('\n');
-  const rnwHelathChecks = deps.map(dep => {
+  const rnwHelathChecks = deps.map((dep) => {
     const match = /([^:]+): ([^:]+): (.*)/.exec(dep);
     if (!match) {
       throw new Error(`Unexpected output from ${rnwDepScriptPath}`);
