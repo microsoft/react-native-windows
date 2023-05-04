@@ -1,14 +1,13 @@
 import path from 'path';
 
-import { execSync} from 'child_process';
-
 const rnDir = path.dirname(require.resolve('react-native/package.json', {paths: [process.cwd()]}));
 const cliDir = path.dirname(require.resolve('@react-native-community/cli/package.json', {paths: [rnDir]}));
 const execaPath = require.resolve('execa', { paths: [cliDir] });
 const execa = require(execaPath);
 
-import type {HealthCheckCategory} from '@react-native-community/cli-doctor/build/types';
+import type {HealthCheckCategory, HealthCheckInterface} from '@react-native-community/cli-doctor/build/types';
 import { powershell } from './runWindows/utils/commandWithProgress';
+import { HealthCheckList } from './healthCheckList';
 
 export function getHealthChecks(): HealthCheckCategory[] | undefined {
   // #8471: There are known cases where the dependencies script will error out.
@@ -37,27 +36,21 @@ function getHealthChecksUnsafe(): HealthCheckCategory[] | undefined {
         'react-native-windows/package.json',
         {paths: [process.cwd()]})), 'Scripts/rnw-dependencies.ps1');
     
-    const rnwDeps = execSync(`${powershell} -ExecutionPolicy Unrestricted -NoProfile "${rnwDepScriptPath}" -NoPrompt -ListChecks`, {stdio: 'pipe'});
-    const deps = rnwDeps.toString().trim().split('\n');
     return [
       {
         label: 'Windows',
         healthchecks:
-          deps.map(dep => {
-            const match = /([^:]+): ([^:]+): (.*)/.exec(dep);
-            if (!match) {
-              throw new Error(`Unexpected output from ${rnwDepScriptPath}`);
-            }
-            const [, /*optional*/, id, name] = match;
+        HealthCheckList.map((dep: [boolean, string, string]) => {
+            const [optional, id, name] = dep;
             return {
               label: name,
               // The schema check of react-native doctor requires this to be a string, although it should be a boolean
               // Enable this once we pick up a new version of the CLI that includes https://github.com/react-native-community/cli/pull/1367
-              // isRequired: (optional.trim() === 'Required') ? true : false, 
+              isRequired: optional, 
               getDiagnostics: async () => {
                 let needsToBeFixed = true;
                 try {
-                  await execa(`${powershell} -ExecutionPolicy Unrestricted -NoProfile "${rnwDepScriptPath}" -NoPrompt -Check ${id}`);
+                  await execa(`"${powershell}" -ExecutionPolicy Unrestricted -NoProfile "${rnwDepScriptPath}" -NoPrompt -Check ${id}`);
                   needsToBeFixed = false;
                 } catch {
                 }
@@ -80,7 +73,7 @@ function getHealthChecksUnsafe(): HealthCheckCategory[] | undefined {
                   loader.fail();
                 }
               }
-            }
+            } as HealthCheckInterface
           })
       }];
   }
