@@ -521,6 +521,13 @@
       "file": "src/Libraries/Utilities/Platform.windows.js",
       "baseFile": "packages/react-native/Libraries/Utilities/Platform.android.js",
       "baseHash": "a8b6131f20d78db59b5efc33c4f8de86aad527dc"
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/Utilities/useColorScheme.windows.js",
+      "baseFile": "packages/react-native/Libraries/Utilities/useColorScheme.js",
+      "baseHash": "cd8bf7551e40f751acba3ed018554b0b100ff142",
+      "issue": 0
     }
   ]
 }
