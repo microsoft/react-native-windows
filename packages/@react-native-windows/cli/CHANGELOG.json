@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Thu, 04 May 2023 05:12:48 GMT",
+      "tag": "@react-native-windows/cli_v0.68.8",
+      "version": "0.68.8",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "ed386d39b722fbf31a33a785d65a1468629e2f3e",
+            "comment": "Avoid having to launch PowerShell for every react-native config query"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 28 Nov 2022 16:10:57 GMT",
       "tag": "@react-native-windows/cli_v0.68.7",
       "version": "0.68.7",

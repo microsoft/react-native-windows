@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 24 Apr 2023 15:09:03 GMT and should not be manually modified.
+This log was last generated on Thu, 04 May 2023 05:12:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.68.34
+
+Thu, 04 May 2023 05:12:48 GMT
+
+### Patches
+
+- Avoid having to launch PowerShell for every react-native config query (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.68.8
 
 ## 0.68.33
 
