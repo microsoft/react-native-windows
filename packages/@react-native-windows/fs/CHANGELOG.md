@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/fs
 
-This log was last generated on Mon, 01 May 2023 16:43:58 GMT and should not be manually modified.
+This log was last generated on Thu, 04 May 2023 20:58:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.72.0-preview.2
+
+Thu, 04 May 2023 20:58:54 GMT
+
+### Changes
+
+- Backport Node 16 (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.72.0-preview.1
 
