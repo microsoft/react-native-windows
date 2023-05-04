@@ -4348,7 +4348,7 @@ protected:
   NativePerformanceCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
 
 public:
-  virtual void mark(jsi::Runtime &rt, jsi::String name, double startTime, double duration) = 0;
+  virtual void mark(jsi::Runtime &rt, jsi::String name, double startTime) = 0;
   virtual void measure(jsi::Runtime &rt, jsi::String name, double startTime, double endTime, std::optional<double> duration, std::optional<jsi::String> startMark, std::optional<jsi::String> endMark) = 0;
   virtual jsi::Object getSimpleMemoryInfo(jsi::Runtime &rt) = 0;
   virtual jsi::Object getReactNativeStartupTiming(jsi::Runtime &rt) = 0;
@@ -4373,13 +4373,13 @@ private:
     Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
       NativePerformanceCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
 
-    void mark(jsi::Runtime &rt, jsi::String name, double startTime, double duration) override {
+    void mark(jsi::Runtime &rt, jsi::String name, double startTime) override {
       static_assert(
-          bridging::getParameterCount(&T::mark) == 4,
-          "Expected mark(...) to have 4 parameters");
+          bridging::getParameterCount(&T::mark) == 3,
+          "Expected mark(...) to have 3 parameters");
 
       return bridging::callFromJs<void>(
-          rt, &T::mark, jsInvoker_, instance_, std::move(name), std::move(startTime), std::move(duration));
+          rt, &T::mark, jsInvoker_, instance_, std::move(name), std::move(startTime));
     }
     void measure(jsi::Runtime &rt, jsi::String name, double startTime, double endTime, std::optional<double> duration, std::optional<jsi::String> startMark, std::optional<jsi::String> endMark) override {
       static_assert(

@@ -15,8 +15,7 @@
 #include <react/renderer/attributedstring/AttributedString.h>
 #include <react/renderer/textlayoutmanager/TextLayoutManager.h>
 
-namespace facebook {
-namespace react {
+namespace facebook::react {
 
 extern const char WindowsTextInputComponentName[];
 
@@ -81,5 +80,4 @@ class WindowsTextInputShadowNode final : public ConcreteViewShadowNode<
   mutable std::optional<AttributedString> m_cachedAttributedString{};
 };
 
-} // namespace react
-} // namespace facebook
+} // namespace facebook::react

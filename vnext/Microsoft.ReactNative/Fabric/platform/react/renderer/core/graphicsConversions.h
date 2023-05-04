@@ -23,8 +23,7 @@
 // #include <react/renderer/graphis/PlatformColorParser.h>
 // WIndows]
 
-namespace facebook {
-namespace react {
+namespace facebook::react {
 
 #pragma mark - Color
 
@@ -244,5 +243,4 @@ inline std::string toString(const CornerInsets &cornerInsets) {
       "}";
 }
 
-} // namespace react
-} // namespace facebook
+} // namespace facebook::react

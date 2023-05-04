@@ -11,8 +11,7 @@
 
 #include <react/renderer/core/ConcreteComponentDescriptor.h>
 
-namespace facebook {
-namespace react {
+namespace facebook::react {
 
 /*
  * Descriptor for <WindowsTextInput> component.
@@ -171,5 +170,4 @@ class WindowsTextInputComponentDescriptor final : public ConcreteComponentDescri
   SharedTextLayoutManager m_textLayoutManager;
 };
 
-} // namespace react
-} // namespace facebook
+} // namespace facebook::react

@@ -1835,8 +1835,7 @@ static jsi::Value __hostFunction_NativePerformanceCxxSpecJSI_mark(jsi::Runtime &
   static_cast<NativePerformanceCxxSpecJSI *>(&turboModule)->mark(
     rt,
     args[0].asString(rt),
-    args[1].asNumber(),
-    args[2].asNumber()
+    args[1].asNumber()
   );
   return jsi::Value::undefined();
 }
@@ -1865,7 +1864,7 @@ static jsi::Value __hostFunction_NativePerformanceCxxSpecJSI_getReactNativeStart
 
 NativePerformanceCxxSpecJSI::NativePerformanceCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
   : TurboModule("NativePerformanceCxx", jsInvoker) {
-  methodMap_["mark"] = MethodMetadata {3, __hostFunction_NativePerformanceCxxSpecJSI_mark};
+  methodMap_["mark"] = MethodMetadata {2, __hostFunction_NativePerformanceCxxSpecJSI_mark};
   methodMap_["measure"] = MethodMetadata {6, __hostFunction_NativePerformanceCxxSpecJSI_measure};
   methodMap_["getSimpleMemoryInfo"] = MethodMetadata {0, __hostFunction_NativePerformanceCxxSpecJSI_getSimpleMemoryInfo};
   methodMap_["getReactNativeStartupTiming"] = MethodMetadata {0, __hostFunction_NativePerformanceCxxSpecJSI_getReactNativeStartupTiming};
