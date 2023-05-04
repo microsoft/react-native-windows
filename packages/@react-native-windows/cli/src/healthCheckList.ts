@@ -2,11 +2,14 @@
 export const HealthCheckList = [
   [false, "FreeSpace", "Free space on current drive > 15 GB"],
   [false, "InstalledMemory", "Installed memory >= 16 GB"],
-  [true, "WindowsVersion", "Windows version >= 10.0.16299.0"],
+  [true, "WindowsVersion", "Windows version > 10.0.16299.0"],
   [true, "DeveloperMode", "Developer mode is on"],
   [true, "LongPath", "Long path support is enabled"],
-  [true, "VSUWP", "Visual Studio 2022 (>= 17.3) & req. components"],
-  [true, "Node", "Node.js (LTS, >= 14.0)"],
+  [true, "Choco", "Choco"],
+  [true, "git", "git"],
+  [true, "VSUWP", "Compilers, build tools, SDKs and Visual Studio"],
+  [true, "Node", "NodeJS LTS"],
+  [false, "Chrome", "Chrome"],
   [true, "Yarn", "Yarn"],
-  [true, "DotNetCore", ".NET SDK (LTS, = 6.0)"]
+  [true, "DotNetCore", ".net core 3.1"]
 ]
