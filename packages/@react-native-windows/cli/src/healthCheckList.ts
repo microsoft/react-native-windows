@@ -2,7 +2,7 @@
 export const HealthCheckList = [
   [false, "FreeSpace", "Free space on current drive > 15 GB"],
   [false, "InstalledMemory", "Installed memory >= 16 GB"],
-  [true, "WindowsVersion", "Windows version >= 10.0.16299.0"],
+  [true, "WindowsVersion", "Windows version >= 10.0.17763.0"],
   [true, "DeveloperMode", "Developer mode is on"],
   [true, "LongPath", "Long path support is enabled"],
   [true, "VSUWP", "Visual Studio 2022 (>= 17.3) & req. components"],
