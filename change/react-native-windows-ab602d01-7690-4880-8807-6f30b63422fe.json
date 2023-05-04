@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Minor bump of folly to bring in clang fix",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -2,6 +2,45 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 04 May 2023 20:58:55 GMT",
+      "tag": "react-native-windows_v0.72.0-preview.2",
+      "version": "0.72.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "0ce3cc6ccbb774acf0157ce20825fedb0cd02cec",
+            "comment": "Minor bump of folly to bring in clang fix"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "9b326ff3b91871e8c70ef55f870753e31be8f603",
+            "comment": "Avoid having to launch PowerShell for every react-native config query"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "24fa0f13c7523c9ab499b0d8c9514cb7dc369ad3",
+            "comment": "Backport Node 16"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.72.0-preview.2",
+            "commit": "24fa0f13c7523c9ab499b0d8c9514cb7dc369ad3"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.72.0-preview.2",
+            "commit": "24fa0f13c7523c9ab499b0d8c9514cb7dc369ad3"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 01 May 2023 16:43:58 GMT",
       "tag": "react-native-windows_v0.72.0-preview.1",
       "version": "0.72.0-preview.1",

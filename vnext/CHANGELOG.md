@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 01 May 2023 16:43:58 GMT and should not be manually modified.
+This log was last generated on Thu, 04 May 2023 20:58:55 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.72.0-preview.2
+
+Thu, 04 May 2023 20:58:55 GMT
+
+### Changes
+
+- Minor bump of folly to bring in clang fix (30809111+acoates-ms@users.noreply.github.com)
+- Avoid having to launch PowerShell for every react-native config query (30809111+acoates-ms@users.noreply.github.com)
+- Backport Node 16 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.72.0-preview.2
+- Bump @react-native-windows/codegen to v0.72.0-preview.2
 
 ## 0.72.0-preview.1
 
