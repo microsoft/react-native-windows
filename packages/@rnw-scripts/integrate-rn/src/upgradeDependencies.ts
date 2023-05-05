@@ -155,7 +155,7 @@ async function upgradeReactNative(
 }
 
 /**
- * Uses override tooling to pull in a new version of the repo-config package
+ * Uses override tooling to pull in a new version of the monorepo package
  */
 async function upgradeRepoConfig(
   newReactNativeVersion: string,
@@ -172,7 +172,7 @@ async function upgradeRepoConfig(
 
   if (!upgradeResults.every(result => result.filesWritten)) {
     throw new Error(
-      'Could not sync repo-config package due to conflicts. Please resolve manually',
+      'Could not sync monorepo package due to conflicts. Please resolve manually',
     );
   }
 
