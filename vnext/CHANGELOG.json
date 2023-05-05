@@ -2,6 +2,126 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 03 May 2023 19:30:16 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.649",
+      "version": "0.0.0-canary.649",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "8298b969da1f0fcd0f91b03b7c632c5483645eea",
+            "comment": "Bump default _WIN32_WINNT_VERSION"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "21e551f47241ced13e30b1232787dbad41163900",
+            "comment": "add default static activityIndicator"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "88a983b740588f6e0c522837d1772892ea979f13",
+            "comment": "Update folly version"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 27 Apr 2023 05:12:48 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.648",
+      "version": "0.0.0-canary.648",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "adrum@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "1badc96a5990cee74d15292b17beb276765aea07",
+            "comment": "working impl of getBoundingRect and ElementProviderFromPoint"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 26 Apr 2023 05:13:36 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.647",
+      "version": "0.0.0-canary.647",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "26607885+chrisglein@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "f6d9f968299ed2605acb5eb7017e4ee3c4bccc72",
+            "comment": "Resolve some XAML style colors in Fabric"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 25 Apr 2023 05:17:02 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.646",
+      "version": "0.0.0-canary.646",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "39f99ed6163a15559a4b23ed52e27c8cddb68e94",
+            "comment": "Integrate 4/13"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "73b38e47cee9cd8a0956b636ea5618f7883665f2",
+            "comment": "Upgrade to WinUI 2.8"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "6a15837a441c23df1e2fb4c1257bc835a49539f2",
+            "comment": "Update Node to 16"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.168",
+            "commit": "39f99ed6163a15559a4b23ed52e27c8cddb68e94"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.56",
+            "commit": "39f99ed6163a15559a4b23ed52e27c8cddb68e94"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.16",
+            "commit": "39f99ed6163a15559a4b23ed52e27c8cddb68e94"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.2",
+            "commit": "39f99ed6163a15559a4b23ed52e27c8cddb68e94"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.7",
+            "commit": "39f99ed6163a15559a4b23ed52e27c8cddb68e94"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.9.5",
+            "commit": "39f99ed6163a15559a4b23ed52e27c8cddb68e94"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 22 Apr 2023 05:13:57 GMT",
       "tag": "react-native-windows_v0.0.0-canary.645",
       "version": "0.0.0-canary.645",

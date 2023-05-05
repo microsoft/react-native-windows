@@ -20,6 +20,7 @@
 #include <react/renderer/components/view/ViewShadowNode.h>
 
 #include <Fabric/Composition/AbiCompositionViewComponentView.h>
+#include <Fabric/Composition/ActivityIndicatorComponentView.h>
 #include <Fabric/Composition/CompositionHelpers.h>
 #include <Fabric/Composition/CompositionViewComponentView.h>
 #include <Fabric/Composition/ImageComponentView.h>
@@ -57,8 +58,10 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
     view = WindowsTextInputComponentView::Create(compContext, tag, m_context);
   } else if (componentHandle == facebook::react::SwitchShadowNode::Handle()) {
     view = SwitchComponentView::Create(compContext, tag, m_context);
+  } else if (componentHandle == facebook::react::ActivityIndicatorViewShadowNode::Handle()) {
+    view = ActivityIndicatorComponentView::Create(compContext, tag, m_context);
   } else if (componentHandle == facebook::react::RootShadowNode::Handle()) {
-    view = RootComponentView::Create(compContext, tag);
+    view = RootComponentView::Create(compContext, tag, m_context);
   } else if (
       componentHandle == facebook::react::RawTextShadowNode::Handle() ||
       componentHandle == facebook::react::TextShadowNode::Handle()) {

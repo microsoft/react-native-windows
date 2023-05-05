@@ -34,15 +34,6 @@ ViewProps::ViewProps(
                                                        "opacity",
                                                        sourceProps.opacity,
                                                        (Float)1.0)),
-      foregroundColor(
-          CoreFeatures::enablePropIteratorSetter
-              ? sourceProps.foregroundColor
-              : convertRawProp(
-                    context,
-                    rawProps,
-                    "foregroundColor",
-                    sourceProps.foregroundColor,
-                    {})),
       backgroundColor(
           CoreFeatures::enablePropIteratorSetter
               ? sourceProps.backgroundColor
@@ -297,7 +288,6 @@ void ViewProps::setProp(
 
   switch (hash) {
     RAW_SET_PROP_SWITCH_CASE_BASIC(opacity);
-    RAW_SET_PROP_SWITCH_CASE_BASIC(foregroundColor);
     RAW_SET_PROP_SWITCH_CASE_BASIC(backgroundColor);
     RAW_SET_PROP_SWITCH_CASE_BASIC(shadowColor);
     RAW_SET_PROP_SWITCH_CASE_BASIC(shadowOffset);
@@ -448,10 +438,6 @@ SharedDebugStringConvertibleList ViewProps::getDebugProps() const {
       SharedDebugStringConvertibleList{
           debugStringConvertibleItem(
               "opacity", opacity, defaultViewProps.opacity),
-          debugStringConvertibleItem(
-              "foregroundColor",
-              foregroundColor,
-              defaultViewProps.foregroundColor),
           debugStringConvertibleItem(
               "backgroundColor",
               backgroundColor,

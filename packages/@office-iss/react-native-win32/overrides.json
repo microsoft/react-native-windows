@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20230404-2109-62c4da142",
+  "baseVersion": "0.0.0-20230414-2146-adb210306",
   "overrides": [
     {
       "type": "derived",
@@ -126,14 +126,14 @@
       "baseHash": "058fa050230bbb1710b64156f2e3680fc16aa252"
     },
     {
-      "type": "platform",
-      "file": "src/Libraries/Components/TextInput/Win32TextInputNativeComponent.js"
-    },
-    {
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInputState.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInputState.js",
       "baseHash": "60655baaca427e1c7c1b8884833b848335c4033b"
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/Components/TextInput/Win32TextInputNativeComponent.js"
     },
     {
       "type": "copy",
@@ -215,7 +215,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewPropTypes.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewPropTypes.js",
-      "baseHash": "6ef6e875149d8c9c6da9b72703890736dd665463",
+      "baseHash": "f876c5954f1ab6471fec28f146f4aff61442dd15",
       "issue": 6240
     },
     {
@@ -344,7 +344,7 @@
       "type": "derived",
       "file": "src/Libraries/NativeComponent/BaseViewConfig.win32.js",
       "baseFile": "packages/react-native/Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "3c1918ff2ab3e43b4900e9b1e8549537d273d575"
+      "baseHash": "f810cc5f609a5812784688bf31126c27af8d5e03"
     },
     {
       "type": "derived",

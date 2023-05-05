@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/babel-node-config",
   "entries": [
     {
+      "date": "Tue, 25 Apr 2023 05:16:59 GMT",
+      "tag": "@rnw-scripts/babel-node-config_v2.2.2",
+      "version": "2.2.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@rnw-scripts/babel-node-config",
+            "commit": "6a15837a441c23df1e2fb4c1257bc835a49539f2",
+            "comment": "Update Node to 16"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 21 Mar 2023 21:21:54 GMT",
       "tag": "@rnw-scripts/babel-node-config_v2.2.1",
       "version": "2.2.1",

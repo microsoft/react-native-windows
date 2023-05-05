@@ -1,8 +1,29 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Thu, 13 Apr 2023 05:14:28 GMT and should not be manually modified.
+This log was last generated on Wed, 03 May 2023 19:30:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.193
+
+Wed, 03 May 2023 19:30:16 GMT
+
+### Changes
+
+- Simplify ViewWin32 focus, now devmain properly implements UIManger.focus (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.192
+
+Tue, 25 Apr 2023 05:16:56 GMT
+
+### Changes
+
+- Update Node to 16 (34109996+chiaramooney@users.noreply.github.com)
+- Integrate 4/13 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.1.16
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.2
+- Bump @rnw-scripts/just-task to v2.3.7
+- Bump react-native-platform-override to v1.9.5
 
 ## 0.0.0-canary.191
 

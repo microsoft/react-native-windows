@@ -1,8 +1,50 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 22 Apr 2023 05:13:57 GMT and should not be manually modified.
+This log was last generated on Wed, 03 May 2023 19:30:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.649
+
+Wed, 03 May 2023 19:30:16 GMT
+
+### Changes
+
+- Bump default _WIN32_WINNT_VERSION (julio.rocha@microsoft.com)
+- add default static activityIndicator (tatianakapos@microsoft.com)
+- Update folly version (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.648
+
+Thu, 27 Apr 2023 05:12:48 GMT
+
+### Changes
+
+- working impl of getBoundingRect and ElementProviderFromPoint (adrum@microsoft.com)
+
+## 0.0.0-canary.647
+
+Wed, 26 Apr 2023 05:13:36 GMT
+
+### Changes
+
+- Resolve some XAML style colors in Fabric (26607885+chrisglein@users.noreply.github.com)
+
+## 0.0.0-canary.646
+
+Tue, 25 Apr 2023 05:17:02 GMT
+
+### Changes
+
+- Integrate 4/13 (34109996+chiaramooney@users.noreply.github.com)
+- Upgrade to WinUI 2.8 (34109996+chiaramooney@users.noreply.github.com)
+- Update Node to 16 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.168
+- Bump @react-native-windows/codegen to v0.0.0-canary.56
+- Bump @rnw-scripts/eslint-config to v1.1.16
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.2
+- Bump @rnw-scripts/just-task to v2.3.7
+- Bump react-native-platform-override to v1.9.5
 
 ## 0.0.0-canary.645
 

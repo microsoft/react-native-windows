@@ -114,7 +114,10 @@ struct CompositionViewComponentView : public CompositionBaseComponentView {
 
   facebook::react::Props::Shared props() noexcept override;
 
-  facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt) const noexcept override;
+  facebook::react::Tag hitTest(
+      facebook::react::Point pt,
+      facebook::react::Point &localPt,
+      bool ignorePointerEvents = false) const noexcept override;
   bool ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept override;
 
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
