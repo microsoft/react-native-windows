@@ -16,7 +16,7 @@
     "flow-enums-runtime": "^0.0.5"
   },
   "peerDependencies": {
-    "@react-native-picker/picker": "2.2.0",
+    "@react-native-picker/picker": "2.4.10",
     "react": "18.0.0",
     "react-native": "0.0.0-20230321-2153-7b86e3aae",
     "react-native-windows": "0.72.0-preview.2",
