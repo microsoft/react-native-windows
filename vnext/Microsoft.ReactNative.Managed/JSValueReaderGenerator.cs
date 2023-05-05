@@ -18,7 +18,7 @@ namespace Microsoft.ReactNative.Managed
     // The current assembly to ensure we always register the basic type readers
     private static readonly Assembly s_currentAssembly = typeof(JSValueReaderGenerator).Assembly;
 
-    private static readonly ConcurrentDictionary<Assembly, bool> s_registerdAssemblies = new ConcurrentDictionary<Assembly, bool>();
+    private static readonly ConcurrentDictionary<Assembly, bool> s_registeredAssemblies = new ConcurrentDictionary<Assembly, bool>();
     private static readonly ConcurrentDictionary<Type, MethodInfo> s_codeGenerateGenericExtensionMethods = new ConcurrentDictionary<Type, MethodInfo>();
 
     private static readonly Lazy<KeyValuePair<Type, MethodInfo>[]> s_allMethods;
@@ -28,12 +28,12 @@ namespace Microsoft.ReactNative.Managed
     public static void RegisterAssembly(Assembly assembly)
     {
       // UnitTests re-register over and over, safe to skip if already added.
-      if (s_registerdAssemblies.ContainsKey(assembly))
+      if (s_registeredAssemblies.ContainsKey(assembly))
       {
         return;
       }
 
-      s_registerdAssemblies.GetOrAdd(assembly, true);
+      s_registeredAssemblies.GetOrAdd(assembly, true);
 
       // Fail programs that register after we started serializing values.
       if (s_allMethods.IsValueCreated)
@@ -53,7 +53,7 @@ namespace Microsoft.ReactNative.Managed
 
     static JSValueReaderGenerator()
     {
-      s_registerdAssemblies.GetOrAdd(s_currentAssembly, true);
+      s_registeredAssemblies.GetOrAdd(s_currentAssembly, true);
 
       // Get all extension ReadValue methods for IJSValueReader and JSValue.
       // The first parameter must be IJSValueReader or JSValue.
@@ -63,7 +63,7 @@ namespace Microsoft.ReactNative.Managed
       s_allMethods = new Lazy<KeyValuePair<Type, MethodInfo>[]>(() =>
       {
         var extensionMethods =
-          from assembly in s_registerdAssemblies.Keys
+          from assembly in s_registeredAssemblies.Keys
           from type in assembly.GetTypes()
           let typeInfo = type.GetTypeInfo()
           where typeInfo.IsSealed && !typeInfo.IsGenericType && !typeInfo.IsNested

@@ -7,7 +7,7 @@ using namespace winrt::Microsoft::ReactNative;
 namespace winrt::integrationtest::implementation {
 
 void ReactPackageProvider::CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept {
-  // We do not use TurboModules for the TestModule, since the integration tests are specifically targetting
+  // We do not use TurboModules for the TestModule, since the integration tests are specifically targeting
   // NativeModules NOT TurboModules.
   //
   // See here for an example usage of NativeModules.TestModule:

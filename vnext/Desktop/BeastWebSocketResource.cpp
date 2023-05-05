@@ -582,7 +582,7 @@ SecureWebSocketResource::SecureWebSocketResource(Url &&url) : BaseWebSocketResou
 }
 
 void SecureWebSocketResource::Handshake() {
-  // Prefer shared_from_this() in concrete classes. SharedFromThis() falis to compile.
+  // Prefer shared_from_this() in concrete classes. SharedFromThis() fails to compile.
   this->m_stream->next_layer().async_handshake(
       ssl::stream_base::client, bind_front_handler(&SecureWebSocketResource::OnSslHandshake, shared_from_this()));
 }

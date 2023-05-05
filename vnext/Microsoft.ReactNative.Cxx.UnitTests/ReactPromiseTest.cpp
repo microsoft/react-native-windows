@@ -10,24 +10,26 @@ namespace ReactNativeTests {
 
 TEST_CLASS (ReactPromiseTest) {
   TEST_METHOD(Test_ReactPromise_void_resolve) {
-    bool isSucceded = false;
+    bool isSucceeded = false;
     bool isFailed = false;
     ReactPromise<void> promise(
-        [&isSucceded]() noexcept { isSucceded = true; }, [&isFailed](ReactError const &) noexcept { isFailed = true; });
+        [&isSucceeded]() noexcept { isSucceeded = true; },
+        [&isFailed](ReactError const &) noexcept { isFailed = true; });
     promise.Resolve();
 
-    TestCheck(isSucceded);
+    TestCheck(isSucceeded);
     TestCheck(!isFailed);
   }
 
   TEST_METHOD(Test_ReactPromise_void_reject) {
-    bool isSucceded = false;
+    bool isSucceeded = false;
     bool isFailed = false;
     ReactPromise<void> promise(
-        [&isSucceded]() noexcept { isSucceded = true; }, [&isFailed](ReactError const &) noexcept { isFailed = true; });
+        [&isSucceeded]() noexcept { isSucceeded = true; },
+        [&isFailed](ReactError const &) noexcept { isFailed = true; });
     promise.Reject("Failed");
 
-    TestCheck(!isSucceded);
+    TestCheck(!isSucceeded);
     TestCheck(isFailed);
   }
 

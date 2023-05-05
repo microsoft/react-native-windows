@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+// cspell:ignoreRegExp u8".+"
+
 #include "UnicodeTestStrings.h"
 
 namespace Microsoft::React::Test {

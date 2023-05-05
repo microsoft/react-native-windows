@@ -28,7 +28,7 @@ interface ExtendedObject extends NativeModuleObjectTypeAnnotation {
   '$RNW-TURBOMODULE-ALIAS'?: string;
 }
 
-function recordAnonymouseAlias(
+function recordAnonymousAlias(
   aliases: AliasMap,
   baseAliasName: string,
   extended: ExtendedObject,
@@ -59,7 +59,7 @@ export function getAnonymousAliasCppName(
   // associate the name with this object literal type and return
   if (aliases.types[baseAliasName] === undefined) {
     return getAliasCppName(
-      recordAnonymouseAlias(aliases, baseAliasName, extended),
+      recordAnonymousAlias(aliases, baseAliasName, extended),
     );
   }
 
@@ -70,6 +70,6 @@ export function getAnonymousAliasCppName(
   }
 
   return getAliasCppName(
-    recordAnonymouseAlias(aliases, `${baseAliasName}${index}`, extended),
+    recordAnonymousAlias(aliases, `${baseAliasName}${index}`, extended),
   );
 }

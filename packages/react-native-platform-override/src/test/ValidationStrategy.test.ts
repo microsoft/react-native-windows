@@ -5,6 +5,8 @@
  * @format
  */
 
+// cspell:ignoreRegExp /content: '\w+'/
+
 import {
   MockReactFileRepository,
   MockWritableFileRepository,

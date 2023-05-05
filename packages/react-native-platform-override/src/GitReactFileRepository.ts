@@ -19,7 +19,7 @@ import {fetchFullRef} from './refFromVersion';
 const RN_GITHUB_URL = 'https://github.com/facebook/react-native.git';
 
 /**
- * Retrives React Native files using the React Native Github repo. Switching
+ * Retrieves React Native files using the React Native Github repo. Switching
  * between getting file contents of different versions may be slow.
  */
 export default class GitReactFileRepository
@@ -42,7 +42,7 @@ export default class GitReactFileRepository
   }
 
   /**
-   * Asynchronusly initialize the scratch repository, creating a new Git repo is needed
+   * Asynchronously initialize the scratch repository, creating a new Git repo is needed
    * @param gitDirectory optional repo directory
    */
   static async createAndInit(

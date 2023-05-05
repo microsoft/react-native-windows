@@ -30,14 +30,14 @@ enum class HostAction {
   Continue,
 
   // Ensure that all pending events from the test are fired. The transaction
-  // should be notifed after by calling OnEventsFlushed.
+  // should be notified after by calling OnEventsFlushed.
   FlushEvents,
 
   // A test result is ready
   ResultReady,
 };
 
-//! Describes the peding transaction result
+//! Describes the pending transaction result
 enum class TestResult {
   None,
   FailNoMessage,
@@ -70,7 +70,7 @@ class TestTransaction : public winrt::implements<TestTransaction, winrt::Windows
   //! All test events have been flushed
   [[nodiscard]] HostAction OnEventsFlushed() noexcept;
 
-  //! Retrives a result based on the completed transaction. Must only be
+  //! Retrieves a result based on the completed transaction. Must only be
   //! called once the test is complete.
   winrt::Windows::Data::Json::JsonObject GetResult() noexcept;
 

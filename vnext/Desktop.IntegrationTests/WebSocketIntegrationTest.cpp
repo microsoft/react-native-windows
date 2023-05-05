@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+// cspell:disable
+
 // clang-format off
 #include <CppUnitTest.h>
 #include <Networking/IWebSocketResource.h>

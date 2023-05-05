@@ -55,8 +55,8 @@ TEST_CLASS (ScriptStoreIntegrationTest) {
     auto startWorkingSet =
         ProcessDiagnosticInfo::GetForCurrentProcess().MemoryUsage().GetReport().WorkingSetSizeInBytes();
 
-    auto prepd = preparedScriptStore->tryGetPreparedScript(scriptSignature, runtimeSignature, "prepareTag");
-    Assert::AreEqual(fileSize, prepd->size());
+    auto prepped = preparedScriptStore->tryGetPreparedScript(scriptSignature, runtimeSignature, "prepareTag");
+    Assert::AreEqual(fileSize, prepped->size());
 
     auto endWorkingSet =
         ProcessDiagnosticInfo::GetForCurrentProcess().MemoryUsage().GetReport().WorkingSetSizeInBytes();

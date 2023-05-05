@@ -93,7 +93,7 @@ test('hashFileOrDirectory - No File', async () => {
     {filename: 'a/b.txt', content: 'Hello World!'},
   ]);
 
-  expect(await hashFileOrDirectory('bope', fileRepo)).toBeNull();
+  expect(await hashFileOrDirectory('nope', fileRepo)).toBeNull();
 });
 
 test('hashFileOrDirectory - File', async () => {

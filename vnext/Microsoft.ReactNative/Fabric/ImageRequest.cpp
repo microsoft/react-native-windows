@@ -29,8 +29,9 @@ ImageRequest::~ImageRequest() {
   }
 }
 
-void ImageRequest::setCancelationFunction(std::function<void(void)> cancelationFunction) {
-  cancelRequest_ = cancelationFunction;
+// cspell:disable-next-line
+void ImageRequest::setCancelationFunction(std::function<void(void)> cancellationFunction) {
+  cancelRequest_ = cancellationFunction;
 }
 
 const ImageSource &ImageRequest::getImageSource() const {

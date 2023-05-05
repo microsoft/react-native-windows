@@ -23,9 +23,9 @@ struct ReactModuleBuilderMock {
   template <class... TArgs>
   void Call0(std::wstring const &methodName, TArgs &&...args) noexcept;
 
-  template <class... TArgs, class... TReasolveArgs>
+  template <class... TArgs, class... TResolveArgs>
   Mso::Future<bool>
-  Call1(std::wstring const &methodName, std::function<void(TReasolveArgs...)> &&resolve, TArgs &&...args) noexcept;
+  Call1(std::wstring const &methodName, std::function<void(TResolveArgs...)> &&resolve, TArgs &&...args) noexcept;
 
   template <class... TArgs, class... TResolveArgs, class... TRejectArgs>
   Mso::Future<bool> Call2(

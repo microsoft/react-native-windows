@@ -157,7 +157,7 @@ const transitions: ITransitions = {
 // (function children) or styles. A keypressed state is equivalent to a normal
 // press state. If either a pointer, mouse, or special key (space/enter) is pressed
 // the touchable considers itself to be in a pressed state. Do note that key presses
-// will not invoke gesture responder hooksand are not subject to the passed in delays.
+// will not invoke gesture responder hooks and are not subject to the passed in delays.
 interface IInternalTouchableWin32State extends ITouchableWin32State {
   isKeyPressed: boolean;
 }

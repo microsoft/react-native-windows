@@ -39,10 +39,10 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests
     }
 
     [TestMethod]
-    public void SapareteOutFileAndNamespace()
+    public void SeparateOutFileAndNamespace()
     {
       var options = new Options();
-      var result = options.TryParse(new []
+      var result = options.TryParse(new[]
       {
         "/ns:TestNs"
       });
@@ -96,7 +96,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests
     }
 
     [TestMethod]
-    public void NonExistentRefereceFile()
+    public void NonExistentReferenceFile()
     {
       var options = new Options();
       var result = options.TryParse(new[]
@@ -183,7 +183,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests
       Assert.IsTrue(result);
       var collection = isSources ? options.SourceFiles : options.References;
 
-      Assert.AreEqual(4,  collection.Count);
+      Assert.AreEqual(4, collection.Count);
       Assert.AreEqual(f1, collection[0]);
       Assert.AreEqual(f2, collection[1]);
       Assert.AreEqual(f3, collection[2]);

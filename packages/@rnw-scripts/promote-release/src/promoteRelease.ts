@@ -75,7 +75,7 @@ type ReleaseType = 'preview' | 'latest' | 'legacy';
     });
   }
 
-  console.log(chalk.green('All done! Please check locally commited changes.'));
+  console.log(chalk.green('All done! Please check locally committed changes.'));
 })();
 
 /**

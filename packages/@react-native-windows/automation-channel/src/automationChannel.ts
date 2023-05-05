@@ -107,7 +107,7 @@ export class AutomationClient {
 
     switch (response.type) {
       case RpcStatusType.request:
-        throw new Error('Recieved JSON-RPC request instead of response');
+        throw new Error('Received JSON-RPC request instead of response');
       case RpcStatusType.notification:
         throw new Error('Unexpected JSON-RPC notification');
       case RpcStatusType.invalid:

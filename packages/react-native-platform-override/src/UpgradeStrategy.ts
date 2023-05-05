@@ -44,7 +44,7 @@ export const UpgradeStrategies = {
   }),
 
   /**
-   * Perform a three way merge of the original base file, the overriden version
+   * Perform a three way merge of the original base file, the overridden version
    * of it, and the base file from a newwer version of React Native.
    */
   threeWayMerge: (
@@ -126,7 +126,7 @@ export const UpgradeStrategies = {
         await overrideRepo.listFiles([`${overrideDirectory}/**`])
       ).map(f => path.relative(overrideDirectory, f));
 
-      // Note that this logic can lead emopty directories. This shouldn't
+      // Note that this logic can leave empty directories. This shouldn't
       // matter in practice as Git won't track them.
       const deleteTasks = _.difference(overrideFiles, baseFiles).map(f =>
         overrideRepo.deleteFile(path.join(overrideDirectory, f)),

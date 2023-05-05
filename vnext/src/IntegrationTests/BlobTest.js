@@ -24,6 +24,7 @@ class BlobTest extends React.Component<{...}, State> {
     statusCode: 0,
     xhr: new XMLHttpRequest(),
     // https://www.facebook.com/favicon.ico
+    // cspell:disable
     expected:
       'data:application/octet-stream;base64,' +
       'AAABAAIAEBAAAAEAIABoBAAAJgAAACAgAAABACAAqBAAAI4EAAAoAAAAEAAAACAA' +
@@ -140,6 +141,7 @@ class BlobTest extends React.Component<{...}, State> {
       'AAPAAAADgAAAAYAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA' +
       'AAAAAAAAAAAAAAAAAACAAAABgAAAAcAAAAPAAAAD4AAAB/AAAA/4AAAf/AAAP/8A' +
       'AP//wAP/',
+    // cspell:enable
   };
 
   _get = () => {

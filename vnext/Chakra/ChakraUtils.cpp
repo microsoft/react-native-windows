@@ -181,7 +181,7 @@ FileMappingBigString::FileMappingBigString(const std::string &filenameUtf8, uint
     // Ensure m_data is null-terminated
     m_data = decltype(m_data){
         new char[m_size + 1],
-        [](void *pv) // Can't just say &opreator delete[] because of calling
+        [](void *pv) // Can't just say &operator delete[] because of calling
                      // convention mismatches
         { delete[] static_cast<char *>(pv); }};
     memcpy(m_data.get(), static_cast<char *>(m_fileData.get()) + offset, m_size);

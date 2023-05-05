@@ -91,13 +91,13 @@
 
   struct IBank
   {
-    // Generate mock_TryWithdrawlUint32
-    LIBLET_MOCKNAME("TryWithdrawlUint32")
-    virtual bool TryWithdrawl(uint32_t amount) = 0;
+    // Generate mock_TryWithdrawalUint32
+    LIBLET_MOCKNAME("TryWithdrawalUint32")
+    virtual bool TryWithdrawal(uint32_t amount) = 0;
 
-    // Generate mock_TryWithdrawlFloat
-    LIBLET_MOCKNAME("TryWithdrawlFloat")
-    virtual bool TryWithdrawl(float amount) = 0;
+    // Generate mock_TryWithdrawalFloat
+    LIBLET_MOCKNAME("TryWithdrawalFloat")
+    virtual bool TryWithdrawal(float amount) = 0;
   };
 */
 #if defined(__clangpluginrunner__)

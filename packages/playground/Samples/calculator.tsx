@@ -141,7 +141,7 @@ export default class Bootstrap extends React.Component {
       btn === operators.multiply ||
       btn === operators.divide
     ) {
-      // Add, Subrtract, Multiply, or Divide
+      // Add, Subtract, Multiply, or Divide
       if (isFinite(Number(text))) {
         this.computeAndUpdate(btn);
         this.setState({displayText: calc.stackValue});
