@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Upgrade to WinUI 2.8",
+  "comment": "Cherry Pick",
   "packageName": "@react-native-windows/telemetry",
   "email": "34109996+chiaramooney@users.noreply.github.com",
   "dependentChangeType": "patch"
