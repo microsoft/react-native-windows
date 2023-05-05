@@ -897,11 +897,11 @@ bool CompositionBaseComponentView::TryUpdateSpecialBorderLayers(
   // We only handle a single borderStyle for now
   auto borderStyle = borderMetrics.borderStyles.left;
 
-  if (borderMetrics.borderColors.isUniform()) {
-    if (!borderMetrics.borderWidths.left)
-      return false;
-    if (!facebook::react::isColorMeaningful(borderMetrics.borderColors.left))
-      return false;
+  bool hasMeaningfulColor =
+      !borderMetrics.borderColors.isUniform() || !facebook::react::isColorMeaningful(borderMetrics.borderColors.left);
+  bool hasMeaningfulWidth = !borderMetrics.borderWidths.isUniform() || (borderMetrics.borderWidths.left != 0);
+  if (!hasMeaningfulColor && !hasMeaningfulWidth) {
+    return false;
   }
 
   // Create the special border layers if they don't exist yet
