@@ -64,9 +64,9 @@ function insertBlockIntoLines(lines: string[], block: string[], index: number) {
 
 /**
  * Overwrite the lines at the given index with the block.
- * @param lines The destionation array of lines to.
+ * @param lines The destination array of lines to.
  * @param block The source block of lines.
- * @param index The index to perform the pverwrite.
+ * @param index The index to perform the overwrite.
  */
 function overwriteLinesWithBlock(
   lines: string[],

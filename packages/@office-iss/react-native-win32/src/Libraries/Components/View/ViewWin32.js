@@ -8,13 +8,11 @@
  */
 
 import * as React from 'react';
-import {useCallback, useRef, useLayoutEffect} from 'react';
+import {useLayoutEffect} from 'react';
 import type {ViewProps} from './ViewPropTypes';
 
 import View from './View';
 import {findNodeHandle} from '../../ReactNative/RendererProxy';
-import UIManager from '../../ReactNative/UIManager';
-import useMergeRefs from '../../Utilities/useMergeRefs';
 import warnOnce from '../../Utilities/warnOnce';
 
 /**
@@ -74,7 +72,7 @@ const ViewWin32: React.AbstractComponent<
       ) {
         warnOnce(
           'accessibilityDescribedByRef',
-          'accessibilityDescribedBy should be specfied as a string matching the nativeID of the target component.  Support of specifying accessibilityDescribedBy using a ref is deprecated and will be removed in a future release',
+          'accessibilityDescribedBy should be specified as a string matching the nativeID of the target component.  Support of specifying accessibilityDescribedBy using a ref is deprecated and will be removed in a future release',
         );
         // $FlowFixMe[incompatible-use] - Using accessibilityDescribedBy as Ref for backcompat, not typed
         // $FlowFixMe[prop-missing]
@@ -92,7 +90,7 @@ const ViewWin32: React.AbstractComponent<
       ) {
         warnOnce(
           'accessibilityControlsRef',
-          'accessibilityControls should be specfied as a string matching the nativeID of the target component.  Support of specifying accessibilityControls using a ref is deprecated and will be removed in a future release',
+          'accessibilityControls should be specified as a string matching the nativeID of the target component.  Support of specifying accessibilityControls using a ref is deprecated and will be removed in a future release',
         );
         // $FlowFixMe[incompatible-use] - Using accessibilityControls as Ref for backcompat, not typed
         // $FlowFixMe[prop-missing]
@@ -100,40 +98,9 @@ const ViewWin32: React.AbstractComponent<
       }
     }, [accessibilityControls]);
 
-    /**
-     * Set up the forwarding ref to enable adding the focus method.
-     */
-    const focusRef = useRef<typeof View | null>(null);
-
-    const setLocalRef = useCallback(
-      (instance: typeof View | null) => {
-        focusRef.current = instance;
-        /**
-         * Add focus() as a callable function to the forwarded reference.
-         */
-        if (instance) {
-          // $FlowFixMe[prop-missing] - TODO - focus on a component should already call into TextInputState.focus.. once we remove the refs required for legacy accessibility*By ref support
-          instance.focus = () => {
-            UIManager.dispatchViewManagerCommand(
-              findNodeHandle(instance),
-              UIManager.getViewManagerConfig('RCTView').Commands.focus,
-              null,
-            );
-          };
-        }
-      },
-      [focusRef],
-    );
-
-    // $FlowFixMe
-    const setNativeRef = useMergeRefs<typeof View | null>({
-      setLocalRef,
-      forwardedRef,
-    });
-
     return (
       <View
-        ref={setNativeRef}
+        ref={forwardedRef}
         {...rest}
         {...(controlsTarget !== null
           ? {accessibilityControls: controlsTarget}

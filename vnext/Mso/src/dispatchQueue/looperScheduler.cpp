@@ -14,7 +14,7 @@ struct LooperScheduler : Mso::UnknownObject<Mso::RefCountStrategy::WeakRef, IDis
   static void RunLoop(const Mso::WeakPtr<LooperScheduler> &weakSelf) noexcept;
 
  public: // IDispatchQueueScheduler
-  void IntializeScheduler(Mso::WeakPtr<IDispatchQueueService> &&queue) noexcept override;
+  void InitializeScheduler(Mso::WeakPtr<IDispatchQueueService> &&queue) noexcept override;
   bool HasThreadAccess() noexcept override;
   bool IsSerial() noexcept override;
   void Post() noexcept override;
@@ -88,7 +88,7 @@ LooperScheduler::~LooperScheduler() noexcept {
   }
 }
 
-void LooperScheduler::IntializeScheduler(Mso::WeakPtr<IDispatchQueueService> &&queue) noexcept {
+void LooperScheduler::InitializeScheduler(Mso::WeakPtr<IDispatchQueueService> &&queue) noexcept {
   m_queue = std::move(queue);
 }
 

@@ -156,10 +156,18 @@ int64_t CompositionEventHandler::SendMessage(uint32_t msg, uint64_t wParam, int6
       MouseMove(msg, wParam, lParam);
       return 0;
     }
+    case WM_CHAR:
+    case WM_SYSCHAR: {
+      // TODO full bubbling of events
+      if (auto focusedComponent = RootComponentView().GetFocusedComponent()) {
+        auto result = focusedComponent->sendMessage(msg, wParam, lParam);
+        if (result)
+          return result;
+      }
+      break;
+    }
     case WM_KEYDOWN:
     case WM_KEYUP:
-    case WM_CHAR:
-    case WM_SYSCHAR:
     case WM_SYSKEYDOWN:
     case WM_SYSKEYUP: {
       // TODO full bubbling of events
@@ -186,10 +194,11 @@ int64_t CompositionEventHandler::SendMessage(uint32_t msg, uint64_t wParam, int6
           Microsoft::ReactNative::DevMenuManager::Show(
               Mso::CntPtr<Mso::React::IReactContext>(&contextSelf->GetInner()));
         }
-        if (msg == WM_KEYDOWN && wParam == VK_TAB) {
-          if (RootComponentView().TryMoveFocus(!fShift)) {
-            return 1;
+        if (!fCtrl && msg == WM_KEYDOWN && wParam == VK_TAB) {
+          if (!RootComponentView().TryMoveFocus(!fShift)) {
+            // TODO notify rootview that host should move focus
           }
+          return 1;
         }
       }
       return 0;
@@ -212,9 +221,9 @@ std::vector<IComponentView *> GetTouchableViewsInPathToRoot(IComponentView *view
 
 /**
  * Private method which is used for tracking the location of pointer events to manage the entering/leaving events.
- * The primary idea is that a pointer's presence & movement is dicated by a variety of underlying events such as down,
+ * The primary idea is that a pointer's presence & movement is dictated by a variety of underlying events such as down,
  * move, and up — and they should all be treated the same when it comes to tracking the entering & leaving of pointers
- * to views. This method accomplishes that by recieving the pointer event, the target view (can be null in cases when
+ * to views. This method accomplishes that by receiving the pointer event, the target view (can be null in cases when
  * the event indicates that the pointer has left the screen entirely), and a block/callback where the underlying event
  * should be fired.
  */
@@ -229,7 +238,7 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
   auto itCurrentlyHoveredViews = m_currentlyHoveredViewsPerPointer.find(pointerId);
   if (itCurrentlyHoveredViews != m_currentlyHoveredViewsPerPointer.end()) {
     for (auto &taggedView : itCurrentlyHoveredViews->second) {
-      if (auto &view = taggedView.view()) {
+      if (auto view = taggedView.view()) {
         currentlyHoveredViews.push_back(view.get());
       }
     }
@@ -256,7 +265,7 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
   // We only want to emit events to JS if there is a view that is currently listening to said event
   // so we only send those event to the JS side if the element which has been entered is itself listening,
   // or if one of its parents is listening in case those listeners care about the capturing phase. Adding the ability
-  // for native to distingusih between capturing listeners and not could be an optimization to futher reduce the
+  // for native to distinguish between capturing listeners and not could be an optimization to further reduce the
   // number of events we send to JS
   bool hasParentEnterListener = false;
 
@@ -301,7 +310,7 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
 
   // Leaving
 
-  // pointerleave events need to be emited from the deepest target to the root but
+  // pointerleave events need to be emitted from the deepest target to the root but
   // we also need to efficiently keep track of if a view has a parent which is listening to the leave events,
   // so we first iterate from the root to the target, collecting the views which need events fired for, of which
   // we reverse iterate (now from target to root), actually emitting the events.

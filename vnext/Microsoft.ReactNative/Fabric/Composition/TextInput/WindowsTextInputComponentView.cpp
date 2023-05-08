@@ -6,6 +6,7 @@
 
 #include "WindowsTextInputComponentView.h"
 
+#include <Fabric/Composition/CompositionDynamicAutomationProvider.h>
 #include <Utils/ValueUtils.h>
 #include <tom.h>
 #include <unicode.h>
@@ -363,9 +364,9 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
   }
 
   //@cmember Get the character to display for password input
-  HRESULT TxGetPasswordChar(_Out_ TCHAR *pch) override {
-    assert(false);
-    return {};
+  HRESULT TxGetPasswordChar(_Out_ wchar_t *pch) override {
+    *pch = L'\u2022';
+    return S_OK;
   }
 
   //@cmember Get the accelerator character
@@ -542,6 +543,18 @@ void WindowsTextInputComponentView::handleCommand(std::string const &commandName
 }
 
 int64_t WindowsTextInputComponentView::sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
+  // Do not forward tab keys into the TextInput, since we want that to do the tab loop instead.  This aligns with WinUI
+  // behavior We do forward Ctrl+Tab to the textinput.
+  if (((msg == WM_KEYDOWN || msg == WM_KEYUP) && wParam == VK_TAB) || (msg == WM_CHAR && wParam == '\t')) {
+    BYTE bKeys[256];
+    if (GetKeyboardState(bKeys)) {
+      bool fCtrl = false;
+      if (!(bKeys[VK_LCONTROL] & 0x80 || bKeys[VK_RCONTROL] & 0x80)) {
+        return 0;
+      }
+    }
+  }
+
   if (m_textServices) {
     LRESULT lresult;
     DrawBlock db(*this);
@@ -551,19 +564,6 @@ int64_t WindowsTextInputComponentView::sendMessage(uint32_t msg, uint64_t wParam
     }
   }
   return Super::sendMessage(msg, wParam, lParam);
-}
-
-std::vector<facebook::react::ComponentDescriptorProvider>
-WindowsTextInputComponentView::supplementalComponentDescriptorProviders() noexcept {
-  return {};
-}
-
-void WindowsTextInputComponentView::parent(IComponentView *parent) noexcept {
-  if (!parent && rootComponentView()->GetFocusedComponent() == this) {
-    rootComponentView()->SetFocusedComponent(nullptr); // TODO need move focus logic - where should focus go?
-  }
-
-  Super::parent(parent);
 }
 
 void WindowsTextInputComponentView::mountChildComponentView(
@@ -614,6 +614,27 @@ void WindowsTextInputComponentView::updateProps(
     propBits |= TXTBIT_CHARFORMATCHANGE;
   }
 
+  if (oldTextInputProps.secureTextEntry != newTextInputProps.secureTextEntry) {
+    propBitsMask |= TXTBIT_USEPASSWORD;
+    if (newTextInputProps.secureTextEntry) {
+      propBits |= TXTBIT_USEPASSWORD;
+    }
+  }
+
+  if (oldTextInputProps.multiline != newTextInputProps.multiline) {
+    propBitsMask |= TXTBIT_MULTILINE | TXTBIT_WORDWRAP;
+    if (newTextInputProps.multiline) {
+      propBits |= TXTBIT_MULTILINE | TXTBIT_WORDWRAP;
+    }
+  }
+
+  if (oldTextInputProps.editable != newTextInputProps.editable) {
+    propBitsMask |= TXTBIT_READONLY;
+    if (!newTextInputProps.editable) {
+      propBits |= TXTBIT_READONLY;
+    }
+  }
+
   /*
   if (oldTextInputProps.textAttributes.foregroundColor != newTextInputProps.textAttributes.foregroundColor) {
     if (newTextInputProps.textAttributes.foregroundColor)
@@ -654,17 +675,6 @@ void WindowsTextInputComponentView::updateProps(
     m_element.PlaceholderText(winrt::to_hstring(newTextInputProps.placeholder));
   }
 
-  if (oldTextInputProps.editable != newTextInputProps.editable) {
-    m_element.IsReadOnly(!newTextInputProps.editable);
-  }
-
-
-    if (oldTextInputProps.multiline != newTextInputProps.multiline) {
-      m_element.TextWrapping(newTextInputProps.multiline ? xaml::TextWrapping::Wrap : xaml::TextWrapping::NoWrap);
-      m_element.AcceptsReturn(newTextInputProps.multiline);
-    }
-
-
   if (oldTextInputProps.selection.start != newTextInputProps.selection.start ||
       oldTextInputProps.selection.end != newTextInputProps.selection.end) {
     m_element.Select(
@@ -675,7 +685,7 @@ void WindowsTextInputComponentView::updateProps(
     if (newTextInputProps.autoCapitalize == "characters") {
       m_element.CharacterCasing(xaml::Controls::CharacterCasing::Upper);
     } else { // anything else turns off autoCap (should be "None" but
-             // we don't support "words"/"senetences" yet)
+             // we don't support "words"/"sentences" yet)
       m_element.CharacterCasing(xaml::Controls::CharacterCasing::Normal);
     }
   }
@@ -760,7 +770,7 @@ void WindowsTextInputComponentView::updateLayoutMetrics(
   // Set Position & Size Properties
 
   if ((layoutMetrics.displayType != m_layoutMetrics.displayType)) {
-    m_visual.IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
+    OuterVisual().IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
   }
 
   if ((layoutMetrics.pointScaleFactor != m_layoutMetrics.pointScaleFactor)) {
@@ -791,11 +801,6 @@ void WindowsTextInputComponentView::updateLayoutMetrics(
   m_visual.Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
-  m_visual.Offset({
-      layoutMetrics.frame.origin.x * layoutMetrics.pointScaleFactor,
-      layoutMetrics.frame.origin.y * layoutMetrics.pointScaleFactor,
-      0.0f,
-  });
 }
 
 // When we are notified by RichEdit that the text changed, we need to notify JS
@@ -836,10 +841,10 @@ std::string WindowsTextInputComponentView::GetTextFromRichEdit() const noexcept 
   auto str = BstrToStdString(bstr);
 
   // JS gets confused by the \r\0 ending
-  if (*(str.end() - 1) == '\0') {
+  if (str.size() > 0 && *(str.end() - 1) == '\0') {
     str.pop_back();
   }
-  if (*(str.end() - 1) == '\r') {
+  if (str.size() > 0 && *(str.end() - 1) == '\r') {
     str.pop_back();
   }
   SysFreeString(bstr);
@@ -1026,8 +1031,10 @@ void WindowsTextInputComponentView::DrawText() noexcept {
   m_needsRedraw = false;
 }
 
-facebook::react::Tag WindowsTextInputComponentView::hitTest(facebook::react::Point pt, facebook::react::Point &localPt)
-    const noexcept {
+facebook::react::Tag WindowsTextInputComponentView::hitTest(
+    facebook::react::Point pt,
+    facebook::react::Point &localPt,
+    bool ignorePointerEvents) const noexcept {
   facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
 
   facebook::react::Tag targetTag;
@@ -1042,7 +1049,7 @@ facebook::react::Tag WindowsTextInputComponentView::hitTest(facebook::react::Poi
       return targetTag;
       */
 
-  if ((m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
+  if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
        m_props->pointerEvents == facebook::react::PointerEventsMode::BoxOnly) &&
       ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
       ptLocal.y <= m_layoutMetrics.frame.size.height) {
@@ -1061,6 +1068,7 @@ void WindowsTextInputComponentView::ensureVisual() noexcept {
     winrt::com_ptr<IUnknown> spUnk;
     winrt::check_hresult(g_pfnCreateTextServices(nullptr, m_textHost.get(), spUnk.put()));
     spUnk.as(m_textServices);
+    OuterVisual().InsertAt(m_visual, 0);
   }
 
   if (!m_caretVisual) {
@@ -1072,6 +1080,14 @@ void WindowsTextInputComponentView::ensureVisual() noexcept {
 
 winrt::Microsoft::ReactNative::Composition::IVisual WindowsTextInputComponentView::Visual() const noexcept {
   return m_visual;
+}
+
+std::shared_ptr<WindowsTextInputComponentView> WindowsTextInputComponentView::Create(
+    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    facebook::react::Tag tag,
+    winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
+  return std::shared_ptr<WindowsTextInputComponentView>(
+      new WindowsTextInputComponentView(compContext, tag, reactContext));
 }
 
 } // namespace Microsoft::ReactNative

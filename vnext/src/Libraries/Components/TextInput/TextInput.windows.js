@@ -600,6 +600,14 @@ export type Props = $ReadOnly<{|
   ...WindowsProps, // [Windows]
 
   /**
+   * String to be read by screenreaders to indicate an error state. The acceptable parameters
+   * of accessibilityErrorMessage is a string. Setting accessibilityInvalid to true activates
+   * the error message. Setting accessibilityInvalid to false removes the error message.
+   */
+  accessibilityErrorMessage?: ?Stringish,
+  accessibilityInvalid?: ?boolean,
+
+  /**
    * Can tell `TextInput` to automatically capitalize certain characters.
    *
    * - `characters`: all characters.
@@ -632,7 +640,7 @@ export type Props = $ReadOnly<{|
    * On Android devices manufactured by Xiaomi with Android Q,
    * when keyboardType equals 'email-address'this will be set
    * in native to 'true' to prevent a system related crash. This
-   * will cause cursor to be diabled as a side-effect.
+   * will cause cursor to be disabled as a side-effect.
    *
    */
   caretHidden?: ?boolean,
@@ -1409,6 +1417,12 @@ function InternalTextInput(props: Props): React.Node {
   }
 
   const accessible = props.accessible !== false;
+
+  const accessibilityErrorMessage =
+    props.accessibilityInvalid === true
+      ? props.accessibilityErrorMessage
+      : null;
+
   const focusable = props.focusable !== false;
 
   const config = React.useMemo(
@@ -1534,6 +1548,7 @@ function InternalTextInput(props: Props): React.Node {
         ref={ref}
         {...otherProps}
         {...eventHandlers}
+        accessibilityErrorMessage={accessibilityErrorMessage}
         accessibilityState={_accessibilityState}
         accessible={accessible}
         submitBehavior={submitBehavior}
@@ -1585,6 +1600,7 @@ function InternalTextInput(props: Props): React.Node {
         ref={ref}
         {...otherProps}
         {...eventHandlers}
+        accessibilityErrorMessage={accessibilityErrorMessage}
         accessibilityState={_accessibilityState}
         accessibilityLabelledBy={_accessibilityLabelledBy}
         accessible={accessible}

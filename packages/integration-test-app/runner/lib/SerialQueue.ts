@@ -6,7 +6,7 @@
  */
 
 /**
- * Executes each async function one-by-onem returning the original function
+ * Executes each async function one-by-one returning the original function
  * result/exception
  */
 export default class SerialQueue {

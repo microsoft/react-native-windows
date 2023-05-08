@@ -45,10 +45,10 @@ enum class ShadowCorners : uint8_t {
 };
 
 struct ShadowNodeLayout {
-  float Left;
-  float Top;
-  float Width;
-  float Height;
+  float Left{0.f};
+  float Top{0.f};
+  float Width{0.f};
+  float Height{0.f};
 };
 
 extern const DECLSPEC_SELECTANY double c_UndefinedEdge = -1;
@@ -125,12 +125,15 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public ShadowNode {
   bool IsAccessible();
   void IsFocusable(bool focusable);
   bool IsFocusable();
+  void IsDisable(bool disable);
+  bool IsDisable();
 
  protected:
   XamlView m_view;
   bool m_updating = false;
   bool m_isFocusable = true;
   bool m_isAccessible = true;
+  bool m_isDisabled = false;
   comp::CompositionPropertySet m_transformPS{nullptr};
 
  public:
@@ -143,11 +146,14 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public ShadowNode {
   bool m_onMouseEnterRegistered = false;
   bool m_onMouseLeaveRegistered = false;
 
+  // Overflow
+  bool m_overflowHidden = false;
+
   // Pointer events
   PointerEventsKind m_pointerEvents = PointerEventsKind::Auto;
 
   // Layout
-  ShadowNodeLayout m_layout;
+  ShadowNodeLayout m_layout{};
 
   // Support Keyboard
  public:

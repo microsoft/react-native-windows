@@ -17,7 +17,7 @@ import CrossProcessLock from '../CrossProcessLock';
   if (await lock.tryLock()) {
     console.log('Lock acquired!');
   } else {
-    console.log('Failed to acqurie lock. Waiting...');
+    console.log('Failed to acquire lock. Waiting...');
     await lock.lock();
     console.log('Lock acquired!');
   }

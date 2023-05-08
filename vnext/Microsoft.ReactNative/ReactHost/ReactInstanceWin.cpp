@@ -449,6 +449,8 @@ void ReactInstanceWin::Initialize() noexcept {
                   strongThis->m_reactContext->Properties());
           devSettings->waitingForDebuggerCallback = GetWaitingForDebuggerCallback();
           devSettings->debuggerAttachCallback = GetDebuggerAttachCallback();
+          devSettings->enableDefaultCrashHandler = m_options.EnableDefaultCrashHandler();
+          devSettings->bundleAppId = BundleAppId();
           devSettings->showDevMenuCallback = [weakThis]() noexcept {
             if (auto strongThis = weakThis.GetStrongPtr()) {
               strongThis->m_uiQueue->Post(
@@ -792,8 +794,8 @@ void ReactInstanceWin::InitUIManager() noexcept {
 
   Microsoft::ReactNative::AddStandardViewManagers(viewManagers, *m_reactContext);
 
-  auto uiManagerSettings =
-      std::make_unique<Microsoft::ReactNative::UIManagerSettings>(m_batchingUIThread, std::move(viewManagers));
+  auto uiManagerSettings = std::make_unique<Microsoft::ReactNative::UIManagerSettings>(
+      m_batchingUIThread, m_uiMessageThread.Load(), std::move(viewManagers));
   Microsoft::ReactNative::UIManager::SetSettings(m_reactContext->Properties(), std::move(uiManagerSettings));
 
   m_reactContext->Properties().Set(
@@ -1158,6 +1160,10 @@ JSIEngine ReactInstanceWin::JsiEngine() const noexcept {
 
 std::string ReactInstanceWin::JavaScriptBundleFile() const noexcept {
   return m_options.Identity;
+}
+
+std::string ReactInstanceWin::BundleAppId() const noexcept {
+  return m_options.DeveloperSettings.BundleAppId;
 }
 
 bool ReactInstanceWin::UseDeveloperSupport() const noexcept {

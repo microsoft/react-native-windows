@@ -14,7 +14,8 @@ namespace Microsoft::ReactNative {
 struct CompositionBaseComponentView;
 struct CompContext;
 
-struct CompositionBaseComponentView : public IComponentView {
+struct CompositionBaseComponentView : public IComponentView,
+                                      public std::enable_shared_from_this<CompositionBaseComponentView> {
   static constexpr size_t SpecialBorderLayerCount = 8;
 
   CompositionBaseComponentView(
@@ -22,6 +23,8 @@ struct CompositionBaseComponentView : public IComponentView {
       facebook::react::Tag tag);
 
   virtual winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept = 0;
+  // Visual that should be parented to this ComponentView's parent
+  virtual winrt::Microsoft::ReactNative::Composition::IVisual OuterVisual() const noexcept;
   void updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept override;
   const facebook::react::SharedViewEventEmitter &GetEventEmitter() const noexcept;
   void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept override;
@@ -33,6 +36,8 @@ struct CompositionBaseComponentView : public IComponentView {
   void onFocusLost() noexcept override;
   void onFocusGained() noexcept override;
   bool focusable() const noexcept override;
+  std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept
+      override;
   facebook::react::SharedTouchEventEmitter touchEventEmitter() noexcept override;
   facebook::react::SharedTouchEventEmitter touchEventEmitterAtPoint(facebook::react::Point pt) noexcept override;
   facebook::react::Tag tag() const noexcept override;
@@ -54,6 +59,8 @@ struct CompositionBaseComponentView : public IComponentView {
   comp::CompositionPropertySet EnsureCenterPointPropertySet() noexcept;
   void EnsureTransformMatrixFacade() noexcept;
 
+  winrt::IInspectable EnsureUiaProvider() noexcept override;
+
  protected:
   std::array<winrt::Microsoft::ReactNative::Composition::SpriteVisual, SpecialBorderLayerCount>
   FindSpecialBorderLayers() const noexcept;
@@ -66,6 +73,7 @@ struct CompositionBaseComponentView : public IComponentView {
       const facebook::react::ViewProps &viewProps) noexcept;
   void UpdateCenterPropertySet() noexcept;
 
+  winrt::IInspectable m_uiaProvider{nullptr};
   winrt::Microsoft::ReactNative::Composition::ICompositionContext m_compContext;
   comp::CompositionPropertySet m_centerPropSet{nullptr};
   const facebook::react::Tag m_tag;
@@ -75,17 +83,22 @@ struct CompositionBaseComponentView : public IComponentView {
   facebook::react::LayoutMetrics m_layoutMetrics;
   bool m_needsBorderUpdate{false};
   bool m_hasTransformMatrixFacade{false};
+  bool m_enableFocusVisual{false};
   uint8_t m_numBorderVisuals{0};
+
+ private:
+  void showFocusVisual(bool show) noexcept;
+  winrt::Microsoft::ReactNative::Composition::IFocusVisual m_focusVisual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::IVisual m_outerVisual{nullptr};
 };
 
 struct CompositionViewComponentView : public CompositionBaseComponentView {
   using Super = CompositionBaseComponentView;
-  CompositionViewComponentView(
-      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-      facebook::react::Tag tag);
 
-  std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept
-      override;
+  [[nodiscard]] static std::shared_ptr<CompositionViewComponentView> Create(
+      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      facebook::react::Tag tag) noexcept;
+
   void mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
   void unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
   void updateProps(facebook::react::Props::Shared const &props, facebook::react::Props::Shared const &oldProps) noexcept
@@ -101,10 +114,18 @@ struct CompositionViewComponentView : public CompositionBaseComponentView {
 
   facebook::react::Props::Shared props() noexcept override;
 
-  facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt) const noexcept override;
+  facebook::react::Tag hitTest(
+      facebook::react::Point pt,
+      facebook::react::Point &localPt,
+      bool ignorePointerEvents = false) const noexcept override;
   bool ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept override;
 
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
+
+ protected:
+  CompositionViewComponentView(
+      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      facebook::react::Tag tag);
 
  private:
   facebook::react::SharedViewProps m_props;

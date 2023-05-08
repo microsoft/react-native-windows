@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix typos and add `cspell` configuration",
+  "packageName": "@rnw-scripts/doxysaurus",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}

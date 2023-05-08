@@ -31,6 +31,7 @@ std::pair<std::string, bool> GetJavaScriptFromServer(
     const uint16_t sourceBundlePort,
     const std::string &jsBundleName,
     const std::string &platform,
+    const std::string &bundleAppId,
     bool dev,
     bool hot,
     bool inlineSourceMap,
@@ -51,7 +52,7 @@ class DevSupportManager final : public facebook::react::IDevSupportManager {
   virtual void StopPollingLiveReload() override;
 
   virtual void EnsureHermesInspector(const std::string &packagerHost, const uint16_t packagerPort) noexcept override;
-  virtual void UpdateBundleStatus(bool isLastDownloadSucess, int64_t updateTimestamp) noexcept override;
+  virtual void UpdateBundleStatus(bool isLastDownloadSuccess, int64_t updateTimestamp) noexcept override;
 
  private:
   std::atomic_bool m_cancellation_token;
@@ -64,8 +65,8 @@ class DevSupportManager final : public facebook::react::IDevSupportManager {
       return m_bundleStatus;
     }
 
-    void updateBundleStatus(bool isLastDownloadSucess, int64_t updateTimestamp) {
-      m_bundleStatus.m_isLastDownloadSucess = isLastDownloadSucess;
+    void updateBundleStatus(bool isLastDownloadSuccess, int64_t updateTimestamp) {
+      m_bundleStatus.m_isLastDownloadSuccess = isLastDownloadSuccess;
       m_bundleStatus.m_updateTimestamp = updateTimestamp;
     }
 

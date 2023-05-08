@@ -63,6 +63,9 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   hstring JavaScriptBundleFile() noexcept;
   void JavaScriptBundleFile(hstring const &value) noexcept;
 
+  hstring BundleAppId() noexcept;
+  void BundleAppId(hstring const &value) noexcept;
+
   //! Should the instance run in a remote environment such as within a browser
   //! By default, this is using a browser navigated to  http://localhost:8081/debugger-ui served
   //! by Metro/Haul. Debugging will start as soon as the React Native instance is loaded.
@@ -76,7 +79,7 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   void UseFastRefresh(bool value) noexcept;
 
   //! Should the instance monitor for changes to the JS and reload the instance when a change is
-  //! detected.  Generally its prefered to use FastFreshed instead of this.  But if there is some
+  //! detected.  Generally its preferred to use FastFreshed instead of this.  But if there is some
   //! issue with hot reloading in your app, then this can be used instead
   bool UseLiveReload() noexcept;
   void UseLiveReload(bool value) noexcept;
@@ -170,6 +173,7 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   Windows::Foundation::Collections::IVector<IReactPackageProvider> m_packageProviders{
       single_threaded_vector<IReactPackageProvider>()};
   hstring m_javaScriptBundleFile{};
+  hstring m_bundleAppId{};
   bool m_enableJITCompilation{true};
   bool m_enableByteCodeCaching{false};
   hstring m_byteCodeFileUri{};
@@ -225,6 +229,14 @@ inline hstring ReactInstanceSettings::JavaScriptBundleFile() noexcept {
 
 inline void ReactInstanceSettings::JavaScriptBundleFile(hstring const &value) noexcept {
   m_javaScriptBundleFile = value;
+}
+
+inline hstring ReactInstanceSettings::BundleAppId() noexcept {
+  return m_bundleAppId;
+}
+
+inline void ReactInstanceSettings::BundleAppId(hstring const &value) noexcept {
+  m_bundleAppId = value;
 }
 
 inline bool ReactInstanceSettings::EnableJITCompilation() noexcept {

@@ -15,6 +15,7 @@ import semver from 'semver';
  */
 export default async function renderPropsFile(
   version: string,
+  commitId: string,
 ): Promise<string> {
   const templatePath = path.join(
     __dirname,
@@ -30,5 +31,6 @@ export default async function renderPropsFile(
     minor: semver.minor(version),
     patch: semver.patch(version),
     canary: semver.prerelease(version)?.[0] === 'canary',
+    commitId: commitId,
   });
 }

@@ -76,7 +76,7 @@ class AppendingList extends React.Component<
         <ScrollView
           automaticallyAdjustContentInsets={false}
           maintainVisibleContentPosition={{
-            minIndexForVisible: 1,
+            minIndexForVisible: 0,
             autoscrollToTopThreshold: 10,
           }}
           nestedScrollEnabled
@@ -741,6 +741,7 @@ const RefreshControlExample = () => {
   const [refreshing, setRefreshing] = useState(false);
   const onRefresh = useCallback(() => {
     setRefreshing(true);
+    // $FlowFixMe[unused-promise]
     wait(2000).then(() => setRefreshing(false));
   }, []);
 

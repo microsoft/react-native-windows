@@ -14,6 +14,11 @@
 #include "IReactContext.h"
 #include "ReactInstanceSettings.h"
 
+#ifdef USE_FABRIC
+#include <Fabric/WindowsComponentDescriptorRegistry.h>
+#include <react/renderer/componentregistry/ComponentDescriptorProviderRegistry.h>
+#endif
+
 using namespace winrt;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
@@ -87,12 +92,23 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
 
   auto turboModulesProvider = std::make_shared<TurboModulesProvider>();
 
+#ifdef USE_FABRIC
+  auto componentregistry = std::make_shared<::Microsoft::ReactNative::WindowsComponentDescriptorRegistry>();
+  auto componentDescriptorRegistry = std::make_shared<facebook::react::ComponentDescriptorProviderRegistry>();
+
+  ::Microsoft::ReactNative::WindowsComponentDescriptorRegistry::AddToProperties(
+      ReactPropertyBag(m_instanceSettings.Properties()), componentregistry);
+#endif
+
   m_packageBuilder = make<ReactPackageBuilder>(
       modulesProvider,
 #ifndef CORE_ABI
       viewManagersProvider,
 #endif
       turboModulesProvider,
+#ifdef USE_FABRIC
+      componentregistry,
+#endif
       m_instanceSettings.UseWebDebugger());
 
   if (auto packageProviders = InstanceSettings().PackageProviders()) {
@@ -134,6 +150,7 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
   reactOptions.DeveloperSettings.SourceBundleHost = to_string(m_instanceSettings.SourceBundleHost());
   reactOptions.DeveloperSettings.SourceBundlePort = m_instanceSettings.SourceBundlePort();
   reactOptions.DeveloperSettings.RequestInlineSourceMap = m_instanceSettings.RequestInlineSourceMap();
+  reactOptions.DeveloperSettings.BundleAppId = to_string(m_instanceSettings.BundleAppId());
 
   reactOptions.ByteCodeFileUri = to_string(m_instanceSettings.ByteCodeFileUri());
   reactOptions.EnableByteCodeCaching = m_instanceSettings.EnableByteCodeCaching();

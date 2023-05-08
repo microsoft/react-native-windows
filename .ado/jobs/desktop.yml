@@ -204,7 +204,7 @@ jobs:
               parameters:
                 ${{ if eq(matrix.UseFabric, true) }}:
                   artifactName: DesktopFabric
-                ${{ if eq(matrix.UseFabric, false) }}:
+                ${{ else }}:
                   artifactName: Desktop
                 buildPlatform: ${{ matrix.BuildPlatform }}
                 buildConfiguration: ${{ matrix.BuildConfiguration }}

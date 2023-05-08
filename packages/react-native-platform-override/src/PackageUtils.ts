@@ -19,7 +19,7 @@ export async function getInstalledRNVersion(): Promise<string> {
   const version = rnPackage.version;
 
   if (typeof version !== 'string') {
-    throw new Error('Unexpected formt of React Native package.json');
+    throw new Error('Unexpected format of React Native package.json');
   }
 
   return version;

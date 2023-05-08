@@ -103,7 +103,7 @@ class MyRedBoxHandler : IRedBoxHandler
     }
 
    public void ShowNewError(IRedBoxErrorInfo info, RedBoxErrorType type) {
-      /-/ Dont report non-fatal errors (optional)
+      /-/ Do not report non-fatal errors (optional)
       if (type != RedBoxErrorType.JavaScriptSoft)
         ReportErrorToMyErrorReportingSystem(info, type);
 

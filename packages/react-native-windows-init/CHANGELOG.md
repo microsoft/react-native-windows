@@ -1,8 +1,64 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Wed, 22 Feb 2023 06:14:08 GMT and should not be manually modified.
+This log was last generated on Tue, 25 Apr 2023 05:17:02 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.3.21
+
+Tue, 25 Apr 2023 05:17:02 GMT
+
+### Patches
+
+- Update Node to 16 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.18
+- Bump @react-native-windows/telemetry to v0.0.0-canary.66
+- Bump @react-native-windows/cli to v0.0.0-canary.168
+- Bump @rnw-scripts/eslint-config to v1.1.16
+- Bump @rnw-scripts/jest-unittest-config to v1.5.2
+- Bump @rnw-scripts/just-task to v2.3.7
+- Bump @rnw-scripts/ts-config to v2.0.4
+
+## 1.3.20
+
+Thu, 13 Apr 2023 05:14:29 GMT
+
+### Patches
+
+- Bump @react-native-windows/cli to v0.0.0-canary.167
+
+## 1.3.19
+
+Tue, 21 Mar 2023 21:21:55 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.17
+- Bump @react-native-windows/telemetry to v0.0.0-canary.65
+- Bump @react-native-windows/cli to v0.0.0-canary.166
+- Bump @rnw-scripts/jest-unittest-config to v1.5.1
+- Bump @rnw-scripts/just-task to v2.3.6
+
+## 1.3.18
+
+Thu, 02 Mar 2023 06:14:24 GMT
+
+### Patches
+
+- Merge branch 'YajurG-8875' of https://github.com/YajurG/react-native-windows into YajurG-8875 (email not defined)
+- Bump @react-native-windows/fs to v0.0.0-canary.16
+- Bump @react-native-windows/telemetry to v0.0.0-canary.64
+- Bump @react-native-windows/cli to v0.0.0-canary.165
+
+## 1.3.17
+
+Sat, 25 Feb 2023 06:13:36 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.15
+- Bump @react-native-windows/telemetry to v0.0.0-canary.63
+- Bump @react-native-windows/cli to v0.0.0-canary.164
 
 ## 1.3.16
 

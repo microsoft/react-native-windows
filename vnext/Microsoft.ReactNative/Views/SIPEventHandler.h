@@ -37,7 +37,7 @@ class SIPEventHandler {
   winrt::weak_ref<XamlView> m_view{};
   xaml::FrameworkElement::Loaded_revoker m_loadedRevoker{};
   bool m_isShowing{false};
-  bool m_fireKeyboradEvents;
+  bool m_fireKeyboardEvents;
 
   void InitializeCoreInputView();
 };

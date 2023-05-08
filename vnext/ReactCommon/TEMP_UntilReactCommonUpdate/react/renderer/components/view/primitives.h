@@ -59,7 +59,8 @@ struct ViewEvents {
     PointerOut = 27,
     PointerOverCapture = 28,
     PointerOutCapture = 29,
-
+    Click = 30,
+    ClickCapture = 31,
     MouseEnter = 30, // Windows
     MouseLeave = 31, // Windows
 

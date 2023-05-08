@@ -9,6 +9,7 @@
 
 #include <react/renderer/components/view/AccessibilityProps.h>
 #include <react/renderer/components/view/YogaStylableProps.h>
+#include <react/renderer/components/view/HostPlatformViewProps.h> // [Windows]
 #include <react/renderer/components/view/primitives.h>
 #include <react/renderer/core/LayoutMetrics.h>
 #include <react/renderer/core/Props.h>
@@ -25,7 +26,7 @@ class ViewProps;
 
 using SharedViewProps = std::shared_ptr<ViewProps const>;
 
-class ViewProps : public YogaStylableProps, public AccessibilityProps {
+class ViewProps : public YogaStylableProps, public AccessibilityProps, public HostPlatformViewProps  { // [Windows] added HostPlatformViewProps
  public:
   ViewProps() = default;
   ViewProps(
@@ -49,7 +50,6 @@ class ViewProps : public YogaStylableProps, public AccessibilityProps {
 
   // Color
   Float opacity{1.0};
-  SharedColor foregroundColor{};
   SharedColor backgroundColor{};
 
   // Borders
@@ -88,9 +88,7 @@ class ViewProps : public YogaStylableProps, public AccessibilityProps {
   std::optional<NativeDrawable> nativeBackground{};
   std::optional<NativeDrawable> nativeForeground{};
 
-#endif // [Windows]
   bool focusable{false};
-#ifdef ANDROID // [Windows]
   bool hasTVPreferredFocus{false};
   bool needsOffscreenAlphaCompositing{false};
   bool renderToHardwareTextureAndroid{false};

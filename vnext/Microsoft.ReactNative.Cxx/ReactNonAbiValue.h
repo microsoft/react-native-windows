@@ -53,7 +53,7 @@ struct ReactNonAbiValue : Windows::Foundation::IInspectable {
   // Create an empty ReactNonAbiValue.
   ReactNonAbiValue(std::nullptr_t = nullptr) noexcept {}
 
-  // Create a ReactNonAbiValue with taking the onwership from the provided pointer.
+  // Create a ReactNonAbiValue with taking the ownership from the provided pointer.
   ReactNonAbiValue(void *ptr, take_ownership_from_abi_t) noexcept : IInspectable(ptr, take_ownership_from_abi) {}
 
   // Get a pointer to the value from the object it implements IReactNonAbiValue.

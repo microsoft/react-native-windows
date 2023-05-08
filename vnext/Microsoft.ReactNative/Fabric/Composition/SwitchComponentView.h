@@ -17,13 +17,12 @@ struct SwitchComponentView;
 
 struct SwitchComponentView : CompositionBaseComponentView {
   using Super = CompositionBaseComponentView;
-  SwitchComponentView(
+
+  [[nodiscard]] static std::shared_ptr<SwitchComponentView> Create(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
-      winrt::Microsoft::ReactNative::ReactContext const &reactContext);
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
-  std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept
-      override;
   void mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
   void unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
   void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept override;
@@ -39,11 +38,17 @@ struct SwitchComponentView : CompositionBaseComponentView {
   facebook::react::Props::Shared props() noexcept override;
   bool focusable() const noexcept override;
 
-  facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt) const noexcept override;
+  facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt, bool ignorePointerEvents)
+      const noexcept override;
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
   int64_t sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept override;
 
  private:
+  SwitchComponentView(
+      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      facebook::react::Tag tag,
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext);
+
   void ensureVisual() noexcept;
   void Draw() noexcept;
   void ensureDrawingSurface() noexcept;

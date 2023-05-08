@@ -232,7 +232,7 @@ export function SectionList_scrollable(Props: {
   };
 
   return (
-    <RNTesterPage noSpacer={true} noScroll={true}>
+    <RNTesterPage noScroll={true}>
       <View style={styles.searchRow}>
         <PlainInput
           onChangeText={text => setFilterText(text)}
@@ -281,12 +281,10 @@ export function SectionList_scrollable(Props: {
         ref={ref}
         ListHeaderComponent={HeaderComponent}
         ListFooterComponent={FooterComponent}
-        // eslint-disable-next-line react/no-unstable-nested-components
         // $FlowFixMe[missing-local-annot]
         SectionSeparatorComponent={info => (
           <CustomSeparatorComponent {...info} text="SECTION SEPARATOR" />
         )}
-        // eslint-disable-next-line react/no-unstable-nested-components
         // $FlowFixMe[missing-local-annot]
         ItemSeparatorComponent={info => (
           <CustomSeparatorComponent {...info} text="ITEM SEPARATOR" />

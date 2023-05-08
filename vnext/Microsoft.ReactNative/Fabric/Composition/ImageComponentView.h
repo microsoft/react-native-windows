@@ -29,13 +29,12 @@ struct WindowsImageResponseObserver;
 
 struct ImageComponentView : CompositionBaseComponentView {
   using Super = CompositionBaseComponentView;
-  ImageComponentView(
+
+  [[nodiscard]] static std::shared_ptr<ImageComponentView> Create(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
-      winrt::Microsoft::ReactNative::ReactContext const &reactContext);
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
-  std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept
-      override;
   void mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
   void unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
   void updateProps(facebook::react::Props::Shared const &props, facebook::react::Props::Shared const &oldProps) noexcept
@@ -50,11 +49,17 @@ struct ImageComponentView : CompositionBaseComponentView {
   facebook::react::Props::Shared props() noexcept override;
   void OnRenderingDeviceLost() noexcept override;
 
-  facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt) const noexcept override;
+  facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt, bool ignorePointerEvents)
+      const noexcept override;
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
   bool focusable() const noexcept override;
 
  private:
+  ImageComponentView(
+      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      facebook::react::Tag tag,
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext);
+
   struct WindowsImageResponseObserver : facebook::react::ImageResponseObserver {
    public:
     WindowsImageResponseObserver(std::shared_ptr<ImageComponentView> image);

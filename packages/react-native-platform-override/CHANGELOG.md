@@ -1,8 +1,52 @@
 # Change Log - react-native-platform-override
 
-This log was last generated on Thu, 09 Feb 2023 06:16:44 GMT and should not be manually modified.
+This log was last generated on Tue, 25 Apr 2023 05:17:02 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.9.5
+
+Tue, 25 Apr 2023 05:17:02 GMT
+
+### Patches
+
+- Update Node to 16 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.18
+- Bump @react-native-windows/package-utils to v0.0.0-canary.44
+- Bump @rnw-scripts/eslint-config to v1.1.16
+- Bump @rnw-scripts/jest-unittest-config to v1.5.2
+- Bump @rnw-scripts/just-task to v2.3.7
+- Bump @rnw-scripts/ts-config to v2.0.4
+
+## 1.9.4
+
+Tue, 21 Mar 2023 21:21:55 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.17
+- Bump @react-native-windows/package-utils to v0.0.0-canary.43
+- Bump @rnw-scripts/jest-unittest-config to v1.5.1
+- Bump @rnw-scripts/just-task to v2.3.6
+
+## 1.9.3
+
+Thu, 02 Mar 2023 06:14:23 GMT
+
+### Patches
+
+- Merge branch 'YajurG-8875' of https://github.com/YajurG/react-native-windows into YajurG-8875 (email not defined)
+- Bump @react-native-windows/fs to v0.0.0-canary.16
+- Bump @react-native-windows/package-utils to v0.0.0-canary.42
+
+## 1.9.2
+
+Sat, 25 Feb 2023 06:13:36 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.15
+- Bump @react-native-windows/package-utils to v0.0.0-canary.41
 
 ## 1.9.1
 

@@ -141,9 +141,7 @@ void WindowsTextInputShadowNode::updateStateIfNeeded() {
       newEventCount,
       newAttributedString,
       reactTreeAttributedString,
-      {}, // TODO getConcreteProps().paragraphAttributes,
-      defaultTextAttributes,
-      ShadowView(*this),
+      {},
       state.defaultThemePaddingStart,
       state.defaultThemePaddingEnd,
       state.defaultThemePaddingTop,
@@ -183,7 +181,8 @@ Size WindowsTextInputShadowNode::measureContent(
       ->measure(
           AttributedStringBox{attributedString},
           {}, // TODO getConcreteProps().paragraphAttributes,
-          layoutConstraints)
+          layoutConstraints,
+          nullptr)
       .size;
 }
 

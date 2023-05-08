@@ -160,7 +160,7 @@ void ReactRootView::InitRootView(
 
   m_touchEventHandler->AddTouchHandlers(*this);
   m_previewKeyboardEventHandlerOnRoot->hook(*this);
-  m_SIPEventHandler->AttachView(*this, /*fireKeyboradEvents:*/ true);
+  m_SIPEventHandler->AttachView(*this, /*fireKeyboardEvents:*/ true);
 
   UpdateRootViewInternal();
   AttachBackHandlers();

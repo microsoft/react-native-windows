@@ -246,6 +246,7 @@ void DevSupportManager::EnsureHermesInspector(
 #ifdef HERMES_ENABLE_DEBUGGER
   static std::once_flag once;
   std::call_once(once, [this, &packagerHost, packagerPort]() {
+    // TODO: should we use the bundleAppId as the app param if available?
     std::string packageName("RNW");
     wchar_t fullName[PACKAGE_FULL_NAME_MAX_LENGTH]{};
     UINT32 size = ARRAYSIZE(fullName);
@@ -269,9 +270,9 @@ void DevSupportManager::EnsureHermesInspector(
 #endif
 }
 
-void DevSupportManager::UpdateBundleStatus(bool isLastDownloadSucess, int64_t updateTimestamp) noexcept {
+void DevSupportManager::UpdateBundleStatus(bool isLastDownloadSuccess, int64_t updateTimestamp) noexcept {
 #ifdef HERMES_ENABLE_DEBUGGER
-  m_BundleStatusProvider->updateBundleStatus(isLastDownloadSucess, updateTimestamp);
+  m_BundleStatusProvider->updateBundleStatus(isLastDownloadSuccess, updateTimestamp);
 #endif
 }
 
@@ -280,12 +281,21 @@ std::pair<std::string, bool> GetJavaScriptFromServer(
     const uint16_t sourceBundlePort,
     const std::string &jsBundleName,
     const std::string &platform,
+    const std::string &bundleAppId,
     bool dev,
     bool hot,
     bool inlineSourceMap,
     const uint32_t hermesBytecodeVersion) {
   auto bundleUrl = facebook::react::DevServerHelper::get_BundleUrl(
-      sourceBundleHost, sourceBundlePort, jsBundleName, platform, dev, hot, inlineSourceMap, hermesBytecodeVersion);
+      sourceBundleHost,
+      sourceBundlePort,
+      jsBundleName,
+      platform,
+      bundleAppId,
+      dev,
+      hot,
+      inlineSourceMap,
+      hermesBytecodeVersion);
   try {
     return GetJavaScriptFromServerAsync(bundleUrl).get();
   } catch (winrt::hresult_error const &e) {

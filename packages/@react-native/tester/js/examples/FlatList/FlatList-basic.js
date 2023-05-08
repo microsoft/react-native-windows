@@ -12,7 +12,7 @@
 
 import type {AnimatedComponentType} from 'react-native/Libraries/Animated/createAnimatedComponent';
 import typeof FlatListType from 'react-native/Libraries/Lists/FlatList';
-import type {RenderItemProps} from 'react-native/Libraries/Lists/VirtualizedListProps';
+import type {RenderItemProps} from 'react-native/Libraries/Lists/VirtualizedList';
 
 import type {RNTesterModuleExample} from '../../types/RNTesterTypes';
 import * as React from 'react';
@@ -136,10 +136,7 @@ class FlatListExample extends React.PureComponent<Props, State> {
     const filteredData = this.state.data.filter(filter);
     const flatListItemRendererProps = this._renderItemComponent();
     return (
-      <RNTesterPage
-        noSpacer={true}
-        noScroll={true}
-        title="Simple list of items">
+      <RNTesterPage noScroll={true} title="Simple list of items">
         <View style={styles.container}>
           <View style={styles.searchRow}>
             <View style={styles.options}>

@@ -41,7 +41,7 @@ struct Selection {
 };
 } // namespace Microsoft::ReactNative
 
-// Such code is better to move to a seperate parser layer
+// Such code is better to move to a separate parser layer
 template <>
 struct json_type_traits<Microsoft::ReactNative::Selection> {
   static Microsoft::ReactNative::Selection parseJson(const winrt::Microsoft::ReactNative::JSValue &json) {
@@ -127,7 +127,7 @@ class TextInputShadowNode : public ShadowNodeBase {
   void dispatchTextInputChangeEvent(winrt::hstring newText);
   void registerEvents();
   void registerPreviewKeyDown();
-  void HideCaretIfNeeded();
+  void UpdateCaretColorOrHideIfNeeded();
   void setPasswordBoxPlaceholderForeground(
       xaml::Controls::PasswordBox passwordBox,
       const winrt::Microsoft::ReactNative::JSValue &color);
@@ -143,6 +143,8 @@ class TextInputShadowNode : public ShadowNodeBase {
   bool m_contextMenuHidden = false;
   bool m_hideCaret = false;
   bool m_shouldClearTextOnSubmit = false;
+
+  winrt::Microsoft::ReactNative::JSValue m_cursorColor;
 
   winrt::Microsoft::ReactNative::JSValue m_placeholderTextColor;
   std::vector<HandledKeyboardEvent> m_submitKeyEvents{};
@@ -260,7 +262,7 @@ void TextInputShadowNode::registerEvents() {
         control.as<xaml::Controls::PasswordBox>().SelectAll();
       }
     }
-    HideCaretIfNeeded();
+    UpdateCaretColorOrHideIfNeeded();
 
     folly::dynamic eventData = folly::dynamic::object("target", tag);
     if (!m_updating)
@@ -312,7 +314,9 @@ void TextInputShadowNode::registerEvents() {
 
   m_controlLoadedRevoker = control.Loaded(winrt::auto_revoke, [=](auto &&, auto &&) {
     if (m_autoFocus) {
-      control.Focus(xaml::FocusState::Keyboard);
+      if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
+        uiManager->focus(m_tag);
+      }
     }
 
     auto contentElement = control.GetTemplateChild(L"ContentElement");
@@ -328,7 +332,7 @@ void TextInputShadowNode::registerEvents() {
             }
           });
     }
-    HideCaretIfNeeded();
+    UpdateCaretColorOrHideIfNeeded();
   });
 
   if (control.try_as<xaml::IUIElement7>()) {
@@ -446,14 +450,24 @@ bool TextInputShadowNode::IsTextBox() {
   return !!GetView().try_as<xaml::Controls::TextBox>();
 }
 
-// hacking solution to hide the caret
-void TextInputShadowNode::HideCaretIfNeeded() {
+// hacking solution to hide the caret or change its color
+void TextInputShadowNode::UpdateCaretColorOrHideIfNeeded() {
+  bool updateRequired = false;
+  xaml::Media::SolidColorBrush color;
+
   if (m_hideCaret) {
+    updateRequired = true;
+    color = xaml::Media::SolidColorBrush(winrt::Colors::Transparent());
+  } else if (!m_cursorColor.IsNull()) {
+    updateRequired = true;
+    color = SolidColorBrushFrom(m_cursorColor);
+  }
+
+  if (updateRequired) {
     auto control = GetView().as<xaml::Controls::Control>();
     if (auto caret = FindCaret(control)) {
       caret.CompositeMode(xaml::Media::ElementCompositeMode::Inherit);
-      xaml::Media::SolidColorBrush transparentColor(winrt::Colors::Transparent());
-      caret.Fill(transparentColor);
+      caret.Fill(color);
     }
   }
 }
@@ -518,7 +532,7 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
     } else if (propertyName == "caretHidden") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
         m_hideCaret = propertyValue.AsBoolean();
-        HideCaretIfNeeded();
+        UpdateCaretColorOrHideIfNeeded();
       }
     } else if (propertyName == "focusable") {
       // parent class also sets isTabStop
@@ -579,6 +593,11 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
             isTextBox ? xaml::Controls::TextBox::PlaceholderTextProperty()
                       : xaml::Controls::PasswordBox::PlaceholderTextProperty());
       }
+    } else if (propertyName == "cursorColor") {
+      m_cursorColor = nullptr;
+      if (IsValidColorValue(propertyValue)) {
+        m_cursorColor = propertyValue.Copy();
+      }
     } else if (propertyName == "selectionColor") {
       if (IsValidColorValue(propertyValue)) {
         control.SetValue(
@@ -591,9 +610,9 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
                       : xaml::Controls::PasswordBox::SelectionHighlightColorProperty());
     } else if (propertyName == "keyboardType") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
-        auto inputScopeNameVaue = parseKeyboardType(propertyValue, isTextBox);
+        auto inputScopeNameValue = parseKeyboardType(propertyValue, isTextBox);
         auto scope = xaml::Input::InputScope();
-        auto scopeName = xaml::Input::InputScopeName(inputScopeNameVaue);
+        auto scopeName = xaml::Input::InputScopeName(inputScopeNameValue);
         auto names = scope.Names();
         names.Append(scopeName);
         control.SetValue(
@@ -674,7 +693,7 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
               if (propertyValue.AsString() == "characters") {
                 textBox.CharacterCasing(xaml::Controls::CharacterCasing::Upper);
               } else { // anything else turns off autoCap (should be "None" but
-                       // we don't support "words"/"senetences" yet)
+                       // we don't support "words"/"sentences" yet)
                 textBox.CharacterCasing(xaml::Controls::CharacterCasing::Normal);
               }
             } else if (propertyValue.IsNull())
@@ -820,10 +839,12 @@ void TextInputViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::I
   React::WriteProperty(writer, L"placeholder", L"string");
   React::WriteProperty(writer, L"placeholderTextColor", L"Color");
   React::WriteProperty(writer, L"scrollEnabled", L"boolean");
+  React::WriteProperty(writer, L"cursorColor", L"Color");
   React::WriteProperty(writer, L"selection", L"Map");
   React::WriteProperty(writer, L"selectionColor", L"Color");
   React::WriteProperty(writer, L"selectTextOnFocus", L"boolean");
   React::WriteProperty(writer, L"spellCheck", L"boolean");
+  React::WriteProperty(writer, L"submitBehavior", L"string");
   React::WriteProperty(writer, L"text", L"string");
   React::WriteProperty(writer, L"mostRecentEventCount", L"int");
   React::WriteProperty(writer, L"secureTextEntry", L"boolean");
@@ -943,7 +964,7 @@ void TextInputViewManager::TransferProperties(const XamlView &oldView, const Xam
           xaml::Controls::TextBox::SelectionHighlightColorProperty(),
           xaml::Controls::PasswordBox::SelectionHighlightColorProperty());
       newView.as<xaml::Controls::PasswordBox>().Password(oldView.as<xaml::Controls::TextBox>().Text());
-      // Since both focasable/editable affect isEnabled for PasswordBox, if the oldView is enabled we still need to
+      // Since both focusable/editable affect isEnabled for PasswordBox, if the oldView is enabled we still need to
       // check isReadOnly
       if (oldView.as<xaml::Controls::TextBox>().IsEnabled()) {
         newView.as<xaml::Controls::PasswordBox>().IsEnabled(!oldView.as<xaml::Controls::TextBox>().IsReadOnly());
@@ -967,7 +988,7 @@ void TextInputViewManager::TransferProperties(const XamlView &oldView, const Xam
           xaml::Controls::PasswordBox::SelectionHighlightColorProperty(),
           xaml::Controls::TextBox::SelectionHighlightColorProperty());
       newView.as<xaml::Controls::TextBox>().Text(oldView.as<xaml::Controls::PasswordBox>().Password());
-      // Since both focasable/editable affect isEnabled for PasswordBox, if the oldView is enabled we still need to
+      // Since both focusable/editable affect isEnabled for PasswordBox, if the oldView is enabled we still need to
       // check isReadOnly
       if (oldView.as<xaml::Controls::PasswordBox>().IsEnabled()) {
         newView.as<xaml::Controls::TextBox>().IsReadOnly(!oldView.as<xaml::Controls::PasswordBox>().IsEnabled());

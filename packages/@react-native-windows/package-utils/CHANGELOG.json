@@ -2,6 +2,132 @@
   "name": "@react-native-windows/package-utils",
   "entries": [
     {
+      "date": "Tue, 25 Apr 2023 05:16:58 GMT",
+      "tag": "@react-native-windows/package-utils_v0.0.0-canary.44",
+      "version": "0.0.0-canary.44",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/package-utils",
+            "commit": "6a15837a441c23df1e2fb4c1257bc835a49539f2",
+            "comment": "Update Node to 16"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.0.0-canary.47",
+            "commit": "39f99ed6163a15559a4b23ed52e27c8cddb68e94"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.18",
+            "commit": "39f99ed6163a15559a4b23ed52e27c8cddb68e94"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.16",
+            "commit": "39f99ed6163a15559a4b23ed52e27c8cddb68e94"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.7",
+            "commit": "39f99ed6163a15559a4b23ed52e27c8cddb68e94"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @rnw-scripts/ts-config to v2.0.4",
+            "commit": "39f99ed6163a15559a4b23ed52e27c8cddb68e94"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 21 Mar 2023 21:21:55 GMT",
+      "tag": "@react-native-windows/package-utils_v0.0.0-canary.43",
+      "version": "0.0.0-canary.43",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.0.0-canary.46",
+            "commit": "94c638560965be5e431120eb3642f76c01d77b87"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.17",
+            "commit": "94c638560965be5e431120eb3642f76c01d77b87"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.6",
+            "commit": "94c638560965be5e431120eb3642f76c01d77b87"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 02 Mar 2023 06:14:22 GMT",
+      "tag": "@react-native-windows/package-utils_v0.0.0-canary.42",
+      "version": "0.0.0-canary.42",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/package-utils",
+            "commit": "cb93a6cb140ed8652dfccbc4e3b587be4897230b",
+            "comment": "Merge branch 'YajurG-8875' of https://github.com/YajurG/react-native-windows into YajurG-8875"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.0.0-canary.45",
+            "commit": "cb93a6cb140ed8652dfccbc4e3b587be4897230b"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.16",
+            "commit": "cb93a6cb140ed8652dfccbc4e3b587be4897230b"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 25 Feb 2023 06:13:36 GMT",
+      "tag": "@react-native-windows/package-utils_v0.0.0-canary.41",
+      "version": "0.0.0-canary.41",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "4123478+tido64@users.noreply.github.com",
+            "package": "@react-native-windows/package-utils",
+            "commit": "beaa9c1b1f6ef2b6d8a4e1b6caea07168818a1d1",
+            "comment": "Move `@typescript-eslint/eslint-plugin` to `devDependencies` so they don't get installed by consumers"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.0.0-canary.44",
+            "commit": "97bbe423f10f6ebc28c0f317b8854c293fd878a8"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.15",
+            "commit": "97bbe423f10f6ebc28c0f317b8854c293fd878a8"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 09 Feb 2023 06:16:42 GMT",
       "tag": "@react-native-windows/package-utils_v0.0.0-canary.40",
       "version": "0.0.0-canary.40",

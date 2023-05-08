@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+// cspell:ignore evnt
+
 using System;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -250,7 +252,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
           break;
       }
 
-      // Generate reader call only if we have argumentes to read.
+      // Generate reader call only if we have arguments to read.
       if (readArgsArguments != null)
       {
         // generates:
@@ -470,7 +472,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
       }
 
       // generates:
-      //  module.<callackName> = (ArgType0 arg0, ArgType1 arg0, ...) =>
+      //  module.<callbackName> = (ArgType0 arg0, ArgType1 arg0, ...) =>
       //    new ReactContext(reactContext).<contextCallbackMethod>(
       //      eventEmitterName,
       //      eventName,

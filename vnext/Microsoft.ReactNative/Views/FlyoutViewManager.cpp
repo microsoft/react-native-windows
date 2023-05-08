@@ -135,7 +135,7 @@ class FlyoutShadowNode : public ShadowNodeBase {
   winrt::FlyoutShowOptions m_showOptions = nullptr;
   bool m_autoFocus = false;
 
-  std::unique_ptr<TouchEventHandler> m_touchEventHanadler;
+  std::unique_ptr<TouchEventHandler> m_touchEventHandler;
   std::unique_ptr<PreviewKeyboardEventHandlerOnRoot> m_previewKeyboardEventHandlerOnRoot;
 
   winrt::Flyout::Closing_revoker m_flyoutClosingRevoker{};
@@ -146,13 +146,13 @@ class FlyoutShadowNode : public ShadowNodeBase {
 };
 
 FlyoutShadowNode::~FlyoutShadowNode() {
-  m_touchEventHanadler->RemoveTouchHandlers();
+  m_touchEventHandler->RemoveTouchHandlers();
   m_previewKeyboardEventHandlerOnRoot->unhook();
 }
 
 void FlyoutShadowNode::AddView(ShadowNode &child, int64_t /*index*/) {
   auto childView = static_cast<ShadowNodeBase &>(child).GetView();
-  m_touchEventHanadler->AddTouchHandlers(childView);
+  m_touchEventHandler->AddTouchHandlers(childView);
   m_previewKeyboardEventHandlerOnRoot->hook(childView);
 
   if (m_flyout != nullptr) {
@@ -180,7 +180,7 @@ void FlyoutShadowNode::createView(const winrt::Microsoft::ReactNative::JSValueOb
   if (m_isFlyoutShowOptionsSupported)
     m_showOptions = winrt::FlyoutShowOptions();
 
-  m_touchEventHanadler = std::make_unique<TouchEventHandler>(GetViewManager()->GetReactContext());
+  m_touchEventHandler = std::make_unique<TouchEventHandler>(GetViewManager()->GetReactContext());
   m_previewKeyboardEventHandlerOnRoot =
       std::make_unique<PreviewKeyboardEventHandlerOnRoot>(GetViewManager()->GetReactContext());
 
@@ -193,12 +193,14 @@ void FlyoutShadowNode::createView(const winrt::Microsoft::ReactNative::JSValueOb
 
   m_flyoutClosedRevoker = m_flyout.Closed(winrt::auto_revoke, [=](auto &&, auto &&) {
     if (!m_updating) {
-      if (m_targetElement != nullptr) {
+      if (m_targetTag > 0) {
         // When the flyout closes, attempt to move focus to
         // its anchor element to prevent cases where focus can land on
         // an outer flyout content and therefore trigger a unexpected flyout
         // dismissal
-        xaml::Input::FocusManager::TryFocusAsync(m_targetElement, winrt::FocusState::Programmatic);
+        if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
+          uiManager->focus(m_targetTag);
+        }
       }
 
       OnFlyoutClosed(GetViewManager()->GetReactContext(), m_tag, false);

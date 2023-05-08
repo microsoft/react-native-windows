@@ -9,7 +9,6 @@
 #include <ReactContext.h>
 #include <winrt/Microsoft.ReactNative.h>
 #include "CompositionEventHandler.h"
-#include "CompositionRootAutomationProvider.h"
 #include "ReactHost/React.h"
 #include "Views/ICompositionRootView.h"
 
@@ -66,7 +65,9 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
   winrt::Microsoft::ReactNative::FocusNavigationResult NavigateFocus(
       const winrt::Microsoft::ReactNative::FocusNavigationRequest &request) noexcept;
 
-  IInspectable GetUiaProvider(uint64_t hWnd) noexcept;
+  ::Microsoft::ReactNative::RootComponentView *GetComponentView() noexcept;
+
+  IInspectable GetUiaProvider() noexcept;
 
   int64_t SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept;
   void OnScrollWheel(Windows::Foundation::Point point, int32_t delta) noexcept;
@@ -89,7 +90,6 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
   void UninitRootView() noexcept;
 
  private:
-  IInspectable m_compositionUiaProvider{nullptr};
   bool m_isInitialized{false};
   bool m_isJSViewAttached{false};
   IReactDispatcher m_uiDispatcher{nullptr};

@@ -347,7 +347,7 @@ struct MethodSignatureMatchResult {
   bool IsResultMatching;
   bool AreArgsMatching;
   bool AreCallbacksMatching;
-  bool IsPromiseMathcing;
+  bool IsPromiseMatching;
   bool IsSucceeded;
 };
 
@@ -415,10 +415,10 @@ struct MethodSignature {
           std::make_index_sequence<CallbackCount>{});
     }
 
-    result.IsPromiseMathcing = std::is_same_v<OutputPromises, typename TOtherMethodSignature::OutputPromises>;
+    result.IsPromiseMatching = std::is_same_v<OutputPromises, typename TOtherMethodSignature::OutputPromises>;
 
     result.IsSucceeded = result.IsResultMatching && result.ArgCountCompare == 0 && result.AreArgsMatching &&
-        result.CallbackCountCompare == 0 && result.AreCallbacksMatching && result.IsPromiseMathcing;
+        result.CallbackCountCompare == 0 && result.AreCallbacksMatching && result.IsPromiseMatching;
 
     return result;
   }
@@ -481,7 +481,7 @@ constexpr static bool MatchMethodSignature() noexcept {
     static_assert(matchResult.AreCallbacksMatching, "Method callback types are different from the method spec.");
   }
 
-  static_assert(matchResult.IsPromiseMathcing, "Method Promise type is different from the method spec.");
+  static_assert(matchResult.IsPromiseMatching, "Method Promise type is different from the method spec.");
 
   return matchResult.IsSucceeded;
 }

@@ -2,6 +2,54 @@
   "name": "@rnw-scripts/format-files",
   "entries": [
     {
+      "date": "Tue, 25 Apr 2023 05:17:00 GMT",
+      "tag": "@rnw-scripts/format-files_v1.1.9",
+      "version": "1.1.9",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@rnw-scripts/format-files",
+            "commit": "6a15837a441c23df1e2fb4c1257bc835a49539f2",
+            "comment": "Update Node to 16"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/format-files",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.16",
+            "commit": "39f99ed6163a15559a4b23ed52e27c8cddb68e94"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/format-files",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.7",
+            "commit": "39f99ed6163a15559a4b23ed52e27c8cddb68e94"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/format-files",
+            "comment": "Bump @rnw-scripts/ts-config to v2.0.4",
+            "commit": "39f99ed6163a15559a4b23ed52e27c8cddb68e94"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 21 Mar 2023 21:21:55 GMT",
+      "tag": "@rnw-scripts/format-files_v1.1.8",
+      "version": "1.1.8",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/format-files",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.6",
+            "commit": "94c638560965be5e431120eb3642f76c01d77b87"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 09 Feb 2023 06:16:43 GMT",
       "tag": "@rnw-scripts/format-files_v1.1.7",
       "version": "1.1.7",

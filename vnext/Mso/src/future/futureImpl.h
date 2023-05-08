@@ -159,7 +159,7 @@ struct FuturePackedData {
   FutureState GetState() const noexcept;
   FutureImpl *GetContinuation() noexcept;
   bool IsDone() const noexcept;
-  bool IsSucceded() const noexcept;
+  bool IsSucceeded() const noexcept;
   bool IsFailed() const noexcept;
 
   static FuturePackedData Make(FutureState state) noexcept;

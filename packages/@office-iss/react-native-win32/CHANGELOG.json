@@ -2,6 +2,219 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 03 May 2023 19:30:16 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.193",
+      "version": "0.0.0-canary.193",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "027b991e266e5612f475dcba176a233b43e746d7",
+            "comment": "Simplify ViewWin32 focus, now devmain properly implements UIManger.focus"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 25 Apr 2023 05:16:56 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.192",
+      "version": "0.0.0-canary.192",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "6a15837a441c23df1e2fb4c1257bc835a49539f2",
+            "comment": "Update Node to 16"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "39f99ed6163a15559a4b23ed52e27c8cddb68e94",
+            "comment": "Integrate 4/13"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.16",
+            "commit": "39f99ed6163a15559a4b23ed52e27c8cddb68e94"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.2",
+            "commit": "39f99ed6163a15559a4b23ed52e27c8cddb68e94"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.7",
+            "commit": "39f99ed6163a15559a4b23ed52e27c8cddb68e94"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump react-native-platform-override to v1.9.5",
+            "commit": "39f99ed6163a15559a4b23ed52e27c8cddb68e94"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 13 Apr 2023 05:14:28 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.191",
+      "version": "0.0.0-canary.191",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "71ca215e58db4f6b9b79be31b1320ab4c05714f1",
+            "comment": "Update TextInput.win32 to align with core"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 08 Apr 2023 05:13:11 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.190",
+      "version": "0.0.0-canary.190",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "9e4665f9f54d645c4d7f6ccce991a935ca63f156",
+            "comment": "integrate rn 0.0.0-20230404-2109-62c4da142"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 01 Apr 2023 05:15:15 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.189",
+      "version": "0.0.0-canary.189",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "25d51e62ec75240d3d175adabc940d2f6d3a0ce2",
+            "comment": "Integrate 3/22/23"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 23 Mar 2023 05:13:37 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.188",
+      "version": "0.0.0-canary.188",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "9ee8e4c86b17115a03c18cafdef56f4f3078596c",
+            "comment": "integrate RN 3/8/23"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 22 Mar 2023 05:14:41 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.187",
+      "version": "0.0.0-canary.187",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "16364605b2af12d0b11bb7d6920c82798f656c0b",
+            "comment": "Minor TS type updates"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 21 Mar 2023 21:21:55 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.186",
+      "version": "0.0.0-canary.186",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.6",
+            "commit": "94c638560965be5e431120eb3642f76c01d77b87"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump react-native-platform-override to v1.9.4",
+            "commit": "94c638560965be5e431120eb3642f76c01d77b87"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 08 Mar 2023 06:14:10 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.185",
+      "version": "0.0.0-canary.185",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "7bcdfb05e54c7a9d0a7467b023a816d3df96e848",
+            "comment": "Fix API Gaps"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 02 Mar 2023 06:14:20 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.184",
+      "version": "0.0.0-canary.184",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "4fa93ab9d50346f3efe9914a0ccf1d7b587547c7",
+            "comment": "Integrate 2/13"
+          },
+          {
+            "author": "email not defined",
+            "package": "@office-iss/react-native-win32",
+            "commit": "cb93a6cb140ed8652dfccbc4e3b587be4897230b",
+            "comment": "Merge branch 'YajurG-8875' of https://github.com/YajurG/react-native-windows into YajurG-8875"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump react-native-platform-override to v1.9.3",
+            "commit": "cb93a6cb140ed8652dfccbc4e3b587be4897230b"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 25 Feb 2023 06:13:36 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.183",
+      "version": "0.0.0-canary.183",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump react-native-platform-override to v1.9.2",
+            "commit": "97bbe423f10f6ebc28c0f317b8854c293fd878a8"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 15 Feb 2023 06:22:16 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.182",
       "version": "0.0.0-canary.182",

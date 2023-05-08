@@ -18,12 +18,11 @@ namespace Microsoft::ReactNative {
 
 struct ParagraphComponentView : CompositionBaseComponentView {
   using Super = CompositionBaseComponentView;
-  ParagraphComponentView(
-      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-      facebook::react::Tag tag);
 
-  std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept
-      override;
+  [[nodiscard]] static std::shared_ptr<ParagraphComponentView> Create(
+      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      facebook::react::Tag tag) noexcept;
+
   void mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
   void unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
   void updateProps(facebook::react::Props::Shared const &props, facebook::react::Props::Shared const &oldProps) noexcept
@@ -37,13 +36,18 @@ struct ParagraphComponentView : CompositionBaseComponentView {
   void finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept override;
   void prepareForRecycle() noexcept override;
   facebook::react::Props::Shared props() noexcept override;
-  facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt) const noexcept override;
+  facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt, bool ignorePointerEvents)
+      const noexcept override;
   void OnRenderingDeviceLost() noexcept override;
   facebook::react::SharedTouchEventEmitter touchEventEmitterAtPoint(facebook::react::Point pt) noexcept override;
 
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
 
  private:
+  ParagraphComponentView(
+      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      facebook::react::Tag tag);
+
   void ensureVisual() noexcept;
   void updateVisualBrush() noexcept;
   void DrawText() noexcept;

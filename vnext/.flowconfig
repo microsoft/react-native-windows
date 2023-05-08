@@ -53,13 +53,16 @@
 .*/node_modules/playground/.*
 
 ; Ignore templates for 'react-native init'
-<PROJECT_ROOT>/template/.*
+<PROJECT_ROOT>/packages/react-native/template/.*
 
 ; Ignore the Dangerfile
 <PROJECT_ROOT>/packages/react-native-bots/dangerfile.js
 
 ; Ignore "BUCK" generated dirs
 <PROJECT_ROOT>/\.buckd/
+
+; Flow doesn't support platforms
+.*/packages/react-native/Libraries/Utilities/LoadingView.js
 
 ; Ignore the src folder - flow files are combined with ones from react-native into the root Libraries folder
 .*/vnext/src/.*
@@ -76,8 +79,11 @@
 [libs]
 interface.js
 flow/
+flow-typed/
 
 [options]
+enums=true
+
 emoji=true
 
 exact_by_default=true
@@ -102,9 +108,6 @@ suppress_type=$FlowFixMeProps
 suppress_type=$FlowFixMeState
 suppress_type=$FlowFixMeEmpty
 
-experimental.array_literal_providers=true
-inference_mode=experimental.lti
-
 sharedmemory.hash_table_pow=21
 
 [lints]
@@ -116,6 +119,7 @@ nonstrict-import=warn
 deprecated-type=error
 unsafe-getters-setters=warn
 unnecessary-invariant=warn
+unused-promise=error
 
 [strict]
 deprecated-type
@@ -127,4 +131,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.198.2
+^0.203.0

@@ -16,12 +16,12 @@ class InspectorPackagerConnection final : public std::enable_shared_from_this<In
 
   class BundleStatus {
    public:
-    bool m_isLastDownloadSucess;
+    bool m_isLastDownloadSuccess;
     int64_t m_updateTimestamp = -1;
 
-    BundleStatus(bool isLastDownloadSucess, long updateTimestamp)
-        : m_isLastDownloadSucess(isLastDownloadSucess), m_updateTimestamp(updateTimestamp) {}
-    BundleStatus() : m_isLastDownloadSucess(false), m_updateTimestamp(-1) {}
+    BundleStatus(bool isLastDownloadSuccess, long updateTimestamp)
+        : m_isLastDownloadSuccess(isLastDownloadSuccess), m_updateTimestamp(updateTimestamp) {}
+    BundleStatus() : m_isLastDownloadSuccess(false), m_updateTimestamp(-1) {}
   };
 
   struct IBundleStatusProvider {
@@ -37,7 +37,7 @@ class InspectorPackagerConnection final : public std::enable_shared_from_this<In
   winrt::fire_and_forget sendMessageToPackagerAsync(std::string &&message) const;
   void sendMessageToPackager(std::string &&message) const;
 
-  // Note:: VM side Inspector processes the messages asynchronousely in a sequential executor with dedicated thread.
+  // Note:: VM side Inspector processes the messages asynchronously in a sequential executor with dedicated thread.
   // Hence, we don't bother invoking the inspector asynchronously.
   void sendMessageToVM(int64_t pageId, std::string &&message);
 

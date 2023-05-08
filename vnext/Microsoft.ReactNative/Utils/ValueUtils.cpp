@@ -7,6 +7,7 @@
 #include <UI.Xaml.Markup.h>
 #include <UI.Xaml.Media.h>
 #include <Utils/ValueUtils.h>
+#include <windows.foundation.h>
 #include <winrt/Windows.UI.ViewManagement.h>
 #include "Unicode.h"
 #include "XamlUtils.h"
@@ -311,15 +312,6 @@ REACTWINDOWS_API_(bool) IsValidColorValue(const winrt::Microsoft::ReactNative::J
 REACTWINDOWS_API_(winrt::TimeSpan) TimeSpanFromMs(double ms) {
   std::chrono::milliseconds dur((int64_t)ms);
   return dur;
-}
-
-// C# provides System.Uri.TryCreate, but no native equivalent seems to exist
-winrt::Uri UriTryCreate(winrt::param::hstring const &uri) {
-  try {
-    return winrt::Uri(uri);
-  } catch (...) {
-    return winrt::Uri(nullptr);
-  }
 }
 
 bool IsValidOptionalColorValue(const winrt::Microsoft::ReactNative::JSValue &v) {

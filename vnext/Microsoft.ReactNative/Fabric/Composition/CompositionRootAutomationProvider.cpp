@@ -1,20 +1,18 @@
 #include "pch.h"
 #include "CompositionRootAutomationProvider.h"
-
-#include "Fabric/Composition/CompositionRootView.h"
+#include "UiaHelpers.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
 CompositionRootAutomationProvider::CompositionRootAutomationProvider(
-    winrt::weak_ref<winrt::Microsoft::ReactNative::implementation::CompositionRootView> &&weakRootControl,
-    HWND hwnd) noexcept
-    : m_weakRootControl{std::move(weakRootControl)}, m_hwnd{hwnd} {}
+    const std::shared_ptr<::Microsoft::ReactNative::RootComponentView> &componentView) noexcept
+    : m_view{componentView} {}
 
 // Implementations should return NULL for a top-level element that is hosted in a window. Other elements should return
 // an array that contains UiaAppendRuntimeId (defined in Uiautomationcoreapi.h), followed by a value that is unique
 // within an instance of the fragment.
 //
-// We'll use the View pointer as our identifier for those situations
+// We'll use the react tag as our identifier for those situations
 HRESULT __stdcall CompositionRootAutomationProvider::GetRuntimeId(SAFEARRAY **pRetVal) {
   if (pRetVal == nullptr)
     return E_POINTER;
@@ -57,6 +55,7 @@ HRESULT __stdcall CompositionRootAutomationProvider::get_HostRawElementProvider(
   if (pRetVal == nullptr)
     return E_POINTER;
 
+  // TODO: assumes windowed
   if (!IsWindow(m_hwnd))
     return UIA_E_ELEMENTNOTAVAILABLE;
 
@@ -68,6 +67,24 @@ HRESULT __stdcall CompositionRootAutomationProvider::get_HostRawElementProvider(
 HRESULT __stdcall CompositionRootAutomationProvider::get_BoundingRectangle(UiaRect *pRetVal) {
   if (pRetVal == nullptr)
     return E_POINTER;
+
+  // TODO: Need host site offsets
+  // Assume we're hosted in some other visual-based hosting site
+  if (m_hwnd == nullptr || !IsWindow(m_hwnd)) {
+    return UiaGetBoundingRectangleHelper(m_view, *pRetVal);
+  }
+
+  POINT point{0, 0};
+  ClientToScreen(m_hwnd, &point);
+  pRetVal->left = point.x;
+  pRetVal->top = point.y;
+  RECT rect;
+  GetClientRect(m_hwnd, &rect);
+  point.x = rect.right;
+  point.y = rect.bottom;
+  ClientToScreen(m_hwnd, &point);
+  pRetVal->width = point.x - pRetVal->left;
+  pRetVal->height = point.y - pRetVal->top;
 
   return S_OK;
 }
@@ -99,6 +116,31 @@ HRESULT __stdcall CompositionRootAutomationProvider::ElementProviderFromPoint(
 
   *pRetVal = nullptr;
 
+  auto strongView = m_view.view();
+
+  if (strongView == nullptr) {
+    return UIA_E_ELEMENTNOTAVAILABLE;
+  }
+
+  auto spRootView = strongView->rootComponentView();
+  if (spRootView == nullptr) {
+    return UIA_E_ELEMENTNOTAVAILABLE;
+  }
+
+  if (m_hwnd == nullptr || !IsWindow(m_hwnd)) {
+    // TODO: Add support for non-HWND based hosting
+    return E_FAIL;
+  }
+
+  POINT clientPoint{static_cast<LONG>(x), static_cast<LONG>(y)};
+  ScreenToClient(m_hwnd, &clientPoint);
+
+  auto provider = spRootView->UiaProviderFromPoint(clientPoint);
+  auto spFragment = provider.try_as<IRawElementProviderFragment>();
+  if (spFragment) {
+    *pRetVal = spFragment.detach();
+  }
+
   return S_OK;
 }
 
@@ -108,7 +150,28 @@ HRESULT __stdcall CompositionRootAutomationProvider::GetFocus(IRawElementProvide
 
   *pRetVal = nullptr;
 
+  auto strongView = m_view.view();
+
+  if (strongView == nullptr) {
+    return UIA_E_ELEMENTNOTAVAILABLE;
+  }
+
+  auto rootCV = std::static_pointer_cast<::Microsoft::ReactNative::RootComponentView>(strongView);
+  auto focusedComponent = rootCV->GetFocusedComponent();
+
+  if (focusedComponent) {
+    auto focusedUiaProvider = focusedComponent->EnsureUiaProvider();
+    auto spFragment = focusedUiaProvider.try_as<IRawElementProviderFragment>();
+    if (spFragment) {
+      *pRetVal = spFragment.detach();
+    }
+  }
+
   return S_OK;
+}
+
+void CompositionRootAutomationProvider::SetHwnd(HWND hwnd) noexcept {
+  m_hwnd = hwnd;
 }
 
 HRESULT __stdcall CompositionRootAutomationProvider::Navigate(
@@ -117,8 +180,12 @@ HRESULT __stdcall CompositionRootAutomationProvider::Navigate(
   if (pRetVal == nullptr)
     return E_POINTER;
 
+  // Fragment roots do not enable navigation to a parent or siblings; navigation among fragment roots is handled by the
+  // default window providers. Elements in fragments must navigate only to other elements within that fragment.
+  if (direction == NavigateDirection_FirstChild || direction == NavigateDirection_LastChild) {
+    return UiaNavigateHelper(m_view, direction, *pRetVal);
+  }
   *pRetVal = nullptr;
-
   return S_OK;
 }
 

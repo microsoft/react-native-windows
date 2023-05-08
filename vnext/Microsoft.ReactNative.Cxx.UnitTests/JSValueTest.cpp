@@ -375,7 +375,7 @@ TEST_CLASS (JSValueTest) {
   }
 
   TEST_METHOD(TestJSValueImplicitCast) {
-    // We do not assign values directly here sbecause it would be an explicit constructor call.
+    // We do not assign values directly here because it would be an explicit constructor call.
     JSValue value01, value02, value03, value04, value05, value06, value07, value08, value09, value10, value11, value12,
         value13, value14, value15, value16, value17, value18, value19, value20, value21;
 

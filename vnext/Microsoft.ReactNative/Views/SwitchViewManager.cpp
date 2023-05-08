@@ -46,7 +46,7 @@ class SwitchShadowNode : public ShadowNodeBase {
 // sets the resources to Empty SolidColorBrushes if the user sets the color before runtime, this lets the user change
 // the color of the SolidColorBrush at runtime and keeps the toggleswitches who did not change colors on the default
 // ThemeResource
-void setEmptyResouceBrushes(
+void setEmptyResourceBrushes(
     const winrt::Microsoft::ReactNative::JSValueObject &props,
     const xaml::Controls::ToggleSwitch toggleSwitch) {
   auto brush = xaml::Media::SolidColorBrush();
@@ -83,7 +83,7 @@ void SwitchShadowNode::createView(const winrt::Microsoft::ReactNative::JSValueOb
   Super::createView(props);
   auto toggleSwitch = GetView().as<winrt::ToggleSwitch>();
 
-  setEmptyResouceBrushes(props, toggleSwitch);
+  setEmptyResourceBrushes(props, toggleSwitch);
 
   m_toggleSwitchToggledRevoker = toggleSwitch.Toggled(winrt::auto_revoke, [=](auto &&, auto &&) {
     if (m_offTrackColor)

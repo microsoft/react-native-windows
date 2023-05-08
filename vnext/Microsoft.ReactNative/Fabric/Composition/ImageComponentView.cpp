@@ -20,6 +20,7 @@
 #include <winrt/Windows.UI.Composition.h>
 #include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/Windows.Web.Http.h>
+#include "CompositionDynamicAutomationProvider.h"
 #include "CompositionHelpers.h"
 
 extern "C" HRESULT WINAPI WICCreateImagingFactory_Proxy(UINT SDKVersion, IWICImagingFactory **ppIWICImagingFactory);
@@ -53,11 +54,6 @@ ImageComponentView::ImageComponentView(
     : Super(compContext, tag), m_context(reactContext) {
   static auto const defaultProps = std::make_shared<facebook::react::ImageProps const>();
   m_props = defaultProps;
-}
-
-std::vector<facebook::react::ComponentDescriptorProvider>
-ImageComponentView::supplementalComponentDescriptorProviders() noexcept {
-  return {};
 }
 
 void ImageComponentView::mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
@@ -116,7 +112,7 @@ void ImageComponentView::updateProps(
   if (oldImageProps.backgroundColor != newImageProps.backgroundColor ||
       oldImageProps.blurRadius != newImageProps.blurRadius || oldImageProps.tintColor != newImageProps.tintColor ||
       oldImageProps.resizeMode != newImageProps.resizeMode) {
-    m_drawingSurface = nullptr; // TODO dont need to recreate the surface just to redraw...
+    m_drawingSurface = nullptr; // TODO don't need to recreate the surface just to redraw...
   }
 
   if (oldImageProps.opacity != newImageProps.opacity) {
@@ -133,7 +129,7 @@ void ImageComponentView::updateState(
   auto newImageState = std::static_pointer_cast<facebook::react::ImageShadowNode::ConcreteState const>(state);
 
   if (!m_imageResponseObserver) {
-    // Should ViewComponents enable_shared_from_this? then we dont need this dance to get a shared_ptr
+    // Should ViewComponents enable_shared_from_this? then we don't need this dance to get a shared_ptr
     std::shared_ptr<FabricUIManager> fabricuiManager =
         ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties());
     auto componentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(m_tag);
@@ -174,7 +170,7 @@ void ImageComponentView::updateLayoutMetrics(
   // Set Position & Size Properties
 
   if ((layoutMetrics.displayType != m_layoutMetrics.displayType)) {
-    m_visual.IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
+    OuterVisual().IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
   }
 
   updateBorderLayoutMetrics(layoutMetrics, *m_props);
@@ -185,11 +181,6 @@ void ImageComponentView::updateLayoutMetrics(
   m_visual.Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
-  m_visual.Offset({
-      layoutMetrics.frame.origin.x * layoutMetrics.pointScaleFactor,
-      layoutMetrics.frame.origin.y * layoutMetrics.pointScaleFactor,
-      0.0f,
-  });
 }
 
 void ImageComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {}
@@ -371,13 +362,15 @@ facebook::react::Props::Shared ImageComponentView::props() noexcept {
   return m_props;
 }
 
-facebook::react::Tag ImageComponentView::hitTest(facebook::react::Point pt, facebook::react::Point &localPt)
-    const noexcept {
+facebook::react::Tag ImageComponentView::hitTest(
+    facebook::react::Point pt,
+    facebook::react::Point &localPt,
+    bool ignorePointerEvents) const noexcept {
   facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
 
   facebook::react::Tag targetTag;
 
-  if ((m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
+  if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
        m_props->pointerEvents == facebook::react::PointerEventsMode::BoxNone) &&
       std::any_of(m_children.rbegin(), m_children.rend(), [&targetTag, &ptLocal, &localPt](auto child) {
         targetTag = static_cast<const CompositionBaseComponentView *>(child)->hitTest(ptLocal, localPt);
@@ -385,7 +378,7 @@ facebook::react::Tag ImageComponentView::hitTest(facebook::react::Point pt, face
       }))
     return targetTag;
 
-  if ((m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
+  if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
        m_props->pointerEvents == facebook::react::PointerEventsMode::BoxOnly) &&
       ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
       ptLocal.y <= m_layoutMetrics.frame.size.height) {
@@ -399,6 +392,7 @@ facebook::react::Tag ImageComponentView::hitTest(facebook::react::Point pt, face
 void ImageComponentView::ensureVisual() noexcept {
   if (!m_visual) {
     m_visual = m_compContext.CreateSpriteVisual();
+    OuterVisual().InsertAt(m_visual, 0);
   }
 }
 
@@ -408,6 +402,13 @@ winrt::Microsoft::ReactNative::Composition::IVisual ImageComponentView::Visual()
 
 bool ImageComponentView::focusable() const noexcept {
   return m_props->focusable;
+}
+
+std::shared_ptr<ImageComponentView> ImageComponentView::Create(
+    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    facebook::react::Tag tag,
+    winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
+  return std::shared_ptr<ImageComponentView>(new ImageComponentView(compContext, tag, reactContext));
 }
 
 } // namespace Microsoft::ReactNative

@@ -50,7 +50,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
     public static readonly DiagnosticDescriptor SerializableTypesMustHaveEmptyConstructor = new DiagnosticDescriptor(
       id: Invariant($"{ReactNativeNames.ErrorCodePrefix}1003"),
       category: ReactNativeNames.ErrorCategory,
-      title: "Cannot serialie type",
+      title: "Cannot serialize type",
       messageFormat: "Types that are serialized for React bust have a default parameter-less constructor",
       defaultSeverity: DiagnosticSeverity.Error,
       isEnabledByDefault: true);

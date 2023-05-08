@@ -98,16 +98,6 @@ winrt::AutomationPeer ViewPanel::OnCreateAutomationPeer() {
   return xaml::Controls::Canvas::LeftProperty();
 }
 
-/*static*/ xaml::DependencyProperty ViewPanel::ClipChildrenProperty() {
-  static xaml::DependencyProperty s_clipChildrenProperty = xaml::DependencyProperty::Register(
-      L"ClipChildren",
-      winrt::xaml_typename<bool>(),
-      viewPanelTypeName,
-      winrt::PropertyMetadata(winrt::box_value(false), ViewPanel::VisualPropertyChanged));
-
-  return s_clipChildrenProperty;
-}
-
 /*static*/ void ViewPanel::SetTop(xaml::UIElement const &element, double value) {
   element.SetValue(TopProperty(), winrt::box_value<double>(value));
   InvalidateForArrange(element);
@@ -143,7 +133,7 @@ winrt::Size ViewPanel::MeasureOverride(winrt::Size /*availableSize*/) {
 winrt::Size ViewPanel::ArrangeOverride(winrt::Size finalSize) {
   // Sometimes we create outerBorder(i.e. when CornerRadius is true) instead of innerBorder,
   // Yoga has no notion of outerBorder when calculating the child's position, so we
-  // need to make adujustment in arrange for outerborder's thickness.
+  // need to make adjustment in arrange for outerborder's thickness.
   float outerBorderLeft = 0;
   float outerBorderTop = 0;
   if (auto outerBorder = GetOuterBorder()) {
@@ -185,8 +175,6 @@ winrt::Size ViewPanel::ArrangeOverride(winrt::Size finalSize) {
         winrt::Rect(adjustedLeft, adjustedTop, static_cast<float>(childWidth), static_cast<float>(childHeight)));
   }
 
-  UpdateClip(finalSize);
-
   return finalSize;
 }
 
@@ -223,10 +211,6 @@ void ViewPanel::BorderBrush(winrt::Brush const &value) {
 
 void ViewPanel::CornerRadius(xaml::CornerRadius const &value) {
   SetValue(CornerRadiusProperty(), winrt::box_value(value));
-}
-
-void ViewPanel::ClipChildren(bool value) {
-  SetValue(ClipChildrenProperty(), winrt::box_value(value));
 }
 
 void ViewPanel::FinalizeProperties() {
@@ -268,9 +252,6 @@ void ViewPanel::FinalizeProperties() {
   } else if (!displayBorder) {
     scenario = Scenario::NoBorder;
     m_hasOuterBorder = false;
-  } else if (ClipChildren()) {
-    scenario = Scenario::OuterBorder;
-    m_hasOuterBorder = true;
   } else {
     scenario = Scenario::InnerBorder;
     m_hasOuterBorder = false;
@@ -347,17 +328,6 @@ xaml::Controls::Border ViewPanel::GetOuterBorder() {
     return m_border;
   else
     return xaml::Controls::Border(nullptr);
-}
-
-void ViewPanel::UpdateClip(winrt::Size &finalSize) {
-  if (ClipChildren()) {
-    winrt::RectangleGeometry clipGeometry;
-    clipGeometry.Rect(winrt::Rect(0, 0, static_cast<float>(finalSize.Width), static_cast<float>(finalSize.Height)));
-
-    Clip(clipGeometry);
-  } else {
-    Clip(nullptr);
-  }
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

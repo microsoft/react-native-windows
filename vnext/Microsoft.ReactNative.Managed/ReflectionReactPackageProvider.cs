@@ -22,7 +22,7 @@ namespace Microsoft.ReactNative.Managed
   }
 
   /// <summary>
-  /// Extensions for registring a reflection based package provider
+  /// Extensions for registering a reflection based package provider
   /// </summary>
   public static class ReflectionReactPackageProviderExtensions
   {

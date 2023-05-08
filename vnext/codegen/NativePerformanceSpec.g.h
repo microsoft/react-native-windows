@@ -13,12 +13,24 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
+REACT_STRUCT(PerformanceSpec_ReactNativeStartupTiming)
+struct PerformanceSpec_ReactNativeStartupTiming {
+    REACT_FIELD(startTime)
+    double startTime;
+    REACT_FIELD(endTime)
+    double endTime;
+    REACT_FIELD(executeJavaScriptBundleEntryPointStart)
+    double executeJavaScriptBundleEntryPointStart;
+    REACT_FIELD(executeJavaScriptBundleEntryPointEnd)
+    double executeJavaScriptBundleEntryPointEnd;
+};
+
 struct PerformanceSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
       Method<void(std::string, double, double) noexcept>{0, L"mark"},
-      Method<void(std::string) noexcept>{1, L"clearMarks"},
-      Method<void(std::string, double, double, double, std::string, std::string) noexcept>{2, L"measure"},
-      Method<void(std::string) noexcept>{3, L"clearMeasures"},
+      Method<void(std::string, double, double, double, std::string, std::string) noexcept>{1, L"measure"},
+      SyncMethod<::React::JSValue() noexcept>{2, L"getSimpleMemoryInfo"},
+      SyncMethod<PerformanceSpec_ReactNativeStartupTiming() noexcept>{3, L"getReactNativeStartupTiming"},
   };
 
   template <class TModule>
@@ -32,19 +44,19 @@ struct PerformanceSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
           "    REACT_METHOD(mark) static void mark(std::string name, double startTime, double duration) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
-          "clearMarks",
-          "    REACT_METHOD(clearMarks) void clearMarks(std::string markName) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(clearMarks) static void clearMarks(std::string markName) noexcept { /* implementation */ }\n");
-    REACT_SHOW_METHOD_SPEC_ERRORS(
-          2,
           "measure",
           "    REACT_METHOD(measure) void measure(std::string name, double startTime, double endTime, double duration, std::string startMark, std::string endMark) noexcept { /* implementation */ }\n"
           "    REACT_METHOD(measure) static void measure(std::string name, double startTime, double endTime, double duration, std::string startMark, std::string endMark) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
+          2,
+          "getSimpleMemoryInfo",
+          "    REACT_SYNC_METHOD(getSimpleMemoryInfo) ::React::JSValue getSimpleMemoryInfo() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(getSimpleMemoryInfo) static ::React::JSValue getSimpleMemoryInfo() noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
-          "clearMeasures",
-          "    REACT_METHOD(clearMeasures) void clearMeasures(std::string measureName) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(clearMeasures) static void clearMeasures(std::string measureName) noexcept { /* implementation */ }\n");
+          "getReactNativeStartupTiming",
+          "    REACT_SYNC_METHOD(getReactNativeStartupTiming) PerformanceSpec_ReactNativeStartupTiming getReactNativeStartupTiming() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(getReactNativeStartupTiming) static PerformanceSpec_ReactNativeStartupTiming getReactNativeStartupTiming() noexcept { /* implementation */ }\n");
   }
 };
 

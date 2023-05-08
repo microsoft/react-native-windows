@@ -8,9 +8,14 @@
 import {app} from '@react-native-windows/automation';
 import {dumpVisualTree} from '@react-native-windows/automation-commands';
 import {goToComponentExample} from './RNTesterNavigation';
+import {verifyNoErrorLogs} from './Helpers';
 
 beforeAll(async () => {
   await goToComponentExample('LegacyImageTest');
+});
+
+afterEach(async () => {
+  await verifyNoErrorLogs();
 });
 
 describe('LegacyImageTest', () => {
@@ -27,7 +32,7 @@ describe('LegacyImageTest', () => {
     expect(dump).toMatchSnapshot();
   });
 
-  /* Test case #3: Click button one more, remove border from view and image but tree sturcture is different from #1*/
+  /* Test case #3: Click button one more, remove border from view and image but tree structure is different from #1*/
   test('ImageWithoutBorderTestOneMoreClick', async () => {
     await toggleImageBorder();
     const dump = await dumpVisualTree('image-container');

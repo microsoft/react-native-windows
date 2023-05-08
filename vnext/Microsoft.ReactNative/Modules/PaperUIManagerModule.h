@@ -22,9 +22,11 @@ class NativeUIManager;
 struct UIManagerSettings {
   UIManagerSettings(
       const std::shared_ptr<facebook::react::MessageQueueThread> batchingUIMessageQueue,
+      const std::shared_ptr<facebook::react::MessageQueueThread> uiMessageQueue,
       std::vector<std::unique_ptr<IViewManager>> &&viewManagers);
   UIManagerSettings(UIManagerSettings const &) = delete;
   const std::shared_ptr<facebook::react::MessageQueueThread> batchingUIMessageQueue;
+  const std::shared_ptr<facebook::react::MessageQueueThread> uiMessageQueue;
   std::vector<std::unique_ptr<IViewManager>> viewManagers;
 };
 
@@ -35,7 +37,7 @@ REACT_MODULE(UIManager)
 struct UIManager final {
   // TODO:
   // Spec incorrectly reports commandID as a number, but its actually a number | string..
-  // There is also other issues to catch up, so dont use the spec for now
+  // There is also other issues to catch up, so don't use the spec for now
   // using ModuleSpec = ReactNativeSpecs::UIManagerSpec;
 
   UIManager();
@@ -175,6 +177,7 @@ struct UIManager final {
 
  private:
   std::shared_ptr<facebook::react::MessageQueueThread> m_batchingUIMessageQueue;
+  std::shared_ptr<facebook::react::MessageQueueThread> m_uiMessageQueue;
   std::shared_ptr<UIManagerModule> m_module;
   winrt::Microsoft::ReactNative::ReactContext m_context;
 };

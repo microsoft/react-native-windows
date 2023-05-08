@@ -11,6 +11,8 @@
 #include <dispatchQueue/dispatchQueue.h>
 
 // Windows API
+#include <windows.Networking.Sockets.h>
+#include <windows.Storage.Streams.h>
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Security.Cryptography.h>
 
@@ -203,7 +205,7 @@ fire_and_forget WinRTWebSocketResource::PerformWrite(string &&message, bool isBi
   }
 
   try {
-    size_t length;
+    size_t length = 0;
     string messageLocal;
     bool isBinaryLocal;
     {
@@ -216,8 +218,10 @@ fire_and_forget WinRTWebSocketResource::PerformWrite(string &&message, bool isBi
       self->m_socket.Control().MessageType(SocketMessageType::Binary);
 
       auto buffer = CryptographicBuffer::DecodeFromBase64String(winrt::to_hstring(messageLocal));
-      length = buffer.Length();
-      self->m_writer.WriteBuffer(buffer);
+      if (buffer) {
+        length = buffer.Length();
+        self->m_writer.WriteBuffer(buffer);
+      }
     } else {
       self->m_socket.Control().MessageType(SocketMessageType::Utf8);
 
@@ -292,49 +296,59 @@ void WinRTWebSocketResource::Synchronize() noexcept {
 #pragma region IWebSocketResource
 
 void WinRTWebSocketResource::Connect(string &&url, const Protocols &protocols, const Options &options) noexcept {
-  m_socket.MessageReceived(
-      [self = shared_from_this()](IWebSocket const &sender, IMessageWebSocketMessageReceivedEventArgs const &args) {
-        try {
-          string response;
-          IDataReader reader = args.GetDataReader();
-          auto len = reader.UnconsumedBufferLength();
-          if (args.MessageType() == SocketMessageType::Utf8) {
-            reader.UnicodeEncoding(UnicodeEncoding::Utf8);
-            vector<uint8_t> data(len);
-            reader.ReadBytes(data);
+  m_socket.MessageReceived([self = shared_from_this()](
+                               IWebSocket const &sender, IMessageWebSocketMessageReceivedEventArgs const &args) {
+    try {
+      string response;
 
-            response = string(CheckedReinterpretCast<char *>(data.data()), data.size());
-          } else {
-            auto buffer = reader.ReadBuffer(len);
-            winrt::hstring data = CryptographicBuffer::EncodeToBase64String(buffer);
+      IDataReader reader{nullptr};
+      // Use ABI version to avoid throwing exceptions on expected code paths
+      HRESULT hr =
+          reinterpret_cast<ABI::Windows::Networking::Sockets::IMessageWebSocketMessageReceivedEventArgs *>(
+              winrt::get_abi(args))
+              ->GetDataReader(reinterpret_cast<ABI::Windows::Storage::Streams::IDataReader **>(winrt::put_abi(reader)));
 
-            response = winrt::to_string(std::wstring_view(data));
-          }
-
-          if (self->m_readHandler) {
-            self->m_readHandler(response.length(), response, args.MessageType() == SocketMessageType::Binary);
-          }
-        } catch (hresult_error const &e) {
-          if (self->m_errorHandler) {
-            string errorMessage;
-            ErrorType errorType;
-            // See
-            // https://docs.microsoft.com/uwp/api/windows.networking.sockets.messagewebsocketmessagereceivedeventargs.getdatareader?view=winrt-19041#remarks
-            if (e.code() == WININET_E_CONNECTION_ABORTED) {
-              errorMessage = "[0x80072EFE] Underlying TCP connection suddenly terminated";
-              errorType = ErrorType::Connection;
-              self->m_errorHandler({errorMessage, errorType});
-
-              // Note: We are not clear whether all read-related errors should close the socket.
-              self->Close(CloseCode::BadPayload, std::move(errorMessage));
-            } else {
-              errorMessage = Utilities::HResultToString(e);
-              errorType = ErrorType::Receive;
-              self->m_errorHandler({errorMessage, errorType});
-            }
-          }
+      if (FAILED(hr)) {
+        // See
+        // https://docs.microsoft.com/uwp/api/windows.networking.sockets.messagewebsocketmessagereceivedeventargs.getdatareader?view=winrt-19041#remarks
+        if (hr == WININET_E_CONNECTION_ABORTED) {
+          string errorMessage{"[0x80072EFE] Underlying TCP connection suddenly terminated"};
+          self->m_errorHandler({errorMessage, ErrorType::Connection});
+          // Note: We are not clear whether all read-related errors should close the socket.
+          self->Close(CloseCode::BadPayload, std::move(errorMessage));
+        } else {
+          self->m_errorHandler({Utilities::HResultToString(hr), ErrorType::Receive});
         }
-      });
+        return;
+      }
+
+      auto len = reader.UnconsumedBufferLength();
+      if (args.MessageType() == SocketMessageType::Utf8) {
+        reader.UnicodeEncoding(UnicodeEncoding::Utf8);
+        vector<uint8_t> data(len);
+        reader.ReadBytes(data);
+
+        response = string(CheckedReinterpretCast<char *>(data.data()), data.size());
+      } else {
+        auto buffer = reader.ReadBuffer(len);
+        winrt::hstring data = CryptographicBuffer::EncodeToBase64String(buffer);
+
+        response = winrt::to_string(std::wstring_view(data));
+      }
+
+      if (self->m_readHandler) {
+        self->m_readHandler(response.length(), response, args.MessageType() == SocketMessageType::Binary);
+      }
+    } catch (hresult_error const &e) {
+      if (self->m_errorHandler) {
+        string errorMessage;
+        ErrorType errorType;
+        errorMessage = Utilities::HResultToString(e);
+        errorType = ErrorType::Receive;
+        self->m_errorHandler({errorMessage, errorType});
+      }
+    }
+  });
 
   m_readyState = ReadyState::Connecting;
 

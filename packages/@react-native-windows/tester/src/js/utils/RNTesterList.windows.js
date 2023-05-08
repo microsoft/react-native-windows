@@ -253,6 +253,10 @@ const APIs: Array<RNTesterModuleInfo> = [
     module: require('../examples/Dimensions/DimensionsExample'),
   },
   {
+    key: 'InvalidPropsExample',
+    module: require('../examples/InvalidProps/InvalidPropsExample'),
+  },
+  {
     key: 'Keyboard',
     category: 'Basic',
     module: require('../examples/Keyboard/KeyboardExample').default,
@@ -356,6 +360,11 @@ const APIs: Array<RNTesterModuleInfo> = [
     key: 'TurboCxxModuleExample',
     category: 'Basic',
     module: require('../examples/TurboModule/TurboCxxModuleExample'),
+  },
+  {
+    key: 'PerformanceApiExample',
+    category: 'Basic',
+    module: require('../examples/Performance/PerformanceApiExample'),
   },
 ];
 

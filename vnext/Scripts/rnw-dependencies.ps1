@@ -215,7 +215,7 @@ function CheckNode {
         $nodeVersion = (Get-Command node -ErrorAction Stop).Version;
         Write-Verbose "Node version found: $nodeVersion";
         $v = $nodeVersion.Major;
-        return ($v -ge 14) -and (($v % 2) -eq 0);
+        return ($v -ge 16) -and (($v % 2) -eq 0);
     } catch { Write-Debug $_ }
 
     Write-Verbose "Node not found.";
@@ -360,7 +360,7 @@ $requiredFreeSpaceGB = 15;
 $requirements = @(
     @{
         Id=[CheckId]::FreeSpace;
-        Name = "Free space on $drive`: > $requiredFreeSpaceGB GB";
+        Name = "Free space on current drive > $requiredFreeSpaceGB GB";
         Tags = @('appDev');
         Valid = { $drive.Free/1GB -gt $requiredFreeSpaceGB; }
         HasVerboseOutput = $true;
@@ -376,7 +376,7 @@ $requirements = @(
     },
     @{
         Id=[CheckId]::WindowsVersion;
-        Name = 'Windows version >= 10.0.16299.0';
+        Name = 'Windows version >= 10.0.17763.0';
         Tags = @('appDev');
         Valid = { ($v.Major -eq 10 -and $v.Minor -eq 0 -and $v.Build -ge 16299); }
     },
@@ -412,7 +412,7 @@ $requirements = @(
     },
     @{
         Id=[CheckId]::Node;
-        Name = 'Node.js (LTS, >= 14.0)';
+        Name = 'Node.js (LTS, >= 16.0)';
         Tags = @('appDev');
         Valid = { CheckNode; }
         Install = { choco install -y nodejs-lts };
@@ -501,7 +501,7 @@ function EnsureChocoForInstall {
     Write-Verbose "Checking for Choco...";
     try {
         $chocoCmd = (Get-Command choco -ErrorAction Stop);
-        if (chocoCmd -ne $null) {
+        if ($chocoCmd -ne $null) {
             Write-Verbose "Choco found.";
             return;
         }

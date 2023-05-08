@@ -52,17 +52,11 @@ struct ViewPanel : ViewPanelT<ViewPanel> {
   }
   void CornerRadius(xaml::CornerRadius const &value);
 
-  bool ClipChildren() {
-    return winrt::unbox_value<bool>(GetValue(ClipChildrenProperty()));
-  }
-  void ClipChildren(bool value);
-
   // ViewPanel Properties
   static xaml::DependencyProperty ViewBackgroundProperty();
   static xaml::DependencyProperty BorderThicknessProperty();
   static xaml::DependencyProperty BorderBrushProperty();
   static xaml::DependencyProperty CornerRadiusProperty();
-  static xaml::DependencyProperty ClipChildrenProperty();
 
   // Attached Properties
   static xaml::DependencyProperty TopProperty();
@@ -81,8 +75,6 @@ struct ViewPanel : ViewPanelT<ViewPanel> {
 
  private:
   void Remove(xaml::UIElement element) const;
-
-  void UpdateClip(winrt::Windows::Foundation::Size &finalSize);
 
  private:
   bool m_propertiesChanged{false};

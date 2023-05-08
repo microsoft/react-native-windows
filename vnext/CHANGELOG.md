@@ -1,8 +1,308 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 22 Feb 2023 06:14:08 GMT and should not be manually modified.
+This log was last generated on Wed, 03 May 2023 19:30:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.649
+
+Wed, 03 May 2023 19:30:16 GMT
+
+### Changes
+
+- Bump default _WIN32_WINNT_VERSION (julio.rocha@microsoft.com)
+- add default static activityIndicator (tatianakapos@microsoft.com)
+- Update folly version (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.648
+
+Thu, 27 Apr 2023 05:12:48 GMT
+
+### Changes
+
+- working impl of getBoundingRect and ElementProviderFromPoint (adrum@microsoft.com)
+
+## 0.0.0-canary.647
+
+Wed, 26 Apr 2023 05:13:36 GMT
+
+### Changes
+
+- Resolve some XAML style colors in Fabric (26607885+chrisglein@users.noreply.github.com)
+
+## 0.0.0-canary.646
+
+Tue, 25 Apr 2023 05:17:02 GMT
+
+### Changes
+
+- Integrate 4/13 (34109996+chiaramooney@users.noreply.github.com)
+- Upgrade to WinUI 2.8 (34109996+chiaramooney@users.noreply.github.com)
+- Update Node to 16 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.168
+- Bump @react-native-windows/codegen to v0.0.0-canary.56
+- Bump @rnw-scripts/eslint-config to v1.1.16
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.2
+- Bump @rnw-scripts/just-task to v2.3.7
+- Bump react-native-platform-override to v1.9.5
+
+## 0.0.0-canary.645
+
+Sat, 22 Apr 2023 05:13:57 GMT
+
+### Changes
+
+- Use case-insensitive comparer for AllowedHeaders (julio.rocha@microsoft.com)
+- Add cursorColor support to TextInput (d@litsman.com)
+
+## 0.0.0-canary.644
+
+Wed, 19 Apr 2023 05:12:49 GMT
+
+### Changes
+
+- Implement Fabric TextInput editable - Uses TXTBIT_READONLY (26607885+chrisglein@users.noreply.github.com)
+
+## 0.0.0-canary.643
+
+Tue, 18 Apr 2023 05:12:59 GMT
+
+### Changes
+
+- Enable secureTextEntry for Fabric - Supply password character - Set TXTBIT_USEPASSWORD - Fix problem when backspacing on short strings (26607885+chrisglein@users.noreply.github.com)
+- Add support for Fabric TextInput `multiline` - Uses TXTBIT_MULTILINE and TXTBIT_WORDWRAP (26607885+chrisglein@users.noreply.github.com)
+
+## 0.0.0-canary.642
+
+Thu, 13 Apr 2023 05:14:28 GMT
+
+### Changes
+
+- Adds QuirkSetting for non-batched create view (erozell@outlook.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.167
+- Bump @react-native-windows/codegen to v0.0.0-canary.55
+
+## 0.0.0-canary.641
+
+Wed, 12 Apr 2023 05:14:59 GMT
+
+### Changes
+
+- Fix unintended fallthrough This was causing a WM_CHAR to fallthrough to WM_KEYDOWN and produce a duplicate `sendMessage` (26607885+chrisglein@users.noreply.github.com)
+
+## 0.0.0-canary.640
+
+Tue, 11 Apr 2023 05:13:26 GMT
+
+### Changes
+
+- Use Boost GUID generator (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.639
+
+Sat, 08 Apr 2023 05:13:12 GMT
+
+### Changes
+
+- Ensure ReactNativeWindowsDir is set in Directory.Build.props (jthysell@microsoft.com)
+- integrate rn 0.0.0-20230404-2109-62c4da142 (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.638
+
+Fri, 07 Apr 2023 05:13:15 GMT
+
+### Changes
+
+- Initialize layout values to zero (erozell@outlook.com)
+
+## 0.0.0-canary.637
+
+Tue, 04 Apr 2023 05:14:38 GMT
+
+### Changes
+
+- Allow ABIViewManagers to use `overflow: hidden` (erozell@outlook.com)
+
+## 0.0.0-canary.636
+
+Sat, 01 Apr 2023 05:15:15 GMT
+
+### Changes
+
+- Integrate 3/22/23 (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.635
+
+Fri, 31 Mar 2023 05:13:52 GMT
+
+### Changes
+
+- Suppresses auto-focus under certain conditions (erozell@outlook.com)
+- Fixes issue where Alert crashes (erozell@outlook.com)
+- Add UIA Navigate to Fabric Providers (adrum@microsoft.com)
+- Workaround fix for "missing-asset-registry-path" error to unblock PRs (jthysell@microsoft.com)
+
+## 0.0.0-canary.634
+
+Wed, 29 Mar 2023 05:13:53 GMT
+
+### Changes
+
+- add switch 'trackColor' for Fabric (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.633
+
+Tue, 28 Mar 2023 05:13:53 GMT
+
+### Changes
+
+- Fix typo in rnw-dependencies.ps1 (alicemagicassociation@gmail.com)
+
+## 0.0.0-canary.632
+
+Fri, 24 Mar 2023 05:13:44 GMT
+
+### Changes
+
+- Fixes occasional crash in hit testing (ericroz@meta.com)
+
+## 0.0.0-canary.631
+
+Thu, 23 Mar 2023 05:13:37 GMT
+
+### Changes
+
+- integrate RN 3/8/23 (tatianakapos@microsoft.com)
+- [Fabric] Beginning of custom component interfaces (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.630
+
+Tue, 21 Mar 2023 21:21:54 GMT
+
+### Changes
+
+- CrashManager should also handle SIGABRT (tudor.mihai@microsoft.com)
+- Fix RedBox Dismiss (30809111+acoates-ms@users.noreply.github.com)
+- Verify JS ViewConfig and ViewManager ViewConfigs align (30809111+acoates-ms@users.noreply.github.com)
+- Adds BundleAppId to ReactInstanceSettings (erozell@outlook.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.166
+- Bump @react-native-windows/codegen to v0.0.0-canary.54
+- Bump @rnw-scripts/just-task to v2.3.6
+- Bump react-native-platform-override to v1.9.4
+
+## 0.0.0-canary.629
+
+Tue, 14 Mar 2023 05:13:40 GMT
+
+### Changes
+
+- [Fabric] Add visuals for fallback when a native component isn't registered (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.628
+
+Sat, 11 Mar 2023 06:14:57 GMT
+
+### Changes
+
+- Fix build from merge conflict (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.627
+
+Fri, 10 Mar 2023 06:14:16 GMT
+
+### Changes
+
+- [Fabric] Clean up a bunch of include redirect files (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] TextInput shouldn't block the tab loop (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Add implementation of ScrollView.scrollto (30809111+acoates-ms@users.noreply.github.com)
+- Add submitBehavior prop to Paper VM for TextInput (helenistic@meta.com)
+- [Fabric] Move Windows specific properties out of ViewProps into HostPlatformViewProps (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.626
+
+Wed, 08 Mar 2023 06:14:10 GMT
+
+### Changes
+
+- Fix API Gaps (34109996+chiaramooney@users.noreply.github.com)
+- [Fabric] Add support for backgroundColor on text and text fragments (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Add support for backface visibility (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Fix minor border issue (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] add support for enableFocusRing (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.625
+
+Tue, 07 Mar 2023 06:13:31 GMT
+
+### Changes
+
+- [Fabric] Adds text measure caching. Add support for lineHeight, letterSpacing, maximumNumberOfLines and textTransform (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.624
+
+Sat, 04 Mar 2023 06:13:14 GMT
+
+### Changes
+
+- [Fabric] Conditionally exclude fabric files from Shared.vcxitems (email not defined)
+
+## 0.0.0-canary.623
+
+Thu, 02 Mar 2023 06:14:24 GMT
+
+### Changes
+
+- Resolved nits (email not defined)
+- Integrate 2/13 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.165
+- Bump @react-native-windows/codegen to v0.0.0-canary.53
+- Bump react-native-platform-override to v1.9.3
+
+## 0.0.0-canary.622
+
+Wed, 01 Mar 2023 06:13:04 GMT
+
+### Changes
+
+- Add commitid to product version of binaries (dannyvv@microsoft.com)
+
+## 0.0.0-canary.621
+
+Tue, 28 Feb 2023 06:14:14 GMT
+
+### Changes
+
+- Remove an unneeded force include from yoga/utils.cpp (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Implement onKeyUp and onKeyDown (30809111+acoates-ms@users.noreply.github.com)
+- Keyboard event's key property will now correctly switch between lower and upper case based on Shift/CapsLock state (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.620
+
+Sat, 25 Feb 2023 06:13:36 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.164
+- Bump @react-native-windows/codegen to v0.0.0-canary.52
+- Bump react-native-platform-override to v1.9.2
+
+## 0.0.0-canary.619
+
+Fri, 24 Feb 2023 06:14:52 GMT
+
+### Changes
+
+- Adds collapsable prop to Paper VM for View (erozell@outlook.com)
+- [Fabric] Implement onFocus and onBlur (30809111+acoates-ms@users.noreply.github.com)
+- Reduce some exceptions being thrown in some normal use cases (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.618
+
+Thu, 23 Feb 2023 06:13:41 GMT
+
+### Changes
+
+- [Fabric] Keyboard focus loop (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.617
 

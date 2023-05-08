@@ -3733,6 +3733,7 @@ protected:
 
 public:
   virtual std::optional<jsi::String> getColorScheme(jsi::Runtime &rt) = 0;
+  virtual void setColorScheme(jsi::Runtime &rt, jsi::String colorScheme) = 0;
   virtual void addListener(jsi::Runtime &rt, jsi::String eventName) = 0;
   virtual void removeListeners(jsi::Runtime &rt, double count) = 0;
 
@@ -3763,6 +3764,14 @@ private:
 
       return bridging::callFromJs<std::optional<jsi::String>>(
           rt, &T::getColorScheme, jsInvoker_, instance_);
+    }
+    void setColorScheme(jsi::Runtime &rt, jsi::String colorScheme) override {
+      static_assert(
+          bridging::getParameterCount(&T::setColorScheme) == 2,
+          "Expected setColorScheme(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::setColorScheme, jsInvoker_, instance_, std::move(colorScheme));
     }
     void addListener(jsi::Runtime &rt, jsi::String eventName) override {
       static_assert(
@@ -4067,50 +4076,6 @@ private:
 };
 
 
-  class JSI_EXPORT NativeDevSplitBundleLoaderCxxSpecJSI : public TurboModule {
-protected:
-  NativeDevSplitBundleLoaderCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
-
-public:
-  virtual jsi::Value loadBundle(jsi::Runtime &rt, jsi::String bundlePath) = 0;
-
-};
-
-template <typename T>
-class JSI_EXPORT NativeDevSplitBundleLoaderCxxSpec : public TurboModule {
-public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
-  }
-
-protected:
-  NativeDevSplitBundleLoaderCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("DevSplitBundleLoader", jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
-
-private:
-  class Delegate : public NativeDevSplitBundleLoaderCxxSpecJSI {
-  public:
-    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativeDevSplitBundleLoaderCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
-
-    jsi::Value loadBundle(jsi::Runtime &rt, jsi::String bundlePath) override {
-      static_assert(
-          bridging::getParameterCount(&T::loadBundle) == 2,
-          "Expected loadBundle(...) to have 2 parameters");
-
-      return bridging::callFromJs<jsi::Value>(
-          rt, &T::loadBundle, jsInvoker_, instance_, std::move(bundlePath));
-    }
-
-  private:
-    T *instance_;
-  };
-
-  Delegate delegate_;
-};
-
-
   class JSI_EXPORT NativePlatformConstantsAndroidCxxSpecJSI : public TurboModule {
 protected:
   NativePlatformConstantsAndroidCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
@@ -4323,15 +4288,70 @@ private:
 };
 
 
-  class JSI_EXPORT NativePerformanceCxxSpecJSI : public TurboModule {
+  #pragma mark - NativePerformanceCxxBaseReactNativeStartupTiming
+
+template <typename P0, typename P1, typename P2, typename P3>
+struct NativePerformanceCxxBaseReactNativeStartupTiming {
+  P0 startTime;
+  P1 endTime;
+  P2 executeJavaScriptBundleEntryPointStart;
+  P3 executeJavaScriptBundleEntryPointEnd;
+  bool operator==(const NativePerformanceCxxBaseReactNativeStartupTiming &other) const {
+    return startTime == other.startTime && endTime == other.endTime && executeJavaScriptBundleEntryPointStart == other.executeJavaScriptBundleEntryPointStart && executeJavaScriptBundleEntryPointEnd == other.executeJavaScriptBundleEntryPointEnd;
+  }
+};
+
+template <typename P0, typename P1, typename P2, typename P3>
+struct NativePerformanceCxxBaseReactNativeStartupTimingBridging {
+  static NativePerformanceCxxBaseReactNativeStartupTiming<P0, P1, P2, P3> fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    NativePerformanceCxxBaseReactNativeStartupTiming<P0, P1, P2, P3> result{
+      bridging::fromJs<P0>(rt, value.getProperty(rt, "startTime"), jsInvoker),
+      bridging::fromJs<P1>(rt, value.getProperty(rt, "endTime"), jsInvoker),
+      bridging::fromJs<P2>(rt, value.getProperty(rt, "executeJavaScriptBundleEntryPointStart"), jsInvoker),
+      bridging::fromJs<P3>(rt, value.getProperty(rt, "executeJavaScriptBundleEntryPointEnd"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static double startTimeToJs(jsi::Runtime &rt, P0 value) {
+    return bridging::toJs(rt, value);
+  }
+  static double endTimeToJs(jsi::Runtime &rt, P1 value) {
+    return bridging::toJs(rt, value);
+  }
+  static double executeJavaScriptBundleEntryPointStartToJs(jsi::Runtime &rt, P2 value) {
+    return bridging::toJs(rt, value);
+  }
+  static double executeJavaScriptBundleEntryPointEndToJs(jsi::Runtime &rt, P3 value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+    jsi::Runtime &rt,
+    const NativePerformanceCxxBaseReactNativeStartupTiming<P0, P1, P2, P3> &value,
+    const std::shared_ptr<CallInvoker> &jsInvoker) {
+      auto result = facebook::jsi::Object(rt);
+          result.setProperty(rt, "startTime", bridging::toJs(rt, value.startTime, jsInvoker));
+    result.setProperty(rt, "endTime", bridging::toJs(rt, value.endTime, jsInvoker));
+    result.setProperty(rt, "executeJavaScriptBundleEntryPointStart", bridging::toJs(rt, value.executeJavaScriptBundleEntryPointStart, jsInvoker));
+    result.setProperty(rt, "executeJavaScriptBundleEntryPointEnd", bridging::toJs(rt, value.executeJavaScriptBundleEntryPointEnd, jsInvoker));
+          return result;
+        }
+      };
+
+class JSI_EXPORT NativePerformanceCxxSpecJSI : public TurboModule {
 protected:
   NativePerformanceCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
 
 public:
   virtual void mark(jsi::Runtime &rt, jsi::String name, double startTime, double duration) = 0;
-  virtual void clearMarks(jsi::Runtime &rt, std::optional<jsi::String> markName) = 0;
   virtual void measure(jsi::Runtime &rt, jsi::String name, double startTime, double endTime, std::optional<double> duration, std::optional<jsi::String> startMark, std::optional<jsi::String> endMark) = 0;
-  virtual void clearMeasures(jsi::Runtime &rt, std::optional<jsi::String> measureName) = 0;
+  virtual jsi::Object getSimpleMemoryInfo(jsi::Runtime &rt) = 0;
+  virtual jsi::Object getReactNativeStartupTiming(jsi::Runtime &rt) = 0;
 
 };
 
@@ -4361,14 +4381,6 @@ private:
       return bridging::callFromJs<void>(
           rt, &T::mark, jsInvoker_, instance_, std::move(name), std::move(startTime), std::move(duration));
     }
-    void clearMarks(jsi::Runtime &rt, std::optional<jsi::String> markName) override {
-      static_assert(
-          bridging::getParameterCount(&T::clearMarks) == 2,
-          "Expected clearMarks(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::clearMarks, jsInvoker_, instance_, std::move(markName));
-    }
     void measure(jsi::Runtime &rt, jsi::String name, double startTime, double endTime, std::optional<double> duration, std::optional<jsi::String> startMark, std::optional<jsi::String> endMark) override {
       static_assert(
           bridging::getParameterCount(&T::measure) == 7,
@@ -4377,13 +4389,21 @@ private:
       return bridging::callFromJs<void>(
           rt, &T::measure, jsInvoker_, instance_, std::move(name), std::move(startTime), std::move(endTime), std::move(duration), std::move(startMark), std::move(endMark));
     }
-    void clearMeasures(jsi::Runtime &rt, std::optional<jsi::String> measureName) override {
+    jsi::Object getSimpleMemoryInfo(jsi::Runtime &rt) override {
       static_assert(
-          bridging::getParameterCount(&T::clearMeasures) == 2,
-          "Expected clearMeasures(...) to have 2 parameters");
+          bridging::getParameterCount(&T::getSimpleMemoryInfo) == 1,
+          "Expected getSimpleMemoryInfo(...) to have 1 parameters");
 
-      return bridging::callFromJs<void>(
-          rt, &T::clearMeasures, jsInvoker_, instance_, std::move(measureName));
+      return bridging::callFromJs<jsi::Object>(
+          rt, &T::getSimpleMemoryInfo, jsInvoker_, instance_);
+    }
+    jsi::Object getReactNativeStartupTiming(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::getReactNativeStartupTiming) == 1,
+          "Expected getReactNativeStartupTiming(...) to have 1 parameters");
+
+      return bridging::callFromJs<jsi::Object>(
+          rt, &T::getReactNativeStartupTiming, jsInvoker_, instance_);
     }
 
   private:
@@ -4522,10 +4542,16 @@ protected:
   NativePerformanceObserverCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
 
 public:
-  virtual void startReporting(jsi::Runtime &rt, jsi::String entryType) = 0;
-  virtual void stopReporting(jsi::Runtime &rt, jsi::String entryType) = 0;
+  virtual void startReporting(jsi::Runtime &rt, double entryType) = 0;
+  virtual void stopReporting(jsi::Runtime &rt, double entryType) = 0;
+  virtual void setIsBuffered(jsi::Runtime &rt, jsi::Array entryTypes, bool isBuffered) = 0;
   virtual jsi::Object popPendingEntries(jsi::Runtime &rt) = 0;
   virtual void setOnPerformanceEntryCallback(jsi::Runtime &rt, std::optional<jsi::Function> callback) = 0;
+  virtual void logRawEntry(jsi::Runtime &rt, jsi::Object entry) = 0;
+  virtual jsi::Array getEventCounts(jsi::Runtime &rt) = 0;
+  virtual void setDurationThreshold(jsi::Runtime &rt, double entryType, double durationThreshold) = 0;
+  virtual void clearEntries(jsi::Runtime &rt, double entryType, std::optional<jsi::String> entryName) = 0;
+  virtual jsi::Array getEntries(jsi::Runtime &rt, std::optional<double> entryType, std::optional<jsi::String> entryName) = 0;
 
 };
 
@@ -4547,7 +4573,7 @@ private:
     Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
       NativePerformanceObserverCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
 
-    void startReporting(jsi::Runtime &rt, jsi::String entryType) override {
+    void startReporting(jsi::Runtime &rt, double entryType) override {
       static_assert(
           bridging::getParameterCount(&T::startReporting) == 2,
           "Expected startReporting(...) to have 2 parameters");
@@ -4555,13 +4581,21 @@ private:
       return bridging::callFromJs<void>(
           rt, &T::startReporting, jsInvoker_, instance_, std::move(entryType));
     }
-    void stopReporting(jsi::Runtime &rt, jsi::String entryType) override {
+    void stopReporting(jsi::Runtime &rt, double entryType) override {
       static_assert(
           bridging::getParameterCount(&T::stopReporting) == 2,
           "Expected stopReporting(...) to have 2 parameters");
 
       return bridging::callFromJs<void>(
           rt, &T::stopReporting, jsInvoker_, instance_, std::move(entryType));
+    }
+    void setIsBuffered(jsi::Runtime &rt, jsi::Array entryTypes, bool isBuffered) override {
+      static_assert(
+          bridging::getParameterCount(&T::setIsBuffered) == 3,
+          "Expected setIsBuffered(...) to have 3 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::setIsBuffered, jsInvoker_, instance_, std::move(entryTypes), std::move(isBuffered));
     }
     jsi::Object popPendingEntries(jsi::Runtime &rt) override {
       static_assert(
@@ -4578,6 +4612,46 @@ private:
 
       return bridging::callFromJs<void>(
           rt, &T::setOnPerformanceEntryCallback, jsInvoker_, instance_, std::move(callback));
+    }
+    void logRawEntry(jsi::Runtime &rt, jsi::Object entry) override {
+      static_assert(
+          bridging::getParameterCount(&T::logRawEntry) == 2,
+          "Expected logRawEntry(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::logRawEntry, jsInvoker_, instance_, std::move(entry));
+    }
+    jsi::Array getEventCounts(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::getEventCounts) == 1,
+          "Expected getEventCounts(...) to have 1 parameters");
+
+      return bridging::callFromJs<jsi::Array>(
+          rt, &T::getEventCounts, jsInvoker_, instance_);
+    }
+    void setDurationThreshold(jsi::Runtime &rt, double entryType, double durationThreshold) override {
+      static_assert(
+          bridging::getParameterCount(&T::setDurationThreshold) == 3,
+          "Expected setDurationThreshold(...) to have 3 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::setDurationThreshold, jsInvoker_, instance_, std::move(entryType), std::move(durationThreshold));
+    }
+    void clearEntries(jsi::Runtime &rt, double entryType, std::optional<jsi::String> entryName) override {
+      static_assert(
+          bridging::getParameterCount(&T::clearEntries) == 3,
+          "Expected clearEntries(...) to have 3 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::clearEntries, jsInvoker_, instance_, std::move(entryType), std::move(entryName));
+    }
+    jsi::Array getEntries(jsi::Runtime &rt, std::optional<double> entryType, std::optional<jsi::String> entryName) override {
+      static_assert(
+          bridging::getParameterCount(&T::getEntries) == 3,
+          "Expected getEntries(...) to have 3 parameters");
+
+      return bridging::callFromJs<jsi::Array>(
+          rt, &T::getEntries, jsInvoker_, instance_, std::move(entryType), std::move(entryName));
     }
 
   private:
@@ -6033,6 +6107,33 @@ private:
 };
 
 
+#pragma mark - SampleTurboModuleEnumInt
+
+enum SampleTurboModuleEnumInt { A, B };
+
+template <>
+struct Bridging<SampleTurboModuleEnumInt> {
+  static SampleTurboModuleEnumInt fromJs(jsi::Runtime &rt, const jsi::Value &rawValue, const std::shared_ptr<CallInvoker> &jsInvoker) {
+    double value = (double)rawValue.asNumber();
+    if (value == 23) {
+      return SampleTurboModuleEnumInt::A;
+    } else if (value == 42) {
+      return SampleTurboModuleEnumInt::B;
+    } else {
+      throw jsi::JSError(rt, "No appropriate enum member found for value");
+    }
+  }
+
+  static jsi::Value toJs(jsi::Runtime &rt, SampleTurboModuleEnumInt value, const std::shared_ptr<CallInvoker> &jsInvoker) {
+    if (value == SampleTurboModuleEnumInt::A) {
+      return bridging::toJs(rt, 23);
+    } else if (value == SampleTurboModuleEnumInt::B) {
+      return bridging::toJs(rt, 42);
+    } else {
+      throw jsi::JSError(rt, "No appropriate enum member found for enum value");
+    }
+  }
+};
   class JSI_EXPORT NativeSampleTurboModuleCxxSpecJSI : public TurboModule {
 protected:
   NativeSampleTurboModuleCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
@@ -6041,6 +6142,7 @@ public:
   virtual jsi::Object getConstants(jsi::Runtime &rt) = 0;
   virtual void voidFunc(jsi::Runtime &rt) = 0;
   virtual bool getBool(jsi::Runtime &rt, bool arg) = 0;
+  virtual int getEnum(jsi::Runtime &rt, int arg) = 0;
   virtual double getNumber(jsi::Runtime &rt, double arg) = 0;
   virtual jsi::String getString(jsi::Runtime &rt, jsi::String arg) = 0;
   virtual jsi::Array getArray(jsi::Runtime &rt, jsi::Array arg) = 0;
@@ -6050,6 +6152,12 @@ public:
   virtual jsi::Object getValue(jsi::Runtime &rt, double x, jsi::String y, jsi::Object z) = 0;
   virtual void getValueWithCallback(jsi::Runtime &rt, jsi::Function callback) = 0;
   virtual jsi::Value getValueWithPromise(jsi::Runtime &rt, bool error) = 0;
+  virtual void voidFuncThrows(jsi::Runtime &rt) = 0;
+  virtual jsi::Object getObjectThrows(jsi::Runtime &rt, jsi::Object arg) = 0;
+  virtual jsi::Value promiseThrows(jsi::Runtime &rt) = 0;
+  virtual void voidFuncAssert(jsi::Runtime &rt) = 0;
+  virtual jsi::Object getObjectAssert(jsi::Runtime &rt, jsi::Object arg) = 0;
+  virtual jsi::Value promiseAssert(jsi::Runtime &rt) = 0;
 
 };
 
@@ -6094,6 +6202,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::getBool, jsInvoker_, instance_, std::move(arg));
+    }
+    int getEnum(jsi::Runtime &rt, int arg) override {
+      static_assert(
+          bridging::getParameterCount(&T::getEnum) == 2,
+          "Expected getEnum(...) to have 2 parameters");
+
+      return bridging::callFromJs<int>(
+          rt, &T::getEnum, jsInvoker_, instance_, std::move(arg));
     }
     double getNumber(jsi::Runtime &rt, double arg) override {
       static_assert(
@@ -6166,6 +6282,54 @@ private:
 
       return bridging::callFromJs<jsi::Value>(
           rt, &T::getValueWithPromise, jsInvoker_, instance_, std::move(error));
+    }
+    void voidFuncThrows(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::voidFuncThrows) == 1,
+          "Expected voidFuncThrows(...) to have 1 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::voidFuncThrows, jsInvoker_, instance_);
+    }
+    jsi::Object getObjectThrows(jsi::Runtime &rt, jsi::Object arg) override {
+      static_assert(
+          bridging::getParameterCount(&T::getObjectThrows) == 2,
+          "Expected getObjectThrows(...) to have 2 parameters");
+
+      return bridging::callFromJs<jsi::Object>(
+          rt, &T::getObjectThrows, jsInvoker_, instance_, std::move(arg));
+    }
+    jsi::Value promiseThrows(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::promiseThrows) == 1,
+          "Expected promiseThrows(...) to have 1 parameters");
+
+      return bridging::callFromJs<jsi::Value>(
+          rt, &T::promiseThrows, jsInvoker_, instance_);
+    }
+    void voidFuncAssert(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::voidFuncAssert) == 1,
+          "Expected voidFuncAssert(...) to have 1 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::voidFuncAssert, jsInvoker_, instance_);
+    }
+    jsi::Object getObjectAssert(jsi::Runtime &rt, jsi::Object arg) override {
+      static_assert(
+          bridging::getParameterCount(&T::getObjectAssert) == 2,
+          "Expected getObjectAssert(...) to have 2 parameters");
+
+      return bridging::callFromJs<jsi::Object>(
+          rt, &T::getObjectAssert, jsInvoker_, instance_, std::move(arg));
+    }
+    jsi::Value promiseAssert(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::promiseAssert) == 1,
+          "Expected promiseAssert(...) to have 1 parameters");
+
+      return bridging::callFromJs<jsi::Value>(
+          rt, &T::promiseAssert, jsInvoker_, instance_);
     }
 
   private:

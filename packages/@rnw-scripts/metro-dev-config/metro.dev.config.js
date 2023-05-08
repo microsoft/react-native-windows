@@ -29,7 +29,11 @@ function makeMetroConfig(customConfig = {}) {
       customSerializer: MetroSerializer([
         DuplicateDependencies({
           // Duplicate dependencies introduced by external code
-          ignoredModules: ['react-is', 'metro-runtime'],
+          ignoredModules: [
+            'react-is',
+            'metro-runtime',
+            '@react-native/normalize-colors',
+          ],
         }),
       ]),
     },

@@ -63,20 +63,18 @@ class WindowsTextInputComponentDescriptor final : public ConcreteComponentDescri
         env->DeleteLocalRef(defaultTextInputPaddingArray);
       }
 
-      return std::make_shared<AndroidTextInputShadowNode::ConcreteState>(
-          std::make_shared<AndroidTextInputState const>(AndroidTextInputState(
-              0,
-              {},
-              {},
-              {},
-              {},
-              {},
-              ((YGValue)theme[YGEdgeStart]).value,
-              ((YGValue)theme[YGEdgeEnd]).value,
-              ((YGValue)theme[YGEdgeTop]).value,
-              ((YGValue)theme[YGEdgeBottom]).value)),
-          family);
-    }
+    return std::make_shared<AndroidTextInputShadowNode::ConcreteState>(
+        std::make_shared<AndroidTextInputState const>(AndroidTextInputState(
+            0,
+            {},
+            {},
+            {},
+            ((YGValue)theme[YGEdgeStart]).value,
+            ((YGValue)theme[YGEdgeEnd]).value,
+            ((YGValue)theme[YGEdgeTop]).value,
+            ((YGValue)theme[YGEdgeBottom]).value)),
+        family);
+  }
   */
 
  protected:

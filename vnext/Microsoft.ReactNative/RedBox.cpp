@@ -57,11 +57,9 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
         m_errorInfo(std::move(errorInfo)) {}
 
   void Dismiss() noexcept {
-#ifdef USE_FABRIC
     if (m_popup) {
       m_popup.IsOpen(false);
     }
-#endif // USE_FABRIC
   }
 
   void Reload() noexcept {
@@ -489,7 +487,7 @@ struct DefaultRedBoxHandler final : public std::enable_shared_from_this<DefaultR
   }
 
   virtual void showNewError(ErrorInfo &&info, ErrorType /*exceptionType*/) override {
-    // Check if the rebox has been suppressed
+    // Check if the redbox has been suppressed
     if (!info.ExtraData.isNull()) {
       auto iterator = info.ExtraData.find("suppressRedBox");
       if (iterator != info.ExtraData.items().end()) {
