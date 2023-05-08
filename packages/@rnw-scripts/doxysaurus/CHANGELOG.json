@@ -2,6 +2,33 @@
   "name": "@rnw-scripts/doxysaurus",
   "entries": [
     {
+      "date": "Mon, 08 May 2023 17:41:04 GMT",
+      "tag": "@rnw-scripts/doxysaurus_v0.4.6",
+      "version": "0.4.6",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@rnw-scripts/doxysaurus",
+            "commit": "fe7d786b7419fafdaf864c6769ef33555548f443",
+            "comment": "Fix typos and add `cspell` configuration"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/doxysaurus",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.19",
+            "commit": "3024cc281f520af9a3d99244fa124aff233625d8"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/doxysaurus",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.8",
+            "commit": "3024cc281f520af9a3d99244fa124aff233625d8"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 25 Apr 2023 05:16:59 GMT",
       "tag": "@rnw-scripts/doxysaurus_v0.4.5",
       "version": "0.4.5",

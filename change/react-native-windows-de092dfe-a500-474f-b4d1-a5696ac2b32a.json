@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix typos and add `cspell` configuration",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
