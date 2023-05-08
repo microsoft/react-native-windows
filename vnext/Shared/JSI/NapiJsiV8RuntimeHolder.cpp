@@ -11,57 +11,75 @@ using std::unique_ptr;
 
 namespace Microsoft::JSI {
 
-struct NapiTask {
-  NapiTask(
-      napi_env env,
-      napi_ext_task_callback taskCallback,
-      void *taskData,
-      napi_finalize finalizeCallback,
-      void *finalizeHint) noexcept
-      : m_env{env},
-        m_taskCallback{taskCallback},
-        m_taskData{taskData},
-        m_finalizeCallback{finalizeCallback},
-        m_finalizeHint{finalizeHint} {}
+class NapiTask {
+ public:
+  NapiTask(void *task, v8_task_run_cb onTaskRun, v8_task_release_cb onTaskRelease)
+      : task_(task), onTaskRun_(onTaskRun), onTaskRelease_(onTaskRelease) {}
 
-  NapiTask(const NapiTask &) = delete;
-  NapiTask &operator=(const NapiTask &) = delete;
+  NapiTask(NapiTask &&other)
+      : task_(std::exchange(other.task_, nullptr)),
+        onTaskRun_(std::exchange(other.onTaskRun_, nullptr)),
+        onTaskRelease_(std::exchange(other.onTaskRelease_, nullptr)) {}
+
+  NapiTask &operator=(NapiTask &&other) {
+    if (this != &other) {
+      NapiTask taskToDelete(std::move(*this));
+      task_ = std::exchange(other.task_, nullptr);
+      onTaskRun_ = std::exchange(other.onTaskRun_, nullptr);
+      onTaskRelease_ = std::exchange(other.onTaskRelease_, nullptr);
+    }
+    return *this;
+  }
+
+  NapiTask(const NapiTask &other) = delete;
+  NapiTask &operator=(const NapiTask &other) = delete;
 
   ~NapiTask() {
-    if (m_finalizeCallback) {
-      m_finalizeCallback(m_env, m_taskData, m_finalizeHint);
+    if (task_ != nullptr) {
+      onTaskRelease_(task_);
     }
   }
 
-  void operator()() noexcept {
-    m_taskCallback(m_env, m_taskData);
+  void Run() const {
+    if (task_ != nullptr) {
+      onTaskRun_(task_);
+    }
   }
 
  private:
-  napi_env m_env;
-  napi_ext_task_callback m_taskCallback;
-  void *m_taskData;
-  napi_finalize m_finalizeCallback;
-  void *m_finalizeHint;
+  void *task_;
+  v8_task_run_cb onTaskRun_;
+  v8_task_release_cb onTaskRelease_;
 };
 
-// See napi_ext_schedule_task_callback definition.
-/*static*/ void NapiJsiV8RuntimeHolder::ScheduleTaskCallback(
-    napi_env env,
-    napi_ext_task_callback taskCallback,
-    void *taskData,
-    uint32_t /*delayInMsec*/,
-    napi_finalize finalizeCallback,
-    void *finalizeHint) {
-  NapiJsiV8RuntimeHolder *holder;
-  auto result = napi_get_instance_data(env, (void **)&holder);
-  if (result != napi_status::napi_ok) {
-    std::terminate();
+class NapiTaskRunner {
+ public:
+  NapiTaskRunner(std::shared_ptr<facebook::react::MessageQueueThread> jsQueue) : m_jsQueue(std::move(jsQueue)) {}
+
+  static v8_task_runner_t Create(std::shared_ptr<facebook::react::MessageQueueThread> jsQueue) {
+    NapiTaskRunner *taskRunner = new NapiTaskRunner(std::move(jsQueue));
+    return v8_create_task_runner(reinterpret_cast<void *>(taskRunner), &PostTask, &Release);
   }
 
-  auto task = std::make_shared<NapiTask>(env, taskCallback, taskData, finalizeCallback, finalizeHint);
-  holder->m_jsQueue->runOnQueue([task = std::move(task)]() { task->operator()(); });
-}
+ private:
+  static void __cdecl PostTask(
+      void *taskRunner,
+      void *task,
+      v8_task_run_cb onTaskRun,
+      v8_task_release_cb onTaskRelease) {
+    auto napiTask = std::make_shared<NapiTask>(task, onTaskRun, onTaskRelease);
+    reinterpret_cast<NapiTaskRunner *>(taskRunner)->m_jsQueue->runOnQueue([napiTask = std::move(napiTask)] {
+      napiTask->Run();
+    });
+  }
+
+  static void __cdecl Release(void *taskRunner) {
+    delete reinterpret_cast<NapiTaskRunner *>(taskRunner);
+  }
+
+ private:
+  std::shared_ptr<facebook::react::MessageQueueThread> m_jsQueue;
+};
 
 NapiJsiV8RuntimeHolder::NapiJsiV8RuntimeHolder(
     shared_ptr<DevSettings> devSettings,
@@ -85,7 +103,7 @@ void NapiJsiV8RuntimeHolder::InitRuntime() noexcept {
   settings.flags.enable_inspector = m_useDirectDebugger;
   settings.flags.wait_for_debugger = m_debuggerBreakOnNextLine;
   //  TODO: args.debuggerRuntimeName = debuggerRuntimeName_;
-  settings.foreground_scheduler = &NapiJsiV8RuntimeHolder::ScheduleTaskCallback;
+  settings.foreground_task_runner = NapiTaskRunner::Create(m_jsQueue);
 
   napi_ext_script_cache scriptCache = InitScriptCache(std::move(m_preparedScriptStore));
   settings.script_cache = &scriptCache;
