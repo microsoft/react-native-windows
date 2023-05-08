@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/cli",
-  "version": "0.71.1",
+  "version": "0.71.5",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "repository": {
@@ -17,12 +17,10 @@
     "watch": "rnw-scripts watch"
   },
   "dependencies": {
-    "@react-native-windows/codegen": "0.71.1",
-    "@react-native-windows/fs": "0.71.1",
-    "@react-native-windows/package-utils": "0.71.1",
-    "@react-native-windows/telemetry": "0.71.1",
-    "@typescript-eslint/eslint-plugin": "^5.30.5",
-    "@typescript-eslint/parser": "^5.30.5",
+    "@react-native-windows/codegen": "0.71.3",
+    "@react-native-windows/fs": "0.71.2",
+    "@react-native-windows/package-utils": "0.71.2",
+    "@react-native-windows/telemetry": "0.71.2",
     "@xmldom/xmldom": "^0.7.7",
     "chalk": "^4.1.0",
     "cli-spinners": "^2.2.0",
@@ -42,7 +40,7 @@
     "xpath": "^0.0.27"
   },
   "devDependencies": {
-    "@react-native-community/cli-doctor": "10.0.0",
+    "@react-native-community/cli-doctor": "^10.2.0",
     "@react-native-community/cli-types": "10.0.0",
     "@rnw-scripts/eslint-config": "1.1.14",
     "@rnw-scripts/jest-unittest-config": "1.4.2",
@@ -60,6 +58,8 @@
     "@types/uuid": "^8.3.0",
     "@types/xml-parser": "^1.2.29",
     "@types/xmldom": "^0.1.30",
+    "@typescript-eslint/eslint-plugin": "^5.30.5",
+    "@typescript-eslint/parser": "^5.30.5",
     "babel-jest": "^29.3.0",
     "eslint": "^8.19.0",
     "jest": "^29.2.1",

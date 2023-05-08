@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.71.0",
+  "baseVersion": "0.71.6",
   "overrides": [
     {
       "type": "derived",
@@ -114,14 +114,14 @@
       "file": "src/Libraries/Components/TextInput/Tests/TextInputTest.tsx"
     },
     {
-      "type": "platform",
-      "file": "src/Libraries/Components/TextInput/TextInput.Types.win32.ts"
-    },
-    {
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "5de06cf785aabebe8a0bb7331389a5320d7f38c0"
+      "baseHash": "b59411676fb68eb715dc9b33991accf7f5ec4bbe"
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/Components/TextInput/Win32TextInputNativeComponent.js"
     },
     {
       "type": "patch",
@@ -191,7 +191,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/View/ViewAccessibility.win32.d.ts",
       "baseFile": "Libraries/Components/View/ViewAccessibility.d.ts",
-      "baseHash": "fb6095450277c96f033749633af10b42a184e07c"
+      "baseHash": "a9a7bfcff4be91484ad8bb17680c4ec225a28f0e"
     },
     {
       "type": "derived",

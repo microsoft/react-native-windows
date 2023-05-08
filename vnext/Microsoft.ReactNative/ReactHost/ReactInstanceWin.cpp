@@ -424,6 +424,7 @@ void ReactInstanceWin::Initialize() noexcept {
 
           devSettings->waitingForDebuggerCallback = GetWaitingForDebuggerCallback();
           devSettings->debuggerAttachCallback = GetDebuggerAttachCallback();
+          devSettings->enableDefaultCrashHandler = m_options.EnableDefaultCrashHandler();
 
 #ifndef CORE_ABI
           devSettings->showDevMenuCallback = [weakThis]() noexcept {

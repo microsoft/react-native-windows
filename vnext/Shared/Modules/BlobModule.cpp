@@ -12,6 +12,9 @@
 // React Native
 #include <cxxreact/JsArgumentHelpers.h>
 
+// Boost Libriaries
+#include <boost/uuid/uuid_io.hpp>
+
 // Windows API
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Security.Cryptography.h>
@@ -33,7 +36,6 @@ using winrt::Microsoft::ReactNative::IReactPropertyBag;
 using winrt::Microsoft::ReactNative::ReactNonAbiValue;
 using winrt::Microsoft::ReactNative::ReactPropertyBag;
 using winrt::Microsoft::ReactNative::ReactPropertyId;
-using winrt::Windows::Foundation::GuidHelper;
 using winrt::Windows::Foundation::IInspectable;
 using winrt::Windows::Foundation::Uri;
 using winrt::Windows::Security::Cryptography::CryptographicBuffer;
@@ -249,8 +251,7 @@ void MemoryBlobPersistor::StoreMessage(vector<uint8_t> &&message, string &&blobI
 }
 
 string MemoryBlobPersistor::StoreMessage(vector<uint8_t> &&message) noexcept {
-  // substr(1, 36) strips curly braces from a GUID.
-  auto blobId = winrt::to_string(winrt::to_hstring(GuidHelper::CreateNewGuid())).substr(1, 36);
+  auto blobId = boost::uuids::to_string(m_guidGenerator());
 
   scoped_lock lock{m_mutex};
   m_blobs.insert_or_assign(blobId, std::move(message));

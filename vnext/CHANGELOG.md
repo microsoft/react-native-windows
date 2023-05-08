@@ -1,8 +1,89 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 13 Feb 2023 16:16:02 GMT and should not be manually modified.
+This log was last generated on Thu, 04 May 2023 05:17:21 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.10
+
+Thu, 04 May 2023 05:17:21 GMT
+
+### Patches
+
+- Avoid having to launch PowerShell for every react-native config query (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.71.5
+
+## 0.71.9
+
+Mon, 01 May 2023 20:57:17 GMT
+
+### Patches
+
+- Minor bump of folly to bring in clang fix (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.71.8
+
+Tue, 25 Apr 2023 23:09:17 GMT
+
+### Patches
+
+- Update V8 version to be one with matching JSI version (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.71.7
+
+Mon, 24 Apr 2023 15:13:33 GMT
+
+### Patches
+
+- Use case-insensitive comparison for CORS preflight responses (#11511) (dev@rocha.red)
+
+## 0.71.6
+
+Thu, 13 Apr 2023 20:50:34 GMT
+
+### Patches
+
+- Use Boost GUID generator (#11470) (julio.rocha@microsoft.com)
+- Sync dependencies with react-native 0.71.6 (4123478+tido64@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.71.4
+- Bump @react-native-windows/codegen to v0.71.3
+
+## 0.71.5
+
+Mon, 10 Apr 2023 15:13:52 GMT
+
+### Patches
+
+- Ensure ReactNativeWindowsDir is set in Directory.Build.props (jthysell@microsoft.com)
+
+## 0.71.4
+
+Tue, 21 Mar 2023 20:58:57 GMT
+
+### Patches
+
+- CrashManager should also handle SIGABRT (tudor.mihai@microsoft.com)
+- Fix RedBox Dismiss (30809111+acoates-ms@users.noreply.github.com)
+- RN Peer dependency should be ^0.71 (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.71.3
+
+## 0.71.3
+
+Mon, 06 Mar 2023 16:14:41 GMT
+
+### Patches
+
+- Add commitid to product version of binaries (#11316) (dannyvv@microsoft.com)
+
+## 0.71.2
+
+Mon, 27 Feb 2023 16:15:27 GMT
+
+### Patches
+
+- sequentialize ETW init (aeulitz@microsoft.com)
+- Bump @react-native-windows/cli to v0.71.2
+- Bump @react-native-windows/codegen to v0.71.2
 
 ## 0.71.1
 

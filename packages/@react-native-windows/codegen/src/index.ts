@@ -28,7 +28,7 @@ const TypeScriptParser = require(path.resolve(
 
 const schemaValidator = require(path.resolve(
   rncodegenPath,
-  'lib/schemaValidator',
+  'lib/SchemaValidator',
 ));
 
 interface Options {

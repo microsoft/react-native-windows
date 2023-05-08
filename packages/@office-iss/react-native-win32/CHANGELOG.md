@@ -1,8 +1,34 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 13 Feb 2023 16:16:01 GMT and should not be manually modified.
+This log was last generated on Thu, 27 Apr 2023 19:11:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.5
+
+Thu, 27 Apr 2023 19:11:54 GMT
+
+### Patches
+
+- Fix ref's on ViewWin32 (enables ViewWin32.focus() calls to work again) (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.71.4
+
+Thu, 13 Apr 2023 20:50:33 GMT
+
+### Patches
+
+- Update TextInput.win32 to align with core (30809111+acoates-ms@users.noreply.github.com)
+- Sync dependencies with react-native 0.71.6 (4123478+tido64@users.noreply.github.com)
+
+## 0.71.3
+
+Tue, 21 Mar 2023 20:58:57 GMT
+
+### Patches
+
+- Align dependencies with react-native@0.71.4 (30809111+acoates-ms@users.noreply.github.com)
+- Minor TS type updates (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.71.1
 

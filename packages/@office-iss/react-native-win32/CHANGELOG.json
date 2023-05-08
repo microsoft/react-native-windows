@@ -2,6 +2,63 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 27 Apr 2023 19:11:54 GMT",
+      "tag": "@office-iss/react-native-win32_v0.71.5",
+      "version": "0.71.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "e748385ceaa8d5c642fbf3cc6b008a53c088ba55",
+            "comment": "Fix ref's on ViewWin32 (enables ViewWin32.focus() calls to work again)"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 13 Apr 2023 20:50:33 GMT",
+      "tag": "@office-iss/react-native-win32_v0.71.4",
+      "version": "0.71.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "cce2fa1d36c2c2f08c4f1cc9f51574d9fb557a08",
+            "comment": "Update TextInput.win32 to align with core"
+          },
+          {
+            "author": "4123478+tido64@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "3bf4e43731d6ea6da78fb1a4171553dfb9a7fc16",
+            "comment": "Sync dependencies with react-native 0.71.6"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 21 Mar 2023 20:58:57 GMT",
+      "tag": "@office-iss/react-native-win32_v0.71.3",
+      "version": "0.71.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "bfb3ea19d6e4083835b911a754c6b7865d7c6755",
+            "comment": "Align dependencies with react-native@0.71.4"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "d9c335fbddd0fe3f1b3646dd72cffa49ba622ca9",
+            "comment": "Minor TS type updates"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 13 Feb 2023 16:16:01 GMT",
       "tag": "@office-iss/react-native-win32_v0.71.1",
       "version": "0.71.1",
