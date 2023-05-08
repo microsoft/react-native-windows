@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 08 May 2023 17:39:57 GMT",
+      "tag": "react-native-windows_v0.69.26",
+      "version": "0.69.26",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmoroz@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a0f2846c067c651cc0ba5e9d6b76a22d0acad267",
+            "comment": "Fix V8 Node API task runner implementation"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Apr 2023 15:09:26 GMT",
       "tag": "react-native-windows_v0.69.25",
       "version": "0.69.25",

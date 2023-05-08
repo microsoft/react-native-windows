@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 24 Apr 2023 15:09:26 GMT and should not be manually modified.
+This log was last generated on Mon, 08 May 2023 17:39:57 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.69.26
+
+Mon, 08 May 2023 17:39:57 GMT
+
+### Patches
+
+- Fix V8 Node API task runner implementation (vmoroz@users.noreply.github.com)
 
 ## 0.69.25
 
