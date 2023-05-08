@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 08 May 2023 17:42:34 GMT",
+      "tag": "react-native-windows_v0.72.0-preview.3",
+      "version": "0.72.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "0783647397c3eb6c2a594b5805c5523ded61743a",
+            "comment": "Cherry Pick"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.72.0-preview.3",
+            "commit": "412f3c2036ad26d4b3013b3636940eccb26c1d3d"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 04 May 2023 20:58:55 GMT",
       "tag": "react-native-windows_v0.72.0-preview.2",
       "version": "0.72.0-preview.2",

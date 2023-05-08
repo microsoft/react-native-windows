@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 04 May 2023 20:58:55 GMT and should not be manually modified.
+This log was last generated on Mon, 08 May 2023 17:42:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.72.0-preview.3
+
+Mon, 08 May 2023 17:42:34 GMT
+
+### Changes
+
+- Cherry Pick (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.72.0-preview.3
 
 ## 0.72.0-preview.2
 
