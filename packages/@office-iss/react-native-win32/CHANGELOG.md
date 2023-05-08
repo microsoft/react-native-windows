@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 23 Jan 2023 16:11:42 GMT and should not be manually modified.
+This log was last generated on Mon, 27 Feb 2023 16:12:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.70.6
+
+Mon, 27 Feb 2023 16:12:18 GMT
+
+### Patches
+
+- Bump @react-native-windows/virtualized-list to v0.70.2
 
 ## 0.70.5
 

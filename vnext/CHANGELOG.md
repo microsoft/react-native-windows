@@ -1,8 +1,59 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 13 Feb 2023 16:11:58 GMT and should not be manually modified.
+This log was last generated on Mon, 24 Apr 2023 15:09:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.70.18
+
+Mon, 24 Apr 2023 15:09:10 GMT
+
+### Patches
+
+- Use case-insensitive comparison for CORS preflight responses (#11511) (dev@rocha.red)
+
+## 0.70.17
+
+Mon, 17 Apr 2023 15:10:15 GMT
+
+### Patches
+
+- Use Boost GUID generator (#11470) (julio.rocha@microsoft.com)
+
+## 0.70.16
+
+Mon, 10 Apr 2023 15:09:35 GMT
+
+### Patches
+
+- Ensure ReactNativeWindowsDir is set in Directory.Build.props (jthysell@microsoft.com)
+
+## 0.70.15
+
+Tue, 21 Mar 2023 20:51:40 GMT
+
+### Patches
+
+- CrashManager should also handle SIGABRT (tudor.mihai@microsoft.com)
+
+## 0.70.14
+
+Mon, 06 Mar 2023 16:10:38 GMT
+
+### Patches
+
+- Add commitid to product version of binaries (#11316) (dannyvv@microsoft.com)
+
+## 0.70.13
+
+Mon, 27 Feb 2023 16:12:18 GMT
+
+### Patches
+
+- sequentialize ETW init (aeulitz@microsoft.com)
+- Bump @react-native-windows/cli to v0.70.4
+- Bump @react-native-windows/virtualized-list to v0.70.2
+- Bump @react-native-windows/codegen to v0.70.2
 
 ## 0.70.12
 

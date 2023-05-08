@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/cli",
-  "version": "0.70.3",
+  "version": "0.70.4",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "repository": {
@@ -17,11 +17,9 @@
     "watch": "rnw-scripts watch"
   },
   "dependencies": {
-    "@react-native-windows/fs": "0.70.1",
-    "@react-native-windows/package-utils": "0.70.1",
-    "@react-native-windows/telemetry": "0.70.2",
-    "@typescript-eslint/eslint-plugin": "^5.20.0",
-    "@typescript-eslint/parser": "^5.20.0",
+    "@react-native-windows/fs": "0.70.2",
+    "@react-native-windows/package-utils": "0.70.2",
+    "@react-native-windows/telemetry": "0.70.3",
     "@xmldom/xmldom": "^0.7.7",
     "chalk": "^4.1.0",
     "cli-spinners": "^2.2.0",
@@ -58,6 +56,8 @@
     "@types/uuid": "^8.3.0",
     "@types/xml-parser": "^1.2.29",
     "@types/xmldom": "^0.1.30",
+    "@typescript-eslint/eslint-plugin": "^5.20.0",
+    "@typescript-eslint/parser": "^5.20.0",
     "babel-jest": "^26.3.0",
     "eslint": "^7.32.0",
     "jest": "^26.6.3",
