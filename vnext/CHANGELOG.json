@@ -2,6 +2,114 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 24 Apr 2023 15:09:26 GMT",
+      "tag": "react-native-windows_v0.69.25",
+      "version": "0.69.25",
+      "comments": {
+        "patch": [
+          {
+            "author": "dev@rocha.red",
+            "package": "react-native-windows",
+            "commit": "83008100b834a4423968b40e6ce165a1b916d392",
+            "comment": "Use case-insensitive comparison for CORS preflight responses (#11511)"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 17 Apr 2023 15:09:54 GMT",
+      "tag": "react-native-windows_v0.69.24",
+      "version": "0.69.24",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6139c34cc334e411fe8e538dc3044f3767d56a80",
+            "comment": "Use Boost GUID generator (#11470)"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 10 Apr 2023 15:09:14 GMT",
+      "tag": "react-native-windows_v0.69.23",
+      "version": "0.69.23",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ff868f175e9761f65c8b40434453f6b0698c22e3",
+            "comment": "Ensure ReactNativeWindowsDir is set in Directory.Build.props"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 21 Mar 2023 20:25:07 GMT",
+      "tag": "react-native-windows_v0.69.22",
+      "version": "0.69.22",
+      "comments": {
+        "patch": [
+          {
+            "author": "tudor.mihai@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "81b0dc4a3af48f114aea78419f7a9605f4d4e39c",
+            "comment": "CrashManager should also handle SIGABRT"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 06 Mar 2023 16:10:28 GMT",
+      "tag": "react-native-windows_v0.69.21",
+      "version": "0.69.21",
+      "comments": {
+        "patch": [
+          {
+            "author": "dannyvv@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "8ef868f2a3a532524b086dfb427ea314ec8988e5",
+            "comment": "Add commitid to product version of binaries (#11316)"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 27 Feb 2023 16:12:00 GMT",
+      "tag": "react-native-windows_v0.69.20",
+      "version": "0.69.20",
+      "comments": {
+        "patch": [
+          {
+            "author": "aeulitz@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "fbe0b935e89da9aa386f03482c76eea1dd13eb33",
+            "comment": "sequentialize ETW init"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.69.7",
+            "commit": "c7e8fa57a50b66627bc20f0c3206cf64b2bc0564"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.69.2",
+            "commit": "c7e8fa57a50b66627bc20f0c3206cf64b2bc0564"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.69.2",
+            "commit": "c7e8fa57a50b66627bc20f0c3206cf64b2bc0564"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 13 Feb 2023 23:52:41 GMT",
       "tag": "react-native-windows_v0.69.19",
       "version": "0.69.19",

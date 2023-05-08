@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/telemetry",
-  "version": "0.69.4",
+  "version": "0.69.5",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "typings": "lib-commonjs/index.d.ts",
@@ -18,9 +18,7 @@
     "watch": "rnw-scripts watch"
   },
   "dependencies": {
-    "@react-native-windows/fs": "0.69.1",
-    "@typescript-eslint/eslint-plugin": "^5.20.0",
-    "@typescript-eslint/parser": "^5.20.0",
+    "@react-native-windows/fs": "0.69.2",
     "@xmldom/xmldom": "^0.7.7",
     "applicationinsights": "^2.3.1",
     "ci-info": "^3.2.0",
@@ -38,6 +36,8 @@
     "@types/jest": "^26.0.20",
     "@types/node": "^14.14.22",
     "@types/semver": "^7.3.3",
+    "@typescript-eslint/eslint-plugin": "^5.20.0",
+    "@typescript-eslint/parser": "^5.20.0",
     "babel-jest": "^26.3.0",
     "eslint": "^7.32.0",
     "jest": "^26.6.3",

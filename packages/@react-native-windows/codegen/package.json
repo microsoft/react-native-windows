@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/codegen",
-  "version": "0.69.1",
+  "version": "0.69.2",
   "description": "Generators for react-native-codegen targeting react-native-windows",
   "main": "index.js",
   "repository": "https://github.com/microsoft/react-native-windows",
@@ -18,9 +18,7 @@
     "react-native-windows-codegen": "./bin.js"
   },
   "dependencies": {
-    "@react-native-windows/fs": "0.69.1",
-    "@typescript-eslint/eslint-plugin": "^5.20.0",
-    "@typescript-eslint/parser": "^5.20.0",
+    "@react-native-windows/fs": "0.69.2",
     "chalk": "^4.1.0",
     "globby": "^11.0.4",
     "mustache": "^4.0.1",
@@ -37,6 +35,8 @@
     "@types/jest": "^26.0.20",
     "@types/node": "^14.14.22",
     "@types/yargs": "16.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.20.0",
+    "@typescript-eslint/parser": "^5.20.0",
     "babel-jest": "^26.3.0",
     "eslint": "^7.32.0",
     "jest": "^26.6.3",

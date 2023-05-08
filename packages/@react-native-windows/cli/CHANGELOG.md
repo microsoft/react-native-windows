@@ -1,8 +1,19 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Mon, 13 Feb 2023 23:52:41 GMT and should not be manually modified.
+This log was last generated on Mon, 27 Feb 2023 16:11:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.69.7
+
+Mon, 27 Feb 2023 16:11:59 GMT
+
+### Patches
+
+- Move `@typescript-eslint/eslint-plugin` to `devDependencies` so they don't get installed by consumers (4123478+tido64@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.69.2
+- Bump @react-native-windows/package-utils to v0.69.2
+- Bump @react-native-windows/telemetry to v0.69.5
 
 ## 0.69.6
 
