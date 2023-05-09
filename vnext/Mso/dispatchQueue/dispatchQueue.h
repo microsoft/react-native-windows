@@ -308,7 +308,7 @@ struct IDispatchQueue : IUnknown {
 MSO_GUID(IDispatchQueueScheduler, "fd98f3c9-1343-4cbe-8758-a0322ffd253a")
 struct IDispatchQueueScheduler : IUnknown {
   //! Initializes scheduler by providing the dispatch queue service.
-  virtual void IntializeScheduler(Mso::WeakPtr<IDispatchQueueService> &&queue) noexcept = 0;
+  virtual void InitializeScheduler(Mso::WeakPtr<IDispatchQueueService> &&queue) noexcept = 0;
 
   //! True if the scheduler does processing in a serial order.
   virtual bool IsSerial() noexcept = 0;
@@ -376,8 +376,8 @@ struct IDispatchQueueService : IUnknown {
   virtual void UnlockLocalValue(void **tlsValue) noexcept = 0;
 
   //! Suspend task invocation and increment internal suspend count by one.
-  //! Note that we do not expose IsSuspeneded() method because the Suspend/Resume
-  //! methods can be called from different threads and using IsSuspeneded()
+  //! Note that we do not expose IsSuspended() method because the Suspend/Resume
+  //! methods can be called from different threads and using IsSuspended()
   //! could lead to errors because the status can be changed any time right after the check.
   virtual void Suspend() noexcept = 0;
 

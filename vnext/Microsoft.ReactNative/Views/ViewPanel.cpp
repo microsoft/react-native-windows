@@ -133,7 +133,7 @@ winrt::Size ViewPanel::MeasureOverride(winrt::Size /*availableSize*/) {
 winrt::Size ViewPanel::ArrangeOverride(winrt::Size finalSize) {
   // Sometimes we create outerBorder(i.e. when CornerRadius is true) instead of innerBorder,
   // Yoga has no notion of outerBorder when calculating the child's position, so we
-  // need to make adujustment in arrange for outerborder's thickness.
+  // need to make adjustment in arrange for outerborder's thickness.
   float outerBorderLeft = 0;
   float outerBorderTop = 0;
   if (auto outerBorder = GetOuterBorder()) {

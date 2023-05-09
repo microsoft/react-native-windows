@@ -54,7 +54,7 @@ void TextLayoutManager::GetTextLayout(
         // Recommended ratio of baseline to lineSpacing is 80%
         // https://learn.microsoft.com/en-us/windows/win32/api/dwrite/nf-dwrite-idwritetextformat-getlinespacing
         // It is possible we need to load full font metrics to calculate a better baseline value.
-        // For a particular font, you can determine what lineSpacing and baseline should be by examing a
+        // For a particular font, you can determine what lineSpacing and baseline should be by examining a
         // DWRITE_FONT_METRICS method available from the GetMetrics method of IDWriteFont or IDWriteFontFace. For normal
         // behavior, you'd set lineSpacing to the sum of ascent, descent and lineGap (adjusted for the em size, of
         // course), and baseline to the ascent value.

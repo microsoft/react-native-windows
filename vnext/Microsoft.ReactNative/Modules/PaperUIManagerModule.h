@@ -37,7 +37,7 @@ REACT_MODULE(UIManager)
 struct UIManager final {
   // TODO:
   // Spec incorrectly reports commandID as a number, but its actually a number | string..
-  // There is also other issues to catch up, so dont use the spec for now
+  // There is also other issues to catch up, so don't use the spec for now
   // using ModuleSpec = ReactNativeSpecs::UIManagerSpec;
 
   UIManager();

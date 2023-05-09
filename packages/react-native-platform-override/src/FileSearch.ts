@@ -30,7 +30,7 @@ export async function findManifest(cwd?: string): Promise<string> {
 }
 
 /**
- * Enumerate the override manifests reachable from CWD, prefering the local
+ * Enumerate the override manifests reachable from CWD, preferring the local
  * package if run within a package with an override manifest, otherwise
  * searching for packages in a monorepo
  */
@@ -53,7 +53,7 @@ export async function findAllManifests(): Promise<string[]> {
 }
 
 /**
- * Seatch for the package.json for this package (react-native-platform-override)
+ * Search for the package.json for this package (react-native-platform-override)
  */
 export async function findThisPackage(): Promise<string> {
   const thisPackagePath = await findFileAbove(__dirname, 'package.json');

@@ -184,7 +184,7 @@ export default class Manifest {
   }
 
   /**
-   * Returns the overrides in the manfest
+   * Returns the overrides in the manifest
    */
   listOverrides(): Override[] {
     return _.clone(this.overrides);

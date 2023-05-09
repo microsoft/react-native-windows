@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/format-files
 
-This log was last generated on Tue, 25 Apr 2023 05:17:00 GMT and should not be manually modified.
+This log was last generated on Mon, 08 May 2023 17:41:06 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.10
+
+Mon, 08 May 2023 17:41:06 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.3.8
 
 ## 1.1.9
 

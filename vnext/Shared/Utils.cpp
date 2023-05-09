@@ -99,7 +99,7 @@ string Url::Target() {
 } // namespace Microsoft::React
 
 // Folly/folly/SafeAssert.cpp brings in a bunch of file APIs that we otherwise
-// dont need And we probably want to look at some other functionality for
+// don't need And we probably want to look at some other functionality for
 // reporting errors at some point anyway.  For now, just stub them out.
 namespace folly::detail {
 

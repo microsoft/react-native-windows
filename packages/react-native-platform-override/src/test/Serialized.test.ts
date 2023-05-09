@@ -5,6 +5,8 @@
  * @format
  */
 
+// cspell:ignoreRegExp /baseHash: '\w+'/
+
 import * as Serialized from '../Serialized';
 
 test('Empty Manifest Invalid', () => {

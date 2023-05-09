@@ -685,7 +685,7 @@ void WindowsTextInputComponentView::updateProps(
     if (newTextInputProps.autoCapitalize == "characters") {
       m_element.CharacterCasing(xaml::Controls::CharacterCasing::Upper);
     } else { // anything else turns off autoCap (should be "None" but
-             // we don't support "words"/"senetences" yet)
+             // we don't support "words"/"sentences" yet)
       m_element.CharacterCasing(xaml::Controls::CharacterCasing::Normal);
     }
   }

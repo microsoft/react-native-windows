@@ -12,7 +12,7 @@
 // React Native
 #include <cxxreact/JsArgumentHelpers.h>
 
-// Boost Libriaries
+// Boost Libraries
 #include <boost/uuid/uuid_io.hpp>
 
 // Windows API

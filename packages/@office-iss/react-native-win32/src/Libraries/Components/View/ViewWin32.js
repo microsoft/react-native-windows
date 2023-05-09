@@ -72,7 +72,7 @@ const ViewWin32: React.AbstractComponent<
       ) {
         warnOnce(
           'accessibilityDescribedByRef',
-          'accessibilityDescribedBy should be specfied as a string matching the nativeID of the target component.  Support of specifying accessibilityDescribedBy using a ref is deprecated and will be removed in a future release',
+          'accessibilityDescribedBy should be specified as a string matching the nativeID of the target component.  Support of specifying accessibilityDescribedBy using a ref is deprecated and will be removed in a future release',
         );
         // $FlowFixMe[incompatible-use] - Using accessibilityDescribedBy as Ref for backcompat, not typed
         // $FlowFixMe[prop-missing]
@@ -90,7 +90,7 @@ const ViewWin32: React.AbstractComponent<
       ) {
         warnOnce(
           'accessibilityControlsRef',
-          'accessibilityControls should be specfied as a string matching the nativeID of the target component.  Support of specifying accessibilityControls using a ref is deprecated and will be removed in a future release',
+          'accessibilityControls should be specified as a string matching the nativeID of the target component.  Support of specifying accessibilityControls using a ref is deprecated and will be removed in a future release',
         );
         // $FlowFixMe[incompatible-use] - Using accessibilityControls as Ref for backcompat, not typed
         // $FlowFixMe[prop-missing]

@@ -372,7 +372,7 @@ async function printValidationErrors(errors: ValidationError[]) {
 }
 
 /**
- * Print validation errors of a speccific type
+ * Print validation errors of a specific type
  */
 function printErrorType(
   type: ValidationError['type'],

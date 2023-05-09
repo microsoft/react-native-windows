@@ -34,7 +34,7 @@ struct Color {
 /*
  * On Android, a color can be represented as 32 bits integer, so there is no
  * need to instantiate complex color objects and then pass them as shared
- * pointers. Hense instead of using shared_ptr, we use a simple wrapper class
+ * pointers. Hence instead of using shared_ptr, we use a simple wrapper class
  * which provides a pointer-like interface.
  */
 class SharedColor {

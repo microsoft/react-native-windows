@@ -55,7 +55,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
     private ParameterSyntax GetPackageBuilderArgument()
     {
       // generates:
-      //  IReactPackaBuilder ReactNativeNames.PackageBuilder
+      //  IReactPackageBuilder ReactNativeNames.PackageBuilder
       return Parameter(ReactNativeNames.PackageBuilderId)
         .WithType(ReactTypes.IReactPackageBuilder.ToTypeSyntax());
     }

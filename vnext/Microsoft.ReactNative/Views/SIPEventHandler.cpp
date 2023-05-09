@@ -19,7 +19,7 @@ using namespace xaml::Media;
 namespace Microsoft::ReactNative {
 
 SIPEventHandler::SIPEventHandler(const Mso::React::IReactContext &context)
-    : m_context(&context), m_fireKeyboradEvents(false), m_finalRect(winrt::RectHelper::Empty()){};
+    : m_context(&context), m_fireKeyboardEvents(false), m_finalRect(winrt::RectHelper::Empty()){};
 
 SIPEventHandler::~SIPEventHandler() {
   m_occlusionsChanged_revoker = {};
@@ -29,7 +29,7 @@ SIPEventHandler::~SIPEventHandler() {
 // TryShow and TryHide works on >= RS5
 
 void SIPEventHandler::AttachView(XamlView xamlView, bool fireKeyboardEvents) {
-  m_fireKeyboradEvents = fireKeyboardEvents;
+  m_fireKeyboardEvents = fireKeyboardEvents;
   // hookup CoreInputView only after element is in the tree
   m_view = winrt::make_weak(xamlView);
   if (winrt::VisualTreeHelper::GetParent(xamlView)) {
@@ -66,7 +66,7 @@ void SIPEventHandler::InitializeCoreInputView() {
             if (!e.Handled()) {
               bool wasShowing = m_isShowing;
               m_isShowing = !IsOcclusionsEmpty(e.Occlusions());
-              if (wasShowing != m_isShowing && m_fireKeyboradEvents) {
+              if (wasShowing != m_isShowing && m_fireKeyboardEvents) {
                 if (!m_isShowing) {
                   folly::dynamic params = folly::dynamic::object("screenY", 0)("screenX", 0)("width", 0)("height", 0);
                   SendEvent("keyboardDidHide", std::move(params));
@@ -85,14 +85,14 @@ void SIPEventHandler::InitializeCoreInputView() {
 }
 /*
 void SIPEventHandler::TryShow() {
-if (IsRS5OrHigher() && m_coreInputView && !m_isShowing) { // CoreInputView.TryShow is only avaliable after RS5
+if (IsRS5OrHigher() && m_coreInputView && !m_isShowing) { // CoreInputView.TryShow is only available after RS5
   m_coreInputView.TryShow();
 }
 }
 */
 
 void SIPEventHandler::TryHide() {
-  if (IsRS5OrHigher() && m_coreInputView && m_isShowing) { // CoreInputView.TryHide is only avaliable after RS5
+  if (IsRS5OrHigher() && m_coreInputView && m_isShowing) { // CoreInputView.TryHide is only available after RS5
     m_coreInputView.TryHide();
   }
 }

@@ -106,12 +106,12 @@ export async function enumerateRepoPackages(
   pred: (pkg: NpmPackage) => Promise<boolean> = async () => true,
 ): Promise<WritableNpmPackage[]> {
   const repoRoot = await findRepoRoot();
-  const allPackges = getMonorepoPackages(repoRoot).map(
+  const allPackages = getMonorepoPackages(repoRoot).map(
     pkg => new WritableNpmPackage(pkg.location, pkg.package),
   );
 
   const filteredPackages: WritableNpmPackage[] = [];
-  for (const pkg of allPackges) {
+  for (const pkg of allPackages) {
     if (await pred(pkg)) {
       filteredPackages.push(pkg);
     }
@@ -130,11 +130,11 @@ export function enumerateRepoPackagesSync(
   pred: (pkg: NpmPackage) => boolean = () => true,
 ): WritableNpmPackage[] {
   const repoRoot = findRepoRoot.sync();
-  const allPackges = getMonorepoPackages(repoRoot).map(
+  const allPackages = getMonorepoPackages(repoRoot).map(
     pkg => new WritableNpmPackage(pkg.location, pkg.package),
   );
 
-  return allPackges.filter(pred);
+  return allPackages.filter(pred);
 }
 
 /**

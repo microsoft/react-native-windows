@@ -9,7 +9,7 @@ import asyncMethods, {AsyncMethods} from './asyncMethods';
 import syncMethods, {SyncMethods} from './syncMethods';
 import fs from 'graceful-fs';
 
-export interface ReactBativeWindowsFs extends AsyncMethods, SyncMethods {
+export interface ReactNativeWindowsFs extends AsyncMethods, SyncMethods {
   constants: typeof fs.constants;
 
   /**
@@ -19,7 +19,7 @@ export interface ReactBativeWindowsFs extends AsyncMethods, SyncMethods {
   renameSync(oldPath: fs.PathLike, newPath: fs.PathLike): void;
 }
 
-const rnwFs: ReactBativeWindowsFs = {
+const rnwFs: ReactNativeWindowsFs = {
   constants: fs.constants,
   ...asyncMethods,
   ...syncMethods,

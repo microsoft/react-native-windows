@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/just-task
 
-This log was last generated on Tue, 25 Apr 2023 05:17:01 GMT and should not be manually modified.
+This log was last generated on Mon, 08 May 2023 17:41:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.3.8
+
+Mon, 08 May 2023 17:41:05 GMT
+
+### Patches
+
+- Fix typos and add `cspell` configuration (jthysell@microsoft.com)
 
 ## 2.3.7
 

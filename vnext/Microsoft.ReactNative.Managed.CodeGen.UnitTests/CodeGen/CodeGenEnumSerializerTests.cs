@@ -20,7 +20,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests.CodeGen
         {
         }
         ",
-        (codeGen, symbol) => { return codeGen.CreateEnumSerializers(new[] {symbol}); }
+        (codeGen, symbol) => { return codeGen.CreateEnumSerializers(new[] { symbol }); }
       );
     }
 
@@ -63,7 +63,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests.CodeGen
     }
 
     [TestMethod]
-    public void DifferntBaseType()
+    public void DifferentBaseType()
     {
       TestCodeGen<INamedTypeSymbol>(@"
         [Flags]

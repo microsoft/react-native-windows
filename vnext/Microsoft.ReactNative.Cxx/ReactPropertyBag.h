@@ -48,7 +48,7 @@
 // In case if we do not have a requirement to pass values across the DLL/EXE boundary,
 // we can use the ReactNonAbiValue<T> wrapper to store non-ABI safe values.
 // The type ReactNonAbiValue<T> is a smart pointer similar to winrt::com_ptr
-// or winrt::Windows::Foundation::IInspactable. It is treated as IInspectable type and
+// or winrt::Windows::Foundation::IInspectable. It is treated as IInspectable type and
 // **is not** wrapped in std::optional. It can be casted to bool to check if it is null.
 //
 // For example, we can define a property to use in our DLL or EXE to store std::string:

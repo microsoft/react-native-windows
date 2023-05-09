@@ -20,7 +20,7 @@ export type HashOpts = {
 };
 
 /**
- * Normalize content according to insensitivty rules
+ * Normalize content according to insensitivity rules
  */
 function normalizeContent(
   content: string | Buffer,

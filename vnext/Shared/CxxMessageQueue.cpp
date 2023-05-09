@@ -223,7 +223,7 @@ class CxxMessageQueue::QueueRunner {
 CxxMessageQueue::CxxMessageQueue() : qr_(new QueueRunner()) {}
 
 CxxMessageQueue::~CxxMessageQueue() {
-  // TODO(cjhopman): Add detach() so that the queue doesn't have to be
+  // TODO(@cjhopman): Add detach() so that the queue doesn't have to be
   // explicitly stopped.
   if (!qr_->isStopped()) {
     LOG(FATAL) << "Queue not stopped.";

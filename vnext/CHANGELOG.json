@@ -2,6 +2,69 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 08 May 2023 17:41:02 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.650",
+      "version": "0.0.0-canary.650",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "657672e5ab8a3d8658822fb41c8645e643f155f5",
+            "comment": "Fix Secure Supply Chain compliance issues"
+          },
+          {
+            "author": "26607885+chrisglein@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "f8923be22e6bfa105bd6f57e5bb26b5d94666758",
+            "comment": "Borders should show if mixed widths but not colors They were checking if the color was variable per side but assuming width wouldn't be. Fixes #11549"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "fe7d786b7419fafdaf864c6769ef33555548f443",
+            "comment": "Fix typos and add `cspell` configuration"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "577784ee6ad8fc541cd0faef9310e84aa0964a38",
+            "comment": "Improve Chocolatey detection in rnw-dependencies.ps1"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "3515e2939ca14800a381175e4f304d84e4489f8c",
+            "comment": "Avoid having to launch PowerShell for every react-native config query"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.169",
+            "commit": "3024cc281f520af9a3d99244fa124aff233625d8"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.57",
+            "commit": "3024cc281f520af9a3d99244fa124aff233625d8"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.8",
+            "commit": "3024cc281f520af9a3d99244fa124aff233625d8"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.9.6",
+            "commit": "3024cc281f520af9a3d99244fa124aff233625d8"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 03 May 2023 19:30:16 GMT",
       "tag": "react-native-windows_v0.0.0-canary.649",
       "version": "0.0.0-canary.649",

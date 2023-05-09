@@ -61,6 +61,6 @@ export function applyTemplateRules(text: string, rules: TemplateRules): string {
     },
   );
 
-  // return transformed text excpet for the EOL added by leading pipe
+  // return transformed text except for the EOL added by leading pipe
   return startsWithPipe ? transformed.substr(rules.EOL.length) : transformed;
 }

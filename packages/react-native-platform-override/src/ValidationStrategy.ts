@@ -175,7 +175,7 @@ export const ValidationStrategies = {
       }
 
       // There can be whitespace differences from merges that lead to
-      // semantically indentical files. Do a whitespace insensitive compare to
+      // semantically identical files. Do a whitespace insensitive compare to
       // determine if there is a difference.
       const hashOpts: HashOpts = {insensitivity: 'whitespace'};
 

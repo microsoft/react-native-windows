@@ -8,8 +8,8 @@
 namespace facebook {
 namespace jsi {
 
-// Integer type as it's persist friently.
-using ScriptVersion_t = uint64_t; // It shouldbe std::optional<uint64_t> once we have c++17 available everywhere. Until
+// Integer type as it's persist friendly.
+using ScriptVersion_t = uint64_t; // It should be std::optional<uint64_t> once we have c++17 available everywhere. Until
                                   // then, 0 implies versioning not available.
 using JSRuntimeVersion_t = uint64_t; // 0 implies version can't be computed. We assert whenever that happens.
 
@@ -47,7 +47,7 @@ struct PreparedScriptStore {
       const char *prepareTag // Optional tag. For e.g. eagerly evaluated vs lazy cache.
       ) noexcept = 0;
 
-  // Persist the perpared javascript for a given combination of script & runtime.
+  // Persist the prepared javascript for a given combination of script & runtime.
   // scriptSignature : Javascript url and version
   // RuntimeSignature : Javascript engine type and version
   // prepareTag : Custom tag to uniquely identify JS engine specific preparation schemes. It is usually useful while

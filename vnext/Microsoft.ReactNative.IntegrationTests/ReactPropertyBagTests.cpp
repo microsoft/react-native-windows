@@ -484,7 +484,7 @@ TEST_CLASS (ReactPropertyBagTests) {
   }
 
   TEST_METHOD(PropertyBag_Property_ReactPropertyBag) {
-    // Store IInsectable-inherited type
+    // Store IInspectable-inherited type
     ReactPropertyId<IReactPropertyBag> fooName{L"Foo"};
     ReactPropertyBag pb{ReactPropertyBagHelper::CreatePropertyBag()};
 

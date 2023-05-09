@@ -20,7 +20,7 @@ struct JSCallInvokerScheduler
 
  public:
   // IDispatchQueueScheduler
-  void IntializeScheduler(Mso::WeakPtr<IDispatchQueueService> &&queue) noexcept override;
+  void InitializeScheduler(Mso::WeakPtr<IDispatchQueueService> &&queue) noexcept override;
   bool HasThreadAccess() noexcept override;
   bool IsSerial() noexcept override;
   void Post() noexcept override;
@@ -59,7 +59,7 @@ JSCallInvokerScheduler::~JSCallInvokerScheduler() noexcept {
   AwaitTermination();
 }
 
-void JSCallInvokerScheduler::IntializeScheduler(Mso::WeakPtr<IDispatchQueueService> &&queue) noexcept {
+void JSCallInvokerScheduler::InitializeScheduler(Mso::WeakPtr<IDispatchQueueService> &&queue) noexcept {
   m_queue = std::move(queue);
 }
 
