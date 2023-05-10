@@ -13,20 +13,20 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests
 {
-    public abstract class AnalysisTestBase
+  public abstract class AnalysisTestBase
+  {
+    public TestContext TestContext { get; set; }
+
+    protected CancellationTokenSource TokenSource;
+
+    public AnalysisTestBase()
     {
-        public TestContext TestContext { get; set; }
+      TokenSource = new CancellationTokenSource();
+    }
 
-        protected CancellationTokenSource TokenSource;
-
-        public AnalysisTestBase()
-        {
-            TokenSource = new CancellationTokenSource();
-        }
-
-        protected (CodeAnalyzer, INamedTypeSymbol) AnalyzeModuleFile(string csSnippet)
-        {
-            var csCode = @"
+    protected (CodeAnalyzer, INamedTypeSymbol) AnalyzeModuleFile(string csSnippet)
+    {
+      var csCode = @"
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -39,64 +39,64 @@ public class TestClass
 }
 ";
 
-            return AnalyzeFileAsync(csCode).GetAwaiter().GetResult();
-        }
+      return AnalyzeFileAsync(csCode).GetAwaiter().GetResult();
+    }
 
-        protected (CodeAnalyzer, INamedTypeSymbol) AnalyzeFile(string csCode)
-        {
-            return AnalyzeFileAsync(csCode).GetAwaiter().GetResult();
-        }
+    protected (CodeAnalyzer, INamedTypeSymbol) AnalyzeFile(string csCode)
+    {
+      return AnalyzeFileAsync(csCode).GetAwaiter().GetResult();
+    }
 
-        protected async Task<(CodeAnalyzer, INamedTypeSymbol)> AnalyzeFileAsync(string csCode)
-        {
-            var codeAnalyzer = new CodeAnalyzer(TokenSource.Token);
+    protected async Task<(CodeAnalyzer, INamedTypeSymbol)> AnalyzeFileAsync(string csCode)
+    {
+      var codeAnalyzer = new CodeAnalyzer(TokenSource.Token);
 
-            codeAnalyzer.AddSyntaxTree(
-              CSharpSyntaxTree.ParseText(csCode, path: "test.cs", options: new CSharpParseOptions()));
+      codeAnalyzer.AddSyntaxTree(
+        CSharpSyntaxTree.ParseText(csCode, path: "test.cs", options: new CSharpParseOptions()));
 
-            var targetFolderWithConfiguration = Path.GetDirectoryName(TestContext.TestDeploymentDir);
-            var configuration = Path.GetFileName(targetFolderWithConfiguration);
-            var targetRoot = Path.GetDirectoryName(Path.GetDirectoryName(targetFolderWithConfiguration));
+      var targetFolderWithConfiguration = Path.GetDirectoryName(TestContext.TestDeploymentDir);
+      var configuration = Path.GetFileName(targetFolderWithConfiguration);
+      var targetRoot = Path.GetDirectoryName(Path.GetDirectoryName(targetFolderWithConfiguration));
 
-            var references = new List<string>();
+      var references = new List<string>();
 
-            var uapVersion = "uap10.0.15138";
-            var uwpPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86),
-                "Microsoft SDKs", "UWPNuGetPackages", "microsoft.netcore.universalwindowsplatform");
+      var uapVersion = "uap10.0.15138";
+      var uwpPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86),
+          "Microsoft SDKs", "UWPNuGetPackages", "microsoft.netcore.universalwindowsplatform");
 
-            var versions = Directory.GetDirectories(uwpPath).Select(x => new Version(Path.GetFileName(x)));
-            Assert.IsTrue(versions.Count() > 0);
-            var microsoftNetCoreUwpPkgVersion = versions.Max();
-            Assert.IsTrue(microsoftNetCoreUwpPkgVersion >= new Version("6.2.10"));
-            var microsoftNetCoreUwpPkgFolder = Path.Combine(uwpPath, microsoftNetCoreUwpPkgVersion.ToString(), "ref", uapVersion);
-            if (!Directory.Exists(microsoftNetCoreUwpPkgFolder))
-            {
-                Assert.Fail($"Could not find path {microsoftNetCoreUwpPkgFolder}. This should have been installed as part of the UWP workload for Microsoft Visual Studio 2022 version 17.0");
-            }
-            references.AddRange(Directory.EnumerateFiles(microsoftNetCoreUwpPkgFolder, "*.dll"));
+      var versions = Directory.GetDirectories(uwpPath).Select(x => new Version(Path.GetFileName(x)));
+      Assert.IsTrue(versions.Count() > 0);
+      var microsoftNetCoreUwpPkgVersion = versions.Max();
+      Assert.IsTrue(microsoftNetCoreUwpPkgVersion >= new Version("6.2.10"));
+      var microsoftNetCoreUwpPkgFolder = Path.Combine(uwpPath, microsoftNetCoreUwpPkgVersion.ToString(), "ref", uapVersion);
+      if (!Directory.Exists(microsoftNetCoreUwpPkgFolder))
+      {
+        Assert.Fail($"Could not find path {microsoftNetCoreUwpPkgFolder}. This should have been installed as part of the UWP workload for Microsoft Visual Studio 2022 version 17.0");
+      }
+      references.AddRange(Directory.EnumerateFiles(microsoftNetCoreUwpPkgFolder, "*.dll"));
 
 
-            // A custom target in the test project ensures the x64 versions of these assemblies are built
-            // before the unittest is run.
-            // I could not find a way for the dotnet core project to NOT be "Any CPU" and then produce x64 binaries
-            // in that configuration. I tried all the usual tricks for the netcore project to match the universal
-            // multi platform support.
-            references.Add($@"{targetRoot}\X64\{configuration}\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.dll");
-            references.Add($@"{targetRoot}\X64\{configuration}\Microsoft.ReactNative\Microsoft.ReactNative.winmd");
+      // A custom target in the test project ensures the x64 versions of these assemblies are built
+      // before the unittest is run.
+      // I could not find a way for the dotnet core project to NOT be "Any CPU" and then produce x64 binaries
+      // in that configuration. I tried all the usual tricks for the netcore project to match the universal
+      // multi platform support.
+      references.Add($@"{targetRoot}\X64\{configuration}\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.dll");
+      references.Add($@"{targetRoot}\X64\{configuration}\Microsoft.ReactNative\Microsoft.ReactNative.winmd");
 
-            // Add the windows 10 sdk assemblies for UWP. We have a compile time safeguard in place to
-            // ensure that it matches the version that is defined in our MSBuild projects matches the one
-            // used in our unittests. Unfortunately C# doesn't allow constants to flow into code, nor do any
-            // of the unitest runners are allowed to pick up a variable from the build file. And given the many
-            // ways one can run inttests, this seemed to be the most reasonable out of a lot of poor options.
-            var win10SdkFolder = @"C:\Program Files (x86)\Windows Kits\10";
+      // Add the windows 10 sdk assemblies for UWP. We have a compile time safeguard in place to
+      // ensure that it matches the version that is defined in our MSBuild projects matches the one
+      // used in our unit tests. Unfortunately C# doesn't allow constants to flow into code, nor do any
+      // of the unitest runners are allowed to pick up a variable from the build file. And given the many
+      // ways one can run inttests, this seemed to be the most reasonable out of a lot of poor options.
+      var win10SdkFolder = @"C:\Program Files (x86)\Windows Kits\10";
 #if win10SdkVersion10_0_19041_0
       var win10SdkVersion = "10.0.19041.0";
 #else
 #error The Win10 Sdk Version must be updated in code when updated in MSBuild.
 #endif
 
-            references.AddRange(new[] {
+      references.AddRange(new[] {
         $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.AI.MachineLearning.MachineLearningContract\3.0.0.0\Windows.AI.MachineLearning.MachineLearningContract.winmd",
         $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.AI.MachineLearning.Preview.MachineLearningPreviewContract\2.0.0.0\Windows.AI.MachineLearning.Preview.MachineLearningPreviewContract.winmd",
         $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.ApplicationModel.Calls.Background.CallsBackgroundContract\2.0.0.0\Windows.ApplicationModel.Calls.Background.CallsBackgroundContract.winmd",
@@ -129,29 +129,29 @@ public class TestClass
         $@"{win10SdkFolder}\UnionMetadata\{win10SdkVersion}\Facade\Windows.winmd"
       });
 
-            await codeAnalyzer.LoadMetadataReferencesAsync(references);
+      await codeAnalyzer.LoadMetadataReferencesAsync(references);
 
-            var success = codeAnalyzer.TryCompileAndCheckForErrors();
-            if (!success)
-            {
-                TestContext.WriteLine(string.Join(Environment.NewLine, codeAnalyzer.Diagnostics));
-                Assert.Fail("Diagnostics encountered");
-            }
+      var success = codeAnalyzer.TryCompileAndCheckForErrors();
+      if (!success)
+      {
+        TestContext.WriteLine(string.Join(Environment.NewLine, codeAnalyzer.Diagnostics));
+        Assert.Fail("Diagnostics encountered");
+      }
 
-            var errorCount = codeAnalyzer.Diagnostics.Count(diag => diag.Severity == DiagnosticSeverity.Error);
-            Assert.AreEqual(0, errorCount);
+      var errorCount = codeAnalyzer.Diagnostics.Count(diag => diag.Severity == DiagnosticSeverity.Error);
+      Assert.AreEqual(0, errorCount);
 
-            var type = codeAnalyzer.GetAllTypes().FirstOrDefault(tp => tp.Name == "TestClass");
+      var type = codeAnalyzer.GetAllTypes().FirstOrDefault(tp => tp.Name == "TestClass");
 
-            return (codeAnalyzer, type);
-        }
-
-        protected void ExpectSingleError(CodeAnalyzer analyzer, DiagnosticDescriptor descriptor)
-        {
-            Assert.AreEqual(1, analyzer.Diagnostics.Count());
-            var error = analyzer.Diagnostics.First();
-            Assert.AreEqual(descriptor, error.Descriptor);
-            Assert.AreNotEqual(Location.None, error.Location);
-        }
+      return (codeAnalyzer, type);
     }
+
+    protected void ExpectSingleError(CodeAnalyzer analyzer, DiagnosticDescriptor descriptor)
+    {
+      Assert.AreEqual(1, analyzer.Diagnostics.Count());
+      var error = analyzer.Diagnostics.First();
+      Assert.AreEqual(descriptor, error.Descriptor);
+      Assert.AreNotEqual(Location.None, error.Location);
+    }
+  }
 }

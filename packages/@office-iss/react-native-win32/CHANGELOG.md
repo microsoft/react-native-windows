@@ -1,8 +1,18 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Wed, 03 May 2023 19:30:16 GMT and should not be manually modified.
+This log was last generated on Mon, 08 May 2023 17:41:03 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.194
+
+Mon, 08 May 2023 17:41:03 GMT
+
+### Changes
+
+- Fix typos and add `cspell` configuration (jthysell@microsoft.com)
+- Bump @rnw-scripts/just-task to v2.3.8
+- Bump react-native-platform-override to v1.9.6
 
 ## 0.0.0-canary.193
 

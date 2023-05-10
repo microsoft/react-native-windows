@@ -96,7 +96,7 @@ ChakraApi::JsRefHolder::~JsRefHolder() noexcept {
 }
 
 /*static*/ void ChakraApi::DisposeRuntime(JsRuntimeHandle runtime) {
-  ChakraVerifyElseThrow(JsDisposeRuntime(runtime) == JsErrorCode::JsNoError, "Cannot dispaose Chakra runtime.");
+  ChakraVerifyElseThrow(JsDisposeRuntime(runtime) == JsErrorCode::JsNoError, "Cannot dispose Chakra runtime.");
 }
 
 /*static*/ uint32_t ChakraApi::AddRef(JsRef ref) {

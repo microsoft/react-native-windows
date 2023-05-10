@@ -2,6 +2,57 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 08 May 2023 17:41:03 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.169",
+      "version": "0.0.0-canary.169",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "fe7d786b7419fafdaf864c6769ef33555548f443",
+            "comment": "Fix typos and add `cspell` configuration"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "3515e2939ca14800a381175e4f304d84e4489f8c",
+            "comment": "Avoid having to launch PowerShell for every react-native config query"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.57",
+            "commit": "3024cc281f520af9a3d99244fa124aff233625d8"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.19",
+            "commit": "3024cc281f520af9a3d99244fa124aff233625d8"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/package-utils to v0.0.0-canary.45",
+            "commit": "3024cc281f520af9a3d99244fa124aff233625d8"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.67",
+            "commit": "3024cc281f520af9a3d99244fa124aff233625d8"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.8",
+            "commit": "3024cc281f520af9a3d99244fa124aff233625d8"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 25 Apr 2023 05:16:57 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.168",
       "version": "0.0.0-canary.168",

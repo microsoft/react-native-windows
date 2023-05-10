@@ -34,7 +34,7 @@ namespace Microsoft::ReactNative {
 
 /*static*/ winrt::com_ptr<ReactImage> ReactImage::Create() {
   auto reactImage = winrt::make_self<ReactImage>();
-  // Grid inheirts the layout direction from parent and mirrors the background image in RTL mode.
+  // Grid inherits the layout direction from parent and mirrors the background image in RTL mode.
   // Forcing the container to LTR mode to avoid the unexpected mirroring behavior.
   reactImage->FlowDirection(xaml::FlowDirection::LeftToRight);
   return reactImage;

@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Component Governance Updates 5/8/23",
+  "packageName": "@rnw-scripts/doxysaurus",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -97,7 +97,7 @@ struct UISchedulerWinRT : Mso::UnknownObject<Mso::RefCountStrategy::WeakRef, IDi
   static DispatchQueueRegistry &GetDispatchQueueRegistry() noexcept;
 
  public: // IDispatchQueueScheduler
-  void IntializeScheduler(Mso::WeakPtr<IDispatchQueueService> &&queue) noexcept override;
+  void InitializeScheduler(Mso::WeakPtr<IDispatchQueueService> &&queue) noexcept override;
   bool HasThreadAccess() noexcept override;
   bool IsSerial() noexcept override;
   void Post() noexcept override;
@@ -238,7 +238,7 @@ DispatcherQueueHandler UISchedulerWinRT::MakeDispatcherQueueHandler() noexcept {
   return {static_cast<void *>(&m_dispatcherHandler), take_ownership_from_abi};
 }
 
-void UISchedulerWinRT::IntializeScheduler(Mso::WeakPtr<IDispatchQueueService> &&queue) noexcept {
+void UISchedulerWinRT::InitializeScheduler(Mso::WeakPtr<IDispatchQueueService> &&queue) noexcept {
   m_queue = std::move(queue);
 }
 

@@ -83,7 +83,7 @@ function devResolve(packageName, originDir, moduleName) {
  * Allows the usage of live reload in packages in our repo which merges
  * Windows-specific over core. These normally work by copying from the "src"
  * subdirectory to package root during build time, but this resolver will
- * instead prefere the copy in "src" to avoid the need to build.
+ * instead prefer the copy in "src" to avoid the need to build.
  */
 function devResolveRequest(
   context,

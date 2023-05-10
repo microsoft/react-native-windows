@@ -24,14 +24,6 @@ class NapiJsiV8RuntimeHolder : public Microsoft::JSI::RuntimeHolderLazyInit {
       std::unique_ptr<facebook::jsi::PreparedScriptStore> &&preparedScriptStore) noexcept;
 
  private:
-  static void __cdecl ScheduleTaskCallback(
-      napi_env env,
-      napi_ext_task_callback taskCb,
-      void *taskData,
-      uint32_t delayMs,
-      napi_finalize finalizeCb,
-      void *finalizeHint);
-
   void InitRuntime() noexcept;
   napi_ext_script_cache InitScriptCache(
       std::unique_ptr<facebook::jsi::PreparedScriptStore> &&preparedScriptStore) noexcept;

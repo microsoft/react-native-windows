@@ -277,7 +277,7 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
     auto request = HttpRequestMessage(HttpMethod::Get(), Uri{L"http://somehost"});
     request.Properties().Insert(L"RequestArgs", reqArgs);
     request.Headers().TryAppendWithoutValidation(L"ChangeMyCase", L"Value");
-    // Should implicitly set Conent-Length and Content-Type
+    // Should implicitly set Content-Length and Content-Type
     request.Content(HttpStringContent{L"PreflightContent"});
 
     auto filter = winrt::make<OriginPolicyHttpFilter>(mockFilter);
@@ -320,7 +320,7 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
     auto request = HttpRequestMessage(HttpMethod::Get(), Uri{L"http://somehost"});
     request.Properties().Insert(L"RequestArgs", reqArgs);
     request.Headers().TryAppendWithoutValidation(L"Authorization", L"Bearer abc");
-    // Should implicitly set Conent-Length and Content-Type
+    // Should implicitly set Content-Length and Content-Type
     request.Content(HttpStringContent{L"PreflightContent"});
 
     auto filter = winrt::make<OriginPolicyHttpFilter>(mockFilter);

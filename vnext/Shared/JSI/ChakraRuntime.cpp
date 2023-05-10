@@ -124,16 +124,16 @@ void ChakraRuntime::PromiseContinuation(JsValueRef funcRef) noexcept {
   }
 }
 
-JsValueRef ChakraRuntime::CreatePropertyDescriptor(JsValueRef value, PropertyAttibutes attrs) {
+JsValueRef ChakraRuntime::CreatePropertyDescriptor(JsValueRef value, PropertyAttributes attrs) {
   JsValueRef descriptor = CreateObject();
   SetProperty(descriptor, m_propertyId.value, value);
-  if (!(attrs & PropertyAttibutes::ReadOnly)) {
+  if (!(attrs & PropertyAttributes::ReadOnly)) {
     SetProperty(descriptor, m_propertyId.writable, BoolToBoolean(true));
   }
-  if (!(attrs & PropertyAttibutes::DontEnum)) {
+  if (!(attrs & PropertyAttributes::DontEnum)) {
     SetProperty(descriptor, m_propertyId.enumerable, BoolToBoolean(true));
   }
-  if (!(attrs & PropertyAttibutes::DontDelete)) {
+  if (!(attrs & PropertyAttributes::DontDelete)) {
     // The JavaScript 'configurable=true' allows property to be deleted.
     SetProperty(descriptor, m_propertyId.configurable, BoolToBoolean(true));
   }
@@ -607,7 +607,7 @@ facebook::jsi::Function ChakraRuntime::createFunctionFromHostFunction(
   DefineProperty(
       function,
       m_propertyId.hostFunctionSymbol,
-      CreatePropertyDescriptor(hostFunctionHolder, PropertyAttibutes::DontEnumAndFrozen));
+      CreatePropertyDescriptor(hostFunctionHolder, PropertyAttributes::DontEnumAndFrozen));
 
   return MakePointer<facebook::jsi::Object>(function).getFunction(*this);
 }
@@ -763,7 +763,7 @@ JsValueRef ChakraRuntime::CreateExternalFunction(
   DefineProperty(
       function,
       m_propertyId.length,
-      CreatePropertyDescriptor(IntToNumber(paramCount), PropertyAttibutes::DontEnumAndFrozen));
+      CreatePropertyDescriptor(IntToNumber(paramCount), PropertyAttributes::DontEnumAndFrozen));
   return function;
 }
 
@@ -773,14 +773,14 @@ JsValueRef CALLBACK ChakraRuntime::HostFunctionCall(
     JsValueRef *args,
     unsigned short argCount,
     void *callbackState) {
-  HostFunctionWrapper *hostFuncWraper = static_cast<HostFunctionWrapper *>(callbackState);
-  ChakraRuntime &chakraRuntime = hostFuncWraper->GetRuntime();
+  HostFunctionWrapper *hostFuncWrapper = static_cast<HostFunctionWrapper *>(callbackState);
+  ChakraRuntime &chakraRuntime = hostFuncWrapper->GetRuntime();
   return chakraRuntime.HandleCallbackExceptions([&]() {
     ChakraVerifyElseThrow(argCount > 0, "There must be at least 'this' argument.");
     const JsiValueView jsiThisArg{*args};
     const JsiValueViewArgs jsiArgs{args + 1, argCount - 1u};
 
-    const facebook::jsi::HostFunctionType &hostFunc = hostFuncWraper->GetHostFunction();
+    const facebook::jsi::HostFunctionType &hostFunc = hostFuncWrapper->GetHostFunction();
     return RunInMethodContext("HostFunction", [&]() {
       return chakraRuntime.ToJsValueRef(hostFunc(chakraRuntime, jsiThisArg, jsiArgs.Data(), jsiArgs.Size()));
     });
@@ -913,7 +913,7 @@ JsValueRef CALLBACK ChakraRuntime::HostFunctionCall(
       const PropNameIDView propertyId{GetPropertyIdFromName(StringToPointer(propertyName).data())};
       return RunInMethodContext("HostObject::getOwnPropertyDescriptor", [&]() {
         auto value = chakraRuntime->ToJsValueRef(hostObject->get(*chakraRuntime, propertyId));
-        auto descriptor = chakraRuntime->CreatePropertyDescriptor(value, PropertyAttibutes::None);
+        auto descriptor = chakraRuntime->CreatePropertyDescriptor(value, PropertyAttributes::None);
         return descriptor;
       });
     }

@@ -103,8 +103,8 @@ class OJSIExecutorFactory : public JSExecutorFactory {
     auto turboModuleManager = std::make_shared<TurboModuleManager>(turboModuleRegistry_, jsCallInvoker_);
 
     // TODO: The binding here should also add the proxys that convert cxxmodules into turbomodules
-    // [vmoroz] Note, that we must not use the RN TurboCxxModule.h code because it uses global LongLivedObjectCollection
-    // instance that prevents us from using multiple RN instance in the same process.
+    // [@vmoroz] Note, that we must not use the RN TurboCxxModule.h code because it uses global
+    // LongLivedObjectCollection instance that prevents us from using multiple RN instance in the same process.
     auto binding = [turboModuleManager](const std::string &name) -> std::shared_ptr<TurboModule> {
       return turboModuleManager->getModule(name);
     };
@@ -641,7 +641,7 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
       nativeQueue));
 
   // These modules are instantiated separately in MSRN (Universal Windows).
-  // When there are module name colisions, the last one registered is used.
+  // When there are module name collisions, the last one registered is used.
   // If this code is enabled, we will have unused module instances.
   // Also, MSRN has a different property bag mechanism incompatible with this method's transitionalProps variable.
 #if (defined(_MSC_VER) && !defined(WINRT))

@@ -71,7 +71,7 @@ class AbiViewComponentDescriptor : public facebook::react::ComponentDescriptor {
 
  protected:
   /*
-   * Called immediatelly after `ShadowNode` is created or cloned.
+   * Called immediately after `ShadowNode` is created or cloned.
    *
    * Override this method to pass information from custom `ComponentDescriptor`
    * to new instance of `ShadowNode`.

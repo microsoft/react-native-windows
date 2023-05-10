@@ -5,6 +5,10 @@
  * @format
  */
 
+// cspell:ignoreRegExp /file: '[\w\.]+'/
+// cspell:ignoreRegExp /baseFile: '[\w\.]+'/
+// cspell:ignoreRegExp /baseHash: '\w+'/
+
 import * as Serialized from '../Serialized';
 import _ from 'lodash';
 
@@ -83,7 +87,7 @@ test('constructor - Duplicate Override Names', () => {
   ).toThrow();
 });
 
-test('constructor - Input Mutation Doesnt Affect Manifest', () => {
+test('constructor - Input Mutation Does Not Affect Manifest', () => {
   const overrides = [
     new PlatformOverride({file: 'aaa.windows.js'}),
     new PlatformOverride({file: 'bbb.windows.js'}),
@@ -373,7 +377,7 @@ test('markUpToDate - Simple', async () => {
   expect(newOverride.baseHash).toBe(hashContent(reactFiles[0].content));
 });
 
-test('Serialization (Indivudal Base) Round-Trip', () => {
+test('Serialization (Individual Base) Round-Trip', () => {
   const serializedManifest: Serialized.Manifest = {
     includePatterns: undefined,
     excludePatterns: undefined,

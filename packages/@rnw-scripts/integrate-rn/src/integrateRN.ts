@@ -67,7 +67,7 @@ async function performSteps(newVersion: string) {
   logger.info(`Commits: ${await generateCommitsUrl(newVersion)}`);
 
   await funcStep(
-    `Updating packages and dependants to react-native@${newVersion}`,
+    `Updating packages and dependents to react-native@${newVersion}`,
     async () => {
       await upgradeDependencies(newVersion);
       return {status: 'success'};

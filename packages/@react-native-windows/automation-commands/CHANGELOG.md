@@ -1,8 +1,18 @@
 # Change Log - @react-native-windows/automation-commands
 
-This log was last generated on Wed, 03 May 2023 19:30:16 GMT and should not be manually modified.
+This log was last generated on Mon, 08 May 2023 17:41:03 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.91
+
+Mon, 08 May 2023 17:41:03 GMT
+
+### Patches
+
+- Fix typos and add `cspell` configuration (jthysell@microsoft.com)
+- Bump @react-native-windows/automation-channel to v0.10.19
+- Bump @rnw-scripts/just-task to v2.3.8
 
 ## 0.1.90
 

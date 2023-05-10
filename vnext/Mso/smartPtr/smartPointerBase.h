@@ -74,7 +74,7 @@ class THolder {
   } // equivalent to std::string::clear()
   void reset() noexcept {
     this->Clear();
-  } // equivalent to std::unique_ptr::reset(), excpet for not supporting (yet) passing a new pointer in (like Attach
+  } // equivalent to std::unique_ptr::reset(), except for not supporting (yet) passing a new pointer in (like Attach
     // here).
 
   /**

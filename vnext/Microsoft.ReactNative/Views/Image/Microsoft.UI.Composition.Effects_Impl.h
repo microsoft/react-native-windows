@@ -95,7 +95,7 @@ class EffectBase : public winrt::implements<EffectBase, abi::IGraphicsEffectD2D1
     return winrt::PropertyValue::CreateSingleArray(reinterpret_cast<std::array<float, ComponentCount> &>(values));
   }
 
-  // Helpers to implement GetNamedPropertyMapping more succintly
+  // Helpers to implement GetNamedPropertyMapping more succinctly
   struct NamedProperty {
     const wchar_t *Name; // Compile-time constant
     UINT Index; // Property index
@@ -128,7 +128,7 @@ class EffectBase : public winrt::implements<EffectBase, abi::IGraphicsEffectD2D1
 };
 
 //-----------------------------------------------------------------------------------------------------------------
-// Helper macros to make implementation more succint
+// Helper macros to make implementation more succinct
 //-----------------------------------------------------------------------------------------------------------------
 
 #pragma push_macro("DECLARE_D2D_GUID")

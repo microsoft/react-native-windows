@@ -295,7 +295,7 @@ TEST_CLASS (JSValueReaderTest) {
     IJSValueReader reader = make<JsonJSValueReader>(json);
 
     TestCheck(reader.ValueType() == JSValueType::Object);
-    int properyCount = 0;
+    int propertyCount = 0;
     hstring propertyName;
     while (reader.GetNextObjectProperty(/*out*/ propertyName)) {
       if (propertyName == L"StringValue1") {
@@ -313,7 +313,7 @@ TEST_CLASS (JSValueReaderTest) {
         TestCheck(ReadValue<uint64_t>(reader) == 0);
         TestCheck(ReadValue<float>(reader) == 0);
         TestCheck(ReadValue<double>(reader) == 0);
-        ++properyCount;
+        ++propertyCount;
       } else if (propertyName == L"StringValue2") {
         TestCheck(ReadValue<std::string>(reader) == "5");
         TestCheck(ReadValue<std::wstring>(reader) == L"5");
@@ -329,7 +329,7 @@ TEST_CLASS (JSValueReaderTest) {
         TestCheck(ReadValue<uint64_t>(reader) == 5);
         TestCheck(ReadValue<float>(reader) == 5);
         TestCheck(ReadValue<double>(reader) == 5);
-        ++properyCount;
+        ++propertyCount;
       } else if (propertyName == L"StringValue3") {
         TestCheck(ReadValue<std::string>(reader) == "Hello");
         TestCheck(ReadValue<std::wstring>(reader) == L"Hello");
@@ -345,7 +345,7 @@ TEST_CLASS (JSValueReaderTest) {
         TestCheck(ReadValue<uint64_t>(reader) == 0);
         TestCheck(ReadValue<float>(reader) == 0);
         TestCheck(ReadValue<double>(reader) == 0);
-        ++properyCount;
+        ++propertyCount;
       } else if (propertyName == L"BoolValue1") {
         TestCheck(ReadValue<std::string>(reader) == "false");
         TestCheck(ReadValue<std::wstring>(reader) == L"false");
@@ -361,7 +361,7 @@ TEST_CLASS (JSValueReaderTest) {
         TestCheck(ReadValue<uint64_t>(reader) == 0);
         TestCheck(ReadValue<float>(reader) == 0);
         TestCheck(ReadValue<double>(reader) == 0);
-        ++properyCount;
+        ++propertyCount;
       } else if (propertyName == L"BoolValue2") {
         TestCheck(ReadValue<std::string>(reader) == "true");
         TestCheck(ReadValue<std::wstring>(reader) == L"true");
@@ -377,7 +377,7 @@ TEST_CLASS (JSValueReaderTest) {
         TestCheck(ReadValue<uint64_t>(reader) == 1);
         TestCheck(ReadValue<float>(reader) == 1);
         TestCheck(ReadValue<double>(reader) == 1);
-        ++properyCount;
+        ++propertyCount;
       } else if (propertyName == L"IntValue1") {
         TestCheck(ReadValue<std::string>(reader) == "0");
         TestCheck(ReadValue<std::wstring>(reader) == L"0");
@@ -393,7 +393,7 @@ TEST_CLASS (JSValueReaderTest) {
         TestCheck(ReadValue<uint64_t>(reader) == 0);
         TestCheck(ReadValue<float>(reader) == 0);
         TestCheck(ReadValue<double>(reader) == 0);
-        ++properyCount;
+        ++propertyCount;
       } else if (propertyName == L"IntValue2") {
         TestCheck(ReadValue<std::string>(reader) == "42");
         TestCheck(ReadValue<std::wstring>(reader) == L"42");
@@ -409,7 +409,7 @@ TEST_CLASS (JSValueReaderTest) {
         TestCheck(ReadValue<uint64_t>(reader) == 42);
         TestCheck(ReadValue<float>(reader) == 42);
         TestCheck(ReadValue<double>(reader) == 42);
-        ++properyCount;
+        ++propertyCount;
       } else if (propertyName == L"FloatValue") {
         TestCheck(ReadValue<std::string>(reader) == "3.14");
         TestCheck(ReadValue<std::wstring>(reader) == L"3.14");
@@ -425,7 +425,7 @@ TEST_CLASS (JSValueReaderTest) {
         TestCheck(ReadValue<uint64_t>(reader) == 3);
         TestCheck(ReadValue<float>(reader) == 3.14f);
         TestCheck(ReadValue<double>(reader) == 3.14);
-        ++properyCount;
+        ++propertyCount;
       } else if (propertyName == L"NullValue") {
         TestCheck(ReadValue<std::string>(reader) == "");
         TestCheck(ReadValue<std::wstring>(reader) == L"");
@@ -442,10 +442,10 @@ TEST_CLASS (JSValueReaderTest) {
         TestCheck(ReadValue<float>(reader) == 0);
         TestCheck(ReadValue<double>(reader) == 0);
 
-        ++properyCount;
+        ++propertyCount;
       }
     }
-    TestCheck(properyCount == 9);
+    TestCheck(propertyCount == 9);
   }
 
   TEST_METHOD(TestWriteValueDefaultExtensions) {

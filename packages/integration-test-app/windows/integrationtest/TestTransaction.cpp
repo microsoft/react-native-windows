@@ -26,7 +26,7 @@ HostAction TestTransaction::OnNewError(const IRedBoxErrorInfo &errorInfo) noexce
 
   // When __DEV__ is set, ExceptionsManager will always try to prettify the
   // stack trace, and will usually succeed. Wait for either a prettified
-  // strack trace or timeout.
+  // stack trace or timeout.
 #if BUNDLE
   m_state = TestState::WaitingForCompletion;
   return HostAction::FlushEvents;

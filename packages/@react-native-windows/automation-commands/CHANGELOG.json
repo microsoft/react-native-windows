@@ -2,6 +2,33 @@
   "name": "@react-native-windows/automation-commands",
   "entries": [
     {
+      "date": "Mon, 08 May 2023 17:41:03 GMT",
+      "tag": "@react-native-windows/automation-commands_v0.1.91",
+      "version": "0.1.91",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/automation-commands",
+            "commit": "fe7d786b7419fafdaf864c6769ef33555548f443",
+            "comment": "Fix typos and add `cspell` configuration"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.10.19",
+            "commit": "3024cc281f520af9a3d99244fa124aff233625d8"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.8",
+            "commit": "3024cc281f520af9a3d99244fa124aff233625d8"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 03 May 2023 19:30:16 GMT",
       "tag": "@react-native-windows/automation-commands_v0.1.90",
       "version": "0.1.90",

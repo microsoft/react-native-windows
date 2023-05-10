@@ -1,8 +1,24 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 03 May 2023 19:30:16 GMT and should not be manually modified.
+This log was last generated on Mon, 08 May 2023 17:41:02 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.650
+
+Mon, 08 May 2023 17:41:02 GMT
+
+### Changes
+
+- Fix Secure Supply Chain compliance issues (jthysell@microsoft.com)
+- Borders should show if mixed widths but not colors They were checking if the color was variable per side but assuming width wouldn't be. Fixes #11549 (26607885+chrisglein@users.noreply.github.com)
+- Fix typos and add `cspell` configuration (jthysell@microsoft.com)
+- Improve Chocolatey detection in rnw-dependencies.ps1 (jthysell@microsoft.com)
+- Avoid having to launch PowerShell for every react-native config query (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.169
+- Bump @react-native-windows/codegen to v0.0.0-canary.57
+- Bump @rnw-scripts/just-task to v2.3.8
+- Bump react-native-platform-override to v1.9.6
 
 ## 0.0.0-canary.649
 

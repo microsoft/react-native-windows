@@ -209,7 +209,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
 
     private static void CallCallback<T>(T callback, IJSValueWriter writer) where T : Delegate
     {
-      var resulReader = new JSValueTreeReader((writer as JSValueTreeWriter).TakeValue());
+      var resultReader = new JSValueTreeReader((writer as JSValueTreeWriter).TakeValue());
       var delegateInvoke = typeof(T).GetMethod("Invoke");
       var parameters = delegateInvoke.GetParameters();
       var paramTypes = parameters.Select(p => p.ParameterType).ToArray();
@@ -220,7 +220,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       else
       {
         object[] args = new object[paramTypes.Length + 1];
-        args[0] = resulReader;
+        args[0] = resultReader;
         var readArgsMethod = JSValueReaderGenerator.ReadArgsOf(paramTypes);
         readArgsMethod.Invoke(null, args);
         delegateInvoke.Invoke(callback, args.Skip(1).ToArray());
@@ -229,8 +229,8 @@ namespace Microsoft.ReactNative.Managed.UnitTests
 
     private static T GetResult<T>(IJSValueWriter writer)
     {
-      var resulReader = new JSValueTreeReader((writer as JSValueTreeWriter).TakeValue());
-      resulReader.ReadValue(out T result);
+      var resultReader = new JSValueTreeReader((writer as JSValueTreeWriter).TakeValue());
+      resultReader.ReadValue(out T result);
       return result;
     }
 

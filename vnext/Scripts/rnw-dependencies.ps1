@@ -192,9 +192,9 @@ function InstallVS {
         
         if ($Enterprise) {
             # The CI machines need the enterprise version of VS as that is what is hardcoded in all the scripts
-            & choco install -y visualstudio2022enterprise;
+            ChocoInstall visualstudio2022enterprise;
         } else {
-            & choco install -y visualstudio2022community;
+            ChocoInstall visualstudio2022community;
         }
 
         $vsWhere = Get-VSWhere;
@@ -360,7 +360,7 @@ $requiredFreeSpaceGB = 15;
 $requirements = @(
     @{
         Id=[CheckId]::FreeSpace;
-        Name = "Free space on $drive`: > $requiredFreeSpaceGB GB";
+        Name = "Free space on current drive > $requiredFreeSpaceGB GB";
         Tags = @('appDev');
         Valid = { $drive.Free/1GB -gt $requiredFreeSpaceGB; }
         HasVerboseOutput = $true;
@@ -399,7 +399,7 @@ $requirements = @(
         Name = 'Git';
         Tags = @('rnwDev');
         Valid = { try { (Get-Command git.exe -ErrorAction Stop) -ne $null } catch { $false }; }
-        Install = { choco install -y git };
+        Install = { ChocoInstall git };
         InstallsWithChoco = $true;
     },
     @{
@@ -415,7 +415,7 @@ $requirements = @(
         Name = 'Node.js (LTS, >= 16.0)';
         Tags = @('appDev');
         Valid = { CheckNode; }
-        Install = { choco install -y nodejs-lts };
+        Install = { ChocoInstall nodejs-lts };
         InstallsWithChoco = $true;
         HasVerboseOutput = $true;
     },
@@ -424,7 +424,7 @@ $requirements = @(
         Name = 'Yarn';
         Tags = @('appDev');
         Valid = { CheckYarn }
-        Install = { choco install -y yarn };
+        Install = { ChocoInstall yarn };
         InstallsWithChoco = $true;
         HasVerboseOutput = $true;
     },
@@ -449,7 +449,7 @@ $requirements = @(
         Tags = @('rnwDev');
         Valid = { ( cmd "/c assoc .binlog 2>nul" ) -ne $null; }
         Install = {
-            choco install -y msbuild-structured-log-viewer;
+            ChocoInstall msbuild-structured-log-viewer;
             $slv = gci ${env:LocalAppData}\MSBuildStructuredLogViewer\StructuredLogViewer.exe -Recurse | select FullName | Sort-Object -Property FullName -Descending | Select-Object -First 1
             cmd /c "assoc .binlog=MSBuildLog >nul";
             cmd /c "ftype MSBuildLog=$($slv.FullName) %1 >nul";
@@ -463,7 +463,7 @@ $requirements = @(
         Name = 'Windows ADK';
         Tags = @('buildLab');
         Valid = { (Test-Path "${env:ProgramFiles(x86)}\Windows Kits\10\Windows Performance Toolkit\wpr.exe"); };
-        Install = { choco install -y windows-adk };
+        Install = { ChocoInstall windows-adk };
         InstallsWithChoco = $true;
         Optional = $true;
     },
@@ -491,32 +491,61 @@ $requirements = @(
         Name = ".NET SDK (LTS, = $dotnetver)";
         Tags = @('appDev');
         Valid = { CheckDotNetCore; };
-        Install = { & choco install -y dotnet-$dotnetver-sdk };
+        Install = { ChocoInstall dotnet-$dotnetver-sdk };
         InstallsWithChoco = $true;
         HasVerboseOutput = $true;
     }
 );
 
+$ChocoCmd = ""; # This should get set when EnsureChocoForInstall is called
+
 function EnsureChocoForInstall {
-    Write-Verbose "Checking for Choco...";
+    Write-Verbose "Checking for Chocolatey...";
     try {
-        $chocoCmd = (Get-Command choco -ErrorAction Stop);
-        if ($chocoCmd -ne $null) {
-            Write-Verbose "Choco found.";
+        # Check if choco.exe is in PATH
+        if (Get-Command "choco.exe" -CommandType Application -ErrorAction Ignore) {
+            Set-Variable -Name "ChocoCmd" -Value "choco.exe" -Scope Script
+            Write-Verbose "Chocolatey found in PATH.";
             return;
         }
+
+        # Check for choco.exe in usual install location (taken from https://chocolatey.org/install.ps1)
+        $checkPath = if ($env:ChocolateyInstall) { $env:ChocolateyInstall } else { "$env:PROGRAMDATA\chocolatey" }
+
+        $FullPath = Join-Path $checkPath "bin\choco.exe";
+
+        if (Test-Path $FullPath) {
+            Set-Variable -Name "ChocoCmd" -Value $FullPath -Scope Script
+            Write-Verbose "Chocolatey found at $ChocoCmd.";
+            return;
+        }
+
     } catch { Write-Debug $_ }
 
-    Write-Verbose "Choco not found.";
+    Write-Verbose "Chocolatey not found.";
 
-    if (!$NoPrompt -and (Read-Host "Choco is necessary to install this component. Do you want to install Choco? [y/N]").ToUpperInvariant() -eq 'Y') {
-        Write-Host "Installing Choco...";
+    if (!$NoPrompt -and (Read-Host "This script uses Chocolatey to install this component. Do you want to install Chocolatey? [y/N]").ToUpperInvariant() -eq 'Y') {
+        Write-Host "Installing Chocolatey...";
         [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072;
         iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'));
+        EnsureChocoForInstall;
         return;
     }
 
-    throw "Choco needed to install.";
+    throw "Chocolatey needed to install.";
+}
+
+function ChocoInstall {
+    param(
+        [string]$ChocoPackage
+    )
+
+    if ($ChocoCmd -eq "") {
+        throw "`$ChocoCmd is not set, did you call EnsureChocoForInstall?";
+    }
+
+    Write-Verbose "Executing `"$ChocoCmd`" install -y `"$ChocoPackage`"";
+    & "$ChocoCmd" install -y "$ChocoPackage"
 }
 
 function IsElevated {

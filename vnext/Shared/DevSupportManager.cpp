@@ -270,9 +270,9 @@ void DevSupportManager::EnsureHermesInspector(
 #endif
 }
 
-void DevSupportManager::UpdateBundleStatus(bool isLastDownloadSucess, int64_t updateTimestamp) noexcept {
+void DevSupportManager::UpdateBundleStatus(bool isLastDownloadSuccess, int64_t updateTimestamp) noexcept {
 #ifdef HERMES_ENABLE_DEBUGGER
-  m_BundleStatusProvider->updateBundleStatus(isLastDownloadSucess, updateTimestamp);
+  m_BundleStatusProvider->updateBundleStatus(isLastDownloadSuccess, updateTimestamp);
 #endif
 }
 

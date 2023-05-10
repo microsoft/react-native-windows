@@ -67,7 +67,7 @@ export default class Bootstrap extends React.Component<
             this.setState({counterValue: this.state.counterValue + 1});
           }}>
           <Text style={styles.text}>
-            Testing acessibilityValue:text, Click to increase:{' '}
+            Testing accessibilityValue:text, Click to increase:{' '}
             {this.state.counterValue}
           </Text>
         </TouchableHighlight>
@@ -85,7 +85,7 @@ export default class Bootstrap extends React.Component<
             this.setState({sliderValue: this.state.sliderValue + 1});
           }}>
           <Text style={styles.text}>
-            Testing acessibilityValue:min/max/now, click to increase:{' '}
+            Testing accessibilityValue:min/max/now, click to increase:{' '}
             {this.state.sliderValue}
           </Text>
         </TouchableHighlight>

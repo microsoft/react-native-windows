@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix V8 Node API Task Runner implementation (#10966)",
+  "packageName": "react-native-windows",
+  "email": "vmoroz@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

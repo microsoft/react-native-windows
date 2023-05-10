@@ -16,7 +16,7 @@
 // Windows API
 #include <winrt/Windows.Security.Cryptography.h>
 
-// Standard Libriary
+// Standard Library
 #include <iomanip>
 
 using namespace facebook::xplat;

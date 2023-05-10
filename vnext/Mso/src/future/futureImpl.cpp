@@ -144,7 +144,7 @@ bool FuturePackedData::IsDone() const noexcept {
   return (state == FutureState::Succeeded || state == FutureState::Failed);
 }
 
-bool FuturePackedData::IsSucceded() const noexcept {
+bool FuturePackedData::IsSucceeded() const noexcept {
   return (GetState() == FutureState::Succeeded);
 }
 
@@ -218,7 +218,7 @@ FutureImpl::~FutureImpl() noexcept {
   }
 
   // Destroy value if it was set. The value exists only if future succeeded.
-  if (m_traits.ValueDestroy && data.IsSucceded()) {
+  if (m_traits.ValueDestroy && data.IsSucceeded()) {
     m_traits.ValueDestroy(GetValueInternal());
   }
 
@@ -291,7 +291,7 @@ const FutureTraits &FutureImpl::GetTraits() const noexcept {
 
 ByteArrayView FutureImpl::GetValue() noexcept {
   FuturePackedData data = m_stateAndContinuation.load(std::memory_order_acquire);
-  if (data.IsSucceded()) {
+  if (data.IsSucceeded()) {
     if (IsSet(m_traits.Options, FutureOptions::UseParentValue)) {
       return m_link->GetValue();
     }
@@ -352,7 +352,7 @@ void FutureImpl::AddContinuation(Mso::CntPtr<IFuture> &&continuation) noexcept {
       // Do not change ref count when assigning previous continuation. It could be already deleted by now.
       // So, we treat it just as a raw pointer until compare_exchange_weak succeeds.
       // Initially it is owned by this FutureImpl instance, and if compare_exchange_weak succeeds then the
-      // ownership is transfered to the new continuation contFuture. No ref count should be changed during that
+      // ownership is transferred to the new continuation contFuture. No ref count should be changed during that
       // ownership transition.
       //
       contFuture->m_link = Mso::CntPtr<FutureImpl>{currentContinuation, AttachTag};
@@ -809,7 +809,7 @@ bool FutureImpl::IsDone() const noexcept {
 }
 
 bool FutureImpl::IsSucceeded() const noexcept {
-  return m_stateAndContinuation.load(std::memory_order_acquire).IsSucceded();
+  return m_stateAndContinuation.load(std::memory_order_acquire).IsSucceeded();
 }
 
 bool FutureImpl::IsFailed() const noexcept {

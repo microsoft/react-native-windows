@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/just-task",
   "entries": [
     {
+      "date": "Mon, 08 May 2023 17:41:05 GMT",
+      "tag": "@rnw-scripts/just-task_v2.3.8",
+      "version": "2.3.8",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@rnw-scripts/just-task",
+            "commit": "fe7d786b7419fafdaf864c6769ef33555548f443",
+            "comment": "Fix typos and add `cspell` configuration"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 25 Apr 2023 05:17:01 GMT",
       "tag": "@rnw-scripts/just-task_v2.3.7",
       "version": "2.3.7",

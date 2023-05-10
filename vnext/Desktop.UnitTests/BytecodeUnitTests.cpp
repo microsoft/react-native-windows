@@ -48,7 +48,7 @@ TEST_CLASS (BytecodeUnitTests) {
   static constexpr const uint64_t bytecodeIndex =
       ChakraVersionInfoIndex + 4 * sizeof(uint32_t) /* size of ChakraVersionInfo */;
 
-  static constexpr const uint64_t scirptVersion = 42;
+  static constexpr const uint64_t scriptVersion = 42;
   static constexpr int testScriptResult = 6;
   static constexpr const char *const testScriptBytecodeFilename = "testScript.bytecode";
   static constexpr const char *const testScript =

@@ -23,7 +23,7 @@ struct ThreadPoolSchedulerWin : Mso::UnknownObject<IDispatchQueueScheduler> {
       _Inout_ PTP_WORK work);
 
  public: // IDispatchQueueScheduler
-  void IntializeScheduler(Mso::WeakPtr<IDispatchQueueService> &&queue) noexcept override;
+  void InitializeScheduler(Mso::WeakPtr<IDispatchQueueService> &&queue) noexcept override;
   bool HasThreadAccess() noexcept override;
   bool IsSerial() noexcept override;
   void Post() noexcept override;
@@ -131,7 +131,7 @@ ThreadPoolSchedulerWin::~ThreadPoolSchedulerWin() noexcept {
   }
 }
 
-void ThreadPoolSchedulerWin::IntializeScheduler(Mso::WeakPtr<IDispatchQueueService> &&queue) noexcept {
+void ThreadPoolSchedulerWin::InitializeScheduler(Mso::WeakPtr<IDispatchQueueService> &&queue) noexcept {
   m_queue = std::move(queue);
 }
 

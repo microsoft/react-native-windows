@@ -32,7 +32,7 @@ std::map<std::string, folly::dynamic> PlatformConstantsModule::getConstants() {
        folly::dynamic::object("major", ReactNativeVersion.Major)("minor", ReactNativeVersion.Minor)(
            "patch", ReactNativeVersion.Patch)("prerelease", StringOrNull(ReactNativeVersion.Prerelease))},
 
-      // Provide version information for react-native-windows -- which is independant of
+      // Provide version information for react-native-windows -- which is independent of
       // the version of react-native we are built from
       {"reactNativeWindowsVersion", folly::dynamic::object("major", RNW_MAJOR)("minor", RNW_MINOR)("patch", RNW_PATCH)},
 

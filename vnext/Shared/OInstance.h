@@ -13,7 +13,7 @@
 #include <ReactCommon/LongLivedObject.h>
 #include <cxxreact/Instance.h>
 
-// Standard Libriary
+// Standard Library
 #include <memory>
 #include <string>
 #include <vector>

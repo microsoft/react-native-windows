@@ -1,8 +1,21 @@
 # Change Log - @rnw-scripts/integrate-rn
 
-This log was last generated on Tue, 25 Apr 2023 05:17:00 GMT and should not be manually modified.
+This log was last generated on Mon, 08 May 2023 17:41:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.4.7
+
+Mon, 08 May 2023 17:41:05 GMT
+
+### Patches
+
+- Fix typos and add `cspell` configuration (jthysell@microsoft.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.48
+- Bump @react-native-windows/fs to v0.0.0-canary.19
+- Bump @react-native-windows/package-utils to v0.0.0-canary.45
+- Bump react-native-platform-override to v1.9.6
+- Bump @rnw-scripts/just-task to v2.3.8
 
 ## 1.4.6
 

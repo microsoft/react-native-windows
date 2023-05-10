@@ -103,7 +103,7 @@ struct EmptyArray {
 };
 
 // [true]
-struct ArrayWitnOneElement {
+struct ArrayWithOneElement {
   static void Write(IJSValueWriter &writer) {
     writer.WriteArrayBegin();
     writer.WriteBoolean(true);
@@ -120,7 +120,7 @@ struct ArrayWitnOneElement {
 };
 
 // [0, 1, 2, 3, 4]
-struct ArrayWitnMultipleElement {
+struct ArrayWithMultipleElement {
   static void Write(IJSValueWriter &writer) {
     writer.WriteArrayBegin();
     for (int i = 0; i < 5; i++) {
@@ -308,8 +308,8 @@ struct NestedObjectWithPrimitiveValues {
 
 #define IMPORT_ARGUMENT_READER_TEST_CASES           \
   IMPORT_READER_TEST_CASE(EmptyArray)               \
-  IMPORT_READER_TEST_CASE(ArrayWitnOneElement)      \
-  IMPORT_READER_TEST_CASE(ArrayWitnMultipleElement) \
+  IMPORT_READER_TEST_CASE(ArrayWithOneElement)      \
+  IMPORT_READER_TEST_CASE(ArrayWithMultipleElement) \
   IMPORT_READER_TEST_CASE(EmptyNestedArray)         \
   IMPORT_READER_TEST_CASE(NestedArrayWithPrimitiveValues)
 

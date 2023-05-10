@@ -33,7 +33,7 @@ namespace Microsoft.ReactNative
     DOC_STRING(
         "There is a chance that cached flex basis values can cause text truncation in some re-layout scenarios. "
         "Enabling [Yoga](https://github.com/facebook/yoga)'s experimental web flex basis behavior fixes this issue, "
-        "however using it may result in perfomance regressions due to additional layout passes.")
+        "however using it may result in performance regressions due to additional layout passes.")
     DOC_DEFAULT("false")
     static void SetUseWebFlexBasisBehavior(ReactInstanceSettings settings, Boolean value);
 

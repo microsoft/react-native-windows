@@ -56,7 +56,7 @@ winrt::Windows::Foundation::IInspectable ReactCompositionViewComponentBuilder::C
   return m_createView(context);
 }
 
-bool ReactCompositionViewComponentBuilder::HandeCommand(
+bool ReactCompositionViewComponentBuilder::HandelCommand(
     winrt::Windows::Foundation::IInspectable handle,
     winrt::hstring commandName,
     IJSValueReader args) noexcept {

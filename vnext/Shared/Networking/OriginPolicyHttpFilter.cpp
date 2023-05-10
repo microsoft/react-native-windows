@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+// cspell:ignore Referer
+
 #include "OriginPolicyHttpFilter.h"
 
 // React Native Windows
@@ -565,8 +567,8 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(
   if (!requestHeadersAllowed) {
     // Forbidden headers are excluded from the JavaScript layer.
     // User agents may use these headers internally.
-    const set unsafeNotForbidenHeaderNames = CorsUnsafeNotForbiddenRequestHeaderNames(request.Headers());
-    for (const auto name : unsafeNotForbidenHeaderNames) {
+    const set unsafeNotForbiddenHeaderNames = CorsUnsafeNotForbiddenRequestHeaderNames(request.Headers());
+    for (const auto name : unsafeNotForbiddenHeaderNames) {
       if (controlValues.AllowedHeaders.find(name) == controlValues.AllowedHeaders.cend())
         throw hresult_error{
             E_INVALIDARG,
@@ -694,7 +696,7 @@ bool OriginPolicyHttpFilter::OnRedirecting(
     HttpResponseMessage const &response) noexcept {
   // Consider the following scenario.
   // User signs in to http://a.com and visits a page that makes CORS request to http://b.com with origin=http://a.com.
-  // Http://b.com reponds with a redirect to http://a.com. The browser follows the redirect to http://a.com with
+  // Http://b.com responds with a redirect to http://a.com. The browser follows the redirect to http://a.com with
   // origin=http://a.com. Since the origin matches the URL, the request is authorized at http://a.com, but it actually
   // allows http://b.com to bypass the CORS check at http://a.com since the redirected URL is from http://b.com.
   if (!IsSameOrigin(response.Headers().Location(), request.RequestUri()) &&
