@@ -9,7 +9,7 @@
     "directory": "packages/@rnw-scripts/ts-config"
   },
   "engines": {
-    "node": ">= 14"
+    "node": ">= 16"
   },
   "private": true
 }

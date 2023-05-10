@@ -19,9 +19,9 @@
     "integrate-rn": "./bin.js"
   },
   "dependencies": {
-    "@react-native-windows/find-repo-root": "0.72.0-preview.1",
-    "@react-native-windows/fs": "0.72.0-preview.1",
-    "@react-native-windows/package-utils": "0.72.0-preview.1",
+    "@react-native-windows/find-repo-root": "0.72.0-preview.2",
+    "@react-native-windows/fs": "0.72.0-preview.2",
+    "@react-native-windows/package-utils": "0.72.0-preview.2",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
     "async": "^3.2.3",
@@ -43,7 +43,7 @@
     "@types/async": "^3.2.5",
     "@types/jest": "^29.2.2",
     "@types/lodash": "^4.14.168",
-    "@types/node": "^14.14.22",
+    "@types/node": "^16.0.0",
     "@types/ora": "^3.2.0",
     "@types/semver": "^7.3.3",
     "@types/yargs": "^16.0.0",
@@ -58,7 +58,7 @@
     "lib-commonjs"
   ],
   "engines": {
-    "node": ">= 14"
+    "node": ">= 16"
   },
   "private": true
 }

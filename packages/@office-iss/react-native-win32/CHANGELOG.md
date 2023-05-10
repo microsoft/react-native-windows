@@ -1,8 +1,17 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 01 May 2023 16:43:57 GMT and should not be manually modified.
+This log was last generated on Thu, 04 May 2023 20:58:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.72.0-preview.2
+
+Thu, 04 May 2023 20:58:53 GMT
+
+### Changes
+
+- Backport Node 16 (34109996+chiaramooney@users.noreply.github.com)
+- Fix ref's on ViewWin32 (enables ViewWin32.focus() calls to work again) (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.72.0-preview.1
 

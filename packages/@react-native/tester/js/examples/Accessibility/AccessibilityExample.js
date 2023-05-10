@@ -40,9 +40,6 @@ const mixedCheckboxImageSource = require('./mixed.png');
 const {createRef} = require('react');
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    rowGap: 20,
-  },
   default: {
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#0f0f0f',
@@ -106,7 +103,7 @@ const styles = StyleSheet.create({
 class AccessibilityExample extends React.Component<{}> {
   render(): React.Node {
     return (
-      <View style={styles.sectionContainer}>
+      <View>
         <RNTesterBlock title="TextView without label">
           <Text>
             Text's accessibilityLabel is the raw text itself unless it is set
@@ -287,7 +284,7 @@ class AccessibilityExample extends React.Component<{}> {
 class AutomaticContentGrouping extends React.Component<{}> {
   render(): React.Node {
     return (
-      <View style={styles.sectionContainer}>
+      <View>
         <RNTesterBlock title="The parent and the children have a different role">
           <TouchableNativeFeedback accessible={true} accessibilityRole="button">
             <View accessible={false}>
@@ -734,7 +731,7 @@ class AccessibilityRoleAndStateExample extends React.Component<{}> {
     ];
 
     return (
-      <View style={styles.sectionContainer}>
+      <>
         <RNTesterBlock title="ScrollView with grid role">
           <ScrollView accessibilityRole="grid" style={styles.scrollView}>
             {content}
@@ -879,11 +876,12 @@ class AccessibilityRoleAndStateExample extends React.Component<{}> {
             </View>
             <ExpandableElementExample />
             <SelectionExample />
-            <Text>Nested checkbox with delayed state change</Text>
-            <NestedCheckBox />
+            <RNTesterBlock title="Nested checkbox with delayed state change">
+              <NestedCheckBox />
+            </RNTesterBlock>
           </View>
         </RNTesterBlock>
-      </View>
+      </>
     );
   }
 }
@@ -891,7 +889,7 @@ class AccessibilityRoleAndStateExample extends React.Component<{}> {
 class AccessibilityActionsExample extends React.Component<{}> {
   render(): React.Node {
     return (
-      <View style={styles.sectionContainer}>
+      <View>
         <RNTesterBlock title="Non-touchable with activate action">
           <View
             accessible={true}
@@ -1295,7 +1293,7 @@ function SetAccessibilityFocusExample(props: {}): React.Node {
 class EnabledExamples extends React.Component<{}> {
   render(): React.Node {
     return (
-      <View style={styles.sectionContainer}>
+      <View>
         {Platform.OS === 'ios' ? (
           <>
             <RNTesterBlock title="isBoldTextEnabled()">
@@ -1359,7 +1357,7 @@ class EnabledExamples extends React.Component<{}> {
 class ImportantForAccessibilityExamples extends React.Component<{}> {
   render(): React.Node {
     return (
-      <View style={styles.sectionContainer}>
+      <View>
         <RNTesterBlock title="ImageBackground with importantForAccessibility=no-hide-descendants">
           <View style={styles.container}>
             <ImageBackground
@@ -1548,10 +1546,11 @@ function DisplayOptionStatusExample({
 
 function AccessibilityExpandedExample(): React.Node {
   const [expand, setExpanded] = React.useState(false);
+  const [pressed, setPressed] = React.useState(false);
   const expandAction = {name: 'expand'};
   const collapseAction = {name: 'collapse'};
   return (
-    <View style={styles.sectionContainer}>
+    <>
       <RNTesterBlock title="Collapse/Expanded state change (Paper)">
         <Text>
           The following component announces expanded/collapsed state correctly
@@ -1593,7 +1592,7 @@ function AccessibilityExpandedExample(): React.Node {
           </View>
         </TouchableWithoutFeedback>
       </RNTesterBlock>
-    </View>
+    </>
   );
 }
 

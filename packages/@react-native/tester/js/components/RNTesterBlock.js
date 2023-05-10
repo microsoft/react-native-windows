@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
   container: {
     borderRadius: 0,
     borderWidth: 1,
+    marginTop: 30,
     marginHorizontal: 20,
   },
   titleText: {

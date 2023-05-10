@@ -136,7 +136,10 @@ class FlatListExample extends React.PureComponent<Props, State> {
     const filteredData = this.state.data.filter(filter);
     const flatListItemRendererProps = this._renderItemComponent();
     return (
-      <RNTesterPage noScroll={true} title="Simple list of items">
+      <RNTesterPage
+        noSpacer={true}
+        noScroll={true}
+        title="Simple list of items">
         <View style={styles.container}>
           <View style={styles.searchRow}>
             <View style={styles.options}>

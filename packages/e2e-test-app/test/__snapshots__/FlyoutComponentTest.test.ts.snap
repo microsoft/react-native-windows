@@ -184,7 +184,7 @@ exports[`FlyoutTests Flyout 1`] = `
                   "VerticalAlignment": "Center",
                   "Visibility": "Visible",
                   "Width": 12,
-                  "XamlType": "Windows.UI.Xaml.Controls.IconElement",
+                  "XamlType": "Microsoft.UI.Xaml.Controls.AnimatedIcon",
                   "children": [
                     {
                       "Background": "#00000000",

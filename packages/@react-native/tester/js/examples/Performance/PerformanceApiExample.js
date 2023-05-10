@@ -32,7 +32,7 @@ function MemoryExample(): React.Node {
     setMemoryInfo(performance.memory);
   }, []);
   return (
-    <RNTesterPage noScroll={true} title="performance.memory">
+    <RNTesterPage noSpacer={true} noScroll={true} title="performance.memory">
       <View style={styles.container}>
         <Button onPress={onGetMemoryInfo} title="Click to update memory info" />
         <View>
@@ -63,7 +63,10 @@ function StartupTimingExample(): React.Node {
     setStartUpTiming(performance.reactNativeStartupTiming);
   }, []);
   return (
-    <RNTesterPage noScroll={true} title="performance.reactNativeStartupTiming">
+    <RNTesterPage
+      noSpacer={true}
+      noScroll={true}
+      title="performance.reactNativeStartupTiming">
       <View style={styles.container}>
         <Button
           onPress={onGetStartupTiming}

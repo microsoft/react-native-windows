@@ -1,8 +1,25 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Mon, 01 May 2023 16:43:58 GMT and should not be manually modified.
+This log was last generated on Mon, 08 May 2023 17:42:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.72.0-preview.3
+
+Mon, 08 May 2023 17:42:34 GMT
+
+### Changes
+
+- Cherry Pick (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.72.0-preview.2
+
+Thu, 04 May 2023 20:58:54 GMT
+
+### Changes
+
+- Backport Node 16 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.72.0-preview.2
 
 ## 0.72.0-preview.1
 

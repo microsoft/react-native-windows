@@ -12,6 +12,15 @@
       default:
         - BuildEnvironment: PullRequest
           Matrix:
+            - Name: Arm64Debug
+              BuildConfiguration: Debug
+              BuildPlatform: ARM64
+            - Name: Arm64Release
+              BuildConfiguration: Release
+              BuildPlatform: ARM64
+            - Name: X64Debug
+              BuildConfiguration: Debug
+              BuildPlatform: x64
             - Name: X64Release
               BuildConfiguration: Release
               BuildPlatform: x64
@@ -19,6 +28,9 @@
               BuildConfiguration: Debug
               BuildPlatform: x86
               CreateApiDocs: true
+            - Name: X86Release
+              BuildConfiguration: Release
+              BuildPlatform: x86
         - BuildEnvironment: Continuous
           Matrix:
             - Name: Arm64Debug

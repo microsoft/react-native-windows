@@ -429,7 +429,7 @@ exports[`XamlTest Layout 1`] = `
       "VerticalAlignment": "Center",
       "Visibility": "Visible",
       "Width": 40,
-      "XamlType": "Windows.UI.Xaml.Controls.Control",
+      "XamlType": "Microsoft.UI.Xaml.Controls.ProgressRing",
       "children": [
         {
           "Background": "#00FFFFFF",
@@ -458,7 +458,7 @@ exports[`XamlTest Layout 1`] = `
               "Top": 0,
               "VerticalAlignment": "Stretch",
               "Visibility": "Visible",
-              "XamlType": "Windows.UI.Xaml.FrameworkElement",
+              "XamlType": "Microsoft.UI.Xaml.Controls.AnimatedVisualPlayer",
             },
           ],
         },
@@ -481,7 +481,7 @@ exports[`XamlTest Layout 1`] = `
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
       "Width": 800,
-      "XamlType": "Windows.UI.Xaml.Controls.Control",
+      "XamlType": "Microsoft.UI.Xaml.Controls.InfoBar",
       "children": [
         {
           "Background": "#FFDFF6DD",
@@ -575,7 +575,7 @@ exports[`XamlTest Layout 1`] = `
                   "Top": 0,
                   "VerticalAlignment": "Stretch",
                   "Visibility": "Visible",
-                  "XamlType": "Windows.UI.Xaml.Controls.Panel",
+                  "XamlType": "Microsoft.UI.Xaml.Controls.Primitives.InfoBarPanel",
                   "children": [
                     {
                       "Clip": null,

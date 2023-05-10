@@ -107,13 +107,7 @@ export default function RNTesterModuleContainer(props: Props): React.Node {
           sections={sections}
           filter={filter}
           render={({filteredSections}) =>
-            module.showIndividualExamples === true ? (
-              filteredSections[0].data.map(renderExample)
-            ) : (
-              <View style={styles.sectionContainer}>
-                {filteredSections[0].data.map(renderExample)}
-              </View>
-            )
+            filteredSections[0].data.map(renderExample)
           }
         />
       </View>
@@ -165,9 +159,5 @@ const styles = StyleSheet.create({
       android: 0,
     }),
     marginHorizontal: 15,
-  },
-  sectionContainer: {
-    rowGap: 30,
-    paddingVertical: 30,
   },
 });

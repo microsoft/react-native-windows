@@ -4076,6 +4076,50 @@ private:
 };
 
 
+  class JSI_EXPORT NativeDevSplitBundleLoaderCxxSpecJSI : public TurboModule {
+protected:
+  NativeDevSplitBundleLoaderCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
+
+public:
+  virtual jsi::Value loadBundle(jsi::Runtime &rt, jsi::String bundlePath) = 0;
+
+};
+
+template <typename T>
+class JSI_EXPORT NativeDevSplitBundleLoaderCxxSpec : public TurboModule {
+public:
+  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.get(rt, propName);
+  }
+
+protected:
+  NativeDevSplitBundleLoaderCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
+    : TurboModule("DevSplitBundleLoader", jsInvoker),
+      delegate_(static_cast<T*>(this), jsInvoker) {}
+
+private:
+  class Delegate : public NativeDevSplitBundleLoaderCxxSpecJSI {
+  public:
+    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
+      NativeDevSplitBundleLoaderCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
+
+    jsi::Value loadBundle(jsi::Runtime &rt, jsi::String bundlePath) override {
+      static_assert(
+          bridging::getParameterCount(&T::loadBundle) == 2,
+          "Expected loadBundle(...) to have 2 parameters");
+
+      return bridging::callFromJs<jsi::Value>(
+          rt, &T::loadBundle, jsInvoker_, instance_, std::move(bundlePath));
+    }
+
+  private:
+    T *instance_;
+  };
+
+  Delegate delegate_;
+};
+
+
   class JSI_EXPORT NativePlatformConstantsAndroidCxxSpecJSI : public TurboModule {
 protected:
   NativePlatformConstantsAndroidCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);

@@ -87,7 +87,7 @@ function watchProject(config: Config): void {
   log(`[Watching] folder {${config.input}} ...`);
 
   // We use delayTimer to coalesce multiple events coming at the same time
-  let delayTimer: number | undefined;
+  let delayTimer: NodeJS.Timeout | undefined;
   fs.watch(config.input, () => {
     clearTimeout(delayTimer);
     delayTimer = setTimeout(() => fireAndForget(startProcessingProject), 100);
