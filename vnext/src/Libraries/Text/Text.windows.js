@@ -208,6 +208,7 @@ const Text: React.AbstractComponent<
 
   const _accessible = Platform.select({
     ios: accessible !== false,
+    windows: accessible !== false,
     default: accessible,
   });
 
