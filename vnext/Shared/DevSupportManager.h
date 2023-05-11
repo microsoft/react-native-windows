@@ -31,6 +31,7 @@ std::pair<std::string, bool> GetJavaScriptFromServer(
     const uint16_t sourceBundlePort,
     const std::string &jsBundleName,
     const std::string &platform,
+    const std::string &bundleAppId,
     bool dev,
     bool hot,
     bool inlineSourceMap,

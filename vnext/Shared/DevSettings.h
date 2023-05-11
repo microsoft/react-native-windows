@@ -43,6 +43,7 @@ struct DevSettings {
   std::string sourceBundleHost;
   std::string debugBundlePath;
   std::string platformName{STRING(RN_PLATFORM)};
+  std::string bundleAppId;
   std::function<void()> liveReloadCallback;
   std::function<void(std::string)> errorCallback;
   std::function<void()> waitingForDebuggerCallback;
@@ -93,6 +94,9 @@ struct DevSettings {
   std::function<void()> showDevMenuCallback;
 
   bool inlineSourceMap{true};
+
+  // When querying the bundle server for a bundle, should it request the dev bundle or release bundle
+  bool devBundle{true};
 
   bool enableDefaultCrashHandler{false};
 };

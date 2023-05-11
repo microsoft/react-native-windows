@@ -31,6 +31,7 @@ class DevServerHelper {
       const uint16_t sourceBundlePort,
       const std::string &jsbundle,
       const std::string &platform,
+      const std::string &bundleAppId,
       bool dev,
       bool hot,
       bool inlineSourceMap,
@@ -41,6 +42,12 @@ class DevServerHelper {
       hermesBytecodeVersionQuery = string_format(HermesBytecodeVersionQueryFormat, hermesBytecodeVersion);
     }
 
+    std::string appIdQuery;
+    if (bundleAppId.size() > 0) {
+      static constexpr const char AppIdQueryFormat[] = "&app=%s";
+      appIdQuery = string_format(AppIdQueryFormat, bundleAppId.c_str());
+    }
+
     return string_format(
         BundleUrlFormat,
         GetDeviceLocalHost(sourceBundleHost, sourceBundlePort).c_str(),
@@ -49,7 +56,8 @@ class DevServerHelper {
         dev ? "true" : "false",
         hot ? "true" : "false",
         inlineSourceMap ? "true" : "false",
-        hermesBytecodeVersionQuery.c_str());
+        hermesBytecodeVersionQuery.c_str(),
+        appIdQuery.c_str());
   }
 
   static std::string get_OnChangeEndpointUrl(const std::string &sourceBundleHost, const uint16_t sourceBundlePort) {
@@ -91,7 +99,8 @@ class DevServerHelper {
   }
 
   static constexpr const char DeviceLocalHostFormat[] = "%s:%d";
-  static constexpr const char BundleUrlFormat[] = "http://%s/%s.bundle?platform=%s&dev=%s&hot=%s&inlineSourceMap=%s%s";
+  static constexpr const char BundleUrlFormat[] =
+      "http://%s/%s.bundle?platform=%s&dev=%s&hot=%s&inlineSourceMap=%s%s%s";
   static constexpr const char SourceMapUrlFormat[] = "http://%s/%s.map?platform=%s&dev=%s&hot=%s";
   static constexpr const char LaunchDevToolsCommandUrlFormat[] = "http://%s/launch-js-devtools";
   static constexpr const char OnChangeEndpointUrlFormat[] = "http://%s/onchange";

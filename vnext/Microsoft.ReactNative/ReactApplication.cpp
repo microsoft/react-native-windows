@@ -97,6 +97,14 @@ void ReactApplication::JavaScriptBundleFile(hstring const &value) noexcept {
   InstanceSettings().JavaScriptBundleFile(value);
 }
 
+hstring ReactApplication::BundleAppId() noexcept {
+  return InstanceSettings().BundleAppId();
+}
+
+void ReactApplication::BundleAppId(hstring const &value) noexcept {
+  InstanceSettings().BundleAppId(value);
+}
+
 void ReactApplication::OnActivated(Windows::ApplicationModel::Activation::IActivatedEventArgs const &e) {
   if (e.Kind() == Windows::ApplicationModel::Activation::ActivationKind::Protocol) {
     auto protocolActivatedEventArgs{e.as<Windows::ApplicationModel::Activation::ProtocolActivatedEventArgs>()};
