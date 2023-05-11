@@ -105,6 +105,7 @@ struct IReactSettingsSnapshot : IUnknown {
   virtual bool RequestInlineSourceMap() const noexcept = 0;
   virtual std::string JavaScriptBundleFile() const noexcept = 0;
   virtual std::string BundleAppId() const noexcept = 0;
+  virtual bool RequestDevBundle() const noexcept = 0;
   virtual bool UseDeveloperSupport() const noexcept = 0;
   virtual JSIEngine JsiEngine() const noexcept = 0;
 };
@@ -152,6 +153,7 @@ struct ReactDevOptions {
   std::string SourceBundleName; // Bundle name without any extension (e.g. "index.win32"). Default: "index.{PLATFORM}"
   std::string SourceBundleExtension; // Bundle name extension. Default: ".bundle".
   std::string BundleAppId; // Bundle app id. Default: "".
+  bool DevBundle{true}; // When requesting bundle from bundle server, query for dev bundle or release bundle
 
   //! Module name used for loading the debug bundle.
   //! e.g. The modules name registered in the jsbundle via AppRegistry.registerComponent('ModuleName', () =>

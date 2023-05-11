@@ -30,6 +30,7 @@ class ReactSettingsSnapshot final : public Mso::UnknownObject<IReactSettingsSnap
   bool RequestInlineSourceMap() const noexcept override;
   std::string JavaScriptBundleFile() const noexcept override;
   std::string BundleAppId() const noexcept override;
+  bool RequestDevBundle() const noexcept override;
   bool UseDeveloperSupport() const noexcept override;
   JSIEngine JsiEngine() const noexcept override;
 

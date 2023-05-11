@@ -125,6 +125,12 @@ namespace Microsoft.ReactNative
       "at the time when the React instance was created.\n"
       "The name of the app passed to the packager server via the 'app' query parameter.")
     String BundleAppId { get; };
+
+    DOC_STRING(
+      "A read-only snapshot of the @ReactInstanceSettings.RequestDevBundle property value "
+      "at the time when the React instance was created.\n"
+      "When querying the bundle server for a bundle, should it request the dev bundle or release bundle.")
+    Boolean RequestDevBundle { get; };
   }
 
   [webhosthidden]

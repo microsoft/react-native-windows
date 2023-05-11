@@ -110,6 +110,10 @@ struct ReactContextStub : implements<ReactContextStub, IReactContext> {
   hstring BundleAppId() noexcept {
     VerifyElseCrashSz(false, "Not implemented");
   }
+  
+  bool RequestDevBundle() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
 
   LoadingState LoadingState() noexcept {
     VerifyElseCrashSz(false, "Not implemented");
