@@ -65,6 +65,10 @@ hstring ReactSettingsSnapshot::BundleAppId() const noexcept {
   return winrt::to_hstring(m_settings->BundleAppId());
 }
 
+bool ReactSettingsSnapshot::RequestDevBundle() const noexcept {
+  return m_settings->RequestDevBundle();
+}
+
 Mso::React::IReactSettingsSnapshot const &ReactSettingsSnapshot::GetInner() const noexcept {
   return *m_settings;
 }
