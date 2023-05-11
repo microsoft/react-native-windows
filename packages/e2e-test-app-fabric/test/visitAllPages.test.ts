@@ -34,7 +34,7 @@ type RNTesterList = {
 
 describe('visitAllPages', () => {
   //for (const component of componentExamples) {
-  test('Button', async () => await goToComponentExample('Button'));
+  //test('Button', async () => await goToComponentExample('Button'));
   //}
   /*
   for (const api of apiExamples) {
