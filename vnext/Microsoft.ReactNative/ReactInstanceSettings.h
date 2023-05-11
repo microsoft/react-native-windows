@@ -178,7 +178,7 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
       single_threaded_vector<IReactPackageProvider>()};
   hstring m_javaScriptBundleFile{};
   hstring m_bundleAppId{};
-  bool m_devBundle{};
+  bool m_devBundle{true};
   bool m_enableJITCompilation{true};
   bool m_enableByteCodeCaching{false};
   hstring m_byteCodeFileUri{};
