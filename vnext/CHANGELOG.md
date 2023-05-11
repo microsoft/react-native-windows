@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 10 May 2023 01:38:12 GMT and should not be manually modified.
+This log was last generated on Thu, 11 May 2023 23:56:13 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.12
+
+Thu, 11 May 2023 23:56:13 GMT
+
+### Patches
+
+- Fix a bunch of properties on Text (30809111+acoates-ms@users.noreply.github.com)
+- Add option to load ship bundles from metro (30809111+acoates-ms@users.noreply.github.com)
+- Adds BundleAppId to ReactInstanceSettings (erozell@outlook.com)
 
 ## 0.71.11
 

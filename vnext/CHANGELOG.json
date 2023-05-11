@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 11 May 2023 23:56:13 GMT",
+      "tag": "react-native-windows_v0.71.12",
+      "version": "0.71.12",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "304ec17f0ee96fe2c21014d350084cd992857c68",
+            "comment": "Fix a bunch of properties on Text"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "3d5325df558354162ad48941e7f96c5bd376acd9",
+            "comment": "Add option to load ship bundles from metro"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "3d5325df558354162ad48941e7f96c5bd376acd9",
+            "comment": "Adds BundleAppId to ReactInstanceSettings"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 10 May 2023 01:38:12 GMT",
       "tag": "react-native-windows_v0.71.11",
       "version": "0.71.11",
