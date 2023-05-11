@@ -426,6 +426,7 @@ void ReactInstanceWin::Initialize() noexcept {
           devSettings->debuggerAttachCallback = GetDebuggerAttachCallback();
           devSettings->enableDefaultCrashHandler = m_options.EnableDefaultCrashHandler();
           devSettings->bundleAppId = BundleAppId();
+          devSettings->devBundle = RequestDevBundle();
 
 #ifndef CORE_ABI
           devSettings->showDevMenuCallback = [weakThis]() noexcept {
@@ -1128,6 +1129,10 @@ std::string ReactInstanceWin::JavaScriptBundleFile() const noexcept {
 
 std::string ReactInstanceWin::BundleAppId() const noexcept {
   return m_options.DeveloperSettings.BundleAppId;
+}
+
+bool ReactInstanceWin::RequestDevBundle() const noexcept {
+  return m_options.DeveloperSettings.DevBundle;
 }
 
 bool ReactInstanceWin::UseDeveloperSupport() const noexcept {
