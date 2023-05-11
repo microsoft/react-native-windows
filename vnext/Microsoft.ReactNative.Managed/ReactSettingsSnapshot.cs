@@ -32,7 +32,7 @@ namespace Microsoft.ReactNative.Managed
 
     public bool UseWebDebugger => IsValid ? Handle.UseWebDebugger : false;
 
-    public bool RequestDevBundle => IsValid ? Handle.RequestDevBundle : null;
+    public bool RequestDevBundle => IsValid ? Handle.RequestDevBundle : true;
 
     public IReactSettingsSnapshot Handle { get; }
 
