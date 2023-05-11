@@ -212,6 +212,7 @@ const Text: React.AbstractComponent<
 
   const _accessible = Platform.select({
     ios: accessible !== false,
+    windows: accessible !== false,
     default: accessible,
   });
 
@@ -228,24 +229,16 @@ const Text: React.AbstractComponent<
     return (
       <NativeVirtualText
         {...restProps}
+        accessibilityState={_accessibilityState}
         {...eventHandlersForText}
-        disabled={_disabled}
-        selectable={_selectable}
-        accessible={
-          accessible == null && Platform.OS === 'android'
-            ? _hasOnPressOrOnLongPress
-            : _accessible
-        }
         accessibilityLabel={ariaLabel ?? accessibilityLabel}
-        accessibilityState={nativeTextAccessibilityState}
         accessibilityRole={
           role ? getAccessibilityRoleFromRole(role) : accessibilityRole
         }
-        allowFontScaling={allowFontScaling !== false}
-        ellipsizeMode={ellipsizeMode ?? 'tail'}
         isHighlighted={isHighlighted}
-        nativeID={id ?? nativeID}
         isPressable={isPressable}
+        selectable={_selectable}
+        nativeID={id ?? nativeID}
         numberOfLines={numberOfLines}
         selectionColor={selectionColor}
         style={flattenedStyle}
@@ -297,10 +290,23 @@ const Text: React.AbstractComponent<
             <NativeText
               {...textPropsLessStyle}
               {...eventHandlersForText}
-              accessible={accessible !== false}
+              disabled={_disabled}
+              selectable={_selectable}
+              accessible={
+                accessible == null && Platform.OS === 'android'
+                  ? _hasOnPressOrOnLongPress
+                  : _accessible
+              }
+              accessibilityLabel={ariaLabel ?? accessibilityLabel}
+              accessibilityState={nativeTextAccessibilityState}
+              accessibilityRole={
+                role ? getAccessibilityRoleFromRole(role) : accessibilityRole
+              }
               allowFontScaling={allowFontScaling !== false}
               ellipsizeMode={ellipsizeMode ?? 'tail'}
               isHighlighted={isHighlighted}
+              nativeID={id ?? nativeID}
+              numberOfLines={numberOfLines}
               selectionColor={selectionColor}
               style={((rest: any): TextStyleProp)}
               ref={forwardedRef}
@@ -314,12 +320,25 @@ const Text: React.AbstractComponent<
           <NativeText
             {...restProps}
             {...eventHandlersForText}
-            accessible={accessible !== false}
+            disabled={_disabled}
+            selectable={_selectable}
+            accessible={
+              accessible == null && Platform.OS === 'android'
+                ? _hasOnPressOrOnLongPress
+                : _accessible
+            }
+            accessibilityLabel={ariaLabel ?? accessibilityLabel}
+            accessibilityState={nativeTextAccessibilityState}
+            accessibilityRole={
+              role ? getAccessibilityRoleFromRole(role) : accessibilityRole
+            }
             allowFontScaling={allowFontScaling !== false}
             ellipsizeMode={ellipsizeMode ?? 'tail'}
             isHighlighted={isHighlighted}
+            nativeID={id ?? nativeID}
+            numberOfLines={numberOfLines}
             selectionColor={selectionColor}
-            style={style}
+            style={flattenedStyle}
             ref={forwardedRef}
           />
         </TextAncestor.Provider>
