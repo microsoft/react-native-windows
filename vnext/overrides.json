@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.72.0-rc.1",
+  "baseVersion": "0.72.0-rc.3",
   "overrides": [
     {
       "type": "derived",
@@ -50,7 +50,7 @@
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/ImageRequest.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/imagemanager/platform/ios/react/renderer/imagemanager/ImageRequest.cpp",
-      "baseHash": "1c2613db5bd1cbbadbab5f5357186ffc73d6bd90"
+      "baseHash": "106181f5367b924b2ee2572842e9f2159427e3c2"
     },
     {
       "type": "patch",
@@ -439,7 +439,7 @@
       "type": "derived",
       "file": "src/Libraries/NativeComponent/BaseViewConfig.windows.js",
       "baseFile": "packages/react-native/Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "3c1918ff2ab3e43b4900e9b1e8549537d273d575"
+      "baseHash": "daeb879969c322e67efcb9595d6bb171b9dad6d8"
     },
     {
       "type": "platform",
