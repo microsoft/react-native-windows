@@ -129,9 +129,6 @@ componentTest(
   ),
 );
 
-// Slider needs a height set to render (#5437)
-componentTest.skip('Slider', mountAndMeasure(RN.Slider));
-
 componentTest('Switch', mountAndMeasure(RN.Switch));
 
 componentTest(
