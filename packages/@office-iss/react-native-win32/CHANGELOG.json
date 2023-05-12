@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 12 May 2023 05:14:33 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.195",
+      "version": "0.0.0-canary.195",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "90e19f38281b3bcdd0c18029c5e79fbe44bc90f9",
+            "comment": "Export additional TS types for back compat"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 08 May 2023 17:41:03 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.194",
       "version": "0.0.0-canary.194",
