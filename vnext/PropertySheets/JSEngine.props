@@ -24,7 +24,7 @@
     <EnableDevServerHBCBundles Condition="'$(EnableDevServerHBCBundles)' == ''">false</EnableDevServerHBCBundles>
 
     <UseV8 Condition="'$(UseV8)' == ''">false</UseV8>
-    <V8Version Condition="'$(V8Version)' == ''">0.71.2</V8Version>
+    <V8Version Condition="'$(V8Version)' == ''">0.71.3</V8Version>
     <V8PackageName>ReactNative.V8Jsi.Windows</V8PackageName>
     <V8PackageName Condition="'$(V8AppPlatform)' != 'win32'">$(V8PackageName).UWP</V8PackageName>
   </PropertyGroup>
