@@ -23,10 +23,12 @@ module.exports = {
   roots: ['<rootDir>/test/'],
 
   // The test environment that will be used for testing
-  testEnvironment: '@react-native-windows/automation',
+  // This environment causes the app to launch and close after testing is complete.
+  // Temporarily disabling due to breaks in UIA implementation.
+  //testEnvironment: '@react-native-windows/automation',
 
   // The pattern or patterns Jest uses to detect test files
-  testRegex: '.*\\.test\\.ts$',
+  testRegex: ['.*\\.test\\.ts$', '.*\\.test\\.js$'],
 
   // Default timeout of a test in milliseconds
   testTimeout: 70000,

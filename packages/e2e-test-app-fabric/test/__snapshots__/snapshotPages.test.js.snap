@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Control 1`] = `"View"`;
+
+exports[`Control2 1`] = `null`;
