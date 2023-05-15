@@ -11,7 +11,7 @@ steps:
     - task: NodeTool@0
       displayName: Set Node Version
       inputs:
-        versionSpec: '16.x'
+        versionSpec: '16.3.x'
 
   - template: yarn-install.yml
     parameters:
