@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 15 May 2023 15:16:30 GMT",
+      "tag": "react-native-windows_v0.71.13",
+      "version": "0.71.13",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "20a19f916805fdc0b9e65ece5a0f6bdb9f7364e2",
+            "comment": "Revert 10863"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "f54d249fcac7999eefbc155fa2f23b1b33619e8b",
+            "comment": "Backport Yoga Fix"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 11 May 2023 23:56:13 GMT",
       "tag": "react-native-windows_v0.71.12",
       "version": "0.71.12",
