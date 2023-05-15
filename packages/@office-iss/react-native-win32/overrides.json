@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.72.0-rc.1",
+  "baseVersion": "0.72.0-rc.3",
   "overrides": [
     {
       "type": "derived",
@@ -344,7 +344,7 @@
       "type": "derived",
       "file": "src/Libraries/NativeComponent/BaseViewConfig.win32.js",
       "baseFile": "packages/react-native/Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "3c1918ff2ab3e43b4900e9b1e8549537d273d575"
+      "baseHash": "daeb879969c322e67efcb9595d6bb171b9dad6d8"
     },
     {
       "type": "derived",
