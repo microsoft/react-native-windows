@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 08 May 2023 17:41:02 GMT and should not be manually modified.
+This log was last generated on Fri, 12 May 2023 05:14:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.651
+
+Fri, 12 May 2023 05:14:34 GMT
+
+### Changes
+
+- Remove relative path from codegen include in AppearanceModule.h (lyahdav@users.noreply.github.com)
+- [Fabric] fix border for Image and Switch (email not defined)
+- Add option to load ship bundles from metro (30809111+acoates-ms@users.noreply.github.com)
+- Fix V8 Node API Task Runner implementation (#10966) (vmoroz@users.noreply.github.com)
 
 ## 0.0.0-canary.650
 

@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 08 May 2023 17:41:03 GMT and should not be manually modified.
+This log was last generated on Fri, 12 May 2023 05:14:33 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.195
+
+Fri, 12 May 2023 05:14:33 GMT
+
+### Changes
+
+- Export additional TS types for back compat (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.194
 
