@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 15 May 2023 15:18:30 GMT",
+      "tag": "@office-iss/react-native-win32_v0.72.0-preview.3",
+      "version": "0.72.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "f2076401425338dec2db2d115b886988ac70e57b",
+            "comment": "Export additional TS types for back compat"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 04 May 2023 20:58:53 GMT",
       "tag": "@office-iss/react-native-win32_v0.72.0-preview.2",
       "version": "0.72.0-preview.2",
