@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 15 May 2023 15:18:30 GMT",
+      "tag": "react-native-windows_v0.72.0-preview.4",
+      "version": "0.72.0-preview.4",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "412f3c2036ad26d4b3013b3636940eccb26c1d3d",
+            "comment": "Fix V8 Node API task runner implementation"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 08 May 2023 17:42:34 GMT",
       "tag": "react-native-windows_v0.72.0-preview.3",
       "version": "0.72.0-preview.3",
