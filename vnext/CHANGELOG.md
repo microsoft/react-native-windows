@@ -1,8 +1,21 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 12 May 2023 05:14:34 GMT and should not be manually modified.
+This log was last generated on Tue, 16 May 2023 05:16:30 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.652
+
+Tue, 16 May 2023 05:16:30 GMT
+
+### Changes
+
+- Update Props Function (34109996+chiaramooney@users.noreply.github.com)
+- Integrate 4/28 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.170
+- Bump @react-native-windows/codegen to v0.0.0-canary.58
+- Bump @rnw-scripts/just-task to v2.3.9
+- Bump react-native-platform-override to v1.9.7
 
 ## 0.0.0-canary.651
 

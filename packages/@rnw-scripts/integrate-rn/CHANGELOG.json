@@ -2,6 +2,57 @@
   "name": "@rnw-scripts/integrate-rn",
   "entries": [
     {
+      "date": "Tue, 16 May 2023 05:16:30 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v1.4.8",
+      "version": "1.4.8",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@rnw-scripts/integrate-rn",
+            "commit": "b603bc740703e3725e21087cf26aee2b164c1307",
+            "comment": "Integrate 4/28"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.0.0-canary.49",
+            "commit": "b603bc740703e3725e21087cf26aee2b164c1307"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.20",
+            "commit": "b603bc740703e3725e21087cf26aee2b164c1307"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Bump @react-native-windows/package-utils to v0.0.0-canary.46",
+            "commit": "b603bc740703e3725e21087cf26aee2b164c1307"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Bump react-native-platform-override to v1.9.7",
+            "commit": "b603bc740703e3725e21087cf26aee2b164c1307"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Bump @rnw-scripts/jest-unittest-config to v1.5.3",
+            "commit": "b603bc740703e3725e21087cf26aee2b164c1307"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.9",
+            "commit": "b603bc740703e3725e21087cf26aee2b164c1307"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 08 May 2023 17:41:05 GMT",
       "tag": "@rnw-scripts/integrate-rn_v1.4.7",
       "version": "1.4.7",
