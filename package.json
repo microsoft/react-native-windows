@@ -39,6 +39,7 @@
     "@rnw-scripts/stamp-version": "0.0.0",
     "@rnw-scripts/take-screenshot": "*",
     "beachball": "^2.20.0",
+    "fast-glob": "^3.2.11",
     "husky": "^4.2.5",
     "react-native-platform-override": "*",
     "unbroken": "1.0.27",
