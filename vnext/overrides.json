@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20230429-2107-c4a6c3728",
+  "baseVersion": "0.0.0-20230505-2109-9b69263a1",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "66f0376d46a43021d6254829573c92db033a65c7"
+      "baseHash": "1f24493537576fda127ec6cfc52ed554bb119671"
     },
     {
       "type": "derived",
@@ -50,7 +50,7 @@
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/ImageRequest.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/imagemanager/platform/ios/react/renderer/imagemanager/ImageRequest.cpp",
-      "baseHash": "ee3373ea5f584d6b1128c8ac81bb134622de5fd7"
+      "baseHash": "355f9ced2d304fc8668b36433aabc55ac1c12247"
     },
     {
       "type": "patch",
@@ -132,7 +132,7 @@
       "type": "patch",
       "file": "ReactCommon/Yoga.cpp",
       "baseFile": "packages/react-native/ReactCommon/yoga/yoga/Yoga.cpp",
-      "baseHash": "10d7e3b2dd851c9a6790a8d807846744dc9bbded",
+      "baseHash": "ed0f2f0d276e2201bd1d72cdab348be2206eb229",
       "issue": 3994
     },
     {

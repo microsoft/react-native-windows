@@ -12,25 +12,15 @@ ImageRequest::ImageRequest(ImageSource imageSource, std::shared_ptr<const ImageT
   coordinator_ = std::make_shared<ImageResponseObserverCoordinator>();
 }
 
-ImageRequest::ImageRequest(ImageRequest &&other) noexcept
-    : imageSource_(std::move(other.imageSource_)),
-      telemetry_(std::move(other.telemetry_)),
-      coordinator_(std::move(other.coordinator_)) {
-  other.coordinator_ = nullptr;
-  other.cancelRequest_ = nullptr;
-  other.telemetry_ = nullptr;
-  other.imageSource_ = {};
+void ImageRequest::setCancelationFunction(
+    std::function<void(void)> cancelationFunction) {
+  cancelRequest_ = cancelationFunction;
 }
 
-ImageRequest::~ImageRequest() {
+void ImageRequest::cancel() const {
   if (cancelRequest_) {
     cancelRequest_();
   }
-}
-
-// cspell:disable-next-line
-void ImageRequest::setCancelationFunction(std::function<void(void)> cancellationFunction) {
-  cancelRequest_ = cancellationFunction;
 }
 
 const ImageSource &ImageRequest::getImageSource() const {
