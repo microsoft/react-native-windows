@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "RN integration 5/5/23",
+  "packageName": "@react-native-windows/automation-channel",
+  "email": "tatianakapos@microsoft.com",
+  "dependentChangeType": "patch"
+}
