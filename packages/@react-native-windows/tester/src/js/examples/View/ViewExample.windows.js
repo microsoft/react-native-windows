@@ -18,6 +18,7 @@ const {
   TouchableWithoutFeedback,
   View,
   Platform,
+  Alert,
 } = require('react-native');
 
 class ViewBorderStyleExample extends React.Component<
