@@ -2311,12 +2311,12 @@
     "@rnx-kit/tools-workspaces" "^0.1.3"
 
 "@rnx-kit/metro-plugin-duplicates-checker@^2.1.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-plugin-duplicates-checker/-/metro-plugin-duplicates-checker-2.1.0.tgz#22ae1a9f676aced666354f2ace67bd201ff287c1"
-  integrity sha512-YPCa73Arl6ICHRuq2Ccb76prf4tFDico10ymkRACkKCHf+6xaLcOL/VooNrd6TlXM1uoQMpzTcs+gVS4QpnDgA==
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-plugin-duplicates-checker/-/metro-plugin-duplicates-checker-2.1.1.tgz#7e31c3c7dcdf54968c0778d5e097a6c403d055bc"
+  integrity sha512-kWGOgbbxMVLr4KoBkqbbY+IHTSwiOGslQGo/8B4le9eeoN00nkfEI1rhMLNLHRkmSpbVZBwTDlPLYz2/T2AgoQ==
   dependencies:
     "@rnx-kit/console" "^1.0.11"
-    "@rnx-kit/tools-node" "^1.2.7"
+    "@rnx-kit/tools-node" "^2.0.0"
 
 "@rnx-kit/metro-serializer@^1.0.11":
   version "1.0.11"
@@ -2325,25 +2325,10 @@
   dependencies:
     semver "^7.0.0"
 
-"@rnx-kit/tools-language@^1.2.6":
-  version "1.2.6"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/tools-language/-/tools-language-1.2.6.tgz#ced63a53ce9821d14acb57a927237e5c39801387"
-  integrity sha512-8pq4JlFIkOqjwkN6amYebQ2CTAa1EeYjSBurGh8upYZtqUZBXDOK7FUAx+OVHs/7qQfmF2lU7QpqA7DZGv4xJA==
-
 "@rnx-kit/tools-language@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@rnx-kit/tools-language/-/tools-language-2.0.0.tgz#f6b12f9c7f1aa5245f2e6db4f03855a9a3d40add"
   integrity sha512-KUZf7MIWG4GFA2vskiG1Su3AMlTKighUqIi/T8J2OlANC5gKNflqAAYFhSgwj2I0XJ5nvxyJ4VRmDEf7DSjJIA==
-
-"@rnx-kit/tools-node@^1.2.7":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/tools-node/-/tools-node-1.3.0.tgz#8eb7a513ad9d2bba625cc9b1c5e9b033bb09045c"
-  integrity sha512-aUlKjcETkS3p6y2va4iFSpgUQ1QbzwxV54EgurGsJZ6FVv64LBc2FzgEVEVZ9IFwT/aVlc7JK4foC2LhT4rc5Q==
-  dependencies:
-    "@rnx-kit/tools-language" "^1.2.6"
-    find-up "^5.0.0"
-    pkg-dir "^5.0.0"
-    pkg-up "^3.1.0"
 
 "@rnx-kit/tools-node@^2.0.0":
   version "2.0.0"
