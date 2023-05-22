@@ -590,15 +590,13 @@ void ViewViewManager::TryUpdateView(
 }
 
 void ViewViewManager::SyncFocusableAndAccessible(ViewShadowNode *pViewShadowNode, bool useControl) {
-  // If developer specifies either the accessible and focusable prop to be false
-  // remove keyboard focus for component.
   if (useControl) {
     const auto isFocusable = pViewShadowNode->IsFocusable();
     const auto isAccessible = pViewShadowNode->IsAccessible();
     const auto isDisabled = pViewShadowNode->IsDisable();
     const auto isTabStop = !isDisabled && isFocusable;
     const auto accessibilityView = isAccessible ? xaml::Automation::Peers::AccessibilityView::Content
-                                             : xaml::Automation::Peers::AccessibilityView::Raw;
+                                                : xaml::Automation::Peers::AccessibilityView::Raw;
     pViewShadowNode->GetControl().IsTabStop(isTabStop);
     xaml::Automation::AutomationProperties::SetAccessibilityView(pViewShadowNode->GetControl(), accessibilityView);
   }
