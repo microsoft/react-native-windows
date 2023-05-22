@@ -1498,6 +1498,12 @@ function InternalTextInput(props: Props): React.Node {
     selected: props['aria-selected'] ?? props.accessibilityState?.selected,
   };
 
+  if (focusable && !accessible) {
+    console.warn(
+      'All focusable views should report proper accessiblity information. TextInputs marked as focusable should always be accessible.',
+    );
+  }
+
   if (Platform.OS === 'ios') {
     const RCTTextInputView =
       props.multiline === true
