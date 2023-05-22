@@ -11,22 +11,15 @@
 #include <algorithm>
 #include <atomic>
 #include <memory>
+
+#include <yoga/Yoga.h>
+
+#include "log.h"
 #include "Utils.h"
 #include "YGNode.h"
 #include "YGNodePrint.h"
 #include "Yoga-internal.h"
 #include "event/event.h"
-#include "log.h"
-#ifdef _MSC_VER
-#include <float.h>
-
-/* define fmaxf if < VC12 */
-#if _MSC_VER < 1800
-__forceinline const float fmaxf(const float a, const float b) {
-  return (a > b) ? a : b;
-}
-#endif
-#endif
 
 using namespace facebook::yoga;
 using detail::Log;

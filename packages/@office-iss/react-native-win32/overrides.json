@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20230429-2107-c4a6c3728",
+  "baseVersion": "0.0.0-20230505-2109-9b69263a1",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "66f0376d46a43021d6254829573c92db033a65c7"
+      "baseHash": "1f24493537576fda127ec6cfc52ed554bb119671"
     },
     {
       "type": "derived",
@@ -35,7 +35,7 @@
       "type": "derived",
       "file": "src/Libraries/Animated/NativeAnimatedHelper.win32.js",
       "baseFile": "packages/react-native/Libraries/Animated/NativeAnimatedHelper.js",
-      "baseHash": "1fa81d394592753bb28ee0c89e9a6070da434556",
+      "baseHash": "99fc31f856815c19024407d629e4a0762df9011e",
       "issue": 11041
     },
     {
