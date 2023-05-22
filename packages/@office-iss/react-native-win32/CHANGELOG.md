@@ -1,8 +1,24 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Thu, 04 May 2023 20:58:53 GMT and should not be manually modified.
+This log was last generated on Mon, 22 May 2023 15:16:17 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.72.0-preview.4
+
+Mon, 22 May 2023 15:16:17 GMT
+
+### Changes
+
+- Merge rc3: (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.72.0-preview.3
+
+Mon, 15 May 2023 15:18:30 GMT
+
+### Changes
+
+- Export additional TS types for back compat (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.72.0-preview.2
 
