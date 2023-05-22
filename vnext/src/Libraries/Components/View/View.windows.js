@@ -185,12 +185,15 @@ const View: React.AbstractComponent<
     };
 
     const _focusable = tabIndex !== undefined ? !tabIndex : focusable;
-    const _accessible = importantForAccessibility === 'no-hide-descendants'
-      ? false
-      : otherProps.accessible;
+    const _accessible =
+      importantForAccessibility === 'no-hide-descendants'
+        ? false
+        : otherProps.accessible;
 
     if (_focusable && !_accessible) {
-      console.warn('All focusable views should report proper accessiblity information. Views marked as focusable should always be accessible.');
+      console.warn(
+        'All focusable views should report proper accessiblity information. Views marked as focusable should always be accessible.',
+      );
     }
 
     // Windows]
