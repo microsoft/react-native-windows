@@ -190,7 +190,7 @@ const View: React.AbstractComponent<
         ? false
         : otherProps.accessible;
 
-    if (_focusable && !_accessible) {
+    if (_focusable === true && _accessible === false) {
       console.warn(
         'All focusable views should report proper accessiblity information. Views marked as focusable should always be accessible.',
       );
