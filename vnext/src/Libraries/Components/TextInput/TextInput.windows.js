@@ -1527,6 +1527,12 @@ function InternalTextInput(props: Props): React.Node {
     };
   }
 
+  if (focusable && !accessible) {
+    console.warn(
+      'All focusable views should report proper accessiblity information. TextInputs marked as focusable should always be accessible.',
+    );
+  }
+
   // $FlowFixMe[underconstrained-implicit-instantiation]
   let style = flattenStyle(props.style);
 

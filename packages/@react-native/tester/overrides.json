@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.72.0-rc.1",
+  "baseVersion": "0.72.0-rc.3",
   "overrides": [
     {
       "type": "copy",
@@ -425,7 +425,7 @@
       "type": "copy",
       "directory": "js/examples/View",
       "baseDirectory": "packages/rn-tester/js/examples/View",
-      "baseHash": "ed0c0457a5d986aa5ac7969c9b6d112705436616",
+      "baseHash": "f8e81a317e2a94523374549592f9fab2cb5aa463",
       "issue": 4054
     },
     {
