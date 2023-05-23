@@ -18,7 +18,7 @@
   "main": "lib-commonjs/automationChannel.js",
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^5.30.5",
-    "@typescript-eslint/parser": "^5.30.5",
+    "@typescript-eslint/parser": "^5.57.1",
     "jsonrpc-lite": "^2.2.0"
   },
   "devDependencies": {
@@ -31,7 +31,7 @@
     "just-scripts": "^1.3.2",
     "prettier": "^2.4.1",
     "react": "18.2.0",
-    "react-native": "0.0.0-20230505-2109-9b69263a1",
+    "react-native": "0.73.0-nightly-20230519-de1e9f5d1",
     "react-native-windows": "^0.0.0-canary.652",
     "typescript": "^4.9.5"
   },

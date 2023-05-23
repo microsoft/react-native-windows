@@ -20,7 +20,7 @@
   "dependencies": {
     "@react-native-windows/automation-channel": "^0.10.21",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
-    "@typescript-eslint/parser": "^5.30.5"
+    "@typescript-eslint/parser": "^5.57.1"
   },
   "devDependencies": {
     "@jest/types": "^29.2.1",
