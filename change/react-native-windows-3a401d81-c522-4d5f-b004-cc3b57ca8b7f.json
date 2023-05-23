@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix Utils.cpp not compiling on Clang",
-  "packageName": "react-native-windows",
-  "email": "lyahdav@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
