@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 15 May 2023 15:16:30 GMT and should not be manually modified.
+This log was last generated on Tue, 23 May 2023 00:04:06 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.14
+
+Tue, 23 May 2023 00:04:06 GMT
+
+### Patches
+
+- Allow apps to provide accessibility information on non-focusable components (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.71.13
 

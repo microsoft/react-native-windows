@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 23 May 2023 00:04:06 GMT",
+      "tag": "react-native-windows_v0.71.14",
+      "version": "0.71.14",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "af7e085f5462a7dbca69a6816ece21f65638971f",
+            "comment": "Allow apps to provide accessibility information on non-focusable components"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 15 May 2023 15:16:30 GMT",
       "tag": "react-native-windows_v0.71.13",
       "version": "0.71.13",
