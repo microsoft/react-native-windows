@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Tue, 23 May 2023 05:13:44 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.197",
+      "version": "0.0.0-canary.197",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "47eeb713077963b7e41a80265d16bbeee568d674",
+            "comment": "RN integration 5/5/23"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 16 May 2023 05:16:29 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.196",
       "version": "0.0.0-canary.196",

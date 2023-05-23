@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 23 May 2023 05:13:44 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.653",
+      "version": "0.0.0-canary.653",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "lyahdav@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "53d1bbf9c37708e88bd0e670947ec5189babc50d",
+            "comment": "Fix Utils.cpp not compiling on Clang"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "f360feb23890a0690ac0d4049edc6bfc99a5da3b",
+            "comment": "Allow apps to provide accessiblity information on non-focusable components"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "47eeb713077963b7e41a80265d16bbeee568d674",
+            "comment": "RN integration 5/5/23"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 16 May 2023 05:16:30 GMT",
       "tag": "react-native-windows_v0.0.0-canary.652",
       "version": "0.0.0-canary.652",

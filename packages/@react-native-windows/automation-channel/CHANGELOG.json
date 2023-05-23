@@ -2,6 +2,27 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Tue, 23 May 2023 05:13:44 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.11.0",
+      "version": "0.11.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "47eeb713077963b7e41a80265d16bbeee568d674",
+            "comment": "RN integration 5/5/23"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.653",
+            "commit": "47eeb713077963b7e41a80265d16bbeee568d674"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 16 May 2023 05:16:29 GMT",
       "tag": "@react-native-windows/automation-channel_v0.10.21",
       "version": "0.10.21",

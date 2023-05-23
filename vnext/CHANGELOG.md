@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 16 May 2023 05:16:30 GMT and should not be manually modified.
+This log was last generated on Tue, 23 May 2023 05:13:44 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.653
+
+Tue, 23 May 2023 05:13:44 GMT
+
+### Changes
+
+- Fix Utils.cpp not compiling on Clang (lyahdav@users.noreply.github.com)
+- Allow apps to provide accessiblity information on non-focusable components (30809111+acoates-ms@users.noreply.github.com)
+- RN integration 5/5/23 (tatianakapos@microsoft.com)
 
 ## 0.0.0-canary.652
 
