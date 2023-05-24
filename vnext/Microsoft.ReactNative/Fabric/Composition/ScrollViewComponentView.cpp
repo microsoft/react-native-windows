@@ -219,8 +219,7 @@ void ScrollViewComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMa
 }
 void ScrollViewComponentView::prepareForRecycle() noexcept {}
 facebook::react::Props::Shared ScrollViewComponentView::props() noexcept {
-  assert(false);
-  return {};
+  return m_props;
 }
 
 /*

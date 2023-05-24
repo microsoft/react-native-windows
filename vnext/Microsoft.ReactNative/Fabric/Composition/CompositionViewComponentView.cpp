@@ -16,6 +16,7 @@
 #include "CompositionHelpers.h"
 #include "RootComponentView.h"
 #include "d2d1helper.h"
+#include "UiaHelpers.h"
 
 namespace Microsoft::ReactNative {
 
@@ -78,12 +79,20 @@ bool CompositionBaseComponentView::runOnChildren(bool forward, Mso::Functor<bool
 void CompositionBaseComponentView::onFocusLost() noexcept {
   m_eventEmitter->onBlur();
   showFocusVisual(false);
+  winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+      m_uiaProvider, UIA_HasKeyboardFocusPropertyId, true, false);
 }
 
 void CompositionBaseComponentView::onFocusGained() noexcept {
   m_eventEmitter->onFocus();
   if (m_enableFocusVisual) {
     showFocusVisual(true);
+  }
+  auto spProviderSimple = m_uiaProvider.try_as<IRawElementProviderSimple>();
+  if (UiaClientsAreListening() && spProviderSimple != nullptr) {
+    winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+        *spProviderSimple.get(), UIA_HasKeyboardFocusPropertyId, false, true);
+    UiaRaiseAutomationEvent(spProviderSimple.get(), UIA_AutomationFocusChangedEventId);
   }
 }
 
@@ -1030,6 +1039,23 @@ void CompositionBaseComponentView::updateBorderProps(
   }
 }
 
+void CompositionBaseComponentView::updateAccessibilityProps(
+    const facebook::react::ViewProps &oldViewProps,
+    const facebook::react::ViewProps &newViewProps) noexcept {
+
+  auto spProviderSimple = m_uiaProvider.try_as<IRawElementProviderSimple>();
+
+  if (spProviderSimple == nullptr || !UiaClientsAreListening())
+    return;
+
+  //advise events
+
+  auto hr = winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+      *spProviderSimple.get(), UIA_IsKeyboardFocusablePropertyId, oldViewProps.focusable, newViewProps.focusable);
+
+  //check 
+}
+
 void CompositionBaseComponentView::updateBorderLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
     const facebook::react::ViewProps &viewProps) noexcept {
@@ -1206,6 +1232,7 @@ void CompositionViewComponentView::updateProps(
     m_visual.Opacity(newViewProps.opacity);
   }
 
+  updateAccessibilityProps(oldViewProps, newViewProps);
   updateBorderProps(oldViewProps, newViewProps);
 
   // Shadow

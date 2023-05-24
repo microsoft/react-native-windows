@@ -96,7 +96,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetEmbeddedFragmentRoots
 }
 
 HRESULT __stdcall CompositionDynamicAutomationProvider::SetFocus(void) {
-  return S_OK;
+  return UiaSetFocusHelper(m_view);
 }
 
 HRESULT __stdcall CompositionDynamicAutomationProvider::get_FragmentRoot(IRawElementProviderFragmentRoot **pRetVal) {
@@ -232,6 +232,29 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
       pRetVal->bstrVal = temp.Detach();
       break;
     }
+    case UIA_IsKeyboardFocusablePropertyId: {
+      pRetVal->vt = VT_BOOL;
+      pRetVal->boolVal = props->focusable ? VARIANT_TRUE : VARIANT_FALSE;
+      break;
+    }
+    case UIA_HasKeyboardFocusPropertyId: {
+      auto rootCV = strongView->rootComponentView();
+      if (rootCV == nullptr)
+        return UIA_E_ELEMENTNOTAVAILABLE;
+
+      pRetVal->vt = VT_BOOL;
+      pRetVal->boolVal = rootCV->GetFocusedComponent() == strongView.get() ? VARIANT_TRUE : VARIANT_FALSE;
+      break;
+    }
+    case UIA_IsEnabledPropertyId: {
+      pRetVal->vt = VT_BOOL;
+      pRetVal->boolVal = VARIANT_TRUE;
+      break;
+    }
+    //case UIA_IsControlElementPropertyId: {
+    //  pRetVal->vt = VT_BOOL;
+    //  pRetVal->boolVal = props->accessibilityRole != "none" ? VARIANT_TRUE : VARIANT_FALSE;
+    //}
   }
 
   return S_OK;

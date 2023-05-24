@@ -50,6 +50,9 @@ struct CompositionBaseComponentView : public IComponentView,
   void updateBorderProps(
       const facebook::react::ViewProps &oldViewProps,
       const facebook::react::ViewProps &newViewProps) noexcept;
+  void updateAccessibilityProps(
+      const facebook::react::ViewProps &oldView,
+      const facebook::react::ViewProps &newViewProps) noexcept;
   void updateBorderLayoutMetrics(
       facebook::react::LayoutMetrics const &layoutMetrics,
       const facebook::react::ViewProps &viewProps) noexcept;

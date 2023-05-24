@@ -25,6 +25,7 @@ struct RootComponentView : CompositionViewComponentView {
 
   ::Microsoft::ReactNative::IComponentView *GetFocusedComponent() noexcept;
   void SetFocusedComponent(::Microsoft::ReactNative::IComponentView *value) noexcept;
+  bool TrySetFocusedComponent(::Microsoft::ReactNative::IComponentView &view) noexcept;
 
   bool NavigateFocus(const winrt::Microsoft::ReactNative::FocusNavigationRequest &request) noexcept;
 

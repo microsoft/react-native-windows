@@ -2,6 +2,7 @@
 #include "UiaHelpers.h"
 #include <Fabric/Composition/CompositionViewComponentView.h>
 #include <inspectable.h>
+#include "RootComponentView.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
@@ -84,6 +85,49 @@ HRESULT UiaGetBoundingRectangleHelper(::Microsoft::ReactNative::ReactTaggedView 
   rect.height = clientRect.bottom - clientRect.top;
 
   return S_OK;
+}
+
+HRESULT UiaSetFocusHelper(::Microsoft::ReactNative::ReactTaggedView& view) noexcept
+{
+  auto strongView = view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  auto rootCV = strongView->rootComponentView();
+  if (rootCV == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  return rootCV->TrySetFocusedComponent(*strongView) ? S_OK : E_FAIL;
+}
+
+HRESULT UpdateUiaProperty(winrt::IInspectable provider, PROPERTYID propId, bool oldValue, bool newValue) noexcept {
+  auto spProviderSimple = provider.try_as<IRawElementProviderSimple>();
+
+  if (spProviderSimple == nullptr || !UiaClientsAreListening())
+    return S_OK;
+
+  return UpdateUiaProperty(*spProviderSimple.get(), propId, oldValue, newValue);
+}
+
+HRESULT UpdateUiaProperty(
+    IRawElementProviderSimple &providerSimple,
+    PROPERTYID propId,
+    bool oldValue,
+    bool newValue) noexcept {
+
+  if (oldValue == newValue)
+    return S_OK;
+
+  VARIANT oldVariant;
+  oldVariant.vt = VT_BOOL;
+  oldVariant.boolVal = oldValue ? VARIANT_TRUE : VARIANT_FALSE;
+
+  VARIANT newVariant;
+  newVariant.vt = VT_BOOL;
+  newVariant.boolVal = newValue ? VARIANT_TRUE : VARIANT_FALSE;
+
+  return UiaRaiseAutomationPropertyChangedEvent(&providerSimple, propId, oldVariant, newVariant);
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation
