@@ -112,6 +112,10 @@ namespace Microsoft.ReactNative
     String BundleAppId { get; set; };
 
     DOC_STRING(
+      "When querying the bundle server for a bundle, should it request the dev bundle or release bundle.")
+    Boolean RequestDevBundle { get; set; };
+
+    DOC_STRING(
       "Controls whether the instance JavaScript runs in a remote environment such as within a browser.\n"
       "By default, this is using a browser navigated to http://localhost:8081/debugger-ui served by Metro/Haul.\n"
       "Debugging will start as soon as the react native instance is loaded.")

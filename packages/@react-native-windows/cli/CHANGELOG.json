@@ -2,6 +2,57 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Tue, 16 May 2023 05:16:29 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.170",
+      "version": "0.0.0-canary.170",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "b603bc740703e3725e21087cf26aee2b164c1307",
+            "comment": "Integrate 4/28"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.58",
+            "commit": "b603bc740703e3725e21087cf26aee2b164c1307"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.20",
+            "commit": "b603bc740703e3725e21087cf26aee2b164c1307"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/package-utils to v0.0.0-canary.46",
+            "commit": "b603bc740703e3725e21087cf26aee2b164c1307"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.68",
+            "commit": "b603bc740703e3725e21087cf26aee2b164c1307"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @rnw-scripts/jest-unittest-config to v1.5.3",
+            "commit": "b603bc740703e3725e21087cf26aee2b164c1307"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.9",
+            "commit": "b603bc740703e3725e21087cf26aee2b164c1307"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 08 May 2023 17:41:03 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.169",
       "version": "0.0.0-canary.169",

@@ -15,8 +15,7 @@
 
 #include "TouchEventEmitter.h"
 
-namespace facebook {
-namespace react {
+namespace facebook::react {
 
 struct FocusEvent {
   int target;
@@ -90,5 +89,4 @@ class ViewEventEmitter : public TouchEventEmitter {
       std::make_shared<LayoutEventState>()};
 };
 
-} // namespace react
-} // namespace facebook
+} // namespace facebook::react

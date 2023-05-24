@@ -2,6 +2,69 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Tue, 23 May 2023 05:13:44 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.11.0",
+      "version": "0.11.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "47eeb713077963b7e41a80265d16bbeee568d674",
+            "comment": "RN integration 5/5/23"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.653",
+            "commit": "47eeb713077963b7e41a80265d16bbeee568d674"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 16 May 2023 05:16:29 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.10.21",
+      "version": "0.10.21",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "b603bc740703e3725e21087cf26aee2b164c1307",
+            "comment": "Integrate 4/28"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.9",
+            "commit": "b603bc740703e3725e21087cf26aee2b164c1307"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.652",
+            "commit": "b603bc740703e3725e21087cf26aee2b164c1307"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 12 May 2023 05:14:35 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.10.20",
+      "version": "0.10.20",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.651",
+            "commit": "d0bc9ee4473f5a90c7dee1ebeedb8bfda4615366"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 08 May 2023 17:41:03 GMT",
       "tag": "@react-native-windows/automation-channel_v0.10.19",
       "version": "0.10.19",

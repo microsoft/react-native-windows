@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "../../codegen/NativeAppearanceSpec.g.h"
+#include "codegen/NativeAppearanceSpec.g.h"
 #include <React.h>
 #include <winrt/Windows.UI.ViewManagement.h>
 

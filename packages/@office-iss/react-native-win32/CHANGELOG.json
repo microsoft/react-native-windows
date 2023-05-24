@@ -2,6 +2,63 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Tue, 23 May 2023 05:13:44 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.197",
+      "version": "0.0.0-canary.197",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "47eeb713077963b7e41a80265d16bbeee568d674",
+            "comment": "RN integration 5/5/23"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 16 May 2023 05:16:29 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.196",
+      "version": "0.0.0-canary.196",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "b603bc740703e3725e21087cf26aee2b164c1307",
+            "comment": "Integrate 4/28"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.9",
+            "commit": "b603bc740703e3725e21087cf26aee2b164c1307"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump react-native-platform-override to v1.9.7",
+            "commit": "b603bc740703e3725e21087cf26aee2b164c1307"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 12 May 2023 05:14:33 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.195",
+      "version": "0.0.0-canary.195",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "90e19f38281b3bcdd0c18029c5e79fbe44bc90f9",
+            "comment": "Export additional TS types for back compat"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 08 May 2023 17:41:03 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.194",
       "version": "0.0.0-canary.194",

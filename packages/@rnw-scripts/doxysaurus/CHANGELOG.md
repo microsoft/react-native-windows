@@ -1,8 +1,26 @@
 # Change Log - @rnw-scripts/doxysaurus
 
-This log was last generated on Mon, 08 May 2023 17:41:04 GMT and should not be manually modified.
+This log was last generated on Tue, 16 May 2023 05:16:30 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.4.8
+
+Tue, 16 May 2023 05:16:30 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.20
+- Bump @rnw-scripts/jest-unittest-config to v1.5.3
+- Bump @rnw-scripts/just-task to v2.3.9
+
+## 0.4.7
+
+Fri, 12 May 2023 05:14:34 GMT
+
+### Patches
+
+- Component Governance Updates 5/8/23 (jthysell@microsoft.com)
 
 ## 0.4.6
 

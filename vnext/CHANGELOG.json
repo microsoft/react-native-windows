@@ -2,6 +2,111 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 23 May 2023 05:13:44 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.653",
+      "version": "0.0.0-canary.653",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "lyahdav@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "53d1bbf9c37708e88bd0e670947ec5189babc50d",
+            "comment": "Fix Utils.cpp not compiling on Clang"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "f360feb23890a0690ac0d4049edc6bfc99a5da3b",
+            "comment": "Allow apps to provide accessiblity information on non-focusable components"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "47eeb713077963b7e41a80265d16bbeee568d674",
+            "comment": "RN integration 5/5/23"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 16 May 2023 05:16:30 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.652",
+      "version": "0.0.0-canary.652",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "27e1172e00f85141a49c86b1aad519ddfabe7bff",
+            "comment": "Update Props Function"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b603bc740703e3725e21087cf26aee2b164c1307",
+            "comment": "Integrate 4/28"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.170",
+            "commit": "b603bc740703e3725e21087cf26aee2b164c1307"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.58",
+            "commit": "b603bc740703e3725e21087cf26aee2b164c1307"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.9",
+            "commit": "b603bc740703e3725e21087cf26aee2b164c1307"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.9.7",
+            "commit": "b603bc740703e3725e21087cf26aee2b164c1307"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 12 May 2023 05:14:34 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.651",
+      "version": "0.0.0-canary.651",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "lyahdav@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "112ae2b5148a0e078969ef6c478b7d1e3f34b52e",
+            "comment": "Remove relative path from codegen include in AppearanceModule.h"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "4ea7ff6b7023cbb829e8f5f9aad8cdb240df2f38",
+            "comment": "[Fabric] fix border for Image and Switch"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "24a95892896de67ae58a2293a18865673a49bc63",
+            "comment": "Add option to load ship bundles from metro"
+          },
+          {
+            "author": "vmoroz@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "3024cc281f520af9a3d99244fa124aff233625d8",
+            "comment": "Fix V8 Node API Task Runner implementation (#10966)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 08 May 2023 17:41:02 GMT",
       "tag": "react-native-windows_v0.0.0-canary.650",
       "version": "0.0.0-canary.650",

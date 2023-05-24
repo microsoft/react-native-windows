@@ -154,7 +154,7 @@ NativeUIManager::NativeUIManager(winrt::Microsoft::ReactNative::ReactContext con
   if (React::implementation::QuirkSettings::GetUseWebFlexBasisBehavior(m_context.Properties()))
     YGConfigSetExperimentalFeatureEnabled(m_yogaConfig, YGExperimentalFeatureWebFlexBasis, true);
   if (React::implementation::QuirkSettings::GetMatchAndroidAndIOSStretchBehavior(m_context.Properties()))
-    YGConfigSetUseLegacyStretchBehaviour(m_yogaConfig, true);
+    YGConfigSetErrata(m_yogaConfig, YGErrataStretchFlexBasis);
 
 #if defined(_DEBUG)
   YGConfigSetLogger(m_yogaConfig, &YogaLog);

@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20230414-2146-adb210306",
+  "baseVersion": "0.0.0-20230505-2109-9b69263a1",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "241d0d49a4d24294ec5c48f3672c3c800136f24d"
+      "baseHash": "1f24493537576fda127ec6cfc52ed554bb119671"
     },
     {
       "type": "derived",
@@ -35,7 +35,7 @@
       "type": "derived",
       "file": "src/Libraries/Animated/NativeAnimatedHelper.win32.js",
       "baseFile": "packages/react-native/Libraries/Animated/NativeAnimatedHelper.js",
-      "baseHash": "ae83fb31990e1d572d743909f5bdd36589c86939",
+      "baseHash": "99fc31f856815c19024407d629e4a0762df9011e",
       "issue": 11041
     },
     {
@@ -123,7 +123,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "058fa050230bbb1710b64156f2e3680fc16aa252"
+      "baseHash": "04757d209b80c0b9ed2bb11a8b36cd5a3b3f878e"
     },
     {
       "type": "patch",

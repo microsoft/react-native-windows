@@ -22,11 +22,11 @@
     "@rnx-kit/metro-serializer": "^1.0.11",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
-    "metro-config": "0.73.7"
+    "metro-config": "0.76.2"
   },
   "devDependencies": {
     "@rnw-scripts/eslint-config": "1.1.16",
-    "@rnw-scripts/just-task": "2.3.8",
+    "@rnw-scripts/just-task": "2.3.9",
     "eslint": "^8.19.0",
     "prettier": "^2.4.1"
   },

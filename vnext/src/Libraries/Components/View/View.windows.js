@@ -183,6 +183,19 @@ const View: React.AbstractComponent<
         return updatedChildren;
       }
     };
+
+    const _focusable = tabIndex !== undefined ? !tabIndex : focusable;
+    const _accessible =
+      importantForAccessibility === 'no-hide-descendants'
+        ? false
+        : otherProps.accessible;
+
+    if (_focusable === true && _accessible === false) {
+      console.warn(
+        'All focusable views should report proper accessiblity information. Views marked as focusable should always be accessible.',
+      );
+    }
+
     // Windows]
 
     return (
@@ -205,7 +218,7 @@ const View: React.AbstractComponent<
                   : ariaLive ?? accessibilityLiveRegion
               }
               accessibilityLabel={ariaLabel ?? accessibilityLabel}
-              focusable={tabIndex !== undefined ? !tabIndex : focusable}
+              focusable={_focusable}
               disabled={disabled}
               accessibilityState={_accessibilityState}
               accessibilityRole={
@@ -230,11 +243,7 @@ const View: React.AbstractComponent<
               onKeyUp={_keyUp}
               onKeyUpCapture={_keyUpCapture}
               // [Windows
-              accessible={
-                importantForAccessibility === 'no-hide-descendants'
-                  ? false
-                  : otherProps.accessible
-              }
+              accessible={_accessible}
               children={
                 importantForAccessibility === 'no-hide-descendants'
                   ? childrenWithImportantForAccessibility(otherProps.children)
