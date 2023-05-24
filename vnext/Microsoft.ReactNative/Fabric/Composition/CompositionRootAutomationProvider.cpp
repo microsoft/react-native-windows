@@ -32,7 +32,7 @@ HRESULT __stdcall CompositionRootAutomationProvider::GetEmbeddedFragmentRoots(SA
 }
 
 HRESULT __stdcall CompositionRootAutomationProvider::SetFocus(void) {
-  return S_OK;
+  return UiaSetFocusHelper(m_view);
 }
 
 HRESULT __stdcall CompositionRootAutomationProvider::GetPatternProvider(PATTERNID patternId, IUnknown **pRetVal) {
@@ -122,10 +122,7 @@ HRESULT __stdcall CompositionRootAutomationProvider::ElementProviderFromPoint(
     return UIA_E_ELEMENTNOTAVAILABLE;
   }
 
-  auto spRootView = strongView->rootComponentView();
-  if (spRootView == nullptr) {
-    return UIA_E_ELEMENTNOTAVAILABLE;
-  }
+  auto spRootView = std::static_pointer_cast<::Microsoft::ReactNative::RootComponentView>(strongView);
 
   if (m_hwnd == nullptr || !IsWindow(m_hwnd)) {
     // TODO: Add support for non-HWND based hosting
