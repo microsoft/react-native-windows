@@ -66,6 +66,9 @@ struct FileReaderTurboModule {
       winrt::Microsoft::ReactNative::JSValue &&data,
       std::string&& encoding,
       winrt::Microsoft::ReactNative::ReactPromise<std::string> &&result) noexcept;
+
+private:
+  std::shared_ptr<IBlobPersistor> m_blobPersistor;
 };
 
 } // namespace Microsoft::React

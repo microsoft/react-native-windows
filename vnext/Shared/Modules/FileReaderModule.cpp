@@ -147,7 +147,8 @@ void FileReaderTurboModule::Initialize(msrn::ReactContext const& reactContext) n
 void FileReaderTurboModule::ReadAsDataUrl(
   msrn::JSValue&& data,
   msrn::ReactPromise<string>&& result) noexcept {
-
+  if (!m_blobPersistor)
+    return result.Reject(L"Could not find Blob persistor");
 }
 
 void FileReaderTurboModule::ReadAsText(
