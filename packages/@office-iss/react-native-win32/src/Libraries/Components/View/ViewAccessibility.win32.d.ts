@@ -319,7 +319,7 @@ export interface AccessibilityPropsIOS {
   accessibilityViewIsModal?: boolean | undefined;
 
   /**
-   * When accessibile is true, the system will invoke this function when the user performs the escape gesture (scrub with two fingers).
+   * When accessible is true, the system will invoke this function when the user performs the escape gesture (scrub with two fingers).
    * @platform ios
    */
   onAccessibilityEscape?: (() => void) | undefined;
@@ -401,7 +401,7 @@ export interface AccessibilityPropsWin32 {
 
   /**
    * accessibilityDescription provides more detailed information specific to the element (i.e. last edit date, full location for a file)
-   * while accessibilityHint provides infomation on what will happen when they perform an action.
+   * while accessibilityHint provides information on what will happen when they perform an action.
    * @platform win32
    *
    */

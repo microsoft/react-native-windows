@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Borders should show if mixed widths but not colors They were checking if the color was variable per side but assuming width wouldn't be. Fixes #11549",
-  "packageName": "react-native-windows",
-  "email": "26607885+chrisglein@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

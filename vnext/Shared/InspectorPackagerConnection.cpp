@@ -89,7 +89,7 @@ struct InspectorProtocol {
       pageDyn["title"] = page.title;
       pageDyn["vm"] = page.vm;
 
-      pageDyn["isLastBundleDownloadSuccess"] = bundleStatus.m_isLastDownloadSucess;
+      pageDyn["isLastBundleDownloadSuccess"] = bundleStatus.m_isLastDownloadSuccess;
       pageDyn["bundleUpdateTimestamp"] = bundleStatus.m_updateTimestamp;
 
       payload.push_back(pageDyn);
@@ -108,7 +108,7 @@ struct InspectorProtocol {
       pageDyn["title"] = page.title;
       pageDyn["vm"] = page.vm;
 
-      pageDyn["isLastBundleDownloadSuccess"] = bundleStatus.m_isLastDownloadSucess;
+      pageDyn["isLastBundleDownloadSuccess"] = bundleStatus.m_isLastDownloadSuccess;
       pageDyn["bundleUpdateTimestamp"] = bundleStatus.m_updateTimestamp;
 
       payload.push_back(pageDyn);

@@ -80,6 +80,7 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   bool RequestInlineSourceMap() const noexcept;
   std::string JavaScriptBundleFile() const noexcept;
   std::string BundleAppId() const noexcept;
+  bool RequestDevBundle() const noexcept;
   bool UseDeveloperSupport() const noexcept;
   JSIEngine JsiEngine() const noexcept;
 

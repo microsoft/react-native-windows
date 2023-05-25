@@ -411,7 +411,7 @@ struct NapiJsiRuntime : facebook::jsi::Runtime {
   struct HostFunctionWrapper {
     HostFunctionWrapper(facebook::jsi::HostFunctionType &&hostFunction, NapiJsiRuntime &runtime);
 
-    // Does not suppor copying.
+    // Does not support copying.
     HostFunctionWrapper(const HostFunctionWrapper &) = delete;
     HostFunctionWrapper &operator=(const HostFunctionWrapper &) = delete;
 
@@ -1525,7 +1525,7 @@ vector<uint8_t> NapiJsiRuntime::SerializeScript(napi_value script, const char *s
   return result;
 }
 
-// Runs serialized scriopt with the provided source and the sourceUrl origin.
+// Runs serialized script with the provided source and the sourceUrl origin.
 napi_value
 NapiJsiRuntime::RunSerializedScript(span<const uint8_t> serialized, napi_value source, const char *sourceUrl) {
   napi_value result{};
@@ -1545,7 +1545,7 @@ napi_ext_ref NapiJsiRuntime::CreateReference(napi_value value) const {
 // Decrements the reference ref count. It removes the reference if its ref count becomes 0.
 // Do not use the provided ref parameter after calling this method.
 void NapiJsiRuntime::ReleaseReference(napi_ext_ref ref) const {
-  // TODO: [vmoroz] make it safe to be called from another thread per JSI spec.
+  // TODO: [@vmoroz] make it safe to be called from another thread per JSI spec.
   CHECK_NAPI(napi_ext_reference_unref(m_env, ref));
 }
 
@@ -2017,7 +2017,7 @@ napi_value NapiJsiRuntime::HostObjectGetOwnPropertyDescriptorTrap(span<napi_valu
 
 #pragma region Miscellaneous utility methods
 
-// Converts facebook::jsi::Bufer to span.
+// Converts facebook::jsi::Buffer to span.
 span<const uint8_t> NapiJsiRuntime::ToSpan(const Buffer &buffer) {
   return span<const uint8_t>(buffer.data(), buffer.size());
 }

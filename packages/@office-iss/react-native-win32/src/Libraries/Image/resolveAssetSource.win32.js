@@ -103,7 +103,7 @@ class AssetResolverLateScaleResolution {
       height: this._resolver.asset.height,
       uri: source,
       // Include scales info in returned object
-      // This may make it easier to do scale lookups on native side if we dont have that infomation from any kind of manifest
+      // This may make it easier to do scale lookups on native side if we don't have that information from any kind of manifest
       scales: this._resolver.asset.scales,
     };
   }

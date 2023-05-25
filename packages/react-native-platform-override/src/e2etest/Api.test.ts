@@ -18,12 +18,12 @@ test('validateManifest', async () => {
       reactNativeVersion: SAMPLE_REPO_VERSION,
     };
 
-    const validatonErrors = await Api.validateManifest(
+    const validationErrors = await Api.validateManifest(
       path.join(repoPath, 'overrides.json'),
       opts,
     );
 
-    expect(validatonErrors).toEqual([
+    expect(validationErrors).toEqual([
       {
         overrideName: 'setUpDeveloperTools.windesktop.js',
         type: 'missingFromManifest',

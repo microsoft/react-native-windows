@@ -107,7 +107,7 @@ export async function addOverride(
 }
 
 /**
- * Ouputs a patch-style diff of an override compared to its original source
+ * Outputs a patch-style diff of an override compared to its original source
  */
 export async function diffOverride(
   overrideName: string,
@@ -124,7 +124,7 @@ export async function diffOverride(
 }
 
 /**
- * Receives notifications on progress during overide upgrades
+ * Receives notifications on progress during override upgrades
  */
 export type UpgradeProgressListener = (
   currentOverride: number,

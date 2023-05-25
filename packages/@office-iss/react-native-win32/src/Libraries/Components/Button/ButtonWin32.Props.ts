@@ -9,7 +9,7 @@ export interface IButtonWin32Style extends Omit<RN.TextStyle, ButtonWin32OmitSty
 
 export interface IButtonWin32Props extends RN.ButtonProps {
   /**
-   * Style information which controls the visual appearence of the button.
+   * Style information which controls the visual appearance of the button.
    */
   style?: RN.StyleProp<IButtonWin32Style>;
 

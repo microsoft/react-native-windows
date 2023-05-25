@@ -73,7 +73,7 @@
 // It is useful to check when a noexcept function throws, or std::terminate is called directly.
 // The implementation uses setjmp and longjmp which stops the termination sequence.
 // In case if TestCheckTerminate succeeds we may end up with leaked memory because
-// the call stack is not unwinded correctly.
+// the call stack is not unwound correctly.
 // You should disable memory leak detection in tests that use TestCheckTerminate.
 //=============================================================================
 #define TestCheckTerminateAtInternal(file, line, expr, exprStr, ...) \

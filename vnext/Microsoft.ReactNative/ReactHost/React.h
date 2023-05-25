@@ -105,6 +105,7 @@ struct IReactSettingsSnapshot : IUnknown {
   virtual bool RequestInlineSourceMap() const noexcept = 0;
   virtual std::string JavaScriptBundleFile() const noexcept = 0;
   virtual std::string BundleAppId() const noexcept = 0;
+  virtual bool RequestDevBundle() const noexcept = 0;
   virtual bool UseDeveloperSupport() const noexcept = 0;
   virtual JSIEngine JsiEngine() const noexcept = 0;
 };
@@ -152,6 +153,7 @@ struct ReactDevOptions {
   std::string SourceBundleName; // Bundle name without any extension (e.g. "index.win32"). Default: "index.{PLATFORM}"
   std::string SourceBundleExtension; // Bundle name extension. Default: ".bundle".
   std::string BundleAppId; // Bundle app id. Default: "".
+  bool DevBundle{true}; // When requesting bundle from bundle server, query for dev bundle or release bundle
 
   //! Module name used for loading the debug bundle.
   //! e.g. The modules name registered in the jsbundle via AppRegistry.registerComponent('ModuleName', () =>
@@ -184,7 +186,7 @@ struct ReactOptions {
   //! Identity of the SDX. Must uniquely describe the SDX across the installed product.
   std::string Identity;
 
-  //! List of names of Cxx modules that all ReactIntances hosting this SDX should be configured with.
+  //! List of names of Cxx modules that all ReactInstances hosting this SDX should be configured with.
   //!
   //! In addition to this list, there are following hardcoded modules.
   //!
@@ -198,7 +200,7 @@ struct ReactOptions {
   //! ExceptionsManager: Implemented by facebook::react::ExceptionsManagerModule
   std::vector<std::string> CxxModuleNames;
 
-  //! List of names of Java modules that all ReactIntances hosting this SDX should be configured with.
+  //! List of names of Java modules that all ReactInstances hosting this SDX should be configured with.
   std::vector<std::string> JavaModuleNames;
 
   //! (Optional) Name of the registered IDataServiceProvider to use when creating data services
@@ -340,7 +342,7 @@ struct ReactOptions {
   OnReactInstanceDestroyedCallback OnInstanceDestroyed;
 };
 
-//! IReactHost manages a RactNative instance.
+//! IReactHost manages a ReactNative instance.
 MSO_GUID(IReactHost, "2a2474ff-264f-449a-9852-0463e6ac6bbf")
 struct DECLSPEC_NOVTABLE IReactHost : IUnknown {
   //! Returns a copy of react options.

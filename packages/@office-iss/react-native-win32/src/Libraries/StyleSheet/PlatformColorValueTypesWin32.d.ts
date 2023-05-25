@@ -30,7 +30,7 @@ export type GradientColorValueWin32 = {
 };
 
 /**
- * Creates a color value that renders using a grandient brush.
+ * Creates a color value that renders using a gradient brush.
  * This can be used to provide a value to most components that take a standard color value.
  */
 export declare const ColorGradientWin32: (

@@ -112,7 +112,7 @@ void ImageComponentView::updateProps(
   if (oldImageProps.backgroundColor != newImageProps.backgroundColor ||
       oldImageProps.blurRadius != newImageProps.blurRadius || oldImageProps.tintColor != newImageProps.tintColor ||
       oldImageProps.resizeMode != newImageProps.resizeMode) {
-    m_drawingSurface = nullptr; // TODO dont need to recreate the surface just to redraw...
+    m_drawingSurface = nullptr; // TODO don't need to recreate the surface just to redraw...
   }
 
   if (oldImageProps.opacity != newImageProps.opacity) {
@@ -129,7 +129,7 @@ void ImageComponentView::updateState(
   auto newImageState = std::static_pointer_cast<facebook::react::ImageShadowNode::ConcreteState const>(state);
 
   if (!m_imageResponseObserver) {
-    // Should ViewComponents enable_shared_from_this? then we dont need this dance to get a shared_ptr
+    // Should ViewComponents enable_shared_from_this? then we don't need this dance to get a shared_ptr
     std::shared_ptr<FabricUIManager> fabricuiManager =
         ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties());
     auto componentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(m_tag);
@@ -183,7 +183,12 @@ void ImageComponentView::updateLayoutMetrics(
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
 }
 
-void ImageComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {}
+void ImageComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
+  if (m_needsBorderUpdate) {
+    m_needsBorderUpdate = false;
+    UpdateSpecialBorderLayers(m_layoutMetrics, *m_props);
+  }
+}
 
 void ImageComponentView::OnRenderingDeviceLost() noexcept {
   // Draw the text again

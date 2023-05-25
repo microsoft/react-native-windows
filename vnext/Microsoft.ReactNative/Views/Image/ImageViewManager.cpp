@@ -24,7 +24,7 @@ using namespace xaml::Controls;
 using namespace xaml::Automation::Peers;
 } // namespace winrt
 
-// Such code is better to move to a seperate parser layer
+// Such code is better to move to a separate parser layer
 template <>
 struct json_type_traits<Microsoft::ReactNative::ReactImageSource> {
   static Microsoft::ReactNative::ReactImageSource parseJson(const winrt::Microsoft::ReactNative::JSValue &json) {

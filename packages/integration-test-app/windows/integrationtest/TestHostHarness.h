@@ -58,7 +58,7 @@ class TestHostHarness : public winrt::implements<TestHostHarness, winrt::Windows
   winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Data::Json::IJsonValue> OnTestCommand(
       TestCommandId command,
       winrt::Windows::Data::Json::JsonValue payload) noexcept;
-  winrt::fire_and_forget TimeoutOnInactivty(winrt::weak_ref<TestTransaction> transaction) noexcept;
+  winrt::fire_and_forget TimeoutOnInactivity(winrt::weak_ref<TestTransaction> transaction) noexcept;
   winrt::fire_and_forget HandleHostAction(HostAction action) noexcept;
 
   winrt::Windows::Foundation::IAsyncAction FlushJSQueue() noexcept;

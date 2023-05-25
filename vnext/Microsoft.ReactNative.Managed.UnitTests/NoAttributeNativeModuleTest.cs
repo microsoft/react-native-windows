@@ -163,8 +163,8 @@ namespace Microsoft.ReactNative.Managed.UnitTests
 
     public async void NegateAsyncCallbacks(int x, Action<int> resolve, Action<string> reject)
     {
-      bool isPosititve = await Task.Run(() => x >= 0);
-      if (isPosititve)
+      bool isPositive = await Task.Run(() => x >= 0);
+      if (isPositive)
       {
         resolve(-x);
       }
@@ -210,8 +210,8 @@ namespace Microsoft.ReactNative.Managed.UnitTests
 
     public static async void StaticNegateAsyncCallbacks(int x, Action<int> resolve, Action<string> reject)
     {
-      bool isPosititve = await Task.Run(() => x >= 0);
-      if (isPosititve)
+      bool isPositive = await Task.Run(() => x >= 0);
+      if (isPositive)
       {
         resolve(-x);
       }
@@ -287,8 +287,8 @@ namespace Microsoft.ReactNative.Managed.UnitTests
 
     public async void NegateAsyncPromise(int x, IReactPromise<int> promise)
     {
-      bool isPosititve = await Task.Run(() => x >= 0);
-      if (isPosititve)
+      bool isPositive = await Task.Run(() => x >= 0);
+      if (isPositive)
       {
         promise.Resolve(-x);
       }
@@ -346,8 +346,8 @@ namespace Microsoft.ReactNative.Managed.UnitTests
 
     public static async void StaticNegateAsyncPromise(int x, IReactPromise<int> promise)
     {
-      bool isPosititve = await Task.Run(() => x >= 0);
-      if (isPosititve)
+      bool isPositive = await Task.Run(() => x >= 0);
+      if (isPositive)
       {
         promise.Resolve(-x);
       }

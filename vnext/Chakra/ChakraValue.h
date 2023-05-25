@@ -271,7 +271,7 @@ class ChakraValue {
     JsValueRef value;
     auto result = JsConvertValueToString(m_value, &value);
     if (JsNoError == result) {
-      JsAddRef(value, nullptr); // TODO is this the right lifetime symantics?
+      JsAddRef(value, nullptr); // TODO is this the right lifetime semantics?
     } else if (result == JsErrorScriptException) {
       assert(false && "JsConvertValueToString() failed().");
       std::terminate();

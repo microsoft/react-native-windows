@@ -15,7 +15,7 @@ import NativeAppTheme, {
   type HighContrastColors,
 } from './NativeAppTheme';
 
-// Default values here are used in jest environment, or when native module otherwise not availiable
+// Default values here are used in jest environment, or when native module otherwise not available
 let _isHighContrast = false;
 let _highContrastColors = {
   ButtonFaceColor: '',
@@ -38,7 +38,7 @@ type NativeAppThemeEventDefinitions = {
 };
 
 // $FlowFixMe[underconstrained-implicit-instantiation]
-const _notifHandlers = new Map();
+const _notifyHandlers = new Map();
 
 if (NativeAppTheme) {
   _isHighContrast = NativeAppTheme.getConstants().isHighContrast;
@@ -75,16 +75,16 @@ module.exports = {
     event: AppThemeEvent,
   ): EventSubscription {
     const listener = eventEmitter.addListener(eventName, event);
-    _notifHandlers.set(eventName, listener);
+    _notifyHandlers.set(eventName, listener);
     return listener;
   },
 
   removeListener(eventName: 'highContrastChanged', event: AppThemeEvent): void {
-    const listener = _notifHandlers.get(eventName);
+    const listener = _notifyHandlers.get(eventName);
     if (!listener) {
       return;
     }
     listener.remove();
-    _notifHandlers.delete(eventName);
+    _notifyHandlers.delete(eventName);
   },
 };

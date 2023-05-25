@@ -84,6 +84,11 @@ void SwitchComponentView::updateLayoutMetrics(
 
 void SwitchComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
   ensureDrawingSurface();
+
+  if (m_needsBorderUpdate) {
+    m_needsBorderUpdate = false;
+    UpdateSpecialBorderLayers(m_layoutMetrics, *m_props);
+  }
 }
 
 void SwitchComponentView::Draw() noexcept {

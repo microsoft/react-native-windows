@@ -24,7 +24,7 @@ export type FromSerializedOpts = {defaultBaseVersion?: string};
  */
 export default interface Override {
   /**
-   * Case sensitive identifer of the override (e.g. filename or directory name)
+   * Case sensitive identifier of the override (e.g. filename or directory name)
    */
   name(): string;
 
@@ -102,7 +102,7 @@ export class PlatformOverride implements Override {
   }
 
   diffStrategy(): DiffStrategy {
-    return DiffStrategies.asssumeSame();
+    return DiffStrategies.assumeSame();
   }
 }
 
@@ -418,7 +418,7 @@ export class DirectoryCopyOverride implements Override {
   }
 
   diffStrategy(): DiffStrategy {
-    return DiffStrategies.asssumeSame();
+    return DiffStrategies.assumeSame();
   }
 }
 

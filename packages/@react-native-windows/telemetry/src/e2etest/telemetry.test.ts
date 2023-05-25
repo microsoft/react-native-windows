@@ -340,7 +340,7 @@ async function runTestCommandE2E(commandBody: () => Promise<void>) {
   TelemetryTest.endCommand(getTestCommandEndInfo(errorCode), getExtraProps());
 }
 
-/** Verifys the contents of events fired during the 'test-command'. */
+/** Verifies the contents of events fired during the 'test-command'. */
 function verifyTestCommandTelemetryProcessor(
   caughtErrors: Error[],
   expectedResultCode?: errorUtils.CodedErrorType,

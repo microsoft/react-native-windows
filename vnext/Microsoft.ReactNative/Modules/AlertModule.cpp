@@ -191,7 +191,7 @@ void Alert::ProcessPendingAlertRequestsMessageDialog() noexcept {
   }
 
   if (!args.cancelable.value_or(true)) {
-    messageDialog.CancelCommandIndex(0xffffffff /* -1 doesn't allow cancelation of message dialog */);
+    messageDialog.CancelCommandIndex(0xffffffff /* -1 doesn't allow cancellation of message dialog */);
   }
 
   auto hwnd = winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::GetTopLevelWindowId(
@@ -223,7 +223,7 @@ void Alert::ProcessPendingAlertRequests() noexcept {
   }
 #ifdef USE_FABRIC
   else {
-    // If we dont have xaml loaded, fallback to using MessageDialog
+    // If we don't have xaml loaded, fallback to using MessageDialog
     ProcessPendingAlertRequestsMessageDialog();
   }
 #endif

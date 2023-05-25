@@ -66,6 +66,10 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   hstring BundleAppId() noexcept;
   void BundleAppId(hstring const &value) noexcept;
 
+  //! When querying the bundle server for a bundle, should it request the dev bundle or release bundle
+  bool RequestDevBundle() noexcept;
+  void RequestDevBundle(bool value) noexcept;
+
   //! Should the instance run in a remote environment such as within a browser
   //! By default, this is using a browser navigated to  http://localhost:8081/debugger-ui served
   //! by Metro/Haul. Debugging will start as soon as the React Native instance is loaded.
@@ -79,7 +83,7 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   void UseFastRefresh(bool value) noexcept;
 
   //! Should the instance monitor for changes to the JS and reload the instance when a change is
-  //! detected.  Generally its prefered to use FastFreshed instead of this.  But if there is some
+  //! detected.  Generally its preferred to use FastFreshed instead of this.  But if there is some
   //! issue with hot reloading in your app, then this can be used instead
   bool UseLiveReload() noexcept;
   void UseLiveReload(bool value) noexcept;
@@ -174,6 +178,7 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
       single_threaded_vector<IReactPackageProvider>()};
   hstring m_javaScriptBundleFile{};
   hstring m_bundleAppId{};
+  bool m_devBundle{true};
   bool m_enableJITCompilation{true};
   bool m_enableByteCodeCaching{false};
   hstring m_byteCodeFileUri{};
@@ -237,6 +242,14 @@ inline hstring ReactInstanceSettings::BundleAppId() noexcept {
 
 inline void ReactInstanceSettings::BundleAppId(hstring const &value) noexcept {
   m_bundleAppId = value;
+}
+
+inline bool ReactInstanceSettings::RequestDevBundle() noexcept {
+  return m_devBundle;
+}
+
+inline void ReactInstanceSettings::RequestDevBundle(bool value) noexcept {
+  m_devBundle = value;
 }
 
 inline bool ReactInstanceSettings::EnableJITCompilation() noexcept {

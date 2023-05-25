@@ -43,7 +43,7 @@ function getPossibleMethodSignatures(
     }
   }
 
-  // TODO: be much more exhastive on the possible method signatures that can be used..
+  // TODO: be much more exhaustive on the possible method signatures that can be used..
   const sig = `REACT_${isMethodSync(funcType) ? 'SYNC_' : ''}METHOD(${
     prop.name
   }) ${translateImplReturnType(

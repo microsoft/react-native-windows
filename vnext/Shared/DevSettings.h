@@ -95,6 +95,9 @@ struct DevSettings {
 
   bool inlineSourceMap{true};
 
+  // When querying the bundle server for a bundle, should it request the dev bundle or release bundle
+  bool devBundle{true};
+
   bool enableDefaultCrashHandler{false};
 };
 

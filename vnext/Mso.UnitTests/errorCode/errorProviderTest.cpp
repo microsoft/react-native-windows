@@ -15,7 +15,7 @@ const Mso::ErrorProvider<UtSimpleError, UtSimpleErrorProviderGuid> &UtSimpleErro
   return s_utSimpleErrorProvider;
 }
 
-// Unit Test error example with overriden.ToString()
+// Unit Test error example with overridden.ToString()
 struct UtError {
   int Value;
 };

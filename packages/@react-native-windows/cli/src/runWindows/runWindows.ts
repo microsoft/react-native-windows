@@ -31,7 +31,7 @@ import {runWindowsOptions, RunWindowsOptions} from './runWindowsOptions';
 import {autolinkWindowsInternal, AutoLinkOptions} from './utils/autolink';
 
 /**
- * Sanitizes the given option for telemetery.
+ * Sanitizes the given option for telemetry.
  * @param key The key of the option.
  * @param value The unsanitized value of the option.
  * @returns The sanitized value of the option.

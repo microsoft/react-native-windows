@@ -9,7 +9,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests.Analysis
   public class ModuleAnalysisTests : AnalysisTestBase
   {
     [TestMethod]
-    public void NoAttirbuteIsNoModule()
+    public void NoAttributeIsNoModule()
     {
       var (codeAnalyzer, type) = AnalyzeFile(@"
         public class TestClass

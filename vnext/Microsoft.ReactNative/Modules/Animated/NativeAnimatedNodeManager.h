@@ -25,7 +25,7 @@ namespace Microsoft::ReactNative {
 /// implementation drives UI changes.
 ///
 /// It implements a management interface for animated nodes graph and
-/// establishes a number of composistion animations and property sets to
+/// establishes a number of composition animations and property sets to
 /// drive the animating of the nodes to the Xaml elements off the UI Thread
 ///
 /// </summary>

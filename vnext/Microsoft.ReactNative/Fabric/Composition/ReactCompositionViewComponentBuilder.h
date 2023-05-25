@@ -37,7 +37,7 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
   IComponentProps CreateProps(ViewProps props) noexcept;
 
   winrt::Windows::Foundation::IInspectable CreateView(ICompositionContext context) noexcept;
-  bool HandeCommand(
+  bool HandelCommand(
       winrt::Windows::Foundation::IInspectable handle,
       winrt::hstring commandName,
       IJSValueReader args) noexcept;

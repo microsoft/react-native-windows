@@ -31,7 +31,7 @@ const RNW_REPO = {
 const ELIGIBLE_PACKAGES = ['react-native-windows'];
 
 /**
- * Representation the JSON chanelog comment obejct
+ * Representation the JSON changelog comment object
  */
 interface Comment {
   comment: string;

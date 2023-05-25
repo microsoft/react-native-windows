@@ -84,7 +84,7 @@ TEST_CLASS (MemoryMappedBufferUnitTests) {
  public:
   MemoryMappedBufferUnitTests() : m_testFileName{GetTestFileName()} {}
 
-  TEST_METHOD(SimpleTest_NoOffest) {
+  TEST_METHOD(SimpleTest_NoOffset) {
     constexpr const char *const content = "This is a very interesting string.";
     const size_t size = strlen(content);
     WriteTestFile(content, size);
@@ -95,7 +95,7 @@ TEST_CLASS (MemoryMappedBufferUnitTests) {
     Assert::IsTrue(strcmp(CheckedReinterpretCast<const char *>(buffer->data()), content) == 0);
   }
 
-  TEST_METHOD(SimpleTest_WithOffest) {
+  TEST_METHOD(SimpleTest_WithOffset) {
     constexpr const char *const fileContent = "This is another very interesting string.";
     const size_t fileSize = strlen(fileContent);
     WriteTestFile(fileContent, fileSize);

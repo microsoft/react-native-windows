@@ -24,7 +24,7 @@ export type UIElement = {
   Height?: number | null;
   BorderBrush?: string | null;
   VerticalAlignment?: string | null;
-  HorizontalAlignmen?: string | null;
+  HorizontalAlignment?: string | null;
   Clip?: string | null;
   FlowDirection?: string | null;
   Name?: string | null;
@@ -90,7 +90,7 @@ function pruneCollapsedElements(element: UIElement) {
 }
 
 /**
- * Removes trees of properties that are not determinisitc
+ * Removes trees of properties that are not deterministic
  */
 function removeNonDeterministicProps(element: UIElement) {
   if (element.RenderSize) {

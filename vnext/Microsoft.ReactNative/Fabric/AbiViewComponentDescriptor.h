@@ -59,7 +59,7 @@ class AbiViewComponentDescriptor : public facebook::react::ComponentDescriptor {
       const facebook::react::Props::Shared &props,
       const facebook::react::Props::Shared &newProps) const override;
   virtual facebook::react::State::Shared createInitialState(
-      facebook::react::ShadowNodeFragment const &fragment,
+      facebook::react::Props::Shared const &props,
       facebook::react::ShadowNodeFamily::Shared const &family) const override;
   virtual facebook::react::State::Shared createState(
       facebook::react::ShadowNodeFamily const &family,
@@ -71,7 +71,7 @@ class AbiViewComponentDescriptor : public facebook::react::ComponentDescriptor {
 
  protected:
   /*
-   * Called immediatelly after `ShadowNode` is created or cloned.
+   * Called immediately after `ShadowNode` is created or cloned.
    *
    * Override this method to pass information from custom `ComponentDescriptor`
    * to new instance of `ShadowNode`.

@@ -2,6 +2,42 @@
   "name": "@rnw-scripts/just-task",
   "entries": [
     {
+      "date": "Tue, 16 May 2023 05:16:30 GMT",
+      "tag": "@rnw-scripts/just-task_v2.3.9",
+      "version": "2.3.9",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/just-task",
+            "comment": "Bump @rnw-scripts/jest-e2e-config to v1.4.3",
+            "commit": "b603bc740703e3725e21087cf26aee2b164c1307"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/just-task",
+            "comment": "Bump @rnw-scripts/jest-unittest-config to v1.5.3",
+            "commit": "b603bc740703e3725e21087cf26aee2b164c1307"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 08 May 2023 17:41:05 GMT",
+      "tag": "@rnw-scripts/just-task_v2.3.8",
+      "version": "2.3.8",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@rnw-scripts/just-task",
+            "commit": "fe7d786b7419fafdaf864c6769ef33555548f443",
+            "comment": "Fix typos and add `cspell` configuration"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 25 Apr 2023 05:17:01 GMT",
       "tag": "@rnw-scripts/just-task_v2.3.7",
       "version": "2.3.7",

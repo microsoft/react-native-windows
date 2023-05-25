@@ -1,0 +1,32 @@
+// cSpell Settings
+{
+    "version": "0.2",
+    "language": "en",
+    "dictionaryDefinitions": [
+        {
+            "name": "project-words",
+            "path": "./.spelling",
+            "addWords": true
+        }
+    ],
+    "dictionaries": ["project-words"],
+    "files": ["**/*.{cpp,h,idl,cs,js,jsx,ts,tsx}"],
+    "ignorePaths": [
+        "node_modules",
+        "packages/@office-iss/react-native-win32-tester",
+        "packages/@react-native/tester",
+        "packages/@react-native-windows/tester",
+        "packages/react-native-platform-override/src/e2etest/collateral",
+        "vnext/Folly/TEMP_UntilFollyUpdate",
+        "vnext/ReactCommon/TEMP_UntilReactCommonUpdate",
+        "vnext/ReactCommon/Yoga.cpp"
+    ],
+    "useGitignore": true,
+    "ignoreRegExpList": [
+        "require\\('.+'\\)", // Node require
+        " from '.+';", // Node import from
+        "\\$FlowFixMe\\[[a-z\\-]+\\]", // Ignore flow tags
+        "[@#][a-z\\-\\.]+", // Ignore @name or #name tags
+        "0x[0-9a-f]+ \/\\* tag_\\w{5} \\*\/"
+    ]
+}

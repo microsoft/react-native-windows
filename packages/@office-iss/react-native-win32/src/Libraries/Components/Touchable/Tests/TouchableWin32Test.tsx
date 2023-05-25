@@ -193,7 +193,7 @@ interface ITouchableWin32HighlightComponentProps extends ITouchableWin32Highligh
 
 /**
  * Example implementation of TouchableHighlight - not meant for use outside these examples
- * The main difference between a ful TouchableHiglight implementation and this example is that
+ * The main difference between a full TouchableHighlight implementation and this example is that
  * TouchableHighlight should manipulate the opacity of the wrapped view to display the underlay color.
  * This example merely uses hard coded color values to distinguish between different control states
  */
@@ -284,7 +284,7 @@ class TouchableWin32HighlightComponent extends React.Component<ITouchableWin32Hi
    * The generated style uses hard-coded color values,
    * though it is trivial to pass these values as props.
    * This is an example of a render style (one that is a
-   * funtion passed on to TouchableWin32 and resolved according
+   * function passed on to TouchableWin32 and resolved according
    * to the internal state of TouchableWin32).
    */
   private readonly _generateStyle = (state: ITouchableWin32State): ViewStyle => {

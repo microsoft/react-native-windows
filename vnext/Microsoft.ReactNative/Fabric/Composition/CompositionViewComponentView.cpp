@@ -824,7 +824,7 @@ winrt::com_ptr<ID2D1GeometryGroup> GetGeometryForRoundedBorder(
   return nullptr;
 }
 
-// We dont want half pixel borders, or border radii - they lead to blurry borders
+// We don't want half pixel borders, or border radii - they lead to blurry borders
 // Also apply scale factor to the radii at this point
 void pixelRoundBorderRadii(facebook::react::BorderRadii &borderRadii, float scaleFactor) noexcept {
   // Always round radii down to avoid spikey circles

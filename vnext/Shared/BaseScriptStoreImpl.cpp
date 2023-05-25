@@ -197,40 +197,40 @@ std::string BasePreparedScriptStoreImpl::getPreparedScriptFileName(
   // Essentially, we are trying to construct,
   // prep_<source_url>_<runtime_id>_<preparation_tag>.cache
 
-  std::string prparedScriptFileName("prep_");
+  std::string preparedScriptFileName("prep_");
 
   const std::string &scriptUrl = scriptSignature.url;
 
   // As a crude heuristic we choose the last 64 characters of the source url.
   constexpr int MAXLENGTH = 64;
-  prparedScriptFileName.append(
+  preparedScriptFileName.append(
       scriptUrl.begin() + ((scriptUrl.size() < MAXLENGTH) ? 0 : (scriptUrl.size() - MAXLENGTH)), scriptUrl.end());
 
   // Make a valid file name.
-  std::replace(prparedScriptFileName.begin(), prparedScriptFileName.end(), '\\', '_');
-  std::replace(prparedScriptFileName.begin(), prparedScriptFileName.end(), '/', '_');
-  std::replace(prparedScriptFileName.begin(), prparedScriptFileName.end(), ':', '_');
-  std::replace(prparedScriptFileName.begin(), prparedScriptFileName.end(), '.', '_');
+  std::replace(preparedScriptFileName.begin(), preparedScriptFileName.end(), '\\', '_');
+  std::replace(preparedScriptFileName.begin(), preparedScriptFileName.end(), '/', '_');
+  std::replace(preparedScriptFileName.begin(), preparedScriptFileName.end(), ':', '_');
+  std::replace(preparedScriptFileName.begin(), preparedScriptFileName.end(), '.', '_');
 
   if (runtimeSignature.runtimeName.empty()) {
     std::terminate();
   }
 
-  prparedScriptFileName.append("_");
-  prparedScriptFileName.append(runtimeSignature.runtimeName);
+  preparedScriptFileName.append("_");
+  preparedScriptFileName.append(runtimeSignature.runtimeName);
 
   if (prepareTag) {
-    prparedScriptFileName.append("_");
-    prparedScriptFileName.append(prepareTag);
+    preparedScriptFileName.append("_");
+    preparedScriptFileName.append(prepareTag);
   }
 
-  // TODO :: Need to constuct a hash. ref:
+  // TODO :: Need to construct a hash. ref:
   // https://en.wikipedia.org/wiki/Base64#Filenames
 
   // extension
-  prparedScriptFileName.append(".cache");
+  preparedScriptFileName.append(".cache");
 
-  return prparedScriptFileName;
+  return preparedScriptFileName;
 }
 
 std::shared_ptr<const jsi::Buffer> BasePreparedScriptStoreImpl::tryGetPreparedScript(

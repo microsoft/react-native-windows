@@ -18,7 +18,7 @@ namespace Microsoft.ReactNative.Managed
     /// This caches for each assembly (keyed on location
     /// </summary>
     /// <remarks>
-    /// We use concurrentDictionary instead of ConcurrentBag due to it's performance charateristics.
+    /// We use concurrentDictionary instead of ConcurrentBag due to it's performance characteristics.
     /// </remarks>
     private static readonly ConcurrentDictionary<Assembly, Lazy<Dictionary<string, AttributedModule>>> s_registeredAssemblies =
       new ConcurrentDictionary<Assembly, Lazy<Dictionary<string, AttributedModule>>>();

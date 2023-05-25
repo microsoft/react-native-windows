@@ -39,6 +39,7 @@
     "@rnw-scripts/stamp-version": "0.0.0",
     "@rnw-scripts/take-screenshot": "*",
     "beachball": "^2.20.0",
+    "fast-glob": "^3.2.11",
     "husky": "^4.2.5",
     "react-native-platform-override": "*",
     "unbroken": "1.0.27",
@@ -52,10 +53,11 @@
     "set-value": "^4.0.1",
     "strip-ansi": "^6.0.1",
     "**/parse-url/normalize-url": "^4.5.1",
-    "**/@react-native/repo-config/jest-junit": "^13.0.0",
-    "**/@react-native/repo-config/ws": "^6.2.2",
+    "**/@react-native/monorepo/node_modules/jest-junit": "^13.0.0",
+    "**/@react-native/monorepo/node_modules/ws": "^6.2.2",
     "**/@react-native/tester/ws": "^6.2.2",
     "**/detox/ws": "^5.2.3",
+    "xml2js": "^0.5.0",
     "z-schema": "^5.0.2"
   },
   "resolutions.justification": {

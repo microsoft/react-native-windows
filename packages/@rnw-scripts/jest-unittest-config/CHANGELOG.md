@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/jest-unittest-config
 
-This log was last generated on Tue, 25 Apr 2023 05:17:01 GMT and should not be manually modified.
+This log was last generated on Tue, 16 May 2023 05:16:30 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.5.3
+
+Tue, 16 May 2023 05:16:30 GMT
+
+### Patches
+
+- Bump @rnw-scripts/babel-node-config to v2.2.3
 
 ## 1.5.2
 

@@ -487,7 +487,7 @@ struct DefaultRedBoxHandler final : public std::enable_shared_from_this<DefaultR
   }
 
   virtual void showNewError(ErrorInfo &&info, ErrorType /*exceptionType*/) override {
-    // Check if the rebox has been suppressed
+    // Check if the redbox has been suppressed
     if (!info.ExtraData.isNull()) {
       auto iterator = info.ExtraData.find("suppressRedBox");
       if (iterator != info.ExtraData.items().end()) {

@@ -22,7 +22,7 @@ export const DiffStrategies = {
   /**
    * Assume the override is the same as the original
    */
-  asssumeSame: (): DiffStrategy => ({
+  assumeSame: (): DiffStrategy => ({
     diff: async () => '',
   }),
 
