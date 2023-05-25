@@ -7,6 +7,7 @@
 EXPORTS
 ??0dynamic@folly@@QAE@$$QAU01@@Z
 ??8folly@@YG_NABUdynamic@0@0@Z
+??Mfolly@@YG_NABUdynamic@0@0@Z
 ??4dynamic@folly@@QAEAAU01@$$QAU01@@Z
 ?hash@dynamic@folly@@QBEIXZ
 ?destroy@dynamic@folly@@AAEXXZ
@@ -171,6 +172,7 @@ _YGNodeStyleSetFlexDirection@8
 _YGNodeStyleSetFlexGrow@8
 _YGNodeStyleSetFlexShrink@8
 _YGNodeStyleSetFlexWrap@8
+_YGNodeStyleSetGap@12
 _YGNodeStyleSetHeight@8
 _YGNodeStyleSetHeightAuto@4
 _YGNodeStyleSetHeightPercent@8
