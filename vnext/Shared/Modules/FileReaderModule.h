@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <NativeModules.h>
 #include "IBlobPersistor.h"
 
 // React Native
@@ -49,6 +50,22 @@ class FileReaderModule : public facebook::xplat::module::CxxModule {
 
  private:
   std::weak_ptr<IBlobPersistor> m_weakBlobPersistor;
+};
+
+REACT_MODULE(FileReaderTurboModule, L"FileReaderModule")
+struct FileReaderTurboModule {
+
+  REACT_INIT(Initialize)
+  void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
+
+  REACT_METHOD(ReadAsDataUrl, L"readAsDataURL")
+  void ReadAsDataUrl(winrt::Microsoft::ReactNative::JSValue&& data, winrt::Microsoft::ReactNative::ReactPromise<std::string>&& result) noexcept;
+
+  REACT_METHOD(ReadAsText, L"readAsText")
+  void ReadAsText(
+      winrt::Microsoft::ReactNative::JSValue &&data,
+      std::string&& encoding,
+      winrt::Microsoft::ReactNative::ReactPromise<std::string> &&result) noexcept;
 };
 
 } // namespace Microsoft::React

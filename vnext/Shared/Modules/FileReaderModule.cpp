@@ -19,6 +19,8 @@
 
 using namespace facebook::xplat;
 
+namespace msrn = winrt::Microsoft::ReactNative;
+
 using folly::dynamic;
 using std::string;
 using std::weak_ptr;
@@ -29,7 +31,7 @@ using winrt::Microsoft::ReactNative::ReactPropertyId;
 using winrt::Windows::Foundation::IInspectable;
 
 namespace {
-constexpr char moduleName[] = "FileReaderModule";
+constexpr char moduleName0[] = "FileReaderModule";
 } // namespace
 
 namespace Microsoft::React {
@@ -45,7 +47,7 @@ FileReaderModule::~FileReaderModule() noexcept /*override*/
 #pragma region CxxModule
 
 string FileReaderModule::getName() {
-  return moduleName;
+  return moduleName0;
 }
 
 std::map<string, dynamic> FileReaderModule::getConstants() {
@@ -136,8 +138,29 @@ std::vector<module::CxxModule::Method> FileReaderModule::getMethods() {
 
 #pragma endregion FileReaderModule
 
+#pragma region FileReaderTurboModule
+
+void FileReaderTurboModule::Initialize(msrn::ReactContext const& reactContext) noexcept {
+
+}
+
+void FileReaderTurboModule::ReadAsDataUrl(
+  msrn::JSValue&& data,
+  msrn::ReactPromise<string>&& result) noexcept {
+
+}
+
+void FileReaderTurboModule::ReadAsText(
+  msrn::JSValue&& data,
+  string&& encoding,
+  msrn::ReactPromise<string>&& result) noexcept {
+
+}
+
+#pragma endregion FileReaderTurboModule
+
 /*extern*/ const char *GetFileReaderModuleName() noexcept {
-  return moduleName;
+  return moduleName0;
 }
 
 /*extern*/ std::unique_ptr<module::CxxModule> CreateFileReaderModule(
