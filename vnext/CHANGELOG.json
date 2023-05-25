@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 25 May 2023 20:07:27 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.655",
+      "version": "0.0.0-canary.655",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "f323367cf403e92bf8f216fe773cf2355d529b28",
+            "comment": "Fix a bunch of properties on Text"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 25 May 2023 05:15:04 GMT",
       "tag": "react-native-windows_v0.0.0-canary.654",
       "version": "0.0.0-canary.654",
