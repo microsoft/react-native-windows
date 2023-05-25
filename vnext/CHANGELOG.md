@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 23 May 2023 05:13:44 GMT and should not be manually modified.
+This log was last generated on Thu, 25 May 2023 05:15:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.654
+
+Thu, 25 May 2023 05:15:04 GMT
+
+### Changes
+
+- [Win32] Export yoga gap function (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.653
 
