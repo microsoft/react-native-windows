@@ -2,6 +2,9 @@ variables:
   # Injection configuration
   runCodesignValidationInjection: false
   
+  # SBOM signing only works on microsoft ADO
+  Packaging.EnableSBOMSigning: ${{ startsWith(variables['System.CollectionUri'], 'https://dev.azure.com/microsoft') }}
+  
   # Enables `chalk` to show colored output to Azure Pipelines
   FORCE_COLOR: 3
 
