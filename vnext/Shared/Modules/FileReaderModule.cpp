@@ -24,10 +24,6 @@ namespace msrn = winrt::Microsoft::ReactNative;
 using folly::dynamic;
 using std::string;
 using std::weak_ptr;
-using winrt::Microsoft::ReactNative::IReactPropertyBag;
-using winrt::Microsoft::ReactNative::ReactNonAbiValue;
-using winrt::Microsoft::ReactNative::ReactPropertyBag;
-using winrt::Microsoft::ReactNative::ReactPropertyId;
 using winrt::Windows::Foundation::IInspectable;
 
 namespace {
@@ -155,7 +151,8 @@ void FileReaderTurboModule::ReadAsText(
   msrn::JSValue&& data,
   string&& encoding,
   msrn::ReactPromise<string>&& result) noexcept {
-
+  if (!m_blobPersistor)
+    return result.Reject(L"Could not find Blob persistor");
 }
 
 #pragma endregion FileReaderTurboModule
@@ -166,8 +163,8 @@ void FileReaderTurboModule::ReadAsText(
 
 /*extern*/ std::unique_ptr<module::CxxModule> CreateFileReaderModule(
     IInspectable const &inspectableProperties) noexcept {
-  auto propId = ReactPropertyId<ReactNonAbiValue<weak_ptr<IBlobPersistor>>>{L"Blob.Persistor"};
-  auto propBag = ReactPropertyBag{inspectableProperties.try_as<IReactPropertyBag>()};
+  auto propId = msrn::ReactPropertyId<msrn::ReactNonAbiValue<weak_ptr<IBlobPersistor>>>{L"Blob.Persistor"};
+  auto propBag = msrn::ReactPropertyBag{inspectableProperties.try_as<msrn::IReactPropertyBag>()};
 
   if (auto prop = propBag.Get(propId)) {
     auto weakBlobPersistor = prop.Value();
