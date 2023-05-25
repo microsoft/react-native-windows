@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 25 May 2023 15:09:11 GMT",
+      "tag": "react-native-windows_v0.71.15",
+      "version": "0.71.15",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ab496b5ec0b8f5e6876d23b4f1e4c89d2e45d115",
+            "comment": "[Win32] Export yoga gap function"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 23 May 2023 00:04:06 GMT",
       "tag": "react-native-windows_v0.71.14",
       "version": "0.71.14",
