@@ -13,9 +13,6 @@
     <ClCompile Include="AsyncStorageTest.cpp">
       <Filter>Unit Tests</Filter>
     </ClCompile>
-    <ClCompile Include="BaseWebSocketTests.cpp">
-      <Filter>Unit Tests</Filter>
-    </ClCompile>
     <ClCompile Include="BytecodeUnitTests.cpp">
       <Filter>Unit Tests</Filter>
     </ClCompile>
