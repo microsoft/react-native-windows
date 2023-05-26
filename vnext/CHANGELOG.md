@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 25 May 2023 20:07:27 GMT and should not be manually modified.
+This log was last generated on Fri, 26 May 2023 05:13:21 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.656
+
+Fri, 26 May 2023 05:13:21 GMT
+
+### Changes
+
+- Change multi_threaded_map to single_threaded_map in WinRTHttpResource (lyahdav@users.noreply.github.com)
+- Remove unused Beast production code (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.655
 

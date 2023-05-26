@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Change multi_threaded_map to single_threaded_map in WinRTHttpResource",
-  "packageName": "react-native-windows",
-  "email": "lyahdav@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

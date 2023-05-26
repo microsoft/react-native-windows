@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 26 May 2023 05:13:21 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.656",
+      "version": "0.0.0-canary.656",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "lyahdav@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a0f4ee3295b3dc3e942e4865bf5489162680efea",
+            "comment": "Change multi_threaded_map to single_threaded_map in WinRTHttpResource"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "8e12ccc82efc6d981ffcefecb70a15504fdf0cb2",
+            "comment": "Remove unused Beast production code"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 25 May 2023 20:07:27 GMT",
       "tag": "react-native-windows_v0.0.0-canary.655",
       "version": "0.0.0-canary.655",
