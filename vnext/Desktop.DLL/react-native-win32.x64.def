@@ -9,6 +9,7 @@ EXPORTS
 ??8folly@@YA_NAEBUdynamic@0@0@Z
 ??4dynamic@folly@@QEAAAEAU01@$$QEAU01@@Z
 ?hash@dynamic@folly@@QEBA_KXZ
+??Mfolly@@YA_NAEBUdynamic@0@0@Z
 ?destroy@dynamic@folly@@AEAAXXZ
 ??0TypeError@folly@@QEAA@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4Type@dynamic@1@@Z
 ??0dynamic@folly@@QEAA@AEBU01@@Z
@@ -161,6 +162,7 @@ YGNodeStyleSetFlexDirection
 YGNodeStyleSetFlexGrow
 YGNodeStyleSetFlexShrink
 YGNodeStyleSetFlexWrap
+YGNodeStyleSetGap
 YGNodeStyleSetHeight
 YGNodeStyleSetHeightAuto
 YGNodeStyleSetHeightPercent
