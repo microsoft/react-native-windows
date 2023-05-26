@@ -72,13 +72,12 @@ export const runWindowsOptions: CommandOption[] = [
   {
     name: '--arch [string]',
     description: 'The build architecture (ARM64, x86, x64)',
-    default: (
+    default:
       os.arch() === 'ia32'
         ? 'x86'
         : os.arch() === 'arm64'
         ? 'ARM64'
-        : os.arch()
-    ),
+        : os.arch(),
     parse: parseBuildArch,
   },
   {
