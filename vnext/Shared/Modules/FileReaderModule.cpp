@@ -27,6 +27,7 @@ using std::weak_ptr;
 using winrt::Windows::Foundation::IInspectable;
 
 namespace {
+//TODO: EW! Rename!
 constexpr char moduleName0[] = "FileReaderModule";
 } // namespace
 
@@ -140,13 +141,20 @@ void FileReaderTurboModule::Initialize(msrn::ReactContext const& reactContext) n
 
 }
 
+///
+/// <param name="args">
+/// Array of arguments passed from the JavaScript layer.
+/// [0]  - dynamic blob object { blobId, offset, size[, type] }
+/// </param>
+///
 void FileReaderTurboModule::ReadAsDataUrl(
   msrn::JSValue&& data,
   msrn::ReactPromise<string>&& result) noexcept {
   if (!m_blobPersistor)
     return result.Reject(L"Could not find Blob persistor");
 
-  auto& blob = data.AsObject();
+  auto& array = data.AsArray();
+  auto& blob = data[0].AsObject();
   auto blobId = blob["blobId"].AsString();
   auto offset = blob["offset"].AsInt64();
   auto size = blob["size"].AsInt64();
@@ -177,12 +185,39 @@ void FileReaderTurboModule::ReadAsDataUrl(
   result.Resolve(std::move(content));
 }
 
+///TODO: update (folly not used)
+/// <param name="args">
+/// Array of arguments passed from the JavaScript layer.
+/// [0]  - dynamic blob object { blobId, offset, size }
+/// [1]  - string encoding
+/// </param>
+///
 void FileReaderTurboModule::ReadAsText(
   msrn::JSValue&& data,
   string&& encoding,
   msrn::ReactPromise<string>&& result) noexcept {
   if (!m_blobPersistor)
     return result.Reject(L"Could not find Blob persistor");
+
+  auto& args = data.AsArray();
+  auto& blob = args[0].AsObject();
+
+  auto blobId = blob["blobId"].AsString();
+  auto offset = blob["offset"].AsInt64();
+  auto size = blob["size"].AsInt64();
+
+  winrt::array_view<uint8_t const> bytes;
+  try {
+    bytes = m_blobPersistor->ResolveMessage(std::move(blobId), offset, size);
+  } catch(const std::exception &e) {
+    return result.Reject(e.what());
+  }
+
+  // #9982 - Handle non-UTF8 encodings
+  //         See https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/charset/Charset.html
+  auto content = string{bytes.cbegin(), bytes.cend()};
+
+  result.Resolve(std::move(content));
 }
 
 #pragma endregion FileReaderTurboModule
