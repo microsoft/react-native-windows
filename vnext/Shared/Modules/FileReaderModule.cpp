@@ -145,6 +145,36 @@ void FileReaderTurboModule::ReadAsDataUrl(
   msrn::ReactPromise<string>&& result) noexcept {
   if (!m_blobPersistor)
     return result.Reject(L"Could not find Blob persistor");
+
+  auto& blob = data.AsObject();
+  auto blobId = blob["blobId"].AsString();
+  auto offset = blob["offset"].AsInt64();
+  auto size = blob["size"].AsInt64();
+
+  winrt::array_view<uint8_t const> bytes;
+  try {
+    bytes = m_blobPersistor->ResolveMessage(std::move(blobId), offset, size);
+  } catch (const std::exception &e) {
+    return result.Reject(e.what());
+  }
+
+  auto content = string{"data:"};
+  auto typeItr = blob.find("type");
+  if (typeItr == blob.end()) { //TODO: .items() ?
+    content += "application/octet-stream";
+  } else {
+    content += (*typeItr).second.AsString();
+  }
+  content += ";base64,";
+
+  // https://www.boost.org/doc/libs/1_76_0/libs/serialization/doc/dataflow.html
+  using namespace boost::archive::iterators;
+  typedef base64_from_binary<transform_width<const char *, 6, 8>> encode_base64;
+  std::ostringstream oss;
+  std::copy(encode_base64(bytes.cbegin()), encode_base64(bytes.cend()), ostream_iterator<char>(oss));
+  content += oss.str();
+
+  result.Resolve(std::move(content));
 }
 
 void FileReaderTurboModule::ReadAsText(
