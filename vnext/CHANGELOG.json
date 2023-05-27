@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 27 May 2023 05:15:02 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.657",
+      "version": "0.0.0-canary.657",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "31e90ef4d20203a35b7ebb2353b0adbe2686fe6e",
+            "comment": "Fix dependency script to install missing components for VS Preview"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.171",
+            "commit": "31e90ef4d20203a35b7ebb2353b0adbe2686fe6e"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 26 May 2023 05:13:21 GMT",
       "tag": "react-native-windows_v0.0.0-canary.656",
       "version": "0.0.0-canary.656",

@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Tue, 16 May 2023 05:16:29 GMT and should not be manually modified.
+This log was last generated on Sat, 27 May 2023 05:15:02 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.171
+
+Sat, 27 May 2023 05:15:02 GMT
+
+### Changes
+
+- fix x86 node invocation (asklar@microsoft.com)
 
 ## 0.0.0-canary.170
 
