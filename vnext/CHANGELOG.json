@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 29 May 2023 15:17:23 GMT",
+      "tag": "react-native-windows_v0.72.0-preview.6",
+      "version": "0.72.0-preview.6",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "5d17894d8adc1d616efdd8579ae7ea408b524c90",
+            "comment": "Fix a bunch of properties not working on Text"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "587083b399cbdc0a5134daef36996e5527f8c1dc",
+            "comment": "Allow apps to provide accessiblity information on non-focusable components"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b9a2d51896667aadcd9a7c497631ca96fe0d1ca4",
+            "comment": "[Win32] Export yoga gap function"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 22 May 2023 15:16:17 GMT",
       "tag": "react-native-windows_v0.72.0-preview.5",
       "version": "0.72.0-preview.5",
