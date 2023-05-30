@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Limit Yoga layout to relevant root on resize",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
