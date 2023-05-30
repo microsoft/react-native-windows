@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "CompositionRootAutomationProvider.h"
-#include "UiaHelpers.h"
 #include <algorithm>
+#include "UiaHelpers.h"
 #pragma warning(push)
 #pragma warning(disable : 4229)
 #define IN
@@ -193,13 +193,17 @@ HRESULT __stdcall CompositionRootAutomationProvider::Navigate(
   return S_OK;
 }
 
+// The old C-style interface for SAFEARRAY is tedious to use. ATL provides CComSafeArray which allows us to interact
+// with the data structure using much more modern methods. However, AdviseEventAdded/Removed don't expect us to
+// deallocate their In param, so this is a simple RAII wrapper to Attach/Detach in the scope of those functions and
+// perform a little validation that the incoming SAFEARRAY is well formed.
 class UIAPropertyArray {
   CComSafeArray<PROPERTYID> m_propArray{};
+
  public:
   UIAPropertyArray(SAFEARRAY *psaProperties) noexcept {
     VARTYPE vt;
-    if (psaProperties && SUCCEEDED(SafeArrayGetVartype(psaProperties, &vt)) && vt == m_propArray.GetType())
-    {
+    if (psaProperties && SUCCEEDED(SafeArrayGetVartype(psaProperties, &vt)) && vt == m_propArray.GetType()) {
       m_propArray.Attach(psaProperties);
     }
   }
@@ -210,8 +214,7 @@ class UIAPropertyArray {
   bool IsValid() noexcept {
     return m_propArray.GetSafeArrayPtr() != nullptr && m_propArray.GetDimensions() == 1 && m_propArray.GetCount() > 0;
   }
-  CComSafeArray<PROPERTYID>* operator->() noexcept
-  {
+  CComSafeArray<PROPERTYID> *operator->() noexcept {
     return &m_propArray;
   }
 };
@@ -222,9 +225,7 @@ void AdviseEventAddedImpl(
   auto it = std::find_if(
       advisedEvents.begin(),
       advisedEvents.end(),
-      [idEvent](const CompositionRootAutomationProvider::AdvisedEvent &ae) noexcept {
-    return ae.Event == idEvent;
-  });
+      [idEvent](const CompositionRootAutomationProvider::AdvisedEvent &ae) noexcept { return ae.Event == idEvent; });
 
   if (it == advisedEvents.end()) {
     advisedEvents.emplace_back(CompositionRootAutomationProvider::AdvisedEvent{idEvent, 1 /*Count*/});
@@ -261,9 +262,7 @@ HRESULT AdviseEventRemovedImpl(
   auto it = std::find_if(
       advisedEvents.begin(),
       advisedEvents.end(),
-      [idEvent](const CompositionRootAutomationProvider::AdvisedEvent &ae) noexcept {
-    return ae.Event == idEvent;
-  });
+      [idEvent](const CompositionRootAutomationProvider::AdvisedEvent &ae) noexcept { return ae.Event == idEvent; });
 
   if (it == advisedEvents.end()) {
     assert(false);
@@ -287,14 +286,12 @@ HRESULT CompositionRootAutomationProvider::AdvisePropertiesRemoved(SAFEARRAY *ps
   for (auto i = props->GetLowerBound(); i <= props->GetUpperBound(); i++) {
     auto prop = props->GetAt(i);
     auto hr = AdviseEventRemovedImpl(m_advisedProperties, prop);
-    if (FAILED(hr))
-    {
+    if (FAILED(hr)) {
       returnHr = hr;
     }
   }
   return returnHr;
 }
-
 
 HRESULT
 CompositionRootAutomationProvider::AdviseEventRemoved(EVENTID idEvent, SAFEARRAY *psaProperties) {

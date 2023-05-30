@@ -1,10 +1,10 @@
 #include "pch.h"
 #include "UiaHelpers.h"
-#include <atlcomcli.h>
 #include <Fabric/Composition/CompositionViewComponentView.h>
+#include <atlcomcli.h>
 #include <inspectable.h>
-#include "RootComponentView.h"
 #include "CompositionRootAutomationProvider.h"
+#include "RootComponentView.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
@@ -89,8 +89,7 @@ HRESULT UiaGetBoundingRectangleHelper(::Microsoft::ReactNative::ReactTaggedView 
   return S_OK;
 }
 
-HRESULT UiaSetFocusHelper(::Microsoft::ReactNative::ReactTaggedView& view) noexcept
-{
+HRESULT UiaSetFocusHelper(::Microsoft::ReactNative::ReactTaggedView &view) noexcept {
   auto strongView = view.view();
 
   if (!strongView)
@@ -124,11 +123,14 @@ void UpdateUiaProperty(winrt::IInspectable provider, PROPERTYID propId, bool old
   if (spProviderSimple == nullptr || oldValue == newValue || !WasUiaPropertyAdvised(spProviderSimple, propId))
     return;
 
-  UiaRaiseAutomationPropertyChangedEvent(
-      spProviderSimple.get(), propId, CComVariant(oldValue), CComVariant(newValue));
+  UiaRaiseAutomationPropertyChangedEvent(spProviderSimple.get(), propId, CComVariant(oldValue), CComVariant(newValue));
 }
 
-void UpdateUiaProperty(winrt::IInspectable provider, PROPERTYID propId, const std::string& oldValue, const std::string& newValue) noexcept {
+void UpdateUiaProperty(
+    winrt::IInspectable provider,
+    PROPERTYID propId,
+    const std::string &oldValue,
+    const std::string &newValue) noexcept {
   auto spProviderSimple = provider.try_as<IRawElementProviderSimple>();
 
   if (spProviderSimple == nullptr || oldValue == newValue || !WasUiaPropertyAdvised(spProviderSimple, propId))
@@ -137,6 +139,5 @@ void UpdateUiaProperty(winrt::IInspectable provider, PROPERTYID propId, const st
   UiaRaiseAutomationPropertyChangedEvent(
       spProviderSimple.get(), propId, CComVariant(oldValue.c_str()), CComVariant(newValue.c_str()));
 }
-
 
 } // namespace winrt::Microsoft::ReactNative::implementation

@@ -15,8 +15,8 @@
 #include "CompositionDynamicAutomationProvider.h"
 #include "CompositionHelpers.h"
 #include "RootComponentView.h"
-#include "d2d1helper.h"
 #include "UiaHelpers.h"
+#include "d2d1helper.h"
 
 namespace Microsoft::ReactNative {
 
@@ -78,8 +78,7 @@ bool CompositionBaseComponentView::runOnChildren(bool forward, Mso::Functor<bool
 void CompositionBaseComponentView::onFocusLost() noexcept {
   m_eventEmitter->onBlur();
   showFocusVisual(false);
-  if (UiaClientsAreListening())
-  {
+  if (UiaClientsAreListening()) {
     winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
         EnsureUiaProvider(), UIA_HasKeyboardFocusPropertyId, true, false);
   }
@@ -90,8 +89,7 @@ void CompositionBaseComponentView::onFocusGained() noexcept {
   if (m_enableFocusVisual) {
     showFocusVisual(true);
   }
-  if (UiaClientsAreListening())
-  {
+  if (UiaClientsAreListening()) {
     auto spProviderSimple = EnsureUiaProvider().try_as<IRawElementProviderSimple>();
     if (spProviderSimple != nullptr) {
       winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
@@ -1047,7 +1045,6 @@ void CompositionBaseComponentView::updateBorderProps(
 void CompositionBaseComponentView::updateAccessibilityProps(
     const facebook::react::ViewProps &oldViewProps,
     const facebook::react::ViewProps &newViewProps) noexcept {
-
   if (!UiaClientsAreListening())
     return;
 
