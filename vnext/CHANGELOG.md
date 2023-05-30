@@ -1,8 +1,42 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 23 May 2023 05:13:44 GMT and should not be manually modified.
+This log was last generated on Sat, 27 May 2023 05:15:02 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.657
+
+Sat, 27 May 2023 05:15:02 GMT
+
+### Changes
+
+- Fix dependency script to install missing components for VS Preview (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.171
+
+## 0.0.0-canary.656
+
+Fri, 26 May 2023 05:13:21 GMT
+
+### Changes
+
+- Change multi_threaded_map to single_threaded_map in WinRTHttpResource (lyahdav@users.noreply.github.com)
+- Remove unused Beast production code (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.655
+
+Thu, 25 May 2023 20:07:27 GMT
+
+### Changes
+
+- Fix a bunch of properties on Text (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.654
+
+Thu, 25 May 2023 05:15:04 GMT
+
+### Changes
+
+- [Win32] Export yoga gap function (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.653
 

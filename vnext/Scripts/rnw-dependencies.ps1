@@ -81,6 +81,8 @@ $vsWorkloads = @('Microsoft.VisualStudio.Workload.ManagedDesktop',
 $vsAll = ($vsComponents + $vsWorkloads);
 
 # The minimum VS version to check for
+# Note: For install to work, whatever min version you specify here must be met by the current package available on choco.
+# I.E. Do NOT specify a Preview version here because choco doesn't have VS Preview packages.
 $vsver = "17.3";
 
 # The exact .NET SDK version to check for
@@ -177,16 +179,34 @@ function CheckVS {
     return $result;
 }
 
+function GetVSChannelAndProduct {
+    param(
+        [string]$VsWhere
+    )
+    
+    if ($VsWhere -ne $null) {
+        $channelId = & $VsWhere -version $vsver -property channelId;
+        $productId = & $VsWhere -version $vsver -property productId;
+        
+        # Channel/product not found, check one more time for pre-release
+        if (($channelId -eq $null) -or ($productId -eq $null)) {
+            $channelId = & $VsWhere -version $vsver -property channelId -prerelease;
+            $productId = & $VsWhere -version $vsver -property productId -prerelease;
+        }
+        
+        return $channelId, $productId;
+    }
+    
+    return $null, $null;
+}
+
 function InstallVS {
     $vsWhere = Get-VSWhere;
-
-    if ($vsWhere -ne $null) {
-        $channelId = & $vsWhere -version $vsver -property channelId;
-        $productId = & $vsWhere -version $vsver -property productId;
-    }
+    
+    $channelId, $productId = GetVSChannelAndProduct -VsWhere $vsWhere
 
     if (($vsWhere -eq $null) -or ($channelId -eq $null) -or ($productId -eq $null)) {
-        # No VSWhere / VS_Installer
+        # No VSWhere / VS_Installer, try to install
 
         EnsureChocoForInstall;
         
@@ -199,8 +219,12 @@ function InstallVS {
 
         $vsWhere = Get-VSWhere;
 
-        $channelId = & $vsWhere -version $vsver -property channelId;
-        $productId = & $vsWhere -version $vsver -property productId;
+        $channelId, $productId = GetVSChannelAndProduct -VsWhere $vsWhere
+    }
+    
+    # Final check before attempting install
+    if (($vsWhere -eq $null) -or ($channelId -eq $null) -or ($productId -eq $null)) {
+        throw "Unable to find or install a compatible version of Visual Studio >= ($vsver).";
     }
 
     $vsInstaller = Join-Path -Path (Split-Path -Parent $vsWhere) -ChildPath "vs_installer.exe";

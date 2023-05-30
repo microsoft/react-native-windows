@@ -2,6 +2,78 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 27 May 2023 05:15:02 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.657",
+      "version": "0.0.0-canary.657",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "31e90ef4d20203a35b7ebb2353b0adbe2686fe6e",
+            "comment": "Fix dependency script to install missing components for VS Preview"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.171",
+            "commit": "31e90ef4d20203a35b7ebb2353b0adbe2686fe6e"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 26 May 2023 05:13:21 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.656",
+      "version": "0.0.0-canary.656",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "lyahdav@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a0f4ee3295b3dc3e942e4865bf5489162680efea",
+            "comment": "Change multi_threaded_map to single_threaded_map in WinRTHttpResource"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "8e12ccc82efc6d981ffcefecb70a15504fdf0cb2",
+            "comment": "Remove unused Beast production code"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 25 May 2023 20:07:27 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.655",
+      "version": "0.0.0-canary.655",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "f323367cf403e92bf8f216fe773cf2355d529b28",
+            "comment": "Fix a bunch of properties on Text"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 25 May 2023 05:15:04 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.654",
+      "version": "0.0.0-canary.654",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "8d3727b36af1395edc802bd2d017765ca5cc5b2c",
+            "comment": "[Win32] Export yoga gap function"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 23 May 2023 05:13:44 GMT",
       "tag": "react-native-windows_v0.0.0-canary.653",
       "version": "0.0.0-canary.653",

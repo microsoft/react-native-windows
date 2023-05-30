@@ -397,7 +397,7 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
   // Ensure background thread
   co_await winrt::resume_background();
 
-  auto props = winrt::multi_threaded_map<winrt::hstring, IInspectable>();
+  auto props = winrt::single_threaded_map<winrt::hstring, IInspectable>();
   props.Insert(L"RequestArgs", coArgs);
 
   auto coRequestOp = CreateRequest(std::move(coMethod), std::move(coUri), props);
