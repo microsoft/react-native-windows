@@ -241,6 +241,7 @@ HRESULT CompositionRootAutomationProvider::AdvisePropertiesAdded(SAFEARRAY *psaP
     return E_INVALIDARG;
   }
 
+  // Note SAFEARRAY's upperbound is inclusive
   for (auto i = props->GetLowerBound(); i <= props->GetUpperBound(); i++) {
     auto prop = props->GetAt(i);
     AdviseEventAddedImpl(m_advisedProperties, prop);
