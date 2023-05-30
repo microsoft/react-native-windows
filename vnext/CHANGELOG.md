@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 22 May 2023 15:16:17 GMT and should not be manually modified.
+This log was last generated on Mon, 29 May 2023 15:17:23 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.72.0-preview.6
+
+Mon, 29 May 2023 15:17:23 GMT
+
+### Changes
+
+- Fix a bunch of properties not working on Text (30809111+acoates-ms@users.noreply.github.com)
+- Allow apps to provide accessiblity information on non-focusable components (30809111+acoates-ms@users.noreply.github.com)
+- [Win32] Export yoga gap function (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.72.0-preview.5
 
