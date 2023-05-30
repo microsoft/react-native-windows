@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "[0.71] fix x86 node invocation",
+  "packageName": "@react-native-windows/cli",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
