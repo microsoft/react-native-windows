@@ -1051,11 +1051,19 @@ void CompositionBaseComponentView::updateAccessibilityProps(
   if (!UiaClientsAreListening())
     return;
 
-  winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
-      EnsureUiaProvider(), UIA_IsKeyboardFocusablePropertyId, oldViewProps.focusable, newViewProps.focusable);
+  auto provider = EnsureUiaProvider();
 
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
-      EnsureUiaProvider(), UIA_NamePropertyId, oldViewProps.accessibilityLabel, newViewProps.accessibilityLabel);
+      provider, UIA_IsKeyboardFocusablePropertyId, oldViewProps.focusable, newViewProps.focusable);
+
+  winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+      provider, UIA_NamePropertyId, oldViewProps.accessibilityLabel, newViewProps.accessibilityLabel);
+
+  winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+      provider,
+      UIA_IsEnabledPropertyId,
+      !oldViewProps.accessibilityState.disabled,
+      !newViewProps.accessibilityState.disabled);
 }
 
 void CompositionBaseComponentView::updateBorderLayoutMetrics(

@@ -124,10 +124,8 @@ void UpdateUiaProperty(winrt::IInspectable provider, PROPERTYID propId, bool old
   if (spProviderSimple == nullptr || oldValue == newValue || !WasUiaPropertyAdvised(spProviderSimple, propId))
     return;
 
-  auto hr = UiaRaiseAutomationPropertyChangedEvent(
+  UiaRaiseAutomationPropertyChangedEvent(
       spProviderSimple.get(), propId, CComVariant(oldValue), CComVariant(newValue));
-
-  assert(SUCCEEDED(hr));
 }
 
 void UpdateUiaProperty(winrt::IInspectable provider, PROPERTYID propId, const std::string& oldValue, const std::string& newValue) noexcept {
@@ -136,10 +134,8 @@ void UpdateUiaProperty(winrt::IInspectable provider, PROPERTYID propId, const st
   if (spProviderSimple == nullptr || oldValue == newValue || !WasUiaPropertyAdvised(spProviderSimple, propId))
     return;
 
-  auto hr = UiaRaiseAutomationPropertyChangedEvent(
+  UiaRaiseAutomationPropertyChangedEvent(
       spProviderSimple.get(), propId, CComVariant(oldValue.c_str()), CComVariant(newValue.c_str()));
-
-  assert(SUCCEEDED(hr));
 }
 
 

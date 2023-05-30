@@ -249,9 +249,8 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
       break;
     }
     case UIA_IsEnabledPropertyId: {
-      // TODO: Implement accessibilityState
       pRetVal->vt = VT_BOOL;
-      pRetVal->boolVal = VARIANT_TRUE;
+      pRetVal->boolVal = !props->accessibilityState.disabled ? VARIANT_TRUE : VARIANT_FALSE;
       break;
     }
   }
