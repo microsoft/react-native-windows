@@ -211,6 +211,8 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
   if (props == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
+  auto hr = S_OK;
+
   switch (propertyId) {
     case UIA_ControlTypePropertyId: {
       pRetVal->vt = VT_I4;
@@ -247,17 +249,14 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
       break;
     }
     case UIA_IsEnabledPropertyId: {
+      // TODO: Implement accessibilityState
       pRetVal->vt = VT_BOOL;
       pRetVal->boolVal = VARIANT_TRUE;
       break;
     }
-    //case UIA_IsControlElementPropertyId: {
-    //  pRetVal->vt = VT_BOOL;
-    //  pRetVal->boolVal = props->accessibilityRole != "none" ? VARIANT_TRUE : VARIANT_FALSE;
-    //}
   }
 
-  return S_OK;
+  return hr;
 }
 
 HRESULT __stdcall CompositionDynamicAutomationProvider::get_HostRawElementProvider(

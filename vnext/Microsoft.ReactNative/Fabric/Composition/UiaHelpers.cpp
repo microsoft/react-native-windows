@@ -1,8 +1,10 @@
 #include "pch.h"
 #include "UiaHelpers.h"
+#include <atlcomcli.h>
 #include <Fabric/Composition/CompositionViewComponentView.h>
 #include <inspectable.h>
 #include "RootComponentView.h"
+#include "CompositionRootAutomationProvider.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
@@ -101,33 +103,44 @@ HRESULT UiaSetFocusHelper(::Microsoft::ReactNative::ReactTaggedView& view) noexc
   return rootCV->TrySetFocusedComponent(*strongView) ? S_OK : E_FAIL;
 }
 
-HRESULT UpdateUiaProperty(winrt::IInspectable provider, PROPERTYID propId, bool oldValue, bool newValue) noexcept {
+bool WasUiaPropertyAdvised(winrt::com_ptr<IRawElementProviderSimple> &providerSimple, PROPERTYID propId) noexcept {
+  auto spFragment = providerSimple.try_as<IRawElementProviderFragment>();
+  if (spFragment == nullptr)
+    return false;
+
+  winrt::com_ptr<IRawElementProviderFragmentRoot> spFragmentRoot;
+  spFragment->get_FragmentRoot(spFragmentRoot.put());
+  if (spFragmentRoot == nullptr)
+    return false;
+
+  auto rootProvider = static_cast<CompositionRootAutomationProvider *>(spFragmentRoot.get());
+
+  return rootProvider->WasPropertyAdvised(propId);
+}
+
+void UpdateUiaProperty(winrt::IInspectable provider, PROPERTYID propId, bool oldValue, bool newValue) noexcept {
   auto spProviderSimple = provider.try_as<IRawElementProviderSimple>();
 
-  if (spProviderSimple == nullptr || !UiaClientsAreListening())
-    return S_OK;
+  if (spProviderSimple == nullptr || oldValue == newValue || !WasUiaPropertyAdvised(spProviderSimple, propId))
+    return;
 
-  return UpdateUiaProperty(*spProviderSimple.get(), propId, oldValue, newValue);
+  auto hr = UiaRaiseAutomationPropertyChangedEvent(
+      spProviderSimple.get(), propId, CComVariant(oldValue), CComVariant(newValue));
+
+  assert(SUCCEEDED(hr));
 }
 
-HRESULT UpdateUiaProperty(
-    IRawElementProviderSimple &providerSimple,
-    PROPERTYID propId,
-    bool oldValue,
-    bool newValue) noexcept {
+void UpdateUiaProperty(winrt::IInspectable provider, PROPERTYID propId, const std::string& oldValue, const std::string& newValue) noexcept {
+  auto spProviderSimple = provider.try_as<IRawElementProviderSimple>();
 
-  if (oldValue == newValue)
-    return S_OK;
+  if (spProviderSimple == nullptr || oldValue == newValue || !WasUiaPropertyAdvised(spProviderSimple, propId))
+    return;
 
-  VARIANT oldVariant;
-  oldVariant.vt = VT_BOOL;
-  oldVariant.boolVal = oldValue ? VARIANT_TRUE : VARIANT_FALSE;
+  auto hr = UiaRaiseAutomationPropertyChangedEvent(
+      spProviderSimple.get(), propId, CComVariant(oldValue.c_str()), CComVariant(newValue.c_str()));
 
-  VARIANT newVariant;
-  newVariant.vt = VT_BOOL;
-  newVariant.boolVal = newValue ? VARIANT_TRUE : VARIANT_FALSE;
-
-  return UiaRaiseAutomationPropertyChangedEvent(&providerSimple, propId, oldVariant, newVariant);
+  assert(SUCCEEDED(hr));
 }
+
 
 } // namespace winrt::Microsoft::ReactNative::implementation

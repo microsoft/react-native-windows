@@ -38,7 +38,6 @@ RootComponentView *CompositionBaseComponentView::rootComponentView() noexcept {
   if (m_parent)
     return m_parent->rootComponentView();
 
-  assert(false);
   return nullptr;
 }
 
@@ -79,8 +78,11 @@ bool CompositionBaseComponentView::runOnChildren(bool forward, Mso::Functor<bool
 void CompositionBaseComponentView::onFocusLost() noexcept {
   m_eventEmitter->onBlur();
   showFocusVisual(false);
-  winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
-      m_uiaProvider, UIA_HasKeyboardFocusPropertyId, true, false);
+  if (UiaClientsAreListening())
+  {
+    winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+        EnsureUiaProvider(), UIA_HasKeyboardFocusPropertyId, true, false);
+  }
 }
 
 void CompositionBaseComponentView::onFocusGained() noexcept {
@@ -88,11 +90,14 @@ void CompositionBaseComponentView::onFocusGained() noexcept {
   if (m_enableFocusVisual) {
     showFocusVisual(true);
   }
-  auto spProviderSimple = m_uiaProvider.try_as<IRawElementProviderSimple>();
-  if (UiaClientsAreListening() && spProviderSimple != nullptr) {
-    winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
-        *spProviderSimple.get(), UIA_HasKeyboardFocusPropertyId, false, true);
-    UiaRaiseAutomationEvent(spProviderSimple.get(), UIA_AutomationFocusChangedEventId);
+  if (UiaClientsAreListening())
+  {
+    auto spProviderSimple = EnsureUiaProvider().try_as<IRawElementProviderSimple>();
+    if (spProviderSimple != nullptr) {
+      winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+          m_uiaProvider, UIA_HasKeyboardFocusPropertyId, false, true);
+      UiaRaiseAutomationEvent(spProviderSimple.get(), UIA_AutomationFocusChangedEventId);
+    }
   }
 }
 
@@ -1043,17 +1048,14 @@ void CompositionBaseComponentView::updateAccessibilityProps(
     const facebook::react::ViewProps &oldViewProps,
     const facebook::react::ViewProps &newViewProps) noexcept {
 
-  auto spProviderSimple = m_uiaProvider.try_as<IRawElementProviderSimple>();
-
-  if (spProviderSimple == nullptr || !UiaClientsAreListening())
+  if (!UiaClientsAreListening())
     return;
 
-  //advise events
+  winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+      EnsureUiaProvider(), UIA_IsKeyboardFocusablePropertyId, oldViewProps.focusable, newViewProps.focusable);
 
-  auto hr = winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
-      *spProviderSimple.get(), UIA_IsKeyboardFocusablePropertyId, oldViewProps.focusable, newViewProps.focusable);
-
-  //check 
+  winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+      EnsureUiaProvider(), UIA_NamePropertyId, oldViewProps.accessibilityLabel, newViewProps.accessibilityLabel);
 }
 
 void CompositionBaseComponentView::updateBorderLayoutMetrics(

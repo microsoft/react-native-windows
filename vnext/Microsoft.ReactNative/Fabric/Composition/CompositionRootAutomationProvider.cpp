@@ -1,6 +1,13 @@
 #include "pch.h"
 #include "CompositionRootAutomationProvider.h"
 #include "UiaHelpers.h"
+#include <algorithm>
+#pragma warning(push)
+#pragma warning(disable : 4229)
+#define IN
+#define OUT
+#include <atlsafe.h>
+#pragma warning(pop)
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
@@ -184,6 +191,130 @@ HRESULT __stdcall CompositionRootAutomationProvider::Navigate(
   }
   *pRetVal = nullptr;
   return S_OK;
+}
+
+class UIAPropertyArray {
+  CComSafeArray<PROPERTYID> m_propArray{};
+ public:
+  UIAPropertyArray(SAFEARRAY *psaProperties) noexcept {
+    VARTYPE vt;
+    if (psaProperties && SUCCEEDED(SafeArrayGetVartype(psaProperties, &vt)) && vt == m_propArray.GetType())
+    {
+      m_propArray.Attach(psaProperties);
+    }
+  }
+  ~UIAPropertyArray() noexcept {
+    if (m_propArray.GetSafeArrayPtr() != nullptr)
+      m_propArray.Detach();
+  }
+  bool IsValid() noexcept {
+    return m_propArray.GetSafeArrayPtr() != nullptr && m_propArray.GetDimensions() == 1 && m_propArray.GetCount() > 0;
+  }
+  CComSafeArray<PROPERTYID>* operator->() noexcept
+  {
+    return &m_propArray;
+  }
+};
+
+void AdviseEventAddedImpl(
+    std::vector<CompositionRootAutomationProvider::AdvisedEvent> &advisedEvents,
+    EVENTID idEvent) noexcept {
+  auto it = std::find_if(
+      advisedEvents.begin(),
+      advisedEvents.end(),
+      [idEvent](const CompositionRootAutomationProvider::AdvisedEvent &ae) noexcept {
+    return ae.Event == idEvent;
+  });
+
+  if (it == advisedEvents.end()) {
+    advisedEvents.emplace_back(CompositionRootAutomationProvider::AdvisedEvent{idEvent, 1 /*Count*/});
+  } else {
+    it->Count++;
+  }
+}
+
+HRESULT CompositionRootAutomationProvider::AdvisePropertiesAdded(SAFEARRAY *psaProperties) noexcept {
+  UIAPropertyArray props(psaProperties);
+
+  if (!props.IsValid()) {
+    return E_INVALIDARG;
+  }
+
+  for (auto i = props->GetLowerBound(); i <= props->GetUpperBound(); i++) {
+    auto prop = props->GetAt(i);
+    AdviseEventAddedImpl(m_advisedProperties, prop);
+  }
+  return S_OK;
+}
+
+HRESULT CompositionRootAutomationProvider::AdviseEventAdded(EVENTID idEvent, SAFEARRAY *psaProperties) {
+  if (idEvent == UIA_AutomationPropertyChangedEventId) {
+    return AdvisePropertiesAdded(psaProperties);
+  }
+  AdviseEventAddedImpl(m_advisedEvents, idEvent);
+  return S_OK;
+}
+
+HRESULT AdviseEventRemovedImpl(
+    std::vector<CompositionRootAutomationProvider::AdvisedEvent> &advisedEvents,
+    EVENTID idEvent) noexcept {
+  auto it = std::find_if(
+      advisedEvents.begin(),
+      advisedEvents.end(),
+      [idEvent](const CompositionRootAutomationProvider::AdvisedEvent &ae) noexcept {
+    return ae.Event == idEvent;
+  });
+
+  if (it == advisedEvents.end()) {
+    assert(false);
+    return UIA_E_INVALIDOPERATION;
+  } else if (it->Count == 1) {
+    advisedEvents.erase(it);
+  } else {
+    it->Count--;
+  }
+  return S_OK;
+}
+
+HRESULT CompositionRootAutomationProvider::AdvisePropertiesRemoved(SAFEARRAY *psaProperties) noexcept {
+  UIAPropertyArray props(psaProperties);
+
+  if (!props.IsValid()) {
+    return E_INVALIDARG;
+  }
+
+  auto returnHr = S_OK;
+  for (auto i = props->GetLowerBound(); i <= props->GetUpperBound(); i++) {
+    auto prop = props->GetAt(i);
+    auto hr = AdviseEventRemovedImpl(m_advisedProperties, prop);
+    if (FAILED(hr))
+    {
+      returnHr = hr;
+    }
+  }
+  return returnHr;
+}
+
+
+HRESULT
+CompositionRootAutomationProvider::AdviseEventRemoved(EVENTID idEvent, SAFEARRAY *psaProperties) {
+  if (idEvent == UIA_AutomationPropertyChangedEventId) {
+    return AdvisePropertiesRemoved(psaProperties);
+  }
+
+  return AdviseEventRemovedImpl(m_advisedEvents, idEvent);
+}
+
+bool CompositionRootAutomationProvider::WasEventAdvised(EVENTID event) noexcept {
+  return std::any_of(m_advisedEvents.begin(), m_advisedEvents.end(), [event](const AdvisedEvent &ae) {
+    return ae.Event == event && ae.Count > 0;
+  });
+}
+
+bool CompositionRootAutomationProvider::WasPropertyAdvised(PROPERTYID prop) noexcept {
+  return std::any_of(m_advisedProperties.begin(), m_advisedProperties.end(), [prop](const AdvisedEvent &ae) {
+    return ae.Property == prop && ae.Count > 0;
+  });
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

@@ -17,9 +17,12 @@ HRESULT UiaGetBoundingRectangleHelper(::Microsoft::ReactNative::ReactTaggedView 
 
 HRESULT UiaSetFocusHelper(::Microsoft::ReactNative::ReactTaggedView &view) noexcept;
 
-HRESULT
-UpdateUiaProperty(IRawElementProviderSimple &providerSimple, PROPERTYID prop, bool oldValue, bool newValue) noexcept;
+void UpdateUiaProperty(winrt::IInspectable provider, PROPERTYID propId, bool oldValue, bool newValue) noexcept;
 
-HRESULT UpdateUiaProperty(winrt::IInspectable provider, PROPERTYID propId, bool oldValue, bool newValue) noexcept;
+void UpdateUiaProperty(
+    winrt::IInspectable provider,
+    PROPERTYID propId,
+    const std::string &oldValue,
+    const std::string &newValue) noexcept;
 
 } // namespace winrt::Microsoft::ReactNative::implementation

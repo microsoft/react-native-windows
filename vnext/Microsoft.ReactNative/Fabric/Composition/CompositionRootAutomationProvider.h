@@ -13,7 +13,8 @@ class CompositionRootAutomationProvider : public winrt::implements<
                                               IInspectable,
                                               IRawElementProviderFragmentRoot,
                                               IRawElementProviderFragment,
-                                              IRawElementProviderSimple> {
+                                              IRawElementProviderSimple,
+                                              IRawElementProviderAdviseEvents> {
  public:
   // inherited via IRawElementProviderFragmentRoot
   virtual HRESULT __stdcall ElementProviderFromPoint(double x, double y, IRawElementProviderFragment **pRetVal)
@@ -34,11 +35,33 @@ class CompositionRootAutomationProvider : public winrt::implements<
   virtual HRESULT __stdcall GetPropertyValue(PROPERTYID propertyId, VARIANT *pRetVal) override;
   virtual HRESULT __stdcall get_HostRawElementProvider(IRawElementProviderSimple **pRetVal) override;
 
+  // IRawElementProviderAdviseEvents
+  virtual HRESULT __stdcall AdviseEventAdded(EVENTID idEvent, SAFEARRAY *psaProperties) override;
+  virtual HRESULT __stdcall AdviseEventRemoved(EVENTID idEvent, SAFEARRAY *psaProperties)
+      override;
+
   CompositionRootAutomationProvider(
       const std::shared_ptr<::Microsoft::ReactNative::RootComponentView> &componentView) noexcept;
+
   void SetHwnd(HWND hwnd) noexcept;
+  bool WasPropertyAdvised(PROPERTYID prop) noexcept;
+  bool WasEventAdvised(EVENTID event) noexcept;
+
+  static_assert(std::is_same<EVENTID, PROPERTYID>::value);
+  struct AdvisedEvent {
+    union {
+      EVENTID Event;
+      PROPERTYID Property;
+    };
+    uint32_t Count;
+  };
 
  private:
+  HRESULT AdvisePropertiesAdded(SAFEARRAY *psaProperties) noexcept;
+  HRESULT AdvisePropertiesRemoved(SAFEARRAY *psaProperties) noexcept;
+
+  std::vector<AdvisedEvent> m_advisedEvents{};
+  std::vector<AdvisedEvent> m_advisedProperties{};
   ::Microsoft::ReactNative::ReactTaggedView m_view;
   HWND m_hwnd{nullptr};
 };
