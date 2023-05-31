@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Set yoga to maintain all legacy behavior unless specifically opted into",
+  "packageName": "react-native-windows",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
