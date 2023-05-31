@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 27 May 2023 05:15:02 GMT and should not be manually modified.
+This log was last generated on Wed, 31 May 2023 05:13:44 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.658
+
+Wed, 31 May 2023 05:13:44 GMT
+
+### Changes
+
+- Limit Yoga layout to relevant root on resize (erozell@outlook.com)
 
 ## 0.0.0-canary.657
 

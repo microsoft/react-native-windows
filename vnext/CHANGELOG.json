@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 31 May 2023 05:13:44 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.658",
+      "version": "0.0.0-canary.658",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "684db1330d1a3e933274bd80e42e684a78f8e7c4",
+            "comment": "Limit Yoga layout to relevant root on resize"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 27 May 2023 05:15:02 GMT",
       "tag": "react-native-windows_v0.0.0-canary.657",
       "version": "0.0.0-canary.657",
