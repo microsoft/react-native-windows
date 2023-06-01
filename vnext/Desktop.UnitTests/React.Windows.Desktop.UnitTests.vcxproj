@@ -83,9 +83,6 @@
   </ItemDefinitionGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
   <ItemGroup>
-    <ClCompile Include="BaseWebSocketTests.cpp">
-      <ExcludedFromBuild Condition="'$(EnableBeast)' == 0">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="BytecodeUnitTests.cpp" />
     <ClCompile Include="EmptyUIManagerModule.cpp" />
     <ClCompile Include="LayoutAnimationTests.cpp" />

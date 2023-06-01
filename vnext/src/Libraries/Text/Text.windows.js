@@ -208,6 +208,7 @@ const Text: React.AbstractComponent<
 
   const _accessible = Platform.select({
     ios: accessible !== false,
+    windows: accessible !== false,
     default: accessible,
   });
 
@@ -242,18 +243,13 @@ const Text: React.AbstractComponent<
         accessibilityRole={
           role ? getAccessibilityRoleFromRole(role) : accessibilityRole
         }
-        accessibilityState={nativeTextAccessibilityState}
-        accessible={
-          accessible == null && Platform.OS === 'android'
-            ? _hasOnPressOrOnLongPress
-            : _accessible
-        }
+        accessibilityState={_accessibilityState}
         allowFontScaling={allowFontScaling !== false}
         disabled={_disabled}
         ellipsizeMode={ellipsizeMode ?? 'tail'}
         isHighlighted={isHighlighted}
-        nativeID={id ?? nativeID}
         isPressable={isPressable}
+        nativeID={id ?? nativeID}
         numberOfLines={numberOfLines}
         ref={forwardedRef}
         selectable={_selectable}
@@ -307,13 +303,26 @@ const Text: React.AbstractComponent<
             <NativeText
               {...textPropsLessStyle}
               {...eventHandlersForText}
-              accessible={accessible !== false}
+              accessibilityLabel={ariaLabel ?? accessibilityLabel}
+              accessibilityRole={
+                role ? getAccessibilityRoleFromRole(role) : accessibilityRole
+              }
+              accessibilityState={nativeTextAccessibilityState}
+              accessible={
+                accessible == null && Platform.OS === 'android'
+                  ? _hasOnPressOrOnLongPress
+                  : _accessible
+              }
               allowFontScaling={allowFontScaling !== false}
+              disabled={_disabled}
               ellipsizeMode={ellipsizeMode ?? 'tail'}
               isHighlighted={isHighlighted}
+              nativeID={id ?? nativeID}
+              numberOfLines={numberOfLines}
+              ref={forwardedRef}
+              selectable={_selectable}
               selectionColor={selectionColor}
               style={((rest: any): TextStyleProp)}
-              ref={forwardedRef}
             />
           </TextAncestor.Provider>
         </View>
@@ -324,13 +333,26 @@ const Text: React.AbstractComponent<
           <NativeText
             {...restProps}
             {...eventHandlersForText}
-            accessible={accessible !== false}
+            accessibilityLabel={ariaLabel ?? accessibilityLabel}
+            accessibilityRole={
+              role ? getAccessibilityRoleFromRole(role) : accessibilityRole
+            }
+            accessibilityState={nativeTextAccessibilityState}
+            accessible={
+              accessible == null && Platform.OS === 'android'
+                ? _hasOnPressOrOnLongPress
+                : _accessible
+            }
             allowFontScaling={allowFontScaling !== false}
+            disabled={_disabled}
             ellipsizeMode={ellipsizeMode ?? 'tail'}
             isHighlighted={isHighlighted}
+            nativeID={id ?? nativeID}
+            numberOfLines={numberOfLines}
+            ref={forwardedRef}
+            selectable={_selectable}
             selectionColor={selectionColor}
             style={style}
-            ref={forwardedRef}
           />
         </TextAncestor.Provider>
       );
