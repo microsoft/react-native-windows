@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "[0.69] Disable RestoreUseStaticGraphEvaluation for VS >= 17.6",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
