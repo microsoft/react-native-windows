@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 31 May 2023 05:13:44 GMT and should not be manually modified.
+This log was last generated on Thu, 01 Jun 2023 05:14:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.659
+
+Thu, 01 Jun 2023 05:14:54 GMT
+
+### Changes
+
+- Set yoga to maintain all legacy behavior unless specifically opted into (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.658
 
