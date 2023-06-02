@@ -21,6 +21,8 @@
     <!-- When bumping the fmt version, be sure to bump the git hash of that version's commit and build fmt.vcxproj (to update its cgmanifest.json) too. -->
     <FmtVersion>8.0.0</FmtVersion>
     <FmtCommitHash>9e8b86fd2d9806672cc73133d21780dd182bfd24</FmtCommitHash>
+    <!-- Commit hash for https://github.com/microsoft/node-api-jsi code. -->
+    <NodeApiJsiCommitHash>94be53a0db167acd992a600325aaaadf57bce030</NodeApiJsiCommitHash>
   </PropertyGroup>
 
   <!--
@@ -40,6 +42,9 @@
 
     <FmtDir Condition="'$(FmtDir)' == '' AND Exists('$([MSBuild]::NormalizeDirectory($(ReactNativeDir)..\..\node_modules))')">$(ReactNativeDir)..\..\node_modules\.fmt\fmt-$(FmtVersion)</FmtDir>
     <FmtDir>$([MSBuild]::NormalizeDirectory($(FmtDir)))</FmtDir>
+
+    <NodeApiJsiDir Condition="'$(NodeApiJsiDir)' == '' AND Exists('$([MSBuild]::NormalizeDirectory($(ReactNativeDir)..\..\node_modules))')">$(ReactNativeDir)..\..\node_modules\.node-api-jsi\node-api-jsi-$(NodeApiJsiCommitHash)</NodeApiJsiDir>
+    <NodeApiJsiDir>$([MSBuild]::NormalizeDirectory($(NodeApiJsiDir)))</NodeApiJsiDir>
   </PropertyGroup>
 
   <PropertyGroup Label="Configuration">

@@ -4,17 +4,19 @@
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     <HasSharedItems>true</HasSharedItems>
     <ItemsProjectGuid>{da8b35b3-da00-4b02-bde6-6a397b3fd46b}</ItemsProjectGuid>
-    <ReactNativeDir Condition="'$(ReactNativeDir)' == '' AND Exists('$(MSBuildThisFileDirectory)..\..\node_modules\react-native\package.json')">$(MSBuildThisFileDirectory)..\..\node_modules\react-native</ReactNativeDir>
+    <ReactNativeDir Condition="'$(ReactNativeDir)' == '' AND Exists('$(MSBuildThisFileDirectory)..\..\node_modules\react-native\package.json')">$(MSBuildThisFileDirectory)..\..\node_modules\react-native\</ReactNativeDir>
     <ReactNativeDir Condition="'$(ReactNativeDir)' == '' AND Exists('$(MSBuildThisFileDirectory)..\..\..\node_modules\react-native\package.json')">$(MSBuildThisFileDirectory)..\..\..\node_modules\react-native</ReactNativeDir>
-    <JSI_SourcePath Condition="'$(JSI_SourcePath)' == '' AND '$(ReactNativeDir)' != ''">$(ReactNativeDir)\ReactCommon\jsi</JSI_SourcePath>
+    <JSI_SourcePath Condition="'$(JSI_SourcePath)' == '' AND '$(ReactNativeDir)' != ''">$(ReactNativeDir)ReactCommon\jsi</JSI_SourcePath>
     <JSI_SourcePath Condition="'$(JSI_SourcePath)' == '' AND Exists('$(MSBuildThisFileDirectory)jsi\jsi.h')">$(MSBuildThisFileDirectory)</JSI_SourcePath>
-    <CallInvoker_SourcePath Condition="'$(CallInvoker_SourcePath)' == '' AND '$(ReactNativeDir)' != ''">$(ReactNativeDir)\ReactCommon\callinvoker</CallInvoker_SourcePath>
+    <CallInvoker_SourcePath Condition="'$(CallInvoker_SourcePath)' == '' AND '$(ReactNativeDir)' != ''">$(ReactNativeDir)ReactCommon\callinvoker</CallInvoker_SourcePath>
     <CallInvoker_SourcePath Condition="'$(CallInvoker_SourcePath)' == '' AND Exists('$(MSBuildThisFileDirectory)ReactCommon\CallInvoker.h')">$(MSBuildThisFileDirectory)</CallInvoker_SourcePath>
     <CallInvoker_SourcePath Condition="'$(CallInvoker_SourcePath)' == '' AND Exists('$(MSBuildThisFileDirectory)ReactCommon\SchedulerPriority.h')">$(MSBuildThisFileDirectory)</CallInvoker_SourcePath>
-    <TurboModule_SourcePath Condition="'$(TurboModule_SourcePath)' == '' AND '$(ReactNativeDir)' != ''">$(ReactNativeDir)\ReactCommon\react\nativemodule\core</TurboModule_SourcePath>
+    <TurboModule_SourcePath Condition="'$(TurboModule_SourcePath)' == '' AND '$(ReactNativeDir)' != ''">$(ReactNativeDir)ReactCommon\react\nativemodule\core</TurboModule_SourcePath>
     <TurboModule_SourcePath Condition="'$(TurboModule_SourcePath)' == '' AND Exists('$(MSBuildThisFileDirectory)ReactCommon\TurboModule.h')">$(MSBuildThisFileDirectory)</TurboModule_SourcePath>
-    <Bridging_SourcePath Condition="'$(Bridging_SourcePath)' == '' AND '$(ReactNativeDir)' != ''">$(ReactNativeDir)\ReactCommon\react\bridging</Bridging_SourcePath>
+    <Bridging_SourcePath Condition="'$(Bridging_SourcePath)' == '' AND '$(ReactNativeDir)' != ''">$(ReactNativeDir)ReactCommon\react\bridging</Bridging_SourcePath>
     <Bridging_SourcePath Condition="'$(Bridging_SourcePath)' == '' AND Exists('$(MSBuildThisFileDirectory)ReactCommon\CallbackWrapper.h')">$(MSBuildThisFileDirectory)ReactCommon</Bridging_SourcePath>
+    <NodeApiJsiCommitHash>94be53a0db167acd992a600325aaaadf57bce030</NodeApiJsiCommitHash>
+    <NodeApiJsiDir Condition="'$(NodeApiJsiDir)' == '' AND '$(ReactNativeDir)' != ''">$(ReactNativeDir)..\..\node_modules\.node-api-jsi\node-api-jsi-$(NodeApiJsiCommitHash)\</NodeApiJsiDir>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -24,6 +26,8 @@
         $(CallInvoker_SourcePath);
         $(TurboModule_SourcePath);
         $(Bridging_SourcePath);
+        $(NodeApiJsiDir)\node-api;
+        $(NodeApiJsiDir)\src;
         %(AdditionalIncludeDirectories)
       </AdditionalIncludeDirectories>
     </ClCompile>
@@ -41,7 +45,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)CoreApp.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DesktopWindowBridge.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\LongLivedJsiValue.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\NodeApiJsiRuntime.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TurboModuleProvider.h" />
     <ClInclude Include="$(CallInvoker_SourcePath)\ReactCommon\CallInvoker.h" />
     <ClInclude Include="$(CallInvoker_SourcePath)\ReactCommon\SchedulerPriority.h" />
@@ -130,10 +133,27 @@
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)README.md" />
   </ItemGroup>
-  <ItemGroup Condition="'$(BuildMSRNCxx)' != 'false' and '$(RNExternalReferences)' != 'true'">
-    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\NodeApiJsiRuntime.cpp">
+  <ItemGroup>
+    <ClInclude Include="$(NodeApiJsiDir)\src\ApiLoaders\NodeApi.h" />
+    <ClInclude Include="$(NodeApiJsiDir)\src\ApiLoaders\NodeApi.inc" />
+    <ClInclude Include="$(NodeApiJsiDir)\src\ApiLoaders\JSRuntimeApi.h" />
+    <ClInclude Include="$(NodeApiJsiDir)\src\ApiLoaders\JSRuntimeApi.inc" />
+    <ClInclude Include="$(NodeApiJsiDir)\src\NodeApiJsiRuntime.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(NodeApiJsiDir)\src\ApiLoaders\NodeApi.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <ExcludedFromBuild Condition="'$(UseV8)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="$(NodeApiJsiDir)\src\ApiLoaders\JSRuntimeApi.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(NodeApiJsiDir)\src\NodeApiJsiRuntime.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup Condition="'$(BuildMSRNCxx)' != 'false' and '$(BuildMSRNCxxModule)' != 'false'">
+    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\NodeApiJsiLoader.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
 </Project>

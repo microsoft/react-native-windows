@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{bcc8577e-f1b8-4fb0-b0de-86a12c5aafcf}</ProjectGuid>
+    <Keyword>StaticLibrary</Keyword>
+    <ProjectName>node-api-jsi</ProjectName>
+    <RootNamespace>NodeApiJsi</RootNamespace>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <AppContainerApplication>true</AppContainerApplication>
+    <ApplicationType>Windows Store</ApplicationType>
+    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|ARM64">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM64">
+      <Configuration>Release</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <!-- Include Warnings.props after Microsoft.Cpp.props to change default WarningLevel -->
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\Warnings.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(NodeApiJsiDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NOMINMAX;_CRT_SECURE_NO_WARNINGS;WINAPI_PARTITION_APP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ForcedUsingFiles />
+      <DisableSpecificWarnings>%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
+    </ClCompile>
+    <Link>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <PropertyGroup>
+    <NodeApiJsiZipDir>$(NodeApiJsiDir)..\.node-api-jsi-zip</NodeApiJsiZipDir>
+    <NodeApiJsiZipFile>$(NodeApiJsiZipDir)\node-api-jsi-$(NodeApiJsiCommitHash).zip</NodeApiJsiZipFile>
+    <CGManifestFile>$(MSBuildThisFileDirectory)cgmanifest.json</CGManifestFile>
+  </PropertyGroup>
+  <Target Name="DownloadNodeApiJsi" BeforeTargets="PrepareForBuild" Inputs="$(NodeApiJsiZipFile)" Outputs="$(NodeApiJsiZipFile)">
+    <Message Importance="High" Text="Downloading node-api-jsi..." />
+    <DownloadFile
+      SourceUrl="https://github.com/microsoft/node-api-jsi/archive/$(NodeApiJsiCommitHash).zip"
+      DestinationFileName="$(NodeApiJsiZipFile)"
+      DestinationFolder="$(NodeApiJsiZipDir)"
+      Retries="10" />
+  </Target>
+  <Target Name="UnzipNodeApiJsi" BeforeTargets="PrepareForBuild" DependsOnTargets="DownloadNodeApiJsi">
+    <Message Condition="!Exists('$(NodeApiJsiDir)src\NodeApiJsiRuntime.h')" Importance="High" Text="Unzipping node-api-jsi to $([MSBuild]::NormalizePath($(NodeApiJsiDir)..))."/>
+    <Unzip
+      Condition="!Exists('$(NodeApiJsiDir)src\NodeApiJsiRuntime.h')"
+      SourceFiles="$(NodeApiJsiZipFile)"
+      DestinationFolder="$([MSBuild]::NormalizePath($(NodeApiJsiDir)..))"
+      OverwriteReadOnlyFiles="true" />
+  </Target>
+  <Target Name="WriteCGManifest" BeforeTargets="PrepareForBuild" DependsOnTargets="DownloadNodeApiJsi" Inputs="$(NodeApiJsiZipFile)" Outputs="$(CGManifestFile)">
+    <PropertyGroup>
+      <CGManifestText>{
+    "$schema": "https://json.schemastore.org/component-detection-manifest.json",
+    "Registrations": [
+        {
+            "Component": {
+                "Type": "git",
+                "Git": {
+                  "RepositoryUrl": "https://github.com/microsoft/node-api-jsi",
+                  "CommitHash": "$(NodeApiJsiCommitHash)"
+                }
+            },
+            "DevelopmentDependency": false
+        }
+    ]
+}</CGManifestText>
+    </PropertyGroup>
+    <Message Importance="High" Text="Generating $(CGManifestFile)." />
+    <WriteLinesToFile
+      File="$(CGManifestFile)"
+      Overwrite="true"
+      Lines="$(CGManifestText)" />
+  </Target>
+  <ItemGroup>
+    <TemporaryNodeApiJsiPatchFiles Include="$(MSBuildThisFileDirectory)\TEMP_UntilNodeApiJsiUpdate\**\*.*" />
+  </ItemGroup>
+  <Target Name="Deploy" />
+  <!-- Allow temporary patches if needed, while we wait for PRs to land in node-api-jsi -->
+  <Target Name="ApplyNodeApiJsiTemporaryPatch" BeforeTargets="PrepareForBuild" DependsOnTargets="UnzipNodeApiJsi">
+    <Message Importance="High" Text="Applying temporary patches to node-api-jsi." />
+    <Copy DestinationFiles="@(TemporaryNodeApiJsiPatchFiles->'$(NodeApiJsiDir)node-api-jsi\%(RecursiveDir)%(Filename)%(Extension)')" SourceFiles="@(TemporaryNodeApiJsiPatchFiles)" />
+  </Target>
+</Project>

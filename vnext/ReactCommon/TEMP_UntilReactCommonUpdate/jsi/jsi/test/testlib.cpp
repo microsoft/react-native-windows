@@ -11,8 +11,8 @@
 #include <jsi/decorator.h>
 #include <jsi/jsi.h>
 
-#include <stdlib.h>
 #include <chrono>
+#include <cstdlib>
 #include <functional>
 #include <thread>
 #include <unordered_map>
