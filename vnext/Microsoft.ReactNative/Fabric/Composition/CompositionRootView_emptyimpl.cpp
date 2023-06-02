@@ -1,9 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 #include "pch.h"
+
+#include "CompositionRootView.h"
+
 #include "CompositionRootView.g.cpp"
 #include "FocusNavigationRequest.g.cpp"
-#include "CompositionRootView.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
