@@ -51,7 +51,7 @@ steps:
 
   # PostAnalysis Task (https://docs.microsoft.com/en-us/azure/security/develop/yaml-configuration#post-analysis-task)
   # Breaks the build if any of the tasks failed.
-  - task: PostAnalysis@1
+  - task: PostAnalysis@2
     displayName: "⚖️ Compliance Pre-Build Analysis"
     inputs:
       AllTools: false
