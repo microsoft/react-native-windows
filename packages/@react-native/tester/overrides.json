@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.0.0-20230505-2109-9b69263a1",
+  "baseVersion": "0.73.0-nightly-20230519-de1e9f5d1",
   "overrides": [
     {
       "type": "copy",
@@ -313,7 +313,7 @@
       "type": "copy",
       "directory": "js/examples/SectionList",
       "baseDirectory": "packages/rn-tester/js/examples/SectionList",
-      "baseHash": "98a55bb4239f01dd0b6c972e6b8134162ad4af9b",
+      "baseHash": "a76069838b1e901936938574973ae1bffe3f5fce",
       "issue": 4054
     },
     {
@@ -411,7 +411,7 @@
       "type": "copy",
       "directory": "js/examples/TurboModule",
       "baseDirectory": "packages/rn-tester/js/examples/TurboModule",
-      "baseHash": "6f4b2e5902a91408b22e507b35f1c2435d153648",
+      "baseHash": "cae0dd2386d23310b1e224c7eeefc11e876a5c8a",
       "issue": 4054
     },
     {
@@ -509,7 +509,7 @@
       "type": "copy",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
-      "baseHash": "dda10fcee9d469c9ee7028b71388f9e39def8767",
+      "baseHash": "f579e5ed008e621c501adf9d39bf2847e2e3b268",
       "issue": 4054
     }
   ]
