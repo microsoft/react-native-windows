@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.73.0-nightly-20230519-de1e9f5d1",
+  "baseVersion": "0.73.0-nightly-20230601-d9b3339ef",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "0a1676c98b55af1089d3696194a0d7dd14aedf12"
+      "baseHash": "dc6c68bc12e76498f4935a43bb2f188efb02f0c5"
     },
     {
       "type": "derived",
@@ -123,7 +123,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "04757d209b80c0b9ed2bb11a8b36cd5a3b3f878e"
+      "baseHash": "a817f8d62ee3ba4c56b772bd0cfb852739cb4aa7"
     },
     {
       "type": "patch",
@@ -380,7 +380,7 @@
       "type": "patch",
       "file": "src/Libraries/Pressability/Pressability.win32.js",
       "baseFile": "packages/react-native/Libraries/Pressability/Pressability.js",
-      "baseHash": "9b1c05c59ddcf30c6b5938ff8ed26ec7633ebdce",
+      "baseHash": "087060bb677adb35353dcf83bea2d4eb09c4fd40",
       "issue": 6240
     },
     {

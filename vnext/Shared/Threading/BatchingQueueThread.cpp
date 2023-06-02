@@ -16,7 +16,7 @@ BatchingQueueCallInvoker::BatchingQueueCallInvoker(
     std::shared_ptr<facebook::react::MessageQueueThread> const &queueThread)
     : m_queueThread(queueThread) {}
 
-void BatchingQueueCallInvoker::invokeAsync(std::function<void()> &&func) noexcept {
+void BatchingQueueCallInvoker::invokeAsync(const std::string &methodName, std::function<void()> &&func) noexcept {
   EnsureQueue();
   m_taskQueue->emplace_back(std::move(func));
 
@@ -58,7 +58,7 @@ void BatchingQueueCallInvoker::quitSynchronous() noexcept {
   m_queueThread->quitSynchronous();
 }
 
-void BatchingQueueCallInvoker::invokeSync(std::function<void()> &&func) noexcept {
+void BatchingQueueCallInvoker::invokeSync(const std::string &methodName, std::function<void()> &&func) noexcept {
   assert(false && "Not supported");
   std::terminate();
 }
@@ -78,8 +78,8 @@ void BatchingQueueThread::decoratedNativeCallInvokerReady(
     // When items were queued in the undecoratedNativeCallInvoker it will not have called
     // recordTurboModuleAsyncMethodCall. Calling invokeAsync on the decoratedNativeCallInvoker
     // ensures that the queue is properly flushed, on the next batch complete
-    auto decoratedCallInvoker = instance->getDecoratedNativeCallInvoker(m_callInvoker);
-    decoratedCallInvoker->invokeAsync([decoratedCallInvoker, wkInstance, this] {
+    auto decoratedCallInvoker = instance->getDecoratedNativeMethodCallInvoker(m_callInvoker);
+    decoratedCallInvoker->invokeAsync("decoratedNativeCallInvokerReady", [decoratedCallInvoker, wkInstance, this] {
       if (auto instance = wkInstance.lock()) {
         std::scoped_lock lckQuitting(m_mutexQuitting);
 
@@ -99,7 +99,7 @@ BatchingQueueThread::~BatchingQueueThread() noexcept {}
 
 void BatchingQueueThread::runOnQueue(std::function<void()> &&func) noexcept {
   std::scoped_lock lck(m_mutex);
-  m_callInvoker->invokeAsync(std::move(func));
+  m_callInvoker->invokeAsync("runOnQueue", std::move(func));
 }
 
 void BatchingQueueThread::onBatchComplete() noexcept {
