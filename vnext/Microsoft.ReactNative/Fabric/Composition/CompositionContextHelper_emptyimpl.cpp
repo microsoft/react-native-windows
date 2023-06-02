@@ -15,33 +15,32 @@ namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 ICompositionContext CompositionContextHelper::CreateContext(
     winrt::Windows::UI::Composition::Compositor const &) noexcept {
-      return nullptr;
+  return nullptr;
 }
 
 IVisual CompositionContextHelper::CreateVisual(winrt::Windows::UI::Composition::Visual const &) noexcept {
-      return nullptr;
+  return nullptr;
 }
 
-winrt::Windows::UI::Composition::Compositor CompositionContextHelper::InnerCompositor(
-    ICompositionContext) noexcept {
-      return nullptr;
+winrt::Windows::UI::Composition::Compositor CompositionContextHelper::InnerCompositor(ICompositionContext) noexcept {
+  return nullptr;
 }
 
 winrt::Windows::UI::Composition::Visual CompositionContextHelper::InnerVisual(IVisual) noexcept {
-      return nullptr;
+  return nullptr;
 }
 
 winrt::Windows::UI::Composition::DropShadow CompositionContextHelper::InnerDropShadow(IDropShadow) noexcept {
-      return nullptr;
+  return nullptr;
 }
 
 winrt::Windows::UI::Composition::CompositionBrush CompositionContextHelper::InnerBrush(IBrush) noexcept {
-      return nullptr;
+  return nullptr;
 }
 
 winrt::Windows::UI::Composition::ICompositionSurface CompositionContextHelper::InnerSurface(
     ICompositionDrawingSurface) noexcept {
-      return nullptr;
+  return nullptr;
 }
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
