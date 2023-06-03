@@ -51,8 +51,8 @@
       },
       "Microsoft.JavaScript.Hermes": {
         "type": "Transitive",
-        "resolved": "0.1.12",
-        "contentHash": "dx0eVRCxgl7pHIq/XMpRU7PHrXUG6f44sw/iwaySG1Xw7lvCmmw/8ECJYD0RybWDvDNKne8hIP3RpD7jyTApyg=="
+        "resolved": "0.1.13",
+        "contentHash": "dzqFCHeC0V4WYNFDWR4eFOVXXMpVUhrTPpuAR5QDyQL8MlvvVQIbBdqeh3GZYgsqwfzfMcgTC/OAGVYbutKE6w=="
       },
       "Microsoft.Net.Native.Compiler": {
         "type": "Transitive",
@@ -315,7 +315,7 @@
         "dependencies": {
           "Common": "[1.0.0, )",
           "Folly": "[1.0.0, )",
-          "Microsoft.JavaScript.Hermes": "[0.1.12, )",
+          "Microsoft.JavaScript.Hermes": "[0.1.13, )",
           "Microsoft.UI.Xaml": "[2.8.0, )",
           "Microsoft.Windows.SDK.BuildTools": "[10.0.22000.194, )",
           "ReactCommon": "[1.0.0, )",
