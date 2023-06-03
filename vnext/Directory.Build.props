@@ -71,8 +71,9 @@
   </PropertyGroup>
 
   <PropertyGroup Label="NuGet" Condition="'$(MSBuildProjectExtension)' == '.vcxproj'">
-    <!--See https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#restore-target-->
-    <RestoreUseStaticGraphEvaluation Condition="'$(BuildingInsideVisualStudio)' == 'true' AND '$(DisableRestoreUseStaticGraphEvaluation)' != 'true'">true</RestoreUseStaticGraphEvaluation>
+    <!-- See https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#restore-target -->
+    <!-- RestoreUseStaticGraphEvaluation broke in VS 17.6, see https://github.com/microsoft/react-native-windows/issues/11670 -->
+    <RestoreUseStaticGraphEvaluation Condition="'$(BuildingInsideVisualStudio)' == 'true' AND $([MSBuild]::VersionLessThan('$(MSBuildVersion)', '17.6')) AND '$(DisableRestoreUseStaticGraphEvaluation)' != 'true'">true</RestoreUseStaticGraphEvaluation>
   </PropertyGroup>
 
 </Project>

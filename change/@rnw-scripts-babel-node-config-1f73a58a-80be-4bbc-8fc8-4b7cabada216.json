@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "📦 Bump @babel/preset-env from 7.21.5 to 7.22.4",
+  "packageName": "@rnw-scripts/babel-node-config",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}

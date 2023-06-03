@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20230505-2109-9b69263a1",
+  "baseVersion": "0.73.0-nightly-20230519-de1e9f5d1",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "1f24493537576fda127ec6cfc52ed554bb119671"
+      "baseHash": "0a1676c98b55af1089d3696194a0d7dd14aedf12"
     },
     {
       "type": "derived",
@@ -132,7 +132,7 @@
       "type": "patch",
       "file": "ReactCommon/Yoga.cpp",
       "baseFile": "packages/react-native/ReactCommon/yoga/yoga/Yoga.cpp",
-      "baseHash": "ed0f2f0d276e2201bd1d72cdab348be2206eb229",
+      "baseHash": "256489f312363c06be0ea1aee3ccf08a8cdd7c37",
       "issue": 3994
     },
     {
@@ -369,7 +369,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ReactNativeViewAttributes.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/View/ReactNativeViewAttributes.js",
-      "baseHash": "1e2900121c17ba9f58a7f6d0b3604456a13642bf",
+      "baseHash": "0aabb0825ab9d65cb39f526ad3ac10874d6cde7e",
       "issue": 9053
     },
     {
@@ -439,7 +439,7 @@
       "type": "derived",
       "file": "src/Libraries/NativeComponent/BaseViewConfig.windows.js",
       "baseFile": "packages/react-native/Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "f810cc5f609a5812784688bf31126c27af8d5e03"
+      "baseHash": "543595671ac827300ab6c501a43a2e9b7d870faa"
     },
     {
       "type": "platform",

@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Set yoga to maintain all legacy behavior unless specifically opted into",
+  "comment": "Add fabric APIs to win32 winmd to allow easier flighting",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
   "dependentChangeType": "patch"

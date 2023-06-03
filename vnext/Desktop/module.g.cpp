@@ -6,11 +6,9 @@
 #include "pch.h"
 #include "winrt/base.h"
 void* winrt_make_Microsoft_Internal_TestController();
-#ifdef USE_FABRIC
 void* winrt_make_Microsoft_ReactNative_CompositionRootView();
 void *winrt_make_Microsoft_ReactNative_Composition_CompositionContextHelper();
 void *winrt_make_Microsoft_ReactNative_Composition_CompositionUIService();
-#endif
 void* winrt_make_Microsoft_ReactNative_JsiRuntime();
 void* winrt_make_Microsoft_ReactNative_ReactCoreInjection();
 void* winrt_make_Microsoft_ReactNative_ReactDispatcherHelper();
@@ -45,8 +43,6 @@ void* __stdcall winrt_get_activation_factory([[maybe_unused]] std::wstring_view 
     {
         return winrt_make_Microsoft_Internal_TestController();
     }
-
-#ifdef USE_FABRIC
     if (requal(name, L"Microsoft.ReactNative.CompositionRootView")) {
       return winrt_make_Microsoft_ReactNative_CompositionRootView();
     }
@@ -56,8 +52,6 @@ void* __stdcall winrt_get_activation_factory([[maybe_unused]] std::wstring_view 
     if (requal(name, L"Microsoft.ReactNative.Composition.CompositionUIService")) {
       return winrt_make_Microsoft_ReactNative_Composition_CompositionUIService();
     }
-#endif
-
     if (requal(name, L"Microsoft.ReactNative.JsiRuntime"))
     {
         return winrt_make_Microsoft_ReactNative_JsiRuntime();
