@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/cli",
-  "version": "0.0.0-canary.170",
+  "version": "0.0.0-canary.171",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "repository": {
@@ -59,7 +59,7 @@
     "@types/xml-parser": "^1.2.29",
     "@types/xmldom": "^0.1.30",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
-    "@typescript-eslint/parser": "^5.30.5",
+    "@typescript-eslint/parser": "^5.57.1",
     "babel-jest": "^29.3.0",
     "eslint": "^8.19.0",
     "jest": "^29.2.1",

@@ -1,8 +1,33 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 26 May 2023 05:13:21 GMT and should not be manually modified.
+This log was last generated on Thu, 01 Jun 2023 05:14:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.659
+
+Thu, 01 Jun 2023 05:14:54 GMT
+
+### Changes
+
+- Set yoga to maintain all legacy behavior unless specifically opted into (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.658
+
+Wed, 31 May 2023 05:13:44 GMT
+
+### Changes
+
+- Limit Yoga layout to relevant root on resize (erozell@outlook.com)
+
+## 0.0.0-canary.657
+
+Sat, 27 May 2023 05:15:02 GMT
+
+### Changes
+
+- Fix dependency script to install missing components for VS Preview (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.171
 
 ## 0.0.0-canary.656
 

@@ -89,13 +89,6 @@ class ViewShadowNode : public ShadowNodeBase {
     m_isControl = isControl;
   }
 
-  bool HasOuterBorder() {
-    return m_hasOuterBorder;
-  }
-  void HasOuterBorder(bool hasOuterBorder) {
-    m_hasOuterBorder = hasOuterBorder;
-  }
-
   bool EnableFocusRing() {
     return m_enableFocusRing;
   }
@@ -161,12 +154,6 @@ class ViewShadowNode : public ShadowNodeBase {
         cdebug << "Tearing down, IsControl=true but the control is not a ContentControl, it's a " << name << "\n";
       }
     }
-
-    if (HasOuterBorder()) {
-      if (auto border = current.try_as<xaml::Controls::Border>()) {
-        border.Child(nullptr);
-      }
-    }
   }
 
   void ReplaceChild(const XamlView &oldChildView, const XamlView &newChildView) override {
@@ -197,12 +184,6 @@ class ViewShadowNode : public ShadowNodeBase {
     if (IsControl()) {
       if (auto control = m_view.try_as<xaml::Controls::ContentControl>()) {
         current = control.Content().as<XamlView>();
-      }
-    }
-
-    if (HasOuterBorder()) {
-      if (auto border = current.try_as<xaml::Controls::Border>()) {
-        current = border.Child().try_as<XamlView>();
       }
     }
 
@@ -242,8 +223,6 @@ class ViewShadowNode : public ShadowNodeBase {
 
  private:
   bool m_isControl = false;
-  bool m_hasOuterBorder = false;
-
   bool m_enableFocusRing = true;
   bool m_onClick = false;
   int32_t m_tabIndex = std::numeric_limits<std::int32_t>::max();
@@ -251,87 +230,6 @@ class ViewShadowNode : public ShadowNodeBase {
   xaml::Controls::ContentControl::GotFocus_revoker m_contentControlGotFocusRevoker{};
   xaml::Controls::ContentControl::LostFocus_revoker m_contentControlLostFocusRevoker{};
 };
-
-// ViewPanel uses a ViewBackground property, not Background, so need to
-// specialize
-// PropertyUtils' TryUpdateBackgroundBrush to use ViewBackground.
-// Issue #2172: Additionally, we need to use
-// winrt::Microsoft::ReactNative::ViewPanel::implementation::ViewBackgroundProperty
-// rather than the proper projected type, because of how we're using cppwinrt.
-
-template <>
-bool TryUpdateBackgroundBrush(
-    const winrt::Microsoft::ReactNative::ViewPanel &element,
-    const std::string &propertyName,
-    const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
-  if (propertyName == "backgroundColor") {
-    if (IsValidColorValue(propertyValue))
-      element.ViewBackground(BrushFrom(propertyValue));
-    else if (propertyValue.IsNull())
-      element.ClearValue(ViewPanel::ViewBackgroundProperty());
-
-    return true;
-  }
-
-  return false;
-}
-
-// Issue #2172: Calling winrt::Microsoft::ReactNative::ViewPanel::BorderBrushProperty fails
-// to call
-// down into winrt::Microsoft::ReactNative::implementation::ViewPanel::BorderBrushProperty
-// because of how we're using cppwinrt. So we specialize PropertyUtils'
-// TryUpdateBorderProperties
-// to use winrt::Microsoft::ReactNative::ViewPanel::implementation::BorderBrushProperty
-
-template <>
-bool TryUpdateBorderProperties(
-    ShadowNodeBase *node,
-    const winrt::Microsoft::ReactNative::ViewPanel &element,
-    const std::string &propertyName,
-    const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
-  bool isBorderProperty = true;
-
-  if (propertyName == "borderColor") {
-    if (IsValidColorValue(propertyValue))
-      element.BorderBrush(BrushFrom(propertyValue));
-    else if (propertyValue.IsNull())
-      element.ClearValue(ViewPanel::BorderBrushProperty());
-  } else if (propertyName == "borderLeftWidth") {
-    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
-        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
-      SetBorderThickness(node, element, ShadowEdges::Left, propertyValue.AsDouble());
-  } else if (propertyName == "borderTopWidth") {
-    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
-        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
-      SetBorderThickness(node, element, ShadowEdges::Top, propertyValue.AsDouble());
-  } else if (propertyName == "borderRightWidth") {
-    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
-        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
-      SetBorderThickness(node, element, ShadowEdges::Right, propertyValue.AsDouble());
-  } else if (propertyName == "borderBottomWidth") {
-    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
-        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
-      SetBorderThickness(node, element, ShadowEdges::Bottom, propertyValue.AsDouble());
-  } else if (propertyName == "borderStartWidth") {
-    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
-        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
-      SetBorderThickness(node, element, ShadowEdges::Start, propertyValue.AsDouble());
-  } else if (propertyName == "borderEndWidth") {
-    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
-        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
-      SetBorderThickness(node, element, ShadowEdges::End, propertyValue.AsDouble());
-  } else if (propertyName == "borderWidth") {
-    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
-        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
-      SetBorderThickness(node, element, ShadowEdges::AllEdges, propertyValue.AsDouble());
-    else if (propertyValue.IsNull())
-      element.ClearValue(ViewPanel::BorderThicknessProperty());
-  } else {
-    isBorderProperty = false;
-  }
-
-  return isBorderProperty;
-}
 
 // ViewViewManager
 
@@ -364,7 +262,7 @@ XamlView ViewViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft
   auto panel = winrt::make<winrt::Microsoft::ReactNative::implementation::ViewPanel>();
   panel.VerticalAlignment(xaml::VerticalAlignment::Stretch);
   panel.HorizontalAlignment(xaml::HorizontalAlignment::Stretch);
-
+  panel.BorderBrush(DefaultBrushStore::Instance().GetDefaultBorderBrush());
   return panel.as<XamlView>();
 }
 
@@ -389,19 +287,18 @@ bool ViewViewManager::UpdateProperty(
   auto pPanel = pViewShadowNode->GetPanel().as<winrt::Microsoft::ReactNative::ViewPanel>();
   bool ret = true;
   if (pPanel != nullptr) {
-    if (TryUpdateBackgroundBrush(pPanel, propertyName, propertyValue)) {
+    if (TryUpdateBackgroundBrush(pPanel.as<xaml::Controls::Panel>(), propertyName, propertyValue)) {
     } else if (TryUpdateBorderProperties(nodeToUpdate, pPanel, propertyName, propertyValue)) {
     } else if (TryUpdateCornerRadiusOnNode(nodeToUpdate, pPanel, propertyName, propertyValue)) {
       // Do not clamp until a size has been set for the View
       auto maxCornerRadius = std::numeric_limits<double>::max();
       // The Width and Height properties are not always set on ViewPanel. In
-      // cases where it is embedded in a Control or outer Border, the values
-      // dimensions are set on those wrapper elements. We cannot depend on the
-      // default behavior of `UpdateCornerRadiusOnElement` to check for the
-      // clamp dimension from only the ViewPanel.
-      const xaml::FrameworkElement sizingElement = pViewShadowNode->IsControl() ? pViewShadowNode->GetControl()
-          : pViewShadowNode->HasOuterBorder() ? pPanel.GetOuterBorder().as<xaml::FrameworkElement>()
-                                              : pPanel;
+      // cases where it is embedded in a Control, the values dimensions are
+      // set on those wrapper elements. We cannot depend on the default
+      // behavior of `UpdateCornerRadiusOnElement` to check for the clamp
+      // dimension from only the ViewPanel.
+      const xaml::FrameworkElement sizingElement =
+          pViewShadowNode->IsControl() ? pViewShadowNode->GetControl().as<xaml::FrameworkElement>() : pPanel;
       if (sizingElement.ReadLocalValue(xaml::FrameworkElement::WidthProperty()) !=
               xaml::DependencyProperty::UnsetValue() &&
           sizingElement.ReadLocalValue(xaml::FrameworkElement::HeightProperty()) !=
@@ -471,8 +368,6 @@ void ViewViewManager::OnPropertiesUpdated(ShadowNodeBase *node) {
     shouldBeControl = shouldBeControl || HasDynamicAutomationProperties(view);
   }
 
-  panel.FinalizeProperties();
-
   TryUpdateView(viewShadowNode, panel, shouldBeControl);
   SyncFocusableAndAccessible(viewShadowNode, shouldBeControl);
 }
@@ -482,21 +377,19 @@ void ViewViewManager::TryUpdateView(
     winrt::Microsoft::ReactNative::ViewPanel &pPanel,
     bool useControl) {
   bool isControl = pViewShadowNode->IsControl();
-  bool hadOuterBorder = pViewShadowNode->HasOuterBorder();
-  bool hasOuterBorder = pPanel.GetOuterBorder() != nullptr;
 
   // This short-circuits all of the update code when we have the same hierarchy
-  if (isControl == useControl && hadOuterBorder == hasOuterBorder)
+  if (isControl == useControl)
     return;
 
   //
   // 1. Ensure we have the new 'root' and do the child replacement
-  //      This is first to ensure that we can re-parent the Border or ViewPanel
+  //      This is first to ensure that we can re-parent the ViewPanel
   //      we already have
   // 2. Transfer properties
   //      There are likely some complexities to handle here
   // 3. Do any sub=parenting
-  //      This means Panel under Border and/or Border under Control
+  //      This means Panel under Control
   //
 
   XamlView oldXamlView(pViewShadowNode->GetView());
@@ -515,19 +408,14 @@ void ViewViewManager::TryUpdateView(
   }
 
   // Clean up child of Control if needed
-  if (isControl && (!useControl || (hasOuterBorder != hadOuterBorder))) {
+  if (isControl) {
     pViewShadowNode->GetControl().Content(nullptr);
   }
 
-  // If don't need a control, then set Outer Border or the Panel as the view
-  // root
+  // If don't need a control, then set the Panel as the view root
   if (!useControl) {
-    newXamlView = hasOuterBorder ? pPanel.GetOuterBorder().try_as<XamlView>() : pPanel.try_as<XamlView>();
+    newXamlView = pPanel;
   }
-
-  // Clean up child of Border if needed
-  if (hasOuterBorder && !hadOuterBorder)
-    pPanel.GetOuterBorder().Child(nullptr);
 
   // ASSERT: One of the scenarios should be true, so we should have a root view
   assert(newXamlView != nullptr);
@@ -541,13 +429,8 @@ void ViewViewManager::TryUpdateView(
     TransferProperties(oldXamlView, newXamlView);
   }
 
-  // Since we transferred properties to the new view we need to make the call to
-  // finalize
-  pPanel.FinalizeProperties();
-
   // Update the meta-data in the shadow node
   pViewShadowNode->IsControl(useControl);
-  pViewShadowNode->HasOuterBorder(hasOuterBorder);
 
   //
   // 3. Setup any new parent-child relationships
@@ -574,19 +457,8 @@ void ViewViewManager::TryUpdateView(
     }
   }
 
-  // Ensure parenting is setup properly
-  auto visualRoot = pPanel.try_as<xaml::UIElement>();
-
-  if (hasOuterBorder) {
-    xaml::Controls::Border outerBorder = pPanel.GetOuterBorder();
-    if (outerBorder.Child() == nullptr)
-      outerBorder.Child(pPanel.try_as<xaml::UIElement>());
-
-    visualRoot = outerBorder;
-  }
-
   if (useControl)
-    pViewShadowNode->GetControl().Content(visualRoot);
+    pViewShadowNode->GetControl().Content(pPanel);
 }
 
 void ViewViewManager::SyncFocusableAndAccessible(ViewShadowNode *pViewShadowNode, bool useControl) {
@@ -622,13 +494,10 @@ void ViewViewManager::SetLayoutProps(
 
   Super::SetLayoutProps(nodeToUpdate, viewToUpdate, left, top, width, height);
   if (pPanel.ReadLocalValue(ViewPanel::CornerRadiusProperty()) != xaml::DependencyProperty::UnsetValue()) {
-    // Rather than use ViewPanel::FinalizeProperties, only perform the explicit
-    // logic required to propagate the CornerRadius value to the Border parent.
-    auto border = pPanel.GetOuterBorder();
-    if (border) {
+    if (pPanel.GetValue(React::ViewPanel::CornerRadiusProperty()) != xaml::DependencyProperty::UnsetValue()) {
       const auto maxCornerRadius = std::min(width, height) / 2;
       UpdateCornerRadiusOnElement(&nodeToUpdate, pPanel, maxCornerRadius);
-      border.CornerRadius(pPanel.CornerRadius());
+      pPanel.CornerRadius(pPanel.CornerRadius());
     }
   }
 }

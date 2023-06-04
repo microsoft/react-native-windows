@@ -4,7 +4,7 @@ exports[`DisplayNoneTest DisplayNoneDisabledTest 1`] = `
 {
   "AutomationId": "textbox-container",
   "Background": null,
-  "BorderBrush": "#00000000",
+  "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
   "Clip": null,
   "CornerRadius": "0,0,0,0",
@@ -13,6 +13,7 @@ exports[`DisplayNoneTest DisplayNoneDisabledTest 1`] = `
   "HorizontalAlignment": "Stretch",
   "Left": 0,
   "Margin": "0,0,0,0",
+  "Padding": "0,0,0,0",
   "Top": 50,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
@@ -206,7 +207,7 @@ exports[`DisplayNoneTest DisplayNoneEnabledTest 1`] = `
 {
   "AutomationId": "textbox-container",
   "Background": null,
-  "BorderBrush": "#00000000",
+  "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
   "Clip": null,
   "CornerRadius": "0,0,0,0",
@@ -215,6 +216,7 @@ exports[`DisplayNoneTest DisplayNoneEnabledTest 1`] = `
   "HorizontalAlignment": "Stretch",
   "Left": 0,
   "Margin": "0,0,0,0",
+  "Padding": "0,0,0,0",
   "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Collapsed",
