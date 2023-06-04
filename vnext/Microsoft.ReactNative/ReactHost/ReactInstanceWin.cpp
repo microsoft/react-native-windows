@@ -526,10 +526,7 @@ void ReactInstanceWin::Initialize() noexcept {
 #endif // USE_FABRIC
 
               devSettings->jsiRuntimeHolder = std::make_shared<Microsoft::ReactNative::V8RuntimeHolder>(
-                  devSettings,
-                  m_jsMessageThread.Load(),
-                  std::move(preparedScriptStore),
-                  enableMultiThreadSupport);
+                  devSettings, m_jsMessageThread.Load(), std::move(preparedScriptStore), enableMultiThreadSupport);
               break;
             }
 #endif // USE_V8
