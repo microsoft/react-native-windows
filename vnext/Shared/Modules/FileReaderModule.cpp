@@ -27,7 +27,7 @@ using std::weak_ptr;
 using winrt::Windows::Foundation::IInspectable;
 
 namespace {
-//TODO: EW! Rename!
+// TODO: EW! Rename!
 constexpr char moduleName0[] = "FileReaderModule";
 } // namespace
 
@@ -36,7 +36,7 @@ namespace Microsoft::React {
 #pragma region FileReaderModule
 
 FileReaderModule::FileReaderModule(weak_ptr<IBlobPersistor> weakBlobPersistor) noexcept
-    : m_weakBlobPersistor{weakBlobPersistor} {}
+    : m_weakBlobPersistor{weakBlobPersistor}, m_resource{IFileReaderResource::Make()} {}
 
 FileReaderModule::~FileReaderModule() noexcept /*override*/
 {}
@@ -60,41 +60,30 @@ std::vector<module::CxxModule::Method> FileReaderModule::getMethods() {
        /// </param>
        ///
        "readAsDataURL",
-       [blobPersistor = m_weakBlobPersistor.lock()](dynamic args, Callback resolve, Callback reject) {
-         if (!blobPersistor) {
-           return reject({"Could not find Blob persistor"});
-         }
-
+       [blobPersistor = m_weakBlobPersistor.lock(), resource = m_resource](
+           dynamic args, Callback resolve, Callback reject) {
          auto blob = jsArgAsObject(args, 0);
 
          auto blobId = blob["blobId"].asString();
          auto offset = blob["offset"].asInt();
          auto size = blob["size"].asInt();
 
-         winrt::array_view<uint8_t const> bytes;
-         try {
-           bytes = blobPersistor->ResolveMessage(std::move(blobId), offset, size);
-         } catch (const std::exception &e) {
-           return reject({e.what()});
-         }
-
-         auto result = string{"data:"};
          auto typeItr = blob.find("type");
+         string type{};
          if (typeItr == blob.items().end()) {
-           result += "application/octet-stream";
+           type = "application/octet-stream";
          } else {
-           result += (*typeItr).second.asString();
+           type = (*typeItr).second.asString();
          }
-         result += ";base64,";
 
-         // https://www.boost.org/doc/libs/1_76_0/libs/serialization/doc/dataflow.html
-         using namespace boost::archive::iterators;
-         typedef base64_from_binary<transform_width<const char *, 6, 8>> encode_base64;
-         std::ostringstream oss;
-         std::copy(encode_base64(bytes.cbegin()), encode_base64(bytes.cend()), ostream_iterator<char>(oss));
-         result += oss.str();
-
-         resolve({std::move(result)});
+         resource->ReadAsDataUrl(
+             std::move(blobId),
+             offset,
+             size,
+             std::move(type),
+             blobPersistor,
+             [&resolve](string &&message) { resolve({std::move(message)}); },
+             [&reject](string &&message) { reject({std::move(message)}); });
        }},
       {///
        /// <param name="args">
@@ -104,11 +93,8 @@ std::vector<module::CxxModule::Method> FileReaderModule::getMethods() {
        /// </param>
        ///
        "readAsText",
-       [blobPersistor = m_weakBlobPersistor.lock()](dynamic args, Callback resolve, Callback reject) {
-         if (!blobPersistor) {
-           return reject({"Could not find Blob persistor"});
-         }
-
+       [blobPersistor = m_weakBlobPersistor.lock(), resource = m_resource](
+           dynamic args, Callback resolve, Callback reject) {
          auto blob = jsArgAsObject(args, 0);
          auto encoding = jsArgAsString(args, 1); // Default: "UTF-8"
 
@@ -116,18 +102,14 @@ std::vector<module::CxxModule::Method> FileReaderModule::getMethods() {
          auto offset = blob["offset"].asInt();
          auto size = blob["size"].asInt();
 
-         winrt::array_view<uint8_t const> bytes;
-         try {
-           bytes = blobPersistor->ResolveMessage(std::move(blobId), offset, size);
-         } catch (const std::exception &e) {
-           return reject({e.what()});
-         }
-
-         // #9982 - Handle non-UTF8 encodings
-         //         See https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/charset/Charset.html
-         auto result = string{bytes.cbegin(), bytes.cend()};
-
-         resolve({std::move(result)});
+         resource->ReadAsText(
+             std::move(blobId),
+             offset,
+             size,
+             std::move(encoding),
+             blobPersistor,
+             [&resolve](string &&message) { resolve({std::move(message)}); },
+             [&reject](string &&message) { reject({std::move(message)}); });
        }}};
 }
 
@@ -137,8 +119,8 @@ std::vector<module::CxxModule::Method> FileReaderModule::getMethods() {
 
 #pragma region FileReaderTurboModule
 
-void FileReaderTurboModule::Initialize(msrn::ReactContext const& reactContext) noexcept {
-
+void FileReaderTurboModule::Initialize(msrn::ReactContext const &reactContext) noexcept {
+  m_resource = IFileReaderResource::Make();
 }
 
 ///
@@ -147,77 +129,65 @@ void FileReaderTurboModule::Initialize(msrn::ReactContext const& reactContext) n
 /// [0]  - dynamic blob object { blobId, offset, size[, type] }
 /// </param>
 ///
-void FileReaderTurboModule::ReadAsDataUrl(
-  msrn::JSValue&& data,
-  msrn::ReactPromise<string>&& result) noexcept {
+void FileReaderTurboModule::ReadAsDataUrl(msrn::JSValue &&data, msrn::ReactPromise<string> &&result) noexcept {
   if (!m_blobPersistor)
     return result.Reject(L"Could not find Blob persistor");
+  // TODO: keep?
 
-  auto& array = data.AsArray();
-  auto& blob = data[0].AsObject();
+  auto &array = data.AsArray();
+  auto &blob = data[0].AsObject();
   auto blobId = blob["blobId"].AsString();
   auto offset = blob["offset"].AsInt64();
   auto size = blob["size"].AsInt64();
 
-  winrt::array_view<uint8_t const> bytes;
-  try {
-    bytes = m_blobPersistor->ResolveMessage(std::move(blobId), offset, size);
-  } catch (const std::exception &e) {
-    return result.Reject(e.what());
-  }
-
-  auto content = string{"data:"};
   auto typeItr = blob.find("type");
-  if (typeItr == blob.end()) { //TODO: .items() ?
-    content += "application/octet-stream";
+  string type{};
+  if (typeItr == blob.end()) { // TODO: .items() ?
+    type = "application/octet-stream";
   } else {
-    content += (*typeItr).second.AsString();
+    type = (*typeItr).second.AsString();
   }
-  content += ";base64,";
 
-  // https://www.boost.org/doc/libs/1_76_0/libs/serialization/doc/dataflow.html
-  using namespace boost::archive::iterators;
-  typedef base64_from_binary<transform_width<const char *, 6, 8>> encode_base64;
-  std::ostringstream oss;
-  std::copy(encode_base64(bytes.cbegin()), encode_base64(bytes.cend()), ostream_iterator<char>(oss));
-  content += oss.str();
-
-  result.Resolve(std::move(content));
+  m_resource->ReadAsDataUrl(
+      std::move(blobId),
+      offset,
+      size,
+      std::move(type),
+      m_blobPersistor,
+      [&result](string &&message) { result.Resolve(std::move(message)); },
+      [&result](string &&message) { result.Reject(winrt::to_hstring(std::move(message)).c_str()); });
 }
 
-///TODO: update (folly not used)
-/// <param name="args">
-/// Array of arguments passed from the JavaScript layer.
-/// [0]  - dynamic blob object { blobId, offset, size }
-/// [1]  - string encoding
-/// </param>
+/// TODO: update (folly not used)
+///  <param name="args">
+///  Array of arguments passed from the JavaScript layer.
+///  [0]  - dynamic blob object { blobId, offset, size }
+///  [1]  - string encoding
+///  </param>
 ///
 void FileReaderTurboModule::ReadAsText(
-  msrn::JSValue&& data,
-  string&& encoding,
-  msrn::ReactPromise<string>&& result) noexcept {
+    msrn::JSValue &&data,
+    string &&encoding,
+    msrn::ReactPromise<string> &&result) noexcept {
   if (!m_blobPersistor)
     return result.Reject(L"Could not find Blob persistor");
+  // TODO: Keep?
 
-  auto& args = data.AsArray();
-  auto& blob = args[0].AsObject();
+  auto &args = data.AsArray();
+  auto &blob = args[0].AsObject();
 
   auto blobId = blob["blobId"].AsString();
   auto offset = blob["offset"].AsInt64();
   auto size = blob["size"].AsInt64();
 
-  winrt::array_view<uint8_t const> bytes;
-  try {
-    bytes = m_blobPersistor->ResolveMessage(std::move(blobId), offset, size);
-  } catch(const std::exception &e) {
-    return result.Reject(e.what());
-  }
-
-  // #9982 - Handle non-UTF8 encodings
-  //         See https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/charset/Charset.html
-  auto content = string{bytes.cbegin(), bytes.cend()};
-
-  result.Resolve(std::move(content));
+  m_resource->ReadAsText(
+      std::move(blobId),
+      offset,
+      size,
+      std::move(encoding),
+      m_blobPersistor,
+      [&result](string &&message) { result.Resolve(std::move(message)); },
+      [&result](string &&message) { result.Reject(winrt::to_hstring(std::move(message)).c_str()); });
 }
 
 #pragma endregion FileReaderTurboModule
