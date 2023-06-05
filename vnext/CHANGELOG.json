@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 05 Jun 2023 15:11:23 GMT",
+      "tag": "react-native-windows_v0.70.20",
+      "version": "0.70.20",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5e2a21e91210ecf93a332ae0ced19090fd9f6faa",
+            "comment": "Disable RestoreUseStaticGraphEvaluation for VS >= 17.6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 08 May 2023 17:39:46 GMT",
       "tag": "react-native-windows_v0.70.19",
       "version": "0.70.19",
