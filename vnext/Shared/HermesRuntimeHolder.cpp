@@ -257,15 +257,15 @@ class HermesLocalConnection : public facebook::react::ILocalConnection {
   }
 
  private:
-  static void OnRemoteConnectionSendMessage(hermes_remote_connection remoteConnection, const char *message) {
+  static void NAPI_CDECL OnRemoteConnectionSendMessage(hermes_remote_connection remoteConnection, const char *message) {
     reinterpret_cast<facebook::react::IRemoteConnection *>(remoteConnection)->onMessage(message);
   }
 
-  static void OnRemoteConnectionDisconnect(hermes_remote_connection remoteConnection) {
+  static void NAPI_CDECL OnRemoteConnectionDisconnect(hermes_remote_connection remoteConnection) {
     reinterpret_cast<facebook::react::IRemoteConnection *>(remoteConnection)->onDisconnect();
   }
 
-  static void OnRemoteConnectionDelete(void *remoteConnection, void * /*deleterData*/) {
+  static void NAPI_CDECL OnRemoteConnectionDelete(void *remoteConnection, void * /*deleterData*/) {
     delete reinterpret_cast<facebook::react::IRemoteConnection *>(remoteConnection);
   }
 
