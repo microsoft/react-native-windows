@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
 const DebugInstructions = (): Node => (
   <Text>
     Press <Text style={styles.highlight}>Ctrl+Shift+D</Text> to open the Dev
-      Menu.
+    Menu.
   </Text>
 );
 
