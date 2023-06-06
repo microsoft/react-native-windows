@@ -86,7 +86,7 @@
       <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionUIService.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-        <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionUIService_emptyimpl.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionUIService_emptyimpl.cpp">
       <ExcludedFromBuild Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' != 'true'">true</ExcludedFromBuild>
       <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionUIService.idl</DependentUpon>
       <SubType>Code</SubType>

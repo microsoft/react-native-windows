@@ -391,14 +391,3 @@ void HermesRuntimeHolder::removeFromProfiling() const noexcept {
 
 } // namespace Microsoft::ReactNative
 
-namespace Microsoft::NodeApiJsi {
-
-LibHandle LibLoader::loadLib(const char * /*libName*/) {
-  VerifyElseCrashSz(false, "Must be unused");
-}
-
-FuncPtr LibLoader::getFuncPtr(LibHandle /*libHandle*/, const char * /*funcName*/) {
-  VerifyElseCrashSz(false, "Must be unused");
-}
-
-} // namespace Microsoft::NodeApiJsi
