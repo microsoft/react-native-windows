@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/jest-debug-config
 
-This log was last generated on Tue, 16 May 2023 05:16:30 GMT and should not be manually modified.
+This log was last generated on Tue, 06 Jun 2023 19:06:47 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.5.4
+
+Tue, 06 Jun 2023 19:06:47 GMT
+
+### Patches
+
+- Bump @rnw-scripts/babel-node-config to v2.2.4
 
 ## 1.5.3
 

@@ -17,7 +17,7 @@ module.exports = {
     '@babel/preset-typescript',
   ],
   plugins: [
-    ["@babel/plugin-proposal-private-methods", { "loose": true }],
-    ["@babel/plugin-proposal-private-property-in-object", { "loose": true }]
+    ["@babel/plugin-transform-private-methods", { "loose": true }],
+    ["@babel/plugin-transform-private-property-in-object", { "loose": true }]
   ]
 };

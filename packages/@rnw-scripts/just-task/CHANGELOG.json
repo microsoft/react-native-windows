@@ -2,6 +2,27 @@
   "name": "@rnw-scripts/just-task",
   "entries": [
     {
+      "date": "Tue, 06 Jun 2023 19:06:47 GMT",
+      "tag": "@rnw-scripts/just-task_v2.3.10",
+      "version": "2.3.10",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/just-task",
+            "comment": "Bump @rnw-scripts/jest-e2e-config to v1.4.4",
+            "commit": "34cd46235b77dbdc08a4d4f56f7c7d0f0abd65a4"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/just-task",
+            "comment": "Bump @rnw-scripts/jest-unittest-config to v1.5.4",
+            "commit": "34cd46235b77dbdc08a4d4f56f7c7d0f0abd65a4"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 16 May 2023 05:16:30 GMT",
       "tag": "@rnw-scripts/just-task_v2.3.9",
       "version": "2.3.9",

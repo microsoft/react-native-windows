@@ -2,6 +2,33 @@
   "name": "@react-native-windows/find-repo-root",
   "entries": [
     {
+      "date": "Tue, 06 Jun 2023 19:06:44 GMT",
+      "tag": "@react-native-windows/find-repo-root_v0.0.0-canary.50",
+      "version": "0.0.0-canary.50",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@react-native-windows/find-repo-root",
+            "commit": "0358abf96a61404b6772f16b7f2004d6af04bc3b",
+            "comment": "integrate RN nightly 5/19/23"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/find-repo-root",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.21",
+            "commit": "34cd46235b77dbdc08a4d4f56f7c7d0f0abd65a4"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/find-repo-root",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.10",
+            "commit": "34cd46235b77dbdc08a4d4f56f7c7d0f0abd65a4"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 16 May 2023 05:16:30 GMT",
       "tag": "@react-native-windows/find-repo-root_v0.0.0-canary.49",
       "version": "0.0.0-canary.49",

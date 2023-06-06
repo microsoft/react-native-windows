@@ -2,6 +2,63 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Tue, 06 Jun 2023 19:06:43 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.11.7",
+      "version": "0.11.7",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "0358abf96a61404b6772f16b7f2004d6af04bc3b",
+            "comment": "integrate RN nightly 5/19/23"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.10",
+            "commit": "34cd46235b77dbdc08a4d4f56f7c7d0f0abd65a4"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.660",
+            "commit": "34cd46235b77dbdc08a4d4f56f7c7d0f0abd65a4"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 01 Jun 2023 05:14:54 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.11.6",
+      "version": "0.11.6",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.659",
+            "commit": "2d17fc0126add53f76e21097f19624401f2346a8"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 31 May 2023 05:13:44 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.11.5",
+      "version": "0.11.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.658",
+            "commit": "684db1330d1a3e933274bd80e42e684a78f8e7c4"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 27 May 2023 05:15:02 GMT",
       "tag": "@react-native-windows/automation-channel_v0.11.4",
       "version": "0.11.4",
