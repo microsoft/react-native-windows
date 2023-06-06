@@ -17,7 +17,6 @@ bool isColorMeaningful(SharedColor const &color) noexcept {
 
 winrt::Windows::UI::Color ResolvePlatformColor(Color const *const color) {
   if (!color->m_platformColor.empty()) {
-
 #ifndef CORE_ABI
     // If XAML is loaded, look in application resources
     if (xaml::TryGetCurrentApplication()) {
@@ -30,7 +29,8 @@ winrt::Windows::UI::Color ResolvePlatformColor(Color const *const color) {
 
     // Accent colors
     // https://learn.microsoft.com/en-us/uwp/api/windows.ui.viewmanagement.uicolortype?view=winrt-22621
-    static std::unordered_map<std::string, ui::ViewManagement::UIColorType, std::hash<std::string_view>, std::equal_to<>>
+    static std::
+        unordered_map<std::string, ui::ViewManagement::UIColorType, std::hash<std::string_view>, std::equal_to<>>
             s_uiColorTypes = {
                 {"Accent", ui::ViewManagement::UIColorType::Accent},
                 {"AccentDark1", ui::ViewManagement::UIColorType::AccentDark1},
@@ -51,7 +51,8 @@ winrt::Windows::UI::Color ResolvePlatformColor(Color const *const color) {
 
     // UI element colors
     // https://learn.microsoft.com/en-us/uwp/api/windows.ui.viewmanagement.uielementtype?view=winrt-22621
-    static std::unordered_map<std::string, ui::ViewManagement::UIElementType, std::hash<std::string_view>, std::equal_to<>>
+    static std::
+        unordered_map<std::string, ui::ViewManagement::UIElementType, std::hash<std::string_view>, std::equal_to<>>
             s_uiElementTypes = {
                 {"AccentColor", ui::ViewManagement::UIElementType::AccentColor},
                 {"ActiveCaption", ui::ViewManagement::UIElementType::ActiveCaption},
@@ -94,38 +95,37 @@ winrt::Windows::UI::Color ResolvePlatformColor(Color const *const color) {
     // are needed, they should be taken from that section (not "Dark" or "HighContrast").
     // For control-specific values, they will be in a theme resource file for that control. Example:
     // https://github.com/microsoft/microsoft-ui-xaml/blob/9052972906c8a0a1b6cb5d5c61b27d6d27cd7f11/dev/CommonStyles/Button_themeresources.xaml
-    static std::unordered_map<std::string, ui::Color, std::hash<std::string_view>, std::equal_to<>>
-        s_xamlBrushes = {
-            {"SolidBackgroundFillColorBase", {0xFF, 0xF3, 0xF3, 0xF3}},
-            {"ControlFillColorDefault", {0xB3, 0xFF, 0xFF, 0xFF}},
-            {"ControlFillColorSecondary", {0x80, 0xF9, 0xF9, 0xF9}},
-            {"ControlFillColorTertiary", {0x4D, 0xF9, 0xF9, 0xF9}},
-            {"ControlFillColorDisabled", {0x4D, 0xF9, 0xF9, 0xF9}},
-            {"ControlFillColorTransparent", {0x00, 0xFF, 0xFF, 0xFF}},
-            {"ControlStrokeColorDefault", {0x0F, 0x00, 0x00, 0x00}},
-            {"ControlStrokeColorSecondary", {0x29, 0x00, 0x00, 0x00}},
-            {"ControlStrokeColorOnAccentSecondary", {0x66, 0x00, 0x00, 0x00}},
-            {"TextFillColorPrimary", {0xE4, 0x00, 0x00, 0x00}},
-            {"TextFillColorSecondary", {0x9E, 0x00, 0x00, 0x00}},
-            {"TextFillColorDisabled", {0x5C, 0x00, 0x00, 0x00}},
-            // Arguably only the control-agnostic platform colors should be respected, and
-            // Button should be updated to use those instead, assuming that still holds up
-            // in high contrast and such.
-            {"ButtonBackgroundPressed", {0x4D, 0xF9, 0xF9, 0xF9}}, // ControlFillColorTertiary
-            {"ButtonForegroundPressed", {0x9E, 0x00, 0x00, 0x00}}, // TextFillColorSecondary
-            {"ButtonForegroundPointerOver", {0xE4, 0x00, 0x00, 0x00}}, // TextFillColorPrimary
-            {"ButtonBackground", {0xB3, 0xFF, 0xFF, 0xFF}}, // ControlFillColorDefault
-            {"ButtonBorderBrush",
-             {0x29, 0x00, 0x00, 0x00}}, // from ControlStrokeColorSecondary to ControlStrokeColorDefault
-            {"ButtonForeground", {0xE4, 0x00, 0x00, 0x00}}, // TextFillColorPrimary
-            {"ButtonBackgroundDisabled", {0x4D, 0xF9, 0xF9, 0xF9}}, // ControlFillColorDisabled
-            {"ButtonBorderBrushDisabled", {0x0F, 0x00, 0x00, 0x00}}, // ControlStrokeColorDefault
-            {"ButtonForegroundDisabled", {0x5C, 0x00, 0x00, 0x00}}, // TextFillColorDisabled
-            {"ButtonBackgroundPointerOver", {0x80, 0xF9, 0xF9, 0xF9}}, // ControlFillColorSecondary
-            {"ButtonBorderBrushPointerOver",
-             {0x66, 0x00, 0x00, 0x00}}, // from ControlStrokeColorOnAccentSecondary to ControlStrokeColorOnAccentDefault
-            {"ButtonBorderBrushPressed", {0x00, 0xFF, 0xFF, 0xFF}}, // ControlFillColorTransparent
-        };
+    static std::unordered_map<std::string, ui::Color, std::hash<std::string_view>, std::equal_to<>> s_xamlBrushes = {
+        {"SolidBackgroundFillColorBase", {0xFF, 0xF3, 0xF3, 0xF3}},
+        {"ControlFillColorDefault", {0xB3, 0xFF, 0xFF, 0xFF}},
+        {"ControlFillColorSecondary", {0x80, 0xF9, 0xF9, 0xF9}},
+        {"ControlFillColorTertiary", {0x4D, 0xF9, 0xF9, 0xF9}},
+        {"ControlFillColorDisabled", {0x4D, 0xF9, 0xF9, 0xF9}},
+        {"ControlFillColorTransparent", {0x00, 0xFF, 0xFF, 0xFF}},
+        {"ControlStrokeColorDefault", {0x0F, 0x00, 0x00, 0x00}},
+        {"ControlStrokeColorSecondary", {0x29, 0x00, 0x00, 0x00}},
+        {"ControlStrokeColorOnAccentSecondary", {0x66, 0x00, 0x00, 0x00}},
+        {"TextFillColorPrimary", {0xE4, 0x00, 0x00, 0x00}},
+        {"TextFillColorSecondary", {0x9E, 0x00, 0x00, 0x00}},
+        {"TextFillColorDisabled", {0x5C, 0x00, 0x00, 0x00}},
+        // Arguably only the control-agnostic platform colors should be respected, and
+        // Button should be updated to use those instead, assuming that still holds up
+        // in high contrast and such.
+        {"ButtonBackgroundPressed", {0x4D, 0xF9, 0xF9, 0xF9}}, // ControlFillColorTertiary
+        {"ButtonForegroundPressed", {0x9E, 0x00, 0x00, 0x00}}, // TextFillColorSecondary
+        {"ButtonForegroundPointerOver", {0xE4, 0x00, 0x00, 0x00}}, // TextFillColorPrimary
+        {"ButtonBackground", {0xB3, 0xFF, 0xFF, 0xFF}}, // ControlFillColorDefault
+        {"ButtonBorderBrush",
+         {0x29, 0x00, 0x00, 0x00}}, // from ControlStrokeColorSecondary to ControlStrokeColorDefault
+        {"ButtonForeground", {0xE4, 0x00, 0x00, 0x00}}, // TextFillColorPrimary
+        {"ButtonBackgroundDisabled", {0x4D, 0xF9, 0xF9, 0xF9}}, // ControlFillColorDisabled
+        {"ButtonBorderBrushDisabled", {0x0F, 0x00, 0x00, 0x00}}, // ControlStrokeColorDefault
+        {"ButtonForegroundDisabled", {0x5C, 0x00, 0x00, 0x00}}, // TextFillColorDisabled
+        {"ButtonBackgroundPointerOver", {0x80, 0xF9, 0xF9, 0xF9}}, // ControlFillColorSecondary
+        {"ButtonBorderBrushPointerOver",
+         {0x66, 0x00, 0x00, 0x00}}, // from ControlStrokeColorOnAccentSecondary to ControlStrokeColorOnAccentDefault
+        {"ButtonBorderBrushPressed", {0x00, 0xFF, 0xFF, 0xFF}}, // ControlFillColorTransparent
+    };
 
     auto result = s_xamlBrushes.find(color->m_platformColor);
     if (result != s_xamlBrushes.end()) {
