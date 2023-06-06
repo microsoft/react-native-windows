@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 29 May 2023 15:17:23 GMT and should not be manually modified.
+This log was last generated on Tue, 06 Jun 2023 19:19:45 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.72.0-preview.7
+
+Tue, 06 Jun 2023 19:19:45 GMT
+
+### Changes
+
+- Disable RestoreUseStaticGraphEvaluation for VS >= 17.6 (jthysell@microsoft.com)
+- Add option to load ship bundles from metro (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.72.0-preview.5
 
 ## 0.72.0-preview.6
 

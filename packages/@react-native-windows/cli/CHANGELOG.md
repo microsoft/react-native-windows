@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Mon, 22 May 2023 15:16:17 GMT and should not be manually modified.
+This log was last generated on Tue, 06 Jun 2023 19:19:44 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.72.0-preview.5
+
+Tue, 06 Jun 2023 19:19:44 GMT
+
+### Changes
+
+- fix x86 node invocation (asklar@microsoft.com)
 
 ## 0.72.0-preview.4
 

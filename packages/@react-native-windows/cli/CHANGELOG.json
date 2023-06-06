@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Tue, 06 Jun 2023 19:19:44 GMT",
+      "tag": "@react-native-windows/cli_v0.72.0-preview.5",
+      "version": "0.72.0-preview.5",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "40f82b16f0248ca72c8bf8004a99622d570d2405",
+            "comment": "fix x86 node invocation"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 22 May 2023 15:16:17 GMT",
       "tag": "@react-native-windows/cli_v0.72.0-preview.4",
       "version": "0.72.0-preview.4",
