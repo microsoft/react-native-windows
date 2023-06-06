@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/babel-node-config
 
-This log was last generated on Tue, 16 May 2023 05:16:30 GMT and should not be manually modified.
+This log was last generated on Tue, 06 Jun 2023 19:06:45 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.2.4
+
+Tue, 06 Jun 2023 19:06:45 GMT
+
+### Patches
+
+- 📦 Bump @babel/preset-env from 7.21.5 to 7.22.4 (jthysell@microsoft.com)
 
 ## 2.2.3
 

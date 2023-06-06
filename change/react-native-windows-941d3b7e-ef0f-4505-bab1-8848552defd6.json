@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Switch ViewPanel base class to Grid",
+  "comment": "Make IReactNotificationSubscription template explicit",
   "packageName": "react-native-windows",
   "email": "erozell@outlook.com",
   "dependentChangeType": "patch"

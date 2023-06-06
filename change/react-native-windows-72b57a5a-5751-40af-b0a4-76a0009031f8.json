@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Add fabric APIs to win32 winmd to allow easier flighting",
+  "comment": "Fix reversed logic on GetMatchAndroidAndIOSStretchBehavior",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
   "dependentChangeType": "patch"

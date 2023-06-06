@@ -13,13 +13,13 @@
     "e2etest:debug": "jest --config ./jest.debug.config.js"
   },
   "dependencies": {
-    "@react-native-windows/automation-channel": "^0.11.6",
+    "@react-native-windows/automation-channel": "^0.11.7",
     "@react-native-windows/tester": "0.0.1",
     "@typescript-eslint/eslint-plugin": "^5.21.0",
     "@typescript-eslint/parser": "^5.21.0",
     "react": "18.2.0",
     "react-native": "0.73.0-nightly-20230601-d9b3339ef",
-    "react-native-windows": "^0.0.0-canary.659"
+    "react-native-windows": "^0.0.0-canary.660"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
@@ -27,12 +27,12 @@
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-typescript": "^7.8.3",
     "@babel/runtime": "^7.8.4",
-    "@react-native-windows/automation": "^0.3.80",
-    "@react-native-windows/automation-commands": "^0.1.100",
-    "@rnw-scripts/babel-node-config": "2.2.3",
+    "@react-native-windows/automation": "^0.3.81",
+    "@react-native-windows/automation-commands": "^0.1.101",
+    "@rnw-scripts/babel-node-config": "2.2.4",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.1.16",
-    "@rnw-scripts/just-task": "2.3.9",
+    "@rnw-scripts/just-task": "2.3.10",
     "@rnw-scripts/metro-dev-config": "0.0.0",
     "@rnw-scripts/ts-config": "2.0.4",
     "@rnx-kit/jest-preset": "^0.1.0",
