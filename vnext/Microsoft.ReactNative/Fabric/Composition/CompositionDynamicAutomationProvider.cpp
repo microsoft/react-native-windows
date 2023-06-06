@@ -1,9 +1,9 @@
 #include "pch.h"
 #include "CompositionDynamicAutomationProvider.h"
 #include <Fabric/ComponentView.h>
+#include <Unicode.h>
 #include "RootComponentView.h"
 #include "UiaHelpers.h"
-#include <Unicode.h>
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
@@ -37,7 +37,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetRuntimeId(SAFEARRAY *
     return UIA_E_ELEMENTNOTAVAILABLE;
 
   *pRetVal = SafeArrayCreateVector(VT_I4, 0, 2);
-  
+
   if (*pRetVal == nullptr)
     return E_OUTOFMEMORY;
 

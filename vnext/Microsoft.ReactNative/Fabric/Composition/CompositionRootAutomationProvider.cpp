@@ -189,7 +189,7 @@ HRESULT __stdcall CompositionRootAutomationProvider::Navigate(
 
 // RAII wrapper to unaccess SafeArray data so I can early return in the relevant functions
 class SafeArrayAccessScope {
-  SAFEARRAY* m_pArray = nullptr;
+  SAFEARRAY *m_pArray = nullptr;
 
  public:
   SafeArrayAccessScope(SAFEARRAY *psa) noexcept : m_pArray(psa) {}
