@@ -1,8 +1,18 @@
 # Change Log - @rnw-scripts/take-screenshot
 
-This log was last generated on Tue, 16 May 2023 05:16:30 GMT and should not be manually modified.
+This log was last generated on Tue, 06 Jun 2023 19:06:46 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.15
+
+Tue, 06 Jun 2023 19:06:46 GMT
+
+### Patches
+
+- integrate RN nightly 5/19/23 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.21
+- Bump @rnw-scripts/just-task to v2.3.10
 
 ## 1.1.14
 

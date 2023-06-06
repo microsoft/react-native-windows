@@ -1,8 +1,23 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 01 Jun 2023 05:14:54 GMT and should not be manually modified.
+This log was last generated on Tue, 06 Jun 2023 19:06:46 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.660
+
+Tue, 06 Jun 2023 19:06:46 GMT
+
+### Changes
+
+- Disable RestoreUseStaticGraphEvaluation for VS >= 17.6 (jthysell@microsoft.com)
+- Add fabric APIs to win32 winmd to allow easier flighting (30809111+acoates-ms@users.noreply.github.com)
+- Switch ViewPanel base class to Grid (erozell@outlook.com)
+- integrate RN nightly 5/19/23 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.172
+- Bump @react-native-windows/codegen to v0.0.0-canary.59
+- Bump @rnw-scripts/just-task to v2.3.10
+- Bump react-native-platform-override to v1.9.8
 
 ## 0.0.0-canary.659
 
