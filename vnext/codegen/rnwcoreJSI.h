@@ -6148,7 +6148,7 @@ enum SampleTurboModuleEnumInt { A, B };
 
 template <>
 struct Bridging<SampleTurboModuleEnumInt> {
-  static SampleTurboModuleEnumInt fromJs(jsi::Runtime &rt, const jsi::Value &rawValue, const std::shared_ptr<CallInvoker> &jsInvoker) {
+  static SampleTurboModuleEnumInt fromJs(jsi::Runtime &rt, const jsi::Value &rawValue) {
     double value = (double)rawValue.asNumber();
     if (value == 23) {
       return SampleTurboModuleEnumInt::A;
