@@ -123,7 +123,8 @@ struct ReactNotificationSubscriptionView : implements<
   ReactNotificationSubscriptionView(
       weak_ref<ReactNotificationService> &&notificationService,
       IReactNotificationSubscription const &childSubscription) noexcept
-      : m_notificationService{std::move(notificationService)}, m_childSubscription{weak_ref(childSubscription)} {
+      : m_notificationService{std::move(notificationService)},
+        m_childSubscription{weak_ref<IReactNotificationSubscription>(childSubscription)} {
     childSubscription.as<IReactNotificationSubscriptionPrivate>()->SetParent(*this);
   }
 
