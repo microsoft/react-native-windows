@@ -2,12 +2,6 @@
 #include "CompositionRootAutomationProvider.h"
 #include <algorithm>
 #include "UiaHelpers.h"
-#pragma warning(push)
-#pragma warning(disable : 4229)
-#define IN
-#define OUT
-#include <atlsafe.h>
-#pragma warning(pop)
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
@@ -193,29 +187,15 @@ HRESULT __stdcall CompositionRootAutomationProvider::Navigate(
   return S_OK;
 }
 
-// The old C-style interface for SAFEARRAY is tedious to use. ATL provides CComSafeArray which allows us to interact
-// with the data structure using much more modern methods. However, AdviseEventAdded/Removed don't expect us to
-// deallocate their In param, so this is a simple RAII wrapper to Attach/Detach in the scope of those functions and
-// perform a little validation that the incoming SAFEARRAY is well formed.
-class UIAPropertyArray {
-  CComSafeArray<PROPERTYID> m_propArray{};
+// RAII wrapper to unaccess SafeArray data so I can early return in the relevant functions
+class SafeArrayAccessScope {
+  SAFEARRAY* m_pArray = nullptr;
 
  public:
-  UIAPropertyArray(SAFEARRAY *psaProperties) noexcept {
-    VARTYPE vt;
-    if (psaProperties && SUCCEEDED(SafeArrayGetVartype(psaProperties, &vt)) && vt == m_propArray.GetType()) {
-      m_propArray.Attach(psaProperties);
-    }
-  }
-  ~UIAPropertyArray() noexcept {
-    if (m_propArray.GetSafeArrayPtr() != nullptr)
-      m_propArray.Detach();
-  }
-  bool IsValid() noexcept {
-    return m_propArray.GetSafeArrayPtr() != nullptr && m_propArray.GetDimensions() == 1 && m_propArray.GetCount() > 0;
-  }
-  CComSafeArray<PROPERTYID> *operator->() noexcept {
-    return &m_propArray;
+  SafeArrayAccessScope(SAFEARRAY *psa) noexcept : m_pArray(psa) {}
+  ~SafeArrayAccessScope() noexcept {
+    if (m_pArray != nullptr)
+      SafeArrayUnaccessData(m_pArray);
   }
 };
 
@@ -235,16 +215,38 @@ void AdviseEventAddedImpl(
 }
 
 HRESULT CompositionRootAutomationProvider::AdvisePropertiesAdded(SAFEARRAY *psaProperties) noexcept {
-  UIAPropertyArray props(psaProperties);
+  if (psaProperties == nullptr)
+    return E_POINTER;
 
-  if (!props.IsValid()) {
+  long *pValues = nullptr;
+  auto hr = SafeArrayAccessData(psaProperties, reinterpret_cast<void **>(&pValues));
+  if (FAILED(hr))
+    return hr;
+
+  SafeArrayAccessScope accessScope(psaProperties);
+
+  if (SafeArrayGetDim(psaProperties) != 1)
     return E_INVALIDARG;
-  }
 
-  // Note SAFEARRAY's upperbound is inclusive
-  for (auto i = props->GetLowerBound(); i <= props->GetUpperBound(); i++) {
-    auto prop = props->GetAt(i);
-    AdviseEventAddedImpl(m_advisedProperties, prop);
+  VARTYPE vt;
+  hr = SafeArrayGetVartype(psaProperties, &vt);
+  if (FAILED(hr) || vt != VT_I4)
+    return E_INVALIDARG;
+
+  long lower;
+  hr = SafeArrayGetLBound(psaProperties, 1, &lower);
+  if (FAILED(hr))
+    return hr;
+
+  long upper;
+  hr = SafeArrayGetUBound(psaProperties, 1, &upper);
+  if (FAILED(hr))
+    return hr;
+
+  long count = upper - lower + 1;
+
+  for (int i = 0; i < count; i++) {
+    AdviseEventAddedImpl(m_advisedProperties, pValues[i]);
   }
   return S_OK;
 }
@@ -277,16 +279,38 @@ HRESULT AdviseEventRemovedImpl(
 }
 
 HRESULT CompositionRootAutomationProvider::AdvisePropertiesRemoved(SAFEARRAY *psaProperties) noexcept {
-  UIAPropertyArray props(psaProperties);
+  if (psaProperties == nullptr)
+    return E_POINTER;
 
-  if (!props.IsValid()) {
+  long *pValues = nullptr;
+  auto hr = SafeArrayAccessData(psaProperties, reinterpret_cast<void **>(&pValues));
+  if (FAILED(hr))
+    return hr;
+
+  SafeArrayAccessScope accessScope(psaProperties);
+
+  if (SafeArrayGetDim(psaProperties) != 1)
     return E_INVALIDARG;
-  }
 
+  VARTYPE vt;
+  hr = SafeArrayGetVartype(psaProperties, &vt);
+  if (FAILED(hr) || vt != VT_I4)
+    return E_INVALIDARG;
+
+  long lower;
+  hr = SafeArrayGetLBound(psaProperties, 1, &lower);
+  if (FAILED(hr))
+    return hr;
+
+  long upper;
+  hr = SafeArrayGetUBound(psaProperties, 1, &upper);
+  if (FAILED(hr))
+    return hr;
+
+  long count = upper - lower + 1;
   auto returnHr = S_OK;
-  for (auto i = props->GetLowerBound(); i <= props->GetUpperBound(); i++) {
-    auto prop = props->GetAt(i);
-    auto hr = AdviseEventRemovedImpl(m_advisedProperties, prop);
+  for (int i = 0; i < count; i++) {
+    auto hr = AdviseEventRemovedImpl(m_advisedProperties, pValues[i]);
     if (FAILED(hr)) {
       returnHr = hr;
     }

@@ -1,14 +1,9 @@
 #include "pch.h"
 #include "CompositionDynamicAutomationProvider.h"
 #include <Fabric/ComponentView.h>
-#pragma warning(push)
-#pragma warning(disable : 4229)
-#define IN
-#define OUT
-#include <atlsafe.h>
-#pragma warning(pop)
 #include "RootComponentView.h"
 #include "UiaHelpers.h"
+#include <Unicode.h>
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
@@ -41,16 +36,15 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetRuntimeId(SAFEARRAY *
   if (!strongView)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  CComSafeArray<int32_t> runtimeId;
-  auto hr = runtimeId.Create(2);
+  *pRetVal = SafeArrayCreateVector(VT_I4, 0, 2);
+  
+  if (*pRetVal == nullptr)
+    return E_OUTOFMEMORY;
 
-  if (FAILED(hr))
-    return hr;
-
-  runtimeId[0] = UiaAppendRuntimeId;
-  runtimeId[1] = strongView->tag();
-
-  *pRetVal = runtimeId.Detach();
+  int runtimeId[] = {UiaAppendRuntimeId, strongView->tag()};
+  for (long i = 0; i < 2; i++) {
+    SafeArrayPutElement(*pRetVal, &i, static_cast<void *>(&runtimeId[i]));
+  }
 
   return S_OK;
 }
@@ -222,16 +216,16 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
     }
     case UIA_AutomationIdPropertyId: {
       pRetVal->vt = VT_BSTR;
-      auto testId = props->testId;
-      CComBSTR temp(testId.c_str());
-      pRetVal->bstrVal = temp.Detach();
+      auto wideTestId = ::Microsoft::Common::Unicode::Utf8ToUtf16(props->testId);
+      pRetVal->bstrVal = SysAllocString(wideTestId.c_str());
+      hr = pRetVal->bstrVal != nullptr ? S_OK : E_OUTOFMEMORY;
       break;
     }
     case UIA_NamePropertyId: {
       pRetVal->vt = VT_BSTR;
-      auto name = props->accessibilityLabel;
-      CComBSTR temp(name.c_str());
-      pRetVal->bstrVal = temp.Detach();
+      auto wideName = ::Microsoft::Common::Unicode::Utf8ToUtf16(props->accessibilityLabel);
+      pRetVal->bstrVal = SysAllocString(wideName.c_str());
+      hr = pRetVal->bstrVal != nullptr ? S_OK : E_OUTOFMEMORY;
       break;
     }
     case UIA_IsKeyboardFocusablePropertyId: {
