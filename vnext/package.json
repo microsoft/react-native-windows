@@ -73,20 +73,20 @@
     "@types/react": "^18.0.18",
     "eslint": "^8.19.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "flow-bin": "^0.206.0",
+    "flow-bin": "^0.207.0",
     "jscodeshift": "^0.14.0",
     "just-scripts": "^1.3.3",
     "metro-config": "0.76.2",
     "prettier": "^2.4.1",
     "react": "18.2.0",
-    "react-native": "0.73.0-nightly-20230519-de1e9f5d1",
+    "react-native": "0.73.0-nightly-20230601-d9b3339ef",
     "react-native-platform-override": "^1.9.8",
     "react-refresh": "^0.4.0",
     "typescript": "^4.9.5"
   },
   "peerDependencies": {
     "react": "18.2.0",
-    "react-native": "0.73.0-nightly-20230519-de1e9f5d1"
+    "react-native": "0.73.0-nightly-20230601-d9b3339ef"
   },
   "beachball": {
     "defaultNpmTag": "canary",
