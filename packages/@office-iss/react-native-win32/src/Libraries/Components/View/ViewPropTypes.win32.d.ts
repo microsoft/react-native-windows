@@ -211,7 +211,7 @@ export type IHandledKeyboardEvent = PartiallyRequired<
   INativeKeyboardEvent,
   'key'
 > & {
-  eventPhase:
+  eventPhase?:
     | EventPhase.None
     | EventPhase.Capturing
     | EventPhase.AtTarget
