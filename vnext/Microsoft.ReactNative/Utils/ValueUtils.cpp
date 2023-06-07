@@ -166,10 +166,10 @@ xaml::Media::Brush BrushFromColorObject(const folly::dynamic &d) {
   auto value{d.find("windowsbrush")->second};
   if (value.isArray()) {
     for (const auto &resource : value) {
-      resources.emplace_back(resource.asString());
+      resources.emplace_back(winrt::to_hstring(resource.asString()));
     }
   } else {
-    resources.emplace_back(value.asString());
+    resources.emplace_back(winrt::to_hstring(value.asString()));
   }
 
   return BrushFromColorObject(resources);
