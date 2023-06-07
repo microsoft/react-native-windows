@@ -113,11 +113,12 @@ void FieldWriter(IJSValueWriter const &writer, const void *obj, const uintptr_t 
 
 template <class T>
 struct StructInfo {
-  static const FieldMap FieldMap;
+  static const FieldMap& GetFieldMap()
+  {
+    static const FieldMap fieldMap = GetStructInfo(static_cast<T *>(nullptr));
+    return fieldMap;
+  }
 };
-
-template <class T>
-/*static*/ const FieldMap StructInfo<T>::FieldMap = GetStructInfo(static_cast<T *>(nullptr));
 
 template <int I>
 using ReactFieldId = std::integral_constant<int, I>;

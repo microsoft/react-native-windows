@@ -69,7 +69,7 @@ struct CppTurboModuleSpec : TurboModuleSpec {
 
       Method<void(int, int, Callback<int>, Callback<std::string const &>) noexcept>{INDEX(c2), L"divideCallbacks"},
       Method<void(int, Callback<int>, Callback<std::string const &>) noexcept>{INDEX(c2), L"negateCallbacks"},
-      Method<void(int, Callback<int>, Callback<std::string const &>) noexcept>{INDEX(c2), L"negateAsyncCallbacks"},
+      Method<void(int, Callback<int>, Callback<std::string const &>) noexcept>{INDEX(c2), L"negateAsyncCallbacks"},                                                                                                                                                                                         
       Method<void(int, Callback<int>, Callback<std::string const &>) noexcept>{
           INDEX(c2),
           L"negateDispatchQueueCallbacks"},
