@@ -14,7 +14,7 @@ import type {ColorValue} from './StyleSheet';
 import type {ProcessedColorValue} from './processColor';
 
 export opaque type NativeColorValue = {
-  windowsbrush?: string,
+  windowsbrush?: Array<string>,
 };
 
 export const PlatformColor = (...names: Array<string>): ColorValue => {
