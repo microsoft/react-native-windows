@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/babel-node-config
 
-This log was last generated on Tue, 06 Jun 2023 19:06:45 GMT and should not be manually modified.
+This log was last generated on Wed, 07 Jun 2023 05:16:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.3.0
+
+Wed, 07 Jun 2023 05:16:10 GMT
+
+### Minor changes
+
+- integrate RN Nightly 6/1/23 (tatianakapos@microsoft.com)
 
 ## 2.2.4
 

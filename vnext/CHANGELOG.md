@@ -1,8 +1,22 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 06 Jun 2023 19:06:46 GMT and should not be manually modified.
+This log was last generated on Wed, 07 Jun 2023 05:16:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.661
+
+Wed, 07 Jun 2023 05:16:11 GMT
+
+### Changes
+
+- Fix reversed logic on GetMatchAndroidAndIOSStretchBehavior (30809111+acoates-ms@users.noreply.github.com)
+- Make IReactNotificationSubscription template explicit (erozell@outlook.com)
+- integrate RN Nightly 6/1/23 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.173
+- Bump @react-native-windows/codegen to v0.0.0-canary.60
+- Bump @rnw-scripts/just-task to v2.3.11
+- Bump react-native-platform-override to v1.9.9
 
 ## 0.0.0-canary.660
 

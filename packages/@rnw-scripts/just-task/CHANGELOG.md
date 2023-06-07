@@ -1,8 +1,17 @@
 # Change Log - @rnw-scripts/just-task
 
-This log was last generated on Tue, 06 Jun 2023 19:06:47 GMT and should not be manually modified.
+This log was last generated on Wed, 07 Jun 2023 05:16:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.3.11
+
+Wed, 07 Jun 2023 05:16:11 GMT
+
+### Patches
+
+- Bump @rnw-scripts/jest-e2e-config to v1.4.5
+- Bump @rnw-scripts/jest-unittest-config to v1.5.5
 
 ## 2.3.10
 
