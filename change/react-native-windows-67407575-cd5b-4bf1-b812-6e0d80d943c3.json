@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add UIA focus management and AdvisedEvents for prop changes",
+  "packageName": "react-native-windows",
+  "email": "adrum@microsoft.com",
+  "dependentChangeType": "patch"
+}
