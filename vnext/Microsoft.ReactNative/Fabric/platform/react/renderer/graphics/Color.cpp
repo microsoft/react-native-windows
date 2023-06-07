@@ -8,6 +8,8 @@
 #include <XamlUtils.h>
 #endif // CORE_ABI
 
+#include <winrt/Windows.UI.ViewManagement.h>
+
 namespace facebook::react {
 
 bool isColorMeaningful(SharedColor const &color) noexcept {
