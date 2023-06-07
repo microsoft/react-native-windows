@@ -113,8 +113,7 @@ void FieldWriter(IJSValueWriter const &writer, const void *obj, const uintptr_t 
 
 template <class T>
 struct StructInfo {
-  static const FieldMap& GetFieldMap()
-  {
+  static const FieldMap &GetFieldMap() {
     static const FieldMap fieldMap = GetStructInfo(static_cast<T *>(nullptr));
     return fieldMap;
   }
