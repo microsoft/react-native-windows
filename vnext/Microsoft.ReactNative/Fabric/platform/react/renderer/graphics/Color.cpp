@@ -26,8 +26,7 @@ winrt::Windows::UI::Color ResolvePlatformColor(Color const *const color) {
 #ifndef CORE_ABI
       // If XAML is loaded, look in application resources
       if (xaml::TryGetCurrentApplication()) {
-        xaml::Media::Brush brush{
-            Microsoft::ReactNative::BrushFromColorObject(winrt::to_hstring(color->m_platformColor))};
+        xaml::Media::Brush brush{Microsoft::ReactNative::BrushFromColorObject(platformColor)};
         if (auto scb{brush.try_as<xaml::Media::SolidColorBrush>()}) {
           return scb.Color();
         }
@@ -139,9 +138,9 @@ winrt::Windows::UI::Color ResolvePlatformColor(Color const *const color) {
         return result->second;
       }
     }
-
-    return color->m_color;
   }
+  return color->m_color;
+}
 
   D2D1::ColorF SharedColor::AsD2DColor() const {
     winrt::Windows::UI::Color color = ResolvePlatformColor(m_color.get());
