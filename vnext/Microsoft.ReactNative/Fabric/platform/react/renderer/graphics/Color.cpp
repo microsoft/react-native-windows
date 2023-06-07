@@ -142,60 +142,60 @@ winrt::Windows::UI::Color ResolvePlatformColor(Color const *const color) {
   return color->m_color;
 }
 
-  D2D1::ColorF SharedColor::AsD2DColor() const {
-    winrt::Windows::UI::Color color = ResolvePlatformColor(m_color.get());
-    return {color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, color.A / 255.0f};
-  }
+D2D1::ColorF SharedColor::AsD2DColor() const {
+  winrt::Windows::UI::Color color = ResolvePlatformColor(m_color.get());
+  return {color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, color.A / 255.0f};
+}
 
-  winrt::Windows::UI::Color SharedColor::AsWindowsColor() const {
-    return ResolvePlatformColor(m_color.get());
-  }
+winrt::Windows::UI::Color SharedColor::AsWindowsColor() const {
+  return ResolvePlatformColor(m_color.get());
+}
 
 #ifndef CORE_ABI
-  xaml::Media::Brush SharedColor::AsWindowsBrush() const {
-    if (!m_color)
-      return nullptr;
-    if (!m_color->m_platformColor.empty()) {
-      return Microsoft::ReactNative::BrushFromColorObject(m_color->m_platformColor);
-    }
-    return xaml::Media::SolidColorBrush(m_color->m_color);
+xaml::Media::Brush SharedColor::AsWindowsBrush() const {
+  if (!m_color)
+    return nullptr;
+  if (!m_color->m_platformColor.empty()) {
+    return Microsoft::ReactNative::BrushFromColorObject(m_color->m_platformColor);
   }
+  return xaml::Media::SolidColorBrush(m_color->m_color);
+}
 #endif // CORE_ABI
 
-  SharedColor colorFromComponents(ColorComponents components) {
-    float ratio = 255;
-    return {ui::ColorHelper::FromArgb(
-        (int)round(components.alpha * ratio) & 0xff,
-        (int)round(components.red * ratio) & 0xff,
-        (int)round(components.green * ratio) & 0xff,
-        (int)round(components.blue * ratio) & 0xff)};
-  }
+SharedColor colorFromComponents(ColorComponents components) {
+  float ratio = 255;
+  return {ui::ColorHelper::FromArgb(
+      (int)round(components.alpha * ratio) & 0xff,
+      (int)round(components.red * ratio) & 0xff,
+      (int)round(components.green * ratio) & 0xff,
+      (int)round(components.blue * ratio) & 0xff)};
+}
 
-  ColorComponents colorComponentsFromColor(SharedColor const &sharedColor) {
-    float ratio = 255;
-    auto color = sharedColor.AsWindowsColor();
-    return ColorComponents{
-        (float)color.R / ratio, (float)color.G / ratio, (float)color.B / ratio, (float)color.A / ratio};
-  }
+ColorComponents colorComponentsFromColor(SharedColor const &sharedColor) {
+  float ratio = 255;
+  auto color = sharedColor.AsWindowsColor();
+  return ColorComponents{
+      (float)color.R / ratio, (float)color.G / ratio, (float)color.B / ratio, (float)color.A / ratio};
+}
 
-  SharedColor clearColor() {
-    static SharedColor color = colorFromComponents(ColorComponents{0, 0, 0, 0});
-    return color;
-  }
+SharedColor clearColor() {
+  static SharedColor color = colorFromComponents(ColorComponents{0, 0, 0, 0});
+  return color;
+}
 
-  SharedColor blackColor() {
-    static SharedColor color = colorFromComponents(ColorComponents{0, 0, 0, 1});
-    return color;
-  }
+SharedColor blackColor() {
+  static SharedColor color = colorFromComponents(ColorComponents{0, 0, 0, 1});
+  return color;
+}
 
-  SharedColor whiteColor() {
-    static SharedColor color = colorFromComponents(ColorComponents{1, 1, 1, 1});
-    return color;
-  }
+SharedColor whiteColor() {
+  static SharedColor color = colorFromComponents(ColorComponents{1, 1, 1, 1});
+  return color;
+}
 
-  SharedColor greyColor() {
-    static SharedColor color = colorFromComponents(ColorComponents{133, 133, 133, 1});
-    return color;
-  }
+SharedColor greyColor() {
+  static SharedColor color = colorFromComponents(ColorComponents{133, 133, 133, 1});
+  return color;
+}
 
 } // namespace facebook::react
