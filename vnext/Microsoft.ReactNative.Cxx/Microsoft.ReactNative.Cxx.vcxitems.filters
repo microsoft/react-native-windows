@@ -28,14 +28,12 @@
       <Filter>JSI</Filter>
     </ClCompile>
     <ClCompile Include="$(Bridging_SourcePath)\LongLivedObject.cpp" />
-    <ClCompile Include="$(NodeApiJsiDir)\src\NodeApiJsiRuntime.cpp">
-      <Filter>NodeApiJsi</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\NodeApiJsiLoader.cpp">
       <Filter>NodeApiJsi</Filter>
     </ClCompile>
-    <ClCompile Include="$(NodeApiJsiDir)\src\ApiLoaders\NodeApi.cpp" />
-    <ClCompile Include="$(NodeApiJsiDir)\src\ApiLoaders\JSRuntimeApi.cpp" />
+    <ClCompile Include="$(NodeApiJsiSrcDir)ApiLoaders\NodeApi.cpp" />
+    <ClCompile Include="$(NodeApiJsiSrcDir)ApiLoaders\JSRuntimeApi.cpp" />
+    <ClCompile Include="$(NodeApiJsiSrcDir)NodeApiJsiRuntime.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Crash.h" />
@@ -166,13 +164,11 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\LongLivedJsiValue.h">
       <Filter>TurboModule</Filter>
     </ClInclude>
-    <ClInclude Include="$(NodeApiJsiDir)\src\NodeApiJsiRuntime.h">
-      <Filter>NodeApiJsi</Filter>
-    </ClInclude>
-    <ClInclude Include="$(NodeApiJsiDir)\src\ApiLoaders\NodeApi.h" />
-    <ClInclude Include="$(NodeApiJsiDir)\src\ApiLoaders\NodeApi.inc" />
-    <ClInclude Include="$(NodeApiJsiDir)\src\ApiLoaders\JSRuntimeApi.h" />
-    <ClInclude Include="$(NodeApiJsiDir)\src\ApiLoaders\JSRuntimeApi.inc" />
+    <ClInclude Include="$(NodeApiJsiSrcDir)ApiLoaders\NodeApi.h" />
+    <ClInclude Include="$(NodeApiJsiSrcDir)ApiLoaders\NodeApi.inc" />
+    <ClInclude Include="$(NodeApiJsiSrcDir)ApiLoaders\JSRuntimeApi.h" />
+    <ClInclude Include="$(NodeApiJsiSrcDir)ApiLoaders\JSRuntimeApi.inc" />
+    <ClInclude Include="$(NodeApiJsiSrcDir)NodeApiJsiRuntime.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="JSI">

@@ -5,18 +5,10 @@
     <HasSharedItems>true</HasSharedItems>
     <ItemsProjectGuid>{2049dbe9-8d13-42c9-ae4b-413ae38fffd0}</ItemsProjectGuid>
     <ItemsProjectName>Microsoft.ReactNative.Shared</ItemsProjectName>
-    <ReactNativeDir Condition="'$(ReactNativeDir)' == '' AND Exists('$(MSBuildThisFileDirectory)..\..\node_modules\react-native\package.json')">$(MSBuildThisFileDirectory)..\..\node_modules\react-native\</ReactNativeDir>
-    <ReactNativeDir Condition="'$(ReactNativeDir)' == '' AND Exists('$(MSBuildThisFileDirectory)..\..\..\node_modules\react-native\package.json')">$(MSBuildThisFileDirectory)..\..\..\node_modules\react-native\</ReactNativeDir>
-    <NodeApiJsiCommitHash>94be53a0db167acd992a600325aaaadf57bce030</NodeApiJsiCommitHash>
-    <NodeApiJsiDir Condition="'$(NodeApiJsiDir)' == '' AND '$(ReactNativeDir)' != ''">$(ReactNativeDir)..\..\node_modules\.node-api-jsi\node-api-jsi-$(NodeApiJsiCommitHash)\</NodeApiJsiDir>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>
-        $(NodeApiJsiDir)node-api;
-        $(MSBuildThisFileDirectory);
-        %(AdditionalIncludeDirectories)
-      </AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
