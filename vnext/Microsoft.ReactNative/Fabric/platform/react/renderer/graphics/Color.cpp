@@ -3,7 +3,10 @@
 
 #include "Color.h"
 #include <Utils/ValueUtils.h>
+
+#ifndef CORE_ABI
 #include <XamlUtils.h>
+#endif // CORE_ABI
 
 namespace facebook::react {
 
