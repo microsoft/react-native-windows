@@ -56,9 +56,11 @@ winrt::Windows::UI::Color ResolvePlatformColor(Color const *const color) {
       };
 
   if (!color->m_platformColor.empty()) {
-    auto result = s_windowsColors.find(color->m_platformColor);
-    if (result != s_windowsColors.end()) {
-      return result->second;
+    for (auto platformColor : color->m_platformColor) {
+      auto result = s_windowsColors.find(platformColor);
+      if (result != s_windowsColors.end()) {
+        return result->second;
+      }
     }
   }
 
@@ -79,7 +81,7 @@ xaml::Media::Brush SharedColor::AsWindowsBrush() const {
   if (!m_color)
     return nullptr;
   if (!m_color->m_platformColor.empty()) {
-    return Microsoft::ReactNative::BrushFromColorObject(winrt::to_hstring(m_color->m_platformColor));
+    return Microsoft::ReactNative::BrushFromColorObject(m_color->m_platformColor);
   }
   return xaml::Media::SolidColorBrush(m_color->m_color);
 }

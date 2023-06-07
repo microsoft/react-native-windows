@@ -46,13 +46,10 @@ inline void fromRawValue(const PropsParserContext &context, const RawValue &valu
     colorComponents.blue = items.at(2);
     colorComponents.alpha = length == 4 ? items.at(3) : 1.0f;
     // [Windows - Embed WindowBrush into SharedColor instead of trying to parse PlatformColor into RGB
-  } else if (value.hasType<butter::map<std::string, std::string>>()) {
-    auto map = (butter::map<std::string, std::string>)value;
-    for (const auto &pair : map) {
-      if (pair.first == "windowsbrush") {
-        result = SharedColor(std::string(pair.second));
-        return;
-      }
+  } else if (value.hasType<butter::map<std::string, std::vector<std::string>>>()) {
+    auto map = (butter::map<std::string, std::vector<std::string>>)value;
+    if (map.find("windowsbrush") != map.end()) {
+      result = SharedColor(std::move(map["windowsbrush"]));
     }
   }
   // Windows]

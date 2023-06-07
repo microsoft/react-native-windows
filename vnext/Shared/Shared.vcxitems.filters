@@ -398,6 +398,9 @@
     <Filter Include="Source Files\Fabric\platform\react\renderer\textlayoutmanager">
       <UniqueIdentifier>{d63d0a43-1f13-4674-aaa5-de02447a46b9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Fabric\platform\react\renderer\core">
+      <UniqueIdentifier>{0bd2cd2a-875b-4f98-851d-b90adac57415}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\ExceptionsManagerModule.h">
@@ -726,6 +729,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\AbiViewProps.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\AbiViewComponentDescriptor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\UiaHelpers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\core\graphicsConversions.h">
+      <Filter>Header Files\Fabric\platform\react\renderer\core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)tracing\rnw.wprp">

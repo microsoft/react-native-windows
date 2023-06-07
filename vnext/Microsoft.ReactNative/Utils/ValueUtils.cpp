@@ -109,8 +109,9 @@ struct BrushCache {
     });
   }
 
-  xaml::Media::Brush BrushFromResourceName(const std::vector<winrt::hstring> &resources) {
-    for (auto resourceName : resources) {
+  xaml::Media::Brush BrushFromResourceName(const std::vector<std::string> &resources) {
+    for (auto resource : resources) {
+      auto resourceName{winrt::to_hstring(resource)};
       if (m_map.find(resourceName) != m_map.end()) {
         if (auto brush = m_map.at(resourceName)) {
           return brush;
@@ -150,40 +151,40 @@ struct BrushCache {
   }
 };
 
-xaml::Media::Brush BrushFromColorObject(winrt::hstring resourceName) {
-  return BrushFromColorObject(std::vector<winrt::hstring>{resourceName});
+xaml::Media::Brush BrushFromColorObject(const std::string &resourceName) {
+  return BrushFromColorObject(std::vector<std::string>{resourceName});
 }
 
-xaml::Media::Brush BrushFromColorObject(const std::vector<winrt::hstring> &resourceNames) {
+xaml::Media::Brush BrushFromColorObject(const std::vector<std::string> &resourceNames) {
   thread_local static BrushCache accentColorMap;
 
   return accentColorMap.BrushFromResourceName(resourceNames);
 }
 
 xaml::Media::Brush BrushFromColorObject(const folly::dynamic &d) {
-  std::vector<winrt::hstring> resources;
+  std::vector<std::string> resources;
 
   auto value{d.find("windowsbrush")->second};
   if (value.isArray()) {
     for (const auto &resource : value) {
-      resources.emplace_back(winrt::to_hstring(resource.asString()));
+      resources.emplace_back(resource.asString());
     }
   } else {
-    resources.emplace_back(winrt::to_hstring(value.asString()));
+    resources.emplace_back(value.asString());
   }
 
   return BrushFromColorObject(resources);
 }
 
 xaml::Media::Brush BrushFromColorObject(const winrt::Microsoft::ReactNative::JSValue &v) {
-  std::vector<winrt::hstring> resources;
+  std::vector<std::string> resources;
 
   if (v["windowsbrush"].Type() == winrt::Microsoft::ReactNative::JSValueType::Array) {
     for (const auto &resource : v["windowsbrush"].AsArray()) {
-      resources.emplace_back(winrt::to_hstring(resource.AsString()));
+      resources.emplace_back(resource.AsString());
     }
   } else {
-    resources.emplace_back(winrt::to_hstring(v["windowsbrush"].AsString()));
+    resources.emplace_back(v["windowsbrush"].AsString());
   }
 
   return BrushFromColorObject(resources);
