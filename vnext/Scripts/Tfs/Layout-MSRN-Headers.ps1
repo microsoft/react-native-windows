@@ -15,6 +15,22 @@ Write-Host "Destination root: [$TargetRoot]"
 Write-Host "React Native root: [$ReactNativeRoot]"
 Write-Host "ReactCommon Override root: [$ReactCommonOverrideRoot]"
 
+[xml]$props = gc $PSScriptRoot\..\..\Directory.Build.props
+[string] $NodeApiJsiCommitHash = $props.Project.PropertyGroup.NodeApiJsiCommitHash;
+$NodeApiJsiCommitHash = $NodeApiJsiCommitHash.Trim()
+$NodeApiJsiRoot = "$SourceRoot\node_modules\.node-api-jsi\node-api-jsi-${NodeApiJsiCommitHash}";
+Write-Host "Node-API JSI root: [$NodeApiJsiRoot]"
+
+# Download Node-API JSI if running on a machine which hasn't run native build logic to acquire it
+if (!(Test-Path $NodeApiJsiRoot)) {
+	Write-Host "Downloading Node-API JSI $NodeApiJsiCommitHash"
+	$NodeApiJsiZip = "$SourceRoot\node_modules\.node-api-jsi\node-api-jsi-${NodeApiJsiCommitHash}.zip"
+
+	New-Item $NodeApiJsiRoot -ItemType Directory
+	Invoke-RestMethod -Uri "https://github.com/microsoft/node-api-jsi/archive/$(NodeApiJsiCommitHash).zip" -OutFile $NodeApiJsiZip
+	Expand-Archive -LiteralPath $NodeApiJsiZip -DestinationPath $NodeApiJsiRoot
+}
+
 md -Force $TargetRoot
 
 $patterns = $Extensions| ForEach-Object {"*.$_"}
@@ -38,6 +54,25 @@ Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\jsi\jsi\jsi.cpp -Destination
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\jsi\jsi\jsi.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\jsi\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\jsi\jsi\jsi-inl.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\jsi\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\jsi\jsi\threadsafe.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\jsi\
+
+# Microsoft.ReactNative.CXX project Node-API files
+New-Item $TargetRoot\Microsoft.ReactNative.Cxx\node-api -ItemType Directory -Force
+Copy-Item -Force -Path $NodeApiJsiRoot\node-api\js_native_api.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\node-api\
+Copy-Item -Force -Path $NodeApiJsiRoot\node-api\js_native_api_types.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\node-api\
+Copy-Item -Force -Path $NodeApiJsiRoot\node-api\js_runtime_api.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\node-api\
+
+# Microsoft.ReactNative.CXX project Node-API JSI files
+New-Item $TargetRoot\Microsoft.ReactNative.Cxx\ApiLoaders -ItemType Directory -Force
+Copy-Item -Force -Path $NodeApiJsiRoot\src\ApiLoaders\JSRuntimeApi.cpp -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ApiLoaders\
+Copy-Item -Force -Path $NodeApiJsiRoot\src\ApiLoaders\JSRuntimeApi.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ApiLoaders\
+Copy-Item -Force -Path $NodeApiJsiRoot\src\ApiLoaders\JSRuntimeApi.inc -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ApiLoaders\
+Copy-Item -Force -Path $NodeApiJsiRoot\src\ApiLoaders\NodeApi.cpp -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ApiLoaders\
+Copy-Item -Force -Path $NodeApiJsiRoot\src\ApiLoaders\NodeApi.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ApiLoaders\
+Copy-Item -Force -Path $NodeApiJsiRoot\src\ApiLoaders\NodeApi.inc -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ApiLoaders\
+Copy-Item -Force -Path $NodeApiJsiRoot\src\ApiLoaders\NodeApi_posix.cpp -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ApiLoaders\
+Copy-Item -Force -Path $NodeApiJsiRoot\src\ApiLoaders\NodeApi_win.cpp -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ApiLoaders\
+Copy-Item -Force -Path $NodeApiJsiRoot\src\NodeApiJsiRuntime.cpp -Destination $TargetRoot\Microsoft.ReactNative.Cxx\
+Copy-Item -Force -Path $NodeApiJsiRoot\src\NodeApiJsiRuntime.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\
 
 # Microsoft.ReactNative.CXX project TurboModule files
 New-Item -ItemType Directory -Path $TargetRoot\Microsoft.ReactNative.Cxx\ReactCommon -Force
