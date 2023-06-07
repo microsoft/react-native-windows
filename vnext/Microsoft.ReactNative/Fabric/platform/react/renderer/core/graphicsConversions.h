@@ -50,6 +50,7 @@ inline void fromRawValue(const PropsParserContext &context, const RawValue &valu
     auto map = (butter::map<std::string, std::vector<std::string>>)value;
     if (map.find("windowsbrush") != map.end()) {
       result = SharedColor(std::move(map["windowsbrush"]));
+      return;
     }
   }
   // Windows]
