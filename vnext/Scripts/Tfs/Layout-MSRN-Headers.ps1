@@ -27,7 +27,7 @@ if (!(Test-Path $NodeApiJsiRoot)) {
 	$NodeApiJsiZip = "$SourceRoot\node_modules\.node-api-jsi\node-api-jsi-${NodeApiJsiCommitHash}.zip"
 
 	New-Item $NodeApiJsiRoot -ItemType Directory
-	Invoke-RestMethod -Uri "https://github.com/microsoft/node-api-jsi/archive/$(NodeApiJsiCommitHash).zip" -OutFile $NodeApiJsiZip
+	Invoke-RestMethod -Uri "https://github.com/microsoft/node-api-jsi/archive/${NodeApiJsiCommitHash}.zip" -OutFile $NodeApiJsiZip
 	Expand-Archive -LiteralPath $NodeApiJsiZip -DestinationPath $NodeApiJsiRoot
 }
 

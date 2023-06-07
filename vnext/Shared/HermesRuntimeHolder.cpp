@@ -390,4 +390,3 @@ void HermesRuntimeHolder::removeFromProfiling() const noexcept {
 }
 
 } // namespace Microsoft::ReactNative
-
