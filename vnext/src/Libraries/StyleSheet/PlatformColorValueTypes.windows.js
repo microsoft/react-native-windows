@@ -19,7 +19,7 @@ export opaque type NativeColorValue = {
 
 export const PlatformColor = (...names: Array<string>): ColorValue => {
   // We don't support fallback colors right now, so no point in sending more than the first color across the bridge
-  return {windowsbrush: names[0]};
+  return {windowsbrush: names};
 };
 
 export const normalizeColorObject = (
