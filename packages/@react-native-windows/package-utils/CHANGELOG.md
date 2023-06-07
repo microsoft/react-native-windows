@@ -1,8 +1,18 @@
 # Change Log - @react-native-windows/package-utils
 
-This log was last generated on Tue, 06 Jun 2023 19:06:44 GMT and should not be manually modified.
+This log was last generated on Wed, 07 Jun 2023 05:16:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.48
+
+Wed, 07 Jun 2023 05:16:11 GMT
+
+### Changes
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.51
+- Bump @react-native-windows/fs to v0.0.0-canary.22
+- Bump @rnw-scripts/just-task to v2.3.11
 
 ## 0.0.0-canary.47
 

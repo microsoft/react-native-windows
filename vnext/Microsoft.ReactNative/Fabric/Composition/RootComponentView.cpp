@@ -84,6 +84,14 @@ bool RootComponentView::NavigateFocus(const winrt::Microsoft::ReactNative::Focus
   return view != nullptr;
 }
 
+bool RootComponentView::TrySetFocusedComponent(IComponentView &view) noexcept {
+  if (view.focusable()) {
+    view.rootComponentView()->SetFocusedComponent(&view);
+    return true;
+  }
+  return false;
+}
+
 bool RootComponentView::TryMoveFocus(bool next) noexcept {
   if (!m_focusedComponent) {
     return NavigateFocus(winrt::Microsoft::ReactNative::FocusNavigationRequest(
@@ -94,11 +102,8 @@ bool RootComponentView::TryMoveFocus(bool next) noexcept {
   Mso::Functor<bool(IComponentView &)> fn = [currentlyFocused = m_focusedComponent](IComponentView &view) noexcept {
     if (&view == currentlyFocused)
       return false;
-    if (view.focusable()) {
-      view.rootComponentView()->SetFocusedComponent(&view);
-      return true;
-    }
-    return false;
+
+    return view.rootComponentView()->TrySetFocusedComponent(view);
   };
 
   return walkTree(*m_focusedComponent, next, fn);

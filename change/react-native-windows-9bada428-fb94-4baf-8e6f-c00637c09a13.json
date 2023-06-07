@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "integrate RN Nightly 6/1/23",
+  "comment": "[Fabric] Add basic PlatformColor support",
   "packageName": "react-native-windows",
-  "email": "tatianakapos@microsoft.com",
+  "email": "email not defined",
   "dependentChangeType": "patch"
 }

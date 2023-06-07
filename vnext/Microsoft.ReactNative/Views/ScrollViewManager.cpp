@@ -100,6 +100,8 @@ void ScrollViewShadowNode::dispatchCommand(
 void ScrollViewShadowNode::createView(const winrt::Microsoft::ReactNative::JSValueObject &props) {
   Super::createView(props);
 
+  IsFocusable(false);
+
   const auto scrollViewer = GetView().as<winrt::ScrollViewer>();
   const auto scrollViewUWPImplementation = ScrollViewUWPImplementation(scrollViewer);
   scrollViewUWPImplementation.ScrollViewerSnapPointManager();
