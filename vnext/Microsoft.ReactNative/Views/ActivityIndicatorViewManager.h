@@ -15,6 +15,7 @@ class ActivityIndicatorViewManager : public ControlViewManager {
 
   const wchar_t *GetName() const override;
   void GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
+  ShadowNode *createShadow() const override;
 
  protected:
   bool UpdateProperty(
