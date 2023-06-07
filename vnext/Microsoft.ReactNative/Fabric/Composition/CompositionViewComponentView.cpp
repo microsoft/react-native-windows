@@ -1229,7 +1229,7 @@ void CompositionViewComponentView::updateProps(
 
   if (oldViewProps.backgroundColor != newViewProps.backgroundColor) {
     if (newViewProps.backgroundColor) {
-      m_visual.Brush(m_compContext.CreateColorBrush((*newViewProps.backgroundColor).m_color));
+      m_visual.Brush(m_compContext.CreateColorBrush(newViewProps.backgroundColor.AsWindowsColor()));
     } else {
       m_visual.Brush(nullptr);
     }
