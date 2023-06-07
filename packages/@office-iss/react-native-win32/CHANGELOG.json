@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Tue, 06 Jun 2023 23:29:48 GMT",
+      "tag": "@office-iss/react-native-win32_v0.71.7",
+      "version": "0.71.7",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "6cecb24f618b6af4149f453ec89618b4ac97a146",
+            "comment": "Export ITouchableWin32State"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 10 May 2023 01:38:11 GMT",
       "tag": "@office-iss/react-native-win32_v0.71.6",
       "version": "0.71.6",

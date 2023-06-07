@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Tue, 06 Jun 2023 19:20:17 GMT",
+      "tag": "@react-native-windows/cli_v0.71.6",
+      "version": "0.71.6",
+      "comments": {
+        "patch": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "682435d93104edb758545f02771857055306be99",
+            "comment": "fix x86 node invocation"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 04 May 2023 05:17:21 GMT",
       "tag": "@react-native-windows/cli_v0.71.5",
       "version": "0.71.5",

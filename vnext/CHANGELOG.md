@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 25 May 2023 15:09:11 GMT and should not be manually modified.
+This log was last generated on Tue, 06 Jun 2023 19:20:17 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.16
+
+Tue, 06 Jun 2023 19:20:17 GMT
+
+### Patches
+
+- Disable RestoreUseStaticGraphEvaluation for VS >= 17.6 (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.71.6
 
 ## 0.71.15
 
