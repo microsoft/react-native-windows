@@ -109,7 +109,7 @@ struct BrushCache {
     });
   }
 
-  xaml::Media::Brush BrushFromResourceName(const std::vector<winrt::hstring> resources) {
+  xaml::Media::Brush BrushFromResourceName(const std::vector<winrt::hstring> &resources) {
     for (auto resourceName : resources) {
       if (m_map.find(resourceName) != m_map.end()) {
         if (auto brush = m_map.at(resourceName)) {
@@ -154,7 +154,7 @@ xaml::Media::Brush BrushFromColorObject(winrt::hstring resourceName) {
   return BrushFromColorObject(std::vector<winrt::hstring>{resourceName});
 }
 
-xaml::Media::Brush BrushFromColorObject(std::vector<winrt::hstring> resourceNames) {
+xaml::Media::Brush BrushFromColorObject(const std::vector<winrt::hstring> &resourceNames) {
   thread_local static BrushCache accentColorMap;
 
   return accentColorMap.BrushFromResourceName(resourceNames);
