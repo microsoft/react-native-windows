@@ -197,11 +197,6 @@ export interface INativeKeyboardEvent {
   metaKey: boolean;
   shiftKey: boolean;
   key: string;
-  eventPhase:
-    | EventPhase.None
-    | EventPhase.Capturing
-    | EventPhase.AtTarget
-    | EventPhase.Bubbling;
 }
 export type IKeyboardEvent = NativeSyntheticEvent<INativeKeyboardEvent>;
 
@@ -215,7 +210,13 @@ type PartiallyRequired<T, Keys extends keyof T = keyof T> = Pick<
 export type IHandledKeyboardEvent = PartiallyRequired<
   INativeKeyboardEvent,
   'key'
->;
+> & {
+  eventPhase:
+    | EventPhase.None
+    | EventPhase.Capturing
+    | EventPhase.AtTarget
+    | EventPhase.Bubbling;
+};
 // Win32]
 
 export interface ViewPropsWin32 {
