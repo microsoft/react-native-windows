@@ -853,7 +853,10 @@ std::string WindowsTextInputComponentView::GetTextFromRichEdit() const noexcept 
 
 void WindowsTextInputComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
   // m_element.FinalizeProperties();
-
+  if (m_needsBorderUpdate) {
+    m_needsBorderUpdate = false;
+    UpdateSpecialBorderLayers(m_layoutMetrics, *m_props);
+  }
   ensureDrawingSurface();
 }
 void WindowsTextInputComponentView::prepareForRecycle() noexcept {}
