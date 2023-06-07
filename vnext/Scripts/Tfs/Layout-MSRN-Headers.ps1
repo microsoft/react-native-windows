@@ -25,10 +25,11 @@ Write-Host "Node-API JSI root: [$NodeApiJsiRoot]"
 if (!(Test-Path $NodeApiJsiRoot)) {
 	Write-Host "Downloading Node-API JSI $NodeApiJsiCommitHash"
 	$NodeApiJsiZip = "$SourceRoot\node_modules\.node-api-jsi\node-api-jsi-${NodeApiJsiCommitHash}.zip"
+	$NodeApiJsiDest = "$SourceRoot\node_modules\.node-api-jsi"
 
 	New-Item $NodeApiJsiRoot -ItemType Directory
 	Invoke-RestMethod -Uri "https://github.com/microsoft/node-api-jsi/archive/${NodeApiJsiCommitHash}.zip" -OutFile $NodeApiJsiZip
-	Expand-Archive -LiteralPath $NodeApiJsiZip -DestinationPath $NodeApiJsiRoot
+	Expand-Archive -LiteralPath $NodeApiJsiZip -DestinationPath $NodeApiJsiDest
 }
 
 md -Force $TargetRoot
