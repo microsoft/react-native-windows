@@ -10,7 +10,7 @@ import { AccessibilityPropsWin32 } from '@office-iss/react-native-win32/Librarie
 export { AccessibilityPropsWin32 } from '@office-iss/react-native-win32/Libraries/Components/View/ViewAccessibility.win32';
 export type IViewWin32Props = IViewWin32PropsOnly & AccessibilityPropsWin32;
 export {ViewWin32} from './Components/View/ViewWin32';
-export {IKeyboardEvent, IHandledKeyboardEvent} from './Components/View/ViewPropTypes.win32';
+export {IKeyboardEvent, IHandledKeyboardEvent, EventPhase} from './Components/View/ViewPropTypes.win32';
 import {ITextWin32Props as ITextWin32PropsOnly} from './Components/Text/TextWin32.Props';
 export type ITextWin32Props = ITextWin32PropsOnly & AccessibilityPropsWin32;
 export {TextWin32TextStyle } from './Components/Text/TextWin32.Props';
