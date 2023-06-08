@@ -247,6 +247,16 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
       pRetVal->boolVal = !props->accessibilityState.disabled ? VARIANT_TRUE : VARIANT_FALSE;
       break;
     }
+    case UIA_IsContentElementPropertyId: {
+      pRetVal->vt = VT_BOOL;
+      pRetVal->boolVal = (props->accessible && props->accessibilityRole != "none") ? VARIANT_TRUE : VARIANT_FALSE;
+      break;
+    }
+    case UIA_IsControlElementPropertyId: {
+      pRetVal->vt = VT_BOOL;
+      pRetVal->boolVal = (props->accessible && props->accessibilityRole != "none") ? VARIANT_TRUE : VARIANT_FALSE;
+      break;
+    }
   }
 
   return hr;
