@@ -184,6 +184,13 @@ export type Cursor =
   | 'we-resize'
   | 'text';
 
+export namespace EventPhase {
+  export const None = 0;
+  export const Capturing = 1;
+  export const AtTarget = 2;
+  export const Bubbling = 3;
+}
+
 export interface INativeKeyboardEvent {
   altKey: boolean;
   ctrlKey: boolean;
@@ -203,7 +210,13 @@ type PartiallyRequired<T, Keys extends keyof T = keyof T> = Pick<
 export type IHandledKeyboardEvent = PartiallyRequired<
   INativeKeyboardEvent,
   'key'
->;
+> & {
+  eventPhase?:
+    | EventPhase.None
+    | EventPhase.Capturing
+    | EventPhase.AtTarget
+    | EventPhase.Bubbling;
+};
 // Win32]
 
 export interface ViewPropsWin32 {
