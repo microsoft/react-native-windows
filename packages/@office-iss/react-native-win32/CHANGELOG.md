@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Thu, 08 Jun 2023 02:10:56 GMT and should not be manually modified.
+This log was last generated on Thu, 08 Jun 2023 17:58:47 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.9
+
+Thu, 08 Jun 2023 17:58:47 GMT
+
+### Patches
+
+- Fix various text properties not being forwarded to native (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.71.8
 

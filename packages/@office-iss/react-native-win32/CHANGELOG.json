@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 08 Jun 2023 17:58:47 GMT",
+      "tag": "@office-iss/react-native-win32_v0.71.9",
+      "version": "0.71.9",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "202f2e9fdb03deb76dbbd7efe7facdfab62a23ab",
+            "comment": "Fix various text properties not being forwarded to native"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 08 Jun 2023 02:10:56 GMT",
       "tag": "@office-iss/react-native-win32_v0.71.8",
       "version": "0.71.8",
