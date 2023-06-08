@@ -10,7 +10,7 @@ import { AccessibilityPropsWin32 } from '@office-iss/react-native-win32/Librarie
 export { AccessibilityPropsWin32 } from '@office-iss/react-native-win32/Libraries/Components/View/ViewAccessibility.win32';
 export type IViewWin32Props = IViewWin32PropsOnly & AccessibilityPropsWin32;
 export {ViewWin32} from './Components/View/ViewWin32';
-export {IKeyboardEvent, IHandledKeyboardEvent} from './Components/View/ViewPropTypes.win32';
+export {IKeyboardEvent, IHandledKeyboardEvent, EventPhase} from './Components/View/ViewPropTypes.win32';
 import {ITextWin32Props as ITextWin32PropsOnly} from './Components/Text/TextWin32.Props';
 export type ITextWin32Props = ITextWin32PropsOnly & AccessibilityPropsWin32;
 export {TextWin32TextStyle } from './Components/Text/TextWin32.Props';
@@ -18,7 +18,7 @@ export {TextWin32} from './Components/Text/TextWin32';
 export {IButtonWin32Props, IButtonWin32Style} from './Components/Button/ButtonWin32.Props';
 export {ButtonWin32} from './Components/Button/ButtonWin32';
 export {GradientColorStop, GradientColorValueWin32, ColorGradientWin32} from './StyleSheet/PlatformColorValueTypesWin32';
-export {ITouchableWin32Props} from './Components/Touchable/TouchableWin32.Props';
+export {ITouchableWin32Props, ITouchableWin32State} from './Components/Touchable/TouchableWin32.Props';
 export * from './Components/Touchable/TouchableWin32.Types';
 export * from './Components/Touchable/TouchableWin32';
 export * from './PersonaCoin/PersonaCoin';
