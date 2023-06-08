@@ -1,6 +1,6 @@
 import React from 'react'
 import RN = require('react-native');
-import type { IViewWin32Props } from '../View/ViewPropTypes.win32';
+import type { IViewWin32Props } from '../View/ViewPropTypes';
 import type { ITextWin32Props } from '../Text/TextWin32.Props';
 import type { IButtonWin32Props } from './ButtonWin32.Props';
 
