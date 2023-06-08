@@ -99,10 +99,6 @@
     },
     {
       "type": "platform",
-      "file": "src/Libraries/Components/Text/Tests/TextWin32Test.tsx"
-    },
-    {
-      "type": "platform",
       "file": "src/Libraries/Components/Text/TextWin32.Props.ts"
     },
     {

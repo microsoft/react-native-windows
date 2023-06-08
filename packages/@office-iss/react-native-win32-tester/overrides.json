@@ -49,6 +49,10 @@
       "baseFile": "packages/rn-tester/js/utils/testerStateUtils.js",
       "baseHash": "fafcb01f5f717d16fd558668a58ed12dcdf4454c",
       "issue": 6316
+    },
+    {
+      "type": "platform",
+      "file": "src/js/components/TextWin32Test.tsx"
     }
   ]
 }
