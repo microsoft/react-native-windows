@@ -15,8 +15,12 @@
     <TurboModule_SourcePath Condition="'$(TurboModule_SourcePath)' == '' AND Exists('$(MSBuildThisFileDirectory)ReactCommon\TurboModule.h')">$(MSBuildThisFileDirectory)</TurboModule_SourcePath>
     <Bridging_SourcePath Condition="'$(Bridging_SourcePath)' == '' AND '$(ReactNativeDir)' != ''">$(ReactNativeDir)\ReactCommon\react\bridging</Bridging_SourcePath>
     <Bridging_SourcePath Condition="'$(Bridging_SourcePath)' == '' AND Exists('$(MSBuildThisFileDirectory)ReactCommon\CallbackWrapper.h')">$(MSBuildThisFileDirectory)ReactCommon</Bridging_SourcePath>
-    <NodeApiJsiDir Condition="'$(NodeApiJsiDir)' == ''">$(MSBuildThisFileDirectory)</NodeApiJsiDir>
-    <NodeApiJsiSrcDir Condition="'$(NodeApiJsiSrcDir)' == '' AND '$(NodeApiJsiCommitHash)' != ''">$(NodeApiJsiDir)src\</NodeApiJsiSrcDir>
+
+    <NodeApiJsiCommitHash>94be53a0db167acd992a600325aaaadf57bce030</NodeApiJsiCommitHash>
+    <NodeApiJsiLocal Condition="Exists('$(MSBuildThisFileDirectory)NodeApiJsiRuntime.cpp')">true</NodeApiJsiLocal>
+    <NodeApiJsiDir Condition="'$(NodeApiJsiDir)' == '' AND '$(NodeApiJsiLocal)' == 'true'">$(MSBuildThisFileDirectory)</NodeApiJsiDir>
+    <NodeApiJsiDir Condition="'$(NodeApiJsiDir)' == '' AND '$(ReactNativeDir)' != ''">$(ReactNativeDir)\..\..\node_modules\.node-api-jsi\node-api-jsi-$(NodeApiJsiCommitHash)\</NodeApiJsiDir>
+    <NodeApiJsiSrcDir Condition="'$(NodeApiJsiSrcDir)' == '' AND '$(NodeApiJsiLocal)' != 'true'">$(NodeApiJsiDir)src\</NodeApiJsiSrcDir>
     <NodeApiJsiSrcDir Condition="'$(NodeApiJsiSrcDir)' == ''">$(MSBuildThisFileDirectory)</NodeApiJsiSrcDir>
     <NodeApiDir Condition="'$(NodeApiDir)' == ''">$(NodeApiJsiDir)node-api\</NodeApiDir>
   </PropertyGroup>
@@ -97,7 +101,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Media.Media3D.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Navigation.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Shapes.h" />
-    <ClInclude Include="$(NodeApiDir)js_native_api" />
+    <ClInclude Include="$(NodeApiDir)js_native_api.h" />
     <ClInclude Include="$(NodeApiDir)js_native_api_types.h" />
     <ClInclude Include="$(NodeApiDir)js_runtime_api.h" />
   </ItemGroup>

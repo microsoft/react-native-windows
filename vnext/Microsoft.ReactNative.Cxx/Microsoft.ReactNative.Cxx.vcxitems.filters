@@ -169,6 +169,9 @@
     <ClInclude Include="$(NodeApiJsiSrcDir)ApiLoaders\JSRuntimeApi.h" />
     <ClInclude Include="$(NodeApiJsiSrcDir)ApiLoaders\JSRuntimeApi.inc" />
     <ClInclude Include="$(NodeApiJsiSrcDir)NodeApiJsiRuntime.h" />
+    <ClInclude Include="$(NodeApiDir)js_native_api.h" />
+    <ClInclude Include="$(NodeApiDir)js_native_api_types.h" />
+    <ClInclude Include="$(NodeApiDir)js_runtime_api.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="JSI">
