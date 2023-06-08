@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 08 Jun 2023 02:10:56 GMT",
+      "tag": "@office-iss/react-native-win32_v0.71.8",
+      "version": "0.71.8",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "4912435b600c70f161ad87f26e70a69bafb42cb8",
+            "comment": "Add missing eventPhase on IHandledKeyboardEvent"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 06 Jun 2023 23:29:48 GMT",
       "tag": "@office-iss/react-native-win32_v0.71.7",
       "version": "0.71.7",
