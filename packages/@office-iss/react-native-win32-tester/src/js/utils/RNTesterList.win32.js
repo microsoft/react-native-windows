@@ -115,7 +115,7 @@ const Components: Array<RNTesterModuleInfo> = [
   },
   {
     key: 'TextWin32Test',
-    module: require('@office-iss/react-native-win32/Libraries/Components/Text/Tests/TextWin32Test'),
+    module: require('../components/TextWin32Test'),
   },
   {
     key: 'TouchableExample',
