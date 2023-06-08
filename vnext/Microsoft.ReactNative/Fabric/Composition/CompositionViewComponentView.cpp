@@ -1057,10 +1057,10 @@ void CompositionBaseComponentView::updateAccessibilityProps(
       provider, UIA_NamePropertyId, oldViewProps.accessibilityLabel, newViewProps.accessibilityLabel);
 
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
-      provider, UIA_IsContentElementPropertyId, oldViewProps.accessible, newViewProps.accessible);
+      provider, UIA_IsContentElementPropertyId, (oldViewProps.accessible && oldViewProps.accessibilityRole != "none"), (newViewProps.accessible && newViewProps.accessibilityRole != "none"));
 
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
-      provider, UIA_IsControlElementPropertyId, oldViewProps.accessible, newViewProps.accessible);
+      provider, UIA_IsControlElementPropertyId, (oldViewProps.accessible && oldViewProps.accessibilityRole != "none"), (newViewProps.accessible && newViewProps.accessibilityRole != "none"));
 
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
       provider,

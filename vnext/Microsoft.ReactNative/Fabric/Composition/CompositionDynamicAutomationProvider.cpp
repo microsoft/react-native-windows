@@ -249,12 +249,12 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
     }
     case UIA_IsContentElementPropertyId: {
       pRetVal->vt = VT_BOOL;
-      pRetVal->boolVal = props->accessible ? VARIANT_TRUE : VARIANT_FALSE;
+      pRetVal->boolVal = (props->accessible && props->accessibilityRole != "none") ? VARIANT_TRUE : VARIANT_FALSE;
       break;
     }
     case UIA_IsControlElementPropertyId: {
       pRetVal->vt = VT_BOOL;
-      pRetVal->boolVal = props->accessible ? VARIANT_TRUE : VARIANT_FALSE;
+      pRetVal->boolVal = (props->accessible && props->accessibilityRole != "none") ? VARIANT_TRUE : VARIANT_FALSE;
       break;
     }
   }
