@@ -1,8 +1,17 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Wed, 07 Jun 2023 05:16:10 GMT and should not be manually modified.
+This log was last generated on Thu, 08 Jun 2023 05:15:28 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.200
+
+Thu, 08 Jun 2023 05:15:28 GMT
+
+### Changes
+
+- Add missing eventPhase on IHandledKeyboardEvent (30809111+acoates-ms@users.noreply.github.com)
+- Export ITouchableWin32State (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.199
 

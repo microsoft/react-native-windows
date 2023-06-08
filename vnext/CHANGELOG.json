@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 08 Jun 2023 05:15:29 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.662",
+      "version": "0.0.0-canary.662",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "adrum@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "72e480d188a58cb1f51eca45086ff1377f62f103",
+            "comment": "Add UIA focus management and AdvisedEvents for prop changes"
+          },
+          {
+            "author": "lyahdav@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "cacc9adf27875f7a9738078ddc690d9c5af94ff9",
+            "comment": "Make ScrollView and ActivityIndicator not focusable by default"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "a4d6c41ab40c0ccb0d146be952590a93684c6514",
+            "comment": "[Fabric] Add basic PlatformColor support"
+          },
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "35a67270eda3d3b2ba17614c09819392901ddc83",
+            "comment": "Get StructInfo<T>::FieldMap lazy initialized"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 07 Jun 2023 05:16:11 GMT",
       "tag": "react-native-windows_v0.0.0-canary.661",
       "version": "0.0.0-canary.661",

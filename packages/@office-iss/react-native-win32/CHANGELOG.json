@@ -2,6 +2,27 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 08 Jun 2023 05:15:28 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.200",
+      "version": "0.0.0-canary.200",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "dd5d4fbc6acda601a767b8b7766292eaa35ddde7",
+            "comment": "Add missing eventPhase on IHandledKeyboardEvent"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "7c72e3c5f310d794fa57af11a77d62679678a042",
+            "comment": "Export ITouchableWin32State"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 07 Jun 2023 05:16:10 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.199",
       "version": "0.0.0-canary.199",

@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 07 Jun 2023 05:16:11 GMT and should not be manually modified.
+This log was last generated on Thu, 08 Jun 2023 05:15:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.662
+
+Thu, 08 Jun 2023 05:15:29 GMT
+
+### Changes
+
+- Add UIA focus management and AdvisedEvents for prop changes (adrum@microsoft.com)
+- Make ScrollView and ActivityIndicator not focusable by default (lyahdav@users.noreply.github.com)
+- [Fabric] Add basic PlatformColor support (email not defined)
+- Get StructInfo<T>::FieldMap lazy initialized (53799235+ZihanChen-MSFT@users.noreply.github.com)
 
 ## 0.0.0-canary.661
 
