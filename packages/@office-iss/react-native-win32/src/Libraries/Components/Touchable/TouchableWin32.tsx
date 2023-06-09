@@ -25,7 +25,7 @@ import {
   IStateConditions,
   ITransitions,
 } from './TouchableWin32.Types';
-import { IKeyboardEvent } from '../View/ViewPropTypes.win32';
+import { IKeyboardEvent } from '../View/ViewPropTypes';
 
 const BoundingDimensions = require('./BoundingDimensions');
 const Position = require('./Position');

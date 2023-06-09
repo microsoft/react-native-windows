@@ -3,7 +3,6 @@
   "compilerOptions": {
     "rootDir": "src",
     "outDir": ".",
-    "moduleSuffixes": [".win32", ".native", ""],
     "paths": {
       "react-native": ["../react-native-win32"] // this mapping is relative to "baseUrl"
     },
