@@ -175,7 +175,8 @@ struct CompReactPackageProvider
     : winrt::implements<CompReactPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
  public: // IReactPackageProvider
   void CreatePackage(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept {
-    packageBuilder.AddTurboModule(L"DeviceInfo", winrt::Microsoft::ReactNative::MakeModuleProvider<DeviceInfo>());
+    AddAttributedModules(packageBuilder, true);
+    packageBuilder.AddModule(L"DeviceInfo", winrt::Microsoft::ReactNative::MakeModuleProvider<DeviceInfo>());
 
     CustomComponent::RegisterViewComponent(packageBuilder);
   }
@@ -521,7 +522,6 @@ int RunPlayground(int showCmd, bool useWebDebugger) {
       windowData.get());
 
   WINRT_VERIFY(hwnd);
-  winrt::check_win32(!hwnd);
 
   windowData.release();
 
@@ -539,7 +539,7 @@ int RunPlayground(int showCmd, bool useWebDebugger) {
     }
   }
 
-  return (int)msg.wParam;
+  return static_cast<int>(msg.wParam);
 }
 
 _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR /* commandLine */, int showCmd) {
