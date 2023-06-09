@@ -49,6 +49,7 @@ const AnnotationExample: React.FunctionComponent = () => {
       accessibilityAnnotation={{ typeID: 'Comment', author: 'Krystal Siler', dateTime: '7/19/2019 1:03 PM' }}
       accessibilityLabel="Test accessibility label"
       accessibilityHint="Test accessibility hint"
+      accessibilityPositionInSet={1}
       focusable
       style={styles.box}
     >
