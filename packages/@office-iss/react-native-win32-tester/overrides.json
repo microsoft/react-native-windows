@@ -46,6 +46,10 @@
     {
       "type": "platform",
       "file": "src/js/components/TextWin32Test.tsx"
+    },
+    {
+      "type": "platform",
+      "file": "src/js/components/ViewWin32Test.tsx"
     }
   ]
 }
