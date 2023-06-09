@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 09 Jun 2023 01:05:22 GMT",
+      "tag": "@office-iss/react-native-win32_v0.71.10",
+      "version": "0.71.10",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "00884781329203a073ca269509dc58d35e919cbe",
+            "comment": "Type definition files shouldnt use win32 extension"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 08 Jun 2023 17:58:47 GMT",
       "tag": "@office-iss/react-native-win32_v0.71.9",
       "version": "0.71.9",
