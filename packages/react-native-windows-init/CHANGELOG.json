@@ -2,6 +2,21 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Fri, 09 Jun 2023 05:15:18 GMT",
+      "tag": "react-native-windows-init_v1.3.27",
+      "version": "1.3.27",
+      "comments": {
+        "patch": [
+          {
+            "author": "donadeldev@gmail.com",
+            "package": "react-native-windows-init",
+            "commit": "dd71ea4b69d1306eadac9af7ff57c891aabb3b3f",
+            "comment": "[react-native-windows-init] Fix cli to work with workspaces"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 07 Jun 2023 05:16:11 GMT",
       "tag": "react-native-windows-init_v1.3.26",
       "version": "1.3.26",

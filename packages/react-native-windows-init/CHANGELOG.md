@@ -1,8 +1,16 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Wed, 07 Jun 2023 05:16:11 GMT and should not be manually modified.
+This log was last generated on Fri, 09 Jun 2023 05:15:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.3.27
+
+Fri, 09 Jun 2023 05:15:18 GMT
+
+### Patches
+
+- [react-native-windows-init] Fix cli to work with workspaces (donadeldev@gmail.com)
 
 ## 1.3.26
 

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "add border to Fabric TextInput",
-  "packageName": "react-native-windows",
-  "email": "tatianakapos@microsoft.com",
-  "dependentChangeType": "patch"
-}

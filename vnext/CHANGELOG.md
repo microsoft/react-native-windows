@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 08 Jun 2023 05:15:29 GMT and should not be manually modified.
+This log was last generated on Fri, 09 Jun 2023 05:15:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.663
+
+Fri, 09 Jun 2023 05:15:18 GMT
+
+### Changes
+
+- add border to Fabric TextInput (tatianakapos@microsoft.com)
+- Support PlatformColor fallback (email not defined)
+- Add accessible Functionality (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.0.0-canary.662
 

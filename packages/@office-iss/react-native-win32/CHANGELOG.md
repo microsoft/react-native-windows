@@ -1,8 +1,17 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Thu, 08 Jun 2023 05:15:28 GMT and should not be manually modified.
+This log was last generated on Fri, 09 Jun 2023 05:15:17 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.201
+
+Fri, 09 Jun 2023 05:15:17 GMT
+
+### Changes
+
+- Type definition files shouldnt use win32 extension (30809111+acoates-ms@users.noreply.github.com)
+- Fix various text properties not being forwarded to native (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.200
 

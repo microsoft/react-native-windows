@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "[react-native-windows-init] Fix cli to work with workspaces",
-  "packageName": "react-native-windows-init",
-  "email": "donadeldev@gmail.com",
-  "dependentChangeType": "patch"
-}

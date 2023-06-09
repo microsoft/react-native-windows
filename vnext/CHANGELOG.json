@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 09 Jun 2023 05:15:18 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.663",
+      "version": "0.0.0-canary.663",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "cdd75aebec30183d6cb6b87152538f6107be63db",
+            "comment": "add border to Fabric TextInput"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "e24cdb336373a36b8db1068922df74d8e7c18abf",
+            "comment": "Support PlatformColor fallback"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "2a3578d479483527359e345238afecd4512fbc10",
+            "comment": "Add accessible Functionality"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 08 Jun 2023 05:15:29 GMT",
       "tag": "react-native-windows_v0.0.0-canary.662",
       "version": "0.0.0-canary.662",

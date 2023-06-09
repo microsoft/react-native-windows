@@ -2,6 +2,27 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 09 Jun 2023 05:15:17 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.201",
+      "version": "0.0.0-canary.201",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "c763debec5be129b090583b03532bc109d5f0590",
+            "comment": "Type definition files shouldnt use win32 extension"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "ceda0f6453e4d09667ab4e853bb73108f756bd1b",
+            "comment": "Fix various text properties not being forwarded to native"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 08 Jun 2023 05:15:28 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.200",
       "version": "0.0.0-canary.200",
