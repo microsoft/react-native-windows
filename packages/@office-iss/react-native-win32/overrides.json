@@ -151,7 +151,7 @@
     },
     {
       "type": "derived",
-      "file": "src/Libraries/Components/Touchable/TouchableNativeFeedback.win32.d.ts",
+      "file": "src/Libraries/Components/Touchable/TouchableNativeFeedback.d.ts",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableNativeFeedback.d.ts",
       "baseHash": "b38a2d4fb0c6a08c3ada7748fffded9949c97c2a"
     },
@@ -180,10 +180,6 @@
       "baseHash": "0aabb0825ab9d65cb39f526ad3ac10874d6cde7e"
     },
     {
-      "type": "platform",
-      "file": "src/Libraries/Components/View/Tests/ViewWin32Test.tsx"
-    },
-    {
       "type": "patch",
       "file": "src/Libraries/Components/View/View.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/View/View.js",
@@ -191,7 +187,7 @@
     },
     {
       "type": "derived",
-      "file": "src/Libraries/Components/View/ViewAccessibility.win32.d.ts",
+      "file": "src/Libraries/Components/View/ViewAccessibility.d.ts",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewAccessibility.d.ts",
       "baseHash": "085982a44202765d099caf13785e8b4a42628d86"
     },
@@ -203,7 +199,7 @@
     },
     {
       "type": "derived",
-      "file": "src/Libraries/Components/View/ViewPropTypes.win32.d.ts",
+      "file": "src/Libraries/Components/View/ViewPropTypes.d.ts",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewPropTypes.d.ts",
       "baseHash": "91d96e475fc55da6c6456a240edbd650c1ca4a26"
     },
