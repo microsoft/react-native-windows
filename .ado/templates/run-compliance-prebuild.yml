@@ -49,6 +49,14 @@ steps:
       debugMode: false
     continueOnError: ${{ parameters.complianceWarnOnly }}
 
+  - task: PublishSecurityAnalysisLogs@3
+    displayName: 'Publish Guardian Artifacts'
+    inputs:
+      ArtifactName: CodeAnalysisLogs
+      ArtifactType: Container
+      PublishProcessedResults: false
+      AllTools: true
+
   # PostAnalysis Task (https://docs.microsoft.com/en-us/azure/security/develop/yaml-configuration#post-analysis-task)
   # Breaks the build if any of the tasks failed.
   - task: PostAnalysis@2

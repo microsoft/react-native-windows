@@ -486,7 +486,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
     case WM_GETOBJECT: {
       if (lparam == UiaRootObjectId) {
         auto windowData = WindowData::GetFromWindow(hwnd);
-        if (!windowData->m_windowInited)
+        if (windowData == nullptr || !windowData->m_windowInited)
           break;
 
         auto hwndHost = windowData->m_CompositionHwndHost;

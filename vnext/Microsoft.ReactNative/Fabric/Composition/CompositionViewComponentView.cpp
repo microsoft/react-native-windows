@@ -15,6 +15,7 @@
 #include "CompositionDynamicAutomationProvider.h"
 #include "CompositionHelpers.h"
 #include "RootComponentView.h"
+#include "UiaHelpers.h"
 #include "d2d1helper.h"
 
 namespace Microsoft::ReactNative {
@@ -37,7 +38,6 @@ RootComponentView *CompositionBaseComponentView::rootComponentView() noexcept {
   if (m_parent)
     return m_parent->rootComponentView();
 
-  assert(false);
   return nullptr;
 }
 
@@ -78,12 +78,24 @@ bool CompositionBaseComponentView::runOnChildren(bool forward, Mso::Functor<bool
 void CompositionBaseComponentView::onFocusLost() noexcept {
   m_eventEmitter->onBlur();
   showFocusVisual(false);
+  if (UiaClientsAreListening()) {
+    winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+        EnsureUiaProvider(), UIA_HasKeyboardFocusPropertyId, true, false);
+  }
 }
 
 void CompositionBaseComponentView::onFocusGained() noexcept {
   m_eventEmitter->onFocus();
   if (m_enableFocusVisual) {
     showFocusVisual(true);
+  }
+  if (UiaClientsAreListening()) {
+    auto spProviderSimple = EnsureUiaProvider().try_as<IRawElementProviderSimple>();
+    if (spProviderSimple != nullptr) {
+      winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+          m_uiaProvider, UIA_HasKeyboardFocusPropertyId, false, true);
+      UiaRaiseAutomationEvent(spProviderSimple.get(), UIA_AutomationFocusChangedEventId);
+    }
   }
 }
 
@@ -1030,6 +1042,39 @@ void CompositionBaseComponentView::updateBorderProps(
   }
 }
 
+void CompositionBaseComponentView::updateAccessibilityProps(
+    const facebook::react::ViewProps &oldViewProps,
+    const facebook::react::ViewProps &newViewProps) noexcept {
+  if (!UiaClientsAreListening())
+    return;
+
+  auto provider = EnsureUiaProvider();
+
+  winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+      provider, UIA_IsKeyboardFocusablePropertyId, oldViewProps.focusable, newViewProps.focusable);
+
+  winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+      provider, UIA_NamePropertyId, oldViewProps.accessibilityLabel, newViewProps.accessibilityLabel);
+
+  winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+      provider,
+      UIA_IsContentElementPropertyId,
+      (oldViewProps.accessible && oldViewProps.accessibilityRole != "none"),
+      (newViewProps.accessible && newViewProps.accessibilityRole != "none"));
+
+  winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+      provider,
+      UIA_IsControlElementPropertyId,
+      (oldViewProps.accessible && oldViewProps.accessibilityRole != "none"),
+      (newViewProps.accessible && newViewProps.accessibilityRole != "none"));
+
+  winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+      provider,
+      UIA_IsEnabledPropertyId,
+      !oldViewProps.accessibilityState.disabled,
+      !newViewProps.accessibilityState.disabled);
+}
+
 void CompositionBaseComponentView::updateBorderLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
     const facebook::react::ViewProps &viewProps) noexcept {
@@ -1196,7 +1241,7 @@ void CompositionViewComponentView::updateProps(
 
   if (oldViewProps.backgroundColor != newViewProps.backgroundColor) {
     if (newViewProps.backgroundColor) {
-      m_visual.Brush(m_compContext.CreateColorBrush((*newViewProps.backgroundColor).m_color));
+      m_visual.Brush(m_compContext.CreateColorBrush(newViewProps.backgroundColor.AsWindowsColor()));
     } else {
       m_visual.Brush(nullptr);
     }
@@ -1206,6 +1251,7 @@ void CompositionViewComponentView::updateProps(
     m_visual.Opacity(newViewProps.opacity);
   }
 
+  updateAccessibilityProps(oldViewProps, newViewProps);
   updateBorderProps(oldViewProps, newViewProps);
 
   // Shadow

@@ -2,6 +2,42 @@
   "name": "@react-native-windows/fs",
   "entries": [
     {
+      "date": "Wed, 07 Jun 2023 05:16:11 GMT",
+      "tag": "@react-native-windows/fs_v0.0.0-canary.22",
+      "version": "0.0.0-canary.22",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/fs",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.11",
+            "commit": "0ea8d03bb94996244a8ea2c215acb111c31ed8ce"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 06 Jun 2023 19:06:44 GMT",
+      "tag": "@react-native-windows/fs_v0.0.0-canary.21",
+      "version": "0.0.0-canary.21",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@react-native-windows/fs",
+            "commit": "0358abf96a61404b6772f16b7f2004d6af04bc3b",
+            "comment": "integrate RN nightly 5/19/23"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/fs",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.10",
+            "commit": "34cd46235b77dbdc08a4d4f56f7c7d0f0abd65a4"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 16 May 2023 05:16:30 GMT",
       "tag": "@react-native-windows/fs_v0.0.0-canary.20",
       "version": "0.0.0-canary.20",

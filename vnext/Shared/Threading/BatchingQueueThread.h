@@ -13,15 +13,15 @@ class Instance;
 
 namespace Microsoft::ReactNative {
 
-struct BatchingQueueCallInvoker : facebook::react::CallInvoker {
+struct BatchingQueueCallInvoker : facebook::react::NativeMethodCallInvoker {
   BatchingQueueCallInvoker(std::shared_ptr<facebook::react::MessageQueueThread> const &queueThread);
 
-  void invokeAsync(std::function<void()> &&func) noexcept override;
+  void invokeAsync(const std::string &methodName, std::function<void()> &&func) noexcept override;
   void EnsureQueue() noexcept;
   void onBatchComplete() noexcept;
   void quitSynchronous() noexcept;
   void PostBatch() noexcept;
-  void invokeSync(std::function<void()> &&func) noexcept override;
+  void invokeSync(const std::string &methodName, std::function<void()> &&func) noexcept override;
 
  private:
   std::shared_ptr<facebook::react::MessageQueueThread> m_queueThread;
@@ -52,7 +52,7 @@ struct BatchingQueueThread final : facebook::react::BatchingMessageQueueThread {
   std::mutex m_mutex;
   std::mutex m_mutexQuitting;
   bool m_quitting{false};
-  std::shared_ptr<facebook::react::CallInvoker> m_callInvoker;
+  std::shared_ptr<facebook::react::NativeMethodCallInvoker> m_callInvoker;
   std::shared_ptr<BatchingQueueCallInvoker> m_batchingQueueCallInvoker;
 };
 

@@ -1,8 +1,58 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 01 Jun 2023 05:14:54 GMT and should not be manually modified.
+This log was last generated on Fri, 09 Jun 2023 05:15:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.663
+
+Fri, 09 Jun 2023 05:15:18 GMT
+
+### Changes
+
+- add border to Fabric TextInput (tatianakapos@microsoft.com)
+- Support PlatformColor fallback (email not defined)
+- Add accessible Functionality (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.662
+
+Thu, 08 Jun 2023 05:15:29 GMT
+
+### Changes
+
+- Add UIA focus management and AdvisedEvents for prop changes (adrum@microsoft.com)
+- Make ScrollView and ActivityIndicator not focusable by default (lyahdav@users.noreply.github.com)
+- [Fabric] Add basic PlatformColor support (email not defined)
+- Get StructInfo<T>::FieldMap lazy initialized (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.661
+
+Wed, 07 Jun 2023 05:16:11 GMT
+
+### Changes
+
+- Fix reversed logic on GetMatchAndroidAndIOSStretchBehavior (30809111+acoates-ms@users.noreply.github.com)
+- Make IReactNotificationSubscription template explicit (erozell@outlook.com)
+- integrate RN Nightly 6/1/23 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.173
+- Bump @react-native-windows/codegen to v0.0.0-canary.60
+- Bump @rnw-scripts/just-task to v2.3.11
+- Bump react-native-platform-override to v1.9.9
+
+## 0.0.0-canary.660
+
+Tue, 06 Jun 2023 19:06:46 GMT
+
+### Changes
+
+- Disable RestoreUseStaticGraphEvaluation for VS >= 17.6 (jthysell@microsoft.com)
+- Add fabric APIs to win32 winmd to allow easier flighting (30809111+acoates-ms@users.noreply.github.com)
+- Switch ViewPanel base class to Grid (erozell@outlook.com)
+- integrate RN nightly 5/19/23 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.172
+- Bump @react-native-windows/codegen to v0.0.0-canary.59
+- Bump @rnw-scripts/just-task to v2.3.10
+- Bump react-native-platform-override to v1.9.8
 
 ## 0.0.0-canary.659
 
