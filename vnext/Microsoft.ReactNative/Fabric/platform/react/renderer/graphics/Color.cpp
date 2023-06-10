@@ -8,8 +8,8 @@
 #include <XamlUtils.h>
 #endif // CORE_ABI
 
-#include <winrt/Windows.UI.ViewManagement.h>
 #include <UI.Xaml.Media.h>
+#include <winrt/Windows.UI.ViewManagement.h>
 
 namespace facebook::react {
 
