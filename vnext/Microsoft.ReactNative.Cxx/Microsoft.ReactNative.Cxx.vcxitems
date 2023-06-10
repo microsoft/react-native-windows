@@ -104,6 +104,11 @@
     <ClInclude Include="$(NodeApiDir)js_native_api.h" />
     <ClInclude Include="$(NodeApiDir)js_native_api_types.h" />
     <ClInclude Include="$(NodeApiDir)js_runtime_api.h" />
+    <ClInclude Include="$(NodeApiJsiSrcDir)ApiLoaders\NodeApi.h" />
+    <ClInclude Include="$(NodeApiJsiSrcDir)ApiLoaders\NodeApi.inc" />
+    <ClInclude Include="$(NodeApiJsiSrcDir)ApiLoaders\JSRuntimeApi.h" />
+    <ClInclude Include="$(NodeApiJsiSrcDir)ApiLoaders\JSRuntimeApi.inc" />
+    <ClInclude Include="$(NodeApiJsiSrcDir)NodeApiJsiRuntime.h" />
   </ItemGroup>
   <ItemGroup Condition="'$(BuildMSRNCxx)' != 'false'">
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\JsiAbiApi.cpp" />
@@ -116,16 +121,18 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)ReactPromise.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TurboModuleProvider.cpp" />
   </ItemGroup>
-  <ItemGroup Condition="'$(BuildMSRNCxx)' != 'false' and '$(BuildMSRNCxxReactCommon)' != 'false'">
-    <!--
-      Make sure all FB code uses the same flags to improve build parallelism.
-      This is because msbuild has to invoke different cl.exe invocations for each
-      set of flags and msbuild inside a project is single threaded.
-    -->
+  <ItemGroup Condition="'$(BuildMSRNCxxJsi)' != 'false'">
     <ClCompile Include="$(JSI_SourcePath)\jsi\jsi.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <DisableSpecificWarnings>%(DisableSpecificWarnings);4100</DisableSpecificWarnings>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup Condition="'$(BuildMSRNCxxReactCommon)' != 'false'">
+    <!--
+      Make sure all Meta code uses the same flags to improve build parallelism.
+      This is because msbuild has to invoke different cl.exe invocations for each
+      set of flags and msbuild inside a project is single threaded.
+    -->
     <ClCompile Include="$(Bridging_SourcePath)\LongLivedObject.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <DisableSpecificWarnings>%(DisableSpecificWarnings);4100</DisableSpecificWarnings>
@@ -139,17 +146,7 @@
       <DisableSpecificWarnings>%(DisableSpecificWarnings);4100</DisableSpecificWarnings>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)README.md" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="$(NodeApiJsiSrcDir)ApiLoaders\NodeApi.h" />
-    <ClInclude Include="$(NodeApiJsiSrcDir)ApiLoaders\NodeApi.inc" />
-    <ClInclude Include="$(NodeApiJsiSrcDir)ApiLoaders\JSRuntimeApi.h" />
-    <ClInclude Include="$(NodeApiJsiSrcDir)ApiLoaders\JSRuntimeApi.inc" />
-    <ClInclude Include="$(NodeApiJsiSrcDir)NodeApiJsiRuntime.h" />
-  </ItemGroup>
-  <ItemGroup>
+  <ItemGroup Condition="'$(BuildMSRNCxxNodeApiJsi)' != 'false'">
     <ClCompile Include="$(NodeApiJsiSrcDir)ApiLoaders\NodeApi.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -160,9 +157,12 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup Condition="'$(UseNodeApiJsiLoaderCpp)' != 'false'">
+  <ItemGroup Condition="'$(BuildMSRNCxxNodeApiJsiLoader)' != 'false'">
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\NodeApiJsiLoader.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)README.md" />
   </ItemGroup>
 </Project>
