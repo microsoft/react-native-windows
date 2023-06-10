@@ -275,7 +275,11 @@ class HermesLocalConnection : public facebook::react::ILocalConnection {
 
 int32_t NAPI_CDECL addInspectorPage(const char *title, const char *vm, void *connectFunc) noexcept {
   return facebook::react::getInspectorInstance().addPage(
-      title, vm, [connectFunc](std::unique_ptr<facebook::react::IRemoteConnection> remoteConneciton) {
+      title,
+      vm,
+      [connectFunc,
+       hermesApi = HermesApi::current()](std::unique_ptr<facebook::react::IRemoteConnection> remoteConneciton) {
+        HermesApi::Scope apiScope(hermesApi);
         return std::make_unique<HermesLocalConnection>(std::move(remoteConneciton), connectFunc);
       });
 }
