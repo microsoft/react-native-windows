@@ -176,7 +176,6 @@ struct CompReactPackageProvider
  public: // IReactPackageProvider
   void CreatePackage(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept {
     AddAttributedModules(packageBuilder, true);
-    packageBuilder.AddModule(L"DeviceInfo", winrt::Microsoft::ReactNative::MakeModuleProvider<DeviceInfo>());
 
     CustomComponent::RegisterViewComponent(packageBuilder);
   }
