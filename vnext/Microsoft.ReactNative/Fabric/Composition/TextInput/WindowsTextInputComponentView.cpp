@@ -170,10 +170,9 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
       return false;
     }
 
-    // the y-position of the caret is constant
     m_outer->m_caretVisual.Position(
         {x - (m_outer->m_layoutMetrics.frame.origin.x * m_outer->m_layoutMetrics.pointScaleFactor),
-         m_outer->m_layoutMetrics.contentInsets.top * m_outer->m_layoutMetrics.pointScaleFactor});
+         y - (m_outer->m_layoutMetrics.frame.origin.y * m_outer->m_layoutMetrics.pointScaleFactor)});
     return true;
   }
 
