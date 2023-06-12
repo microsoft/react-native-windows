@@ -11,7 +11,7 @@
   "dependencies": {
     "@babel/core": "^7.14.0",
     "@babel/eslint-parser": "^7.18.2",
-    "@react-native-community/eslint-config": "3.0.3",
+    "@react-native/eslint-config": "^0.72.1",
     "eslint-config-prettier": "^8.5.0"
   },
   "devDependencies": {
