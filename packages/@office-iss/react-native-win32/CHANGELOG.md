@@ -1,8 +1,19 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 22 May 2023 15:16:17 GMT and should not be manually modified.
+This log was last generated on Mon, 12 Jun 2023 15:15:26 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.72.0-preview.5
+
+Mon, 12 Jun 2023 15:15:26 GMT
+
+### Changes
+
+- Export ITouchableWin32State (30809111+acoates-ms@users.noreply.github.com)
+- Fix various text properties not being forwarded to native (30809111+acoates-ms@users.noreply.github.com)
+- Type definition files shouldnt use win32 extension (30809111+acoates-ms@users.noreply.github.com)
+- Add eventPhase to IHandledKeyboardEvent (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.72.0-preview.4
 

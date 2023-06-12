@@ -2,6 +2,39 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 12 Jun 2023 15:15:26 GMT",
+      "tag": "@office-iss/react-native-win32_v0.72.0-preview.5",
+      "version": "0.72.0-preview.5",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "125bf2395bc1dbef5f2ecc4a7fea61c09fc9c190",
+            "comment": "Export ITouchableWin32State"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "88732b0213ae48680de8ee55974b1b7ba9633116",
+            "comment": "Fix various text properties not being forwarded to native"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "aff0d025f28f09fd0fc9d4a2d05cb32c21d82bb8",
+            "comment": "Type definition files shouldnt use win32 extension"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "d3b6a8912b0c43a7534d26b56777083672444159",
+            "comment": "Add eventPhase to IHandledKeyboardEvent"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 22 May 2023 15:16:17 GMT",
       "tag": "@office-iss/react-native-win32_v0.72.0-preview.4",
       "version": "0.72.0-preview.4",
