@@ -116,7 +116,7 @@ facebook::react::Props::Shared AbiViewComponentDescriptor::interpolateProps(
 };
 
 facebook::react::State::Shared AbiViewComponentDescriptor::createInitialState(
-    facebook::react::ShadowNodeFragment const &fragment,
+    facebook::react::Props::Shared const &props,
     facebook::react::ShadowNodeFamily::Shared const &family) const {
   if (std::is_same<ConcreteStateData, facebook::react::StateData>::value) {
     // Default case: Returning `null` for nodes that don't use `State`.
@@ -125,7 +125,7 @@ facebook::react::State::Shared AbiViewComponentDescriptor::createInitialState(
 
   return std::make_shared<ConcreteState>(
       std::make_shared<ConcreteStateData const>(ConcreteShadowNode::initialStateData(
-          fragment, facebook::react::ShadowNodeFamilyFragment::build(*family), *this)),
+          props, facebook::react::ShadowNodeFamilyFragment::build(*family), *this)),
       family);
 }
 

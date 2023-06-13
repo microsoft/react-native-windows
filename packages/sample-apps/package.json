@@ -13,19 +13,19 @@
   },
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^5.30.5",
-    "@typescript-eslint/parser": "^5.30.5",
+    "@typescript-eslint/parser": "^5.57.1",
     "react": "18.2.0",
-    "react-native": "0.0.0-20230414-2146-adb210306",
-    "react-native-windows": "^0.0.0-canary.650"
+    "react-native": "0.73.0-nightly-20230601-d9b3339ef",
+    "react-native-windows": "^0.0.0-canary.663"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
-    "@babel/eslint-parser": "^7.19.0",
+    "@babel/eslint-parser": "^7.20.0",
     "@babel/runtime": "^7.8.4",
-    "@react-native-windows/codegen": "0.0.0-canary.57",
+    "@react-native-windows/codegen": "0.0.0-canary.60",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.1.16",
-    "@rnw-scripts/just-task": "2.3.8",
+    "@rnw-scripts/just-task": "2.3.11",
     "@rnw-scripts/metro-dev-config": "0.0.0",
     "@types/node": "^16.0.0",
     "@types/react": "^18.0.18",

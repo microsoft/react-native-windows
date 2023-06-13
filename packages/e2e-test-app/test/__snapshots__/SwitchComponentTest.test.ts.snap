@@ -2501,7 +2501,7 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
 {
   "AutomationId": "accessibility-switch",
   "Background": null,
-  "BorderBrush": "#00000000",
+  "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
   "Clip": null,
   "CornerRadius": "0,0,0,0",
@@ -2510,6 +2510,7 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
   "HorizontalAlignment": "Stretch",
   "Left": 0,
   "Margin": "0,0,0,0",
+  "Padding": "0,0,0,0",
   "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
@@ -2518,7 +2519,7 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
   "children": [
     {
       "Background": null,
-      "BorderBrush": "#00000000",
+      "BorderBrush": "#E4000000",
       "BorderThickness": "0,0,0,0",
       "Clip": null,
       "CornerRadius": "0,0,0,0",
@@ -2527,6 +2528,7 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
       "HorizontalAlignment": "Stretch",
       "Left": 0,
       "Margin": "0,0,0,0",
+      "Padding": "0,0,0,0",
       "Top": 0,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
@@ -2983,7 +2985,7 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
     },
     {
       "Background": null,
-      "BorderBrush": "#00000000",
+      "BorderBrush": "#E4000000",
       "BorderThickness": "0,0,0,0",
       "Clip": null,
       "CornerRadius": "0,0,0,0",
@@ -2992,6 +2994,7 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
       "HorizontalAlignment": "Stretch",
       "Left": 0,
       "Margin": "0,0,0,0",
+      "Padding": "0,0,0,0",
       "Top": 41,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",

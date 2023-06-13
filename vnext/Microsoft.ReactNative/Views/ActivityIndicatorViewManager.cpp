@@ -25,6 +25,13 @@ void ActivityIndicatorViewManager::GetNativeProps(const winrt::Microsoft::ReactN
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"color", L"Color");
 }
 
+ShadowNode *Microsoft::ReactNative::ActivityIndicatorViewManager::createShadow() const {
+  ShadowNode *shadowNode = Super::createShadow();
+  ShadowNodeBase *shadowNodeBase = static_cast<ShadowNodeBase *>(shadowNode);
+  shadowNodeBase->IsFocusable(false);
+  return shadowNode;
+}
+
 XamlView ActivityIndicatorViewManager::CreateViewCore(
     int64_t /*tag*/,
     const winrt::Microsoft::ReactNative::JSValueObject &) {

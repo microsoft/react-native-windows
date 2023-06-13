@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20230414-2146-adb210306",
+  "baseVersion": "0.73.0-nightly-20230601-d9b3339ef",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "241d0d49a4d24294ec5c48f3672c3c800136f24d"
+      "baseHash": "dc6c68bc12e76498f4935a43bb2f188efb02f0c5"
     },
     {
       "type": "derived",
@@ -35,7 +35,7 @@
       "type": "derived",
       "file": "src/Libraries/Animated/NativeAnimatedHelper.win32.js",
       "baseFile": "packages/react-native/Libraries/Animated/NativeAnimatedHelper.js",
-      "baseHash": "ae83fb31990e1d572d743909f5bdd36589c86939",
+      "baseHash": "99fc31f856815c19024407d629e4a0762df9011e",
       "issue": 11041
     },
     {
@@ -105,10 +105,6 @@
     },
     {
       "type": "platform",
-      "file": "src/Libraries/Components/Text/Tests/TextWin32Test.tsx"
-    },
-    {
-      "type": "platform",
       "file": "src/Libraries/Components/Text/TextWin32.Props.ts"
     },
     {
@@ -123,7 +119,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "058fa050230bbb1710b64156f2e3680fc16aa252"
+      "baseHash": "a817f8d62ee3ba4c56b772bd0cfb852739cb4aa7"
     },
     {
       "type": "patch",
@@ -155,7 +151,7 @@
     },
     {
       "type": "derived",
-      "file": "src/Libraries/Components/Touchable/TouchableNativeFeedback.win32.d.ts",
+      "file": "src/Libraries/Components/Touchable/TouchableNativeFeedback.d.ts",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableNativeFeedback.d.ts",
       "baseHash": "b38a2d4fb0c6a08c3ada7748fffded9949c97c2a"
     },
@@ -181,11 +177,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ReactNativeViewAttributes.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/View/ReactNativeViewAttributes.js",
-      "baseHash": "1e2900121c17ba9f58a7f6d0b3604456a13642bf"
-    },
-    {
-      "type": "platform",
-      "file": "src/Libraries/Components/View/Tests/ViewWin32Test.tsx"
+      "baseHash": "0aabb0825ab9d65cb39f526ad3ac10874d6cde7e"
     },
     {
       "type": "patch",
@@ -195,7 +187,7 @@
     },
     {
       "type": "derived",
-      "file": "src/Libraries/Components/View/ViewAccessibility.win32.d.ts",
+      "file": "src/Libraries/Components/View/ViewAccessibility.d.ts",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewAccessibility.d.ts",
       "baseHash": "085982a44202765d099caf13785e8b4a42628d86"
     },
@@ -207,7 +199,7 @@
     },
     {
       "type": "derived",
-      "file": "src/Libraries/Components/View/ViewPropTypes.win32.d.ts",
+      "file": "src/Libraries/Components/View/ViewPropTypes.d.ts",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewPropTypes.d.ts",
       "baseHash": "91d96e475fc55da6c6456a240edbd650c1ca4a26"
     },
@@ -344,7 +336,7 @@
       "type": "derived",
       "file": "src/Libraries/NativeComponent/BaseViewConfig.win32.js",
       "baseFile": "packages/react-native/Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "f810cc5f609a5812784688bf31126c27af8d5e03"
+      "baseHash": "543595671ac827300ab6c501a43a2e9b7d870faa"
     },
     {
       "type": "derived",
@@ -380,7 +372,7 @@
       "type": "patch",
       "file": "src/Libraries/Pressability/Pressability.win32.js",
       "baseFile": "packages/react-native/Libraries/Pressability/Pressability.js",
-      "baseHash": "9b1c05c59ddcf30c6b5938ff8ed26ec7633ebdce",
+      "baseHash": "087060bb677adb35353dcf83bea2d4eb09c4fd40",
       "issue": 6240
     },
     {

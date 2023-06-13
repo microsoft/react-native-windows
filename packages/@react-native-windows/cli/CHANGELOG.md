@@ -1,8 +1,57 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Mon, 08 May 2023 17:41:03 GMT and should not be manually modified.
+This log was last generated on Wed, 07 Jun 2023 05:16:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.173
+
+Wed, 07 Jun 2023 05:16:11 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.60
+- Bump @react-native-windows/fs to v0.0.0-canary.22
+- Bump @react-native-windows/package-utils to v0.0.0-canary.48
+- Bump @react-native-windows/telemetry to v0.0.0-canary.70
+- Bump @rnw-scripts/jest-unittest-config to v1.5.5
+- Bump @rnw-scripts/just-task to v2.3.11
+
+## 0.0.0-canary.172
+
+Tue, 06 Jun 2023 19:06:44 GMT
+
+### Changes
+
+- integrate RN nightly 5/19/23 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.59
+- Bump @react-native-windows/fs to v0.0.0-canary.21
+- Bump @react-native-windows/package-utils to v0.0.0-canary.47
+- Bump @react-native-windows/telemetry to v0.0.0-canary.69
+- Bump @rnw-scripts/jest-unittest-config to v1.5.4
+- Bump @rnw-scripts/just-task to v2.3.10
+
+## 0.0.0-canary.171
+
+Sat, 27 May 2023 05:15:02 GMT
+
+### Changes
+
+- fix x86 node invocation (asklar@microsoft.com)
+
+## 0.0.0-canary.170
+
+Tue, 16 May 2023 05:16:29 GMT
+
+### Changes
+
+- Integrate 4/28 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.58
+- Bump @react-native-windows/fs to v0.0.0-canary.20
+- Bump @react-native-windows/package-utils to v0.0.0-canary.46
+- Bump @react-native-windows/telemetry to v0.0.0-canary.68
+- Bump @rnw-scripts/jest-unittest-config to v1.5.3
+- Bump @rnw-scripts/just-task to v2.3.9
 
 ## 0.0.0-canary.169
 

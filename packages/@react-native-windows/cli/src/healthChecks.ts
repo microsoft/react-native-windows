@@ -19,6 +19,7 @@ export function getHealthChecks(): HealthCheckCategory[] | undefined {
       label: 'Windows',
       healthchecks: [{
         label: 'Failed to enumerate health checks',
+        description: 'Failed to enumerate health checks',
         getDiagnostics: async () => ({needsToBeFixed: true}),
         runAutomaticFix: async ({loader}) => {loader.fail()},
       }]
@@ -44,6 +45,7 @@ function getHealthChecksUnsafe(): HealthCheckCategory[] | undefined {
             const [optional, id, name] = dep;
             return {
               label: name,
+              description: name,
               // The schema check of react-native doctor requires this to be a string, although it should be a boolean
               // Enable this once we pick up a new version of the CLI that includes https://github.com/react-native-community/cli/pull/1367
               isRequired: optional, 

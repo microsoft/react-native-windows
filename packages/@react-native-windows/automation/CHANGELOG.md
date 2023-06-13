@@ -1,8 +1,119 @@
 # Change Log - @react-native-windows/automation
 
-This log was last generated on Mon, 08 May 2023 17:41:06 GMT and should not be manually modified.
+This log was last generated on Fri, 09 Jun 2023 05:15:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.3.84
+
+Fri, 09 Jun 2023 05:15:18 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.2
+
+## 0.3.83
+
+Thu, 08 Jun 2023 05:15:29 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.1
+
+## 0.3.82
+
+Wed, 07 Jun 2023 05:16:11 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.0
+- Bump @react-native-windows/fs to v0.0.0-canary.22
+- Bump @rnw-scripts/just-task to v2.3.11
+
+## 0.3.81
+
+Tue, 06 Jun 2023 19:06:43 GMT
+
+### Patches
+
+- integrate RN nightly 5/19/23 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/automation-channel to v0.11.7
+- Bump @react-native-windows/fs to v0.0.0-canary.21
+- Bump @rnw-scripts/just-task to v2.3.10
+
+## 0.3.80
+
+Thu, 01 Jun 2023 05:14:54 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.11.6
+
+## 0.3.79
+
+Wed, 31 May 2023 05:13:44 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.11.5
+
+## 0.3.78
+
+Sat, 27 May 2023 05:15:02 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.11.4
+
+## 0.3.77
+
+Fri, 26 May 2023 05:13:21 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.11.3
+
+## 0.3.76
+
+Thu, 25 May 2023 20:07:27 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.11.2
+
+## 0.3.75
+
+Thu, 25 May 2023 05:15:04 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.11.1
+
+## 0.3.74
+
+Tue, 23 May 2023 05:13:45 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.11.0
+
+## 0.3.73
+
+Tue, 16 May 2023 05:16:30 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.10.21
+- Bump @react-native-windows/fs to v0.0.0-canary.20
+- Bump @rnw-scripts/just-task to v2.3.9
+
+## 0.3.72
+
+Fri, 12 May 2023 05:14:35 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.10.20
 
 ## 0.3.71
 

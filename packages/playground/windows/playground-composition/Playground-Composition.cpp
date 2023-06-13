@@ -175,7 +175,7 @@ struct CompReactPackageProvider
     : winrt::implements<CompReactPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
  public: // IReactPackageProvider
   void CreatePackage(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept {
-    packageBuilder.AddTurboModule(L"DeviceInfo", winrt::Microsoft::ReactNative::MakeModuleProvider<DeviceInfo>());
+    AddAttributedModules(packageBuilder, true);
 
     CustomComponent::RegisterViewComponent(packageBuilder);
   }
@@ -486,7 +486,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
     case WM_GETOBJECT: {
       if (lparam == UiaRootObjectId) {
         auto windowData = WindowData::GetFromWindow(hwnd);
-        if (!windowData->m_windowInited)
+        if (windowData == nullptr || !windowData->m_windowInited)
           break;
 
         auto hwndHost = windowData->m_CompositionHwndHost;
@@ -521,7 +521,6 @@ int RunPlayground(int showCmd, bool useWebDebugger) {
       windowData.get());
 
   WINRT_VERIFY(hwnd);
-  winrt::check_win32(!hwnd);
 
   windowData.release();
 
@@ -539,7 +538,7 @@ int RunPlayground(int showCmd, bool useWebDebugger) {
     }
   }
 
-  return (int)msg.wParam;
+  return static_cast<int>(msg.wParam);
 }
 
 _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR /* commandLine */, int showCmd) {

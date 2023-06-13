@@ -87,6 +87,10 @@ class NativeCxxModuleExampleExample extends React.Component<{||}, State> {
     getBool: () => NativeCxxModuleExample?.getBool(true),
     getConstants: () => NativeCxxModuleExample?.getConstants(),
     getCustomEnum: () => NativeCxxModuleExample?.getCustomEnum(EnumInt.IB),
+    getCustomHostObject: () =>
+      NativeCxxModuleExample?.consumeCustomHostObject(
+        NativeCxxModuleExample?.getCustomHostObject(),
+      ),
     getNumEnum: () => NativeCxxModuleExample?.getNumEnum(EnumInt.IB),
     getStrEnum: () => NativeCxxModuleExample?.getStrEnum(EnumNone.NB),
     getNumber: () => NativeCxxModuleExample?.getNumber(99.95),
@@ -227,7 +231,7 @@ class NativeCxxModuleExampleExample extends React.Component<{||}, State> {
           </TouchableOpacity>
         </View>
         <FlatList
-          // $FlowFixMe[incompatible-type]
+          // $FlowFixMe[incompatible-type-arg]
           data={Object.keys(this._tests)}
           keyExtractor={item => item}
           renderItem={({item}: {item: Examples, ...}) => (

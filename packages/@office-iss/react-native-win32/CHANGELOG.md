@@ -1,8 +1,72 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 08 May 2023 17:41:03 GMT and should not be manually modified.
+This log was last generated on Fri, 09 Jun 2023 05:15:17 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.201
+
+Fri, 09 Jun 2023 05:15:17 GMT
+
+### Changes
+
+- Type definition files shouldnt use win32 extension (30809111+acoates-ms@users.noreply.github.com)
+- Fix various text properties not being forwarded to native (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.200
+
+Thu, 08 Jun 2023 05:15:28 GMT
+
+### Changes
+
+- Add missing eventPhase on IHandledKeyboardEvent (30809111+acoates-ms@users.noreply.github.com)
+- Export ITouchableWin32State (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.199
+
+Wed, 07 Jun 2023 05:16:10 GMT
+
+### Changes
+
+- integrate RN Nightly 6/1/23 (tatianakapos@microsoft.com)
+- Bump @rnw-scripts/just-task to v2.3.11
+- Bump react-native-platform-override to v1.9.9
+
+## 0.0.0-canary.198
+
+Tue, 06 Jun 2023 19:06:43 GMT
+
+### Changes
+
+- integrate RN nightly 5/19/23 (tatianakapos@microsoft.com)
+- Bump @rnw-scripts/just-task to v2.3.10
+- Bump react-native-platform-override to v1.9.8
+
+## 0.0.0-canary.197
+
+Tue, 23 May 2023 05:13:44 GMT
+
+### Changes
+
+- RN integration 5/5/23 (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.196
+
+Tue, 16 May 2023 05:16:29 GMT
+
+### Changes
+
+- Integrate 4/28 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/just-task to v2.3.9
+- Bump react-native-platform-override to v1.9.7
+
+## 0.0.0-canary.195
+
+Fri, 12 May 2023 05:14:33 GMT
+
+### Changes
+
+- Export additional TS types for back compat (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.194
 

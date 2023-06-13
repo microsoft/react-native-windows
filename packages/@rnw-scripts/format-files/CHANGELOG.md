@@ -1,8 +1,33 @@
 # Change Log - @rnw-scripts/format-files
 
-This log was last generated on Mon, 08 May 2023 17:41:06 GMT and should not be manually modified.
+This log was last generated on Wed, 07 Jun 2023 05:16:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.13
+
+Wed, 07 Jun 2023 05:16:11 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.3.11
+
+## 1.1.12
+
+Tue, 06 Jun 2023 19:06:45 GMT
+
+### Patches
+
+- integrate RN nightly 5/19/23 (tatianakapos@microsoft.com)
+- Bump @rnw-scripts/just-task to v2.3.10
+
+## 1.1.11
+
+Tue, 16 May 2023 05:16:30 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.3.9
 
 ## 1.1.10
 

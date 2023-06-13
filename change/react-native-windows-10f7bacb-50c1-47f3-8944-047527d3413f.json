@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove relative path from codegen include in AppearanceModule.h",
-  "packageName": "react-native-windows",
-  "email": "lyahdav@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

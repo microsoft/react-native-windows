@@ -149,7 +149,7 @@ void ScrollViewComponentView::updateProps(
 
   if (!oldProps || oldViewProps.backgroundColor != newViewProps.backgroundColor) {
     if (newViewProps.backgroundColor) {
-      m_scrollVisual.Brush(m_compContext.CreateColorBrush((*newViewProps.backgroundColor).m_color));
+      m_scrollVisual.Brush(m_compContext.CreateColorBrush(newViewProps.backgroundColor.AsWindowsColor()));
     } else {
       m_scrollVisual.Brush(m_compContext.CreateColorBrush({0, 0, 0, 0}));
     }
@@ -219,8 +219,7 @@ void ScrollViewComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMa
 }
 void ScrollViewComponentView::prepareForRecycle() noexcept {}
 facebook::react::Props::Shared ScrollViewComponentView::props() noexcept {
-  assert(false);
-  return {};
+  return static_cast<facebook::react::Props::Shared>(m_props);
 }
 
 /*
