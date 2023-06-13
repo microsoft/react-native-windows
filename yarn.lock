@@ -8041,10 +8041,10 @@ kleur@^3.0.3:
   resolved "https://registry.yarnpkg.com/kleur/-/kleur-3.0.3.tgz#a79c9ecc86ee1ce3fa6206d1216c501f147fc07e"
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
-lage@^2.0.0:
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/lage/-/lage-2.6.1.tgz#77b9a97ec5f592f2d91651c15c656a1a5958a161"
-  integrity sha512-Gw6HHlcChr45PK2x4hNti1yEhN+tIJbVjcpIftU0FZZyV+Huzfycod0DV/iBX/oTVsG90OTXK50RX4hUfwFPow==
+lage@^2.7.1:
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/lage/-/lage-2.7.1.tgz#e31130073aadfb2bfdde70ca301e836e12efbe48"
+  integrity sha512-JqezK5ayGSZqCbCB2zvMKYC9o8fs/7uINSBMzsgf7jyl6hQVbFLS7qg6rmpelVYhWg/FlYkupxqmNHSors0EJg==
   dependencies:
     glob-hasher "^1.3.0"
   optionalDependencies:
