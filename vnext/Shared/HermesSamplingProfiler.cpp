@@ -3,13 +3,12 @@
 
 #include "pch.h"
 
-#include <hermes/hermes.h>
+#include <hermes/hermes_api.h>
 #include <chrono>
 #include <future>
 
 #include "HermesRuntimeHolder.h"
 #include "HermesSamplingProfiler.h"
-#include "HermesShim.h"
 #include "IReactDispatcher.h"
 #include "ReactPropertyBag.h"
 #include "Utils.h"
@@ -48,7 +47,7 @@ auto resume_in_dispatcher(const IReactDispatcher &dispatcher) noexcept {
 }
 
 std::future<std::string> getTraceFilePath() noexcept {
-  auto hermesDataPath = co_await Microsoft::React::getApplicationDataPath(L"Hermes");
+  std::string hermesDataPath = co_await Microsoft::React::getApplicationDataPath(L"Hermes");
   std::ostringstream os;
   auto now = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch())
                  .count();
@@ -78,7 +77,7 @@ winrt::fire_and_forget HermesSamplingProfiler::Start(
     hermesRuntimeHolder->addToProfiling();
 
     co_await winrt::resume_background();
-    HermesShim::enableSamplingProfiler();
+    HermesRuntimeHolder::enableSamplingProfiler();
   }
 
   co_return;
@@ -92,10 +91,10 @@ std::future<std::string> HermesSamplingProfiler::Stop(
     ReactPropertyBag propertyBag = ReactPropertyBag(reactContext->Properties());
 
     co_await winrt::resume_background();
-    HermesShim::disableSamplingProfiler();
+    HermesRuntimeHolder::disableSamplingProfiler();
 
     s_lastTraceFilePath = co_await getTraceFilePath();
-    HermesShim::dumpSampledTraceToFile(s_lastTraceFilePath);
+    HermesRuntimeHolder::dumpSampledTraceToFile(s_lastTraceFilePath);
 
     co_await resume_in_dispatcher(jsDispatcher);
     std::shared_ptr<HermesRuntimeHolder> hermesRuntimeHolder = HermesRuntimeHolder::loadFrom(propertyBag);
