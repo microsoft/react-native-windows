@@ -22,10 +22,6 @@ function isMethodSync(funcType: NativeModuleFunctionTypeAnnotation) {
   );
 }
 
-function isMethodReturnPromise(funcType: NativeModuleFunctionTypeAnnotation) {
-  return funcType.returnTypeAnnotation.type === 'PromiseTypeAnnotation';
-}
-
 function getPossibleMethodSignatures(
   prop: NativeModulePropertyShape,
   funcType: NativeModuleFunctionTypeAnnotation,
@@ -33,9 +29,18 @@ function getPossibleMethodSignatures(
   baseAliasName: string,
 ): string[] {
   const args = translateArgs(funcType.params, aliases, baseAliasName);
-  if (isMethodReturnPromise(funcType)) {
-    // TODO: type of the promise could be provided in the future
-    args.push('::React::ReactPromise<::React::JSValue> &&result');
+  if (funcType.returnTypeAnnotation.type === 'PromiseTypeAnnotation') {
+    if (funcType.returnTypeAnnotation.elementType) {
+      args.push(
+        `::React::ReactPromise<${translateImplReturnType(
+          funcType.returnTypeAnnotation.elementType,
+          aliases,
+          baseAliasName,
+        )}> &&result`,
+      );
+    } else {
+      args.push('::React::ReactPromise<::React::JSValue> &&result');
+    }
   }
 
   // TODO: be much more exhastive on the possible method signatures that can be used..
@@ -98,9 +103,18 @@ function renderProperties(
         propAliasName,
       );
 
-      if (isMethodReturnPromise(funcType)) {
-        // TODO: type of the promise could be provided in the future
-        traversedArgs.push('Promise<::React::JSValue>');
+      if (funcType.returnTypeAnnotation.type === 'PromiseTypeAnnotation') {
+        if (funcType.returnTypeAnnotation.elementType) {
+          traversedArgs.push(
+            `Promise<${translateSpecReturnType(
+              funcType.returnTypeAnnotation.elementType,
+              aliases,
+              propAliasName,
+            )}>`,
+          );
+        } else {
+          traversedArgs.push('Promise<::React::JSValue>');
+        }
       }
 
       if (tuple) {
