@@ -5,6 +5,7 @@
 #include <ApiLoaders/V8Api.h>
 #include <NodeApiJsiRuntime.h>
 #include <crash/verifyElseCrash.h>
+#include "SafeLoadLibrary.h"
 
 using namespace Microsoft::NodeApiJsi;
 
@@ -15,8 +16,7 @@ namespace {
 
 class V8FuncResolver : public IFuncResolver {
  public:
-  // TODO: (vmoroz) Use Office safe DLL loading
-  V8FuncResolver() : libHandle_(LoadLibrary(L"v8jsi.dll")) {}
+  V8FuncResolver() : libHandle_(SafeLoadLibrary(L"v8jsi.dll")) {}
 
   FuncPtr getFuncPtr(const char *funcName) override {
     return reinterpret_cast<FuncPtr>(GetProcAddress(libHandle_, funcName));
@@ -256,7 +256,6 @@ facebook::react::JSIEngineOverride V8RuntimeHolder::getRuntimeType() noexcept {
 std::shared_ptr<facebook::jsi::Runtime> V8RuntimeHolder::getRuntime() noexcept {
   std::call_once(m_onceFlag, [this]() { initRuntime(); });
   VerifyElseCrash(m_jsiRuntime);
-  VerifyElseCrashSz(m_ownThreadId == std::this_thread::get_id(), "Must be accessed from JS thread.");
   return m_jsiRuntime;
 }
 

@@ -204,6 +204,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)OInstance.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)PackagerConnection.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)RuntimeOptions.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SafeLoadLibrary.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Threading\BatchingQueueThread.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Threading\MessageDispatchQueue.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Threading\MessageQueueThreadFactory.cpp" />
@@ -361,6 +362,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)NativeModuleProvider.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)OInstance.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Pch\pch.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SafeLoadLibrary.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ShadowNode.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ShadowNodeRegistry.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)targetver.h" />

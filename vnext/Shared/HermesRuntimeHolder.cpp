@@ -12,6 +12,7 @@
 #include <cxxreact/SystraceSection.h>
 #include <jsinspector/InspectorInterfaces.h>
 #include <mutex>
+#include "SafeLoadLibrary.h"
 
 #define CRASH_ON_ERROR(result) VerifyElseCrash(result == napi_ok);
 
@@ -37,7 +38,7 @@ void NAPI_CDECL removeInspectorPage(int32_t pageId) noexcept;
 
 class HermesFuncResolver : public IFuncResolver {
  public:
-  HermesFuncResolver() : libHandle_(LoadLibrary(L"hermes.dll")) {}
+  HermesFuncResolver() : libHandle_(SafeLoadLibrary(L"hermes.dll")) {}
 
   FuncPtr getFuncPtr(const char *funcName) override {
     return reinterpret_cast<FuncPtr>(GetProcAddress(libHandle_, funcName));
@@ -350,7 +351,6 @@ facebook::react::JSIEngineOverride HermesRuntimeHolder::getRuntimeType() noexcep
 std::shared_ptr<facebook::jsi::Runtime> HermesRuntimeHolder::getRuntime() noexcept {
   std::call_once(m_onceFlag, [this]() { initRuntime(); });
   VerifyElseCrash(m_jsiRuntime);
-  VerifyElseCrashSz(m_ownThreadId == std::this_thread::get_id(), "Must be accessed from JS thread.");
   return m_jsiRuntime;
 }
 
