@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Thu, 13 Apr 2023 20:50:34 GMT and should not be manually modified.
+This log was last generated on Tue, 13 Jun 2023 16:25:28 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.4
+
+Tue, 13 Jun 2023 16:25:28 GMT
+
+### Patches
+
+- Support enum/union and T in Promise<T> in codegen (53799235+ZihanChen-MSFT@users.noreply.github.com)
 
 ## 0.71.3
 

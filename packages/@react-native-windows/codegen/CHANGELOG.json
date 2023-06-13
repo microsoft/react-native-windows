@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Tue, 13 Jun 2023 16:25:28 GMT",
+      "tag": "@react-native-windows/codegen_v0.71.4",
+      "version": "0.71.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "9603d524d2b783f20d1da1f1acd718c08bffdf87",
+            "comment": "Support enum/union and T in Promise<T> in codegen"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 13 Apr 2023 20:50:34 GMT",
       "tag": "@react-native-windows/codegen_v0.71.3",
       "version": "0.71.3",
