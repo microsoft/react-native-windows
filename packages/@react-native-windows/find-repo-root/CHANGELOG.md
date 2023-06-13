@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/find-repo-root
 
-This log was last generated on Wed, 07 Jun 2023 05:16:11 GMT and should not be manually modified.
+This log was last generated on Tue, 13 Jun 2023 05:15:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.52
+
+Tue, 13 Jun 2023 05:15:41 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.23
+- Bump @rnw-scripts/eslint-config to v1.2.0
 
 ## 0.0.0-canary.51
 

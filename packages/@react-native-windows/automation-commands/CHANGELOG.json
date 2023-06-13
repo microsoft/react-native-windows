@@ -2,6 +2,27 @@
   "name": "@react-native-windows/automation-commands",
   "entries": [
     {
+      "date": "Tue, 13 Jun 2023 05:15:41 GMT",
+      "tag": "@react-native-windows/automation-commands_v0.1.105",
+      "version": "0.1.105",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.3",
+            "commit": "00ef6dfcfc2340276b2943ae6bdccae682626f2c"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.0",
+            "commit": "00ef6dfcfc2340276b2943ae6bdccae682626f2c"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 09 Jun 2023 05:15:18 GMT",
       "tag": "@react-native-windows/automation-commands_v0.1.104",
       "version": "0.1.104",

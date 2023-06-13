@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/eslint-config",
   "entries": [
     {
+      "date": "Tue, 13 Jun 2023 05:15:41 GMT",
+      "tag": "@rnw-scripts/eslint-config_v1.2.0",
+      "version": "1.2.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "f2112a5d4925e1aa39affca9f5de25697ae70e6f",
+            "comment": "Migrate eslint-config from `@react-native-community` to `@react-native`"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 25 Apr 2023 05:16:59 GMT",
       "tag": "@rnw-scripts/eslint-config_v1.1.16",
       "version": "1.1.16",

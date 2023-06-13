@@ -2,6 +2,21 @@
   "name": "@react-native-windows/fs",
   "entries": [
     {
+      "date": "Tue, 13 Jun 2023 05:15:41 GMT",
+      "tag": "@react-native-windows/fs_v0.0.0-canary.23",
+      "version": "0.0.0-canary.23",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/fs",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.0",
+            "commit": "00ef6dfcfc2340276b2943ae6bdccae682626f2c"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 07 Jun 2023 05:16:11 GMT",
       "tag": "@react-native-windows/fs_v0.0.0-canary.22",
       "version": "0.0.0-canary.22",

@@ -1,8 +1,21 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 09 Jun 2023 05:15:18 GMT and should not be manually modified.
+This log was last generated on Tue, 13 Jun 2023 05:15:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.664
+
+Tue, 13 Jun 2023 05:15:41 GMT
+
+### Changes
+
+- ABI-safe Hermes API and new JSI for Node-API (vmorozov@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.174
+- Bump @react-native-windows/codegen to v0.0.0-canary.61
+- Bump @rnw-scripts/eslint-config to v1.2.0
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.3
+- Bump react-native-platform-override to v1.9.10
 
 ## 0.0.0-canary.663
 

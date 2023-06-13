@@ -2,6 +2,33 @@
   "name": "@rnw-scripts/create-github-releases",
   "entries": [
     {
+      "date": "Tue, 13 Jun 2023 05:15:41 GMT",
+      "tag": "@rnw-scripts/create-github-releases_v1.4.17",
+      "version": "1.4.17",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/create-github-releases",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.0.0-canary.52",
+            "commit": "00ef6dfcfc2340276b2943ae6bdccae682626f2c"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/create-github-releases",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.23",
+            "commit": "00ef6dfcfc2340276b2943ae6bdccae682626f2c"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/create-github-releases",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.0",
+            "commit": "00ef6dfcfc2340276b2943ae6bdccae682626f2c"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 07 Jun 2023 05:16:11 GMT",
       "tag": "@rnw-scripts/create-github-releases_v1.4.16",
       "version": "1.4.16",

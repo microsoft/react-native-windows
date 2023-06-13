@@ -2,6 +2,33 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Tue, 13 Jun 2023 05:15:41 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.71",
+      "version": "0.0.0-canary.71",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "00ef6dfcfc2340276b2943ae6bdccae682626f2c",
+            "comment": "ABI-safe Hermes API and new JSI for Node-API"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/telemetry",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.23",
+            "commit": "00ef6dfcfc2340276b2943ae6bdccae682626f2c"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/telemetry",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.0",
+            "commit": "00ef6dfcfc2340276b2943ae6bdccae682626f2c"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 07 Jun 2023 05:16:11 GMT",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.70",
       "version": "0.0.0-canary.70",

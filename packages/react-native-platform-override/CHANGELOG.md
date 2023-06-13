@@ -1,8 +1,18 @@
 # Change Log - react-native-platform-override
 
-This log was last generated on Wed, 07 Jun 2023 05:16:11 GMT and should not be manually modified.
+This log was last generated on Tue, 13 Jun 2023 05:15:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.9.10
+
+Tue, 13 Jun 2023 05:15:41 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.23
+- Bump @react-native-windows/package-utils to v0.0.0-canary.49
+- Bump @rnw-scripts/eslint-config to v1.2.0
 
 ## 1.9.9
 

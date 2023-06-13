@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/eslint-config
 
-This log was last generated on Tue, 25 Apr 2023 05:16:59 GMT and should not be manually modified.
+This log was last generated on Tue, 13 Jun 2023 05:15:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.2.0
+
+Tue, 13 Jun 2023 05:15:41 GMT
+
+### Minor changes
+
+- Migrate eslint-config from `@react-native-community` to `@react-native` (jthysell@microsoft.com)
 
 ## 1.1.16
 
