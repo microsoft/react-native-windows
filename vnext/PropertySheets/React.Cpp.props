@@ -47,6 +47,7 @@
     <ClCompile>
       <PreprocessorDefinitions Condition="'$(ENABLE_ETW_TRACING)'=='true'">ENABLE_ETW_TRACING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(ENABLE_JS_SYSTRACE_TO_ETW)'=='true'">ENABLE_JS_SYSTRACE_TO_ETW;WITH_FBSYSTRACE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>JSI_VERSION=5;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
 

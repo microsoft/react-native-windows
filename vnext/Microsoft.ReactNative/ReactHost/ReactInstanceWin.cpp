@@ -62,12 +62,12 @@
 #include <Utils/UwpScriptStore.h>
 #endif
 
+#include "BaseScriptStoreImpl.h"
 #include "HermesRuntimeHolder.h"
 
 #if defined(USE_V8)
 #include <winrt/Windows.Storage.h>
-#include "BaseScriptStoreImpl.h"
-#include "V8JSIRuntimeHolder.h"
+#include "JSI/V8RuntimeHolder.h"
 #endif // USE_V8
 
 #include "RedBox.h"
@@ -250,7 +250,7 @@ ReactInstanceWin::ReactInstanceWin(
                                                                onDestroyed = m_options.OnInstanceDestroyed,
                                                                reactContext = m_reactContext]() noexcept {
         whenLoaded.TryCancel(); // It only has an effect if whenLoaded was not set before
-        facebook::react::HermesRuntimeHolder::storeTo(ReactPropertyBag(reactContext->Properties()), nullptr);
+        Microsoft::ReactNative::HermesRuntimeHolder::storeTo(ReactPropertyBag(reactContext->Properties()), nullptr);
         if (onDestroyed) {
           onDestroyed.Get()->Invoke(reactContext);
         }
@@ -466,9 +466,22 @@ void ReactInstanceWin::Initialize() noexcept {
 
           switch (m_options.JsiEngine()) {
             case JSIEngine::Hermes: {
-              auto hermesRuntimeHolder =
-                  std::make_shared<facebook::react::HermesRuntimeHolder>(devSettings, m_jsMessageThread.Load());
-              facebook::react::HermesRuntimeHolder::storeTo(
+              // TODO: Should we use UwpPreparedScriptStore?
+              uint32_t length{0};
+              if (GetCurrentPackageFullName(&length, nullptr) != APPMODEL_ERROR_NO_PACKAGE) {
+                preparedScriptStore =
+                    std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(getApplicationTempFolder());
+              } else {
+                wchar_t tempPath[MAX_PATH];
+                if (GetTempPathW(static_cast<DWORD>(std::size(tempPath)), tempPath)) {
+                  preparedScriptStore =
+                      std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(winrt::to_string(tempPath));
+                }
+              }
+
+              auto hermesRuntimeHolder = std::make_shared<Microsoft::ReactNative::HermesRuntimeHolder>(
+                  devSettings, m_jsMessageThread.Load(), std::move(preparedScriptStore));
+              Microsoft::ReactNative::HermesRuntimeHolder::storeTo(
                   ReactPropertyBag(m_reactContext->Properties()), hermesRuntimeHolder);
               devSettings->jsiRuntimeHolder = hermesRuntimeHolder;
               break;
@@ -487,10 +500,16 @@ void ReactInstanceWin::Initialize() noexcept {
                       std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(winrt::to_string(tempPath));
                 }
               }
-            }
-              devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
-                  devSettings, m_jsMessageThread.Load(), std::move(scriptStore), std::move(preparedScriptStore));
+
+              bool enableMultiThreadSupport{false};
+#ifdef USE_FABRIC
+              enableMultiThreadSupport = Microsoft::ReactNative::IsFabricEnabled(m_reactContext->Properties());
+#endif // USE_FABRIC
+
+              devSettings->jsiRuntimeHolder = std::make_shared<Microsoft::ReactNative::V8RuntimeHolder>(
+                  devSettings, m_jsMessageThread.Load(), std::move(preparedScriptStore), enableMultiThreadSupport);
               break;
+            }
 #endif // USE_V8
             case JSIEngine::Chakra:
 #ifndef CORE_ABI
@@ -1048,13 +1067,10 @@ Mso::CntPtr<IReactInstanceInternal> MakeReactInstance(
       reactHost, std::move(options), std::move(whenCreated), std::move(whenLoaded), std::move(updateUI));
 }
 
-#if defined(USE_V8)
 std::string ReactInstanceWin::getApplicationTempFolder() {
   auto local = winrt::Windows::Storage::ApplicationData::Current().TemporaryFolder().Path();
-
   return Microsoft::Common::Unicode::Utf16ToUtf8(local.c_str(), local.size()) + "\\";
 }
-#endif
 
 bool ReactInstanceWin::UseWebDebugger() const noexcept {
   return m_useWebDebugger;
