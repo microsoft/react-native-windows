@@ -8,13 +8,13 @@ namespace Microsoft::ReactNative {
 // Unsafe calls to LoadLibrary/LoadLibraryEx.
 // The default behavior of LoadLibrary, or LoadLibraryEx without flags, is to try and find the dependency by iterating
 // through a search order. This search order contains the current working directory. In the classic attack, a malicious
-// DLL is dropped in the likely - controllable current working directory.The malicious DLL has the same name as a
-// missing dependency or dependency that is not in the same directory as the executable.When the call to LoadLibrary is
-// reached, the malicious DLL is loaded preferentially, and code execution occurs.
+// DLL is dropped in the likely - controllable current working directory. The malicious DLL has the same name as a
+// missing dependency or dependency that is not in the same directory as the executable. When the call to LoadLibrary
+// is reached, the malicious DLL is loaded preferentially, and code execution occurs.
 //
 // The SafeLoadLibrary is the preferred ways to manually load dependencies.
 // The API does not search the current working directory when resolving dependencies.
-// It is "borrowed" from Office Mso code.
+// The implementation is "borrowed" from Office MsoSafeLoadLibrary.
 
 /**
       List of new flags that control where to search for DLLs. Requires KB2533623.
