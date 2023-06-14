@@ -494,8 +494,8 @@ bool FrameworkElementViewManager::UpdateProperty(
                 !innerValue.IsNull() && innerValue.AsBoolean();
             states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Collapsed)] =
                 innerValue.IsNull() ? false : !innerValue.AsBoolean();
-            //states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Collapsed)] =
-            //    innerValue.IsNull() || !innerValue.AsBoolean();
+            // states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Collapsed)] =
+            //     innerValue.IsNull() || !innerValue.AsBoolean();
 
             const auto prevExpandedState = DynamicAutomationProperties::GetAccessibilityStateExpanded(element);
 
