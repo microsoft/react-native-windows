@@ -3,7 +3,6 @@
 
 #pragma once
 
-#include <InspectorProxy.h>
 #include <Networking/WinRTWebSocketResource.h>
 #include <jsinspector/InspectorInterfaces.h>
 
@@ -16,12 +15,12 @@ class InspectorPackagerConnection final : public std::enable_shared_from_this<In
 
   class BundleStatus {
    public:
-    bool m_isLastDownloadSucess;
+    bool m_isLastDownloadSuccess;
     int64_t m_updateTimestamp = -1;
 
     BundleStatus(bool isLastDownloadSucess, long updateTimestamp)
-        : m_isLastDownloadSucess(isLastDownloadSucess), m_updateTimestamp(updateTimestamp) {}
-    BundleStatus() : m_isLastDownloadSucess(false), m_updateTimestamp(-1) {}
+        : m_isLastDownloadSuccess(isLastDownloadSucess), m_updateTimestamp(updateTimestamp) {}
+    BundleStatus() : m_isLastDownloadSuccess(false), m_updateTimestamp(-1) {}
   };
 
   struct IBundleStatusProvider {
@@ -32,16 +31,16 @@ class InspectorPackagerConnection final : public std::enable_shared_from_this<In
 
  private:
   friend class RemoteConnection;
-  friend class RemoteConnection2;
 
   winrt::fire_and_forget sendMessageToPackagerAsync(std::string &&message) const;
   void sendMessageToPackager(std::string &&message) const;
 
-  // Note:: VM side Inspector processes the messages asynchronousely in a sequential executor with dedicated thread.
+  // Note:: VM side Inspector processes the messages asynchronously in a sequential executor with dedicated thread.
   // Hence, we don't bother invoking the inspector asynchronously.
-  void sendMessageToVM(int64_t pageId, std::string &&message);
+  void sendMessageToVM(int32_t pageId, std::string &&message);
 
-  std::unordered_map<int64_t, std::unique_ptr<facebook::react::ILocalConnection>> m_localConnections;
+ private:
+  std::unordered_map<int32_t, std::unique_ptr<facebook::react::ILocalConnection>> m_localConnections;
   std::shared_ptr<Microsoft::React::Networking::WinRTWebSocketResource> m_packagerWebSocketConnection;
   std::shared_ptr<IBundleStatusProvider> m_bundleStatusProvider;
   std::string m_url;
@@ -49,23 +48,12 @@ class InspectorPackagerConnection final : public std::enable_shared_from_this<In
 
 class RemoteConnection final : public facebook::react::IRemoteConnection {
  public:
-  RemoteConnection(int64_t pageId, const InspectorPackagerConnection &packagerConnection);
+  RemoteConnection(int32_t pageId, const InspectorPackagerConnection &packagerConnection);
   void onMessage(std::string message) override;
   void onDisconnect() override;
 
  private:
-  int64_t m_pageId;
-  const InspectorPackagerConnection &m_packagerConnection;
-};
-
-class RemoteConnection2 final : public facebook::react::IRemoteConnection2 {
- public:
-  RemoteConnection2(int64_t pageId, const InspectorPackagerConnection &packagerConnection);
-  void onMessage(std::string message) override;
-  void onDisconnect() override;
-
- private:
-  int64_t m_pageId;
+  int32_t m_pageId;
   const InspectorPackagerConnection &m_packagerConnection;
 };
 

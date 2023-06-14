@@ -28,9 +28,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)CxxMessageQueue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)HermesRuntimeHolder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)JSBigAbiString.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -41,9 +38,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Utils.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)V8JSIRuntimeHolder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)InstanceManager.cpp">
@@ -98,15 +92,6 @@
       <Filter>Source Files\JSI</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)InspectorPackagerConnection.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\NapiJsiV8RuntimeHolder.cpp">
-      <Filter>Source Files\JSI</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)HermesSamplingProfiler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)HermesShim.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\HttpModule.cpp">
@@ -269,6 +254,15 @@
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\RedBoxErrorFrameInfo.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\RedBoxErrorInfo.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\TurboModulesProvider.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)HermesRuntimeHolder.cpp">
+      <Filter>Hermes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)HermesSamplingProfiler.cpp">
+      <Filter>Hermes</Filter>
+    </ClCompile>
+    <ClCompile Include="$(NodeApiJsiDir)src\ApiLoaders\HermesApi.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\V8RuntimeHolder.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SafeLoadLibrary.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
@@ -394,6 +388,9 @@
     <Filter Include="Source Files\Fabric\platform\react\renderer\textlayoutmanager">
       <UniqueIdentifier>{d63d0a43-1f13-4674-aaa5-de02447a46b9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Hermes">
+      <UniqueIdentifier>{b32590e6-ae3d-4388-ab98-767345ce38c9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\ExceptionsManagerModule.h">
@@ -442,9 +439,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)DevSettings.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)HermesRuntimeHolder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)IDevSupportManager.h">
@@ -498,9 +492,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)V8JSIRuntimeHolder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)WebSocketJSExecutorFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -552,15 +543,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)tracing\tracing.h">
       <Filter>Header Files\tracing</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\NapiJsiV8RuntimeHolder.h">
-      <Filter>Header Files\JSI</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)HermesSamplingProfiler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)HermesShim.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\HttpModule.h">
       <Filter>Header Files\Modules</Filter>
@@ -722,6 +704,17 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\AbiViewProps.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\AbiViewComponentDescriptor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\UiaHelpers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)HermesRuntimeHolder.h">
+      <Filter>Hermes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)HermesSamplingProfiler.h">
+      <Filter>Hermes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(NodeApiJsiDir)src\ApiLoaders\HermesApi.h" />
+    <ClInclude Include="$(NodeApiJsiDir)src\ApiLoaders\HermesApi.inc" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\JsiApi.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\V8RuntimeHolder.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SafeLoadLibrary.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)tracing\rnw.wprp">
