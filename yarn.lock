@@ -124,17 +124,7 @@
     eslint-visitor-keys "^2.1.0"
     semver "^6.3.0"
 
-"@babel/generator@^7.20.0", "@babel/generator@^7.22.0", "@babel/generator@^7.22.3", "@babel/generator@^7.7.2":
-  version "7.22.3"
-  resolved "https://registry.yarnpkg.com/@babel/generator/-/generator-7.22.3.tgz#0ff675d2edb93d7596c5f6728b52615cfc0df01e"
-  integrity sha512-C17MW4wlk//ES/CJDL51kPNwl+qiBQyN7b9SKyVp11BLGFeSPoVaHrv+MNt8jwQFhQWowW88z1eeBx3pFz9v8A==
-  dependencies:
-    "@babel/types" "^7.22.3"
-    "@jridgewell/gen-mapping" "^0.3.2"
-    "@jridgewell/trace-mapping" "^0.3.17"
-    jsesc "^2.5.1"
-
-"@babel/generator@^7.22.5":
+"@babel/generator@^7.20.0", "@babel/generator@^7.22.0", "@babel/generator@^7.22.3", "@babel/generator@^7.22.5", "@babel/generator@^7.7.2":
   version "7.22.5"
   resolved "https://registry.yarnpkg.com/@babel/generator/-/generator-7.22.5.tgz#1e7bf768688acfb05cf30b2369ef855e82d984f7"
   integrity sha512-+lcUbnTRhd0jOewtFSedLyiPsD5tswKkbgcezOqqWFUVNEwoUTlpPOBmvhG7OXWLR4jMdv0czPGH5XbflnD1EA==
