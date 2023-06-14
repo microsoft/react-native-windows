@@ -62,8 +62,8 @@ class DevSupportManager final : public facebook::react::IDevSupportManager {
       return m_bundleStatus;
     }
 
-    void updateBundleStatus(bool isLastDownloadSucess, int64_t updateTimestamp) {
-      m_bundleStatus.m_isLastDownloadSucess = isLastDownloadSucess;
+    void updateBundleStatus(bool isLastDownloadSuccess, int64_t updateTimestamp) {
+      m_bundleStatus.m_isLastDownloadSuccess = isLastDownloadSuccess;
       m_bundleStatus.m_updateTimestamp = updateTimestamp;
     }
 
