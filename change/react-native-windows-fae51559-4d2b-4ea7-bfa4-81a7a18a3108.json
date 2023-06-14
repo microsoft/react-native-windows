@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "fix y-position of caret",
-  "packageName": "react-native-windows",
-  "email": "tatianakapos@microsoft.com",
-  "dependentChangeType": "patch"
-}

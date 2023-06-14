@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 13 Jun 2023 05:15:41 GMT and should not be manually modified.
+This log was last generated on Wed, 14 Jun 2023 05:16:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.665
+
+Wed, 14 Jun 2023 05:16:10 GMT
+
+### Changes
+
+- fix y-position of caret (tatianakapos@microsoft.com)
 
 ## 0.0.0-canary.664
 
