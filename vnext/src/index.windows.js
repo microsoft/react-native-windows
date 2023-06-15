@@ -472,7 +472,7 @@ module.exports = {
       .HandledEventPhase;
   },
   get ViewWindows(): any {
-    return require('./Libraries/Components/View/ViewWindows').ViewWindows;
+    return require('./Libraries/Components/View/View');
   },
   get AppTheme(): AppTheme {
     return require('./Libraries/AppTheme/AppTheme');

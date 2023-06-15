@@ -64,6 +64,7 @@ void TransferFrameworkElementProperties(const xaml::DependencyObject &oldView, c
   TransferProperty(oldView, newView, xaml::Automation::AutomationProperties::AutomationIdProperty());
   TransferProperty(oldView, newView, xaml::Automation::AutomationProperties::NameProperty());
   TransferProperty(oldView, newView, xaml::Automation::AutomationProperties::HelpTextProperty());
+  TransferProperty(oldView, newView, xaml::Automation::AutomationProperties::LevelProperty());
   TransferProperty(oldView, newView, xaml::Automation::AutomationProperties::LiveSettingProperty());
   TransferProperty(oldView, newView, xaml::Automation::AutomationProperties::PositionInSetProperty());
   TransferProperty(oldView, newView, xaml::Automation::AutomationProperties::SizeOfSetProperty());
