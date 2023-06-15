@@ -498,6 +498,12 @@ void ReactInstanceWin::Initialize() noexcept {
                       std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(winrt::to_string(tempPath));
                 }
               }
+
+              bool enableMultiThreadSupport{false};
+#ifdef USE_FABRIC
+              enableMultiThreadSupport = Microsoft::ReactNative::IsFabricEnabled(m_reactContext->Properties());
+#endif // USE_FABRIC
+
               devSettings->jsiRuntimeHolder = std::make_shared<Microsoft::ReactNative::V8RuntimeHolder>(
                   devSettings, m_jsMessageThread.Load(), std::move(preparedScriptStore), enableMultiThreadSupport);
               break;

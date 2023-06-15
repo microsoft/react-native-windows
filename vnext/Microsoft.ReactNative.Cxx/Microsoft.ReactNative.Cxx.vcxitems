@@ -35,6 +35,7 @@
         $(NodeApiJsiSrcDir);
         %(AdditionalIncludeDirectories)
       </AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>JSI_VERSION=6;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Midl>
       <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -162,8 +163,5 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\NodeApiJsiLoader.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)README.md" />
   </ItemGroup>
 </Project>

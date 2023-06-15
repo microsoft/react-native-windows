@@ -46,7 +46,6 @@
 #include <safeint.h>
 #include "PackagerConnection.h"
 
-#include <hermes/BytecodeVersion.h>
 #include "HermesRuntimeHolder.h"
 
 #if defined(USE_V8)
