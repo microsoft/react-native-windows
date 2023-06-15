@@ -461,7 +461,7 @@ export interface AccessibilityPropsWin32 {
    * @platform win32
    */
   accessibilityDescribedBy?: string | undefined;
-  'aria-describedby': ?string;
+  'aria-describedby'?: string;
 }
 
 export type Role =
