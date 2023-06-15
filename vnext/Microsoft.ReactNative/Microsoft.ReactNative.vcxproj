@@ -18,6 +18,7 @@
     <CppWinRTNamespaceMergeDepth>
     </CppWinRTNamespaceMergeDepth>
     <CppWinRTLibs>true</CppWinRTLibs>
+    <BuildMSRNCxxModule>false</BuildMSRNCxxModule>
     <BuildMSRNCxxReactCommon>false</BuildMSRNCxxReactCommon>
     <DesktopCompatible Condition="'$(UseWinUI3)'=='true'">true</DesktopCompatible>
   </PropertyGroup>
@@ -741,7 +742,7 @@
   <ItemGroup>
     <PackageReference Include="boost" Version="1.76.0.0" />
     <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" />
-    <PackageReference Include="ReactNative.Hermes.Windows" Version="$(HermesVersion)" />
+    <PackageReference Include="Microsoft.JavaScript.Hermes" Version="$(HermesVersion)" />
     <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" Condition="'$(OverrideWinUIPackage)'!='true'" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22000.194" />
     <PackageReference Include="$(V8PackageName)" Version="$(V8Version)" Condition="'$(UseV8)' == 'true'" />

@@ -14,9 +14,7 @@
 #include <memory>
 #include <string>
 
-#if defined(HERMES_ENABLE_DEBUGGER)
 #include <InspectorPackagerConnection.h>
-#endif
 
 namespace facebook {
 namespace react {
@@ -56,7 +54,6 @@ class DevSupportManager final : public facebook::react::IDevSupportManager {
  private:
   std::atomic_bool m_cancellation_token;
 
-#if defined(HERMES_ENABLE_DEBUGGER)
   std::shared_ptr<InspectorPackagerConnection> m_inspectorPackagerConnection;
 
   struct BundleStatusProvider : public InspectorPackagerConnection::IBundleStatusProvider {
@@ -73,7 +70,6 @@ class DevSupportManager final : public facebook::react::IDevSupportManager {
     InspectorPackagerConnection::BundleStatus m_bundleStatus;
   };
   std::shared_ptr<BundleStatusProvider> m_BundleStatusProvider = std::make_shared<BundleStatusProvider>();
-#endif
 };
 
 } // namespace Microsoft::ReactNative
