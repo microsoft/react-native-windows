@@ -423,10 +423,22 @@
     },
     {
       "type": "derived",
+      "file": "src/Libraries/Text/Text.win32.js",
+      "baseFile": "packages/react-native/Libraries/Text/Text.js",
+      "baseHash": "6aa0c6611ba260bf235610429481a638e61e5279"
+    },
+    {
+      "type": "derived",
       "file": "src/Libraries/Text/TextNativeComponent.win32.js",
       "baseFile": "packages/react-native/Libraries/Text/TextNativeComponent.js",
       "baseHash": "abcdb74e2fe1e491baaefdd0ba6369199b8032d0",
       "issue": 7074
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/Text/TextProps.win32.js",
+      "baseFile": "packages/react-native/Libraries/Text/TextProps.js",
+      "baseHash": "7ecbe61c439e5c6f79fe5ae262f063060fa6a24f"
     },
     {
       "type": "patch",

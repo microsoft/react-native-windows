@@ -393,11 +393,13 @@ export interface AccessibilityPropsWin32 {
    * @platform win32
    */
   accessibilityPositionInSet?: number;
+  'aria-posinset'?: number;
   /**
    * accessibilitySetSize
    * @platform win32
    */
   accessibilitySetSize?: ?number;
+  'aria-setsize'?: number;
 
   /**
    * accessibilityDescription provides more detailed information specific to the element (i.e. last edit date, full location for a file)
@@ -406,6 +408,7 @@ export interface AccessibilityPropsWin32 {
    *
    */
   accessibilityDescription?: string;
+  'aria-description'?: string;
 
   /**
    * Tells a person using a screen reader what kind of annotation they
@@ -430,6 +433,7 @@ export interface AccessibilityPropsWin32 {
    * @platform win32
    */
   accessibilityLevel?: number;
+  'aria-level'?: number | undefined;
 
   /**
    * Identifies the ItemType property, which is a text string describing the type of the automation element.
@@ -448,6 +452,7 @@ export interface AccessibilityPropsWin32 {
    * @platform win32
    */
   accessibilityControls?: string | undefined;
+  'aria-controls'?: string;
 
   /**
    * Windows Accessibility extensions for allowing other DOM elements to label or describe a given element.
@@ -456,6 +461,7 @@ export interface AccessibilityPropsWin32 {
    * @platform win32
    */
   accessibilityDescribedBy?: string | undefined;
+  'aria-describedby'?: string;
 }
 
 export type Role =
