@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 13 Jun 2023 16:25:28 GMT and should not be manually modified.
+This log was last generated on Thu, 15 Jun 2023 13:23:47 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.18
+
+Thu, 15 Jun 2023 13:23:47 GMT
+
+### Patches
+
+- Fix Hermes sampling profiler (#11033) (vmoroz@users.noreply.github.com)
+- ABI-safe Hermes API and new JSI for Node-API (vmorozov@microsoft.com)
+- Bump @react-native-windows/cli to v0.71.8
 
 ## 0.71.17
 

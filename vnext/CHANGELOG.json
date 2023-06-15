@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 15 Jun 2023 13:23:47 GMT",
+      "tag": "react-native-windows_v0.71.18",
+      "version": "0.71.18",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmoroz@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7a340bdc0265c205c6b21266fb43b4eb3fd6bba1",
+            "comment": "Fix Hermes sampling profiler (#11033)"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "7a340bdc0265c205c6b21266fb43b4eb3fd6bba1",
+            "comment": "ABI-safe Hermes API and new JSI for Node-API"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.71.8",
+            "commit": "7a340bdc0265c205c6b21266fb43b4eb3fd6bba1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 13 Jun 2023 16:25:28 GMT",
       "tag": "react-native-windows_v0.71.17",
       "version": "0.71.17",
