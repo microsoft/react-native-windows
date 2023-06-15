@@ -206,8 +206,12 @@ const View: React.AbstractComponent<
             <ViewNativeComponent
               {...otherProps}
               accessibilityControls={ariaControls ?? accessibilityControls} // Win32
-              accessibilityDescribedBy={ariaDescribedBy ?? accessibilityDescribedBy} // Win32
-              accessibilityDescription={ariaDescription ?? accessibilityDescription} // Win32
+              accessibilityDescribedBy={
+                ariaDescribedBy ?? accessibilityDescribedBy
+              } // Win32
+              accessibilityDescription={
+                ariaDescription ?? accessibilityDescription
+              } // Win32
               accessibilityLiveRegion={
                 ariaLive === 'off'
                   ? 'none'
@@ -216,7 +220,9 @@ const View: React.AbstractComponent<
               accessibilityLabel={ariaLabel ?? accessibilityLabel}
               accessibilityLevel={ariaLevel ?? accessibilityLevel} // Win32
               focusable={tabIndex !== undefined ? !tabIndex : focusable}
-              accessibilityPositionInSet={ariaPosinset ?? accessibilityPositionInSet} // Win32
+              accessibilityPositionInSet={
+                ariaPosinset ?? accessibilityPositionInSet
+              } // Win32
               accessibilitySetSize={ariaSetsize ?? accessibilitySetSize} // Win32
               accessibilityState={_accessibilityState}
               accessibilityRole={
