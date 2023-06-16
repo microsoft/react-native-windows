@@ -7,6 +7,7 @@ using TreeDumpLibrary;
 using Windows.Data.Json;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
@@ -74,9 +75,9 @@ namespace RNTesterApp
                 new AttachedProperty() { Name = "Top", Property = Microsoft.ReactNative.ViewPanel.TopProperty },
                 new AttachedProperty() { Name = "Left", Property = Microsoft.ReactNative.ViewPanel.LeftProperty },
                 new AttachedProperty() { Name = "Tooltip", Property = Windows.UI.Xaml.Controls.ToolTipService.ToolTipProperty },
-                new AttachedProperty() { Name = "AutomationLevel", Property = Windows.UI.Xaml.AutomationProperties.LevelProperty },
-                new AttachedProperty() { Name = "AutomationSizeOfSet", Property = Windows.UI.Xaml.AutomationProperties.SizeOfSetProperty },
-                new AttachedProperty() { Name = "AutomationPositionInSet", Property = Windows.UI.Xaml.AutomationProperties.PositionInSetProperty },
+                new AttachedProperty() { Name = "AutomationLevel", Property = Windows.UI.Xaml.Automation.AutomationProperties.LevelProperty },
+                new AttachedProperty() { Name = "AutomationSizeOfSet", Property = Windows.UI.Xaml.Automation.AutomationProperties.SizeOfSetProperty },
+                new AttachedProperty() { Name = "AutomationPositionInSet", Property = Windows.UI.Xaml.Automation.AutomationProperties.PositionInSetProperty },
             };
             var rootDump = VisualTreeDumper.DumpTree(this, null, additionalProperties, attachedProperties);
             var element = VisualTreeDumper.FindElementByAutomationId(JsonObject.Parse(rootDump), accessibilityId);
