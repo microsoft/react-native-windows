@@ -36,7 +36,7 @@ namespace Microsoft::React {
 #pragma region FileReaderModule
 
 FileReaderModule::FileReaderModule(weak_ptr<IBlobPersistor> weakBlobPersistor) noexcept
-    : m_weakBlobPersistor{weakBlobPersistor}, m_resource{IFileReaderResource::Make()} {}
+    : m_resource{IFileReaderResource::Make(weakBlobPersistor)} {}
 
 FileReaderModule::~FileReaderModule() noexcept /*override*/
 {}
@@ -60,8 +60,7 @@ std::vector<module::CxxModule::Method> FileReaderModule::getMethods() {
        /// </param>
        ///
        "readAsDataURL",
-       [blobPersistor = m_weakBlobPersistor.lock(), resource = m_resource](
-           dynamic args, Callback resolve, Callback reject) {
+       [resource = m_resource](dynamic args, Callback resolve, Callback reject) {
          auto blob = jsArgAsObject(args, 0);
 
          auto blobId = blob["blobId"].asString();
@@ -81,7 +80,6 @@ std::vector<module::CxxModule::Method> FileReaderModule::getMethods() {
              offset,
              size,
              std::move(type),
-             blobPersistor,
              [&resolve](string &&message) { resolve({std::move(message)}); },
              [&reject](string &&message) { reject({std::move(message)}); });
        }},
@@ -93,8 +91,7 @@ std::vector<module::CxxModule::Method> FileReaderModule::getMethods() {
        /// </param>
        ///
        "readAsText",
-       [blobPersistor = m_weakBlobPersistor.lock(), resource = m_resource](
-           dynamic args, Callback resolve, Callback reject) {
+       [resource = m_resource](dynamic args, Callback resolve, Callback reject) {
          auto blob = jsArgAsObject(args, 0);
          auto encoding = jsArgAsString(args, 1); // Default: "UTF-8"
 
@@ -107,7 +104,6 @@ std::vector<module::CxxModule::Method> FileReaderModule::getMethods() {
              offset,
              size,
              std::move(encoding),
-             blobPersistor,
              [&resolve](string &&message) { resolve({std::move(message)}); },
              [&reject](string &&message) { reject({std::move(message)}); });
        }}};
@@ -120,7 +116,10 @@ std::vector<module::CxxModule::Method> FileReaderModule::getMethods() {
 #pragma region FileReaderTurboModule
 
 void FileReaderTurboModule::Initialize(msrn::ReactContext const &reactContext) noexcept {
-  m_resource = IFileReaderResource::Make();
+  auto propId = msrn::ReactPropertyId<msrn::ReactNonAbiValue<weak_ptr<IBlobPersistor>>>{L"Blob.Persistor"};
+  auto props = reactContext.Properties();
+  auto prop = props.Get(propId);
+  m_resource = IFileReaderResource::Make(prop.Value());
 }
 
 ///
@@ -130,10 +129,6 @@ void FileReaderTurboModule::Initialize(msrn::ReactContext const &reactContext) n
 /// </param>
 ///
 void FileReaderTurboModule::ReadAsDataUrl(msrn::JSValue &&data, msrn::ReactPromise<string> &&result) noexcept {
-  if (!m_blobPersistor)
-    return result.Reject(L"Could not find Blob persistor");
-  // TODO: keep?
-
   auto &array = data.AsArray();
   auto &blob = data[0].AsObject();
   auto blobId = blob["blobId"].AsString();
@@ -153,7 +148,6 @@ void FileReaderTurboModule::ReadAsDataUrl(msrn::JSValue &&data, msrn::ReactPromi
       offset,
       size,
       std::move(type),
-      m_blobPersistor,
       [&result](string &&message) { result.Resolve(std::move(message)); },
       [&result](string &&message) { result.Reject(winrt::to_hstring(std::move(message)).c_str()); });
 }
@@ -169,10 +163,6 @@ void FileReaderTurboModule::ReadAsText(
     msrn::JSValue &&data,
     string &&encoding,
     msrn::ReactPromise<string> &&result) noexcept {
-  if (!m_blobPersistor)
-    return result.Reject(L"Could not find Blob persistor");
-  // TODO: Keep?
-
   auto &args = data.AsArray();
   auto &blob = args[0].AsObject();
 
@@ -185,7 +175,6 @@ void FileReaderTurboModule::ReadAsText(
       offset,
       size,
       std::move(encoding),
-      m_blobPersistor,
       [&result](string &&message) { result.Resolve(std::move(message)); },
       [&result](string &&message) { result.Reject(winrt::to_hstring(std::move(message)).c_str()); });
 }

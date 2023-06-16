@@ -50,7 +50,6 @@ class FileReaderModule : public facebook::xplat::module::CxxModule {
 #pragma endregion CxxModule
 
  private:
-  std::weak_ptr<IBlobPersistor> m_weakBlobPersistor;
   std::shared_ptr<IFileReaderResource> m_resource;
 };
 
@@ -71,7 +70,6 @@ struct FileReaderTurboModule {
       winrt::Microsoft::ReactNative::ReactPromise<std::string> &&result) noexcept;
 
  private:
-  std::shared_ptr<IBlobPersistor> m_blobPersistor;
   std::shared_ptr<IFileReaderResource> m_resource;
 };
 
