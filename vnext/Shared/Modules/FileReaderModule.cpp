@@ -27,8 +27,7 @@ using std::weak_ptr;
 using winrt::Windows::Foundation::IInspectable;
 
 namespace {
-// TODO: EW! Rename!
-constexpr char moduleName0[] = "FileReaderModule";
+constexpr char s_moduleName[] = "FileReaderModule";
 } // namespace
 
 namespace Microsoft::React {
@@ -44,7 +43,7 @@ FileReaderModule::~FileReaderModule() noexcept /*override*/
 #pragma region CxxModule
 
 string FileReaderModule::getName() {
-  return moduleName0;
+  return s_moduleName;
 }
 
 std::map<string, dynamic> FileReaderModule::getConstants() {
@@ -182,7 +181,7 @@ void FileReaderTurboModule::ReadAsText(
 #pragma endregion FileReaderTurboModule
 
 /*extern*/ const char *GetFileReaderModuleName() noexcept {
-  return moduleName0;
+  return s_moduleName;
 }
 
 /*extern*/ std::unique_ptr<module::CxxModule> CreateFileReaderModule(
