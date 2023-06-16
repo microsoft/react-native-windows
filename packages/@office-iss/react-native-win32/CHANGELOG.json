@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 16 Jun 2023 05:14:19 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.203",
+      "version": "0.0.0-canary.203",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "2a1b4513ac0a894212d82aea0f0970cfbe0239a2",
+            "comment": "Add support for more aria props"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 13 Jun 2023 05:15:41 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.202",
       "version": "0.0.0-canary.202",

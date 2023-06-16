@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Tue, 13 Jun 2023 05:15:41 GMT and should not be manually modified.
+This log was last generated on Fri, 16 Jun 2023 05:14:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.203
+
+Fri, 16 Jun 2023 05:14:19 GMT
+
+### Changes
+
+- Add support for more aria props (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.202
 
