@@ -464,11 +464,11 @@ module.exports = {
     );
   },
   get EventPhase(): any {
-    return require('./Libraries/Components/Keyboard/KeyboardExtProps')
+    return require('./Libraries/Components/View/ViewPropTypes')
       .HandledEventPhase;
   },
   get HandledEventPhase(): any {
-    return require('./Libraries/Components/Keyboard/KeyboardExtProps')
+    return require('./Libraries/Components/View/ViewPropTypes')
       .HandledEventPhase;
   },
   get ViewWindows(): any {

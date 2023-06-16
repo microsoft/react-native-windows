@@ -436,6 +436,17 @@ type IOSViewProps = $ReadOnly<{|
 |}>;
 
 // [Windows
+export const EventPhase = {
+  None: 0,
+  Capturing: 1,
+  AtTarget: 2,
+  Bubbling: 3,
+}
+
+export const HandledEventPhase = {
+  Capturing: EventPhase.Capturing,
+  Bubbling = EventPhase.Bubbling,
+}
 
 export type HandledKeyboardEvent = $ReadOnly<{|
   altKey?: ?boolean,
