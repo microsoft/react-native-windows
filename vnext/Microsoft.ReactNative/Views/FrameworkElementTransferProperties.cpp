@@ -87,19 +87,11 @@ void TransferFrameworkElementProperties(const xaml::DependencyObject &oldView, c
       newView,
       winrt::Microsoft::ReactNative::DynamicAutomationProperties::AccessibilityStateCheckedProperty());
   TransferProperty(
-      oldView,
-      newView,
-      winrt::Microsoft::ReactNative::DynamicAutomationProperties::AccessibilityStateUncheckedProperty());
-  TransferProperty(
       oldView, newView, winrt::Microsoft::ReactNative::DynamicAutomationProperties::AccessibilityStateBusyProperty());
   TransferProperty(
       oldView,
       newView,
       winrt::Microsoft::ReactNative::DynamicAutomationProperties::AccessibilityStateExpandedProperty());
-  TransferProperty(
-      oldView,
-      newView,
-      winrt::Microsoft::ReactNative::DynamicAutomationProperties::AccessibilityStateCollapsedProperty());
   TransferProperty(
       oldView, newView, winrt::Microsoft::ReactNative::DynamicAutomationProperties::AccessibilityValueMinProperty());
   TransferProperty(
