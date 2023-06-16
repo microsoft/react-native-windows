@@ -319,12 +319,6 @@
       "baseHash": "2687db4c3ff9516440a308bb9da23b0421a8f49b"
     },
     {
-      "type": "derived",
-      "file": "src/Libraries/Components/TextInput/TextInput.d.ts",
-      "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.d.ts",
-      "baseHash": "d7725e024164ff4e3dbef5fdcd563d8a9a0d6046"
-    },
-    {
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",

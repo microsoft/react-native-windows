@@ -73,7 +73,7 @@ namespace RNTesterApp
             var attachedProperties = new AttachedProperty[] {
                 new AttachedProperty() { Name = "Top", Property = Microsoft.ReactNative.ViewPanel.TopProperty },
                 new AttachedProperty() { Name = "Left", Property = Microsoft.ReactNative.ViewPanel.LeftProperty },
-                new AttachedProperty() { Name = "Tooltip", Property = Windows.UI.Xaml.Controls.ToolTipService.TooltipProperty },
+                new AttachedProperty() { Name = "Tooltip", Property = Windows.UI.Xaml.Controls.ToolTipService.ToolTipProperty },
                 new AttachedProperty() { Name = "AutomationLevel", Property = Windows.UI.Xaml.AutomationProperties.LevelProperty },
                 new AttachedProperty() { Name = "AutomationSizeOfSet", Property = Windows.UI.Xaml.AutomationProperties.SizeOfSetProperty },
                 new AttachedProperty() { Name = "AutomationPositionInSet", Property = Windows.UI.Xaml.AutomationProperties.PositionInSetProperty },
