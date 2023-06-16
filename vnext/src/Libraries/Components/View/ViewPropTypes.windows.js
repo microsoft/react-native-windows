@@ -445,7 +445,7 @@ export const EventPhase = {
 
 export const HandledEventPhase = {
   Capturing: EventPhase.Capturing,
-  Bubbling = EventPhase.Bubbling,
+  Bubbling: EventPhase.Bubbling,
 }
 
 export type HandledKeyboardEvent = $ReadOnly<{|
