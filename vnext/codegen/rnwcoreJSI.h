@@ -400,22 +400,24 @@ private:
 
   #pragma mark - NativeAnimatedModuleBaseEndResult
 
-template <typename P0>
+template <typename P0, typename P1>
 struct NativeAnimatedModuleBaseEndResult {
   P0 finished;
+  P1 value;
   bool operator==(const NativeAnimatedModuleBaseEndResult &other) const {
-    return finished == other.finished;
+    return finished == other.finished && value == other.value;
   }
 };
 
-template <typename P0>
+template <typename P0, typename P1>
 struct NativeAnimatedModuleBaseEndResultBridging {
-  static NativeAnimatedModuleBaseEndResult<P0> fromJs(
+  static NativeAnimatedModuleBaseEndResult<P0, P1> fromJs(
       jsi::Runtime &rt,
       const jsi::Object &value,
       const std::shared_ptr<CallInvoker> &jsInvoker) {
-    NativeAnimatedModuleBaseEndResult<P0> result{
-      bridging::fromJs<P0>(rt, value.getProperty(rt, "finished"), jsInvoker)};
+    NativeAnimatedModuleBaseEndResult<P0, P1> result{
+      bridging::fromJs<P0>(rt, value.getProperty(rt, "finished"), jsInvoker),
+      bridging::fromJs<P1>(rt, value.getProperty(rt, "value"), jsInvoker)};
     return result;
   }
 
@@ -423,14 +425,20 @@ struct NativeAnimatedModuleBaseEndResultBridging {
   static bool finishedToJs(jsi::Runtime &rt, P0 value) {
     return bridging::toJs(rt, value);
   }
+  static double valueToJs(jsi::Runtime &rt, P1 value) {
+    return bridging::toJs(rt, value);
+  }
 #endif
 
   static jsi::Object toJs(
     jsi::Runtime &rt,
-    const NativeAnimatedModuleBaseEndResult<P0> &value,
+    const NativeAnimatedModuleBaseEndResult<P0, P1> &value,
     const std::shared_ptr<CallInvoker> &jsInvoker) {
       auto result = facebook::jsi::Object(rt);
           result.setProperty(rt, "finished", bridging::toJs(rt, value.finished, jsInvoker));
+    if (value.value) {
+            result.setProperty(rt, "value", bridging::toJs(rt, value.value.value(), jsInvoker));
+          }
           return result;
         }
       };
@@ -732,22 +740,24 @@ private:
 
   #pragma mark - NativeAnimatedTurboModuleBaseEndResult
 
-template <typename P0>
+template <typename P0, typename P1>
 struct NativeAnimatedTurboModuleBaseEndResult {
   P0 finished;
+  P1 value;
   bool operator==(const NativeAnimatedTurboModuleBaseEndResult &other) const {
-    return finished == other.finished;
+    return finished == other.finished && value == other.value;
   }
 };
 
-template <typename P0>
+template <typename P0, typename P1>
 struct NativeAnimatedTurboModuleBaseEndResultBridging {
-  static NativeAnimatedTurboModuleBaseEndResult<P0> fromJs(
+  static NativeAnimatedTurboModuleBaseEndResult<P0, P1> fromJs(
       jsi::Runtime &rt,
       const jsi::Object &value,
       const std::shared_ptr<CallInvoker> &jsInvoker) {
-    NativeAnimatedTurboModuleBaseEndResult<P0> result{
-      bridging::fromJs<P0>(rt, value.getProperty(rt, "finished"), jsInvoker)};
+    NativeAnimatedTurboModuleBaseEndResult<P0, P1> result{
+      bridging::fromJs<P0>(rt, value.getProperty(rt, "finished"), jsInvoker),
+      bridging::fromJs<P1>(rt, value.getProperty(rt, "value"), jsInvoker)};
     return result;
   }
 
@@ -755,14 +765,20 @@ struct NativeAnimatedTurboModuleBaseEndResultBridging {
   static bool finishedToJs(jsi::Runtime &rt, P0 value) {
     return bridging::toJs(rt, value);
   }
+  static double valueToJs(jsi::Runtime &rt, P1 value) {
+    return bridging::toJs(rt, value);
+  }
 #endif
 
   static jsi::Object toJs(
     jsi::Runtime &rt,
-    const NativeAnimatedTurboModuleBaseEndResult<P0> &value,
+    const NativeAnimatedTurboModuleBaseEndResult<P0, P1> &value,
     const std::shared_ptr<CallInvoker> &jsInvoker) {
       auto result = facebook::jsi::Object(rt);
           result.setProperty(rt, "finished", bridging::toJs(rt, value.finished, jsInvoker));
+    if (value.value) {
+            result.setProperty(rt, "value", bridging::toJs(rt, value.value.value(), jsInvoker));
+          }
           return result;
         }
       };
@@ -6113,7 +6129,7 @@ enum SampleTurboModuleEnumInt { A, B };
 
 template <>
 struct Bridging<SampleTurboModuleEnumInt> {
-  static SampleTurboModuleEnumInt fromJs(jsi::Runtime &rt, const jsi::Value &rawValue, const std::shared_ptr<CallInvoker> &jsInvoker) {
+  static SampleTurboModuleEnumInt fromJs(jsi::Runtime &rt, const jsi::Value &rawValue) {
     double value = (double)rawValue.asNumber();
     if (value == 23) {
       return SampleTurboModuleEnumInt::A;
@@ -6124,7 +6140,7 @@ struct Bridging<SampleTurboModuleEnumInt> {
     }
   }
 
-  static jsi::Value toJs(jsi::Runtime &rt, SampleTurboModuleEnumInt value, const std::shared_ptr<CallInvoker> &jsInvoker) {
+  static jsi::Value toJs(jsi::Runtime &rt, SampleTurboModuleEnumInt value) {
     if (value == SampleTurboModuleEnumInt::A) {
       return bridging::toJs(rt, 23);
     } else if (value == SampleTurboModuleEnumInt::B) {

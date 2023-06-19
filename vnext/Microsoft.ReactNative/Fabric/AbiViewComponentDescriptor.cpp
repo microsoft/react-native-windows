@@ -144,8 +144,7 @@ facebook::react::State::Shared AbiViewComponentDescriptor::createState(
 }
 
 facebook::react::ShadowNodeFamily::Shared AbiViewComponentDescriptor::createFamily(
-    facebook::react::ShadowNodeFamilyFragment const &fragment,
-    facebook::react::SharedEventTarget eventTarget) const {
+    facebook::react::ShadowNodeFamilyFragment const &fragment) const {
   auto eventEmitter =
       std::make_shared<ConcreteEventEmitter const>(std::move(eventTarget), fragment.tag, eventDispatcher_);
   return std::make_shared<facebook::react::ShadowNodeFamily>(
