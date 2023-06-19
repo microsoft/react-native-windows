@@ -93,7 +93,7 @@ namespace facebook {
         jsi::ScriptVersion_t scriptVersion;
         jsi::JSRuntimeVersion_t runtimeVersion;
         uint64_t sizeInBytes;
-        // TODO: hash of the code cache buffer itself
+        std::uint8_t hash[32];
       };
 
       struct PreparedScriptSuffix {
@@ -274,6 +274,20 @@ namespace facebook {
         return nullptr;
       }
 
+      Microsoft::ReactNative::SHA256Hasher hasher;
+      hasher.HashData(reinterpret_cast<const std::uint8_t*>(buffer->data()) + sizeof(PreparedScriptPrefix), prefix->sizeInBytes);
+      std::vector<std::uint8_t> hashBuffer = hasher.GetHashValue();
+
+      if (hashBuffer.size() < sizeof(prefix->hash)) {
+        // Unexpected hash size.
+        return nullptr;
+      }
+
+      if (memcmp(hashBuffer.data(), prefix->hash, sizeof(prefix->hash)) != 0) {
+        // Hash doesn't match. Store is possibly corrupted. It is safer to bail out.
+        return nullptr;
+      }
+
       const PreparedScriptSuffix* suffix = reinterpret_cast<const PreparedScriptSuffix*>(
         buffer->data() + sizeof(PreparedScriptPrefix) + prefix->sizeInBytes);
       if (strncmp(suffix->eof, PERSIST_EOF, sizeof(suffix->eof)) != 0) {
@@ -301,6 +315,12 @@ namespace facebook {
       prefix->scriptVersion = scriptMetadata.version;
       prefix->runtimeVersion = runtimeMetadata.version;
       prefix->sizeInBytes = preparedScript->size();
+
+      Microsoft::ReactNative::SHA256Hasher hasher;
+      hasher.HashData(preparedScript->data(), preparedScript->size());
+      std::vector<std::uint8_t> hashBuffer = hasher.GetHashValue();
+
+      memcpy_s(prefix->hash, sizeof(prefix->hash), hashBuffer.data(), sizeof(prefix->hash));
 
       memcpy_s(
         newBuffer->data() + sizeof(PreparedScriptPrefix),

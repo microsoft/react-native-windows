@@ -1,87 +1,78 @@
 #include "pch.h"
 #include "Hasher.h"
 
-SHA256Hasher::SHA256Hasher()
-{
-  NTSTATUS status;
-  if (!NT_SUCCESS(status = BCryptOpenAlgorithmProvider(&m_hAlg, BCRYPT_SHA256_ALGORITHM, NULL, 0)))
+#ifndef NT_SUCCESS
+#define NT_SUCCESS(Status) ((NTSTATUS)(Status) >= 0)
+#endif // NT_SUCCESS
+
+namespace Microsoft::ReactNative {
+
+  SHA256Hasher::SHA256Hasher()
   {
-    // Failed to load and initialize a CNG provider
-    throw status;
-  }
-
-  DWORD cbObject;
-  DWORD cbData;
-  if (!NT_SUCCESS(status = BCryptGetProperty(m_hAlg, BCRYPT_OBJECT_LENGTH, (PBYTE)&cbObject, sizeof(DWORD), &cbData, 0)))
-  {
-    // Failed to retrieve the value for BCRYPT_OBJECT_LENGTH
-    throw status;
-  }
-
-  m_pbHashObject = new BYTE[cbObject];
-  if (!NT_SUCCESS(status = BCryptCreateHash(m_hAlg, &m_hHash, m_pbHashObject, cbObject, NULL, 0, 0)))
-  {
-    // Failed to create hash
-    throw status;
-  }
-}
-
-SHA256Hasher::~SHA256Hasher()
-{
-  BCryptCloseAlgorithmProvider(m_hAlg, 0);
-  BCryptDestroyHash(m_hHash);
-  delete[] m_pbHashObject;
-}
-
-void SHA256Hasher::HashData(const void* pb, size_t cb, const char* szDesc)
-{
-  NTSTATUS status;
-
-  while (cb > LONG_MAX)
-  {
-    if (!NT_SUCCESS(status = BCryptHashData(m_hHash, (PBYTE)pb, LONG_MAX, 0)))
+    NTSTATUS status;
+    if (!NT_SUCCESS(status = BCryptOpenAlgorithmProvider(&m_hAlg, BCRYPT_SHA256_ALGORITHM, NULL, 0)))
     {
-      // Failed to perform one way hash
+      // Failed to load and initialize a CNG provider
       throw status;
     }
-    pb = (BYTE*)pb + LONG_MAX;
-    cb -= LONG_MAX;
+
+    DWORD cbObject;
+    DWORD cbData;
+    if (!NT_SUCCESS(status = BCryptGetProperty(m_hAlg, BCRYPT_OBJECT_LENGTH, (PBYTE)&cbObject, sizeof(DWORD), &cbData, 0)))
+    {
+      // Failed to retrieve the value for BCRYPT_OBJECT_LENGTH
+      throw status;
+    }
+
+    m_hashObject.resize(cbObject);
+    if (!NT_SUCCESS(status = BCryptCreateHash(m_hAlg, &m_hHash, m_hashObject.data(), static_cast<ULONG>(m_hashObject.size()), NULL, 0, 0)))
+    {
+      // Failed to create hash
+      throw status;
+    }
   }
-  if (!NT_SUCCESS(status = BCryptHashData(m_hHash, (PBYTE)pb, (DWORD)cb, 0)))
+
+  SHA256Hasher::~SHA256Hasher()
   {
-    // Failed to perform final one way hash
-    throw status;
+    BCryptCloseAlgorithmProvider(m_hAlg, 0);
+    BCryptDestroyHash(m_hHash);
   }
-}
 
-wstring SHA256Hasher::GetHashValue()
-{
-  PBYTE pbHashValue;
-  DWORD cbHashValue;
-  DWORD cbData;
-  NTSTATUS status;
-
-  if (!NT_SUCCESS(status = BCryptGetProperty(m_hAlg, BCRYPT_HASH_LENGTH, (PBYTE)&cbHashValue, sizeof(DWORD), &cbData, 0)))
+  void SHA256Hasher::HashData(const void* pb, size_t cb)
   {
-    // Failed to retrieve the value for BCRYPT_HASH_LENGTH
-    throw status;
+    if (cb > LONG_MAX)
+    {
+      // Input too large
+      throw E_INVALIDARG;
+    }
+
+    NTSTATUS status;
+    if (!NT_SUCCESS(status = BCryptHashData(m_hHash, (PBYTE)pb, (DWORD)cb, 0)))
+    {
+      // Failed to perform final one way hash
+      throw status;
+    }
   }
 
-  pbHashValue = new BYTE[cbHashValue];
-  if (!NT_SUCCESS(status = BCryptFinishHash(m_hHash, pbHashValue, cbHashValue, 0)))
+  std::vector<std::uint8_t> SHA256Hasher::GetHashValue()
   {
-    // Failed to retrieve hash
-    throw status;
-  }
+    DWORD hashLength;
+    DWORD cbData;
+    NTSTATUS status;
 
-  wstring result;
-  result.reserve(cbHashValue * 2);
-  for (DWORD i = 0; i < cbHashValue; i++)
-  {
-    result.push_back(tohex(pbHashValue[i] >> 4));
-    result.push_back(tohex(pbHashValue[i] & 15));
-  }
+    if (!NT_SUCCESS(status = BCryptGetProperty(m_hAlg, BCRYPT_HASH_LENGTH, (PBYTE)&hashLength, sizeof(DWORD), &cbData, 0)))
+    {
+      // Failed to retrieve the value for BCRYPT_HASH_LENGTH
+      throw status;
+    }
 
-  delete[] pbHashValue;
-  return result;
-}
+    std::vector<uint8_t> hashValue(hashLength, 0);
+    if (!NT_SUCCESS(status = BCryptFinishHash(m_hHash, &hashValue[0], static_cast<ULONG>(hashValue.size()), 0)))
+    {
+      // Failed to retrieve hash
+      throw status;
+    }
+
+    return hashValue;
+  }
+} // namespace Microsoft::ReactNative
