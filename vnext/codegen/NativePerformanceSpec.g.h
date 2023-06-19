@@ -27,7 +27,7 @@ struct PerformanceSpec_ReactNativeStartupTiming {
 
 struct PerformanceSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(std::string, double, double) noexcept>{0, L"mark"},
+      Method<void(std::string, double) noexcept>{0, L"mark"},
       Method<void(std::string, double, double, double, std::string, std::string) noexcept>{1, L"measure"},
       SyncMethod<::React::JSValue() noexcept>{2, L"getSimpleMemoryInfo"},
       SyncMethod<PerformanceSpec_ReactNativeStartupTiming() noexcept>{3, L"getReactNativeStartupTiming"},
@@ -40,8 +40,8 @@ struct PerformanceSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "mark",
-          "    REACT_METHOD(mark) void mark(std::string name, double startTime, double duration) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(mark) static void mark(std::string name, double startTime, double duration) noexcept { /* implementation */ }\n");
+          "    REACT_METHOD(mark) void mark(std::string name, double startTime) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(mark) static void mark(std::string name, double startTime) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "measure",

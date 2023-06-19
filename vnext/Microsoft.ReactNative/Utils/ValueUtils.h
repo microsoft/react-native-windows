@@ -20,7 +20,8 @@ struct JSValue;
 
 namespace Microsoft::ReactNative {
 
-xaml::Media::Brush BrushFromColorObject(winrt::hstring resourceName);
+xaml::Media::Brush BrushFromColorObject(const std::string &resourceName);
+xaml::Media::Brush BrushFromColorObject(const std::vector<std::string> &resourceNames);
 xaml::Media::Brush BrushFromColorObject(const folly::dynamic &d);
 xaml::Media::Brush BrushFromColorObject(const winrt::Microsoft::ReactNative::JSValue &v);
 xaml::Media::SolidColorBrush SolidBrushFromColor(winrt::Windows::UI::Color color);

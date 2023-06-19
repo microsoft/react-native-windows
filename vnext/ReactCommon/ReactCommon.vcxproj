@@ -106,6 +106,7 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\SystraceSection.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSIExecutor.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSINativeModules.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector\InspectorInterfaces.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\logger\react_native_log.h" />
     <ClInclude Include="$(YogaDir)\yoga\YGEnums.h" />
     <ClInclude Include="$(YogaDir)\yoga\YGMacros.h" />
@@ -127,6 +128,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\JSIDynamic.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSIExecutor.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSINativeModules.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector\InspectorInterfaces.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\logger\react_native_log.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\reactperflogger\reactperflogger\BridgeNativeModulePerfLogger.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\log.cpp" />
@@ -160,11 +162,13 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModule.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleBinding.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleUtils.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\PropsParserContext.h" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\bridging\LongLivedObject.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboCxxModule.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModule.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleBinding.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleUtils.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\PropsParserContext.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\samples\ReactCommon\NativeSampleTurboCxxModuleSpecJSI.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\samples\ReactCommon\SampleTurboCxxModule.cpp" />
   </ItemGroup>
@@ -176,6 +180,52 @@
   <ItemGroup>
     <PackageReference Include="boost" Version="1.76.0.0" />
   </ItemGroup>
+  <PropertyGroup>
+    <NodeApiJsiZipDir>$(NodeApiJsiDir)..\.node-api-jsi-zip</NodeApiJsiZipDir>
+    <NodeApiJsiZipFile>$(NodeApiJsiZipDir)\node-api-jsi-$(NodeApiJsiCommitHash).zip</NodeApiJsiZipFile>
+    <CGManifestFile>$(MSBuildThisFileDirectory)cgmanifest.json</CGManifestFile>
+  </PropertyGroup>
+  <Target Name="DownloadNodeApiJsi" BeforeTargets="PrepareForBuild" Inputs="$(NodeApiJsiZipFile)" Outputs="$(NodeApiJsiZipFile)">
+    <Message Text="Downloading node-api-jsi..." Importance="High" />
+    <DownloadFile
+      SourceUrl="https://github.com/microsoft/node-api-jsi/archive/$(NodeApiJsiCommitHash).zip"
+      DestinationFileName="$(NodeApiJsiZipFile)"
+      DestinationFolder="$(NodeApiJsiZipDir)"
+      Retries="10" />
+  </Target>
+  <Target Name="UnzipNodeApiJsi" BeforeTargets="PrepareForBuild" DependsOnTargets="DownloadNodeApiJsi">
+    <Message Text="Unzipping node-api-jsi to $([MSBuild]::NormalizePath($(NodeApiJsiDir)..))." Importance="High"
+      Condition="!Exists('$(NodeApiJsiDir)src\NodeApiJsiRuntime.h')" />
+    <Unzip
+      Condition="!Exists('$(NodeApiJsiDir)src\NodeApiJsiRuntime.h')"
+      SourceFiles="$(NodeApiJsiZipFile)"
+      DestinationFolder="$([MSBuild]::NormalizePath($(NodeApiJsiDir)..))"
+      OverwriteReadOnlyFiles="true" />
+  </Target>
+  <Target Name="WriteCGManifest" BeforeTargets="PrepareForBuild" DependsOnTargets="DownloadNodeApiJsi" Inputs="$(NodeApiJsiZipFile)" Outputs="$(CGManifestFile)">
+    <PropertyGroup>
+      <CGManifestText>{
+    "$schema": "https://json.schemastore.org/component-detection-manifest.json",
+    "Registrations": [
+        {
+            "Component": {
+                "Type": "git",
+                "Git": {
+                  "RepositoryUrl": "https://github.com/microsoft/node-api-jsi",
+                  "CommitHash": "$(NodeApiJsiCommitHash)"
+                }
+            },
+            "DevelopmentDependency": false
+        }
+    ]
+}</CGManifestText>
+    </PropertyGroup>
+    <Message Text="Generating $(CGManifestFile)." Importance="High" />
+    <WriteLinesToFile
+      File="$(CGManifestFile)"
+      Overwrite="true"
+      Lines="$(CGManifestText)" />
+  </Target>
   <Target Name="EnsureNodeModuleBuildImports" BeforeTargets="PrepareForBuild">
     <Error Condition="!Exists('$(ReactNativeDir)')" Text="This project references code in the node_modules folder that is missing on this computer.  Use `yarn install` to download them." />
     <Error Condition="!Exists('$(YogaDir)')" Text="This project references code in the node_modules folder that is missing on this computer.  Use `yarn install` to download them." />
@@ -185,7 +235,11 @@
   </ItemGroup>
   <Target Name="Deploy" />
   <!-- Reenable this task if we need to temporarily replace any folly files for fixes, while we wait for PRs to land in folly -->
-  <Target Name="ApplyReactCommonTemporaryPatch" BeforeTargets="PrepareForBuild">
+  <Target Name="ApplyReactCommonTemporaryPatch" BeforeTargets="PrepareForBuild" DependsOnTargets="UnzipNodeApiJsi">
+    <ItemGroup>
+      <NodeApiJsiFiles Include="$([MSBuild]::NormalizePath($(NodeApiJsiDir)..))\jsi\**\*.*" />
+   </ItemGroup>
+    <Copy DestinationFiles="@(NodeApiJsiFiles->'$(ReactNativeDir)\ReactCommon\jsi\%(RecursiveDir)%(Filename)%(Extension)')" SourceFiles="@(NodeApiJsiFiles)" />
     <Copy DestinationFiles="@(TemporaryReactCommonPatchFiles->'$(ReactNativeDir)\ReactCommon\%(RecursiveDir)%(Filename)%(Extension)')" SourceFiles="@(TemporaryReactCommonPatchFiles)" />
   </Target>
 </Project>

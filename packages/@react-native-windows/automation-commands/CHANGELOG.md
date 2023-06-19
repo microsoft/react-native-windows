@@ -1,8 +1,133 @@
 # Change Log - @react-native-windows/automation-commands
 
-This log was last generated on Mon, 08 May 2023 17:41:03 GMT and should not be manually modified.
+This log was last generated on Wed, 14 Jun 2023 05:16:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.106
+
+Wed, 14 Jun 2023 05:16:10 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.4
+
+## 0.1.105
+
+Tue, 13 Jun 2023 05:15:41 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.3
+- Bump @rnw-scripts/eslint-config to v1.2.0
+
+## 0.1.104
+
+Fri, 09 Jun 2023 05:15:18 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.2
+
+## 0.1.103
+
+Thu, 08 Jun 2023 05:15:29 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.1
+
+## 0.1.102
+
+Wed, 07 Jun 2023 05:16:11 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.0
+- Bump @rnw-scripts/just-task to v2.3.11
+
+## 0.1.101
+
+Tue, 06 Jun 2023 19:06:43 GMT
+
+### Patches
+
+- integrate RN nightly 5/19/23 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/automation-channel to v0.11.7
+- Bump @rnw-scripts/just-task to v2.3.10
+
+## 0.1.100
+
+Thu, 01 Jun 2023 05:14:54 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.11.6
+
+## 0.1.99
+
+Wed, 31 May 2023 05:13:44 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.11.5
+
+## 0.1.98
+
+Sat, 27 May 2023 05:15:02 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.11.4
+
+## 0.1.97
+
+Fri, 26 May 2023 05:13:21 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.11.3
+
+## 0.1.96
+
+Thu, 25 May 2023 20:07:27 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.11.2
+
+## 0.1.95
+
+Thu, 25 May 2023 05:15:04 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.11.1
+
+## 0.1.94
+
+Tue, 23 May 2023 05:13:45 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.11.0
+
+## 0.1.93
+
+Tue, 16 May 2023 05:16:30 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.10.21
+- Bump @rnw-scripts/just-task to v2.3.9
+
+## 0.1.92
+
+Fri, 12 May 2023 05:14:35 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.10.20
 
 ## 0.1.91
 

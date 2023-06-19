@@ -183,7 +183,12 @@ void ImageComponentView::updateLayoutMetrics(
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
 }
 
-void ImageComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {}
+void ImageComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
+  if (m_needsBorderUpdate) {
+    m_needsBorderUpdate = false;
+    UpdateSpecialBorderLayers(m_layoutMetrics, *m_props);
+  }
+}
 
 void ImageComponentView::OnRenderingDeviceLost() noexcept {
   // Draw the text again

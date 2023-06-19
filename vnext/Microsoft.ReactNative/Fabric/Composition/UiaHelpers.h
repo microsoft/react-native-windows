@@ -15,4 +15,14 @@ UiaNavigateHelper(
 
 HRESULT UiaGetBoundingRectangleHelper(::Microsoft::ReactNative::ReactTaggedView &view, UiaRect &rect) noexcept;
 
+HRESULT UiaSetFocusHelper(::Microsoft::ReactNative::ReactTaggedView &view) noexcept;
+
+void UpdateUiaProperty(winrt::IInspectable provider, PROPERTYID propId, bool oldValue, bool newValue) noexcept;
+
+void UpdateUiaProperty(
+    winrt::IInspectable provider,
+    PROPERTYID propId,
+    const std::string &oldValue,
+    const std::string &newValue) noexcept;
+
 } // namespace winrt::Microsoft::ReactNative::implementation

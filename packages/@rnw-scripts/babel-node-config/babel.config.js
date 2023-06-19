@@ -11,13 +11,13 @@ module.exports = {
     [
       '@babel/preset-env',
       {
-        targets: {node: '14'},
+        targets: {node: '16'},
       },
     ],
     '@babel/preset-typescript',
   ],
   plugins: [
-    ["@babel/plugin-proposal-private-methods", { "loose": true }],
-    ["@babel/plugin-proposal-private-property-in-object", { "loose": true }]
+    ["@babel/plugin-transform-private-methods", { "loose": true }],
+    ["@babel/plugin-transform-private-property-in-object", { "loose": true }]
   ]
 };

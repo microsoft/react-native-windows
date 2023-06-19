@@ -80,6 +80,7 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   bool RequestInlineSourceMap() const noexcept;
   std::string JavaScriptBundleFile() const noexcept;
   std::string BundleAppId() const noexcept;
+  bool RequestDevBundle() const noexcept;
   bool UseDeveloperSupport() const noexcept;
   JSIEngine JsiEngine() const noexcept;
 
@@ -135,9 +136,7 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
     folly::dynamic Args;
   };
 
-#if defined(USE_V8)
   static std::string getApplicationTempFolder();
-#endif
 
  private: // immutable fields
   const Mso::WeakPtr<IReactHost> m_weakReactHost;

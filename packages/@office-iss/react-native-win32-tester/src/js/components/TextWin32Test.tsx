@@ -1,8 +1,6 @@
 'use strict';
 import React from 'react'
-import { Button, View } from 'react-native';
-import { TextWin32 } from '../../Text/TextWin32';
-import { ViewWin32 } from '../../View/ViewWin32';
+import { Button, TextWin32, View, ViewWin32 } from 'react-native';
 
 // Disabling no-jsx-lambda so functional components are more convenient to use
 
@@ -37,7 +35,15 @@ const SelectableTextTest: React.FC<{}> = () => {
 const TextStyleTest: React.FC<{}> = () => {
   return (
     <ViewWin32>
-      <TextWin32 textStyle={'MediumBold'}>Normal Text Display</TextWin32>
+      <TextWin32 textStyle={'MediumBold'}>MediumBold TextStyle</TextWin32>
+    </ViewWin32>
+  );
+};
+
+const TextAcessibilityTest: React.FC<{}> = () => {
+  return (
+    <ViewWin32>
+      <TextWin32 accessibilityDescription="A11y description" >This TextWin32 text with accessibilityDescription</TextWin32>
     </ViewWin32>
   );
 };
@@ -138,6 +144,13 @@ export const examples = [
       description: 'TextStyles in action',
       render(): JSX.Element {
         return (<TextStyleTest />);
+      },
+    },
+    {
+      title: 'Acessibility Example',
+      description: 'Acessibility on Text in action',
+      render(): JSX.Element {
+        return (<TextAcessibilityTest />);
       },
     },
     {

@@ -252,7 +252,7 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Retrieves the coordinates of a window's client area
   HRESULT TxGetClientRect(LPRECT prc) override {
-    *prc = m_outer->getClientRect();
+    *prc = m_outer->m_rcClient;
     return S_OK;
   }
 
@@ -852,8 +852,10 @@ std::string WindowsTextInputComponentView::GetTextFromRichEdit() const noexcept 
 }
 
 void WindowsTextInputComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
-  // m_element.FinalizeProperties();
-
+  if (m_needsBorderUpdate) {
+    m_needsBorderUpdate = false;
+    UpdateSpecialBorderLayers(m_layoutMetrics, *m_props);
+  }
   ensureDrawingSurface();
 }
 void WindowsTextInputComponentView::prepareForRecycle() noexcept {}
@@ -950,8 +952,8 @@ void WindowsTextInputComponentView::ensureDrawingSurface() noexcept {
         winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
         winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
 
-    auto rcClient = getClientRect();
-    winrt::check_hresult(m_textServices->OnTxInPlaceActivate(&rcClient));
+    m_rcClient = getClientRect();
+    winrt::check_hresult(m_textServices->OnTxInPlaceActivate(&m_rcClient));
 
     LRESULT lresult;
     winrt::check_hresult(

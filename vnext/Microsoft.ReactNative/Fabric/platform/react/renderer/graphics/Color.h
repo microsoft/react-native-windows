@@ -28,7 +28,7 @@ struct Color {
   }
 
   winrt::Windows::UI::Color m_color;
-  std::string m_platformColor;
+  std::vector<std::string> m_platformColor;
 };
 
 /*
@@ -50,7 +50,7 @@ class SharedColor {
     m_color->m_color = color;
   }
 
-  SharedColor(std::string &&windowsBrush) {
+  SharedColor(std::vector<std::string> &&windowsBrush) {
     m_color = std::make_shared<Color>();
     m_color->m_platformColor = std::move(windowsBrush);
   }
@@ -122,7 +122,12 @@ struct hash<facebook::react::SharedColor> {
   size_t operator()(const facebook::react::SharedColor &sharedColor) const {
     size_t h = sharedColor.m_color->m_color.A + (sharedColor.m_color->m_color.B << 8) +
         (sharedColor.m_color->m_color.G << 16) + (sharedColor.m_color->m_color.R << 24);
-    return h ^ hash<decltype(sharedColor.m_color->m_platformColor)>{}(sharedColor.m_color->m_platformColor);
+
+    for (auto s : sharedColor.m_color->m_platformColor) {
+      h ^= hash<decltype(s)>{}(s);
+    }
+
+    return h;
   }
 };
 } // namespace std

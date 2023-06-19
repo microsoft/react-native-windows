@@ -1,8 +1,72 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Mon, 08 May 2023 17:41:06 GMT and should not be manually modified.
+This log was last generated on Tue, 13 Jun 2023 05:15:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.3.28
+
+Tue, 13 Jun 2023 05:15:41 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.23
+- Bump @react-native-windows/telemetry to v0.0.0-canary.71
+- Bump @react-native-windows/cli to v0.0.0-canary.174
+- Bump @rnw-scripts/eslint-config to v1.2.0
+
+## 1.3.27
+
+Fri, 09 Jun 2023 05:15:18 GMT
+
+### Patches
+
+- [react-native-windows-init] Fix cli to work with workspaces (donadeldev@gmail.com)
+
+## 1.3.26
+
+Wed, 07 Jun 2023 05:16:11 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.22
+- Bump @react-native-windows/telemetry to v0.0.0-canary.70
+- Bump @react-native-windows/cli to v0.0.0-canary.173
+- Bump @rnw-scripts/jest-unittest-config to v1.5.5
+- Bump @rnw-scripts/just-task to v2.3.11
+
+## 1.3.25
+
+Tue, 06 Jun 2023 19:06:47 GMT
+
+### Patches
+
+- integrate RN nightly 5/19/23 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.21
+- Bump @react-native-windows/telemetry to v0.0.0-canary.69
+- Bump @react-native-windows/cli to v0.0.0-canary.172
+- Bump @rnw-scripts/jest-unittest-config to v1.5.4
+- Bump @rnw-scripts/just-task to v2.3.10
+
+## 1.3.24
+
+Sat, 27 May 2023 05:15:02 GMT
+
+### Patches
+
+- Bump @react-native-windows/cli to v0.0.0-canary.171
+
+## 1.3.23
+
+Tue, 16 May 2023 05:16:30 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.20
+- Bump @react-native-windows/telemetry to v0.0.0-canary.68
+- Bump @react-native-windows/cli to v0.0.0-canary.170
+- Bump @rnw-scripts/jest-unittest-config to v1.5.3
+- Bump @rnw-scripts/just-task to v2.3.9
 
 ## 1.3.22
 
