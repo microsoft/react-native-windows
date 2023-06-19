@@ -16,326 +16,321 @@
 #include <fstream>
 
 namespace facebook {
-  namespace react {
+namespace react {
 
-    namespace {
+namespace {
 
-      class ByteArrayBuffer : public facebook::jsi::Buffer {
-      public:
-        size_t size() const override {
-          return size_;
-        }
+class ByteArrayBuffer : public facebook::jsi::Buffer {
+ public:
+  size_t size() const override {
+    return size_;
+  }
 
-        const uint8_t* data() const override {
-          return byteArray_.get();
-        }
+  const uint8_t *data() const override {
+    return byteArray_.get();
+  }
 
-        uint8_t* data() {
-          return byteArray_.get();
-        }
+  uint8_t *data() {
+    return byteArray_.get();
+  }
 
-        ByteArrayBuffer(size_t size) : size_(size), byteArray_(std::make_unique<uint8_t[]>(size)) {}
+  ByteArrayBuffer(size_t size) : size_(size), byteArray_(std::make_unique<uint8_t[]>(size)) {}
 
-        ByteArrayBuffer(ByteArrayBuffer&&) = default;
-        ByteArrayBuffer& operator=(ByteArrayBuffer&&) = default;
+  ByteArrayBuffer(ByteArrayBuffer &&) = default;
+  ByteArrayBuffer &operator=(ByteArrayBuffer &&) = default;
 
-      private:
-        ByteArrayBuffer(const ByteArrayBuffer&) = delete;
-        ByteArrayBuffer& operator=(const ByteArrayBuffer&) = delete;
+ private:
+  ByteArrayBuffer(const ByteArrayBuffer &) = delete;
+  ByteArrayBuffer &operator=(const ByteArrayBuffer &) = delete;
 
-        size_t size_;
-        std::unique_ptr<uint8_t[]> byteArray_;
-      };
+  size_t size_;
+  std::unique_ptr<uint8_t[]> byteArray_;
+};
 
-      class BufferViewBuffer : public facebook::jsi::Buffer {
-      public:
-        size_t size() const override {
-          return size_;
-        }
+class BufferViewBuffer : public facebook::jsi::Buffer {
+ public:
+  size_t size() const override {
+    return size_;
+  }
 
-        const uint8_t* data() const override {
-          return buffer_->data() + offset_;
-        }
+  const uint8_t *data() const override {
+    return buffer_->data() + offset_;
+  }
 
-        uint8_t* data() {
-          return const_cast<uint8_t*>(buffer_->data()) + offset_;
-        }
+  uint8_t *data() {
+    return const_cast<uint8_t *>(buffer_->data()) + offset_;
+  }
 
-        BufferViewBuffer(std::unique_ptr<const facebook::jsi::Buffer> buffer, size_t offset, size_t size)
-          : buffer_(std::move(buffer)), offset_(offset), size_(size) {
-          if (size_ > buffer_->size() - offset)
-            std::terminate();
-        }
+  BufferViewBuffer(std::unique_ptr<const facebook::jsi::Buffer> buffer, size_t offset, size_t size)
+      : buffer_(std::move(buffer)), offset_(offset), size_(size) {
+    if (size_ > buffer_->size() - offset)
+      std::terminate();
+  }
 
-        BufferViewBuffer(BufferViewBuffer&&) = default;
-        BufferViewBuffer& operator=(BufferViewBuffer&&) = default;
+  BufferViewBuffer(BufferViewBuffer &&) = default;
+  BufferViewBuffer &operator=(BufferViewBuffer &&) = default;
 
-      private:
-        BufferViewBuffer(const BufferViewBuffer&) = delete;
-        BufferViewBuffer& operator=(const BufferViewBuffer&) = delete;
+ private:
+  BufferViewBuffer(const BufferViewBuffer &) = delete;
+  BufferViewBuffer &operator=(const BufferViewBuffer &) = delete;
 
-        std::unique_ptr<const facebook::jsi::Buffer> buffer_;
-        size_t offset_;
-        size_t size_;
-      };
+  std::unique_ptr<const facebook::jsi::Buffer> buffer_;
+  size_t offset_;
+  size_t size_;
+};
 
-      constexpr const char* PERSIST_MAGIC = "RNWPREP";
-      constexpr const char* PERSIST_EOF = "EOF";
+constexpr const char *PERSIST_MAGIC = "RNWPREP";
+constexpr const char *PERSIST_EOF = "EOF";
 
-      int constexpr length__(const char* str) {
-        return *str ? 1 + length__(str + 1) : 0;
-      }
+int constexpr length__(const char *str) {
+  return *str ? 1 + length__(str + 1) : 0;
+}
 
-      // TODO : Enforce any packing policy ?
-      struct PreparedScriptPrefix {
-        // TODO :: constexpr initialize the array.
-        char magic[length__(PERSIST_MAGIC)];
-        jsi::ScriptVersion_t scriptVersion;
-        jsi::JSRuntimeVersion_t runtimeVersion;
-        uint64_t sizeInBytes;
-        std::uint8_t hash[32];
-      };
+// TODO : Enforce any packing policy ?
+struct PreparedScriptPrefix {
+  // TODO :: constexpr initialize the array.
+  char magic[length__(PERSIST_MAGIC)];
+  jsi::ScriptVersion_t scriptVersion;
+  jsi::JSRuntimeVersion_t runtimeVersion;
+  uint64_t sizeInBytes;
+  std::uint8_t hash[32];
+};
 
-      struct PreparedScriptSuffix {
-        char eof[length__(PERSIST_EOF)];
-      };
+struct PreparedScriptSuffix {
+  char eof[length__(PERSIST_EOF)];
+};
 
-    } // namespace
+} // namespace
 
-    jsi::VersionedBuffer BaseScriptStoreImpl::getVersionedScript(const std::string& url) noexcept {
-      std::ifstream file(url, std::ios::binary | std::ios::ate);
+jsi::VersionedBuffer BaseScriptStoreImpl::getVersionedScript(const std::string &url) noexcept {
+  std::ifstream file(url, std::ios::binary | std::ios::ate);
 
-      if (!file) {
-        return { nullptr, 0 };
-      }
+  if (!file) {
+    return {nullptr, 0};
+  }
 
-      std::streamsize size = file.tellg();
-      file.seekg(0, std::ios::beg);
+  std::streamsize size = file.tellg();
+  file.seekg(0, std::ios::beg);
 
-      auto buffer = std::make_unique<ByteArrayBuffer>(static_cast<size_t>(size));
-      if (!file.read(reinterpret_cast<char*>(buffer->data()), size)) {
-        return { nullptr, 0 };
-      }
+  auto buffer = std::make_unique<ByteArrayBuffer>(static_cast<size_t>(size));
+  if (!file.read(reinterpret_cast<char *>(buffer->data()), size)) {
+    return {nullptr, 0};
+  }
 
-      file.close();
+  file.close();
 
-      return { std::move(buffer), versionProvider_ ? versionProvider_->getVersion(url) : static_cast<uint64_t>(size) };
+  return {std::move(buffer), versionProvider_ ? versionProvider_->getVersion(url) : static_cast<uint64_t>(size)};
+}
+
+jsi::ScriptVersion_t BaseScriptStoreImpl::getScriptVersion(const std::string &url) noexcept {
+  if (versionProvider_) {
+    return versionProvider_->getVersion(url);
+  } else {
+    std::ifstream file(url, std::ios::binary | std::ios::ate);
+
+    if (!file) {
+      return 0;
     }
 
-    jsi::ScriptVersion_t BaseScriptStoreImpl::getScriptVersion(const std::string& url) noexcept {
-      if (versionProvider_) {
-        return versionProvider_->getVersion(url);
-      }
-      else {
-        std::ifstream file(url, std::ios::binary | std::ios::ate);
+    std::streamsize size = file.tellg();
+    file.seekg(0, std::ios::beg);
 
-        if (!file) {
-          return 0;
-        }
+    return static_cast<uint64_t>(size);
+  }
+}
 
-        std::streamsize size = file.tellg();
-        file.seekg(0, std::ios::beg);
+std::unique_ptr<const jsi::Buffer> LocalFileSimpleBufferStore::getBuffer(const std::string &bufferId) noexcept {
+  // 1. Store path must be set
+  // 2. It must be a directory that exists. TODO :: Figure out a cross platform
+  // way to ensure this.
+  // 3. Directory must end with the path delimiter. TODO :: Verify this.
+  if (storeDirectory_.empty()) {
+    std::terminate();
+  }
 
-        return static_cast<uint64_t>(size);
-      }
+  if (Microsoft::React::GetRuntimeOptionBool("JSI.MemoryMappedScriptStore")) {
+    try {
+      return Microsoft::JSI::MakeMemoryMappedBuffer(winrt::to_hstring(storeDirectory_ + bufferId).c_str());
+    } catch (const facebook::jsi::JSINativeException &) {
+      return nullptr;
+    }
+  } else {
+    // Treat buffer id as the relative path fragment.
+    std::ifstream file(storeDirectory_ + bufferId, std::ios::binary | std::ios::ate);
+
+    if (!file) {
+      return nullptr;
     }
 
-    std::unique_ptr<const jsi::Buffer> LocalFileSimpleBufferStore::getBuffer(const std::string& bufferId) noexcept {
-      // 1. Store path must be set
-      // 2. It must be a directory that exists. TODO :: Figure out a cross platform
-      // way to ensure this.
-      // 3. Directory must end with the path delimiter. TODO :: Verify this.
-      if (storeDirectory_.empty()) {
-        std::terminate();
-      }
+    std::streamsize size = file.tellg();
+    file.seekg(0, std::ios::beg);
 
-      if (Microsoft::React::GetRuntimeOptionBool("JSI.MemoryMappedScriptStore")) {
-        try {
-          return Microsoft::JSI::MakeMemoryMappedBuffer(winrt::to_hstring(storeDirectory_ + bufferId).c_str());
-        }
-        catch (const facebook::jsi::JSINativeException&) {
-          return nullptr;
-        }
-      }
-      else {
-        // Treat buffer id as the relative path fragment.
-        std::ifstream file(storeDirectory_ + bufferId, std::ios::binary | std::ios::ate);
-
-        if (!file) {
-          return nullptr;
-        }
-
-        std::streamsize size = file.tellg();
-        file.seekg(0, std::ios::beg);
-
-        auto buffer = std::make_unique<ByteArrayBuffer>(static_cast<size_t>(size));
-        if (!file.read(reinterpret_cast<char*>(buffer->data()), size)) {
-          return nullptr;
-        }
-
-        return buffer;
-      }
+    auto buffer = std::make_unique<ByteArrayBuffer>(static_cast<size_t>(size));
+    if (!file.read(reinterpret_cast<char *>(buffer->data()), size)) {
+      return nullptr;
     }
 
-    bool LocalFileSimpleBufferStore::persistBuffer(
-      const std::string& relativeUrl,
-      std::unique_ptr<const jsi::Buffer> buffer) noexcept {
-      // Assumptions on storeDirectory_ same as in getRawBuffer
-      if (storeDirectory_.empty())
-        std::terminate();
+    return buffer;
+  }
+}
 
-      std::ofstream file;
-      file.open(storeDirectory_ + relativeUrl, std::ios::binary | std::ios::trunc);
-      if (!file)
-        return false;
+bool LocalFileSimpleBufferStore::persistBuffer(
+    const std::string &relativeUrl,
+    std::unique_ptr<const jsi::Buffer> buffer) noexcept {
+  // Assumptions on storeDirectory_ same as in getRawBuffer
+  if (storeDirectory_.empty())
+    std::terminate();
 
-      file.write(reinterpret_cast<const char*>(buffer->data()), buffer->size());
-      file.close();
+  std::ofstream file;
+  file.open(storeDirectory_ + relativeUrl, std::ios::binary | std::ios::trunc);
+  if (!file)
+    return false;
 
-      return true;
-    }
+  file.write(reinterpret_cast<const char *>(buffer->data()), buffer->size());
+  file.close();
 
-    std::string BasePreparedScriptStoreImpl::getPreparedScriptFileName(
-      const jsi::ScriptSignature& scriptSignature,
-      const jsi::JSRuntimeSignature& runtimeSignature,
-      const char* prepareTag) {
-      // Essentially, we are trying to construct,
-      // prep_<source_url>_<runtime_id>_<preparation_tag>.cache
+  return true;
+}
 
-      std::string preparedScriptFileName("prep_");
+std::string BasePreparedScriptStoreImpl::getPreparedScriptFileName(
+    const jsi::ScriptSignature &scriptSignature,
+    const jsi::JSRuntimeSignature &runtimeSignature,
+    const char *prepareTag) {
+  // Essentially, we are trying to construct,
+  // prep_<source_url>_<runtime_id>_<preparation_tag>.cache
 
-      const std::string& scriptUrl = scriptSignature.url;
+  std::string preparedScriptFileName("prep_");
 
-      // As a crude heuristic we choose the last 64 characters of the source url.
-      constexpr int MAXLENGTH = 64;
-      preparedScriptFileName.append(
-        scriptUrl.begin() + ((scriptUrl.size() < MAXLENGTH) ? 0 : (scriptUrl.size() - MAXLENGTH)), scriptUrl.end());
+  const std::string &scriptUrl = scriptSignature.url;
 
-      // Make a valid file name.
-      std::replace(preparedScriptFileName.begin(), preparedScriptFileName.end(), '\\', '_');
-      std::replace(preparedScriptFileName.begin(), preparedScriptFileName.end(), '/', '_');
-      std::replace(preparedScriptFileName.begin(), preparedScriptFileName.end(), ':', '_');
-      std::replace(preparedScriptFileName.begin(), preparedScriptFileName.end(), '.', '_');
+  // As a crude heuristic we choose the last 64 characters of the source url.
+  constexpr int MAXLENGTH = 64;
+  preparedScriptFileName.append(
+      scriptUrl.begin() + ((scriptUrl.size() < MAXLENGTH) ? 0 : (scriptUrl.size() - MAXLENGTH)), scriptUrl.end());
 
-      if (runtimeSignature.runtimeName.empty()) {
-        std::terminate();
-      }
+  // Make a valid file name.
+  std::replace(preparedScriptFileName.begin(), preparedScriptFileName.end(), '\\', '_');
+  std::replace(preparedScriptFileName.begin(), preparedScriptFileName.end(), '/', '_');
+  std::replace(preparedScriptFileName.begin(), preparedScriptFileName.end(), ':', '_');
+  std::replace(preparedScriptFileName.begin(), preparedScriptFileName.end(), '.', '_');
 
-      preparedScriptFileName.append("_");
-      preparedScriptFileName.append(runtimeSignature.runtimeName);
+  if (runtimeSignature.runtimeName.empty()) {
+    std::terminate();
+  }
 
-      if (prepareTag) {
-        preparedScriptFileName.append("_");
-        preparedScriptFileName.append(prepareTag);
-      }
+  preparedScriptFileName.append("_");
+  preparedScriptFileName.append(runtimeSignature.runtimeName);
 
-      // TODO :: Need to construct a hash. ref:
-      // https://en.wikipedia.org/wiki/Base64#Filenames
+  if (prepareTag) {
+    preparedScriptFileName.append("_");
+    preparedScriptFileName.append(prepareTag);
+  }
 
-      // extension
-      preparedScriptFileName.append(".cache");
+  // TODO :: Need to construct a hash. ref:
+  // https://en.wikipedia.org/wiki/Base64#Filenames
 
-      return preparedScriptFileName;
-    }
+  // extension
+  preparedScriptFileName.append(".cache");
 
-    std::shared_ptr<const jsi::Buffer> BasePreparedScriptStoreImpl::tryGetPreparedScript(
-      const jsi::ScriptSignature& scriptSignature,
-      const jsi::JSRuntimeSignature& runtimeSignature,
-      const char* prepareTag) noexcept {
-      std::string preparedScriptFilePath = getPreparedScriptFileName(scriptSignature, runtimeSignature, prepareTag);
+  return preparedScriptFileName;
+}
 
-      auto buffer = bufferStore_->getBuffer(preparedScriptFilePath);
+std::shared_ptr<const jsi::Buffer> BasePreparedScriptStoreImpl::tryGetPreparedScript(
+    const jsi::ScriptSignature &scriptSignature,
+    const jsi::JSRuntimeSignature &runtimeSignature,
+    const char *prepareTag) noexcept {
+  std::string preparedScriptFilePath = getPreparedScriptFileName(scriptSignature, runtimeSignature, prepareTag);
 
-      if (!buffer) {
-        return nullptr;
-      }
+  auto buffer = bufferStore_->getBuffer(preparedScriptFilePath);
 
-      const PreparedScriptPrefix* prefix = reinterpret_cast<const PreparedScriptPrefix*>(buffer->data());
+  if (!buffer) {
+    return nullptr;
+  }
 
-      if (strncmp(prefix->magic, PERSIST_MAGIC, sizeof(prefix->magic)) != 0) {
-        // magic value doesn't match!! The store is very likely corrupted or belongs
-        // to old version.
-        return nullptr;
-      }
+  const PreparedScriptPrefix *prefix = reinterpret_cast<const PreparedScriptPrefix *>(buffer->data());
 
-      if (prefix->scriptVersion != scriptSignature.version) {
-        // script version don't match!! Need to regenerate cache.
-        return nullptr;
-      }
+  if (strncmp(prefix->magic, PERSIST_MAGIC, sizeof(prefix->magic)) != 0) {
+    // magic value doesn't match!! The store is very likely corrupted or belongs
+    // to old version.
+    return nullptr;
+  }
 
-      if (prefix->runtimeVersion != runtimeSignature.version) {
-        // Runtime changed after the cache generation.
-        return nullptr;
-      }
+  if (prefix->scriptVersion != scriptSignature.version) {
+    // script version don't match!! Need to regenerate cache.
+    return nullptr;
+  }
 
-      if (prefix->sizeInBytes != buffer->size() - sizeof(PreparedScriptPrefix) - sizeof(PreparedScriptSuffix)) {
-        // Size is not as expected. Store is possibly corrupted .. It is safer to
-        // bail out.
-        return nullptr;
-      }
+  if (prefix->runtimeVersion != runtimeSignature.version) {
+    // Runtime changed after the cache generation.
+    return nullptr;
+  }
 
-      Microsoft::ReactNative::SHA256Hasher hasher;
-      hasher.HashData(reinterpret_cast<const std::uint8_t*>(buffer->data()) + sizeof(PreparedScriptPrefix), prefix->sizeInBytes);
-      std::vector<std::uint8_t> hashBuffer = hasher.GetHashValue();
+  if (prefix->sizeInBytes != buffer->size() - sizeof(PreparedScriptPrefix) - sizeof(PreparedScriptSuffix)) {
+    // Size is not as expected. Store is possibly corrupted .. It is safer to
+    // bail out.
+    return nullptr;
+  }
 
-      if (hashBuffer.size() < sizeof(prefix->hash)) {
-        // Unexpected hash size.
-        return nullptr;
-      }
+  Microsoft::ReactNative::SHA256Hasher hasher;
+  hasher.HashData(reinterpret_cast<const std::uint8_t*>(buffer->data()) + sizeof(PreparedScriptPrefix), prefix->sizeInBytes);
+  std::vector<std::uint8_t> hashBuffer = hasher.GetHashValue();
+  
+  if (hashBuffer.size() < sizeof(prefix->hash)) {
+    // Unexpected hash size.
+    return nullptr;
+  }
+  
+  if (memcmp(hashBuffer.data(), prefix->hash, sizeof(prefix->hash)) != 0) {
+    // Hash doesn't match. Store is possibly corrupted. It is safer to bail out.
+    return nullptr;
+  }
 
-      if (memcmp(hashBuffer.data(), prefix->hash, sizeof(prefix->hash)) != 0) {
-        // Hash doesn't match. Store is possibly corrupted. It is safer to bail out.
-        return nullptr;
-      }
+  const PreparedScriptSuffix *suffix = reinterpret_cast<const PreparedScriptSuffix *>(buffer->data() + sizeof(PreparedScriptPrefix) + prefix->sizeInBytes);
+  if (strncmp(suffix->eof, PERSIST_EOF, sizeof(suffix->eof)) != 0) {
+    // magic value doesn't match!! The store is very likely corrupted or belongs
+    // to old version.
+    return nullptr;
+  }
 
-      const PreparedScriptSuffix* suffix = reinterpret_cast<const PreparedScriptSuffix*>(
-        buffer->data() + sizeof(PreparedScriptPrefix) + prefix->sizeInBytes);
-      if (strncmp(suffix->eof, PERSIST_EOF, sizeof(suffix->eof)) != 0) {
-        // magic value doesn't match!! The store is very likely corrupted or belongs
-        // to old version.
-        return nullptr;
-      }
+  return std::make_shared<BufferViewBuffer>(
+      std::move(buffer), sizeof(PreparedScriptPrefix), static_cast<size_t>(prefix->sizeInBytes));
+}
 
-      return std::make_shared<BufferViewBuffer>(
-        std::move(buffer), sizeof(PreparedScriptPrefix), static_cast<size_t>(prefix->sizeInBytes));
-    }
+void BasePreparedScriptStoreImpl::persistPreparedScript(
+    std::shared_ptr<const jsi::Buffer> preparedScript,
+    const jsi::ScriptSignature &scriptMetadata,
+    const jsi::JSRuntimeSignature &runtimeMetadata,
+    const char *prepareTag) noexcept {
+  // TODO :: Unfortunately, The current abstraction is forcing us to make a
+  // copy. Need to re-evaluate.
+  auto newBuffer = std::make_unique<ByteArrayBuffer>(
+      sizeof(PreparedScriptPrefix) + preparedScript->size() + sizeof(PreparedScriptSuffix));
 
-    void BasePreparedScriptStoreImpl::persistPreparedScript(
-      std::shared_ptr<const jsi::Buffer> preparedScript,
-      const jsi::ScriptSignature& scriptMetadata,
-      const jsi::JSRuntimeSignature& runtimeMetadata,
-      const char* prepareTag) noexcept {
-      // TODO :: Unfortunately, The current abstraction is forcing us to make a
-      // copy. Need to re-evaluate.
-      auto newBuffer = std::make_unique<ByteArrayBuffer>(
-        sizeof(PreparedScriptPrefix) + preparedScript->size() + sizeof(PreparedScriptSuffix));
+  PreparedScriptPrefix *prefix = reinterpret_cast<PreparedScriptPrefix *>(newBuffer->data());
+  memcpy_s(prefix->magic, sizeof(prefix->magic), PERSIST_MAGIC, sizeof(prefix->magic));
+  prefix->scriptVersion = scriptMetadata.version;
+  prefix->runtimeVersion = runtimeMetadata.version;
+  prefix->sizeInBytes = preparedScript->size();
 
-      PreparedScriptPrefix* prefix = reinterpret_cast<PreparedScriptPrefix*>(newBuffer->data());
-      memcpy_s(prefix->magic, sizeof(prefix->magic), PERSIST_MAGIC, sizeof(prefix->magic));
-      prefix->scriptVersion = scriptMetadata.version;
-      prefix->runtimeVersion = runtimeMetadata.version;
-      prefix->sizeInBytes = preparedScript->size();
+  Microsoft::ReactNative::SHA256Hasher hasher;
+  hasher.HashData(preparedScript->data(), preparedScript->size());
+  std::vector<std::uint8_t> hashBuffer = hasher.GetHashValue();
+  memcpy_s(prefix->hash, sizeof(prefix->hash), hashBuffer.data(), sizeof(prefix->hash));
 
-      Microsoft::ReactNative::SHA256Hasher hasher;
-      hasher.HashData(preparedScript->data(), preparedScript->size());
-      std::vector<std::uint8_t> hashBuffer = hasher.GetHashValue();
+  memcpy_s(
+      newBuffer->data() + sizeof(PreparedScriptPrefix),
+      newBuffer->size() - sizeof(PreparedScriptPrefix),
+      preparedScript->data(),
+      preparedScript->size());
 
-      memcpy_s(prefix->hash, sizeof(prefix->hash), hashBuffer.data(), sizeof(prefix->hash));
+  PreparedScriptSuffix *suffix = reinterpret_cast<PreparedScriptSuffix *>(
+      newBuffer->data() + sizeof(PreparedScriptPrefix) + preparedScript->size());
+  memcpy_s(suffix->eof, sizeof(suffix->eof), PERSIST_EOF, sizeof(suffix->eof));
 
-      memcpy_s(
-        newBuffer->data() + sizeof(PreparedScriptPrefix),
-        newBuffer->size() - sizeof(PreparedScriptPrefix),
-        preparedScript->data(),
-        preparedScript->size());
+  std::string preparedScriptFilePath = getPreparedScriptFileName(scriptMetadata, runtimeMetadata, prepareTag);
 
-      PreparedScriptSuffix* suffix = reinterpret_cast<PreparedScriptSuffix*>(
-        newBuffer->data() + sizeof(PreparedScriptPrefix) + preparedScript->size());
-      memcpy_s(suffix->eof, sizeof(suffix->eof), PERSIST_EOF, sizeof(suffix->eof));
+  bufferStore_->persistBuffer(preparedScriptFilePath, std::move(newBuffer));
+}
 
-      std::string preparedScriptFilePath = getPreparedScriptFileName(scriptMetadata, runtimeMetadata, prepareTag);
-
-      bufferStore_->persistBuffer(preparedScriptFilePath, std::move(newBuffer));
-    }
-
-  } // namespace react
+} // namespace react
 } // namespace facebook
