@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "CrashManager should also handle SIGABRT",
+  "comment": "Use the Hasher in ScriptStore",
   "packageName": "react-native-windows",
   "email": "tudor.mihai@microsoft.com",
   "dependentChangeType": "patch"
