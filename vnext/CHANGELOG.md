@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 06 Jun 2023 19:19:45 GMT and should not be manually modified.
+This log was last generated on Mon, 19 Jun 2023 15:16:07 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.72.0-preview.8
+
+Mon, 19 Jun 2023 15:16:07 GMT
+
+### Changes
+
+- ABI-safe Hermes API and new JSI for Node-API (vmorozov@microsoft.com)
+- Bump @react-native-windows/cli to v0.72.0-preview.6
 
 ## 0.72.0-preview.7
 

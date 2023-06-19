@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 19 Jun 2023 15:16:07 GMT",
+      "tag": "react-native-windows_v0.72.0-preview.8",
+      "version": "0.72.0-preview.8",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "258dc53b8d2868b1889441ddff63f7238de5f7dc",
+            "comment": "ABI-safe Hermes API and new JSI for Node-API"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.72.0-preview.6",
+            "commit": "258dc53b8d2868b1889441ddff63f7238de5f7dc"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 06 Jun 2023 19:19:45 GMT",
       "tag": "react-native-windows_v0.72.0-preview.7",
       "version": "0.72.0-preview.7",

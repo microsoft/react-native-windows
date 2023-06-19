@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Mon, 19 Jun 2023 15:16:07 GMT",
+      "tag": "@react-native-windows/telemetry_v0.72.0-preview.5",
+      "version": "0.72.0-preview.5",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "258dc53b8d2868b1889441ddff63f7238de5f7dc",
+            "comment": "ABI-safe Hermes API and new JSI for Node-API"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 22 May 2023 15:16:17 GMT",
       "tag": "@react-native-windows/telemetry_v0.72.0-preview.4",
       "version": "0.72.0-preview.4",
