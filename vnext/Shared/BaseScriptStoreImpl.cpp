@@ -5,6 +5,7 @@
 
 #include "BaseScriptStoreImpl.h"
 #include "MemoryMappedBuffer.h"
+#include "Hasher.h"
 
 #include <CppRuntimeOptions.h>
 
@@ -92,6 +93,7 @@ struct PreparedScriptPrefix {
   jsi::ScriptVersion_t scriptVersion;
   jsi::JSRuntimeVersion_t runtimeVersion;
   uint64_t sizeInBytes;
+  std::uint8_t hash[32];
 };
 
 struct PreparedScriptSuffix {
@@ -197,40 +199,40 @@ std::string BasePreparedScriptStoreImpl::getPreparedScriptFileName(
   // Essentially, we are trying to construct,
   // prep_<source_url>_<runtime_id>_<preparation_tag>.cache
 
-  std::string prparedScriptFileName("prep_");
+  std::string preparedScriptFileName("prep_");
 
   const std::string &scriptUrl = scriptSignature.url;
 
   // As a crude heuristic we choose the last 64 characters of the source url.
   constexpr int MAXLENGTH = 64;
-  prparedScriptFileName.append(
+  preparedScriptFileName.append(
       scriptUrl.begin() + ((scriptUrl.size() < MAXLENGTH) ? 0 : (scriptUrl.size() - MAXLENGTH)), scriptUrl.end());
 
   // Make a valid file name.
-  std::replace(prparedScriptFileName.begin(), prparedScriptFileName.end(), '\\', '_');
-  std::replace(prparedScriptFileName.begin(), prparedScriptFileName.end(), '/', '_');
-  std::replace(prparedScriptFileName.begin(), prparedScriptFileName.end(), ':', '_');
-  std::replace(prparedScriptFileName.begin(), prparedScriptFileName.end(), '.', '_');
+  std::replace(preparedScriptFileName.begin(), preparedScriptFileName.end(), '\\', '_');
+  std::replace(preparedScriptFileName.begin(), preparedScriptFileName.end(), '/', '_');
+  std::replace(preparedScriptFileName.begin(), preparedScriptFileName.end(), ':', '_');
+  std::replace(preparedScriptFileName.begin(), preparedScriptFileName.end(), '.', '_');
 
   if (runtimeSignature.runtimeName.empty()) {
     std::terminate();
   }
 
-  prparedScriptFileName.append("_");
-  prparedScriptFileName.append(runtimeSignature.runtimeName);
+  preparedScriptFileName.append("_");
+  preparedScriptFileName.append(runtimeSignature.runtimeName);
 
   if (prepareTag) {
-    prparedScriptFileName.append("_");
-    prparedScriptFileName.append(prepareTag);
+    preparedScriptFileName.append("_");
+    preparedScriptFileName.append(prepareTag);
   }
 
-  // TODO :: Need to constuct a hash. ref:
+  // TODO :: Need to construct a hash. ref:
   // https://en.wikipedia.org/wiki/Base64#Filenames
 
   // extension
-  prparedScriptFileName.append(".cache");
+  preparedScriptFileName.append(".cache");
 
-  return prparedScriptFileName;
+  return preparedScriptFileName;
 }
 
 std::shared_ptr<const jsi::Buffer> BasePreparedScriptStoreImpl::tryGetPreparedScript(
@@ -269,8 +271,21 @@ std::shared_ptr<const jsi::Buffer> BasePreparedScriptStoreImpl::tryGetPreparedSc
     return nullptr;
   }
 
-  const PreparedScriptSuffix *suffix = reinterpret_cast<const PreparedScriptSuffix *>(
-      buffer->data() + sizeof(PreparedScriptPrefix) + prefix->sizeInBytes);
+  Microsoft::ReactNative::SHA256Hasher hasher;
+  hasher.HashData(reinterpret_cast<const std::uint8_t*>(buffer->data()) + sizeof(PreparedScriptPrefix), prefix->sizeInBytes);
+  std::vector<std::uint8_t> hashBuffer = hasher.GetHashValue();
+  
+  if (hashBuffer.size() < sizeof(prefix->hash)) {
+    // Unexpected hash size.
+    return nullptr;
+  }
+  
+  if (memcmp(hashBuffer.data(), prefix->hash, sizeof(prefix->hash)) != 0) {
+    // Hash doesn't match. Store is possibly corrupted. It is safer to bail out.
+    return nullptr;
+  }
+
+  const PreparedScriptSuffix *suffix = reinterpret_cast<const PreparedScriptSuffix *>(buffer->data() + sizeof(PreparedScriptPrefix) + prefix->sizeInBytes);
   if (strncmp(suffix->eof, PERSIST_EOF, sizeof(suffix->eof)) != 0) {
     // magic value doesn't match!! The store is very likely corrupted or belongs
     // to old version.
@@ -296,6 +311,11 @@ void BasePreparedScriptStoreImpl::persistPreparedScript(
   prefix->scriptVersion = scriptMetadata.version;
   prefix->runtimeVersion = runtimeMetadata.version;
   prefix->sizeInBytes = preparedScript->size();
+
+  Microsoft::ReactNative::SHA256Hasher hasher;
+  hasher.HashData(preparedScript->data(), preparedScript->size());
+  std::vector<std::uint8_t> hashBuffer = hasher.GetHashValue();
+  memcpy_s(prefix->hash, sizeof(prefix->hash), hashBuffer.data(), sizeof(prefix->hash));
 
   memcpy_s(
       newBuffer->data() + sizeof(PreparedScriptPrefix),
