@@ -68,7 +68,8 @@ class AbiViewComponentDescriptor : public facebook::react::ComponentDescriptor {
   facebook::react::ShadowNodeFamily::Shared createFamily(
       facebook::react::ShadowNodeFamilyFragment const &fragment) const override;
 
-  facebook::react::SharedEventEmitter createEventEmitter(facebook::react::InstanceHandle::Shared const &instanceHandle) const override;
+  facebook::react::SharedEventEmitter createEventEmitter(
+      facebook::react::InstanceHandle::Shared const &instanceHandle) const override;
 
  protected:
   /*

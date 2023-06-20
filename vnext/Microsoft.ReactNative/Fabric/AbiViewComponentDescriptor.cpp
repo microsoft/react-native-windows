@@ -124,8 +124,7 @@ facebook::react::State::Shared AbiViewComponentDescriptor::createInitialState(
   }
 
   return std::make_shared<ConcreteState>(
-      std::make_shared<ConcreteStateData const>(ConcreteShadowNode::initialStateData(props, family, *this)),
-      family);
+      std::make_shared<ConcreteStateData const>(ConcreteShadowNode::initialStateData(props, family, *this)), family);
 }
 
 facebook::react::State::Shared AbiViewComponentDescriptor::createState(
