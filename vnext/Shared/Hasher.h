@@ -9,7 +9,7 @@ namespace Microsoft::ReactNative {
     ~SHA256Hasher();
 
     std::vector<std::uint8_t> GetHashValue();
-    void HashData(const void* pb, size_t cb);
+    void HashData(const void* pb, uint32_t cb);
 
   private:
     BCRYPT_ALG_HANDLE m_hAlg;

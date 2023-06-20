@@ -38,7 +38,7 @@ namespace Microsoft::ReactNative {
     BCryptDestroyHash(m_hHash);
   }
 
-  void SHA256Hasher::HashData(const void* pb, size_t cb)
+  void SHA256Hasher::HashData(const void* pb, uint32_t cb)
   {
     if (cb > LONG_MAX)
     {

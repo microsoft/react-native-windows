@@ -4,8 +4,8 @@
 #include "pch.h"
 
 #include "BaseScriptStoreImpl.h"
-#include "MemoryMappedBuffer.h"
 #include "Hasher.h"
+#include "MemoryMappedBuffer.h"
 
 #include <CppRuntimeOptions.h>
 
@@ -272,20 +272,23 @@ std::shared_ptr<const jsi::Buffer> BasePreparedScriptStoreImpl::tryGetPreparedSc
   }
 
   Microsoft::ReactNative::SHA256Hasher hasher;
-  hasher.HashData(reinterpret_cast<const std::uint8_t*>(buffer->data()) + sizeof(PreparedScriptPrefix), prefix->sizeInBytes);
+  hasher.HashData(
+      reinterpret_cast<const std::uint8_t *>(buffer->data()) + sizeof(PreparedScriptPrefix),
+      static_cast<uint32_t>(prefix->sizeInBytes));
   std::vector<std::uint8_t> hashBuffer = hasher.GetHashValue();
-  
+
   if (hashBuffer.size() < sizeof(prefix->hash)) {
     // Unexpected hash size.
     return nullptr;
   }
-  
+
   if (memcmp(hashBuffer.data(), prefix->hash, sizeof(prefix->hash)) != 0) {
     // Hash doesn't match. Store is possibly corrupted. It is safer to bail out.
     return nullptr;
   }
 
-  const PreparedScriptSuffix *suffix = reinterpret_cast<const PreparedScriptSuffix *>(buffer->data() + sizeof(PreparedScriptPrefix) + prefix->sizeInBytes);
+  const PreparedScriptSuffix *suffix = reinterpret_cast<const PreparedScriptSuffix *>(
+      buffer->data() + sizeof(PreparedScriptPrefix) + prefix->sizeInBytes);
   if (strncmp(suffix->eof, PERSIST_EOF, sizeof(suffix->eof)) != 0) {
     // magic value doesn't match!! The store is very likely corrupted or belongs
     // to old version.
