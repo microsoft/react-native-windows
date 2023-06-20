@@ -171,16 +171,16 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)DevSupportManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Executors\WebSocketJSExecutor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Executors\WebSocketJSExecutorFactory.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Hasher.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)HermesRuntimeHolder.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)HermesSamplingProfiler.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)HermesShim.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)InspectorPackagerConnection.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)InstanceManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSBigAbiString.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\ChakraApi.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\ChakraJsiRuntime_edgemode.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntime.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\NapiJsiV8RuntimeHolder.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\V8RuntimeHolder.cpp">
       <ExcludedFromBuild Condition="'$(UseV8)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)LayoutAnimation.cpp" />
@@ -206,6 +206,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)OInstance.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)PackagerConnection.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)RuntimeOptions.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SafeLoadLibrary.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Threading\BatchingQueueThread.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Threading\MessageDispatchQueue.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Threading\MessageQueueThreadFactory.cpp" />
@@ -213,9 +214,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)TurboModuleManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Utils.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Utils\WinRTConversions.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)V8JSIRuntimeHolder.cpp">
-      <ExcludedFromBuild Condition="'$(UseV8)' != 'true'">true</ExcludedFromBuild>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\codegen\react\components\rnwcore\EventEmitters.h" />
@@ -248,9 +246,11 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\DWriteHelpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\FabricUIManagerModule.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\graphics\Color.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\core\graphicsConversions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\textlayoutmanager\TextLayoutManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\ReactNativeConfigProperties.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\WindowsImageManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\JsiApi.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\SchedulerSettings.h" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\DynamicReader.cpp">
       <DependentUpon>$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IJSValueReader.idl</DependentUpon>
@@ -307,14 +307,13 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)BaseFileReaderResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CppRuntimeOptions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)HermesSamplingProfiler.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)HermesShim.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)IFileReaderResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ByteArrayBuffer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraApi.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntime.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntimeArgs.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntimeFactory.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\NapiJsiV8RuntimeHolder.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\V8RuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\RuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ScriptStore.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\BlobModule.h" />
@@ -367,6 +366,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)NativeModuleProvider.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)OInstance.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Pch\pch.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SafeLoadLibrary.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ShadowNode.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ShadowNodeRegistry.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)targetver.h" />
@@ -381,7 +381,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Utils.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Utils\CppWinrtLessExceptions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Utils\WinRTConversions.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)V8JSIRuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)WebSocketJSExecutorFactory.h" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\DevSettingsModule.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\ReactRootViewTagGenerator.cpp" />
@@ -533,5 +532,19 @@
     <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactPackageBuilderFabric.idl" />
     <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactViewComponentBuilder.idl" />
     <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ViewProps.idl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(NodeApiJsiDir)src\ApiLoaders\HermesApi.h" />
+    <ClInclude Include="$(NodeApiJsiDir)src\ApiLoaders\HermesApi.inc" />
+    <ClCompile Include="$(NodeApiJsiDir)src\ApiLoaders\HermesApi.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup Condition="'$(UseV8)' == 'true'">
+    <ClInclude Include="$(NodeApiJsiDir)src\ApiLoaders\V8Api.h" />
+    <ClInclude Include="$(NodeApiJsiDir)src\ApiLoaders\V8Api.inc" />
+    <ClCompile Include="$(NodeApiJsiDir)src\ApiLoaders\V8Api.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
   </ItemGroup>
 </Project>

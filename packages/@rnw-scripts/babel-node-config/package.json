@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/babel-node-config",
-  "version": "2.2.3",
+  "version": "2.3.0",
   "license": "MIT",
   "main": "babel.config.js",
   "repository": {
@@ -10,20 +10,20 @@
   },
   "devDependencies": {
     "@babel/core": "^7.22.0",
-    "@babel/preset-env": "^7.22.0",
-    "@babel/preset-typescript": "^7.21.0",
     "@babel/plugin-transform-private-methods": "^7.22.0",
     "@babel/plugin-transform-private-property-in-object": "^7.22.0",
+    "@babel/preset-env": "^7.22.0",
+    "@babel/preset-typescript": "^7.21.0",
     "@types/node": "^16.0.0",
     "eslint": "^8.19.0",
     "prettier": "^2.4.1"
   },
   "peerDependencies": {
     "@babel/core": "^7.22.0",
-    "@babel/preset-env": "^7.22.0",
-    "@babel/preset-typescript": "^7.21.0",
     "@babel/plugin-transform-private-methods": "^7.22.0",
-    "@babel/plugin-transform-private-property-in-object": "^7.22.0"
+    "@babel/plugin-transform-private-property-in-object": "^7.22.0",
+    "@babel/preset-env": "^7.22.0",
+    "@babel/preset-typescript": "^7.21.0"
   },
   "engines": {
     "node": ">= 16"

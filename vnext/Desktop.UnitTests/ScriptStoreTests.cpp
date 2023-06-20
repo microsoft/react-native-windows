@@ -65,7 +65,8 @@ TEST_CLASS (ScriptStoreIntegrationTest) {
     // Without memory mapping: about 6.11 MB (fileSize + app overhead)
     // With memory mapping: about 2.14 MB (view overhead + app overhead)
     // Expected working set size should be lower than the actual file size, provided it is larger than the app overhead
-    Assert::IsTrue(endWorkingSet - startWorkingSet < fileSize);
+    // plus 10% to account for memory used by hashing
+    Assert::IsTrue(endWorkingSet - startWorkingSet < fileSize * 1.1);
   }
 };
 } // namespace Microsoft::JSI::Test

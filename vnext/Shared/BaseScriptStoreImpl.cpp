@@ -4,6 +4,7 @@
 #include "pch.h"
 
 #include "BaseScriptStoreImpl.h"
+#include "Hasher.h"
 #include "MemoryMappedBuffer.h"
 
 #include <CppRuntimeOptions.h>
@@ -92,6 +93,7 @@ struct PreparedScriptPrefix {
   jsi::ScriptVersion_t scriptVersion;
   jsi::JSRuntimeVersion_t runtimeVersion;
   uint64_t sizeInBytes;
+  std::uint8_t hash[32];
 };
 
 struct PreparedScriptSuffix {
@@ -269,6 +271,24 @@ std::shared_ptr<const jsi::Buffer> BasePreparedScriptStoreImpl::tryGetPreparedSc
     return nullptr;
   }
 
+  std::optional<std::vector<std::uint8_t>> hashBuffer = Microsoft::ReactNative::GetSHA256Hash(
+      reinterpret_cast<const std::uint8_t *>(buffer->data()) + sizeof(PreparedScriptPrefix),
+      static_cast<size_t>(prefix->sizeInBytes));
+  if (!hashBuffer) {
+    // Hashing failed.
+    return nullptr;
+  }
+
+  if (hashBuffer.value().size() < sizeof(prefix->hash)) {
+    // Unexpected hash size.
+    return nullptr;
+  }
+
+  if (memcmp(hashBuffer.value().data(), prefix->hash, sizeof(prefix->hash)) != 0) {
+    // Hash doesn't match. Store is possibly corrupted. It is safer to bail out.
+    return nullptr;
+  }
+
   const PreparedScriptSuffix *suffix = reinterpret_cast<const PreparedScriptSuffix *>(
       buffer->data() + sizeof(PreparedScriptPrefix) + prefix->sizeInBytes);
   if (strncmp(suffix->eof, PERSIST_EOF, sizeof(suffix->eof)) != 0) {
@@ -296,6 +316,15 @@ void BasePreparedScriptStoreImpl::persistPreparedScript(
   prefix->scriptVersion = scriptMetadata.version;
   prefix->runtimeVersion = runtimeMetadata.version;
   prefix->sizeInBytes = preparedScript->size();
+
+  std::optional<std::vector<std::uint8_t>> hashBuffer =
+      Microsoft::ReactNative::GetSHA256Hash(preparedScript->data(), preparedScript->size());
+  if (!hashBuffer) {
+    // Hashing failed.
+    std::terminate();
+  }
+
+  memcpy_s(prefix->hash, sizeof(prefix->hash), hashBuffer.value().data(), hashBuffer.value().size());
 
   memcpy_s(
       newBuffer->data() + sizeof(PreparedScriptPrefix),

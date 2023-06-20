@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/jest-out-of-tree-snapshot-resolver
 
-This log was last generated on Tue, 25 Apr 2023 05:17:01 GMT and should not be manually modified.
+This log was last generated on Tue, 13 Jun 2023 05:15:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.3
+
+Tue, 13 Jun 2023 05:15:41 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.0
 
 ## 1.1.2
 

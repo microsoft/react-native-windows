@@ -121,7 +121,7 @@ const Components: Array<RNTesterModuleInfo> = [
   },
   {
     key: 'TextWin32Test',
-    module: require('@office-iss/react-native-win32/Libraries/Components/Text/Tests/TextWin32Test'),
+    module: require('../components/TextWin32Test'),
   },
   {
     key: 'TouchableExample',
@@ -139,7 +139,7 @@ const Components: Array<RNTesterModuleInfo> = [
   },
   {
     key: 'ViewWin32Test',
-    module: require('@office-iss/react-native-win32/Libraries/Components/View/Tests/ViewWin32Test'),
+    module: require('../components/ViewWin32Test'),
   },
 ];
 

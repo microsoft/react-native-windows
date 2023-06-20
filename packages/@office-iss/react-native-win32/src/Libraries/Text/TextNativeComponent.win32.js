@@ -48,12 +48,38 @@ const textViewConfig = {
     android_hyphenationFrequency: true,
     lineBreakStrategyIOS: true,
     // [Windows
-    // Listed for the property to be honored even though
-    // the property tooltip and the events from ViewWin32
-    //work without being listed.  Any Text-specific events
-    // would need to be listed here.
-    focusable: true,
+    accessibilityAccessKey: true,
+    accessibilityAnnotation: true,
+    accessibilityControls: true,
+    accessibilityDescribedBy: true,
+    accessibilityDescription: true,
+    accessibilityItemType: true,
     accessibilityLevel: true,
+    accessibilityPositionInSet: true,
+    accessibilitySetSize: true,
+    animationClass: true,
+    cursor: true,
+    draggedTypes: true,
+    enableFocusRing: true,
+    focusable: true,
+    keyDownEvents: true,
+    keyUpEvents: true,
+    onBlur: true,
+    onBlurCapture: true,
+    onDragEnter: true,
+    onDragLeave: true,
+    onDrop: true,
+    onFocus: true,
+    onFocusCapture: true,
+    onKeyDown: true,
+    onKeyDownCapture: true,
+    onKeyUp: true,
+    onKeyUpCapture: true,
+    onMouseEnter: true,
+    onMouseLeave: true,
+    tabIndex: true,
+    textStyle: true,
+    tooltip: true,
     // Windows]
   },
   directEventTypes: {

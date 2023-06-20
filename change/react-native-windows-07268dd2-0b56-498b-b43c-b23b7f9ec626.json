@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "Switch ViewPanel base class to Grid",
+  "comment": "Use the Hasher in ScriptStore",
   "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
+  "email": "tudor.mihai@microsoft.com",
   "dependentChangeType": "patch"
 }

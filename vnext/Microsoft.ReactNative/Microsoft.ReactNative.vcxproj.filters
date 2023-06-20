@@ -7,44 +7,12 @@
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
     <ClCompile Include="ABICxxModule.cpp" />
     <ClCompile Include="ABIViewManager.cpp" />
-    <ClCompile Include="IReactDispatcher.cpp" />
-    <ClCompile Include="IReactNotificationService.cpp" />
-    <ClCompile Include="NativeModulesProvider.cpp" />
-    <ClCompile Include="TurboModulesProvider.cpp" />
     <ClCompile Include="XamlLoadState.cpp" />
     <ClCompile Include="XamlView.cpp" />
     <ClCompile Include="Pch\pch.cpp">
       <Filter>Pch</Filter>
     </ClCompile>
-    <ClCompile Include="ReactHost\AsyncActionQueue.cpp">
-      <Filter>ReactHost</Filter>
-    </ClCompile>
-    <ClCompile Include="ReactHost\JSBundle.cpp">
-      <Filter>ReactHost</Filter>
-    </ClCompile>
-    <ClCompile Include="ReactHost\JSBundle_Win32.cpp">
-      <Filter>ReactHost</Filter>
-    </ClCompile>
-    <ClCompile Include="ReactHost\MsoUtils.cpp">
-      <Filter>ReactHost</Filter>
-    </ClCompile>
-    <ClCompile Include="ReactHost\MsoReactContext.cpp">
-      <Filter>ReactHost</Filter>
-    </ClCompile>
-    <ClCompile Include="ReactHost\ReactErrorProvider.cpp">
-      <Filter>ReactHost</Filter>
-    </ClCompile>
-    <ClCompile Include="ReactHost\ReactHost.cpp">
-      <Filter>ReactHost</Filter>
-    </ClCompile>
-    <ClCompile Include="ReactHost\ReactInstanceWin.cpp">
-      <Filter>ReactHost</Filter>
-    </ClCompile>
-    <ClCompile Include="ReactHost\CrashManager.cpp">
-      <Filter>ReactHost</Filter>
-    </ClCompile>
     <ClCompile Include="ReactSupport.cpp" />
-    <ClCompile Include="RedBox.cpp" />
     <ClCompile Include="TestHook.cpp" />
     <ClCompile Include="ViewManagersProvider.cpp" />
     <ClCompile Include="Base\CoreNativeModules.cpp">
@@ -141,9 +109,6 @@
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="Modules\DeviceInfoModule.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\DevSettingsModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="Modules\I18nManagerModule.cpp">
@@ -287,9 +252,6 @@
     <ClCompile Include="Utils\XamlIslandUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="JsiApi.cpp" />
-    <ClCompile Include="RedBoxErrorInfo.cpp" />
-    <ClCompile Include="RedBoxErrorFrameInfo.cpp" />
     <ClCompile Include="Modules\CreateModules.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
@@ -301,9 +263,6 @@
     <ClCompile Include="Views\ShadowNodeRegistry.cpp" />
     <ClCompile Include="Utils\BatchingEventEmitter.cpp">
       <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="ReactHost\JSCallInvokerScheduler.cpp">
-      <Filter>ReactHost</Filter>
     </ClCompile>
     <ClCompile Include="Views\Text\TextHighlighterVisitor.cpp">
       <Filter>Views\Text</Filter>
@@ -333,6 +292,7 @@
     <ClCompile Include="Views\FrameworkElementTransferProperties.cpp" />
     <ClCompile Include="Views\ReactViewInstance.cpp" />
     <ClCompile Include="CoreApp.cpp" />
+    <ClCompile Include="Utils\KeyboardUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABICxxModule.h" />
@@ -735,25 +695,12 @@
     <ClInclude Include="ReactPointerEventArgs.h" />
     <ClInclude Include="Views\FrameworkElementTransferProperties.h" />
     <ClInclude Include="Views\ReactViewInstance.h" />
+    <ClInclude Include="Utils\KeyboardUtils.h" />
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="IJSValueReader.idl" />
-    <Midl Include="IJSValueWriter.idl" />
-    <Midl Include="IReactContext.idl" />
-    <Midl Include="IReactDispatcher.idl" />
-    <Midl Include="IReactModuleBuilder.idl" />
-    <Midl Include="IReactNonAbiValue.idl" />
-    <Midl Include="IReactNotificationService.idl" />
-    <Midl Include="IReactPackageBuilder.idl" />
-    <Midl Include="IReactPackageProvider.idl" />
-    <Midl Include="IReactPropertyBag.idl" />
     <Midl Include="IViewManager.idl" />
     <Midl Include="ReactApplication.idl" />
-    <Midl Include="ReactInstanceSettings.idl" />
-    <Midl Include="ReactNativeHost.idl" />
     <Midl Include="ReactRootView.idl" />
-    <Midl Include="RedBoxHandler.idl" />
-    <Midl Include="QuirkSettings.idl" />
     <Midl Include="XamlHelper.idl" />
     <Midl Include="LayoutService.idl" />
     <Midl Include="XamlUIService.idl" />
@@ -770,11 +717,9 @@
       <Filter>Views\cppwinrt</Filter>
     </Midl>
     <Midl Include="IViewManagerCore.idl" />
-    <Midl Include="JsiApi.idl" />
     <Midl Include="DocString.idl" />
     <Midl Include="DesktopWindowMessage.idl" />
     <Midl Include="ReactPointerEventArgs.idl" />
-    <Midl Include="ReactCoreInjection.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="microsoft.reactnative.def" />
