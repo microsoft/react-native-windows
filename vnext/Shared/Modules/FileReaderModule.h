@@ -57,7 +57,6 @@ class FileReaderModule : public facebook::xplat::module::CxxModule {
 
 REACT_MODULE(FileReaderTurboModule, L"FileReaderModule")
 struct FileReaderTurboModule {
-
   using ModuleSpec = ReactNativeSpecs::FileReaderModuleSpec;
 
   REACT_INIT(Initialize)
