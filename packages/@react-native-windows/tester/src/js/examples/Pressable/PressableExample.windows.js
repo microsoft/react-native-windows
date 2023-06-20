@@ -926,7 +926,7 @@ const examples = [
               borderRadius: 2,
             }}
             onPress={() => {}}
-            toolTip="Pressable"
+            tooltip="Pressable"
             nativeID="Pressable-NativeID">
             <Text>Pressable with ToolTip "Pressable"</Text>
           </Pressable>

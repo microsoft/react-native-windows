@@ -33,7 +33,6 @@ export class ButtonWin32 extends React.Component<IButtonWin32Props, IButtonWin32
       onBlur: this._onBlur,
       onMouseEnter: this.props.onMouseEnter,
       onMouseLeave: this.props.onMouseLeave,
-      // @ts-ignore
       onTouchStart: this.props.onTouchStart,
       onTouchEnd: this._onTouchEnd,
       testID: this.props.testID,
@@ -48,7 +47,6 @@ export class ButtonWin32 extends React.Component<IButtonWin32Props, IButtonWin32
     }
 
     return (
-      // @ts-ignore
       <RN.ViewWin32 {...viewProps}>
         <RN.TextWin32 {...textProps}>{this.props.title}</RN.TextWin32>
       </RN.ViewWin32>
