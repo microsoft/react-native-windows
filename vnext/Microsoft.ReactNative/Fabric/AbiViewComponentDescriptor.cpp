@@ -124,8 +124,7 @@ facebook::react::State::Shared AbiViewComponentDescriptor::createInitialState(
   }
 
   return std::make_shared<ConcreteState>(
-      std::make_shared<ConcreteStateData const>(ConcreteShadowNode::initialStateData(
-          props, facebook::react::ShadowNodeFamilyFragment::build(*family), *this)),
+      std::make_shared<ConcreteStateData const>(ConcreteShadowNode::initialStateData(props, family, *this)),
       family);
 }
 
@@ -145,12 +144,16 @@ facebook::react::State::Shared AbiViewComponentDescriptor::createState(
 
 facebook::react::ShadowNodeFamily::Shared AbiViewComponentDescriptor::createFamily(
     facebook::react::ShadowNodeFamilyFragment const &fragment) const {
-  auto eventEmitter =
-      std::make_shared<ConcreteEventEmitter const>(std::move(eventTarget), fragment.tag, eventDispatcher_);
   return std::make_shared<facebook::react::ShadowNodeFamily>(
-      facebook::react::ShadowNodeFamilyFragment{fragment.tag, fragment.surfaceId, eventEmitter},
+      facebook::react::ShadowNodeFamilyFragment{fragment.tag, fragment.surfaceId, fragment.instanceHandle},
       eventDispatcher_,
       *this);
+}
+
+facebook::react::SharedEventEmitter AbiViewComponentDescriptor::createEventEmitter(
+    facebook::react::InstanceHandle::Shared const &instanceHandle) const {
+  return std::make_shared<ConcreteEventEmitter const>(
+      std::make_shared<facebook::react::EventTarget>(instanceHandle), eventDispatcher_);
 }
 
 /*
