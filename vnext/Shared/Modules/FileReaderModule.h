@@ -3,6 +3,8 @@
 
 #pragma once
 
+#include <NativeFileReaderModuleSpec.g.h>
+
 #include <IFileReaderResource.h>
 #include <NativeModules.h>
 #include "IBlobPersistor.h"
@@ -55,6 +57,9 @@ class FileReaderModule : public facebook::xplat::module::CxxModule {
 
 REACT_MODULE(FileReaderTurboModule, L"FileReaderModule")
 struct FileReaderTurboModule {
+
+  using ModuleSpec = ReactNativeSpecs::FileReaderModuleSpec;
+
   REACT_INIT(Initialize)
   void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
