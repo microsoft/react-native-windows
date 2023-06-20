@@ -21,8 +21,10 @@
 #include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/Windows.Web.Http.h>
 
+#ifdef HERMES_ENABLE_DEBUGGER
 #include <winrt/Windows.ApplicationModel.Activation.h>
 #include <winrt/Windows.Networking.Connectivity.h>
+#endif
 
 #pragma warning(push)
 #pragma warning(disable : 4068 4251 4101 4804 4309)
@@ -241,6 +243,7 @@ void DevSupportManager::StopPollingLiveReload() {
 void DevSupportManager::EnsureHermesInspector(
     [[maybe_unused]] const std::string &packagerHost,
     [[maybe_unused]] const uint16_t packagerPort) noexcept {
+#ifdef HERMES_ENABLE_DEBUGGER
   static std::once_flag once;
   std::call_once(once, [this, &packagerHost, packagerPort]() {
     // TODO: should we use the bundleAppId as the app param if available?
@@ -263,10 +266,14 @@ void DevSupportManager::EnsureHermesInspector(
         m_BundleStatusProvider);
     m_inspectorPackagerConnection->connectAsync();
   });
+
+#endif
 }
 
-void DevSupportManager::UpdateBundleStatus(bool isLastDownloadSuccess, int64_t updateTimestamp) noexcept {
-  m_BundleStatusProvider->updateBundleStatus(isLastDownloadSuccess, updateTimestamp);
+void DevSupportManager::UpdateBundleStatus(bool isLastDownloadSucess, int64_t updateTimestamp) noexcept {
+#ifdef HERMES_ENABLE_DEBUGGER
+  m_BundleStatusProvider->updateBundleStatus(isLastDownloadSucess, updateTimestamp);
+#endif
 }
 
 std::pair<std::string, bool> GetJavaScriptFromServer(
