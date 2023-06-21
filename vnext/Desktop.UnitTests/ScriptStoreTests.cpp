@@ -56,8 +56,8 @@ TEST_CLASS (ScriptStoreIntegrationTest) {
     auto startWorkingSet =
         ProcessDiagnosticInfo::GetForCurrentProcess().MemoryUsage().GetReport().WorkingSetSizeInBytes();
 
-    auto prepd = preparedScriptStore->tryGetPreparedScript(scriptSignature, runtimeSignature, "prepareTag");
-    Assert::AreEqual(fileSize, prepd->size());
+    auto prepped = preparedScriptStore->tryGetPreparedScript(scriptSignature, runtimeSignature, "prepareTag");
+    Assert::AreEqual(fileSize, prepped->size());
 
     auto endWorkingSet =
         ProcessDiagnosticInfo::GetForCurrentProcess().MemoryUsage().GetReport().WorkingSetSizeInBytes();
@@ -68,8 +68,8 @@ TEST_CLASS (ScriptStoreIntegrationTest) {
     // Expected working set size should be lower than the actual file size, provided it is larger than the app overhead
     //
     // Update: PR #11781 adds hash evaluation for the whole file that requires reading all file data to memory.
-    // The working set is about 4.5 MB. It is about 1/8 abouve the file size.
-    Assert::IsTrue(endWorkingSet - startWorkingSet < fileSize * 9 / 8);
+    // The working set is about 4.3 MB. It is about 10% above the file size.
+    Assert::IsTrue(endWorkingSet - startWorkingSet < fileSize * 1.1);
   }
 };
 } // namespace Microsoft::JSI::Test

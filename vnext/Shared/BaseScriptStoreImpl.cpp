@@ -271,18 +271,20 @@ std::shared_ptr<const jsi::Buffer> BasePreparedScriptStoreImpl::tryGetPreparedSc
     return nullptr;
   }
 
-  Microsoft::ReactNative::SHA256Hasher hasher;
-  hasher.HashData(
+  std::optional<std::vector<std::uint8_t>> hashBuffer = Microsoft::ReactNative::GetSHA256Hash(
       reinterpret_cast<const std::uint8_t *>(buffer->data()) + sizeof(PreparedScriptPrefix),
-      static_cast<uint32_t>(prefix->sizeInBytes));
-  std::vector<std::uint8_t> hashBuffer = hasher.GetHashValue();
+      static_cast<size_t>(prefix->sizeInBytes));
+  if (!hashBuffer) {
+    // Hashing failed.
+    return nullptr;
+  }
 
-  if (hashBuffer.size() < sizeof(prefix->hash)) {
+  if (hashBuffer.value().size() < sizeof(prefix->hash)) {
     // Unexpected hash size.
     return nullptr;
   }
 
-  if (memcmp(hashBuffer.data(), prefix->hash, sizeof(prefix->hash)) != 0) {
+  if (memcmp(hashBuffer.value().data(), prefix->hash, sizeof(prefix->hash)) != 0) {
     // Hash doesn't match. Store is possibly corrupted. It is safer to bail out.
     return nullptr;
   }
@@ -315,10 +317,14 @@ void BasePreparedScriptStoreImpl::persistPreparedScript(
   prefix->runtimeVersion = runtimeMetadata.version;
   prefix->sizeInBytes = preparedScript->size();
 
-  Microsoft::ReactNative::SHA256Hasher hasher;
-  hasher.HashData(preparedScript->data(), static_cast<uint32_t>(preparedScript->size()));
-  std::vector<std::uint8_t> hashBuffer = hasher.GetHashValue();
-  memcpy_s(prefix->hash, sizeof(prefix->hash), hashBuffer.data(), sizeof(prefix->hash));
+  std::optional<std::vector<std::uint8_t>> hashBuffer =
+      Microsoft::ReactNative::GetSHA256Hash(preparedScript->data(), preparedScript->size());
+  if (!hashBuffer) {
+    // Hashing failed.
+    std::terminate();
+  }
+
+  memcpy_s(prefix->hash, sizeof(prefix->hash), hashBuffer.value().data(), hashBuffer.value().size());
 
   memcpy_s(
       newBuffer->data() + sizeof(PreparedScriptPrefix),
