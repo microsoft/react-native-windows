@@ -4,6 +4,7 @@
 #include "pch.h"
 
 #include <Modules/WebSocketModule.h>
+#include <Modules/WebSocketTurboModule.h>
 
 #include <Modules/CxxModuleUtilities.h>
 #include <Modules/IWebSocketModuleContentHandler.h>
@@ -18,6 +19,8 @@
 
 // Standard Library
 #include <iomanip>
+
+namespace msrn = winrt::Microsoft::ReactNative;
 
 using namespace facebook::xplat;
 
@@ -42,7 +45,7 @@ using Microsoft::React::WebSocketModule;
 using Microsoft::React::Modules::SendEvent;
 using Microsoft::React::Networking::IWebSocketResource;
 
-constexpr char moduleName[] = "WebSocketModule";
+constexpr char s_moduleName[] = "WebSocketModule";
 
 static shared_ptr<IWebSocketResource>
 GetOrCreateWebSocket(int64_t id, string &&url, weak_ptr<WebSocketModule::SharedState> weakState) {
@@ -179,7 +182,7 @@ void WebSocketModule::SetResourceFactory(
 }
 
 string WebSocketModule::getName() {
-  return moduleName;
+  return s_moduleName;
 }
 
 std::map<string, dynamic> WebSocketModule::getConstants() {
@@ -312,8 +315,16 @@ void WebSocketModuleProxy::SendBinary(std::string &&base64String, int64_t id) no
 
 #pragma endregion WebSocketModuleProxy
 
+#pragma region WebSocketTurboModule
+
+void WebSocketTurboModule::Initialize(msrn::ReactContext const& reactContext) noexcept {
+
+}
+
+#pragma endregion WebSocketTurboModule
+
 /*extern*/ const char *GetWebSocketModuleName() noexcept {
-  return moduleName;
+  return s_moduleName;
 }
 
 /*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule(
