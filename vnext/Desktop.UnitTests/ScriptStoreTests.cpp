@@ -42,6 +42,7 @@ TEST_CLASS (ScriptStoreIntegrationTest) {
 
     constexpr size_t fileSize = 4 * 1024 * 1024;
     std::vector<char> chars{};
+    chars.reserve(fileSize);
     while (chars.size() < fileSize) {
       chars.emplace_back(static_cast<char>('0' + chars.size() % 16));
     }
@@ -65,7 +66,10 @@ TEST_CLASS (ScriptStoreIntegrationTest) {
     // Without memory mapping: about 6.11 MB (fileSize + app overhead)
     // With memory mapping: about 2.14 MB (view overhead + app overhead)
     // Expected working set size should be lower than the actual file size, provided it is larger than the app overhead
-    Assert::IsTrue(endWorkingSet - startWorkingSet < fileSize);
+    //
+    // Update: PR #11781 adds hash evaluation for the whole file that requires reading all file data to memory.
+    // The working set is about 4.5 MB. It is about 1/8 abouve the file size.
+    Assert::IsTrue(endWorkingSet - startWorkingSet < fileSize * 9 / 8);
   }
 };
 } // namespace Microsoft::JSI::Test
