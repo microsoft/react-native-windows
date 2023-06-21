@@ -436,6 +436,17 @@ type IOSViewProps = $ReadOnly<{|
 |}>;
 
 // [Windows
+export const EventPhase = {
+  None: 0,
+  Capturing: 1,
+  AtTarget: 2,
+  Bubbling: 3,
+};
+
+export const HandledEventPhase = {
+  Capturing: EventPhase.Capturing,
+  Bubbling: EventPhase.Bubbling,
+};
 
 export type HandledKeyboardEvent = $ReadOnly<{|
   altKey?: ?boolean,
@@ -469,8 +480,12 @@ type WindowsViewProps = $ReadOnly<{|
 
   disabled?: ?boolean,
 
+  accessibilityLevel?: ?number,
+  'aria-level'?: ?number,
   accessibilityPosInSet?: ?number,
+  'aria-posinset'?: ?number,
   accessibilitySetSize?: ?number,
+  'aria-setsize'?: ?number,
 
   /**
    * Specifies if the control should show System focus visuals

@@ -38,6 +38,9 @@ const Text: React.AbstractComponent<
   const {
     accessible,
     accessibilityLabel,
+    accessibilityLevel, // Windows
+    accessibilityPosInSet, // Windows
+    accessibilitySetSize, // Windows
     accessibilityRole,
     accessibilityState,
     allowFontScaling,
@@ -46,6 +49,9 @@ const Text: React.AbstractComponent<
     'aria-disabled': ariaDisabled,
     'aria-expanded': ariaExpanded,
     'aria-label': ariaLabel,
+    'aria-level': ariaLevel, // Windows
+    'aria-posinset': ariaPosinset, // Windows
+    'aria-setsize': ariaSetsize, // Windows
     'aria-selected': ariaSelected,
     ellipsizeMode,
     id,
@@ -240,6 +246,9 @@ const Text: React.AbstractComponent<
         {...restProps}
         {...eventHandlersForText}
         accessibilityLabel={ariaLabel ?? accessibilityLabel}
+        accessibilityLevel={ariaLevel ?? accessibilityLevel} // Windows
+        accessibilityPosInSet={ariaPosinset ?? accessibilityPosInSet} // Windows
+        accessibilitySetSize={ariaSetsize ?? accessibilitySetSize} // Windows
         accessibilityRole={
           role ? getAccessibilityRoleFromRole(role) : accessibilityRole
         }
@@ -304,6 +313,9 @@ const Text: React.AbstractComponent<
               {...textPropsLessStyle}
               {...eventHandlersForText}
               accessibilityLabel={ariaLabel ?? accessibilityLabel}
+              accessibilityLevel={ariaLevel ?? accessibilityLevel} // Windows
+              accessibilityPosInSet={ariaPosinset ?? accessibilityPosInSet} // Windows
+              accessibilitySetSize={ariaSetsize ?? accessibilitySetSize} // Windows
               accessibilityRole={
                 role ? getAccessibilityRoleFromRole(role) : accessibilityRole
               }
@@ -334,6 +346,9 @@ const Text: React.AbstractComponent<
             {...restProps}
             {...eventHandlersForText}
             accessibilityLabel={ariaLabel ?? accessibilityLabel}
+            accessibilityLevel={ariaLevel ?? accessibilityLevel} // Windows
+            accessibilityPosInSet={ariaPosinset ?? accessibilityPosInSet} // Windows
+            accessibilitySetSize={ariaSetsize ?? accessibilitySetSize} // Windows
             accessibilityRole={
               role ? getAccessibilityRoleFromRole(role) : accessibilityRole
             }

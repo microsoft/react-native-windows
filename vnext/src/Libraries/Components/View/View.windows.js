@@ -38,8 +38,11 @@ const View: React.AbstractComponent<
       accessibilityElementsHidden,
       accessibilityLabel,
       accessibilityLabelledBy,
+      accessibilityLevel, // Windows
       accessibilityLiveRegion,
+      accessibilityPosInSet, // Windows
       accessibilityRole,
+      accessibilitySetSize, // Windows
       accessibilityState,
       accessibilityValue,
       'aria-busy': ariaBusy,
@@ -49,8 +52,11 @@ const View: React.AbstractComponent<
       'aria-hidden': ariaHidden,
       'aria-label': ariaLabel,
       'aria-labelledby': ariaLabelledBy,
+      'aria-level': ariaLevel,
       'aria-live': ariaLive,
+      'aria-posinset': ariaPosinset, // Windows
       'aria-selected': ariaSelected,
+      'aria-setsize': ariaSetsize, // Windows
       'aria-valuemax': ariaValueMax,
       'aria-valuemin': ariaValueMin,
       'aria-valuenow': ariaValueNow,
@@ -218,6 +224,9 @@ const View: React.AbstractComponent<
                   : ariaLive ?? accessibilityLiveRegion
               }
               accessibilityLabel={ariaLabel ?? accessibilityLabel}
+              accessibilityLevel={ariaLevel ?? accessibilityLevel}
+              accessibilityPosInSet={ariaPosinset ?? accessibilityPosInSet}
+              accessibilitySetSize={ariaSetsize ?? accessibilitySetSize}
               focusable={_focusable}
               disabled={disabled}
               accessibilityState={_accessibilityState}

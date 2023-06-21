@@ -348,6 +348,7 @@ const validAttributesForNonEventProps = {
 
   direction: true,
 
+  accessibilityLevel: true, // [Windows]
   accessibilityLiveRegion: true, // [Windows]
   accessibilityPosInSet: true, // [Windows]
   accessibilitySetSize: true, // [Windows]

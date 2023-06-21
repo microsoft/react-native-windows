@@ -10,11 +10,13 @@
 
 import type {HostComponent} from '../../Renderer/shims/ReactNativeTypes';
 import type {
+  KeyEvent, // Windows
+  MouseEvent, // Windows
   PressEvent,
   ScrollEvent,
   SyntheticEvent,
 } from '../../Types/CoreEventTypes';
-import type {ViewProps} from '../View/ViewPropTypes';
+import type {HandledKeyboardEvent, ViewProps} from '../View/ViewPropTypes';
 import type {TextInputType} from './TextInput.flow';
 
 import usePressability from '../../Pressability/usePressability';
@@ -50,7 +52,6 @@ let RCTMultilineTextInputView;
 let RCTMultilineTextInputNativeCommands;
 let WindowsTextInput; // [Windows]
 let WindowsTextInputCommands; // [Windows]
-import type {KeyEvent} from '../../Types/CoreEventTypes'; // [Windows]
 
 // [Windows
 if (Platform.OS === 'android') {
@@ -467,6 +468,39 @@ type WindowsProps = $ReadOnly<{|
    * @platform windows
    */
   submitKeyEvents?: ?$ReadOnlyArray<SubmitKeyEvent>,
+
+  /**
+   * Specifies the Tooltip for the view
+   */
+  tooltip?: string,
+
+  /**
+   * Indicates the TabIndex to use for this view
+   */
+  tabIndex?: number,
+
+  /**
+   * Specifies if the control should show System focus visuals
+   */
+  enableFocusRing?: boolean,
+
+  /**
+   * Event fired when the mouse leaves the view
+   */
+  onMouseLeave?: (args: MouseEvent) => void,
+
+  /**
+   * Event fired when the mouse enters the view
+   */
+  onMouseEnter?: (args: MouseEvent) => void,
+
+  onKeyDown?: (args: KeyEvent) => void,
+  onKeyDownCapture?: (args: KeyEvent) => void,
+  onKeyUp?: (args: KeyEvent) => void,
+  onKeyUpCapture?: (args: KeyEvent) => void,
+
+  keyDownEvents?: ?$ReadOnlyArray<HandledKeyboardEvent>,
+  keyUpEvents?: ?$ReadOnlyArray<HandledKeyboardEvent>,
 |}>;
 
 // Windows]

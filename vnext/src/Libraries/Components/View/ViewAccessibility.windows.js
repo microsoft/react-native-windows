@@ -84,6 +84,9 @@ export type AccessibilityRole =
   | 'grid'
   | 'pager'
   | 'scrollview'
+  | 'group' // Windows
+  | 'tree' // Windows
+  | 'treeitem' // Windows
   | 'horizontalscrollview'
   | 'viewgroup'
   | 'webview'

@@ -427,24 +427,28 @@
       "baseHash": "a5ff7c1a8aeb920613c2e39aa00278af7902cfed"
     },
     {
+      "type": "derived",
+      "file": "src/Libraries/Components/View/ViewAccessibility.d.ts",
+      "baseFile": "packages/react-native/Libraries/Components/View/ViewAccessibility.d.ts",
+      "baseHash": "085982a44202765d099caf13785e8b4a42628d86"
+    },
+    {
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewAccessibility.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewAccessibility.js",
       "baseHash": "d12245b45ccdc5f473ba9484b5ec994cb45dae75"
     },
     {
+      "type": "derived",
+      "file": "src/Libraries/Components/View/ViewPropTypes.d.ts",
+      "baseFile": "packages/react-native/Libraries/Components/View/ViewPropTypes.d.ts",
+      "baseHash": "91d96e475fc55da6c6456a240edbd650c1ca4a26"
+    },
+    {
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewPropTypes.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewPropTypes.js",
       "baseHash": "f876c5954f1ab6471fec28f146f4aff61442dd15"
-    },
-    {
-      "type": "platform",
-      "file": "src/Libraries/Components/View/ViewWindows.tsx"
-    },
-    {
-      "type": "platform",
-      "file": "src/Libraries/Components/View/ViewWindowsProps.ts"
     },
     {
       "type": "copy",
@@ -546,10 +550,22 @@
       "baseHash": "6aa0c6611ba260bf235610429481a638e61e5279"
     },
     {
+      "type": "derived",
+      "file": "src/Libraries/Text/TextProps.windows.js",
+      "baseFile": "packages/react-native/Libraries/Text/TextProps.js",
+      "baseHash": "7ecbe61c439e5c6f79fe5ae262f063060fa6a24f"
+    },
+    {
       "type": "patch",
       "file": "src/Libraries/Types/CoreEventTypes.windows.js",
       "baseFile": "packages/react-native/Libraries/Types/CoreEventTypes.js",
       "baseHash": "7fe2b87cf49f4674d731d07f0883bab2f5cfc356"
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/Utilities/AcessibilityMapping.windows.js",
+      "baseFile": "packages/react-native/Libraries/Utilities/AcessibilityMapping.js",
+      "baseHash": "7a662ddd93c6cd0a7193e3002120aeb196991340"
     },
     {
       "type": "copy",
