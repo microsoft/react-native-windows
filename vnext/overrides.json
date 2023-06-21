@@ -17,6 +17,54 @@
       "baseHash": "8001e96c33f9678b48367e1c63939558ce4520b6"
     },
     {
+      "type": "copy",
+      "file": "flow-typed/npm/base64-js_v1.x.x.js",
+      "baseFile": "flow-typed/npm/base64-js_v1.x.x.js",
+      "baseHash": "fcdcdf527d3bd0eba6ba217065d265b4dc99dde9"
+    },
+    {
+      "type": "copy",
+      "file": "flow-typed/npm/glob_v7.x.x.js",
+      "baseFile": "flow-typed/npm/glob_v7.x.x.js",
+      "baseHash": "510531325af8657e239020101a7e32c687c30687"
+    },
+    {
+      "type": "copy",
+      "file": "flow-typed/npm/pretty-format_v26.x.x.js",
+      "baseFile": "flow-typed/npm/pretty-format_v26.x.x.js",
+      "baseHash": "b85e343468dbf62da99cd3f8963f715c2e1be266"
+    },
+    {
+      "type": "copy",
+      "file": "flow-typed/npm/promise_v8.x.x.js",
+      "baseFile": "flow-typed/npm/promise_v8.x.x.js",
+      "baseHash": "f7366f2fba3efc5752da61df4b8104c0f20631d7"
+    },
+    {
+      "type": "copy",
+      "file": "flow-typed/npm/react-dom_v17.x.x.js",
+      "baseFile": "flow-typed/npm/react-dom_v17.x.x.js",
+      "baseHash": "0ff2e50881d7a7288c174f3b138fb0fab7d160b5"
+    },
+    {
+      "type": "copy",
+      "file": "flow-typed/npm/react-test-renderer_v16.x.x.js",
+      "baseFile": "flow-typed/npm/react-test-renderer_v16.x.x.js",
+      "baseHash": "729e61a62b67c258bf977502e1fa2574ba000187"
+    },
+    {
+      "type": "copy",
+      "file": "flow-typed/npm/stacktrace-parser_v0.1.x.js",
+      "baseFile": "flow-typed/npm/stacktrace-parser_v0.1.x.js",
+      "baseHash": "ca53db52b39d05f3ccb8a6cab9acd9c43cfbfbe8"
+    },
+    {
+      "type": "copy",
+      "file": "flow-typed/npm/yargs_v17.x.x.js",
+      "baseFile": "flow-typed/npm/yargs_v17.x.x.js",
+      "baseHash": "819ff849fcc7c5e5ed20d02e280eae749ca22ae8"
+    },
+    {
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputComponentDescriptor.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputComponentDescriptor.h",

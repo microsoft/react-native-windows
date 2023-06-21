@@ -77,9 +77,9 @@
 ../node_modules/
 
 [libs]
+flow-typed/
 interface.js
 flow/
-flow-typed/
 
 [options]
 enums=true
