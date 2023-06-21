@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Use the Hasher in ScriptStore",
-  "packageName": "react-native-windows",
-  "email": "tudor.mihai@microsoft.com",
-  "dependentChangeType": "patch"
-}
