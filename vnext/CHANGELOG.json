@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 21 Jun 2023 15:24:51 GMT",
+      "tag": "react-native-windows_v0.71.20",
+      "version": "0.71.20",
+      "comments": {
+        "patch": [
+          {
+            "author": "tudor.mihai@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "fbe998224a24862ab7ac61ba86a817c89476fdfa",
+            "comment": "Add a checksum to the script cache"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 21 Jun 2023 00:09:42 GMT",
       "tag": "react-native-windows_v0.71.19",
       "version": "0.71.19",
