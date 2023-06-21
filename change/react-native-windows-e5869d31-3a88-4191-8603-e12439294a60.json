@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "Use the Hasher in ScriptStore",
+  "comment": "Implement FileReader TurboModule",
   "packageName": "react-native-windows",
-  "email": "tudor.mihai@microsoft.com",
+  "email": "julio.rocha@microsoft.com",
   "dependentChangeType": "patch"
 }
