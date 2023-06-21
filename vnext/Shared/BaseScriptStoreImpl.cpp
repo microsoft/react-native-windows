@@ -316,7 +316,7 @@ void BasePreparedScriptStoreImpl::persistPreparedScript(
   prefix->sizeInBytes = preparedScript->size();
 
   Microsoft::ReactNative::SHA256Hasher hasher;
-  hasher.HashData(preparedScript->data(), preparedScript->size());
+  hasher.HashData(preparedScript->data(), static_cast<uint32_t>(preparedScript->size()));
   std::vector<std::uint8_t> hashBuffer = hasher.GetHashValue();
   memcpy_s(prefix->hash, sizeof(prefix->hash), hashBuffer.data(), sizeof(prefix->hash));
 
