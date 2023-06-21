@@ -118,6 +118,12 @@ function removeDefaultProps(element: UIElement) {
     ['AutomationLevel', -1],
     ['AutomationPositionInSet', -1],
     ['AutomationSizeOfSet', -1],
+    ['AccessibilityRole', null],
+    ['AccessibilityStateSelected', null],
+    ['AccessibilityStateDisabled', null],
+    ['AccessibilityStateChecked', null],
+    ['AccessibilityStateBusy', null],
+    ['AccessibilityStateExpanded', null],
   ];
 
   defaultValues.forEach(([propname, defaultValue]) => {

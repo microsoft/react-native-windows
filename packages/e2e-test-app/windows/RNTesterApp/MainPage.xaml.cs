@@ -78,6 +78,12 @@ namespace RNTesterApp
                 new AttachedProperty() { Name = "AutomationLevel", Property = Windows.UI.Xaml.Automation.AutomationProperties.LevelProperty },
                 new AttachedProperty() { Name = "AutomationSizeOfSet", Property = Windows.UI.Xaml.Automation.AutomationProperties.SizeOfSetProperty },
                 new AttachedProperty() { Name = "AutomationPositionInSet", Property = Windows.UI.Xaml.Automation.AutomationProperties.PositionInSetProperty },
+                new AttachedProperty() { Name = "AccessibilityRole", Property = Microsoft.ReactNative.DynamicAutomationProperties.AccessibilityRoleProperty },
+                new AttachedProperty() { Name = "AccessibilityStateSelected", Property = Microsoft.ReactNative.DynamicAutomationProperties.AccessibilityStateSelectedProperty },
+                new AttachedProperty() { Name = "AccessibilityStateDisabled", Property = Microsoft.ReactNative.DynamicAutomationProperties.AccessibilityStateDisabledProperty },
+                new AttachedProperty() { Name = "AccessibilityStateChecked", Property = Microsoft.ReactNative.DynamicAutomationProperties.AccessibilityStateCheckedProperty },
+                new AttachedProperty() { Name = "AccessibilityStateBusy", Property = Microsoft.ReactNative.DynamicAutomationProperties.AccessibilityStateBusyProperty },
+                new AttachedProperty() { Name = "AccessibilityStateExpanded", Property = Microsoft.ReactNative.DynamicAutomationProperties.AccessibilityStateExpandedProperty },
             };
             var rootDump = VisualTreeDumper.DumpTree(this, null, additionalProperties, attachedProperties);
             var element = VisualTreeDumper.FindElementByAutomationId(JsonObject.Parse(rootDump), accessibilityId);
@@ -115,7 +121,8 @@ namespace RNTesterApp
                 try
                 {
                     await server.ProcessAllClientRequests(8603, TimeSpan.FromMilliseconds(50));
-                } catch( Exception ex)
+                }
+                catch (Exception ex)
                 {
                 }
             }
