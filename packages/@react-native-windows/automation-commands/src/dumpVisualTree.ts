@@ -121,7 +121,7 @@ function removeDefaultProps(element: UIElement) {
     ['AccessibilityRole', 'Unknown'],
     ['AccessibilityStateSelected', false],
     ['AccessibilityStateDisabled', false],
-    ['AccessibilityStateChecked', false],
+    ['AccessibilityStateChecked', 'Unchecked'],
     ['AccessibilityStateBusy', false],
     ['AccessibilityStateExpanded', false],
   ];
