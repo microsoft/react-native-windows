@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 22 Jun 2023 05:14:30 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.667",
+      "version": "0.0.0-canary.667",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "f3fe56a5722d7ec4a24c6b6ed788febd1cd5708e",
+            "comment": "Implement FileReader TurboModule"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 21 Jun 2023 05:12:39 GMT",
       "tag": "react-native-windows_v0.0.0-canary.666",
       "version": "0.0.0-canary.666",
