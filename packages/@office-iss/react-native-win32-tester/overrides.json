@@ -5,13 +5,13 @@
   "excludePatterns": [
     "src/js/examples-win32/**"
   ],
-  "baseVersion": "0.72.0-rc.3",
+  "baseVersion": "0.72.0",
   "overrides": [
     {
       "type": "patch",
       "file": "src/js/components/ListExampleShared.win32.js",
       "baseFile": "packages/rn-tester/js/components/ListExampleShared.js",
-      "baseHash": "66abd6b53ecdcd41fd06156620a5f679b9fc9103"
+      "baseHash": "9858605235f92f728f0e1abe412038062f853052"
     },
     {
       "type": "patch",
@@ -25,6 +25,14 @@
       "file": "src/js/components/RNTesterExampleFilter.win32.js",
       "baseFile": "packages/rn-tester/js/components/RNTesterExampleFilter.js",
       "baseHash": "91b349ecb666e3c44c14fecc5d8ac2a5fdba4ae6"
+    },
+    {
+      "type": "platform",
+      "file": "src/js/components/TextWin32Test.tsx"
+    },
+    {
+      "type": "platform",
+      "file": "src/js/components/ViewWin32Test.tsx"
     },
     {
       "type": "platform",
@@ -42,14 +50,6 @@
       "file": "src/js/utils/RNTesterList.win32.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
       "baseHash": "8954573b49f8321edea6bd2bdddf814ba2a7226c"
-    },
-    {
-      "type": "platform",
-      "file": "src/js/components/TextWin32Test.tsx"
-    },
-    {
-      "type": "platform",
-      "file": "src/js/components/ViewWin32Test.tsx"
     }
   ]
 }

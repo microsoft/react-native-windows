@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.72.0-rc.3",
+  "baseVersion": "0.72.0",
   "overrides": [
     {
       "type": "copy",
@@ -12,7 +12,7 @@
       "type": "copy",
       "directory": "js/components",
       "baseDirectory": "packages/rn-tester/js/components",
-      "baseHash": "673a2f0c5cf1d3faac0a85f1c6aacd6d86a34de5",
+      "baseHash": "a8aac134da412a0f18df5fc11a8ec440fb60e268",
       "issue": 4054
     },
     {
@@ -131,7 +131,7 @@
       "type": "copy",
       "directory": "js/examples/FlatList",
       "baseDirectory": "packages/rn-tester/js/examples/FlatList",
-      "baseHash": "6662e9290a3f3b2ffa701ef31def04849f986e3e",
+      "baseHash": "d97774c1c54f46b28018edbcba1515715bfc44ca",
       "issue": 4054
     },
     {
@@ -313,7 +313,7 @@
       "type": "copy",
       "directory": "js/examples/SectionList",
       "baseDirectory": "packages/rn-tester/js/examples/SectionList",
-      "baseHash": "d84e67d39c74690b4bb806c25eb048181d5060ab",
+      "baseHash": "481774c05bca68b9fe0db960157cbe1811387734",
       "issue": 4054
     },
     {
