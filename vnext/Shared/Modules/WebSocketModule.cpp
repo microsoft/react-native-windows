@@ -413,7 +413,18 @@ void WebSocketTurboModule::Connect(
     }
   }
 
-  // TODO
+  weak_ptr<IWebSocketResource> weakRc;
+  auto rcItr = m_resourceMap.find(id);
+  if (rcItr != m_resourceMap.cend()) {
+    weakRc = (*rcItr).second;
+  }
+  else {
+    weakRc = CreateResource(id, string{ url });
+  }
+
+  if (auto rc = weakRc.lock()) {
+    rc->Connect(std::move(url), rcProtocols, rcOptions);
+  }
 }
 
 #pragma endregion WebSocketTurboModule
