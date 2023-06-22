@@ -2267,9 +2267,9 @@
     joi "^17.2.1"
 
 "@react-native-community/cli-types@^12.0.0-alpha.3":
-  version "12.0.0-alpha.4"
-  resolved "https://registry.yarnpkg.com/@react-native-community/cli-types/-/cli-types-12.0.0-alpha.4.tgz#af076ae89f4b91ba9c2e5ce8b67354631c2c1215"
-  integrity sha512-KMfYyaMseWedetK6hf4P28/Hn0w/mpfQofUpbqOzW+wLMHC8UCqnv70rMv1F7yyj4ydxQKAUlxWm8K6s8smADg==
+  version "12.0.0-alpha.5"
+  resolved "https://registry.yarnpkg.com/@react-native-community/cli-types/-/cli-types-12.0.0-alpha.5.tgz#8ad455ba49aba57dafdc2135af2cf0004f54cbf3"
+  integrity sha512-l8hKaoMynoThztIs9mcr09N/NwodyHISaVrg77sMmaalrK86At1EKNS4GdrwDF/K2PcQfNCx0Mf1QyHjO5+OcA==
   dependencies:
     joi "^17.2.1"
 
