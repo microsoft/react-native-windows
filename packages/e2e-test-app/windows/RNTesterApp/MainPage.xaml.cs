@@ -86,6 +86,7 @@ namespace RNTesterApp
                 new AttachedProperty() { Name = "AccessibilityStateExpanded", Property = Microsoft.ReactNative.DynamicAutomationProperties.AccessibilityStateExpandedProperty },
             };
             var rootDump = VisualTreeDumper.DumpTree(this, null, additionalProperties, attachedProperties);
+            rootDump = rootDump.Replace(" False", " false").Replace(" True", " true"); // Temporary workaround until we can fix upstream to produce correct JSON boolean values
             var element = VisualTreeDumper.FindElementByAutomationId(JsonObject.Parse(rootDump), accessibilityId);
             if (element != null)
                 return element;

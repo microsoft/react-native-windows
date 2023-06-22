@@ -152,7 +152,11 @@ winrt::IInspectable DynamicAutomationPeer::GetPatternCore(winrt::PatternInterfac
 }
 
 bool DynamicAutomationPeer::IsEnabledCore() const {
-  bool disabled = DynamicAutomationProperties::GetAccessibilityStateDisabled(Owner());
+  bool disabled = false;
+  try {
+    disabled = DynamicAutomationProperties::GetAccessibilityStateDisabled(Owner());
+  } catch (...) {
+  }
   return !disabled && Super::IsEnabledCore();
 }
 
@@ -160,8 +164,11 @@ winrt::hstring DynamicAutomationPeer::GetItemStatusCore() const {
   winrt::hstring itemStatus = Super::GetItemStatusCore();
 
   if (itemStatus.empty()) {
-    if (DynamicAutomationProperties::GetAccessibilityStateBusy(Owner())) {
-      itemStatus = L"Busy";
+    try {
+      if (DynamicAutomationProperties::GetAccessibilityStateBusy(Owner())) {
+        itemStatus = L"Busy";
+      }
+    } catch (...) {
     }
   }
 
@@ -191,7 +198,12 @@ winrt::com_array<winrt::IRawElementProviderSimple> DynamicAutomationPeer::GetSel
 // ISelectionItemProvider
 
 bool DynamicAutomationPeer::IsSelected() const {
-  return DynamicAutomationProperties::GetAccessibilityStateSelected(Owner());
+  bool selected = false;
+  try {
+    return DynamicAutomationProperties::GetAccessibilityStateSelected(Owner());
+  } catch (...) {
+  }
+  return false;
 }
 
 winrt::IRawElementProviderSimple DynamicAutomationPeer::SelectionContainer() const {
@@ -218,9 +230,14 @@ void DynamicAutomationPeer::Select() const {
 // IToggleProvider
 
 winrt::ToggleState DynamicAutomationPeer::ToggleState() const {
-  auto checkedState = DynamicAutomationProperties::GetAccessibilityStateChecked(Owner());
+  auto checkedState = winrt::ToggleState::Off;
 
-  return static_cast<winrt::ToggleState>(checkedState);
+  try {
+    checkedState = static_cast<winrt::ToggleState>(DynamicAutomationProperties::GetAccessibilityStateChecked(Owner()));
+  } catch (...) {
+  }
+
+  return checkedState;
 }
 
 void DynamicAutomationPeer::Toggle() const {
@@ -234,9 +251,15 @@ void DynamicAutomationPeer::Toggle() const {
 // IExpandCollapseProvider
 
 winrt::ExpandCollapseState DynamicAutomationPeer::ExpandCollapseState() const {
-  bool expandedState = DynamicAutomationProperties::GetAccessibilityStateExpanded(Owner());
+  auto expandedState = winrt::ExpandCollapseState::Collapsed;
 
-  return expandedState ? winrt::ExpandCollapseState::Expanded : winrt::ExpandCollapseState::Collapsed;
+  try {
+    expandedState = DynamicAutomationProperties::GetAccessibilityStateExpanded(Owner())
+        ? winrt::ExpandCollapseState::Expanded
+        : winrt::ExpandCollapseState::Collapsed;
+  } catch (...) {
+  }
+  return expandedState;
 }
 
 void DynamicAutomationPeer::Expand() const {

@@ -47,9 +47,11 @@
     "lodash": "^4.17.15"
   },
   "resolutions": {
+    "convert-source-map": "^2.0.0",
     "kind-of": "6.0.3",
     "glob-parent": "^5.1.2",
     "node-notifier": "^9.0.0",
+    "safe-buffer": "^5.2.1",
     "set-value": "^4.0.1",
     "strip-ansi": "^6.0.1",
     "**/parse-url/normalize-url": "^4.5.1",
