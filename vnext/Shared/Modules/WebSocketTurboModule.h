@@ -3,17 +3,16 @@
 
 #pragma once
 
-// #include <NativeFileReaderModuleSpec.g.h>
-
 #include <Modules/IWebSocketModuleProxy.h>
-#include <NativeModules.h>
 #include <Networking/IWebSocketResource.h>
+#include <NativeModules.h>
+#include <NativeWebSocketModuleSpec.g.h>
 
 namespace Microsoft::React {
 
 REACT_MODULE(WebSocketTurboModule, L"WebSocketModule")
 struct WebSocketTurboModule {
-  // using ModuleSpec = ReactNativeSpecs::WebSocketModuleSpec;
+  //using ModuleSpec = ReactNativeSpecs::WebSocketModuleSpec;
 
   REACT_INIT(Initialize)
   void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
