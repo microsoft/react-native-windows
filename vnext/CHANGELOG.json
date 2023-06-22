@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 22 Jun 2023 17:16:32 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.668",
+      "version": "0.0.0-canary.668",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e5dbbe92b63ebec7cbf6764b137ffef35b106705",
+            "comment": "Delete extra copy/paste line in V8RuntimeHolder"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 22 Jun 2023 05:14:30 GMT",
       "tag": "react-native-windows_v0.0.0-canary.667",
       "version": "0.0.0-canary.667",
