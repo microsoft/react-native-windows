@@ -370,6 +370,20 @@ shared_ptr<IWebSocketResource> WebSocketTurboModule::CreateResource(int64_t id, 
     SendEvent(context, L"websocketMessage", std::move(args));
   });
 
+  rc->SetOnClose([id, context = m_context](IWebSocketResource::CloseCode code, const string &reason) {
+    auto args = msrn::JSValueObject{{"id", id}, {"code", static_cast<uint16_t>(code)}, {"reason", reason}};
+
+    SendEvent(context, L"websocketClosed", std::move(args));
+  });
+
+  rc->SetOnError([id, context = m_context](const IWebSocketResource::Error &err) {
+    auto errorObj = msrn::JSValueObject{{"id", id}, {"message", err.Message}};
+
+    SendEvent(context, L"websocketFailed", std::move(errorObj));
+  });
+
+  m_resourceMap.emplace(id, rc);
+
   return rc;
 }
 
