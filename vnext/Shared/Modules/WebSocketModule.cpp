@@ -10,6 +10,9 @@
 #include <Modules/IWebSocketModuleContentHandler.h>
 #include <ReactPropertyBag.h>
 
+// fmt
+#include <fmt/format.h>
+
 // React Native
 #include <cxxreact/Instance.h>
 #include <cxxreact/JsArgumentHelpers.h>
@@ -317,8 +320,77 @@ void WebSocketModuleProxy::SendBinary(std::string &&base64String, int64_t id) no
 
 #pragma region WebSocketTurboModule
 
-void WebSocketTurboModule::Initialize(msrn::ReactContext const& reactContext) noexcept {
+shared_ptr<IWebSocketResource> WebSocketTurboModule::CreateResource(int64_t id, string&& url) noexcept
+{
+  shared_ptr<IWebSocketResource> rc;
+  try
+  {
+    rc = IWebSocketResource::Make();
+  }
+  catch (const winrt::hresult_error& e)
+  {
+    auto error = fmt::format("[0x{:0>8x}] {}", static_cast<uint32_t>(e.code()), winrt::to_string(e.message()));
+    SendEvent(m_context, L"webSocketFailed", {{"id", id}, {"message", std::move(error)}});
 
+    return nullptr;
+  }
+  catch (const std::exception& e)
+  {
+    SendEvent(m_context, L"webSocketFailed", {{"id", id}, {"message", e.what()}});
+
+    return nullptr;
+  }
+  catch (...)
+  {
+    SendEvent(m_context, L"webSocketFailed", {{"id", id}, { "message", "Unidentified error creating IWebSocketResource" }});
+
+    return nullptr;
+  }
+
+  // Set up resource
+  rc->SetOnConnect([id, context = m_context]()
+  {
+      SendEvent(context, L"websocketOpen", { {"id", id} });
+  });
+
+  rc->SetOnMessage([id, context = m_context](size_t length, const string& message, bool isBinary)
+  {
+  });
+
+  return rc;
+}
+
+void WebSocketTurboModule::Initialize(msrn::ReactContext const& reactContext) noexcept
+{
+  m_context = reactContext.Handle();
+}
+
+void WebSocketTurboModule::Connect(
+  string&& url,
+  msrn::JSValueArray&& protocols,
+  msrn::JSValueObject&& options,
+  int64_t id,
+  msrn::ReactPromise<string>&& result) noexcept
+{
+  IWebSocketResource::Protocols rcProtocols;
+  for (const auto& protocol : protocols)
+  {
+    rcProtocols.push_back(protocol.AsString());
+  }
+
+  IWebSocketResource::Options rcOptions;
+  if (options["headers"].ItemCount())//TODO: needed?
+  {
+    const auto& headers = options["headers"].AsArray();
+    for (const auto& header : headers)
+    {
+      // Each header JSObject should only contain one key-value pair
+      const auto& entry = *header.AsObject().cbegin();
+      rcOptions.emplace(winrt::to_hstring(entry.first), entry.second.AsString());
+    }
+  }
+
+  //TODO
 }
 
 #pragma endregion WebSocketTurboModule
