@@ -18,10 +18,10 @@ void SendEvent(weak_ptr<Instance> weakReactInstance, string &&eventName, dynamic
   }
 }
 
-void SendEvent(msrn::ReactContext const& reactContext,
-  std::wstring_view&& eventName,
-  msrn::JSValueObject&& args) noexcept
-{
+void SendEvent(
+    msrn::ReactContext const &reactContext,
+    std::wstring_view &&eventName,
+    msrn::JSValueObject &&args) noexcept {
   reactContext.EmitJSEvent(L"RCTDeviceEventEmitter", std::move(eventName), std::move(args));
 }
 

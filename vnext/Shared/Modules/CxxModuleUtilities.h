@@ -24,8 +24,8 @@ void SendEvent(
     folly::dynamic &&args);
 
 void SendEvent(
-  winrt::Microsoft::ReactNative::ReactContext const& reactContext,
-  std::wstring_view&& eventName,
-  winrt::Microsoft::ReactNative::JSValueObject&& args) noexcept;
+    winrt::Microsoft::ReactNative::ReactContext const &reactContext,
+    std::wstring_view &&eventName,
+    winrt::Microsoft::ReactNative::JSValueObject &&args) noexcept;
 
 } // namespace Microsoft::React::Modules

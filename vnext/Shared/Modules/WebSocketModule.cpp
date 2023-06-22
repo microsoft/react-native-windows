@@ -320,77 +320,86 @@ void WebSocketModuleProxy::SendBinary(std::string &&base64String, int64_t id) no
 
 #pragma region WebSocketTurboModule
 
-shared_ptr<IWebSocketResource> WebSocketTurboModule::CreateResource(int64_t id, string&& url) noexcept
-{
+shared_ptr<IWebSocketResource> WebSocketTurboModule::CreateResource(int64_t id, string &&url) noexcept {
   shared_ptr<IWebSocketResource> rc;
-  try
-  {
+  try {
     rc = IWebSocketResource::Make();
-  }
-  catch (const winrt::hresult_error& e)
-  {
+  } catch (const winrt::hresult_error &e) {
     auto error = fmt::format("[0x{:0>8x}] {}", static_cast<uint32_t>(e.code()), winrt::to_string(e.message()));
     SendEvent(m_context, L"webSocketFailed", {{"id", id}, {"message", std::move(error)}});
 
     return nullptr;
-  }
-  catch (const std::exception& e)
-  {
+  } catch (const std::exception &e) {
     SendEvent(m_context, L"webSocketFailed", {{"id", id}, {"message", e.what()}});
 
     return nullptr;
-  }
-  catch (...)
-  {
-    SendEvent(m_context, L"webSocketFailed", {{"id", id}, { "message", "Unidentified error creating IWebSocketResource" }});
+  } catch (...) {
+    SendEvent(
+        m_context, L"webSocketFailed", {{"id", id}, {"message", "Unidentified error creating IWebSocketResource"}});
 
     return nullptr;
   }
 
   // Set up resource
-  rc->SetOnConnect([id, context = m_context]()
-  {
-      SendEvent(context, L"websocketOpen", { {"id", id} });
-  });
+  rc->SetOnConnect([id, context = m_context]() { SendEvent(context, L"websocketOpen", {{"id", id}}); });
 
-  rc->SetOnMessage([id, context = m_context](size_t length, const string& message, bool isBinary)
-  {
+  rc->SetOnMessage([id, context = m_context](size_t length, const string &message, bool isBinary) {
+    auto args = msrn::JSValueObject{{"id", id}, {"type", isBinary ? "binary" : "text"}};
+    shared_ptr<IWebSocketModuleContentHandler> contentHandler;
+    auto propId =
+        ReactPropertyId<ReactNonAbiValue<weak_ptr<IWebSocketModuleContentHandler>>>{L"BlobModule.ContentHandler"};
+    auto propBag = context.Properties();
+    if (auto prop = propBag.Get(propId))
+      contentHandler = prop.Value().lock();
+
+    if (contentHandler) {
+      if (isBinary) {
+        auto buffer = CryptographicBuffer::DecodeFromBase64String(winrt::to_hstring(message));
+        winrt::com_array<uint8_t> arr;
+        CryptographicBuffer::CopyToByteArray(buffer, arr);
+        auto data = std::vector<uint8_t>(arr.begin(), arr.end());
+
+        contentHandler->ProcessMessage(std::move(data), args);
+      } else {
+        contentHandler->ProcessMessage(string{message}, args);
+      }
+    } else {
+      args["data"] = message;
+    }
+
+    SendEvent(context, L"websocketMessage", std::move(args));
   });
 
   return rc;
 }
 
-void WebSocketTurboModule::Initialize(msrn::ReactContext const& reactContext) noexcept
-{
+void WebSocketTurboModule::Initialize(msrn::ReactContext const &reactContext) noexcept {
   m_context = reactContext.Handle();
 }
 
 void WebSocketTurboModule::Connect(
-  string&& url,
-  msrn::JSValueArray&& protocols,
-  msrn::JSValueObject&& options,
-  int64_t id,
-  msrn::ReactPromise<string>&& result) noexcept
-{
+    string &&url,
+    msrn::JSValueArray &&protocols,
+    msrn::JSValueObject &&options,
+    int64_t id,
+    msrn::ReactPromise<string> &&result) noexcept {
   IWebSocketResource::Protocols rcProtocols;
-  for (const auto& protocol : protocols)
-  {
+  for (const auto &protocol : protocols) {
     rcProtocols.push_back(protocol.AsString());
   }
 
   IWebSocketResource::Options rcOptions;
-  if (options["headers"].ItemCount())//TODO: needed?
+  if (options["headers"].ItemCount()) // TODO: needed?
   {
-    const auto& headers = options["headers"].AsArray();
-    for (const auto& header : headers)
-    {
+    const auto &headers = options["headers"].AsArray();
+    for (const auto &header : headers) {
       // Each header JSObject should only contain one key-value pair
-      const auto& entry = *header.AsObject().cbegin();
+      const auto &entry = *header.AsObject().cbegin();
       rcOptions.emplace(winrt::to_hstring(entry.first), entry.second.AsString());
     }
   }
 
-  //TODO
+  // TODO
 }
 
 #pragma endregion WebSocketTurboModule
