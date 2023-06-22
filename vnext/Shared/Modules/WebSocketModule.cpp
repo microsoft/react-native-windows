@@ -395,8 +395,7 @@ void WebSocketTurboModule::Connect(
     string &&url,
     msrn::JSValueArray &&protocols,
     msrn::JSValueObject &&options,
-    int64_t id,
-    msrn::ReactPromise<string> &&result) noexcept {
+    int64_t id) noexcept {
   IWebSocketResource::Protocols rcProtocols;
   for (const auto &protocol : protocols) {
     rcProtocols.push_back(protocol.AsString());
@@ -424,6 +423,54 @@ void WebSocketTurboModule::Connect(
 
   if (auto rc = weakRc.lock()) {
     rc->Connect(std::move(url), rcProtocols, rcOptions);
+  }
+}
+
+void WebSocketTurboModule::Close(int64_t code, string&& reason, int64_t id) noexcept {
+  auto rcItr = m_resourceMap.find(id);
+  if (rcItr == m_resourceMap.cend()) {
+    return;//TODO: Send error instead?
+  }
+
+  weak_ptr<IWebSocketResource> weakRc = (*rcItr).second;
+  if (auto rc = weakRc.lock()) {
+    rc->Close(static_cast<IWebSocketResource::CloseCode>(code), std::move(reason));
+  }
+}
+
+void WebSocketTurboModule::Send(string&& message, int64_t id) noexcept {
+  auto rcItr = m_resourceMap.find(id);
+  if (rcItr == m_resourceMap.cend()) {
+    return;//TODO: Send error instead?
+  }
+
+  weak_ptr<IWebSocketResource> weakRc = (*rcItr).second;
+  if (auto rc = weakRc.lock()) {
+    rc->Send(std::move(message));
+  }
+}
+
+void WebSocketTurboModule::SendBinary(string&& base64String, int64_t id) noexcept {
+  auto rcItr = m_resourceMap.find(id);
+  if (rcItr == m_resourceMap.cend()) {
+    return;//TODO: Send error instead?
+  }
+
+  weak_ptr<IWebSocketResource> weakRc = (*rcItr).second;
+  if (auto rc = weakRc.lock()) {
+    rc->SendBinary(std::move(base64String));
+  }
+}
+
+void WebSocketTurboModule::Ping(int64_t id) noexcept {
+  auto rcItr = m_resourceMap.find(id);
+  if (rcItr == m_resourceMap.cend()) {
+    return;//TODO: Send error instead?
+  }
+
+  weak_ptr<IWebSocketResource> weakRc = (*rcItr).second;
+  if (auto rc = weakRc.lock()) {
+    rc->Ping();
   }
 }
 

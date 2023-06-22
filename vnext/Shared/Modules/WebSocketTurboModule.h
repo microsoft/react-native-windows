@@ -23,8 +23,19 @@ struct WebSocketTurboModule {
       std::string &&url,
       winrt::Microsoft::ReactNative::JSValueArray &&protocols,
       winrt::Microsoft::ReactNative::JSValueObject &&options,
-      int64_t id,
-      winrt::Microsoft::ReactNative::ReactPromise<std::string> &&result) noexcept;
+      int64_t id) noexcept;
+
+  REACT_METHOD(Close, L"close")
+  void Close(int64_t code, std::string &&url, int64_t id) noexcept;
+
+  REACT_METHOD(Send, L"send")
+  void Send(std::string&& message, int64_t id) noexcept;
+
+  REACT_METHOD(SendBinary, L"sendBinary")
+  void SendBinary(std::string &&base64String, int64_t id) noexcept;
+
+  REACT_METHOD(Ping, L"ping")
+  void Ping(int64_t id) noexcept;
 
  private:
   std::shared_ptr<Networking::IWebSocketResource> CreateResource(int64_t id, std::string &&url) noexcept;
