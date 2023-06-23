@@ -476,7 +476,7 @@ void WebSocketTurboModule::Ping(double socketID) noexcept {
 }
 
 // See react-native/ReactAndroid/src/main/java/com/facebook/react/modules/websocket/WebSocketModule.java
-void WebSocketTurboModule::AddListener(string&& /*eventName*/) noexcept {}
+void WebSocketTurboModule::AddListener(string && /*eventName*/) noexcept {}
 
 void WebSocketTurboModule::RemoveListeners(double /*count*/) noexcept {}
 
