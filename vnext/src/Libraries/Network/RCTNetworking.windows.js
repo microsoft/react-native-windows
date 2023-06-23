@@ -9,11 +9,12 @@
 'use strict';
 
 import RCTDeviceEventEmitter from '../EventEmitter/RCTDeviceEventEmitter';
+import {type EventSubscription} from '../vendor/emitter/EventEmitter';
+import convertRequestBody, {type RequestBody} from './convertRequestBody';
+import NativeNetworkingWindows from './NativeNetworkingWindows';
+import {type NativeResponseType} from './XMLHttpRequest';
 const RCTNetworkingNative =
   require('../BatchedBridge/NativeModules').Networking; // [Windows]
-import {type NativeResponseType} from './XMLHttpRequest';
-import convertRequestBody, {type RequestBody} from './convertRequestBody';
-import {type EventSubscription} from '../vendor/emitter/EventEmitter';
 
 type RCTNetworkingEventDefinitions = $ReadOnly<{
   didSendNetworkData: [

@@ -5,6 +5,8 @@
 
 #include <Networking/IHttpResource.h>
 #include <NativeModules.h>
+#include <NativeNetworkingWindowsSpec.g.h>
+
 
 // React Native
 #include <cxxreact/CxxModule.h>
@@ -16,7 +18,10 @@ namespace Microsoft::React {
 
 REACT_MODULE(HttpTurboModule, L"Networking")
 struct HttpTurboModule {
+  //using ModuleSpec = ReactNativeSpecs::NetworkingWindowsSpec;
 
+  REACT_INIT(Initialize)
+  void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept{}
 };
 
 ///
