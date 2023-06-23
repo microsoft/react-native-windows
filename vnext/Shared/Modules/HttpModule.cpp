@@ -107,7 +107,28 @@ namespace Microsoft::React {
 #pragma region HttpTurboModule
 
 void HttpTurboModule::Initialize(msrn::ReactContext const& reactContext) noexcept {
+  m_context = reactContext;
+  m_resource = IHttpResource::Make(m_context.Properties().Handle());
 
+  m_resource->SetOnRequestSuccess([context = m_context](int64_t requestId) {
+    //TODO: SendEvent
+  });
+
+  m_resource->SetOnResponse([context = m_context](int64_t requestId, IHttpResource::Response&& response) {
+    auto headers = msrn::JSValueObject{};
+    for (auto& header : response.Headers) {
+      headers[header.first] = header.second;
+    }
+
+    //TODO: Test response content?
+    auto args = msrn::JSValueArray{ requestId, response.StatusCode, std::move(headers), response.Url };
+
+    //TODO: SendEvent
+  });
+
+  m_resource->SetOnData([context = m_context](int64_t requestId, string&& responseData) {
+    //TODO: SendEvent
+  });
 }
 
 void HttpTurboModule::SendRequest(ReactNativeSpecs::NetworkingWindowsSpec_sendRequest_query&& query, function<void(double)> const& callback) noexcept {

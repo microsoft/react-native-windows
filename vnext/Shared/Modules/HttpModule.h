@@ -37,6 +37,10 @@ struct HttpTurboModule {
 
   REACT_METHOD(RemoveListeners, L"removeListeners")
   void RemoveListeners(double count) noexcept;
+
+private:
+  std::shared_ptr<Networking::IHttpResource> m_resource;
+  winrt::Microsoft::ReactNative::ReactContext m_context;
 };
 
 ///
