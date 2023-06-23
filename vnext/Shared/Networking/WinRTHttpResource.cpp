@@ -146,6 +146,14 @@ IAsyncOperation<HttpRequestMessage> WinRTHttpResource::CreateRequest(
         }
         co_return nullptr;
       }
+    } else if (boost::iequals(name.c_str(), "User-Agent")) {
+      bool success = request.Headers().TryAppendWithoutValidation(to_hstring(name), to_hstring(value));
+      if (!success) {
+        if (self->m_onError) {
+          self->m_onError(reqArgs->RequestId, "Failed to append User-Agent", false);
+        }
+        co_return nullptr;
+      }
     } else {
       try {
         request.Headers().Append(to_hstring(name), to_hstring(value));
