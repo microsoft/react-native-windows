@@ -18,10 +18,25 @@ namespace Microsoft::React {
 
 REACT_MODULE(HttpTurboModule, L"Networking")
 struct HttpTurboModule {
-  //using ModuleSpec = ReactNativeSpecs::NetworkingWindowsSpec;
+  using ModuleSpec = ReactNativeSpecs::NetworkingWindowsSpec;
 
   REACT_INIT(Initialize)
-  void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept{}
+  void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
+
+  REACT_METHOD(SendRequest, L"sendRequest")
+  void SendRequest(ReactNativeSpecs::NetworkingWindowsSpec_sendRequest_query&& query, std::function<void(double)> const& callback) noexcept;
+
+  REACT_METHOD(AbortRequest, L"abortRequest")
+  void AbortRequest(double requestId) noexcept;
+
+  REACT_METHOD(ClearCookies, L"clearCookies")
+  void ClearCookies(std::function<void(bool)> const& callback) noexcept;
+
+  REACT_METHOD(AddListener, L"addListener")
+  void AddListener(std::string&& eventName) noexcept;
+
+  REACT_METHOD(RemoveListeners, L"removeListeners")
+  void RemoveListeners(double count) noexcept;
 };
 
 ///

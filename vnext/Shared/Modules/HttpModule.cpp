@@ -14,6 +14,7 @@
 
 using facebook::react::Instance;
 using folly::dynamic;
+using std::function;
 using std::shared_ptr;
 using std::string;
 using std::weak_ptr;
@@ -22,6 +23,8 @@ using winrt::Microsoft::ReactNative::ReactNonAbiValue;
 using winrt::Microsoft::ReactNative::ReactPropertyBag;
 using winrt::Microsoft::ReactNative::ReactPropertyId;
 using winrt::Windows::Foundation::IInspectable;
+
+namespace msrn = winrt::Microsoft::ReactNative;
 
 namespace {
 
@@ -65,7 +68,7 @@ static void SetUpHttpResource(
   });
 
   // Explicitly declaring function type to avoid type inference ambiguity.
-  std::function<void(int64_t, dynamic &&)> onDataDynamic = [weakReactInstance](
+  function<void(int64_t, dynamic &&)> onDataDynamic = [weakReactInstance](
                                                                int64_t requestId, dynamic &&responseData) {
     SendEvent(weakReactInstance, receivedData, dynamic::array(requestId, std::move(responseData)));
   };
@@ -101,10 +104,40 @@ static void SetUpHttpResource(
 
 namespace Microsoft::React {
 
-HttpModule::HttpModule(IInspectable const &inspectableProperties) noexcept
-    : m_holder{std::make_shared<ModuleHolder>()},
-      m_inspectableProperties{inspectableProperties},
-      m_resource{IHttpResource::Make(inspectableProperties)} {
+#pragma region HttpTurboModule
+
+void HttpTurboModule::Initialize(msrn::ReactContext const& reactContext) noexcept {
+
+}
+
+void HttpTurboModule::SendRequest(ReactNativeSpecs::NetworkingWindowsSpec_sendRequest_query&& query, function<void(double)> const& callback) noexcept {
+
+}
+
+void HttpTurboModule::AbortRequest(double requestId) noexcept {
+
+}
+
+void HttpTurboModule::ClearCookies(function<void(bool)> const& callback) noexcept {
+
+}
+
+void HttpTurboModule::AddListener(string&& eventName) noexcept {
+
+}
+
+void HttpTurboModule::RemoveListeners(double count) noexcept {
+
+}
+
+#pragma endregion HttpTurboModule
+
+#pragma region HttpModule
+
+HttpModule::HttpModule(IInspectable const& inspectableProperties) noexcept
+  : m_holder{ std::make_shared<ModuleHolder>() },
+  m_inspectableProperties{ inspectableProperties },
+  m_resource{ IHttpResource::Make(inspectableProperties) } {
   m_holder->Module = this;
 }
 
@@ -210,6 +243,8 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
 // clang-format on
 
 #pragma endregion CxxModule
+
+#pragma endregion HttpModule
 
 /*extern*/ const char *GetHttpModuleName() noexcept {
   return s_moduleName;
