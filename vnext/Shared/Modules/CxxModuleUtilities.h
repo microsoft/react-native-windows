@@ -28,4 +28,9 @@ void SendEvent(
     std::wstring_view &&eventName,
     winrt::Microsoft::ReactNative::JSValueObject &&args) noexcept;
 
+void SendEvent(
+  winrt::Microsoft::ReactNative::ReactContext const& reactContext,
+  std::wstring_view&& eventName,
+  winrt::Microsoft::ReactNative::JSValueArray&& args) noexcept;
+
 } // namespace Microsoft::React::Modules

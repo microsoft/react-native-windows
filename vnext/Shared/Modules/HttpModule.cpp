@@ -111,7 +111,8 @@ void HttpTurboModule::Initialize(msrn::ReactContext const& reactContext) noexcep
   m_resource = IHttpResource::Make(m_context.Properties().Handle());
 
   m_resource->SetOnRequestSuccess([context = m_context](int64_t requestId) {
-    //TODO: SendEvent
+    SendEvent(context, winrt::to_hstring(completedResponse), msrn::JSValueArray{requestId});
+    //TODO: create constexpr variant of event name
   });
 
   m_resource->SetOnResponse([context = m_context](int64_t requestId, IHttpResource::Response&& response) {
@@ -123,12 +124,15 @@ void HttpTurboModule::Initialize(msrn::ReactContext const& reactContext) noexcep
     //TODO: Test response content?
     auto args = msrn::JSValueArray{ requestId, response.StatusCode, std::move(headers), response.Url };
 
-    //TODO: SendEvent
+    SendEvent(context, winrt::to_hstring(receivedResponse), std::move(args));
   });
 
   m_resource->SetOnData([context = m_context](int64_t requestId, string&& responseData) {
-    //TODO: SendEvent
+    SendEvent(context, winrt::to_hstring(receivedData), msrn::JSValueArray{requestId, std::move(responseData)});
   });
+
+  // Explicitly declaring function type to avoid type inference ambiguity.
+  //TODO
 }
 
 void HttpTurboModule::SendRequest(ReactNativeSpecs::NetworkingWindowsSpec_sendRequest_query&& query, function<void(double)> const& callback) noexcept {

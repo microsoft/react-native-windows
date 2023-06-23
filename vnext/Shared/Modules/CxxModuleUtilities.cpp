@@ -25,4 +25,11 @@ void SendEvent(
   reactContext.EmitJSEvent(L"RCTDeviceEventEmitter", std::move(eventName), std::move(args));
 }
 
+void SendEvent(
+    msrn::ReactContext const &reactContext,
+    std::wstring_view &&eventName,
+    msrn::JSValueArray &&args) noexcept {
+  reactContext.EmitJSEvent(L"RCTDeviceEventEmitter", std::move(eventName), std::move(args));
+}
+
 } // namespace Microsoft::React::Modules
