@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix fetch failing with certain custom user agents",
+  "packageName": "react-native-windows",
+  "email": "lyahdav@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
