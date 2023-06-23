@@ -12,17 +12,17 @@ namespace Microsoft::React {
 
 REACT_MODULE(WebSocketTurboModule, L"WebSocketModule")
 struct WebSocketTurboModule {
-  //using ModuleSpec = ReactNativeSpecs::WebSocketModuleSpec;
+  using ModuleSpec = ReactNativeSpecs::WebSocketModuleSpec;
 
   REACT_INIT(Initialize)
   void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
   REACT_METHOD(Connect, L"connect")
   void Connect(
-      std::string &&url,
-      winrt::Microsoft::ReactNative::JSValueArray &&protocols,
-      winrt::Microsoft::ReactNative::JSValueObject &&options,
-      int64_t id) noexcept;
+    std::string&& url,
+    std::optional<std::vector<std::string>> protocols,
+    ReactNativeSpecs::WebSocketModuleSpec_connect_options&& options,
+    double socketID) noexcept;
 
   REACT_METHOD(Close, L"close")
   void Close(int64_t code, std::string &&url, int64_t id) noexcept;

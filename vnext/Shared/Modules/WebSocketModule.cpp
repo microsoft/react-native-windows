@@ -32,6 +32,7 @@ using folly::dynamic;
 
 using std::shared_ptr;
 using std::string;
+using std::vector;
 using std::weak_ptr;
 
 using winrt::Microsoft::ReactNative::IReactPropertyBag;
@@ -123,7 +124,7 @@ GetOrCreateWebSocket(int64_t id, string &&url, weak_ptr<WebSocketModule::SharedS
               auto buffer = CryptographicBuffer::DecodeFromBase64String(winrt::to_hstring(message));
               winrt::com_array<uint8_t> arr;
               CryptographicBuffer::CopyToByteArray(buffer, arr);
-              auto data = std::vector<uint8_t>(arr.begin(), arr.end());
+              auto data = vector<uint8_t>(arr.begin(), arr.end());
 
               contentHandler->ProcessMessage(std::move(data), args);
             } else {
@@ -193,7 +194,7 @@ std::map<string, dynamic> WebSocketModule::getConstants() {
 }
 
 // clang-format off
-std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMethods()
+vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMethods()
 {
   return
   {
@@ -357,7 +358,7 @@ shared_ptr<IWebSocketResource> WebSocketTurboModule::CreateResource(int64_t id, 
         auto buffer = CryptographicBuffer::DecodeFromBase64String(winrt::to_hstring(message));
         winrt::com_array<uint8_t> arr;
         CryptographicBuffer::CopyToByteArray(buffer, arr);
-        auto data = std::vector<uint8_t>(arr.begin(), arr.end());
+        auto data = vector<uint8_t>(arr.begin(), arr.end());
 
         contentHandler->ProcessMessage(std::move(data), args);
       } else {
@@ -393,26 +394,28 @@ void WebSocketTurboModule::Initialize(msrn::ReactContext const &reactContext) no
 
 void WebSocketTurboModule::Connect(
     string &&url,
-    msrn::JSValueArray &&protocols,
-    msrn::JSValueObject &&options,
-    int64_t id) noexcept {
+    std::optional<vector<string>> protocols,
+    ReactNativeSpecs::WebSocketModuleSpec_connect_options &&options,
+    double socketID) noexcept {
   IWebSocketResource::Protocols rcProtocols;
-  for (const auto &protocol : protocols) {
-    rcProtocols.push_back(protocol.AsString());
+  for (const auto& protocol : protocols.value_or(vector<string>{})) {
+    rcProtocols.push_back(protocol);
   }
 
   IWebSocketResource::Options rcOptions;
-  if (options["headers"].ItemCount()) // TODO: needed?
+  auto& optHeaders = options.headers;
+  if (optHeaders.has_value())
   {
-    const auto &headers = options["headers"].AsArray();
-    for (const auto &header : headers) {
-      // Each header JSObject should only contain one key-value pair
-      const auto &entry = *header.AsObject().cbegin();
+    auto& headersVal = optHeaders.value();
+    for (const auto& headerVal : headersVal.AsArray()) {
+      // Each header JSValueObject should only contain one key-value pair
+      const auto& entry = *headerVal.AsObject().cbegin();
       rcOptions.emplace(winrt::to_hstring(entry.first), entry.second.AsString());
     }
   }
 
   weak_ptr<IWebSocketResource> weakRc;
+  auto id = static_cast<int64_t>(socketID);
   auto rcItr = m_resourceMap.find(id);
   if (rcItr != m_resourceMap.cend()) {
     weakRc = (*rcItr).second;
