@@ -36,11 +36,11 @@ struct WebSocketTurboModule {
   REACT_METHOD(Ping, L"ping")
   void Ping(double socketID) noexcept;
 
-  // TODO:
-  REACT_METHOD(addListener) void addListener(std::string eventName) noexcept { /* implementation */
-  }
-  REACT_METHOD(removeListeners) void removeListeners(double count) noexcept { /* implementation */
-  }
+  REACT_METHOD(AddListener, L"addListener")
+  void AddListener(std::string &&eventName) noexcept;
+
+  REACT_METHOD(RemoveListeners, L"removeListeners")
+  void RemoveListeners(double count) noexcept;
 
  private:
   std::shared_ptr<Networking::IWebSocketResource> CreateResource(int64_t id, std::string &&url) noexcept;
