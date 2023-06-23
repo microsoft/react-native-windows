@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "[Fabric] No need to assert when an unimplemented view has children added to it",
+  "packageName": "react-native-windows",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
