@@ -57,6 +57,19 @@ namespace RNTesterApp
             return result;
         }
 
+        private static PropertyValueConverter GetEnumConverter<T>() where T : struct
+        {
+            return (propertyValue) =>
+            {
+                if (propertyValue is T pvAsT)
+                {
+                    return pvAsT.ToString();
+                }
+
+                return $"Error: \"{propertyValue}\" is not of type { nameof(T) }.";
+            };
+        }
+
         JsonObject DumpVisualTree(JsonValue payload)
         {
             var payloadObj = payload.GetObject();
@@ -74,19 +87,18 @@ namespace RNTesterApp
             var attachedProperties = new AttachedProperty[] {
                 new AttachedProperty() { Name = "Top", Property = Microsoft.ReactNative.ViewPanel.TopProperty },
                 new AttachedProperty() { Name = "Left", Property = Microsoft.ReactNative.ViewPanel.LeftProperty },
-                new AttachedProperty() { Name = "Tooltip", Property = Windows.UI.Xaml.Controls.ToolTipService.ToolTipProperty },
-                new AttachedProperty() { Name = "AutomationLevel", Property = Windows.UI.Xaml.Automation.AutomationProperties.LevelProperty },
-                new AttachedProperty() { Name = "AutomationSizeOfSet", Property = Windows.UI.Xaml.Automation.AutomationProperties.SizeOfSetProperty },
-                new AttachedProperty() { Name = "AutomationPositionInSet", Property = Windows.UI.Xaml.Automation.AutomationProperties.PositionInSetProperty },
-                new AttachedProperty() { Name = "AccessibilityRole", Property = Microsoft.ReactNative.DynamicAutomationProperties.AccessibilityRoleProperty },
-                new AttachedProperty() { Name = "AccessibilityStateSelected", Property = Microsoft.ReactNative.DynamicAutomationProperties.AccessibilityStateSelectedProperty },
-                new AttachedProperty() { Name = "AccessibilityStateDisabled", Property = Microsoft.ReactNative.DynamicAutomationProperties.AccessibilityStateDisabledProperty },
-                new AttachedProperty() { Name = "AccessibilityStateChecked", Property = Microsoft.ReactNative.DynamicAutomationProperties.AccessibilityStateCheckedProperty },
-                new AttachedProperty() { Name = "AccessibilityStateBusy", Property = Microsoft.ReactNative.DynamicAutomationProperties.AccessibilityStateBusyProperty },
-                new AttachedProperty() { Name = "AccessibilityStateExpanded", Property = Microsoft.ReactNative.DynamicAutomationProperties.AccessibilityStateExpandedProperty },
+                new AttachedProperty() { Name = "Tooltip", Property = Windows.UI.Xaml.Controls.ToolTipService.ToolTipProperty, ExcludeIfValueIsUnset = true },
+                new AttachedProperty() { Name = "AutomationLevel", Property = Windows.UI.Xaml.Automation.AutomationProperties.LevelProperty, ExcludeIfValueIsUnset = true },
+                new AttachedProperty() { Name = "AutomationSizeOfSet", Property = Windows.UI.Xaml.Automation.AutomationProperties.SizeOfSetProperty, ExcludeIfValueIsUnset = true },
+                new AttachedProperty() { Name = "AutomationPositionInSet", Property = Windows.UI.Xaml.Automation.AutomationProperties.PositionInSetProperty, ExcludeIfValueIsUnset = true },
+                new AttachedProperty() { Name = "AccessibilityRole", Property = Microsoft.ReactNative.DynamicAutomationProperties.AccessibilityRoleProperty, ExcludeIfValueIsUnset = true, PropertyValueConverter = GetEnumConverter<Microsoft.ReactNative.AccessibilityRoles>() },
+                new AttachedProperty() { Name = "AccessibilityStateSelected", Property = Microsoft.ReactNative.DynamicAutomationProperties.AccessibilityStateSelectedProperty, ExcludeIfValueIsUnset = true },
+                new AttachedProperty() { Name = "AccessibilityStateDisabled", Property = Microsoft.ReactNative.DynamicAutomationProperties.AccessibilityStateDisabledProperty, ExcludeIfValueIsUnset = true },
+                new AttachedProperty() { Name = "AccessibilityStateChecked", Property = Microsoft.ReactNative.DynamicAutomationProperties.AccessibilityStateCheckedProperty, ExcludeIfValueIsUnset = true, PropertyValueConverter = GetEnumConverter<Microsoft.ReactNative.AccessibilityStateCheckedValue>()},
+                new AttachedProperty() { Name = "AccessibilityStateBusy", Property = Microsoft.ReactNative.DynamicAutomationProperties.AccessibilityStateBusyProperty, ExcludeIfValueIsUnset = true },
+                new AttachedProperty() { Name = "AccessibilityStateExpanded", Property = Microsoft.ReactNative.DynamicAutomationProperties.AccessibilityStateExpandedProperty, ExcludeIfValueIsUnset = true },
             };
             var rootDump = VisualTreeDumper.DumpTree(this, null, additionalProperties, attachedProperties);
-            rootDump = rootDump.Replace(" False", " false").Replace(" True", " true"); // Temporary workaround until we can fix upstream to produce correct JSON boolean values
             var element = VisualTreeDumper.FindElementByAutomationId(JsonObject.Parse(rootDump), accessibilityId);
             if (element != null)
                 return element;

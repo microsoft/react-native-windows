@@ -113,18 +113,7 @@ function removeNonDeterministicProps(element: UIElement) {
  * Removes noise from snapshot by removing properties with the default value
  */
 function removeDefaultProps(element: UIElement) {
-  const defaultValues: [string, unknown][] = [
-    ['Tooltip', null],
-    ['AutomationLevel', -1],
-    ['AutomationPositionInSet', -1],
-    ['AutomationSizeOfSet', -1],
-    ['AccessibilityRole', 'Unknown'],
-    ['AccessibilityStateSelected', false],
-    ['AccessibilityStateDisabled', false],
-    ['AccessibilityStateChecked', 'Unchecked'],
-    ['AccessibilityStateBusy', false],
-    ['AccessibilityStateExpanded', false],
-  ];
+  const defaultValues: [string, unknown][] = [['Tooltip', null]];
 
   defaultValues.forEach(([propname, defaultValue]) => {
     if (element[propname] === defaultValue) {

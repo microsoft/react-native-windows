@@ -25,9 +25,9 @@
       },
       "XamlTreeDump": {
         "type": "Direct",
-        "requested": "[1.0.9, )",
-        "resolved": "1.0.9",
-        "contentHash": "rvh/RZghhSG28PDL1dw56nTZRN0/ViV2TIja/ykU9FHn0gtM8pwtgD8Ebo1nobu0QnSjn8Cg6Ncu39VV19rkrw=="
+        "requested": "[1.0.10, )",
+        "resolved": "1.0.10",
+        "contentHash": "JZU+uldJihK7doefnCjduIcwn6VSy/+7BB1X+IHV2FCcpblf35+XdUcR8nxhtk7vCEVMHZ9FECVcR0g3az9pCA=="
       },
       "boost": {
         "type": "Transitive",

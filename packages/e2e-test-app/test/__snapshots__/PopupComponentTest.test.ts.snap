@@ -270,6 +270,7 @@ exports[`PopupTests Popups can be anchored 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AccessibilityRole": "Button",
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -412,6 +413,7 @@ exports[`PopupTests Popups can have customized accessibility 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
+      "AccessibilityRole": "Button",
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -552,6 +554,7 @@ exports[`PopupTests Popups can have different placement 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
+      "AccessibilityRole": "Button",
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
