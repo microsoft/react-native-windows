@@ -398,18 +398,17 @@ void WebSocketTurboModule::Connect(
     ReactNativeSpecs::WebSocketModuleSpec_connect_options &&options,
     double socketID) noexcept {
   IWebSocketResource::Protocols rcProtocols;
-  for (const auto& protocol : protocols.value_or(vector<string>{})) {
+  for (const auto &protocol : protocols.value_or(vector<string>{})) {
     rcProtocols.push_back(protocol);
   }
 
   IWebSocketResource::Options rcOptions;
-  auto& optHeaders = options.headers;
-  if (optHeaders.has_value())
-  {
-    auto& headersVal = optHeaders.value();
-    for (const auto& headerVal : headersVal.AsArray()) {
+  auto &optHeaders = options.headers;
+  if (optHeaders.has_value()) {
+    auto &headersVal = optHeaders.value();
+    for (const auto &headerVal : headersVal.AsArray()) {
       // Each header JSValueObject should only contain one key-value pair
-      const auto& entry = *headerVal.AsObject().cbegin();
+      const auto &entry = *headerVal.AsObject().cbegin();
       rcOptions.emplace(winrt::to_hstring(entry.first), entry.second.AsString());
     }
   }
@@ -419,9 +418,8 @@ void WebSocketTurboModule::Connect(
   auto rcItr = m_resourceMap.find(id);
   if (rcItr != m_resourceMap.cend()) {
     weakRc = (*rcItr).second;
-  }
-  else {
-    weakRc = CreateResource(id, string{ url });
+  } else {
+    weakRc = CreateResource(id, string{url});
   }
 
   if (auto rc = weakRc.lock()) {
@@ -429,10 +427,10 @@ void WebSocketTurboModule::Connect(
   }
 }
 
-void WebSocketTurboModule::Close(int64_t code, string&& reason, int64_t id) noexcept {
-  auto rcItr = m_resourceMap.find(id);
+void WebSocketTurboModule::Close(double code, string &&reason, double socketID) noexcept {
+  auto rcItr = m_resourceMap.find(static_cast<int64_t>(socketID));
   if (rcItr == m_resourceMap.cend()) {
-    return;//TODO: Send error instead?
+    return; // TODO: Send error instead?
   }
 
   weak_ptr<IWebSocketResource> weakRc = (*rcItr).second;
@@ -441,10 +439,10 @@ void WebSocketTurboModule::Close(int64_t code, string&& reason, int64_t id) noex
   }
 }
 
-void WebSocketTurboModule::Send(string&& message, int64_t id) noexcept {
-  auto rcItr = m_resourceMap.find(id);
+void WebSocketTurboModule::Send(string &&message, double forSocketID) noexcept {
+  auto rcItr = m_resourceMap.find(static_cast<int64_t>(forSocketID));
   if (rcItr == m_resourceMap.cend()) {
-    return;//TODO: Send error instead?
+    return; // TODO: Send error instead?
   }
 
   weak_ptr<IWebSocketResource> weakRc = (*rcItr).second;
@@ -453,10 +451,10 @@ void WebSocketTurboModule::Send(string&& message, int64_t id) noexcept {
   }
 }
 
-void WebSocketTurboModule::SendBinary(string&& base64String, int64_t id) noexcept {
-  auto rcItr = m_resourceMap.find(id);
+void WebSocketTurboModule::SendBinary(string &&base64String, double forSocketID) noexcept {
+  auto rcItr = m_resourceMap.find(static_cast<int64_t>(forSocketID));
   if (rcItr == m_resourceMap.cend()) {
-    return;//TODO: Send error instead?
+    return; // TODO: Send error instead?
   }
 
   weak_ptr<IWebSocketResource> weakRc = (*rcItr).second;
@@ -465,10 +463,10 @@ void WebSocketTurboModule::SendBinary(string&& base64String, int64_t id) noexcep
   }
 }
 
-void WebSocketTurboModule::Ping(int64_t id) noexcept {
-  auto rcItr = m_resourceMap.find(id);
+void WebSocketTurboModule::Ping(double socketID) noexcept {
+  auto rcItr = m_resourceMap.find(static_cast<int64_t>(socketID));
   if (rcItr == m_resourceMap.cend()) {
-    return;//TODO: Send error instead?
+    return; // TODO: Send error instead?
   }
 
   weak_ptr<IWebSocketResource> weakRc = (*rcItr).second;

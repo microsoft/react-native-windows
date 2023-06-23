@@ -3,10 +3,10 @@
 
 #pragma once
 
-#include <Modules/IWebSocketModuleProxy.h>
-#include <Networking/IWebSocketResource.h>
-#include <NativeModules.h>
 #include <NativeWebSocketModuleSpec.g.h>
+#include <Modules/IWebSocketModuleProxy.h>
+#include <NativeModules.h>
+#include <Networking/IWebSocketResource.h>
 
 namespace Microsoft::React {
 
@@ -19,30 +19,28 @@ struct WebSocketTurboModule {
 
   REACT_METHOD(Connect, L"connect")
   void Connect(
-    std::string&& url,
-    std::optional<std::vector<std::string>> protocols,
-    ReactNativeSpecs::WebSocketModuleSpec_connect_options&& options,
-    double socketID) noexcept;
+      std::string &&url,
+      std::optional<std::vector<std::string>> protocols,
+      ReactNativeSpecs::WebSocketModuleSpec_connect_options &&options,
+      double socketID) noexcept;
 
-  REACT_METHOD(close) void close(double code, std::string reason, double socketID) noexcept { /* implementation */ }
-  //REACT_METHOD(Close, L"close")
-  void Close(int64_t code, std::string &&url, int64_t id) noexcept;
+  REACT_METHOD(Close, L"close")
+  void Close(double code, std::string &&reason, double socketID) noexcept;
 
-  REACT_METHOD(send) void send(std::string message, double forSocketID) noexcept { /* implementation */ }
-  //REACT_METHOD(Send, L"send")
-  void Send(std::string&& message, int64_t id) noexcept;
+  REACT_METHOD(Send, L"send")
+  void Send(std::string &&message, double forSocketID) noexcept;
 
-  REACT_METHOD(sendBinary) void sendBinary(std::string base64String, double forSocketID) noexcept { /* implementation */ }
-  //REACT_METHOD(SendBinary, L"sendBinary")
-  void SendBinary(std::string &&base64String, int64_t id) noexcept;
+  REACT_METHOD(SendBinary, L"sendBinary")
+  void SendBinary(std::string &&base64String, double forSocketID) noexcept;
 
-  REACT_METHOD(ping) void ping(double socketID) noexcept { /* implementation */ }
-  //REACT_METHOD(Ping, L"ping")
-  void Ping(int64_t id) noexcept;
+  REACT_METHOD(Ping, L"ping")
+  void Ping(double socketID) noexcept;
 
-  //TODO:
-  REACT_METHOD(addListener) void addListener(std::string eventName) noexcept { /* implementation */ }
-  REACT_METHOD(removeListeners) void removeListeners(double count) noexcept { /* implementation */ }
+  // TODO:
+  REACT_METHOD(addListener) void addListener(std::string eventName) noexcept { /* implementation */
+  }
+  REACT_METHOD(removeListeners) void removeListeners(double count) noexcept { /* implementation */
+  }
 
  private:
   std::shared_ptr<Networking::IWebSocketResource> CreateResource(int64_t id, std::string &&url) noexcept;
