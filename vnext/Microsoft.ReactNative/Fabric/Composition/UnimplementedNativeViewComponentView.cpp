@@ -31,13 +31,11 @@ std::shared_ptr<UnimplementedNativeViewComponentView> UnimplementedNativeViewCom
 void UnimplementedNativeViewComponentView::mountChildComponentView(
     IComponentView &childComponentView,
     uint32_t index) noexcept {
-  assert(false);
 }
 
 void UnimplementedNativeViewComponentView::unmountChildComponentView(
     IComponentView &childComponentView,
     uint32_t index) noexcept {
-  assert(false);
 }
 
 void UnimplementedNativeViewComponentView::updateProps(
