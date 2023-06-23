@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 23 Jun 2023 01:59:53 GMT",
+      "tag": "react-native-windows_v0.72.0-preview.9",
+      "version": "0.72.0-preview.9",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e3c569687bfc41afe75bc3d1e27a6798acf35d2a",
+            "comment": "Integrate RN 0.72.0"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 19 Jun 2023 15:16:07 GMT",
       "tag": "react-native-windows_v0.72.0-preview.8",
       "version": "0.72.0-preview.8",

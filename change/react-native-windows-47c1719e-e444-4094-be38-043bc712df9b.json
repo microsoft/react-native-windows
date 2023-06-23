@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Integrate RN 0.72.0",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
