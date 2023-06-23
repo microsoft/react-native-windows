@@ -24,17 +24,25 @@ struct WebSocketTurboModule {
     ReactNativeSpecs::WebSocketModuleSpec_connect_options&& options,
     double socketID) noexcept;
 
-  REACT_METHOD(Close, L"close")
+  REACT_METHOD(close) void close(double code, std::string reason, double socketID) noexcept { /* implementation */ }
+  //REACT_METHOD(Close, L"close")
   void Close(int64_t code, std::string &&url, int64_t id) noexcept;
 
-  REACT_METHOD(Send, L"send")
+  REACT_METHOD(send) void send(std::string message, double forSocketID) noexcept { /* implementation */ }
+  //REACT_METHOD(Send, L"send")
   void Send(std::string&& message, int64_t id) noexcept;
 
-  REACT_METHOD(SendBinary, L"sendBinary")
+  REACT_METHOD(sendBinary) void sendBinary(std::string base64String, double forSocketID) noexcept { /* implementation */ }
+  //REACT_METHOD(SendBinary, L"sendBinary")
   void SendBinary(std::string &&base64String, int64_t id) noexcept;
 
-  REACT_METHOD(Ping, L"ping")
+  REACT_METHOD(ping) void ping(double socketID) noexcept { /* implementation */ }
+  //REACT_METHOD(Ping, L"ping")
   void Ping(int64_t id) noexcept;
+
+  //TODO:
+  REACT_METHOD(addListener) void addListener(std::string eventName) noexcept { /* implementation */ }
+  REACT_METHOD(removeListeners) void removeListeners(double count) noexcept { /* implementation */ }
 
  private:
   std::shared_ptr<Networking::IWebSocketResource> CreateResource(int64_t id, std::string &&url) noexcept;
