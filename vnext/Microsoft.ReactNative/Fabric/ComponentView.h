@@ -27,6 +27,17 @@ DEFINE_ENUM_FLAG_OPERATORS(RNComponentViewUpdateMask);
 
 struct RootComponentView;
 
+struct BringIntoViewOptions {
+  bool AnimationDesired{false};
+  // NaN will bring the element fully into view aligned to the nearest edge of the viewport
+  float HorizontalAlignmentRatio{std::numeric_limits<float>::quiet_NaN()};
+  float HorizontalOffset{0};
+  std::optional<facebook::react::Rect> TargetRect;
+  // NaN will bring the element fully into view aligned to the nearest edge of the viewport
+  float VerticalAlignmentRatio{std::numeric_limits<float>::quiet_NaN()};
+  float VerticalOffset{0};
+};
+
 struct IComponentView {
   virtual std::vector<facebook::react::ComponentDescriptorProvider>
   supplementalComponentDescriptorProviders() noexcept = 0;
@@ -68,6 +79,8 @@ struct IComponentView {
       bool ignorePointerEvents = false) const noexcept = 0;
   virtual int64_t sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept = 0;
   virtual winrt::IInspectable EnsureUiaProvider() noexcept = 0;
+  // Notify up the tree to bring the rect into view by scrolling as needed
+  virtual void StartBringIntoView(BringIntoViewOptions &&args) noexcept = 0;
 };
 
 // Run fn on all nodes of the component view tree starting from this one until fn returns true
