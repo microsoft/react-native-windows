@@ -46,7 +46,7 @@ struct WebSocketTurboModule {
   std::shared_ptr<Networking::IWebSocketResource> CreateResource(int64_t id, std::string &&url) noexcept;
 
   winrt::Microsoft::ReactNative::ReactContext m_context;
-  std::unordered_map<int64_t, std::shared_ptr<Networking::IWebSocketResource>> m_resourceMap;
+  std::unordered_map<double, std::shared_ptr<Networking::IWebSocketResource>> m_resourceMap;
 };
 
 } // namespace Microsoft::React

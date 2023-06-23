@@ -383,7 +383,7 @@ shared_ptr<IWebSocketResource> WebSocketTurboModule::CreateResource(int64_t id, 
     SendEvent(context, L"websocketFailed", std::move(errorObj));
   });
 
-  m_resourceMap.emplace(id, rc);
+  m_resourceMap.emplace(static_cast<double>(id), rc);
 
   return rc;
 }
@@ -414,12 +414,11 @@ void WebSocketTurboModule::Connect(
   }
 
   weak_ptr<IWebSocketResource> weakRc;
-  auto id = static_cast<int64_t>(socketID);
-  auto rcItr = m_resourceMap.find(id);
+  auto rcItr = m_resourceMap.find(socketID);
   if (rcItr != m_resourceMap.cend()) {
     weakRc = (*rcItr).second;
   } else {
-    weakRc = CreateResource(id, string{url});
+    weakRc = CreateResource(static_cast<int64_t>(socketID), string{url});
   }
 
   if (auto rc = weakRc.lock()) {
@@ -428,7 +427,7 @@ void WebSocketTurboModule::Connect(
 }
 
 void WebSocketTurboModule::Close(double code, string &&reason, double socketID) noexcept {
-  auto rcItr = m_resourceMap.find(static_cast<int64_t>(socketID));
+  auto rcItr = m_resourceMap.find(socketID);
   if (rcItr == m_resourceMap.cend()) {
     return; // TODO: Send error instead?
   }
@@ -440,7 +439,7 @@ void WebSocketTurboModule::Close(double code, string &&reason, double socketID) 
 }
 
 void WebSocketTurboModule::Send(string &&message, double forSocketID) noexcept {
-  auto rcItr = m_resourceMap.find(static_cast<int64_t>(forSocketID));
+  auto rcItr = m_resourceMap.find(forSocketID);
   if (rcItr == m_resourceMap.cend()) {
     return; // TODO: Send error instead?
   }
@@ -452,7 +451,7 @@ void WebSocketTurboModule::Send(string &&message, double forSocketID) noexcept {
 }
 
 void WebSocketTurboModule::SendBinary(string &&base64String, double forSocketID) noexcept {
-  auto rcItr = m_resourceMap.find(static_cast<int64_t>(forSocketID));
+  auto rcItr = m_resourceMap.find(forSocketID);
   if (rcItr == m_resourceMap.cend()) {
     return; // TODO: Send error instead?
   }
@@ -464,7 +463,7 @@ void WebSocketTurboModule::SendBinary(string &&base64String, double forSocketID)
 }
 
 void WebSocketTurboModule::Ping(double socketID) noexcept {
-  auto rcItr = m_resourceMap.find(static_cast<int64_t>(socketID));
+  auto rcItr = m_resourceMap.find(socketID);
   if (rcItr == m_resourceMap.cend()) {
     return; // TODO: Send error instead?
   }
