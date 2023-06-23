@@ -109,6 +109,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IWebSocketModuleProxy.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\HttpModule.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\NetworkingModule.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\WebSocketTurboModule.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Networking\IHttpResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Networking\IRedirectEventSource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Networking\IWebSocketResource.h" />

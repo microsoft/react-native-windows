@@ -480,6 +480,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)BaseFileReaderResource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\WebSocketTurboModule.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)tracing\rnw.wprp">
