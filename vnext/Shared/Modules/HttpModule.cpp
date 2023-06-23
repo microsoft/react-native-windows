@@ -41,6 +41,13 @@ constexpr char receivedIncrementalData[] = "didReceiveNetworkIncrementalData";
 constexpr char receivedDataProgress[] = "didReceiveNetworkDataProgress";
 constexpr char receivedData[] = "didReceiveNetworkData";
 
+constexpr wchar_t completedResponseW[] = L"didCompleteNetworkResponse";
+constexpr wchar_t receivedResponseW[] = L"didReceiveNetworkResponse";
+constexpr wchar_t sentDataW[] = L"didSendNetworkData";
+constexpr wchar_t receivedIncrementalDataW[] = L"didReceiveNetworkIncrementalData";
+constexpr wchar_t receivedDataProgressW[] = L"didReceiveNetworkDataProgress";
+constexpr wchar_t receivedDataW[] = L"didReceiveNetworkData";
+
 static void SetUpHttpResource(
     shared_ptr<IHttpResource> resource,
     weak_ptr<Instance> weakReactInstance,
@@ -111,7 +118,7 @@ void HttpTurboModule::Initialize(msrn::ReactContext const& reactContext) noexcep
   m_resource = IHttpResource::Make(m_context.Properties().Handle());
 
   m_resource->SetOnRequestSuccess([context = m_context](int64_t requestId) {
-    SendEvent(context, winrt::to_hstring(completedResponse), msrn::JSValueArray{requestId});
+    SendEvent(context, completedResponseW, msrn::JSValueArray{requestId});
     //TODO: create constexpr variant of event name
   });
 
@@ -124,11 +131,11 @@ void HttpTurboModule::Initialize(msrn::ReactContext const& reactContext) noexcep
     //TODO: Test response content?
     auto args = msrn::JSValueArray{ requestId, response.StatusCode, std::move(headers), response.Url };
 
-    SendEvent(context, winrt::to_hstring(receivedResponse), std::move(args));
+    SendEvent(context, receivedResponseW, std::move(args));
   });
 
   m_resource->SetOnData([context = m_context](int64_t requestId, string&& responseData) {
-    SendEvent(context, winrt::to_hstring(receivedData), msrn::JSValueArray{requestId, std::move(responseData)});
+    SendEvent(context, receivedDataW, msrn::JSValueArray{requestId, std::move(responseData)});
   });
 
   // Explicitly declaring function type to avoid type inference ambiguity.
