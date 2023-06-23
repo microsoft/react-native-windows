@@ -28,7 +28,7 @@ namespace {
 using Microsoft::React::Modules::SendEvent;
 using Microsoft::React::Networking::IHttpResource;
 
-constexpr char moduleName[] = "Networking";
+constexpr char s_moduleName[] = "Networking";
 
 // React event names
 constexpr char completedResponse[] = "didCompleteNetworkResponse";
@@ -115,7 +115,7 @@ HttpModule::~HttpModule() noexcept /*override*/ {
 #pragma region CxxModule
 
 string HttpModule::getName() /*override*/ {
-  return moduleName;
+  return s_moduleName;
 }
 
 std::map<string, dynamic> HttpModule::getConstants() {
@@ -212,7 +212,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
 #pragma endregion CxxModule
 
 /*extern*/ const char *GetHttpModuleName() noexcept {
-  return moduleName;
+  return s_moduleName;
 }
 
 } // namespace Microsoft::React

@@ -4,6 +4,7 @@
 #pragma once
 
 #include <Networking/IHttpResource.h>
+#include <NativeModules.h>
 
 // React Native
 #include <cxxreact/CxxModule.h>
@@ -12,6 +13,11 @@
 #include <winrt/Windows.Foundation.h>
 
 namespace Microsoft::React {
+
+REACT_MODULE(HttpTurboModule, L"Networking")
+struct HttpTurboModule {
+
+};
 
 ///
 /// Realizes <c>NativeModules</c> projection.
