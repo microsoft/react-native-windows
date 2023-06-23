@@ -1,8 +1,16 @@
 # Change Log - debug-test
 
-This log was last generated on Mon, 27 Feb 2023 16:15:27 GMT and should not be manually modified.
+This log was last generated on Fri, 23 Jun 2023 18:19:57 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Fri, 23 Jun 2023 18:19:57 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.71.3
 
 ## 0.0.0
 

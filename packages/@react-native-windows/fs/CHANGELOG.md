@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/fs
 
-This log was last generated on Mon, 27 Feb 2023 16:15:27 GMT and should not be manually modified.
+This log was last generated on Fri, 23 Jun 2023 18:19:56 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.3
+
+Fri, 23 Jun 2023 18:19:56 GMT
+
+### Patches
+
+- Promote 0.71 to legacy (jthysell@microsoft.com)
 
 ## 0.71.2
 

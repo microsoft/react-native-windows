@@ -2,6 +2,21 @@
   "name": "debug-test",
   "entries": [
     {
+      "date": "Fri, 23 Jun 2023 18:19:57 GMT",
+      "tag": "debug-test_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "debug-test",
+            "comment": "Bump @react-native-windows/fs to v0.71.3",
+            "commit": "558faa07e799af7b36c2654a505161ae152b2c36"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 27 Feb 2023 16:15:27 GMT",
       "tag": "debug-test_v0.0.0",
       "version": "0.0.0",
