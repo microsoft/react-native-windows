@@ -1,8 +1,24 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 21 Jun 2023 05:12:39 GMT and should not be manually modified.
+This log was last generated on Thu, 22 Jun 2023 17:16:32 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.668
+
+Thu, 22 Jun 2023 17:16:32 GMT
+
+### Changes
+
+- Delete extra copy/paste line in V8RuntimeHolder (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.667
+
+Thu, 22 Jun 2023 05:14:30 GMT
+
+### Changes
+
+- Implement FileReader TurboModule (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.666
 

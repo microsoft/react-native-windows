@@ -19,7 +19,7 @@
     "@react-native-picker/picker": "2.4.10",
     "react": "18.0.0",
     "react-native": "0.73.0-nightly-20230601-d9b3339ef",
-    "react-native-windows": "^0.0.0-canary.666",
+    "react-native-windows": "^0.0.0-canary.668",
     "react-native-xaml": "^0.0.50"
   },
   "devDependencies": {
@@ -33,7 +33,7 @@
     "just-scripts": "^1.3.3",
     "react-native": "0.73.0-nightly-20230601-d9b3339ef",
     "react-native-platform-override": "^1.9.10",
-    "react-native-windows": "^0.0.0-canary.666",
+    "react-native-windows": "^0.0.0-canary.668",
     "typescript": "^4.9.5"
   },
   "engines": {
