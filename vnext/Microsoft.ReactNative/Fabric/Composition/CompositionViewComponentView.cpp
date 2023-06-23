@@ -48,7 +48,7 @@ const std::vector<IComponentView *> &CompositionBaseComponentView::children() co
 void CompositionBaseComponentView::parent(IComponentView *parent) noexcept {
   if (!parent) {
     auto root = rootComponentView();
-    if (root->GetFocusedComponent() == this) {
+    if (root && root->GetFocusedComponent() == this) {
       root->SetFocusedComponent(nullptr); // TODO need move focus logic - where should focus go?
     }
   }
