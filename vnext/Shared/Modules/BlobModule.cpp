@@ -369,13 +369,13 @@ bool BlobModuleResponseHandler::Supports(string &responseType) /*override*/ {
   return blobKey == responseType;
 }
 
-dynamic BlobModuleResponseHandler::ToResponseData(vector<uint8_t> &&content) /*override*/ {
-  auto blob = dynamic::object();
-  blob(offsetKey, 0);
-  blob(sizeKey, content.size());
-  blob(blobIdKey, m_blobPersistor->StoreMessage(std::move(content)));
-
-  return blob;
+msrn::JSValueObject BlobModuleResponseHandler::ToResponseData(vector<uint8_t> &&content) /*override*/ {
+  return
+  {
+    { offsetKey, 0 },
+    { sizeKey, content.size() },
+    { blobIdKey, m_blobPersistor->StoreMessage(std::move(content)) }
+  };
 }
 
 #pragma endregion IResponseHandler

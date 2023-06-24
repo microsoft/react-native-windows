@@ -96,7 +96,7 @@ class BlobModuleResponseHandler final : public IResponseHandler {
 
   bool Supports(std::string &responseType) override;
 
-  folly::dynamic ToResponseData(std::vector<uint8_t> &&content) override;
+  winrt::Microsoft::ReactNative::JSValueObject ToResponseData(std::vector<uint8_t> &&content) override;
 
 #pragma endregion IResponseHandler
 };

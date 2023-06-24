@@ -356,7 +356,7 @@ void WinRTHttpResource::SetOnData(function<void(int64_t requestId, string &&resp
   m_onData = std::move(handler);
 }
 
-void WinRTHttpResource::SetOnData(function<void(int64_t requestId, dynamic &&responseData)> &&handler) noexcept
+void WinRTHttpResource::SetOnData(function<void(int64_t requestId, msrn::JSValueObject &&responseData)> &&handler) noexcept
 /*override*/
 {
   m_onDataDynamic = std::move(handler);
