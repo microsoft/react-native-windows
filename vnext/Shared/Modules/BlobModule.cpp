@@ -327,31 +327,31 @@ BlobModuleRequestBodyHandler::BlobModuleRequestBodyHandler(shared_ptr<IBlobPersi
 
 #pragma region IRequestBodyHandler
 
-bool BlobModuleRequestBodyHandler::Supports(dynamic &data) /*override*/ {
+bool BlobModuleRequestBodyHandler::Supports(msrn::JSValueObject &data) /*override*/ {
   auto itr = data.find(blobKey);
 
-  return itr != data.items().end() && !(*itr).second.empty();
+  return itr != data.cend() && !(*itr).second.AsString().empty();
 }
 
-dynamic BlobModuleRequestBodyHandler::ToRequestBody(dynamic &data, string &contentType) /*override*/ {
+msrn::JSValueObject BlobModuleRequestBodyHandler::ToRequestBody(msrn::JSValueObject &data, string &contentType) /*override*/ {
   auto type = contentType;
-  if (!data[typeKey].isNull() && !data[typeKey].asString().empty()) {
-    type = data[typeKey].asString();
+  if (!data[typeKey].IsNull() && !data[typeKey].AsString().empty()) {
+    type = data[typeKey].AsString();
   }
   if (type.empty()) {
     type = "application/octet-stream";
   }
 
-  auto blob = data[blobKey];
-  auto blobId = blob[blobIdKey].asString();
-  auto bytes = m_blobPersistor->ResolveMessage(std::move(blobId), blob[offsetKey].asInt(), blob[sizeKey].asInt());
+  auto& blob = data[blobKey].AsObject();
+  auto blobId = blob[blobIdKey].AsString();
+  auto bytes = m_blobPersistor->ResolveMessage(std::move(blobId), blob[offsetKey].AsInt64(), blob[sizeKey].AsInt64());
 
-  auto result = dynamic::object();
-  result(typeKey, type);
-  result(sizeKey, bytes.size());
-  result("bytes", dynamic(bytes.cbegin(), bytes.cend()));
-
-  return result;
+  return
+  {
+    { typeKey, type },
+    { sizeKey, bytes.size() },
+    { "bytes", msrn::JSValueArray(bytes.cbegin(), bytes.cend()) } //TODO: Validate!!!
+  };
 }
 
 #pragma endregion IRequestBodyHandler

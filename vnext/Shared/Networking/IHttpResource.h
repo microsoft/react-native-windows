@@ -20,7 +20,6 @@ namespace Microsoft::React::Networking {
 struct IHttpResource {
   typedef std::unordered_map<std::string, std::string> Headers;
 
-  // TODO: Implement Form data
   struct BodyData {
     enum class Type : size_t { Empty, String, Base64, Uri, Form } Type = Type::Empty;
     std::string Data;
