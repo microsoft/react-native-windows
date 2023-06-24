@@ -8,6 +8,7 @@
 #include "WinRTNetworkingMocks.h"
 
 // Windows API
+#include <Windows.h>
 #include <WinInet.h>
 #include <winrt/Windows.Web.Http.Headers.h>
 

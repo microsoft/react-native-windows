@@ -219,7 +219,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
           params["url"].asString(),
           params["requestId"].asInt(),
           std::move(headers),
-          std::move(params["data"]),
+          Modules::ToJSValue(params["data"]).MoveObject(),
           params["responseType"].asString(),
           params["incrementalUpdates"].asBool(),
           static_cast<int64_t>(params["timeout"].asDouble()),

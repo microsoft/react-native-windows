@@ -23,8 +23,6 @@
 #include <winrt/Windows.Storage.Streams.h>
 #include <winrt/Windows.Web.Http.Headers.h>
 
-using folly::dynamic;
-
 using std::function;
 using std::scoped_lock;
 using std::shared_ptr;
@@ -276,7 +274,7 @@ void WinRTHttpResource::SendRequest(
     string &&url,
     int64_t requestId,
     Headers &&headers,
-    dynamic &&data,
+    msrn::JSValueObject &&data,
     string &&responseType,
     bool useIncrementalUpdates,
     int64_t timeout,
@@ -297,8 +295,7 @@ void WinRTHttpResource::SendRequest(
     auto reqArgs = iReqArgs.as<RequestArgs>();
     reqArgs->RequestId = requestId;
     reqArgs->Headers = std::move(headers);
-    //reqArgs->Data = std::move(data);//TODO: Update interface!!!!
-    reqArgs->Data = {};
+    reqArgs->Data = std::move(data);
     reqArgs->IncrementalUpdates = useIncrementalUpdates;
     reqArgs->WithCredentials = withCredentials;
     reqArgs->ResponseType = std::move(responseType);

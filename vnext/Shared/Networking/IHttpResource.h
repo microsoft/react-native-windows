@@ -3,9 +3,6 @@
 
 #pragma once
 
-// Folly
-#include <folly/dynamic.h>
-
 // React Native Windows
 #include <JSValue.h>
 
@@ -83,7 +80,7 @@ struct IHttpResource {
       std::string &&url,
       int64_t requestId,
       Headers &&headers,
-      folly::dynamic &&data,
+      winrt::Microsoft::ReactNative::JSValueObject &&data,
       std::string &&responseType,
       bool useIncrementalUpdates,
       int64_t timeout,
