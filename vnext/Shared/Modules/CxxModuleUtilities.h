@@ -33,4 +33,6 @@ void SendEvent(
   std::wstring_view&& eventName,
   winrt::Microsoft::ReactNative::JSValueArray&& args) noexcept;
 
+winrt::Microsoft::ReactNative::JSValue ToJSValue(folly::dynamic &value) noexcept;
+
 } // namespace Microsoft::React::Modules
