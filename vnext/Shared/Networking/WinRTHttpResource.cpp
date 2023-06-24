@@ -359,7 +359,7 @@ void WinRTHttpResource::SetOnData(function<void(int64_t requestId, string &&resp
 void WinRTHttpResource::SetOnData(function<void(int64_t requestId, msrn::JSValueObject &&responseData)> &&handler) noexcept
 /*override*/
 {
-  m_onDataDynamic = std::move(handler);
+  m_onDataObject = std::move(handler);
 }
 
 void WinRTHttpResource::SetOnIncrementalData(
@@ -429,8 +429,8 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
     try {
       if (uriHandler->Supports(uri, reqArgs->ResponseType)) {
         auto blob = uriHandler->Fetch(uri);
-        if (self->m_onDataDynamic && self->m_onRequestSuccess) {
-          self->m_onDataDynamic(reqArgs->RequestId, std::move(blob));
+        if (self->m_onDataObject && self->m_onRequestSuccess) {
+          self->m_onDataObject(reqArgs->RequestId, std::move(blob));
           self->m_onRequestSuccess(reqArgs->RequestId);
         }
 
@@ -539,8 +539,8 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
 
           auto blob = responseHandler->ToResponseData(std::move(responseData));
 
-          if (self->m_onDataDynamic && self->m_onRequestSuccess) {
-            self->m_onDataDynamic(reqArgs->RequestId, std::move(blob));
+          if (self->m_onDataObject && self->m_onRequestSuccess) {
+            self->m_onDataObject(reqArgs->RequestId, std::move(blob));
             self->m_onRequestSuccess(reqArgs->RequestId);
           }
 
