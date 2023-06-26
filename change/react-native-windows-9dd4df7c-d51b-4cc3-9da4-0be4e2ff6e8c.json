@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Define WebSocket TurboModule",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix AV in LinkingManagerModule when resolving promise with nullptr",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
