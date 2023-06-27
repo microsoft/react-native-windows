@@ -19,13 +19,19 @@ class ABIShadowNode : public ::Microsoft::ReactNative::ShadowNodeBase {
   using Super = ShadowNodeBase;
 
  public:
-  ABIShadowNode(bool needsForceLayout) : m_needsForceLayout(needsForceLayout) {}
+  ABIShadowNode(bool needsForceLayout, bool isWindowed)
+      : m_needsForceLayout(needsForceLayout), m_isWindowed{isWindowed} {}
   bool NeedsForceLayout() override {
     return m_needsForceLayout;
   }
 
+  bool IsWindowed() override {
+    return m_isWindowed;
+  }
+
  private:
   bool m_needsForceLayout;
+  bool m_isWindowed;
 };
 
 ABIViewManager::ABIViewManager(
@@ -43,6 +49,7 @@ ABIViewManager::ABIViewManager(
       m_viewManagerWithChildren{viewManager.try_as<IViewManagerWithChildren>()},
       m_viewManagerWithPointerEvents{viewManager.try_as<IViewManagerWithPointerEvents>()},
       m_viewManagerWithDropViewInstance{viewManager.try_as<IViewManagerWithDropViewInstance>()},
+      m_viewManagerWithWindowedContent{viewManager.try_as<IViewManagerWithWindowedContent>()},
       m_viewManagerWithOnLayout{viewManager.try_as<IViewManagerWithOnLayout>()} {
   if (m_viewManagerWithReactContext) {
     m_viewManagerWithReactContext.ReactContext(winrt::make<implementation::ReactContext>(Mso::Copy(reactContext)));
@@ -257,7 +264,8 @@ void ABIViewManager::SetLayoutProps(
 
 ::Microsoft::ReactNative::ShadowNode *ABIViewManager::createShadow() const {
   return new ABIShadowNode(
-      m_viewManagerRequiresNativeLayout && m_viewManagerRequiresNativeLayout.RequiresNativeLayout());
+      m_viewManagerRequiresNativeLayout && m_viewManagerRequiresNativeLayout.RequiresNativeLayout(),
+      m_viewManagerWithWindowedContent && m_viewManagerWithWindowedContent.IsWindowed());
 }
 
 } // namespace winrt::Microsoft::ReactNative

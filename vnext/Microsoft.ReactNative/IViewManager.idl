@@ -117,4 +117,18 @@ namespace Microsoft.ReactNative
         "without a corresponding `onLayout` event in JavaScript.")
     void OnLayout(XAML_NAMESPACE.FrameworkElement view, Single left, Single top, Single width, Single height);
   };
-} // namespace Microsoft.ReactNative
+
+  [webhosthidden]
+  DOC_STRING(
+    "Experimental interface enabling view managers to accurately measure content "
+    "that is rendered outside of the @ReactRootView, e.g., in a Popup."
+  )
+  interface IViewManagerWithWindowedContent {
+    DOC_STRING(
+        "When true, ensures that content is measured against the first native ancestor in "
+        "the sub-tree(s) attached to components created by this @IViewManager.")
+    Boolean IsWindowed {
+      get;
+    };
+  };
+  } // namespace Microsoft.ReactNative
