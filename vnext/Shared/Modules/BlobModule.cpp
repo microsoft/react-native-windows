@@ -41,6 +41,7 @@ using winrt::Windows::Foundation::Uri;
 using winrt::Windows::Security::Cryptography::CryptographicBuffer;
 
 namespace fs = std::filesystem;
+namespace msrn = winrt::Microsoft::ReactNative;
 
 namespace {
 constexpr char moduleName[] = "BlobModule";
@@ -283,6 +284,25 @@ void BlobWebSocketModuleContentHandler::ProcessMessage(vector<uint8_t> &&message
   params[dataKey] = std::move(blob);
   params[typeKey] = blobKey;
 }
+
+void BlobWebSocketModuleContentHandler::ProcessMessage(
+    string &&message,
+    msrn::JSValueObject &params) noexcept /*override*/
+{
+  params[dataKey] = std::move(message);
+}
+
+void BlobWebSocketModuleContentHandler::ProcessMessage(
+    vector<uint8_t> &&message,
+    msrn::JSValueObject &params) noexcept /*override*/
+{
+  auto blob = msrn::JSValueObject{
+      {offsetKey, 0}, {sizeKey, message.size()}, {blobIdKey, m_blobPersistor->StoreMessage(std::move(message))}};
+
+  params[dataKey] = std::move(blob);
+  params[typeKey] = blobKey;
+}
+
 #pragma endregion IWebSocketModuleContentHandler
 
 void BlobWebSocketModuleContentHandler::Register(int64_t socketID) noexcept {

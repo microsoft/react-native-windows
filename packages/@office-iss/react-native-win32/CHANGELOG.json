@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 21 Jun 2023 05:12:39 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.203",
+      "version": "0.0.0-canary.203",
+      "comments": {
+        "none": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "8b9ab36319d57077f02990af9feb9c5ccf519c74",
+            "comment": "Implement aria-level, aria-posinset and aria-setsize"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 16 Jun 2023 05:14:19 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.203",
       "version": "0.0.0-canary.203",

@@ -1,8 +1,43 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 14 Jun 2023 05:16:10 GMT and should not be manually modified.
+This log was last generated on Sat, 24 Jun 2023 05:13:09 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.669
+
+Sat, 24 Jun 2023 05:13:09 GMT
+
+### Changes
+
+- Define WebSocket TurboModule (julio.rocha@microsoft.com)
+- Fix fetch failing with certain custom user agents (lyahdav@users.noreply.github.com)
+- Fix AV in LinkingManagerModule when resolving promise with nullptr (jthysell@microsoft.com)
+
+## 0.0.0-canary.668
+
+Thu, 22 Jun 2023 17:16:32 GMT
+
+### Changes
+
+- Delete extra copy/paste line in V8RuntimeHolder (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.667
+
+Thu, 22 Jun 2023 05:14:30 GMT
+
+### Changes
+
+- Implement FileReader TurboModule (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.666
+
+Wed, 21 Jun 2023 05:12:39 GMT
+
+### Changes
+
+- Use the Hasher in ScriptStore (tudor.mihai@microsoft.com)
+- Implement aria-level, aria-posinset and aria-setsize (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.665
 

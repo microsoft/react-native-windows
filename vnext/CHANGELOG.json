@@ -2,6 +2,84 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 24 Jun 2023 05:13:09 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.669",
+      "version": "0.0.0-canary.669",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "84c66b7ca90208464fc80293b6a6708ba319682e",
+            "comment": "Define WebSocket TurboModule"
+          },
+          {
+            "author": "lyahdav@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "2aaf6557c2d8d1331f63167680d6c0ee64208f23",
+            "comment": "Fix fetch failing with certain custom user agents"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "7d2cb255e342beee0c2ad96aabbffbb114aeb181",
+            "comment": "Fix AV in LinkingManagerModule when resolving promise with nullptr"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 22 Jun 2023 17:16:32 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.668",
+      "version": "0.0.0-canary.668",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e5dbbe92b63ebec7cbf6764b137ffef35b106705",
+            "comment": "Delete extra copy/paste line in V8RuntimeHolder"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 22 Jun 2023 05:14:30 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.667",
+      "version": "0.0.0-canary.667",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "f3fe56a5722d7ec4a24c6b6ed788febd1cd5708e",
+            "comment": "Implement FileReader TurboModule"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 21 Jun 2023 05:12:39 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.666",
+      "version": "0.0.0-canary.666",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tudor.mihai@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d57251f6ea618152a94141d5fe01a75aaaa01684",
+            "comment": "Use the Hasher in ScriptStore"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "8b9ab36319d57077f02990af9feb9c5ccf519c74",
+            "comment": "Implement aria-level, aria-posinset and aria-setsize"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 16 Jun 2023 05:14:19 GMT",
       "tag": "react-native-windows_v0.0.0-canary.665",
       "version": "0.0.0-canary.665",
