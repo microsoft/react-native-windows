@@ -5,11 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "node",
+            "name": "Attach to RNW App (Hermes Direct Debug w/ Metro)",
+            "port": 8081,
             "request": "attach",
-            "name": "Attach to react-native direct debugger",
-            "protocol": "inspector",
-            "port": 9229
-          },
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node",
+        }
     ]
 }
