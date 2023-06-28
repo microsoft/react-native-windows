@@ -119,7 +119,6 @@ void HttpTurboModule::Initialize(msrn::ReactContext const& reactContext) noexcep
 
   m_resource->SetOnRequestSuccess([context = m_context](int64_t requestId) {
     SendEvent(context, completedResponseW, msrn::JSValueArray{requestId});
-    //TODO: create constexpr variant of event name
   });
 
   m_resource->SetOnResponse([context = m_context](int64_t requestId, IHttpResource::Response&& response) {
@@ -139,7 +138,37 @@ void HttpTurboModule::Initialize(msrn::ReactContext const& reactContext) noexcep
   });
 
   // Explicitly declaring function type to avoid type inference ambiguity.
-  //TODO
+  function<void(int64_t, msrn::JSValueObject&&)> onDataObject = [context = m_context](int64_t requestId, msrn::JSValueObject&& responseData) {
+    SendEvent(context, receivedDataW, msrn::JSValueArray(requestId, std::move(responseData)));
+      };
+  m_resource->SetOnData(std::move(onDataObject));
+
+  m_resource->SetOnIncrementalData([context = m_context](int64_t requestId, string&& responseData, int64_t progress, int64_t total) {
+    SendEvent(
+      context,
+      receivedIncrementalDataW,
+      msrn::JSValueArray{requestId, std::move(responseData), progress, total});
+    });
+
+  m_resource->SetOnDataProgress([context = m_context](int64_t requestId, int64_t progress, int64_t total) {
+    SendEvent(
+      context,
+      receivedDataProgressW,
+      msrn::JSValueArray{requestId, progress, total});
+    });
+
+  m_resource->SetOnResponseComplete([context = m_context](int64_t requestId) {
+    SendEvent(context, completedResponseW, msrn::JSValueArray{requestId});
+    });
+
+  m_resource->SetOnError([context = m_context](int64_t requestId, string&& message, bool isTimeout) {
+    auto args = msrn::JSValueArray{ requestId, std::move(message) };
+    if (isTimeout) {
+      args.push_back(true);
+    }
+
+    SendEvent(context, completedResponseW, std::move(args));
+    });
 }
 
 void HttpTurboModule::SendRequest(ReactNativeSpecs::NetworkingWindowsSpec_sendRequest_query&& query, function<void(double)> const& callback) noexcept {
