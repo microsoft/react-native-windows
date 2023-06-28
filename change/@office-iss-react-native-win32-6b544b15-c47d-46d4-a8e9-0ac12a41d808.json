@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "integrate 0.73.0-nightly-20230603-fd9e295be",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "email not defined",
+  "dependentChangeType": "patch"
+}
