@@ -30,6 +30,24 @@ msrn::JSValueObject ToJSValueObject(dynamic& object) noexcept {
   return result;
 }
 
+dynamic ToDynamicArray(const msrn::JSValue& value) noexcept {
+  auto result = dynamic::array();
+  for (auto& item : value.AsArray()) {
+    result.push_back(Microsoft::React::Modules::ToDynamic(item));
+  }
+
+  return result;
+}
+
+dynamic ToDynamicObject(const msrn::JSValue& value) noexcept {
+  auto result = dynamic::object();
+  for (auto& entry : value.AsObject()) {
+    result(entry.first, Microsoft::React::Modules::ToDynamic(entry.second));
+  }
+
+  return result;
+}
+
 } // namespace <anonymous>
 
 namespace Microsoft::React::Modules {
@@ -55,7 +73,7 @@ void SendEvent(
 }
 
 msrn::JSValue ToJSValue(dynamic& value) noexcept {
-  using namespace winrt::Microsoft::ReactNative;
+  using msrn::JSValue;
 
   switch (value.type()) {
     case dynamic::Type::BOOL:
@@ -76,6 +94,30 @@ msrn::JSValue ToJSValue(dynamic& value) noexcept {
 
   // This should not happen.
   return JSValue{nullptr};
+}
+
+dynamic ToDynamic(const msrn::JSValue& value) noexcept {
+  using msrn::JSValueType;
+
+  switch (value.Type())
+  {
+  case JSValueType::Boolean:
+    return dynamic{ value.AsBoolean() };
+  case JSValueType::Double:
+    return dynamic{ value.AsDouble() };
+  case JSValueType::Int64:
+    return dynamic{ value.AsInt64() };
+  case JSValueType::String:
+    return dynamic{ value.AsString() };
+  case JSValueType::Null:
+    return dynamic{nullptr};
+  case JSValueType::Array:
+    return ToDynamicArray(value);
+  case JSValueType::Object:
+    return ToDynamicObject(value);
+  }
+
+  return dynamic{ nullptr };
 }
 
 } // namespace Microsoft::React::Modules

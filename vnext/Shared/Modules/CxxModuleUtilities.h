@@ -35,4 +35,6 @@ void SendEvent(
 
 winrt::Microsoft::ReactNative::JSValue ToJSValue(folly::dynamic &value) noexcept;
 
+folly::dynamic ToDynamic(const winrt::Microsoft::ReactNative::JSValue& value) noexcept;
+
 } // namespace Microsoft::React::Modules

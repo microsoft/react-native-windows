@@ -75,9 +75,10 @@ static void SetUpHttpResource(
   });
 
   // Explicitly declaring function type to avoid type inference ambiguity.
-  function<void(int64_t, dynamic &&)> onDataDynamic = [weakReactInstance](
-                                                               int64_t requestId, dynamic &&responseData) {
-    SendEvent(weakReactInstance, receivedData, dynamic::array(requestId, std::move(responseData)));
+  function<void(int64_t, msrn::JSValueObject &&)> onDataDynamic = [weakReactInstance](
+                                                               int64_t requestId, msrn::JSValueObject &&responseData) {
+      auto responseDynamic = Microsoft::React::Modules::ToDynamic(msrn::JSValue{std::move(responseData)});
+      SendEvent(weakReactInstance, receivedData, dynamic::array(requestId, std::move(responseDynamic)));
   };
   resource->SetOnData(std::move(onDataDynamic));
 
