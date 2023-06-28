@@ -98,9 +98,6 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public ShadowNode {
   int64_t GetParent() const {
     return m_parent;
   }
-  virtual bool IsWindowed() {
-    return false;
-  }
 
   void ReplaceView(XamlView view);
 
@@ -135,6 +132,8 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public ShadowNode {
   bool m_isAccessible = true;
   bool m_isDisabled = false;
   comp::CompositionPropertySet m_transformPS{nullptr};
+
+  XamlView GetRootView();
 
  public:
   double m_padding[(int)ShadowEdges::CountEdges] = INIT_UNDEFINED_EDGES;
