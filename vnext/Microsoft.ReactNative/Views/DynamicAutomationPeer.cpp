@@ -200,10 +200,10 @@ winrt::com_array<winrt::IRawElementProviderSimple> DynamicAutomationPeer::GetSel
 bool DynamicAutomationPeer::IsSelected() const {
   bool selected = false;
   try {
-    return DynamicAutomationProperties::GetAccessibilityStateSelected(Owner());
+    selected = DynamicAutomationProperties::GetAccessibilityStateSelected(Owner());
   } catch (...) {
   }
-  return false;
+  return selected;
 }
 
 winrt::IRawElementProviderSimple DynamicAutomationPeer::SelectionContainer() const {
