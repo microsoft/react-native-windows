@@ -306,6 +306,98 @@ void ScrollViewComponentView::handleCommand(std::string const &commandName, foll
   }
 }
 
+void ScrollViewComponentView::StartBringIntoView(BringIntoViewOptions &&options) noexcept {
+  RECT rc{getClientRect()};
+
+  if (!options.TargetRect) {
+    Super::StartBringIntoView(std::move(options));
+    return;
+  }
+
+  bool needsScroll = false;
+  float scrollToVertical = m_scrollVisual.ScrollPosition().y;
+  float scrollToHorizontal = m_scrollVisual.ScrollPosition().x;
+  float viewerHeight = m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor;
+  float viewerWidth = m_layoutMetrics.frame.size.width * m_layoutMetrics.pointScaleFactor;
+  float targetBottom = options.TargetRect->origin.y + options.TargetRect->size.height;
+  float targetRight = options.TargetRect->origin.x + options.TargetRect->size.width;
+
+  if (isnan(options.VerticalAlignmentRatio)) {
+    // Scroll Down
+    if (targetBottom > (m_scrollVisual.ScrollPosition().y + viewerHeight) &&
+        options.TargetRect->origin.y > m_scrollVisual.ScrollPosition().y) {
+      needsScroll = true;
+      if (options.TargetRect->size.height > viewerHeight) {
+        scrollToVertical = options.TargetRect->origin.y + options.VerticalOffset;
+      } else {
+        scrollToVertical = (targetBottom - viewerHeight) + options.VerticalOffset;
+      }
+      // Scroll Up
+    } else if (
+        options.TargetRect->origin.y < m_scrollVisual.ScrollPosition().y &&
+        targetBottom < (m_scrollVisual.ScrollPosition().y + viewerHeight)) {
+      needsScroll = true;
+      if (options.TargetRect->size.height > viewerHeight) {
+        scrollToVertical = targetBottom - viewerHeight - options.VerticalOffset;
+      } else {
+        scrollToVertical = options.TargetRect->origin.y - options.VerticalOffset;
+      }
+    }
+  } else {
+    needsScroll = true;
+    scrollToVertical = options.TargetRect->getMidY() - (viewerHeight * options.VerticalAlignmentRatio);
+  }
+
+  if (isnan(options.HorizontalAlignmentRatio)) {
+    // Scroll Right
+    if (targetRight > (m_scrollVisual.ScrollPosition().x + viewerWidth) &&
+        options.TargetRect->origin.x > m_scrollVisual.ScrollPosition().x) {
+      needsScroll = true;
+      if (options.TargetRect->size.width > viewerWidth) {
+        scrollToHorizontal = options.TargetRect->origin.x + options.HorizontalOffset;
+      } else {
+        scrollToHorizontal = (targetRight - viewerWidth) + options.HorizontalOffset;
+      }
+      // Scroll Left
+    } else if (
+        options.TargetRect->origin.x < m_scrollVisual.ScrollPosition().x &&
+        targetRight < (m_scrollVisual.ScrollPosition().x + viewerWidth)) {
+      needsScroll = true;
+      if (options.TargetRect->size.width > viewerWidth) {
+        scrollToHorizontal = targetRight - viewerWidth - options.HorizontalOffset;
+      } else {
+        scrollToHorizontal = options.TargetRect->origin.x - options.HorizontalOffset;
+      }
+    }
+  } else {
+    needsScroll = true;
+    scrollToHorizontal = options.TargetRect->getMidX() - (viewerWidth * options.HorizontalAlignmentRatio);
+  }
+
+  if (needsScroll) {
+    m_scrollVisual.TryUpdatePosition(
+        {static_cast<float>(scrollToHorizontal), static_cast<float>(scrollToVertical), 0.0f}, options.AnimationDesired);
+  }
+
+  if (m_parent) {
+    options.TargetRect->origin.y += m_layoutMetrics.frame.origin.y * m_layoutMetrics.pointScaleFactor;
+    options.TargetRect->origin.x += m_layoutMetrics.frame.origin.x * m_layoutMetrics.pointScaleFactor;
+
+    options.TargetRect->origin.y -= m_scrollVisual.ScrollPosition().y;
+    options.TargetRect->origin.x -= m_scrollVisual.ScrollPosition().x;
+
+    facebook::react::Rect viewerRect = {
+        {m_layoutMetrics.frame.origin.x * m_layoutMetrics.pointScaleFactor,
+         m_layoutMetrics.frame.origin.y * m_layoutMetrics.pointScaleFactor},
+        {m_layoutMetrics.frame.size.width * m_layoutMetrics.pointScaleFactor,
+         m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor}};
+
+    options.TargetRect = facebook::react::Rect::intersect(viewerRect, options.TargetRect.value());
+
+    m_parent->StartBringIntoView(std::move(options));
+  }
+}
+
 void ScrollViewComponentView::ensureVisual() noexcept {
   if (!m_visual) {
     m_visual = m_compContext.CreateSpriteVisual();
