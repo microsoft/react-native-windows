@@ -39,6 +39,15 @@
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorReactFrames.js
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxStyle.js
 
+; Ignore files
+<PROJECT_ROOT>/Libraries/Core/Devtools/parseErrorStack.js
+<PROJECT_ROOT>/Libraries/Promise.js
+<PROJECT_ROOT>/Libraries/Utilities/HMRClient.js
+<PROJECT_ROOT>/Libraries/Utilities/ReactNativeTestTools.js
+<PROJECT_ROOT>/Libraries/Utilities/binaryToBase64.js
+<PROJECT_ROOT>/Libraries/promiseRejectionTrackingOptions.js
+
+
 ; Ignore react-native files in node_modules since they are copied into project root
 .*/node_modules/react-native/.*
 
