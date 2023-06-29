@@ -141,7 +141,7 @@ void HttpTurboModule::Initialize(msrn::ReactContext const &reactContext) noexcep
   // Explicitly declaring function type to avoid type inference ambiguity.
   function<void(int64_t, msrn::JSValueObject &&)> onDataObject =
       [context = m_context](int64_t requestId, msrn::JSValueObject &&responseData) {
-        SendEvent(context, receivedDataW, msrn::JSValueArray(requestId, std::move(responseData)));
+        SendEvent(context, receivedDataW, msrn::JSValueArray{requestId, std::move(responseData)});
       };
   m_resource->SetOnData(std::move(onDataObject));
 
