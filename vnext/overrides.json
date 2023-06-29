@@ -447,6 +447,10 @@
     },
     {
       "type": "platform",
+      "file": "src/Libraries/Network/NativeNetworkingWindows.js"
+    },
+    {
+      "type": "platform",
       "file": "src/Libraries/Network/RCTNetworking.windows.js"
     },
     {
