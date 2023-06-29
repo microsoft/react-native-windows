@@ -9,6 +9,7 @@
 
 // Windows API
 #include <Windows.h>
+// Leaving a line so clang-format does not mess up include ordering
 #include <WinInet.h>
 #include <winrt/Windows.Web.Http.Headers.h>
 
