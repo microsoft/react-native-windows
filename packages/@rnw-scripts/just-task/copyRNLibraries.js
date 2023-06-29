@@ -36,10 +36,6 @@ exports.copyTask = baseDir => {
       dest: base('flow'),
     }),
     copyTask({
-      paths: reactNative('flow-typed/**'),
-      dest: base('flow-typed'),
-    }),
-    copyTask({
       paths: reactNative('jest/**'),
       dest: base('jest'),
     }),
