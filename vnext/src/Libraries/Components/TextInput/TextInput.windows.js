@@ -235,13 +235,16 @@ export type TextContentType =
   | 'oneTimeCode';
 
 export type enterKeyHintType =
-  | 'enter'
+  // Cross Platform
   | 'done'
   | 'go'
   | 'next'
-  | 'previous'
   | 'search'
-  | 'send';
+  | 'send'
+  // Android-only
+  | 'previous'
+  // iOS-only
+  | 'enter';
 
 type PasswordRules = string;
 
