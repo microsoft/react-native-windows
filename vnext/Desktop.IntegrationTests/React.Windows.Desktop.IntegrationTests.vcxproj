@@ -36,13 +36,14 @@
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="Shared">
+    <Import Project="..\Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems" Label="Shared" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)Mso;$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)include\Shared;$(ReactNativeWindowsDir)Desktop;$(ReactNativeWindowsDir)IntegrationTests;$(ReactNativeWindowsDir)JSI\Shared;$(ReactNativeWindowsDir)Microsoft.ReactNative.Cxx;$(MSBuildProjectDirectory);$(IncludePath)</IncludePath>
+    <IncludePath>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)Mso;$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)include\Shared;$(ReactNativeWindowsDir)Desktop;$(ReactNativeWindowsDir)IntegrationTests;$(ReactNativeWindowsDir)JSI\Shared;$(MSBuildProjectDirectory);$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -69,6 +70,8 @@
       <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
       <AdditionalIncludeDirectories>
         $(VCInstallDir)UnitTest\include;
+        "$(ReactNativeWindowsDir)Microsoft.ReactNative";
+        "$(ReactNativeWindowsDir)\Shared\tracing";
         %(AdditionalIncludeDirectories)
       </AdditionalIncludeDirectories>
       <UseFullPaths>true</UseFullPaths>
@@ -103,10 +106,6 @@
     <ClCompile Include="WebSocketResourcePerformanceTests.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueReader.idl" />
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueWriter.idl" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Desktop.DLL\React.Windows.Desktop.DLL.vcxproj">
       <Project>{88bab0fa-e1ac-4da7-a30c-f91702a8eadb}</Project>
     </ProjectReference>
@@ -139,5 +138,24 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Target Name="Test">
     <Exec Command="$(OutDir)$(TargetFileName)" IgnoreStandardErrorWarningFormat="true" />
+  </Target>
+  <Target Name="SetCppWinRTReferences" AfterTargets="GetCppWinRTProjectWinMDReferences" BeforeTargets="CppWinRTMakeReferenceProjection" Returns="@(CppWinRTDynamicProjectWinMDReferences)">
+    <ItemGroup>
+      <!--
+      To increase resilience against build configuration changes, we could try to obtain the .winmd
+      path below from the Desktop.DLL project reference. The respective task should look similar to
+      'GetTargetFileName' MSBuild task in the 'GetRNDllPath' target below (and potentially share
+      build logic with it).
+      -->
+      <CppWinRTDynamicProjectWinMDReferences Include="$(OutputPath)..\React.Windows.Desktop\facebook.react.winmd">
+        <WinMDPath>$(OutputPath)..\React.Windows.Desktop\facebook.react.winmd</WinMDPath>
+      </CppWinRTDynamicProjectWinMDReferences>
+      <CppWinRTDynamicProjectWinMDReferences Include="$(OutputPath)..\React.Windows.Desktop\Microsoft.Internal.winmd">
+        <WinMDPath>$(OutputPath)..\React.Windows.Desktop\Microsoft.Internal.winmd</WinMDPath>
+      </CppWinRTDynamicProjectWinMDReferences>
+      <CppWinRTDynamicProjectWinMDReferences Include="$(OutputPath)..\React.Windows.Desktop\Microsoft.ReactNative.winmd">
+        <WinMDPath>$(OutputPath)..\React.Windows.Desktop\Microsoft.ReactNative.winmd</WinMDPath>
+      </CppWinRTDynamicProjectWinMDReferences>
+    </ItemGroup>
   </Target>
 </Project>
