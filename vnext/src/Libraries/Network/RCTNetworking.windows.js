@@ -13,8 +13,6 @@ import {type EventSubscription} from '../vendor/emitter/EventEmitter';
 import convertRequestBody, {type RequestBody} from './convertRequestBody';
 import NativeNetworkingWindows from './NativeNetworkingWindows';
 import {type NativeResponseType} from './XMLHttpRequest';
-const RCTNetworkingNative =
-  require('../BatchedBridge/NativeModules').Networking; // [Windows]
 
 type RCTNetworkingEventDefinitions = $ReadOnly<{
   didSendNetworkData: [
@@ -91,7 +89,7 @@ const RCTNetworking = {
   ) {
     const requestId = generateRequestId();
     const body = convertRequestBody(data);
-    RCTNetworkingNative.sendRequest(
+    NativeNetworkingWindows.sendRequest(
       {
         method,
         url,
@@ -108,11 +106,11 @@ const RCTNetworking = {
   },
 
   abortRequest(requestId: number) {
-    RCTNetworkingNative.abortRequest(requestId);
+    NativeNetworkingWindows.abortRequest(requestId);
   },
 
   clearCookies(callback: (result: boolean) => void) {
-    RCTNetworkingNative.clearCookies(callback);
+    NativeNetworkingWindows.clearCookies(callback);
   },
 };
 
