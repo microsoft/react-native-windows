@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "remove from copyRNLibraries",
+  "packageName": "@rnw-scripts/just-task",
+  "email": "email not defined",
+  "dependentChangeType": "patch"
+}
