@@ -21,7 +21,7 @@ import {
   getAliasCppName,
   getAnonymousAliasCppName,
 } from './AliasManaging';
-import type {CppStringTypes} from './ObjectTypes';
+import type {CppCodegenOptions} from './ObjectTypes';
 
 type NativeModuleParamShape = NamedShape<
   Nullable<NativeModuleParamTypeAnnotation>
@@ -43,11 +43,12 @@ function decorateType(type: string, target: ParamTarget): string {
 function translateUnionReturnType(
   type: NativeModuleEnumDeclaration | NativeModuleUnionTypeAnnotation,
   target: ParamTarget,
+  options: CppCodegenOptions,
 ): string {
   const memberType = type.memberType;
   switch (type.memberType) {
     case 'StringTypeAnnotation':
-      return 'std::string';
+      return options.cppStringType;
     case 'NumberTypeAnnotation':
       return 'double';
     case 'ObjectTypeAnnotation':
@@ -64,25 +65,26 @@ function translateFunction(
   aliases: AliasMap,
   baseAliasName: string,
   target: ParamTarget,
+  options: CppCodegenOptions,
 ): string {
   // TODO: type.returnTypeAnnotation
   switch (target) {
     case 'spec':
       return `Callback<${param.params
         .map((p: NativeModuleParamShape) =>
-          translateSpecFunctionParam(p, aliases, `${baseAliasName}_${p.name}`),
+          translateSpecFunctionParam(p, aliases, `${baseAliasName}_${p.name}`, options),
         )
         .join(', ')}>`;
     case 'template':
       return `std::function<void(${param.params
         .map((p: NativeModuleParamShape) =>
-          translateCallbackParam(p, aliases, `${baseAliasName}_${p.name}`),
+          translateCallbackParam(p, aliases, `${baseAliasName}_${p.name}`, options),
         )
         .join(', ')})>`;
     default:
       return `std::function<void(${param.params
         .map((p: NativeModuleParamShape) =>
-          translateCallbackParam(p, aliases, `${baseAliasName}_${p.name}`),
+          translateCallbackParam(p, aliases, `${baseAliasName}_${p.name}`, options),
         )
         .join(', ')})> const &`;
   }
@@ -95,6 +97,7 @@ function translateArray(
   aliases: AliasMap,
   baseAliasName: string,
   target: ParamTarget,
+  options: CppCodegenOptions,
 ): string {
   if (param.elementType) {
     switch (target) {
@@ -106,6 +109,7 @@ function translateArray(
           `${baseAliasName}_element`,
           'template',
           'template',
+          options,
         )}>`;
       default:
         return `std::vector<${translateNullableParamType(
@@ -114,6 +118,7 @@ function translateArray(
           `${baseAliasName}_element`,
           'template',
           'template',
+          options,
         )}> const &`;
     }
   } else {
@@ -126,12 +131,13 @@ function translateParam(
   aliases: AliasMap,
   baseAliasName: string,
   target: ParamTarget,
+  options: CppCodegenOptions,
 ): string {
   // avoid: Property 'type' does not exist on type 'never'
   const paramType = param.type;
   switch (param.type) {
     case 'StringTypeAnnotation':
-      return 'std::string';
+      return options.cppStringType;
     case 'NumberTypeAnnotation':
     case 'FloatTypeAnnotation':
     case 'DoubleTypeAnnotation':
@@ -141,9 +147,9 @@ function translateParam(
     case 'BooleanTypeAnnotation':
       return 'bool';
     case 'FunctionTypeAnnotation':
-      return translateFunction(param, aliases, baseAliasName, target);
+      return translateFunction(param, aliases, baseAliasName, target, options);
     case 'ArrayTypeAnnotation':
-      return translateArray(param, aliases, baseAliasName, target);
+      return translateArray(param, aliases, baseAliasName, target, options);
     case 'GenericObjectTypeAnnotation':
       return decorateType('::React::JSValue', target);
     case 'ObjectTypeAnnotation':
@@ -164,7 +170,7 @@ function translateParam(
       return decorateType(getAliasCppName(param.name), target);
     case 'EnumDeclaration':
     case 'UnionTypeAnnotation':
-      return translateUnionReturnType(param, target);
+      return translateUnionReturnType(param, target, options);
     default:
       throw new Error(`Unhandled type in translateParam: ${paramType}`);
   }
@@ -176,6 +182,7 @@ function translateNullableParamType(
   baseAliasName: string,
   nullableTarget: ParamTarget,
   target: ParamTarget,
+  options: CppCodegenOptions,
 ): string {
   switch (paramType.type) {
     case 'NullableTypeAnnotation':
@@ -184,9 +191,10 @@ function translateNullableParamType(
         aliases,
         baseAliasName,
         nullableTarget,
+        options,
       )}>`;
     default:
-      return translateParam(paramType, aliases, baseAliasName, target);
+      return translateParam(paramType, aliases, baseAliasName, target, options);
   }
 }
 
@@ -194,6 +202,7 @@ function translateSpecFunctionParam(
   param: NativeModuleParamShape,
   aliases: AliasMap,
   baseAliasName: string,
+  options: CppCodegenOptions,
 ): string {
   return translateNullableParamType(
     param.typeAnnotation,
@@ -201,6 +210,7 @@ function translateSpecFunctionParam(
     baseAliasName,
     'spec',
     'spec',
+    options,
   );
 }
 
@@ -208,6 +218,7 @@ function translateCallbackParam(
   param: NativeModuleParamShape,
   aliases: AliasMap,
   baseAliasName: string,
+  options: CppCodegenOptions,
 ): string {
   return translateNullableParamType(
     param.typeAnnotation,
@@ -215,6 +226,7 @@ function translateCallbackParam(
     baseAliasName,
     'template',
     'callback-arg',
+    options,
   );
 }
 
@@ -222,6 +234,7 @@ function translateFunctionParam(
   param: NativeModuleParamShape,
   aliases: AliasMap,
   baseAliasName: string,
+  options: CppCodegenOptions,
 ): string {
   return translateNullableParamType(
     param.typeAnnotation,
@@ -229,6 +242,7 @@ function translateFunctionParam(
     baseAliasName,
     'template',
     'method-arg',
+    options,
   );
 }
 
@@ -236,12 +250,14 @@ export function translateSpecArgs(
   params: ReadonlyArray<NativeModuleParamShape>,
   aliases: AliasMap,
   baseAliasName: string,
+  options: CppCodegenOptions,
 ) {
   return params.map(param => {
     const translatedParam = translateSpecFunctionParam(
       param,
       aliases,
       `${baseAliasName}_${param.name}`,
+      options,
     );
     return `${translatedParam}`;
   });
@@ -251,12 +267,14 @@ export function translateArgs(
   params: ReadonlyArray<NativeModuleParamShape>,
   aliases: AliasMap,
   baseAliasName: string,
+  options: CppCodegenOptions,
 ) {
   return params.map(param => {
     const translatedParam = translateFunctionParam(
       param,
       aliases,
       `${baseAliasName}_${param.name}`,
+      options,
     );
     return `${translatedParam} ${param.name}`;
   });
