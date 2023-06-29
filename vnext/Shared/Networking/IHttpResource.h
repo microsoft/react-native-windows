@@ -145,7 +145,9 @@ struct IHttpResource {
   ///   Structured response content payload (i.e. Blob data)
   ///   </param>
   /// </param>
-  virtual void SetOnData(std::function<void(int64_t requestId, winrt::Microsoft::ReactNative::JSValueObject &&responseData)> &&handler) noexcept = 0;
+  virtual void SetOnData(
+      std::function<void(int64_t requestId, winrt::Microsoft::ReactNative::JSValueObject &&responseData)>
+          &&handler) noexcept = 0;
 
   /// <summary>
   /// Sets a function to be invoked when a response content increment has been received.

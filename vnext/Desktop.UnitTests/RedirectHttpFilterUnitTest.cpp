@@ -8,8 +8,8 @@
 #include "WinRTNetworkingMocks.h"
 
 // Windows API
-#include <Windows.h>
 #include <WinInet.h>
+#include <Windows.h>
 #include <winrt/Windows.Web.Http.Headers.h>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;

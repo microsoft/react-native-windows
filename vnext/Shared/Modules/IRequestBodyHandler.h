@@ -46,7 +46,9 @@ struct IRequestBodyHandler {
   /// "bytes" - Raw body content
   ///           NOTE: This is an arbitrary key. Pending non-folly structured object to model request body.
   /// </returns>
-  virtual winrt::Microsoft::ReactNative::JSValueObject ToRequestBody(winrt::Microsoft::ReactNative::JSValueObject &data, std::string &contentType) = 0;
+  virtual winrt::Microsoft::ReactNative::JSValueObject ToRequestBody(
+      winrt::Microsoft::ReactNative::JSValueObject &data,
+      std::string &contentType) = 0;
 };
 
 } // namespace Microsoft::React

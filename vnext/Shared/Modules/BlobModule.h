@@ -81,7 +81,9 @@ class BlobModuleRequestBodyHandler final : public IRequestBodyHandler {
 
   bool Supports(winrt::Microsoft::ReactNative::JSValueObject &data) override;
 
-  winrt::Microsoft::ReactNative::JSValueObject ToRequestBody(winrt::Microsoft::ReactNative::JSValueObject &data, std::string &contentType) override;
+  winrt::Microsoft::ReactNative::JSValueObject ToRequestBody(
+      winrt::Microsoft::ReactNative::JSValueObject &data,
+      std::string &contentType) override;
 
 #pragma endregion IRequestBodyHandler
 };

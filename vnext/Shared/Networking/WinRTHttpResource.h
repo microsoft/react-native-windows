@@ -83,7 +83,8 @@ class WinRTHttpResource : public IHttpResource,
   void SetOnRequestSuccess(std::function<void(int64_t requestId)> &&handler) noexcept override;
   void SetOnResponse(std::function<void(int64_t requestId, Response &&response)> &&handler) noexcept override;
   void SetOnData(std::function<void(int64_t requestId, std::string &&responseData)> &&handler) noexcept override;
-  void SetOnData(std::function<void(int64_t requestId, winrt::Microsoft::ReactNative::JSValueObject &&responseData)> &&handler) noexcept override;
+  void SetOnData(std::function<void(int64_t requestId, winrt::Microsoft::ReactNative::JSValueObject &&responseData)>
+                     &&handler) noexcept override;
   void SetOnIncrementalData(
       std::function<void(int64_t requestId, std::string &&responseData, int64_t progress, int64_t total)>
           &&handler) noexcept override;

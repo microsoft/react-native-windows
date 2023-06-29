@@ -3,10 +3,9 @@
 
 #pragma once
 
-#include <Networking/IHttpResource.h>
-#include <NativeModules.h>
 #include <NativeNetworkingWindowsSpec.g.h>
-
+#include <NativeModules.h>
+#include <Networking/IHttpResource.h>
 
 // React Native
 #include <cxxreact/CxxModule.h>
@@ -24,21 +23,23 @@ struct HttpTurboModule {
   void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
   REACT_METHOD(SendRequest, L"sendRequest")
-  void SendRequest(ReactNativeSpecs::NetworkingWindowsSpec_sendRequest_query&& query, std::function<void(double)> const& callback) noexcept;
+  void SendRequest(
+      ReactNativeSpecs::NetworkingWindowsSpec_sendRequest_query &&query,
+      std::function<void(double)> const &callback) noexcept;
 
   REACT_METHOD(AbortRequest, L"abortRequest")
   void AbortRequest(double requestId) noexcept;
 
   REACT_METHOD(ClearCookies, L"clearCookies")
-  void ClearCookies(std::function<void(bool)> const& callback) noexcept;
+  void ClearCookies(std::function<void(bool)> const &callback) noexcept;
 
   REACT_METHOD(AddListener, L"addListener")
-  void AddListener(std::string&& eventName) noexcept;
+  void AddListener(std::string &&eventName) noexcept;
 
   REACT_METHOD(RemoveListeners, L"removeListeners")
   void RemoveListeners(double count) noexcept;
 
-private:
+ private:
   std::shared_ptr<Networking::IHttpResource> m_resource;
   winrt::Microsoft::ReactNative::ReactContext m_context;
 };

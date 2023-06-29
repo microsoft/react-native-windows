@@ -183,7 +183,7 @@ IAsyncOperation<HttpRequestMessage> WinRTHttpResource::CreateRequest(
         }
         co_return nullptr;
       }
-      auto& bytes = blob["bytes"].AsArray();
+      auto &bytes = blob["bytes"].AsArray();
       auto byteVector = vector<uint8_t>(bytes.size());
       for (auto &byte : bytes) {
         byteVector.push_back(static_cast<uint8_t>(byte.AsUInt8()));
@@ -191,7 +191,7 @@ IAsyncOperation<HttpRequestMessage> WinRTHttpResource::CreateRequest(
       auto view = winrt::array_view<uint8_t const>{byteVector};
       auto buffer = CryptographicBuffer::CreateFromByteArray(view);
       content = HttpBufferContent{std::move(buffer)};
-    } else if (!data["string"].IsNull()) {//TODO: Test FOR JSValue
+    } else if (!data["string"].IsNull()) { // TODO: Test FOR JSValue
       content = HttpStringContent{to_hstring(data["string"].AsString())};
     } else if (!data["base64"].IsNull()) {
       auto buffer = CryptographicBuffer::DecodeFromBase64String(to_hstring(data["base64"].AsString()));
@@ -202,7 +202,7 @@ IAsyncOperation<HttpRequestMessage> WinRTHttpResource::CreateRequest(
       content = HttpStreamContent{std::move(stream)};
     } else if (!data["formData"].IsNull()) {
       winrt::Windows::Web::Http::HttpMultipartFormDataContent multiPartContent;
-      auto& formData = data["formData"].AsObject();
+      auto &formData = data["formData"].AsObject();
 
       // #6046 -  Overwriting WinRT's HttpMultipartFormDataContent implicit Content-Type clears the generated boundary
       contentType = nullptr;
@@ -353,7 +353,8 @@ void WinRTHttpResource::SetOnData(function<void(int64_t requestId, string &&resp
   m_onData = std::move(handler);
 }
 
-void WinRTHttpResource::SetOnData(function<void(int64_t requestId, msrn::JSValueObject &&responseData)> &&handler) noexcept
+void WinRTHttpResource::SetOnData(
+    function<void(int64_t requestId, msrn::JSValueObject &&responseData)> &&handler) noexcept
 /*override*/
 {
   m_onDataObject = std::move(handler);

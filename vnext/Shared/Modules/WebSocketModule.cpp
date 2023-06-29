@@ -342,7 +342,9 @@ shared_ptr<IWebSocketResource> WebSocketTurboModule::CreateResource(int64_t id, 
   }
 
   // Set up resource
-  rc->SetOnConnect([id, context = m_context]() { SendEvent(context, L"websocketOpen", msrn::JSValueObject{{"id", id}}); });
+  rc->SetOnConnect([id, context = m_context]() {
+    SendEvent(context, L"websocketOpen", msrn::JSValueObject{{"id", id}});
+  });
 
   rc->SetOnMessage([id, context = m_context](size_t length, const string &message, bool isBinary) {
     auto args = msrn::JSValueObject{{"id", id}, {"type", isBinary ? "binary" : "text"}};

@@ -75,11 +75,11 @@ static void SetUpHttpResource(
   });
 
   // Explicitly declaring function type to avoid type inference ambiguity.
-  function<void(int64_t, msrn::JSValueObject &&)> onDataDynamic = [weakReactInstance](
-                                                               int64_t requestId, msrn::JSValueObject &&responseData) {
-      auto responseDynamic = Microsoft::React::Modules::ToDynamic(msrn::JSValue{std::move(responseData)});
-      SendEvent(weakReactInstance, receivedData, dynamic::array(requestId, std::move(responseDynamic)));
-  };
+  function<void(int64_t, msrn::JSValueObject &&)> onDataDynamic =
+      [weakReactInstance](int64_t requestId, msrn::JSValueObject &&responseData) {
+        auto responseDynamic = Microsoft::React::Modules::ToDynamic(msrn::JSValue{std::move(responseData)});
+        SendEvent(weakReactInstance, receivedData, dynamic::array(requestId, std::move(responseDynamic)));
+      };
   resource->SetOnData(std::move(onDataDynamic));
 
   resource->SetOnIncrementalData(
@@ -114,7 +114,7 @@ namespace Microsoft::React {
 
 #pragma region HttpTurboModule
 
-void HttpTurboModule::Initialize(msrn::ReactContext const& reactContext) noexcept {
+void HttpTurboModule::Initialize(msrn::ReactContext const &reactContext) noexcept {
   m_context = reactContext;
   m_resource = IHttpResource::Make(m_context.Properties().Handle());
 
@@ -122,84 +122,73 @@ void HttpTurboModule::Initialize(msrn::ReactContext const& reactContext) noexcep
     SendEvent(context, completedResponseW, msrn::JSValueArray{requestId});
   });
 
-  m_resource->SetOnResponse([context = m_context](int64_t requestId, IHttpResource::Response&& response) {
+  m_resource->SetOnResponse([context = m_context](int64_t requestId, IHttpResource::Response &&response) {
     auto headers = msrn::JSValueObject{};
-    for (auto& header : response.Headers) {
+    for (auto &header : response.Headers) {
       headers[header.first] = header.second;
     }
 
-    //TODO: Test response content?
-    auto args = msrn::JSValueArray{ requestId, response.StatusCode, std::move(headers), response.Url };
+    // TODO: Test response content?
+    auto args = msrn::JSValueArray{requestId, response.StatusCode, std::move(headers), response.Url};
 
     SendEvent(context, receivedResponseW, std::move(args));
   });
 
-  m_resource->SetOnData([context = m_context](int64_t requestId, string&& responseData) {
+  m_resource->SetOnData([context = m_context](int64_t requestId, string &&responseData) {
     SendEvent(context, receivedDataW, msrn::JSValueArray{requestId, std::move(responseData)});
   });
 
   // Explicitly declaring function type to avoid type inference ambiguity.
-  function<void(int64_t, msrn::JSValueObject&&)> onDataObject = [context = m_context](int64_t requestId, msrn::JSValueObject&& responseData) {
-    SendEvent(context, receivedDataW, msrn::JSValueArray(requestId, std::move(responseData)));
+  function<void(int64_t, msrn::JSValueObject &&)> onDataObject =
+      [context = m_context](int64_t requestId, msrn::JSValueObject &&responseData) {
+        SendEvent(context, receivedDataW, msrn::JSValueArray(requestId, std::move(responseData)));
       };
   m_resource->SetOnData(std::move(onDataObject));
 
-  m_resource->SetOnIncrementalData([context = m_context](int64_t requestId, string&& responseData, int64_t progress, int64_t total) {
-    SendEvent(
-      context,
-      receivedIncrementalDataW,
-      msrn::JSValueArray{requestId, std::move(responseData), progress, total});
-    });
+  m_resource->SetOnIncrementalData(
+      [context = m_context](int64_t requestId, string &&responseData, int64_t progress, int64_t total) {
+        SendEvent(
+            context, receivedIncrementalDataW, msrn::JSValueArray{requestId, std::move(responseData), progress, total});
+      });
 
   m_resource->SetOnDataProgress([context = m_context](int64_t requestId, int64_t progress, int64_t total) {
-    SendEvent(
-      context,
-      receivedDataProgressW,
-      msrn::JSValueArray{requestId, progress, total});
-    });
+    SendEvent(context, receivedDataProgressW, msrn::JSValueArray{requestId, progress, total});
+  });
 
   m_resource->SetOnResponseComplete([context = m_context](int64_t requestId) {
     SendEvent(context, completedResponseW, msrn::JSValueArray{requestId});
-    });
+  });
 
-  m_resource->SetOnError([context = m_context](int64_t requestId, string&& message, bool isTimeout) {
-    auto args = msrn::JSValueArray{ requestId, std::move(message) };
+  m_resource->SetOnError([context = m_context](int64_t requestId, string &&message, bool isTimeout) {
+    auto args = msrn::JSValueArray{requestId, std::move(message)};
     if (isTimeout) {
       args.push_back(true);
     }
 
     SendEvent(context, completedResponseW, std::move(args));
-    });
+  });
 }
 
-void HttpTurboModule::SendRequest(ReactNativeSpecs::NetworkingWindowsSpec_sendRequest_query&& query, function<void(double)> const& callback) noexcept {
+void HttpTurboModule::SendRequest(
+    ReactNativeSpecs::NetworkingWindowsSpec_sendRequest_query &&query,
+    function<void(double)> const &callback) noexcept {}
 
-}
+void HttpTurboModule::AbortRequest(double requestId) noexcept {}
 
-void HttpTurboModule::AbortRequest(double requestId) noexcept {
+void HttpTurboModule::ClearCookies(function<void(bool)> const &callback) noexcept {}
 
-}
+void HttpTurboModule::AddListener(string &&eventName) noexcept {}
 
-void HttpTurboModule::ClearCookies(function<void(bool)> const& callback) noexcept {
-
-}
-
-void HttpTurboModule::AddListener(string&& eventName) noexcept {
-
-}
-
-void HttpTurboModule::RemoveListeners(double count) noexcept {
-
-}
+void HttpTurboModule::RemoveListeners(double count) noexcept {}
 
 #pragma endregion HttpTurboModule
 
 #pragma region HttpModule
 
-HttpModule::HttpModule(IInspectable const& inspectableProperties) noexcept
-  : m_holder{ std::make_shared<ModuleHolder>() },
-  m_inspectableProperties{ inspectableProperties },
-  m_resource{ IHttpResource::Make(inspectableProperties) } {
+HttpModule::HttpModule(IInspectable const &inspectableProperties) noexcept
+    : m_holder{std::make_shared<ModuleHolder>()},
+      m_inspectableProperties{inspectableProperties},
+      m_resource{IHttpResource::Make(inspectableProperties)} {
   m_holder->Module = this;
 }
 
