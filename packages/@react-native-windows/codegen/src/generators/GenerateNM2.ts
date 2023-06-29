@@ -46,9 +46,11 @@ struct ::_MODULE_NAME_::Spec : winrt::Microsoft::ReactNative::TurboModuleSpec {
 export function createNM2Generator({
   methodOnly,
   namespace,
+  cppStringType,
 }: {
   methodOnly: boolean;
   namespace: string;
+  cppStringType: 'std::string' | 'std::wstring';
 }) {
   return (
     _libraryName: string,
