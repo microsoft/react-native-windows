@@ -8,6 +8,7 @@
 import path from 'path';
 import fs from '@react-native-windows/fs';
 import globby from 'globby';
+import type {CppStringTypes} from './generators/GenerateNM2';
 import {createNM2Generator} from './generators/GenerateNM2';
 import {
   generateTypeScript,
@@ -48,7 +49,7 @@ export interface SharedOptions {
   modulesWindows: boolean;
   namespace: string;
   outputDirectory: string;
-  cppStringType: 'std::string' | 'std::wstring';
+  cppStringType: CppStringTypes;
 }
 
 interface Options extends SharedOptions {

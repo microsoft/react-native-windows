@@ -20,6 +20,8 @@ import {
   getAnonymousAliasCppName,
 } from './AliasManaging';
 
+export type CppStringTypes = 'std::string' | 'std::wstring';
+
 function translateUnionReturnType(
   type: NativeModuleEnumDeclaration | NativeModuleUnionTypeAnnotation,
 ): string {

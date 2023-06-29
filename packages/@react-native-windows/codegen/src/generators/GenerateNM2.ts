@@ -11,6 +11,9 @@ import {AliasMap, setPreferredModuleName} from './AliasManaging';
 import {createAliasMap, generateAliases} from './AliasGen';
 import {generateValidateConstants} from './ValidateConstants';
 import {generateValidateMethods} from './ValidateMethods';
+import type {CppStringTypes} from './ObjectTypes';
+
+export type {CppStringTypes} from './ObjectTypes';
 
 type FilesOutput = Map<string, string>;
 
@@ -50,7 +53,7 @@ export function createNM2Generator({
 }: {
   methodOnly: boolean;
   namespace: string;
-  cppStringType: 'std::string' | 'std::wstring';
+  cppStringType: CppStringTypes;
 }) {
   return (
     _libraryName: string,
