@@ -19,7 +19,7 @@
   "peerDependencies": {
     "@office-iss/react-native-win32": "^0.0.0-canary.203",
     "react": "18.0.0",
-    "react-native": "0.73.0-nightly-20230605-5062553c6"
+    "react-native": "0.73.0-nightly-20230606-396cdac62"
   },
   "devDependencies": {
     "@office-iss/react-native-win32": "^0.0.0-canary.203",
@@ -30,7 +30,7 @@
     "@types/node": "^16.0.0",
     "eslint": "^8.19.0",
     "just-scripts": "^1.3.3",
-    "react-native": "0.73.0-nightly-20230605-5062553c6",
+    "react-native": "0.73.0-nightly-20230606-396cdac62",
     "react-native-platform-override": "^1.9.10",
     "typescript": "^4.9.5"
   },
