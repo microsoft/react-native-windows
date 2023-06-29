@@ -79,6 +79,9 @@ if (
   process.exit(1);
 }
 
+// type casting is necessary here because
+// cppStringType does not become union of string literals
+// until yargs.options get improved in the future
 const changesNecessary = runCodeGen(<CodeGenOptions>argv);
 
 if (argv.test && changesNecessary) {
