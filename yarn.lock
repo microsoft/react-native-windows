@@ -10202,7 +10202,7 @@ prettier-linter-helpers@^1.0.0:
   dependencies:
     fast-diff "^1.1.2"
 
-prettier@^2.4.1:
+prettier@2.8.8, prettier@^2.4.1:
   version "2.8.8"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.8.8.tgz#e8c5d7e98a4305ffe3de2e1fc4aca1a71c28b1da"
   integrity sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==
@@ -10410,10 +10410,10 @@ react-native-xaml@^0.0.74:
     "@types/react-native" "*"
     typescript "^4.4.3"
 
-react-native@0.73.0-nightly-20230606-396cdac62:
-  version "0.73.0-nightly-20230606-396cdac62"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.73.0-nightly-20230606-396cdac62.tgz#0d52a014b83920d6b30d73df3b3f00bc5aa60a0b"
-  integrity sha512-F9bpA1JR/YXw7bVChpq0skRukMNFdsQ/KTTvpFr2L0qRZC/cqZ2P32mSX4OVWkvcZSr56dGNAPtCqKy/G/vr9Q==
+react-native@0.73.0-nightly-20230607-4540668c1:
+  version "0.73.0-nightly-20230607-4540668c1"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.73.0-nightly-20230607-4540668c1.tgz#1e1d485d2bebc6b1a478a6ebd85ca29759db036d"
+  integrity sha512-42IHXKNbIqyj/gV17dpkQ26dZEf4Z6ZVbl9/U297MbuDXMCutVX4X3KKg2DCtRf6/aeMDjorb4c6p4H3ITDmKQ==
   dependencies:
     "@jest/create-cache-key-function" "^29.2.1"
     "@react-native-community/cli" "12.0.0-alpha.3"

@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.73.0-nightly-20230606-396cdac62",
+  "baseVersion": "0.73.0-nightly-20230607-4540668c1",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "dc6c68bc12e76498f4935a43bb2f188efb02f0c5"
+      "baseHash": "a51c214c4d50ec0579e4d1e6065cf23adbf7d6f1"
     },
     {
       "type": "derived",
