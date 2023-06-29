@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 24 Jun 2023 05:13:09 GMT and should not be manually modified.
+This log was last generated on Thu, 29 Jun 2023 05:14:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.670
+
+Thu, 29 Jun 2023 05:14:05 GMT
+
+### Changes
+
+- Update files proeprty to ensure TS types are published (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] No need to assert when an unimplemented view has children added to it (30809111+acoates-ms@users.noreply.github.com)
+- [Farbic] Fix crash in certain unmount scenarios (30809111+acoates-ms@users.noreply.github.com)
+- Fabric: Scroll Scrollviews to bring focused items into view (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.669
 
