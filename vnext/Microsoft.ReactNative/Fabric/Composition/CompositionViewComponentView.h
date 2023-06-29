@@ -59,6 +59,8 @@ struct CompositionBaseComponentView : public IComponentView,
 
   virtual void OnRenderingDeviceLost() noexcept;
 
+  void StartBringIntoView(BringIntoViewOptions &&args) noexcept override;
+
   comp::CompositionPropertySet EnsureCenterPointPropertySet() noexcept;
   void EnsureTransformMatrixFacade() noexcept;
 
