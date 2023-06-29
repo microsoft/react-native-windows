@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 29 Jun 2023 05:14:05 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.670",
+      "version": "0.0.0-canary.670",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "0cc9c37b2080b220a413cc4355f60113f473bb8d",
+            "comment": "Update files proeprty to ensure TS types are published"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e18ce24933aab5870e2bd4968562d2c60fc9137a",
+            "comment": "[Fabric] No need to assert when an unimplemented view has children added to it"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "55b5fc628679e900308adb7fb2c2cf0f3c83226c",
+            "comment": "[Farbic] Fix crash in certain unmount scenarios"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "50a0327c8e643234dfd29bd659e68e11183a89b4",
+            "comment": "Fabric: Scroll Scrollviews to bring focused items into view"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 24 Jun 2023 05:13:09 GMT",
       "tag": "react-native-windows_v0.0.0-canary.669",
       "version": "0.0.0-canary.669",

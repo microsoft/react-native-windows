@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "[Farbic] Fix crash in certain unmount scenarios",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
