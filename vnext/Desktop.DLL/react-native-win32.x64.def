@@ -191,7 +191,3 @@ YGUnitToString
 
 DllCanUnloadNow = WINRT_CanUnloadNow                    PRIVATE
 DllGetActivationFactory = WINRT_GetActivationFactory    PRIVATE
-
-;TODO: Find another way to use in Desktop.IntegrationTests
-??0JSValueObject@ReactNative@Microsoft@winrt@@QEAA@V?$initializer_list@UJSValueObjectKeyValue@ReactNative@Microsoft@winrt@@@std@@@Z
-??1JSValue@ReactNative@Microsoft@winrt@@QEAA@XZ
