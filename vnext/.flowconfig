@@ -78,15 +78,9 @@
 ../node_modules/
 
 [libs]
-<<<<<<< Upstream
-flow-typed/
-packages/react-native/interface.js
-packages/react-native/flow/
-=======
 interface.js
 flow/
 flow-typed/
->>>>>>> Override
 
 [options]
 enums=true
