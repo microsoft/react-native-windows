@@ -337,8 +337,9 @@ msrn::JSValueObject BlobModuleRequestBodyHandler::ToRequestBody(
     msrn::JSValueObject &data,
     string &contentType) /*override*/ {
   auto type = contentType;
-  if (!data[typeKey].IsNull() && !data[typeKey].AsString().empty()) {
-    type = data[typeKey].AsString();
+  auto itr = data.find(typeKey);
+  if (itr != data.cend() && !(*itr).second.AsString().empty()) {
+    type = (*itr).second.AsString();
   }
   if (type.empty()) {
     type = "application/octet-stream";
