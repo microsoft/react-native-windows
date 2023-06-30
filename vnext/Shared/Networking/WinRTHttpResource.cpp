@@ -33,6 +33,7 @@ using std::weak_ptr;
 using winrt::fire_and_forget;
 using winrt::hresult_error;
 using winrt::to_hstring;
+using winrt::Microsoft::ReactNative::JSValueObject;
 using winrt::Windows::Foundation::IAsyncOperation;
 using winrt::Windows::Foundation::IInspectable;
 using winrt::Windows::Foundation::Uri;
@@ -48,8 +49,6 @@ using winrt::Windows::Web::Http::HttpStringContent;
 using winrt::Windows::Web::Http::IHttpClient;
 using winrt::Windows::Web::Http::IHttpContent;
 using winrt::Windows::Web::Http::Headers::HttpMediaTypeHeaderValue;
-
-namespace msrn = winrt::Microsoft::ReactNative;
 
 namespace {
 
@@ -69,7 +68,7 @@ constexpr char responseTypeBlob[] = "blob";
 namespace Microsoft::React::Networking {
 
 // May throw winrt::hresult_error
-void AttachMultipartHeaders(IHttpContent content, const msrn::JSValueObject &headers) {
+void AttachMultipartHeaders(IHttpContent content, const JSValueObject &headers) {
   HttpMediaTypeHeaderValue contentType{nullptr};
 
   // Headers are generally case-insensitive
@@ -174,7 +173,7 @@ IAsyncOperation<HttpRequestMessage> WinRTHttpResource::CreateRequest(
     auto bodyHandler = self->m_requestBodyHandler.lock();
     if (bodyHandler && bodyHandler->Supports(data)) {
       auto contentTypeString = contentType ? winrt::to_string(contentType.ToString()) : "";
-      msrn::JSValueObject blob;
+      JSValueObject blob;
       try {
         blob = bodyHandler->ToRequestBody(data, contentTypeString);
       } catch (const std::invalid_argument &e) {
@@ -209,6 +208,7 @@ IAsyncOperation<HttpRequestMessage> WinRTHttpResource::CreateRequest(
 
       for (auto &formDataPart : formData) {
         IHttpContent formContent{nullptr};
+        auto& itr = formDataPart.second["string"];
         if (!formDataPart.second["string"].IsNull()) {
           formContent = HttpStringContent{to_hstring(formDataPart.second["string"].AsString())};
         } else if (!formDataPart.second["uri"].IsNull()) {
@@ -274,7 +274,7 @@ void WinRTHttpResource::SendRequest(
     string &&url,
     int64_t requestId,
     Headers &&headers,
-    msrn::JSValueObject &&data,
+    JSValueObject &&data,
     string &&responseType,
     bool useIncrementalUpdates,
     int64_t timeout,
@@ -354,7 +354,7 @@ void WinRTHttpResource::SetOnData(function<void(int64_t requestId, string &&resp
 }
 
 void WinRTHttpResource::SetOnData(
-    function<void(int64_t requestId, msrn::JSValueObject &&responseData)> &&handler) noexcept
+    function<void(int64_t requestId, JSValueObject &&responseData)> &&handler) noexcept
 /*override*/
 {
   m_onDataObject = std::move(handler);
