@@ -239,8 +239,6 @@ void V8RuntimeHolder::initRuntime() noexcept {
   CRASH_ON_ERROR(api.jsr_create_runtime(config, &runtime));
   CRASH_ON_ERROR(api.jsr_delete_config(config));
 
-  CRASH_ON_ERROR(api.jsr_create_runtime(config, &runtime));
-
   napi_env env{};
   CRASH_ON_ERROR(api.jsr_runtime_get_node_api_env(runtime, &env));
 
