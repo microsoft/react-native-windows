@@ -170,8 +170,9 @@ void HttpTurboModule::Initialize(msrn::ReactContext const &reactContext) noexcep
 }
 
 void HttpTurboModule::SendRequest(
-    ReactNativeSpecs::NetworkingWindowsSpec_sendRequest_query &&query,
+    ReactNativeSpecs::NetworkingIOSSpec_sendRequest_query &&query,
     function<void(double)> const &callback) noexcept {
+  m_requestId++;
   auto &headersObj = query.headers.AsObject();
   IHttpResource::Headers headers;
   for (auto &entry : headersObj) {
@@ -181,7 +182,7 @@ void HttpTurboModule::SendRequest(
   m_resource->SendRequest(
       std::move(query.method),
       std::move(query.url),
-      static_cast<int64_t>(query.requestId),
+      m_requestId,
       std::move(headers),
       query.data.MoveObject(),
       std::move(query.responseType),
@@ -250,6 +251,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
           SetUpHttpResource(resource, holder->Module->getInstance(), holder->Module->m_inspectableProperties);
           holder->Module->m_isResourceSetup = true;
         }
+        holder->Module->m_requestId++;
 
         auto params = facebook::xplat::jsArgAsObject(args, 0);
         IHttpResource::Headers headers;
@@ -260,7 +262,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
         resource->SendRequest(
           params["method"].asString(),
           params["url"].asString(),
-          params["requestId"].asInt(),
+          holder->Module->m_requestId,
           std::move(headers),
           Modules::ToJSValue(params["data"]).MoveObject(),
           params["responseType"].asString(),

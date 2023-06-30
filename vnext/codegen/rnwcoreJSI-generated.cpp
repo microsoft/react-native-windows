@@ -1167,51 +1167,6 @@ NativeNetworkingIOSCxxSpecJSI::NativeNetworkingIOSCxxSpecJSI(std::shared_ptr<Cal
   methodMap_["addListener"] = MethodMetadata {1, __hostFunction_NativeNetworkingIOSCxxSpecJSI_addListener};
   methodMap_["removeListeners"] = MethodMetadata {1, __hostFunction_NativeNetworkingIOSCxxSpecJSI_removeListeners};
 }
-static jsi::Value __hostFunction_NativeNetworkingWindowsCxxSpecJSI_sendRequest(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeNetworkingWindowsCxxSpecJSI *>(&turboModule)->sendRequest(
-    rt,
-    args[0].asObject(rt),
-    args[1].asObject(rt).asFunction(rt)
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeNetworkingWindowsCxxSpecJSI_abortRequest(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeNetworkingWindowsCxxSpecJSI *>(&turboModule)->abortRequest(
-    rt,
-    args[0].asNumber()
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeNetworkingWindowsCxxSpecJSI_clearCookies(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeNetworkingWindowsCxxSpecJSI *>(&turboModule)->clearCookies(
-    rt,
-    args[0].asObject(rt).asFunction(rt)
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeNetworkingWindowsCxxSpecJSI_addListener(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeNetworkingWindowsCxxSpecJSI *>(&turboModule)->addListener(
-    rt,
-    args[0].asString(rt)
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeNetworkingWindowsCxxSpecJSI_removeListeners(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeNetworkingWindowsCxxSpecJSI *>(&turboModule)->removeListeners(
-    rt,
-    args[0].asNumber()
-  );
-  return jsi::Value::undefined();
-}
-
-NativeNetworkingWindowsCxxSpecJSI::NativeNetworkingWindowsCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("Networking", jsInvoker) {
-  methodMap_["sendRequest"] = MethodMetadata {2, __hostFunction_NativeNetworkingWindowsCxxSpecJSI_sendRequest};
-  methodMap_["abortRequest"] = MethodMetadata {1, __hostFunction_NativeNetworkingWindowsCxxSpecJSI_abortRequest};
-  methodMap_["clearCookies"] = MethodMetadata {1, __hostFunction_NativeNetworkingWindowsCxxSpecJSI_clearCookies};
-  methodMap_["addListener"] = MethodMetadata {1, __hostFunction_NativeNetworkingWindowsCxxSpecJSI_addListener};
-  methodMap_["removeListeners"] = MethodMetadata {1, __hostFunction_NativeNetworkingWindowsCxxSpecJSI_removeListeners};
-}
 static jsi::Value __hostFunction_NativeJSCSamplingProfilerCxxSpecJSI_operationComplete(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeJSCSamplingProfilerCxxSpecJSI *>(&turboModule)->operationComplete(
     rt,

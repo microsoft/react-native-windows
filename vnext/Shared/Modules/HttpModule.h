@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <NativeNetworkingWindowsSpec.g.h>
+#include <NativeNetworkingIOSSpec.g.h>
 #include <NativeModules.h>
 #include <Networking/IHttpResource.h>
 
@@ -17,14 +17,14 @@ namespace Microsoft::React {
 
 REACT_MODULE(HttpTurboModule, L"Networking")
 struct HttpTurboModule {
-  using ModuleSpec = ReactNativeSpecs::NetworkingWindowsSpec;
+  using ModuleSpec = ReactNativeSpecs::NetworkingIOSSpec;
 
   REACT_INIT(Initialize)
   void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
   REACT_METHOD(SendRequest, L"sendRequest")
   void SendRequest(
-      ReactNativeSpecs::NetworkingWindowsSpec_sendRequest_query &&query,
+      ReactNativeSpecs::NetworkingIOSSpec_sendRequest_query &&query,
       std::function<void(double)> const &callback) noexcept;
 
   REACT_METHOD(AbortRequest, L"abortRequest")
@@ -42,6 +42,7 @@ struct HttpTurboModule {
  private:
   std::shared_ptr<Networking::IHttpResource> m_resource;
   winrt::Microsoft::ReactNative::ReactContext m_context;
+  int64_t m_requestId{0};
 };
 
 ///
@@ -84,6 +85,7 @@ class HttpModule : public facebook::xplat::module::CxxModule {
   std::shared_ptr<Networking::IHttpResource> m_resource;
   std::shared_ptr<ModuleHolder> m_holder;
   bool m_isResourceSetup{false};
+  int64_t m_requestId{0};
 
   // Property bag high level reference.
   winrt::Windows::Foundation::IInspectable m_inspectableProperties;
