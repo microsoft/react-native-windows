@@ -72,19 +72,34 @@ function translateFunction(
     case 'spec':
       return `Callback<${param.params
         .map((p: NativeModuleParamShape) =>
-          translateSpecFunctionParam(p, aliases, `${baseAliasName}_${p.name}`, options),
+          translateSpecFunctionParam(
+            p,
+            aliases,
+            `${baseAliasName}_${p.name}`,
+            options,
+          ),
         )
         .join(', ')}>`;
     case 'template':
       return `std::function<void(${param.params
         .map((p: NativeModuleParamShape) =>
-          translateCallbackParam(p, aliases, `${baseAliasName}_${p.name}`, options),
+          translateCallbackParam(
+            p,
+            aliases,
+            `${baseAliasName}_${p.name}`,
+            options,
+          ),
         )
         .join(', ')})>`;
     default:
       return `std::function<void(${param.params
         .map((p: NativeModuleParamShape) =>
-          translateCallbackParam(p, aliases, `${baseAliasName}_${p.name}`, options),
+          translateCallbackParam(
+            p,
+            aliases,
+            `${baseAliasName}_${p.name}`,
+            options,
+          ),
         )
         .join(', ')})> const &`;
   }

@@ -88,14 +88,22 @@ function generateNestedAliasesInCorrectOrder(
     // nested C++ structs must be put before the current C++ struct
     // as they will be used in the current C++ struct
     // the order will be perfectly and easily ensured by doing this recursively
-    generateNestedAliasesInCorrectOrder(aliases, aliasCode, aliasOrder, options);
+    generateNestedAliasesInCorrectOrder(
+      aliases,
+      aliasCode,
+      aliasOrder,
+      options,
+    );
     // all referenced C++ structs are generated
     // put the current one following them
     aliasOrder.push(aliasName);
   }
 }
 
-export function generateAliases(aliases: AliasMap, options: CppCodegenOptions): string {
+export function generateAliases(
+  aliases: AliasMap,
+  options: CppCodegenOptions,
+): string {
   const aliasCode: AliasCodeMap = {};
   const aliasOrder: string[] = [];
   generateNestedAliasesInCorrectOrder(aliases, aliasCode, aliasOrder, options);

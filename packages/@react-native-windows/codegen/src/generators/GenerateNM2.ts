@@ -79,7 +79,9 @@ export function createNM2Generator({
         const aliases: AliasMap = createAliasMap(nativeModule.aliasMap);
 
         // prepare methods
-        const methods = generateValidateMethods(nativeModule, aliases, {cppStringType});
+        const methods = generateValidateMethods(nativeModule, aliases, {
+          cppStringType,
+        });
         let tuples = `
   static constexpr auto methods = std::tuple{
 ${methods[0]}
@@ -103,7 +105,9 @@ ${errors}`;
         }
 
         // generate code for structs
-        const traversedAliasedStructs = generateAliases(aliases, {cppStringType});
+        const traversedAliasedStructs = generateAliases(aliases, {
+          cppStringType,
+        });
 
         files.set(
           `Native${preferredModuleName}Spec.g.h`,

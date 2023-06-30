@@ -47,7 +47,12 @@ export function translateSpecReturnType(
   baseAliasName: string,
   options: CppCodegenOptions,
 ) {
-  return translateReturnType(type, aliases, `${baseAliasName}_returnType`, options);
+  return translateReturnType(
+    type,
+    aliases,
+    `${baseAliasName}_returnType`,
+    options,
+  );
 }
 
 export function translateImplReturnType(
@@ -56,5 +61,10 @@ export function translateImplReturnType(
   baseAliasName: string,
   options: CppCodegenOptions,
 ) {
-  return translateReturnType(type, aliases, `${baseAliasName}_returnType`, options);
+  return translateReturnType(
+    type,
+    aliases,
+    `${baseAliasName}_returnType`,
+    options,
+  );
 }

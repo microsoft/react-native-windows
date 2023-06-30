@@ -75,7 +75,13 @@ function translatePossibleMethodSignatures(
   baseAliasName: string,
   options: CppCodegenOptions,
 ): string {
-  return getPossibleMethodSignatures(prop, funcType, aliases, baseAliasName, options)
+  return getPossibleMethodSignatures(
+    prop,
+    funcType,
+    aliases,
+    baseAliasName,
+    options,
+  )
     .map(sig => `"    ${sig}\\n"`)
     .join('\n          ');
 }
@@ -155,7 +161,17 @@ export function generateValidateMethods(
   options: CppCodegenOptions,
 ): [string, string] {
   const properties = nativeModule.spec.properties;
-  const traversedProperties = renderProperties(properties, aliases, false, options);
-  const traversedPropertyTuples = renderProperties(properties, aliases, true, options);
+  const traversedProperties = renderProperties(
+    properties,
+    aliases,
+    false,
+    options,
+  );
+  const traversedPropertyTuples = renderProperties(
+    properties,
+    aliases,
+    true,
+    options,
+  );
   return [traversedPropertyTuples, traversedProperties];
 }
