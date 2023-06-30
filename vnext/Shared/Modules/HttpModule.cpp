@@ -172,27 +172,23 @@ void HttpTurboModule::Initialize(msrn::ReactContext const &reactContext) noexcep
 void HttpTurboModule::SendRequest(
     ReactNativeSpecs::NetworkingWindowsSpec_sendRequest_query &&query,
     function<void(double)> const &callback) noexcept {
-
-  auto& headersObj = query.headers.AsObject();
+  auto &headersObj = query.headers.AsObject();
   IHttpResource::Headers headers;
-  for (auto& entry : headersObj) {
+  for (auto &entry : headersObj) {
     headers.emplace(entry.first, entry.second.AsString());
   }
 
   m_resource->SendRequest(
-    std::move(query.method),
-    std::move(query.url),
-    static_cast<int64_t>(query.requestId),
-    std::move(headers),
-    query.data.MoveObject(),
-    std::move(query.responseType),
-    query.incrementalUpdates,
-    static_cast<int64_t>(query.timeout),
-    query.withCredentials,
-    [&callback](int64_t requestId) {
-      callback({ static_cast<double>(requestId) });
-    }
-  );
+      std::move(query.method),
+      std::move(query.url),
+      static_cast<int64_t>(query.requestId),
+      std::move(headers),
+      query.data.MoveObject(),
+      std::move(query.responseType),
+      query.incrementalUpdates,
+      static_cast<int64_t>(query.timeout),
+      query.withCredentials,
+      [&callback](int64_t requestId) { callback({static_cast<double>(requestId)}); });
 }
 
 void HttpTurboModule::AbortRequest(double requestId) noexcept {
@@ -203,9 +199,11 @@ void HttpTurboModule::ClearCookies(function<void(bool)> const &callback) noexcep
   m_resource->ClearCookies();
 }
 
-void HttpTurboModule::AddListener(string &&eventName) noexcept { /*NOOP*/ }
+void HttpTurboModule::AddListener(string &&eventName) noexcept { /*NOOP*/
+}
 
-void HttpTurboModule::RemoveListeners(double count) noexcept { /*NOOP*/ }
+void HttpTurboModule::RemoveListeners(double count) noexcept { /*NOOP*/
+}
 
 #pragma endregion HttpTurboModule
 

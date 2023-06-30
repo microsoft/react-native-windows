@@ -349,11 +349,7 @@ msrn::JSValueObject BlobModuleRequestBodyHandler::ToRequestBody(
   auto blobId = blob[blobIdKey].AsString();
   auto bytes = m_blobPersistor->ResolveMessage(std::move(blobId), blob[offsetKey].AsInt64(), blob[sizeKey].AsInt64());
 
-  return {
-      {typeKey, type},
-      {sizeKey, bytes.size()},
-      {"bytes", msrn::JSValueArray(bytes.cbegin(), bytes.cend())}
-  };
+  return {{typeKey, type}, {sizeKey, bytes.size()}, {"bytes", msrn::JSValueArray(bytes.cbegin(), bytes.cend())}};
 }
 
 #pragma endregion IRequestBodyHandler

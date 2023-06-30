@@ -208,7 +208,7 @@ IAsyncOperation<HttpRequestMessage> WinRTHttpResource::CreateRequest(
 
       for (auto &formDataPart : formData) {
         IHttpContent formContent{nullptr};
-        auto& itr = formDataPart.second["string"];
+        auto &itr = formDataPart.second["string"];
         if (!formDataPart.second["string"].IsNull()) {
           formContent = HttpStringContent{to_hstring(formDataPart.second["string"].AsString())};
         } else if (!formDataPart.second["uri"].IsNull()) {
@@ -353,8 +353,7 @@ void WinRTHttpResource::SetOnData(function<void(int64_t requestId, string &&resp
   m_onData = std::move(handler);
 }
 
-void WinRTHttpResource::SetOnData(
-    function<void(int64_t requestId, JSValueObject &&responseData)> &&handler) noexcept
+void WinRTHttpResource::SetOnData(function<void(int64_t requestId, JSValueObject &&responseData)> &&handler) noexcept
 /*override*/
 {
   m_onDataObject = std::move(handler);
