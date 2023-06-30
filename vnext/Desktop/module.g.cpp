@@ -6,9 +6,9 @@
 #include "pch.h"
 #include "winrt/base.h"
 void* winrt_make_Microsoft_Internal_TestController();
-// void* winrt_make_Microsoft_ReactNative_CompositionRootView();//TODO: revert
-// void *winrt_make_Microsoft_ReactNative_Composition_CompositionContextHelper();
-// void *winrt_make_Microsoft_ReactNative_Composition_CompositionUIService();
+void* winrt_make_Microsoft_ReactNative_CompositionRootView();
+void *winrt_make_Microsoft_ReactNative_Composition_CompositionContextHelper();
+void *winrt_make_Microsoft_ReactNative_Composition_CompositionUIService();
 void* winrt_make_Microsoft_ReactNative_JsiRuntime();
 void* winrt_make_Microsoft_ReactNative_ReactCoreInjection();
 void* winrt_make_Microsoft_ReactNative_ReactDispatcherHelper();
@@ -43,15 +43,15 @@ void* __stdcall winrt_get_activation_factory([[maybe_unused]] std::wstring_view 
     {
         return winrt_make_Microsoft_Internal_TestController();
     }
-    // if (requal(name, L"Microsoft.ReactNative.CompositionRootView")) {//TODO: revert
-    //   return winrt_make_Microsoft_ReactNative_CompositionRootView();
-    // }
-    // if (requal(name, L"Microsoft.ReactNative.Composition.CompositionContextHelper")) {
-    //   return winrt_make_Microsoft_ReactNative_Composition_CompositionContextHelper();
-    // }
-    // if (requal(name, L"Microsoft.ReactNative.Composition.CompositionUIService")) {
-    //   return winrt_make_Microsoft_ReactNative_Composition_CompositionUIService();
-    // }
+    if (requal(name, L"Microsoft.ReactNative.CompositionRootView")) {
+      return winrt_make_Microsoft_ReactNative_CompositionRootView();
+    }
+    if (requal(name, L"Microsoft.ReactNative.Composition.CompositionContextHelper")) {
+      return winrt_make_Microsoft_ReactNative_Composition_CompositionContextHelper();
+    }
+    if (requal(name, L"Microsoft.ReactNative.Composition.CompositionUIService")) {
+      return winrt_make_Microsoft_ReactNative_Composition_CompositionUIService();
+    }
     if (requal(name, L"Microsoft.ReactNative.JsiRuntime"))
     {
         return winrt_make_Microsoft_ReactNative_JsiRuntime();
