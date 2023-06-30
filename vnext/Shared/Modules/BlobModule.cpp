@@ -351,7 +351,7 @@ msrn::JSValueObject BlobModuleRequestBodyHandler::ToRequestBody(
   return {
       {typeKey, type},
       {sizeKey, bytes.size()},
-      {"bytes", msrn::JSValueArray(bytes.cbegin(), bytes.cend())} // TODO: Validate!!!
+      {"bytes", msrn::JSValueArray(bytes.cbegin(), bytes.cend())}
   };
 }
 

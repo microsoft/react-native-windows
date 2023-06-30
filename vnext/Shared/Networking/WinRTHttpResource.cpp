@@ -191,16 +191,16 @@ IAsyncOperation<HttpRequestMessage> WinRTHttpResource::CreateRequest(
       auto view = winrt::array_view<uint8_t const>{byteVector};
       auto buffer = CryptographicBuffer::CreateFromByteArray(view);
       content = HttpBufferContent{std::move(buffer)};
-    } else if (!data["string"].IsNull()) { // TODO: Test FOR JSValue
+    } else if (data.find("string") != data.cend()) {
       content = HttpStringContent{to_hstring(data["string"].AsString())};
-    } else if (!data["base64"].IsNull()) {
+    } else if (data.find("base64") != data.cend()) {
       auto buffer = CryptographicBuffer::DecodeFromBase64String(to_hstring(data["base64"].AsString()));
       content = HttpBufferContent{std::move(buffer)};
-    } else if (!data["uri"].IsNull()) {
+    } else if (data.find("uri") != data.cend()) {
       auto file = co_await StorageFile::GetFileFromApplicationUriAsync(Uri{to_hstring(data["uri"].AsString())});
       auto stream = co_await file.OpenReadAsync();
       content = HttpStreamContent{std::move(stream)};
-    } else if (!data["formData"].IsNull()) {
+    } else if (data.find("formData") != data.cend()) {
       winrt::Windows::Web::Http::HttpMultipartFormDataContent multiPartContent;
       auto &formData = data["formData"].AsObject();
 
