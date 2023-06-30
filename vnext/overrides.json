@@ -8,19 +8,25 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.73.0-nightly-20230601-d9b3339ef",
+  "baseVersion": "0.73.0-nightly-20230616-5f8bbf2bd",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "dc6c68bc12e76498f4935a43bb2f188efb02f0c5"
+      "baseHash": "8001e96c33f9678b48367e1c63939558ce4520b6"
+    },
+    {
+      "type": "copy",
+      "directory": "flow-typed/npm",
+      "baseDirectory": "flow-typed/npm",
+      "baseHash": "f25f5ecc4f5943b531295f4b5b8512b575ae6eb6"
     },
     {
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputComponentDescriptor.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputComponentDescriptor.h",
-      "baseHash": "d0b44352065d93f8310a4a42589baec82ae7bd62"
+      "baseHash": "1b2c47a5bf3d2118b8baa58ef2f5a89a797cb23f"
     },
     {
       "type": "derived",
@@ -322,7 +328,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "a817f8d62ee3ba4c56b772bd0cfb852739cb4aa7"
+      "baseHash": "a0e8ceeaecf43759ace2e17988aff06e64cba619"
     },
     {
       "type": "patch",
@@ -425,7 +431,7 @@
       "type": "derived",
       "file": "src/Libraries/LogBox/UI/LogBoxInspectorHeader.windows.js",
       "baseFile": "packages/react-native/Libraries/LogBox/UI/LogBoxInspectorHeader.js",
-      "baseHash": "e7ceb23d0449269b419414000fb5938898418a67"
+      "baseHash": "1a12281b1cfab7352fcfeb5984f0ed3c83c04660"
     },
     {
       "type": "derived",

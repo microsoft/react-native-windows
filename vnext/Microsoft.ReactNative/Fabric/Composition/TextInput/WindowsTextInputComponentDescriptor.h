@@ -78,13 +78,13 @@ class WindowsTextInputComponentDescriptor final : public ConcreteComponentDescri
 
  protected:
   void adopt(ShadowNode::Unshared const &shadowNode) const override {
-    auto textInputShadowNode = std::static_pointer_cast<WindowsTextInputShadowNode>(shadowNode);
+    auto &textInputShadowNode = static_cast<WindowsTextInputShadowNode &>(*shadowNode);
 
     // `ParagraphShadowNode` uses `TextLayoutManager` to measure text content
     // and communicate text rendering metrics to mounting layer.
-    textInputShadowNode->setTextLayoutManager(m_textLayoutManager);
+    textInputShadowNode.setTextLayoutManager(m_textLayoutManager);
 
-    textInputShadowNode->setContextContainer(const_cast<ContextContainer *>(getContextContainer().get()));
+    textInputShadowNode.setContextContainer(const_cast<ContextContainer *>(getContextContainer().get()));
 
     /*
         int surfaceId = textInputShadowNode->getSurfaceId();
@@ -161,7 +161,7 @@ class WindowsTextInputComponentDescriptor final : public ConcreteComponentDescri
         textInputShadowNode->dirtyLayout();
 
         */
-    textInputShadowNode->enableMeasurement();
+    textInputShadowNode.enableMeasurement();
 
     ConcreteComponentDescriptor::adopt(shadowNode);
   }

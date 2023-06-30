@@ -467,11 +467,11 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\Sealable.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\ShadowNode.cpp" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\ShadowNodeFamily.cpp" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\ShadowNodeFamilyFragment.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\ShadowNodeFragment.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\ShadowNodeTraits.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\State.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\UnbatchedEventQueue.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\InstanceHandle.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\DebugStringConvertible.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\DebugStringConvertibleItem.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\graphics\Transform.cpp" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)" />
