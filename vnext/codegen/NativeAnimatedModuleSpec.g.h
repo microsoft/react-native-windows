@@ -17,6 +17,8 @@ REACT_STRUCT(AnimatedModuleSpec_EndResult)
 struct AnimatedModuleSpec_EndResult {
     REACT_FIELD(finished)
     bool finished;
+    REACT_FIELD(value)
+    std::optional<double> value;
 };
 
 REACT_STRUCT(AnimatedModuleSpec_EventMapping)

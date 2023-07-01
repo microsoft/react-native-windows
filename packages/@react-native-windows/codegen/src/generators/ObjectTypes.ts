@@ -10,6 +10,8 @@ import type {
   NativeModuleEnumDeclaration,
   NativeModuleBaseTypeAnnotation,
   NativeModuleUnionTypeAnnotation,
+  NativeModuleStringTypeAnnotation,
+  NativeModuleFunctionTypeAnnotation,
   Nullable,
 } from '@react-native/codegen/lib/CodegenSchema';
 import {
@@ -37,7 +39,11 @@ function translateUnionReturnType(
 }
 
 export function translateFieldOrReturnType(
-  type: Nullable<NativeModuleBaseTypeAnnotation>,
+  type: Nullable<
+    | NativeModuleBaseTypeAnnotation
+    | NativeModuleStringTypeAnnotation
+    | NativeModuleFunctionTypeAnnotation
+  >,
   aliases: AliasMap,
   baseAliasName: string,
   callerName: 'translateField' | 'translateReturnType',
