@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/just-task",
   "entries": [
     {
+      "date": "Sat, 01 Jul 2023 05:14:41 GMT",
+      "tag": "@rnw-scripts/just-task_v2.3.12",
+      "version": "2.3.12",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@rnw-scripts/just-task",
+            "commit": "99563ff69161f1c6c699baec89c72f4b6b355224",
+            "comment": "integrate 6/16"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 07 Jun 2023 05:16:11 GMT",
       "tag": "@rnw-scripts/just-task_v2.3.11",
       "version": "2.3.11",

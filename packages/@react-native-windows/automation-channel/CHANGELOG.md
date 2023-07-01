@@ -1,8 +1,19 @@
 # Change Log - @react-native-windows/automation-channel
 
-This log was last generated on Thu, 29 Jun 2023 05:14:06 GMT and should not be manually modified.
+This log was last generated on Sat, 01 Jul 2023 05:14:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.12.10
+
+Sat, 01 Jul 2023 05:14:41 GMT
+
+### Patches
+
+- integrate 6/16 (tatianakapos@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.2.1
+- Bump @rnw-scripts/just-task to v2.3.12
+- Bump react-native-windows to v0.0.0-canary.671
 
 ## 0.12.9
 
