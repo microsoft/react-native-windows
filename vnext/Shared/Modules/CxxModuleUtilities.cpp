@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 #include "CxxModuleUtilities.h"
+#include <DynamicReader.h>
+#include <DynamicWriter.h>
 
 namespace msrn = winrt::Microsoft::ReactNative;
 
@@ -9,46 +11,6 @@ using facebook::react::Instance;
 using folly::dynamic;
 using std::string;
 using std::weak_ptr;
-
-namespace {
-
-msrn::JSValueArray ToJSValueArray(dynamic &array) noexcept {
-  auto result = msrn::JSValueArray{};
-  for (auto &item : array) {
-    result.emplace_back(Microsoft::React::Modules::ToJSValue(item));
-  }
-
-  return result;
-}
-
-msrn::JSValueObject ToJSValueObject(dynamic &object) noexcept {
-  auto result = msrn::JSValueObject{};
-  for (auto &entry : object.items()) {
-    result[entry.first.asString()] = Microsoft::React::Modules::ToJSValue(entry.second);
-  }
-
-  return result;
-}
-
-dynamic ToDynamicArray(const msrn::JSValue &value) noexcept {
-  auto result = dynamic::array();
-  for (auto &item : value.AsArray()) {
-    result.push_back(Microsoft::React::Modules::ToDynamic(item));
-  }
-
-  return result;
-}
-
-dynamic ToDynamicObject(const msrn::JSValue &value) noexcept {
-  auto result = dynamic::object();
-  for (auto &entry : value.AsObject()) {
-    result(entry.first, Microsoft::React::Modules::ToDynamic(entry.second));
-  }
-
-  return result;
-}
-
-} // namespace
 
 namespace Microsoft::React::Modules {
 
@@ -73,50 +35,17 @@ void SendEvent(
 }
 
 msrn::JSValue ToJSValue(dynamic &value) noexcept {
-  using msrn::JSValue;
+  auto reader = winrt::make<msrn::DynamicReader>(value);
+  auto result = msrn::JSValue::ReadFrom(reader);
 
-  switch (value.type()) {
-    case dynamic::Type::BOOL:
-      return JSValue{value.asBool()};
-    case dynamic::Type::DOUBLE:
-      return JSValue{value.asDouble()};
-    case dynamic::Type::INT64:
-      return JSValue{value.asInt()};
-    case dynamic::Type::STRING:
-      return JSValue{value.asString()};
-    case dynamic::Type::NULLT:
-      return JSValue{nullptr};
-    case dynamic::Type::ARRAY:
-      return ToJSValueArray(value);
-    case dynamic::Type::OBJECT:
-      return ToJSValueObject(value);
-  }
-
-  // This should not happen.
-  return JSValue{nullptr};
+  return result;
 }
 
 dynamic ToDynamic(const msrn::JSValue &value) noexcept {
-  using msrn::JSValueType;
+  auto argWriter = msrn::MakeJSValueArgWriter(value);
+  auto result = msrn::DynamicWriter::ToDynamic(argWriter)[0];
 
-  switch (value.Type()) {
-    case JSValueType::Boolean:
-      return dynamic{value.AsBoolean()};
-    case JSValueType::Double:
-      return dynamic{value.AsDouble()};
-    case JSValueType::Int64:
-      return dynamic{value.AsInt64()};
-    case JSValueType::String:
-      return dynamic{value.AsString()};
-    case JSValueType::Null:
-      return dynamic{nullptr};
-    case JSValueType::Array:
-      return ToDynamicArray(value);
-    case JSValueType::Object:
-      return ToDynamicObject(value);
-  }
-
-  return dynamic{nullptr};
+  return result;
 }
 
 } // namespace Microsoft::React::Modules
