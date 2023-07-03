@@ -79,9 +79,11 @@ class BlobModuleRequestBodyHandler final : public IRequestBodyHandler {
 
 #pragma region IRequestBodyHandler
 
-  bool Supports(folly::dynamic &data) override;
+  bool Supports(winrt::Microsoft::ReactNative::JSValueObject &data) override;
 
-  folly::dynamic ToRequestBody(folly::dynamic &data, std::string &contentType) override;
+  winrt::Microsoft::ReactNative::JSValueObject ToRequestBody(
+      winrt::Microsoft::ReactNative::JSValueObject &data,
+      std::string &contentType) override;
 
 #pragma endregion IRequestBodyHandler
 };
@@ -96,7 +98,7 @@ class BlobModuleResponseHandler final : public IResponseHandler {
 
   bool Supports(std::string &responseType) override;
 
-  folly::dynamic ToResponseData(std::vector<uint8_t> &&content) override;
+  winrt::Microsoft::ReactNative::JSValueObject ToResponseData(std::vector<uint8_t> &&content) override;
 
 #pragma endregion IResponseHandler
 };
