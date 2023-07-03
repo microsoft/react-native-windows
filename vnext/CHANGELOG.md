@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 23 Jun 2023 22:30:08 GMT and should not be manually modified.
+This log was last generated on Mon, 03 Jul 2023 15:16:35 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.72.1
+
+Mon, 03 Jul 2023 15:16:35 GMT
+
+### Patches
+
+- Fix AV in LinkingManagerModule when resolving promise with nullptr (jthysell@microsoft.com)
 
 ## 0.72.0
 

@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 03 Jul 2023 15:16:35 GMT",
+      "tag": "react-native-windows_v0.72.1",
+      "version": "0.72.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a519860600004c2458b6b9abe3d54b7a6ad00530",
+            "comment": "Fix AV in LinkingManagerModule when resolving promise with nullptr"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 23 Jun 2023 22:30:08 GMT",
       "tag": "react-native-windows_v0.72.0",
       "version": "0.72.0",
