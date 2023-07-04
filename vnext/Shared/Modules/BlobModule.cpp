@@ -55,6 +55,32 @@ constexpr char dataKey[] = "data";
 
 namespace Microsoft::React {
 
+#pragma region BlobTurboModule
+
+void BlobTurboModule::Initialize(msrn::ReactContext const &reactContext) noexcept {}
+
+ReactNativeSpecs::BlobModuleSpec_Constants GetConstants() noexcept {
+  ReactNativeSpecs::BlobModuleSpec_Constants result;
+  result.BLOB_URI_SCHEME = blobKey;
+  result.BLOB_URI_HOST = {};
+
+  return result;
+}
+
+void BlobTurboModule::AddNetworkingHandler() noexcept {}
+
+void BlobTurboModule::AddWebSocketHandler(double id) noexcept {}
+
+void BlobTurboModule::RemoveWebSocketHandler(double id) noexcept {}
+
+void BlobTurboModule::SendOverSocket(msrn::JSValue&& blob, double socketID) noexcept {}
+
+void BlobTurboModule::CreateFromParts(vector<msrn::JSValue> const& parts, string&& withId) noexcept {}
+
+void BlobTurboModule::Release(string&& blobId) noexcept {}
+
+#pragma endregion BlobTurboModule
+
 #pragma region BlobModule
 
 BlobModule::BlobModule(winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept

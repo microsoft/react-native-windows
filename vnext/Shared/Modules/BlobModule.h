@@ -33,30 +33,28 @@ struct BlobTurboModule {
   using ModuleSpec = ReactNativeSpecs::BlobModuleSpec;
 
   REACT_INIT(Initialize)
-  void Initialize(winrt::Microsoft::ReactNative::ReactContext const& reactContext) noexcept {}
+  void Initialize(winrt::Microsoft::ReactNative::ReactContext const& reactContext) noexcept;
 
   REACT_GET_CONSTANTS(GetConstants)
-  ReactNativeSpecs::BlobModuleSpec_Constants GetConstants() noexcept {
-    return { "BLOB_URI_SCHEME", "BLOB_URI_HOST" };
-  }
+  ReactNativeSpecs::BlobModuleSpec_Constants GetConstants() noexcept;
 
   REACT_METHOD(AddNetworkingHandler, L"addNetworkingHandler")
-  void AddNetworkingHandler() noexcept {}
+  void AddNetworkingHandler() noexcept;
 
   REACT_METHOD(AddWebSocketHandler, L"addWebSocketHandler")
-  void AddWebSocketHandler(double id) noexcept {}
+  void AddWebSocketHandler(double id) noexcept;
 
   REACT_METHOD(RemoveWebSocketHandler, L"removeWebSocketHandler")
-  void RemoveWebSocketHandler(double id) noexcept {}
+  void RemoveWebSocketHandler(double id) noexcept;
 
   REACT_METHOD(SendOverSocket, L"sendOverSocket")
-  void SendOverSocket(winrt::Microsoft::ReactNative::JSValue &&blob, double socketID) noexcept {}
+  void SendOverSocket(winrt::Microsoft::ReactNative::JSValue &&blob, double socketID) noexcept;
 
   REACT_METHOD(CreateFromParts, L"createFromParts")
-  void CreateFromParts(std::vector<winrt::Microsoft::ReactNative::JSValue> const &parts, std::string &&withId) noexcept {}
+  void CreateFromParts(std::vector<winrt::Microsoft::ReactNative::JSValue> const &parts, std::string &&withId) noexcept;
 
   REACT_METHOD(Release, L"release")
-  void Release(std::string &&blobId) noexcept {}
+  void Release(std::string &&blobId) noexcept;
 };
 
 class MemoryBlobPersistor final : public IBlobPersistor {
