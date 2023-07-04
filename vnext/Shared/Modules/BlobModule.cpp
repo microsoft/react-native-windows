@@ -44,7 +44,7 @@ namespace fs = std::filesystem;
 namespace msrn = winrt::Microsoft::ReactNative;
 
 namespace {
-constexpr char moduleName[] = "BlobModule";
+constexpr char s_moduleName[] = "BlobModule";
 constexpr char blobKey[] = "blob";
 constexpr char blobIdKey[] = "blobId";
 constexpr char offsetKey[] = "offset";
@@ -85,7 +85,7 @@ BlobModule::~BlobModule() noexcept /*override*/ {
 #pragma region CxxModule
 
 string BlobModule::getName() {
-  return moduleName;
+  return s_moduleName;
 }
 
 std::map<string, dynamic> BlobModule::getConstants() {
@@ -376,7 +376,7 @@ msrn::JSValueObject BlobModuleResponseHandler::ToResponseData(vector<uint8_t> &&
 #pragma endregion BlobModuleResponseHandler
 
 /*extern*/ const char *GetBlobModuleName() noexcept {
-  return moduleName;
+  return s_moduleName;
 }
 
 /*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateBlobModule(
