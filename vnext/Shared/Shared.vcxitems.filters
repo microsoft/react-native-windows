@@ -738,6 +738,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\WebSocketTurboModule.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\IBlobResource.h">
+      <Filter>Header Files\Networking</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)tracing\rnw.wprp">
