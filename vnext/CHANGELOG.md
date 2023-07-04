@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 01 Jul 2023 05:14:42 GMT and should not be manually modified.
+This log was last generated on Tue, 04 Jul 2023 05:13:23 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.672
+
+Tue, 04 Jul 2023 05:13:23 GMT
+
+### Changes
+
+- Define HTTP TurboModule (julio.rocha@microsoft.com)
+- Default IncludeFabricInterface to true (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.671
 
