@@ -86,7 +86,7 @@ void BlobTurboModule::Release(string &&blobId) noexcept {}
 BlobModule::BlobModule(winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept
     : m_sharedState{std::make_shared<SharedState>()},
       m_blobPersistor{std::make_shared<MemoryBlobPersistor0>()},
-      m_contentHandler{std::make_shared<BlobWebSocketModuleContentHandler>(m_blobPersistor)},
+      m_contentHandler{std::make_shared<BlobWebSocketModuleContentHandler0>(m_blobPersistor)},
       m_requestBodyHandler{std::make_shared<BlobModuleRequestBodyHandler>(m_blobPersistor)},
       m_responseHandler{std::make_shared<BlobModuleResponseHandler>(m_blobPersistor)},
       m_inspectableProperties{inspectableProperties} {
@@ -290,18 +290,18 @@ string MemoryBlobPersistor0::StoreMessage(vector<uint8_t> &&message) noexcept {
 
 #pragma endregion MemoryBlobPersistor0
 
-#pragma region BlobWebSocketModuleContentHandler
+#pragma region BlobWebSocketModuleContentHandler0
 
-BlobWebSocketModuleContentHandler::BlobWebSocketModuleContentHandler(shared_ptr<IBlobPersistor> blobPersistor) noexcept
+BlobWebSocketModuleContentHandler0::BlobWebSocketModuleContentHandler0(shared_ptr<IBlobPersistor> blobPersistor) noexcept
     : m_blobPersistor{blobPersistor} {}
 
 #pragma region IWebSocketModuleContentHandler
 
-void BlobWebSocketModuleContentHandler::ProcessMessage(string &&message, dynamic &params) /*override*/ {
+void BlobWebSocketModuleContentHandler0::ProcessMessage(string &&message, dynamic &params) /*override*/ {
   params[dataKey] = std::move(message);
 }
 
-void BlobWebSocketModuleContentHandler::ProcessMessage(vector<uint8_t> &&message, dynamic &params) /*override*/ {
+void BlobWebSocketModuleContentHandler0::ProcessMessage(vector<uint8_t> &&message, dynamic &params) /*override*/ {
   auto blob = dynamic::object();
   blob(offsetKey, 0);
   blob(sizeKey, message.size());
@@ -311,14 +311,14 @@ void BlobWebSocketModuleContentHandler::ProcessMessage(vector<uint8_t> &&message
   params[typeKey] = blobKey;
 }
 
-void BlobWebSocketModuleContentHandler::ProcessMessage(
+void BlobWebSocketModuleContentHandler0::ProcessMessage(
     string &&message,
     msrn::JSValueObject &params) noexcept /*override*/
 {
   params[dataKey] = std::move(message);
 }
 
-void BlobWebSocketModuleContentHandler::ProcessMessage(
+void BlobWebSocketModuleContentHandler0::ProcessMessage(
     vector<uint8_t> &&message,
     msrn::JSValueObject &params) noexcept /*override*/
 {
@@ -331,12 +331,12 @@ void BlobWebSocketModuleContentHandler::ProcessMessage(
 
 #pragma endregion IWebSocketModuleContentHandler
 
-void BlobWebSocketModuleContentHandler::Register(int64_t socketID) noexcept {
+void BlobWebSocketModuleContentHandler0::Register(int64_t socketID) noexcept {
   scoped_lock lock{m_mutex};
   m_socketIds.insert(socketID);
 }
 
-void BlobWebSocketModuleContentHandler::Unregister(int64_t socketID) noexcept {
+void BlobWebSocketModuleContentHandler0::Unregister(int64_t socketID) noexcept {
   scoped_lock lock{m_mutex};
 
   auto itr = m_socketIds.find(socketID);
@@ -344,7 +344,7 @@ void BlobWebSocketModuleContentHandler::Unregister(int64_t socketID) noexcept {
     m_socketIds.erase(itr);
 }
 
-#pragma endregion BlobWebSocketModuleContentHandler
+#pragma endregion BlobWebSocketModuleContentHandler0
 
 #pragma region BlobModuleRequestBodyHandler
 

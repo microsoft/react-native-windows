@@ -76,13 +76,13 @@ class MemoryBlobPersistor0 final : public IBlobPersistor {
 #pragma endregion IBlobPersistor
 };
 
-class BlobWebSocketModuleContentHandler final : public IWebSocketModuleContentHandler {
+class BlobWebSocketModuleContentHandler0 final : public IWebSocketModuleContentHandler {
   std::unordered_set<int64_t> m_socketIds;
   std::mutex m_mutex;
   std::shared_ptr<IBlobPersistor> m_blobPersistor;
 
  public:
-  BlobWebSocketModuleContentHandler(std::shared_ptr<IBlobPersistor> blobPersistor) noexcept;
+  BlobWebSocketModuleContentHandler0(std::shared_ptr<IBlobPersistor> blobPersistor) noexcept;
 
 #pragma region IWebSocketModuleContentHandler
 
@@ -136,7 +136,7 @@ class BlobModuleResponseHandler final : public IResponseHandler {
 
 class BlobModule : public facebook::xplat::module::CxxModule {
   std::shared_ptr<MemoryBlobPersistor0> m_blobPersistor;
-  std::shared_ptr<BlobWebSocketModuleContentHandler> m_contentHandler;
+  std::shared_ptr<BlobWebSocketModuleContentHandler0> m_contentHandler;
   std::shared_ptr<BlobModuleRequestBodyHandler> m_requestBodyHandler;
   std::shared_ptr<BlobModuleResponseHandler> m_responseHandler;
 

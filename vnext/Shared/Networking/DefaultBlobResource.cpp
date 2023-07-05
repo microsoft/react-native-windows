@@ -7,6 +7,9 @@
 #include <Modules/IHttpModuleProxy.h>
 #include <Modules/IWebSocketModuleProxy.h>
 
+// Folly
+#include <folly/dynamic.h>//TODO: Remove
+
 // Boost Libraries
 #include <boost/uuid/uuid_io.hpp>
 
@@ -16,6 +19,7 @@
 // Standard Library
 #include <mutex>
 
+using folly::dynamic;
 using std::scoped_lock;
 using std::shared_ptr;
 using std::string;
@@ -169,5 +173,61 @@ string MemoryBlobPersistor::StoreMessage(vector<uint8_t> &&message) noexcept {
 #pragma endregion IBlobPersistor
 
 #pragma endregion MemoryBlobPersistor
+
+#pragma region BlobWebSocketModuleContentHandler
+
+BlobWebSocketModuleContentHandler::BlobWebSocketModuleContentHandler(shared_ptr<IBlobPersistor> blobPersistor) noexcept
+    : m_blobPersistor{blobPersistor} {}
+
+#pragma region IWebSocketModuleContentHandler
+
+void BlobWebSocketModuleContentHandler::ProcessMessage(string &&message, dynamic &params) /*override*/ {
+  params[dataKey] = std::move(message);
+}
+
+void BlobWebSocketModuleContentHandler::ProcessMessage(vector<uint8_t> &&message, dynamic &params) /*override*/ {
+  auto blob = dynamic::object();
+  blob(offsetKey, 0);
+  blob(sizeKey, message.size());
+  blob(blobIdKey, m_blobPersistor->StoreMessage(std::move(message)));
+
+  params[dataKey] = std::move(blob);
+  params[typeKey] = blobKey;
+}
+
+void BlobWebSocketModuleContentHandler::ProcessMessage(
+    string &&message,
+    msrn::JSValueObject &params) noexcept /*override*/
+{
+  params[dataKey] = std::move(message);
+}
+
+void BlobWebSocketModuleContentHandler::ProcessMessage(
+    vector<uint8_t> &&message,
+    msrn::JSValueObject &params) noexcept /*override*/
+{
+  auto blob = msrn::JSValueObject{
+      {offsetKey, 0}, {sizeKey, message.size()}, {blobIdKey, m_blobPersistor->StoreMessage(std::move(message))}};
+
+  params[dataKey] = std::move(blob);
+  params[typeKey] = blobKey;
+}
+
+#pragma endregion IWebSocketModuleContentHandler
+
+void BlobWebSocketModuleContentHandler::Register(int64_t socketID) noexcept {
+  scoped_lock lock{m_mutex};
+  m_socketIds.insert(socketID);
+}
+
+void BlobWebSocketModuleContentHandler::Unregister(int64_t socketID) noexcept {
+  scoped_lock lock{m_mutex};
+
+  auto itr = m_socketIds.find(socketID);
+  if (itr != m_socketIds.end())
+    m_socketIds.erase(itr);
+}
+
+#pragma endregion BlobWebSocketModuleContentHandler
 
 } // namespace Microsoft::React::Networking

@@ -6,6 +6,7 @@
 #include "IBlobResource.h"
 
 #include <Modules/IBlobPersistor.h>
+#include <Modules/IWebSocketModuleContentHandler.h>
 
 // Boost Libraries
 #include <boost/uuid/uuid_generators.hpp>
@@ -31,8 +32,35 @@ class MemoryBlobPersistor final : public IBlobPersistor {
 #pragma endregion IBlobPersistor
 };
 
+class BlobWebSocketModuleContentHandler final : public IWebSocketModuleContentHandler {
+  std::unordered_set<int64_t> m_socketIds;
+  std::mutex m_mutex;
+  std::shared_ptr<IBlobPersistor> m_blobPersistor;
+
+public:
+  BlobWebSocketModuleContentHandler(std::shared_ptr<IBlobPersistor> blobPersistor) noexcept;
+
+#pragma region IWebSocketModuleContentHandler
+
+  void ProcessMessage(std::string&& message, folly::dynamic& params) override;
+
+  void ProcessMessage(std::vector<uint8_t>&& message, folly::dynamic& params) override;
+
+  void ProcessMessage(std::string&& message, winrt::Microsoft::ReactNative::JSValueObject& params) noexcept override;
+
+  void ProcessMessage(std::vector<uint8_t>&& message, winrt::Microsoft::ReactNative::JSValueObject& params) noexcept
+    override;
+
+#pragma endregion IWebSocketModuleContentHandler
+
+  void Register(int64_t socketID) noexcept;
+
+  void Unregister(int64_t socketID) noexcept;
+};
+
 class DefaultBlobResource : public IBlobResource, public std::enable_shared_from_this<DefaultBlobResource> {
   std::shared_ptr<MemoryBlobPersistor> m_blobPersistor;
+  std::shared_ptr<BlobWebSocketModuleContentHandler> m_contentHandler;
   BlobCallbacks m_callbacks;
 
  public:
