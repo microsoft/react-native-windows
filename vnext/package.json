@@ -122,7 +122,7 @@
     "/Shared",
     "/stubs",
     "/template",
-    "/rntypes",
+    "/types",
     "/.flowconfig",
     "/Directory.Build.props",
     "/Directory.Build.targets",
