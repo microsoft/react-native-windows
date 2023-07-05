@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.71.6",
+  "baseVersion": "0.71.12",
   "overrides": [
     {
       "type": "derived",
@@ -283,7 +283,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "b59411676fb68eb715dc9b33991accf7f5ec4bbe"
+      "baseHash": "e5845da364f14fff72c9580123c41279eb493db4"
     },
     {
       "type": "patch",
@@ -337,7 +337,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/View.windows.js",
       "baseFile": "Libraries/Components/View/View.js",
-      "baseHash": "91864d8f5518fa50da710f545ecdf5727248c45a"
+      "baseHash": "7945214eb22374ea322b95d12cf8d68a4cf321e4"
     },
     {
       "type": "patch",
@@ -426,7 +426,7 @@
       "type": "derived",
       "file": "src/Libraries/Text/Text.windows.js",
       "baseFile": "Libraries/Text/Text.js",
-      "baseHash": "188c96590a5bd43a4d170a81e472ef6b93315ad4"
+      "baseHash": "abdf0022b453823f9f4a8627519ba54f5fcad841"
     },
     {
       "type": "patch",
