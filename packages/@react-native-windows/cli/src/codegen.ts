@@ -25,7 +25,10 @@ import {
   endTelemetrySession,
 } from './runWindows/utils/telemetryHelpers';
 
-import {CodeGenOptions as RnwCodeGenOptions, runCodeGen} from '@react-native-windows/codegen';
+import {
+  CodeGenOptions as RnwCodeGenOptions,
+  runCodeGen,
+} from '@react-native-windows/codegen';
 import {Ora} from 'ora';
 
 export class CodeGenWindows {
@@ -108,7 +111,7 @@ export class CodeGenWindows {
     ];
 
     const jsRootPathRelative = path.relative(process.cwd(), jsRootDir);
-    const options : RnwCodeGenOptions = {
+    const options: RnwCodeGenOptions = {
       files: [
         `${jsRootPathRelative}${
           jsRootPathRelative ? '/' : ''
