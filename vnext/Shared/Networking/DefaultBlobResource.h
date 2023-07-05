@@ -31,27 +31,22 @@ class MemoryBlobPersistor final : public IBlobPersistor {
 #pragma endregion IBlobPersistor
 };
 
-
-class DefaultBlobResource : public std::enable_shared_from_this<DefaultBlobResource> {
+class DefaultBlobResource : public IBlobResource, public std::enable_shared_from_this<DefaultBlobResource> {
   std::shared_ptr<MemoryBlobPersistor> m_blobPersistor;
+  BlobCallbacks m_callbacks;
 
-public:
+ public:
 #pragma region IBlobResource
 
-  virtual void SendOverSocket(
-    std::string&& blobId,
-    int64_t offset,
-    int64_t size,
-    int64_t socketId) noexcept = 0;
+  void SendOverSocket(std::string &&blobId, int64_t offset, int64_t size, int64_t socketId) noexcept override;
 
-  virtual void CreateFromParts(
-    winrt::Microsoft::ReactNative::JSValueArray&& parts,
-    std::string&& blobId) noexcept = 0;
+  void CreateFromParts(winrt::Microsoft::ReactNative::JSValueArray &&parts, std::string &&blobId) noexcept override;
 
-  virtual void Release(std::string&& blobId) noexcept = 0;
+  void Release(std::string &&blobId) noexcept override;
+
+  BlobCallbacks &Callbacks() noexcept override;
 
 #pragma endregion IBlobResource
-
 };
 
-} // Microsoft::React::Networking
+} // namespace Microsoft::React::Networking
