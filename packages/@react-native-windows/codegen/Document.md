@@ -318,7 +318,7 @@ Here are a list of supported types in TurboModule.
 
 | TypeScript | Flow | C++ |
 | ---------- | ---- | --- |
-| `string` | `*` | `std::string` |
+| `string` | `*` | `std::string` or `std::wstring` according to options |
 | `number` | `*` | `double` |
 | `float (number)` | `*` | `double` |
 | `double (number)` | `*` | `double` |
