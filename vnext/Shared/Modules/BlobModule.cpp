@@ -73,11 +73,11 @@ void BlobTurboModule::AddWebSocketHandler(double id) noexcept {}
 
 void BlobTurboModule::RemoveWebSocketHandler(double id) noexcept {}
 
-void BlobTurboModule::SendOverSocket(msrn::JSValue&& blob, double socketID) noexcept {}
+void BlobTurboModule::SendOverSocket(msrn::JSValue &&blob, double socketID) noexcept {}
 
-void BlobTurboModule::CreateFromParts(vector<msrn::JSValue> const& parts, string&& withId) noexcept {}
+void BlobTurboModule::CreateFromParts(vector<msrn::JSValue> const &parts, string &&withId) noexcept {}
 
-void BlobTurboModule::Release(string&& blobId) noexcept {}
+void BlobTurboModule::Release(string &&blobId) noexcept {}
 
 #pragma endregion BlobTurboModule
 
@@ -85,7 +85,7 @@ void BlobTurboModule::Release(string&& blobId) noexcept {}
 
 BlobModule::BlobModule(winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept
     : m_sharedState{std::make_shared<SharedState>()},
-      m_blobPersistor{std::make_shared<MemoryBlobPersistor>()},
+      m_blobPersistor{std::make_shared<MemoryBlobPersistor0>()},
       m_contentHandler{std::make_shared<BlobWebSocketModuleContentHandler>(m_blobPersistor)},
       m_requestBodyHandler{std::make_shared<BlobModuleRequestBodyHandler>(m_blobPersistor)},
       m_responseHandler{std::make_shared<BlobModuleResponseHandler>(m_blobPersistor)},
@@ -241,11 +241,11 @@ vector<module::CxxModule::Method> BlobModule::getMethods() {
 
 #pragma endregion BlobModule
 
-#pragma region MemoryBlobPersistor
+#pragma region MemoryBlobPersistor0
 
 #pragma region IBlobPersistor
 
-winrt::array_view<uint8_t const> MemoryBlobPersistor::ResolveMessage(string &&blobId, int64_t offset, int64_t size) {
+winrt::array_view<uint8_t const> MemoryBlobPersistor0::ResolveMessage(string &&blobId, int64_t offset, int64_t size) {
   if (size < 1)
     return {};
 
@@ -265,19 +265,19 @@ winrt::array_view<uint8_t const> MemoryBlobPersistor::ResolveMessage(string &&bl
   return winrt::array_view<uint8_t const>(bytes.data() + offset, bytes.data() + endBound);
 }
 
-void MemoryBlobPersistor::RemoveMessage(string &&blobId) noexcept {
+void MemoryBlobPersistor0::RemoveMessage(string &&blobId) noexcept {
   scoped_lock lock{m_mutex};
 
   m_blobs.erase(std::move(blobId));
 }
 
-void MemoryBlobPersistor::StoreMessage(vector<uint8_t> &&message, string &&blobId) noexcept {
+void MemoryBlobPersistor0::StoreMessage(vector<uint8_t> &&message, string &&blobId) noexcept {
   scoped_lock lock{m_mutex};
 
   m_blobs.insert_or_assign(std::move(blobId), std::move(message));
 }
 
-string MemoryBlobPersistor::StoreMessage(vector<uint8_t> &&message) noexcept {
+string MemoryBlobPersistor0::StoreMessage(vector<uint8_t> &&message) noexcept {
   auto blobId = boost::uuids::to_string(m_guidGenerator());
 
   scoped_lock lock{m_mutex};
@@ -288,7 +288,7 @@ string MemoryBlobPersistor::StoreMessage(vector<uint8_t> &&message) noexcept {
 
 #pragma endregion IBlobPersistor
 
-#pragma endregion MemoryBlobPersistor
+#pragma endregion MemoryBlobPersistor0
 
 #pragma region BlobWebSocketModuleContentHandler
 

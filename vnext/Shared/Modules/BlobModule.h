@@ -33,7 +33,7 @@ struct BlobTurboModule {
   using ModuleSpec = ReactNativeSpecs::BlobModuleSpec;
 
   REACT_INIT(Initialize)
-  void Initialize(winrt::Microsoft::ReactNative::ReactContext const& reactContext) noexcept;
+  void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
   REACT_GET_CONSTANTS(GetConstants)
   ReactNativeSpecs::BlobModuleSpec_Constants GetConstants() noexcept;
@@ -57,7 +57,7 @@ struct BlobTurboModule {
   void Release(std::string &&blobId) noexcept;
 };
 
-class MemoryBlobPersistor final : public IBlobPersistor {
+class MemoryBlobPersistor0 final : public IBlobPersistor {
   std::unordered_map<std::string, std::vector<uint8_t>> m_blobs;
   std::mutex m_mutex;
   boost::uuids::random_generator m_guidGenerator;
@@ -135,7 +135,7 @@ class BlobModuleResponseHandler final : public IResponseHandler {
 };
 
 class BlobModule : public facebook::xplat::module::CxxModule {
-  std::shared_ptr<MemoryBlobPersistor> m_blobPersistor;
+  std::shared_ptr<MemoryBlobPersistor0> m_blobPersistor;
   std::shared_ptr<BlobWebSocketModuleContentHandler> m_contentHandler;
   std::shared_ptr<BlobModuleRequestBodyHandler> m_requestBodyHandler;
   std::shared_ptr<BlobModuleResponseHandler> m_responseHandler;

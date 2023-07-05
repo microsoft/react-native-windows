@@ -12,6 +12,7 @@
 
 namespace Microsoft::React {
 
+// TODO: Move out of "Modules"
 struct IBlobPersistor {
   ///
   /// <exception cref="std::invalid_argument">
