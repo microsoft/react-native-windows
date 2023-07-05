@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Revert \"[0.71] Re-apply PR #11757 that added use of hermes.dll with C API (#11788)\"",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}
