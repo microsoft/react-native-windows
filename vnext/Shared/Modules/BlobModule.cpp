@@ -27,6 +27,7 @@
 using namespace facebook::xplat;
 
 using folly::dynamic;
+using Microsoft::React::Networking::IBlobResource;
 using std::scoped_lock;
 using std::shared_ptr;
 using std::string;
@@ -84,24 +85,9 @@ void BlobTurboModule::Release(string &&blobId) noexcept {}
 #pragma region BlobModule
 
 BlobModule::BlobModule(winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept
-    : m_sharedState{std::make_shared<SharedState>()},
-      m_blobPersistor{std::make_shared<MemoryBlobPersistor0>()},
-      m_contentHandler{std::make_shared<BlobWebSocketModuleContentHandler0>(m_blobPersistor)},
-      m_requestBodyHandler{std::make_shared<BlobModuleRequestBodyHandler0>(m_blobPersistor)},
-      m_responseHandler{std::make_shared<BlobModuleResponseHandler0>(m_blobPersistor)},
-      m_inspectableProperties{inspectableProperties} {
-  auto propBag = ReactPropertyBag{m_inspectableProperties.try_as<IReactPropertyBag>()};
-
-  auto contentHandlerPropId =
-      ReactPropertyId<ReactNonAbiValue<weak_ptr<IWebSocketModuleContentHandler>>>{L"BlobModule.ContentHandler"};
-  auto contentHandler = weak_ptr<IWebSocketModuleContentHandler>{m_contentHandler};
-  propBag.Set(contentHandlerPropId, std::move(contentHandler));
-
-  auto blobPersistorPropId = ReactPropertyId<ReactNonAbiValue<weak_ptr<IBlobPersistor>>>{L"Blob.Persistor"};
-  auto blobPersistor = weak_ptr<IBlobPersistor>{m_blobPersistor};
-  propBag.Set(blobPersistorPropId, std::move(blobPersistor));
-
+    : m_sharedState{std::make_shared<SharedState>()} {
   m_sharedState->Module = this;
+  m_resource = IBlobResource::Make(inspectableProperties);
 }
 
 BlobModule::~BlobModule() noexcept /*override*/ {
@@ -120,287 +106,57 @@ std::map<string, dynamic> BlobModule::getConstants() {
 
 vector<module::CxxModule::Method> BlobModule::getMethods() {
   return {
-      {"addNetworkingHandler",
-       [propBag = ReactPropertyBag{m_inspectableProperties.try_as<IReactPropertyBag>()},
-        requestBodyHandler = m_requestBodyHandler,
-        responseHandler = m_responseHandler](dynamic args) {
-         auto propId = ReactPropertyId<ReactNonAbiValue<weak_ptr<IHttpModuleProxy>>>{L"HttpModule.Proxy"};
-
-         if (auto prop = propBag.Get(propId)) {
-           if (auto httpHandler = prop.Value().lock()) {
-             httpHandler->AddRequestBodyHandler(requestBodyHandler);
-             httpHandler->AddResponseHandler(responseHandler);
-           }
-         }
-         // TODO: else emit error?
-       }},
+      {"addNetworkingHandler", [resource = m_resource](dynamic /*args*/) { resource->AddNetworkingHandler(); }},
 
       {"addWebSocketHandler",
-       [contentHandler = m_contentHandler](dynamic args) {
+       [resource = m_resource](dynamic args) {
          auto id = jsArgAsInt(args, 0);
 
-         contentHandler->Register(id);
+         resource->AddWebSocketHandler(id);
        }},
 
       {"removeWebSocketHandler",
-       [contentHandler = m_contentHandler](dynamic args) {
+       [resource = m_resource](dynamic args) {
          auto id = jsArgAsInt(args, 0);
 
-         contentHandler->Unregister(id);
+         resource->RemoveWebSocketHandler(id);
        }},
 
       {"sendOverSocket",
-       [weakState = weak_ptr<SharedState>(m_sharedState),
-        persistor = m_blobPersistor,
-        propBag = ReactPropertyBag{m_inspectableProperties.try_as<IReactPropertyBag>()}](dynamic args) {
-         auto propId = ReactPropertyId<ReactNonAbiValue<weak_ptr<IWebSocketModuleProxy>>>{L"WebSocketModule.Proxy"};
-         shared_ptr<IWebSocketModuleProxy> wsProxy;
-         if (auto prop = propBag.Get(propId)) {
-           wsProxy = prop.Value().lock();
-         }
-         if (!wsProxy) {
-           return;
-         }
-
+       [weakState = weak_ptr<SharedState>(m_sharedState), resource = m_resource](dynamic args) {
          auto blob = jsArgAsObject(args, 0);
          auto blobId = blob[blobIdKey].getString();
          auto offset = blob[offsetKey].getInt();
          auto size = blob[sizeKey].getInt();
-         auto socketID = jsArgAsInt(args, 1);
+         auto socketId = jsArgAsInt(args, 1);
 
-         winrt::array_view<uint8_t const> data;
-         try {
-           data = persistor->ResolveMessage(std::move(blobId), offset, size);
-         } catch (const std::exception &e) {
-           if (auto sharedState = weakState.lock()) {
-             Modules::SendEvent(sharedState->Module->getInstance(), "blobFailed", e.what());
-           }
-           return;
-         }
-
-         auto buffer = CryptographicBuffer::CreateFromByteArray(data);
-         auto winrtString = CryptographicBuffer::EncodeToBase64String(std::move(buffer));
-         auto base64String = Common::Unicode::Utf16ToUtf8(std::move(winrtString));
-
-         wsProxy->SendBinary(std::move(base64String), socketID);
+         resource->SendOverSocket(std::move(blobId), offset, size, socketId);
        }},
 
       {"createFromParts",
        // As of React Native 0.67, instance is set AFTER CxxModule::getMethods() is invoked.
        // Use getInstance() directly once
        // https://github.com/facebook/react-native/commit/1d45b20b6c6ba66df0485cdb9be36463d96cf182 becomes available.
-       [persistor = m_blobPersistor, weakState = weak_ptr<SharedState>(m_sharedState)](dynamic args) {
-         auto parts = jsArgAsArray(args, 0); // Array<Object>
+       [weakState = weak_ptr<SharedState>(m_sharedState), resource = m_resource](dynamic args) {
+         auto dynamicParts = jsArgAsArray(args, 0); // Array<Object>
+         auto parts = Modules::ToJSValue(dynamicParts);
          auto blobId = jsArgAsString(args, 1);
-         vector<uint8_t> buffer{};
 
-         for (const auto &part : parts) {
-           auto type = part[typeKey].asString();
-           if (blobKey == type) {
-             auto blob = part[dataKey];
-             winrt::array_view<uint8_t const> bufferPart;
-             try {
-               bufferPart = persistor->ResolveMessage(
-                   blob[blobIdKey].asString(), blob[offsetKey].asInt(), blob[sizeKey].asInt());
-             } catch (const std::exception &e) {
-               if (auto sharedState = weakState.lock()) {
-                 Modules::SendEvent(sharedState->Module->getInstance(), "blobFailed", e.what());
-               }
-               return;
-             }
-
-             buffer.reserve(buffer.size() + bufferPart.size());
-             buffer.insert(buffer.end(), bufferPart.begin(), bufferPart.end());
-           } else if ("string" == type) {
-             auto data = part[dataKey].asString();
-
-             buffer.reserve(buffer.size() + data.size());
-             buffer.insert(buffer.end(), data.begin(), data.end());
-           } else {
-             if (auto state = weakState.lock()) {
-               auto message = "Invalid type for blob: " + type;
-               Modules::SendEvent(state->Module->getInstance(), "blobFailed", std::move(message));
-             }
-             return;
-           }
-         }
-
-         persistor->StoreMessage(std::move(buffer), std::move(blobId));
+         resource->CreateFromParts(parts.MoveArray(), std::move(blobId));
        }},
 
       {"release",
-       [persistor = m_blobPersistor](dynamic args) // blobId: string
+       [resource = m_resource](dynamic args) // blobId: string
        {
          auto blobId = jsArgAsString(args, 0);
 
-         persistor->RemoveMessage(std::move(blobId));
+         resource->Release(std::move(blobId));
        }}};
 }
 
 #pragma endregion CxxModule
 
 #pragma endregion BlobModule
-
-#pragma region MemoryBlobPersistor0
-
-#pragma region IBlobPersistor
-
-winrt::array_view<uint8_t const> MemoryBlobPersistor0::ResolveMessage(string &&blobId, int64_t offset, int64_t size) {
-  if (size < 1)
-    return {};
-
-  scoped_lock lock{m_mutex};
-
-  auto dataItr = m_blobs.find(std::move(blobId));
-  // Not found.
-  if (dataItr == m_blobs.cend())
-    throw std::invalid_argument("Blob object not found");
-
-  auto &bytes = (*dataItr).second;
-  auto endBound = static_cast<size_t>(offset + size);
-  // Out of bounds.
-  if (endBound > bytes.size() || offset >= static_cast<int64_t>(bytes.size()) || offset < 0)
-    throw std::out_of_range("Offset or size out of range");
-
-  return winrt::array_view<uint8_t const>(bytes.data() + offset, bytes.data() + endBound);
-}
-
-void MemoryBlobPersistor0::RemoveMessage(string &&blobId) noexcept {
-  scoped_lock lock{m_mutex};
-
-  m_blobs.erase(std::move(blobId));
-}
-
-void MemoryBlobPersistor0::StoreMessage(vector<uint8_t> &&message, string &&blobId) noexcept {
-  scoped_lock lock{m_mutex};
-
-  m_blobs.insert_or_assign(std::move(blobId), std::move(message));
-}
-
-string MemoryBlobPersistor0::StoreMessage(vector<uint8_t> &&message) noexcept {
-  auto blobId = boost::uuids::to_string(m_guidGenerator());
-
-  scoped_lock lock{m_mutex};
-  m_blobs.insert_or_assign(blobId, std::move(message));
-
-  return blobId;
-}
-
-#pragma endregion IBlobPersistor
-
-#pragma endregion MemoryBlobPersistor0
-
-#pragma region BlobWebSocketModuleContentHandler0
-
-BlobWebSocketModuleContentHandler0::BlobWebSocketModuleContentHandler0(
-    shared_ptr<IBlobPersistor> blobPersistor) noexcept
-    : m_blobPersistor{blobPersistor} {}
-
-#pragma region IWebSocketModuleContentHandler
-
-void BlobWebSocketModuleContentHandler0::ProcessMessage(string &&message, dynamic &params) /*override*/ {
-  params[dataKey] = std::move(message);
-}
-
-void BlobWebSocketModuleContentHandler0::ProcessMessage(vector<uint8_t> &&message, dynamic &params) /*override*/ {
-  auto blob = dynamic::object();
-  blob(offsetKey, 0);
-  blob(sizeKey, message.size());
-  blob(blobIdKey, m_blobPersistor->StoreMessage(std::move(message)));
-
-  params[dataKey] = std::move(blob);
-  params[typeKey] = blobKey;
-}
-
-void BlobWebSocketModuleContentHandler0::ProcessMessage(
-    string &&message,
-    msrn::JSValueObject &params) noexcept /*override*/
-{
-  params[dataKey] = std::move(message);
-}
-
-void BlobWebSocketModuleContentHandler0::ProcessMessage(
-    vector<uint8_t> &&message,
-    msrn::JSValueObject &params) noexcept /*override*/
-{
-  auto blob = msrn::JSValueObject{
-      {offsetKey, 0}, {sizeKey, message.size()}, {blobIdKey, m_blobPersistor->StoreMessage(std::move(message))}};
-
-  params[dataKey] = std::move(blob);
-  params[typeKey] = blobKey;
-}
-
-#pragma endregion IWebSocketModuleContentHandler
-
-void BlobWebSocketModuleContentHandler0::Register(int64_t socketID) noexcept {
-  scoped_lock lock{m_mutex};
-  m_socketIds.insert(socketID);
-}
-
-void BlobWebSocketModuleContentHandler0::Unregister(int64_t socketID) noexcept {
-  scoped_lock lock{m_mutex};
-
-  auto itr = m_socketIds.find(socketID);
-  if (itr != m_socketIds.end())
-    m_socketIds.erase(itr);
-}
-
-#pragma endregion BlobWebSocketModuleContentHandler0
-
-#pragma region BlobModuleRequestBodyHandler0
-
-BlobModuleRequestBodyHandler0::BlobModuleRequestBodyHandler0(shared_ptr<IBlobPersistor> blobPersistor) noexcept
-    : m_blobPersistor{blobPersistor} {}
-
-#pragma region IRequestBodyHandler
-
-bool BlobModuleRequestBodyHandler0::Supports(msrn::JSValueObject &data) /*override*/ {
-  auto itr = data.find(blobKey);
-
-  return itr != data.cend() && !(*itr).second.AsString().empty();
-}
-
-msrn::JSValueObject BlobModuleRequestBodyHandler0::ToRequestBody(
-    msrn::JSValueObject &data,
-    string &contentType) /*override*/ {
-  auto type = contentType;
-  auto itr = data.find(typeKey);
-  if (itr != data.cend() && !(*itr).second.AsString().empty()) {
-    type = (*itr).second.AsString();
-  }
-  if (type.empty()) {
-    type = "application/octet-stream";
-  }
-
-  auto &blob = data[blobKey].AsObject();
-  auto blobId = blob[blobIdKey].AsString();
-  auto bytes = m_blobPersistor->ResolveMessage(std::move(blobId), blob[offsetKey].AsInt64(), blob[sizeKey].AsInt64());
-
-  return {{typeKey, type}, {sizeKey, bytes.size()}, {"bytes", msrn::JSValueArray(bytes.cbegin(), bytes.cend())}};
-}
-
-#pragma endregion IRequestBodyHandler
-
-#pragma endregion BlobModuleRequestBodyHandler0
-
-#pragma region BlobModuleResponseHandler0
-
-BlobModuleResponseHandler0::BlobModuleResponseHandler0(shared_ptr<IBlobPersistor> blobPersistor) noexcept
-    : m_blobPersistor{blobPersistor} {}
-
-#pragma region IResponseHandler
-
-bool BlobModuleResponseHandler0::Supports(string &responseType) /*override*/ {
-  return blobKey == responseType;
-}
-
-msrn::JSValueObject BlobModuleResponseHandler0::ToResponseData(vector<uint8_t> &&content) /*override*/ {
-  return {{offsetKey, 0}, {sizeKey, content.size()}, {blobIdKey, m_blobPersistor->StoreMessage(std::move(content))}};
-}
-
-#pragma endregion IResponseHandler
-
-#pragma endregion BlobModuleResponseHandler0
 
 /*extern*/ const char *GetBlobModuleName() noexcept {
   return s_moduleName;
