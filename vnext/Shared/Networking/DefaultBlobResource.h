@@ -122,6 +122,12 @@ class DefaultBlobResource : public IBlobResource, public std::enable_shared_from
 
   void Release(std::string &&blobId) noexcept override;
 
+  void AddNetworkingHandler() noexcept override;
+
+  void AddWebSocketHandler(int64_t id) noexcept override;
+
+  void RemoveWebSocketHandler(int64_t id) noexcept override;
+
   BlobCallbacks &Callbacks() noexcept override;
 
 #pragma endregion IBlobResource

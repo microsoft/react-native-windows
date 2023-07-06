@@ -23,12 +23,6 @@ struct IBlobResource {
     std::function<void(std::string &&errorText)> OnError;
   };
 
-  // static std::shared_ptr<IBlobResource> Make(
-  //   winrt::Windows::Foundation::IInspectable const &inspectableProperties,
-  //   std::shared_ptr<IBlobPersistor> blobPersistor,
-
-  //);
-
   static std::shared_ptr<IBlobResource> Make(winrt::Windows::Foundation::IInspectable const &inspectableProperties);
 
   virtual ~IBlobResource() noexcept {}
@@ -39,7 +33,11 @@ struct IBlobResource {
 
   virtual void Release(std::string &&blobId) noexcept = 0;
 
-  // TODO: addNetworkingHandler? addWebSocketHandler? removeWebSocketHandler?
+  virtual void AddNetworkingHandler() noexcept = 0;
+
+  virtual void AddWebSocketHandler(int64_t id) noexcept = 0;
+
+  virtual void RemoveWebSocketHandler(int64_t id) noexcept = 0;
 
   virtual BlobCallbacks &Callbacks() noexcept = 0;
 };

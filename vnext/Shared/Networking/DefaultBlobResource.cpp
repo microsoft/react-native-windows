@@ -143,6 +143,26 @@ void DefaultBlobResource::Release(string &&blobId) noexcept /*override*/ {
   m_blobPersistor->RemoveMessage(std::move(blobId));
 }
 
+void DefaultBlobResource::AddNetworkingHandler() noexcept /*override*/ {
+  auto propId = msrn::ReactPropertyId<msrn::ReactNonAbiValue<weak_ptr<IHttpModuleProxy>>>{L"HttpModule.Proxy"};
+
+  if (auto prop = m_propertyBag.Get(propId)) {
+    if (auto httpHandler = prop.Value().lock()) {
+      httpHandler->AddRequestBodyHandler(m_requestBodyHandler);
+      httpHandler->AddResponseHandler(m_responseHandler);
+    }
+  }
+  // TODO: else emit error?
+}
+
+void DefaultBlobResource::AddWebSocketHandler(int64_t id) noexcept /*override*/ {
+  m_contentHandler->Register(id);
+}
+
+void DefaultBlobResource::RemoveWebSocketHandler(int64_t id) noexcept /*override*/ {
+  m_contentHandler->Unregister(id);
+}
+
 IBlobResource::BlobCallbacks &DefaultBlobResource::Callbacks() noexcept /*override*/ {
   return m_callbacks;
 }
