@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 23 Jun 2023 18:19:56 GMT and should not be manually modified.
+This log was last generated on Thu, 06 Jul 2023 20:21:35 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.22
+
+Thu, 06 Jul 2023 20:21:35 GMT
+
+### Patches
+
+- Fix warning compiler may not enforce left-to-right evaluation order in braced initializer list (30809111+acoates-ms@users.noreply.github.com)
+- Update core 0.71.6 -> 0.71.12 (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.71.11
 
 ## 0.71.21
 

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Update core 0.71.6 -> 0.71.12",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

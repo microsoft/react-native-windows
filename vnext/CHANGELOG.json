@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 06 Jul 2023 20:21:35 GMT",
+      "tag": "react-native-windows_v0.71.22",
+      "version": "0.71.22",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "afe2b73f5c0a3bf1ae65332e52b4516b087ac0ca",
+            "comment": "Fix warning compiler may not enforce left-to-right evaluation order in braced initializer list"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "de9a38d6b4e1c13b727f9e0fda22615d0f28ff2c",
+            "comment": "Update core 0.71.6 -> 0.71.12"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.71.11",
+            "commit": "de9a38d6b4e1c13b727f9e0fda22615d0f28ff2c"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 23 Jun 2023 18:19:56 GMT",
       "tag": "react-native-windows_v0.71.21",
       "version": "0.71.21",
