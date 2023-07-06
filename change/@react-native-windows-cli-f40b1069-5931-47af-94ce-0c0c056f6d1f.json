@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add configConfig.windows.cppStringType in package.json for @rnw/codegen",
+  "packageName": "@react-native-windows/cli",
+  "email": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
