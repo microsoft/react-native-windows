@@ -4,44 +4,18 @@
 #include "BlobModule.h"
 
 #include <Modules/CxxModuleUtilities.h>
-#include <Modules/IHttpModuleProxy.h>
-#include <Modules/IWebSocketModuleProxy.h>
-#include <ReactPropertyBag.h>
-#include <unicode.h>
 
 // React Native
 #include <cxxreact/JsArgumentHelpers.h>
-
-// Boost Libraries
-#include <boost/uuid/uuid_io.hpp>
-
-// Windows API
-#include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.Security.Cryptography.h>
-
-// Standard Library
-#include <chrono>
-#include <filesystem>
-#include <fstream>
 
 using namespace facebook::xplat;
 
 using folly::dynamic;
 using Microsoft::React::Networking::IBlobResource;
-using std::scoped_lock;
-using std::shared_ptr;
 using std::string;
 using std::vector;
-using std::weak_ptr;
-using winrt::Microsoft::ReactNative::IReactPropertyBag;
-using winrt::Microsoft::ReactNative::ReactNonAbiValue;
-using winrt::Microsoft::ReactNative::ReactPropertyBag;
-using winrt::Microsoft::ReactNative::ReactPropertyId;
 using winrt::Windows::Foundation::IInspectable;
-using winrt::Windows::Foundation::Uri;
-using winrt::Windows::Security::Cryptography::CryptographicBuffer;
 
-namespace fs = std::filesystem;
 namespace msrn = winrt::Microsoft::ReactNative;
 
 namespace {
@@ -50,15 +24,18 @@ constexpr char blobKey[] = "blob";
 constexpr char blobIdKey[] = "blobId";
 constexpr char offsetKey[] = "offset";
 constexpr char sizeKey[] = "size";
-constexpr char typeKey[] = "type";
-constexpr char dataKey[] = "data";
 } // namespace
 
 namespace Microsoft::React {
 
 #pragma region BlobTurboModule
 
-void BlobTurboModule::Initialize(msrn::ReactContext const &reactContext) noexcept {}
+void BlobTurboModule::Initialize(msrn::ReactContext const &reactContext) noexcept {
+  m_resource = IBlobResource::Make(reactContext.Properties().Handle());
+  m_resource->Callbacks().OnError = [&reactContext](string &&errorText) {
+    Modules::SendEvent(reactContext, L"blobFailed", {errorText});
+  };
+}
 
 ReactNativeSpecs::BlobModuleSpec_Constants BlobTurboModule::GetConstants() noexcept {
   ReactNativeSpecs::BlobModuleSpec_Constants result;
@@ -68,17 +45,30 @@ ReactNativeSpecs::BlobModuleSpec_Constants BlobTurboModule::GetConstants() noexc
   return result;
 }
 
-void BlobTurboModule::AddNetworkingHandler() noexcept {}
+void BlobTurboModule::AddNetworkingHandler() noexcept {
+  m_resource->AddNetworkingHandler();
+}
 
-void BlobTurboModule::AddWebSocketHandler(double id) noexcept {}
+void BlobTurboModule::AddWebSocketHandler(double id) noexcept {
+  m_resource->AddWebSocketHandler(static_cast<int64_t>(id));
+}
 
-void BlobTurboModule::RemoveWebSocketHandler(double id) noexcept {}
+void BlobTurboModule::RemoveWebSocketHandler(double id) noexcept {
+  m_resource->RemoveWebSocketHandler(static_cast<int64_t>(id));
+}
 
-void BlobTurboModule::SendOverSocket(msrn::JSValue &&blob, double socketID) noexcept {}
+void BlobTurboModule::SendOverSocket(msrn::JSValue &&blob, double socketID) noexcept {
+  m_resource->SendOverSocket(
+      blob[blobIdKey].AsString(), blob[offsetKey].AsInt64(), blob[sizeKey].AsInt64(), static_cast<int64_t>(socketID));
+}
 
-void BlobTurboModule::CreateFromParts(vector<msrn::JSValue> const &parts, string &&withId) noexcept {}
+void BlobTurboModule::CreateFromParts(vector<msrn::JSValue> &&parts, string &&withId) noexcept {
+  m_resource->CreateFromParts(std::move(parts), std::move(withId));
+}
 
-void BlobTurboModule::Release(string &&blobId) noexcept {}
+void BlobTurboModule::Release(string &&blobId) noexcept {
+  m_resource->Release(std::move(blobId));
+}
 
 #pragma endregion BlobTurboModule
 
@@ -159,7 +149,7 @@ vector<module::CxxModule::Method> BlobModule::getMethods() {
 
 /*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateBlobModule(
     IInspectable const &inspectableProperties) noexcept {
-  if (auto properties = inspectableProperties.try_as<IReactPropertyBag>())
+  if (auto properties = inspectableProperties.try_as<msrn::IReactPropertyBag>())
     return std::make_unique<BlobModule>(properties);
 
   return nullptr;

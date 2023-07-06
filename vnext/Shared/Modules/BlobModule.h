@@ -5,26 +5,16 @@
 
 #include <NativeBlobModuleSpec.g.h>
 
-#include <Modules/IBlobPersistor.h>
-#include <Modules/IRequestBodyHandler.h>
-#include <Modules/IResponseHandler.h>
-#include <Modules/IWebSocketModuleContentHandler.h>
 #include <Networking/IBlobResource.h>
 
 // React Native
 #include <cxxreact/CxxModule.h>
 
-// Boost Libraries
-#include <boost/uuid/uuid_generators.hpp>
-
 // Windows API
 #include <winrt/base.h>
 
 // Standard Library
-#include <mutex>
 #include <string>
-#include <unordered_map>
-#include <unordered_set>
 #include <vector>
 
 namespace Microsoft::React {
@@ -52,10 +42,13 @@ struct BlobTurboModule {
   void SendOverSocket(winrt::Microsoft::ReactNative::JSValue &&blob, double socketID) noexcept;
 
   REACT_METHOD(CreateFromParts, L"createFromParts")
-  void CreateFromParts(std::vector<winrt::Microsoft::ReactNative::JSValue> const &parts, std::string &&withId) noexcept;
+  void CreateFromParts(std::vector<winrt::Microsoft::ReactNative::JSValue> &&parts, std::string &&withId) noexcept;
 
   REACT_METHOD(Release, L"release")
   void Release(std::string &&blobId) noexcept;
+
+ private:
+  std::shared_ptr<Networking::IBlobResource> m_resource;
 };
 
 class BlobModule : public facebook::xplat::module::CxxModule {

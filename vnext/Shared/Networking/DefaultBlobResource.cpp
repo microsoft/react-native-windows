@@ -3,7 +3,6 @@
 
 #include "DefaultBlobResource.h"
 
-#include <Modules/CxxModuleUtilities.h>
 #include <Modules/IHttpModuleProxy.h>
 #include <Modules/IWebSocketModuleProxy.h>
 
@@ -29,7 +28,6 @@ namespace msrn = winrt::Microsoft::ReactNative;
 
 namespace {
 
-constexpr char s_moduleName[] = "BlobModule";
 constexpr char blobKey[] = "blob";
 constexpr char blobIdKey[] = "blobId";
 constexpr char offsetKey[] = "offset";
