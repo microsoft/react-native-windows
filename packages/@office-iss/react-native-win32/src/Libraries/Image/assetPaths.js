@@ -8,6 +8,10 @@
 
 'use strict';
 
+// Some windows machines may not have long paths enabled
+// https://learn.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation
+// Assets in nested node_modules (common when using pnpm) - end up creating very long paths
+// Using this function we shorten longer paths to prevent paths from hitting the path limit
 function ensureSmallPath(str) {
   if (str.length < 40) return str;
 
