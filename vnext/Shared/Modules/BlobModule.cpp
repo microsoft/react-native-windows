@@ -60,7 +60,7 @@ namespace Microsoft::React {
 
 void BlobTurboModule::Initialize(msrn::ReactContext const &reactContext) noexcept {}
 
-ReactNativeSpecs::BlobModuleSpec_Constants GetConstants() noexcept {
+ReactNativeSpecs::BlobModuleSpec_Constants BlobTurboModule::GetConstants() noexcept {
   ReactNativeSpecs::BlobModuleSpec_Constants result;
   result.BLOB_URI_SCHEME = blobKey;
   result.BLOB_URI_HOST = {};
