@@ -7,9 +7,6 @@
 #include <Modules/IHttpModuleProxy.h>
 #include <Modules/IWebSocketModuleProxy.h>
 
-// Folly
-#include <folly/dynamic.h>//TODO: Remove
-
 // Boost Libraries
 #include <boost/uuid/uuid_io.hpp>
 
@@ -46,22 +43,51 @@ namespace Microsoft::React::Networking {
 
 #pragma region DefaultBlobResource
 
+DefaultBlobResource::DefaultBlobResource(
+    shared_ptr<MemoryBlobPersistor> blobPersistor,
+    shared_ptr<BlobWebSocketModuleContentHandler> contentHandler,
+    shared_ptr<BlobModuleRequestBodyHandler> requestBodyHandler,
+    shared_ptr<BlobModuleResponseHandler> responseHandler,
+    msrn::ReactPropertyBag propertyBag)
+    : m_blobPersistor{blobPersistor},
+      m_contentHandler{contentHandler},
+      m_requestBodyHandler{requestBodyHandler},
+      m_responseHandler{responseHandler},
+      m_propertyBag{propertyBag} {}
+
 #pragma region IBlobResource
 
 /*static*/ shared_ptr<IBlobResource> IBlobResource::Make(
     winrt::Windows::Foundation::IInspectable const &inspectableProperties) {
-  auto result = std::make_shared<DefaultBlobResource>();
+  using namespace msrn;
+
+  auto propBag = ReactPropertyBag{inspectableProperties.try_as<IReactPropertyBag>()};
+
+  auto blobPersistor = std::make_shared<MemoryBlobPersistor>();
+  auto contentHandler = std::make_shared<BlobWebSocketModuleContentHandler>(blobPersistor);
+  auto requestBodyHanlder = std::make_shared<BlobModuleRequestBodyHandler>(blobPersistor);
+  auto responseHandler = std::make_shared<BlobModuleResponseHandler>(blobPersistor);
+
+  auto contentHandlerPropId =
+      ReactPropertyId<ReactNonAbiValue<weak_ptr<IWebSocketModuleContentHandler>>>{L"BlobModule.ContentHandler"};
+  propBag.Set(contentHandlerPropId, weak_ptr<IWebSocketModuleContentHandler>{contentHandler});
+
+  auto blobPersistorPropId = ReactPropertyId<ReactNonAbiValue<weak_ptr<IBlobPersistor>>>{L"Blob.Persistor"};
+  ;
+  propBag.Set(blobPersistorPropId, weak_ptr<IBlobPersistor>{blobPersistor});
+
+  auto result = std::make_shared<DefaultBlobResource>(
+      blobPersistor, contentHandler, requestBodyHanlder, responseHandler, propBag);
 
   return result;
 }
 
 void DefaultBlobResource::SendOverSocket(string &&blobId, int64_t offset, int64_t size, int64_t socketId) noexcept
 /*override*/ {
-  auto propBag = msrn::ReactPropertyBag{}; // TODO: Fetch from context.
   auto propId =
       msrn::ReactPropertyId<msrn::ReactNonAbiValue<weak_ptr<IWebSocketModuleProxy>>>{L"WebSocketModule.Proxy"};
   shared_ptr<IWebSocketModuleProxy> wsProxy;
-  if (auto prop = propBag.Get(propId)) {
+  if (auto prop = m_propertyBag.Get(propId)) {
     wsProxy = prop.Value().lock();
   }
   if (!wsProxy) {
@@ -229,5 +255,60 @@ void BlobWebSocketModuleContentHandler::Unregister(int64_t socketID) noexcept {
 }
 
 #pragma endregion BlobWebSocketModuleContentHandler
+
+#pragma region BlobModuleRequestBodyHandler
+
+BlobModuleRequestBodyHandler::BlobModuleRequestBodyHandler(shared_ptr<IBlobPersistor> blobPersistor) noexcept
+    : m_blobPersistor{blobPersistor} {}
+
+#pragma region IRequestBodyHandler
+
+bool BlobModuleRequestBodyHandler::Supports(msrn::JSValueObject &data) /*override*/ {
+  auto itr = data.find(blobKey);
+
+  return itr != data.cend() && !(*itr).second.AsString().empty();
+}
+
+msrn::JSValueObject BlobModuleRequestBodyHandler::ToRequestBody(
+    msrn::JSValueObject &data,
+    string &contentType) /*override*/ {
+  auto type = contentType;
+  auto itr = data.find(typeKey);
+  if (itr != data.cend() && !(*itr).second.AsString().empty()) {
+    type = (*itr).second.AsString();
+  }
+  if (type.empty()) {
+    type = "application/octet-stream";
+  }
+
+  auto &blob = data[blobKey].AsObject();
+  auto blobId = blob[blobIdKey].AsString();
+  auto bytes = m_blobPersistor->ResolveMessage(std::move(blobId), blob[offsetKey].AsInt64(), blob[sizeKey].AsInt64());
+
+  return {{typeKey, type}, {sizeKey, bytes.size()}, {"bytes", msrn::JSValueArray(bytes.cbegin(), bytes.cend())}};
+}
+
+#pragma endregion IRequestBodyHandler
+
+#pragma endregion BlobModuleRequestBodyHandler
+
+#pragma region BlobModuleResponseHandler
+
+BlobModuleResponseHandler::BlobModuleResponseHandler(shared_ptr<IBlobPersistor> blobPersistor) noexcept
+    : m_blobPersistor{blobPersistor} {}
+
+#pragma region IResponseHandler
+
+bool BlobModuleResponseHandler::Supports(string &responseType) /*override*/ {
+  return blobKey == responseType;
+}
+
+msrn::JSValueObject BlobModuleResponseHandler::ToResponseData(vector<uint8_t> &&content) /*override*/ {
+  return {{offsetKey, 0}, {sizeKey, content.size()}, {blobIdKey, m_blobPersistor->StoreMessage(std::move(content))}};
+}
+
+#pragma endregion IResponseHandler
+
+#pragma endregion BlobModuleResponseHandler
 
 } // namespace Microsoft::React::Networking

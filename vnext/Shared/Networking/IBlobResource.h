@@ -3,6 +3,8 @@
 
 #pragma once
 
+#include <Modules/IBlobPersistor.h>
+
 // React Native Windows
 #include <JSValue.h>
 
@@ -20,6 +22,12 @@ struct IBlobResource {
   struct BlobCallbacks {
     std::function<void(std::string &&errorText)> OnError;
   };
+
+  // static std::shared_ptr<IBlobResource> Make(
+  //   winrt::Windows::Foundation::IInspectable const &inspectableProperties,
+  //   std::shared_ptr<IBlobPersistor> blobPersistor,
+
+  //);
 
   static std::shared_ptr<IBlobResource> Make(winrt::Windows::Foundation::IInspectable const &inspectableProperties);
 

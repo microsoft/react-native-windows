@@ -21,10 +21,10 @@ namespace Microsoft::React {
 struct IWebSocketModuleContentHandler {
   virtual ~IWebSocketModuleContentHandler() noexcept {}
 
-  //TODO: DELETE
+  // TODO: DELETE
   virtual void ProcessMessage(std::string &&message, folly::dynamic &params) = 0;
 
-  //TODO: DELETE
+  // TODO: DELETE
   virtual void ProcessMessage(std::vector<uint8_t> &&message, folly::dynamic &params) = 0;
 
   virtual void ProcessMessage(std::string &&message, winrt::Microsoft::ReactNative::JSValueObject &params) noexcept = 0;

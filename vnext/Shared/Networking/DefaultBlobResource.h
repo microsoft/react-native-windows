@@ -6,7 +6,15 @@
 #include "IBlobResource.h"
 
 #include <Modules/IBlobPersistor.h>
+#include <Modules/IRequestBodyHandler.h>
+#include <Modules/IResponseHandler.h>
 #include <Modules/IWebSocketModuleContentHandler.h>
+
+// React Native Windows
+#include <ReactPropertyBag.h>
+
+// Folly
+#include <folly/dynamic.h> //TODO: Remove
 
 // Boost Libraries
 #include <boost/uuid/uuid_generators.hpp>
@@ -37,19 +45,19 @@ class BlobWebSocketModuleContentHandler final : public IWebSocketModuleContentHa
   std::mutex m_mutex;
   std::shared_ptr<IBlobPersistor> m_blobPersistor;
 
-public:
+ public:
   BlobWebSocketModuleContentHandler(std::shared_ptr<IBlobPersistor> blobPersistor) noexcept;
 
 #pragma region IWebSocketModuleContentHandler
 
-  void ProcessMessage(std::string&& message, folly::dynamic& params) override;
+  void ProcessMessage(std::string &&message, folly::dynamic &params) override;
 
-  void ProcessMessage(std::vector<uint8_t>&& message, folly::dynamic& params) override;
+  void ProcessMessage(std::vector<uint8_t> &&message, folly::dynamic &params) override;
 
-  void ProcessMessage(std::string&& message, winrt::Microsoft::ReactNative::JSValueObject& params) noexcept override;
+  void ProcessMessage(std::string &&message, winrt::Microsoft::ReactNative::JSValueObject &params) noexcept override;
 
-  void ProcessMessage(std::vector<uint8_t>&& message, winrt::Microsoft::ReactNative::JSValueObject& params) noexcept
-    override;
+  void ProcessMessage(std::vector<uint8_t> &&message, winrt::Microsoft::ReactNative::JSValueObject &params) noexcept
+      override;
 
 #pragma endregion IWebSocketModuleContentHandler
 
@@ -58,12 +66,54 @@ public:
   void Unregister(int64_t socketID) noexcept;
 };
 
+class BlobModuleRequestBodyHandler final : public IRequestBodyHandler {
+  std::shared_ptr<IBlobPersistor> m_blobPersistor;
+
+ public:
+  BlobModuleRequestBodyHandler(std::shared_ptr<IBlobPersistor> blobPersistor) noexcept;
+
+#pragma region IRequestBodyHandler
+
+  bool Supports(winrt::Microsoft::ReactNative::JSValueObject &data) override;
+
+  winrt::Microsoft::ReactNative::JSValueObject ToRequestBody(
+      winrt::Microsoft::ReactNative::JSValueObject &data,
+      std::string &contentType) override;
+
+#pragma endregion IRequestBodyHandler
+};
+
+class BlobModuleResponseHandler final : public IResponseHandler {
+  std::shared_ptr<IBlobPersistor> m_blobPersistor;
+
+ public:
+  BlobModuleResponseHandler(std::shared_ptr<IBlobPersistor> blobPersistor) noexcept;
+
+#pragma region IResponseHandler
+
+  bool Supports(std::string &responseType) override;
+
+  winrt::Microsoft::ReactNative::JSValueObject ToResponseData(std::vector<uint8_t> &&content) override;
+
+#pragma endregion IResponseHandler
+};
+
 class DefaultBlobResource : public IBlobResource, public std::enable_shared_from_this<DefaultBlobResource> {
   std::shared_ptr<MemoryBlobPersistor> m_blobPersistor;
   std::shared_ptr<BlobWebSocketModuleContentHandler> m_contentHandler;
+  std::shared_ptr<BlobModuleRequestBodyHandler> m_requestBodyHandler;
+  std::shared_ptr<BlobModuleResponseHandler> m_responseHandler;
+  winrt::Microsoft::ReactNative::ReactPropertyBag m_propertyBag;
   BlobCallbacks m_callbacks;
 
  public:
+  DefaultBlobResource(
+      std::shared_ptr<MemoryBlobPersistor> blobPersistor,
+      std::shared_ptr<BlobWebSocketModuleContentHandler> contentHandler,
+      std::shared_ptr<BlobModuleRequestBodyHandler> requestBodyHandler,
+      std::shared_ptr<BlobModuleResponseHandler> responseHandler,
+      winrt::Microsoft::ReactNative::ReactPropertyBag propertyBag);
+
 #pragma region IBlobResource
 
   void SendOverSocket(std::string &&blobId, int64_t offset, int64_t size, int64_t socketId) noexcept override;

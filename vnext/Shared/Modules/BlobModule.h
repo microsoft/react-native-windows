@@ -102,11 +102,11 @@ class BlobWebSocketModuleContentHandler0 final : public IWebSocketModuleContentH
   void Unregister(int64_t socketID) noexcept;
 };
 
-class BlobModuleRequestBodyHandler final : public IRequestBodyHandler {
+class BlobModuleRequestBodyHandler0 final : public IRequestBodyHandler {
   std::shared_ptr<IBlobPersistor> m_blobPersistor;
 
  public:
-  BlobModuleRequestBodyHandler(std::shared_ptr<IBlobPersistor> blobPersistor) noexcept;
+  BlobModuleRequestBodyHandler0(std::shared_ptr<IBlobPersistor> blobPersistor) noexcept;
 
 #pragma region IRequestBodyHandler
 
@@ -119,11 +119,11 @@ class BlobModuleRequestBodyHandler final : public IRequestBodyHandler {
 #pragma endregion IRequestBodyHandler
 };
 
-class BlobModuleResponseHandler final : public IResponseHandler {
+class BlobModuleResponseHandler0 final : public IResponseHandler {
   std::shared_ptr<IBlobPersistor> m_blobPersistor;
 
  public:
-  BlobModuleResponseHandler(std::shared_ptr<IBlobPersistor> blobPersistor) noexcept;
+  BlobModuleResponseHandler0(std::shared_ptr<IBlobPersistor> blobPersistor) noexcept;
 
 #pragma region IResponseHandler
 
@@ -137,8 +137,8 @@ class BlobModuleResponseHandler final : public IResponseHandler {
 class BlobModule : public facebook::xplat::module::CxxModule {
   std::shared_ptr<MemoryBlobPersistor0> m_blobPersistor;
   std::shared_ptr<BlobWebSocketModuleContentHandler0> m_contentHandler;
-  std::shared_ptr<BlobModuleRequestBodyHandler> m_requestBodyHandler;
-  std::shared_ptr<BlobModuleResponseHandler> m_responseHandler;
+  std::shared_ptr<BlobModuleRequestBodyHandler0> m_requestBodyHandler;
+  std::shared_ptr<BlobModuleResponseHandler0> m_responseHandler;
 
   // Property bag high level reference.
   winrt::Windows::Foundation::IInspectable m_inspectableProperties;

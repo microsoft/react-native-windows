@@ -87,8 +87,8 @@ BlobModule::BlobModule(winrt::Windows::Foundation::IInspectable const &inspectab
     : m_sharedState{std::make_shared<SharedState>()},
       m_blobPersistor{std::make_shared<MemoryBlobPersistor0>()},
       m_contentHandler{std::make_shared<BlobWebSocketModuleContentHandler0>(m_blobPersistor)},
-      m_requestBodyHandler{std::make_shared<BlobModuleRequestBodyHandler>(m_blobPersistor)},
-      m_responseHandler{std::make_shared<BlobModuleResponseHandler>(m_blobPersistor)},
+      m_requestBodyHandler{std::make_shared<BlobModuleRequestBodyHandler0>(m_blobPersistor)},
+      m_responseHandler{std::make_shared<BlobModuleResponseHandler0>(m_blobPersistor)},
       m_inspectableProperties{inspectableProperties} {
   auto propBag = ReactPropertyBag{m_inspectableProperties.try_as<IReactPropertyBag>()};
 
@@ -292,7 +292,8 @@ string MemoryBlobPersistor0::StoreMessage(vector<uint8_t> &&message) noexcept {
 
 #pragma region BlobWebSocketModuleContentHandler0
 
-BlobWebSocketModuleContentHandler0::BlobWebSocketModuleContentHandler0(shared_ptr<IBlobPersistor> blobPersistor) noexcept
+BlobWebSocketModuleContentHandler0::BlobWebSocketModuleContentHandler0(
+    shared_ptr<IBlobPersistor> blobPersistor) noexcept
     : m_blobPersistor{blobPersistor} {}
 
 #pragma region IWebSocketModuleContentHandler
@@ -346,20 +347,20 @@ void BlobWebSocketModuleContentHandler0::Unregister(int64_t socketID) noexcept {
 
 #pragma endregion BlobWebSocketModuleContentHandler0
 
-#pragma region BlobModuleRequestBodyHandler
+#pragma region BlobModuleRequestBodyHandler0
 
-BlobModuleRequestBodyHandler::BlobModuleRequestBodyHandler(shared_ptr<IBlobPersistor> blobPersistor) noexcept
+BlobModuleRequestBodyHandler0::BlobModuleRequestBodyHandler0(shared_ptr<IBlobPersistor> blobPersistor) noexcept
     : m_blobPersistor{blobPersistor} {}
 
 #pragma region IRequestBodyHandler
 
-bool BlobModuleRequestBodyHandler::Supports(msrn::JSValueObject &data) /*override*/ {
+bool BlobModuleRequestBodyHandler0::Supports(msrn::JSValueObject &data) /*override*/ {
   auto itr = data.find(blobKey);
 
   return itr != data.cend() && !(*itr).second.AsString().empty();
 }
 
-msrn::JSValueObject BlobModuleRequestBodyHandler::ToRequestBody(
+msrn::JSValueObject BlobModuleRequestBodyHandler0::ToRequestBody(
     msrn::JSValueObject &data,
     string &contentType) /*override*/ {
   auto type = contentType;
@@ -380,26 +381,26 @@ msrn::JSValueObject BlobModuleRequestBodyHandler::ToRequestBody(
 
 #pragma endregion IRequestBodyHandler
 
-#pragma endregion BlobModuleRequestBodyHandler
+#pragma endregion BlobModuleRequestBodyHandler0
 
-#pragma region BlobModuleResponseHandler
+#pragma region BlobModuleResponseHandler0
 
-BlobModuleResponseHandler::BlobModuleResponseHandler(shared_ptr<IBlobPersistor> blobPersistor) noexcept
+BlobModuleResponseHandler0::BlobModuleResponseHandler0(shared_ptr<IBlobPersistor> blobPersistor) noexcept
     : m_blobPersistor{blobPersistor} {}
 
 #pragma region IResponseHandler
 
-bool BlobModuleResponseHandler::Supports(string &responseType) /*override*/ {
+bool BlobModuleResponseHandler0::Supports(string &responseType) /*override*/ {
   return blobKey == responseType;
 }
 
-msrn::JSValueObject BlobModuleResponseHandler::ToResponseData(vector<uint8_t> &&content) /*override*/ {
+msrn::JSValueObject BlobModuleResponseHandler0::ToResponseData(vector<uint8_t> &&content) /*override*/ {
   return {{offsetKey, 0}, {sizeKey, content.size()}, {blobIdKey, m_blobPersistor->StoreMessage(std::move(content))}};
 }
 
 #pragma endregion IResponseHandler
 
-#pragma endregion BlobModuleResponseHandler
+#pragma endregion BlobModuleResponseHandler0
 
 /*extern*/ const char *GetBlobModuleName() noexcept {
   return s_moduleName;
