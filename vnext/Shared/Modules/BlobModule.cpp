@@ -88,7 +88,7 @@ BlobModule::BlobModule(winrt::Windows::Foundation::IInspectable const &inspectab
     : m_sharedState{std::make_shared<SharedState>()} {
   m_sharedState->Module = this;
   m_resource = IBlobResource::Make(inspectableProperties);
-  m_resource->Callbacks().OnError = [sharedState = m_sharedState](string&& errorText) {
+  m_resource->Callbacks().OnError = [sharedState = m_sharedState](string &&errorText) {
     Modules::SendEvent(sharedState->Module->getInstance(), "blobFailed", std::move(errorText));
   };
 }
