@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.20.0",
-    "metro-react-native-babel-preset": "0.73.9"
+    "metro-react-native-babel-preset": "0.73.10"
   },
   "devDependencies": {
     "eslint": "^8.19.0",
