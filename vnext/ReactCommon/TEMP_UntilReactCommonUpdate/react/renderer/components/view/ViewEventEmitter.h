@@ -57,6 +57,8 @@ class ViewEventEmitter : public TouchEventEmitter {
   void onKeyUp(KeyboardEvent const &event) const; // [Windows]
   void onKeyDown(KeyboardEvent const &event) const; // [Windows]
 
+  void onClick() const; // [Windows]
+
  private:
   /*
    * Contains the most recent `frame` and a `mutex` protecting access to it.

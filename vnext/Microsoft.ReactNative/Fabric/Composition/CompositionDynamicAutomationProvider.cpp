@@ -272,4 +272,34 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_HostRawElementProvid
   return S_OK;
 }
 
+HRESULT CompositionDynamicAutomationProvider::Invoke() {
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  auto baseView = std::static_pointer_cast<::Microsoft::ReactNative::CompositionBaseComponentView>(strongView);
+  if (baseView == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  // Currently calls both onAccessibilityTap and onClick.
+  // To match Paper behavior, onAccessibilityTap only called if onClick is not defined.
+  // Events dispatched for any control. 
+  // To match Paper, Event should only dispatch for pressable controls without state.
+  baseView.get()->GetEventEmitter().get()->onAccessibilityTap();
+  baseView.get()->GetEventEmitter().get()->onClick();
+
+  auto rootCV = strongView->rootComponentView();
+  if (rootCV == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  auto uiaProvider = rootCV->EnsureUiaProvider();
+  auto spProviderSimple = uiaProvider.try_as<IRawElementProviderSimple>();
+  if (spProviderSimple != nullptr) {
+    UiaRaiseAutomationEvent(spProviderSimple.get(), UIA_Invoke_InvokedEventId);
+  }
+  
+  return S_OK;
+}
+
 } // namespace winrt::Microsoft::ReactNative::implementation

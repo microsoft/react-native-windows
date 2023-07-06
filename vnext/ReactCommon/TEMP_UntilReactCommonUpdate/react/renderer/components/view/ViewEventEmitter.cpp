@@ -156,4 +156,9 @@ void ViewEventEmitter::onKeyDown(KeyboardEvent const &event) const {
     });
 }
 
+// [Windows]
+void ViewEventEmitter::onClick() const {
+  dispatchEvent("topClick");
+}
+
 } // namespace facebook::react

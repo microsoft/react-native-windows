@@ -4,6 +4,7 @@
 #include <Fabric/ReactTaggedView.h>
 #include <UIAutomation.h>
 #include <inspectable.h>
+#include <uiautomationcore.h>
 
 namespace winrt::Microsoft::ReactNative::implementation {
 struct CompositionRootView;
@@ -14,6 +15,7 @@ class CompositionRootAutomationProvider : public winrt::implements<
                                               IRawElementProviderFragmentRoot,
                                               IRawElementProviderFragment,
                                               IRawElementProviderSimple,
+                                              IInvokeProvider,
                                               IRawElementProviderAdviseEvents> {
  public:
   // inherited via IRawElementProviderFragmentRoot
@@ -34,6 +36,9 @@ class CompositionRootAutomationProvider : public winrt::implements<
   virtual HRESULT __stdcall GetPatternProvider(PATTERNID patternId, IUnknown **pRetVal) override;
   virtual HRESULT __stdcall GetPropertyValue(PROPERTYID propertyId, VARIANT *pRetVal) override;
   virtual HRESULT __stdcall get_HostRawElementProvider(IRawElementProviderSimple **pRetVal) override;
+
+  // inherited via IInvokeProvider
+  virtual HRESULT Invoke() override;
 
   // IRawElementProviderAdviseEvents
   virtual HRESULT __stdcall AdviseEventAdded(EVENTID idEvent, SAFEARRAY *psaProperties) override;
