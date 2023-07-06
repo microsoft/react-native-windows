@@ -85,17 +85,7 @@ void BlobTurboModule::Release(string &&blobId) noexcept {}
 #pragma region BlobModule
 
 BlobModule::BlobModule(winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept
-    : m_sharedState{std::make_shared<SharedState>()} {
-  m_sharedState->Module = this;
-  m_resource = IBlobResource::Make(inspectableProperties);
-  m_resource->Callbacks().OnError = [sharedState = m_sharedState](string&& errorText) {
-    Modules::SendEvent(sharedState->Module->getInstance(), "blobFailed", std::move(errorText));
-  };
-}
-
-BlobModule::~BlobModule() noexcept /*override*/ {
-  m_sharedState->Module = nullptr;
-}
+    : m_resource{IBlobResource::Make(inspectableProperties)} {}
 
 #pragma region CxxModule
 
@@ -108,6 +98,11 @@ std::map<string, dynamic> BlobModule::getConstants() {
 }
 
 vector<module::CxxModule::Method> BlobModule::getMethods() {
+  // See CxxNativeModule::lazyInit()
+  m_resource->Callbacks().OnError = [weakInstance = getInstance()](string &&errorText) {
+    Modules::SendEvent(weakInstance, "blobFailed", std::move(errorText));
+  };
+
   return {
       {"addNetworkingHandler", [resource = m_resource](dynamic /*args*/) { resource->AddNetworkingHandler(); }},
 
@@ -126,7 +121,7 @@ vector<module::CxxModule::Method> BlobModule::getMethods() {
        }},
 
       {"sendOverSocket",
-       [weakState = weak_ptr<SharedState>(m_sharedState), resource = m_resource](dynamic args) {
+       [resource = m_resource](dynamic args) {
          auto blob = jsArgAsObject(args, 0);
          auto blobId = blob[blobIdKey].getString();
          auto offset = blob[offsetKey].getInt();
@@ -137,10 +132,7 @@ vector<module::CxxModule::Method> BlobModule::getMethods() {
        }},
 
       {"createFromParts",
-       // As of React Native 0.67, instance is set AFTER CxxModule::getMethods() is invoked.
-       // Use getInstance() directly once
-       // https://github.com/facebook/react-native/commit/1d45b20b6c6ba66df0485cdb9be36463d96cf182 becomes available.
-       [weakState = weak_ptr<SharedState>(m_sharedState), resource = m_resource](dynamic args) {
+       [resource = m_resource](dynamic args) {
          auto dynamicParts = jsArgAsArray(args, 0); // Array<Object>
          auto parts = Modules::ToJSValue(dynamicParts);
          auto blobId = jsArgAsString(args, 1);

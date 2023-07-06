@@ -74,15 +74,6 @@ class BlobModule : public facebook::xplat::module::CxxModule {
 
   BlobModule(winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept;
 
-  ~BlobModule() noexcept override;
-
-  struct SharedState {
-    /// <summary>
-    /// Keeps a raw reference to the module object to lazily retrieve the React Instance as needed.
-    /// </summary>
-    CxxModule *Module{nullptr};
-  };
-
 #pragma region CxxModule
 
   /// <summary>
@@ -102,12 +93,6 @@ class BlobModule : public facebook::xplat::module::CxxModule {
   std::vector<Method> getMethods() override;
 
 #pragma endregion CxxModule
-
- private:
-  /// <summary>
-  /// Keeps members that can be accessed threads other than this module's owner accessible.
-  /// </summary>
-  std::shared_ptr<SharedState> m_sharedState;
 };
 
 } // namespace Microsoft::React
