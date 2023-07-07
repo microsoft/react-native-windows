@@ -225,20 +225,6 @@ BlobWebSocketModuleContentHandler::BlobWebSocketModuleContentHandler(shared_ptr<
 
 #pragma region IWebSocketModuleContentHandler
 
-void BlobWebSocketModuleContentHandler::ProcessMessage(string &&message, dynamic &params) /*override*/ {
-  params[dataKey] = std::move(message);
-}
-
-void BlobWebSocketModuleContentHandler::ProcessMessage(vector<uint8_t> &&message, dynamic &params) /*override*/ {
-  auto blob = dynamic::object();
-  blob(offsetKey, 0);
-  blob(sizeKey, message.size());
-  blob(blobIdKey, m_blobPersistor->StoreMessage(std::move(message)));
-
-  params[dataKey] = std::move(blob);
-  params[typeKey] = blobKey;
-}
-
 void BlobWebSocketModuleContentHandler::ProcessMessage(
     string &&message,
     msrn::JSValueObject &params) noexcept /*override*/

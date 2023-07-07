@@ -50,10 +50,6 @@ class BlobWebSocketModuleContentHandler final : public IWebSocketModuleContentHa
 
 #pragma region IWebSocketModuleContentHandler
 
-  void ProcessMessage(std::string &&message, folly::dynamic &params) override;
-
-  void ProcessMessage(std::vector<uint8_t> &&message, folly::dynamic &params) override;
-
   void ProcessMessage(std::string &&message, winrt::Microsoft::ReactNative::JSValueObject &params) noexcept override;
 
   void ProcessMessage(std::vector<uint8_t> &&message, winrt::Microsoft::ReactNative::JSValueObject &params) noexcept
