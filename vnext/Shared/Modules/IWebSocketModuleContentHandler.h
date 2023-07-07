@@ -3,9 +3,6 @@
 
 #pragma once
 
-// React Native
-#include <folly/dynamic.h>
-
 // React Native Windows
 #include <JSValue.h>
 

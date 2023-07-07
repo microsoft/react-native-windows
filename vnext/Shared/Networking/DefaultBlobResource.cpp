@@ -15,7 +15,6 @@
 // Standard Library
 #include <mutex>
 
-using folly::dynamic;
 using std::scoped_lock;
 using std::shared_ptr;
 using std::string;

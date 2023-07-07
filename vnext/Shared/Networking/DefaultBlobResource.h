@@ -13,9 +13,6 @@
 // React Native Windows
 #include <ReactPropertyBag.h>
 
-// Folly
-#include <folly/dynamic.h> //TODO: Remove
-
 // Boost Libraries
 #include <boost/uuid/uuid_generators.hpp>
 
