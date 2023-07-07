@@ -11,6 +11,9 @@ import {AliasMap, setPreferredModuleName} from './AliasManaging';
 import {createAliasMap, generateAliases} from './AliasGen';
 import {generateValidateConstants} from './ValidateConstants';
 import {generateValidateMethods} from './ValidateMethods';
+import type {CppStringTypes} from './ObjectTypes';
+
+export type {CppStringTypes} from './ObjectTypes';
 
 type FilesOutput = Map<string, string>;
 
@@ -46,9 +49,11 @@ struct ::_MODULE_NAME_::Spec : winrt::Microsoft::ReactNative::TurboModuleSpec {
 export function createNM2Generator({
   methodOnly,
   namespace,
+  cppStringType,
 }: {
   methodOnly: boolean;
   namespace: string;
+  cppStringType: CppStringTypes;
 }) {
   return (
     _libraryName: string,
@@ -74,7 +79,9 @@ export function createNM2Generator({
         const aliases: AliasMap = createAliasMap(nativeModule.aliasMap);
 
         // prepare methods
-        const methods = generateValidateMethods(nativeModule, aliases);
+        const methods = generateValidateMethods(nativeModule, aliases, {
+          cppStringType,
+        });
         let tuples = `
   static constexpr auto methods = std::tuple{
 ${methods[0]}
@@ -98,7 +105,9 @@ ${errors}`;
         }
 
         // generate code for structs
-        const traversedAliasedStructs = generateAliases(aliases);
+        const traversedAliasedStructs = generateAliases(aliases, {
+          cppStringType,
+        });
 
         files.set(
           `Native${preferredModuleName}Spec.g.h`,

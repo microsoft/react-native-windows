@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 04 Jul 2023 05:13:23 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.672",
+      "version": "0.0.0-canary.672",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "873bbb0a1f07abe67a974a964dd714e801e6cbdb",
+            "comment": "Define HTTP TurboModule"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "11b038f411acd9f1eb37a371830132f06eae3267",
+            "comment": "Default IncludeFabricInterface to true"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 01 Jul 2023 05:14:42 GMT",
       "tag": "react-native-windows_v0.0.0-canary.671",
       "version": "0.0.0-canary.671",
