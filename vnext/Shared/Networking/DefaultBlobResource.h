@@ -5,10 +5,10 @@
 
 #include "IBlobResource.h"
 
+#include <IBlobPersistor.h>
 #include <Modules/IRequestBodyHandler.h>
 #include <Modules/IResponseHandler.h>
 #include <Modules/IWebSocketModuleContentHandler.h>
-#include <IBlobPersistor.h>
 
 // React Native Windows
 #include <ReactPropertyBag.h>
