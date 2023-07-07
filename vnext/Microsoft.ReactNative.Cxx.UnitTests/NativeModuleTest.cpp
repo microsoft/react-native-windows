@@ -695,6 +695,7 @@ TEST_CLASS (NativeModuleTest) {
       if (wcscmp(current->ModuleName(), L"SimpleNativeModule") == 0) {
         registered = true;
       }
+      current = current->Next();
     }
     TestCheck(registered);
   }

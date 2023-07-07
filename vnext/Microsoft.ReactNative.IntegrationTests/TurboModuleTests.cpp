@@ -565,6 +565,7 @@ TEST_CLASS (TurboModuleTests) {
       if (wcscmp(current->ModuleName(), L"CppTurboModule") == 0) {
         registered = true;
       }
+      current = current->Next();
     }
     TestCheck(!registered);
   }
