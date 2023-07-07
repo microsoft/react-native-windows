@@ -308,6 +308,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)BaseFileReaderResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CppRuntimeOptions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)HermesSamplingProfiler.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)IBlobPersistor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)IFileReaderResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ByteArrayBuffer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraApi.h" />
@@ -320,7 +321,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\BlobModule.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\CxxModuleUtilities.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\FileReaderModule.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IBlobPersistor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IHttpModuleProxy.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IRequestBodyHandler.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IResponseHandler.h" />

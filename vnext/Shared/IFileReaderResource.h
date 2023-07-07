@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <Modules/IBlobPersistor.h>
+#include "IBlobPersistor.h"
 
 // Standard Library
 #include <functional>

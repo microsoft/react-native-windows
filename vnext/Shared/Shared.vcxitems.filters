@@ -600,9 +600,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IResponseHandler.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IBlobPersistor.h">
-      <Filter>Header Files\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\CxxModuleUtilities.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
@@ -746,6 +743,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Networking\DefaultBlobResource.h">
       <Filter>Header Files\Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)IBlobPersistor.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

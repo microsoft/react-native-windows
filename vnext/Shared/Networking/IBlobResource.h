@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <Modules/IBlobPersistor.h>
+#include <IBlobPersistor.h>
 
 // React Native Windows
 #include <JSValue.h>
