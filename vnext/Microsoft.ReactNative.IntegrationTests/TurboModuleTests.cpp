@@ -558,6 +558,17 @@ struct CppTurboModulePackageProvider : winrt::implements<CppTurboModulePackagePr
 } // namespace
 
 TEST_CLASS (TurboModuleTests) {
+  TEST_METHOD(EnsureReactModuleNotAutoRegistered) {
+    bool registered = false;
+    auto current = ModuleRegistration::Head();
+    while (current) {
+      if (wcscmp(current->ModuleName(), L"CppTurboModule") == 0) {
+        registered = true;
+      }
+    }
+    TestCheck(!registered);
+  }
+
   TEST_METHOD(ExecuteSampleTurboModule) {
     TestEventService::Initialize();
 
