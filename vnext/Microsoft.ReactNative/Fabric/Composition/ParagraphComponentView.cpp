@@ -474,6 +474,10 @@ void ParagraphComponentView::DrawText() noexcept {
   }
 }
 
+std::string ParagraphComponentView::DefaultControlType() const noexcept {
+  return "text";
+}
+
 winrt::Microsoft::ReactNative::Composition::IVisual ParagraphComponentView::Visual() const noexcept {
   return m_visual;
 }
