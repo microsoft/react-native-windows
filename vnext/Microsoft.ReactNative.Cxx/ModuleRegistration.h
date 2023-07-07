@@ -52,22 +52,26 @@
       (__VA_ARGS__, INTERNAL_REACT_MODULE_3_ARGS, INTERNAL_REACT_MODULE_2_ARGS, INTERNAL_REACT_MODULE_1_ARG, ))
 
 // Another version of REACT_MODULE but does not do auto registration
-#define INTERNAL_REACT_MODULE_NOREG_3_ARGS(moduleStruct, moduleName, eventEmitterName)                              \
-  struct moduleStruct;                                                                                              \
-  template <class TRegistry>                                                                                        \
-  constexpr void GetReactModuleInfo(moduleStruct *, TRegistry &registry) noexcept {                                 \
-    registry.RegisterModule(                                                                                        \
-        moduleName, eventEmitterName, winrt::Microsoft::ReactNative::ReactAttributeId<__COUNTER__>{});              \
+#define INTERNAL_REACT_MODULE_NOREG_3_ARGS(moduleStruct, moduleName, eventEmitterName)                 \
+  struct moduleStruct;                                                                                 \
+  template <class TRegistry>                                                                           \
+  constexpr void GetReactModuleInfo(moduleStruct *, TRegistry &registry) noexcept {                    \
+    registry.RegisterModule(                                                                           \
+        moduleName, eventEmitterName, winrt::Microsoft::ReactNative::ReactAttributeId<__COUNTER__>{}); \
   }
 
 #define INTERNAL_REACT_MODULE_NOREG_2_ARGS(moduleStruct, moduleName) \
   INTERNAL_REACT_MODULE_NOREG_3_ARGS(moduleStruct, moduleName, L"")
 
-#define INTERNAL_REACT_MODULE_NOREG_1_ARG(moduleStruct) INTERNAL_REACT_MODULE_NOREG_2_ARGS(moduleStruct, L## #moduleStruct)
+#define INTERNAL_REACT_MODULE_NOREG_1_ARG(moduleStruct) \
+  INTERNAL_REACT_MODULE_NOREG_2_ARGS(moduleStruct, L## #moduleStruct)
 
-#define INTERNAL_REACT_MODULE_NOREG(...) \
-  INTERNAL_REACT_RECOMPOSER_4(     \
-      (__VA_ARGS__, INTERNAL_REACT_MODULE_NOREG_3_ARGS, INTERNAL_REACT_MODULE_NOREG_2_ARGS, INTERNAL_REACT_MODULE_NOREG_1_ARG, ))
+#define INTERNAL_REACT_MODULE_NOREG(...)   \
+  INTERNAL_REACT_RECOMPOSER_4(             \
+      (__VA_ARGS__,                        \
+       INTERNAL_REACT_MODULE_NOREG_3_ARGS, \
+       INTERNAL_REACT_MODULE_NOREG_2_ARGS, \
+       INTERNAL_REACT_MODULE_NOREG_1_ARG, ))
 
 // Provide meta data information about struct member.
 // For each member with a 'custom attribute' macro we create a static method to provide meta data.
