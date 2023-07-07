@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.73.0-nightly-20230616-5f8bbf2bd",
+  "baseVersion": "0.73.0-nightly-20230620-936936ca5",
   "overrides": [
     {
       "type": "derived",
@@ -90,19 +90,19 @@
       "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/primitives.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/primitives.h",
-      "baseHash": "35dedd98bc8afe09d7e00b01f08b9c60a50f39d2"
+      "baseHash": "9998b3dce38cd39f843fe90f0d182ea75714e830"
     },
     {
       "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/TouchEventEmitter.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/TouchEventEmitter.cpp",
-      "baseHash": "cd5750fe3fabc8aceee83ac0fb02710594bfb18f"
+      "baseHash": "dfd3c73403ae02b428d41c1b9c1fcf1b98df4a45"
     },
     {
       "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/TouchEventEmitter.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/TouchEventEmitter.h",
-      "baseHash": "ccb25c1c597b9162e32236833f6afb9c79db7858"
+      "baseHash": "a76c1bf4ee03ffa180990c86d31af2c3d9d08d62"
     },
     {
       "type": "derived",
@@ -120,7 +120,7 @@
       "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/ViewProps.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/ViewProps.cpp",
-      "baseHash": "62f69ee138e5d81f3911ec792684ca25dbaf4fbf"
+      "baseHash": "e3a1ea2b1b8b244cbe4d88941067c62aadd4ed02"
     },
     {
       "type": "derived",
@@ -132,7 +132,7 @@
       "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/ViewShadowNode.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/ViewShadowNode.cpp",
-      "baseHash": "35abc78c3a5cbc76b5564812d23a50c9e33e2a2f"
+      "baseHash": "85281660295a873beee061f7d7587a931e82f4e1"
     },
     {
       "type": "patch",
@@ -382,7 +382,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/View.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/View/View.js",
-      "baseHash": "a5ff7c1a8aeb920613c2e39aa00278af7902cfed"
+      "baseHash": "e5f834b15f3c739957547f627f50d14b607c3c5e"
     },
     {
       "type": "derived",
@@ -406,7 +406,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewPropTypes.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewPropTypes.js",
-      "baseHash": "f876c5954f1ab6471fec28f146f4aff61442dd15"
+      "baseHash": "5e50a36c5237626489342999f3b08b0c124a4580"
     },
     {
       "type": "copy",
@@ -449,7 +449,7 @@
       "type": "derived",
       "file": "src/Libraries/NativeComponent/BaseViewConfig.windows.js",
       "baseFile": "packages/react-native/Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "543595671ac827300ab6c501a43a2e9b7d870faa"
+      "baseHash": "28b8ac1c3e3ee9fc79772baf8503644988e12645"
     },
     {
       "type": "copy",
@@ -507,7 +507,7 @@
       "type": "derived",
       "file": "src/Libraries/Text/Text.windows.js",
       "baseFile": "packages/react-native/Libraries/Text/Text.js",
-      "baseHash": "6aa0c6611ba260bf235610429481a638e61e5279"
+      "baseHash": "dfec8a4812c7bb0ab749500d341d66d502c11e37"
     },
     {
       "type": "derived",
@@ -520,12 +520,6 @@
       "file": "src/Libraries/Types/CoreEventTypes.windows.js",
       "baseFile": "packages/react-native/Libraries/Types/CoreEventTypes.js",
       "baseHash": "7fe2b87cf49f4674d731d07f0883bab2f5cfc356"
-    },
-    {
-      "type": "derived",
-      "file": "src/Libraries/Utilities/AcessibilityMapping.windows.js",
-      "baseFile": "packages/react-native/Libraries/Utilities/AcessibilityMapping.js",
-      "baseHash": "7a662ddd93c6cd0a7193e3002120aeb196991340"
     },
     {
       "type": "copy",

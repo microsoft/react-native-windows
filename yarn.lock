@@ -2328,10 +2328,10 @@
     jscodeshift "^0.14.0"
     nullthrows "^1.1.1"
 
-"@react-native/codegen@0.73.0-nightly-20230615-2ae163a7e":
-  version "0.73.0-nightly-20230615-2ae163a7e"
-  resolved "https://registry.yarnpkg.com/@react-native/codegen/-/codegen-0.73.0-nightly-20230615-2ae163a7e.tgz#29850792684948c41c5404309a504f89965091ed"
-  integrity sha512-SKM7AkzUNznpBAkowHw+GFPw5no7kfmPCsCrwKYgAy7WedisGO2gL+822DnFjsltdK3vBKBWcRzYuYytCS9cmA==
+"@react-native/codegen@0.73.0-nightly-20230620-936936ca5":
+  version "0.73.0-nightly-20230620-936936ca5"
+  resolved "https://registry.yarnpkg.com/@react-native/codegen/-/codegen-0.73.0-nightly-20230620-936936ca5.tgz#72382377cd11e19fa818b8395691ab130ca4fbc6"
+  integrity sha512-Joo8NPJBvb13jOC0Isl1CCwWleIeIoguHA0tT8ipuejgzPGEJ1rZ/SV/rFC/B3bQ3VTi2AipBoqeyhbP3Zdd0Q==
   dependencies:
     "@babel/parser" "^7.20.0"
     flow-parser "^0.206.0"
@@ -2362,10 +2362,10 @@
   resolved "https://registry.yarnpkg.com/@react-native/eslint-plugin/-/eslint-plugin-0.73.0.tgz#103f2e65c0bc0e145bf510ed75bf1d9b9022c13c"
   integrity sha512-xqEDfJ/3sWXzH8vTZt7OC0aBAV8y8fbX/uDTr8sbsoktiTW5yUY2dVCVVe+pBiPZMqnvDc6AJ+owie9Rl90pOA==
 
-"@react-native/gradle-plugin@0.73.0-nightly-20230616-5f8bbf2bd":
-  version "0.73.0-nightly-20230616-5f8bbf2bd"
-  resolved "https://registry.yarnpkg.com/@react-native/gradle-plugin/-/gradle-plugin-0.73.0-nightly-20230616-5f8bbf2bd.tgz#bbc6eebcdd520e4ea52eaa5c51b5d0c72fd0273d"
-  integrity sha512-YIsDFd493c8TOM6OduILwLfu/MkMIj6yi+zJYwhQkziRwIyaKkeYBbT7cMUTAMoK9uNM30edBdmD2KlevLvNZA==
+"@react-native/gradle-plugin@0.73.0-nightly-20230620-936936ca5":
+  version "0.73.0-nightly-20230620-936936ca5"
+  resolved "https://registry.yarnpkg.com/@react-native/gradle-plugin/-/gradle-plugin-0.73.0-nightly-20230620-936936ca5.tgz#83fa7d469a4969c6c5480cbd9ac33a309eb93971"
+  integrity sha512-lqnxwHyoZgLhSMRuUzmhzr0/by8Stjs9Jwu16ma7z/SH8Zv94hfb2PXB5kz0tK4APA3WYwtWGL+N1TSJ6TQB/w==
 
 "@react-native/js-polyfills@0.73.0-nightly-20230606-396cdac62":
   version "0.73.0-nightly-20230606-396cdac62"
@@ -10445,18 +10445,18 @@ react-native-xaml@^0.0.74:
     "@types/react-native" "*"
     typescript "^4.4.3"
 
-react-native@0.73.0-nightly-20230616-5f8bbf2bd:
-  version "0.73.0-nightly-20230616-5f8bbf2bd"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.73.0-nightly-20230616-5f8bbf2bd.tgz#96308603cdb36b77831fc511759d0b0dcc1d49ef"
-  integrity sha512-LC5WTsAh4J/kX/7OcKaOqBTFTnu6e45apIqZiWSXp7amljMnQ96KX471jBty23B9kRW5OzuUmdR9i4prvqtVSA==
+react-native@0.73.0-nightly-20230620-936936ca5:
+  version "0.73.0-nightly-20230620-936936ca5"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.73.0-nightly-20230620-936936ca5.tgz#0e6eb4ab432a6906d1c728d9c00921c7a8fbf989"
+  integrity sha512-KiOvisx9BkMZtsr6tDxSlPEigXOJqAvN13PCMfNWMKB6+B7R99qK/C9DdSKIaytE1swCSejMaBB2izJdT4Co0A==
   dependencies:
     "@jest/create-cache-key-function" "^29.2.1"
     "@react-native-community/cli" "12.0.0-alpha.3"
     "@react-native-community/cli-platform-android" "12.0.0-alpha.3"
     "@react-native-community/cli-platform-ios" "12.0.0-alpha.3"
     "@react-native/assets-registry" "0.73.0-nightly-20230606-396cdac62"
-    "@react-native/codegen" "0.73.0-nightly-20230615-2ae163a7e"
-    "@react-native/gradle-plugin" "0.73.0-nightly-20230616-5f8bbf2bd"
+    "@react-native/codegen" "0.73.0-nightly-20230620-936936ca5"
+    "@react-native/gradle-plugin" "0.73.0-nightly-20230620-936936ca5"
     "@react-native/js-polyfills" "0.73.0-nightly-20230606-396cdac62"
     "@react-native/normalize-colors" "0.73.0-nightly-20230606-396cdac62"
     "@react-native/virtualized-lists" "0.73.0-nightly-20230616-5f8bbf2bd"

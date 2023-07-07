@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.73.0-nightly-20230616-5f8bbf2bd",
+  "baseVersion": "0.73.0-nightly-20230620-936936ca5",
   "overrides": [
     {
       "type": "copy",
@@ -124,7 +124,7 @@
       "type": "copy",
       "directory": "js/examples/Experimental",
       "baseDirectory": "packages/rn-tester/js/examples/Experimental",
-      "baseHash": "21063376b175eec798015dd99c61407cfea85d3b",
+      "baseHash": "997cbf3b7956c82811b3b057a97db76d023e6142",
       "issue": 4054
     },
     {

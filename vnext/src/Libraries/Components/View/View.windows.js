@@ -12,7 +12,6 @@ import type {ViewProps} from './ViewPropTypes';
 
 import flattenStyle from '../../StyleSheet/flattenStyle';
 import TextAncestor from '../../Text/TextAncestor';
-import {getAccessibilityRoleFromRole} from '../../Utilities/AcessibilityMapping';
 import ViewNativeComponent from './ViewNativeComponent';
 import * as React from 'react';
 import invariant from 'invariant'; // [Windows]
@@ -41,7 +40,6 @@ const View: React.AbstractComponent<
       accessibilityLevel, // Windows
       accessibilityLiveRegion,
       accessibilityPosInSet, // Windows
-      accessibilityRole,
       accessibilitySetSize, // Windows
       accessibilityState,
       accessibilityValue,
@@ -67,7 +65,6 @@ const View: React.AbstractComponent<
       importantForAccessibility,
       nativeID,
       pointerEvents,
-      role,
       tabIndex,
       ...otherProps
     }: ViewProps,
@@ -230,9 +227,6 @@ const View: React.AbstractComponent<
               focusable={_focusable}
               disabled={disabled}
               accessibilityState={_accessibilityState}
-              accessibilityRole={
-                role ? getAccessibilityRoleFromRole(role) : accessibilityRole
-              }
               accessibilityElementsHidden={
                 ariaHidden ?? accessibilityElementsHidden
               }

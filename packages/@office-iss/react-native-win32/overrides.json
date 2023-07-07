@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.73.0-nightly-20230616-5f8bbf2bd",
+  "baseVersion": "0.73.0-nightly-20230620-936936ca5",
   "overrides": [
     {
       "type": "derived",
@@ -189,7 +189,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/View.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/View/View.js",
-      "baseHash": "a5ff7c1a8aeb920613c2e39aa00278af7902cfed"
+      "baseHash": "e5f834b15f3c739957547f627f50d14b607c3c5e"
     },
     {
       "type": "derived",
@@ -213,7 +213,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewPropTypes.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewPropTypes.js",
-      "baseHash": "f876c5954f1ab6471fec28f146f4aff61442dd15",
+      "baseHash": "5e50a36c5237626489342999f3b08b0c124a4580",
       "issue": 6240
     },
     {
@@ -342,7 +342,7 @@
       "type": "derived",
       "file": "src/Libraries/NativeComponent/BaseViewConfig.win32.js",
       "baseFile": "packages/react-native/Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "543595671ac827300ab6c501a43a2e9b7d870faa"
+      "baseHash": "28b8ac1c3e3ee9fc79772baf8503644988e12645"
     },
     {
       "type": "derived",
@@ -431,7 +431,7 @@
       "type": "derived",
       "file": "src/Libraries/Text/Text.win32.js",
       "baseFile": "packages/react-native/Libraries/Text/Text.js",
-      "baseHash": "6aa0c6611ba260bf235610429481a638e61e5279"
+      "baseHash": "dfec8a4812c7bb0ab749500d341d66d502c11e37"
     },
     {
       "type": "derived",
@@ -452,12 +452,6 @@
       "baseFile": "packages/react-native/Libraries/Types/CoreEventTypes.js",
       "baseHash": "7fe2b87cf49f4674d731d07f0883bab2f5cfc356",
       "issue": 6240
-    },
-    {
-      "type": "derived",
-      "file": "src/Libraries/Utilities/AcessibilityMapping.win32.js",
-      "baseFile": "packages/react-native/Libraries/Utilities/AcessibilityMapping.js",
-      "baseHash": "7a662ddd93c6cd0a7193e3002120aeb196991340"
     },
     {
       "type": "copy",

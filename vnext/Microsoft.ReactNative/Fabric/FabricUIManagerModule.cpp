@@ -18,7 +18,7 @@
 #include <UI.Xaml.Controls.h>
 #include <react/components/rnwcore/ComponentDescriptors.h>
 #include <react/renderer/componentregistry/ComponentDescriptorProviderRegistry.h>
-#include <react/renderer/core/CoreFeatures.h>
+#include <react/utils/CoreFeatures.h>
 #include <react/renderer/core/DynamicPropsUtilities.h>
 #include <react/renderer/core/EventBeat.h>
 #include <react/renderer/scheduler/Scheduler.h>

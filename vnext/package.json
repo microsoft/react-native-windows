@@ -29,8 +29,8 @@
     "@react-native-windows/cli": "0.0.0-canary.175",
     "@react-native/assets": "1.0.0",
     "@react-native/assets-registry": "0.73.0-nightly-20230606-396cdac62",
-    "@react-native/codegen": "0.73.0-nightly-20230615-2ae163a7e",
-    "@react-native/gradle-plugin": "0.73.0-nightly-20230616-5f8bbf2bd",
+    "@react-native/codegen": "0.73.0-nightly-20230620-936936ca5",
+    "@react-native/gradle-plugin": "0.73.0-nightly-20230620-936936ca5",
     "@react-native/js-polyfills": "0.73.0-nightly-20230606-396cdac62",
     "@react-native/normalize-colors": "0.73.0-nightly-20230606-396cdac62",
     "@react-native/virtualized-lists": "0.73.0-nightly-20230616-5f8bbf2bd",
@@ -79,14 +79,14 @@
     "metro-config": "0.76.2",
     "prettier": "^2.4.1",
     "react": "18.2.0",
-    "react-native": "0.73.0-nightly-20230616-5f8bbf2bd",
+    "react-native": "0.73.0-nightly-20230620-936936ca5",
     "react-native-platform-override": "^1.9.11",
     "react-refresh": "^0.4.0",
     "typescript": "^4.9.5"
   },
   "peerDependencies": {
     "react": "18.2.0",
-    "react-native": "0.73.0-nightly-20230616-5f8bbf2bd"
+    "react-native": "0.73.0-nightly-20230620-936936ca5"
   },
   "beachball": {
     "defaultNpmTag": "canary",

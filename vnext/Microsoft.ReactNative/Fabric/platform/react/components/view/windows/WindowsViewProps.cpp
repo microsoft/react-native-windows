@@ -7,7 +7,7 @@
 
 #include "WindowsViewProps.h"
 
-#include <react/renderer/core/CoreFeatures.h>
+#include <react/utils/CoreFeatures.h>
 #include <react/renderer/core/propsConversions.h>
 
 namespace facebook::react {
