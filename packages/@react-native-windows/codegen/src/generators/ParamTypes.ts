@@ -183,6 +183,8 @@ function translateParam(
     }
     case 'TypeAliasTypeAnnotation':
       return decorateType(getAliasCppName(param.name), target);
+    case 'MixedTypeAnnotation':
+      return '';
     case 'EnumDeclaration':
     case 'UnionTypeAnnotation':
       return translateUnionReturnType(param, target, options);

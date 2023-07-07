@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.73.0-nightly-20230620-936936ca5",
+  "baseVersion": "0.73.0-nightly-20230623-330639f74",
   "overrides": [
     {
       "type": "copy",
@@ -12,7 +12,7 @@
       "type": "copy",
       "directory": "js/components",
       "baseDirectory": "packages/rn-tester/js/components",
-      "baseHash": "af85ad1d8870d535ab66eca3365b3836029f3fd0",
+      "baseHash": "58010afc63a6477ad2ca6bc451b7c1933002d520",
       "issue": 4054
     },
     {
@@ -146,6 +146,13 @@
       "directory": "js/examples/InputAccessoryView",
       "baseDirectory": "packages/rn-tester/js/examples/InputAccessoryView",
       "baseHash": "51fe1f354f1185ec8e20794b7bf305eb45efb566",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "directory": "js/examples/IntersectionObserver",
+      "baseDirectory": "packages/rn-tester/js/examples/IntersectionObserver",
+      "baseHash": "867babdf0d01fc1c006a4b1feda1134fca6fcd43",
       "issue": 4054
     },
     {
@@ -411,7 +418,7 @@
       "type": "copy",
       "directory": "js/examples/TurboModule",
       "baseDirectory": "packages/rn-tester/js/examples/TurboModule",
-      "baseHash": "cae0dd2386d23310b1e224c7eeefc11e876a5c8a",
+      "baseHash": "8a212be34269272d58c2892d3bc43f32d43ff697",
       "issue": 4054
     },
     {
@@ -474,7 +481,7 @@
       "type": "copy",
       "directory": "js/utils",
       "baseDirectory": "packages/rn-tester/js/utils",
-      "baseHash": "f583abf3b24831a99ec521cff382c327e5ffd3c8",
+      "baseHash": "10b1a1eecb65037c498724dbf9e0f906869e9481",
       "issue": 4054
     },
     {
@@ -509,7 +516,7 @@
       "type": "copy",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
-      "baseHash": "f579e5ed008e621c501adf9d39bf2847e2e3b268",
+      "baseHash": "142175d981ef803b9038044af4e8227a25f3d391",
       "issue": 4054
     }
   ]

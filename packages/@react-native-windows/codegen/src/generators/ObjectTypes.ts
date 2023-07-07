@@ -104,6 +104,8 @@ export function translateFieldOrReturnType(
         callerName,
         options,
       )}>`;
+    case 'MixedTypeAnnotation':
+      return '';
     case 'EnumDeclaration':
     case 'UnionTypeAnnotation':
       return translateUnionReturnType(type, options);

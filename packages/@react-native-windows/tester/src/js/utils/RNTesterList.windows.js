@@ -186,7 +186,7 @@ const Components: Array<RNTesterModuleInfo> = [
   },
 ];
 
-const APIs: Array<RNTesterModuleInfo> = [
+const APIs: Array<RNTesterModuleInfo> = ([
   {
     key: 'KeyboardFocusExample',
     category: 'Basic',
@@ -252,6 +252,14 @@ const APIs: Array<RNTesterModuleInfo> = [
     category: 'UI',
     module: require('../examples/Dimensions/DimensionsExample'),
   },
+  // Only show the link for the example if the API is available.
+  typeof IntersectionObserver === 'function'
+    ? {
+        key: 'IntersectionObserver',
+        category: 'UI',
+        module: require('../examples/IntersectionObserver/IntersectionObserverIndex'),
+      }
+    : null,
   {
     key: 'InvalidPropsExample',
     module: require('../examples/InvalidProps/InvalidPropsExample'),
@@ -366,7 +374,7 @@ const APIs: Array<RNTesterModuleInfo> = [
     category: 'Basic',
     module: require('../examples/Performance/PerformanceApiExample'),
   },
-];
+]: Array<?RNTesterModuleInfo>).filter(Boolean);
 
 if (ReactNativeFeatureFlags.shouldEmitW3CPointerEvents()) {
   APIs.push({

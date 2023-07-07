@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.73.0-nightly-20230620-936936ca5",
+  "baseVersion": "0.73.0-nightly-20230623-330639f74",
   "overrides": [
     {
       "type": "derived",
@@ -20,7 +20,7 @@
       "type": "copy",
       "directory": "flow-typed/npm",
       "baseDirectory": "flow-typed/npm",
-      "baseHash": "f25f5ecc4f5943b531295f4b5b8512b575ae6eb6"
+      "baseHash": "6a1a9c8b3e66d76ad6090885e488b4eed3d9ce14"
     },
     {
       "type": "derived",
