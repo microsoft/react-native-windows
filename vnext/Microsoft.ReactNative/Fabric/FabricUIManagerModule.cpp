@@ -18,12 +18,12 @@
 #include <UI.Xaml.Controls.h>
 #include <react/components/rnwcore/ComponentDescriptors.h>
 #include <react/renderer/componentregistry/ComponentDescriptorProviderRegistry.h>
-#include <react/utils/CoreFeatures.h>
 #include <react/renderer/core/DynamicPropsUtilities.h>
 #include <react/renderer/core/EventBeat.h>
 #include <react/renderer/scheduler/Scheduler.h>
 #include <react/renderer/scheduler/SchedulerToolbox.h>
 #include <react/utils/ContextContainer.h>
+#include <react/utils/CoreFeatures.h>
 #include <runtimeexecutor/ReactCommon/RuntimeExecutor.h>
 #include <winrt/Windows.Graphics.Display.h>
 #include <winrt/Windows.UI.Composition.Desktop.h>
