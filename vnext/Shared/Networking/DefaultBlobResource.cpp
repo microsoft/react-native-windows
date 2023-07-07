@@ -27,12 +27,8 @@ namespace msrn = winrt::Microsoft::ReactNative;
 
 namespace {
 
-constexpr char blobKey[] = "blob";
-constexpr char blobIdKey[] = "blobId";
-constexpr char offsetKey[] = "offset";
-constexpr char sizeKey[] = "size";
-constexpr char typeKey[] = "type";
-constexpr char dataKey[] = "data";
+constexpr Microsoft::React::Networking::IBlobResource::BlobFieldNames
+    blobKeys{"blob", "blobId", "offset", "size", "type", "data"};
 
 } // namespace
 
@@ -53,6 +49,10 @@ DefaultBlobResource::DefaultBlobResource(
       m_propertyBag{propertyBag} {}
 
 #pragma region IBlobResource
+
+/*static*/ const IBlobResource::BlobFieldNames &IBlobResource::FieldNames() noexcept {
+  return blobKeys;
+}
 
 /*static*/ shared_ptr<IBlobResource> IBlobResource::Make(
     winrt::Windows::Foundation::IInspectable const &inspectableProperties) {
@@ -110,13 +110,13 @@ void DefaultBlobResource::CreateFromParts(msrn::JSValueArray &&parts, string &&b
 
   for (const auto &partItem : parts) {
     auto &part = partItem.AsObject();
-    auto type = part.at(typeKey).AsString();
-    if (blobKey == type) {
-      auto &blob = part.at(dataKey).AsObject();
+    auto type = part.at(blobKeys.Type).AsString();
+    if (blobKeys.Blob == type) {
+      auto &blob = part.at(blobKeys.Data).AsObject();
       array_view<uint8_t const> bufferPart;
       try {
         bufferPart = m_blobPersistor->ResolveMessage(
-            blob.at(blobIdKey).AsString(), blob.at(offsetKey).AsInt64(), blob.at(sizeKey).AsInt64());
+            blob.at(blobKeys.BlobId).AsString(), blob.at(blobKeys.Offset).AsInt64(), blob.at(blobKeys.Size).AsInt64());
       } catch (const std::exception &e) {
         return m_callbacks.OnError(e.what());
       }
@@ -124,7 +124,7 @@ void DefaultBlobResource::CreateFromParts(msrn::JSValueArray &&parts, string &&b
       buffer.reserve(buffer.size() + bufferPart.size());
       buffer.insert(buffer.end(), bufferPart.begin(), bufferPart.end());
     } else if ("string" == type) {
-      auto data = part.at(dataKey).AsString();
+      auto data = part.at(blobKeys.Data).AsString();
 
       buffer.reserve(buffer.size() + data.size());
       buffer.insert(buffer.end(), data.begin(), data.end());
@@ -228,7 +228,7 @@ void BlobWebSocketModuleContentHandler::ProcessMessage(
     string &&message,
     msrn::JSValueObject &params) noexcept /*override*/
 {
-  params[dataKey] = std::move(message);
+  params[blobKeys.Data] = std::move(message);
 }
 
 void BlobWebSocketModuleContentHandler::ProcessMessage(
@@ -236,10 +236,12 @@ void BlobWebSocketModuleContentHandler::ProcessMessage(
     msrn::JSValueObject &params) noexcept /*override*/
 {
   auto blob = msrn::JSValueObject{
-      {offsetKey, 0}, {sizeKey, message.size()}, {blobIdKey, m_blobPersistor->StoreMessage(std::move(message))}};
+      {blobKeys.Offset, 0},
+      {blobKeys.Size, message.size()},
+      {blobKeys.BlobId, m_blobPersistor->StoreMessage(std::move(message))}};
 
-  params[dataKey] = std::move(blob);
-  params[typeKey] = blobKey;
+  params[blobKeys.Data] = std::move(blob);
+  params[blobKeys.Type] = blobKeys.Blob;
 }
 
 #pragma endregion IWebSocketModuleContentHandler
@@ -267,7 +269,7 @@ BlobModuleRequestBodyHandler::BlobModuleRequestBodyHandler(shared_ptr<IBlobPersi
 #pragma region IRequestBodyHandler
 
 bool BlobModuleRequestBodyHandler::Supports(msrn::JSValueObject &data) /*override*/ {
-  auto itr = data.find(blobKey);
+  auto itr = data.find(blobKeys.Blob);
 
   return itr != data.cend() && !(*itr).second.AsString().empty();
 }
@@ -276,7 +278,7 @@ msrn::JSValueObject BlobModuleRequestBodyHandler::ToRequestBody(
     msrn::JSValueObject &data,
     string &contentType) /*override*/ {
   auto type = contentType;
-  auto itr = data.find(typeKey);
+  auto itr = data.find(blobKeys.Type);
   if (itr != data.cend() && !(*itr).second.AsString().empty()) {
     type = (*itr).second.AsString();
   }
@@ -284,11 +286,15 @@ msrn::JSValueObject BlobModuleRequestBodyHandler::ToRequestBody(
     type = "application/octet-stream";
   }
 
-  auto &blob = data[blobKey].AsObject();
-  auto blobId = blob[blobIdKey].AsString();
-  auto bytes = m_blobPersistor->ResolveMessage(std::move(blobId), blob[offsetKey].AsInt64(), blob[sizeKey].AsInt64());
+  auto &blob = data[blobKeys.Blob].AsObject();
+  auto blobId = blob[blobKeys.BlobId].AsString();
+  auto bytes = m_blobPersistor->ResolveMessage(
+      std::move(blobId), blob[blobKeys.Offset].AsInt64(), blob[blobKeys.Size].AsInt64());
 
-  return {{typeKey, type}, {sizeKey, bytes.size()}, {"bytes", msrn::JSValueArray(bytes.cbegin(), bytes.cend())}};
+  return {
+      {blobKeys.Type, type},
+      {blobKeys.Size, bytes.size()},
+      {"bytes", msrn::JSValueArray(bytes.cbegin(), bytes.cend())}};
 }
 
 #pragma endregion IRequestBodyHandler
@@ -303,11 +309,14 @@ BlobModuleResponseHandler::BlobModuleResponseHandler(shared_ptr<IBlobPersistor> 
 #pragma region IResponseHandler
 
 bool BlobModuleResponseHandler::Supports(string &responseType) /*override*/ {
-  return blobKey == responseType;
+  return blobKeys.Blob == responseType;
 }
 
 msrn::JSValueObject BlobModuleResponseHandler::ToResponseData(vector<uint8_t> &&content) /*override*/ {
-  return {{offsetKey, 0}, {sizeKey, content.size()}, {blobIdKey, m_blobPersistor->StoreMessage(std::move(content))}};
+  return {
+      {blobKeys.Offset, 0},
+      {blobKeys.Size, content.size()},
+      {blobKeys.BlobId, m_blobPersistor->StoreMessage(std::move(content))}};
 }
 
 #pragma endregion IResponseHandler

@@ -20,10 +20,8 @@ namespace msrn = winrt::Microsoft::ReactNative;
 
 namespace {
 constexpr char s_moduleName[] = "BlobModule";
-constexpr char blobKey[] = "blob";
-constexpr char blobIdKey[] = "blobId";
-constexpr char offsetKey[] = "offset";
-constexpr char sizeKey[] = "size";
+
+const auto &blobKeys = IBlobResource::FieldNames();
 } // namespace
 
 namespace Microsoft::React {
@@ -39,7 +37,7 @@ void BlobTurboModule::Initialize(msrn::ReactContext const &reactContext) noexcep
 
 ReactNativeSpecs::BlobModuleSpec_Constants BlobTurboModule::GetConstants() noexcept {
   ReactNativeSpecs::BlobModuleSpec_Constants result;
-  result.BLOB_URI_SCHEME = blobKey;
+  result.BLOB_URI_SCHEME = blobKeys.Blob;
   result.BLOB_URI_HOST = {};
 
   return result;
@@ -59,7 +57,10 @@ void BlobTurboModule::RemoveWebSocketHandler(double id) noexcept {
 
 void BlobTurboModule::SendOverSocket(msrn::JSValue &&blob, double socketID) noexcept {
   m_resource->SendOverSocket(
-      blob[blobIdKey].AsString(), blob[offsetKey].AsInt64(), blob[sizeKey].AsInt64(), static_cast<int64_t>(socketID));
+      blob[blobKeys.BlobId].AsString(),
+      blob[blobKeys.Offset].AsInt64(),
+      blob[blobKeys.Size].AsInt64(),
+      static_cast<int64_t>(socketID));
 }
 
 void BlobTurboModule::CreateFromParts(vector<msrn::JSValue> &&parts, string &&withId) noexcept {
@@ -84,7 +85,7 @@ string BlobModule::getName() {
 }
 
 std::map<string, dynamic> BlobModule::getConstants() {
-  return {{"BLOB_URI_SCHEME", blobKey}, {"BLOB_URI_HOST", {}}};
+  return {{"BLOB_URI_SCHEME", blobKeys.Blob}, {"BLOB_URI_HOST", {}}};
 }
 
 vector<module::CxxModule::Method> BlobModule::getMethods() {
@@ -113,9 +114,9 @@ vector<module::CxxModule::Method> BlobModule::getMethods() {
       {"sendOverSocket",
        [resource = m_resource](dynamic args) {
          auto blob = jsArgAsObject(args, 0);
-         auto blobId = blob[blobIdKey].getString();
-         auto offset = blob[offsetKey].getInt();
-         auto size = blob[sizeKey].getInt();
+         auto blobId = blob[blobKeys.BlobId].getString();
+         auto offset = blob[blobKeys.Offset].getInt();
+         auto size = blob[blobKeys.Size].getInt();
          auto socketId = jsArgAsInt(args, 1);
 
          resource->SendOverSocket(std::move(blobId), offset, size, socketId);

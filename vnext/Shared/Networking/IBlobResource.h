@@ -23,7 +23,18 @@ struct IBlobResource {
     std::function<void(std::string &&errorText)> OnError;
   };
 
+  struct BlobFieldNames {
+    const char *Blob;
+    const char *BlobId;
+    const char *Offset;
+    const char *Size;
+    const char *Type;
+    const char *Data;
+  };
+
   static std::shared_ptr<IBlobResource> Make(winrt::Windows::Foundation::IInspectable const &inspectableProperties);
+
+  static const BlobFieldNames &FieldNames() noexcept;
 
   virtual ~IBlobResource() noexcept {}
 
