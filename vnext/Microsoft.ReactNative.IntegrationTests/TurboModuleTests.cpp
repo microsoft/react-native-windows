@@ -163,7 +163,7 @@ struct CppTurboModuleSpec : TurboModuleSpec {
   }
 };
 
-REACT_MODULE(CppTurboModule)
+REACT_MODULE_NOREG(CppTurboModule)
 struct CppTurboModule {
   using ModuleSpec = CppTurboModuleSpec;
 
