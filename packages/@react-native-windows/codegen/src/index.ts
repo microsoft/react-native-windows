@@ -17,6 +17,8 @@ import {
 import type {SchemaType} from '@react-native/codegen/lib/CodegenSchema';
 import type {Parser} from '@react-native/codegen/lib/parsers/parser';
 
+export type {CppStringTypes} from './generators/GenerateNM2';
+
 // Load @react-native/codegen from react-native
 const rnPath = path.dirname(require.resolve('react-native/package.json'));
 const rncodegenPath = path.dirname(
