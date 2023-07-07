@@ -16,6 +16,10 @@
 // Boost Libraries
 #include <boost/uuid/uuid_generators.hpp>
 
+// Standard Library
+#include <mutex>
+#include <unordered_set>
+
 namespace Microsoft::React::Networking {
 
 class MemoryBlobPersistor final : public IBlobPersistor {

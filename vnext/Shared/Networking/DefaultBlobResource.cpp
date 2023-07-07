@@ -12,9 +12,6 @@
 // Windows API
 #include <winrt/Windows.Security.Cryptography.h>
 
-// Standard Library
-#include <mutex>
-
 using std::scoped_lock;
 using std::shared_ptr;
 using std::string;
