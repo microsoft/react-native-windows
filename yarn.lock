@@ -117,10 +117,10 @@
     "@nicolo-ribaudo/semver-v6" "^6.3.3"
     eslint-visitor-keys "^2.1.0"
 
-"@babel/generator@^7.20.0", "@babel/generator@^7.22.5", "@babel/generator@^7.7.2":
-  version "7.22.5"
-  resolved "https://registry.yarnpkg.com/@babel/generator/-/generator-7.22.5.tgz#1e7bf768688acfb05cf30b2369ef855e82d984f7"
-  integrity sha512-+lcUbnTRhd0jOewtFSedLyiPsD5tswKkbgcezOqqWFUVNEwoUTlpPOBmvhG7OXWLR4jMdv0czPGH5XbflnD1EA==
+"@babel/generator@^7.20.0", "@babel/generator@^7.22.5", "@babel/generator@^7.22.7", "@babel/generator@^7.7.2":
+  version "7.22.7"
+  resolved "https://registry.yarnpkg.com/@babel/generator/-/generator-7.22.7.tgz#a6b8152d5a621893f2c9dacf9a4e286d520633d5"
+  integrity sha512-p+jPjMG+SI8yvIaxGgeW24u7q9+5+TGpZh8/CuB7RhBKd7RCy8FayNEFNNKrNK/eUcY/4ExQqLmyrvBXKsIcwQ==
   dependencies:
     "@babel/types" "^7.22.5"
     "@jridgewell/gen-mapping" "^0.3.2"
@@ -354,10 +354,10 @@
   dependencies:
     "@babel/types" "^7.22.5"
 
-"@babel/helper-split-export-declaration@^7.22.5":
-  version "7.22.5"
-  resolved "https://registry.yarnpkg.com/@babel/helper-split-export-declaration/-/helper-split-export-declaration-7.22.5.tgz#88cf11050edb95ed08d596f7a044462189127a08"
-  integrity sha512-thqK5QFghPKWLhAV321lxF95yCg2K3Ob5yw+M3VHWfdia0IkPXUtoLH8x/6Fh486QUvzhb8YOWHChTVen2/PoQ==
+"@babel/helper-split-export-declaration@^7.22.5", "@babel/helper-split-export-declaration@^7.22.6":
+  version "7.22.6"
+  resolved "https://registry.yarnpkg.com/@babel/helper-split-export-declaration/-/helper-split-export-declaration-7.22.6.tgz#322c61b7310c0997fe4c323955667f18fcefb91c"
+  integrity sha512-AsUnxuLhRYsisFiaJwvp1QF+I3KjD5FOxut14q/GzovUe6orHLesW2C7d754kRm53h5gqrz6sFl6sxc4BVtE/g==
   dependencies:
     "@babel/types" "^7.22.5"
 
@@ -419,10 +419,10 @@
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.16.4.tgz#d5f92f57cf2c74ffe9b37981c0e72fee7311372e"
   integrity sha512-6V0qdPUaiVHH3RtZeLIsc+6pDhbYzHR8ogA8w+f+Wc77DuXto19g2QUwveINoS34Uw+W8/hQDGJCx+i4n7xcng==
 
-"@babel/parser@^7.1.0", "@babel/parser@^7.11.5", "@babel/parser@^7.13.16", "@babel/parser@^7.14.7", "@babel/parser@^7.16.4", "@babel/parser@^7.20.0", "@babel/parser@^7.22.5":
-  version "7.22.5"
-  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.22.5.tgz#721fd042f3ce1896238cf1b341c77eb7dee7dbea"
-  integrity sha512-DFZMC9LJUG9PLOclRC32G63UXwzqS2koQC8dkx+PLdmt1xSePYpbT/NbsrJy8Q/muXz7o/h/d4A7Fuyixm559Q==
+"@babel/parser@^7.1.0", "@babel/parser@^7.11.5", "@babel/parser@^7.13.16", "@babel/parser@^7.14.7", "@babel/parser@^7.16.4", "@babel/parser@^7.20.0", "@babel/parser@^7.22.5", "@babel/parser@^7.22.7":
+  version "7.22.7"
+  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.22.7.tgz#df8cf085ce92ddbdbf668a7f186ce848c9036cae"
+  integrity sha512-7NF8pOkHP5o2vpmGgNGcfAeCvOYhGLyA3Z4eBQkT1RJlWu47n63bCs93QfJ2hIAFCil7L5P2IWhs1oToVgrL0Q==
 
 "@babel/plugin-bugfix-safari-id-destructuring-collision-in-function-expression@^7.22.5":
   version "7.22.5"
@@ -1314,17 +1314,17 @@
     "@babel/types" "^7.22.5"
 
 "@babel/traverse@^7.11.5", "@babel/traverse@^7.12.5", "@babel/traverse@^7.13.0", "@babel/traverse@^7.16.0", "@babel/traverse@^7.18.9", "@babel/traverse@^7.20.0", "@babel/traverse@^7.22.5", "@babel/traverse@^7.7.2", "@babel/traverse@^7.7.4":
-  version "7.22.5"
-  resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.22.5.tgz#44bd276690db6f4940fdb84e1cb4abd2f729ccd1"
-  integrity sha512-7DuIjPgERaNo6r+PZwItpjCZEa5vyw4eJGufeLxrPdBXBoLcCJCIasvK6pK/9DVNrLZTLFhUGqaC6X/PA007TQ==
+  version "7.22.8"
+  resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.22.8.tgz#4d4451d31bc34efeae01eac222b514a77aa4000e"
+  integrity sha512-y6LPR+wpM2I3qJrsheCTwhIinzkETbplIgPBbwvqPKc+uljeA5gP+3nP8irdYt1mjQaDnlIcG+dw8OjAco4GXw==
   dependencies:
     "@babel/code-frame" "^7.22.5"
-    "@babel/generator" "^7.22.5"
+    "@babel/generator" "^7.22.7"
     "@babel/helper-environment-visitor" "^7.22.5"
     "@babel/helper-function-name" "^7.22.5"
     "@babel/helper-hoist-variables" "^7.22.5"
-    "@babel/helper-split-export-declaration" "^7.22.5"
-    "@babel/parser" "^7.22.5"
+    "@babel/helper-split-export-declaration" "^7.22.6"
+    "@babel/parser" "^7.22.7"
     "@babel/types" "^7.22.5"
     debug "^4.1.0"
     globals "^11.1.0"
