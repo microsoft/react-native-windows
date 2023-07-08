@@ -3,9 +3,6 @@
 
 #pragma once
 
-// React Native
-#include <folly/dynamic.h>
-
 // React Native Windows
 #include <JSValue.h>
 
@@ -20,10 +17,6 @@ namespace Microsoft::React {
 /// </summary>
 struct IWebSocketModuleContentHandler {
   virtual ~IWebSocketModuleContentHandler() noexcept {}
-
-  virtual void ProcessMessage(std::string &&message, folly::dynamic &params) = 0;
-
-  virtual void ProcessMessage(std::vector<uint8_t> &&message, folly::dynamic &params) = 0;
 
   virtual void ProcessMessage(std::string &&message, winrt::Microsoft::ReactNative::JSValueObject &params) noexcept = 0;
 

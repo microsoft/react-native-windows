@@ -266,6 +266,10 @@
     <ClCompile Include="$(NodeApiJsiDir)src\ApiLoaders\HermesApi.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\V8RuntimeHolder.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SafeLoadLibrary.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Hasher.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Networking\DefaultBlobResource.cpp">
+      <Filter>Source Files\Networking</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
@@ -589,9 +593,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IResponseHandler.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IBlobPersistor.h">
-      <Filter>Header Files\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\CxxModuleUtilities.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
@@ -729,6 +730,15 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)SafeLoadLibrary.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\WebSocketTurboModule.h">
       <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\IBlobResource.h">
+      <Filter>Header Files\Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\DefaultBlobResource.h">
+      <Filter>Header Files\Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)IBlobPersistor.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
