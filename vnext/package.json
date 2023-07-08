@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-canary.672",
+  "version": "0.0.0-canary.673",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -26,7 +26,7 @@
     "@react-native-community/cli": "12.0.0-alpha.3",
     "@react-native-community/cli-platform-android": "12.0.0-alpha.3",
     "@react-native-community/cli-platform-ios": "12.0.0-alpha.3",
-    "@react-native-windows/cli": "0.0.0-canary.175",
+    "@react-native-windows/cli": "0.0.0-canary.176",
     "@react-native/assets": "1.0.0",
     "@react-native/assets-registry": "0.73.0-nightly-20230606-396cdac62",
     "@react-native/codegen": "0.73.0-nightly-20230615-2ae163a7e",
@@ -62,7 +62,7 @@
     "yargs": "^17.6.2"
   },
   "devDependencies": {
-    "@react-native-windows/codegen": "0.0.0-canary.62",
+    "@react-native-windows/codegen": "0.0.0-canary.63",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.1",
     "@rnw-scripts/jest-out-of-tree-snapshot-resolver": "^1.1.4",
