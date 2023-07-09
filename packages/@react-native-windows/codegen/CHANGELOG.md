@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Sat, 01 Jul 2023 05:14:41 GMT and should not be manually modified.
+This log was last generated on Sat, 08 Jul 2023 05:13:21 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.63
+
+Sat, 08 Jul 2023 05:13:21 GMT
+
+### Changes
+
+- Add configConfig.windows.cppStringType in package.json for @rnw/codegen (53799235+ZihanChen-MSFT@users.noreply.github.com)
+- Add cppStringType option to @rnw/codegen (53799235+ZihanChen-MSFT@users.noreply.github.com)
 
 ## 0.0.0-canary.62
 

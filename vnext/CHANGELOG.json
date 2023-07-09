@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 08 Jul 2023 05:13:21 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.673",
+      "version": "0.0.0-canary.673",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "6e4108cccdcf279daa9218a2a879decd6c7bd703",
+            "comment": "update nuget lock files"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "1a52d0a11b43fda3a8a72dac3b6e03349a77c01d",
+            "comment": "Define Blob TurboModule"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.176",
+            "commit": "1a52d0a11b43fda3a8a72dac3b6e03349a77c01d"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.63",
+            "commit": "1a52d0a11b43fda3a8a72dac3b6e03349a77c01d"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 04 Jul 2023 05:13:23 GMT",
       "tag": "react-native-windows_v0.0.0-canary.672",
       "version": "0.0.0-canary.672",

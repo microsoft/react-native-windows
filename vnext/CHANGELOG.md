@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 04 Jul 2023 05:13:23 GMT and should not be manually modified.
+This log was last generated on Sat, 08 Jul 2023 05:13:21 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.673
+
+Sat, 08 Jul 2023 05:13:21 GMT
+
+### Changes
+
+- update nuget lock files (30809111+acoates-ms@users.noreply.github.com)
+- Define Blob TurboModule (julio.rocha@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.176
+- Bump @react-native-windows/codegen to v0.0.0-canary.63
 
 ## 0.0.0-canary.672
 
