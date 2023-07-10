@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/just-task
 
-This log was last generated on Wed, 07 Jun 2023 05:16:11 GMT and should not be manually modified.
+This log was last generated on Sat, 01 Jul 2023 05:14:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.3.12
+
+Sat, 01 Jul 2023 05:14:41 GMT
+
+### Patches
+
+- integrate 6/16 (tatianakapos@microsoft.com)
 
 ## 2.3.11
 

@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win32/**"
   ],
-  "baseVersion": "0.73.0-nightly-20230601-d9b3339ef",
+  "baseVersion": "0.73.0-nightly-20230616-5f8bbf2bd",
   "overrides": [
     {
       "type": "patch",
@@ -28,6 +28,14 @@
     },
     {
       "type": "platform",
+      "file": "src/js/components/TextWin32Test.tsx"
+    },
+    {
+      "type": "platform",
+      "file": "src/js/components/ViewWin32Test.tsx"
+    },
+    {
+      "type": "platform",
       "file": "src/js/examples/PlatformColor/PlatformColorExample.win32.js"
     },
     {
@@ -42,14 +50,6 @@
       "file": "src/js/utils/RNTesterList.win32.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
       "baseHash": "8954573b49f8321edea6bd2bdddf814ba2a7226c"
-    },
-    {
-      "type": "platform",
-      "file": "src/js/components/TextWin32Test.tsx"
-    },
-    {
-      "type": "platform",
-      "file": "src/js/components/ViewWin32Test.tsx"
     }
   ]
 }

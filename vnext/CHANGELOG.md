@@ -1,8 +1,61 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 24 Jun 2023 05:13:09 GMT and should not be manually modified.
+This log was last generated on Mon, 10 Jul 2023 05:14:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.674
+
+Mon, 10 Jul 2023 05:14:11 GMT
+
+### Changes
+
+- Add REACT_MODULE_NOREG which is REACT_MODULE but without auto registration (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.673
+
+Sat, 08 Jul 2023 05:13:21 GMT
+
+### Changes
+
+- update nuget lock files (30809111+acoates-ms@users.noreply.github.com)
+- Define Blob TurboModule (julio.rocha@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.176
+- Bump @react-native-windows/codegen to v0.0.0-canary.63
+
+## 0.0.0-canary.672
+
+Tue, 04 Jul 2023 05:13:23 GMT
+
+### Changes
+
+- Define HTTP TurboModule (julio.rocha@microsoft.com)
+- Default IncludeFabricInterface to true (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.671
+
+Sat, 01 Jul 2023 05:14:42 GMT
+
+### Changes
+
+- integrate 6/16 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.175
+- Bump @react-native-windows/codegen to v0.0.0-canary.62
+- Bump @rnw-scripts/eslint-config to v1.2.1
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.4
+- Bump @rnw-scripts/just-task to v2.3.12
+- Bump react-native-platform-override to v1.9.11
+
+## 0.0.0-canary.670
+
+Thu, 29 Jun 2023 05:14:05 GMT
+
+### Changes
+
+- Update files proeprty to ensure TS types are published (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] No need to assert when an unimplemented view has children added to it (30809111+acoates-ms@users.noreply.github.com)
+- [Farbic] Fix crash in certain unmount scenarios (30809111+acoates-ms@users.noreply.github.com)
+- Fabric: Scroll Scrollviews to bring focused items into view (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.669
 

@@ -25,7 +25,11 @@ import {
   endTelemetrySession,
 } from './runWindows/utils/telemetryHelpers';
 
-import {runCodeGen} from '@react-native-windows/codegen';
+import {
+  CodeGenOptions as RnwCodeGenOptions,
+  CppStringTypes,
+  runCodeGen,
+} from '@react-native-windows/codegen';
 import {Ora} from 'ora';
 
 export class CodeGenWindows {
@@ -90,6 +94,23 @@ export class CodeGenWindows {
       );
     }
 
+    let cppStringType: CppStringTypes = 'std::string';
+    if (pkgJson.codegenConfig.windows.cppStringType) {
+      switch (pkgJson.codegenConfig.windows.cppStringType) {
+        case 'std::string':
+        case 'std::wstring':
+          cppStringType = pkgJson.codegenConfig.windows.cppStringType;
+          break;
+        default:
+          throw new CodedError(
+            'InvalidCodegenConfig',
+            `Value of ${chalk.bold(
+              'codegenConfig.windows.cppStringType',
+            )} package.json should be either 'std::string' or 'std::wstring'`,
+          );
+      }
+    }
+
     if (!pkgJson.codegenConfig.name) {
       throw new CodedError(
         'InvalidCodegenConfig',
@@ -108,12 +129,13 @@ export class CodeGenWindows {
     ];
 
     const jsRootPathRelative = path.relative(process.cwd(), jsRootDir);
-    const options = {
+    const options: RnwCodeGenOptions = {
       files: [
         `${jsRootPathRelative}${
           jsRootPathRelative ? '/' : ''
         }**/*Native*.[jt]s`,
       ],
+      cppStringType,
       libraryName: projectName,
       methodOnly: false,
       modulesCxx: generators.indexOf('modulesCxx') !== -1,

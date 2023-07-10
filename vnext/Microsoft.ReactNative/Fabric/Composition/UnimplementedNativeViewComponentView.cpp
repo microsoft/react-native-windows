@@ -30,15 +30,11 @@ std::shared_ptr<UnimplementedNativeViewComponentView> UnimplementedNativeViewCom
 
 void UnimplementedNativeViewComponentView::mountChildComponentView(
     IComponentView &childComponentView,
-    uint32_t index) noexcept {
-  assert(false);
-}
+    uint32_t index) noexcept {}
 
 void UnimplementedNativeViewComponentView::unmountChildComponentView(
     IComponentView &childComponentView,
-    uint32_t index) noexcept {
-  assert(false);
-}
+    uint32_t index) noexcept {}
 
 void UnimplementedNativeViewComponentView::updateProps(
     facebook::react::Props::Shared const &props,

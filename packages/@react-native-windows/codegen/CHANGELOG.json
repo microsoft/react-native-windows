@@ -2,6 +2,60 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Sat, 08 Jul 2023 05:13:21 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.63",
+      "version": "0.0.0-canary.63",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "dcf95f7a1a89aed72717bb44005101903126431d",
+            "comment": "Add configConfig.windows.cppStringType in package.json for @rnw/codegen"
+          },
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "5a3dcf7eac73701e6dd194b5a5f592a763d9f9dd",
+            "comment": "Add cppStringType option to @rnw/codegen"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 01 Jul 2023 05:14:41 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.62",
+      "version": "0.0.0-canary.62",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "99563ff69161f1c6c699baec89c72f4b6b355224",
+            "comment": "integrate 6/16"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.24",
+            "commit": "99563ff69161f1c6c699baec89c72f4b6b355224"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.1",
+            "commit": "99563ff69161f1c6c699baec89c72f4b6b355224"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.12",
+            "commit": "99563ff69161f1c6c699baec89c72f4b6b355224"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 13 Jun 2023 05:15:41 GMT",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.61",
       "version": "0.0.0-canary.61",

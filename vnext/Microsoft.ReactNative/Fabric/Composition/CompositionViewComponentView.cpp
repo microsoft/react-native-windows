@@ -48,7 +48,7 @@ const std::vector<IComponentView *> &CompositionBaseComponentView::children() co
 void CompositionBaseComponentView::parent(IComponentView *parent) noexcept {
   if (!parent) {
     auto root = rootComponentView();
-    if (root->GetFocusedComponent() == this) {
+    if (root && root->GetFocusedComponent() == this) {
       root->SetFocusedComponent(nullptr); // TODO need move focus logic - where should focus go?
     }
   }
@@ -96,6 +96,24 @@ void CompositionBaseComponentView::onFocusGained() noexcept {
           m_uiaProvider, UIA_HasKeyboardFocusPropertyId, false, true);
       UiaRaiseAutomationEvent(spProviderSimple.get(), UIA_AutomationFocusChangedEventId);
     }
+  }
+
+  StartBringIntoView({});
+}
+
+void CompositionBaseComponentView::StartBringIntoView(BringIntoViewOptions &&options) noexcept {
+  if (!options.TargetRect) {
+    // Default to bring the entire of this component into view
+    options.TargetRect = {
+        {0, 0},
+        {m_layoutMetrics.frame.size.width * m_layoutMetrics.pointScaleFactor,
+         m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor}};
+  }
+
+  if (m_parent) {
+    options.TargetRect->origin.y += m_layoutMetrics.frame.origin.y * m_layoutMetrics.pointScaleFactor;
+    options.TargetRect->origin.x += m_layoutMetrics.frame.origin.x * m_layoutMetrics.pointScaleFactor;
+    m_parent->StartBringIntoView(std::move(options));
   }
 }
 
