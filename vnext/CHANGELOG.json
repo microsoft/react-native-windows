@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 10 Jul 2023 05:14:11 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.674",
+      "version": "0.0.0-canary.674",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "19cf1ad4cd6535d131d9d414e285bb479ed167f6",
+            "comment": "Add REACT_MODULE_NOREG which is REACT_MODULE but without auto registration"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 08 Jul 2023 05:13:21 GMT",
       "tag": "react-native-windows_v0.0.0-canary.673",
       "version": "0.0.0-canary.673",

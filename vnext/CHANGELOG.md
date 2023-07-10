@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 08 Jul 2023 05:13:21 GMT and should not be manually modified.
+This log was last generated on Mon, 10 Jul 2023 05:14:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.674
+
+Mon, 10 Jul 2023 05:14:11 GMT
+
+### Changes
+
+- Add REACT_MODULE_NOREG which is REACT_MODULE but without auto registration (53799235+ZihanChen-MSFT@users.noreply.github.com)
 
 ## 0.0.0-canary.673
 
