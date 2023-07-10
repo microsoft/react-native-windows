@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 10 Jul 2023 22:20:00 GMT",
+      "tag": "react-native-windows_v0.71.23",
+      "version": "0.71.23",
+      "comments": {
+        "patch": [
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "6e285ab254f6c38e4bc8a84fc338a42671c37239",
+            "comment": "Add REACT_MODULE_NOREG which is REACT_MODULE but without auto registration (#11849)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 06 Jul 2023 20:21:35 GMT",
       "tag": "react-native-windows_v0.71.22",
       "version": "0.71.22",

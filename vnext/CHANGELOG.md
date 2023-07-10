@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 06 Jul 2023 20:21:35 GMT and should not be manually modified.
+This log was last generated on Mon, 10 Jul 2023 22:20:00 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.23
+
+Mon, 10 Jul 2023 22:20:00 GMT
+
+### Patches
+
+- Add REACT_MODULE_NOREG which is REACT_MODULE but without auto registration (#11849) (53799235+ZihanChen-MSFT@users.noreply.github.com)
 
 ## 0.71.22
 
