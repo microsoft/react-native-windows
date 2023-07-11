@@ -2,6 +2,33 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Sat, 08 Jul 2023 05:13:21 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.176",
+      "version": "0.0.0-canary.176",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "5a3dcf7eac73701e6dd194b5a5f592a763d9f9dd",
+            "comment": "Add cppStringType option to @rnw/codegen"
+          },
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "dcf95f7a1a89aed72717bb44005101903126431d",
+            "comment": "Add configConfig.windows.cppStringType in package.json for @rnw/codegen"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.63",
+            "commit": "1a52d0a11b43fda3a8a72dac3b6e03349a77c01d"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 01 Jul 2023 05:14:42 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.175",
       "version": "0.0.0-canary.175",
