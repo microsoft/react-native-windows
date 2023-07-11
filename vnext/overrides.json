@@ -50,7 +50,7 @@
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/ImageRequest.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/imagemanager/platform/ios/react/renderer/imagemanager/ImageRequest.cpp",
-      "baseHash": "106181f5367b924b2ee2572842e9f2159427e3c2"
+      "baseHash": "99012d5d02bdafa53a4638ecd1f56ada5fc050a5"
     },
     {
       "type": "patch",
