@@ -32,6 +32,7 @@ using Microsoft::React::Modules::SendEvent;
 using Microsoft::React::Networking::IHttpResource;
 
 constexpr char s_moduleName[] = "Networking";
+constexpr wchar_t s_moduleNameW[] = L"Networking";
 
 // React event names
 constexpr char completedResponse[] = "didCompleteNetworkResponse";
@@ -325,6 +326,10 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
 
 /*extern*/ const char *GetHttpModuleName() noexcept {
   return s_moduleName;
+}
+
+/*extern*/ const wchar_t* GetHttpTurboModuleName() noexcept {
+  return s_moduleNameW;
 }
 
 } // namespace Microsoft::React

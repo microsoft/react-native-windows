@@ -34,20 +34,30 @@ extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateTimingModule(
 
 namespace Microsoft::React {
 
-extern const char *GetHttpModuleName() noexcept;
+#pragma region CxxModules
+
+extern const char* GetHttpModuleName() noexcept;
 extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateHttpModule(
-    winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept;
+  winrt::Windows::Foundation::IInspectable const& inspectableProperties) noexcept;
 
-extern const char *GetWebSocketModuleName() noexcept;
+extern const char* GetWebSocketModuleName() noexcept;
 extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule(
-    winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept;
+  winrt::Windows::Foundation::IInspectable const& inspectableProperties) noexcept;
 
-extern const char *GetBlobModuleName() noexcept;
+extern const char* GetBlobModuleName() noexcept;
 extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateBlobModule(
-    winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept;
+  winrt::Windows::Foundation::IInspectable const& inspectableProperties) noexcept;
 
-extern const char *GetFileReaderModuleName() noexcept;
+extern const char* GetFileReaderModuleName() noexcept;
 extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateFileReaderModule(
-    winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept;
+  winrt::Windows::Foundation::IInspectable const& inspectableProperties) noexcept;
+
+#pragma endregion CxxModules
+
+#pragma region TurboModules
+
+extern const wchar_t* GetHttpTurboModuleName() noexcept;
+
+#pragma endregion TurboModules
 
 } // namespace Microsoft::React
