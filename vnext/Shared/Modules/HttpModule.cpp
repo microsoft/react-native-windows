@@ -5,8 +5,8 @@
 
 #include "HttpModule.h"
 
-#include <Modules/CxxModuleUtilities.h>
 #include <CreateModules.h>
+#include <Modules/CxxModuleUtilities.h>
 #include <ReactPropertyBag.h>
 
 // React Native
@@ -331,11 +331,11 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
   return s_moduleName;
 }
 
-/*extern*/ const wchar_t* GetHttpTurboModuleName() noexcept {
+/*extern*/ const wchar_t *GetHttpTurboModuleName() noexcept {
   return s_moduleNameW;
 }
 
-/*extern*/ const msrn::ReactModuleProvider& GetHttpModuleProvider() noexcept {
+/*extern*/ const msrn::ReactModuleProvider &GetHttpModuleProvider() noexcept {
   return s_moduleProvider;
 }
 

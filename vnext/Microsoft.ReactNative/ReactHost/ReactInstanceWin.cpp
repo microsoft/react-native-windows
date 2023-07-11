@@ -6,7 +6,7 @@
 #include "MsoUtils.h"
 
 #include <AppModelHelpers.h>
-#include <Base/CoreNativeModules.h>//TODO: Remove
+#include <Base/CoreNativeModules.h> //TODO: Remove
 #include <Threading/MessageDispatchQueue.h>
 #include <Threading/MessageQueueThreadFactory.h>
 #include <appModel.h>
@@ -393,25 +393,15 @@ void ReactInstanceWin::LoadModules(
       L"Timing", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::Timing>());
 #endif
 
-  registerTurboModule(
-    ::Microsoft::React::GetBlobTurboModuleName(),
-    ::Microsoft::React::GetBlobModuleProvider()
-  );
+  registerTurboModule(::Microsoft::React::GetBlobTurboModuleName(), ::Microsoft::React::GetBlobModuleProvider());
+
+  registerTurboModule(::Microsoft::React::GetHttpTurboModuleName(), ::Microsoft::React::GetHttpModuleProvider());
 
   registerTurboModule(
-    ::Microsoft::React::GetHttpTurboModuleName(),
-    ::Microsoft::React::GetHttpModuleProvider()
-  );
+      ::Microsoft::React::GetFileReaderTurboModuleName(), ::Microsoft::React::GetFileReaderModuleProvider());
 
   registerTurboModule(
-    ::Microsoft::React::GetFileReaderTurboModuleName(),
-    ::Microsoft::React::GetFileReaderModuleProvider()
-  );
-
-  registerTurboModule(
-    ::Microsoft::React::GetWebSocketTurboModuleName(),
-    ::Microsoft::React::GetWebSocketModuleProvider()
-  );
+      ::Microsoft::React::GetWebSocketTurboModuleName(), ::Microsoft::React::GetWebSocketModuleProvider());
 }
 
 //! Initialize() is called from the native queue.

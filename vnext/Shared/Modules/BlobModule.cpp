@@ -3,8 +3,8 @@
 
 #include "BlobModule.h"
 
-#include <Modules/CxxModuleUtilities.h>
 #include <CreateModules.h>
+#include <Modules/CxxModuleUtilities.h>
 
 // React Native
 #include <cxxreact/JsArgumentHelpers.h>
@@ -20,8 +20,8 @@ using winrt::Windows::Foundation::IInspectable;
 namespace msrn = winrt::Microsoft::ReactNative;
 
 namespace {
-  constexpr char s_moduleName[] = "BlobModule";
-  constexpr wchar_t s_moduleNameW[] = L"BlobModule";
+constexpr char s_moduleName[] = "BlobModule";
+constexpr wchar_t s_moduleNameW[] = L"BlobModule";
 
 const auto &blobKeys = IBlobResource::FieldNames();
 
@@ -161,11 +161,11 @@ vector<module::CxxModule::Method> BlobModule::getMethods() {
   return nullptr;
 }
 
-/*extern*/ const wchar_t* GetBlobTurboModuleName() noexcept {
+/*extern*/ const wchar_t *GetBlobTurboModuleName() noexcept {
   return s_moduleNameW;
 }
 
-/*extern*/ const msrn::ReactModuleProvider& GetBlobModuleProvider() noexcept {
+/*extern*/ const msrn::ReactModuleProvider &GetBlobModuleProvider() noexcept {
   return s_moduleProvider;
 }
 

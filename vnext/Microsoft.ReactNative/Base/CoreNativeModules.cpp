@@ -23,21 +23,21 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
     Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept {
   std::vector<facebook::react::NativeModuleDescription> modules;
 
-  //TODO: Remove
-  //modules.emplace_back(
-  //    "Networking",
-  //    [props = context->Properties()]() { return Microsoft::React::CreateHttpModule(props); },
-  //    jsMessageQueue);
+  // TODO: Remove
+  // modules.emplace_back(
+  //     "Networking",
+  //     [props = context->Properties()]() { return Microsoft::React::CreateHttpModule(props); },
+  //     jsMessageQueue);
 
-  //modules.emplace_back(
-  //    Microsoft::React::GetBlobModuleName(),
-  //    [props = context->Properties()]() { return Microsoft::React::CreateBlobModule(props); },
-  //    batchingUIMessageQueue);
+  // modules.emplace_back(
+  //     Microsoft::React::GetBlobModuleName(),
+  //     [props = context->Properties()]() { return Microsoft::React::CreateBlobModule(props); },
+  //     batchingUIMessageQueue);
 
-  //modules.emplace_back(
-  //    Microsoft::React::GetFileReaderModuleName(),
-  //    [props = context->Properties()]() { return Microsoft::React::CreateFileReaderModule(props); },
-  //    batchingUIMessageQueue);
+  // modules.emplace_back(
+  //     Microsoft::React::GetFileReaderModuleName(),
+  //     [props = context->Properties()]() { return Microsoft::React::CreateFileReaderModule(props); },
+  //     batchingUIMessageQueue);
 
   return modules;
 }

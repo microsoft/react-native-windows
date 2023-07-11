@@ -202,11 +202,11 @@ void FileReaderTurboModule::ReadAsText(
   return nullptr;
 }
 
-/*extern*/ const wchar_t* GetFileReaderTurboModuleName() noexcept {
+/*extern*/ const wchar_t *GetFileReaderTurboModuleName() noexcept {
   return s_moduleNameW;
 }
 
-/*extern*/ const msrn::ReactModuleProvider& GetFileReaderModuleProvider() noexcept {
+/*extern*/ const msrn::ReactModuleProvider &GetFileReaderModuleProvider() noexcept {
   return s_moduleProvider;
 }
 

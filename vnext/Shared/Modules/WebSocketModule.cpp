@@ -499,11 +499,11 @@ void WebSocketTurboModule::RemoveListeners(double /*count*/) noexcept {}
   return nullptr;
 }
 
-/*extern*/ const wchar_t* GetWebSocketTurboModuleName() noexcept {
+/*extern*/ const wchar_t *GetWebSocketTurboModuleName() noexcept {
   return s_moduleNameW;
 }
 
-/*extern*/ const msrn::ReactModuleProvider& GetWebSocketModuleProvider() noexcept {
+/*extern*/ const msrn::ReactModuleProvider &GetWebSocketModuleProvider() noexcept {
   return s_moduleProvider;
 }
 
