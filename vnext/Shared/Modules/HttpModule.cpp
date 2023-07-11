@@ -6,6 +6,7 @@
 #include "HttpModule.h"
 
 #include <Modules/CxxModuleUtilities.h>
+#include <CreateModules.h>
 #include <ReactPropertyBag.h>
 
 // React Native

@@ -62,8 +62,17 @@ extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateFileReaderModul
 
 #pragma region TurboModules
 
+extern const wchar_t* GetBlobTurboModuleName() noexcept;
+extern const winrt::Microsoft::ReactNative::ReactModuleProvider& GetBlobModuleProvider() noexcept;
+
 extern const wchar_t* GetHttpTurboModuleName() noexcept;
 extern const winrt::Microsoft::ReactNative::ReactModuleProvider& GetHttpModuleProvider() noexcept;
+
+extern const wchar_t* GetFileReaderTurboModuleName() noexcept;
+extern const winrt::Microsoft::ReactNative::ReactModuleProvider& GetFileReaderModuleProvider() noexcept;
+
+extern const wchar_t* GetWebSocketTurboModuleName() noexcept;
+extern const winrt::Microsoft::ReactNative::ReactModuleProvider& GetWebSocketModuleProvider() noexcept;
 
 #pragma endregion TurboModules
 

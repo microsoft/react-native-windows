@@ -4,6 +4,7 @@
 #include "BlobModule.h"
 
 #include <Modules/CxxModuleUtilities.h>
+#include <CreateModules.h>
 
 // React Native
 #include <cxxreact/JsArgumentHelpers.h>
@@ -19,9 +20,13 @@ using winrt::Windows::Foundation::IInspectable;
 namespace msrn = winrt::Microsoft::ReactNative;
 
 namespace {
-constexpr char s_moduleName[] = "BlobModule";
+  constexpr char s_moduleName[] = "BlobModule";
+  constexpr wchar_t s_moduleNameW[] = L"BlobModule";
 
 const auto &blobKeys = IBlobResource::FieldNames();
+
+msrn::ReactModuleProvider s_moduleProvider = msrn::MakeTurboModuleProvider<Microsoft::React::BlobTurboModule>();
+
 } // namespace
 
 namespace Microsoft::React {
@@ -154,6 +159,14 @@ vector<module::CxxModule::Method> BlobModule::getMethods() {
     return std::make_unique<BlobModule>(properties);
 
   return nullptr;
+}
+
+/*extern*/ const wchar_t* GetBlobTurboModuleName() noexcept {
+  return s_moduleNameW;
+}
+
+/*extern*/ const msrn::ReactModuleProvider& GetBlobModuleProvider() noexcept {
+  return s_moduleProvider;
 }
 
 } // namespace Microsoft::React

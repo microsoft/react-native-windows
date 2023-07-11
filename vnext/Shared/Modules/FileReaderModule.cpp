@@ -3,6 +3,7 @@
 
 #include "FileReaderModule.h"
 
+#include <CreateModules.h>
 #include <ReactPropertyBag.h>
 #include <sstream>
 
@@ -28,6 +29,9 @@ using winrt::Windows::Foundation::IInspectable;
 
 namespace {
 constexpr char s_moduleName[] = "FileReaderModule";
+constexpr wchar_t s_moduleNameW[] = L"FileReaderModule";
+
+msrn::ReactModuleProvider s_moduleProvider = msrn::MakeTurboModuleProvider<Microsoft::React::FileReaderTurboModule>();
 } // namespace
 
 namespace Microsoft::React {
@@ -196,6 +200,14 @@ void FileReaderTurboModule::ReadAsText(
   }
 
   return nullptr;
+}
+
+/*extern*/ const wchar_t* GetFileReaderTurboModuleName() noexcept {
+  return s_moduleNameW;
+}
+
+/*extern*/ const msrn::ReactModuleProvider& GetFileReaderModuleProvider() noexcept {
+  return s_moduleProvider;
 }
 
 } // namespace Microsoft::React
