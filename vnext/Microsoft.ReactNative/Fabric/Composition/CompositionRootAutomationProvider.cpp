@@ -65,7 +65,7 @@ HRESULT __stdcall CompositionRootAutomationProvider::get_HostRawElementProvider(
   return S_OK;
 }
 
-HRESULT CompositionRootAutomationProvider::Invoke() {
+HRESULT __stdcall CompositionRootAutomationProvider::Invoke() {
   return S_OK;
 }
 
