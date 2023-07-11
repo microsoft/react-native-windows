@@ -864,7 +864,8 @@ export default class Pressability {
       }
       const {onLongPress, onPress, android_disableSound} = this._config;
 
-      if (onPress != null &&
+      if (
+        onPress != null &&
         this._isDefaultPressButton(getTouchFromPressEvent(event).button)
       ) {
         const isPressCanceledByLongPress =
