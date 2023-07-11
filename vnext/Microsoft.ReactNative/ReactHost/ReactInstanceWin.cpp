@@ -6,7 +6,6 @@
 #include "MsoUtils.h"
 
 #include <AppModelHelpers.h>
-#include <Base/CoreNativeModules.h> //TODO: Remove
 #include <Threading/MessageDispatchQueue.h>
 #include <Threading/MessageQueueThreadFactory.h>
 #include <appModel.h>
@@ -469,15 +468,7 @@ void ReactInstanceWin::Initialize() noexcept {
             }
           };
 
-#ifdef CORE_ABI
           std::vector<facebook::react::NativeModuleDescription> cxxModules;
-#else
-          // Acquire default modules and then populate with custom modules.
-          // Note that some of these have custom thread affinity.
-          std::vector<facebook::react::NativeModuleDescription> cxxModules =
-              Microsoft::ReactNative::GetCoreModules(m_batchingUIThread, m_jsMessageThread.Load(), m_reactContext);
-#endif
-
           auto nmp = std::make_shared<winrt::Microsoft::ReactNative::NativeModulesProvider>();
 
           LoadModules(nmp, m_options.TurboModuleProvider);
