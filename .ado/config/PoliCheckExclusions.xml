@@ -20,6 +20,6 @@ NOTE: Use ALL CAPS for excluded terms below else it will silently ignore them. A
 	</Exclusion>
 	<!-- The specified file names will be skipped during the scan regardless which folder they are in -->
 	<Exclusion Type="FileName">
-		POLICHECKEXCLUSIONS.XML|TEXTINPUT.D.TS|TEXTINPUT.FLOW.JS|TEXTINPUT.JS|TEXTINPUT.WINDOWS.JS|TEXTINPUT.WIN32.JS
+		POLICHECKEXCLUSIONS.XML
 	</Exclusion>
 </PoliCheckExclusions>
