@@ -34,7 +34,7 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
   // virtual HRESULT __stdcall ShowContextMenu() noexcept override;
 
   // inherited via IInvokeProvider
-  virtual HRESULT Invoke() override;
+  virtual HRESULT __stdcall Invoke() override;
 
  private:
   ::Microsoft::ReactNative::ReactTaggedView m_view;

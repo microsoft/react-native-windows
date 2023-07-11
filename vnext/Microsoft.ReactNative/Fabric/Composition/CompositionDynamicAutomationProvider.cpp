@@ -272,7 +272,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_HostRawElementProvid
   return S_OK;
 }
 
-HRESULT CompositionDynamicAutomationProvider::Invoke() {
+HRESULT __stdcall CompositionDynamicAutomationProvider::Invoke() {
   auto strongView = m_view.view();
 
   if (!strongView)
