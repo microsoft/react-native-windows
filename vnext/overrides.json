@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.72.0",
+  "baseVersion": "0.72.2",
   "overrides": [
     {
       "type": "derived",
@@ -45,12 +45,6 @@
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputState.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputState.h",
       "baseHash": "c945b4b95344c40d5505dec2debd8e9ceda09015"
-    },
-    {
-      "type": "derived",
-      "file": "Microsoft.ReactNative/Fabric/ImageRequest.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/imagemanager/platform/ios/react/renderer/imagemanager/ImageRequest.cpp",
-      "baseHash": "106181f5367b924b2ee2572842e9f2159427e3c2"
     },
     {
       "type": "patch",
