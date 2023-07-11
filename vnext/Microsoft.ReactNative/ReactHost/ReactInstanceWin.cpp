@@ -394,8 +394,23 @@ void ReactInstanceWin::LoadModules(
 #endif
 
   registerTurboModule(
+    ::Microsoft::React::GetBlobTurboModuleName(),
+    ::Microsoft::React::GetBlobModuleProvider()
+  );
+
+  registerTurboModule(
     ::Microsoft::React::GetHttpTurboModuleName(),
     ::Microsoft::React::GetHttpModuleProvider()
+  );
+
+  registerTurboModule(
+    ::Microsoft::React::GetFileReaderTurboModuleName(),
+    ::Microsoft::React::GetFileReaderModuleProvider()
+  );
+
+  registerTurboModule(
+    ::Microsoft::React::GetWebSocketTurboModuleName(),
+    ::Microsoft::React::GetWebSocketModuleProvider()
   );
 }
 
