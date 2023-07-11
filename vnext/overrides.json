@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.73.0-nightly-20230623-330639f74",
+  "baseVersion": "0.73.0-nightly-20230628-15d735b35",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "8001e96c33f9678b48367e1c63939558ce4520b6"
+      "baseHash": "c7a5a5089f3ad1380a829c54a990678ec648aabf"
     },
     {
       "type": "copy",
@@ -56,7 +56,7 @@
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/ImageRequest.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/imagemanager/platform/ios/react/renderer/imagemanager/ImageRequest.cpp",
-      "baseHash": "355f9ced2d304fc8668b36433aabc55ac1c12247"
+      "baseHash": "08027284fbf131faad264cedde5b8c503994c4b8"
     },
     {
       "type": "patch",

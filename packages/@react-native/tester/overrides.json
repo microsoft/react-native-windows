@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.73.0-nightly-20230623-330639f74",
+  "baseVersion": "0.73.0-nightly-20230628-15d735b35",
   "overrides": [
     {
       "type": "copy",
@@ -257,7 +257,7 @@
       "type": "copy",
       "directory": "js/examples/PlatformColor",
       "baseDirectory": "packages/rn-tester/js/examples/PlatformColor",
-      "baseHash": "9530baea4a2337cf0822a7232a0088195e83d349",
+      "baseHash": "6d67c0ed30928bc35b637d8aa5a6b8d64b528def",
       "issue": 4054
     },
     {
@@ -313,7 +313,7 @@
       "type": "copy",
       "directory": "js/examples/ScrollView",
       "baseDirectory": "packages/rn-tester/js/examples/ScrollView",
-      "baseHash": "9270f999f775259432efb29b366e2f4e0c40c8f9",
+      "baseHash": "7dc879d2261076815e87856d3e87247c4f935040",
       "issue": 4054
     },
     {
@@ -467,7 +467,7 @@
       "type": "copy",
       "file": "js/RNTesterAppShared.js",
       "baseFile": "packages/rn-tester/js/RNTesterAppShared.js",
-      "baseHash": "2b14fd09f68f828ba56342745f4d3e1d721b71f3",
+      "baseHash": "60347ef4094fcb58c89f0e2b204e1616e56d6b31",
       "issue": 4054
     },
     {
