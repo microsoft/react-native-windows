@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 10 Jul 2023 05:14:11 GMT and should not be manually modified.
+This log was last generated on Tue, 11 Jul 2023 05:14:42 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.675
+
+Tue, 11 Jul 2023 05:14:42 GMT
+
+### Changes
+
+- Fix warning compiler may not enforce left-to-right evaluation order in braced initializer list (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.674
 
