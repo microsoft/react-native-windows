@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 11 Jul 2023 05:14:42 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.675",
+      "version": "0.0.0-canary.675",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c3daf409c71cfef13118daf1c0b5bcfad2855d87",
+            "comment": "Fix warning compiler may not enforce left-to-right evaluation order in braced initializer list"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 10 Jul 2023 05:14:11 GMT",
       "tag": "react-native-windows_v0.0.0-canary.674",
       "version": "0.0.0-canary.674",
