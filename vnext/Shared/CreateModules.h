@@ -5,7 +5,6 @@
 
 // React Native
 #include <cxxreact/CxxModule.h>
-#include <smartPtr/cntPtr.h>
 
 // Windows API
 #include <winrt/Windows.Foundation.h>
@@ -15,9 +14,9 @@
 
 // Forward declarations. Desktop projects can not access <React.h>
 namespace winrt::Microsoft::ReactNative {
-  struct ReactContext;
-  struct ReactModuleProvider;
-}
+struct ReactContext;
+struct ReactModuleProvider;
+} // namespace winrt::Microsoft::ReactNative
 
 namespace Mso::React {
 struct IReactContext;
