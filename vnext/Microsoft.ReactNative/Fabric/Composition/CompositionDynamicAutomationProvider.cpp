@@ -284,7 +284,7 @@ HRESULT CompositionDynamicAutomationProvider::Invoke() {
 
   // Currently calls both onAccessibilityTap and onClick.
   // To match Paper behavior, onAccessibilityTap only called if onClick is not defined.
-  // Events dispatched for any control. 
+  // Events dispatched for any control.
   // To match Paper, Event should only dispatch for pressable controls without state.
   baseView.get()->GetEventEmitter().get()->onAccessibilityTap();
   baseView.get()->GetEventEmitter().get()->onClick();
@@ -298,7 +298,7 @@ HRESULT CompositionDynamicAutomationProvider::Invoke() {
   if (spProviderSimple != nullptr) {
     UiaRaiseAutomationEvent(spProviderSimple.get(), UIA_Invoke_InvokedEventId);
   }
-  
+
   return S_OK;
 }
 

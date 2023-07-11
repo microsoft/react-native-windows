@@ -35,7 +35,7 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
 
   // inherited via IInvokeProvider
   virtual HRESULT Invoke() override;
-  
+
  private:
   ::Microsoft::ReactNative::ReactTaggedView m_view;
 };
