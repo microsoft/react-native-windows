@@ -14,6 +14,12 @@
 #include <memory>
 
 // Forward declarations. Desktop projects can not access <React.h>
+namespace winrt::Microsoft::ReactNative
+{
+  //struct ReactContext;
+  //struct ReactModuleProvider;
+}
+
 namespace Mso::React {
 struct IReactContext;
 }
@@ -57,6 +63,7 @@ extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateFileReaderModul
 #pragma region TurboModules
 
 extern const wchar_t* GetHttpTurboModuleName() noexcept;
+extern const winrt::Microsoft::ReactNative::ReactModuleProvider& GetHttpModuleProvider() noexcept;
 
 #pragma endregion TurboModules
 

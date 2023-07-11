@@ -6,7 +6,7 @@
 #include "MsoUtils.h"
 
 #include <AppModelHelpers.h>
-#include <Base/CoreNativeModules.h>
+#include <Base/CoreNativeModules.h>//TODO: Remove
 #include <Threading/MessageDispatchQueue.h>
 #include <Threading/MessageQueueThreadFactory.h>
 #include <appModel.h>
@@ -30,7 +30,6 @@
 #include <QuirkSettings.h>
 #include <Shared/DevServerHelper.h>
 #include <Views/ViewManager.h>
-#include <base/CoreNativeModules.h>
 #include <dispatchQueue/dispatchQueue.h>
 #include "DynamicWriter.h"
 #ifndef CORE_ABI
@@ -86,6 +85,7 @@
 #include <tuple>
 #include "ChakraRuntimeHolder.h"
 
+#include <CreateModules.h>
 #include <Utils/Helpers.h>
 #include "CrashManager.h"
 #include "JsiApi.h"
@@ -392,6 +392,11 @@ void ReactInstanceWin::LoadModules(
   registerTurboModule(
       L"Timing", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::Timing>());
 #endif
+
+  registerTurboModule(
+    ::Microsoft::React::GetHttpTurboModuleName(),
+    ::Microsoft::React::GetHttpModuleProvider()
+  );
 }
 
 //! Initialize() is called from the native queue.

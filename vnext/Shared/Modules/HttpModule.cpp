@@ -49,6 +49,8 @@ constexpr wchar_t receivedIncrementalDataW[] = L"didReceiveNetworkIncrementalDat
 constexpr wchar_t receivedDataProgressW[] = L"didReceiveNetworkDataProgress";
 constexpr wchar_t receivedDataW[] = L"didReceiveNetworkData";
 
+msrn::ReactModuleProvider s_moduleProvider = msrn::MakeTurboModuleProvider<Microsoft::React::HttpTurboModule>();
+
 static void SetUpHttpResource(
     shared_ptr<IHttpResource> resource,
     weak_ptr<Instance> weakReactInstance,
@@ -330,6 +332,10 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
 
 /*extern*/ const wchar_t* GetHttpTurboModuleName() noexcept {
   return s_moduleNameW;
+}
+
+/*extern*/ const msrn::ReactModuleProvider& GetHttpModuleProvider() noexcept {
+  return s_moduleProvider;
 }
 
 } // namespace Microsoft::React
