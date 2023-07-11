@@ -15,16 +15,15 @@
 
 // Forward declarations. Desktop projects can not access <React.h>
 namespace winrt::Microsoft::ReactNative {
-// struct ReactContext;
-// struct ReactModuleProvider;
+  struct ReactContext;
+  struct ReactModuleProvider;
 }
 
 namespace Mso::React {
 struct IReactContext;
 }
 
-namespace facebook {
-namespace react {
+namespace facebook::react {
 
 class MessageQueueThread;
 
@@ -34,8 +33,7 @@ class MessageQueueThread;
 extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateTimingModule(
     const std::shared_ptr<facebook::react::MessageQueueThread> &nativeThread) noexcept;
 
-} // namespace react
-} // namespace facebook
+} // namespace facebook::react
 
 namespace Microsoft::React {
 
