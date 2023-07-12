@@ -1,6 +1,6 @@
 {
   "type": "patch",
-  "comment": "[0.72] Integrate RN 0.72.2",
+  "comment": "[0.72] Integrate RN 0.72.3",
   "packageName": "@office-iss/react-native-win32",
   "email": "jthysell@microsoft.com",
   "dependentChangeType": "patch"
