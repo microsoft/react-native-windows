@@ -5,6 +5,7 @@
 
 #include "HttpModule.h"
 
+#include <CreateModules.h>
 #include <Modules/CxxModuleUtilities.h>
 #include <ReactPropertyBag.h>
 
@@ -32,6 +33,7 @@ using Microsoft::React::Modules::SendEvent;
 using Microsoft::React::Networking::IHttpResource;
 
 constexpr char s_moduleName[] = "Networking";
+constexpr wchar_t s_moduleNameW[] = L"Networking";
 
 // React event names
 constexpr char completedResponse[] = "didCompleteNetworkResponse";
@@ -47,6 +49,8 @@ constexpr wchar_t sentDataW[] = L"didSendNetworkData";
 constexpr wchar_t receivedIncrementalDataW[] = L"didReceiveNetworkIncrementalData";
 constexpr wchar_t receivedDataProgressW[] = L"didReceiveNetworkDataProgress";
 constexpr wchar_t receivedDataW[] = L"didReceiveNetworkData";
+
+msrn::ReactModuleProvider s_moduleProvider = msrn::MakeTurboModuleProvider<Microsoft::React::HttpTurboModule>();
 
 static void SetUpHttpResource(
     shared_ptr<IHttpResource> resource,
@@ -325,6 +329,14 @@ std::map<string, dynamic> HttpModule::getConstants() {
 
 /*extern*/ const char *GetHttpModuleName() noexcept {
   return s_moduleName;
+}
+
+/*extern*/ const wchar_t *GetHttpTurboModuleName() noexcept {
+  return s_moduleNameW;
+}
+
+/*extern*/ const msrn::ReactModuleProvider &GetHttpModuleProvider() noexcept {
+  return s_moduleProvider;
 }
 
 } // namespace Microsoft::React

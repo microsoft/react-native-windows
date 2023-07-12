@@ -6,6 +6,7 @@
 #include "MsoUtils.h"
 
 #include <Base/CoreNativeModules.h>
+#include <AppModelHelpers.h>
 #include <Threading/MessageDispatchQueue.h>
 #include <Threading/MessageQueueThreadFactory.h>
 #include <appModel.h>
@@ -29,7 +30,6 @@
 #include <QuirkSettings.h>
 #include <Shared/DevServerHelper.h>
 #include <Views/ViewManager.h>
-#include <base/CoreNativeModules.h>
 #include <dispatchQueue/dispatchQueue.h>
 #include "DynamicWriter.h"
 #ifndef CORE_ABI
@@ -75,6 +75,8 @@
 #include <tuple>
 #include "ChakraRuntimeHolder.h"
 
+#include <CreateModules.h>
+#include <Utils/Helpers.h>
 #include "CrashManager.h"
 #include "JsiApi.h"
 #include "ReactCoreInjection.h"
@@ -367,6 +369,16 @@ void ReactInstanceWin::LoadModules(
       winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::LinkingManager>());
 
 #endif
+
+  registerTurboModule(::Microsoft::React::GetBlobTurboModuleName(), ::Microsoft::React::GetBlobModuleProvider());
+
+  registerTurboModule(::Microsoft::React::GetHttpTurboModuleName(), ::Microsoft::React::GetHttpModuleProvider());
+
+  registerTurboModule(
+      ::Microsoft::React::GetFileReaderTurboModuleName(), ::Microsoft::React::GetFileReaderModuleProvider());
+
+  registerTurboModule(
+      ::Microsoft::React::GetWebSocketTurboModuleName(), ::Microsoft::React::GetWebSocketModuleProvider());
 }
 
 //! Initialize() is called from the native queue.
@@ -438,15 +450,7 @@ void ReactInstanceWin::Initialize() noexcept {
           };
 #endif
 
-#ifdef CORE_ABI
           std::vector<facebook::react::NativeModuleDescription> cxxModules;
-#else
-          // Acquire default modules and then populate with custom modules.
-          // Note that some of these have custom thread affinity.
-          std::vector<facebook::react::NativeModuleDescription> cxxModules = Microsoft::ReactNative::GetCoreModules(
-              m_batchingUIThread, m_jsMessageThread.Load(), std::move(m_appearanceListener), m_reactContext);
-#endif
-
           auto nmp = std::make_shared<winrt::Microsoft::ReactNative::NativeModulesProvider>();
 
           LoadModules(nmp, m_options.TurboModuleProvider);

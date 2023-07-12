@@ -6,6 +6,7 @@
 #include <Modules/WebSocketModule.h>
 #include <Modules/WebSocketTurboModule.h>
 
+#include <CreateModules.h>
 #include <Modules/CxxModuleUtilities.h>
 #include <Modules/IWebSocketModuleContentHandler.h>
 #include <ReactPropertyBag.h>
@@ -50,6 +51,9 @@ using Microsoft::React::Modules::SendEvent;
 using Microsoft::React::Networking::IWebSocketResource;
 
 constexpr char s_moduleName[] = "WebSocketModule";
+constexpr wchar_t s_moduleNameW[] = L"WebSocketModule";
+
+msrn::ReactModuleProvider s_moduleProvider = msrn::MakeTurboModuleProvider<Microsoft::React::WebSocketTurboModule>();
 
 static shared_ptr<IWebSocketResource>
 GetOrCreateWebSocket(int64_t id, string &&url, weak_ptr<WebSocketModule::SharedState> weakState) {
@@ -493,6 +497,14 @@ void WebSocketTurboModule::RemoveListeners(double /*count*/) noexcept {}
     return std::make_unique<WebSocketModule>(properties);
 
   return nullptr;
+}
+
+/*extern*/ const wchar_t *GetWebSocketTurboModuleName() noexcept {
+  return s_moduleNameW;
+}
+
+/*extern*/ const msrn::ReactModuleProvider &GetWebSocketModuleProvider() noexcept {
+  return s_moduleProvider;
 }
 
 } // namespace Microsoft::React

@@ -47,9 +47,6 @@
     <ClCompile Include="RedBox.cpp" />
     <ClCompile Include="TestHook.cpp" />
     <ClCompile Include="ViewManagersProvider.cpp" />
-    <ClCompile Include="Base\CoreNativeModules.cpp">
-      <Filter>Base</Filter>
-    </ClCompile>
     <ClCompile Include="Base\CoreUIManagers.cpp">
       <Filter>Base</Filter>
     </ClCompile>
@@ -401,9 +398,6 @@
     <ClInclude Include="RedBox.h" />
     <ClInclude Include="TestHook.h" />
     <ClInclude Include="ViewManagersProvider.h" />
-    <ClInclude Include="Base\CoreNativeModules.h">
-      <Filter>Base</Filter>
-    </ClInclude>
     <ClInclude Include="Modules\AccessibilityInfoModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
@@ -673,7 +667,6 @@
     <ClInclude Include="Views\IXamlRootView.h">
       <Filter>Views</Filter>
     </ClInclude>
-    <ClInclude Include="JsiApi.h" />
     <ClInclude Include="RedBoxErrorInfo.h" />
     <ClInclude Include="RedBoxErrorFrameInfo.h" />
     <ClInclude Include="Views\Image\Effects.h">
