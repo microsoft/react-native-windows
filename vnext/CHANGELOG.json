@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 12 Jul 2023 05:14:36 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.676",
+      "version": "0.0.0-canary.676",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "41e884ad162ae898f3dff91bf6662b4b2685a32b",
+            "comment": "Use TurboModules for networking in MSRN"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 11 Jul 2023 05:14:42 GMT",
       "tag": "react-native-windows_v0.0.0-canary.675",
       "version": "0.0.0-canary.675",
