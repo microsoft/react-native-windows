@@ -1,4 +1,6 @@
 {
+    "imageType": "Managed",	
+    "baseImage": "/MicrosoftWindowsServer/WindowsServer/2022-datacenter/latest",
     "artifacts": [
         {
             "name": "windows-EnableDeveloperMode"
