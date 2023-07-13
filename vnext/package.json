@@ -28,14 +28,15 @@
     "@react-native-community/cli-platform-ios": "12.0.0-alpha.3",
     "@react-native-windows/cli": "0.0.0-canary.176",
     "@react-native/assets": "1.0.0",
-    "@react-native/assets-registry": "0.73.0-nightly-20230606-396cdac62",
-    "@react-native/codegen": "0.73.0-nightly-20230615-2ae163a7e",
-    "@react-native/gradle-plugin": "0.73.0-nightly-20230616-5f8bbf2bd",
-    "@react-native/js-polyfills": "0.73.0-nightly-20230606-396cdac62",
-    "@react-native/normalize-colors": "0.73.0-nightly-20230606-396cdac62",
-    "@react-native/virtualized-lists": "0.73.0-nightly-20230616-5f8bbf2bd",
+    "@react-native/assets-registry": "0.73.0-nightly-20230622-0201e51bb",
+    "@react-native/codegen": "0.73.0-nightly-20230622-0201e51bb",
+    "@react-native/gradle-plugin": "0.73.0-nightly-20230622-0201e51bb",
+    "@react-native/js-polyfills": "0.73.0-nightly-20230622-0201e51bb",
+    "@react-native/normalize-colors": "0.73.0-nightly-20230622-0201e51bb",
+    "@react-native/virtualized-lists": "0.73.0-nightly-20230622-0201e51bb",
     "abort-controller": "^3.0.0",
     "anser": "^1.4.9",
+    "ansi-regex": "^5.0.0",
     "base64-js": "^1.5.1",
     "deprecated-react-native-prop-types": "4.1.0",
     "event-target-shim": "^5.0.1",
@@ -69,7 +70,7 @@
     "@rnw-scripts/just-task": "2.3.12",
     "@rnw-scripts/metro-dev-config": "0.0.0",
     "@rnx-kit/jest-preset": "^0.1.0",
-    "@types/node": "^16.0.0",
+    "@types/node": "^18.0.0",
     "@types/react": "^18.0.18",
     "eslint": "^8.19.0",
     "eslint-plugin-prettier": "^4.2.1",
@@ -79,14 +80,14 @@
     "metro-config": "0.76.2",
     "prettier": "^2.4.1",
     "react": "18.2.0",
-    "react-native": "0.73.0-nightly-20230616-5f8bbf2bd",
+    "react-native": "0.73.0-nightly-20230628-15d735b35",
     "react-native-platform-override": "^1.9.11",
     "react-refresh": "^0.4.0",
     "typescript": "^4.9.5"
   },
   "peerDependencies": {
     "react": "18.2.0",
-    "react-native": "0.73.0-nightly-20230616-5f8bbf2bd"
+    "react-native": "0.73.0-nightly-20230628-15d735b35"
   },
   "beachball": {
     "defaultNpmTag": "canary",
@@ -137,6 +138,6 @@
   ],
   "promoteRelease": true,
   "engines": {
-    "node": ">= 16"
+    "node": ">= 18"
   }
 }
