@@ -65,10 +65,6 @@ HRESULT __stdcall CompositionRootAutomationProvider::get_HostRawElementProvider(
   return S_OK;
 }
 
-HRESULT __stdcall CompositionRootAutomationProvider::Invoke() {
-  return S_OK;
-}
-
 HRESULT __stdcall CompositionRootAutomationProvider::get_BoundingRectangle(UiaRect *pRetVal) {
   if (pRetVal == nullptr)
     return E_POINTER;

@@ -15,7 +15,6 @@ class CompositionRootAutomationProvider : public winrt::implements<
                                               IRawElementProviderFragmentRoot,
                                               IRawElementProviderFragment,
                                               IRawElementProviderSimple,
-                                              IInvokeProvider,
                                               IRawElementProviderAdviseEvents> {
  public:
   // inherited via IRawElementProviderFragmentRoot
@@ -36,9 +35,6 @@ class CompositionRootAutomationProvider : public winrt::implements<
   virtual HRESULT __stdcall GetPatternProvider(PATTERNID patternId, IUnknown **pRetVal) override;
   virtual HRESULT __stdcall GetPropertyValue(PROPERTYID propertyId, VARIANT *pRetVal) override;
   virtual HRESULT __stdcall get_HostRawElementProvider(IRawElementProviderSimple **pRetVal) override;
-
-  // inherited via IInvokeProvider
-  virtual HRESULT __stdcall Invoke() override;
 
   // IRawElementProviderAdviseEvents
   virtual HRESULT __stdcall AdviseEventAdded(EVENTID idEvent, SAFEARRAY *psaProperties) override;

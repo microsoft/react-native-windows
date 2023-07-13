@@ -127,6 +127,23 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
   if (pRetVal == nullptr)
     return E_POINTER;
 
+  auto strongView = m_view.view();
+  if (strongView == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  auto props = std::static_pointer_cast<const facebook::react::ViewProps>(strongView->props());
+  if (props == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+  auto accessibilityRole = props->accessibilityRole;
+  
+  // Invoke control pattern is used to support controls that do not maintain state 
+  // when activated but rather initiate or perform a single, unambiguous action.
+  if (patternId == UIA_InvokePatternId &&
+      accessibilityRole == "button" ||
+      accessibilityRole ==  "imagebutton") {
+    return pRetVal = this;
+  }
+
   *pRetVal = nullptr;
 
   return S_OK;
@@ -284,16 +301,10 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::Invoke() {
 
   // Currently calls both onAccessibilityTap and onClick.
   // To match Paper behavior, onAccessibilityTap only called if onClick is not defined.
-  // Events dispatched for any control.
-  // To match Paper, Event should only dispatch for pressable controls without state.
   baseView.get()->GetEventEmitter().get()->onAccessibilityTap();
   baseView.get()->GetEventEmitter().get()->onClick();
-
-  auto rootCV = strongView->rootComponentView();
-  if (rootCV == nullptr)
-    return UIA_E_ELEMENTNOTAVAILABLE;
-
-  auto uiaProvider = rootCV->EnsureUiaProvider();
+  
+  auto uiaProvider = baseView->EnsureUiaProvider();
   auto spProviderSimple = uiaProvider.try_as<IRawElementProviderSimple>();
   if (spProviderSimple != nullptr) {
     UiaRaiseAutomationEvent(spProviderSimple.get(), UIA_Invoke_InvokedEventId);
