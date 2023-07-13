@@ -135,7 +135,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
 long GetControlType(const std::string &role) noexcept {
   if (role == "adjustable") {
     return UIA_SliderControlTypeId;
-  } else if (role == "group"  || role == "search" || role == "radiogroup" || role == "timer" || role.empty()) {
+  } else if (role == "group" || role == "search" || role == "radiogroup" || role == "timer" || role.empty()) {
     return UIA_GroupControlTypeId;
   } else if (role == "button" || role == "imagebutton" || role == "switch" || role == "togglebutton") {
     return UIA_ButtonControlTypeId;
