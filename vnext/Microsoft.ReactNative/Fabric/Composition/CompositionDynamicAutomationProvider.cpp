@@ -135,12 +135,10 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
   if (props == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
   auto accessibilityRole = props->accessibilityRole;
-  
-  // Invoke control pattern is used to support controls that do not maintain state 
+
+  // Invoke control pattern is used to support controls that do not maintain state
   // when activated but rather initiate or perform a single, unambiguous action.
-  if (patternId == UIA_InvokePatternId &&
-      accessibilityRole == "button" ||
-      accessibilityRole ==  "imagebutton") {
+  if (patternId == UIA_InvokePatternId && accessibilityRole == "button" || accessibilityRole == "imagebutton") {
     return pRetVal = this;
   }
 
@@ -303,7 +301,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::Invoke() {
   // To match Paper behavior, onAccessibilityTap only called if onClick is not defined.
   baseView.get()->GetEventEmitter().get()->onAccessibilityTap();
   baseView.get()->GetEventEmitter().get()->onClick();
-  
+
   auto uiaProvider = baseView->EnsureUiaProvider();
   auto spProviderSimple = uiaProvider.try_as<IRawElementProviderSimple>();
   if (spProviderSimple != nullptr) {
