@@ -131,7 +131,7 @@ void FileReaderTurboModule::Initialize(msrn::ReactContext const &reactContext) n
 /// [0]  - dynamic blob object { blobId, offset, size[, type] }
 /// </param>
 ///
-void FileReaderTurboModule::ReadAsDataUrl(msrn::JSValue &&data, msrn::ReactPromise<string> &&result) noexcept {
+void FileReaderTurboModule::ReadAsDataUrl(msrn::JSValue &&data, msrn::ReactPromise<msrn::JSValue> &&result) noexcept {
   auto &array = data.AsArray();
   auto &blob = data[0].AsObject();
   auto blobId = blob["blobId"].AsString();
@@ -165,7 +165,7 @@ void FileReaderTurboModule::ReadAsDataUrl(msrn::JSValue &&data, msrn::ReactPromi
 void FileReaderTurboModule::ReadAsText(
     msrn::JSValue &&data,
     string &&encoding,
-    msrn::ReactPromise<string> &&result) noexcept {
+    msrn::ReactPromise<msrn::JSValue> &&result) noexcept {
   auto &args = data.AsArray();
   auto &blob = args[0].AsObject();
 
