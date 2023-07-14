@@ -139,7 +139,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
   // Invoke control pattern is used to support controls that do not maintain state
   // when activated but rather initiate or perform a single, unambiguous action.
   if (patternId == UIA_InvokePatternId && accessibilityRole == "button" || accessibilityRole == "imagebutton") {
-    return pRetVal = this;
+    *pRetVal = reinterpret_cast<::IUnknown *>(this);
   }
 
   *pRetVal = nullptr;
