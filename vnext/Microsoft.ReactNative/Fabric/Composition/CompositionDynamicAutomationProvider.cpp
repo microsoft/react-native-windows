@@ -182,8 +182,6 @@ long GetControlType(const std::string &role) noexcept {
     return UIA_TabItemControlTypeId;
   } else if (role == "tablist") {
     return UIA_TabControlTypeId;
-  } else if (role == "text") {
-    return UIA_TextControlTypeId;
   } else if (role == "textinput" || role == "searchbox") {
     return UIA_EditControlTypeId;
   } else if (role == "toolbar") {
