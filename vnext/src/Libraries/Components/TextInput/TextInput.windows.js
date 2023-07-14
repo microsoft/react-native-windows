@@ -1548,7 +1548,7 @@ function InternalTextInput(props: Props): React.Node {
 
   if (focusable && !accessible) {
     console.warn(
-      'All focusable views should report proper accessiblity information. TextInputs marked as focusable should always be accessible.',
+      'All focusable views should report proper accessibility information. TextInputs marked as focusable should always be accessible.',
     );
   }
 
