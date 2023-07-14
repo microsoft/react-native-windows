@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "integration 6/28",
-  "packageName": "@react-native-windows/package-utils",
-  "email": "tatianakapos@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "integration 6/28",
-  "packageName": "@rnw-scripts/integrate-rn",
-  "email": "tatianakapos@microsoft.com",
-  "dependentChangeType": "patch"
-}
