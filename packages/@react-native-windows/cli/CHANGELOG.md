@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Fri, 14 Jul 2023 05:17:05 GMT and should not be manually modified.
+This log was last generated on Sat, 15 Jul 2023 05:15:31 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.178
+
+Sat, 15 Jul 2023 05:15:31 GMT
+
+### Changes
+
+- Add package.json:codegenConfig.windows.outputDirectory (53799235+ZihanChen-MSFT@users.noreply.github.com)
 
 ## 0.0.0-canary.177
 
