@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Add package.json:codegenConfig.windows.outputDirectory",
   "packageName": "@react-native-windows/cli",
   "email": "53799235+ZihanChen-MSFT@users.noreply.github.com",
