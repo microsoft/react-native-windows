@@ -375,8 +375,8 @@
     {
       "type": "copy",
       "file": "src/Libraries/Network/RCTNetworking.windows.js",
-      "baseFile": "packages/react-native/Libraries/Network/RCTNetworking.ios.js",
-      "baseHash": "39fc8e1003b0f6345ec4fea060f455d06939a321"
+      "baseFile": "Libraries/Network/RCTNetworking.ios.js",
+      "baseHash": "b9d169d83ea1ccd04321190896b5e5e02809f940"
     },
     {
       "type": "patch",
