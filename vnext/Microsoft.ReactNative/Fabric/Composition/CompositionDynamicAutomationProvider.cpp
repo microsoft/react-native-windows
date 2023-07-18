@@ -182,6 +182,8 @@ long GetControlType(const std::string &role) noexcept {
     return UIA_TabItemControlTypeId;
   } else if (role == "tablist") {
     return UIA_TabControlTypeId;
+  } else if (role == "textinput" || role == "searchbox") {
+    return UIA_EditControlTypeId;
   } else if (role == "toolbar") {
     return UIA_ToolBarControlTypeId;
   } else if (role == "tree") {
@@ -205,12 +207,16 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
   if (props == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
+  auto baseView = std::static_pointer_cast<::Microsoft::ReactNative::CompositionBaseComponentView>(strongView);
+  if (baseView == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
   auto hr = S_OK;
 
   switch (propertyId) {
     case UIA_ControlTypePropertyId: {
       pRetVal->vt = VT_I4;
-      auto role = props->accessibilityRole;
+      auto role = props->accessibilityRole == "" ? baseView.get()->DefaultControlType() : props->accessibilityRole;
       pRetVal->lVal = GetControlType(role);
       break;
     }
