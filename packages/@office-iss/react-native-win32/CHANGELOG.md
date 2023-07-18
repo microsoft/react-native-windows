@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Fri, 14 Jul 2023 05:17:04 GMT and should not be manually modified.
+This log was last generated on Tue, 18 Jul 2023 05:13:38 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.206
+
+Tue, 18 Jul 2023 05:13:38 GMT
+
+### Changes
+
+- add isDefaultButton check to win32 (email not defined)
 
 ## 0.0.0-canary.205
 

@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Tue, 18 Jul 2023 05:13:38 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.206",
+      "version": "0.0.0-canary.206",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "@office-iss/react-native-win32",
+            "commit": "00d22425fbb6096003fd68550b821be712baac4d",
+            "comment": "add isDefaultButton check to win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 14 Jul 2023 05:17:04 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.205",
       "version": "0.0.0-canary.205",

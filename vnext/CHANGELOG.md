@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 15 Jul 2023 05:15:31 GMT and should not be manually modified.
+This log was last generated on Tue, 18 Jul 2023 05:13:38 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.679
+
+Tue, 18 Jul 2023 05:13:38 GMT
+
+### Changes
+
+- Use correct data types in FileReaderTurboModule::ReadAs* (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.678
 

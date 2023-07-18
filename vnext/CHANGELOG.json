@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 18 Jul 2023 05:13:38 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.679",
+      "version": "0.0.0-canary.679",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "df09b6528aed4a1fad61742de6e47ff01c8b6067",
+            "comment": "Use correct data types in FileReaderTurboModule::ReadAs*"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 15 Jul 2023 05:15:31 GMT",
       "tag": "react-native-windows_v0.0.0-canary.678",
       "version": "0.0.0-canary.678",
