@@ -146,6 +146,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\SchedulerSettings.cpp">
       <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)BaseFileReaderResource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)BaseScriptStoreImpl.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ChakraRuntimeHolder.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CxxMessageQueue.cpp" />
@@ -179,6 +180,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\SourceCodeModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\StatusBarManagerModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\WebSocketModule.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Networking\DefaultBlobResource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Networking\OriginPolicyHttpFilter.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Networking\RedirectHttpFilter.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Networking\WinRTHttpResource.cpp" />
@@ -283,8 +285,11 @@
       <DependentUpon>$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IJSValueWriter.idl</DependentUpon>
     </ClCompile>
     <ClInclude Include="$(MSBuildThisFileDirectory)AbiSafe.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)BaseFileReaderResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CppRuntimeOptions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)HermesSamplingProfiler.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)IBlobPersistor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)IFileReaderResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ByteArrayBuffer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraApi.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntime.h" />
@@ -296,7 +301,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\BlobModule.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\CxxModuleUtilities.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\FileReaderModule.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IBlobPersistor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IHttpModuleProxy.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IRequestBodyHandler.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IResponseHandler.h" />
@@ -305,6 +309,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IWebSocketModuleProxy.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\HttpModule.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\NetworkingModule.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\WebSocketTurboModule.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\DefaultBlobResource.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\IBlobResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Networking\IHttpResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Networking\IRedirectEventSource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Networking\IWebSocketResource.h" />
