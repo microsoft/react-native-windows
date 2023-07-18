@@ -1,7 +1,7 @@
 #pragma once
 
-// Folly
-#include <folly/dynamic.h>
+// React Native Windows
+#include <JSValue.h>
 
 // Standard Library
 #include <string>
@@ -21,7 +21,7 @@ struct IResponseHandler {
   /// <summary>
   /// Returns the JS body payload for the {@link ResponseBody}.
   /// </summary>
-  virtual folly::dynamic ToResponseData(std::vector<uint8_t> &&content) = 0;
+  virtual winrt::Microsoft::ReactNative::JSValueObject ToResponseData(std::vector<uint8_t> &&content) = 0;
 };
 
 } // namespace Microsoft::React
