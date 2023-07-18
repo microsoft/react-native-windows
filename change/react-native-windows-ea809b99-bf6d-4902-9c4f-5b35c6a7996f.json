@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Use correct data types in FileReaderTurboModule::ReadAs*",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}
