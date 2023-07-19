@@ -1,6 +1,6 @@
 {
-  "type": "prerelease",
-  "comment": "Get StructInfo<T>::FieldMap lazy initialized",
+  "type": "patch",
+  "comment": "Port #11718 and #11849 to 0.72",
   "packageName": "react-native-windows",
   "email": "53799235+ZihanChen-MSFT@users.noreply.github.com",
   "dependentChangeType": "patch"
