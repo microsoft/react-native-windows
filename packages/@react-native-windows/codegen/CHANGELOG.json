@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Mon, 17 Jul 2023 15:14:58 GMT",
+      "tag": "@react-native-windows/codegen_v0.71.6",
+      "version": "0.71.6",
+      "comments": {
+        "patch": [
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "08c3acfdfe4d3c66f15e24ef3dc795dcf39202c5",
+            "comment": "Add cppStringType option to @rnw/codegen (#11833)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 23 Jun 2023 18:19:56 GMT",
       "tag": "@react-native-windows/codegen_v0.71.5",
       "version": "0.71.5",

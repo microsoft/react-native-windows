@@ -28,5 +28,8 @@ csharp_prefer_simple_default_expression = false:none
 indent_style = tab
 indent_size = 4
 
+[overrides.json]
+insert_final_newline = false
+
 [package.json]
 insert_final_newline = false
