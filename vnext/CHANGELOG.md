@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 18 Jul 2023 05:13:38 GMT and should not be manually modified.
+This log was last generated on Wed, 19 Jul 2023 05:14:28 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.680
+
+Wed, 19 Jul 2023 05:14:28 GMT
+
+### Changes
+
+- Add Support for ControlType Specification (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.0.0-canary.679
 

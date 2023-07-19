@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 19 Jul 2023 05:14:28 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.680",
+      "version": "0.0.0-canary.680",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e5ff3faef609f787707035f282c7390e44ea0192",
+            "comment": "Add Support for ControlType Specification"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 18 Jul 2023 05:13:38 GMT",
       "tag": "react-native-windows_v0.0.0-canary.679",
       "version": "0.0.0-canary.679",
