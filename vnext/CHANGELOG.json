@@ -2,6 +2,45 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 19 Jul 2023 18:43:52 GMT",
+      "tag": "react-native-windows_v0.72.2",
+      "version": "0.72.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5e9afa8863e83a46610cc49c82e80c1c02cfcf0e",
+            "comment": "Fix Secure Supply Chain compliance issues"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "9ab97d48c55d3be36b65a115d98e62c871f91bdd",
+            "comment": "Use TurboModules for networking in MSRN (#11867)"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "4b90fba00c273f34d7f97df5b659892d7a92749f",
+            "comment": "Integrate RN 0.72.3"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "225cb6594352bc5b55cc7ba6fa87bde9f4501b84",
+            "comment": "Update files proeprty to ensure TS types are published"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "5e9afa8863e83a46610cc49c82e80c1c02cfcf0e",
+            "comment": "update nuget lock files"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 03 Jul 2023 15:16:35 GMT",
       "tag": "react-native-windows_v0.72.1",
       "version": "0.72.1",

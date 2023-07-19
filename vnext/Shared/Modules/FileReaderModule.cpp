@@ -3,6 +3,7 @@
 
 #include "FileReaderModule.h"
 
+#include <CreateModules.h>
 #include <ReactPropertyBag.h>
 #include <sstream>
 
@@ -19,17 +20,18 @@
 
 using namespace facebook::xplat;
 
+namespace msrn = winrt::Microsoft::ReactNative;
+
 using folly::dynamic;
 using std::string;
 using std::weak_ptr;
-using winrt::Microsoft::ReactNative::IReactPropertyBag;
-using winrt::Microsoft::ReactNative::ReactNonAbiValue;
-using winrt::Microsoft::ReactNative::ReactPropertyBag;
-using winrt::Microsoft::ReactNative::ReactPropertyId;
 using winrt::Windows::Foundation::IInspectable;
 
 namespace {
-constexpr char moduleName[] = "FileReaderModule";
+constexpr char s_moduleName[] = "FileReaderModule";
+constexpr wchar_t s_moduleNameW[] = L"FileReaderModule";
+
+msrn::ReactModuleProvider s_moduleProvider = msrn::MakeTurboModuleProvider<Microsoft::React::FileReaderTurboModule>();
 } // namespace
 
 namespace Microsoft::React {
@@ -37,7 +39,7 @@ namespace Microsoft::React {
 #pragma region FileReaderModule
 
 FileReaderModule::FileReaderModule(weak_ptr<IBlobPersistor> weakBlobPersistor) noexcept
-    : m_weakBlobPersistor{weakBlobPersistor} {}
+    : m_resource{IFileReaderResource::Make(weakBlobPersistor)} {}
 
 FileReaderModule::~FileReaderModule() noexcept /*override*/
 {}
@@ -45,7 +47,7 @@ FileReaderModule::~FileReaderModule() noexcept /*override*/
 #pragma region CxxModule
 
 string FileReaderModule::getName() {
-  return moduleName;
+  return s_moduleName;
 }
 
 std::map<string, dynamic> FileReaderModule::getConstants() {
@@ -61,41 +63,28 @@ std::vector<module::CxxModule::Method> FileReaderModule::getMethods() {
        /// </param>
        ///
        "readAsDataURL",
-       [blobPersistor = m_weakBlobPersistor.lock()](dynamic args, Callback resolve, Callback reject) {
-         if (!blobPersistor) {
-           return reject({"Could not find Blob persistor"});
-         }
-
+       [resource = m_resource](dynamic args, Callback resolve, Callback reject) {
          auto blob = jsArgAsObject(args, 0);
 
          auto blobId = blob["blobId"].asString();
          auto offset = blob["offset"].asInt();
          auto size = blob["size"].asInt();
 
-         winrt::array_view<uint8_t const> bytes;
-         try {
-           bytes = blobPersistor->ResolveMessage(std::move(blobId), offset, size);
-         } catch (const std::exception &e) {
-           return reject({e.what()});
-         }
-
-         auto result = string{"data:"};
          auto typeItr = blob.find("type");
+         string type{};
          if (typeItr == blob.items().end()) {
-           result += "application/octet-stream";
+           type = "application/octet-stream";
          } else {
-           result += (*typeItr).second.asString();
+           type = (*typeItr).second.asString();
          }
-         result += ";base64,";
 
-         // https://www.boost.org/doc/libs/1_76_0/libs/serialization/doc/dataflow.html
-         using namespace boost::archive::iterators;
-         typedef base64_from_binary<transform_width<const char *, 6, 8>> encode_base64;
-         std::ostringstream oss;
-         std::copy(encode_base64(bytes.cbegin()), encode_base64(bytes.cend()), ostream_iterator<char>(oss));
-         result += oss.str();
-
-         resolve({std::move(result)});
+         resource->ReadAsDataUrl(
+             std::move(blobId),
+             offset,
+             size,
+             std::move(type),
+             [&resolve](string &&message) { resolve({std::move(message)}); },
+             [&reject](string &&message) { reject({std::move(message)}); });
        }},
       {///
        /// <param name="args">
@@ -105,11 +94,7 @@ std::vector<module::CxxModule::Method> FileReaderModule::getMethods() {
        /// </param>
        ///
        "readAsText",
-       [blobPersistor = m_weakBlobPersistor.lock()](dynamic args, Callback resolve, Callback reject) {
-         if (!blobPersistor) {
-           return reject({"Could not find Blob persistor"});
-         }
-
+       [resource = m_resource](dynamic args, Callback resolve, Callback reject) {
          auto blob = jsArgAsObject(args, 0);
          auto encoding = jsArgAsString(args, 1); // Default: "UTF-8"
 
@@ -117,18 +102,13 @@ std::vector<module::CxxModule::Method> FileReaderModule::getMethods() {
          auto offset = blob["offset"].asInt();
          auto size = blob["size"].asInt();
 
-         winrt::array_view<uint8_t const> bytes;
-         try {
-           bytes = blobPersistor->ResolveMessage(std::move(blobId), offset, size);
-         } catch (const std::exception &e) {
-           return reject({e.what()});
-         }
-
-         // #9982 - Handle non-UTF8 encodings
-         //         See https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/charset/Charset.html
-         auto result = string{bytes.cbegin(), bytes.cend()};
-
-         resolve({std::move(result)});
+         resource->ReadAsText(
+             std::move(blobId),
+             offset,
+             size,
+             std::move(encoding),
+             [&resolve](string &&message) { resolve({std::move(message)}); },
+             [&reject](string &&message) { reject({std::move(message)}); });
        }}};
 }
 
@@ -136,14 +116,93 @@ std::vector<module::CxxModule::Method> FileReaderModule::getMethods() {
 
 #pragma endregion FileReaderModule
 
+#pragma region FileReaderTurboModule
+
+void FileReaderTurboModule::Initialize(msrn::ReactContext const &reactContext) noexcept {
+  auto propId = msrn::ReactPropertyId<msrn::ReactNonAbiValue<weak_ptr<IBlobPersistor>>>{L"Blob.Persistor"};
+  auto props = reactContext.Properties();
+  auto prop = props.Get(propId);
+  m_resource = IFileReaderResource::Make(prop.Value());
+}
+
+///
+/// <param name="data">
+/// Blob object with the following fields:
+/// - blobId
+/// - offset
+/// - size
+/// - type (optional)
+/// </param>
+/// <param name="result">
+/// Either resolves or rejects the current method with a given text message.
+/// </param>
+///
+void FileReaderTurboModule::ReadAsDataUrl(msrn::JSValue &&data, msrn::ReactPromise<string> &&result) noexcept {
+  auto &blob = data.AsObject();
+  auto blobId = blob["blobId"].AsString();
+  auto offset = blob["offset"].AsInt64();
+  auto size = blob["size"].AsInt64();
+
+  auto typeItr = blob.find("type");
+  string type{};
+  if (typeItr == blob.end()) {
+    type = "application/octet-stream";
+  } else {
+    type = (*typeItr).second.AsString();
+  }
+
+  m_resource->ReadAsDataUrl(
+      std::move(blobId),
+      offset,
+      size,
+      std::move(type),
+      [&result](string &&message) { result.Resolve(std::move(message)); },
+      [&result](string &&message) { result.Reject(winrt::to_hstring(std::move(message)).c_str()); });
+}
+
+///
+/// <param name="data">
+/// Blob object with the following fields:
+/// - blobId
+/// - offset
+/// - size
+/// - type (optional)
+/// </param>
+/// <param name="encoding">
+/// Text encoding to proces data with.
+/// </param>
+/// <param name="result">
+/// Either resolves or rejects the current method with a given text message.
+/// </param>
+///
+void FileReaderTurboModule::ReadAsText(
+    msrn::JSValue &&data,
+    string &&encoding,
+    msrn::ReactPromise<string> &&result) noexcept {
+  auto &blob = data.AsObject();
+  auto blobId = blob["blobId"].AsString();
+  auto offset = blob["offset"].AsInt64();
+  auto size = blob["size"].AsInt64();
+
+  m_resource->ReadAsText(
+      std::move(blobId),
+      offset,
+      size,
+      std::move(encoding),
+      [&result](string &&message) { result.Resolve(std::move(message)); },
+      [&result](string &&message) { result.Reject(winrt::to_hstring(std::move(message)).c_str()); });
+}
+
+#pragma endregion FileReaderTurboModule
+
 /*extern*/ const char *GetFileReaderModuleName() noexcept {
-  return moduleName;
+  return s_moduleName;
 }
 
 /*extern*/ std::unique_ptr<module::CxxModule> CreateFileReaderModule(
     IInspectable const &inspectableProperties) noexcept {
-  auto propId = ReactPropertyId<ReactNonAbiValue<weak_ptr<IBlobPersistor>>>{L"Blob.Persistor"};
-  auto propBag = ReactPropertyBag{inspectableProperties.try_as<IReactPropertyBag>()};
+  auto propId = msrn::ReactPropertyId<msrn::ReactNonAbiValue<weak_ptr<IBlobPersistor>>>{L"Blob.Persistor"};
+  auto propBag = msrn::ReactPropertyBag{inspectableProperties.try_as<msrn::IReactPropertyBag>()};
 
   if (auto prop = propBag.Get(propId)) {
     auto weakBlobPersistor = prop.Value();
@@ -152,6 +211,14 @@ std::vector<module::CxxModule::Method> FileReaderModule::getMethods() {
   }
 
   return nullptr;
+}
+
+/*extern*/ const wchar_t *GetFileReaderTurboModuleName() noexcept {
+  return s_moduleNameW;
+}
+
+/*extern*/ const msrn::ReactModuleProvider &GetFileReaderModuleProvider() noexcept {
+  return s_moduleProvider;
 }
 
 } // namespace Microsoft::React
