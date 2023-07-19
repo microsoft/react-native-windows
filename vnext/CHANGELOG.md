@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 03 Jul 2023 15:16:35 GMT and should not be manually modified.
+This log was last generated on Wed, 19 Jul 2023 18:43:52 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.72.2
+
+Wed, 19 Jul 2023 18:43:52 GMT
+
+### Patches
+
+- Fix Secure Supply Chain compliance issues (jthysell@microsoft.com)
+- Use TurboModules for networking in MSRN (#11867) (julio.rocha@microsoft.com)
+- Integrate RN 0.72.3 (jthysell@microsoft.com)
+- Update files proeprty to ensure TS types are published (30809111+acoates-ms@users.noreply.github.com)
+- update nuget lock files (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.72.1
 
