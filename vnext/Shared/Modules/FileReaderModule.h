@@ -3,6 +3,10 @@
 
 #pragma once
 
+#include <NativeFileReaderModuleSpec.g.h>
+
+#include <IFileReaderResource.h>
+#include <NativeModules.h>
 #include "IBlobPersistor.h"
 
 // React Native
@@ -48,7 +52,29 @@ class FileReaderModule : public facebook::xplat::module::CxxModule {
 #pragma endregion CxxModule
 
  private:
-  std::weak_ptr<IBlobPersistor> m_weakBlobPersistor;
+  std::shared_ptr<IFileReaderResource> m_resource;
+};
+
+REACT_MODULE(FileReaderTurboModule, L"FileReaderModule")
+struct FileReaderTurboModule {
+  using ModuleSpec = ReactNativeSpecs::FileReaderModuleSpec;
+
+  REACT_INIT(Initialize)
+  void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
+
+  REACT_METHOD(ReadAsDataUrl, L"readAsDataURL")
+  void ReadAsDataUrl(
+      winrt::Microsoft::ReactNative::JSValue &&data,
+      winrt::Microsoft::ReactNative::ReactPromise<winrt::Microsoft::ReactNative::JSValue> &&result) noexcept;
+
+  REACT_METHOD(ReadAsText, L"readAsText")
+  void ReadAsText(
+      winrt::Microsoft::ReactNative::JSValue &&data,
+      std::string &&encoding,
+      winrt::Microsoft::ReactNative::ReactPromise<winrt::Microsoft::ReactNative::JSValue> &&result) noexcept;
+
+ private:
+  std::shared_ptr<IFileReaderResource> m_resource;
 };
 
 } // namespace Microsoft::React

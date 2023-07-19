@@ -184,7 +184,6 @@
   <ItemGroup>
     <ClInclude Include="ABICxxModule.h" />
     <ClInclude Include="ABIViewManager.h" />
-    <ClInclude Include="Base\CoreNativeModules.h" />
     <ClInclude Include="Base\CxxReactIncludes.h" />
     <ClInclude Include="Base\FollyIncludes.h" />
     <ClInclude Include="CoreAppPage.h">
@@ -422,7 +421,6 @@
   <ItemGroup>
     <ClCompile Include="ABICxxModule.cpp" />
     <ClCompile Include="ABIViewManager.cpp" />
-    <ClCompile Include="Base\CoreNativeModules.cpp" />
     <ClCompile Include="Base\CoreUIManagers.cpp" />
     <ClCompile Include="CoreAppPage.cpp">
       <DependentUpon>CoreAppPage.xaml</DependentUpon>

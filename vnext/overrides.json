@@ -373,8 +373,10 @@
       "baseHash": "a14d9698dc312aaba608b2877349d4c54600b56c"
     },
     {
-      "type": "platform",
-      "file": "src/Libraries/Network/RCTNetworking.windows.js"
+      "type": "copy",
+      "file": "src/Libraries/Network/RCTNetworking.windows.js",
+      "baseFile": "Libraries/Network/RCTNetworking.ios.js",
+      "baseHash": "b9d169d83ea1ccd04321190896b5e5e02809f940"
     },
     {
       "type": "patch",

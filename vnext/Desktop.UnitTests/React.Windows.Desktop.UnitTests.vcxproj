@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="Current"
+  xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <!--
       Disable WINRT_LEAN_AND_MEAN - Allow out-of-library interface implementations
@@ -41,11 +42,13 @@
   <ImportGroup Label="Shared">
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props"
+      Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')"
+      Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(ReactNativeWindowsDir)Mso;$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)Desktop;$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)include\Shared;$(MSBuildThisFileDirectory);$(IncludePath)</IncludePath>
+    <IncludePath>$(ReactNativeWindowsDir)Mso;$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)Desktop;$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)include\Shared;$(ReactNativeWindowsDir)Microsoft.ReactNative.Cxx;$(MSBuildThisFileDirectory);$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -83,11 +86,10 @@
   </ItemDefinitionGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
   <ItemGroup>
-    <ClCompile Include="AsyncStorageManagerTest.cpp" />
-    <ClCompile Include="AsyncStorageTest.cpp" />
-    <ClCompile Include="BaseWebSocketTests.cpp">
-      <ExcludedFromBuild Condition="'$(EnableBeast)' == 0">true</ExcludedFromBuild>
-    </ClCompile>
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueReader.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueWriter.idl" />
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="BytecodeUnitTests.cpp" />
     <ClCompile Include="EmptyUIManagerModule.cpp" />
     <ClCompile Include="LayoutAnimationTests.cpp" />
@@ -122,7 +124,8 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="boost" Version="1.76.0.0" />
-    <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)"
+      PrivateAssets="all" />
     <PackageReference Include="ReactWindows.OpenSSL.StdCall.Static" Version="1.0.2-p.5" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
