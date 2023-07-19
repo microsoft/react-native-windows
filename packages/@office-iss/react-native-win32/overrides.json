@@ -7,19 +7,19 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.73.0-nightly-20230628-15d735b35",
+  "baseVersion": "0.73.0-nightly-20230705-294b1b5a6",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "c7a5a5089f3ad1380a829c54a990678ec648aabf"
+      "baseHash": "676e7f63058df8b57a6f654f27a828ecd10130b1"
     },
     {
       "type": "copy",
       "directory": "flow-typed/npm",
       "baseDirectory": "flow-typed/npm",
-      "baseHash": "6a1a9c8b3e66d76ad6090885e488b4eed3d9ce14"
+      "baseHash": "26b6bb2cba3a619e21d80019dea805641a77284e"
     },
     {
       "type": "derived",
@@ -165,7 +165,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/Touchable/TouchableNativeFeedback.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableNativeFeedback.js",
-      "baseHash": "d28c8ae97892811292cd9624a4a05525a1e2e1a3"
+      "baseHash": "fa5b3198efddd86eca7965aa90104408ed53fbbf"
     },
     {
       "type": "platform",

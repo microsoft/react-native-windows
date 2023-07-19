@@ -8,19 +8,19 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.73.0-nightly-20230628-15d735b35",
+  "baseVersion": "0.73.0-nightly-20230705-294b1b5a6",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "c7a5a5089f3ad1380a829c54a990678ec648aabf"
+      "baseHash": "676e7f63058df8b57a6f654f27a828ecd10130b1"
     },
     {
       "type": "copy",
       "directory": "flow-typed/npm",
       "baseDirectory": "flow-typed/npm",
-      "baseHash": "6a1a9c8b3e66d76ad6090885e488b4eed3d9ce14"
+      "baseHash": "26b6bb2cba3a619e21d80019dea805641a77284e"
     },
     {
       "type": "derived",
@@ -138,7 +138,7 @@
       "type": "patch",
       "file": "ReactCommon/Yoga.cpp",
       "baseFile": "packages/react-native/ReactCommon/yoga/yoga/Yoga.cpp",
-      "baseHash": "256489f312363c06be0ea1aee3ccf08a8cdd7c37",
+      "baseHash": "dacc4b546fb40a2cffe47e470dd537c7c7ab83eb",
       "issue": 3994
     },
     {
@@ -357,13 +357,13 @@
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/TouchableHighlight.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableHighlight.js",
-      "baseHash": "6dd61c1950ec539790b3e4fd8fa3f3b773ac97f3"
+      "baseHash": "15f8aeb57c64b30ae134c6354df6ca9bd50ff0ec"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/TouchableOpacity.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableOpacity.js",
-      "baseHash": "c02e7007d14d024c9093da26815a9a0ca94b0c1b"
+      "baseHash": "1de89d328e0e4c36a18aa488c8663397e860ef2c"
     },
     {
       "type": "patch",

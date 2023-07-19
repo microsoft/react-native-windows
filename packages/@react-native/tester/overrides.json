@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.73.0-nightly-20230628-15d735b35",
+  "baseVersion": "0.73.0-nightly-20230705-294b1b5a6",
   "overrides": [
     {
       "type": "copy",
@@ -75,7 +75,7 @@
       "type": "copy",
       "directory": "js/examples/Border",
       "baseDirectory": "packages/rn-tester/js/examples/Border",
-      "baseHash": "aee2df5f533a0f8e1f2f30968ab2e76592f21186",
+      "baseHash": "4ba05a36c9e9feee5c071668c3eb843b2c1007e1",
       "issue": 4054
     },
     {
@@ -432,7 +432,7 @@
       "type": "copy",
       "directory": "js/examples/View",
       "baseDirectory": "packages/rn-tester/js/examples/View",
-      "baseHash": "ed0c0457a5d986aa5ac7969c9b6d112705436616",
+      "baseHash": "9e293e3249ffcc454f81bada415e942ea725d8a8",
       "issue": 4054
     },
     {
@@ -474,14 +474,14 @@
       "type": "copy",
       "directory": "js/types",
       "baseDirectory": "packages/rn-tester/js/types",
-      "baseHash": "e6d570099480c5e0b9ce2b052707701dcbf41acf",
+      "baseHash": "71387ea38f6a5d3679d178c99cbabcdfc0b4dc99",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/utils",
       "baseDirectory": "packages/rn-tester/js/utils",
-      "baseHash": "10b1a1eecb65037c498724dbf9e0f906869e9481",
+      "baseHash": "26a61de7e4ea92da96348b705130e752c1525dcd",
       "issue": 4054
     },
     {
