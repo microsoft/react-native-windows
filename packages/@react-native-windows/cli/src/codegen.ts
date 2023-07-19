@@ -123,6 +123,8 @@ export class CodeGenWindows {
     const jsRootDir = pkgJson.codegenConfig.jsSrcsDir
       ? path.join(this.root, pkgJson.codegenConfig.jsSrcsDir)
       : this.root;
+    const codegenOutputDir =
+      pkgJson.codegenConfig.windows.outputDirectory ?? 'codegen';
 
     const generators = pkgJson.codegenConfig.windows.generators ?? [
       'modulesWindows',
@@ -143,7 +145,7 @@ export class CodeGenWindows {
         generators.indexOf('modulesTypeScriptTypes') !== -1,
       modulesWindows: generators.indexOf('modulesWindows') !== -1,
       namespace: projectNamespace,
-      outputDirectory: path.join(this.root, 'codegen'),
+      outputDirectory: path.join(this.root, codegenOutputDir),
       test: !!this.options.check,
     };
 
