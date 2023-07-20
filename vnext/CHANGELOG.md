@@ -1,8 +1,35 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 23 Jun 2023 18:19:56 GMT and should not be manually modified.
+This log was last generated on Mon, 17 Jul 2023 15:14:58 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.24
+
+Mon, 17 Jul 2023 15:14:58 GMT
+
+### Patches
+
+- Bump @react-native-windows/cli to v0.71.12
+- Bump @react-native-windows/codegen to v0.71.6
+
+## 0.71.23
+
+Mon, 10 Jul 2023 22:20:00 GMT
+
+### Patches
+
+- Add REACT_MODULE_NOREG which is REACT_MODULE but without auto registration (#11849) (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.71.22
+
+Thu, 06 Jul 2023 20:21:35 GMT
+
+### Patches
+
+- Fix warning compiler may not enforce left-to-right evaluation order in braced initializer list (30809111+acoates-ms@users.noreply.github.com)
+- Update core 0.71.6 -> 0.71.12 (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.71.11
 
 ## 0.71.21
 

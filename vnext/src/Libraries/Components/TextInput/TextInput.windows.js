@@ -241,36 +241,6 @@ type PasswordRules = string;
 
 type IOSProps = $ReadOnly<{|
   /**
-   * Give the keyboard and the system information about the
-   * expected semantic meaning for the content that users enter.
-   * @platform ios
-   */
-  autoComplete?: ?(
-    | 'address-line1'
-    | 'address-line2'
-    | 'cc-number'
-    | 'current-password'
-    | 'country'
-    | 'email'
-    | 'name'
-    | 'additional-name'
-    | 'family-name'
-    | 'given-name'
-    | 'nickname'
-    | 'honorific-prefix'
-    | 'honorific-suffix'
-    | 'new-password'
-    | 'off'
-    | 'one-time-code'
-    | 'organization'
-    | 'organization-title'
-    | 'postal-code'
-    | 'street-address'
-    | 'tel'
-    | 'url'
-    | 'username'
-  ),
-  /**
    * When the clear button should appear on the right side of the text view.
    * This property is supported only for single-line TextInput component.
    * @platform ios
@@ -375,111 +345,6 @@ type IOSProps = $ReadOnly<{|
 |}>;
 
 type AndroidProps = $ReadOnly<{|
-  /**
-   * Specifies autocomplete hints for the system, so it can provide autofill. On Android, the system will always attempt to offer autofill by using heuristics to identify the type of content.
-   * To disable autocomplete, set `autoComplete` to `off`.
-   *
-   * *Android Only*
-   *
-   * Possible values for `autoComplete` are:
-   *
-   * - `birthdate-day`
-   * - `birthdate-full`
-   * - `birthdate-month`
-   * - `birthdate-year`
-   * - `cc-csc`
-   * - `cc-exp`
-   * - `cc-exp-day`
-   * - `cc-exp-month`
-   * - `cc-exp-year`
-   * - `cc-number`
-   * - `email`
-   * - `gender`
-   * - `name`
-   * - `name-family`
-   * - `name-given`
-   * - `name-middle`
-   * - `name-middle-initial`
-   * - `name-prefix`
-   * - `name-suffix`
-   * - `password`
-   * - `password-new`
-   * - `postal-address`
-   * - `postal-address-country`
-   * - `postal-address-extended`
-   * - `postal-address-extended-postal-code`
-   * - `postal-address-locality`
-   * - `postal-address-region`
-   * - `postal-code`
-   * - `street-address`
-   * - `sms-otp`
-   * - `tel`
-   * - `tel-country-code`
-   * - `tel-national`
-   * - `tel-device`
-   * - `username`
-   * - `username-new`
-   * - `off`
-   *
-   * @platform android
-   */
-  autoComplete?: ?(
-    | 'birthdate-day'
-    | 'birthdate-full'
-    | 'birthdate-month'
-    | 'birthdate-year'
-    | 'cc-csc'
-    | 'cc-exp'
-    | 'cc-exp-day'
-    | 'cc-exp-month'
-    | 'cc-exp-year'
-    | 'cc-number'
-    | 'email'
-    | 'gender'
-    | 'name'
-    | 'name-family'
-    | 'name-given'
-    | 'name-middle'
-    | 'name-middle-initial'
-    | 'name-prefix'
-    | 'name-suffix'
-    | 'password'
-    | 'password-new'
-    | 'postal-address'
-    | 'postal-address-country'
-    | 'postal-address-extended'
-    | 'postal-address-extended-postal-code'
-    | 'postal-address-locality'
-    | 'postal-address-region'
-    | 'postal-code'
-    | 'street-address'
-    | 'sms-otp'
-    | 'tel'
-    | 'tel-country-code'
-    | 'tel-national'
-    | 'tel-device'
-    | 'username'
-    | 'username-new'
-    | 'off'
-    // additional HTML autocomplete values
-    | 'address-line1'
-    | 'address-line2'
-    | 'bday'
-    | 'bday-day'
-    | 'bday-month'
-    | 'bday-year'
-    | 'country'
-    | 'current-password'
-    | 'honorific-prefix'
-    | 'honorific-suffix'
-    | 'additional-name'
-    | 'family-name'
-    | 'given-name'
-    | 'new-password'
-    | 'one-time-code'
-    | 'sex'
-  ),
-
   /**
    * When provided it will set the color of the cursor (or "caret") in the component.
    * Unlike the behavior of `selectionColor` the cursor color will be set independently
@@ -606,6 +471,127 @@ export type Props = $ReadOnly<{|
    * - `none`: don't auto capitalize anything.
    */
   autoCapitalize?: ?AutoCapitalize,
+
+  /**
+   * Specifies autocomplete hints for the system, so it can provide autofill.
+   * On Android, the system will always attempt to offer autofill by using heuristics to identify the type of content.
+   * To disable autocomplete, set autoComplete to off.
+   *
+   * The following values work across platforms:
+   *
+   * - `additional-name`
+   * - `address-line1`
+   * - `address-line2`
+   * - `cc-number`
+   * - `country`
+   * - `current-password`
+   * - `email`
+   * - `family-name`
+   * - `given-name`
+   * - `honorific-prefix`
+   * - `honorific-suffix`
+   * - `name`
+   * - `new-password`
+   * - `off`
+   * - `one-time-code`
+   * - `postal-code`
+   * - `street-address`
+   * - `tel`
+   * - `username`
+   *
+   * The following values work on iOS only:
+   *
+   * - `nickname`
+   * - `organization`
+   * - `organization-title`
+   * - `url`
+   *
+   * The following values work on Android only:
+   *
+   * - `birthdate-day`
+   * - `birthdate-full`
+   * - `birthdate-month`
+   * - `birthdate-year`
+   * - `cc-csc`
+   * - `cc-exp`
+   * - `cc-exp-day`
+   * - `cc-exp-month`
+   * - `cc-exp-year`
+   * - `gender`
+   * - `name-family`
+   * - `name-given`
+   * - `name-middle`
+   * - `name-middle-initial`
+   * - `name-prefix`
+   * - `name-suffix`
+   * - `password`
+   * - `password-new`
+   * - `postal-address`
+   * - `postal-address-country`
+   * - `postal-address-extended`
+   * - `postal-address-extended-postal-code`
+   * - `postal-address-locality`
+   * - `postal-address-region`
+   * - `sms-otp`
+   * - `tel-country-code`
+   * - `tel-national`
+   * - `tel-device`
+   * - `username-new`
+   */
+  autoComplete?: ?(
+    | 'additional-name'
+    | 'address-line1'
+    | 'address-line2'
+    | 'birthdate-day'
+    | 'birthdate-full'
+    | 'birthdate-month'
+    | 'birthdate-year'
+    | 'cc-csc'
+    | 'cc-exp'
+    | 'cc-exp-day'
+    | 'cc-exp-month'
+    | 'cc-exp-year'
+    | 'cc-number'
+    | 'country'
+    | 'current-password'
+    | 'email'
+    | 'family-name'
+    | 'gender'
+    | 'given-name'
+    | 'honorific-prefix'
+    | 'honorific-suffix'
+    | 'name'
+    | 'name-family'
+    | 'name-given'
+    | 'name-middle'
+    | 'name-middle-initial'
+    | 'name-prefix'
+    | 'name-suffix'
+    | 'new-password'
+    | 'nickname'
+    | 'one-time-code'
+    | 'organization'
+    | 'organization-title'
+    | 'password'
+    | 'password-new'
+    | 'postal-address'
+    | 'postal-address-country'
+    | 'postal-address-extended'
+    | 'postal-address-extended-postal-code'
+    | 'postal-address-locality'
+    | 'postal-address-region'
+    | 'postal-code'
+    | 'street-address'
+    | 'sms-otp'
+    | 'tel'
+    | 'tel-country-code'
+    | 'tel-national'
+    | 'tel-device'
+    | 'url'
+    | 'username'
+    | 'username-new'
+    | 'off'
+  ),
 
   /**
    * If `false`, disables auto-correct. The default value is `true`.
@@ -1113,6 +1099,18 @@ const emptyFunctionThatReturnsTrue = () => true;
  *
  */
 function InternalTextInput(props: Props): React.Node {
+  const {
+    'aria-busy': ariaBusy,
+    'aria-checked': ariaChecked,
+    'aria-disabled': ariaDisabled,
+    'aria-expanded': ariaExpanded,
+    'aria-selected': ariaSelected,
+    accessibilityState,
+    id,
+    tabIndex,
+    ...otherProps
+  } = props;
+
   const inputRef = useRef<null | React.ElementRef<HostComponent<mixed>>>(null);
 
   // Android sends a "onTextChanged" event followed by a "onSelectionChanged" event, for
@@ -1490,13 +1488,25 @@ function InternalTextInput(props: Props): React.Node {
     props.onKeyUpCapture && props.onKeyUpCapture(event);
   };
 
-  const _accessibilityState = {
-    busy: props['aria-busy'] ?? props.accessibilityState?.busy,
-    checked: props['aria-checked'] ?? props.accessibilityState?.checked,
-    disabled: props['aria-disabled'] ?? props.accessibilityState?.disabled,
-    expanded: props['aria-expanded'] ?? props.accessibilityState?.expanded,
-    selected: props['aria-selected'] ?? props.accessibilityState?.selected,
-  };
+  let _accessibilityState;
+  if (
+    accessibilityState != null ||
+    ariaBusy != null ||
+    ariaChecked != null ||
+    ariaDisabled != null ||
+    ariaExpanded != null ||
+    ariaSelected != null
+  ) {
+    _accessibilityState = {
+      busy: ariaBusy ?? accessibilityState?.busy,
+      checked: ariaChecked ?? accessibilityState?.checked,
+      disabled: ariaDisabled ?? accessibilityState?.disabled,
+      expanded: ariaExpanded ?? accessibilityState?.expanded,
+      selected: ariaSelected ?? accessibilityState?.selected,
+    };
+  }
+
+  let style = flattenStyle(props.style);
 
   if (focusable && !accessible) {
     console.warn(
@@ -1510,10 +1520,7 @@ function InternalTextInput(props: Props): React.Node {
         ? RCTMultilineTextInputView
         : RCTSinglelineTextInputView;
 
-    const style =
-      props.multiline === true
-        ? StyleSheet.flatten([styles.multilineInput, props.style])
-        : props.style;
+    style = props.multiline === true ? [styles.multilineInput, style] : style;
 
     const useOnChangeSync =
       (props.unstable_onChangeSync || props.unstable_onChangeTextSync) &&
@@ -1522,15 +1529,16 @@ function InternalTextInput(props: Props): React.Node {
     textInput = (
       <RCTTextInputView
         ref={_setNativeRef}
-        {...props}
+        {...otherProps}
         {...eventHandlers}
-        accessible={accessible}
         accessibilityState={_accessibilityState}
+        accessible={accessible}
         submitBehavior={submitBehavior}
         caretHidden={caretHidden}
         dataDetectorTypes={props.dataDetectorTypes}
-        focusable={focusable}
+        focusable={tabIndex !== undefined ? !tabIndex : focusable}
         mostRecentEventCount={mostRecentEventCount}
+        nativeID={id ?? props.nativeID}
         onBlur={_onBlur}
         onKeyPressSync={props.unstable_onKeyPressSync}
         onChange={_onChange}
@@ -1546,7 +1554,6 @@ function InternalTextInput(props: Props): React.Node {
       />
     );
   } else if (Platform.OS === 'android') {
-    const style = [props.style];
     const autoCapitalize = props.autoCapitalize || 'sentences';
     const _accessibilityLabelledBy =
       props?.['aria-labelledby'] ?? props?.accessibilityLabelledBy;
@@ -1572,18 +1579,19 @@ function InternalTextInput(props: Props): React.Node {
        * fixed */
       <AndroidTextInput
         ref={_setNativeRef}
-        {...props}
+        {...otherProps}
         {...eventHandlers}
-        accessible={accessible}
         accessibilityState={_accessibilityState}
         accessibilityLabelledBy={_accessibilityLabelledBy}
+        accessible={accessible}
         autoCapitalize={autoCapitalize}
         submitBehavior={submitBehavior}
         caretHidden={caretHidden}
         children={children}
         disableFullscreenUI={props.disableFullscreenUI}
-        focusable={focusable}
+        focusable={tabIndex !== undefined ? !tabIndex : focusable}
         mostRecentEventCount={mostRecentEventCount}
+        nativeID={id ?? props.nativeID}
         numberOfLines={props.rows ?? props.numberOfLines}
         onBlur={_onBlur}
         onChange={_onChange}
@@ -1608,11 +1616,12 @@ function InternalTextInput(props: Props): React.Node {
     textInput = (
       <WindowsTextInput
         ref={_setNativeRef}
-        {...props}
+        {...otherProps}
         accessible={accessible}
-        focusable={focusable}
+        focusable={tabIndex !== undefined ? !tabIndex : focusable}
         dataDetectorTypes={props.dataDetectorTypes}
         mostRecentEventCount={mostRecentEventCount}
+        nativeID={id ?? props.nativeID}
         onBlur={_onBlur}
         onChange={_onChange}
         onContentSizeChange={props.onContentSizeChange}
@@ -1738,11 +1747,12 @@ const ExportedForwardRef: React.AbstractComponent<
     React.ElementRef<HostComponent<mixed>> & ImperativeMethods,
   >,
 ) {
-  const style = flattenStyle(restProps.style);
+  let style = flattenStyle(restProps.style);
 
   if (style?.verticalAlign != null) {
     style.textAlignVertical =
       verticalAlignToTextAlignVerticalMap[style.verticalAlign];
+    delete style.verticalAlign;
   }
 
   return (
@@ -1782,6 +1792,8 @@ const ExportedForwardRef: React.AbstractComponent<
     />
   );
 });
+
+ExportedForwardRef.displayName = 'TextInput';
 
 /**
  * Switch to `deprecated-react-native-prop-types` for compatibility with future

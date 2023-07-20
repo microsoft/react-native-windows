@@ -2,6 +2,42 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 17 Jul 2023 15:14:58 GMT",
+      "tag": "@react-native-windows/cli_v0.71.12",
+      "version": "0.71.12",
+      "comments": {
+        "patch": [
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "08c3acfdfe4d3c66f15e24ef3dc795dcf39202c5",
+            "comment": "Add configConfig.windows.cppStringType in package.json for @rnw/codegen (#11848)"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.71.6",
+            "commit": "08c3acfdfe4d3c66f15e24ef3dc795dcf39202c5"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 06 Jul 2023 20:21:35 GMT",
+      "tag": "@react-native-windows/cli_v0.71.11",
+      "version": "0.71.11",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "de9a38d6b4e1c13b727f9e0fda22615d0f28ff2c",
+            "comment": "Update core 0.71.6 -> 0.71.12"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 23 Jun 2023 18:19:55 GMT",
       "tag": "@react-native-windows/cli_v0.71.10",
       "version": "0.71.10",

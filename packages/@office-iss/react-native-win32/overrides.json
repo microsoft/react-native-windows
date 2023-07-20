@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.71.6",
+  "baseVersion": "0.71.12",
   "overrides": [
     {
       "type": "derived",
@@ -113,17 +113,17 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "b59411676fb68eb715dc9b33991accf7f5ec4bbe"
-    },
-    {
-      "type": "platform",
-      "file": "src/Libraries/Components/TextInput/Win32TextInputNativeComponent.js"
+      "baseHash": "e5845da364f14fff72c9580123c41279eb493db4"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInputState.win32.js",
       "baseFile": "Libraries/Components/TextInput/TextInputState.js",
       "baseHash": "60655baaca427e1c7c1b8884833b848335c4033b"
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/Components/TextInput/Win32TextInputNativeComponent.js"
     },
     {
       "type": "copy",
@@ -177,7 +177,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/View.win32.js",
       "baseFile": "Libraries/Components/View/View.js",
-      "baseHash": "91864d8f5518fa50da710f545ecdf5727248c45a"
+      "baseHash": "7945214eb22374ea322b95d12cf8d68a4cf321e4"
     },
     {
       "type": "derived",

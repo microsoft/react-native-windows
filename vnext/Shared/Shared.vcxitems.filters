@@ -141,7 +141,13 @@
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Utils\ImageUtils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)BaseFileReaderResource.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Hasher.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Networking\DefaultBlobResource.cpp">
+      <Filter>Source Files\Networking</Filter>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)HermesRuntimeHolder.cpp">
       <Filter>Hermes</Filter>
     </ClCompile>
@@ -426,9 +432,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IResponseHandler.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IBlobPersistor.h">
-      <Filter>Header Files\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\CxxModuleUtilities.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
@@ -452,6 +455,24 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IWebSocketModuleContentHandler.h">
       <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)IFileReaderResource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)BaseFileReaderResource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\WebSocketTurboModule.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\IBlobResource.h">
+      <Filter>Header Files\Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\DefaultBlobResource.h">
+      <Filter>Header Files\Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)IBlobPersistor.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)HermesRuntimeHolder.h">
       <Filter>Hermes</Filter>

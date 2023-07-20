@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win32/**"
   ],
-  "baseVersion": "0.71.6",
+  "baseVersion": "0.71.12",
   "overrides": [
     {
       "type": "patch",
@@ -25,6 +25,14 @@
       "file": "src/js/components/RNTesterExampleFilter.win32.js",
       "baseFile": "packages/rn-tester/js/components/RNTesterExampleFilter.js",
       "baseHash": "e48c4c9538d7eeb1bb244184c4e7a6e80a1ed4f6"
+    },
+    {
+      "type": "platform",
+      "file": "src/js/components/TextWin32Test.tsx"
+    },
+    {
+      "type": "platform",
+      "file": "src/js/components/ViewWin32Test.tsx"
     },
     {
       "type": "platform",
@@ -49,14 +57,6 @@
       "baseFile": "packages/rn-tester/js/utils/testerStateUtils.js",
       "baseHash": "fafcb01f5f717d16fd558668a58ed12dcdf4454c",
       "issue": 6316
-    },
-    {
-      "type": "platform",
-      "file": "src/js/components/TextWin32Test.tsx"
-    },
-    {
-      "type": "platform",
-      "file": "src/js/components/ViewWin32Test.tsx"
     }
   ]
 }
