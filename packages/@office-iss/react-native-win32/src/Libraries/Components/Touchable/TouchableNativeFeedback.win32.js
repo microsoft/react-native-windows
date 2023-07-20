@@ -88,7 +88,6 @@ const RCTTouchableNativeFeedback = requireNativeComponent<Props>(
 
 class TouchableNativeFeedback extends React.Component<Props, {}> {
   render(): React.Node {
-<<<<<<< Upstream
     const element = React.Children.only<$FlowFixMe>(this.props.children);
     const children: Array<React.Node> = [element.props.children];
     if (__DEV__) {
@@ -182,12 +181,6 @@ class TouchableNativeFeedback extends React.Component<Props, {}> {
         testID: this.props.testID,
       },
       ...children,
-=======
-    return (
-      <RCTTouchableNativeFeedback {...this.props}>
-        {this.props.children}
-      </RCTTouchableNativeFeedback>
->>>>>>> Override
     );
   }
 }

@@ -229,7 +229,6 @@ const APIs: Array<RNTesterModuleInfo> = ([
     key: 'LayoutExample',
     category: 'UI',
     module: require('../examples/Layout/LayoutExample'),
-<<<<<<< Upstream
   },
   typeof MutationObserver === 'function'
     ? {
@@ -238,9 +237,6 @@ const APIs: Array<RNTesterModuleInfo> = ([
         module: require('../examples/MutationObserver/MutationObserverIndex'),
       }
     : null,
-=======
-  } /*
->>>>>>> Override
   {
     key: 'NativeAnimationsExample',
     category: 'UI',

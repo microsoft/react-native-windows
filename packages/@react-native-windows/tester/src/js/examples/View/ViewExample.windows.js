@@ -10,7 +10,7 @@
 
 'use strict';
 
-import type {RNTesterModule} from '../../types/RNTesterTypes';
+import  {RNTesterModule} from '../../types/RNTesterTypes';
 import * as React from 'react';
 import {
   StyleSheet,
@@ -18,12 +18,8 @@ import {
   TouchableWithoutFeedback,
   View,
   Platform,
-<<<<<<< Upstream
-} from 'react-native';
-=======
   Alert,
-} = require('react-native');
->>>>>>> Override
+} from 'react-native';
 
 class ViewBorderStyleExample extends React.Component<
   $ReadOnly<{||}>,
@@ -347,21 +343,6 @@ class FlexGapExample extends React.Component<$ReadOnly<{|testID?: ?string|}>> {
   }
 }
 
-<<<<<<< Upstream
-export default ({
-  title: 'View',
-  documentationURL: 'https://reactnative.dev/docs/view',
-  category: 'Basic',
-  description: ('Basic building block of all UI, examples that ' +
-    'demonstrate some of the many styles available.': string),
-  displayName: 'ViewExample',
-  examples: [
-    {
-      title: 'Background Color',
-      name: 'background-color',
-      render({testID}): React.Node {
-        return (
-=======
 class AccessibilityExample extends React.Component<
   $ReadOnly<{||}>,
   {|tap: number|},
@@ -492,12 +473,12 @@ exports.examples = [
           <View style={[styles.box, {margin: 5}]}>
             <Text style={{fontSize: 11}}>5px margin</Text>
           </View>
->>>>>>> Override
           <View
             testID={testID}
             style={{backgroundColor: '#527FE4', padding: 5}}>
             <Text style={{fontSize: 11}}>Blue background</Text>
           </View>
+        </View>
         );
       },
     },
@@ -514,26 +495,6 @@ exports.examples = [
         );
       },
     },
-<<<<<<< Upstream
-    {
-      title: 'Padding/Margin',
-      name: 'padding-margin',
-      render({testID}): React.Node {
-        const styles = StyleSheet.create({
-          box: {
-            backgroundColor: '#527FE4',
-            borderColor: '#000033',
-            borderWidth: 1,
-          },
-        });
-        return (
-          <View
-            testID={testID}
-            style={{borderColor: '#bb0000', borderWidth: 0.5}}>
-            <View style={[styles.box, {padding: 5}]}>
-              <Text style={{fontSize: 11}}>5px padding</Text>
-=======
-  },
   {
     title: 'Border Style',
     render(): React.Node {
@@ -653,7 +614,6 @@ exports.examples = [
           <View style={styles.container}>
             <View style={[StyleSheet.absoluteFill]}>
               <Text style={styles.content}>undefined</Text>
->>>>>>> Override
             </View>
             <View style={[styles.box, {margin: 5}]}>
               <Text style={{fontSize: 11}}>5px margin</Text>
@@ -667,10 +627,6 @@ exports.examples = [
               <Text style={{fontSize: 11}}>widthAutonomous=true</Text>
             </View>
           </View>
-<<<<<<< Upstream
-        );
-      },
-=======
         </View>
       );
     },
@@ -703,7 +659,6 @@ exports.examples = [
           </View>
         </View>
       );
->>>>>>> Override
     },
     {
       title: 'Border Radius',
@@ -743,16 +698,6 @@ exports.examples = [
         return <ViewBorderStyleExample />;
       },
     },
-<<<<<<< Upstream
-    {
-      title: 'Rounded Borders',
-      name: 'rounded-borders',
-      render({testID}): React.Node {
-        return (
-          <View
-            testID={testID}
-            style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-=======
   },
   {
     title: '`display: none` style',
@@ -786,14 +731,13 @@ exports.examples = [
     title: 'BackfaceVisibility',
     render: function (): React.Node {
       return (
-        <>
+        <View>
           <Text style={{paddingBottom: 10}}>
             View #1, front is visible, back is hidden.
           </Text>
           <View
             style={{justifyContent: 'center', alignItems: 'center'}}
             testID="backface-visibility">
->>>>>>> Override
             <View
               style={{
                 width: 50,
@@ -805,15 +749,6 @@ exports.examples = [
             />
             <View
               style={{
-<<<<<<< Upstream
-                width: 50,
-                height: 50,
-                borderRadius: 25,
-                borderWidth: 10,
-                marginRight: 10,
-              }}
-            />
-=======
                 height: 200,
                 width: 200,
                 justifyContent: 'center',
@@ -833,7 +768,6 @@ exports.examples = [
           <View
             style={{justifyContent: 'center', alignItems: 'center'}}
             testID="backface-visibility-2">
->>>>>>> Override
             <View
               style={{
                 width: 50,
@@ -895,9 +829,11 @@ exports.examples = [
               }}
             />
           </View>
+        </View>
         );
       },
     },
+    
     {
       title: 'Overflow',
       name: 'overflow',
@@ -1060,7 +996,6 @@ exports.examples = [
         );
       },
     },
-<<<<<<< Upstream
     {
       title: 'View with aria-label="label"',
       name: 'aria-label',
@@ -1164,7 +1099,10 @@ exports.examples = [
                 }}>
                 <Text style={{fontSize: 11}}>insetInlineStart 5</Text>
               </View>
-=======
+            </View>
+          </View>
+        );
+    }  
   },
   {
     title: 'Accessibility',
@@ -1219,9 +1157,9 @@ exports.examples = [
                 right: 10,
               }}>
               <Text style={{fontSize: 11}}>borderBlockColor orange</Text>
->>>>>>> Override
             </View>
           </View>
+        </View>
         );
       },
     },
@@ -1265,20 +1203,14 @@ exports.examples = [
         );
       },
     },
-<<<<<<< Upstream
-  ],
-}: RNTesterModule);
-=======
-  },
-  {
-    title: 'NativeID',
-    render(): React.Node {
-      return (
-        <View nativeID="native-id-view" testID="nativeid">
-          <Text>A View with a nativeID "native-id-view"</Text>
-        </View>
-      );
+    {
+      title: 'NativeID',
+      render(): React.Node {
+        return (
+          <View nativeID="native-id-view" testID="nativeid">
+            <Text>A View with a nativeID "native-id-view"</Text>
+          </View>
+        );
+      },
     },
-  },
-];
->>>>>>> Override
+  ]
