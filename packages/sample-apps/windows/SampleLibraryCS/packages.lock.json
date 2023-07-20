@@ -21,8 +21,8 @@
       },
       "Microsoft.JavaScript.Hermes": {
         "type": "Transitive",
-        "resolved": "0.1.13",
-        "contentHash": "dzqFCHeC0V4WYNFDWR4eFOVXXMpVUhrTPpuAR5QDyQL8MlvvVQIbBdqeh3GZYgsqwfzfMcgTC/OAGVYbutKE6w=="
+        "resolved": "0.1.15",
+        "contentHash": "My/u5RvxoymtwWokoweU6iVpuP79w271UjadcmSNqnQ9ESIv00tlVP4sHnIiN3t2lJNDeciyE1EVF4swGPECKQ=="
       },
       "Microsoft.Net.Native.Compiler": {
         "type": "Transitive",
@@ -152,8 +152,8 @@
       "folly": {
         "type": "Project",
         "dependencies": {
-          "boost": "[1.76.0, )",
-          "fmt": "[1.0.0, )"
+          "Fmt": "[1.0.0, )",
+          "boost": "[1.76.0, )"
         }
       },
       "microsoft.reactnative": {
@@ -161,7 +161,7 @@
         "dependencies": {
           "Common": "[1.0.0, )",
           "Folly": "[1.0.0, )",
-          "Microsoft.JavaScript.Hermes": "[0.1.13, )",
+          "Microsoft.JavaScript.Hermes": "[0.1.15, )",
           "Microsoft.UI.Xaml": "[2.8.0, )",
           "Microsoft.Windows.SDK.BuildTools": "[10.0.22000.194, )",
           "ReactCommon": "[1.0.0, )",

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Spellcheck update 7/11/2023",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}

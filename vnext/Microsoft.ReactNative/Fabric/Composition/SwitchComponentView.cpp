@@ -266,4 +266,8 @@ bool SwitchComponentView::focusable() const noexcept {
   return m_props->focusable;
 }
 
+std::string SwitchComponentView::DefaultControlType() const noexcept {
+  return "switch";
+}
+
 } // namespace Microsoft::ReactNative

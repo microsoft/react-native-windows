@@ -79,6 +79,7 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   bool ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept override;
 
   void StartBringIntoView(BringIntoViewOptions &&args) noexcept override;
+  virtual std::string DefaultControlType() const noexcept;
 
  private:
   ScrollViewComponentView(

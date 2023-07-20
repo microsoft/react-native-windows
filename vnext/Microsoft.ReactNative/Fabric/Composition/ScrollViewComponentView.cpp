@@ -460,4 +460,8 @@ winrt::Microsoft::ReactNative::Composition::IVisual ScrollViewComponentView::Vis
   return m_visual;
 }
 
+std::string ScrollViewComponentView::DefaultControlType() const noexcept {
+  return "scrollbar";
+}
+
 } // namespace Microsoft::ReactNative

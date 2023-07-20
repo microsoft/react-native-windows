@@ -2,6 +2,45 @@
   "name": "@rnw-scripts/take-screenshot",
   "entries": [
     {
+      "date": "Fri, 14 Jul 2023 05:17:08 GMT",
+      "tag": "@rnw-scripts/take-screenshot_v1.1.19",
+      "version": "1.1.19",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@rnw-scripts/take-screenshot",
+            "commit": "4dae24722d1ea6c9c77e4ade1068aa626f4d2844",
+            "comment": "integration 6/28"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/take-screenshot",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.25",
+            "commit": "4dae24722d1ea6c9c77e4ade1068aa626f4d2844"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/take-screenshot",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.2",
+            "commit": "4dae24722d1ea6c9c77e4ade1068aa626f4d2844"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/take-screenshot",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.13",
+            "commit": "4dae24722d1ea6c9c77e4ade1068aa626f4d2844"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/take-screenshot",
+            "comment": "Bump @rnw-scripts/ts-config to v2.0.5",
+            "commit": "4dae24722d1ea6c9c77e4ade1068aa626f4d2844"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 01 Jul 2023 05:14:42 GMT",
       "tag": "@rnw-scripts/take-screenshot_v1.1.18",
       "version": "1.1.18",

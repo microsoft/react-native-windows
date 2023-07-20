@@ -2,6 +2,27 @@
   "name": "@rnw-scripts/jest-unittest-config",
   "entries": [
     {
+      "date": "Fri, 14 Jul 2023 05:17:07 GMT",
+      "tag": "@rnw-scripts/jest-unittest-config_v1.5.6",
+      "version": "1.5.6",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@rnw-scripts/jest-unittest-config",
+            "commit": "4dae24722d1ea6c9c77e4ade1068aa626f4d2844",
+            "comment": "integration 6/28"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/jest-unittest-config",
+            "comment": "Bump @rnw-scripts/babel-node-config to v2.3.1",
+            "commit": "4dae24722d1ea6c9c77e4ade1068aa626f4d2844"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 07 Jun 2023 05:16:11 GMT",
       "tag": "@rnw-scripts/jest-unittest-config_v1.5.5",
       "version": "1.5.5",

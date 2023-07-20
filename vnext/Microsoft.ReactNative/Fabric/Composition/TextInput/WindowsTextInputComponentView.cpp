@@ -594,6 +594,10 @@ bool WindowsTextInputComponentView::focusable() const noexcept {
   return m_props->focusable;
 }
 
+std::string WindowsTextInputComponentView::DefaultControlType() const noexcept {
+  return "textinput";
+}
+
 void WindowsTextInputComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {

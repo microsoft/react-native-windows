@@ -59,7 +59,7 @@ DefaultBlobResource::DefaultBlobResource(
 
   auto blobPersistor = std::make_shared<MemoryBlobPersistor>();
   auto contentHandler = std::make_shared<BlobWebSocketModuleContentHandler>(blobPersistor);
-  auto requestBodyHanlder = std::make_shared<BlobModuleRequestBodyHandler>(blobPersistor);
+  auto requestBodyHandler = std::make_shared<BlobModuleRequestBodyHandler>(blobPersistor);
   auto responseHandler = std::make_shared<BlobModuleResponseHandler>(blobPersistor);
 
   auto contentHandlerPropId =
@@ -71,7 +71,7 @@ DefaultBlobResource::DefaultBlobResource(
   propBag.Set(blobPersistorPropId, weak_ptr<IBlobPersistor>{blobPersistor});
 
   auto result = std::make_shared<DefaultBlobResource>(
-      blobPersistor, contentHandler, requestBodyHanlder, responseHandler, propBag);
+      blobPersistor, contentHandler, requestBodyHandler, responseHandler, propBag);
 
   return result;
 }
