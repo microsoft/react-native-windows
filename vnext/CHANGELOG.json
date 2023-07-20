@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 20 Jul 2023 05:13:17 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.681",
+      "version": "0.0.0-canary.681",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "57f88c3c66600e66130f5593944c6a650d515050",
+            "comment": "Spellcheck update 7/11/2023"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.179",
+            "commit": "5531df86e4bc019d1f39b2a1ce428b7083efa62d"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 19 Jul 2023 05:14:28 GMT",
       "tag": "react-native-windows_v0.0.0-canary.680",
       "version": "0.0.0-canary.680",

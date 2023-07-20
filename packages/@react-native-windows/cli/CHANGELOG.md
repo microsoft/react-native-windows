@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Sat, 15 Jul 2023 05:15:31 GMT and should not be manually modified.
+This log was last generated on Thu, 20 Jul 2023 05:13:17 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.179
+
+Thu, 20 Jul 2023 05:13:17 GMT
+
+### Changes
+
+- Spellcheck update 7/11/2023 (jthysell@microsoft.com)
 
 ## 0.0.0-canary.178
 
