@@ -660,7 +660,9 @@ exports.examples = [
         </View>
       );
     },
-    {
+  }  
+  
+  {
       title: 'Border Radius',
       name: 'border-radius',
       render({testID}): React.Node {
@@ -698,7 +700,6 @@ exports.examples = [
         return <ViewBorderStyleExample />;
       },
     },
-  },
   {
     title: '`display: none` style',
     render(): React.Node {
