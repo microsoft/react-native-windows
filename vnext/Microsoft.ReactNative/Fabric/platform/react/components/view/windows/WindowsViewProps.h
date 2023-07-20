@@ -26,6 +26,7 @@ class WindowsViewProps {
   WindowsViewEvents windowsEvents{};
   bool enableFocusRing{true};
   bool focusable{false};
+  bool onClick{false};
   // std::optional<std::string> overflowAnchor{};
   // std::optional<std::string> tooltip{};
   // std::vector<HandledKeyEvent> keyDownEvents{};

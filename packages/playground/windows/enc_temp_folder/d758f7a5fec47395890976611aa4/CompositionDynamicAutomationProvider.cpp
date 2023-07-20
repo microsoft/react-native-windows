@@ -139,11 +139,15 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
   auto accessibilityRole = props->accessibilityRole;
   // Invoke control pattern is used to support controls that do not maintain state
   // when activated but rather initiate or perform a single, unambiguous action.
+  // TODO: Need check for OnClick with menuitem and treeitem
   if (patternId == UIA_InvokePatternId &&
       (accessibilityRole == "button" || accessibilityRole == "imagebutton" || accessibilityRole == "link" ||
        accessibilityRole == "splitbutton" || (accessibilityRole == "menuitem" && (props->onAccessibilityTap || props->onClick)) ||
-       (accessibilityRole == "treeitem" && (props->onAccessibilityTap || props->onClick)))) {
-      *pRetVal = static_cast<IInvokeProvider *>(this);
+       (accessibilityRole == "treeitem" && (props->onAccessibilityTap && props->onClick)))) {
+    if (props->onClick) {
+      *pRetVal = nullptr;
+      //*pRetVal = static_cast<IInvokeProvider *>(this);
+    }
   }
 
   return S_OK;

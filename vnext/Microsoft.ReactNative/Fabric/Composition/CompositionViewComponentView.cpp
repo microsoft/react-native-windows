@@ -1091,6 +1091,9 @@ void CompositionBaseComponentView::updateAccessibilityProps(
       UIA_IsEnabledPropertyId,
       !oldViewProps.accessibilityState.disabled,
       !newViewProps.accessibilityState.disabled);
+
+  winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+      provider, UIA_ControlTypePropertyId, oldViewProps.accessibilityRole, newViewProps.accessibilityRole);
 }
 
 void CompositionBaseComponentView::updateBorderLayoutMetrics(
@@ -1212,6 +1215,10 @@ bool CompositionBaseComponentView::focusable() const noexcept {
   return false;
 }
 
+std::string CompositionBaseComponentView::DefaultControlType() const noexcept {
+  return "group";
+}
+
 CompositionViewComponentView::CompositionViewComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag)
@@ -1271,6 +1278,10 @@ void CompositionViewComponentView::updateProps(
 
   updateAccessibilityProps(oldViewProps, newViewProps);
   updateBorderProps(oldViewProps, newViewProps);
+
+  if (oldViewProps.onClick != newViewProps.onClick) {
+    m_onClick = newViewProps.onClick;
+  }
 
   // Shadow
   if (oldViewProps.shadowOffset != newViewProps.shadowOffset || oldViewProps.shadowColor != newViewProps.shadowColor ||
@@ -1411,6 +1422,10 @@ winrt::Microsoft::ReactNative::Composition::IVisual CompositionViewComponentView
 
 bool CompositionViewComponentView::focusable() const noexcept {
   return m_props->focusable;
+}
+
+std::string CompositionViewComponentView::DefaultControlType() const noexcept {
+  return "group";
 }
 
 IComponentView *lastDeepChild(IComponentView &view) noexcept {
