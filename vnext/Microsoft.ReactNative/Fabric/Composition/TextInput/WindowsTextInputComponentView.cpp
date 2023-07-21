@@ -766,6 +766,10 @@ void WindowsTextInputComponentView::UpdateText(const std::string &str) noexcept 
       EM_SETTEXTEX, reinterpret_cast<WPARAM>(&stt), reinterpret_cast<LPARAM>(str.c_str()), &res));
 
   winrt::check_hresult(m_textServices->TxSendMessage(EM_EXGETSEL, 0, reinterpret_cast<LPARAM>(&cr), &res));
+
+  // enable colored emojis
+  winrt::check_hresult(
+      m_textServices->TxSendMessage(EM_SETTYPOGRAPHYOPTIONS, 0x1000 | 0x2000, 0x1000 | 0x2000, nullptr));
 }
 
 void WindowsTextInputComponentView::updateLayoutMetrics(
