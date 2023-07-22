@@ -565,13 +565,7 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
     Microsoft::React::GetFileReaderModuleName(),
     [transitionalProps]() { return Microsoft::React::CreateFileReaderModule(transitionalProps); },
     nativeQueue));
-#endif
 
-  // TODO: This is not included for UWP because we have a different module which
-  // is added later. However, this one is designed
-  //  so that we can base a UWP version on it. We need to do that but is not high
-  //  priority.
-#if (defined(_MSC_VER) && !defined(WINRT))
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
       "Timing",

@@ -237,6 +237,8 @@ std::map<string, dynamic> HttpModule::getConstants() {
 
 // clang-format off
 std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods() {
+  // See CxxNativeModule::lazyInit()
+  SetUpHttpResource(m_resource, getInstance(), m_inspectableProperties);
 
   return
   {
@@ -249,12 +251,6 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
           return;
         }
 
-        auto resource = holder->Module->m_resource;
-        if (!holder->Module->m_isResourceSetup)
-        {
-          SetUpHttpResource(resource, holder->Module->getInstance(), holder->Module->m_inspectableProperties);
-          holder->Module->m_isResourceSetup = true;
-        }
         holder->Module->m_requestId++;
 
         auto params = facebook::xplat::jsArgAsObject(args, 0);
@@ -263,7 +259,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
           headers.emplace(header.first.getString(), header.second.getString());
         }
 
-        resource->SendRequest(
+        holder->Module->m_resource->SendRequest(
           params["method"].asString(),
           params["url"].asString(),
           holder->Module->m_requestId,
@@ -289,14 +285,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
           return;
         }
 
-        auto resource = holder->Module->m_resource;
-        if (!holder->Module->m_isResourceSetup)
-        {
-          SetUpHttpResource(resource, holder->Module->getInstance(), holder->Module->m_inspectableProperties);
-          holder->Module->m_isResourceSetup = true;
-        }
-
-        resource->AbortRequest(facebook::xplat::jsArgAsInt(args, 0));
+        holder->Module->m_resource->AbortRequest(facebook::xplat::jsArgAsInt(args, 0));
       }
     },
     {
@@ -309,14 +298,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
           return;
         }
 
-        auto resource = holder->Module->m_resource;
-        if (!holder->Module->m_isResourceSetup)
-        {
-          SetUpHttpResource(resource, holder->Module->getInstance(), holder->Module->m_inspectableProperties);
-          holder->Module->m_isResourceSetup = true;
-        }
-
-        resource->ClearCookies();
+        holder->Module->m_resource->ClearCookies();
       }
     }
   };
