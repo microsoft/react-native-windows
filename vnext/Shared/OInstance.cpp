@@ -26,7 +26,6 @@
 #include <cxxreact/ModuleRegistry.h>
 
 #include <Modules/ExceptionsManagerModule.h>
-#include <Modules/HttpModule.h>
 #include <Modules/PlatformConstantsModule.h>
 #include <Modules/SourceCodeModule.h>
 #include <Modules/StatusBarManagerModule.h>
@@ -67,15 +66,6 @@ using namespace Microsoft::JSI;
 
 using std::make_shared;
 using winrt::Microsoft::ReactNative::ReactPropertyBagHelper;
-
-namespace Microsoft::React {
-
-/*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateHttpModule(
-    winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept {
-  return std::make_unique<HttpModule>(inspectableProperties);
-}
-
-} // namespace Microsoft::React
 
 namespace facebook {
 namespace react {

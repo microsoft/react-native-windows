@@ -331,6 +331,11 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
   return s_moduleName;
 }
 
+/*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateHttpModule(
+  IInspectable const& inspectableProperties) noexcept {
+  return std::make_unique<HttpModule>(inspectableProperties);
+}
+
 /*extern*/ const wchar_t *GetHttpTurboModuleName() noexcept {
   return s_moduleNameW;
 }
