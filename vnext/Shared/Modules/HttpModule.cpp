@@ -314,7 +314,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
 }
 
 /*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateHttpModule(
-  IInspectable const& inspectableProperties) noexcept {
+    IInspectable const &inspectableProperties) noexcept {
   return std::make_unique<HttpModule>(inspectableProperties);
 }
 
