@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 17 Jul 2023 15:14:58 GMT and should not be manually modified.
+This log was last generated on Mon, 24 Jul 2023 15:13:43 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.25
+
+Mon, 24 Jul 2023 15:13:43 GMT
+
+### Patches
+
+- Use TurboModules for networking in MSRN (#11867) (julio.rocha@microsoft.com)
+- Revert "[0.71] Re-apply PR #11757 that added use of hermes.dll with C API (#11788)" (vmorozov@microsoft.com)
+- Bump @react-native-windows/cli to v0.71.13
 
 ## 0.71.24
 

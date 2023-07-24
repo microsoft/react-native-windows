@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Mon, 24 Jul 2023 15:13:42 GMT",
+      "tag": "@react-native-windows/telemetry_v0.71.6",
+      "version": "0.71.6",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "4a0a6e0ec375d51e84b3dfb1a02adc920cb42ad2",
+            "comment": "Revert \"[0.71] Re-apply PR #11757 that added use of hermes.dll with C API (#11788)\""
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 23 Jun 2023 18:19:56 GMT",
       "tag": "@react-native-windows/telemetry_v0.71.5",
       "version": "0.71.5",
