@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Attempt AddNetworkingHandler if HTTP module was not ready (#11926)",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
