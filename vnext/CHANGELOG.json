@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 24 Jul 2023 15:14:19 GMT",
+      "tag": "react-native-windows_v0.72.3",
+      "version": "0.72.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "4765f49f202cc2bd014825446b6dce3f88e31da6",
+            "comment": "Port #11718 and #11849 to 0.72"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.72.1",
+            "commit": "6485abeed82accde1b46f002e7701b6e630a12b6"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.72.1",
+            "commit": "6485abeed82accde1b46f002e7701b6e630a12b6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 19 Jul 2023 18:43:52 GMT",
       "tag": "react-native-windows_v0.72.2",
       "version": "0.72.2",
