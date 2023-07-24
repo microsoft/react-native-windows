@@ -241,7 +241,7 @@ const APIs: Array<RNTesterModuleInfo> = ([
     key: 'NativeAnimationsExample',
     category: 'UI',
     module: require('../examples/NativeAnimation/NativeAnimationsExample'),
-  }*/,
+  },
   {
     key: 'PanResponderExample',
     category: 'Basic',
