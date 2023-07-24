@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Port #11833, #11848 and #11891 to 0.72",
-  "packageName": "@react-native-windows/codegen",
-  "email": "53799235+ZihanChen-MSFT@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
