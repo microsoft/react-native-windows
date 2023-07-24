@@ -462,7 +462,8 @@ void ParagraphComponentView::DrawText() noexcept {
             static_cast<FLOAT>((offset.x + m_layoutMetrics.contentInsets.left) / m_layoutMetrics.pointScaleFactor),
             static_cast<FLOAT>((offset.y + m_layoutMetrics.contentInsets.top) / m_layoutMetrics.pointScaleFactor)),
         m_textLayout.get(),
-        brush.get());
+        brush.get(),
+        D2D1_DRAW_TEXT_OPTIONS_ENABLE_COLOR_FONT);
 
     // restore dpi to old state
     d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);

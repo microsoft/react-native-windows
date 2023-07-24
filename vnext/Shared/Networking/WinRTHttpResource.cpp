@@ -6,6 +6,7 @@
 #include "WinRTHttpResource.h"
 
 #include <CppRuntimeOptions.h>
+#include <Networking/IBlobResource.h>
 #include <ReactPropertyBag.h>
 #include <Utils/CppWinrtLessExceptions.h>
 #include <Utils/WinRTConversions.h>
@@ -672,6 +673,14 @@ void WinRTHttpResource::AddResponseHandler(shared_ptr<IResponseHandler> response
     auto propBag = ReactPropertyBag{inspectableProperties.try_as<IReactPropertyBag>()};
     auto moduleProxy = weak_ptr<IHttpModuleProxy>{result};
     propBag.Set(propId, std::move(moduleProxy));
+
+    // #11439 - Best-effort attempt to set up the HTTP handler after an initial call to addNetworkingHandler failed.
+    auto blobRcPropId = ReactPropertyId<ReactNonAbiValue<weak_ptr<Networking::IBlobResource>>>{L"Blob.Resource"};
+    if (auto prop = propBag.Get(blobRcPropId)) {
+      if (auto blobRc = prop.Value().lock()) {
+        blobRc->AddNetworkingHandler();
+      }
+    }
   }
 
   return result;
