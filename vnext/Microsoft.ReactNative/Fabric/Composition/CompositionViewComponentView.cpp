@@ -1279,10 +1279,6 @@ void CompositionViewComponentView::updateProps(
   updateAccessibilityProps(oldViewProps, newViewProps);
   updateBorderProps(oldViewProps, newViewProps);
 
-  if (oldViewProps.onClick != newViewProps.onClick) {
-    m_onClick = newViewProps.onClick;
-  }
-
   // Shadow
   if (oldViewProps.shadowOffset != newViewProps.shadowOffset || oldViewProps.shadowColor != newViewProps.shadowColor ||
       oldViewProps.shadowOpacity != newViewProps.shadowOpacity ||

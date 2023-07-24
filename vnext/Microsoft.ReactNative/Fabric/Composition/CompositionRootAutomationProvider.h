@@ -4,7 +4,6 @@
 #include <Fabric/ReactTaggedView.h>
 #include <UIAutomation.h>
 #include <inspectable.h>
-#include <uiautomationcore.h>
 
 namespace winrt::Microsoft::ReactNative::implementation {
 struct CompositionRootView;
