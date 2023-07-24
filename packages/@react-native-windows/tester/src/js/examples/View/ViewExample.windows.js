@@ -474,7 +474,6 @@ export default ({
               <Text style={{fontSize: 11}}>5px margin</Text>
             </View>
             <View
-              testID={testID}
               style={{backgroundColor: '#527FE4', padding: 5}}>
               <Text style={{fontSize: 11}}>Blue background</Text>
             </View>
