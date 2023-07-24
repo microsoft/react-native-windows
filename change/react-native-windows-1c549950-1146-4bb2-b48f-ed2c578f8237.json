@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Attempt AddNetworkingHandler if HTTP module was not ready",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
