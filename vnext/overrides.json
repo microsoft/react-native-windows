@@ -18,7 +18,7 @@
     },
     {
       "type": "copy",
-      "directory": "flow-typed/npm",
+      "directory": "node_modules/.flow/flow-typed/npm",
       "baseDirectory": "flow-typed/npm",
       "baseHash": "6a1a9c8b3e66d76ad6090885e488b4eed3d9ce14"
     },
