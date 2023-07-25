@@ -16,12 +16,6 @@
       "baseHash": "c7a5a5089f3ad1380a829c54a990678ec648aabf"
     },
     {
-      "type": "copy",
-      "directory": "flow-typed/npm",
-      "baseDirectory": "flow-typed/npm",
-      "baseHash": "6a1a9c8b3e66d76ad6090885e488b4eed3d9ce14"
-    },
-    {
       "type": "derived",
       "file": "src/index.win32.js",
       "baseFile": "packages/react-native/index.js",

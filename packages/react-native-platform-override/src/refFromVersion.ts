@@ -13,7 +13,10 @@ export function getAbbreviatedRef(reactNativeVersion: string): string {
     throw new Error(`${reactNativeVersion} is not a valid semver version`);
   }
 
-  if (semver.lt(reactNativeVersion, '0.0.0', {includePrerelease: true})) {
+  if (
+    semver.lt(reactNativeVersion, '0.0.0', {includePrerelease: true}) ||
+    reactNativeVersion.includes('nightly')
+  ) {
     return extractHashFromNightlyVersion(reactNativeVersion);
   } else {
     return `v${reactNativeVersion}`;

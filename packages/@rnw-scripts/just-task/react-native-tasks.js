@@ -12,7 +12,3 @@ const copyRNLibraries = require('./copyRNLibraries');
 
 task('copyRNLibraries', copyRNLibraries.copyTask(process.cwd()));
 task('cleanRNLibraries', copyRNLibraries.cleanTask(process.cwd()));
-
-task('flow-check', () => {
-  require('child_process').execSync('npx flow check', {stdio: 'inherit'});
-});
