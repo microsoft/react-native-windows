@@ -73,6 +73,7 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
   void UpdateCharFormat() noexcept;
   void UpdateParaFormat() noexcept;
   void UpdateText(const std::string &str) noexcept;
+  void setPlaceholderText(const std::string &str) noexcept;
   void OnTextUpdated() noexcept;
   void OnSelectionChanged(LONG start, LONG end) noexcept;
   std::string GetTextFromRichEdit() const noexcept;
@@ -99,7 +100,9 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
   bool m_comingFromState{false};
   int m_cDrawBlock{0};
   bool m_needsRedraw{false};
+  std::string m_placeholderText;
   bool m_drawing{false};
+  bool m_hasFocus;
 };
 
 } // namespace Microsoft::ReactNative

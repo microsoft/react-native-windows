@@ -217,6 +217,7 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
   //@cmember Set the focus to the text window
   void TxSetFocus() override {
     m_outer->rootComponentView()->SetFocusedComponent(m_outer);
+    m_outer->m_hasFocus = true;
     // assert(false);
     // TODO focus
   }
@@ -469,7 +470,6 @@ facebook::react::AttributedString WindowsTextInputComponentView::getAttributedSt
     // fragment.parentShadowView = facebook::react::ShadowView(*this);
     attributedString.prependFragment(fragment);
   }
-
   return attributedString;
 }
 
@@ -583,11 +583,13 @@ void WindowsTextInputComponentView::unmountChildComponentView(
 void WindowsTextInputComponentView::onFocusLost() noexcept {
   Super::onFocusLost();
   sendMessage(WM_KILLFOCUS, 0, 0);
+  m_hasFocus = true;
 }
 
 void WindowsTextInputComponentView::onFocusGained() noexcept {
   Super::onFocusGained();
   sendMessage(WM_SETFOCUS, 0, 0);
+  m_hasFocus = false;
 }
 
 bool WindowsTextInputComponentView::focusable() const noexcept {
@@ -633,6 +635,12 @@ void WindowsTextInputComponentView::updateProps(
     if (!newTextInputProps.editable) {
       propBits |= TXTBIT_READONLY;
     }
+  }
+
+  if (oldTextInputProps.placeholder != newTextInputProps.placeholder) {
+    auto stringPlaceholder = winrt::to_hstring(newTextInputProps.placeholder);
+    m_placeholderText = winrt::to_string(stringPlaceholder);
+    UpdateText(m_placeholderText);
   }
 
   /*
@@ -764,6 +772,8 @@ void WindowsTextInputComponentView::UpdateText(const std::string &str) noexcept 
   winrt::check_hresult(m_textServices->TxSendMessage(EM_EXGETSEL, 0, reinterpret_cast<LPARAM>(&cr), &res));
 }
 
+void WindowsTextInputComponentView::setPlaceholderText(const std::string &str) noexcept {}
+
 void WindowsTextInputComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
     facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
@@ -783,7 +793,6 @@ void WindowsTextInputComponentView::updateLayoutMetrics(
   }
 
   updateBorderLayoutMetrics(layoutMetrics, *m_props);
-
   m_layoutMetrics = layoutMetrics;
 
   // TODO should ceil?
@@ -810,6 +819,13 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
   // if (data.attributedString == newAttributedString)
   //    return;
   data.attributedString = getAttributedString();
+
+  if (data.attributedString.getFragments().size()) {
+    if (data.attributedString.getFragments()[0].string == m_placeholderText) {
+      return;
+    }
+  }
+
   data.mostRecentEventCount = m_nativeEventCount;
   m_state->updateState(std::move(data));
 
@@ -960,6 +976,7 @@ void WindowsTextInputComponentView::ensureDrawingSurface() noexcept {
         m_textServices->TxSendMessage(EM_SETEVENTMASK, 0, ENM_CHANGE | ENM_SELCHANGE | ENM_ENDCOMPOSITION, &lresult));
 
     DrawText();
+    UpdateText(m_placeholderText);
 
     auto surfaceBrush = m_compContext.CreateSurfaceBrush(m_drawingSurface);
     surfaceBrush.HorizontalAlignmentRatio(0.f);
