@@ -155,6 +155,9 @@ winrt::Windows::UI::Composition::Compositor CompositionHwndHost::Compositor() co
 
 IInspectable CompositionHwndHost::UiaProvider() noexcept {
   auto compRootView = winrt::get_self<implementation::CompositionRootView>(m_compRootView);
+  if (compRootView == nullptr)
+    return nullptr;
+
   auto provider = compRootView->GetUiaProvider();
   auto pRootProvider = static_cast<CompositionRootAutomationProvider *>(provider.as<IRawElementProviderSimple>().get());
   if (pRootProvider != nullptr) {
