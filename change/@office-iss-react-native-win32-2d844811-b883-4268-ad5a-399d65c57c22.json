@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "ran integration scripts",
+  "comment": "integrate RN Nightly 7/5/23",
   "packageName": "@office-iss/react-native-win32",
   "email": "email not defined",
   "dependentChangeType": "patch"
