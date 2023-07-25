@@ -9,8 +9,8 @@
     "directory": "packages/@rnw-scripts/just-task"
   },
   "scripts": {
-    "lint": "rnw-scripts lint",
-    "lint:fix": "rnw-scripts lint:fix"
+    "lint": "rnw-scripts eslint",
+    "lint:fix": "rnw-scripts eslint:fix"
   },
   "bin": {
     "rnw-scripts": "./bin/rnw-scripts.js"
@@ -33,9 +33,6 @@
     "eslint": "*",
     "jest": "*",
     "prettier": "*",
-    "react-native": "*",
-    "react-native-windows": "*",
-    "react-native-platform-override": "*",
     "typescript": "*"
   },
   "peerDependenciesMeta": {
