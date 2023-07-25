@@ -90,6 +90,10 @@ jobs:
               displayName: yarn e2etest
               workingDirectory: packages/e2e-test-app
 
+            - script: npx jest --clearCache
+              displayName: clear jest cache
+              workingDirectory: packages/e2e-test-app
+
             - script: yarn e2etest -u
               displayName: Update snapshots
               workingDirectory: packages/e2e-test-app

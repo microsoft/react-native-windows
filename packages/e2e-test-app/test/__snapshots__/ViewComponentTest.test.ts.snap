@@ -47,7 +47,7 @@ exports[`ViewTests Views can adjust backface visibility 1`] = `
           "Left": 83,
           "Margin": "0,0,0,0",
           "Padding": "0,0,0,0",
-          "Text": "Front",
+          "Text": "Testing a failing snapshot test",
           "Top": 90,
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
