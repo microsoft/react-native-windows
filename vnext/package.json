@@ -13,7 +13,7 @@
   "scripts": {
     "build": "rnw-scripts build",
     "clean": "rnw-scripts clean",
-    "flow-check": "flow check",
+    "flow-check": "rnw-scripts flow-check",
     "lint:fix": "rnw-scripts lint:fix",
     "lint": "rnw-scripts lint",
     "start": "react-native start",
