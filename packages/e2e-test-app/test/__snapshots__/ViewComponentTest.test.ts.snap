@@ -115,8 +115,8 @@ exports[`ViewTests Views can adjust backface visibility 2 1`] = `
       "Visibility": "Visible",
       "Width": 50,
       "XamlType": "Microsoft.ReactNative.ViewPanel",
-      },
-      {
+    },
+    {
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "10,10,10,10",
@@ -133,8 +133,8 @@ exports[`ViewTests Views can adjust backface visibility 2 1`] = `
       "Visibility": "Visible",
       "Width": 50,
       "XamlType": "Microsoft.ReactNative.ViewPanel",
-      },
-      {
+    },
+    {
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "6,6,0,0",
@@ -151,8 +151,8 @@ exports[`ViewTests Views can adjust backface visibility 2 1`] = `
       "Visibility": "Visible",
       "Width": 50,
       "XamlType": "Microsoft.ReactNative.ViewPanel",
-      },
-      {
+    },
+    {
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "0,6,6,0",
@@ -167,10 +167,10 @@ exports[`ViewTests Views can adjust backface visibility 2 1`] = `
       "Top": 150,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      ""Width": 50,
+      "Width": 50,
       "XamlType": "Microsoft.ReactNative.ViewPanel",
-      },
-      {
+    },
+    {
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "6,0,0,6",
@@ -187,8 +187,8 @@ exports[`ViewTests Views can adjust backface visibility 2 1`] = `
       "Visibility": "Visible",
       "Width": 50,
       "XamlType": "Microsoft.ReactNative.ViewPanel",
-      },
-      {
+    },
+    {
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "0,0,6,6",
@@ -548,7 +548,6 @@ exports[`ViewTests Views can have overflow 1`] = `
           "Left": 6,
           "Margin": "0,0,0,0",
           "Padding": "0,0,0,0",
-          "Text": "5px margin and padding,",
           "Top": 6,
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
