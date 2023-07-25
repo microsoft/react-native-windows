@@ -622,6 +622,7 @@ exports[`ViewTests Views can have overflow 1`] = `
           "Width": 72,
           "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
           },
+          ],
         },
       ],
     },
