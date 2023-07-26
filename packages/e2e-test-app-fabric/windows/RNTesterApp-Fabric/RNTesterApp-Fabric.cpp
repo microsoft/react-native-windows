@@ -198,7 +198,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
         winrt::com_ptr<IRawElementProviderSimple> spReps;
         hwndHost.UiaProvider().as(spReps);
         LRESULT lResult = UiaReturnRawElementProvider(hWnd, wParam, lParam, spReps.get());
-        LRESULT lResult{};
         return lResult;
       }
     }
