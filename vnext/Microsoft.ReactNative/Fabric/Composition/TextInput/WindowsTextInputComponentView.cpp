@@ -519,6 +519,7 @@ void WindowsTextInputComponentView::handleCommand(std::string const &commandName
       auto begin = arg[2].asInt();
       auto end = arg[3].asInt();
       m_comingFromJS = true;
+
       UpdateText(text);
 
       SELCHANGE sc;
@@ -640,7 +641,7 @@ void WindowsTextInputComponentView::updateProps(
   if (oldTextInputProps.placeholder != newTextInputProps.placeholder) {
     auto stringPlaceholder = winrt::to_hstring(newTextInputProps.placeholder);
     m_placeholderText = winrt::to_string(stringPlaceholder);
-    UpdateText(m_placeholderText);
+    setPlaceholderText(m_placeholderText);
   }
 
   /*
@@ -772,7 +773,36 @@ void WindowsTextInputComponentView::UpdateText(const std::string &str) noexcept 
   winrt::check_hresult(m_textServices->TxSendMessage(EM_EXGETSEL, 0, reinterpret_cast<LPARAM>(&cr), &res));
 }
 
-void WindowsTextInputComponentView::setPlaceholderText(const std::string &str) noexcept {}
+void WindowsTextInputComponentView::setPlaceholderText(const std::string &str) noexcept {
+  SETTEXTEX stt;
+  memset(&stt, 0, sizeof(stt));
+  stt.flags = ST_DEFAULT;
+  stt.codepage = CP_UTF8;
+  LRESULT res;
+
+  CHARRANGE cr;
+  cr.cpMin = cr.cpMax = 0;
+  winrt::check_hresult(m_textServices->TxSendMessage(EM_EXGETSEL, 0, reinterpret_cast<LPARAM>(&cr), &res));
+
+  // try to set color
+  // Create a CHARFORMAT2 structure and set the color attribute
+  const COLORREF rgbRed = 0x808080;
+  CHARFORMAT2 charFormat;
+  ZeroMemory(&charFormat, sizeof(CHARFORMAT2));
+  charFormat.cbSize = sizeof(CHARFORMAT2);
+  charFormat.dwMask = CFM_COLOR;
+  charFormat.crTextColor = rgbRed;
+
+  // Set the character formatting for the selected text or at the caret position
+  m_textServices->TxSendMessage(EM_SETCHARFORMAT, 0, reinterpret_cast<LPARAM>(&charFormat), &res);
+
+  // end test
+
+  winrt::check_hresult(m_textServices->TxSendMessage(
+      EM_SETTEXTEX, reinterpret_cast<WPARAM>(&stt), reinterpret_cast<LPARAM>(str.c_str()), &res));
+
+  winrt::check_hresult(m_textServices->TxSendMessage(EM_EXGETSEL, 0, reinterpret_cast<LPARAM>(&cr), &res));
+}
 
 void WindowsTextInputComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
@@ -820,6 +850,7 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
   //    return;
   data.attributedString = getAttributedString();
 
+  // if the string is m_placholderText, don't notify the JS
   if (data.attributedString.getFragments().size()) {
     if (data.attributedString.getFragments()[0].string == m_placeholderText) {
       return;
@@ -827,6 +858,25 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
   }
 
   data.mostRecentEventCount = m_nativeEventCount;
+  // reset color and text if placeholderText is present
+  if (m_firstTextUpdate && !m_placeholderText.empty()) {
+    m_firstTextUpdate = false;
+    LRESULT res;
+    // set color back to black
+    const COLORREF rgbBlack = 0x000000;
+    CHARFORMAT2 charFormat;
+    ZeroMemory(&charFormat, sizeof(CHARFORMAT2));
+    charFormat.cbSize = sizeof(CHARFORMAT2);
+    charFormat.dwMask = CFM_COLOR;
+    charFormat.crTextColor = rgbBlack;
+
+    // Set the character formatting for the selected text or at the caret position
+    winrt::check_hresult(
+        m_textServices->TxSendMessage(EM_SETCHARFORMAT, 0, reinterpret_cast<LPARAM>(&charFormat), &res));
+    UpdateText("");
+    return;
+  }
+
   m_state->updateState(std::move(data));
 
   if (m_eventEmitter && !m_comingFromJS) {
@@ -976,7 +1026,10 @@ void WindowsTextInputComponentView::ensureDrawingSurface() noexcept {
         m_textServices->TxSendMessage(EM_SETEVENTMASK, 0, ENM_CHANGE | ENM_SELCHANGE | ENM_ENDCOMPOSITION, &lresult));
 
     DrawText();
-    UpdateText(m_placeholderText);
+    if (!m_placeholderText.empty()) {
+      setPlaceholderText(m_placeholderText);
+    }
+    m_firstTextUpdate = true;
 
     auto surfaceBrush = m_compContext.CreateSurfaceBrush(m_drawingSurface);
     surfaceBrush.HorizontalAlignmentRatio(0.f);
