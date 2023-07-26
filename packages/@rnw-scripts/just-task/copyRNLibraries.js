@@ -58,10 +58,11 @@ exports.copyTask = baseDir => {
     () => {
       const typesPath = path.resolve(baseDir, 'types/index.d.ts');
       types = fs.readFileSync(typesPath);
-      types = types + "\n// Export platform specific types\nexport * from '../Libraries/platform-types';\n"
+      types =
+        types +
+        "\n// Export platform specific types\nexport * from '../Libraries/platform-types';\n";
       fs.writeFileSync(typesPath, types);
-    }
-
+    },
   );
 };
 

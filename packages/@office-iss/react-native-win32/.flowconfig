@@ -84,7 +84,7 @@
 [libs]
 interface.js
 flow/
-flow-typed/
+../../../node_modules/.flow/flow-typed/
 
 [options]
 enums=true
