@@ -2,6 +2,7 @@ const React = require('react');
 import {create, act} from 'react-test-renderer';
 import {View} from 'react-native';
 const ViewExample = require('@react-native-windows/tester/js/examples/View/ViewExample');
+jest.useFakeTimers();
 
 type RNTesterExampleModule = {
   title: string;
