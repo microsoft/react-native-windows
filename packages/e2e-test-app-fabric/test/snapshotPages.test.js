@@ -48,11 +48,20 @@ describe('snapshotAllPages', () => {
     });
   }
 
-  for (const api of apiExamples) {
-    if (api === 'Transforms')
-      // disable until either transformExample uses units, or that isn't an error
+  for (const api of testerList.APIs) {
+    if (api.module.title === 'Transforms' || api.module.title === 'TurboModule' || api.module.title === 'Cxx TurboModule' || 
+    api.module.title === 'Appearance' || api.module.title === 'AccessibilityInfo' || api.module.title === 'Accessibility' || 
+    api.module.title === 'Invalid Props'){
+      // disable while these module have not been implemented yet
       continue;
+    }
 
-    test(api, () => {expect(true).toBe(true)});
+    test(api.module.title, () => {
+      for (const example of api.module.examples) {
+        const Example = example.render;
+        const tree = create(<Example />).toJSON();
+        expect(tree).toMatchSnapshot();
+      }
+    });
   }
 });
