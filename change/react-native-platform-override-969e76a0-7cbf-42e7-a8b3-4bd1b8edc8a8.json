@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Remove upstream react-native flow typings from repo",
-  "packageName": "react-native-platform-override",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
