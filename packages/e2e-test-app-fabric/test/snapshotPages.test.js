@@ -1,13 +1,8 @@
 const React = require('react');
 import {create, act} from 'react-test-renderer';
+import {View} from 'react-native';
 
-test('Control', () => {
-  const tree = create('View').toJSON();
-  expect(tree).toMatchSnapshot();
-});
-
-test('Control2', () => {
-  const Example = require('@react-native-windows/tester/js/examples-win/Switch/SwitchExample');
-  const tree = create(<Example/>).toJSON();
+test('Component Control', () => {
+  const tree = create(<View />).toJSON();
   expect(tree).toMatchSnapshot();
 });
