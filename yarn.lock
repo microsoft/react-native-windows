@@ -2370,10 +2370,10 @@
     jscodeshift "^0.14.0"
     nullthrows "^1.1.1"
 
-"@react-native/codegen@0.73.0-nightly-20230622-0201e51bb":
-  version "0.73.0-nightly-20230622-0201e51bb"
-  resolved "https://registry.yarnpkg.com/@react-native/codegen/-/codegen-0.73.0-nightly-20230622-0201e51bb.tgz#694c4ea1cee5cf74ea9661b1c27b8aa8128aba65"
-  integrity sha512-OqgBgDpbiQbL90S4Ixci2ovnwV2qqw4o9ShCKoc89vi8AFbDWnWkx1iSyIby6+dKpA3BYCLG1gL9Q/YyS39Z3Q==
+"@react-native/codegen@0.73.0-nightly-20230711-f396067cc":
+  version "0.73.0-nightly-20230711-f396067cc"
+  resolved "https://registry.yarnpkg.com/@react-native/codegen/-/codegen-0.73.0-nightly-20230711-f396067cc.tgz#04f4cf9c3a04476c09865308ae2be4b6ac6de95c"
+  integrity sha512-kUJtPl5Jk6gW9kyiGF9MMvgh4olOMYJWz1AWgQG9FtJrYfZqeujgOYKEqem10Rt06s/L7gvqzYeZi6ddAsAL9Q==
   dependencies:
     "@babel/parser" "^7.20.0"
     flow-parser "^0.206.0"
@@ -2404,10 +2404,10 @@
   resolved "https://registry.yarnpkg.com/@react-native/eslint-plugin/-/eslint-plugin-0.73.0.tgz#103f2e65c0bc0e145bf510ed75bf1d9b9022c13c"
   integrity sha512-xqEDfJ/3sWXzH8vTZt7OC0aBAV8y8fbX/uDTr8sbsoktiTW5yUY2dVCVVe+pBiPZMqnvDc6AJ+owie9Rl90pOA==
 
-"@react-native/gradle-plugin@0.73.0-nightly-20230704-9c0441b8a":
-  version "0.73.0-nightly-20230704-9c0441b8a"
-  resolved "https://registry.yarnpkg.com/@react-native/gradle-plugin/-/gradle-plugin-0.73.0-nightly-20230704-9c0441b8a.tgz#5e4e60aa0d650a98d0df67489b9baa0f728677ac"
-  integrity sha512-3hsH0qr4MCv4sKahfARxg9WIauk3Esx5+z9TLYiIaktBqZaFKWNIBrxw6iPYH84u9bUVciQnY2mDxg5XyoRlfw==
+"@react-native/gradle-plugin@0.73.0-nightly-20230717-eadbfb86c":
+  version "0.73.0-nightly-20230717-eadbfb86c"
+  resolved "https://registry.yarnpkg.com/@react-native/gradle-plugin/-/gradle-plugin-0.73.0-nightly-20230717-eadbfb86c.tgz#c1e54dbc1f61cdadc01ac4cd82ff4a5c92edc3f7"
+  integrity sha512-Zn6ETim3wuUxgr+zk1W7MB5KZJQK4wgFSuPCvWIXBm13cCHOj0pgPLbsFieWUIKPiI4oeBVAbbZTnRhQCS9ZHw==
 
 "@react-native/js-polyfills@0.73.0-nightly-20230622-0201e51bb":
   version "0.73.0-nightly-20230622-0201e51bb"
@@ -2439,10 +2439,10 @@
   resolved "https://registry.yarnpkg.com/@react-native/normalize-colors/-/normalize-colors-0.73.0-nightly-20230622-0201e51bb.tgz#9f31d54bedfdbba4462d832d43d9bf6049c21bed"
   integrity sha512-LK1kATRmHTztLeKn5dmTEH+w+OojEx6o1L5G77Wt8hjG4jTfG2/Mj+GcY7HsgwS0Ww3vKVcgjEmZq+ZCdqBVzQ==
 
-"@react-native/virtualized-lists@0.73.0-nightly-20230622-0201e51bb":
-  version "0.73.0-nightly-20230622-0201e51bb"
-  resolved "https://registry.yarnpkg.com/@react-native/virtualized-lists/-/virtualized-lists-0.73.0-nightly-20230622-0201e51bb.tgz#141f9a22624d50fc8ec581b3c5aaf303b21cacdb"
-  integrity sha512-rbpWmhTAyCKFSqLXRWYqbzLK9Y5Qjlo/QPSiWop9ELCq98q4GqOEqEGU4/f3mlPJ1i+oVNLH4ijVBhNdhWMBxw==
+"@react-native/virtualized-lists@0.73.0-nightly-20230714-4c944540f":
+  version "0.73.0-nightly-20230714-4c944540f"
+  resolved "https://registry.yarnpkg.com/@react-native/virtualized-lists/-/virtualized-lists-0.73.0-nightly-20230714-4c944540f.tgz#151a4fc6f09563d8511847bc795f43515cb22cba"
+  integrity sha512-rCz1x6ucEuDoJMdZvRT2Iz2TkJy+c/5FrvtRP2EOdt1pqKvqYqb2qJnJSOos6d7B506BeUuge8pviEtPn9Bs+A==
   dependencies:
     invariant "^2.2.4"
     nullthrows "^1.1.1"
@@ -5075,10 +5075,10 @@ depd@^1.1.2:
   resolved "https://registry.yarnpkg.com/depd/-/depd-1.1.2.tgz#9bcd52e14c097763e749b274c4346ed2e560b5a9"
   integrity sha1-m81S4UwJd2PnSbJ0xDRu0uVgtak=
 
-deprecated-react-native-prop-types@4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/deprecated-react-native-prop-types/-/deprecated-react-native-prop-types-4.1.0.tgz#8ed03a64c21b7fbdd2d000957b6838d4f38d2c66"
-  integrity sha512-WfepZHmRbbdTvhcolb8aOKEvQdcmTMn5tKLbqbXmkBvjFjRVWAYqsXk/DBsV8TZxws8SdGHLuHaJrHSQUPRdfw==
+deprecated-react-native-prop-types@4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/deprecated-react-native-prop-types/-/deprecated-react-native-prop-types-4.2.0.tgz#2d7f2a2bb3cf39fb873286a85eb04bc3e1f2e4d5"
+  integrity sha512-DjFQDPM2osEm9CEjxMSjAIGFf6D9kXiPZ8+EhHf4oU0PK2KNktp0Rv1kobdbOS0B9kQQ9QpqmmZQuZN7lI3P5g==
   dependencies:
     "@react-native/normalize-colors" "*"
     invariant "*"
@@ -6041,10 +6041,10 @@ flow-bin@^0.209.0:
   resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.209.0.tgz#616a002b94ef35e1b083add9a6d27dbe387bf4f0"
   integrity sha512-HRc6+bKE8AN23SnuKaxdUjcQcjaIp6pksrGJ6pltFO5tIEvZmPrbT99P7Yb3ybqwcKU/Ry8yfJbuW92Ed2V3nw==
 
-flow-bin@^0.211.0:
-  version "0.211.1"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.211.1.tgz#97f98acb695a1195f02e56ee9de78015666f2d7d"
-  integrity sha512-cydJtraQRY9p2+MX1pWISzgEUE5pDgoJVr3HLLQE4/MPaJ6tT94WvGsR2QorKoOBgriHTJJRzz+5ieDumSYhKw==
+flow-bin@^0.212.0:
+  version "0.212.0"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.212.0.tgz#6ec26d4a26cbfe1e4e02a85cce87a1b08903b804"
+  integrity sha512-RbKhEsMoorfWbKca/Zdd8j5mQFTbnP5I3Q5vzR2ReVfMQUb5RaV8R9ejKeZzoq/nDf6UreXRTNjnffYJVmn4Fw==
 
 flow-enums-runtime@^0.0.5:
   version "0.0.5"
@@ -10892,26 +10892,26 @@ react-native-xaml@^0.0.74:
     "@types/react-native" "*"
     typescript "^4.4.3"
 
-react-native@0.73.0-nightly-20230705-294b1b5a6:
-  version "0.73.0-nightly-20230705-294b1b5a6"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.73.0-nightly-20230705-294b1b5a6.tgz#c76c1fefd035e5b8cf0ed28f2858477710b5dcf6"
-  integrity sha512-UinQczVDld3WA/tr7axaW2XJPeXfcBYuXR91AktAQzw0TVDrjZdTgwcJj1fxFSVGetIHMLEfN44EA+zUH7JftQ==
+react-native@0.73.0-nightly-20230721-ccc50ddd2:
+  version "0.73.0-nightly-20230721-ccc50ddd2"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.73.0-nightly-20230721-ccc50ddd2.tgz#30c95c7615f393822ac262c17a72a2289ee3faa0"
+  integrity sha512-n32nGtgGAFsFfqxBqYqy1rSzvyQE5mFBI3i1vEzT7yV7lTNvr/fwniJIIjj5j0hHyip2TZWKXLVYDVk6UJN7VA==
   dependencies:
     "@jest/create-cache-key-function" "^29.2.1"
     "@react-native-community/cli" "12.0.0-alpha.6"
     "@react-native-community/cli-platform-android" "12.0.0-alpha.6"
     "@react-native-community/cli-platform-ios" "12.0.0-alpha.6"
     "@react-native/assets-registry" "0.73.0-nightly-20230622-0201e51bb"
-    "@react-native/codegen" "0.73.0-nightly-20230622-0201e51bb"
-    "@react-native/gradle-plugin" "0.73.0-nightly-20230704-9c0441b8a"
+    "@react-native/codegen" "0.73.0-nightly-20230711-f396067cc"
+    "@react-native/gradle-plugin" "0.73.0-nightly-20230717-eadbfb86c"
     "@react-native/js-polyfills" "0.73.0-nightly-20230622-0201e51bb"
     "@react-native/normalize-colors" "0.73.0-nightly-20230622-0201e51bb"
-    "@react-native/virtualized-lists" "0.73.0-nightly-20230622-0201e51bb"
+    "@react-native/virtualized-lists" "0.73.0-nightly-20230714-4c944540f"
     abort-controller "^3.0.0"
     anser "^1.4.9"
     ansi-regex "^5.0.0"
     base64-js "^1.5.1"
-    deprecated-react-native-prop-types "4.1.0"
+    deprecated-react-native-prop-types "4.2.0"
     event-target-shim "^5.0.1"
     flow-enums-runtime "^0.0.6"
     invariant "^2.2.4"

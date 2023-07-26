@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.73.0-nightly-20230705-294b1b5a6",
+  "baseVersion": "0.73.0-nightly-20230721-ccc50ddd2",
   "overrides": [
     {
       "type": "copy",
@@ -124,7 +124,7 @@
       "type": "copy",
       "directory": "js/examples/Experimental",
       "baseDirectory": "packages/rn-tester/js/examples/Experimental",
-      "baseHash": "997cbf3b7956c82811b3b057a97db76d023e6142",
+      "baseHash": "38088cc6670ab0792a19d5138b72f418f5c4fb79",
       "issue": 4054
     },
     {
@@ -383,7 +383,7 @@
       "type": "copy",
       "directory": "js/examples/TextInput",
       "baseDirectory": "packages/rn-tester/js/examples/TextInput",
-      "baseHash": "91b7620d56efbb81c5aaa4fd00d6caef22283426",
+      "baseHash": "6e61eec46d392c9e092476dfe235adef1801ff9b",
       "issue": 4054
     },
     {
@@ -425,7 +425,7 @@
       "type": "copy",
       "directory": "js/examples/TurboModule",
       "baseDirectory": "packages/rn-tester/js/examples/TurboModule",
-      "baseHash": "8a212be34269272d58c2892d3bc43f32d43ff697",
+      "baseHash": "be21981af80f207effaabe15b07b5e796696733c",
       "issue": 4054
     },
     {

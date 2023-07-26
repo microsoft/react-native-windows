@@ -26,6 +26,7 @@ const Platform = {
   // $FlowFixMe[unsafe-getters-setters]
   get constants(): {|
     isTesting: boolean,
+    isDisableAnimations?: boolean,
     reactNativeVersion: {|
       major: number,
       minor: number,
@@ -49,6 +50,11 @@ const Platform = {
       return this.constants.isTesting;
     }
     return false;
+  },
+  // $FlowFixMe[unsafe-getters-setters]
+  get isDisableAnimations(): boolean {
+    // $FlowFixMe[object-this-reference]
+    return this.constants.isDisableAnimations ?? this.isTesting;
   },
   // $FlowFixMe[unsafe-getters-setters]
   get isTV(): boolean {
