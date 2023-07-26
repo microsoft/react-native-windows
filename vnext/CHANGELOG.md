@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 24 Jul 2023 15:13:43 GMT and should not be manually modified.
+This log was last generated on Wed, 26 Jul 2023 07:30:55 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.26
+
+Wed, 26 Jul 2023 07:30:55 GMT
+
+### Patches
+
+- Attempt AddNetworkingHandler if HTTP module was not ready (#11926) (julio.rocha@microsoft.com)
 
 ## 0.71.25
 

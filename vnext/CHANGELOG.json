@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 26 Jul 2023 07:30:55 GMT",
+      "tag": "react-native-windows_v0.71.26",
+      "version": "0.71.26",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "75c04ff65c61062feaf0ddcf9568a967108ef291",
+            "comment": "Attempt AddNetworkingHandler if HTTP module was not ready (#11926)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Jul 2023 15:13:43 GMT",
       "tag": "react-native-windows_v0.71.25",
       "version": "0.71.25",
