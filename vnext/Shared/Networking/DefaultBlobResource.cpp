@@ -59,7 +59,7 @@ DefaultBlobResource::DefaultBlobResource(
 
   auto blobPersistor = std::make_shared<MemoryBlobPersistor>();
   auto contentHandler = std::make_shared<BlobWebSocketModuleContentHandler>(blobPersistor);
-  auto requestBodyHanlder = std::make_shared<BlobModuleRequestBodyHandler>(blobPersistor);
+  auto requestBodyHandler = std::make_shared<BlobModuleRequestBodyHandler>(blobPersistor);
   auto responseHandler = std::make_shared<BlobModuleResponseHandler>(blobPersistor);
 
   auto contentHandlerPropId =
@@ -71,7 +71,7 @@ DefaultBlobResource::DefaultBlobResource(
   propBag.Set(blobPersistorPropId, weak_ptr<IBlobPersistor>{blobPersistor});
 
   auto result = std::make_shared<DefaultBlobResource>(
-      blobPersistor, contentHandler, requestBodyHanlder, responseHandler, propBag);
+      blobPersistor, contentHandler, requestBodyHandler, responseHandler, propBag);
 
   return result;
 }
@@ -145,8 +145,13 @@ void DefaultBlobResource::AddNetworkingHandler() noexcept /*override*/ {
       httpHandler->AddRequestBodyHandler(m_requestBodyHandler);
       httpHandler->AddResponseHandler(m_responseHandler);
     }
+  } else {
+    // #11439 - The absence of HttpModule.Proxy may be caused by a module initialization race condition.
+    // Best-effort approach to set up the request/response handlers by exposing this interface to dependents
+    // (i.e. IHttpResource).
+    auto propId = msrn::ReactPropertyId<msrn::ReactNonAbiValue<weak_ptr<IBlobResource>>>{L"Blob.Resource"};
+    m_propertyBag.Set(propId, weak_ptr<IBlobResource>(shared_from_this()));
   }
-  // TODO: else emit error?
 }
 
 void DefaultBlobResource::AddWebSocketHandler(int64_t id) noexcept /*override*/ {

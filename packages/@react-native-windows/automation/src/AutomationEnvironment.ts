@@ -77,6 +77,7 @@ export default class AutomationEnvironment extends NodeEnvironment {
     }
 
     const baseOptions: RemoteOptions = {
+      hostname: '127.0.0.1',
       port: 4723,
       capabilities: {
         app: resolveAppName(passedOptions.app),

@@ -4,9 +4,9 @@
     "UAP,Version=v10.0.17763": {
       "Microsoft.JavaScript.Hermes": {
         "type": "Direct",
-        "requested": "[0.1.14, )",
-        "resolved": "0.1.14",
-        "contentHash": "YhW4fHxZ+ZIt3eZbFiMxhBzkZPISudZx9rEX+4RlB5EZWzpaKUAqfSUQJcapqdPXa4bw4dla9q9THyUqveBBRA=="
+        "requested": "[0.1.15, )",
+        "resolved": "0.1.15",
+        "contentHash": "My/u5RvxoymtwWokoweU6iVpuP79w271UjadcmSNqnQ9ESIv00tlVP4sHnIiN3t2lJNDeciyE1EVF4swGPECKQ=="
       },
       "Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Direct",

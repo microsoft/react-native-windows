@@ -283,7 +283,7 @@ class TouchableOpacity extends React.Component<Props, State> {
         }
         disabled={this.props.disabled}
         style={[this.props.style, {opacity: this.state.anim}]}
-        nativeID={this.props.nativeID}
+        nativeID={this.props.id ?? this.props.nativeID}
         testID={this.props.testID}
         onLayout={this.props.onLayout}
         nextFocusDown={this.props.nextFocusDown}

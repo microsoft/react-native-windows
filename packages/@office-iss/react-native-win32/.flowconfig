@@ -84,10 +84,13 @@
 [libs]
 interface.js
 flow/
-flow-typed/
+../../../node_modules/.flow/flow-typed/
 
 [options]
 enums=true
+conditional_type=true
+mapped_type=true
+type_guards=true
 
 emoji=true
 
@@ -137,4 +140,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.209.0
+^0.211.0

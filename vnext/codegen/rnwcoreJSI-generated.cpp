@@ -966,6 +966,48 @@ NativeFrameRateLoggerCxxSpecJSI::NativeFrameRateLoggerCxxSpecJSI(std::shared_ptr
   methodMap_["beginScroll"] = MethodMetadata {0, __hostFunction_NativeFrameRateLoggerCxxSpecJSI_beginScroll};
   methodMap_["endScroll"] = MethodMetadata {0, __hostFunction_NativeFrameRateLoggerCxxSpecJSI_endScroll};
 }
+static jsi::Value __hostFunction_NativeIntersectionObserverCxxSpecJSI_observe(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeIntersectionObserverCxxSpecJSI *>(&turboModule)->observe(
+    rt,
+    args[0].asObject(rt)
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeIntersectionObserverCxxSpecJSI_unobserve(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeIntersectionObserverCxxSpecJSI *>(&turboModule)->unobserve(
+    rt,
+    args[0].asNumber(),
+    jsi::Value(rt, args[1])
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeIntersectionObserverCxxSpecJSI_connect(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeIntersectionObserverCxxSpecJSI *>(&turboModule)->connect(
+    rt,
+    args[0].asObject(rt).asFunction(rt)
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeIntersectionObserverCxxSpecJSI_disconnect(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeIntersectionObserverCxxSpecJSI *>(&turboModule)->disconnect(
+    rt
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeIntersectionObserverCxxSpecJSI_takeRecords(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeIntersectionObserverCxxSpecJSI *>(&turboModule)->takeRecords(
+    rt
+  );
+}
+
+NativeIntersectionObserverCxxSpecJSI::NativeIntersectionObserverCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("NativeIntersectionObserverCxx", jsInvoker) {
+  methodMap_["observe"] = MethodMetadata {1, __hostFunction_NativeIntersectionObserverCxxSpecJSI_observe};
+  methodMap_["unobserve"] = MethodMetadata {2, __hostFunction_NativeIntersectionObserverCxxSpecJSI_unobserve};
+  methodMap_["connect"] = MethodMetadata {1, __hostFunction_NativeIntersectionObserverCxxSpecJSI_connect};
+  methodMap_["disconnect"] = MethodMetadata {0, __hostFunction_NativeIntersectionObserverCxxSpecJSI_disconnect};
+  methodMap_["takeRecords"] = MethodMetadata {0, __hostFunction_NativeIntersectionObserverCxxSpecJSI_takeRecords};
+}
 static jsi::Value __hostFunction_NativeIntentAndroidCxxSpecJSI_getInitialURL(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeIntentAndroidCxxSpecJSI *>(&turboModule)->getInitialURL(
     rt
@@ -1069,6 +1111,49 @@ NativeModalManagerCxxSpecJSI::NativeModalManagerCxxSpecJSI(std::shared_ptr<CallI
   : TurboModule("ModalManager", jsInvoker) {
   methodMap_["addListener"] = MethodMetadata {1, __hostFunction_NativeModalManagerCxxSpecJSI_addListener};
   methodMap_["removeListeners"] = MethodMetadata {1, __hostFunction_NativeModalManagerCxxSpecJSI_removeListeners};
+}
+static jsi::Value __hostFunction_NativeMutationObserverCxxSpecJSI_observe(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeMutationObserverCxxSpecJSI *>(&turboModule)->observe(
+    rt,
+    args[0].asObject(rt)
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeMutationObserverCxxSpecJSI_unobserve(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeMutationObserverCxxSpecJSI *>(&turboModule)->unobserve(
+    rt,
+    args[0].asNumber(),
+    jsi::Value(rt, args[1])
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeMutationObserverCxxSpecJSI_connect(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeMutationObserverCxxSpecJSI *>(&turboModule)->connect(
+    rt,
+    args[0].asObject(rt).asFunction(rt),
+    args[1].asObject(rt).asFunction(rt)
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeMutationObserverCxxSpecJSI_disconnect(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeMutationObserverCxxSpecJSI *>(&turboModule)->disconnect(
+    rt
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeMutationObserverCxxSpecJSI_takeRecords(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeMutationObserverCxxSpecJSI *>(&turboModule)->takeRecords(
+    rt
+  );
+}
+
+NativeMutationObserverCxxSpecJSI::NativeMutationObserverCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("NativeMutationObserverCxx", jsInvoker) {
+  methodMap_["observe"] = MethodMetadata {1, __hostFunction_NativeMutationObserverCxxSpecJSI_observe};
+  methodMap_["unobserve"] = MethodMetadata {2, __hostFunction_NativeMutationObserverCxxSpecJSI_unobserve};
+  methodMap_["connect"] = MethodMetadata {2, __hostFunction_NativeMutationObserverCxxSpecJSI_connect};
+  methodMap_["disconnect"] = MethodMetadata {0, __hostFunction_NativeMutationObserverCxxSpecJSI_disconnect};
+  methodMap_["takeRecords"] = MethodMetadata {0, __hostFunction_NativeMutationObserverCxxSpecJSI_takeRecords};
 }
 static jsi::Value __hostFunction_NativeNetworkingAndroidCxxSpecJSI_sendRequest(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeNetworkingAndroidCxxSpecJSI *>(&turboModule)->sendRequest(
