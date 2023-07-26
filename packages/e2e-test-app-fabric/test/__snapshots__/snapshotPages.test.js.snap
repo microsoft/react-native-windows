@@ -6749,7 +6749,9 @@ exports[`snapshotAllPages Border 16`] = `
       },
       {
         "borderColor": {
-          "windowsbrush": "SystemAccentColorDark1",
+          "windowsbrush": [
+            "SystemAccentColorDark1",
+          ],
         },
         "borderWidth": 10,
       },
@@ -6815,11 +6817,15 @@ exports[`snapshotAllPages Button 1`] = `
     [
       {
         "backgroundColor": {
-          "windowsbrush": "ButtonBackground",
+          "windowsbrush": [
+            "ButtonBackground",
+          ],
         },
         "borderBottomWidth": 1.5,
         "borderColor": {
-          "windowsbrush": "ButtonBorderBrush",
+          "windowsbrush": [
+            "ButtonBorderBrush",
+          ],
         },
         "borderRadius": 3,
         "borderWidth": 1,
@@ -6839,7 +6845,9 @@ exports[`snapshotAllPages Button 1`] = `
           [
             {
               "color": {
-                "windowsbrush": "ButtonForeground",
+                "windowsbrush": [
+                  "ButtonForeground",
+                ],
               },
               "fontSize": 14,
               "fontWeight": "400",
@@ -6904,11 +6912,15 @@ exports[`snapshotAllPages Button 2`] = `
       [
         {
           "backgroundColor": {
-            "windowsbrush": "ButtonBackground",
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
           },
           "borderBottomWidth": 1.5,
           "borderColor": {
-            "windowsbrush": "ButtonBorderBrush",
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
           },
           "borderRadius": 3,
           "borderWidth": 1,
@@ -6927,7 +6939,9 @@ exports[`snapshotAllPages Button 2`] = `
           [
             {
               "color": {
-                "windowsbrush": "ButtonForeground",
+                "windowsbrush": [
+                  "ButtonForeground",
+                ],
               },
               "fontSize": 14,
               "fontWeight": "400",
@@ -7000,11 +7014,15 @@ exports[`snapshotAllPages Button 3`] = `
         [
           {
             "backgroundColor": {
-              "windowsbrush": "ButtonBackground",
+              "windowsbrush": [
+                "ButtonBackground",
+              ],
             },
             "borderBottomWidth": 1.5,
             "borderColor": {
-              "windowsbrush": "ButtonBorderBrush",
+              "windowsbrush": [
+                "ButtonBorderBrush",
+              ],
             },
             "borderRadius": 3,
             "borderWidth": 1,
@@ -7023,7 +7041,9 @@ exports[`snapshotAllPages Button 3`] = `
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
@@ -7085,11 +7105,15 @@ exports[`snapshotAllPages Button 3`] = `
         [
           {
             "backgroundColor": {
-              "windowsbrush": "ButtonBackground",
+              "windowsbrush": [
+                "ButtonBackground",
+              ],
             },
             "borderBottomWidth": 1.5,
             "borderColor": {
-              "windowsbrush": "ButtonBorderBrush",
+              "windowsbrush": [
+                "ButtonBorderBrush",
+              ],
             },
             "borderRadius": 3,
             "borderWidth": 1,
@@ -7108,7 +7132,9 @@ exports[`snapshotAllPages Button 3`] = `
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
@@ -7182,11 +7208,15 @@ exports[`snapshotAllPages Button 4`] = `
         [
           {
             "backgroundColor": {
-              "windowsbrush": "ButtonBackground",
+              "windowsbrush": [
+                "ButtonBackground",
+              ],
             },
             "borderBottomWidth": 1.5,
             "borderColor": {
-              "windowsbrush": "ButtonBorderBrush",
+              "windowsbrush": [
+                "ButtonBorderBrush",
+              ],
             },
             "borderRadius": 3,
             "borderWidth": 1,
@@ -7205,7 +7235,9 @@ exports[`snapshotAllPages Button 4`] = `
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
@@ -7267,11 +7299,15 @@ exports[`snapshotAllPages Button 4`] = `
         [
           {
             "backgroundColor": {
-              "windowsbrush": "ButtonBackground",
+              "windowsbrush": [
+                "ButtonBackground",
+              ],
             },
             "borderBottomWidth": 1.5,
             "borderColor": {
-              "windowsbrush": "ButtonBorderBrush",
+              "windowsbrush": [
+                "ButtonBorderBrush",
+              ],
             },
             "borderRadius": 3,
             "borderWidth": 1,
@@ -7290,7 +7326,9 @@ exports[`snapshotAllPages Button 4`] = `
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
@@ -7352,11 +7390,15 @@ exports[`snapshotAllPages Button 4`] = `
         [
           {
             "backgroundColor": {
-              "windowsbrush": "ButtonBackground",
+              "windowsbrush": [
+                "ButtonBackground",
+              ],
             },
             "borderBottomWidth": 1.5,
             "borderColor": {
-              "windowsbrush": "ButtonBorderBrush",
+              "windowsbrush": [
+                "ButtonBorderBrush",
+              ],
             },
             "borderRadius": 3,
             "borderWidth": 1,
@@ -7375,7 +7417,9 @@ exports[`snapshotAllPages Button 4`] = `
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
@@ -7442,11 +7486,15 @@ exports[`snapshotAllPages Button 5`] = `
       [
         {
           "backgroundColor": {
-            "windowsbrush": "ButtonBackground",
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
           },
           "borderBottomWidth": 1.5,
           "borderColor": {
-            "windowsbrush": "ButtonBorderBrush",
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
           },
           "borderRadius": 3,
           "borderWidth": 1,
@@ -7456,10 +7504,14 @@ exports[`snapshotAllPages Button 5`] = `
         },
         {
           "backgroundColor": {
-            "windowsbrush": "ButtonBackgroundDisabled",
+            "windowsbrush": [
+              "ButtonBackgroundDisabled",
+            ],
           },
           "borderColor": {
-            "windowsbrush": "ButtonBorderBrushDisabled",
+            "windowsbrush": [
+              "ButtonBorderBrushDisabled",
+            ],
           },
         },
       ]
@@ -7474,7 +7526,9 @@ exports[`snapshotAllPages Button 5`] = `
           [
             {
               "color": {
-                "windowsbrush": "ButtonForeground",
+                "windowsbrush": [
+                  "ButtonForeground",
+                ],
               },
               "fontSize": 14,
               "fontWeight": "400",
@@ -7483,7 +7537,9 @@ exports[`snapshotAllPages Button 5`] = `
             },
             {
               "color": {
-                "windowsbrush": "ButtonForegroundDisabled",
+                "windowsbrush": [
+                  "ButtonForegroundDisabled",
+                ],
               },
             },
           ]
@@ -7544,11 +7600,15 @@ exports[`snapshotAllPages Button 6`] = `
       [
         {
           "backgroundColor": {
-            "windowsbrush": "ButtonBackground",
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
           },
           "borderBottomWidth": 1.5,
           "borderColor": {
-            "windowsbrush": "ButtonBorderBrush",
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
           },
           "borderRadius": 3,
           "borderWidth": 1,
@@ -7567,7 +7627,9 @@ exports[`snapshotAllPages Button 6`] = `
           [
             {
               "color": {
-                "windowsbrush": "ButtonForeground",
+                "windowsbrush": [
+                  "ButtonForeground",
+                ],
               },
               "fontSize": 14,
               "fontWeight": "400",
@@ -7633,11 +7695,15 @@ exports[`snapshotAllPages Button 7`] = `
       [
         {
           "backgroundColor": {
-            "windowsbrush": "ButtonBackground",
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
           },
           "borderBottomWidth": 1.5,
           "borderColor": {
-            "windowsbrush": "ButtonBorderBrush",
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
           },
           "borderRadius": 3,
           "borderWidth": 1,
@@ -7647,10 +7713,14 @@ exports[`snapshotAllPages Button 7`] = `
         },
         {
           "backgroundColor": {
-            "windowsbrush": "ButtonBackgroundDisabled",
+            "windowsbrush": [
+              "ButtonBackgroundDisabled",
+            ],
           },
           "borderColor": {
-            "windowsbrush": "ButtonBorderBrushDisabled",
+            "windowsbrush": [
+              "ButtonBorderBrushDisabled",
+            ],
           },
         },
       ]
@@ -7665,7 +7735,9 @@ exports[`snapshotAllPages Button 7`] = `
           [
             {
               "color": {
-                "windowsbrush": "ButtonForeground",
+                "windowsbrush": [
+                  "ButtonForeground",
+                ],
               },
               "fontSize": 14,
               "fontWeight": "400",
@@ -7674,7 +7746,9 @@ exports[`snapshotAllPages Button 7`] = `
             },
             {
               "color": {
-                "windowsbrush": "ButtonForegroundDisabled",
+                "windowsbrush": [
+                  "ButtonForegroundDisabled",
+                ],
               },
             },
           ]
@@ -7728,11 +7802,15 @@ exports[`snapshotAllPages Button 8`] = `
     [
       {
         "backgroundColor": {
-          "windowsbrush": "ButtonBackground",
+          "windowsbrush": [
+            "ButtonBackground",
+          ],
         },
         "borderBottomWidth": 1.5,
         "borderColor": {
-          "windowsbrush": "ButtonBorderBrush",
+          "windowsbrush": [
+            "ButtonBorderBrush",
+          ],
         },
         "borderRadius": 3,
         "borderWidth": 1,
@@ -7752,7 +7830,9 @@ exports[`snapshotAllPages Button 8`] = `
           [
             {
               "color": {
-                "windowsbrush": "ButtonForeground",
+                "windowsbrush": [
+                  "ButtonForeground",
+                ],
               },
               "fontSize": 14,
               "fontWeight": "400",
@@ -7812,11 +7892,15 @@ exports[`snapshotAllPages Button 9`] = `
       [
         {
           "backgroundColor": {
-            "windowsbrush": "ButtonBackground",
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
           },
           "borderBottomWidth": 1.5,
           "borderColor": {
-            "windowsbrush": "ButtonBorderBrush",
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
           },
           "borderRadius": 3,
           "borderWidth": 1,
@@ -7836,7 +7920,9 @@ exports[`snapshotAllPages Button 9`] = `
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
@@ -7890,11 +7976,15 @@ exports[`snapshotAllPages Button 9`] = `
       [
         {
           "backgroundColor": {
-            "windowsbrush": "ButtonBackground",
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
           },
           "borderBottomWidth": 1.5,
           "borderColor": {
-            "windowsbrush": "ButtonBorderBrush",
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
           },
           "borderRadius": 3,
           "borderWidth": 1,
@@ -7914,7 +8004,9 @@ exports[`snapshotAllPages Button 9`] = `
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
@@ -7968,11 +8060,15 @@ exports[`snapshotAllPages Button 9`] = `
       [
         {
           "backgroundColor": {
-            "windowsbrush": "ButtonBackground",
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
           },
           "borderBottomWidth": 1.5,
           "borderColor": {
-            "windowsbrush": "ButtonBorderBrush",
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
           },
           "borderRadius": 3,
           "borderWidth": 1,
@@ -7992,7 +8088,9 @@ exports[`snapshotAllPages Button 9`] = `
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
@@ -8046,11 +8144,15 @@ exports[`snapshotAllPages Button 9`] = `
       [
         {
           "backgroundColor": {
-            "windowsbrush": "ButtonBackground",
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
           },
           "borderBottomWidth": 1.5,
           "borderColor": {
-            "windowsbrush": "ButtonBorderBrush",
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
           },
           "borderRadius": 3,
           "borderWidth": 1,
@@ -8070,7 +8172,9 @@ exports[`snapshotAllPages Button 9`] = `
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
@@ -8802,11 +8906,15 @@ exports[`snapshotAllPages Crash 1`] = `
     [
       {
         "backgroundColor": {
-          "windowsbrush": "ButtonBackground",
+          "windowsbrush": [
+            "ButtonBackground",
+          ],
         },
         "borderBottomWidth": 1.5,
         "borderColor": {
-          "windowsbrush": "ButtonBorderBrush",
+          "windowsbrush": [
+            "ButtonBorderBrush",
+          ],
         },
         "borderRadius": 3,
         "borderWidth": 1,
@@ -8825,7 +8933,9 @@ exports[`snapshotAllPages Crash 1`] = `
           [
             {
               "color": {
-                "windowsbrush": "ButtonForeground",
+                "windowsbrush": [
+                  "ButtonForeground",
+                ],
               },
               "fontSize": 14,
               "fontWeight": "400",
@@ -8881,11 +8991,15 @@ exports[`snapshotAllPages DevSettings 1`] = `
     [
       {
         "backgroundColor": {
-          "windowsbrush": "ButtonBackground",
+          "windowsbrush": [
+            "ButtonBackground",
+          ],
         },
         "borderBottomWidth": 1.5,
         "borderColor": {
-          "windowsbrush": "ButtonBorderBrush",
+          "windowsbrush": [
+            "ButtonBorderBrush",
+          ],
         },
         "borderRadius": 3,
         "borderWidth": 1,
@@ -8904,7 +9018,9 @@ exports[`snapshotAllPages DevSettings 1`] = `
           [
             {
               "color": {
-                "windowsbrush": "ButtonForeground",
+                "windowsbrush": [
+                  "ButtonForeground",
+                ],
               },
               "fontSize": 14,
               "fontWeight": "400",
@@ -8960,11 +9076,15 @@ exports[`snapshotAllPages DevSettings 2`] = `
     [
       {
         "backgroundColor": {
-          "windowsbrush": "ButtonBackground",
+          "windowsbrush": [
+            "ButtonBackground",
+          ],
         },
         "borderBottomWidth": 1.5,
         "borderColor": {
-          "windowsbrush": "ButtonBorderBrush",
+          "windowsbrush": [
+            "ButtonBorderBrush",
+          ],
         },
         "borderRadius": 3,
         "borderWidth": 1,
@@ -8983,7 +9103,9 @@ exports[`snapshotAllPages DevSettings 2`] = `
           [
             {
               "color": {
-                "windowsbrush": "ButtonForeground",
+                "windowsbrush": [
+                  "ButtonForeground",
+                ],
               },
               "fontSize": 14,
               "fontWeight": "400",
@@ -9226,11 +9348,15 @@ exports[`snapshotAllPages Fast Path Texts 4`] = `
       [
         {
           "backgroundColor": {
-            "windowsbrush": "ButtonBackground",
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
           },
           "borderBottomWidth": 1.5,
           "borderColor": {
-            "windowsbrush": "ButtonBorderBrush",
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
           },
           "borderRadius": 3,
           "borderWidth": 1,
@@ -9249,7 +9375,9 @@ exports[`snapshotAllPages Fast Path Texts 4`] = `
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
@@ -9310,11 +9438,15 @@ exports[`snapshotAllPages Fast Path Texts 5`] = `
       [
         {
           "backgroundColor": {
-            "windowsbrush": "ButtonBackground",
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
           },
           "borderBottomWidth": 1.5,
           "borderColor": {
-            "windowsbrush": "ButtonBorderBrush",
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
           },
           "borderRadius": 3,
           "borderWidth": 1,
@@ -9333,7 +9465,9 @@ exports[`snapshotAllPages Fast Path Texts 5`] = `
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
@@ -9413,11 +9547,15 @@ exports[`snapshotAllPages Fast Path Texts 7`] = `
       [
         {
           "backgroundColor": {
-            "windowsbrush": "ButtonBackground",
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
           },
           "borderBottomWidth": 1.5,
           "borderColor": {
-            "windowsbrush": "ButtonBorderBrush",
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
           },
           "borderRadius": 3,
           "borderWidth": 1,
@@ -9436,7 +9574,9 @@ exports[`snapshotAllPages Fast Path Texts 7`] = `
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
@@ -11658,11 +11798,15 @@ exports[`snapshotAllPages FlatList 2`] = `
         [
           {
             "backgroundColor": {
-              "windowsbrush": "ButtonBackground",
+              "windowsbrush": [
+                "ButtonBackground",
+              ],
             },
             "borderBottomWidth": 1.5,
             "borderColor": {
-              "windowsbrush": "ButtonBorderBrush",
+              "windowsbrush": [
+                "ButtonBorderBrush",
+              ],
             },
             "borderRadius": 3,
             "borderWidth": 1,
@@ -11682,7 +11826,9 @@ exports[`snapshotAllPages FlatList 2`] = `
               [
                 {
                   "color": {
-                    "windowsbrush": "ButtonForeground",
+                    "windowsbrush": [
+                      "ButtonForeground",
+                    ],
                   },
                   "fontSize": 14,
                   "fontWeight": "400",
@@ -12204,11 +12350,15 @@ exports[`snapshotAllPages FlatList 3`] = `
         [
           {
             "backgroundColor": {
-              "windowsbrush": "ButtonBackground",
+              "windowsbrush": [
+                "ButtonBackground",
+              ],
             },
             "borderBottomWidth": 1.5,
             "borderColor": {
-              "windowsbrush": "ButtonBorderBrush",
+              "windowsbrush": [
+                "ButtonBorderBrush",
+              ],
             },
             "borderRadius": 3,
             "borderWidth": 1,
@@ -12228,7 +12378,9 @@ exports[`snapshotAllPages FlatList 3`] = `
               [
                 {
                   "color": {
-                    "windowsbrush": "ButtonForeground",
+                    "windowsbrush": [
+                      "ButtonForeground",
+                    ],
                   },
                   "fontSize": 14,
                   "fontWeight": "400",
@@ -13048,11 +13200,15 @@ exports[`snapshotAllPages FlatList 4`] = `
           [
             {
               "backgroundColor": {
-                "windowsbrush": "ButtonBackground",
+                "windowsbrush": [
+                  "ButtonBackground",
+                ],
               },
               "borderBottomWidth": 1.5,
               "borderColor": {
-                "windowsbrush": "ButtonBorderBrush",
+                "windowsbrush": [
+                  "ButtonBorderBrush",
+                ],
               },
               "borderRadius": 3,
               "borderWidth": 1,
@@ -13072,7 +13228,9 @@ exports[`snapshotAllPages FlatList 4`] = `
                 [
                   {
                     "color": {
-                      "windowsbrush": "ButtonForeground",
+                      "windowsbrush": [
+                        "ButtonForeground",
+                      ],
                     },
                     "fontSize": 14,
                     "fontWeight": "400",
@@ -13871,11 +14029,15 @@ exports[`snapshotAllPages FlatList 5`] = `
         [
           {
             "backgroundColor": {
-              "windowsbrush": "ButtonBackground",
+              "windowsbrush": [
+                "ButtonBackground",
+              ],
             },
             "borderBottomWidth": 1.5,
             "borderColor": {
-              "windowsbrush": "ButtonBorderBrush",
+              "windowsbrush": [
+                "ButtonBorderBrush",
+              ],
             },
             "borderRadius": 3,
             "borderWidth": 1,
@@ -13895,7 +14057,9 @@ exports[`snapshotAllPages FlatList 5`] = `
               [
                 {
                   "color": {
-                    "windowsbrush": "ButtonForeground",
+                    "windowsbrush": [
+                      "ButtonForeground",
+                    ],
                   },
                   "fontSize": 14,
                   "fontWeight": "400",
@@ -25126,11 +25290,15 @@ exports[`snapshotAllPages Flyout 1`] = `
         [
           {
             "backgroundColor": {
-              "windowsbrush": "ButtonBackground",
+              "windowsbrush": [
+                "ButtonBackground",
+              ],
             },
             "borderBottomWidth": 1.5,
             "borderColor": {
-              "windowsbrush": "ButtonBorderBrush",
+              "windowsbrush": [
+                "ButtonBorderBrush",
+              ],
             },
             "borderRadius": 3,
             "borderWidth": 1,
@@ -25149,7 +25317,9 @@ exports[`snapshotAllPages Flyout 1`] = `
               [
                 {
                   "color": {
-                    "windowsbrush": "ButtonForeground",
+                    "windowsbrush": [
+                      "ButtonForeground",
+                    ],
                   },
                   "fontSize": 14,
                   "fontWeight": "400",
@@ -25212,11 +25382,15 @@ exports[`snapshotAllPages Flyout 1`] = `
         [
           {
             "backgroundColor": {
-              "windowsbrush": "ButtonBackground",
+              "windowsbrush": [
+                "ButtonBackground",
+              ],
             },
             "borderBottomWidth": 1.5,
             "borderColor": {
-              "windowsbrush": "ButtonBorderBrush",
+              "windowsbrush": [
+                "ButtonBorderBrush",
+              ],
             },
             "borderRadius": 3,
             "borderWidth": 1,
@@ -25235,7 +25409,9 @@ exports[`snapshotAllPages Flyout 1`] = `
               [
                 {
                   "color": {
-                    "windowsbrush": "ButtonForeground",
+                    "windowsbrush": [
+                      "ButtonForeground",
+                    ],
                   },
                   "fontSize": 14,
                   "fontWeight": "400",
@@ -25298,11 +25474,15 @@ exports[`snapshotAllPages Flyout 1`] = `
         [
           {
             "backgroundColor": {
-              "windowsbrush": "ButtonBackground",
+              "windowsbrush": [
+                "ButtonBackground",
+              ],
             },
             "borderBottomWidth": 1.5,
             "borderColor": {
-              "windowsbrush": "ButtonBorderBrush",
+              "windowsbrush": [
+                "ButtonBorderBrush",
+              ],
             },
             "borderRadius": 3,
             "borderWidth": 1,
@@ -25321,7 +25501,9 @@ exports[`snapshotAllPages Flyout 1`] = `
               [
                 {
                   "color": {
-                    "windowsbrush": "ButtonForeground",
+                    "windowsbrush": [
+                      "ButtonForeground",
+                    ],
                   },
                   "fontSize": 14,
                   "fontWeight": "400",
@@ -28172,11 +28354,15 @@ exports[`snapshotAllPages LegacyControlStyleTest 1`] = `
       [
         {
           "backgroundColor": {
-            "windowsbrush": "ButtonBackground",
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
           },
           "borderBottomWidth": 1.5,
           "borderColor": {
-            "windowsbrush": "ButtonBorderBrush",
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
           },
           "borderRadius": 3,
           "borderWidth": 1,
@@ -28196,7 +28382,9 @@ exports[`snapshotAllPages LegacyControlStyleTest 1`] = `
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
@@ -28281,11 +28469,15 @@ exports[`snapshotAllPages LegacyImageTest 1`] = `
       [
         {
           "backgroundColor": {
-            "windowsbrush": "ButtonBackground",
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
           },
           "borderBottomWidth": 1.5,
           "borderColor": {
-            "windowsbrush": "ButtonBorderBrush",
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
           },
           "borderRadius": 3,
           "borderWidth": 1,
@@ -28305,7 +28497,9 @@ exports[`snapshotAllPages LegacyImageTest 1`] = `
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
@@ -28358,11 +28552,15 @@ exports[`snapshotAllPages LegacyImageTest 1`] = `
       [
         {
           "backgroundColor": {
-            "windowsbrush": "ButtonBackground",
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
           },
           "borderBottomWidth": 1.5,
           "borderColor": {
-            "windowsbrush": "ButtonBorderBrush",
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
           },
           "borderRadius": 3,
           "borderWidth": 1,
@@ -28382,7 +28580,9 @@ exports[`snapshotAllPages LegacyImageTest 1`] = `
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
@@ -28471,11 +28671,15 @@ exports[`snapshotAllPages LegacyLoginTest 1`] = `
       [
         {
           "backgroundColor": {
-            "windowsbrush": "ButtonBackground",
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
           },
           "borderBottomWidth": 1.5,
           "borderColor": {
-            "windowsbrush": "ButtonBorderBrush",
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
           },
           "borderRadius": 3,
           "borderWidth": 1,
@@ -28495,7 +28699,9 @@ exports[`snapshotAllPages LegacyLoginTest 1`] = `
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
@@ -28644,11 +28850,15 @@ exports[`snapshotAllPages LegacySelectableTextTest 1`] = `
       [
         {
           "backgroundColor": {
-            "windowsbrush": "ButtonBackground",
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
           },
           "borderBottomWidth": 1.5,
           "borderColor": {
-            "windowsbrush": "ButtonBorderBrush",
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
           },
           "borderRadius": 3,
           "borderWidth": 1,
@@ -28668,7 +28878,9 @@ exports[`snapshotAllPages LegacySelectableTextTest 1`] = `
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
@@ -28721,11 +28933,15 @@ exports[`snapshotAllPages LegacySelectableTextTest 1`] = `
       [
         {
           "backgroundColor": {
-            "windowsbrush": "ButtonBackground",
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
           },
           "borderBottomWidth": 1.5,
           "borderColor": {
-            "windowsbrush": "ButtonBorderBrush",
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
           },
           "borderRadius": 3,
           "borderWidth": 1,
@@ -28745,7 +28961,9 @@ exports[`snapshotAllPages LegacySelectableTextTest 1`] = `
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
@@ -29069,11 +29287,15 @@ or click here.
       [
         {
           "backgroundColor": {
-            "windowsbrush": "ButtonBackground",
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
           },
           "borderBottomWidth": 1.5,
           "borderColor": {
-            "windowsbrush": "ButtonBorderBrush",
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
           },
           "borderRadius": 3,
           "borderWidth": 1,
@@ -29093,7 +29315,9 @@ or click here.
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
@@ -29569,11 +29793,15 @@ exports[`snapshotAllPages Linking 2`] = `
     [
       {
         "backgroundColor": {
-          "windowsbrush": "ButtonBackground",
+          "windowsbrush": [
+            "ButtonBackground",
+          ],
         },
         "borderBottomWidth": 1.5,
         "borderColor": {
-          "windowsbrush": "ButtonBorderBrush",
+          "windowsbrush": [
+            "ButtonBorderBrush",
+          ],
         },
         "borderRadius": 3,
         "borderWidth": 1,
@@ -29592,7 +29820,9 @@ exports[`snapshotAllPages Linking 2`] = `
           [
             {
               "color": {
-                "windowsbrush": "ButtonForeground",
+                "windowsbrush": [
+                  "ButtonForeground",
+                ],
               },
               "fontSize": 14,
               "fontWeight": "400",
@@ -29687,11 +29917,15 @@ exports[`snapshotAllPages Mouse Click Events 1`] = `
       [
         {
           "backgroundColor": {
-            "windowsbrush": "ButtonBackground",
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
           },
           "borderBottomWidth": 1.5,
           "borderColor": {
-            "windowsbrush": "ButtonBorderBrush",
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
           },
           "borderRadius": 3,
           "borderWidth": 1,
@@ -29711,7 +29945,9 @@ exports[`snapshotAllPages Mouse Click Events 1`] = `
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
@@ -29784,11 +30020,15 @@ exports[`snapshotAllPages Mouse Click Events 1`] = `
       [
         {
           "backgroundColor": {
-            "windowsbrush": "ButtonBackground",
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
           },
           "borderBottomWidth": 1.5,
           "borderColor": {
-            "windowsbrush": "ButtonBorderBrush",
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
           },
           "borderRadius": 3,
           "borderWidth": 1,
@@ -29808,7 +30048,9 @@ exports[`snapshotAllPages Mouse Click Events 1`] = `
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
@@ -31294,11 +31536,15 @@ exports[`snapshotAllPages Performance API Examples 1`] = `
           [
             {
               "backgroundColor": {
-                "windowsbrush": "ButtonBackground",
+                "windowsbrush": [
+                  "ButtonBackground",
+                ],
               },
               "borderBottomWidth": 1.5,
               "borderColor": {
-                "windowsbrush": "ButtonBorderBrush",
+                "windowsbrush": [
+                  "ButtonBorderBrush",
+                ],
               },
               "borderRadius": 3,
               "borderWidth": 1,
@@ -31317,7 +31563,9 @@ exports[`snapshotAllPages Performance API Examples 1`] = `
                 [
                   {
                     "color": {
-                      "windowsbrush": "ButtonForeground",
+                      "windowsbrush": [
+                        "ButtonForeground",
+                      ],
                     },
                     "fontSize": 14,
                     "fontWeight": "400",
@@ -31449,11 +31697,15 @@ exports[`snapshotAllPages Performance API Examples 2`] = `
           [
             {
               "backgroundColor": {
-                "windowsbrush": "ButtonBackground",
+                "windowsbrush": [
+                  "ButtonBackground",
+                ],
               },
               "borderBottomWidth": 1.5,
               "borderColor": {
-                "windowsbrush": "ButtonBorderBrush",
+                "windowsbrush": [
+                  "ButtonBorderBrush",
+                ],
               },
               "borderRadius": 3,
               "borderWidth": 1,
@@ -31472,7 +31724,9 @@ exports[`snapshotAllPages Performance API Examples 2`] = `
                 [
                   {
                     "color": {
-                      "windowsbrush": "ButtonForeground",
+                      "windowsbrush": [
+                        "ButtonForeground",
+                      ],
                     },
                     "fontSize": 14,
                     "fontWeight": "400",
@@ -32969,11 +33223,15 @@ exports[`snapshotAllPages Popup 1`] = `
         [
           {
             "backgroundColor": {
-              "windowsbrush": "ButtonBackground",
+              "windowsbrush": [
+                "ButtonBackground",
+              ],
             },
             "borderBottomWidth": 1.5,
             "borderColor": {
-              "windowsbrush": "ButtonBorderBrush",
+              "windowsbrush": [
+                "ButtonBorderBrush",
+              ],
             },
             "borderRadius": 3,
             "borderWidth": 1,
@@ -32992,7 +33250,9 @@ exports[`snapshotAllPages Popup 1`] = `
               [
                 {
                   "color": {
-                    "windowsbrush": "ButtonForeground",
+                    "windowsbrush": [
+                      "ButtonForeground",
+                    ],
                   },
                   "fontSize": 14,
                   "fontWeight": "400",
@@ -33059,11 +33319,15 @@ exports[`snapshotAllPages Popup 2`] = `
       [
         {
           "backgroundColor": {
-            "windowsbrush": "ButtonBackground",
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
           },
           "borderBottomWidth": 1.5,
           "borderColor": {
-            "windowsbrush": "ButtonBorderBrush",
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
           },
           "borderRadius": 3,
           "borderWidth": 1,
@@ -33082,7 +33346,9 @@ exports[`snapshotAllPages Popup 2`] = `
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
@@ -33148,11 +33414,15 @@ exports[`snapshotAllPages Popup 3`] = `
       [
         {
           "backgroundColor": {
-            "windowsbrush": "ButtonBackground",
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
           },
           "borderBottomWidth": 1.5,
           "borderColor": {
-            "windowsbrush": "ButtonBorderBrush",
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
           },
           "borderRadius": 3,
           "borderWidth": 1,
@@ -33171,7 +33441,9 @@ exports[`snapshotAllPages Popup 3`] = `
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
@@ -35781,11 +36053,15 @@ exports[`snapshotAllPages RTLExample 2`] = `
         [
           {
             "backgroundColor": {
-              "windowsbrush": "ButtonBackground",
+              "windowsbrush": [
+                "ButtonBackground",
+              ],
             },
             "borderBottomWidth": 1.5,
             "borderColor": {
-              "windowsbrush": "ButtonBorderBrush",
+              "windowsbrush": [
+                "ButtonBorderBrush",
+              ],
             },
             "borderRadius": 3,
             "borderWidth": 1,
@@ -35804,7 +36080,9 @@ exports[`snapshotAllPages RTLExample 2`] = `
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
@@ -36060,11 +36338,15 @@ exports[`snapshotAllPages RTLExample 3`] = `
         [
           {
             "backgroundColor": {
-              "windowsbrush": "ButtonBackground",
+              "windowsbrush": [
+                "ButtonBackground",
+              ],
             },
             "borderBottomWidth": 1.5,
             "borderColor": {
-              "windowsbrush": "ButtonBorderBrush",
+              "windowsbrush": [
+                "ButtonBorderBrush",
+              ],
             },
             "borderRadius": 3,
             "borderWidth": 1,
@@ -36083,7 +36365,9 @@ exports[`snapshotAllPages RTLExample 3`] = `
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
@@ -36184,11 +36468,15 @@ exports[`snapshotAllPages RTLExample 4`] = `
         [
           {
             "backgroundColor": {
-              "windowsbrush": "ButtonBackground",
+              "windowsbrush": [
+                "ButtonBackground",
+              ],
             },
             "borderBottomWidth": 1.5,
             "borderColor": {
-              "windowsbrush": "ButtonBorderBrush",
+              "windowsbrush": [
+                "ButtonBorderBrush",
+              ],
             },
             "borderRadius": 3,
             "borderWidth": 1,
@@ -36207,7 +36495,9 @@ exports[`snapshotAllPages RTLExample 4`] = `
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
@@ -36323,11 +36613,15 @@ exports[`snapshotAllPages RTLExample 5`] = `
         [
           {
             "backgroundColor": {
-              "windowsbrush": "ButtonBackground",
+              "windowsbrush": [
+                "ButtonBackground",
+              ],
             },
             "borderBottomWidth": 1.5,
             "borderColor": {
-              "windowsbrush": "ButtonBorderBrush",
+              "windowsbrush": [
+                "ButtonBorderBrush",
+              ],
             },
             "borderRadius": 3,
             "borderWidth": 1,
@@ -36346,7 +36640,9 @@ exports[`snapshotAllPages RTLExample 5`] = `
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
@@ -36462,11 +36758,15 @@ exports[`snapshotAllPages RTLExample 6`] = `
         [
           {
             "backgroundColor": {
-              "windowsbrush": "ButtonBackground",
+              "windowsbrush": [
+                "ButtonBackground",
+              ],
             },
             "borderBottomWidth": 1.5,
             "borderColor": {
-              "windowsbrush": "ButtonBorderBrush",
+              "windowsbrush": [
+                "ButtonBorderBrush",
+              ],
             },
             "borderRadius": 3,
             "borderWidth": 1,
@@ -36485,7 +36785,9 @@ exports[`snapshotAllPages RTLExample 6`] = `
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
@@ -36579,11 +36881,15 @@ exports[`snapshotAllPages RTLExample 7`] = `
         [
           {
             "backgroundColor": {
-              "windowsbrush": "ButtonBackground",
+              "windowsbrush": [
+                "ButtonBackground",
+              ],
             },
             "borderBottomWidth": 1.5,
             "borderColor": {
-              "windowsbrush": "ButtonBorderBrush",
+              "windowsbrush": [
+                "ButtonBorderBrush",
+              ],
             },
             "borderRadius": 3,
             "borderWidth": 1,
@@ -36602,7 +36908,9 @@ exports[`snapshotAllPages RTLExample 7`] = `
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
@@ -36747,11 +37055,15 @@ exports[`snapshotAllPages RTLExample 8`] = `
         [
           {
             "backgroundColor": {
-              "windowsbrush": "ButtonBackground",
+              "windowsbrush": [
+                "ButtonBackground",
+              ],
             },
             "borderBottomWidth": 1.5,
             "borderColor": {
-              "windowsbrush": "ButtonBorderBrush",
+              "windowsbrush": [
+                "ButtonBorderBrush",
+              ],
             },
             "borderRadius": 3,
             "borderWidth": 1,
@@ -36770,7 +37082,9 @@ exports[`snapshotAllPages RTLExample 8`] = `
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
@@ -36952,11 +37266,15 @@ exports[`snapshotAllPages RTLExample 9`] = `
             [
               {
                 "backgroundColor": {
-                  "windowsbrush": "ButtonBackground",
+                  "windowsbrush": [
+                    "ButtonBackground",
+                  ],
                 },
                 "borderBottomWidth": 1.5,
                 "borderColor": {
-                  "windowsbrush": "ButtonBorderBrush",
+                  "windowsbrush": [
+                    "ButtonBorderBrush",
+                  ],
                 },
                 "borderRadius": 3,
                 "borderWidth": 1,
@@ -36975,7 +37293,9 @@ exports[`snapshotAllPages RTLExample 9`] = `
                 [
                   {
                     "color": {
-                      "windowsbrush": "ButtonForeground",
+                      "windowsbrush": [
+                        "ButtonForeground",
+                      ],
                     },
                     "fontSize": 14,
                     "fontWeight": "400",
@@ -37095,11 +37415,15 @@ exports[`snapshotAllPages RTLExample 10`] = `
             [
               {
                 "backgroundColor": {
-                  "windowsbrush": "ButtonBackground",
+                  "windowsbrush": [
+                    "ButtonBackground",
+                  ],
                 },
                 "borderBottomWidth": 1.5,
                 "borderColor": {
-                  "windowsbrush": "ButtonBorderBrush",
+                  "windowsbrush": [
+                    "ButtonBorderBrush",
+                  ],
                 },
                 "borderRadius": 3,
                 "borderWidth": 1,
@@ -37118,7 +37442,9 @@ exports[`snapshotAllPages RTLExample 10`] = `
                 [
                   {
                     "color": {
-                      "windowsbrush": "ButtonForeground",
+                      "windowsbrush": [
+                        "ButtonForeground",
+                      ],
                     },
                     "fontSize": 14,
                     "fontWeight": "400",
@@ -37230,11 +37556,15 @@ exports[`snapshotAllPages RTLExample 11`] = `
             [
               {
                 "backgroundColor": {
-                  "windowsbrush": "ButtonBackground",
+                  "windowsbrush": [
+                    "ButtonBackground",
+                  ],
                 },
                 "borderBottomWidth": 1.5,
                 "borderColor": {
-                  "windowsbrush": "ButtonBorderBrush",
+                  "windowsbrush": [
+                    "ButtonBorderBrush",
+                  ],
                 },
                 "borderRadius": 3,
                 "borderWidth": 1,
@@ -37253,7 +37583,9 @@ exports[`snapshotAllPages RTLExample 11`] = `
                 [
                   {
                     "color": {
-                      "windowsbrush": "ButtonForeground",
+                      "windowsbrush": [
+                        "ButtonForeground",
+                      ],
                     },
                     "fontSize": 14,
                     "fontWeight": "400",
@@ -37361,11 +37693,15 @@ exports[`snapshotAllPages RTLExample 11`] = `
             [
               {
                 "backgroundColor": {
-                  "windowsbrush": "ButtonBackground",
+                  "windowsbrush": [
+                    "ButtonBackground",
+                  ],
                 },
                 "borderBottomWidth": 1.5,
                 "borderColor": {
-                  "windowsbrush": "ButtonBorderBrush",
+                  "windowsbrush": [
+                    "ButtonBorderBrush",
+                  ],
                 },
                 "borderRadius": 3,
                 "borderWidth": 1,
@@ -37384,7 +37720,9 @@ exports[`snapshotAllPages RTLExample 11`] = `
                 [
                   {
                     "color": {
-                      "windowsbrush": "ButtonForeground",
+                      "windowsbrush": [
+                        "ButtonForeground",
+                      ],
                     },
                     "fontSize": 14,
                     "fontWeight": "400",
@@ -37493,11 +37831,15 @@ exports[`snapshotAllPages RTLExample 12`] = `
               [
                 {
                   "backgroundColor": {
-                    "windowsbrush": "ButtonBackground",
+                    "windowsbrush": [
+                      "ButtonBackground",
+                    ],
                   },
                   "borderBottomWidth": 1.5,
                   "borderColor": {
-                    "windowsbrush": "ButtonBorderBrush",
+                    "windowsbrush": [
+                      "ButtonBorderBrush",
+                    ],
                   },
                   "borderRadius": 3,
                   "borderWidth": 1,
@@ -37516,7 +37858,9 @@ exports[`snapshotAllPages RTLExample 12`] = `
                   [
                     {
                       "color": {
-                        "windowsbrush": "ButtonForeground",
+                        "windowsbrush": [
+                          "ButtonForeground",
+                        ],
                       },
                       "fontSize": 14,
                       "fontWeight": "400",
@@ -37629,11 +37973,15 @@ exports[`snapshotAllPages RTLExample 13`] = `
               [
                 {
                   "backgroundColor": {
-                    "windowsbrush": "ButtonBackground",
+                    "windowsbrush": [
+                      "ButtonBackground",
+                    ],
                   },
                   "borderBottomWidth": 1.5,
                   "borderColor": {
-                    "windowsbrush": "ButtonBorderBrush",
+                    "windowsbrush": [
+                      "ButtonBorderBrush",
+                    ],
                   },
                   "borderRadius": 3,
                   "borderWidth": 1,
@@ -37652,7 +38000,9 @@ exports[`snapshotAllPages RTLExample 13`] = `
                   [
                     {
                       "color": {
-                        "windowsbrush": "ButtonForeground",
+                        "windowsbrush": [
+                          "ButtonForeground",
+                        ],
                       },
                       "fontSize": 14,
                       "fontWeight": "400",
@@ -37772,11 +38122,15 @@ exports[`snapshotAllPages RTLExample 14`] = `
               [
                 {
                   "backgroundColor": {
-                    "windowsbrush": "ButtonBackground",
+                    "windowsbrush": [
+                      "ButtonBackground",
+                    ],
                   },
                   "borderBottomWidth": 1.5,
                   "borderColor": {
-                    "windowsbrush": "ButtonBorderBrush",
+                    "windowsbrush": [
+                      "ButtonBorderBrush",
+                    ],
                   },
                   "borderRadius": 3,
                   "borderWidth": 1,
@@ -37795,7 +38149,9 @@ exports[`snapshotAllPages RTLExample 14`] = `
                   [
                     {
                       "color": {
-                        "windowsbrush": "ButtonForeground",
+                        "windowsbrush": [
+                          "ButtonForeground",
+                        ],
                       },
                       "fontSize": 14,
                       "fontWeight": "400",
@@ -37915,11 +38271,15 @@ exports[`snapshotAllPages RTLExample 15`] = `
               [
                 {
                   "backgroundColor": {
-                    "windowsbrush": "ButtonBackground",
+                    "windowsbrush": [
+                      "ButtonBackground",
+                    ],
                   },
                   "borderBottomWidth": 1.5,
                   "borderColor": {
-                    "windowsbrush": "ButtonBorderBrush",
+                    "windowsbrush": [
+                      "ButtonBorderBrush",
+                    ],
                   },
                   "borderRadius": 3,
                   "borderWidth": 1,
@@ -37938,7 +38298,9 @@ exports[`snapshotAllPages RTLExample 15`] = `
                   [
                     {
                       "color": {
-                        "windowsbrush": "ButtonForeground",
+                        "windowsbrush": [
+                          "ButtonForeground",
+                        ],
                       },
                       "fontSize": 14,
                       "fontWeight": "400",
@@ -38073,11 +38435,15 @@ exports[`snapshotAllPages RTLExample 16`] = `
               [
                 {
                   "backgroundColor": {
-                    "windowsbrush": "ButtonBackground",
+                    "windowsbrush": [
+                      "ButtonBackground",
+                    ],
                   },
                   "borderBottomWidth": 1.5,
                   "borderColor": {
-                    "windowsbrush": "ButtonBorderBrush",
+                    "windowsbrush": [
+                      "ButtonBorderBrush",
+                    ],
                   },
                   "borderRadius": 3,
                   "borderWidth": 1,
@@ -38096,7 +38462,9 @@ exports[`snapshotAllPages RTLExample 16`] = `
                   [
                     {
                       "color": {
-                        "windowsbrush": "ButtonForeground",
+                        "windowsbrush": [
+                          "ButtonForeground",
+                        ],
                       },
                       "fontSize": 14,
                       "fontWeight": "400",
@@ -42005,11 +42373,15 @@ exports[`snapshotAllPages ScrollView 10`] = `
           [
             {
               "backgroundColor": {
-                "windowsbrush": "ButtonBackground",
+                "windowsbrush": [
+                  "ButtonBackground",
+                ],
               },
               "borderBottomWidth": 1.5,
               "borderColor": {
-                "windowsbrush": "ButtonBorderBrush",
+                "windowsbrush": [
+                  "ButtonBorderBrush",
+                ],
               },
               "borderRadius": 3,
               "borderWidth": 1,
@@ -42029,7 +42401,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
                 [
                   {
                     "color": {
-                      "windowsbrush": "ButtonForeground",
+                      "windowsbrush": [
+                        "ButtonForeground",
+                      ],
                     },
                     "fontSize": 14,
                     "fontWeight": "400",
@@ -42082,11 +42456,15 @@ exports[`snapshotAllPages ScrollView 10`] = `
           [
             {
               "backgroundColor": {
-                "windowsbrush": "ButtonBackground",
+                "windowsbrush": [
+                  "ButtonBackground",
+                ],
               },
               "borderBottomWidth": 1.5,
               "borderColor": {
-                "windowsbrush": "ButtonBorderBrush",
+                "windowsbrush": [
+                  "ButtonBorderBrush",
+                ],
               },
               "borderRadius": 3,
               "borderWidth": 1,
@@ -42106,7 +42484,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
                 [
                   {
                     "color": {
-                      "windowsbrush": "ButtonForeground",
+                      "windowsbrush": [
+                        "ButtonForeground",
+                      ],
                     },
                     "fontSize": 14,
                     "fontWeight": "400",
@@ -52078,11 +52458,15 @@ exports[`snapshotAllPages SectionList 1`] = `
           [
             {
               "backgroundColor": {
-                "windowsbrush": "ButtonBackground",
+                "windowsbrush": [
+                  "ButtonBackground",
+                ],
               },
               "borderBottomWidth": 1.5,
               "borderColor": {
-                "windowsbrush": "ButtonBorderBrush",
+                "windowsbrush": [
+                  "ButtonBorderBrush",
+                ],
               },
               "borderRadius": 3,
               "borderWidth": 1,
@@ -52102,7 +52486,9 @@ exports[`snapshotAllPages SectionList 1`] = `
                 [
                   {
                     "color": {
-                      "windowsbrush": "ButtonForeground",
+                      "windowsbrush": [
+                        "ButtonForeground",
+                      ],
                     },
                     "fontSize": 14,
                     "fontWeight": "400",
@@ -52689,11 +53075,15 @@ exports[`snapshotAllPages SectionList 2`] = `
         [
           {
             "backgroundColor": {
-              "windowsbrush": "ButtonBackground",
+              "windowsbrush": [
+                "ButtonBackground",
+              ],
             },
             "borderBottomWidth": 1.5,
             "borderColor": {
-              "windowsbrush": "ButtonBorderBrush",
+              "windowsbrush": [
+                "ButtonBorderBrush",
+              ],
             },
             "borderRadius": 3,
             "borderWidth": 1,
@@ -52713,7 +53103,9 @@ exports[`snapshotAllPages SectionList 2`] = `
               [
                 {
                   "color": {
-                    "windowsbrush": "ButtonForeground",
+                    "windowsbrush": [
+                      "ButtonForeground",
+                    ],
                   },
                   "fontSize": 14,
                   "fontWeight": "400",
@@ -54506,11 +54898,15 @@ exports[`snapshotAllPages SectionList 5`] = `
         [
           {
             "backgroundColor": {
-              "windowsbrush": "ButtonBackground",
+              "windowsbrush": [
+                "ButtonBackground",
+              ],
             },
             "borderBottomWidth": 1.5,
             "borderColor": {
-              "windowsbrush": "ButtonBorderBrush",
+              "windowsbrush": [
+                "ButtonBorderBrush",
+              ],
             },
             "borderRadius": 3,
             "borderWidth": 1,
@@ -54530,7 +54926,9 @@ exports[`snapshotAllPages SectionList 5`] = `
               [
                 {
                   "color": {
-                    "windowsbrush": "ButtonForeground",
+                    "windowsbrush": [
+                      "ButtonForeground",
+                    ],
                   },
                   "fontSize": 14,
                   "fontWeight": "400",
@@ -55106,11 +55504,15 @@ exports[`snapshotAllPages SectionList 6`] = `
         [
           {
             "backgroundColor": {
-              "windowsbrush": "ButtonBackground",
+              "windowsbrush": [
+                "ButtonBackground",
+              ],
             },
             "borderBottomWidth": 1.5,
             "borderColor": {
-              "windowsbrush": "ButtonBorderBrush",
+              "windowsbrush": [
+                "ButtonBorderBrush",
+              ],
             },
             "borderRadius": 3,
             "borderWidth": 1,
@@ -55130,7 +55532,9 @@ exports[`snapshotAllPages SectionList 6`] = `
               [
                 {
                   "color": {
-                    "windowsbrush": "ButtonForeground",
+                    "windowsbrush": [
+                      "ButtonForeground",
+                    ],
                   },
                   "fontSize": 14,
                   "fontWeight": "400",
@@ -55880,11 +56284,15 @@ exports[`snapshotAllPages SectionList 7`] = `
               [
                 {
                   "backgroundColor": {
-                    "windowsbrush": "ButtonBackground",
+                    "windowsbrush": [
+                      "ButtonBackground",
+                    ],
                   },
                   "borderBottomWidth": 1.5,
                   "borderColor": {
-                    "windowsbrush": "ButtonBorderBrush",
+                    "windowsbrush": [
+                      "ButtonBorderBrush",
+                    ],
                   },
                   "borderRadius": 3,
                   "borderWidth": 1,
@@ -55903,7 +56311,9 @@ exports[`snapshotAllPages SectionList 7`] = `
                     [
                       {
                         "color": {
-                          "windowsbrush": "ButtonForeground",
+                          "windowsbrush": [
+                            "ButtonForeground",
+                          ],
                         },
                         "fontSize": 14,
                         "fontWeight": "400",
@@ -55964,11 +56374,15 @@ exports[`snapshotAllPages SectionList 7`] = `
               [
                 {
                   "backgroundColor": {
-                    "windowsbrush": "ButtonBackground",
+                    "windowsbrush": [
+                      "ButtonBackground",
+                    ],
                   },
                   "borderBottomWidth": 1.5,
                   "borderColor": {
-                    "windowsbrush": "ButtonBorderBrush",
+                    "windowsbrush": [
+                      "ButtonBorderBrush",
+                    ],
                   },
                   "borderRadius": 3,
                   "borderWidth": 1,
@@ -55987,7 +56401,9 @@ exports[`snapshotAllPages SectionList 7`] = `
                     [
                       {
                         "color": {
-                          "windowsbrush": "ButtonForeground",
+                          "windowsbrush": [
+                            "ButtonForeground",
+                          ],
                         },
                         "fontSize": 14,
                         "fontWeight": "400",
@@ -56048,11 +56464,15 @@ exports[`snapshotAllPages SectionList 7`] = `
               [
                 {
                   "backgroundColor": {
-                    "windowsbrush": "ButtonBackground",
+                    "windowsbrush": [
+                      "ButtonBackground",
+                    ],
                   },
                   "borderBottomWidth": 1.5,
                   "borderColor": {
-                    "windowsbrush": "ButtonBorderBrush",
+                    "windowsbrush": [
+                      "ButtonBorderBrush",
+                    ],
                   },
                   "borderRadius": 3,
                   "borderWidth": 1,
@@ -56071,7 +56491,9 @@ exports[`snapshotAllPages SectionList 7`] = `
                     [
                       {
                         "color": {
-                          "windowsbrush": "ButtonForeground",
+                          "windowsbrush": [
+                            "ButtonForeground",
+                          ],
                         },
                         "fontSize": 14,
                         "fontWeight": "400",
@@ -56132,11 +56554,15 @@ exports[`snapshotAllPages SectionList 7`] = `
               [
                 {
                   "backgroundColor": {
-                    "windowsbrush": "ButtonBackground",
+                    "windowsbrush": [
+                      "ButtonBackground",
+                    ],
                   },
                   "borderBottomWidth": 1.5,
                   "borderColor": {
-                    "windowsbrush": "ButtonBorderBrush",
+                    "windowsbrush": [
+                      "ButtonBorderBrush",
+                    ],
                   },
                   "borderRadius": 3,
                   "borderWidth": 1,
@@ -56155,7 +56581,9 @@ exports[`snapshotAllPages SectionList 7`] = `
                     [
                       {
                         "color": {
-                          "windowsbrush": "ButtonForeground",
+                          "windowsbrush": [
+                            "ButtonForeground",
+                          ],
                         },
                         "fontSize": 14,
                         "fontWeight": "400",
@@ -63322,11 +63750,15 @@ exports[`snapshotAllPages Share 1`] = `
       [
         {
           "backgroundColor": {
-            "windowsbrush": "ButtonBackground",
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
           },
           "borderBottomWidth": 1.5,
           "borderColor": {
-            "windowsbrush": "ButtonBorderBrush",
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
           },
           "borderRadius": 3,
           "borderWidth": 1,
@@ -63345,7 +63777,9 @@ exports[`snapshotAllPages Share 1`] = `
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
@@ -63425,11 +63859,15 @@ exports[`snapshotAllPages Share 2`] = `
       [
         {
           "backgroundColor": {
-            "windowsbrush": "ButtonBackground",
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
           },
           "borderBottomWidth": 1.5,
           "borderColor": {
-            "windowsbrush": "ButtonBorderBrush",
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
           },
           "borderRadius": 3,
           "borderWidth": 1,
@@ -63448,7 +63886,9 @@ exports[`snapshotAllPages Share 2`] = `
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
@@ -63532,11 +63972,15 @@ exports[`snapshotAllPages Share 3`] = `
       [
         {
           "backgroundColor": {
-            "windowsbrush": "ButtonBackground",
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
           },
           "borderBottomWidth": 1.5,
           "borderColor": {
-            "windowsbrush": "ButtonBorderBrush",
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
           },
           "borderRadius": 3,
           "borderWidth": 1,
@@ -63555,7 +63999,9 @@ exports[`snapshotAllPages Share 3`] = `
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
@@ -68790,11 +69236,15 @@ exports[`snapshotAllPages TextInput 4`] = `
       [
         {
           "backgroundColor": {
-            "windowsbrush": "ButtonBackground",
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
           },
           "borderBottomWidth": 1.5,
           "borderColor": {
-            "windowsbrush": "ButtonBorderBrush",
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
           },
           "borderRadius": 3,
           "borderWidth": 1,
@@ -68814,7 +69264,9 @@ exports[`snapshotAllPages TextInput 4`] = `
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
@@ -75849,11 +76301,15 @@ exports[`snapshotAllPages TransferProperties 1`] = `
       [
         {
           "backgroundColor": {
-            "windowsbrush": "ButtonBackground",
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
           },
           "borderBottomWidth": 1.5,
           "borderColor": {
-            "windowsbrush": "ButtonBorderBrush",
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
           },
           "borderRadius": 3,
           "borderWidth": 1,
@@ -75872,7 +76328,9 @@ exports[`snapshotAllPages TransferProperties 1`] = `
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
@@ -76034,11 +76492,15 @@ exports[`snapshotAllPages TransferProperties 2`] = `
       [
         {
           "backgroundColor": {
-            "windowsbrush": "ButtonBackground",
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
           },
           "borderBottomWidth": 1.5,
           "borderColor": {
-            "windowsbrush": "ButtonBorderBrush",
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
           },
           "borderRadius": 3,
           "borderWidth": 1,
@@ -76057,7 +76519,9 @@ exports[`snapshotAllPages TransferProperties 2`] = `
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
@@ -76110,11 +76574,15 @@ exports[`snapshotAllPages TransferProperties 2`] = `
       [
         {
           "backgroundColor": {
-            "windowsbrush": "ButtonBackground",
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
           },
           "borderBottomWidth": 1.5,
           "borderColor": {
-            "windowsbrush": "ButtonBorderBrush",
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
           },
           "borderRadius": 3,
           "borderWidth": 1,
@@ -76133,7 +76601,9 @@ exports[`snapshotAllPages TransferProperties 2`] = `
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
@@ -76324,18 +76794,10 @@ exports[`snapshotAllPages View 3`] = `
   </View>
   <View
     style={
-      [
-        {
-          "backgroundColor": "#527FE4",
-          "borderColor": "#000033",
-          "borderWidth": 1,
-        },
-        {
-          "alignSelf": "flex-start",
-          "margin": 5,
-          "padding": 5,
-        },
-      ]
+      {
+        "backgroundColor": "#527FE4",
+        "padding": 5,
+      }
     }
   >
     <Text
@@ -76345,16 +76807,7 @@ exports[`snapshotAllPages View 3`] = `
         }
       }
     >
-      5px margin and padding,
-    </Text>
-    <Text
-      style={
-        {
-          "fontSize": 11,
-        }
-      }
-    >
-      widthAutonomous=true
+      Blue background
     </Text>
   </View>
 </View>
@@ -76364,9 +76817,9 @@ exports[`snapshotAllPages View 4`] = `
 <View
   style={
     {
-      "borderRadius": 5,
-      "borderWidth": 0.5,
-      "padding": 5,
+      "borderColor": "#527FE4",
+      "borderWidth": 5,
+      "padding": 10,
     }
   }
 >
@@ -76377,7 +76830,7 @@ exports[`snapshotAllPages View 4`] = `
       }
     }
   >
-    Too much use of \`borderRadius\` (especially large radii) on anything which is scrolling may result in dropped frames. Use sparingly.
+    5px blue border
   </Text>
 </View>
 `;
@@ -76406,6 +76859,7 @@ exports[`snapshotAllPages View 5`] = `
   onResponderTerminate={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
+  testID="border-style-button"
 >
   <View
     style={
@@ -76609,30 +77063,12 @@ exports[`snapshotAllPages View 7`] = `
         undefined
       </Text>
     </View>
-  </View>
-  <View
-    style={
-      {
-        "borderWidth": 0.5,
-        "height": 12,
-        "marginBottom": 8,
-        "marginEnd": 16,
-        "width": 95,
-      }
-    }
-  >
     <View
       style={
         [
+          undefined,
           {
-            "bottom": 0,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-          },
-          {
-            "overflow": "hidden",
+            "margin": 5,
           },
         ]
       }
@@ -76640,38 +77076,21 @@ exports[`snapshotAllPages View 7`] = `
       <Text
         style={
           {
-            "height": 20,
-            "width": 200,
+            "fontSize": 11,
           }
         }
       >
-        hidden
+        5px margin
       </Text>
     </View>
-  </View>
-  <View
-    style={
-      {
-        "borderWidth": 0.5,
-        "height": 12,
-        "marginBottom": 8,
-        "marginEnd": 16,
-        "width": 95,
-      }
-    }
-  >
     <View
       style={
         [
+          undefined,
           {
-            "bottom": 0,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-          },
-          {
-            "overflow": "visible",
+            "alignSelf": "flex-start",
+            "margin": 5,
+            "padding": 5,
           },
         ]
       }
@@ -76679,12 +77098,20 @@ exports[`snapshotAllPages View 7`] = `
       <Text
         style={
           {
-            "height": 20,
-            "width": 200,
+            "fontSize": 11,
           }
         }
       >
-        visible
+        5px margin and padding,
+      </Text>
+      <Text
+        style={
+          {
+            "fontSize": 11,
+          }
+        }
+      >
+        widthAutonomous=true
       </Text>
     </View>
   </View>
@@ -76776,6 +77203,30 @@ exports[`snapshotAllPages View 8`] = `
 `;
 
 exports[`snapshotAllPages View 9`] = `
+<View>
+  <View
+    style={
+      {
+        "borderRadius": 5,
+        "borderWidth": 0.5,
+        "padding": 5,
+      }
+    }
+  >
+    <Text
+      style={
+        {
+          "fontSize": 11,
+        }
+      }
+    >
+      Too much use of \`borderRadius\` (especially large radii) on anything which is scrolling may result in dropped frames. Use sparingly.
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages View 10`] = `
 <View
   accessibilityState={
     {
@@ -76799,6 +77250,572 @@ exports[`snapshotAllPages View 9`] = `
   onResponderTerminate={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
+  testID="border-style-button"
+>
+  <View
+    style={
+      [
+        {
+          "borderWidth": 1,
+          "padding": 5,
+        },
+        {
+          "borderStyle": "dashed",
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        {
+          "fontSize": 11,
+        }
+      }
+    >
+      Dashed border style
+    </Text>
+  </View>
+  <View
+    style={
+      [
+        {
+          "borderRadius": 5,
+          "borderWidth": 1,
+          "marginTop": 5,
+          "padding": 5,
+        },
+        {
+          "borderStyle": "dotted",
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        {
+          "fontSize": 11,
+        }
+      }
+    >
+      Dotted border style
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages View 11`] = `
+<View
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessible={true}
+  focusable={true}
+  onClick={[Function]}
+  onKeyDown={[Function]}
+  onKeyUp={[Function]}
+  onMouseEnter={[Function]}
+  onMouseLeave={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  testID="display-none-button"
+>
+  <Text
+    style={
+      {
+        "paddingBottom": 10,
+      }
+    }
+  >
+    Press to toggle \`display: none\`
+  </Text>
+  <View
+    style={
+      {
+        "backgroundColor": "red",
+        "display": "none",
+        "height": 50,
+        "width": 50,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "blue",
+        "display": "none",
+        "height": 50,
+        "width": 50,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "yellow",
+        "display": "none",
+        "height": 50,
+        "width": 50,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "salmon",
+          "display": "none",
+          "height": 30,
+          "width": 30,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "backgroundColor": "magenta",
+        "display": "none",
+        "height": 50,
+        "width": 50,
+      }
+    }
+  />
+</View>
+`;
+
+exports[`snapshotAllPages View 12`] = `
+<View
+  testID="tool-tip"
+  tooltip="Parent View"
+>
+  <Text
+    style={
+      {
+        "fontSize": 11,
+      }
+    }
+  >
+    This Parent View has tooltip "Parent View"
+  </Text>
+  <View
+    tooltip="Child View 1"
+  >
+    <Text
+      style={
+        {
+          "fontSize": 11,
+        }
+      }
+    >
+      This view has tooltip "Child View 1"
+    </Text>
+  </View>
+  <View
+    tooltip="Child View 2"
+  >
+    <Text
+      style={
+        {
+          "fontSize": 11,
+        }
+      }
+    >
+      This view has tooltip "Child View 2"
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages View 13`] = `
+<View>
+  <Text
+    style={
+      {
+        "paddingBottom": 10,
+      }
+    }
+  >
+    View #1, front is visible, back is hidden.
+  </Text>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "justifyContent": "center",
+      }
+    }
+    testID="backface-visibility"
+  >
+    <View
+      style={
+        {
+          "borderRadius": 25,
+          "borderWidth": 1,
+          "height": 50,
+          "marginRight": 10,
+          "width": 50,
+        }
+      }
+    />
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "backfaceVisibility": "hidden",
+          "backgroundColor": "red",
+          "height": 200,
+          "justifyContent": "center",
+          "position": "absolute",
+          "top": 0,
+          "transform": [
+            {
+              "rotateY": "180deg",
+            },
+          ],
+          "width": 200,
+        }
+      }
+    >
+      <Text>
+        Back (You should not see this)
+      </Text>
+    </View>
+  </View>
+  <Text
+    style={
+      {
+        "paddingVertical": 10,
+      }
+    }
+  >
+    View #2, front is hidden, back is visible.
+  </Text>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "justifyContent": "center",
+      }
+    }
+    testID="backface-visibility-2"
+  >
+    <View
+      style={
+        {
+          "borderBottomLeftRadius": 50,
+          "borderBottomRightRadius": 25,
+          "borderTopLeftRadius": 5,
+          "borderTopRightRadius": 10,
+          "borderWidth": 1,
+          "height": 50,
+          "marginRight": 10,
+          "width": 50,
+        }
+      }
+    />
+    <View
+      style={
+        {
+          "borderBottomLeftRadius": 50,
+          "borderBottomRightRadius": 25,
+          "borderTopLeftRadius": 5,
+          "borderTopRightRadius": 10,
+          "borderWidth": 10,
+          "height": 50,
+          "marginRight": 10,
+          "width": 50,
+        }
+      }
+    />
+    <View
+      style={
+        {
+          "borderLeftWidth": 6,
+          "borderTopLeftRadius": 20,
+          "borderTopWidth": 6,
+          "height": 50,
+          "width": 50,
+        }
+      }
+    />
+    <View
+      style={
+        {
+          "borderRightWidth": 6,
+          "borderTopRightRadius": 20,
+          "borderTopWidth": 6,
+          "height": 50,
+          "width": 50,
+        }
+      }
+    />
+    <View
+      style={
+        {
+          "borderBottomLeftRadius": 20,
+          "borderBottomWidth": 6,
+          "borderLeftWidth": 6,
+          "height": 50,
+          "width": 50,
+        }
+      }
+    />
+    <View
+      style={
+        {
+          "borderBottomRightRadius": 20,
+          "borderBottomWidth": 6,
+          "borderRightWidth": 6,
+          "height": 50,
+          "width": 50,
+        }
+      }
+    />
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages View 14`] = `
+<View
+  style={
+    {
+      "flexDirection": "row",
+    }
+  }
+>
+  <View
+    style={
+      {
+        "borderWidth": 0.5,
+        "height": 12,
+        "marginBottom": 8,
+        "marginEnd": 16,
+        "width": 95,
+      }
+    }
+  >
+    <View
+      style={
+        [
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          {
+            "height": 20,
+            "width": 200,
+          }
+        }
+      >
+        undefined
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "borderWidth": 0.5,
+        "height": 12,
+        "marginBottom": 8,
+        "marginEnd": 16,
+        "width": 95,
+      }
+    }
+  >
+    <View
+      style={
+        [
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          },
+          {
+            "overflow": "hidden",
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          {
+            "height": 20,
+            "width": 200,
+          }
+        }
+      >
+        hidden
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "borderWidth": 0.5,
+        "height": 12,
+        "marginBottom": 8,
+        "marginEnd": 16,
+        "width": 95,
+      }
+    }
+  >
+    <View
+      style={
+        [
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          },
+          {
+            "overflow": "visible",
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          {
+            "height": 20,
+            "width": 200,
+          }
+        }
+      >
+        visible
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages View 15`] = `
+<View>
+  <View
+    style={
+      {
+        "opacity": 0,
+      }
+    }
+  >
+    <Text>
+      Opacity 0
+    </Text>
+  </View>
+  <View
+    style={
+      {
+        "opacity": 0.1,
+      }
+    }
+  >
+    <Text>
+      Opacity 0.1
+    </Text>
+  </View>
+  <View
+    style={
+      {
+        "opacity": 0.3,
+      }
+    }
+  >
+    <Text>
+      Opacity 0.3
+    </Text>
+  </View>
+  <View
+    style={
+      {
+        "opacity": 0.5,
+      }
+    }
+  >
+    <Text>
+      Opacity 0.5
+    </Text>
+  </View>
+  <View
+    style={
+      {
+        "opacity": 0.7,
+      }
+    }
+  >
+    <Text>
+      Opacity 0.7
+    </Text>
+  </View>
+  <View
+    style={
+      {
+        "opacity": 0.9,
+      }
+    }
+  >
+    <Text>
+      Opacity 0.9
+    </Text>
+  </View>
+  <View
+    style={
+      {
+        "opacity": 1,
+      }
+    }
+  >
+    <Text>
+      Opacity 1
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages View 16`] = `
+<View
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessible={true}
+  focusable={true}
+  onClick={[Function]}
+  onKeyDown={[Function]}
+  onKeyUp={[Function]}
+  onMouseEnter={[Function]}
+  onMouseLeave={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  testID="offscreen-alpha-compositing-button"
 >
   <Text
     style={
@@ -76920,7 +77937,7 @@ exports[`snapshotAllPages View 9`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 10`] = `
+exports[`snapshotAllPages View 17`] = `
 <View
   accessibilityState={
     {
@@ -76944,6 +77961,7 @@ exports[`snapshotAllPages View 10`] = `
   onResponderTerminate={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
+  testID="z-index-button"
 >
   <Text
     style={
@@ -77049,7 +78067,7 @@ exports[`snapshotAllPages View 10`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 11`] = `
+exports[`snapshotAllPages View 18`] = `
 <View
   accessibilityState={
     {
@@ -77073,6 +78091,7 @@ exports[`snapshotAllPages View 11`] = `
   onResponderTerminate={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
+  testID="display-none-button"
 >
   <Text
     style={
@@ -77137,51 +78156,8 @@ exports[`snapshotAllPages View 11`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 12`] = `
-<View
-  testID="tool-tip"
-  tooltip="Parent View"
->
-  <Text
-    style={
-      {
-        "fontSize": 11,
-      }
-    }
-  >
-    This Parent View has tooltip "Parent View"
-  </Text>
-  <View
-    tooltip="Child View 1"
-  >
-    <Text
-      style={
-        {
-          "fontSize": 11,
-        }
-      }
-    >
-      This view has tooltip "Child View 1"
-    </Text>
-  </View>
-  <View
-    tooltip="Child View 2"
-  >
-    <Text
-      style={
-        {
-          "fontSize": 11,
-        }
-      }
-    >
-      This view has tooltip "Child View 2"
-    </Text>
-  </View>
-</View>
-`;
-
-exports[`snapshotAllPages View 13`] = `
-[
+exports[`snapshotAllPages View 19`] = `
+<View>
   <Text
     style={
       {
@@ -77190,7 +78166,7 @@ exports[`snapshotAllPages View 13`] = `
     }
   >
     View #1, front is visible, back is hidden.
-  </Text>,
+  </Text>
   <View
     style={
       {
@@ -77198,7 +78174,6 @@ exports[`snapshotAllPages View 13`] = `
         "justifyContent": "center",
       }
     }
-    testID="backface-visibility"
   >
     <View
       style={
@@ -77239,7 +78214,7 @@ exports[`snapshotAllPages View 13`] = `
         Back (You should not see this)
       </Text>
     </View>
-  </View>,
+  </View>
   <Text
     style={
       {
@@ -77248,7 +78223,7 @@ exports[`snapshotAllPages View 13`] = `
     }
   >
     View #2, front is hidden, back is visible.
-  </Text>,
+  </Text>
   <View
     style={
       {
@@ -77256,7 +78231,6 @@ exports[`snapshotAllPages View 13`] = `
         "justifyContent": "center",
       }
     }
-    testID="backface-visibility-2"
   >
     <View
       style={
@@ -77292,11 +78266,11 @@ exports[`snapshotAllPages View 13`] = `
         Back
       </Text>
     </View>
-  </View>,
-]
+  </View>
+</View>
 `;
 
-exports[`snapshotAllPages View 14`] = `
+exports[`snapshotAllPages View 20`] = `
 <View
   aria-label="Blue background View with Text"
   style={
@@ -77318,7 +78292,7 @@ exports[`snapshotAllPages View 14`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 15`] = `
+exports[`snapshotAllPages View 21`] = `
 <View
   style={
     {
@@ -77432,7 +78406,7 @@ exports[`snapshotAllPages View 15`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 16`] = `
+exports[`snapshotAllPages View 22`] = `
 <View
   style={
     {
@@ -77653,7 +78627,7 @@ exports[`snapshotAllPages View 16`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 17`] = `
+exports[`snapshotAllPages View 23`] = `
 <View
   accessibilityActions={
     [
@@ -77698,7 +78672,7 @@ exports[`snapshotAllPages View 17`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 18`] = `
+exports[`snapshotAllPages View 24`] = `
 <View
   style={
     {
@@ -77720,7 +78694,7 @@ exports[`snapshotAllPages View 18`] = `
 />
 `;
 
-exports[`snapshotAllPages View 19`] = `
+exports[`snapshotAllPages View 25`] = `
 <View
   hitSlop={
     {
@@ -77743,7 +78717,51 @@ exports[`snapshotAllPages View 19`] = `
 />
 `;
 
-exports[`snapshotAllPages View 20`] = `
+exports[`snapshotAllPages View 26`] = `
+<View
+  style={
+    {
+      "rowGap": 10,
+    }
+  }
+>
+  <View
+    style={
+      {
+        "borderWidth": 1,
+        "height": 50,
+        "position": "relative",
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "borderBlockColor": "orange",
+          "borderWidth": 5,
+          "bottom": 10,
+          "left": 10,
+          "position": "absolute",
+          "right": 10,
+          "top": 10,
+        }
+      }
+    >
+      <Text
+        style={
+          {
+            "fontSize": 11,
+          }
+        }
+      >
+        borderBlockColor orange
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages View 27`] = `
 <View
   style={
     {
@@ -77830,7 +78848,7 @@ exports[`snapshotAllPages View 20`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 21`] = `
+exports[`snapshotAllPages View 28`] = `
 <View
   nativeID="native-id-view"
   testID="nativeid"
@@ -79579,11 +80597,15 @@ exports[`snapshotAllPages XMLHttpRequest 6`] = `
       [
         {
           "backgroundColor": {
-            "windowsbrush": "ButtonBackground",
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
           },
           "borderBottomWidth": 1.5,
           "borderColor": {
-            "windowsbrush": "ButtonBorderBrush",
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
           },
           "borderRadius": 3,
           "borderWidth": 1,
@@ -79602,7 +80624,9 @@ exports[`snapshotAllPages XMLHttpRequest 6`] = `
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
@@ -79655,11 +80679,15 @@ exports[`snapshotAllPages XMLHttpRequest 6`] = `
       [
         {
           "backgroundColor": {
-            "windowsbrush": "ButtonBackground",
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
           },
           "borderBottomWidth": 1.5,
           "borderColor": {
-            "windowsbrush": "ButtonBorderBrush",
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
           },
           "borderRadius": 3,
           "borderWidth": 1,
@@ -79678,7 +80706,9 @@ exports[`snapshotAllPages XMLHttpRequest 6`] = `
             [
               {
                 "color": {
-                  "windowsbrush": "ButtonForeground",
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
                 },
                 "fontSize": 14,
                 "fontWeight": "400",
