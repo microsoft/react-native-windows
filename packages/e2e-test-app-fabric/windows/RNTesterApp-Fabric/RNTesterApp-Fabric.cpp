@@ -195,9 +195,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
           break;
 
         auto hwndHost = windowData->m_CompositionHwndHost;
-        /*winrt::com_ptr<IRawElementProviderSimple> spReps;
+        winrt::com_ptr<IRawElementProviderSimple> spReps;
         hwndHost.UiaProvider().as(spReps);
-        LRESULT lResult = UiaReturnRawElementProvider(hWnd, wParam, lParam, spReps.get());*/
+        LRESULT lResult = UiaReturnRawElementProvider(hWnd, wParam, lParam, spReps.get());
         LRESULT lResult{};
         return lResult;
       }
