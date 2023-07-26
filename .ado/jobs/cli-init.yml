@@ -273,7 +273,7 @@ jobs:
   - ${{ each config in parameters.buildMatrix }}:
     - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
       - ${{ each matrix in config.Matrix }}:
-        - ${{ if and(eq(coalesce(matrix.useNuGet, false), parameters.buildNuGetOnly) }}:
+        - ${{ if and(eq(coalesce(matrix.useNuGet, false), parameters.buildNuGetOnly)) }}:
           - job: CliInit${{ matrix.Name }}
             displayName: Verify Cli ${{ matrix.Name }}
 
