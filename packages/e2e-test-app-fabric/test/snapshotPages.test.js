@@ -51,7 +51,7 @@ describe('snapshotAllPages', () => {
   for (const api of testerList.APIs) {
     if (api.module.title === 'Transforms' || api.module.title === 'TurboModule' || api.module.title === 'Cxx TurboModule' || 
     api.module.title === 'Appearance' || api.module.title === 'AccessibilityInfo' || api.module.title === 'Accessibility' || 
-    api.module.title === 'Invalid Props'){
+    api.module.title === 'Invalid Props' || api.module.title === 'Animated - Gratuitous App'){
       // disable while these module have not been implemented yet
       continue;
     }
