@@ -1,6 +1,7 @@
 const React = require('react');
 import {create, act} from 'react-test-renderer';
 import {View} from 'react-native';
+const ViewExample = require('@react-native-windows/tester/js/examples/View/ViewExample');
 
 type RNTesterExampleModule = {
   title: string;
@@ -27,9 +28,24 @@ test('Component Control', () => {
   expect(tree).toMatchSnapshot();
 });
 
+test('Explicit Component', () => {
+  const Example = ViewExample.examples[0].render;
+  const tree = create(<Example />).toJSON();
+  expect(tree).toMatchSnapshot();
+});
+
 describe('snapshotAllPages', () => {
-  for (const component of componentExamples) {
-    test(component, () => {expect(true).toBe(true)});
+  for (const component of testerList.Components) {
+    if (component.module.title == "New App Screen" || component.module.title == "Image"){
+      continue;
+    }
+    test(component.module.title, () => {
+      for (const example of component.module.examples) {
+        const Example = example.render;
+        const tree = create(<Example />).toJSON();
+        expect(tree).toMatchSnapshot();
+      }
+    });
   }
 
   for (const api of apiExamples) {

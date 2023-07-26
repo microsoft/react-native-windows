@@ -14,4 +14,6 @@ const sanitizeFilename = require('sanitize-filename');
 const screenshotDir = './errorShots';
 fs.mkdirSync(screenshotDir, {recursive: true});
 
+process.env.NODE_ENV = 'test';
+
 //LogBox.ignoreAllLogs(true);
