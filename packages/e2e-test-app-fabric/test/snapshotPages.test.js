@@ -1,7 +1,6 @@
 const React = require('react');
 import {create, act} from 'react-test-renderer';
 import {View} from 'react-native';
-const ViewExample = require('@react-native-windows/tester/js/examples/View/ViewExample');
 jest.useFakeTimers();
 
 type RNTesterExampleModule = {
@@ -29,25 +28,14 @@ test('Component Control', () => {
   expect(tree.toJSON()).toMatchSnapshot();
 });
 
-test('Explicit Component', () => {
-  const Example = ViewExample.examples[0].render;
-  let tree;
-  act(() => {
-    tree = create(<Example />);
-  });
-  expect(tree.toJSON()).toMatchSnapshot();
-});
-
 describe('snapshotAllPages', () => {
   for (const component of testerList.Components) {
     if (component.module.title == "New App Screen" || component.module.title == "Image"){
       continue;
     }
+
     test(component.module.title, () => {
       for (const example of component.module.examples) {
-        if (example.title === 'TouchableNativeFeedback with Animated child')
-          // disable this example while it fails due to animated module usage
-          continue;
         const Example = example.render;
         let tree;
         act(() => {
