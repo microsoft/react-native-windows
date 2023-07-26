@@ -24875,6 +24875,7 @@ exports[`snapshotAllPages FlatList 10`] = `
         
 
       </Text>
+      0 (head)
     </Text>
     <Text
       style={
@@ -34116,7 +34117,7 @@ exports[`snapshotAllPages Pressable 10`] = `
     <View />
   </View>
   <Text>
-    Missing Ref!
+    Native Methods Exist
   </Text>
 </View>
 `;
@@ -74878,65 +74879,6 @@ exports[`snapshotAllPages Touchable* and onPress 2`] = `
 `;
 
 exports[`snapshotAllPages Touchable* and onPress 3`] = `
-<View>
-  <View
-    style={
-      {
-        "flexDirection": "row",
-        "justifyContent": "center",
-      }
-    }
-  >
-    <View
-      accessibilityState={
-        {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": undefined,
-          "expanded": undefined,
-          "selected": undefined,
-        }
-      }
-      accessibilityValue={
-        {
-          "max": undefined,
-          "min": undefined,
-          "now": undefined,
-          "text": undefined,
-        }
-      }
-      accessible={true}
-      collapsable={false}
-      focusable={false}
-      onClick={[Function]}
-      onKeyDown={[Function]}
-      onKeyUp={[Function]}
-      onMouseEnter={[Function]}
-      onMouseLeave={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={
-        {
-          "backgroundColor": "rgb(180, 64, 119)",
-          "height": 100,
-          "transform": [
-            {
-              "scale": 1,
-            },
-          ],
-          "width": 200,
-        }
-      }
-    />
-  </View>
-</View>
-`;
-
-exports[`snapshotAllPages Touchable* and onPress 4`] = `
 <View
   accessibilityValue={
     {
@@ -74984,9 +74926,9 @@ exports[`snapshotAllPages Touchable* and onPress 4`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Touchable* and onPress 5`] = `null`;
+exports[`snapshotAllPages Touchable* and onPress 4`] = `null`;
 
-exports[`snapshotAllPages Touchable* and onPress 6`] = `
+exports[`snapshotAllPages Touchable* and onPress 5`] = `
 <View
   accessibilityValue={
     {
@@ -75021,7 +74963,7 @@ exports[`snapshotAllPages Touchable* and onPress 6`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Touchable* and onPress 7`] = `
+exports[`snapshotAllPages Touchable* and onPress 6`] = `
 <View>
   <Text
     onPress={[Function]}
@@ -75053,7 +74995,7 @@ exports[`snapshotAllPages Touchable* and onPress 7`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Touchable* and onPress 8`] = `
+exports[`snapshotAllPages Touchable* and onPress 7`] = `
 <View
   testID="touchable_feedback_events"
 >
@@ -75141,7 +75083,7 @@ exports[`snapshotAllPages Touchable* and onPress 8`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Touchable* and onPress 9`] = `
+exports[`snapshotAllPages Touchable* and onPress 8`] = `
 <View
   testID="touchable_delay_events"
 >
@@ -75227,7 +75169,7 @@ exports[`snapshotAllPages Touchable* and onPress 9`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Touchable* and onPress 10`] = `
+exports[`snapshotAllPages Touchable* and onPress 9`] = `
 <View
   testID="touchable_3dtouch_event"
 >
@@ -75286,7 +75228,7 @@ exports[`snapshotAllPages Touchable* and onPress 10`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Touchable* and onPress 11`] = `
+exports[`snapshotAllPages Touchable* and onPress 10`] = `
 <View
   testID="touchable_hit_slop"
 >
@@ -75381,7 +75323,7 @@ exports[`snapshotAllPages Touchable* and onPress 11`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Touchable* and onPress 12`] = `
+exports[`snapshotAllPages Touchable* and onPress 11`] = `
 <View>
   <View
     style={
@@ -75425,7 +75367,7 @@ exports[`snapshotAllPages Touchable* and onPress 12`] = `
     </View>
     <Text>
       TouchableHighlight: 
-      Missing Ref!
+      Native Methods Exist
     </Text>
   </View>
   <View
@@ -75485,15 +75427,15 @@ exports[`snapshotAllPages Touchable* and onPress 12`] = `
     </View>
     <Text>
       TouchableOpacity: 
-      Missing Ref!
+      Native Methods Exist
     </Text>
   </View>
 </View>
 `;
 
-exports[`snapshotAllPages Touchable* and onPress 13`] = `null`;
+exports[`snapshotAllPages Touchable* and onPress 12`] = `null`;
 
-exports[`snapshotAllPages Touchable* and onPress 14`] = `
+exports[`snapshotAllPages Touchable* and onPress 13`] = `
 <View>
   <View
     accessibilityState={
