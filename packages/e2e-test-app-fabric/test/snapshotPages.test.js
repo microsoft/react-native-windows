@@ -31,6 +31,7 @@ test('Component Control', () => {
 describe('snapshotAllPages', () => {
   for (const component of testerList.Components) {
     if (component.module.title == "New App Screen" || component.module.title == "Image"){
+      // disable until errors are resolved
       continue;
     }
 
