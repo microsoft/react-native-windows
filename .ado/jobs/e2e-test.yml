@@ -95,11 +95,6 @@ jobs:
               workingDirectory: packages/e2e-test-app
               condition: and(failed(), eq(variables.StartedTests, 'true'))
 
-            - script: yarn e2etest -u
-              displayName: Update snapshots
-              workingDirectory: packages/e2e-test-app
-              condition: and(failed(), eq(variables.StartedTests, 'true'))
-
             - task: PowerShell@2
               displayName: Stop tracing
               inputs:
