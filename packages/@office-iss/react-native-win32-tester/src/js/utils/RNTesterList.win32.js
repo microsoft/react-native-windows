@@ -135,7 +135,7 @@ const Components: Array<RNTesterModuleInfo> = [
   {
     key: 'ViewExample',
     category: 'Basic',
-    module: require('../examples/View/ViewExample'),
+    module: require('../examples/View/ViewExample').default,
   },
   {
     key: 'ViewWin32Test',
@@ -181,7 +181,7 @@ const APIs: Array<RNTesterModuleInfo> = ([
   {
     key: 'BorderExample',
     category: 'UI',
-    module: require('../examples/Border/BorderExample'),
+    module: require('../examples/Border/BorderExample').default,
   },
   {
     key: 'CrashExample',
@@ -229,12 +229,19 @@ const APIs: Array<RNTesterModuleInfo> = ([
     key: 'LayoutExample',
     category: 'UI',
     module: require('../examples/Layout/LayoutExample'),
-  } /*
+  },
+  typeof MutationObserver === 'function'
+    ? {
+        key: 'MutationObserver',
+        category: 'UI',
+        module: require('../examples/MutationObserver/MutationObserverIndex'),
+      }
+    : null,
   {
     key: 'NativeAnimationsExample',
     category: 'UI',
     module: require('../examples/NativeAnimation/NativeAnimationsExample'),
-  }*/,
+  },
   {
     key: 'PanResponderExample',
     category: 'Basic',
