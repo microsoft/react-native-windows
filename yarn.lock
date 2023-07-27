@@ -1414,6 +1414,116 @@
     tar "^6.1.11"
     tar-stream "^2.1.4"
 
+"@esbuild/android-arm64@0.18.16":
+  version "0.18.16"
+  resolved "https://registry.yarnpkg.com/@esbuild/android-arm64/-/android-arm64-0.18.16.tgz#34f562abc0015933aabd41b3d50d8d3359e30155"
+  integrity sha512-wsCqSPqLz+6Ov+OM4EthU43DyYVVyfn15S4j1bJzylDpc1r1jZFFfJQNfDuT8SlgwuqpmpJXK4uPlHGw6ve7eA==
+
+"@esbuild/android-arm@0.18.16":
+  version "0.18.16"
+  resolved "https://registry.yarnpkg.com/@esbuild/android-arm/-/android-arm-0.18.16.tgz#ef6f9aa59a79a9b9330a2e73f7eb402c6630c267"
+  integrity sha512-gCHjjQmA8L0soklKbLKA6pgsLk1byULuHe94lkZDzcO3/Ta+bbeewJioEn1Fr7kgy9NWNFy/C+MrBwC6I/WCug==
+
+"@esbuild/android-x64@0.18.16":
+  version "0.18.16"
+  resolved "https://registry.yarnpkg.com/@esbuild/android-x64/-/android-x64-0.18.16.tgz#ed7444cb17542932c67b15e20528686853239cfd"
+  integrity sha512-ldsTXolyA3eTQ1//4DS+E15xl0H/3DTRJaRL0/0PgkqDsI0fV/FlOtD+h0u/AUJr+eOTlZv4aC9gvfppo3C4sw==
+
+"@esbuild/darwin-arm64@0.18.16":
+  version "0.18.16"
+  resolved "https://registry.yarnpkg.com/@esbuild/darwin-arm64/-/darwin-arm64-0.18.16.tgz#3c5a083e6e08a50f478fa243939989d86be1c6bf"
+  integrity sha512-aBxruWCII+OtluORR/KvisEw0ALuw/qDQWvkoosA+c/ngC/Kwk0lLaZ+B++LLS481/VdydB2u6tYpWxUfnLAIw==
+
+"@esbuild/darwin-x64@0.18.16":
+  version "0.18.16"
+  resolved "https://registry.yarnpkg.com/@esbuild/darwin-x64/-/darwin-x64-0.18.16.tgz#a8f3b61bee2807131cbe28eb164ad2b0333b59f5"
+  integrity sha512-6w4Dbue280+rp3LnkgmriS1icOUZDyPuZo/9VsuMUTns7SYEiOaJ7Ca1cbhu9KVObAWfmdjUl4gwy9TIgiO5eA==
+
+"@esbuild/freebsd-arm64@0.18.16":
+  version "0.18.16"
+  resolved "https://registry.yarnpkg.com/@esbuild/freebsd-arm64/-/freebsd-arm64-0.18.16.tgz#9bdbb3f0e5f0842b21c9b8602e70c106174ac24c"
+  integrity sha512-x35fCebhe9s979DGKbVAwXUOcTmCIE32AIqB9CB1GralMIvxdnMLAw5CnID17ipEw9/3MvDsusj/cspYt2ZLNQ==
+
+"@esbuild/freebsd-x64@0.18.16":
+  version "0.18.16"
+  resolved "https://registry.yarnpkg.com/@esbuild/freebsd-x64/-/freebsd-x64-0.18.16.tgz#24f73956436495cc7a5a4bf06be6b661aea6a2c1"
+  integrity sha512-YM98f+PeNXF3GbxIJlUsj+McUWG1irguBHkszCIwfr3BXtXZsXo0vqybjUDFfu9a8Wr7uUD/YSmHib+EeGAFlg==
+
+"@esbuild/linux-arm64@0.18.16":
+  version "0.18.16"
+  resolved "https://registry.yarnpkg.com/@esbuild/linux-arm64/-/linux-arm64-0.18.16.tgz#244569757f9cbd912f5a595a8ad8144f8c915f13"
+  integrity sha512-XIqhNUxJiuy+zsR77+H5Z2f7s4YRlriSJKtvx99nJuG5ATuJPjmZ9n0ANgnGlPCpXGSReFpgcJ7O3SMtzIFeiQ==
+
+"@esbuild/linux-arm@0.18.16":
+  version "0.18.16"
+  resolved "https://registry.yarnpkg.com/@esbuild/linux-arm/-/linux-arm-0.18.16.tgz#d63923c63af534032cc5ea0b2a0b3de10f8357f5"
+  integrity sha512-b5ABb+5Ha2C9JkeZXV+b+OruR1tJ33ePmv9ZwMeETSEKlmu/WJ45XTTG+l6a2KDsQtJJ66qo/hbSGBtk0XVLHw==
+
+"@esbuild/linux-ia32@0.18.16":
+  version "0.18.16"
+  resolved "https://registry.yarnpkg.com/@esbuild/linux-ia32/-/linux-ia32-0.18.16.tgz#a8825ccea6309f0bccfc5d87b43163ba804c2f20"
+  integrity sha512-no+pfEpwnRvIyH+txbBAWtjxPU9grslmTBfsmDndj7bnBmr55rOo/PfQmRfz7Qg9isswt1FP5hBbWb23fRWnow==
+
+"@esbuild/linux-loong64@0.18.16":
+  version "0.18.16"
+  resolved "https://registry.yarnpkg.com/@esbuild/linux-loong64/-/linux-loong64-0.18.16.tgz#f530e820fc3c61cf2206155b994aeab53b6d25be"
+  integrity sha512-Zbnczs9ZXjmo0oZSS0zbNlJbcwKXa/fcNhYQjahDs4Xg18UumpXG/lwM2lcSvHS3mTrRyCYZvJbmzYc4laRI1g==
+
+"@esbuild/linux-mips64el@0.18.16":
+  version "0.18.16"
+  resolved "https://registry.yarnpkg.com/@esbuild/linux-mips64el/-/linux-mips64el-0.18.16.tgz#2d47ace539257896865d243641bd6716684a1e82"
+  integrity sha512-YMF7hih1HVR/hQVa/ot4UVffc5ZlrzEb3k2ip0nZr1w6fnYypll9td2qcoMLvd3o8j3y6EbJM3MyIcXIVzXvQQ==
+
+"@esbuild/linux-ppc64@0.18.16":
+  version "0.18.16"
+  resolved "https://registry.yarnpkg.com/@esbuild/linux-ppc64/-/linux-ppc64-0.18.16.tgz#d6913e7e9be9e242a6a20402800141bdbe7009f7"
+  integrity sha512-Wkz++LZ29lDwUyTSEnzDaaP5OveOgTU69q9IyIw9WqLRxM4BjTBjz9un4G6TOvehWpf/J3gYVFN96TjGHrbcNQ==
+
+"@esbuild/linux-riscv64@0.18.16":
+  version "0.18.16"
+  resolved "https://registry.yarnpkg.com/@esbuild/linux-riscv64/-/linux-riscv64-0.18.16.tgz#8f33b627389c8234fe61f4636c134f17fb1d9b09"
+  integrity sha512-LFMKZ30tk78/mUv1ygvIP+568bwf4oN6reG/uczXnz6SvFn4e2QUFpUpZY9iSJT6Qpgstrhef/nMykIXZtZWGQ==
+
+"@esbuild/linux-s390x@0.18.16":
+  version "0.18.16"
+  resolved "https://registry.yarnpkg.com/@esbuild/linux-s390x/-/linux-s390x-0.18.16.tgz#4d44c030f78962cf410f604f92fcc1505e4afdde"
+  integrity sha512-3ZC0BgyYHYKfZo3AV2/66TD/I9tlSBaW7eWTEIkrQQKfJIifKMMttXl9FrAg+UT0SGYsCRLI35Gwdmm96vlOjg==
+
+"@esbuild/linux-x64@0.18.16":
+  version "0.18.16"
+  resolved "https://registry.yarnpkg.com/@esbuild/linux-x64/-/linux-x64-0.18.16.tgz#8846d00e16b1e93eb488c8b4dd51c946adfc236f"
+  integrity sha512-xu86B3647DihHJHv/wx3NCz2Dg1gjQ8bbf9cVYZzWKY+gsvxYmn/lnVlqDRazObc3UMwoHpUhNYaZset4X8IPA==
+
+"@esbuild/netbsd-x64@0.18.16":
+  version "0.18.16"
+  resolved "https://registry.yarnpkg.com/@esbuild/netbsd-x64/-/netbsd-x64-0.18.16.tgz#6514a86bd07744f3100d2813ea2fb6520d53e72e"
+  integrity sha512-uVAgpimx9Ffw3xowtg/7qQPwHFx94yCje+DoBx+LNm2ePDpQXHrzE+Sb0Si2VBObYz+LcRps15cq+95YM7gkUw==
+
+"@esbuild/openbsd-x64@0.18.16":
+  version "0.18.16"
+  resolved "https://registry.yarnpkg.com/@esbuild/openbsd-x64/-/openbsd-x64-0.18.16.tgz#ae67ce766d58aab6c0e6037f1a76f15df4a2a5fe"
+  integrity sha512-6OjCQM9wf7z8/MBi6BOWaTL2AS/SZudsZtBziXMtNI8r/U41AxS9x7jn0ATOwVy08OotwkPqGRMkpPR2wcTJXA==
+
+"@esbuild/sunos-x64@0.18.16":
+  version "0.18.16"
+  resolved "https://registry.yarnpkg.com/@esbuild/sunos-x64/-/sunos-x64-0.18.16.tgz#998efe8a58374b7351ac710455051639a6ce6a05"
+  integrity sha512-ZoNkruFYJp9d1LbUYCh8awgQDvB9uOMZqlQ+gGEZR7v6C+N6u7vPr86c+Chih8niBR81Q/bHOSKGBK3brJyvkQ==
+
+"@esbuild/win32-arm64@0.18.16":
+  version "0.18.16"
+  resolved "https://registry.yarnpkg.com/@esbuild/win32-arm64/-/win32-arm64-0.18.16.tgz#8de33682243508eef8d4de1816df2c05adad2b21"
+  integrity sha512-+j4anzQ9hrs+iqO+/wa8UE6TVkKua1pXUb0XWFOx0FiAj6R9INJ+WE//1/Xo6FG1vB5EpH3ko+XcgwiDXTxcdw==
+
+"@esbuild/win32-ia32@0.18.16":
+  version "0.18.16"
+  resolved "https://registry.yarnpkg.com/@esbuild/win32-ia32/-/win32-ia32-0.18.16.tgz#95c9f4274fb3ef9e449d464ffe3e3b7fa091503b"
+  integrity sha512-5PFPmq3sSKTp9cT9dzvI67WNfRZGvEVctcZa1KGjDDu4n3H8k59Inbk0du1fz0KrAbKKNpJbdFXQMDUz7BG4rQ==
+
+"@esbuild/win32-x64@0.18.16":
+  version "0.18.16"
+  resolved "https://registry.yarnpkg.com/@esbuild/win32-x64/-/win32-x64-0.18.16.tgz#5be58d31d0120c68af8e38b702e6937ce764cd68"
+  integrity sha512-sCIVrrtcWN5Ua7jYXNG1xD199IalrbfV2+0k/2Zf2OyV2FtnQnMgdzgpRAbi4AWlKJj1jkX+M+fEGPQj6BQB4w==
+
 "@eslint-community/eslint-utils@^4.2.0":
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/@eslint-community/eslint-utils/-/eslint-utils-4.2.0.tgz#a831e6e468b4b2b5ae42bf658bea015bf10bc518"
@@ -2431,12 +2541,51 @@
   resolved "https://registry.yarnpkg.com/@reactions/component/-/component-2.0.2.tgz#40f8c1c2c37baabe57a0c944edb9310dc1ec6642"
   integrity sha1-QPjBwsN7qr5XoMlE7bkxDcHsZkI=
 
+"@rnx-kit/align-deps@^2.2.2":
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/align-deps/-/align-deps-2.2.4.tgz#3ed70da68276163ee9b362f1c625ccc4e17d364d"
+  integrity sha512-sLbQMBU6LvYesH6AsIHKsN6e90PU1JGyjzvZDXYX8VnxqgjmEkgqHF8/PFAKi0lP+OUzDZk6bmSo3cbhd6OqXg==
+
 "@rnx-kit/babel-preset-metro-react-native@^1.1.4":
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/@rnx-kit/babel-preset-metro-react-native/-/babel-preset-metro-react-native-1.1.4.tgz#7c526987208547614f7fc43ed6e001b183083dd7"
   integrity sha512-ev82sa8Q5Z4a7kQ9pfCKYvpPpPesn0bgOFX8mNx5Gb3uZENb1i1oqySsmw1Qrrf/1KCMi4DKXOI7KezUl8Kf4g==
   dependencies:
     babel-plugin-const-enum "^1.0.0"
+
+"@rnx-kit/cli@^0.16.9":
+  version "0.16.9"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/cli/-/cli-0.16.9.tgz#69947223ebb12f75e0a349cb4ee61e9ffb846146"
+  integrity sha512-R93xEfLj/v6fclHBFmlfBW9zulDcFV6QnkWB3ypP2GJ5bJA8kEu7nXKybgfcV/wDRqOFVj40PcBaiGP1/30XOw==
+  dependencies:
+    "@rnx-kit/align-deps" "^2.2.2"
+    "@rnx-kit/config" "^0.6.2"
+    "@rnx-kit/console" "^1.0.11"
+    "@rnx-kit/metro-plugin-cyclic-dependencies-detector" "^1.1.1"
+    "@rnx-kit/metro-plugin-duplicates-checker" "^2.1.1"
+    "@rnx-kit/metro-plugin-typescript" "^0.4.1"
+    "@rnx-kit/metro-serializer" "^1.0.11"
+    "@rnx-kit/metro-serializer-esbuild" "^0.1.22"
+    "@rnx-kit/metro-service" "^3.0.4"
+    "@rnx-kit/third-party-notices" "^1.3.3"
+    "@rnx-kit/tools-language" "^2.0.0"
+    "@rnx-kit/tools-node" "^2.0.0"
+    "@rnx-kit/tools-react-native" "^1.3.1"
+    chalk "^4.1.0"
+    find-up "^5.0.0"
+    fs-extra "^10.0.0"
+    ora "^5.4.1"
+    qrcode "^1.5.0"
+    readline "^1.3.0"
+
+"@rnx-kit/config@^0.6.2", "@rnx-kit/config@^0.6.3":
+  version "0.6.4"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/config/-/config-0.6.4.tgz#b6f447e475cb4d3ad115f98512af6757cc642b27"
+  integrity sha512-/TEM41vFTU7O76MA6OjRNcGRvbYsiRon9ZOKaBQUomNfMVO9w1ts0Ax5SUC+q9ik7i4HDsjfwoMv3c+qmRq5+w==
+  dependencies:
+    "@rnx-kit/console" "^1.0.11"
+    "@rnx-kit/tools-node" "^2.0.0"
+    semver "^7.0.0"
 
 "@rnx-kit/console@^1.0.0", "@rnx-kit/console@^1.0.11":
   version "1.0.11"
@@ -2445,7 +2594,7 @@
   dependencies:
     chalk "^4.1.0"
 
-"@rnx-kit/jest-preset@^0.1.0":
+"@rnx-kit/jest-preset@^0.1.0", "@rnx-kit/jest-preset@^0.1.14":
   version "0.1.14"
   resolved "https://registry.yarnpkg.com/@rnx-kit/jest-preset/-/jest-preset-0.1.14.tgz#f9fc2d5f813fc3c9b1fb74e192ec9a35ba5fff78"
   integrity sha512-gM/tz/VOdBWxF1n9prwnGbQUnFudt1eRqVrIZWRI5qikbKUEKyzK57iMjEGSZBIA+EpkOzEI+UOzKpW47zL0Yw==
@@ -2465,7 +2614,15 @@
     "@rnx-kit/tools-react-native" "^1.3.1"
     "@rnx-kit/tools-workspaces" "^0.1.3"
 
-"@rnx-kit/metro-plugin-duplicates-checker@^2.1.0":
+"@rnx-kit/metro-plugin-cyclic-dependencies-detector@^1.1.1":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-plugin-cyclic-dependencies-detector/-/metro-plugin-cyclic-dependencies-detector-1.1.2.tgz#587dba02447d32c7a1e51e2469ff2ea0ce3bde10"
+  integrity sha512-NiAyZy8KRGo/+5F+Qdw0zTYJmEfcxpv1tjA83y3zenKCZyxL3IRDeI/moCBerxjU0usSGjEFraxJk9HklnV4jw==
+  dependencies:
+    "@rnx-kit/console" "^1.0.11"
+    "@rnx-kit/tools-node" "^2.0.0"
+
+"@rnx-kit/metro-plugin-duplicates-checker@^2.1.0", "@rnx-kit/metro-plugin-duplicates-checker@^2.1.1":
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/@rnx-kit/metro-plugin-duplicates-checker/-/metro-plugin-duplicates-checker-2.1.2.tgz#3784525dd412ab9a1a900ff2be697107b5b28121"
   integrity sha512-77urwex95u8eHGpYJKnu6JVkT2WjB08Cg9qot4XbwM7y7WD0kLQcJrvCkqekQbtg6kolOyk6jCz84zNeyhyLqw==
@@ -2473,12 +2630,56 @@
     "@rnx-kit/console" "^1.0.11"
     "@rnx-kit/tools-node" "^2.0.0"
 
+"@rnx-kit/metro-plugin-typescript@^0.4.1":
+  version "0.4.3"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-plugin-typescript/-/metro-plugin-typescript-0.4.3.tgz#edd73c1afc0911a63c9371bba81766058ef4ac97"
+  integrity sha512-ehyHCHnGYlTFi7eAxAY/ZAZDzquOb/L/0LDq3asfbAQwTeF8M9+FQTCTk3R8O3gIAnoQVvhXzJ3pmD+iBiNAjg==
+  dependencies:
+    "@rnx-kit/config" "^0.6.3"
+    "@rnx-kit/console" "^1.0.0"
+    "@rnx-kit/tools-node" "^2.0.0"
+    "@rnx-kit/tools-react-native" "^1.3.1"
+    "@rnx-kit/typescript-service" "^1.5.6"
+    semver "^7.0.0"
+    typescript ">=4.7.0"
+
+"@rnx-kit/metro-serializer-esbuild@^0.1.22":
+  version "0.1.26"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-serializer-esbuild/-/metro-serializer-esbuild-0.1.26.tgz#2a4a5e2f5f1248f8f694069d934c0edc97979396"
+  integrity sha512-W0dCYRhmImgCtR4q/BZNiNj9GxHYhATI0+T6zGholkZSBsu/C0eUY8mX0w1QORYlFZRYMzbbnoDBiMr2wRge4A==
+  dependencies:
+    "@rnx-kit/console" "^1.0.11"
+    "@rnx-kit/tools-node" "^2.0.0"
+    "@rnx-kit/tools-react-native" "^1.3.1"
+    esbuild "^0.18.0"
+    esbuild-plugin-lodash "^1.2.0"
+    fast-glob "^3.2.7"
+    semver "^7.0.0"
+
 "@rnx-kit/metro-serializer@^1.0.11":
   version "1.0.11"
   resolved "https://registry.yarnpkg.com/@rnx-kit/metro-serializer/-/metro-serializer-1.0.11.tgz#703a61c70dafa0e89253ad2df7f45f60eaac6bbb"
   integrity sha512-NaXgAsglJg+1v6EjBrv/6eV0JWEvNVEohJQ6wbLqP0R1mFZGCIk7+R4truNd9v1oZE1ZsUBfrrY+dt2q7RO8SA==
   dependencies:
     semver "^7.0.0"
+
+"@rnx-kit/metro-service@^3.0.4":
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-service/-/metro-service-3.0.5.tgz#c7e1259eaeebda00f14ba9f9fc154b9021ae4b61"
+  integrity sha512-te9JDNtkPbEROYuW+KbYHZ2yv3QTz4LqrITU34uRUEwCtUirDR6sxaaB+p4vUO3EuahWMQpTSCeVfLggCv0Kow==
+  dependencies:
+    "@rnx-kit/tools-language" "^2.0.0"
+    chalk "^4.1.0"
+
+"@rnx-kit/third-party-notices@^1.3.3":
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/third-party-notices/-/third-party-notices-1.3.3.tgz#febc4609b32c95cabc00bd18546c2b96bcc89241"
+  integrity sha512-VPmrG0goSMlnlGa2aOFr4yzo6upT6KxqXeRSq5yPDnoSHuU4AeOPihWJHRw6Yw5PP+C629XbJnM5RcHEKhpZMg==
+  dependencies:
+    "@rnx-kit/console" "^1.0.11"
+    "@rnx-kit/tools-node" "^2.0.0"
+    spdx-expression-parse "^3.0.1"
+    yargs "^16.0.0"
 
 "@rnx-kit/tools-language@^2.0.0":
   version "2.0.0"
@@ -2511,6 +2712,14 @@
     find-up "^5.0.0"
     read-yaml-file "^2.1.0"
     strip-json-comments "^3.1.1"
+
+"@rnx-kit/typescript-service@^1.5.6":
+  version "1.5.6"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/typescript-service/-/typescript-service-1.5.6.tgz#f1b608113316e21dc9998d70a5b1a44a8b6f1665"
+  integrity sha512-3Q1PpLI0oJ5XUZfr7lro72gWDBqWX6J7O6OHGibNtciE21ZaNCFLWbAzpabDz4NbZ7dcuYhr1j3JUCnNpJ7GAg==
+  dependencies:
+    "@rnx-kit/tools-node" "^2.0.0"
+    chalk "^4.1.0"
 
 "@rushstack/node-core-library@3.45.3":
   version "3.45.3"
@@ -5117,6 +5326,11 @@ diff@^3.2.0:
   resolved "https://registry.yarnpkg.com/diff/-/diff-3.5.0.tgz#800c0dd1e0a8bfbc95835c202ad220fe317e5a12"
   integrity sha512-A46qtFgd+g7pDZinpnwiRJtxbC1hpgf0uzP3iG89scHk0AUC7A1TGxf5OiiOUv/JMZR8GOt8hL900hV0bOy5xA==
 
+dijkstrajs@^1.0.1:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/dijkstrajs/-/dijkstrajs-1.0.3.tgz#4c8dbdea1f0f6478bff94d9c49c784d623e4fc23"
+  integrity sha512-qiSlmBq9+BCdCA/L46dw8Uy93mloxsPSbwnm5yrKn2vMPiy8KyAskTF6zuV/j5BMsmOGZDPs7KjU+mjb670kfA==
+
 dir-glob@^2.0.0, dir-glob@^2.2.2:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/dir-glob/-/dir-glob-2.2.2.tgz#fa09f0694153c8918b18ba0deafae94769fc50c4"
@@ -5197,6 +5411,11 @@ emoji-regex@^9.2.2:
   version "9.2.2"
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-9.2.2.tgz#840c8803b0d8047f4ff0cf963176b32d4ef3ed72"
   integrity sha512-L18DaJsXSUk2+42pv8mLs5jJT2hqFkFE4j21wOmgbUqsZ2hL72NsUU785g9RXgo3s0ZNgVl42TiHp3ZtOv/Vyg==
+
+encode-utf8@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/encode-utf8/-/encode-utf8-1.0.3.tgz#f30fdd31da07fb596f281beb2f6b027851994cda"
+  integrity sha512-ucAnuBEhUK4boH2HjVYG5Q2mQyPorvv0u/ocS+zhdw0S8AlHYY+GOFhP1Gio5z4icpP2ivFSvhtFjQi8+T9ppw==
 
 encodeurl@~1.0.2:
   version "1.0.2"
@@ -5373,6 +5592,39 @@ es6-weak-map@^2.0.1:
     es5-ext "^0.10.46"
     es6-iterator "^2.0.3"
     es6-symbol "^3.1.1"
+
+esbuild-plugin-lodash@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/esbuild-plugin-lodash/-/esbuild-plugin-lodash-1.2.0.tgz#6395b64cbb9b23a1bee3e37fbbdd98c50bd0b53a"
+  integrity sha512-8CyR67Z/VMvcJ4ABYYSaR2hhioeuoFVII1IsyPb6AwAKN57VQW8jFXyY27OwH4FGU3h3OVwwQ/GVNbo+RgpTGA==
+
+esbuild@^0.18.0:
+  version "0.18.16"
+  resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.18.16.tgz#bbeb058c556152bcbff4e8168e7c93020ccf09c3"
+  integrity sha512-1xLsOXrDqwdHxyXb/x/SOyg59jpf/SH7YMvU5RNSU7z3TInaASNJWNFJ6iRvLvLETZMasF3d1DdZLg7sgRimRQ==
+  optionalDependencies:
+    "@esbuild/android-arm" "0.18.16"
+    "@esbuild/android-arm64" "0.18.16"
+    "@esbuild/android-x64" "0.18.16"
+    "@esbuild/darwin-arm64" "0.18.16"
+    "@esbuild/darwin-x64" "0.18.16"
+    "@esbuild/freebsd-arm64" "0.18.16"
+    "@esbuild/freebsd-x64" "0.18.16"
+    "@esbuild/linux-arm" "0.18.16"
+    "@esbuild/linux-arm64" "0.18.16"
+    "@esbuild/linux-ia32" "0.18.16"
+    "@esbuild/linux-loong64" "0.18.16"
+    "@esbuild/linux-mips64el" "0.18.16"
+    "@esbuild/linux-ppc64" "0.18.16"
+    "@esbuild/linux-riscv64" "0.18.16"
+    "@esbuild/linux-s390x" "0.18.16"
+    "@esbuild/linux-x64" "0.18.16"
+    "@esbuild/netbsd-x64" "0.18.16"
+    "@esbuild/openbsd-x64" "0.18.16"
+    "@esbuild/sunos-x64" "0.18.16"
+    "@esbuild/win32-arm64" "0.18.16"
+    "@esbuild/win32-ia32" "0.18.16"
+    "@esbuild/win32-x64" "0.18.16"
 
 escalade@^3.1.1:
   version "3.1.1"
@@ -10585,6 +10837,11 @@ please-upgrade-node@^3.2.0:
   dependencies:
     semver-compare "^1.0.0"
 
+pngjs@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/pngjs/-/pngjs-5.0.0.tgz#e79dd2b215767fd9c04561c01236df960bce7fbb"
+  integrity sha512-40QW5YalBNfQo5yRYmiw7Yz6TKKVr3h6970B2YE+3fQpsWcrbj1PzJgxeJ19DRQjhMbKPIuMY8rFaXc8moolVw==
+
 posix-character-classes@^0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/posix-character-classes/-/posix-character-classes-0.1.1.tgz#01eac0fe3b5af71a2a6c02feabb8c1fef7e00eab"
@@ -10750,6 +11007,16 @@ pure-rand@^6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/pure-rand/-/pure-rand-6.0.0.tgz#701996ceefa253507923a0e864c17ab421c04a7c"
   integrity sha512-rLSBxJjP+4DQOgcJAx6RZHT2he2pkhQdSnofG5VWyVl6GRq/K02ISOuOLcsMOrtKDIJb8JN2zm3FFzWNbezdPw==
+
+qrcode@^1.5.0:
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/qrcode/-/qrcode-1.5.3.tgz#03afa80912c0dccf12bc93f615a535aad1066170"
+  integrity sha512-puyri6ApkEHYiVl4CFzo1tDkAZ+ATcnbJrJ6RiBM1Fhctdn/ix9MTE3hRph33omisEbC/2fcfemsseiKgBPKZg==
+  dependencies:
+    dijkstrajs "^1.0.1"
+    encode-utf8 "^1.0.3"
+    pngjs "^5.0.0"
+    yargs "^15.3.1"
 
 qs@~6.5.2:
   version "6.5.3"
@@ -11722,7 +11989,7 @@ spdx-exceptions@^2.1.0:
   resolved "https://registry.yarnpkg.com/spdx-exceptions/-/spdx-exceptions-2.3.0.tgz#3f28ce1a77a00372683eade4a433183527a2163d"
   integrity sha512-/tTrYOC7PPI1nUAgx34hUpqXuyJG+DTHJTnIULG4rDygi4xu/tfgmq1e1cIRwRzwZgo4NLySi+ricLkZkw4i5A==
 
-spdx-expression-parse@^3.0.0:
+spdx-expression-parse@^3.0.0, spdx-expression-parse@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/spdx-expression-parse/-/spdx-expression-parse-3.0.1.tgz#cf70f50482eefdc98e3ce0a6833e4a53ceeba679"
   integrity sha512-cbqHunsQWnJNE6KhVSMsMeH5H/L9EpymbzqTQ3uLwNCLZ1Q481oWaofqH7nO6V07xlXwY6PhQdQ2IedWx/ZK4Q==
@@ -12293,6 +12560,11 @@ typescript@5.0.4:
   version "5.0.4"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.0.4.tgz#b217fd20119bd61a94d4011274e0ab369058da3b"
   integrity sha512-cW9T5W9xY37cc+jfEnaUvX91foxtHkza3Nw3wkoF4sSlKn0MONdkdEndig/qPBWXNkmplh3NzayQzCiHM4/hqw==
+
+typescript@>=4.7.0:
+  version "5.1.6"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.1.6.tgz#02f8ac202b6dad2c0dd5e0913745b47a37998274"
+  integrity sha512-zaWCozRZ6DLEWAWFrVDz1H6FVXzUSfTy5FUMWsQlU8Ym5JP9eO4xkTIROFCQvhQf61z6O/G6ugw3SgAnvvm+HA==
 
 typescript@^4.4.3:
   version "4.8.4"
@@ -12924,7 +13196,7 @@ yargs@^15.1.0, yargs@^15.3.1:
     y18n "^4.0.0"
     yargs-parser "^18.1.2"
 
-yargs@^16.1.0, yargs@^16.2.0:
+yargs@^16.0.0, yargs@^16.1.0, yargs@^16.2.0:
   version "16.2.0"
   resolved "https://registry.yarnpkg.com/yargs/-/yargs-16.2.0.tgz#1c82bf0f6b6a66eafce7ef30e376f49a12477f66"
   integrity sha512-D1mvvtDG0L5ft/jGWkLpG1+m0eQxOfaBvTNELraWj22wSVUMWxZUvYgJYcKh6jGGIkJFhH4IZPQhR4TKpc8mBw==
