@@ -102,6 +102,7 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
   int m_cDrawBlock{0};
   bool m_needsRedraw{false};
   std::string m_placeholderText;
+  COLORREF m_placeholderTextColor;
   bool m_firstTextUpdate;
   bool m_drawing{false};
   bool m_hasFocus;

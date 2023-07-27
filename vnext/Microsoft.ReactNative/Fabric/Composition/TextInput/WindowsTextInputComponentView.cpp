@@ -641,7 +641,10 @@ void WindowsTextInputComponentView::updateProps(
   if (oldTextInputProps.placeholder != newTextInputProps.placeholder) {
     auto stringPlaceholder = winrt::to_hstring(newTextInputProps.placeholder);
     m_placeholderText = winrt::to_string(stringPlaceholder);
-    setPlaceholderText(m_placeholderText);
+  }
+
+  if (oldTextInputProps.placeholderTextColor != newTextInputProps.placeholderTextColor) {
+    m_placeholderTextColor = newTextInputProps.placeholderTextColor.AsColorRefNoAlpha();
   }
 
   /*
@@ -678,10 +681,6 @@ void WindowsTextInputComponentView::updateProps(
 
   if (oldTextInputProps.allowFontScaling != newTextInputProps.allowFontScaling) {
     m_element.IsTextScaleFactorEnabled(newTextInputProps.allowFontScaling);
-  }
-
-  if (oldTextInputProps.placeholder != newTextInputProps.placeholder) {
-    m_element.PlaceholderText(winrt::to_hstring(newTextInputProps.placeholder));
   }
 
   if (oldTextInputProps.selection.start != newTextInputProps.selection.start ||
@@ -774,23 +773,12 @@ void WindowsTextInputComponentView::UpdateText(const std::string &str) noexcept 
 }
 
 void WindowsTextInputComponentView::setPlaceholderText(const std::string &str) noexcept {
-  SETTEXTEX stt;
-  memset(&stt, 0, sizeof(stt));
-  stt.flags = ST_DEFAULT;
-  stt.codepage = CP_UTF8;
-  LRESULT res;
-
-  CHARRANGE cr;
-  cr.cpMin = cr.cpMax = 0;
-  winrt::check_hresult(m_textServices->TxSendMessage(EM_EXGETSEL, 0, reinterpret_cast<LPARAM>(&cr), &res));
-
   // Set text color to light gray
-  updateTextColor(0x808080);
-
-  winrt::check_hresult(m_textServices->TxSendMessage(
-      EM_SETTEXTEX, reinterpret_cast<WPARAM>(&stt), reinterpret_cast<LPARAM>(str.c_str()), &res));
-
-  winrt::check_hresult(m_textServices->TxSendMessage(EM_EXGETSEL, 0, reinterpret_cast<LPARAM>(&cr), &res));
+  if (!m_placeholderTextColor) {
+    m_placeholderTextColor = 0x808080;
+  }
+  updateTextColor(m_placeholderTextColor);
+  UpdateText(str);
 }
 
 void WindowsTextInputComponentView::updateLayoutMetrics(
