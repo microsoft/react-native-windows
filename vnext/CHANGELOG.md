@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 26 Jul 2023 05:15:46 GMT and should not be manually modified.
+This log was last generated on Thu, 27 Jul 2023 05:14:49 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.685
+
+Thu, 27 Jul 2023 05:14:49 GMT
+
+### Changes
+
+- integrate RN Nightly 7/5/23 (email not defined)
+- fix AT crash on boot/load of Playground (adrum@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.181
 
 ## 0.0.0-canary.684
 

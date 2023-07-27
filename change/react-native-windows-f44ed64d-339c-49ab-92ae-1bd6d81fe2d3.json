@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "fix AT crash on boot/load of Playground",
-  "packageName": "react-native-windows",
-  "email": "adrum@microsoft.com",
-  "dependentChangeType": "patch"
-}
