@@ -38,7 +38,6 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
   void updateLayoutMetrics(
       facebook::react::LayoutMetrics const &layoutMetrics,
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
-  void updateTextColor(COLORREF color);
   void finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept override;
   void prepareForRecycle() noexcept override;
   facebook::react::Props::Shared props() noexcept override;
@@ -74,6 +73,7 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
   void UpdateCharFormat() noexcept;
   void UpdateParaFormat() noexcept;
   void UpdateText(const std::string &str) noexcept;
+  void updateTextColor(COLORREF color);
   void setPlaceholderText(const std::string &str) noexcept;
   void OnTextUpdated() noexcept;
   void OnSelectionChanged(LONG start, LONG end) noexcept;
@@ -105,7 +105,6 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
   COLORREF m_placeholderTextColor;
   bool m_firstTextUpdate;
   bool m_drawing{false};
-  bool m_hasFocus;
 };
 
 } // namespace Microsoft::ReactNative

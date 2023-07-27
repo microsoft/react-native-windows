@@ -217,7 +217,6 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
   //@cmember Set the focus to the text window
   void TxSetFocus() override {
     m_outer->rootComponentView()->SetFocusedComponent(m_outer);
-    m_outer->m_hasFocus = true;
     // assert(false);
     // TODO focus
   }
@@ -519,7 +518,6 @@ void WindowsTextInputComponentView::handleCommand(std::string const &commandName
       auto begin = arg[2].asInt();
       auto end = arg[3].asInt();
       m_comingFromJS = true;
-
       UpdateText(text);
 
       SELCHANGE sc;
@@ -584,13 +582,11 @@ void WindowsTextInputComponentView::unmountChildComponentView(
 void WindowsTextInputComponentView::onFocusLost() noexcept {
   Super::onFocusLost();
   sendMessage(WM_KILLFOCUS, 0, 0);
-  m_hasFocus = true;
 }
 
 void WindowsTextInputComponentView::onFocusGained() noexcept {
   Super::onFocusGained();
   sendMessage(WM_SETFOCUS, 0, 0);
-  m_hasFocus = false;
 }
 
 bool WindowsTextInputComponentView::focusable() const noexcept {
@@ -842,13 +838,14 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
   // if the string is just m_placholderText, don't notify the JS
   if (data.attributedString.getFragments().size() &&
       data.attributedString.getFragments()[0].string == m_placeholderText) {
-      return;
+    return;
   } else if (m_firstTextUpdate && !m_placeholderText.empty() && !data.attributedString.isEmpty()) {
     // reset color and text if placeholderText is present and this is the first RichEdit update
     m_firstTextUpdate = false;
     updateTextColor(0x000000);
     // strip the placeholder text from attributedString
-    auto strippedString = data.attributedString.getFragments()[0].string.substr(m_placeholderText.size(), data.attributedString.getFragments()[0].string.size());
+    auto strippedString = data.attributedString.getFragments()[0].string.substr(
+        m_placeholderText.size(), data.attributedString.getFragments()[0].string.size());
     data.attributedString.getFragments()[0].string = strippedString;
   }
 
