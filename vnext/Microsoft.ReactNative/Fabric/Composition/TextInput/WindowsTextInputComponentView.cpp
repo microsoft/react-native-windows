@@ -784,19 +784,8 @@ void WindowsTextInputComponentView::setPlaceholderText(const std::string &str) n
   cr.cpMin = cr.cpMax = 0;
   winrt::check_hresult(m_textServices->TxSendMessage(EM_EXGETSEL, 0, reinterpret_cast<LPARAM>(&cr), &res));
 
-  // try to set color
-  // Create a CHARFORMAT2 structure and set the color attribute
-  const COLORREF rgbRed = 0x808080;
-  CHARFORMAT2 charFormat;
-  ZeroMemory(&charFormat, sizeof(CHARFORMAT2));
-  charFormat.cbSize = sizeof(CHARFORMAT2);
-  charFormat.dwMask = CFM_COLOR;
-  charFormat.crTextColor = rgbRed;
-
-  // Set the character formatting for the selected text or at the caret position
-  m_textServices->TxSendMessage(EM_SETCHARFORMAT, 0, reinterpret_cast<LPARAM>(&charFormat), &res);
-
-  // end test
+  // Set text color to light gray
+  updateTextColor(0x808080);
 
   winrt::check_hresult(m_textServices->TxSendMessage(
       EM_SETTEXTEX, reinterpret_cast<WPARAM>(&stt), reinterpret_cast<LPARAM>(str.c_str()), &res));
@@ -842,6 +831,18 @@ void WindowsTextInputComponentView::updateLayoutMetrics(
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
 }
 
+void WindowsTextInputComponentView::updateTextColor(COLORREF color) {
+  LRESULT res;
+  CHARFORMAT2 charFormat;
+  ZeroMemory(&charFormat, sizeof(CHARFORMAT2));
+  charFormat.cbSize = sizeof(CHARFORMAT2);
+  charFormat.dwMask = CFM_COLOR;
+  charFormat.crTextColor = color;
+
+  // Set the color of the text
+  winrt::check_hresult(m_textServices->TxSendMessage(EM_SETCHARFORMAT, 0, reinterpret_cast<LPARAM>(&charFormat), &res));
+}
+
 // When we are notified by RichEdit that the text changed, we need to notify JS
 void WindowsTextInputComponentView::OnTextUpdated() noexcept {
   auto data = m_state->getData();
@@ -850,33 +851,20 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
   //    return;
   data.attributedString = getAttributedString();
 
-  // if the string is m_placholderText, don't notify the JS
-  if (data.attributedString.getFragments().size()) {
-    if (data.attributedString.getFragments()[0].string == m_placeholderText) {
+  // if the string is just m_placholderText, don't notify the JS
+  if (data.attributedString.getFragments().size() &&
+      data.attributedString.getFragments()[0].string == m_placeholderText) {
       return;
-    }
+  } else if (m_firstTextUpdate && !m_placeholderText.empty() && !data.attributedString.isEmpty()) {
+    // reset color and text if placeholderText is present and this is the first RichEdit update
+    m_firstTextUpdate = false;
+    updateTextColor(0x000000);
+    // strip the placeholder text from attributedString
+    auto strippedString = data.attributedString.getFragments()[0].string.substr(m_placeholderText.size(), data.attributedString.getFragments()[0].string.size());
+    data.attributedString.getFragments()[0].string = strippedString;
   }
 
   data.mostRecentEventCount = m_nativeEventCount;
-  // reset color and text if placeholderText is present
-  if (m_firstTextUpdate && !m_placeholderText.empty()) {
-    m_firstTextUpdate = false;
-    LRESULT res;
-    // set color back to black
-    const COLORREF rgbBlack = 0x000000;
-    CHARFORMAT2 charFormat;
-    ZeroMemory(&charFormat, sizeof(CHARFORMAT2));
-    charFormat.cbSize = sizeof(CHARFORMAT2);
-    charFormat.dwMask = CFM_COLOR;
-    charFormat.crTextColor = rgbBlack;
-
-    // Set the character formatting for the selected text or at the caret position
-    winrt::check_hresult(
-        m_textServices->TxSendMessage(EM_SETCHARFORMAT, 0, reinterpret_cast<LPARAM>(&charFormat), &res));
-    UpdateText("");
-    return;
-  }
-
   m_state->updateState(std::move(data));
 
   if (m_eventEmitter && !m_comingFromJS) {

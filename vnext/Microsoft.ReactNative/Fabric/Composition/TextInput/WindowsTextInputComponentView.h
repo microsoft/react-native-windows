@@ -38,6 +38,7 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
   void updateLayoutMetrics(
       facebook::react::LayoutMetrics const &layoutMetrics,
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
+  void updateTextColor(COLORREF color);
   void finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept override;
   void prepareForRecycle() noexcept override;
   facebook::react::Props::Shared props() noexcept override;
