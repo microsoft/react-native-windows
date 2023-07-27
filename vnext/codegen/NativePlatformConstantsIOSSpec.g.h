@@ -29,6 +29,8 @@ REACT_STRUCT(PlatformConstantsIOSSpec_Constants)
 struct PlatformConstantsIOSSpec_Constants {
     REACT_FIELD(isTesting)
     bool isTesting;
+    REACT_FIELD(isDisableAnimations)
+    std::optional<bool> isDisableAnimations;
     REACT_FIELD(reactNativeVersion)
     PlatformConstantsIOSSpec_Constants_reactNativeVersion reactNativeVersion;
     REACT_FIELD(forceTouchAvailable)

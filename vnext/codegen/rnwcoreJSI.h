@@ -35,9 +35,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "ActionSheetManager";
+
 protected:
   NativeActionSheetManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("ActionSheetManager", jsInvoker),
+    : TurboModule(std::string{NativeActionSheetManagerCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -214,9 +216,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "AlertManager";
+
 protected:
   NativeAlertManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("AlertManager", jsInvoker),
+    : TurboModule(std::string{NativeAlertManagerCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -362,9 +366,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "Alert";
+
 protected:
   NativeDialogManagerWindowsCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("Alert", jsInvoker),
+    : TurboModule(std::string{NativeDialogManagerWindowsCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -526,9 +532,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "NativeAnimatedModule";
+
 protected:
   NativeAnimatedModuleCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("NativeAnimatedModule", jsInvoker),
+    : TurboModule(std::string{NativeAnimatedModuleCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -866,9 +874,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "NativeAnimatedTurboModule";
+
 protected:
   NativeAnimatedTurboModuleCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("NativeAnimatedTurboModule", jsInvoker),
+    : TurboModule(std::string{NativeAnimatedTurboModuleCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -1097,9 +1107,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "AppState";
+
 protected:
   NativeAppStateCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("AppState", jsInvoker),
+    : TurboModule(std::string{NativeAppStateCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -1288,9 +1300,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "AppTheme";
+
 protected:
   NativeAppThemeCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("AppTheme", jsInvoker),
+    : TurboModule(std::string{NativeAppThemeCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -1338,9 +1352,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "BlobModule";
+
 protected:
   NativeBlobModuleCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("BlobModule", jsInvoker),
+    : TurboModule(std::string{NativeBlobModuleCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -1431,9 +1447,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "FileReaderModule";
+
 protected:
   NativeFileReaderModuleCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("FileReaderModule", jsInvoker),
+    : TurboModule(std::string{NativeFileReaderModuleCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -1485,9 +1503,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "BugReporting";
+
 protected:
   NativeBugReportingCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("BugReporting", jsInvoker),
+    : TurboModule(std::string{NativeBugReportingCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -1694,9 +1714,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "ExceptionsManager";
+
 protected:
   NativeExceptionsManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("ExceptionsManager", jsInvoker),
+    : TurboModule(std::string{NativeExceptionsManagerCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -1773,9 +1795,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "DevToolsSettingsManager";
+
 protected:
   NativeDevToolsSettingsManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("DevToolsSettingsManager", jsInvoker),
+    : TurboModule(std::string{NativeDevToolsSettingsManagerCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -1841,9 +1865,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "JSCHeapCapture";
+
 protected:
   NativeJSCHeapCaptureCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("JSCHeapCapture", jsInvoker),
+    : TurboModule(std::string{NativeJSCHeapCaptureCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -1953,9 +1979,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "ImageEditingManager";
+
 protected:
   NativeImageEditorCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("ImageEditingManager", jsInvoker),
+    : TurboModule(std::string{NativeImageEditorCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -2010,9 +2038,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "ImageLoader";
+
 protected:
   NativeImageLoaderAndroidCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("ImageLoader", jsInvoker),
+    : TurboModule(std::string{NativeImageLoaderAndroidCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -2099,9 +2129,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "ImageLoader";
+
 protected:
   NativeImageLoaderIOSCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("ImageLoader", jsInvoker),
+    : TurboModule(std::string{NativeImageLoaderIOSCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -2184,9 +2216,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "ImageStoreManager";
+
 protected:
   NativeImageStoreAndroidCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("ImageStoreManager", jsInvoker),
+    : TurboModule(std::string{NativeImageStoreAndroidCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -2240,9 +2274,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "ImageStoreManager";
+
 protected:
   NativeImageStoreIOSCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("ImageStoreManager", jsInvoker),
+    : TurboModule(std::string{NativeImageStoreIOSCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -2319,9 +2355,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "FrameRateLogger";
+
 protected:
   NativeFrameRateLoggerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("FrameRateLogger", jsInvoker),
+    : TurboModule(std::string{NativeFrameRateLoggerCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -2514,9 +2552,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "NativeIntersectionObserverCxx";
+
 protected:
   NativeIntersectionObserverCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("NativeIntersectionObserverCxx", jsInvoker),
+    : TurboModule(std::string{NativeIntersectionObserverCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -2594,9 +2634,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "IntentAndroid";
+
 protected:
   NativeIntentAndroidCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("IntentAndroid", jsInvoker),
+    : TurboModule(std::string{NativeIntentAndroidCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -2675,9 +2717,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "LinkingManager";
+
 protected:
   NativeLinkingManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("LinkingManager", jsInvoker),
+    : TurboModule(std::string{NativeLinkingManagerCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -2760,9 +2804,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "ModalManager";
+
 protected:
   NativeModalManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("ModalManager", jsInvoker),
+    : TurboModule(std::string{NativeModalManagerCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -2921,9 +2967,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "NativeMutationObserverCxx";
+
 protected:
   NativeMutationObserverCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("NativeMutationObserverCxx", jsInvoker),
+    : TurboModule(std::string{NativeMutationObserverCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -3001,9 +3049,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "Networking";
+
 protected:
   NativeNetworkingAndroidCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("Networking", jsInvoker),
+    : TurboModule(std::string{NativeNetworkingAndroidCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -3081,9 +3131,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "Networking";
+
 protected:
   NativeNetworkingIOSCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("Networking", jsInvoker),
+    : TurboModule(std::string{NativeNetworkingIOSCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -3157,9 +3209,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "JSCSamplingProfiler";
+
 protected:
   NativeJSCSamplingProfilerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("JSCSamplingProfiler", jsInvoker),
+    : TurboModule(std::string{NativeJSCSamplingProfilerCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -3204,9 +3258,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "PermissionsAndroid";
+
 protected:
   NativePermissionsAndroidCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("PermissionsAndroid", jsInvoker),
+    : TurboModule(std::string{NativePermissionsAndroidCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -3451,9 +3507,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "PushNotificationManager";
+
 protected:
   NativePushNotificationManagerIOSCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("PushNotificationManager", jsInvoker),
+    : TurboModule(std::string{NativePushNotificationManagerIOSCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -3640,9 +3698,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "HeadlessJsTaskSupport";
+
 protected:
   NativeHeadlessJsTaskSupportCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("HeadlessJsTaskSupport", jsInvoker),
+    : TurboModule(std::string{NativeHeadlessJsTaskSupportCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -3695,9 +3755,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "I18nManager";
+
 protected:
   NativeI18nManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("I18nManager", jsInvoker),
+    : TurboModule(std::string{NativeI18nManagerCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -3788,9 +3850,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "UIManager";
+
 protected:
   NativeUIManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("UIManager", jsInvoker),
+    : TurboModule(std::string{NativeUIManagerCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -4034,9 +4098,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "SettingsManager";
+
 protected:
   NativeSettingsManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("SettingsManager", jsInvoker),
+    : TurboModule(std::string{NativeSettingsManagerCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -4095,9 +4161,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "ShareModule";
+
 protected:
   NativeShareModuleCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("ShareModule", jsInvoker),
+    : TurboModule(std::string{NativeShareModuleCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -4150,9 +4218,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "Appearance";
+
 protected:
   NativeAppearanceCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("Appearance", jsInvoker),
+    : TurboModule(std::string{NativeAppearanceCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -4399,9 +4469,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "DeviceInfo";
+
 protected:
   NativeDeviceInfoCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("DeviceInfo", jsInvoker),
+    : TurboModule(std::string{NativeDeviceInfoCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -4444,9 +4516,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "DevLoadingView";
+
 protected:
   NativeDevLoadingViewCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("DevLoadingView", jsInvoker),
+    : TurboModule(std::string{NativeDevLoadingViewCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -4497,9 +4571,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "PlatformConstants";
+
 protected:
   NativePlatformConstantsAndroidCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("PlatformConstants", jsInvoker),
+    : TurboModule(std::string{NativePlatformConstantsAndroidCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -4549,9 +4625,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "PlatformConstants";
+
 protected:
   NativePlatformConstantsIOSCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("PlatformConstants", jsInvoker),
+    : TurboModule(std::string{NativePlatformConstantsIOSCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -4593,9 +4671,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "PlatformConstants";
+
 protected:
   NativePlatformConstantsWinCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("PlatformConstants", jsInvoker),
+    : TurboModule(std::string{NativePlatformConstantsWinCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -4640,9 +4720,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "Vibration";
+
 protected:
   NativeVibrationCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("Vibration", jsInvoker),
+    : TurboModule(std::string{NativeVibrationCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -4766,9 +4848,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "NativePerformanceCxx";
+
 protected:
   NativePerformanceCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("NativePerformanceCxx", jsInvoker),
+    : TurboModule(std::string{NativePerformanceCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -4966,9 +5050,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "NativePerformanceObserverCxx";
+
 protected:
   NativePerformanceObserverCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("NativePerformanceObserverCxx", jsInvoker),
+    : TurboModule(std::string{NativePerformanceObserverCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -5088,9 +5174,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "WebSocketModule";
+
 protected:
   NativeWebSocketModuleCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("WebSocketModule", jsInvoker),
+    : TurboModule(std::string{NativeWebSocketModuleCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -5185,9 +5273,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "AccessibilityInfo";
+
 protected:
   NativeAccessibilityInfoCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("AccessibilityInfo", jsInvoker),
+    : TurboModule(std::string{NativeAccessibilityInfoCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -5279,9 +5369,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "AccessibilityManager";
+
 protected:
   NativeAccessibilityManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("AccessibilityManager", jsInvoker),
+    : TurboModule(std::string{NativeAccessibilityManagerCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -5405,9 +5497,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "Clipboard";
+
 protected:
   NativeClipboardCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("Clipboard", jsInvoker),
+    : TurboModule(std::string{NativeClipboardCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -5466,9 +5560,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "KeyboardObserver";
+
 protected:
   NativeKeyboardObserverCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("KeyboardObserver", jsInvoker),
+    : TurboModule(std::string{NativeKeyboardObserverCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -5518,9 +5614,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "SoundManager";
+
 protected:
   NativeSoundManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("SoundManager", jsInvoker),
+    : TurboModule(std::string{NativeSoundManagerCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -5566,9 +5664,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "StatusBarManager";
+
 protected:
   NativeStatusBarManagerAndroidCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("StatusBarManager", jsInvoker),
+    : TurboModule(std::string{NativeStatusBarManagerAndroidCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -5648,9 +5748,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "StatusBarManager";
+
 protected:
   NativeStatusBarManagerIOSCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("StatusBarManager", jsInvoker),
+    : TurboModule(std::string{NativeStatusBarManagerIOSCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -5743,9 +5845,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "ToastAndroid";
+
 protected:
   NativeToastAndroidCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("ToastAndroid", jsInvoker),
+    : TurboModule(std::string{NativeToastAndroidCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -5812,9 +5916,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "SegmentFetcher";
+
 protected:
   NativeSegmentFetcherCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("SegmentFetcher", jsInvoker),
+    : TurboModule(std::string{NativeSegmentFetcherCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -5866,9 +5972,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "Timing";
+
 protected:
   NativeTimingCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("Timing", jsInvoker),
+    : TurboModule(std::string{NativeTimingCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -5927,9 +6035,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "AnimationsDebugModule";
+
 protected:
   NativeAnimationsDebugModuleCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("AnimationsDebugModule", jsInvoker),
+    : TurboModule(std::string{NativeAnimationsDebugModuleCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -5979,9 +6089,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "DeviceEventManager";
+
 protected:
   NativeDeviceEventManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("DeviceEventManager", jsInvoker),
+    : TurboModule(std::string{NativeDeviceEventManagerCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -6027,9 +6139,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "DevMenu";
+
 protected:
   NativeDevMenuCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("DevMenu", jsInvoker),
+    : TurboModule(std::string{NativeDevMenuCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -6113,9 +6227,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "DevSettings";
+
 protected:
   NativeDevSettingsCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("DevSettings", jsInvoker),
+    : TurboModule(std::string{NativeDevSettingsCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -6325,9 +6441,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "DialogManagerAndroid";
+
 protected:
   NativeDialogManagerAndroidCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("DialogManagerAndroid", jsInvoker),
+    : TurboModule(std::string{NativeDialogManagerAndroidCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -6378,9 +6496,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "LogBox";
+
 protected:
   NativeLogBoxCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("LogBox", jsInvoker),
+    : TurboModule(std::string{NativeLogBoxCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -6431,9 +6551,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "RedBox";
+
 protected:
   NativeRedBoxCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("RedBox", jsInvoker),
+    : TurboModule(std::string{NativeRedBoxCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -6483,9 +6605,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "SourceCode";
+
 protected:
   NativeSourceCodeCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("SourceCode", jsInvoker),
+    : TurboModule(std::string{NativeSourceCodeCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -6572,9 +6696,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "SampleTurboModule";
+
 protected:
   NativeSampleTurboModuleCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("SampleTurboModule", jsInvoker),
+    : TurboModule(std::string{NativeSampleTurboModuleCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:

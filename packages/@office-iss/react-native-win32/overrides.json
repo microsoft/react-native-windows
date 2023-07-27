@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.73.0-nightly-20230705-294b1b5a6",
+  "baseVersion": "0.73.0-nightly-20230721-ccc50ddd2",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "676e7f63058df8b57a6f654f27a828ecd10130b1"
+      "baseHash": "a854c8b1f0bc61fbb2a446d8f8bf2813a493034a"
     },
     {
       "type": "derived",
@@ -119,7 +119,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "a0e8ceeaecf43759ace2e17988aff06e64cba619"
+      "baseHash": "984eec77c094f1fa298d2b74175b3dfc2bbd5da6"
     },
     {
       "type": "patch",
@@ -207,7 +207,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewPropTypes.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewPropTypes.js",
-      "baseHash": "5e50a36c5237626489342999f3b08b0c124a4580",
+      "baseHash": "10da291013c577313f4fb84993484f35bcbb0400",
       "issue": 6240
     },
     {
@@ -372,7 +372,7 @@
       "type": "patch",
       "file": "src/Libraries/Pressability/Pressability.win32.js",
       "baseFile": "packages/react-native/Libraries/Pressability/Pressability.js",
-      "baseHash": "087060bb677adb35353dcf83bea2d4eb09c4fd40",
+      "baseHash": "bab38d1883648c83295c98c40515d617531d4679",
       "issue": 6240
     },
     {
@@ -478,13 +478,13 @@
       "type": "derived",
       "file": "src/Libraries/Utilities/NativePlatformConstantsWin.js",
       "baseFile": "packages/react-native/Libraries/Utilities/NativePlatformConstantsIOS.js",
-      "baseHash": "05b7359f0b5476a745789ca857c64cf2661d1e7b"
+      "baseHash": "828c7596bdb33933178082e334057cd849d50359"
     },
     {
       "type": "derived",
       "file": "src/Libraries/Utilities/Platform.win32.js",
       "baseFile": "packages/react-native/Libraries/Utilities/Platform.android.js",
-      "baseHash": "a8b6131f20d78db59b5efc33c4f8de86aad527dc"
+      "baseHash": "fb46662fd6a2ac0cad0922e76cbcc7b6c5894581"
     },
     {
       "type": "copy",

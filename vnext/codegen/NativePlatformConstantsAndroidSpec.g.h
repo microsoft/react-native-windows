@@ -29,6 +29,8 @@ REACT_STRUCT(PlatformConstantsAndroidSpec_Constants)
 struct PlatformConstantsAndroidSpec_Constants {
     REACT_FIELD(isTesting)
     bool isTesting;
+    REACT_FIELD(isDisableAnimations)
+    std::optional<bool> isDisableAnimations;
     REACT_FIELD(reactNativeVersion)
     PlatformConstantsAndroidSpec_Constants_reactNativeVersion reactNativeVersion;
     REACT_FIELD(Version)
