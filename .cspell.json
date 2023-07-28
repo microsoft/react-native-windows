@@ -12,6 +12,7 @@
     "dictionaries": ["project-words"],
     "files": ["**/*.{cpp,h,idl,cs,js,jsx,ts,tsx}"],
     "ignorePaths": [
+        "**/flow-typed/npm",
         "node_modules",
         "packages/@office-iss/react-native-win32-tester",
         "packages/@react-native/tester",

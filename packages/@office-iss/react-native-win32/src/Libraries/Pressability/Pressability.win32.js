@@ -145,6 +145,8 @@ export type PressabilityConfig = $ReadOnly<{|
   /**
    * Returns whether a long press gesture should cancel the press gesture.
    * Defaults to true.
+   *
+   * @deprecated
    */
   onLongPressShouldCancelPress_DEPRECATED?: ?() => boolean,
 
@@ -153,6 +155,8 @@ export type PressabilityConfig = $ReadOnly<{|
    *
    * Returns whether to yield to a lock termination request (e.g. if a native
    * scroll gesture attempts to steal the responder lock).
+   *
+   * @deprecated
    */
   onResponderTerminationRequest_DEPRECATED?: ?() => boolean,
 
@@ -190,7 +194,7 @@ export type EventHandlers = $ReadOnly<{|
   onMouseLeave?: (event: MouseEvent) => void,
   onPointerEnter?: (event: PointerEvent) => void,
   onPointerLeave?: (event: PointerEvent) => void,
-  onResponderGrant: (event: PressEvent) => void,
+  onResponderGrant: (event: PressEvent) => void | boolean,
   onResponderMove: (event: PressEvent) => void,
   onResponderRelease: (event: PressEvent) => void,
   onResponderTerminate: (event: PressEvent) => void,
@@ -429,6 +433,7 @@ export default class Pressability {
   |}>;
   _touchActivateTime: ?number;
   _touchState: TouchState = 'NOT_RESPONDER';
+  _isKeyDown: boolean = false;
 
   constructor(config: PressabilityConfig) {
     this.configure(config);
@@ -474,6 +479,7 @@ export default class Pressability {
         if (onBlur != null) {
           onBlur(event);
         }
+        this._isKeyDown = false;
       },
       onFocus: (event: FocusEvent): void => {
         const {onFocus} = this._config;
@@ -495,7 +501,7 @@ export default class Pressability {
         return !disabled;
       },
 
-      onResponderGrant: (event: PressEvent): void => {
+      onResponderGrant: (event: PressEvent): void | boolean => {
         event.persist();
 
         this._cancelPressOutDelayTimeout();
@@ -521,6 +527,8 @@ export default class Pressability {
         this._longPressDelayTimeout = setTimeout(() => {
           this._handleLongPress(event);
         }, delayLongPress + delayPressIn);
+
+        return this._config.cancelable === false;
       },
 
       onResponderMove: (event: PressEvent): void => {
@@ -615,7 +623,8 @@ export default class Pressability {
           (event.nativeEvent.code === 'Space' ||
             event.nativeEvent.code === 'Enter' ||
             event.nativeEvent.code === 'GamepadA') &&
-          event.defaultPrevented !== true
+          event.defaultPrevented !== true &&
+          this._isKeyDown
         ) {
           const {onPressOut, onPress} = this._config;
           // $FlowFixMe: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of passing KeyEvents instead
@@ -623,6 +632,8 @@ export default class Pressability {
           // $FlowFixMe: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of passing KeyEvents instead
           onPress && onPress(event);
         }
+        // Native windows app clears the key pressed state when another key press interrupts the current
+        this._isKeyDown = false;
       },
       onKeyDown: (event: KeyEvent): void => {
         const {onKeyDown} = this._config;
@@ -635,6 +646,7 @@ export default class Pressability {
           event.defaultPrevented !== true
         ) {
           const {onPressIn} = this._config;
+          this._isKeyDown = true;
           // $FlowFixMe: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of passing KeyEvents instead
           onPressIn && onPressIn(event);
         }
@@ -799,6 +811,12 @@ export default class Pressability {
     }
   }
 
+  // [Win32]
+  // $FlowFixMe - button typing
+  _isDefaultPressButton(button): boolean {
+    return !button; // Treat 0 or undefined as default press
+  }
+
   /**
    * Performs a transition between touchable states and identify any activations
    * or deactivations (and callback invocations).
@@ -827,7 +845,10 @@ export default class Pressability {
 
     if (isPressInSignal(prevState) && signal === 'LONG_PRESS_DETECTED') {
       const {onLongPress} = this._config;
-      if (onLongPress != null) {
+      if (
+        onLongPress != null &&
+        this._isDefaultPressButton(getTouchFromPressEvent(event).button)
+      ) {
         onLongPress(event);
       }
     }
@@ -848,7 +869,11 @@ export default class Pressability {
         this._deactivate(event);
       }
       const {onLongPress, onPress, android_disableSound} = this._config;
-      if (onPress != null) {
+
+      if (
+        onPress != null &&
+        this._isDefaultPressButton(getTouchFromPressEvent(event).button)
+      ) {
         const isPressCanceledByLongPress =
           onLongPress != null &&
           prevState === 'RESPONDER_ACTIVE_LONG_PRESS_IN' &&
@@ -867,17 +892,20 @@ export default class Pressability {
 
   _activate(event: PressEvent): void {
     const {onPressIn} = this._config;
-    const {pageX, pageY} = getTouchFromPressEvent(event);
+    const {pageX, pageY, button} = getTouchFromPressEvent(event);
     this._touchActivatePosition = {pageX, pageY};
     this._touchActivateTime = Date.now();
-    if (onPressIn != null) {
+    if (onPressIn != null && this._isDefaultPressButton(button)) {
       onPressIn(event);
     }
   }
 
   _deactivate(event: PressEvent): void {
     const {onPressOut} = this._config;
-    if (onPressOut != null) {
+    if (
+      onPressOut != null &&
+      this._isDefaultPressButton(getTouchFromPressEvent(event).button)
+    ) {
       const minPressDuration = normalizeDelay(
         this._config.minPressDuration,
         0,

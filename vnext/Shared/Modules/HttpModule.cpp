@@ -5,6 +5,7 @@
 
 #include "HttpModule.h"
 
+#include <CreateModules.h>
 #include <Modules/CxxModuleUtilities.h>
 #include <ReactPropertyBag.h>
 
@@ -32,6 +33,7 @@ using Microsoft::React::Modules::SendEvent;
 using Microsoft::React::Networking::IHttpResource;
 
 constexpr char s_moduleName[] = "Networking";
+constexpr wchar_t s_moduleNameW[] = L"Networking";
 
 // React event names
 constexpr char completedResponse[] = "didCompleteNetworkResponse";
@@ -47,6 +49,8 @@ constexpr wchar_t sentDataW[] = L"didSendNetworkData";
 constexpr wchar_t receivedIncrementalDataW[] = L"didReceiveNetworkIncrementalData";
 constexpr wchar_t receivedDataProgressW[] = L"didReceiveNetworkDataProgress";
 constexpr wchar_t receivedDataW[] = L"didReceiveNetworkData";
+
+msrn::ReactModuleProvider s_moduleProvider = msrn::MakeTurboModuleProvider<Microsoft::React::HttpTurboModule>();
 
 static void SetUpHttpResource(
     shared_ptr<IHttpResource> resource,
@@ -233,6 +237,8 @@ std::map<string, dynamic> HttpModule::getConstants() {
 
 // clang-format off
 std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods() {
+  // See CxxNativeModule::lazyInit()
+  SetUpHttpResource(m_resource, getInstance(), m_inspectableProperties);
 
   return
   {
@@ -245,12 +251,6 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
           return;
         }
 
-        auto resource = holder->Module->m_resource;
-        if (!holder->Module->m_isResourceSetup)
-        {
-          SetUpHttpResource(resource, holder->Module->getInstance(), holder->Module->m_inspectableProperties);
-          holder->Module->m_isResourceSetup = true;
-        }
         holder->Module->m_requestId++;
 
         auto params = facebook::xplat::jsArgAsObject(args, 0);
@@ -259,7 +259,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
           headers.emplace(header.first.getString(), header.second.getString());
         }
 
-        resource->SendRequest(
+        holder->Module->m_resource->SendRequest(
           params["method"].asString(),
           params["url"].asString(),
           holder->Module->m_requestId,
@@ -285,14 +285,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
           return;
         }
 
-        auto resource = holder->Module->m_resource;
-        if (!holder->Module->m_isResourceSetup)
-        {
-          SetUpHttpResource(resource, holder->Module->getInstance(), holder->Module->m_inspectableProperties);
-          holder->Module->m_isResourceSetup = true;
-        }
-
-        resource->AbortRequest(facebook::xplat::jsArgAsInt(args, 0));
+        holder->Module->m_resource->AbortRequest(facebook::xplat::jsArgAsInt(args, 0));
       }
     },
     {
@@ -305,14 +298,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
           return;
         }
 
-        auto resource = holder->Module->m_resource;
-        if (!holder->Module->m_isResourceSetup)
-        {
-          SetUpHttpResource(resource, holder->Module->getInstance(), holder->Module->m_inspectableProperties);
-          holder->Module->m_isResourceSetup = true;
-        }
-
-        resource->ClearCookies();
+        holder->Module->m_resource->ClearCookies();
       }
     }
   };
@@ -325,6 +311,19 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
 
 /*extern*/ const char *GetHttpModuleName() noexcept {
   return s_moduleName;
+}
+
+/*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateHttpModule(
+    IInspectable const &inspectableProperties) noexcept {
+  return std::make_unique<HttpModule>(inspectableProperties);
+}
+
+/*extern*/ const wchar_t *GetHttpTurboModuleName() noexcept {
+  return s_moduleNameW;
+}
+
+/*extern*/ const msrn::ReactModuleProvider &GetHttpModuleProvider() noexcept {
+  return s_moduleProvider;
 }
 
 } // namespace Microsoft::React

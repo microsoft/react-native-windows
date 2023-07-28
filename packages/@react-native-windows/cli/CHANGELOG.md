@@ -1,8 +1,72 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Sat, 08 Jul 2023 05:13:21 GMT and should not be manually modified.
+This log was last generated on Fri, 28 Jul 2023 05:14:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.182
+
+Fri, 28 Jul 2023 05:14:53 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.66
+- Bump @react-native-windows/fs to v0.0.0-canary.27
+- Bump @react-native-windows/package-utils to v0.0.0-canary.53
+- Bump @react-native-windows/telemetry to v0.0.0-canary.75
+- Bump @rnw-scripts/just-task to v2.3.15
+
+## 0.0.0-canary.181
+
+Thu, 27 Jul 2023 05:14:49 GMT
+
+### Changes
+
+- integrate RN Nightly 7/5/23 (email not defined)
+
+## 0.0.0-canary.180
+
+Wed, 26 Jul 2023 05:15:47 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.65
+- Bump @react-native-windows/fs to v0.0.0-canary.26
+- Bump @react-native-windows/package-utils to v0.0.0-canary.52
+- Bump @react-native-windows/telemetry to v0.0.0-canary.74
+- Bump @rnw-scripts/just-task to v2.3.14
+
+## 0.0.0-canary.179
+
+Thu, 20 Jul 2023 05:13:17 GMT
+
+### Changes
+
+- Spellcheck update 7/11/2023 (jthysell@microsoft.com)
+
+## 0.0.0-canary.178
+
+Sat, 15 Jul 2023 05:15:31 GMT
+
+### Changes
+
+- Add package.json:codegenConfig.windows.outputDirectory (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.177
+
+Fri, 14 Jul 2023 05:17:05 GMT
+
+### Changes
+
+- integration 6/28 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.64
+- Bump @react-native-windows/fs to v0.0.0-canary.25
+- Bump @react-native-windows/package-utils to v0.0.0-canary.51
+- Bump @react-native-windows/telemetry to v0.0.0-canary.73
+- Bump @rnw-scripts/eslint-config to v1.2.2
+- Bump @rnw-scripts/jest-unittest-config to v1.5.6
+- Bump @rnw-scripts/just-task to v2.3.13
+- Bump @rnw-scripts/ts-config to v2.0.5
 
 ## 0.0.0-canary.176
 

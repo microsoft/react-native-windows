@@ -440,6 +440,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\TextShadowNode.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\RawTextShadowNode.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\AccessibilityProps.cpp" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\PointerEvent.cpp" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\TouchEventEmitter.cpp" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\ViewEventEmitter.cpp" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\ViewProps.cpp" DisableSpecificWarnings="4459;4715;%(DisableSpecificWarnings)" />
@@ -448,7 +449,8 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\YogaStylableProps.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\BatchedEventQueue.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\ComponentDescriptor.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\CoreFeatures.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\ValueFactoryEventPayload.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\utils\CoreFeatures.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\DynamicPropsUtilities.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventBeat.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventDispatcher.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)" />
@@ -504,6 +506,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\templateprocessor\UITemplateProcessor.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\textlayoutmanager\TextMeasureCache.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\bindingUtils.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\PointerEventsProcessor.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\SurfaceRegistryBinding.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\UIManager.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\UIManagerBinding.cpp" DisableSpecificWarnings="4389;4715;%(DisableSpecificWarnings)" />

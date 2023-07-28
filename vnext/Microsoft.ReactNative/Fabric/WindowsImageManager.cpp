@@ -79,7 +79,7 @@ void generateBitmap(
 facebook::react::ImageRequest WindowsImageManager::requestImage(
     const facebook::react::ImageSource &imageSource,
     facebook::react::SurfaceId surfaceId) const {
-  auto imageRequest = facebook::react::ImageRequest(imageSource, nullptr);
+  auto imageRequest = facebook::react::ImageRequest(imageSource, nullptr, {});
 
   auto weakObserverCoordinator = (std::weak_ptr<const facebook::react::ImageResponseObserverCoordinator>)
                                      imageRequest.getSharedObserverCoordinator();

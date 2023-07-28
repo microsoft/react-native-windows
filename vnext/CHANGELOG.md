@@ -1,8 +1,121 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 10 Jul 2023 05:14:11 GMT and should not be manually modified.
+This log was last generated on Fri, 28 Jul 2023 05:14:51 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.686
+
+Fri, 28 Jul 2023 05:14:51 GMT
+
+### Changes
+
+- Integrate 7/21 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.182
+- Bump @react-native-windows/codegen to v0.0.0-canary.66
+- Bump @rnw-scripts/just-task to v2.3.15
+- Bump react-native-platform-override to v1.9.14
+
+## 0.0.0-canary.685
+
+Thu, 27 Jul 2023 05:14:49 GMT
+
+### Changes
+
+- integrate RN Nightly 7/5/23 (email not defined)
+- fix AT crash on boot/load of Playground (adrum@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.181
+
+## 0.0.0-canary.684
+
+Wed, 26 Jul 2023 05:15:46 GMT
+
+### Changes
+
+- Remove upstream react-native flow typings from repo (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.180
+- Bump @react-native-windows/codegen to v0.0.0-canary.65
+- Bump @rnw-scripts/just-task to v2.3.14
+- Bump react-native-platform-override to v1.9.13
+
+## 0.0.0-canary.683
+
+Tue, 25 Jul 2023 05:13:22 GMT
+
+### Changes
+
+- Attempt AddNetworkingHandler if HTTP module was not ready (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.682
+
+Sat, 22 Jul 2023 05:14:01 GMT
+
+### Changes
+
+- add colored fonts (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.681
+
+Thu, 20 Jul 2023 05:13:17 GMT
+
+### Changes
+
+- Spellcheck update 7/11/2023 (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.179
+
+## 0.0.0-canary.680
+
+Wed, 19 Jul 2023 05:14:28 GMT
+
+### Changes
+
+- Add Support for ControlType Specification (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.679
+
+Tue, 18 Jul 2023 05:13:38 GMT
+
+### Changes
+
+- Use correct data types in FileReaderTurboModule::ReadAs* (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.678
+
+Sat, 15 Jul 2023 05:15:31 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.178
+
+## 0.0.0-canary.677
+
+Fri, 14 Jul 2023 05:17:08 GMT
+
+### Changes
+
+- integration 6/28 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.177
+- Bump @react-native-windows/codegen to v0.0.0-canary.64
+- Bump @rnw-scripts/eslint-config to v1.2.2
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.5
+- Bump @rnw-scripts/just-task to v2.3.13
+- Bump react-native-platform-override to v1.9.12
+
+## 0.0.0-canary.676
+
+Wed, 12 Jul 2023 05:14:36 GMT
+
+### Changes
+
+- Use TurboModules for networking in MSRN (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.675
+
+Tue, 11 Jul 2023 05:14:42 GMT
+
+### Changes
+
+- Fix warning compiler may not enforce left-to-right evaluation order in braced initializer list (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.674
 

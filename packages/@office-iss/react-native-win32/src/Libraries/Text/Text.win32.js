@@ -15,7 +15,6 @@ import * as PressabilityDebug from '../Pressability/PressabilityDebug';
 import usePressability from '../Pressability/usePressability';
 import flattenStyle from '../StyleSheet/flattenStyle';
 import processColor from '../StyleSheet/processColor';
-import {getAccessibilityRoleFromRole} from '../Utilities/AcessibilityMapping';
 import Platform from '../Utilities/Platform';
 import TextAncestor from './TextAncestor';
 import {NativeText, NativeVirtualText} from './TextNativeComponent';
@@ -39,7 +38,6 @@ const Text: React.AbstractComponent<
     accessibilityLabel,
     accessibilityLevel, // Win32
     accessibilityPositionInSet, // Win32
-    accessibilityRole,
     accessibilitySetSize, // Win32
     accessibilityState,
     allowFontScaling,
@@ -69,7 +67,6 @@ const Text: React.AbstractComponent<
     onResponderTerminationRequest,
     onStartShouldSetResponder,
     pressRetentionOffset,
-    role,
     suppressHighlighting,
     ...restProps
   } = props;
@@ -251,9 +248,6 @@ const Text: React.AbstractComponent<
       accessibilityLabel={ariaLabel ?? accessibilityLabel}
       accessibilityLevel={ariaLevel ?? accessibilityLevel} // Win32
       accessibilityPositionInSet={ariaPosinset ?? accessibilityPositionInSet} // Win32
-      accessibilityRole={
-        role ? getAccessibilityRoleFromRole(role) : accessibilityRole
-      }
       accessibilitySetSize={ariaSetsize ?? accessibilitySetSize} // Win32
       accessibilityState={_accessibilityState}
       isHighlighted={isHighlighted}
@@ -276,9 +270,6 @@ const Text: React.AbstractComponent<
         accessibilityLabel={ariaLabel ?? accessibilityLabel}
         accessibilityLevel={ariaLevel ?? accessibilityLevel} // Win32
         accessibilityPositionInSet={ariaPosinset ?? accessibilityPositionInSet} // Win32
-        accessibilityRole={
-          role ? getAccessibilityRoleFromRole(role) : accessibilityRole
-        }
         accessibilitySetSize={ariaSetsize ?? accessibilitySetSize} // Win32
         accessibilityState={nativeTextAccessibilityState}
         accessible={
