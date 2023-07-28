@@ -844,9 +844,10 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
     m_firstTextUpdate = false;
     updateTextColor(0x000000);
     // strip the placeholder text from attributedString
-    auto strippedString = data.attributedString.getFragments()[0].string.substr(
-        m_placeholderText.size(), data.attributedString.getFragments()[0].string.size());
-    data.attributedString.getFragments()[0].string = strippedString;
+    if (data.attributedString.getFragments()[0].string.size() > m_placeholderText.size()) {
+      auto strippedString = data.attributedString.getFragments()[0].string.substr(m_placeholderText.size(), data.attributedString.getFragments()[0].string.size());
+      data.attributedString.getFragments()[0].string = strippedString;
+    }   
   }
 
   data.mostRecentEventCount = m_nativeEventCount;
