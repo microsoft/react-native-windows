@@ -252,6 +252,7 @@ exports[`ViewTests Views can have a custom nativeID 1`] = `
 
 exports[`ViewTests Views can have accessibility customization 1`] = `
 {
+  "AccessibilityRole": "Unknown",
   "AutomationId": "accessibility",
   "Background": null,
   "BorderBrush": null,

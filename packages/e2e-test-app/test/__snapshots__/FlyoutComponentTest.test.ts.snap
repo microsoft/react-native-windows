@@ -262,6 +262,7 @@ exports[`FlyoutTests Flyout 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AccessibilityRole": "Button",
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -398,6 +399,7 @@ exports[`FlyoutTests Flyout 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AccessibilityRole": "Button",
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -534,6 +536,7 @@ exports[`FlyoutTests Flyout 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AccessibilityRole": "Button",
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",

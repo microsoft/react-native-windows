@@ -3589,6 +3589,7 @@ exports[`ScrollViewTests ScrollViews can scroll an item list horizontally 1`] = 
 
 exports[`ScrollViewTests ScrollViews can scroll an item list vertically 1`] = `
 {
+  "AccessibilityRole": "Unknown",
   "AutomationId": "scroll_vertical",
   "Background": "#FFEEEEEE",
   "BorderBrush": "#00FFFFFF",

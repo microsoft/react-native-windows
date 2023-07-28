@@ -2,6 +2,8 @@
 
 exports[`ButtonTests Buttons can be disabled 1`] = `
 {
+  "AccessibilityRole": "Button",
+  "AccessibilityStateDisabled": true,
   "AutomationId": "disabled_button",
   "Background": null,
   "BorderBrush": null,
@@ -93,6 +95,7 @@ exports[`ButtonTests Buttons can be disabled 1`] = `
                   "XamlType": "Microsoft.ReactNative.ViewPanel",
                   "children": [
                     {
+                      "AccessibilityStateDisabled": true,
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
                       "Foreground": "#5C000000",
@@ -122,6 +125,7 @@ exports[`ButtonTests Buttons can be disabled 1`] = `
 
 exports[`ButtonTests Buttons can have accessibility labels 1`] = `
 {
+  "AccessibilityRole": "Button",
   "AutomationId": "accessibilityLabel_button",
   "Background": null,
   "BorderBrush": null,
@@ -242,6 +246,7 @@ exports[`ButtonTests Buttons can have accessibility labels 1`] = `
 
 exports[`ButtonTests Buttons can have accessibility props 1`] = `
 {
+  "AccessibilityRole": "Button",
   "AutomationId": "accessibility_props",
   "Background": null,
   "BorderBrush": null,
@@ -362,6 +367,8 @@ exports[`ButtonTests Buttons can have accessibility props 1`] = `
 
 exports[`ButtonTests Buttons can have accessibility states 1`] = `
 {
+  "AccessibilityRole": "Button",
+  "AccessibilityStateDisabled": true,
   "AutomationId": "accessibilityState_button",
   "Background": null,
   "BorderBrush": null,
@@ -453,6 +460,7 @@ exports[`ButtonTests Buttons can have accessibility states 1`] = `
                   "XamlType": "Microsoft.ReactNative.ViewPanel",
                   "children": [
                     {
+                      "AccessibilityStateDisabled": true,
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
                       "Foreground": "#5C000000",
@@ -482,6 +490,7 @@ exports[`ButtonTests Buttons can have accessibility states 1`] = `
 
 exports[`ButtonTests Buttons can have custom colors 1`] = `
 {
+  "AccessibilityRole": "Button",
   "AutomationId": "cancel_button",
   "Background": null,
   "BorderBrush": null,
@@ -621,6 +630,7 @@ exports[`ButtonTests Buttons can have their accessibility and keyboard focus dis
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
+      "AccessibilityRole": "Button",
       "AutomationId": "accessibility_props",
       "Background": null,
       "BorderBrush": null,
@@ -738,6 +748,7 @@ exports[`ButtonTests Buttons can have their accessibility and keyboard focus dis
       ],
     },
     {
+      "AccessibilityRole": "Button",
       "AutomationId": "accessibility_props",
       "Background": null,
       "BorderBrush": null,
@@ -855,6 +866,7 @@ exports[`ButtonTests Buttons can have their accessibility and keyboard focus dis
       ],
     },
     {
+      "AccessibilityRole": "Button",
       "AutomationId": "accessibility_props",
       "Background": null,
       "BorderBrush": null,
@@ -972,6 +984,7 @@ exports[`ButtonTests Buttons can have their accessibility and keyboard focus dis
       ],
     },
     {
+      "AccessibilityRole": "Button",
       "AutomationId": "accessibility_props",
       "Background": null,
       "BorderBrush": null,
@@ -1094,6 +1107,7 @@ exports[`ButtonTests Buttons can have their accessibility and keyboard focus dis
 
 exports[`ButtonTests Buttons have default styling 1`] = `
 {
+  "AccessibilityRole": "Button",
   "AutomationId": "button_default_styling",
   "Background": null,
   "BorderBrush": null,

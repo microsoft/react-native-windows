@@ -31,9 +31,9 @@
       },
       "XamlTreeDump": {
         "type": "Direct",
-        "requested": "[1.0.9, )",
-        "resolved": "1.0.9",
-        "contentHash": "rvh/RZghhSG28PDL1dw56nTZRN0/ViV2TIja/ykU9FHn0gtM8pwtgD8Ebo1nobu0QnSjn8Cg6Ncu39VV19rkrw=="
+        "requested": "[1.0.10, )",
+        "resolved": "1.0.10",
+        "contentHash": "2+6dKEFYpSP7w2QA4hkOtzPphpGlYHvW92/MTkloNNXH5ejy8qt64LhpIGzGX6FC42p4SwGSrZCXJjdvxr7bRw=="
       },
       "Microsoft.Net.Native.Compiler": {
         "type": "Transitive",

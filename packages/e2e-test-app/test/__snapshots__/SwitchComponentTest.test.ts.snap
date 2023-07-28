@@ -2,6 +2,7 @@
 
 exports[`SwitchTests Change events can be detected, event bottom 1`] = `
 {
+  "AccessibilityRole": "Switch",
   "AutomationId": "event-switch-bottom",
   "Background": null,
   "BorderBrush": null,
@@ -229,6 +230,7 @@ exports[`SwitchTests Change events can be detected, event bottom 1`] = `
 
 exports[`SwitchTests Change events can be detected, event regression top 1`] = `
 {
+  "AccessibilityRole": "Switch",
   "AutomationId": "event-switch-regression-top",
   "Background": null,
   "BorderBrush": null,
@@ -456,6 +458,7 @@ exports[`SwitchTests Change events can be detected, event regression top 1`] = `
 
 exports[`SwitchTests Change events can be detected, event top 1`] = `
 {
+  "AccessibilityRole": "Switch",
   "AutomationId": "event-switch-top",
   "Background": null,
   "BorderBrush": null,
@@ -683,6 +686,7 @@ exports[`SwitchTests Change events can be detected, event top 1`] = `
 
 exports[`SwitchTests Change events can be detected, events regression bottom 1`] = `
 {
+  "AccessibilityRole": "Switch",
   "AutomationId": "event-switch-regression-bottom",
   "Background": null,
   "BorderBrush": null,
@@ -910,6 +914,7 @@ exports[`SwitchTests Change events can be detected, events regression bottom 1`]
 
 exports[`SwitchTests Controlled switch 1`] = `
 {
+  "AccessibilityRole": "Switch",
   "AutomationId": "controlled-switch",
   "Background": null,
   "BorderBrush": null,
@@ -1137,6 +1142,7 @@ exports[`SwitchTests Controlled switch 1`] = `
 
 exports[`SwitchTests Custom colors can be provided, initial false 1`] = `
 {
+  "AccessibilityRole": "Switch",
   "AutomationId": "initial-false-switch",
   "Background": null,
   "BorderBrush": null,
@@ -1364,6 +1370,7 @@ exports[`SwitchTests Custom colors can be provided, initial false 1`] = `
 
 exports[`SwitchTests Custom colors can be provided, initial true 1`] = `
 {
+  "AccessibilityRole": "Switch",
   "AutomationId": "initial-true-switch",
   "Background": null,
   "BorderBrush": null,
@@ -1591,6 +1598,7 @@ exports[`SwitchTests Custom colors can be provided, initial true 1`] = `
 
 exports[`SwitchTests Switches can be disabled, initial false 1`] = `
 {
+  "AccessibilityRole": "Switch",
   "AutomationId": "disabled-initial-off",
   "Background": null,
   "BorderBrush": null,
@@ -1818,6 +1826,7 @@ exports[`SwitchTests Switches can be disabled, initial false 1`] = `
 
 exports[`SwitchTests Switches can be disabled, initial true 1`] = `
 {
+  "AccessibilityRole": "Switch",
   "AutomationId": "disabled-initial-on",
   "Background": null,
   "BorderBrush": null,
@@ -2045,6 +2054,7 @@ exports[`SwitchTests Switches can be disabled, initial true 1`] = `
 
 exports[`SwitchTests Switches can be set to true/false, initial false 1`] = `
 {
+  "AccessibilityRole": "Switch",
   "AutomationId": "on-off-initial-off",
   "Background": null,
   "BorderBrush": null,
@@ -2272,6 +2282,7 @@ exports[`SwitchTests Switches can be set to true/false, initial false 1`] = `
 
 exports[`SwitchTests Switches can be set to true/false, initial true 1`] = `
 {
+  "AccessibilityRole": "Switch",
   "AutomationId": "on-off-initial-on",
   "Background": null,
   "BorderBrush": null,
@@ -2536,6 +2547,7 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AccessibilityRole": "Switch",
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -2759,6 +2771,7 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
           ],
         },
         {
+          "AccessibilityRole": "Switch",
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -3002,6 +3015,7 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AccessibilityRole": "Switch",
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -3225,6 +3239,7 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
           ],
         },
         {
+          "AccessibilityRole": "Switch",
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
