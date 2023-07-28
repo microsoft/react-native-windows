@@ -14,4 +14,13 @@
     <CppWinRTVersion Condition="'$(CppWinRTVersion)' == '' Or $([MSBuild]::VersionLessThan('$(CppWinRTVersion)', '2.0.211028.7'))">2.0.211028.7</CppWinRTVersion>
   </PropertyGroup>
 
+  <ItemDefinitionGroup Label="CppWinRT">
+    <ClCompile>
+      <PreprocessorDefinitions Condition="$([MSBuild]::VersionGreaterThanOrEquals('$(CppWinRTVersion)', '2.0.230524.3'))">
+        CPPWINRT_USE_LOADLIBRARYEXW;
+        %(PreprocessorDefinitions)
+      </PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+
 </Project>
