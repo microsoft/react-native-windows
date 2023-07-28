@@ -843,11 +843,23 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
     // reset color and text if placeholderText is present and this is the first RichEdit update
     m_firstTextUpdate = false;
     updateTextColor(0x000000);
-    // strip the placeholder text from attributedString
-    if (data.attributedString.getFragments()[0].string.size() > m_placeholderText.size()) {
-      auto strippedString = data.attributedString.getFragments()[0].string.substr(m_placeholderText.size(), data.attributedString.getFragments()[0].string.size());
-      data.attributedString.getFragments()[0].string = strippedString;
-    }   
+    auto strippedString = data.attributedString.getFragments()[0].string.substr(m_placeholderText.size(), data.attributedString.getFragments()[0].string.size());
+    data.attributedString.getFragments()[0].string = strippedString;
+
+
+    LRESULT res;
+    CHARRANGE cr;
+    cr.cpMin = cr.cpMax = 0;
+    winrt::check_hresult(m_textServices->TxSendMessage(EM_EXGETSEL, 0, reinterpret_cast<LPARAM>(&cr), &res));
+
+    UpdateText(
+        data.attributedString.getFragments().size() ? data.attributedString.getFragments()[0].string
+            : "");
+
+    winrt::check_hresult(
+        m_textServices->TxSendMessage(EM_SETSEL, static_cast<WPARAM>(cr.cpMin), static_cast<LPARAM>(cr.cpMax), &res));
+
+     //return;
   }
 
   data.mostRecentEventCount = m_nativeEventCount;
@@ -895,6 +907,9 @@ void WindowsTextInputComponentView::finalizeUpdates(RNComponentViewUpdateMask up
   if (m_needsBorderUpdate) {
     m_needsBorderUpdate = false;
     UpdateSpecialBorderLayers(m_layoutMetrics, *m_props);
+  }
+  if (!m_placeholderText.empty() && m_firstTextUpdate) {
+    setPlaceholderText(m_placeholderText);
   }
   ensureDrawingSurface();
 }
@@ -1000,11 +1015,8 @@ void WindowsTextInputComponentView::ensureDrawingSurface() noexcept {
         m_textServices->TxSendMessage(EM_SETEVENTMASK, 0, ENM_CHANGE | ENM_SELCHANGE | ENM_ENDCOMPOSITION, &lresult));
 
     DrawText();
-    if (!m_placeholderText.empty()) {
-      setPlaceholderText(m_placeholderText);
-    }
+    //works here
     m_firstTextUpdate = true;
-
     auto surfaceBrush = m_compContext.CreateSurfaceBrush(m_drawingSurface);
     surfaceBrush.HorizontalAlignmentRatio(0.f);
     surfaceBrush.VerticalAlignmentRatio(0.f);
