@@ -10785,18 +10785,6 @@ pify@^4.0.1:
   resolved "https://registry.yarnpkg.com/pify/-/pify-4.0.1.tgz#4b2cd25c50d598735c50292224fd8c6df41e3231"
   integrity sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==
 
-pinkie-promise@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/pinkie-promise/-/pinkie-promise-2.0.1.tgz#2135d6dfa7a358c069ac9b178776288228450ffa"
-  integrity sha1-ITXW36ejWMBprJsXh3YogihFD/o=
-  dependencies:
-    pinkie "^2.0.0"
-
-pinkie@^2.0.0:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/pinkie/-/pinkie-2.0.4.tgz#72556b80cfa0d48a974e80e77248e80ed4f7f870"
-  integrity sha1-clVrgM+g1IqXToDnckjoDtT3+HA=
-
 pirates@^4.0.4, pirates@^4.0.5:
   version "4.0.5"
   resolved "https://registry.yarnpkg.com/pirates/-/pirates-4.0.5.tgz#feec352ea5c3268fb23a37c702ab1699f35a5f3b"
@@ -11638,11 +11626,10 @@ scheduler@^0.23.0:
     loose-envify "^1.1.0"
 
 screenshot-desktop@^1.12.2:
-  version "1.14.0"
-  resolved "https://registry.yarnpkg.com/screenshot-desktop/-/screenshot-desktop-1.14.0.tgz#b6b8df892b4b8035278535808478ac85e294b95d"
-  integrity sha512-CLkGkP6k74i7gc1on3UV+JKpfRG8HSPiU39gxA790m0YHToY9A9c+eY0uNW30jIDJvOQcDnDt/2Xs7+r2Fq47Q==
+  version "1.15.0"
+  resolved "https://registry.yarnpkg.com/screenshot-desktop/-/screenshot-desktop-1.15.0.tgz#62109463865cdb1bbe61dff39003cd06ac404fb0"
+  integrity sha512-CLaZNBDEXU+KJ6BGsO8jSbKI7Zck7gQmFJHjzluBdwrVP0jOemP2avpD3ufWu81yqzwB92u2AMv+K9IlaslRsg==
   dependencies:
-    pinkie-promise "^2.0.1"
     temp "^0.9.4"
 
 scss-parser@^1.0.4:
