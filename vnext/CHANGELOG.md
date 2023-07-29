@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 26 Jul 2023 07:30:55 GMT and should not be manually modified.
+This log was last generated on Sat, 29 Jul 2023 23:20:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.27
+
+Sat, 29 Jul 2023 23:20:22 GMT
+
+### Patches
+
+- Revert "[0.71] Re-apply PR #11757 that added use of hermes.dll with C API (#11838)" (julio.rocha@microsoft.com)
+- Bump @react-native-windows/cli to v0.71.14
 
 ## 0.71.26
 
