@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 29 Jul 2023 05:13:14 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.687",
+      "version": "0.0.0-canary.687",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e68fcf4631b66de9d9e73c687bb3c731557b042d",
+            "comment": "Enable using newer CppWinRT versions that use WINRT_IMPL_LoadLibraryExW"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "13c1223ecd1869e51a3d2f539e2718953744d4c1",
+            "comment": "Fix accessibilityState to support states not being set"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 28 Jul 2023 05:14:51 GMT",
       "tag": "react-native-windows_v0.0.0-canary.686",
       "version": "0.0.0-canary.686",

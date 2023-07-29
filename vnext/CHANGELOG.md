@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 28 Jul 2023 05:14:51 GMT and should not be manually modified.
+This log was last generated on Sat, 29 Jul 2023 05:13:14 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.687
+
+Sat, 29 Jul 2023 05:13:14 GMT
+
+### Changes
+
+- Enable using newer CppWinRT versions that use WINRT_IMPL_LoadLibraryExW (jthysell@microsoft.com)
+- Fix accessibilityState to support states not being set (jthysell@microsoft.com)
 
 ## 0.0.0-canary.686
 

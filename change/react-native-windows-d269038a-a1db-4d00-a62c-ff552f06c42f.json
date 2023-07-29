@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix accessibilityState to support states not being set",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}

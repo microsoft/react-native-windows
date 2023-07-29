@@ -2,6 +2,27 @@
   "name": "@react-native-windows/automation-commands",
   "entries": [
     {
+      "date": "Sat, 29 Jul 2023 05:13:14 GMT",
+      "tag": "@react-native-windows/automation-commands_v0.1.128",
+      "version": "0.1.128",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/automation-commands",
+            "commit": "13c1223ecd1869e51a3d2f539e2718953744d4c1",
+            "comment": "Fix accessibilityState to support states not being set"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.26",
+            "commit": "e68fcf4631b66de9d9e73c687bb3c731557b042d"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 28 Jul 2023 05:14:53 GMT",
       "tag": "@react-native-windows/automation-commands_v0.1.127",
       "version": "0.1.127",
