@@ -130,6 +130,7 @@ void FrameworkElementViewManager::GetNativeProps(const winrt::Microsoft::ReactNa
   GetAccessibilityStateProps(writer);
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"accessibilityHint", L"string");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"accessibilityLabel", L"string");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"accessibilityLevel", L"number");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"accessibilityPosInSet", L"number");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"accessibilitySetSize", L"number");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"testID", L"string");
@@ -286,6 +287,15 @@ bool FrameworkElementViewManager::UpdateProperty(
         }
       } else if (propertyValue.IsNull()) {
         element.ClearValue(xaml::Automation::AutomationProperties::AccessibilityViewProperty());
+      }
+    } else if (propertyName == "accessibilityLevel") {
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+          propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
+        auto value = static_cast<int>(propertyValue.AsDouble());
+        auto boxedValue = winrt::Windows::Foundation::PropertyValue::CreateInt32(value);
+        element.SetValue(xaml::Automation::AutomationProperties::LevelProperty(), boxedValue);
+      } else if (propertyValue.IsNull()) {
+        element.ClearValue(xaml::Automation::AutomationProperties::LevelProperty());
       }
     } else if (propertyName == "accessibilityLiveRegion") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
@@ -493,7 +503,7 @@ bool FrameworkElementViewManager::UpdateProperty(
             states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Expanded)] =
                 !innerValue.IsNull() && innerValue.AsBoolean();
             states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Collapsed)] =
-                innerValue.IsNull() || !innerValue.AsBoolean();
+                innerValue.IsNull() ? false : !innerValue.AsBoolean();
 
             const auto prevExpandedState = DynamicAutomationProperties::GetAccessibilityStateExpanded(element);
 

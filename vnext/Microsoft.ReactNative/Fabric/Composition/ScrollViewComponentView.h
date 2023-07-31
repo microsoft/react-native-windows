@@ -78,6 +78,9 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   // void OnPointerDown(const winrt::Windows::UI::Input::PointerPoint &pp) noexcept override;
   bool ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept override;
 
+  void StartBringIntoView(BringIntoViewOptions &&args) noexcept override;
+  virtual std::string DefaultControlType() const noexcept;
+
  private:
   ScrollViewComponentView(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,

@@ -2,6 +2,36 @@
   "name": "@rnw-scripts/eslint-config",
   "entries": [
     {
+      "date": "Fri, 14 Jul 2023 05:17:06 GMT",
+      "tag": "@rnw-scripts/eslint-config_v1.2.2",
+      "version": "1.2.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "4dae24722d1ea6c9c77e4ade1068aa626f4d2844",
+            "comment": "integration 6/28"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 01 Jul 2023 05:14:41 GMT",
+      "tag": "@rnw-scripts/eslint-config_v1.2.1",
+      "version": "1.2.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "99563ff69161f1c6c699baec89c72f4b6b355224",
+            "comment": "integrate 6/16"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 13 Jun 2023 05:15:41 GMT",
       "tag": "@rnw-scripts/eslint-config_v1.2.0",
       "version": "1.2.0",

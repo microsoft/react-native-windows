@@ -807,6 +807,12 @@ exports.examples = ([
           <WithLabel label="one-time-code">
             <TextInput autoComplete="one-time-code" style={styles.default} />
           </WithLabel>
+          <WithLabel label="birthdate-full">
+            <TextInput autoComplete="birthdate-full" style={styles.default} />
+          </WithLabel>
+          <WithLabel label="cc-name">
+            <TextInput autoComplete="cc-name" style={styles.default} />
+          </WithLabel>
         </View>
       );
     },
@@ -828,6 +834,15 @@ exports.examples = ([
               autoComplete="email"
               style={styles.default}
             />
+          </WithLabel>
+          <WithLabel label="creditCardExpiration">
+            <TextInput
+              textContentType="creditCardExpiration"
+              style={styles.default}
+            />
+          </WithLabel>
+          <WithLabel label="birthdate">
+            <TextInput textContentType="birthdate" style={styles.default} />
           </WithLabel>
         </View>
       );
@@ -902,6 +917,25 @@ exports.examples = ([
               </View>
             );
           })}
+        </View>
+      );
+    },
+  },
+  {
+    title: 'iOS autoformatting behaviors',
+    render: function (): React.Node {
+      return (
+        <View>
+          <WithLabel label="smartInsertDelete: true | undefined">
+            <TextInput style={styles.default} defaultValue="CopyAndPaste" />
+          </WithLabel>
+          <WithLabel label="smartInsertDelete: false">
+            <TextInput
+              smartInsertDelete={false}
+              style={styles.default}
+              defaultValue="CopyAndPaste"
+            />
+          </WithLabel>
         </View>
       );
     },

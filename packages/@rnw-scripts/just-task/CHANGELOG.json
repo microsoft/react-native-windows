@@ -2,6 +2,78 @@
   "name": "@rnw-scripts/just-task",
   "entries": [
     {
+      "date": "Fri, 28 Jul 2023 05:14:52 GMT",
+      "tag": "@rnw-scripts/just-task_v2.3.15",
+      "version": "2.3.15",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@rnw-scripts/just-task",
+            "commit": "1f6d2a9ab892a5ab2ffb9652d4ee41ff6a04b2b6",
+            "comment": "Integrate 7/21"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 26 Jul 2023 05:15:46 GMT",
+      "tag": "@rnw-scripts/just-task_v2.3.14",
+      "version": "2.3.14",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@rnw-scripts/just-task",
+            "commit": "4880f76af3c9032afea04e74a02c86990fd0a396",
+            "comment": "Remove upstream react-native flow typings from repo"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 14 Jul 2023 05:17:08 GMT",
+      "tag": "@rnw-scripts/just-task_v2.3.13",
+      "version": "2.3.13",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@rnw-scripts/just-task",
+            "commit": "4dae24722d1ea6c9c77e4ade1068aa626f4d2844",
+            "comment": "integration 6/28"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/just-task",
+            "comment": "Bump @rnw-scripts/jest-e2e-config to v1.4.6",
+            "commit": "4dae24722d1ea6c9c77e4ade1068aa626f4d2844"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/just-task",
+            "comment": "Bump @rnw-scripts/jest-unittest-config to v1.5.6",
+            "commit": "4dae24722d1ea6c9c77e4ade1068aa626f4d2844"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 01 Jul 2023 05:14:41 GMT",
+      "tag": "@rnw-scripts/just-task_v2.3.12",
+      "version": "2.3.12",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@rnw-scripts/just-task",
+            "commit": "99563ff69161f1c6c699baec89c72f4b6b355224",
+            "comment": "integrate 6/16"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 07 Jun 2023 05:16:11 GMT",
       "tag": "@rnw-scripts/just-task_v2.3.11",
       "version": "2.3.11",

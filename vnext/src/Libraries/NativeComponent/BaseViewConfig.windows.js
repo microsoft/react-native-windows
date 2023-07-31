@@ -143,6 +143,18 @@ const bubblingEventTypes = {
       bubbled: 'onPointerOut',
     },
   },
+  topGotPointerCapture: {
+    phasedRegistrationNames: {
+      captured: 'onGotPointerCaptureCapture',
+      bubbled: 'onGotPointerCapture',
+    },
+  },
+  topLostPointerCapture: {
+    phasedRegistrationNames: {
+      captured: 'onLostPointerCaptureCapture',
+      bubbled: 'onLostPointerCapture',
+    },
+  },
 
   topKeyDown: {
     // [Windows]
@@ -348,6 +360,7 @@ const validAttributesForNonEventProps = {
 
   direction: true,
 
+  accessibilityLevel: true, // [Windows]
   accessibilityLiveRegion: true, // [Windows]
   accessibilityPosInSet: true, // [Windows]
   accessibilitySetSize: true, // [Windows]
@@ -406,6 +419,8 @@ const validAttributesForEventProps = {
   onPointerLeave: true,
   onPointerOver: true,
   onPointerOut: true,
+  onGotPointerCapture: true,
+  onLostPointerCapture: true,
 
   // [Windows
   // Mouse enter/leave events

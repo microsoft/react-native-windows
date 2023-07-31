@@ -48,7 +48,7 @@ const std::vector<IComponentView *> &CompositionBaseComponentView::children() co
 void CompositionBaseComponentView::parent(IComponentView *parent) noexcept {
   if (!parent) {
     auto root = rootComponentView();
-    if (root->GetFocusedComponent() == this) {
+    if (root && root->GetFocusedComponent() == this) {
       root->SetFocusedComponent(nullptr); // TODO need move focus logic - where should focus go?
     }
   }
@@ -96,6 +96,24 @@ void CompositionBaseComponentView::onFocusGained() noexcept {
           m_uiaProvider, UIA_HasKeyboardFocusPropertyId, false, true);
       UiaRaiseAutomationEvent(spProviderSimple.get(), UIA_AutomationFocusChangedEventId);
     }
+  }
+
+  StartBringIntoView({});
+}
+
+void CompositionBaseComponentView::StartBringIntoView(BringIntoViewOptions &&options) noexcept {
+  if (!options.TargetRect) {
+    // Default to bring the entire of this component into view
+    options.TargetRect = {
+        {0, 0},
+        {m_layoutMetrics.frame.size.width * m_layoutMetrics.pointScaleFactor,
+         m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor}};
+  }
+
+  if (m_parent) {
+    options.TargetRect->origin.y += m_layoutMetrics.frame.origin.y * m_layoutMetrics.pointScaleFactor;
+    options.TargetRect->origin.x += m_layoutMetrics.frame.origin.x * m_layoutMetrics.pointScaleFactor;
+    m_parent->StartBringIntoView(std::move(options));
   }
 }
 
@@ -1073,6 +1091,9 @@ void CompositionBaseComponentView::updateAccessibilityProps(
       UIA_IsEnabledPropertyId,
       !oldViewProps.accessibilityState.disabled,
       !newViewProps.accessibilityState.disabled);
+
+  winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+      provider, UIA_ControlTypePropertyId, oldViewProps.accessibilityRole, newViewProps.accessibilityRole);
 }
 
 void CompositionBaseComponentView::updateBorderLayoutMetrics(
@@ -1192,6 +1213,10 @@ facebook::react::SharedTouchEventEmitter CompositionBaseComponentView::touchEven
 
 bool CompositionBaseComponentView::focusable() const noexcept {
   return false;
+}
+
+std::string CompositionBaseComponentView::DefaultControlType() const noexcept {
+  return "group";
 }
 
 CompositionViewComponentView::CompositionViewComponentView(
@@ -1393,6 +1418,10 @@ winrt::Microsoft::ReactNative::Composition::IVisual CompositionViewComponentView
 
 bool CompositionViewComponentView::focusable() const noexcept {
   return m_props->focusable;
+}
+
+std::string CompositionViewComponentView::DefaultControlType() const noexcept {
+  return "group";
 }
 
 IComponentView *lastDeepChild(IComponentView &view) noexcept {

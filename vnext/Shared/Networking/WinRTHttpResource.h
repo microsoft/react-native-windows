@@ -28,7 +28,7 @@ class WinRTHttpResource : public IHttpResource,
   std::function<void(int64_t requestId)> m_onRequestSuccess;
   std::function<void(int64_t requestId, Response &&response)> m_onResponse;
   std::function<void(int64_t requestId, std::string &&responseData)> m_onData;
-  std::function<void(int64_t requestId, folly::dynamic &&responseData)> m_onDataDynamic;
+  std::function<void(int64_t requestId, winrt::Microsoft::ReactNative::JSValueObject &&responseData)> m_onDataObject;
   std::function<void(int64_t requestId, std::string &&errorMessage, bool isTimeout)> m_onError;
   std::function<void(int64_t requestId, std::string &&responseData, int64_t progress, int64_t total)>
       m_onIncrementalData;
@@ -71,7 +71,7 @@ class WinRTHttpResource : public IHttpResource,
       std::string &&url,
       int64_t requestId,
       Headers &&headers,
-      folly::dynamic &&data,
+      winrt::Microsoft::ReactNative::JSValueObject &&data,
       std::string &&responseType,
       bool useIncrementalUpdates,
       int64_t timeout,
@@ -83,7 +83,8 @@ class WinRTHttpResource : public IHttpResource,
   void SetOnRequestSuccess(std::function<void(int64_t requestId)> &&handler) noexcept override;
   void SetOnResponse(std::function<void(int64_t requestId, Response &&response)> &&handler) noexcept override;
   void SetOnData(std::function<void(int64_t requestId, std::string &&responseData)> &&handler) noexcept override;
-  void SetOnData(std::function<void(int64_t requestId, folly::dynamic &&responseData)> &&handler) noexcept override;
+  void SetOnData(std::function<void(int64_t requestId, winrt::Microsoft::ReactNative::JSValueObject &&responseData)>
+                     &&handler) noexcept override;
   void SetOnIncrementalData(
       std::function<void(int64_t requestId, std::string &&responseData, int64_t progress, int64_t total)>
           &&handler) noexcept override;

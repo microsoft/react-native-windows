@@ -42,6 +42,7 @@ struct ParagraphComponentView : CompositionBaseComponentView {
   facebook::react::SharedTouchEventEmitter touchEventEmitterAtPoint(facebook::react::Point pt) noexcept override;
 
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
+  virtual std::string DefaultControlType() const noexcept;
 
  private:
   ParagraphComponentView(

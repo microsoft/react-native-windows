@@ -17,6 +17,8 @@ REACT_STRUCT(AnimatedTurboModuleSpec_EndResult)
 struct AnimatedTurboModuleSpec_EndResult {
     REACT_FIELD(finished)
     bool finished;
+    REACT_FIELD(value)
+    std::optional<double> value;
 };
 
 REACT_STRUCT(AnimatedTurboModuleSpec_EventMapping)

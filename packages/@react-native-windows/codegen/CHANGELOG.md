@@ -1,8 +1,59 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Tue, 13 Jun 2023 05:15:41 GMT and should not be manually modified.
+This log was last generated on Fri, 28 Jul 2023 05:14:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.66
+
+Fri, 28 Jul 2023 05:14:53 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.27
+- Bump @rnw-scripts/just-task to v2.3.15
+
+## 0.0.0-canary.65
+
+Wed, 26 Jul 2023 05:15:47 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.26
+- Bump @rnw-scripts/just-task to v2.3.14
+
+## 0.0.0-canary.64
+
+Fri, 14 Jul 2023 05:17:05 GMT
+
+### Changes
+
+- integration 6/28 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.25
+- Bump @rnw-scripts/eslint-config to v1.2.2
+- Bump @rnw-scripts/jest-unittest-config to v1.5.6
+- Bump @rnw-scripts/just-task to v2.3.13
+- Bump @rnw-scripts/ts-config to v2.0.5
+
+## 0.0.0-canary.63
+
+Sat, 08 Jul 2023 05:13:21 GMT
+
+### Changes
+
+- Add configConfig.windows.cppStringType in package.json for @rnw/codegen (53799235+ZihanChen-MSFT@users.noreply.github.com)
+- Add cppStringType option to @rnw/codegen (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.62
+
+Sat, 01 Jul 2023 05:14:41 GMT
+
+### Changes
+
+- integrate 6/16 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.24
+- Bump @rnw-scripts/eslint-config to v1.2.1
+- Bump @rnw-scripts/just-task to v2.3.12
 
 ## 0.0.0-canary.61
 

@@ -52,7 +52,7 @@ struct CompReactPackageProvider
  public: // IReactPackageProvider
   void CreatePackage(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept {
     AddAttributedModules(packageBuilder, true);
-    packageBuilder.AddModule(L"DeviceInfo", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<DeviceInfo>());
+    packageBuilder.AddTurboModule(L"DeviceInfo", winrt::Microsoft::ReactNative::MakeModuleProvider<DeviceInfo>());
   }
 };
 
@@ -191,7 +191,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
     case WM_GETOBJECT: {
       if (lParam == UiaRootObjectId) {
         auto windowData = WindowData::GetFromWindow(hWnd);
-        if (!windowData->m_windowInited)
+        if (windowData == nullptr || !windowData->m_windowInited)
           break;
 
         auto hwndHost = windowData->m_CompositionHwndHost;

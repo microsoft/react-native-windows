@@ -16,7 +16,6 @@ import * as PressabilityDebug from '../Pressability/PressabilityDebug';
 import usePressability from '../Pressability/usePressability';
 import flattenStyle from '../StyleSheet/flattenStyle';
 import processColor from '../StyleSheet/processColor';
-import {getAccessibilityRoleFromRole} from '../Utilities/AcessibilityMapping';
 import Platform from '../Utilities/Platform';
 import TextAncestor from './TextAncestor';
 import {NativeText, NativeVirtualText} from './TextNativeComponent';
@@ -38,7 +37,9 @@ const Text: React.AbstractComponent<
   const {
     accessible,
     accessibilityLabel,
-    accessibilityRole,
+    accessibilityLevel, // Windows
+    accessibilityPosInSet, // Windows
+    accessibilitySetSize, // Windows
     accessibilityState,
     allowFontScaling,
     'aria-busy': ariaBusy,
@@ -46,6 +47,9 @@ const Text: React.AbstractComponent<
     'aria-disabled': ariaDisabled,
     'aria-expanded': ariaExpanded,
     'aria-label': ariaLabel,
+    'aria-level': ariaLevel, // Windows
+    'aria-posinset': ariaPosinset, // Windows
+    'aria-setsize': ariaSetsize, // Windows
     'aria-selected': ariaSelected,
     ellipsizeMode,
     id,
@@ -61,7 +65,6 @@ const Text: React.AbstractComponent<
     onResponderTerminationRequest,
     onStartShouldSetResponder,
     pressRetentionOffset,
-    role,
     suppressHighlighting,
     ...restProps
   } = props;
@@ -240,9 +243,9 @@ const Text: React.AbstractComponent<
         {...restProps}
         {...eventHandlersForText}
         accessibilityLabel={ariaLabel ?? accessibilityLabel}
-        accessibilityRole={
-          role ? getAccessibilityRoleFromRole(role) : accessibilityRole
-        }
+        accessibilityLevel={ariaLevel ?? accessibilityLevel} // Windows
+        accessibilityPosInSet={ariaPosinset ?? accessibilityPosInSet} // Windows
+        accessibilitySetSize={ariaSetsize ?? accessibilitySetSize} // Windows
         accessibilityState={_accessibilityState}
         allowFontScaling={allowFontScaling !== false}
         disabled={_disabled}
@@ -304,9 +307,9 @@ const Text: React.AbstractComponent<
               {...textPropsLessStyle}
               {...eventHandlersForText}
               accessibilityLabel={ariaLabel ?? accessibilityLabel}
-              accessibilityRole={
-                role ? getAccessibilityRoleFromRole(role) : accessibilityRole
-              }
+              accessibilityLevel={ariaLevel ?? accessibilityLevel} // Windows
+              accessibilityPosInSet={ariaPosinset ?? accessibilityPosInSet} // Windows
+              accessibilitySetSize={ariaSetsize ?? accessibilitySetSize} // Windows
               accessibilityState={nativeTextAccessibilityState}
               accessible={
                 accessible == null && Platform.OS === 'android'
@@ -334,9 +337,9 @@ const Text: React.AbstractComponent<
             {...restProps}
             {...eventHandlersForText}
             accessibilityLabel={ariaLabel ?? accessibilityLabel}
-            accessibilityRole={
-              role ? getAccessibilityRoleFromRole(role) : accessibilityRole
-            }
+            accessibilityLevel={ariaLevel ?? accessibilityLevel} // Windows
+            accessibilityPosInSet={ariaPosinset ?? accessibilityPosInSet} // Windows
+            accessibilitySetSize={ariaSetsize ?? accessibilitySetSize} // Windows
             accessibilityState={nativeTextAccessibilityState}
             accessible={
               accessible == null && Platform.OS === 'android'

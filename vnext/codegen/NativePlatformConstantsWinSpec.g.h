@@ -29,6 +29,8 @@ REACT_STRUCT(PlatformConstantsWinSpec_Constants)
 struct PlatformConstantsWinSpec_Constants {
     REACT_FIELD(isTesting)
     bool isTesting;
+    REACT_FIELD(isDisableAnimations)
+    std::optional<bool> isDisableAnimations;
     REACT_FIELD(reactNativeVersion)
     PlatformConstantsWinSpec_Constants_reactNativeVersion reactNativeVersion;
     REACT_FIELD(osVersion)

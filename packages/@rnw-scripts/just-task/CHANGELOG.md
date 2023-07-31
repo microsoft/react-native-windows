@@ -1,8 +1,42 @@
 # Change Log - @rnw-scripts/just-task
 
-This log was last generated on Wed, 07 Jun 2023 05:16:11 GMT and should not be manually modified.
+This log was last generated on Fri, 28 Jul 2023 05:14:52 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.3.15
+
+Fri, 28 Jul 2023 05:14:52 GMT
+
+### Patches
+
+- Integrate 7/21 (34109996+chiaramooney@users.noreply.github.com)
+
+## 2.3.14
+
+Wed, 26 Jul 2023 05:15:46 GMT
+
+### Patches
+
+- Remove upstream react-native flow typings from repo (jthysell@microsoft.com)
+
+## 2.3.13
+
+Fri, 14 Jul 2023 05:17:08 GMT
+
+### Patches
+
+- integration 6/28 (tatianakapos@microsoft.com)
+- Bump @rnw-scripts/jest-e2e-config to v1.4.6
+- Bump @rnw-scripts/jest-unittest-config to v1.5.6
+
+## 2.3.12
+
+Sat, 01 Jul 2023 05:14:41 GMT
+
+### Patches
+
+- integrate 6/16 (tatianakapos@microsoft.com)
 
 ## 2.3.11
 

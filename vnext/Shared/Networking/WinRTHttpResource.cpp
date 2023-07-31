@@ -6,6 +6,7 @@
 #include "WinRTHttpResource.h"
 
 #include <CppRuntimeOptions.h>
+#include <Networking/IBlobResource.h>
 #include <ReactPropertyBag.h>
 #include <Utils/CppWinrtLessExceptions.h>
 #include <Utils/WinRTConversions.h>
@@ -23,8 +24,6 @@
 #include <winrt/Windows.Storage.Streams.h>
 #include <winrt/Windows.Web.Http.Headers.h>
 
-using folly::dynamic;
-
 using std::function;
 using std::scoped_lock;
 using std::shared_ptr;
@@ -35,6 +34,7 @@ using std::weak_ptr;
 using winrt::fire_and_forget;
 using winrt::hresult_error;
 using winrt::to_hstring;
+using winrt::Microsoft::ReactNative::JSValueObject;
 using winrt::Windows::Foundation::IAsyncOperation;
 using winrt::Windows::Foundation::IInspectable;
 using winrt::Windows::Foundation::Uri;
@@ -69,15 +69,15 @@ constexpr char responseTypeBlob[] = "blob";
 namespace Microsoft::React::Networking {
 
 // May throw winrt::hresult_error
-void AttachMultipartHeaders(IHttpContent content, const dynamic &headers) {
+void AttachMultipartHeaders(IHttpContent content, const JSValueObject &headers) {
   HttpMediaTypeHeaderValue contentType{nullptr};
 
   // Headers are generally case-insensitive
   // https://www.ietf.org/rfc/rfc2616.txt section 4.2
   // TODO: Consolidate with PerformRequest's header parsing.
-  for (auto &header : headers.items()) {
-    auto &name = header.first.getString();
-    auto &value = header.second.getString();
+  for (auto &header : headers) {
+    auto &name = header.first;
+    auto value = header.second.AsString();
 
     if (boost::iequals(name.c_str(), "Content-Type")) {
       contentType = HttpMediaTypeHeaderValue::Parse(to_hstring(value));
@@ -147,6 +147,14 @@ IAsyncOperation<HttpRequestMessage> WinRTHttpResource::CreateRequest(
         }
         co_return nullptr;
       }
+    } else if (boost::iequals(name.c_str(), "User-Agent")) {
+      bool success = request.Headers().TryAppendWithoutValidation(to_hstring(name), to_hstring(value));
+      if (!success) {
+        if (self->m_onError) {
+          self->m_onError(reqArgs->RequestId, "Failed to append User-Agent", false);
+        }
+        co_return nullptr;
+      }
     } else {
       try {
         request.Headers().Append(to_hstring(name), to_hstring(value));
@@ -162,11 +170,11 @@ IAsyncOperation<HttpRequestMessage> WinRTHttpResource::CreateRequest(
   // Initialize content
   IHttpContent content{nullptr};
   auto &data = reqArgs->Data;
-  if (!data.isNull()) {
+  if (!data.empty()) {
     auto bodyHandler = self->m_requestBodyHandler.lock();
     if (bodyHandler && bodyHandler->Supports(data)) {
       auto contentTypeString = contentType ? winrt::to_string(contentType.ToString()) : "";
-      dynamic blob;
+      JSValueObject blob;
       try {
         blob = bodyHandler->ToRequestBody(data, contentTypeString);
       } catch (const std::invalid_argument &e) {
@@ -175,44 +183,45 @@ IAsyncOperation<HttpRequestMessage> WinRTHttpResource::CreateRequest(
         }
         co_return nullptr;
       }
-      auto bytes = blob["bytes"];
+      auto &bytes = blob["bytes"].AsArray();
       auto byteVector = vector<uint8_t>(bytes.size());
       for (auto &byte : bytes) {
-        byteVector.push_back(static_cast<uint8_t>(byte.asInt()));
+        byteVector.push_back(static_cast<uint8_t>(byte.AsUInt8()));
       }
       auto view = winrt::array_view<uint8_t const>{byteVector};
       auto buffer = CryptographicBuffer::CreateFromByteArray(view);
       content = HttpBufferContent{std::move(buffer)};
-    } else if (!data["string"].isNull()) {
-      content = HttpStringContent{to_hstring(data["string"].asString())};
-    } else if (!data["base64"].empty()) {
-      auto buffer = CryptographicBuffer::DecodeFromBase64String(to_hstring(data["base64"].asString()));
+    } else if (data.find("string") != data.cend()) {
+      content = HttpStringContent{to_hstring(data["string"].AsString())};
+    } else if (data.find("base64") != data.cend()) {
+      auto buffer = CryptographicBuffer::DecodeFromBase64String(to_hstring(data["base64"].AsString()));
       content = HttpBufferContent{std::move(buffer)};
-    } else if (!data["uri"].empty()) {
-      auto file = co_await StorageFile::GetFileFromApplicationUriAsync(Uri{to_hstring(data["uri"].asString())});
+    } else if (data.find("uri") != data.cend()) {
+      auto file = co_await StorageFile::GetFileFromApplicationUriAsync(Uri{to_hstring(data["uri"].AsString())});
       auto stream = co_await file.OpenReadAsync();
       content = HttpStreamContent{std::move(stream)};
-    } else if (!data["formData"].empty()) {
+    } else if (data.find("formData") != data.cend()) {
       winrt::Windows::Web::Http::HttpMultipartFormDataContent multiPartContent;
-      auto formData = data["formData"];
+      auto &formData = data["formData"].AsObject();
 
       // #6046 -  Overwriting WinRT's HttpMultipartFormDataContent implicit Content-Type clears the generated boundary
       contentType = nullptr;
 
       for (auto &formDataPart : formData) {
         IHttpContent formContent{nullptr};
-        if (!formDataPart["string"].isNull()) {
-          formContent = HttpStringContent{to_hstring(formDataPart["string"].asString())};
-        } else if (!formDataPart["uri"].empty()) {
-          auto filePath = to_hstring(formDataPart["uri"].asString());
+        auto &itr = formDataPart.second["string"];
+        if (!formDataPart.second["string"].IsNull()) {
+          formContent = HttpStringContent{to_hstring(formDataPart.second["string"].AsString())};
+        } else if (!formDataPart.second["uri"].IsNull()) {
+          auto filePath = to_hstring(formDataPart.second["uri"].AsString());
           auto file = co_await StorageFile::GetFileFromPathAsync(filePath);
           auto stream = co_await file.OpenReadAsync();
           formContent = HttpStreamContent{stream};
         }
 
         if (formContent) {
-          AttachMultipartHeaders(formContent, formDataPart["headers"]);
-          multiPartContent.Add(formContent, to_hstring(formDataPart["fieldName"].asString()));
+          AttachMultipartHeaders(formContent, formDataPart.second["headers"].AsObject());
+          multiPartContent.Add(formContent, to_hstring(formDataPart.second["fieldName"].AsString()));
         }
       } // foreach form data part
 
@@ -266,7 +275,7 @@ void WinRTHttpResource::SendRequest(
     string &&url,
     int64_t requestId,
     Headers &&headers,
-    dynamic &&data,
+    JSValueObject &&data,
     string &&responseType,
     bool useIncrementalUpdates,
     int64_t timeout,
@@ -345,10 +354,10 @@ void WinRTHttpResource::SetOnData(function<void(int64_t requestId, string &&resp
   m_onData = std::move(handler);
 }
 
-void WinRTHttpResource::SetOnData(function<void(int64_t requestId, dynamic &&responseData)> &&handler) noexcept
+void WinRTHttpResource::SetOnData(function<void(int64_t requestId, JSValueObject &&responseData)> &&handler) noexcept
 /*override*/
 {
-  m_onDataDynamic = std::move(handler);
+  m_onDataObject = std::move(handler);
 }
 
 void WinRTHttpResource::SetOnIncrementalData(
@@ -418,8 +427,8 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
     try {
       if (uriHandler->Supports(uri, reqArgs->ResponseType)) {
         auto blob = uriHandler->Fetch(uri);
-        if (self->m_onDataDynamic && self->m_onRequestSuccess) {
-          self->m_onDataDynamic(reqArgs->RequestId, std::move(blob));
+        if (self->m_onDataObject && self->m_onRequestSuccess) {
+          self->m_onDataObject(reqArgs->RequestId, std::move(blob));
           self->m_onRequestSuccess(reqArgs->RequestId);
         }
 
@@ -528,8 +537,8 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
 
           auto blob = responseHandler->ToResponseData(std::move(responseData));
 
-          if (self->m_onDataDynamic && self->m_onRequestSuccess) {
-            self->m_onDataDynamic(reqArgs->RequestId, std::move(blob));
+          if (self->m_onDataObject && self->m_onRequestSuccess) {
+            self->m_onDataObject(reqArgs->RequestId, std::move(blob));
             self->m_onRequestSuccess(reqArgs->RequestId);
           }
 
@@ -664,6 +673,14 @@ void WinRTHttpResource::AddResponseHandler(shared_ptr<IResponseHandler> response
     auto propBag = ReactPropertyBag{inspectableProperties.try_as<IReactPropertyBag>()};
     auto moduleProxy = weak_ptr<IHttpModuleProxy>{result};
     propBag.Set(propId, std::move(moduleProxy));
+
+    // #11439 - Best-effort attempt to set up the HTTP handler after an initial call to addNetworkingHandler failed.
+    auto blobRcPropId = ReactPropertyId<ReactNonAbiValue<weak_ptr<Networking::IBlobResource>>>{L"Blob.Resource"};
+    if (auto prop = propBag.Get(blobRcPropId)) {
+      if (auto blobRc = prop.Value().lock()) {
+        blobRc->AddNetworkingHandler();
+      }
+    }
   }
 
   return result;

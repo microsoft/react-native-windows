@@ -29,6 +29,7 @@
 <PROJECT_ROOT>/Libraries/Pressability/Pressability.js
 <PROJECT_ROOT>/Libraries/Pressability/HoverState.js
 <PROJECT_ROOT>/Libraries/StyleSheet/StyleSheet.js
+<PROJECT_ROOT>/Libraries/Text/TextProps.js
 <PROJECT_ROOT>/Libraries/Types/CoreEventTypes.js
 <PROJECT_ROOT>/Libraries/Utilities/DeviceInfo.js
 <PROJECT_ROOT>/Libraries/Utilities/Dimensions.js
@@ -83,10 +84,13 @@
 [libs]
 interface.js
 flow/
-flow-typed/
+../../../node_modules/.flow/flow-typed/
 
 [options]
 enums=true
+conditional_type=true
+mapped_type=true
+type_guards=true
 
 emoji=true
 
@@ -136,4 +140,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.207.0
+^0.212.0

@@ -594,6 +594,10 @@ bool WindowsTextInputComponentView::focusable() const noexcept {
   return m_props->focusable;
 }
 
+std::string WindowsTextInputComponentView::DefaultControlType() const noexcept {
+  return "textinput";
+}
+
 void WindowsTextInputComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
@@ -767,6 +771,10 @@ void WindowsTextInputComponentView::UpdateText(const std::string &str) noexcept 
       EM_SETTEXTEX, reinterpret_cast<WPARAM>(&stt), reinterpret_cast<LPARAM>(str.c_str()), &res));
 
   winrt::check_hresult(m_textServices->TxSendMessage(EM_EXGETSEL, 0, reinterpret_cast<LPARAM>(&cr), &res));
+
+  // enable colored emojis
+  winrt::check_hresult(
+      m_textServices->TxSendMessage(EM_SETTYPOGRAPHYOPTIONS, 0x1000 | 0x2000, 0x1000 | 0x2000, nullptr));
 }
 
 void WindowsTextInputComponentView::setPlaceholderText(const std::string &str) noexcept {

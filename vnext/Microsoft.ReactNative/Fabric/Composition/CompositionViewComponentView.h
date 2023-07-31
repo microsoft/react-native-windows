@@ -59,10 +59,14 @@ struct CompositionBaseComponentView : public IComponentView,
 
   virtual void OnRenderingDeviceLost() noexcept;
 
+  void StartBringIntoView(BringIntoViewOptions &&args) noexcept override;
+
   comp::CompositionPropertySet EnsureCenterPointPropertySet() noexcept;
   void EnsureTransformMatrixFacade() noexcept;
 
   winrt::IInspectable EnsureUiaProvider() noexcept override;
+
+  virtual std::string DefaultControlType() const noexcept;
 
  protected:
   std::array<winrt::Microsoft::ReactNative::Composition::SpriteVisual, SpecialBorderLayerCount>
@@ -114,6 +118,7 @@ struct CompositionViewComponentView : public CompositionBaseComponentView {
   void finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept override;
   void prepareForRecycle() noexcept override;
   bool focusable() const noexcept override;
+  std::string DefaultControlType() const noexcept override;
 
   facebook::react::Props::Shared props() noexcept override;
 

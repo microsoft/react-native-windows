@@ -12,7 +12,6 @@ import type {ViewProps} from './ViewPropTypes';
 
 import flattenStyle from '../../StyleSheet/flattenStyle';
 import TextAncestor from '../../Text/TextAncestor';
-import {getAccessibilityRoleFromRole} from '../../Utilities/AcessibilityMapping';
 import ViewNativeComponent from './ViewNativeComponent';
 import * as React from 'react';
 import invariant from 'invariant'; // [Windows]
@@ -35,22 +34,33 @@ const View: React.AbstractComponent<
 > = React.forwardRef(
   (
     {
+      accessibilityControls, // Win32
+      accessibilityDescribedBy, // Win32
+      accessibilityDescription, //  Win32
       accessibilityElementsHidden,
       accessibilityLabel,
       accessibilityLabelledBy,
+      accessibilityLevel, // Win32
       accessibilityLiveRegion,
-      accessibilityRole,
+      accessibilityPositionInSet, // Win32
+      accessibilitySetSize, // Win32
       accessibilityState,
       accessibilityValue,
       'aria-busy': ariaBusy,
       'aria-checked': ariaChecked,
+      'aria-controls': ariaControls,
+      'aria-describedby': ariaDescribedBy, // Win32
+      'aria-description': ariaDescription, // Win32
       'aria-disabled': ariaDisabled,
       'aria-expanded': ariaExpanded,
       'aria-hidden': ariaHidden,
       'aria-label': ariaLabel,
       'aria-labelledby': ariaLabelledBy,
+      'aria-level': ariaLevel, // Win32
       'aria-live': ariaLive,
+      'aria-posinset': ariaPosinset, // Win32
       'aria-selected': ariaSelected,
+      'aria-setsize': ariaSetsize, // Win32
       'aria-valuemax': ariaValueMax,
       'aria-valuemin': ariaValueMin,
       'aria-valuenow': ariaValueNow,
@@ -60,7 +70,6 @@ const View: React.AbstractComponent<
       importantForAccessibility,
       nativeID,
       pointerEvents,
-      role,
       tabIndex,
       ...otherProps
     }: ViewProps,
@@ -193,17 +202,26 @@ const View: React.AbstractComponent<
           return (
             <ViewNativeComponent
               {...otherProps}
+              accessibilityControls={ariaControls ?? accessibilityControls} // Win32
+              accessibilityDescribedBy={
+                ariaDescribedBy ?? accessibilityDescribedBy
+              } // Win32
+              accessibilityDescription={
+                ariaDescription ?? accessibilityDescription
+              } // Win32
               accessibilityLiveRegion={
                 ariaLive === 'off'
                   ? 'none'
                   : ariaLive ?? accessibilityLiveRegion
               }
               accessibilityLabel={ariaLabel ?? accessibilityLabel}
+              accessibilityLevel={ariaLevel ?? accessibilityLevel} // Win32
               focusable={tabIndex !== undefined ? !tabIndex : focusable}
+              accessibilityPositionInSet={
+                ariaPosinset ?? accessibilityPositionInSet
+              } // Win32
+              accessibilitySetSize={ariaSetsize ?? accessibilitySetSize} // Win32
               accessibilityState={_accessibilityState}
-              accessibilityRole={
-                role ? getAccessibilityRoleFromRole(role) : accessibilityRole
-              }
               accessibilityElementsHidden={
                 ariaHidden ?? accessibilityElementsHidden
               }

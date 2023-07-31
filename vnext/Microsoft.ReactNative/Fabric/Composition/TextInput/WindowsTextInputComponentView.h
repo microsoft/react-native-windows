@@ -52,6 +52,7 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
   void onFocusLost() noexcept override;
   void onFocusGained() noexcept override;
   bool focusable() const noexcept override;
+  std::string DefaultControlType() const noexcept override;
 
  private:
   WindowsTextInputComponentView(

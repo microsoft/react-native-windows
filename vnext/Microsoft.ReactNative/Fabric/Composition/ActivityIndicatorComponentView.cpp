@@ -126,4 +126,8 @@ bool ActivityIndicatorComponentView::focusable() const noexcept {
   return false;
 }
 
+std::string ActivityIndicatorComponentView::DefaultControlType() const noexcept {
+  return "progressbar";
+}
+
 } // namespace Microsoft::ReactNative

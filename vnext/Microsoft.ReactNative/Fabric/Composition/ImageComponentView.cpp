@@ -409,6 +409,10 @@ bool ImageComponentView::focusable() const noexcept {
   return m_props->focusable;
 }
 
+std::string ImageComponentView::DefaultControlType() const noexcept {
+  return "image";
+}
+
 std::shared_ptr<ImageComponentView> ImageComponentView::Create(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
