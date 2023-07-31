@@ -831,16 +831,15 @@ std::string WindowsTextInputComponentView::findExtraChar(
     std::string const &originalString,
     std::string const &modifiedString) {
   auto newLength = modifiedString.size() - originalString.size();
-  // find first location of extra char
   int i = 0;
+  // find first location of extra char
   while (i < modifiedString.size()) {
     if (originalString[i] != modifiedString[i]) {
       break;
     }
     i++;
   }
-
-  return modifiedString.substr(i,newLength);
+  return modifiedString.substr(i, newLength);
 }
 
 // When we are notified by RichEdit that the text changed, we need to notify JS
@@ -862,24 +861,16 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
     CHARRANGE cr;
     cr.cpMin = cr.cpMax = 0;
 
-    /*
-    if (m_placeholderText.size() <= data.attributedString.getFragments()[0].string.size()) {
-      auto strippedString = data.attributedString.getFragments()[0].string.substr(m_placeholderText.size(), data.attributedString.getFragments()[0].string.size());
-      data.attributedString.getFragments()[0].string = strippedString;
-    }
-    */
-
-    auto test = findExtraChar(m_placeholderText, data.attributedString.getFragments()[0].string);
-    data.attributedString.getFragments()[0].string = test;
+    std::string inputString = findExtraChar(m_placeholderText, data.attributedString.getFragments()[0].string);
+    data.attributedString.getFragments()[0].string = inputString;
 
     winrt::check_hresult(m_textServices->TxSendMessage(EM_EXGETSEL, 0, reinterpret_cast<LPARAM>(&cr), &res));
-    updateTextColor(0x000000);
-    UpdateText(test);
+    updateTextColor(0x000000); // update the text color back to black
+    UpdateText(data.attributedString.getFragments()[0].string);
 
     winrt::check_hresult(
         m_textServices->TxSendMessage(EM_SETSEL, static_cast<WPARAM>(cr.cpMin), static_cast<LPARAM>(cr.cpMax), &res));
-    return;
-}
+  }
 
   data.mostRecentEventCount = m_nativeEventCount;
   m_state->updateState(std::move(data));
@@ -1034,8 +1025,8 @@ void WindowsTextInputComponentView::ensureDrawingSurface() noexcept {
         m_textServices->TxSendMessage(EM_SETEVENTMASK, 0, ENM_CHANGE | ENM_SELCHANGE | ENM_ENDCOMPOSITION, &lresult));
 
     DrawText();
-    //works here
     m_firstTextUpdate = true;
+
     auto surfaceBrush = m_compContext.CreateSurfaceBrush(m_drawingSurface);
     surfaceBrush.HorizontalAlignmentRatio(0.f);
     surfaceBrush.VerticalAlignmentRatio(0.f);
