@@ -469,6 +469,7 @@ facebook::react::AttributedString WindowsTextInputComponentView::getAttributedSt
     // fragment.parentShadowView = facebook::react::ShadowView(*this);
     attributedString.prependFragment(fragment);
   }
+
   return attributedString;
 }
 
@@ -796,6 +797,7 @@ void WindowsTextInputComponentView::updateLayoutMetrics(
   }
 
   updateBorderLayoutMetrics(layoutMetrics, *m_props);
+
   m_layoutMetrics = layoutMetrics;
 
   // TODO should ceil?
