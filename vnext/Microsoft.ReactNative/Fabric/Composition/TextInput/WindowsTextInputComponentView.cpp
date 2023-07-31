@@ -841,7 +841,7 @@ std::string WindowsTextInputComponentView::findExtraChar(
     std::string const &originalString,
     std::string const &modifiedString) {
   auto newLength = modifiedString.size() - originalString.size();
-  int i = 0;
+  size_t i = 0;
   // find first location of extra char
   while (i < modifiedString.size()) {
     if (originalString[i] != modifiedString[i]) {
