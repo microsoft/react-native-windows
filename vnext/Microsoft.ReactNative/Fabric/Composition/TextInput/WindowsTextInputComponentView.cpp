@@ -640,8 +640,7 @@ void WindowsTextInputComponentView::updateProps(
   }
 
   if (oldTextInputProps.placeholder != newTextInputProps.placeholder) {
-    auto stringPlaceholder = winrt::to_hstring(newTextInputProps.placeholder);
-    m_placeholderText = winrt::to_string(stringPlaceholder);
+    m_placeholderText = newTextInputProps.placeholder;
   }
 
   if (oldTextInputProps.placeholderTextColor != newTextInputProps.placeholderTextColor) {
