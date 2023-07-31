@@ -827,6 +827,22 @@ void WindowsTextInputComponentView::updateTextColor(COLORREF color) {
   winrt::check_hresult(m_textServices->TxSendMessage(EM_SETCHARFORMAT, 0, reinterpret_cast<LPARAM>(&charFormat), &res));
 }
 
+std::string WindowsTextInputComponentView::findExtraChar(
+    std::string const &originalString,
+    std::string const &modifiedString) {
+  auto newLength = modifiedString.size() - originalString.size();
+  // find first location of extra char
+  int i = 0;
+  while (i < modifiedString.size()) {
+    if (originalString[i] != modifiedString[i]) {
+      break;
+    }
+    i++;
+  }
+
+  return modifiedString.substr(i,newLength);
+}
+
 // When we are notified by RichEdit that the text changed, we need to notify JS
 void WindowsTextInputComponentView::OnTextUpdated() noexcept {
   auto data = m_state->getData();
@@ -842,25 +858,28 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
   } else if (m_firstTextUpdate && !m_placeholderText.empty() && !data.attributedString.isEmpty()) {
     // reset color and text if placeholderText is present and this is the first RichEdit update
     m_firstTextUpdate = false;
-    updateTextColor(0x000000);
-    auto strippedString = data.attributedString.getFragments()[0].string.substr(m_placeholderText.size(), data.attributedString.getFragments()[0].string.size());
-    data.attributedString.getFragments()[0].string = strippedString;
-
-
     LRESULT res;
     CHARRANGE cr;
     cr.cpMin = cr.cpMax = 0;
-    winrt::check_hresult(m_textServices->TxSendMessage(EM_EXGETSEL, 0, reinterpret_cast<LPARAM>(&cr), &res));
 
-    UpdateText(
-        data.attributedString.getFragments().size() ? data.attributedString.getFragments()[0].string
-            : "");
+    /*
+    if (m_placeholderText.size() <= data.attributedString.getFragments()[0].string.size()) {
+      auto strippedString = data.attributedString.getFragments()[0].string.substr(m_placeholderText.size(), data.attributedString.getFragments()[0].string.size());
+      data.attributedString.getFragments()[0].string = strippedString;
+    }
+    */
+
+    auto test = findExtraChar(m_placeholderText, data.attributedString.getFragments()[0].string);
+    data.attributedString.getFragments()[0].string = test;
+
+    winrt::check_hresult(m_textServices->TxSendMessage(EM_EXGETSEL, 0, reinterpret_cast<LPARAM>(&cr), &res));
+    updateTextColor(0x000000);
+    UpdateText(test);
 
     winrt::check_hresult(
         m_textServices->TxSendMessage(EM_SETSEL, static_cast<WPARAM>(cr.cpMin), static_cast<LPARAM>(cr.cpMax), &res));
-
-     //return;
-  }
+    return;
+}
 
   data.mostRecentEventCount = m_nativeEventCount;
   m_state->updateState(std::move(data));
