@@ -688,6 +688,18 @@ TEST_CLASS (NativeModuleTest) {
     m_module = React::ReactNonAbiValue<SimpleNativeModule>::GetPtrUnsafe(m_moduleObject);
   }
 
+  TEST_METHOD(EnsureReactModuleAutoRegistered) {
+    bool registered = false;
+    auto current = React::ModuleRegistration::Head();
+    while (current) {
+      if (wcscmp(current->ModuleName(), L"SimpleNativeModule") == 0) {
+        registered = true;
+      }
+      current = current->Next();
+    }
+    TestCheck(registered);
+  }
+
   TEST_METHOD(TestMethodCall_Add) {
     m_builderMock.Call1(L"Add", std::function<void(int)>([](int result) noexcept { TestCheck(result == 8); }), 3, 5);
     TestCheck(m_builderMock.IsResolveCallbackCalled());

@@ -30,6 +30,11 @@
 #define REACT_MODULE(/* moduleStruct, [opt] moduleName, [opt] eventEmitterName */...) \
   INTERNAL_REACT_MODULE(__VA_ARGS__)(__VA_ARGS__)
 
+// REACT_MODULE_NOREG is REACT_MODULE without auto registration
+// they have the same arguments
+#define REACT_MODULE_NOREG(/* moduleStruct, [opt] moduleName, [opt] eventEmitterName */...) \
+  INTERNAL_REACT_MODULE_NOREG(__VA_ARGS__)(__VA_ARGS__)
+
 // REACT_INIT(method)
 // Arguments:
 // - method (required) - the method name the macro is attached to.

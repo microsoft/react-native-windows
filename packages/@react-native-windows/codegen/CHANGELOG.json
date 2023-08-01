@@ -2,6 +2,27 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Mon, 24 Jul 2023 15:14:19 GMT",
+      "tag": "@react-native-windows/codegen_v0.72.1",
+      "version": "0.72.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "c4fb608824ded1103e4160922cac2939b3144eae",
+            "comment": "Port #11833, #11848 and #11891 to 0.72"
+          },
+          {
+            "author": "4123478+tido64@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "6485abeed82accde1b46f002e7701b6e630a12b6",
+            "comment": "Fix RNW not being detected on case-sensitive file systems"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 23 Jun 2023 22:30:08 GMT",
       "tag": "@react-native-windows/codegen_v0.72.0",
       "version": "0.72.0",

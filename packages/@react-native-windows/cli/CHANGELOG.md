@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Fri, 23 Jun 2023 22:30:08 GMT and should not be manually modified.
+This log was last generated on Mon, 24 Jul 2023 15:14:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.72.1
+
+Mon, 24 Jul 2023 15:14:19 GMT
+
+### Patches
+
+- Port #11833, #11848 and #11891 to 0.72 (53799235+ZihanChen-MSFT@users.noreply.github.com)
+- Bump @react-native-windows/codegen to v0.72.1
 
 ## 0.72.0
 

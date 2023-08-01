@@ -409,7 +409,7 @@ inline void ReadValue(IJSValueReader const &reader, /*out*/ JSValueArray &value)
 template <class T, std::enable_if_t<!std::is_void_v<decltype(GetStructInfo(static_cast<T *>(nullptr)))>, int>>
 inline void ReadValue(IJSValueReader const &reader, /*out*/ T &value) noexcept {
   if (reader.ValueType() == JSValueType::Object) {
-    const auto &fieldMap = StructInfo<T>::FieldMap;
+    const auto &fieldMap = StructInfo<T>::GetFieldMap();
     hstring propertyName;
     while (reader.GetNextObjectProperty(/*out*/ propertyName)) {
       auto it = fieldMap.find(std::wstring_view(propertyName));
