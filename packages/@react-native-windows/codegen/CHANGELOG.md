@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Fri, 23 Jun 2023 18:19:56 GMT and should not be manually modified.
+This log was last generated on Mon, 17 Jul 2023 15:14:58 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.6
+
+Mon, 17 Jul 2023 15:14:58 GMT
+
+### Patches
+
+- Add cppStringType option to @rnw/codegen (#11833) (53799235+ZihanChen-MSFT@users.noreply.github.com)
 
 ## 0.71.5
 

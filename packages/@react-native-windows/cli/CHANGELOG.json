@@ -2,6 +2,63 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Sat, 29 Jul 2023 23:20:23 GMT",
+      "tag": "@react-native-windows/cli_v0.71.14",
+      "version": "0.71.14",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.71.7",
+            "commit": "5cd9b23f58d5b82abb2ab41a35444ede00afd6da"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 24 Jul 2023 15:13:42 GMT",
+      "tag": "@react-native-windows/cli_v0.71.13",
+      "version": "0.71.13",
+      "comments": {
+        "patch": [
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "e955ba23ba5cd36bd9ee22760537096dda335f3d",
+            "comment": "Add package.json:codegenConfig.windows.outputDirectory"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.71.6",
+            "commit": "4a0a6e0ec375d51e84b3dfb1a02adc920cb42ad2"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 17 Jul 2023 15:14:58 GMT",
+      "tag": "@react-native-windows/cli_v0.71.12",
+      "version": "0.71.12",
+      "comments": {
+        "patch": [
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "08c3acfdfe4d3c66f15e24ef3dc795dcf39202c5",
+            "comment": "Add configConfig.windows.cppStringType in package.json for @rnw/codegen (#11848)"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.71.6",
+            "commit": "08c3acfdfe4d3c66f15e24ef3dc795dcf39202c5"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 06 Jul 2023 20:21:35 GMT",
       "tag": "@react-native-windows/cli_v0.71.11",
       "version": "0.71.11",

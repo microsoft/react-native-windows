@@ -2,6 +2,105 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 29 Jul 2023 23:20:22 GMT",
+      "tag": "react-native-windows_v0.71.27",
+      "version": "0.71.27",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5cd9b23f58d5b82abb2ab41a35444ede00afd6da",
+            "comment": "Revert \"[0.71] Re-apply PR #11757 that added use of hermes.dll with C API (#11838)\""
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.71.14",
+            "commit": "5cd9b23f58d5b82abb2ab41a35444ede00afd6da"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 26 Jul 2023 07:30:55 GMT",
+      "tag": "react-native-windows_v0.71.26",
+      "version": "0.71.26",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "75c04ff65c61062feaf0ddcf9568a967108ef291",
+            "comment": "Attempt AddNetworkingHandler if HTTP module was not ready (#11926)"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 24 Jul 2023 15:13:43 GMT",
+      "tag": "react-native-windows_v0.71.25",
+      "version": "0.71.25",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ef642b3b06fdd559345703bdb2e973c6a034454a",
+            "comment": "Use TurboModules for networking in MSRN (#11867)"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "4a0a6e0ec375d51e84b3dfb1a02adc920cb42ad2",
+            "comment": "Revert \"[0.71] Re-apply PR #11757 that added use of hermes.dll with C API (#11788)\""
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.71.13",
+            "commit": "4a0a6e0ec375d51e84b3dfb1a02adc920cb42ad2"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 17 Jul 2023 15:14:58 GMT",
+      "tag": "react-native-windows_v0.71.24",
+      "version": "0.71.24",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.71.12",
+            "commit": "08c3acfdfe4d3c66f15e24ef3dc795dcf39202c5"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.71.6",
+            "commit": "08c3acfdfe4d3c66f15e24ef3dc795dcf39202c5"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 10 Jul 2023 22:20:00 GMT",
+      "tag": "react-native-windows_v0.71.23",
+      "version": "0.71.23",
+      "comments": {
+        "patch": [
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "6e285ab254f6c38e4bc8a84fc338a42671c37239",
+            "comment": "Add REACT_MODULE_NOREG which is REACT_MODULE but without auto registration (#11849)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 06 Jul 2023 20:21:35 GMT",
       "tag": "react-native-windows_v0.71.22",
       "version": "0.71.22",

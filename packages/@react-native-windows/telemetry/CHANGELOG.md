@@ -1,8 +1,24 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Fri, 23 Jun 2023 18:19:56 GMT and should not be manually modified.
+This log was last generated on Sat, 29 Jul 2023 23:20:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.7
+
+Sat, 29 Jul 2023 23:20:22 GMT
+
+### Patches
+
+- Revert "[0.71] Re-apply PR #11757 that added use of hermes.dll with C API (#11838)" (julio.rocha@microsoft.com)
+
+## 0.71.6
+
+Mon, 24 Jul 2023 15:13:42 GMT
+
+### Patches
+
+- Revert "[0.71] Re-apply PR #11757 that added use of hermes.dll with C API (#11788)" (vmorozov@microsoft.com)
 
 ## 0.71.5
 

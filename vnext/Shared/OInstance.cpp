@@ -26,7 +26,6 @@
 #include <cxxreact/ModuleRegistry.h>
 
 #include <Modules/ExceptionsManagerModule.h>
-#include <Modules/HttpModule.h>
 #include <Modules/PlatformConstantsModule.h>
 #include <Modules/SourceCodeModule.h>
 #include <Modules/StatusBarManagerModule.h>
@@ -69,15 +68,6 @@ using namespace Microsoft::JSI;
 
 using std::make_shared;
 using winrt::Microsoft::ReactNative::ReactPropertyBagHelper;
-
-namespace Microsoft::React {
-
-/*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateHttpModule(
-    winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept {
-  return std::make_unique<HttpModule>(inspectableProperties);
-}
-
-} // namespace Microsoft::React
 
 namespace facebook {
 namespace react {
@@ -559,6 +549,10 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
   std::vector<std::unique_ptr<NativeModule>> modules;
   auto transitionalProps{ReactPropertyBagHelper::CreatePropertyBag()};
 
+  // These modules are instantiated separately in MSRN (Universal Windows).
+  // When there are module name collisions, the last one registered is used.
+  // If this code is enabled, we will have unused module instances.
+  // Also, MSRN has a different property bag mechanism incompatible with this method's transitionalProps variable.
 #if (defined(_MSC_VER) && !defined(WINRT))
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
@@ -567,7 +561,6 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
         return Microsoft::React::CreateHttpModule(transitionalProps);
       },
       nativeQueue));
-#endif
 
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
@@ -577,11 +570,18 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
       },
       nativeQueue));
 
-  // TODO: This is not included for UWP because we have a different module which
-  // is added later. However, this one is designed
-  //  so that we can base a UWP version on it. We need to do that but is not high
-  //  priority.
-#if (defined(_MSC_VER) && !defined(WINRT))
+  modules.push_back(std::make_unique<CxxNativeModule>(
+      m_innerInstance,
+      Microsoft::React::GetBlobModuleName(),
+      [transitionalProps]() { return Microsoft::React::CreateBlobModule(transitionalProps); },
+      nativeQueue));
+
+  modules.push_back(std::make_unique<CxxNativeModule>(
+      m_innerInstance,
+      Microsoft::React::GetFileReaderModuleName(),
+      [transitionalProps]() { return Microsoft::React::CreateFileReaderModule(transitionalProps); },
+      nativeQueue));
+
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
       "Timing",
@@ -635,26 +635,6 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
       StatusBarManagerModule::Name,
       []() { return std::make_unique<StatusBarManagerModule>(); },
       nativeQueue));
-
-  // These modules are instantiated separately in MSRN (Universal Windows).
-  // When there are module name colisions, the last one registered is used.
-  // If this code is enabled, we will have unused module instances.
-  // Also, MSRN has a different property bag mechanism incompatible with this method's transitionalProps variable.
-#if (defined(_MSC_VER) && !defined(WINRT))
-  if (Microsoft::React::GetRuntimeOptionBool("Blob.EnableModule")) {
-    modules.push_back(std::make_unique<CxxNativeModule>(
-        m_innerInstance,
-        Microsoft::React::GetBlobModuleName(),
-        [transitionalProps]() { return Microsoft::React::CreateBlobModule(transitionalProps); },
-        nativeQueue));
-
-    modules.push_back(std::make_unique<CxxNativeModule>(
-        m_innerInstance,
-        Microsoft::React::GetFileReaderModuleName(),
-        [transitionalProps]() { return Microsoft::React::CreateFileReaderModule(transitionalProps); },
-        nativeQueue));
-  }
-#endif
 
   return modules;
 }

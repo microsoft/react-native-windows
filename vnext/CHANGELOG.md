@@ -1,8 +1,52 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 06 Jul 2023 20:21:35 GMT and should not be manually modified.
+This log was last generated on Sat, 29 Jul 2023 23:20:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.27
+
+Sat, 29 Jul 2023 23:20:22 GMT
+
+### Patches
+
+- Revert "[0.71] Re-apply PR #11757 that added use of hermes.dll with C API (#11838)" (julio.rocha@microsoft.com)
+- Bump @react-native-windows/cli to v0.71.14
+
+## 0.71.26
+
+Wed, 26 Jul 2023 07:30:55 GMT
+
+### Patches
+
+- Attempt AddNetworkingHandler if HTTP module was not ready (#11926) (julio.rocha@microsoft.com)
+
+## 0.71.25
+
+Mon, 24 Jul 2023 15:13:43 GMT
+
+### Patches
+
+- Use TurboModules for networking in MSRN (#11867) (julio.rocha@microsoft.com)
+- Revert "[0.71] Re-apply PR #11757 that added use of hermes.dll with C API (#11788)" (vmorozov@microsoft.com)
+- Bump @react-native-windows/cli to v0.71.13
+
+## 0.71.24
+
+Mon, 17 Jul 2023 15:14:58 GMT
+
+### Patches
+
+- Bump @react-native-windows/cli to v0.71.12
+- Bump @react-native-windows/codegen to v0.71.6
+
+## 0.71.23
+
+Mon, 10 Jul 2023 22:20:00 GMT
+
+### Patches
+
+- Add REACT_MODULE_NOREG which is REACT_MODULE but without auto registration (#11849) (53799235+ZihanChen-MSFT@users.noreply.github.com)
 
 ## 0.71.22
 

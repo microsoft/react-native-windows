@@ -163,7 +163,7 @@ struct CppTurboModuleSpec : TurboModuleSpec {
   }
 };
 
-REACT_MODULE(CppTurboModule)
+REACT_MODULE_NOREG(CppTurboModule)
 struct CppTurboModule {
   using ModuleSpec = CppTurboModuleSpec;
 
@@ -558,6 +558,18 @@ struct CppTurboModulePackageProvider : winrt::implements<CppTurboModulePackagePr
 } // namespace
 
 TEST_CLASS (TurboModuleTests) {
+  TEST_METHOD(EnsureReactModuleNotAutoRegistered) {
+    bool registered = false;
+    auto current = ModuleRegistration::Head();
+    while (current) {
+      if (wcscmp(current->ModuleName(), L"CppTurboModule") == 0) {
+        registered = true;
+      }
+      current = current->Next();
+    }
+    TestCheck(!registered);
+  }
+
   TEST_METHOD(ExecuteSampleTurboModule) {
     TestEventService::Initialize();
 

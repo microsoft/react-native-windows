@@ -1,8 +1,34 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Thu, 06 Jul 2023 20:21:35 GMT and should not be manually modified.
+This log was last generated on Sat, 29 Jul 2023 23:20:23 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.14
+
+Sat, 29 Jul 2023 23:20:23 GMT
+
+### Patches
+
+- Bump @react-native-windows/telemetry to v0.71.7
+
+## 0.71.13
+
+Mon, 24 Jul 2023 15:13:42 GMT
+
+### Patches
+
+- Add package.json:codegenConfig.windows.outputDirectory (53799235+ZihanChen-MSFT@users.noreply.github.com)
+- Bump @react-native-windows/telemetry to v0.71.6
+
+## 0.71.12
+
+Mon, 17 Jul 2023 15:14:58 GMT
+
+### Patches
+
+- Add configConfig.windows.cppStringType in package.json for @rnw/codegen (#11848) (53799235+ZihanChen-MSFT@users.noreply.github.com)
+- Bump @react-native-windows/codegen to v0.71.6
 
 ## 0.71.11
 
