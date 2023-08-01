@@ -145,6 +145,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
        (accessibilityRole == "menuitem" && (props->onAccessibilityTap || props->onClick)) ||
        (accessibilityRole == "treeitem" && (props->onAccessibilityTap || props->onClick)))) {
     *pRetVal = static_cast<IInvokeProvider *>(this);
+    AddRef();
   }
 
   return S_OK;
