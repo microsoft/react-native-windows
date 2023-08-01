@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Fri, 23 Jun 2023 22:30:08 GMT and should not be manually modified.
+This log was last generated on Mon, 24 Jul 2023 15:14:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.72.1
+
+Mon, 24 Jul 2023 15:14:19 GMT
+
+### Patches
+
+- Port #11833, #11848 and #11891 to 0.72 (53799235+ZihanChen-MSFT@users.noreply.github.com)
+- Fix RNW not being detected on case-sensitive file systems (4123478+tido64@users.noreply.github.com)
 
 ## 0.72.0
 
