@@ -2,6 +2,42 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 29 Jul 2023 23:20:22 GMT",
+      "tag": "react-native-windows_v0.71.27",
+      "version": "0.71.27",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5cd9b23f58d5b82abb2ab41a35444ede00afd6da",
+            "comment": "Revert \"[0.71] Re-apply PR #11757 that added use of hermes.dll with C API (#11838)\""
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.71.14",
+            "commit": "5cd9b23f58d5b82abb2ab41a35444ede00afd6da"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 26 Jul 2023 07:30:55 GMT",
+      "tag": "react-native-windows_v0.71.26",
+      "version": "0.71.26",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "75c04ff65c61062feaf0ddcf9568a967108ef291",
+            "comment": "Attempt AddNetworkingHandler if HTTP module was not ready (#11926)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Jul 2023 15:13:43 GMT",
       "tag": "react-native-windows_v0.71.25",
       "version": "0.71.25",
