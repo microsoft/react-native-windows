@@ -84,7 +84,6 @@ class HttpModule : public facebook::xplat::module::CxxModule {
 
   std::shared_ptr<Networking::IHttpResource> m_resource;
   std::shared_ptr<ModuleHolder> m_holder;
-  bool m_isResourceSetup{false};
   int64_t m_requestId{0};
 
   // Property bag high level reference.
