@@ -101,19 +101,19 @@ facebook::react::Props::Shared AbiViewComponentDescriptor::cloneProps(
   return shadowNodeProps;
 };
 
-facebook::react::Props::Shared AbiViewComponentDescriptor::interpolateProps(
-    const facebook::react::PropsParserContext &context,
-    facebook::react::Float animationProgress,
-    const facebook::react::Props::Shared &props,
-    const facebook::react::Props::Shared &newProps) const {
-  facebook::react::Props::Shared interpolatedPropsShared = cloneProps(context, newProps, {});
+// facebook::react::Props::Shared AbiViewComponentDescriptor::interpolateProps(
+//     const facebook::react::PropsParserContext &context,
+//     facebook::react::Float animationProgress,
+//     const facebook::react::Props::Shared &props,
+//     const facebook::react::Props::Shared &newProps) const {
+//   facebook::react::Props::Shared interpolatedPropsShared = cloneProps(context, newProps, {});
 
-  if (ConcreteShadowNode::BaseTraits().check(facebook::react::ShadowNodeTraits::Trait::ViewKind)) {
-    facebook::react::interpolateViewProps(animationProgress, props, newProps, interpolatedPropsShared);
-  }
+//   if (ConcreteShadowNode::BaseTraits().check(facebook::react::ShadowNodeTraits::Trait::ViewKind)) {
+//     facebook::react::interpolateViewProps(animationProgress, props, newProps, interpolatedPropsShared);
+//   }
 
-  return interpolatedPropsShared;
-};
+//   return interpolatedPropsShared;
+// };
 
 facebook::react::State::Shared AbiViewComponentDescriptor::createInitialState(
     facebook::react::Props::Shared const &props,

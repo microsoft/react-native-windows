@@ -53,11 +53,11 @@ class AbiViewComponentDescriptor : public facebook::react::ComponentDescriptor {
       const facebook::react::PropsParserContext &context,
       const facebook::react::Props::Shared &props,
       const facebook::react::RawProps &rawProps) const override;
-  facebook::react::Props::Shared interpolateProps(
-      const facebook::react::PropsParserContext &context,
-      facebook::react::Float animationProgress,
-      const facebook::react::Props::Shared &props,
-      const facebook::react::Props::Shared &newProps) const override;
+//   facebook::react::Props::Shared interpolateProps(
+//       const facebook::react::PropsParserContext &context,
+//       facebook::react::Float animationProgress,
+//       const facebook::react::Props::Shared &props,
+//       const facebook::react::Props::Shared &newProps) const override;
   virtual facebook::react::State::Shared createInitialState(
       facebook::react::Props::Shared const &props,
       facebook::react::ShadowNodeFamily::Shared const &family) const override;
