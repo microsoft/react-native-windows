@@ -61,7 +61,7 @@ module.exports = {
 
   testEnvironmentOptions: {
     app: `windows\\Debug\\RNTesterApp-Fabric.exe`,
-    enableAutomationChannel: false,
+    enableAutomationChannel: true,
     winAppDriverBin: 'D:\\WindowsApplicationDriver\\WinAppDriver.exe',
   },
 
