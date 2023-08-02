@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "resolved merge conflicts and build errors",
+  "packageName": "react-native-windows",
+  "email": "email not defined",
+  "dependentChangeType": "patch"
+}
