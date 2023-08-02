@@ -83,16 +83,13 @@ const bubblingEventTypes = {
       captured: 'onTouchEndCapture',
     },
   },
-
   // Experimental/Work in Progress Pointer Events (not yet ready for use)
-  /*[Windows
   topClick: {
     phasedRegistrationNames: {
       captured: 'onClickCapture',
       bubbled: 'onClick',
     },
   },
-  Windows] */
   topPointerCancel: {
     phasedRegistrationNames: {
       captured: 'onPointerCancelCapture',
@@ -201,9 +198,6 @@ const directEventTypes = {
   },
   topMouseLeave: {
     registrationName: 'onMouseLeave',
-  },
-  topClick: {
-    registrationName: 'onClick',
   },
   // Windows]
 };
