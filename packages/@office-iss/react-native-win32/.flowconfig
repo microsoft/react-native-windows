@@ -84,7 +84,7 @@
 [libs]
 interface.js
 flow/
-flow-typed/
+../../../node_modules/.flow/flow-typed/
 
 [options]
 enums=true
@@ -140,4 +140,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.210.1
+^0.212.0

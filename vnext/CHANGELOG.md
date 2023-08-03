@@ -1,8 +1,67 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 20 Jul 2023 05:13:17 GMT and should not be manually modified.
+This log was last generated on Sat, 29 Jul 2023 05:13:14 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.687
+
+Sat, 29 Jul 2023 05:13:14 GMT
+
+### Changes
+
+- Enable using newer CppWinRT versions that use WINRT_IMPL_LoadLibraryExW (jthysell@microsoft.com)
+- Fix accessibilityState to support states not being set (jthysell@microsoft.com)
+
+## 0.0.0-canary.686
+
+Fri, 28 Jul 2023 05:14:51 GMT
+
+### Changes
+
+- Integrate 7/21 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.182
+- Bump @react-native-windows/codegen to v0.0.0-canary.66
+- Bump @rnw-scripts/just-task to v2.3.15
+- Bump react-native-platform-override to v1.9.14
+
+## 0.0.0-canary.685
+
+Thu, 27 Jul 2023 05:14:49 GMT
+
+### Changes
+
+- integrate RN Nightly 7/5/23 (email not defined)
+- fix AT crash on boot/load of Playground (adrum@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.181
+
+## 0.0.0-canary.684
+
+Wed, 26 Jul 2023 05:15:46 GMT
+
+### Changes
+
+- Remove upstream react-native flow typings from repo (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.180
+- Bump @react-native-windows/codegen to v0.0.0-canary.65
+- Bump @rnw-scripts/just-task to v2.3.14
+- Bump react-native-platform-override to v1.9.13
+
+## 0.0.0-canary.683
+
+Tue, 25 Jul 2023 05:13:22 GMT
+
+### Changes
+
+- Attempt AddNetworkingHandler if HTTP module was not ready (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.682
+
+Sat, 22 Jul 2023 05:14:01 GMT
+
+### Changes
+
+- add colored fonts (tatianakapos@microsoft.com)
 
 ## 0.0.0-canary.681
 

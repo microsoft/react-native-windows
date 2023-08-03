@@ -1,8 +1,26 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Fri, 14 Jul 2023 05:17:05 GMT and should not be manually modified.
+This log was last generated on Fri, 28 Jul 2023 05:14:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.66
+
+Fri, 28 Jul 2023 05:14:53 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.27
+- Bump @rnw-scripts/just-task to v2.3.15
+
+## 0.0.0-canary.65
+
+Wed, 26 Jul 2023 05:15:47 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.26
+- Bump @rnw-scripts/just-task to v2.3.14
 
 ## 0.0.0-canary.64
 

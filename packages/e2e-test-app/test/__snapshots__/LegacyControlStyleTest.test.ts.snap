@@ -21,6 +21,7 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
+      "AccessibilityRole": "Switch",
       "Background": "#33E1E1E1",
       "BorderBrush": "#55FF00FF",
       "BorderThickness": "1,1,1,1",
@@ -655,6 +656,7 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
+      "AccessibilityRole": "Switch",
       "Background": "#33E1E1E1",
       "BorderBrush": "#55FF00FF",
       "BorderThickness": "1,1,1,1",
@@ -1289,6 +1291,7 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
+      "AccessibilityRole": "Switch",
       "Background": "#33000000",
       "BorderBrush": "#5500FF00",
       "BorderThickness": "10,10,10,10",

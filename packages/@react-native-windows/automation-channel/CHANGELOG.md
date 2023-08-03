@@ -1,8 +1,60 @@
 # Change Log - @react-native-windows/automation-channel
 
-This log was last generated on Thu, 20 Jul 2023 05:13:17 GMT and should not be manually modified.
+This log was last generated on Sat, 29 Jul 2023 05:13:15 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.12.26
+
+Sat, 29 Jul 2023 05:13:15 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.687
+
+## 0.12.25
+
+Fri, 28 Jul 2023 05:14:52 GMT
+
+### Patches
+
+- Integrate 7/21 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/just-task to v2.3.15
+- Bump react-native-windows to v0.0.0-canary.686
+
+## 0.12.24
+
+Thu, 27 Jul 2023 05:14:49 GMT
+
+### Patches
+
+- integrate RN Nightly 7/5/23 (email not defined)
+- Bump react-native-windows to v0.0.0-canary.685
+
+## 0.12.23
+
+Wed, 26 Jul 2023 05:15:47 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.3.14
+- Bump react-native-windows to v0.0.0-canary.684
+
+## 0.12.22
+
+Tue, 25 Jul 2023 05:13:22 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.683
+
+## 0.12.21
+
+Sat, 22 Jul 2023 05:14:01 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.682
 
 ## 0.12.20
 

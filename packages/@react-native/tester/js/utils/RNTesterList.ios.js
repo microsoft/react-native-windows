@@ -128,7 +128,7 @@ const Components: Array<RNTesterModuleInfo> = [
   },
   {
     key: 'ViewExample',
-    module: require('../examples/View/ViewExample'),
+    module: require('../examples/View/ViewExample').default,
     category: 'Basic',
   },
   {
@@ -176,7 +176,7 @@ const APIs: Array<RNTesterModuleInfo> = ([
   },
   {
     key: 'BorderExample',
-    module: require('../examples/Border/BorderExample'),
+    module: require('../examples/Border/BorderExample').default,
   },
   {
     key: 'BoxShadowExample',
@@ -222,6 +222,13 @@ const APIs: Array<RNTesterModuleInfo> = ([
     key: 'LinkingExample',
     module: require('../examples/Linking/LinkingExample'),
   },
+  typeof MutationObserver === 'function'
+    ? {
+        key: 'MutationObserver',
+        category: 'UI',
+        module: require('../examples/MutationObserver/MutationObserverIndex'),
+      }
+    : null,
   {
     key: 'NativeAnimationsExample',
     module: require('../examples/NativeAnimation/NativeAnimationsExample'),

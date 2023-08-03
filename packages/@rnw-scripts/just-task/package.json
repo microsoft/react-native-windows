@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/just-task",
-  "version": "2.3.13",
+  "version": "2.3.15",
   "license": "MIT",
   "main": "just-task.js",
   "repository": {
@@ -8,10 +8,15 @@
     "url": "https://github.com/microsoft/react-native-windows",
     "directory": "packages/@rnw-scripts/just-task"
   },
+  "scripts": {
+    "lint": "rnw-scripts eslint",
+    "lint:fix": "rnw-scripts eslint:fix"
+  },
   "bin": {
     "rnw-scripts": "./bin/rnw-scripts.js"
   },
   "dependencies": {
+    "@octokit/rest": "^18.5.3",
     "@rnw-scripts/jest-e2e-config": "1.4.6",
     "@rnw-scripts/jest-unittest-config": "1.5.6",
     "depcheck": "^1.4.1",
@@ -19,7 +24,10 @@
     "just-scripts": "^1.3.3"
   },
   "devDependencies": {
-    "@types/node": "^18.0.0"
+    "@rnw-scripts/eslint-config": "1.2.2",
+    "@types/node": "^18.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.30.5",
+    "@typescript-eslint/parser": "^5.57.1"
   },
   "peerDependencies": {
     "eslint": "*",

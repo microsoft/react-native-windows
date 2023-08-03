@@ -1,8 +1,60 @@
 # Change Log - @react-native-windows/automation-commands
 
-This log was last generated on Thu, 20 Jul 2023 05:13:17 GMT and should not be manually modified.
+This log was last generated on Sat, 29 Jul 2023 05:13:14 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.128
+
+Sat, 29 Jul 2023 05:13:14 GMT
+
+### Patches
+
+- Fix accessibilityState to support states not being set (jthysell@microsoft.com)
+- Bump @react-native-windows/automation-channel to v0.12.26
+
+## 0.1.127
+
+Fri, 28 Jul 2023 05:14:53 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.25
+- Bump @rnw-scripts/just-task to v2.3.15
+
+## 0.1.126
+
+Thu, 27 Jul 2023 05:14:49 GMT
+
+### Patches
+
+- integrate RN Nightly 7/5/23 (email not defined)
+- Bump @react-native-windows/automation-channel to v0.12.24
+
+## 0.1.125
+
+Wed, 26 Jul 2023 05:15:47 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.23
+- Bump @rnw-scripts/just-task to v2.3.14
+
+## 0.1.124
+
+Tue, 25 Jul 2023 05:13:22 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.22
+
+## 0.1.123
+
+Sat, 22 Jul 2023 05:14:01 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.21
 
 ## 0.1.122
 
