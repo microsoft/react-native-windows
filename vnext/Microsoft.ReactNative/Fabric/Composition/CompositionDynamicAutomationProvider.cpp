@@ -142,8 +142,8 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
   if (patternId == UIA_InvokePatternId &&
       (accessibilityRole == "button" || accessibilityRole == "imagebutton" || accessibilityRole == "link" ||
        accessibilityRole == "splitbutton" ||
-       (accessibilityRole == "menuitem" && (props->onAccessibilityTap || props->onClick)) ||
-       (accessibilityRole == "treeitem" && (props->onAccessibilityTap || props->onClick)))) {
+       (accessibilityRole == "menuitem" && props->onAccessibilityTap) ||
+       (accessibilityRole == "treeitem" && props->onAccessibilityTap))) {
     *pRetVal = static_cast<IInvokeProvider *>(this);
     AddRef();
   }
@@ -307,11 +307,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::Invoke() {
   if (baseView == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  // Currently calls both onAccessibilityTap and onClick.
-  // To match Paper behavior, onAccessibilityTap only called if onClick is not defined.
   baseView.get()->GetEventEmitter().get()->onAccessibilityTap();
-  baseView.get()->GetEventEmitter().get()->onClick();
-
   auto uiaProvider = baseView->EnsureUiaProvider();
   auto spProviderSimple = uiaProvider.try_as<IRawElementProviderSimple>();
   if (spProviderSimple != nullptr) {

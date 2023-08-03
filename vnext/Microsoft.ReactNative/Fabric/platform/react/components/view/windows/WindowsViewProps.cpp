@@ -19,8 +19,7 @@ WindowsViewProps::WindowsViewProps(
     bool shouldSetRawProps)
     : windowsEvents(sourceProps.windowsEvents),
       focusable(sourceProps.focusable),
-      enableFocusRing(sourceProps.enableFocusRing),
-      onClick(sourceProps.onClick) {}
+      enableFocusRing(sourceProps.enableFocusRing) {}
 
 #define WINDOWS_VIEW_EVENT_CASE(eventType)                    \
   case CONSTEXPR_RAW_PROPS_KEY_HASH("on" #eventType): {       \
@@ -48,7 +47,6 @@ void WindowsViewProps::setProp(
     WINDOWS_VIEW_EVENT_CASE(KeyDown);
     RAW_SET_PROP_SWITCH_CASE_BASIC(focusable);
     RAW_SET_PROP_SWITCH_CASE_BASIC(enableFocusRing);
-    RAW_SET_PROP_SWITCH_CASE_BASIC(onClick);
   }
 }
 
