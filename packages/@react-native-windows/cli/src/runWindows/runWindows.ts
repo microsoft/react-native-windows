@@ -205,10 +205,6 @@ async function runWindowsInternal(
 ) {
   const verbose = options.logging === true;
 
-  if (verbose) {
-    newInfo('Verbose: ON');
-  }
-
   // Get the solution file
   let slnFile: string | null;
   runWindowsPhase = 'FindSolution';
