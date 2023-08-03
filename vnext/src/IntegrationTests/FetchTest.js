@@ -4,46 +4,46 @@
  * @format
  * @flow
  */
-import React, { useEffect, useState } from 'react';
-import { Button, Text, View } from 'react-native';
+
+'use strict';
+
+const React = require('react');
+const ReactNative = require('react-native');
+
+const { AppRegistry, View } = ReactNative;
 
 const { TestModule } = ReactNative.NativeModules;
 
-const FetchTest = () => {
-  const [content, setContent] = useState('NOTHING');
-  const [reqId, setReqId] = useState(0);
-  const uri =
-    'https://raw.githubusercontent.com/microsoft/react-native-windows/main/.yarnrc.yml';
-    //'http://localhost:5555';
+const uri = 'https://raw.githubusercontent.com/microsoft/react-native-windows/main/.yarnrc.yml';
+const expectedContent = 'enableScripts: false';
 
-  const doFetch = async () => {
-    var response = await fetch(uri);
-    var text = await response.text();
-    setReqId(reqId + 1);
-    setContent(text);
-  };
+class FetchTest extends React.Component {
 
-  useEffect(() => {
-    doFetch().catch(console.error);
-    TestModule.markTestPassed(true);
-  }, []);
+  constructor() {
+    super();
+    this.state = { data: 'NONE' };
+  }
 
-  return (
-    <View />
-  );
+  async componentDidMount() {
+    const response = await fetch(uri);
+    const text = await response.text();
+    this.setState({ data: text });
 
-//  return (
-//    <View
-//      style={{
-//        flex: 1,
-//        justifyContent: 'flex-start',
-//        alignItems: 'stretch',
-//      }}>
-//      <Text>Response {reqId}:</Text>
-//      <Text>[{content}]</Text>
-//      <Button onPress={doFetch} title="Reload" />
-//    </View>
-//  );
-};
+    if (this.state.data === expectedContent) {
+      TestModule.markTestPassed(true);
+    } else {
+      TestModule.markTestPassed(false);
+    }
 
-export default FetchTest;
+  }
+
+  render() {
+    return (
+      <View />
+    );
+  }
+}
+
+AppRegistry.registerComponent('FetchTest', () => FetchTest);
+
+module.exports = FetchTest;
