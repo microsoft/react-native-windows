@@ -141,8 +141,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
   // when activated but rather initiate or perform a single, unambiguous action.
   if (patternId == UIA_InvokePatternId &&
       (accessibilityRole == "button" || accessibilityRole == "imagebutton" || accessibilityRole == "link" ||
-       accessibilityRole == "splitbutton" ||
-       (accessibilityRole == "menuitem" && props->onAccessibilityTap) ||
+       accessibilityRole == "splitbutton" || (accessibilityRole == "menuitem" && props->onAccessibilityTap) ||
        (accessibilityRole == "treeitem" && props->onAccessibilityTap))) {
     *pRetVal = static_cast<IInvokeProvider *>(this);
     AddRef();
