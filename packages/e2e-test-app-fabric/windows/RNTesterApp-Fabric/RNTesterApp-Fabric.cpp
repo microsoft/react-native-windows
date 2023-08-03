@@ -5,6 +5,7 @@
 #include "RNTesterApp-Fabric.h"
 
 #include "../../../../vnext/codegen/NativeDeviceInfoSpec.g.h"
+#include "winrt/AutomationChannel.h"
 
 #include <DispatcherQueue.h>
 #include <UIAutomation.h>
@@ -52,7 +53,6 @@ struct CompReactPackageProvider
  public: // IReactPackageProvider
   void CreatePackage(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept {
     AddAttributedModules(packageBuilder, true);
-    packageBuilder.AddTurboModule(L"DeviceInfo", winrt::Microsoft::ReactNative::MakeModuleProvider<DeviceInfo>());
   }
 };
 
@@ -136,6 +136,7 @@ struct WindowData {
     host.InstanceSettings().UseDeveloperSupport(true);
 
     host.PackageProviders().Append(winrt::make<CompReactPackageProvider>());
+    host.PackageProviders().Append(winrt::AutomationChannel::ReactPackageProvider());
     winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
         host.InstanceSettings().Properties(), reinterpret_cast<uint64_t>(hwnd));
 
