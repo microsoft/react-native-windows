@@ -231,5 +231,12 @@ TEST_CLASS (RNTesterIntegrationTests) {
     Assert::AreEqual(TestStatus::Passed, result.Status, result.Message.c_str());
   }
 
+  BEGIN_TEST_METHOD_ATTRIBUTE(Fetch)
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(Fetch) {
+    auto result = m_runner.RunTest("IntegrationTests/FetchTest", "FetchTest");
+    Assert::AreEqual(TestStatus::Passed, result.Status, result.Message.c_str());
+  }
+
 #pragma endregion Extended Tests
 };
