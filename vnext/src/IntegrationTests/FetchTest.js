@@ -18,25 +18,32 @@ const uri =
   'https://raw.githubusercontent.com/microsoft/react-native-windows/main/.yarnrc.yml';
 const expectedContent = 'enableScripts: false';
 
-class FetchTest extends React.Component {
-  constructor() {
-    super();
-    this.state = {data: 'NONE'};
-  }
+type State = {
+  uri: string,
+  expected: string,
+  content: string,
+};
+
+class FetchTest extends React.Component<{...}, State> {
+  state: State = {
+    uri: 'https://raw.githubusercontent.com/microsoft/react-native-windows/main/.yarnrc.yml',
+    expected: 'enableScripts: false',
+    content: '',
+  };
 
   async componentDidMount() {
     const response = await fetch(uri);
     const text = await response.text();
-    this.setState({data: text});
+    this.setState({content: text});
 
-    if (this.state.data === expectedContent) {
+    if (this.state.content === expectedContent) {
       TestModule.markTestPassed(true);
     } else {
       TestModule.markTestPassed(false);
     }
   }
 
-  render() {
+  render(): React.Node {
     return <View />;
   }
 }
