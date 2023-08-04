@@ -31,7 +31,8 @@ const moduleTemplate = `
 #include <tuple>
 
 namespace ::_NAMESPACE_:: {
-::_MODULE_ALIASED_STRUCTS_::
+::_MODULE_CUSTPM_TYPES_::
+::_MODULE_CUSTPM_TYPES_REFLECTION_::
 struct ::_MODULE_NAME_::Spec : winrt::Microsoft::ReactNative::TurboModuleSpec {
 ::_MODULE_MEMBERS_TUPLES_::
 
@@ -105,14 +106,15 @@ ${errors}`;
         }
 
         // generate code for structs
-        const traversedAliasedStructs = generateAliases(aliases, {
+        const [customTypes, customReflection] = generateAliases(aliases, {
           cppStringType,
         });
 
         files.set(
           `Native${preferredModuleName}Spec.g.h`,
           moduleTemplate
-            .replace(/::_MODULE_ALIASED_STRUCTS_::/g, traversedAliasedStructs)
+            .replace(/::_MODULE_CUSTPM_TYPES_::/g, customTypes)
+            .replace(/::_MODULE_CUSTPM_TYPES_REFLECTION_::/g, customReflection)
             .replace(/::_MODULE_MEMBERS_TUPLES_::/g, tuples.substring(1))
             .replace(/::_MODULE_MEMBERS_CHECKS_::/g, checks.substring(1))
             .replace(/::_MODULE_MEMBERS_ERRORS_::/g, errors)
