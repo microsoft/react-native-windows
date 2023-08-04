@@ -8,50 +8,61 @@
  */
 #pragma once
 
-#include "NativeModules.h"
+#include <NativeModules.h>
 #include <tuple>
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(PlatformConstantsAndroidSpec_Constants_reactNativeVersion)
 struct PlatformConstantsAndroidSpec_Constants_reactNativeVersion {
-    REACT_FIELD(major)
     double major;
-    REACT_FIELD(minor)
     double minor;
-    REACT_FIELD(patch)
     double patch;
-    REACT_FIELD(prerelease)
     std::optional<double> prerelease;
 };
 
-REACT_STRUCT(PlatformConstantsAndroidSpec_Constants)
 struct PlatformConstantsAndroidSpec_Constants {
-    REACT_FIELD(isTesting)
     bool isTesting;
-    REACT_FIELD(isDisableAnimations)
     std::optional<bool> isDisableAnimations;
-    REACT_FIELD(reactNativeVersion)
     PlatformConstantsAndroidSpec_Constants_reactNativeVersion reactNativeVersion;
-    REACT_FIELD(Version)
     double Version;
-    REACT_FIELD(Release)
     std::string Release;
-    REACT_FIELD(Serial)
     std::string Serial;
-    REACT_FIELD(Fingerprint)
     std::string Fingerprint;
-    REACT_FIELD(Model)
     std::string Model;
-    REACT_FIELD(ServerHost)
     std::optional<std::string> ServerHost;
-    REACT_FIELD(uiMode)
     std::string uiMode;
-    REACT_FIELD(Brand)
     std::string Brand;
-    REACT_FIELD(Manufacturer)
     std::string Manufacturer;
 };
+
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PlatformConstantsAndroidSpec_Constants_reactNativeVersion*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"major", &PlatformConstantsAndroidSpec_Constants_reactNativeVersion::major},
+        {L"minor", &PlatformConstantsAndroidSpec_Constants_reactNativeVersion::minor},
+        {L"patch", &PlatformConstantsAndroidSpec_Constants_reactNativeVersion::patch},
+        {L"prerelease", &PlatformConstantsAndroidSpec_Constants_reactNativeVersion::prerelease},
+    };
+    return fieldMap;
+}
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PlatformConstantsAndroidSpec_Constants*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"isTesting", &PlatformConstantsAndroidSpec_Constants::isTesting},
+        {L"isDisableAnimations", &PlatformConstantsAndroidSpec_Constants::isDisableAnimations},
+        {L"reactNativeVersion", &PlatformConstantsAndroidSpec_Constants::reactNativeVersion},
+        {L"Version", &PlatformConstantsAndroidSpec_Constants::Version},
+        {L"Release", &PlatformConstantsAndroidSpec_Constants::Release},
+        {L"Serial", &PlatformConstantsAndroidSpec_Constants::Serial},
+        {L"Fingerprint", &PlatformConstantsAndroidSpec_Constants::Fingerprint},
+        {L"Model", &PlatformConstantsAndroidSpec_Constants::Model},
+        {L"ServerHost", &PlatformConstantsAndroidSpec_Constants::ServerHost},
+        {L"uiMode", &PlatformConstantsAndroidSpec_Constants::uiMode},
+        {L"Brand", &PlatformConstantsAndroidSpec_Constants::Brand},
+        {L"Manufacturer", &PlatformConstantsAndroidSpec_Constants::Manufacturer},
+    };
+    return fieldMap;
+}
 
 struct PlatformConstantsAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto constants = std::tuple{
