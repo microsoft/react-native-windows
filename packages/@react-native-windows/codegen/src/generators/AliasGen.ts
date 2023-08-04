@@ -15,7 +15,7 @@ import type {
 import {AliasMap, getAliasCppName} from './AliasManaging';
 import {CppCodegenOptions, translateField} from './ObjectTypes';
 
-function translateObjectBody(
+function translateObjectMembersDefinition(
   type: NativeModuleObjectTypeAnnotation,
   aliases: AliasMap,
   baseAliasName: string,
@@ -28,14 +28,24 @@ function translateObjectBody(
       if (prop.optional && propType.type !== 'NullableTypeAnnotation') {
         propType = {type: 'NullableTypeAnnotation', typeAnnotation: propType};
       }
-      const first = `${prefix}REACT_FIELD(${prop.name})`;
-      const second = `${prefix}${translateField(
+      return `${prefix}${translateField(
         propType,
         aliases,
         `${baseAliasName}_${prop.name}`,
         options,
       )} ${prop.name};`;
-      return `${first}\n${second}`;
+    })
+    .join('\n');
+}
+
+function translateObjectMembersReflection(
+  type: NativeModuleObjectTypeAnnotation,
+  aliasCppName: string,
+  prefix: string,
+) {
+  return type.properties
+    .map((prop: NamedShape<Nullable<NativeModuleBaseTypeAnnotation>>) => {
+      return `${prefix}{L"${prop.name}", &${aliasCppName}::${prop.name}},`;
     })
     .join('\n');
 }
@@ -65,14 +75,27 @@ function generateSingleAlias(
   aliasCode: AliasCodeMap,
   options: CppCodegenOptions,
 ): void {
+  const aliasCppName = getAliasCppName(aliasName);
   const aliasType = <NativeModuleObjectTypeAnnotation>aliases.types[aliasName];
   const definition = `
-REACT_STRUCT(${getAliasCppName(aliasName)})
-struct ${getAliasCppName(aliasName)} {
-${translateObjectBody(aliasType, aliases, aliasName, '    ', options)}
+struct aliasCppName {
+${translateObjectMembersDefinition(
+  aliasType,
+  aliases,
+  aliasName,
+  '    ',
+  options,
+)}
 };
 `;
-  const reflection = ``;
+  const reflection = `
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(${aliasCppName}*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+${translateObjectMembersReflection(aliasType, aliasCppName, '    ')}
+    };
+    return fieldMap;
+}
+`;
   aliasCode[aliasName] = {definition, reflection};
 }
 
