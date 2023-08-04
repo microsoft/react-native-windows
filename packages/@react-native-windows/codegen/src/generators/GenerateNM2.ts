@@ -27,7 +27,7 @@ const moduleTemplate = `
  */
 #pragma once
 
-#include "NativeModules.h"
+#include <NativeModules.h>
 #include <tuple>
 
 namespace ::_NAMESPACE_:: {
