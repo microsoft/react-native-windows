@@ -78,7 +78,7 @@ function generateSingleAlias(
   const aliasCppName = getAliasCppName(aliasName);
   const aliasType = <NativeModuleObjectTypeAnnotation>aliases.types[aliasName];
   const definition = `
-struct aliasCppName {
+struct ${aliasCppName} {
 ${translateObjectMembersDefinition(
   aliasType,
   aliases,
@@ -91,7 +91,7 @@ ${translateObjectMembersDefinition(
   const reflection = `
 inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(${aliasCppName}*) noexcept {
     winrt::Microsoft::ReactNative::FieldMap fieldMap {
-${translateObjectMembersReflection(aliasType, aliasCppName, '    ')}
+${translateObjectMembersReflection(aliasType, aliasCppName, '        ')}
     };
     return fieldMap;
 }
