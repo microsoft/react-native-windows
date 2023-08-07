@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 07 Aug 2023 15:13:38 GMT",
+      "tag": "react-native-windows_v0.72.5",
+      "version": "0.72.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6b90857aa8bfcba0b1a5f771c31b089c8dde9a5a",
+            "comment": "Allow disabling Blob Cxx module (#11979)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Jul 2023 23:36:10 GMT",
       "tag": "react-native-windows_v0.72.4",
       "version": "0.72.4",
