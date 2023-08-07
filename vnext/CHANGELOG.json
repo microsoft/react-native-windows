@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 05 Aug 2023 05:13:13 GMT",
+      "version": "0.0.0-canary.688",
+      "tag": "react-native-windows_v0.0.0-canary.688",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "bde337f669defa9ee42241b742a8111aaf218ca9",
+            "comment": "Allow disabling Blob Cxx module"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 29 Jul 2023 05:13:14 GMT",
       "tag": "react-native-windows_v0.0.0-canary.687",
       "version": "0.0.0-canary.687",
