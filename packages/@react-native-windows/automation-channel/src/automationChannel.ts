@@ -155,4 +155,5 @@ export function waitForConnection(opts: {
       resolve(new AutomationClient(socket, server));
     });
   });
+  console.log('test');
 }
