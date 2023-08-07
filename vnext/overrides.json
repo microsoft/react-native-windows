@@ -158,6 +158,10 @@
     },
     {
       "type": "platform",
+      "file": "src/IntegrationTests/FetchTest.js"
+    },
+    {
+      "type": "platform",
       "file": "src/IntegrationTests/LoggingTest.js"
     },
     {
