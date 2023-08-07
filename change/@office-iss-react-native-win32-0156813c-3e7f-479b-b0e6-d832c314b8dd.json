@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "add isDefaultButton check to win32",
   "packageName": "@office-iss/react-native-win32",
   "email": "email not defined",
