@@ -5,7 +5,6 @@
 #include "RNTesterApp-Fabric.h"
 
 #include "../../../../vnext/codegen/NativeDeviceInfoSpec.g.h"
-#include "winrt/AutomationChannel.h"
 
 #include <DispatcherQueue.h>
 #include <UIAutomation.h>
