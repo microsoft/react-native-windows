@@ -8,38 +8,49 @@
  */
 #pragma once
 
-#include "NativeModules.h"
+#include <NativeModules.h>
 #include <tuple>
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(IntersectionObserverSpec_NativeIntersectionObserverObserveOptions)
 struct IntersectionObserverSpec_NativeIntersectionObserverObserveOptions {
-    REACT_FIELD(intersectionObserverId)
     double intersectionObserverId;
-    REACT_FIELD(targetShadowNode)
      targetShadowNode;
-    REACT_FIELD(thresholds)
     std::vector<double> thresholds;
 };
 
-REACT_STRUCT(IntersectionObserverSpec_NativeIntersectionObserverEntry)
 struct IntersectionObserverSpec_NativeIntersectionObserverEntry {
-    REACT_FIELD(intersectionObserverId)
     double intersectionObserverId;
-    REACT_FIELD(targetInstanceHandle)
      targetInstanceHandle;
-    REACT_FIELD(targetRect)
     std::vector<double> targetRect;
-    REACT_FIELD(rootRect)
     std::vector<double> rootRect;
-    REACT_FIELD(intersectionRect)
     std::optional<std::vector<double>> intersectionRect;
-    REACT_FIELD(isIntersectingAboveThresholds)
     bool isIntersectingAboveThresholds;
-    REACT_FIELD(time)
     double time;
 };
+
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(IntersectionObserverSpec_NativeIntersectionObserverObserveOptions*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"intersectionObserverId", &IntersectionObserverSpec_NativeIntersectionObserverObserveOptions::intersectionObserverId},
+        {L"targetShadowNode", &IntersectionObserverSpec_NativeIntersectionObserverObserveOptions::targetShadowNode},
+        {L"thresholds", &IntersectionObserverSpec_NativeIntersectionObserverObserveOptions::thresholds},
+    };
+    return fieldMap;
+}
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(IntersectionObserverSpec_NativeIntersectionObserverEntry*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"intersectionObserverId", &IntersectionObserverSpec_NativeIntersectionObserverEntry::intersectionObserverId},
+        {L"targetInstanceHandle", &IntersectionObserverSpec_NativeIntersectionObserverEntry::targetInstanceHandle},
+        {L"targetRect", &IntersectionObserverSpec_NativeIntersectionObserverEntry::targetRect},
+        {L"rootRect", &IntersectionObserverSpec_NativeIntersectionObserverEntry::rootRect},
+        {L"intersectionRect", &IntersectionObserverSpec_NativeIntersectionObserverEntry::intersectionRect},
+        {L"isIntersectingAboveThresholds", &IntersectionObserverSpec_NativeIntersectionObserverEntry::isIntersectingAboveThresholds},
+        {L"time", &IntersectionObserverSpec_NativeIntersectionObserverEntry::time},
+    };
+    return fieldMap;
+}
 
 struct IntersectionObserverSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{

@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Fix accessibilityState to support states not being set",
+  "comment": "Deprecate Microsoft.ReactNative.WindowsAppSDK project",
   "packageName": "react-native-windows",
   "email": "jthysell@microsoft.com",
   "dependentChangeType": "patch"
