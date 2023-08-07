@@ -11,6 +11,8 @@ export {
   CommandEndInfo,
 } from './telemetry';
 
+export {deviceArchitecture, nodeArchitecture} from './utils/basePropUtils';
+
 export {CodedError, CodedErrorType, CodedErrors} from './utils/errorUtils';
 
 export {
