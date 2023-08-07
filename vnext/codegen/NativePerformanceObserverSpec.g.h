@@ -8,28 +8,34 @@
  */
 #pragma once
 
-#include "NativeModules.h"
+#include <NativeModules.h>
 #include <tuple>
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(PerformanceObserverSpec_RawPerformanceEntry)
 struct PerformanceObserverSpec_RawPerformanceEntry {
-    REACT_FIELD(name)
     std::string name;
-    REACT_FIELD(entryType)
     double entryType;
-    REACT_FIELD(startTime)
     double startTime;
-    REACT_FIELD(duration)
     double duration;
-    REACT_FIELD(processingStart)
     std::optional<double> processingStart;
-    REACT_FIELD(processingEnd)
     std::optional<double> processingEnd;
-    REACT_FIELD(interactionId)
     std::optional<double> interactionId;
 };
+
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PerformanceObserverSpec_RawPerformanceEntry*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"name", &PerformanceObserverSpec_RawPerformanceEntry::name},
+        {L"entryType", &PerformanceObserverSpec_RawPerformanceEntry::entryType},
+        {L"startTime", &PerformanceObserverSpec_RawPerformanceEntry::startTime},
+        {L"duration", &PerformanceObserverSpec_RawPerformanceEntry::duration},
+        {L"processingStart", &PerformanceObserverSpec_RawPerformanceEntry::processingStart},
+        {L"processingEnd", &PerformanceObserverSpec_RawPerformanceEntry::processingEnd},
+        {L"interactionId", &PerformanceObserverSpec_RawPerformanceEntry::interactionId},
+    };
+    return fieldMap;
+}
 
 struct PerformanceObserverSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{

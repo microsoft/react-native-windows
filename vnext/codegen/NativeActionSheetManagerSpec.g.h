@@ -8,66 +8,82 @@
  */
 #pragma once
 
-#include "NativeModules.h"
+#include <NativeModules.h>
 #include <tuple>
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(ActionSheetManagerSpec_showActionSheetWithOptions_options)
 struct ActionSheetManagerSpec_showActionSheetWithOptions_options {
-    REACT_FIELD(title)
     std::optional<std::string> title;
-    REACT_FIELD(message)
     std::optional<std::string> message;
-    REACT_FIELD(options)
     std::optional<std::vector<std::string>> options;
-    REACT_FIELD(destructiveButtonIndices)
     std::optional<std::vector<double>> destructiveButtonIndices;
-    REACT_FIELD(cancelButtonIndex)
     std::optional<double> cancelButtonIndex;
-    REACT_FIELD(anchor)
     std::optional<double> anchor;
-    REACT_FIELD(tintColor)
     std::optional<double> tintColor;
-    REACT_FIELD(cancelButtonTintColor)
     std::optional<double> cancelButtonTintColor;
-    REACT_FIELD(userInterfaceStyle)
     std::optional<std::string> userInterfaceStyle;
-    REACT_FIELD(disabledButtonIndices)
     std::optional<std::vector<double>> disabledButtonIndices;
 };
 
-REACT_STRUCT(ActionSheetManagerSpec_showShareActionSheetWithOptions_options)
 struct ActionSheetManagerSpec_showShareActionSheetWithOptions_options {
-    REACT_FIELD(message)
     std::optional<std::string> message;
-    REACT_FIELD(url)
     std::optional<std::string> url;
-    REACT_FIELD(subject)
     std::optional<std::string> subject;
-    REACT_FIELD(anchor)
     std::optional<double> anchor;
-    REACT_FIELD(tintColor)
     std::optional<double> tintColor;
-    REACT_FIELD(cancelButtonTintColor)
     std::optional<double> cancelButtonTintColor;
-    REACT_FIELD(excludedActivityTypes)
     std::optional<std::vector<std::string>> excludedActivityTypes;
-    REACT_FIELD(userInterfaceStyle)
     std::optional<std::string> userInterfaceStyle;
 };
 
-REACT_STRUCT(ActionSheetManagerSpec_showShareActionSheetWithOptions_failureCallback_error)
 struct ActionSheetManagerSpec_showShareActionSheetWithOptions_failureCallback_error {
-    REACT_FIELD(domain)
     std::string domain;
-    REACT_FIELD(code)
     std::string code;
-    REACT_FIELD(userInfo)
     std::optional<::React::JSValue> userInfo;
-    REACT_FIELD(message)
     std::string message;
 };
+
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(ActionSheetManagerSpec_showActionSheetWithOptions_options*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"title", &ActionSheetManagerSpec_showActionSheetWithOptions_options::title},
+        {L"message", &ActionSheetManagerSpec_showActionSheetWithOptions_options::message},
+        {L"options", &ActionSheetManagerSpec_showActionSheetWithOptions_options::options},
+        {L"destructiveButtonIndices", &ActionSheetManagerSpec_showActionSheetWithOptions_options::destructiveButtonIndices},
+        {L"cancelButtonIndex", &ActionSheetManagerSpec_showActionSheetWithOptions_options::cancelButtonIndex},
+        {L"anchor", &ActionSheetManagerSpec_showActionSheetWithOptions_options::anchor},
+        {L"tintColor", &ActionSheetManagerSpec_showActionSheetWithOptions_options::tintColor},
+        {L"cancelButtonTintColor", &ActionSheetManagerSpec_showActionSheetWithOptions_options::cancelButtonTintColor},
+        {L"userInterfaceStyle", &ActionSheetManagerSpec_showActionSheetWithOptions_options::userInterfaceStyle},
+        {L"disabledButtonIndices", &ActionSheetManagerSpec_showActionSheetWithOptions_options::disabledButtonIndices},
+    };
+    return fieldMap;
+}
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(ActionSheetManagerSpec_showShareActionSheetWithOptions_options*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"message", &ActionSheetManagerSpec_showShareActionSheetWithOptions_options::message},
+        {L"url", &ActionSheetManagerSpec_showShareActionSheetWithOptions_options::url},
+        {L"subject", &ActionSheetManagerSpec_showShareActionSheetWithOptions_options::subject},
+        {L"anchor", &ActionSheetManagerSpec_showShareActionSheetWithOptions_options::anchor},
+        {L"tintColor", &ActionSheetManagerSpec_showShareActionSheetWithOptions_options::tintColor},
+        {L"cancelButtonTintColor", &ActionSheetManagerSpec_showShareActionSheetWithOptions_options::cancelButtonTintColor},
+        {L"excludedActivityTypes", &ActionSheetManagerSpec_showShareActionSheetWithOptions_options::excludedActivityTypes},
+        {L"userInterfaceStyle", &ActionSheetManagerSpec_showShareActionSheetWithOptions_options::userInterfaceStyle},
+    };
+    return fieldMap;
+}
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(ActionSheetManagerSpec_showShareActionSheetWithOptions_failureCallback_error*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"domain", &ActionSheetManagerSpec_showShareActionSheetWithOptions_failureCallback_error::domain},
+        {L"code", &ActionSheetManagerSpec_showShareActionSheetWithOptions_failureCallback_error::code},
+        {L"userInfo", &ActionSheetManagerSpec_showShareActionSheetWithOptions_failureCallback_error::userInfo},
+        {L"message", &ActionSheetManagerSpec_showShareActionSheetWithOptions_failureCallback_error::message},
+    };
+    return fieldMap;
+}
 
 struct ActionSheetManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
