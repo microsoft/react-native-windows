@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 04 Aug 2023 23:49:15 GMT",
+      "tag": "@office-iss/react-native-win32_v0.71.13",
+      "version": "0.71.13",
+      "comments": {
+        "patch": [
+          {
+            "author": "email not defined",
+            "package": "@office-iss/react-native-win32",
+            "commit": "958bd7b3a1d65a3cd4076bed410c0cb1b5675740",
+            "comment": "add isDefaultButton check to win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 06 Jul 2023 20:21:35 GMT",
       "tag": "@office-iss/react-native-win32_v0.71.12",
       "version": "0.71.12",

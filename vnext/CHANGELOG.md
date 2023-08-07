@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 29 Jul 2023 23:20:22 GMT and should not be manually modified.
+This log was last generated on Fri, 04 Aug 2023 23:49:15 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.28
+
+Fri, 04 Aug 2023 23:49:15 GMT
+
+### Patches
+
+- Allow disabling Blob Cxx module (#11979) (julio.rocha@microsoft.com)
 
 ## 0.71.27
 
