@@ -84,7 +84,7 @@
     visitor.Visit(                                                                                            \
         &TStruct::member,                                                                                     \
         attributeId,                                                                                          \
-        winrt::Microsoft::ReactNative::React##memberKind##Attribute{jsMemberName, jsModuleName});             \
+        winrt::Microsoft::ReactNative::React##memberKind##Attribute(jsMemberName, jsModuleName));             \
   }
 
 #define INTERNAL_REACT_MEMBER_3_ARGS(memberKind, member, jsMemberName) \

@@ -23,7 +23,11 @@ import {
   OptionSanitizer,
   configToProjectInfo,
   getProjectFileFromConfig,
+  deviceArchitecture,
+  nodeArchitecture,
 } from '@react-native-windows/telemetry';
+
+import {newInfo, newWarn} from './commandWithProgress';
 
 /**
  * Calculates a the default values of a given react-native CLI command's options.
@@ -89,11 +93,25 @@ export async function startTelemetrySession(
   defaultOptions: CommanderOptionsType,
   optionSanitizer: OptionSanitizer,
 ) {
+  const verbose = options.logging === true;
+
   if (!options.telemetry) {
-    if (options.logging) {
-      console.log('Telemetry is disabled');
+    if (verbose) {
+      newInfo('Telemetry is disabled');
     }
     return;
+  }
+
+  if (verbose) {
+    newInfo(
+      `Running ${nodeArchitecture()} node on a ${deviceArchitecture()} machine`,
+    );
+  }
+
+  if (deviceArchitecture() !== nodeArchitecture()) {
+    newWarn(
+      'This version of node was built for a different architecture than this machine and may cause unintended behavior',
+    );
   }
 
   await Telemetry.setup();

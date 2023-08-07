@@ -27,6 +27,8 @@ import {
   getProjectFileFromConfig,
   OptionSanitizer,
   YargsOptionsType,
+  deviceArchitecture,
+  nodeArchitecture,
 } from '@react-native-windows/telemetry';
 
 /**
@@ -373,11 +375,25 @@ async function startTelemetrySession(
   args: string[],
   options: YargsOptionsType,
 ) {
+  const verbose = options.verbose === true;
+
   if (!options.telemetry) {
-    if (options.verbose) {
+    if (verbose) {
       console.log('Telemetry is disabled');
     }
     return;
+  }
+
+  if (verbose) {
+    console.log(
+      `Running ${nodeArchitecture()} node on a ${deviceArchitecture()} machine`,
+    );
+  }
+
+  if (deviceArchitecture() !== nodeArchitecture()) {
+    console.warn(
+      'This version of node was built for a different architecture than this machine and may cause unintended behavior',
+    );
   }
 
   // Setup telemetry, but don't get NPM package version info right away as
