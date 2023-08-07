@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Make ScrollView and ActivityIndicator not focusable by default",
+  "packageName": "react-native-windows",
+  "email": "lyahdav@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
