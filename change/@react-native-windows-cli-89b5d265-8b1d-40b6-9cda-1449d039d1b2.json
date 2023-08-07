@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Properly detect the correct machine architecture",
+  "packageName": "@react-native-windows/cli",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
