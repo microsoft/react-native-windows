@@ -8,32 +8,43 @@
  */
 #pragma once
 
-#include "NativeModules.h"
+#include <NativeModules.h>
 #include <tuple>
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(MutationObserverSpec_NativeMutationObserverObserveOptions)
 struct MutationObserverSpec_NativeMutationObserverObserveOptions {
-    REACT_FIELD(mutationObserverId)
     double mutationObserverId;
-    REACT_FIELD(targetShadowNode)
      targetShadowNode;
-    REACT_FIELD(subtree)
     bool subtree;
 };
 
-REACT_STRUCT(MutationObserverSpec_NativeMutationRecord)
 struct MutationObserverSpec_NativeMutationRecord {
-    REACT_FIELD(mutationObserverId)
     double mutationObserverId;
-    REACT_FIELD(target)
      target;
-    REACT_FIELD(addedNodes)
     std::vector<> addedNodes;
-    REACT_FIELD(removedNodes)
     std::vector<> removedNodes;
 };
+
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(MutationObserverSpec_NativeMutationObserverObserveOptions*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"mutationObserverId", &MutationObserverSpec_NativeMutationObserverObserveOptions::mutationObserverId},
+        {L"targetShadowNode", &MutationObserverSpec_NativeMutationObserverObserveOptions::targetShadowNode},
+        {L"subtree", &MutationObserverSpec_NativeMutationObserverObserveOptions::subtree},
+    };
+    return fieldMap;
+}
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(MutationObserverSpec_NativeMutationRecord*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"mutationObserverId", &MutationObserverSpec_NativeMutationRecord::mutationObserverId},
+        {L"target", &MutationObserverSpec_NativeMutationRecord::target},
+        {L"addedNodes", &MutationObserverSpec_NativeMutationRecord::addedNodes},
+        {L"removedNodes", &MutationObserverSpec_NativeMutationRecord::removedNodes},
+    };
+    return fieldMap;
+}
 
 struct MutationObserverSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
