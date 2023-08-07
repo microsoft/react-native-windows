@@ -8,38 +8,49 @@
  */
 #pragma once
 
-#include "NativeModules.h"
+#include <NativeModules.h>
 #include <tuple>
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(PlatformConstantsIOSSpec_Constants_reactNativeVersion)
 struct PlatformConstantsIOSSpec_Constants_reactNativeVersion {
-    REACT_FIELD(major)
     double major;
-    REACT_FIELD(minor)
     double minor;
-    REACT_FIELD(patch)
     double patch;
-    REACT_FIELD(prerelease)
     std::optional<double> prerelease;
 };
 
-REACT_STRUCT(PlatformConstantsIOSSpec_Constants)
 struct PlatformConstantsIOSSpec_Constants {
-    REACT_FIELD(isTesting)
     bool isTesting;
-    REACT_FIELD(reactNativeVersion)
     PlatformConstantsIOSSpec_Constants_reactNativeVersion reactNativeVersion;
-    REACT_FIELD(forceTouchAvailable)
     bool forceTouchAvailable;
-    REACT_FIELD(osVersion)
     std::string osVersion;
-    REACT_FIELD(systemName)
     std::string systemName;
-    REACT_FIELD(interfaceIdiom)
     std::string interfaceIdiom;
 };
+
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PlatformConstantsIOSSpec_Constants_reactNativeVersion*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"major", &PlatformConstantsIOSSpec_Constants_reactNativeVersion::major},
+        {L"minor", &PlatformConstantsIOSSpec_Constants_reactNativeVersion::minor},
+        {L"patch", &PlatformConstantsIOSSpec_Constants_reactNativeVersion::patch},
+        {L"prerelease", &PlatformConstantsIOSSpec_Constants_reactNativeVersion::prerelease},
+    };
+    return fieldMap;
+}
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PlatformConstantsIOSSpec_Constants*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"isTesting", &PlatformConstantsIOSSpec_Constants::isTesting},
+        {L"reactNativeVersion", &PlatformConstantsIOSSpec_Constants::reactNativeVersion},
+        {L"forceTouchAvailable", &PlatformConstantsIOSSpec_Constants::forceTouchAvailable},
+        {L"osVersion", &PlatformConstantsIOSSpec_Constants::osVersion},
+        {L"systemName", &PlatformConstantsIOSSpec_Constants::systemName},
+        {L"interfaceIdiom", &PlatformConstantsIOSSpec_Constants::interfaceIdiom},
+    };
+    return fieldMap;
+}
 
 struct PlatformConstantsIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto constants = std::tuple{

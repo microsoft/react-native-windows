@@ -8,22 +8,33 @@
  */
 #pragma once
 
-#include "NativeModules.h"
+#include <NativeModules.h>
 #include <tuple>
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(AppStateSpec_getCurrentAppState_success_appState)
 struct AppStateSpec_getCurrentAppState_success_appState {
-    REACT_FIELD(app_state)
     std::string app_state;
 };
 
-REACT_STRUCT(AppStateSpec_Constants)
 struct AppStateSpec_Constants {
-    REACT_FIELD(initialAppState)
     std::string initialAppState;
 };
+
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(AppStateSpec_getCurrentAppState_success_appState*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"app_state", &AppStateSpec_getCurrentAppState_success_appState::app_state},
+    };
+    return fieldMap;
+}
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(AppStateSpec_Constants*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"initialAppState", &AppStateSpec_Constants::initialAppState},
+    };
+    return fieldMap;
+}
 
 struct AppStateSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto constants = std::tuple{

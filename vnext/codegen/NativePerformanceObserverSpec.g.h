@@ -8,36 +8,47 @@
  */
 #pragma once
 
-#include "NativeModules.h"
+#include <NativeModules.h>
 #include <tuple>
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(PerformanceObserverSpec_RawPerformanceEntry)
 struct PerformanceObserverSpec_RawPerformanceEntry {
-    REACT_FIELD(name)
     std::string name;
-    REACT_FIELD(entryType)
     double entryType;
-    REACT_FIELD(startTime)
     double startTime;
-    REACT_FIELD(duration)
     double duration;
-    REACT_FIELD(processingStart)
     std::optional<double> processingStart;
-    REACT_FIELD(processingEnd)
     std::optional<double> processingEnd;
-    REACT_FIELD(interactionId)
     std::optional<double> interactionId;
 };
 
-REACT_STRUCT(PerformanceObserverSpec_GetPendingEntriesResult)
 struct PerformanceObserverSpec_GetPendingEntriesResult {
-    REACT_FIELD(entries)
     std::vector<PerformanceObserverSpec_RawPerformanceEntry> entries;
-    REACT_FIELD(droppedEntriesCount)
     double droppedEntriesCount;
 };
+
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PerformanceObserverSpec_RawPerformanceEntry*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"name", &PerformanceObserverSpec_RawPerformanceEntry::name},
+        {L"entryType", &PerformanceObserverSpec_RawPerformanceEntry::entryType},
+        {L"startTime", &PerformanceObserverSpec_RawPerformanceEntry::startTime},
+        {L"duration", &PerformanceObserverSpec_RawPerformanceEntry::duration},
+        {L"processingStart", &PerformanceObserverSpec_RawPerformanceEntry::processingStart},
+        {L"processingEnd", &PerformanceObserverSpec_RawPerformanceEntry::processingEnd},
+        {L"interactionId", &PerformanceObserverSpec_RawPerformanceEntry::interactionId},
+    };
+    return fieldMap;
+}
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PerformanceObserverSpec_GetPendingEntriesResult*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"entries", &PerformanceObserverSpec_GetPendingEntriesResult::entries},
+        {L"droppedEntriesCount", &PerformanceObserverSpec_GetPendingEntriesResult::droppedEntriesCount},
+    };
+    return fieldMap;
+}
 
 struct PerformanceObserverSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{

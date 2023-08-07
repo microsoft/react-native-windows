@@ -8,44 +8,55 @@
  */
 #pragma once
 
-#include "NativeModules.h"
+#include <NativeModules.h>
 #include <tuple>
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(AccessibilityManagerSpec_setAccessibilityContentSizeMultipliers_JSMultipliers)
 struct AccessibilityManagerSpec_setAccessibilityContentSizeMultipliers_JSMultipliers {
-    REACT_FIELD(extraSmall)
     std::optional<double> extraSmall;
-    REACT_FIELD(small)
     std::optional<double> small;
-    REACT_FIELD(medium)
     std::optional<double> medium;
-    REACT_FIELD(large)
     std::optional<double> large;
-    REACT_FIELD(extraLarge)
     std::optional<double> extraLarge;
-    REACT_FIELD(extraExtraLarge)
     std::optional<double> extraExtraLarge;
-    REACT_FIELD(extraExtraExtraLarge)
     std::optional<double> extraExtraExtraLarge;
-    REACT_FIELD(accessibilityMedium)
     std::optional<double> accessibilityMedium;
-    REACT_FIELD(accessibilityLarge)
     std::optional<double> accessibilityLarge;
-    REACT_FIELD(accessibilityExtraLarge)
     std::optional<double> accessibilityExtraLarge;
-    REACT_FIELD(accessibilityExtraExtraLarge)
     std::optional<double> accessibilityExtraExtraLarge;
-    REACT_FIELD(accessibilityExtraExtraExtraLarge)
     std::optional<double> accessibilityExtraExtraExtraLarge;
 };
 
-REACT_STRUCT(AccessibilityManagerSpec_announceForAccessibilityWithOptions_options)
 struct AccessibilityManagerSpec_announceForAccessibilityWithOptions_options {
-    REACT_FIELD(queue)
     std::optional<bool> queue;
 };
+
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(AccessibilityManagerSpec_setAccessibilityContentSizeMultipliers_JSMultipliers*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"extraSmall", &AccessibilityManagerSpec_setAccessibilityContentSizeMultipliers_JSMultipliers::extraSmall},
+        {L"small", &AccessibilityManagerSpec_setAccessibilityContentSizeMultipliers_JSMultipliers::small},
+        {L"medium", &AccessibilityManagerSpec_setAccessibilityContentSizeMultipliers_JSMultipliers::medium},
+        {L"large", &AccessibilityManagerSpec_setAccessibilityContentSizeMultipliers_JSMultipliers::large},
+        {L"extraLarge", &AccessibilityManagerSpec_setAccessibilityContentSizeMultipliers_JSMultipliers::extraLarge},
+        {L"extraExtraLarge", &AccessibilityManagerSpec_setAccessibilityContentSizeMultipliers_JSMultipliers::extraExtraLarge},
+        {L"extraExtraExtraLarge", &AccessibilityManagerSpec_setAccessibilityContentSizeMultipliers_JSMultipliers::extraExtraExtraLarge},
+        {L"accessibilityMedium", &AccessibilityManagerSpec_setAccessibilityContentSizeMultipliers_JSMultipliers::accessibilityMedium},
+        {L"accessibilityLarge", &AccessibilityManagerSpec_setAccessibilityContentSizeMultipliers_JSMultipliers::accessibilityLarge},
+        {L"accessibilityExtraLarge", &AccessibilityManagerSpec_setAccessibilityContentSizeMultipliers_JSMultipliers::accessibilityExtraLarge},
+        {L"accessibilityExtraExtraLarge", &AccessibilityManagerSpec_setAccessibilityContentSizeMultipliers_JSMultipliers::accessibilityExtraExtraLarge},
+        {L"accessibilityExtraExtraExtraLarge", &AccessibilityManagerSpec_setAccessibilityContentSizeMultipliers_JSMultipliers::accessibilityExtraExtraExtraLarge},
+    };
+    return fieldMap;
+}
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(AccessibilityManagerSpec_announceForAccessibilityWithOptions_options*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"queue", &AccessibilityManagerSpec_announceForAccessibilityWithOptions_options::queue},
+    };
+    return fieldMap;
+}
 
 struct AccessibilityManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{

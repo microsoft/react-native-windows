@@ -8,22 +8,28 @@
  */
 #pragma once
 
-#include "NativeModules.h"
+#include <NativeModules.h>
 #include <tuple>
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(PerformanceSpec_ReactNativeStartupTiming)
 struct PerformanceSpec_ReactNativeStartupTiming {
-    REACT_FIELD(startTime)
     double startTime;
-    REACT_FIELD(endTime)
     double endTime;
-    REACT_FIELD(executeJavaScriptBundleEntryPointStart)
     double executeJavaScriptBundleEntryPointStart;
-    REACT_FIELD(executeJavaScriptBundleEntryPointEnd)
     double executeJavaScriptBundleEntryPointEnd;
 };
+
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PerformanceSpec_ReactNativeStartupTiming*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"startTime", &PerformanceSpec_ReactNativeStartupTiming::startTime},
+        {L"endTime", &PerformanceSpec_ReactNativeStartupTiming::endTime},
+        {L"executeJavaScriptBundleEntryPointStart", &PerformanceSpec_ReactNativeStartupTiming::executeJavaScriptBundleEntryPointStart},
+        {L"executeJavaScriptBundleEntryPointEnd", &PerformanceSpec_ReactNativeStartupTiming::executeJavaScriptBundleEntryPointEnd},
+    };
+    return fieldMap;
+}
 
 struct PerformanceSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
