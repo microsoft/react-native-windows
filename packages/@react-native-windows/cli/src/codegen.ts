@@ -112,7 +112,7 @@ export class CodeGenWindows {
     }
 
     let allInOne = true;
-    if (pkgJson.codegenConfig.windows.allInOne) {
+    if (pkgJson.codegenConfig.windows.allInOne !== undefined) {
       switch (pkgJson.codegenConfig.windows.allInOne) {
         case true:
         case false:
