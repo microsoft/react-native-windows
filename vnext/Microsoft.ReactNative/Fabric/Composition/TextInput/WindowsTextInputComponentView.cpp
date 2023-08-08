@@ -777,66 +777,6 @@ void WindowsTextInputComponentView::UpdateText(const std::string &str) noexcept 
 }
 
 void WindowsTextInputComponentView::setPlaceholderText(const std::string &str) noexcept {
-  if (!m_drawingSurface)
-    return;
-
-  // Begin our update of the surface pixels. If this is our first update, we are required
-  // to specify the entire surface, which nullptr is shorthand for (but, as it works out,
-  // any time we make an update we touch the entire surface, so we always pass nullptr).
-  winrt::com_ptr<ID2D1DeviceContext> d2dDeviceContext;
-  POINT offset;
-
-  winrt::com_ptr<Composition::ICompositionDrawingSurfaceInterop> drawingSurfaceInterop;
-  m_drawingSurface.as(drawingSurfaceInterop);
-
-  m_drawing = true;
-  if (CheckForDeviceRemoved(drawingSurfaceInterop->BeginDraw(d2dDeviceContext.put(), &offset))) {
-    d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
-    assert(d2dDeviceContext->GetUnitMode() == D2D1_UNIT_MODE_DIPS);
-    const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
-    float oldDpiX, oldDpiY;
-    d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
-    d2dDeviceContext->SetDpi(dpi, dpi);
-
-    winrt::com_ptr<ID2D1SolidColorBrush> brush;
-    winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Green, 1.0f), brush.put()));
-
-    facebook::react::LayoutConstraints constraints;
-    constraints.maximumSize.width = static_cast<FLOAT>(offset.x) + static_cast<FLOAT>(m_imgWidth);
-    constraints.maximumSize.height = static_cast<FLOAT>(offset.y) + static_cast<FLOAT>(m_imgHeight);
-
-    // Create a fragment with text attributes
-    facebook::react::AttributedString attributedString;
-    facebook::react::AttributedString::Fragment fragment1;
-    facebook::react::TextAttributes textAttributes;
-    facebook::react::ShadowView parentShadowView;
-    m_textLayout = nullptr;
-
-    textAttributes.fontSize = 16.0f; // TODO: should be m_props->textAttributes.fontSize but breaks rntester
-    fragment1.string = m_placeholderText;
-    fragment1.textAttributes = textAttributes;
-    fragment1.parentShadowView = parentShadowView; // do I need to find the parent shadow view maybe??
-    attributedString.appendFragment(fragment1);
-
-    m_attributedStringBox = facebook::react::AttributedStringBox(attributedString);
-    facebook::react::TextLayoutManager::GetTextLayout(m_attributedStringBox, {} /*TODO*/, constraints, m_textLayout);
-
-    // draw text
-    d2dDeviceContext->DrawTextLayout(
-        D2D1::Point2F(static_cast<FLOAT>(m_rcClient.top), static_cast<FLOAT>(m_rcClient.left)),
-        m_textLayout.get(),
-        brush.get(),
-        D2D1_DRAW_TEXT_OPTIONS_ENABLE_COLOR_FONT);
-
-    // restore dpi state
-    d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
-
-    // Our update is done. EndDraw never indicates rendering device removed, so any
-    // failure here is unexpected and, therefore, fatal.
-    auto hrEndDraw = drawingSurfaceInterop->EndDraw();
-    winrt::check_hresult(hrEndDraw);
-  }
-  m_needsRedraw = false;
 }
 
 void WindowsTextInputComponentView::updateLayoutMetrics(
@@ -986,13 +926,8 @@ void WindowsTextInputComponentView::finalizeUpdates(RNComponentViewUpdateMask up
   }
 
   ensureDrawingSurface();
-
-  if (!m_placeholderText.empty() && m_firstTextUpdate) {
-    setPlaceholderText(m_placeholderText);
-    // m_firstTextUpdate = false; // this is commentted out just to be able to see the text placed, uncomment to work as
-    // attended (ie only being ran once the textinput is first drawn)
-  }
 }
+
 void WindowsTextInputComponentView::prepareForRecycle() noexcept {}
 facebook::react::Props::Shared WindowsTextInputComponentView::props() noexcept {
   return m_props;
@@ -1156,6 +1091,39 @@ void WindowsTextInputComponentView::DrawText() noexcept {
     auto hrDraw = m_textServices->TxDrawD2D(d2dDeviceContext.get(), &rc, nullptr, TXTVIEW_ACTIVE);
     winrt::check_hresult(hrDraw);
 
+    // draw text ontop of richedit
+    winrt::com_ptr<ID2D1SolidColorBrush> brush;
+    winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Green, 1.0f), brush.put()));
+
+    facebook::react::LayoutConstraints constraints;
+    constraints.maximumSize.width = static_cast<FLOAT>(offset.x) + static_cast<FLOAT>(m_imgWidth);
+    constraints.maximumSize.height = static_cast<FLOAT>(offset.y) + static_cast<FLOAT>(m_imgHeight);
+
+    // Create a fragment with text attributes
+    facebook::react::AttributedString attributedString;
+    facebook::react::AttributedString::Fragment fragment1;
+    facebook::react::TextAttributes textAttributes;
+    facebook::react::ShadowView parentShadowView;
+    m_textLayout = nullptr;
+
+    textAttributes.fontSize = 16.0f; // TODO: should be m_props->textAttributes.fontSize but breaks rntester
+    fragment1.string = m_placeholderText;
+    fragment1.textAttributes = textAttributes;
+    fragment1.parentShadowView = parentShadowView; // do I need to find the parent shadow view maybe??
+    attributedString.appendFragment(fragment1);
+
+    m_attributedStringBox = facebook::react::AttributedStringBox(attributedString);
+    facebook::react::TextLayoutManager::GetTextLayout(m_attributedStringBox, {} /*TODO*/, constraints, m_textLayout);
+
+    // draw text
+    d2dDeviceContext->DrawTextLayout(
+        D2D1::Point2F(static_cast<FLOAT>(0.0f), static_cast<FLOAT>(0.0f)),
+        m_textLayout.get(),
+        brush.get(),
+        D2D1_DRAW_TEXT_OPTIONS_ENABLE_COLOR_FONT);
+
+    // end draw text
+
     // restore dpi state
     d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
 
@@ -1212,12 +1180,6 @@ void WindowsTextInputComponentView::ensureVisual() noexcept {
     m_caretVisual = m_compContext.CreateCaretVisual();
     m_visual.InsertAt(m_caretVisual.InnerVisual(), 0);
     m_caretVisual.IsVisible(false);
-  }
-
-  if (!m_placeholderText.empty()) {
-    m_placeholderVisual = m_compContext.CreateSpriteVisual();
-    // setPlaceholderText(m_placeholderText);
-    OuterVisual().InsertAt(m_placeholderVisual, 0);
   }
 }
 
