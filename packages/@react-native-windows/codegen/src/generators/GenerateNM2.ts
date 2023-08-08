@@ -44,7 +44,6 @@ ${headerTemplate}
 #include <optional>
 #include <function>
 #include <vector>
-#include <tuple>
 
 namespace ::_NAMESPACE_:: {
 ::_MODULE_CUSTPM_TYPES_::
@@ -56,8 +55,9 @@ namespace ::_NAMESPACE_:: {
 const moduleOnlyTemplate = `
 ${headerTemplate}
 
-#include <::_TYPE_DEFINITION_FILE_NAME_::>
+::_TYPE_DEFINITION_INCLUDE_::
 #include <NativeModules.h>
+#include <tuple>
 
 namespace ::_NAMESPACE_:: {
 ${specTemplate}
@@ -145,6 +145,8 @@ ${errors}`;
           cppStringType,
         });
 
+        const customTypesExist = customTypes !== '';
+
         const replaceContent = function (template: string): string {
           return template
             .replace(/::_MODULE_CUSTPM_TYPES_::/g, customTypes)
@@ -154,8 +156,10 @@ ${errors}`;
             .replace(/::_MODULE_MEMBERS_ERRORS_::/g, errors)
             .replace(/::_MODULE_NAME_::/g, preferredModuleName)
             .replace(
-              /::_TYPE_DEFINITION_FILE_NAME_::/g,
-              `Native${preferredModuleName}Types.g.h`,
+              /::_TYPE_DEFINITION_INCLUDE_::/g,
+              customTypesExist
+                ? `#include <Native${preferredModuleName}Types.g.h>`
+                : '',
             )
             .replace(/::_NAMESPACE_::/g, namespace);
         };
@@ -166,10 +170,12 @@ ${errors}`;
             replaceContent(allInOneTemplate),
           );
         } else {
-          files.set(
-            `Native${preferredModuleName}Types.g.h`,
-            replaceContent(typeOnlyTemplate),
-          );
+          if (customTypesExist) {
+            files.set(
+              `Native${preferredModuleName}Types.g.h`,
+              replaceContent(typeOnlyTemplate),
+            );
+          }
           files.set(
             `Native${preferredModuleName}Spec.g.h`,
             replaceContent(moduleOnlyTemplate),

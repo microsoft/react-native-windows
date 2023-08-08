@@ -114,8 +114,8 @@ export class CodeGenWindows {
     let allInOne = true;
     if (pkgJson.codegenConfig.windows.allInOne) {
       switch (pkgJson.codegenConfig.windows.allInOne) {
-        case 'true':
-        case 'false':
+        case true:
+        case false:
           allInOne = pkgJson.codegenConfig.windows.allInOne;
           break;
         default:
