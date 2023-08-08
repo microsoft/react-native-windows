@@ -798,41 +798,35 @@ void WindowsTextInputComponentView::setPlaceholderText(const std::string &str) n
     d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
     d2dDeviceContext->SetDpi(dpi, dpi);
 
+    winrt::com_ptr<ID2D1SolidColorBrush> brush;
+    winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Green, 1.0f), brush.put()));
 
-      winrt::com_ptr<ID2D1SolidColorBrush> brush;
-      winrt::check_hresult(
-          d2dDeviceContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Green, 1.0f), brush.put()));
+    facebook::react::LayoutConstraints constraints;
+    constraints.maximumSize.width = static_cast<FLOAT>(offset.x) + static_cast<FLOAT>(m_imgWidth);
+    constraints.maximumSize.height = static_cast<FLOAT>(offset.y) + static_cast<FLOAT>(m_imgHeight);
 
-     facebook::react::LayoutConstraints constraints;
-     constraints.maximumSize.width = static_cast<FLOAT>(offset.x) + static_cast<FLOAT>(m_imgWidth);
-     constraints.maximumSize.height = static_cast<FLOAT>(offset.y) + static_cast<FLOAT>(m_imgHeight);
+    // Create a fragment with text attributes
+    facebook::react::AttributedString attributedString;
+    facebook::react::AttributedString::Fragment fragment1;
+    facebook::react::TextAttributes textAttributes;
+    facebook::react::ShadowView parentShadowView;
+    m_textLayout = nullptr;
 
-     // setting things up?
-     facebook::react::AttributedString attributedString;
+    textAttributes.fontSize = 16.0f; // TODO: should be m_props->textAttributes.fontSize but breaks rntester
+    fragment1.string = m_placeholderText;
+    fragment1.textAttributes = textAttributes;
+    fragment1.parentShadowView = parentShadowView; // do I need to find the parent shadow view maybe??
+    attributedString.appendFragment(fragment1);
 
-     // Create a fragment with text attributes and parent shadow view.AttributedString::Fragment fragment1;
-     facebook::react::AttributedString::Fragment fragment1;
-     fragment1.string = m_placeholderText;
-     facebook::react::TextAttributes textAttributes;
-     textAttributes.fontSize = 50.0f;
-     facebook::react::ShadowView parentShadowView;
-     fragment1.textAttributes = textAttributes; // Set your desired text attributes here.
-     // fragment1.parentShadowView = m_state->getData().attributedString.getFragments()[0].parentShadowView; // Set
-     // your desired parent shadow view here.
-     fragment1.parentShadowView = parentShadowView;
-     attributedString.appendFragment(fragment1);
+    m_attributedStringBox = facebook::react::AttributedStringBox(attributedString);
+    facebook::react::TextLayoutManager::GetTextLayout(m_attributedStringBox, {} /*TODO*/, constraints, m_textLayout);
 
-     m_attributedStringBox = facebook::react::AttributedStringBox(attributedString);
-     m_textLayout = nullptr;
-     facebook::react::TextLayoutManager::GetTextLayout(m_attributedStringBox, {} /*TODO*/, constraints, m_textLayout);
-
-      // draw text
-     d2dDeviceContext->DrawTextLayout(
-         D2D1::Point2F(static_cast<FLOAT>(m_rcClient.top), static_cast<FLOAT>(m_rcClient.left)),
-         m_textLayout.get(),
-         brush.get(),
-         D2D1_DRAW_TEXT_OPTIONS_ENABLE_COLOR_FONT);
-    // end testing
+    // draw text
+    d2dDeviceContext->DrawTextLayout(
+        D2D1::Point2F(static_cast<FLOAT>(m_rcClient.top), static_cast<FLOAT>(m_rcClient.left)),
+        m_textLayout.get(),
+        brush.get(),
+        D2D1_DRAW_TEXT_OPTIONS_ENABLE_COLOR_FONT);
 
     // restore dpi state
     d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
@@ -940,7 +934,7 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
 
     winrt::check_hresult(
         m_textServices->TxSendMessage(EM_SETSEL, static_cast<WPARAM>(cr.cpMin), static_cast<LPARAM>(cr.cpMax), &res));
-      
+
   }
   */
 
@@ -990,12 +984,13 @@ void WindowsTextInputComponentView::finalizeUpdates(RNComponentViewUpdateMask up
     m_needsBorderUpdate = false;
     UpdateSpecialBorderLayers(m_layoutMetrics, *m_props);
   }
-  
+
   ensureDrawingSurface();
 
   if (!m_placeholderText.empty() && m_firstTextUpdate) {
     setPlaceholderText(m_placeholderText);
-    // m_firstTextUpdate = false; // this is commentted out just to be able to see the text placed, uncomment to work as attended (ie only being ran once the textinput is first drawn)
+    // m_firstTextUpdate = false; // this is commentted out just to be able to see the text placed, uncomment to work as
+    // attended (ie only being ran once the textinput is first drawn)
   }
 }
 void WindowsTextInputComponentView::prepareForRecycle() noexcept {}
@@ -1221,7 +1216,7 @@ void WindowsTextInputComponentView::ensureVisual() noexcept {
 
   if (!m_placeholderText.empty()) {
     m_placeholderVisual = m_compContext.CreateSpriteVisual();
-    //setPlaceholderText(m_placeholderText);
+    // setPlaceholderText(m_placeholderText);
     OuterVisual().InsertAt(m_placeholderVisual, 0);
   }
 }
