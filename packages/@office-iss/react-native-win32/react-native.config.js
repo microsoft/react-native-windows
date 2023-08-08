@@ -7,7 +7,8 @@ module.exports = {
         projectConfig: (projectRoot, projectParams) => null,
         dependencyConfig: (projectRoot, dependencyParams) => null,
         npmPackageName: '@office-iss/react-native-win32',
-        saveAssetsPlugin: '@office-iss/react-native-win32/saveAssetPlugin'
+        // Enable once CLI config supports it
+        // saveAssetsPlugin: '@office-iss/react-native-win32/saveAssetPlugin'
       },
     },
   };

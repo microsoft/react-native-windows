@@ -1,6 +1,6 @@
 // @ts-check
 const path = require('path');
-const ensureSmallPath = require('./Libraries/Image/assetPaths');
+const ensureShortPath = require('./Libraries/Image/assetPaths');
 
 /**
  * @typedef {import("metro").AssetData} AssetData;
@@ -18,7 +18,7 @@ function getAssetDestPath(asset, scale) {
     // Assets can have relative paths outside of the project root.
     // Replace `../` with `_` to make sure they don't end up outside of
     // the expected assets directory.
-    ensureSmallPath(asset.httpServerLocation.substr(1).replace(/\.\.\//g, '_')),
+    ensureShortPath(asset.httpServerLocation.substr(1).replace(/\.\.\//g, '_')),
     fileName,
   );
 }
