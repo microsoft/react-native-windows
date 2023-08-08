@@ -106,7 +106,24 @@ export class CodeGenWindows {
             'InvalidCodegenConfig',
             `Value of ${chalk.bold(
               'codegenConfig.windows.cppStringType',
-            )} package.json should be either 'std::string' or 'std::wstring'`,
+            )} in package.json should be either 'std::string' or 'std::wstring'`,
+          );
+      }
+    }
+
+    let allInOne = true;
+    if (pkgJson.codegenConfig.windows.allInOne) {
+      switch (pkgJson.codegenConfig.windows.allInOne) {
+        case 'true':
+        case 'false':
+          allInOne = pkgJson.codegenConfig.windows.allInOne;
+          break;
+        default:
+          throw new CodedError(
+            'InvalidCodegenConfig',
+            `Value of ${chalk.bold(
+              'codegenConfig.windows.allInOne',
+            )} in package.json should be either true or false`,
           );
       }
     }
@@ -138,6 +155,7 @@ export class CodeGenWindows {
         }**/*Native*.[jt]s`,
       ],
       cppStringType,
+      allInOne,
       libraryName: projectName,
       methodOnly: false,
       modulesCxx: generators.indexOf('modulesCxx') !== -1,
