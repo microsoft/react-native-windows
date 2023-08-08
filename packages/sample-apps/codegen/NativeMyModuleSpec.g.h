@@ -8,17 +8,11 @@
  */
 #pragma once
 
+#include "NativeMyModuleTypes.g.h"
 #include <NativeModules.h>
 #include <tuple>
 
 namespace SampleLibraryCodegen {
-
-struct MyModuleSpec_Constants {
-    bool const1;
-    double const2;
-    std::string const3;
-};
-
 
 inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(MyModuleSpec_Constants*) noexcept {
     winrt::Microsoft::ReactNative::FieldMap fieldMap {
