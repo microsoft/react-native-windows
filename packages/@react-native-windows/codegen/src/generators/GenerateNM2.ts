@@ -42,13 +42,11 @@ ${headerTemplate}
 
 #include <string>
 #include <optional>
-#include <function>
+#include <functional>
 #include <vector>
 
 namespace ::_NAMESPACE_:: {
 ::_MODULE_CUSTPM_TYPES_::
-};
-
 } // namespace ::_NAMESPACE_::
 `;
 
@@ -158,7 +156,7 @@ ${errors}`;
             .replace(
               /::_TYPE_DEFINITION_INCLUDE_::/g,
               customTypesExist
-                ? `#include <Native${preferredModuleName}Types.g.h>`
+                ? `#include "Native${preferredModuleName}Types.g.h"`
                 : '',
             )
             .replace(/::_NAMESPACE_::/g, namespace);
