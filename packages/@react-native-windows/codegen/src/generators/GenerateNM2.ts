@@ -17,22 +17,16 @@ export type {CppStringTypes} from './ObjectTypes';
 
 type FilesOutput = Map<string, string>;
 
-const moduleTemplate = `
-/*
+const headerTemplate = `/*
  * This file is auto-generated from a NativeModule spec file in js.
  *
  * This is a C++ Spec class that should be used with MakeTurboModuleProvider to register native modules
  * in a way that also verifies at compile time that the native module matches the interface required
  * by the TurboModule JS spec.
  */
-#pragma once
+#pragma once`;
 
-#include <NativeModules.h>
-#include <tuple>
-
-namespace ::_NAMESPACE_:: {
-::_MODULE_CUSTPM_TYPES_::
-::_MODULE_CUSTPM_TYPES_REFLECTION_::
+const specTemplate = `::_MODULE_CUSTPM_TYPES_REFLECTION_::
 struct ::_MODULE_NAME_::Spec : winrt::Microsoft::ReactNative::TurboModuleSpec {
 ::_MODULE_MEMBERS_TUPLES_::
 
@@ -41,7 +35,46 @@ struct ::_MODULE_NAME_::Spec : winrt::Microsoft::ReactNative::TurboModuleSpec {
 ::_MODULE_MEMBERS_CHECKS_::
 
 ::_MODULE_MEMBERS_ERRORS_::
-  }
+  }`;
+
+const typeOnlyTemplate = `
+${headerTemplate}
+
+#include <string>
+#include <optional>
+#include <function>
+#include <vector>
+#include <tuple>
+
+namespace ::_NAMESPACE_:: {
+::_MODULE_CUSTPM_TYPES_::
+};
+
+} // namespace ::_NAMESPACE_::
+`;
+
+const moduleOnlyTemplate = `
+${headerTemplate}
+
+#include <::_TYPE_DEFINITION_FILE_NAME_::>
+#include <NativeModules.h>
+
+namespace ::_NAMESPACE_:: {
+${specTemplate}
+};
+
+} // namespace ::_NAMESPACE_::
+`;
+
+const allInOneTemplate = `
+${headerTemplate}
+
+#include <NativeModules.h>
+#include <tuple>
+
+namespace ::_NAMESPACE_:: {
+::_MODULE_CUSTPM_TYPES_::
+${specTemplate}
 };
 
 } // namespace ::_NAMESPACE_::
@@ -51,10 +84,12 @@ export function createNM2Generator({
   methodOnly,
   namespace,
   cppStringType,
+  allInOne,
 }: {
   methodOnly: boolean;
   namespace: string;
   cppStringType: CppStringTypes;
+  allInOne: boolean;
 }) {
   return (
     _libraryName: string,
@@ -110,17 +145,36 @@ ${errors}`;
           cppStringType,
         });
 
-        files.set(
-          `Native${preferredModuleName}Spec.g.h`,
-          moduleTemplate
+        const replaceContent = function (template: string): string {
+          return template
             .replace(/::_MODULE_CUSTPM_TYPES_::/g, customTypes)
             .replace(/::_MODULE_CUSTPM_TYPES_REFLECTION_::/g, customReflection)
             .replace(/::_MODULE_MEMBERS_TUPLES_::/g, tuples.substring(1))
             .replace(/::_MODULE_MEMBERS_CHECKS_::/g, checks.substring(1))
             .replace(/::_MODULE_MEMBERS_ERRORS_::/g, errors)
             .replace(/::_MODULE_NAME_::/g, preferredModuleName)
-            .replace(/::_NAMESPACE_::/g, namespace),
-        );
+            .replace(
+              /::_TYPE_DEFINITION_FILE_NAME_::/g,
+              `Native${preferredModuleName}Types.g.h`,
+            )
+            .replace(/::_NAMESPACE_::/g, namespace);
+        };
+
+        if (allInOne) {
+          files.set(
+            `Native${preferredModuleName}Spec.g.h`,
+            replaceContent(allInOneTemplate),
+          );
+        } else {
+          files.set(
+            `Native${preferredModuleName}Types.g.h`,
+            replaceContent(typeOnlyTemplate),
+          );
+          files.set(
+            `Native${preferredModuleName}Spec.g.h`,
+            replaceContent(moduleOnlyTemplate),
+          );
+        }
       }
     }
 
