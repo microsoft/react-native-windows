@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Tue, 08 Aug 2023 05:13:00 GMT",
+      "version": "0.0.0-canary.67",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.67",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "a5eb34c37cd76beffb419d2eacda3700d18bc3cb",
+            "comment": "@rnw/codegen generates GetStructInfo instead of REACT_STRUCT"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 28 Jul 2023 05:14:53 GMT",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.66",
       "version": "0.0.0-canary.66",
