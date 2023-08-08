@@ -156,7 +156,7 @@ ${errors}`;
             .replace(
               /::_TYPE_DEFINITION_INCLUDE_::/g,
               customTypesExist
-                ? `#include "Native${preferredModuleName}Types.g.h"`
+                ? `// #include "Native${preferredModuleName}Types.g.h" before this file to use the generated type definition`
                 : '',
             )
             .replace(/::_NAMESPACE_::/g, namespace);

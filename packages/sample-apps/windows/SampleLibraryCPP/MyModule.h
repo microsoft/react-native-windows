@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "..\..\codegen\NativeMyModuleTypes.g.h"
 #include "..\..\codegen\NativeMyModuleSpec.g.h"
 #include "DebugHelpers.h"
 
