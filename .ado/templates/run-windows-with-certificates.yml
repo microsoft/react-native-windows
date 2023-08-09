@@ -23,10 +23,10 @@ parameters:
     type: string
   - name: restoreLockedMode
     type: boolean
-    default: true
+    default: false
   - name: restoreForceEvaluate
     type: boolean
-    default: true
+    default: false
   - name: moreMSBuildProps
     type: string
     default: ''

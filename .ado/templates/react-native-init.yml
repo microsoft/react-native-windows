@@ -150,7 +150,6 @@ steps:
       deployOption: ${{ parameters.additionalRunArguments }}
       buildLogDirectory: $(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs
       workingDirectory: $(Agent.BuildDirectory)\testcli
-      restoreLockedMode: false # Allow new lockfile to be created
 
   - template: upload-build-logs.yml
     parameters:
