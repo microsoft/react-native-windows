@@ -284,7 +284,7 @@ void HttpSession::Close()
 #pragma region HttpServer
 
 HttpServer::HttpServer(string &&address, uint16_t port, int concurrency)
-  : m_ioThreadCount{concurrency}
+  : m_ioThreadCount{ static_cast<size_t>(concurrency) }
   , m_ioContext{concurrency}
   , m_acceptor{make_strand(m_ioContext)}
 {
