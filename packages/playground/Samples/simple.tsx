@@ -25,17 +25,17 @@ export default class Bootstrap extends React.Component {
         />
         <TextInput
           style={styles.singleLine}
-          placeholder="test"
+          placeholder="I am a placeholder text2"
           placeholderTextColor={'green'}
         />
         <TextInput
           style={styles.singleLine}
-          placeholder="plz work plz"
+          placeholder="I am a placeholder text3"
           placeholderTextColor={'green'}
         />
         <TextInput
           style={styles.singleLine}
-          placeholder="hello"
+          placeholder="I am a placeholder text4"
           placeholderTextColor={'green'}
         />
       </View>

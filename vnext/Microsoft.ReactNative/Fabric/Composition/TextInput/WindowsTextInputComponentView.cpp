@@ -776,8 +776,7 @@ void WindowsTextInputComponentView::UpdateText(const std::string &str) noexcept 
       m_textServices->TxSendMessage(EM_SETTYPOGRAPHYOPTIONS, 0x1000 | 0x2000, 0x1000 | 0x2000, nullptr));
 }
 
-void WindowsTextInputComponentView::setPlaceholderText(const std::string &str) noexcept {
-}
+void WindowsTextInputComponentView::setPlaceholderText(const std::string &str) noexcept {}
 
 void WindowsTextInputComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
@@ -1023,11 +1022,15 @@ void WindowsTextInputComponentView::ensureDrawingSurface() noexcept {
         winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
 
     m_rcClient = getClientRect();
-    winrt::check_hresult(m_textServices->OnTxInPlaceActivate(&m_rcClient));
+    // winrt::check_hresult(m_textServices->OnTxInPlaceActivate(&m_rcClient)); // Notifies the text services object that
+    // this control is in-place active.
 
     LRESULT lresult;
-    winrt::check_hresult(
-        m_textServices->TxSendMessage(EM_SETEVENTMASK, 0, ENM_CHANGE | ENM_SELCHANGE | ENM_ENDCOMPOSITION, &lresult));
+    winrt::check_hresult(m_textServices->TxSendMessage(
+        EM_SETEVENTMASK,
+        0,
+        ENM_CHANGE | ENM_SELCHANGE | ENM_ENDCOMPOSITION,
+        &lresult)); // sets event mask for richEdit, ie which notification coed to send to parent window
 
     DrawText();
 
@@ -1085,43 +1088,52 @@ void WindowsTextInputComponentView::DrawText() noexcept {
         static_cast<LONG>(offset.x) + static_cast<LONG>(m_imgWidth),
         static_cast<LONG>(offset.y) + static_cast<LONG>(m_imgHeight)};
 
-    winrt::check_hresult(m_textServices->OnTxInPlaceActivate(&rcClient));
-
-    // TODO keep track of proper invalid rect
-    auto hrDraw = m_textServices->TxDrawD2D(d2dDeviceContext.get(), &rc, nullptr, TXTVIEW_ACTIVE);
-    winrt::check_hresult(hrDraw);
-
     // draw text ontop of richedit
-    winrt::com_ptr<ID2D1SolidColorBrush> brush;
-    winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Green, 1.0f), brush.put()));
+    if (!m_placeholderText.empty() && m_firstTextUpdate <= 2) {
+      m_firstTextUpdate++; // TODO: Figure out why DrawText is/needs to be called twice to actually draw
+      winrt::com_ptr<ID2D1SolidColorBrush> brush;
+      winrt::check_hresult(
+          d2dDeviceContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Green, 1.0f), brush.put()));
 
-    facebook::react::LayoutConstraints constraints;
-    constraints.maximumSize.width = static_cast<FLOAT>(offset.x) + static_cast<FLOAT>(m_imgWidth);
-    constraints.maximumSize.height = static_cast<FLOAT>(offset.y) + static_cast<FLOAT>(m_imgHeight);
+      facebook::react::LayoutConstraints constraints;
+      constraints.maximumSize.width = static_cast<FLOAT>(offset.x) + static_cast<FLOAT>(m_imgWidth);
+      constraints.maximumSize.height = static_cast<FLOAT>(offset.y) + static_cast<FLOAT>(m_imgHeight);
 
-    // Create a fragment with text attributes
-    facebook::react::AttributedString attributedString;
-    facebook::react::AttributedString::Fragment fragment1;
-    facebook::react::TextAttributes textAttributes;
-    facebook::react::ShadowView parentShadowView;
-    m_textLayout = nullptr;
+      // Create a fragment with text attributes
+      facebook::react::AttributedString attributedString;
+      facebook::react::AttributedString::Fragment fragment1;
+      facebook::react::TextAttributes textAttributes;
+      //facebook::react::ShadowView parentShadowView;
+      m_textLayout = nullptr;
 
-    textAttributes.fontSize = 16.0f; // TODO: should be m_props->textAttributes.fontSize but breaks rntester
-    fragment1.string = m_placeholderText;
-    fragment1.textAttributes = textAttributes;
-    fragment1.parentShadowView = parentShadowView; // do I need to find the parent shadow view maybe??
-    attributedString.appendFragment(fragment1);
+      textAttributes.fontSize = 16.0f; // TODO: should be m_props->textAttributes.fontSize but breaks rntester
+      fragment1.string = m_placeholderText;
+      fragment1.textAttributes = textAttributes;
+      // fragment1.parentShadowView = parentShadowView; // do I need to find the parent shadow view maybe??
+      attributedString.appendFragment(fragment1);
 
-    m_attributedStringBox = facebook::react::AttributedStringBox(attributedString);
-    facebook::react::TextLayoutManager::GetTextLayout(m_attributedStringBox, {} /*TODO*/, constraints, m_textLayout);
+      m_attributedStringBox = facebook::react::AttributedStringBox(attributedString);
+      facebook::react::TextLayoutManager::GetTextLayout(m_attributedStringBox, {} /*TODO*/, constraints, m_textLayout);
 
-    // draw text
-    d2dDeviceContext->DrawTextLayout(
-        D2D1::Point2F(static_cast<FLOAT>(0.0f), static_cast<FLOAT>(0.0f)),
-        m_textLayout.get(),
-        brush.get(),
-        D2D1_DRAW_TEXT_OPTIONS_ENABLE_COLOR_FONT);
+      // draw text
+      d2dDeviceContext->DrawTextLayout(
+          D2D1::Point2F(static_cast<FLOAT>(4.0f), static_cast<FLOAT>(4.0f)),
+          m_textLayout.get(),
+          brush.get(),
+          D2D1_DRAW_TEXT_OPTIONS_ENABLE_COLOR_FONT);
+    } else {
+      winrt::check_hresult(m_textServices->OnTxInPlaceActivate(
+          &rcClient)); // Notifies the text services object that this control is in-place active. (why do we have this
+                       // also in ensureDrawing surface?)
 
+      // TODO keep track of proper invalid rect
+      auto hrDraw = m_textServices->TxDrawD2D(
+          d2dDeviceContext.get(),
+          &rc,
+          nullptr,
+          TXTVIEW_ACTIVE); // Draws the text services object by using Direct2D rendering.
+      winrt::check_hresult(hrDraw);
+    }
     // end draw text
 
     // restore dpi state

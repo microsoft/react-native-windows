@@ -105,12 +105,12 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
   bool m_needsRedraw{false};
   std::string m_placeholderText;
   // Testing drawing TextLayout
-  winrt::Microsoft::ReactNative::Composition::SpriteVisual m_placeholderVisual{nullptr};
+  // winrt::Microsoft::ReactNative::Composition::SpriteVisual m_placeholderVisual{nullptr};
   winrt::com_ptr<::IDWriteTextLayout> m_textLayout;
   facebook::react::AttributedStringBox m_attributedStringBox;
-  // end Test
+  // end
   COLORREF m_placeholderTextColor;
-  bool m_firstTextUpdate{true};
+  int m_firstTextUpdate{0};
   bool m_drawing{false};
 };
 
