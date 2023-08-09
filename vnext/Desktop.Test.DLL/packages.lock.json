@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "dependencies": {
+    "native,Version=v0.0": {
+      "boost": {
+        "type": "Direct",
+        "requested": "[1.76.0, )",
+        "resolved": "1.76.0",
+        "contentHash": "p+w3YvNdXL8Cu9Fzrmexssu0tZbWxuf6ywsQqHjDlKFE5ojXHof1HIyMC3zDLfLnh80dIeFcEUAuR2Asg/XHRA=="
+      },
+      "ReactWindows.OpenSSL.StdCall.Static": {
+        "type": "Direct",
+        "requested": "[1.0.2-p.5, )",
+        "resolved": "1.0.2-p.5",
+        "contentHash": "1tAtFgtbVpI/JgRIxy9j30R/W6B1zi9dYt0o5QwAk5V3X2mo9xrrHcbXlbczKQIftYoNHe0Mfq9ExIu9A1Cs0g=="
+      },
+      "react.windows.test": {
+        "type": "Project",
+        "dependencies": {
+          "ReactWindows.OpenSSL.StdCall.Static": "[1.0.2-p.5, )",
+          "boost": "[1.76.0, )"
+        }
+      }
+    }
+  }
+}
