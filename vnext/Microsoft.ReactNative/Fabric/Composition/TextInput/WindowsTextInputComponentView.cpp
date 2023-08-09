@@ -829,21 +829,6 @@ void WindowsTextInputComponentView::updateTextColor(COLORREF color) {
   winrt::check_hresult(m_textServices->TxSendMessage(EM_SETCHARFORMAT, 0, reinterpret_cast<LPARAM>(&charFormat), &res));
 }
 
-std::string WindowsTextInputComponentView::findExtraChar(
-    std::string const &originalString,
-    std::string const &modifiedString) {
-  auto newLength = modifiedString.size() - originalString.size();
-  size_t i = 0;
-  // find first location of extra char
-  while (i < modifiedString.size()) {
-    if (originalString[i] != modifiedString[i]) {
-      break;
-    }
-    i++;
-  }
-  return modifiedString.substr(i, newLength);
-}
-
 // When we are notified by RichEdit that the text changed, we need to notify JS
 void WindowsTextInputComponentView::OnTextUpdated() noexcept {
   auto data = m_state->getData();
@@ -1022,15 +1007,15 @@ void WindowsTextInputComponentView::ensureDrawingSurface() noexcept {
         winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
 
     m_rcClient = getClientRect();
-    // winrt::check_hresult(m_textServices->OnTxInPlaceActivate(&m_rcClient)); // Notifies the text services object that
-    // this control is in-place active.
+    winrt::check_hresult(m_textServices->OnTxInPlaceActivate(
+        &m_rcClient)); // Notifies the text services object that this control is in-place active.
 
     LRESULT lresult;
     winrt::check_hresult(m_textServices->TxSendMessage(
         EM_SETEVENTMASK,
         0,
         ENM_CHANGE | ENM_SELCHANGE | ENM_ENDCOMPOSITION,
-        &lresult)); // sets event mask for richEdit, ie which notification coed to send to parent window
+        &lresult)); // sets event mask for richEdit, ie which notification code to send to parent window
 
     DrawText();
 
@@ -1103,7 +1088,7 @@ void WindowsTextInputComponentView::DrawText() noexcept {
       facebook::react::AttributedString attributedString;
       facebook::react::AttributedString::Fragment fragment1;
       facebook::react::TextAttributes textAttributes;
-      //facebook::react::ShadowView parentShadowView;
+      // facebook::react::ShadowView parentShadowView;
       m_textLayout = nullptr;
 
       textAttributes.fontSize = 16.0f; // TODO: should be m_props->textAttributes.fontSize but breaks rntester
