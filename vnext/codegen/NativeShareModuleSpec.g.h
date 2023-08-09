@@ -8,24 +8,35 @@
  */
 #pragma once
 
-#include "NativeModules.h"
+#include <NativeModules.h>
 #include <tuple>
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(ShareModuleSpec_share_content)
 struct ShareModuleSpec_share_content {
-    REACT_FIELD(title)
     std::optional<std::string> title;
-    REACT_FIELD(message)
     std::optional<std::string> message;
 };
 
-REACT_STRUCT(ShareModuleSpec_share_returnType)
 struct ShareModuleSpec_share_returnType {
-    REACT_FIELD(action)
     std::string action;
 };
+
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(ShareModuleSpec_share_content*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"title", &ShareModuleSpec_share_content::title},
+        {L"message", &ShareModuleSpec_share_content::message},
+    };
+    return fieldMap;
+}
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(ShareModuleSpec_share_returnType*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"action", &ShareModuleSpec_share_returnType::action},
+    };
+    return fieldMap;
+}
 
 struct ShareModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{

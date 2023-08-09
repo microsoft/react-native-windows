@@ -13,13 +13,14 @@ import type {
   Nullable,
 } from '@react-native/codegen/lib/CodegenSchema';
 import {AliasMap, getAliasCppName} from './AliasManaging';
-import {translateField} from './ObjectTypes';
+import {CppCodegenOptions, translateField} from './ObjectTypes';
 
-function translateObjectBody(
+function translateObjectMembersDefinition(
   type: NativeModuleObjectTypeAnnotation,
   aliases: AliasMap,
   baseAliasName: string,
   prefix: string,
+  options: CppCodegenOptions,
 ) {
   return type.properties
     .map((prop: NamedShape<Nullable<NativeModuleBaseTypeAnnotation>>) => {
@@ -27,13 +28,24 @@ function translateObjectBody(
       if (prop.optional && propType.type !== 'NullableTypeAnnotation') {
         propType = {type: 'NullableTypeAnnotation', typeAnnotation: propType};
       }
-      const first = `${prefix}REACT_FIELD(${prop.name})`;
-      const second = `${prefix}${translateField(
+      return `${prefix}${translateField(
         propType,
         aliases,
         `${baseAliasName}_${prop.name}`,
+        options,
       )} ${prop.name};`;
-      return `${first}\n${second}`;
+    })
+    .join('\n');
+}
+
+function translateObjectMembersReflection(
+  type: NativeModuleObjectTypeAnnotation,
+  aliasCppName: string,
+  prefix: string,
+) {
+  return type.properties
+    .map((prop: NamedShape<Nullable<NativeModuleBaseTypeAnnotation>>) => {
+      return `${prefix}{L"${prop.name}", &${aliasCppName}::${prop.name}},`;
     })
     .join('\n');
 }
@@ -48,28 +60,50 @@ export function createAliasMap(nativeModuleAliases: {
   return aliases;
 }
 
+interface AliasCode {
+  definition: string;
+  reflection: string;
+}
+
 interface AliasCodeMap {
-  [name: string]: string;
+  [name: string]: AliasCode;
 }
 
 function generateSingleAlias(
   aliases: AliasMap,
   aliasName: string,
   aliasCode: AliasCodeMap,
+  options: CppCodegenOptions,
 ): void {
+  const aliasCppName = getAliasCppName(aliasName);
   const aliasType = <NativeModuleObjectTypeAnnotation>aliases.types[aliasName];
-  aliasCode[aliasName] = `
-REACT_STRUCT(${getAliasCppName(aliasName)})
-struct ${getAliasCppName(aliasName)} {
-${translateObjectBody(aliasType, aliases, aliasName, '    ')}
+  const definition = `
+struct ${aliasCppName} {
+${translateObjectMembersDefinition(
+  aliasType,
+  aliases,
+  aliasName,
+  '    ',
+  options,
+)}
 };
 `;
+  const reflection = `
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(${aliasCppName}*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+${translateObjectMembersReflection(aliasType, aliasCppName, '        ')}
+    };
+    return fieldMap;
+}
+`;
+  aliasCode[aliasName] = {definition, reflection};
 }
 
 function generateNestedAliasesInCorrectOrder(
   aliases: AliasMap,
   aliasCode: AliasCodeMap,
   aliasOrder: string[],
+  options: CppCodegenOptions,
 ): void {
   // retrieve and clean all ungenerated aliases
   const jobs = aliases.jobs;
@@ -80,26 +114,36 @@ function generateNestedAliasesInCorrectOrder(
     // generate a new struct and all fields will be examined
     // new anonymous objects could be found
     // they will be stored in aliases.jobs
-    generateSingleAlias(aliases, aliasName, aliasCode);
+    generateSingleAlias(aliases, aliasName, aliasCode, options);
     // nested C++ structs must be put before the current C++ struct
     // as they will be used in the current C++ struct
     // the order will be perfectly and easily ensured by doing this recursively
-    generateNestedAliasesInCorrectOrder(aliases, aliasCode, aliasOrder);
+    generateNestedAliasesInCorrectOrder(
+      aliases,
+      aliasCode,
+      aliasOrder,
+      options,
+    );
     // all referenced C++ structs are generated
     // put the current one following them
     aliasOrder.push(aliasName);
   }
 }
 
-export function generateAliases(aliases: AliasMap): string {
+export function generateAliases(
+  aliases: AliasMap,
+  options: CppCodegenOptions,
+): [string, string] {
   const aliasCode: AliasCodeMap = {};
   const aliasOrder: string[] = [];
-  generateNestedAliasesInCorrectOrder(aliases, aliasCode, aliasOrder);
+  generateNestedAliasesInCorrectOrder(aliases, aliasCode, aliasOrder, options);
 
   // aliasOrder now has the correct order of C++ struct code
-  let traversedAliasedStructs = '';
+  let customTypes = '';
+  let customReflection = '';
   for (const aliasName of aliasOrder) {
-    traversedAliasedStructs = `${traversedAliasedStructs}${aliasCode[aliasName]}`;
+    customTypes = `${customTypes}${aliasCode[aliasName].definition}`;
+    customReflection = `${customReflection}${aliasCode[aliasName].reflection}`;
   }
-  return traversedAliasedStructs;
+  return [customTypes, customReflection];
 }

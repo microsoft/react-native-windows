@@ -3,8 +3,8 @@
 
 #pragma once
 
-// Folly
-#include <folly/dynamic.h>
+// React Native Windows
+#include <JSValue.h>
 
 // Standard Library
 #include <string>
@@ -26,7 +26,7 @@ struct IRequestBodyHandler {
   /// true  - <paramref name="data" /> contains a blob reference.
   /// false - <paramref name="data" /> does not contain a blob reference.
   /// </returns>
-  virtual bool Supports(folly::dynamic &data) = 0;
+  virtual bool Supports(winrt::Microsoft::ReactNative::JSValueObject &data) = 0;
 
   /// <summary>
   /// Returns the {@link RequestBody} for the JS body payload.
@@ -46,7 +46,9 @@ struct IRequestBodyHandler {
   /// "bytes" - Raw body content
   ///           NOTE: This is an arbitrary key. Pending non-folly structured object to model request body.
   /// </returns>
-  virtual folly::dynamic ToRequestBody(folly::dynamic &data, std::string &contentType) = 0;
+  virtual winrt::Microsoft::ReactNative::JSValueObject ToRequestBody(
+      winrt::Microsoft::ReactNative::JSValueObject &data,
+      std::string &contentType) = 0;
 };
 
 } // namespace Microsoft::React

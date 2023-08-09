@@ -184,6 +184,7 @@ exports[`PressableTests Pressables can have delayed event handlers 1`] = `
 
 exports[`PressableTests Pressables can have event handlers 1`] = `
 {
+  "AccessibilityRole": "Button",
   "AutomationId": "pressable_feedback_events_button",
   "Background": null,
   "BorderBrush": null,

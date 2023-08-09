@@ -8,32 +8,45 @@
  */
 #pragma once
 
-#include "NativeModules.h"
+#include <NativeModules.h>
 #include <tuple>
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(PlatformConstantsWinSpec_Constants_reactNativeVersion)
 struct PlatformConstantsWinSpec_Constants_reactNativeVersion {
-    REACT_FIELD(major)
     double major;
-    REACT_FIELD(minor)
     double minor;
-    REACT_FIELD(patch)
     double patch;
-    REACT_FIELD(prerelease)
     std::optional<std::string> prerelease;
 };
 
-REACT_STRUCT(PlatformConstantsWinSpec_Constants)
 struct PlatformConstantsWinSpec_Constants {
-    REACT_FIELD(isTesting)
     bool isTesting;
-    REACT_FIELD(reactNativeVersion)
+    std::optional<bool> isDisableAnimations;
     PlatformConstantsWinSpec_Constants_reactNativeVersion reactNativeVersion;
-    REACT_FIELD(osVersion)
     double osVersion;
 };
+
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PlatformConstantsWinSpec_Constants_reactNativeVersion*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"major", &PlatformConstantsWinSpec_Constants_reactNativeVersion::major},
+        {L"minor", &PlatformConstantsWinSpec_Constants_reactNativeVersion::minor},
+        {L"patch", &PlatformConstantsWinSpec_Constants_reactNativeVersion::patch},
+        {L"prerelease", &PlatformConstantsWinSpec_Constants_reactNativeVersion::prerelease},
+    };
+    return fieldMap;
+}
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PlatformConstantsWinSpec_Constants*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"isTesting", &PlatformConstantsWinSpec_Constants::isTesting},
+        {L"isDisableAnimations", &PlatformConstantsWinSpec_Constants::isDisableAnimations},
+        {L"reactNativeVersion", &PlatformConstantsWinSpec_Constants::reactNativeVersion},
+        {L"osVersion", &PlatformConstantsWinSpec_Constants::osVersion},
+    };
+    return fieldMap;
+}
 
 struct PlatformConstantsWinSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto constants = std::tuple{

@@ -8,26 +8,37 @@
  */
 #pragma once
 
-#include "NativeModules.h"
+#include <NativeModules.h>
 #include <tuple>
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(ImageLoaderAndroidSpec_getSize_returnType)
 struct ImageLoaderAndroidSpec_getSize_returnType {
-    REACT_FIELD(width)
     double width;
-    REACT_FIELD(height)
     double height;
 };
 
-REACT_STRUCT(ImageLoaderAndroidSpec_getSizeWithHeaders_returnType)
 struct ImageLoaderAndroidSpec_getSizeWithHeaders_returnType {
-    REACT_FIELD(width)
     double width;
-    REACT_FIELD(height)
     double height;
 };
+
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(ImageLoaderAndroidSpec_getSize_returnType*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"width", &ImageLoaderAndroidSpec_getSize_returnType::width},
+        {L"height", &ImageLoaderAndroidSpec_getSize_returnType::height},
+    };
+    return fieldMap;
+}
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(ImageLoaderAndroidSpec_getSizeWithHeaders_returnType*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"width", &ImageLoaderAndroidSpec_getSizeWithHeaders_returnType::width},
+        {L"height", &ImageLoaderAndroidSpec_getSizeWithHeaders_returnType::height},
+    };
+    return fieldMap;
+}
 
 struct ImageLoaderAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{

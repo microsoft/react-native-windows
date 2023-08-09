@@ -6,7 +6,7 @@
  */
 
 import yargs from 'yargs';
-import {runCodeGen} from './index';
+import {CodeGenOptions, runCodeGen} from './index';
 
 const argv = yargs.options({
   file: {
@@ -58,6 +58,12 @@ const argv = yargs.options({
     required: true,
     describe: 'Used for part of the path generated within the codegen dir',
   },
+  cppStringType: {
+    choices: ['std::string', 'std::wstring'],
+    describe:
+      'C++ string type in generated code, should be "std::string" or "std::wstring"',
+    default: 'std::string',
+  },
 }).argv;
 
 if ((argv.file && argv.files) || (!argv.file && !argv.files)) {
@@ -65,7 +71,18 @@ if ((argv.file && argv.files) || (!argv.file && !argv.files)) {
   process.exit(1);
 }
 
-const changesNecessary = runCodeGen(argv);
+if (
+  argv.cppStringType !== 'std::string' &&
+  argv.cppStringType !== 'std::wstring'
+) {
+  console.error('cppStringType should be "std::string" or "std::wstring".');
+  process.exit(1);
+}
+
+// type casting is necessary here because
+// cppStringType does not become union of string literals
+// until yargs.options get improved in the future
+const changesNecessary = runCodeGen(<CodeGenOptions>argv);
 
 if (argv.test && changesNecessary) {
   console.error(

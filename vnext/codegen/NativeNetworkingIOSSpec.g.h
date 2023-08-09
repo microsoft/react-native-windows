@@ -8,30 +8,36 @@
  */
 #pragma once
 
-#include "NativeModules.h"
+#include <NativeModules.h>
 #include <tuple>
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(NetworkingIOSSpec_sendRequest_query)
 struct NetworkingIOSSpec_sendRequest_query {
-    REACT_FIELD(method)
     std::string method;
-    REACT_FIELD(url)
     std::string url;
-    REACT_FIELD(data)
     ::React::JSValue data;
-    REACT_FIELD(headers)
     ::React::JSValue headers;
-    REACT_FIELD(responseType)
     std::string responseType;
-    REACT_FIELD(incrementalUpdates)
     bool incrementalUpdates;
-    REACT_FIELD(timeout)
     double timeout;
-    REACT_FIELD(withCredentials)
     bool withCredentials;
 };
+
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(NetworkingIOSSpec_sendRequest_query*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"method", &NetworkingIOSSpec_sendRequest_query::method},
+        {L"url", &NetworkingIOSSpec_sendRequest_query::url},
+        {L"data", &NetworkingIOSSpec_sendRequest_query::data},
+        {L"headers", &NetworkingIOSSpec_sendRequest_query::headers},
+        {L"responseType", &NetworkingIOSSpec_sendRequest_query::responseType},
+        {L"incrementalUpdates", &NetworkingIOSSpec_sendRequest_query::incrementalUpdates},
+        {L"timeout", &NetworkingIOSSpec_sendRequest_query::timeout},
+        {L"withCredentials", &NetworkingIOSSpec_sendRequest_query::withCredentials},
+    };
+    return fieldMap;
+}
 
 struct NetworkingIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{

@@ -25,6 +25,13 @@ test('deviceArchitecture() is valid', () => {
   expect(value).not.toBeNull();
 });
 
+test('nodeArchitecture() is valid', () => {
+  const value = basePropUtils.nodeArchitecture();
+  expect(value).toBeDefined();
+  expect(value).not.toBe('');
+  expect(value).not.toBeNull();
+});
+
 test('devicePlatform() is valid', () => {
   const value = basePropUtils.devicePlatform();
   expect(value).toBeDefined();

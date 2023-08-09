@@ -135,7 +135,7 @@ const Components: Array<RNTesterModuleInfo> = [
   {
     key: 'ViewExample',
     category: 'Basic',
-    module: require('../examples/View/ViewExample'),
+    module: require('../examples/View/ViewExample').default,
   },
   {
     key: 'ViewWin32Test',
@@ -143,7 +143,7 @@ const Components: Array<RNTesterModuleInfo> = [
   },
 ];
 
-const APIs: Array<RNTesterModuleInfo> = [
+const APIs: Array<RNTesterModuleInfo> = ([
   {
     key: 'AccessibilityExample',
     category: 'Basic',
@@ -181,7 +181,7 @@ const APIs: Array<RNTesterModuleInfo> = [
   {
     key: 'BorderExample',
     category: 'UI',
-    module: require('../examples/Border/BorderExample'),
+    module: require('../examples/Border/BorderExample').default,
   },
   {
     key: 'CrashExample',
@@ -198,6 +198,14 @@ const APIs: Array<RNTesterModuleInfo> = [
     category: 'UI',
     module: require('../examples/Dimensions/DimensionsExample'),
   },
+  // Only show the link for the example if the API is available.
+  typeof IntersectionObserver === 'function'
+    ? {
+        key: 'IntersectionObserver',
+        category: 'UI',
+        module: require('../examples/IntersectionObserver/IntersectionObserverIndex'),
+      }
+    : null,
   {
     key: 'InvalidPropsExample',
     module: require('../examples/InvalidProps/InvalidPropsExample'),
@@ -221,12 +229,19 @@ const APIs: Array<RNTesterModuleInfo> = [
     key: 'LayoutExample',
     category: 'UI',
     module: require('../examples/Layout/LayoutExample'),
-  } /*
+  },
+  typeof MutationObserver === 'function'
+    ? {
+        key: 'MutationObserver',
+        category: 'UI',
+        module: require('../examples/MutationObserver/MutationObserverIndex'),
+      }
+    : null,
   {
     key: 'NativeAnimationsExample',
     category: 'UI',
     module: require('../examples/NativeAnimation/NativeAnimationsExample'),
-  }*/,
+  },
   {
     key: 'PanResponderExample',
     category: 'Basic',
@@ -294,7 +309,7 @@ const APIs: Array<RNTesterModuleInfo> = [
     category: 'Basic',
     module: require('../examples/Performance/PerformanceApiExample'),
   },
-];
+]: Array<?RNTesterModuleInfo>).filter(Boolean);
 
 if (ReactNativeFeatureFlags.shouldEmitW3CPointerEvents()) {
   APIs.push({

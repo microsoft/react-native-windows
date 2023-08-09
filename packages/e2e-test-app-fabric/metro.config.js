@@ -12,12 +12,10 @@ const path = require('path');
 const rnwPath = fs.realpathSync(
   path.dirname(require.resolve('react-native-windows/package.json')),
 );
-console.log(rnwPath);
 
 const rnwTesterPath = fs.realpathSync(
   path.dirname(require.resolve('@react-native-windows/tester/package.json')),
 );
-console.log(rnwTesterPath);
 
 const devPackages = {
   'react-native': path.normalize(rnwPath),

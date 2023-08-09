@@ -53,6 +53,7 @@ struct ImageComponentView : CompositionBaseComponentView {
       const noexcept override;
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
   bool focusable() const noexcept override;
+  virtual std::string DefaultControlType() const noexcept;
 
  private:
   ImageComponentView(

@@ -26,7 +26,6 @@ TEST_MODULE_INITIALIZE(InitModule) {
   using Microsoft::React::SetRuntimeOptionBool;
 
   SetRuntimeOptionBool("WebSocket.AcceptSelfSigned", true);
-  SetRuntimeOptionBool("Blob.EnableModule", true);
 
   // WebSocketJSExecutor can't register native log hooks.
   SetRuntimeOptionBool("RNTester.UseWebDebugger", false);
@@ -221,6 +220,13 @@ TEST_CLASS (RNTesterIntegrationTests) {
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(Blob) {
     auto result = m_runner.RunTest("IntegrationTests/BlobTest", "BlobTest");
+    Assert::AreEqual(TestStatus::Passed, result.Status, result.Message.c_str());
+  }
+
+  BEGIN_TEST_METHOD_ATTRIBUTE(Fetch)
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(Fetch) {
+    auto result = m_runner.RunTest("IntegrationTests/FetchTest", "FetchTest");
     Assert::AreEqual(TestStatus::Passed, result.Status, result.Message.c_str());
   }
 

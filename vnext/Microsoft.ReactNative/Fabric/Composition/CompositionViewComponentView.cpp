@@ -1091,6 +1091,9 @@ void CompositionBaseComponentView::updateAccessibilityProps(
       UIA_IsEnabledPropertyId,
       !oldViewProps.accessibilityState.disabled,
       !newViewProps.accessibilityState.disabled);
+
+  winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+      provider, UIA_ControlTypePropertyId, oldViewProps.accessibilityRole, newViewProps.accessibilityRole);
 }
 
 void CompositionBaseComponentView::updateBorderLayoutMetrics(
@@ -1210,6 +1213,10 @@ facebook::react::SharedTouchEventEmitter CompositionBaseComponentView::touchEven
 
 bool CompositionBaseComponentView::focusable() const noexcept {
   return false;
+}
+
+std::string CompositionBaseComponentView::DefaultControlType() const noexcept {
+  return "group";
 }
 
 CompositionViewComponentView::CompositionViewComponentView(
@@ -1411,6 +1418,10 @@ winrt::Microsoft::ReactNative::Composition::IVisual CompositionViewComponentView
 
 bool CompositionViewComponentView::focusable() const noexcept {
   return m_props->focusable;
+}
+
+std::string CompositionViewComponentView::DefaultControlType() const noexcept {
+  return "group";
 }
 
 IComponentView *lastDeepChild(IComponentView &view) noexcept {

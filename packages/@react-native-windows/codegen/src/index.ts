@@ -8,6 +8,7 @@
 import path from 'path';
 import fs from '@react-native-windows/fs';
 import globby from 'globby';
+import type {CppStringTypes} from './generators/GenerateNM2';
 import {createNM2Generator} from './generators/GenerateNM2';
 import {
   generateTypeScript,
@@ -15,6 +16,8 @@ import {
 } from './generators/GenerateTypeScript';
 import type {SchemaType} from '@react-native/codegen/lib/CodegenSchema';
 import type {Parser} from '@react-native/codegen/lib/parsers/parser';
+
+export type {CppStringTypes} from './generators/GenerateNM2';
 
 // Load @react-native/codegen from react-native
 const rnPath = path.dirname(require.resolve('react-native/package.json'));
@@ -40,15 +43,19 @@ const schemaValidator = require(path.resolve(
   'lib/SchemaValidator',
 ));
 
-interface Options {
+export interface SharedOptions {
   libraryName: string;
   methodOnly: boolean;
   modulesCxx: boolean;
-  moduleSpecName: string;
   modulesTypeScriptTypes: boolean;
   modulesWindows: boolean;
   namespace: string;
   outputDirectory: string;
+  cppStringType: CppStringTypes;
+}
+
+interface Options extends SharedOptions {
+  moduleSpecName: string;
   schema: SchemaType;
 }
 
@@ -204,11 +211,12 @@ export function generate(
     libraryName,
     methodOnly,
     modulesCxx,
-    moduleSpecName,
     modulesTypeScriptTypes,
     modulesWindows,
     namespace,
     outputDirectory,
+    cppStringType,
+    moduleSpecName,
     schema,
   }: Options,
   {/*generators,*/ test}: Config,
@@ -231,6 +239,7 @@ export function generate(
   const generateNM2 = createNM2Generator({
     methodOnly,
     namespace,
+    cppStringType,
   });
 
   const generateJsiModuleH = require(path.resolve(
@@ -336,18 +345,11 @@ export function generate(
   return writeMapToFiles(generatedFiles, outputDirectory);
 }
 
-export type CodeGenOptions = {
+export interface CodeGenOptions extends SharedOptions {
   file?: string;
   files?: string[];
-  libraryName: string;
-  methodOnly: boolean;
-  modulesCxx: boolean;
-  modulesTypeScriptTypes: boolean;
-  modulesWindows: boolean;
-  namespace: string;
-  outputDirectory: string;
   test: boolean;
-};
+}
 
 export function runCodeGen(options: CodeGenOptions): boolean {
   if (!options.file && !options.files)
@@ -366,17 +368,19 @@ export function runCodeGen(options: CodeGenOptions): boolean {
     modulesWindows,
     namespace,
     outputDirectory,
+    cppStringType,
   } = options;
   return generate(
     {
       libraryName,
       methodOnly,
       modulesCxx,
-      moduleSpecName,
       modulesTypeScriptTypes,
       modulesWindows,
       namespace,
       outputDirectory,
+      cppStringType,
+      moduleSpecName,
       schema,
     },
     {generators: [], test: options.test},

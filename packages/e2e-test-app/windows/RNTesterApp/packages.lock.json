@@ -4,9 +4,9 @@
     "UAP,Version=v10.0.17763": {
       "Microsoft.JavaScript.Hermes": {
         "type": "Direct",
-        "requested": "[0.1.14, )",
-        "resolved": "0.1.14",
-        "contentHash": "YhW4fHxZ+ZIt3eZbFiMxhBzkZPISudZx9rEX+4RlB5EZWzpaKUAqfSUQJcapqdPXa4bw4dla9q9THyUqveBBRA=="
+        "requested": "[0.1.15, )",
+        "resolved": "0.1.15",
+        "contentHash": "My/u5RvxoymtwWokoweU6iVpuP79w271UjadcmSNqnQ9ESIv00tlVP4sHnIiN3t2lJNDeciyE1EVF4swGPECKQ=="
       },
       "Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Direct",
@@ -31,9 +31,9 @@
       },
       "XamlTreeDump": {
         "type": "Direct",
-        "requested": "[1.0.9, )",
-        "resolved": "1.0.9",
-        "contentHash": "rvh/RZghhSG28PDL1dw56nTZRN0/ViV2TIja/ykU9FHn0gtM8pwtgD8Ebo1nobu0QnSjn8Cg6Ncu39VV19rkrw=="
+        "requested": "[1.0.10, )",
+        "resolved": "1.0.10",
+        "contentHash": "2+6dKEFYpSP7w2QA4hkOtzPphpGlYHvW92/MTkloNNXH5ejy8qt64LhpIGzGX6FC42p4SwGSrZCXJjdvxr7bRw=="
       },
       "Microsoft.Net.Native.Compiler": {
         "type": "Transitive",

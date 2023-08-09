@@ -3,6 +3,7 @@
 
 #include "FileReaderModule.h"
 
+#include <CreateModules.h>
 #include <ReactPropertyBag.h>
 #include <sstream>
 
@@ -28,6 +29,9 @@ using winrt::Windows::Foundation::IInspectable;
 
 namespace {
 constexpr char s_moduleName[] = "FileReaderModule";
+constexpr wchar_t s_moduleNameW[] = L"FileReaderModule";
+
+msrn::ReactModuleProvider s_moduleProvider = msrn::MakeTurboModuleProvider<Microsoft::React::FileReaderTurboModule>();
 } // namespace
 
 namespace Microsoft::React {
@@ -122,21 +126,26 @@ void FileReaderTurboModule::Initialize(msrn::ReactContext const &reactContext) n
 }
 
 ///
-/// <param name="args">
-/// Array of arguments passed from the JavaScript layer.
-/// [0]  - dynamic blob object { blobId, offset, size[, type] }
+/// <param name="data">
+/// Blob object with the following fields:
+/// - blobId
+/// - offset
+/// - size
+/// - type (optional)
+/// </param>
+/// <param name="result">
+/// Either resolves or rejects the current method with a given text message.
 /// </param>
 ///
 void FileReaderTurboModule::ReadAsDataUrl(msrn::JSValue &&data, msrn::ReactPromise<string> &&result) noexcept {
-  auto &array = data.AsArray();
-  auto &blob = data[0].AsObject();
+  auto &blob = data.AsObject();
   auto blobId = blob["blobId"].AsString();
   auto offset = blob["offset"].AsInt64();
   auto size = blob["size"].AsInt64();
 
   auto typeItr = blob.find("type");
   string type{};
-  if (typeItr == blob.end()) { // TODO: .items() ?
+  if (typeItr == blob.end()) {
     type = "application/octet-stream";
   } else {
     type = (*typeItr).second.AsString();
@@ -151,20 +160,26 @@ void FileReaderTurboModule::ReadAsDataUrl(msrn::JSValue &&data, msrn::ReactPromi
       [&result](string &&message) { result.Reject(winrt::to_hstring(std::move(message)).c_str()); });
 }
 
-/// TODO: update (folly not used)
-///  <param name="args">
-///  Array of arguments passed from the JavaScript layer.
-///  [0]  - dynamic blob object { blobId, offset, size }
-///  [1]  - string encoding
-///  </param>
+///
+/// <param name="data">
+/// Blob object with the following fields:
+/// - blobId
+/// - offset
+/// - size
+/// - type (optional)
+/// </param>
+/// <param name="encoding">
+/// Text encoding to proces data with.
+/// </param>
+/// <param name="result">
+/// Either resolves or rejects the current method with a given text message.
+/// </param>
 ///
 void FileReaderTurboModule::ReadAsText(
     msrn::JSValue &&data,
     string &&encoding,
     msrn::ReactPromise<string> &&result) noexcept {
-  auto &args = data.AsArray();
-  auto &blob = args[0].AsObject();
-
+  auto &blob = data.AsObject();
   auto blobId = blob["blobId"].AsString();
   auto offset = blob["offset"].AsInt64();
   auto size = blob["size"].AsInt64();
@@ -196,6 +211,14 @@ void FileReaderTurboModule::ReadAsText(
   }
 
   return nullptr;
+}
+
+/*extern*/ const wchar_t *GetFileReaderTurboModuleName() noexcept {
+  return s_moduleNameW;
+}
+
+/*extern*/ const msrn::ReactModuleProvider &GetFileReaderModuleProvider() noexcept {
+  return s_moduleProvider;
 }
 
 } // namespace Microsoft::React

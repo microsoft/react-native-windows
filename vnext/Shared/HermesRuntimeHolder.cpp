@@ -233,11 +233,11 @@ class HermesScriptCache {
 class HermesLocalConnection : public facebook::react::ILocalConnection {
  public:
   HermesLocalConnection(
-      std::unique_ptr<facebook::react::IRemoteConnection> remoteConneciton,
+      std::unique_ptr<facebook::react::IRemoteConnection> remoteConnection,
       void *connectFunc) noexcept {
     CRASH_ON_ERROR(getHermesApi().hermes_create_local_connection(
         connectFunc,
-        reinterpret_cast<hermes_remote_connection>(remoteConneciton.release()),
+        reinterpret_cast<hermes_remote_connection>(remoteConnection.release()),
         &OnRemoteConnectionSendMessage,
         &OnRemoteConnectionDisconnect,
         &OnRemoteConnectionDelete,
@@ -279,9 +279,9 @@ int32_t NAPI_CDECL addInspectorPage(const char *title, const char *vm, void *con
       title,
       vm,
       [connectFunc,
-       hermesApi = HermesApi::current()](std::unique_ptr<facebook::react::IRemoteConnection> remoteConneciton) {
+       hermesApi = HermesApi::current()](std::unique_ptr<facebook::react::IRemoteConnection> remoteConnection) {
         HermesApi::Scope apiScope(hermesApi);
-        return std::make_unique<HermesLocalConnection>(std::move(remoteConneciton), connectFunc);
+        return std::make_unique<HermesLocalConnection>(std::move(remoteConnection), connectFunc);
       });
 }
 
@@ -359,7 +359,7 @@ void HermesRuntimeHolder::crashHandler(int fileDescriptor) noexcept {
 }
 
 void HermesRuntimeHolder::teardown() noexcept {
-  // TODO: (vmoroz) Implement
+  // TODO: (@vmoroz) Implement
 }
 
 std::shared_ptr<HermesRuntimeHolder> HermesRuntimeHolder::loadFrom(

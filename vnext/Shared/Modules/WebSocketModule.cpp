@@ -6,6 +6,7 @@
 #include <Modules/WebSocketModule.h>
 #include <Modules/WebSocketTurboModule.h>
 
+#include <CreateModules.h>
 #include <Modules/CxxModuleUtilities.h>
 #include <Modules/IWebSocketModuleContentHandler.h>
 #include <ReactPropertyBag.h>
@@ -50,6 +51,9 @@ using Microsoft::React::Modules::SendEvent;
 using Microsoft::React::Networking::IWebSocketResource;
 
 constexpr char s_moduleName[] = "WebSocketModule";
+constexpr wchar_t s_moduleNameW[] = L"WebSocketModule";
+
+msrn::ReactModuleProvider s_moduleProvider = msrn::MakeTurboModuleProvider<Microsoft::React::WebSocketTurboModule>();
 
 static shared_ptr<IWebSocketResource>
 GetOrCreateWebSocket(int64_t id, string &&url, weak_ptr<WebSocketModule::SharedState> weakState) {
@@ -112,7 +116,7 @@ GetOrCreateWebSocket(int64_t id, string &&url, weak_ptr<WebSocketModule::SharedS
           if (!strongInstance)
             return;
 
-          dynamic args = dynamic::object("id", id)("type", isBinary ? "binary" : "text");
+          auto args = msrn::JSValueObject{{"id", id}, {"type", isBinary ? "binary" : "text"}};
           shared_ptr<Microsoft::React::IWebSocketModuleContentHandler> contentHandler;
           auto propId = ReactPropertyId<ReactNonAbiValue<weak_ptr<Microsoft::React::IWebSocketModuleContentHandler>>>{
               L"BlobModule.ContentHandler"};
@@ -134,7 +138,7 @@ GetOrCreateWebSocket(int64_t id, string &&url, weak_ptr<WebSocketModule::SharedS
             args["data"] = message;
           }
 
-          SendEvent(weakInstance, "websocketMessage", std::move(args));
+          SendEvent(weakInstance, "websocketMessage", Microsoft::React::Modules::ToDynamic(std::move(args)));
         });
     ws->SetOnClose([id, weakInstance](IWebSocketResource::CloseCode code, const string &reason) {
       auto strongInstance = weakInstance.lock();
@@ -342,7 +346,9 @@ shared_ptr<IWebSocketResource> WebSocketTurboModule::CreateResource(int64_t id, 
   }
 
   // Set up resource
-  rc->SetOnConnect([id, context = m_context]() { SendEvent(context, L"websocketOpen", {{"id", id}}); });
+  rc->SetOnConnect([id, context = m_context]() {
+    SendEvent(context, L"websocketOpen", msrn::JSValueObject{{"id", id}});
+  });
 
   rc->SetOnMessage([id, context = m_context](size_t length, const string &message, bool isBinary) {
     auto args = msrn::JSValueObject{{"id", id}, {"type", isBinary ? "binary" : "text"}};
@@ -491,6 +497,14 @@ void WebSocketTurboModule::RemoveListeners(double /*count*/) noexcept {}
     return std::make_unique<WebSocketModule>(properties);
 
   return nullptr;
+}
+
+/*extern*/ const wchar_t *GetWebSocketTurboModuleName() noexcept {
+  return s_moduleNameW;
+}
+
+/*extern*/ const msrn::ReactModuleProvider &GetWebSocketModuleProvider() noexcept {
+  return s_moduleProvider;
 }
 
 } // namespace Microsoft::React

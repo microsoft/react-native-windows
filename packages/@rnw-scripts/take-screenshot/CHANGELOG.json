@@ -2,6 +2,87 @@
   "name": "@rnw-scripts/take-screenshot",
   "entries": [
     {
+      "date": "Fri, 28 Jul 2023 05:14:53 GMT",
+      "tag": "@rnw-scripts/take-screenshot_v1.1.21",
+      "version": "1.1.21",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/take-screenshot",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.27",
+            "commit": "1f6d2a9ab892a5ab2ffb9652d4ee41ff6a04b2b6"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/take-screenshot",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.15",
+            "commit": "1f6d2a9ab892a5ab2ffb9652d4ee41ff6a04b2b6"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 26 Jul 2023 05:15:47 GMT",
+      "tag": "@rnw-scripts/take-screenshot_v1.1.20",
+      "version": "1.1.20",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/take-screenshot",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.26",
+            "commit": "4880f76af3c9032afea04e74a02c86990fd0a396"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/take-screenshot",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.14",
+            "commit": "4880f76af3c9032afea04e74a02c86990fd0a396"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 14 Jul 2023 05:17:08 GMT",
+      "tag": "@rnw-scripts/take-screenshot_v1.1.19",
+      "version": "1.1.19",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@rnw-scripts/take-screenshot",
+            "commit": "4dae24722d1ea6c9c77e4ade1068aa626f4d2844",
+            "comment": "integration 6/28"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/take-screenshot",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.25",
+            "commit": "4dae24722d1ea6c9c77e4ade1068aa626f4d2844"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/take-screenshot",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.2",
+            "commit": "4dae24722d1ea6c9c77e4ade1068aa626f4d2844"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/take-screenshot",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.13",
+            "commit": "4dae24722d1ea6c9c77e4ade1068aa626f4d2844"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/take-screenshot",
+            "comment": "Bump @rnw-scripts/ts-config to v2.0.5",
+            "commit": "4dae24722d1ea6c9c77e4ade1068aa626f4d2844"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 01 Jul 2023 05:14:42 GMT",
       "tag": "@rnw-scripts/take-screenshot_v1.1.18",
       "version": "1.1.18",
