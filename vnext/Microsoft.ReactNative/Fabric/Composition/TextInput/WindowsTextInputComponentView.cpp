@@ -836,32 +836,6 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
   // if (data.attributedString == newAttributedString)
   //    return;
   data.attributedString = getAttributedString();
-
-  // if the string is just m_placholderText, don't notify the JS
-  /*
-  if (data.attributedString.getFragments().size() &&
-      data.attributedString.getFragments()[0].string == m_placeholderText) {
-    return;
-  } else if (m_firstTextUpdate && !m_placeholderText.empty() && !data.attributedString.isEmpty()) {
-    // reset color and text if placeholderText is present and this is the first RichEdit update
-    m_firstTextUpdate = false;
-    LRESULT res;
-    CHARRANGE cr;
-    cr.cpMin = cr.cpMax = 0;
-    /*
-    std::string inputString = findExtraChar(m_placeholderText, data.attributedString.getFragments()[0].string);
-    data.attributedString.getFragments()[0].string = inputString;
-
-    winrt::check_hresult(m_textServices->TxSendMessage(EM_EXGETSEL, 0, reinterpret_cast<LPARAM>(&cr), &res));
-    updateTextColor(0x000000); // update the text color back to black
-    UpdateText(data.attributedString.getFragments()[0].string);
-
-    winrt::check_hresult(
-        m_textServices->TxSendMessage(EM_SETSEL, static_cast<WPARAM>(cr.cpMin), static_cast<LPARAM>(cr.cpMax), &res));
-
-  }
-  */
-
   data.mostRecentEventCount = m_nativeEventCount;
   m_state->updateState(std::move(data));
 
