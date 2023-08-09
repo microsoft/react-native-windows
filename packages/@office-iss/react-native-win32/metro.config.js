@@ -15,4 +15,4 @@ if (
 const {makeMetroConfig} = require('@rnw-scripts/metro-dev-config');
 module.exports = makeMetroConfig();
 // Enable this when RN CLI gets support for saveAssetPlugins: https://github.com/react-native-community/cli/pull/2002
-module.exports.transformer.assetPlugins = [require.resolve('./metroShortPathAssetDataPlugin.js')];
+// module.exports.transformer.assetPlugins = [require.resolve('./metroShortPathAssetDataPlugin.js')];
