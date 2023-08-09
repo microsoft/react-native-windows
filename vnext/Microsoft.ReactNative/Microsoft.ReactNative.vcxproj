@@ -643,9 +643,7 @@
   <Choose>
     <When Condition="'$(EnableSourceLink)' == 'true'">
       <ItemGroup>
-        <PackageReference Include="Microsoft.Build.Tasks.Git" Version="1.0.0" />
-        <PackageReference Include="Microsoft.SourceLink.Common" Version="1.0.0" />
-        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" />
       </ItemGroup>
     </When>
   </Choose>

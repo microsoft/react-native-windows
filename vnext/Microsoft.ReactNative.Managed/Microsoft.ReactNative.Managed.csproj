@@ -139,8 +139,14 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>$(NETCoreUWPVersion)</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
+  <Choose>
+    <When Condition="'$(EnableSourceLink)' == 'true'">
+      <ItemGroup>
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+      </ItemGroup>
+    </When>
+  </Choose>
   <!--
     Visual Studio (but not MSBuild) will ignore Conditions applied directly to
     the PackageReference or ItemGroup containing a PackageReference. Both

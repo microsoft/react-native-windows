@@ -3,13 +3,9 @@
   "dependencies": {
     "native,Version=v0.0": {
       "boost": {
-        "type": "Direct",
-        "requested": "[1.76.0, )",
+        "type": "Transitive",
         "resolved": "1.76.0",
         "contentHash": "p+w3YvNdXL8Cu9Fzrmexssu0tZbWxuf6ywsQqHjDlKFE5ojXHof1HIyMC3zDLfLnh80dIeFcEUAuR2Asg/XHRA=="
-      },
-      "common": {
-        "type": "Project"
       },
       "fmt": {
         "type": "Project"

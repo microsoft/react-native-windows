@@ -19,10 +19,29 @@
         "resolved": "1.76.0",
         "contentHash": "p+w3YvNdXL8Cu9Fzrmexssu0tZbWxuf6ywsQqHjDlKFE5ojXHof1HIyMC3zDLfLnh80dIeFcEUAuR2Asg/XHRA=="
       },
+      "Microsoft.Build.Tasks.Git": {
+        "type": "Transitive",
+        "resolved": "1.1.1",
+        "contentHash": "AT3HlgTjsqHnWpBHSNeR0KxbLZD7bztlZVj7I8vgeYG9SYqbeFGh0TM/KVtC6fg53nrWHl3VfZFvb5BiQFcY6Q=="
+      },
       "Microsoft.JavaScript.Hermes": {
         "type": "Transitive",
         "resolved": "0.1.15",
         "contentHash": "My/u5RvxoymtwWokoweU6iVpuP79w271UjadcmSNqnQ9ESIv00tlVP4sHnIiN3t2lJNDeciyE1EVF4swGPECKQ=="
+      },
+      "Microsoft.SourceLink.Common": {
+        "type": "Transitive",
+        "resolved": "1.1.1",
+        "contentHash": "WMcGpWKrmJmzrNeuaEb23bEMnbtR/vLmvZtkAP5qWu7vQsY59GqfRJd65sFpBszbd2k/bQ8cs8eWawQKAabkVg=="
+      },
+      "Microsoft.SourceLink.GitHub": {
+        "type": "Transitive",
+        "resolved": "1.1.1",
+        "contentHash": "IaJGnOv/M7UQjRJks7B6p7pbPnOwisYGOIzqCz5ilGFTApZ3ktOR+6zJ12ZRPInulBmdAf1SrGdDG2MU8g6XTw==",
+        "dependencies": {
+          "Microsoft.Build.Tasks.Git": "1.1.1",
+          "Microsoft.SourceLink.Common": "1.1.1"
+        }
       },
       "ReactNative.V8Jsi.Windows": {
         "type": "Transitive",
@@ -43,8 +62,8 @@
       "folly": {
         "type": "Project",
         "dependencies": {
-          "boost": "[1.76.0, )",
-          "fmt": "[1.0.0, )"
+          "Fmt": "[1.0.0, )",
+          "boost": "[1.76.0, )"
         }
       },
       "follywin32": {
@@ -60,6 +79,7 @@
           "Folly": "[1.0.0, )",
           "FollyWin32": "[1.0.0, )",
           "Microsoft.JavaScript.Hermes": "[0.1.15, )",
+          "Microsoft.SourceLink.GitHub": "[1.1.1, )",
           "ReactCommon": "[1.0.0, )",
           "ReactNative.V8Jsi.Windows": "[0.71.5, )",
           "ReactWindows.OpenSSL.StdCall.Static": "[1.0.2-p.5, )",
@@ -70,6 +90,7 @@
         "type": "Project",
         "dependencies": {
           "Microsoft.JavaScript.Hermes": "[0.1.15, )",
+          "Microsoft.SourceLink.GitHub": "[1.1.1, )",
           "React.Windows.Desktop": "[1.0.0, )",
           "ReactNative.V8Jsi.Windows": "[0.71.5, )",
           "ReactWindows.OpenSSL.StdCall.Static": "[1.0.2-p.5, )",
