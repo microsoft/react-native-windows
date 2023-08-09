@@ -5,10 +5,6 @@
   <Import Condition="Exists($([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../')))" Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
 
   <PropertyGroup>
-
-    <BuildingReactNativeWindowsRepo Condition="'$(BuildingReactNativeWindowsRepo)' == '' And $(MSBuildThisFileDirectory.EndsWith('vnext'))">true</BuildingReactNativeWindowsRepo>
-    <BuildingReactNativeWindowsRepo Condition="'$(BuildingReactNativeWindowsRepo)' == ''" >false</BuildingReactNativeWindowsRepo>
-
     <SolutionDir Condition="'$(SolutionDir)' == '' OR '$(SolutionDir)' == '*Undefined*'">$(MSBuildThisFileDirectory)</SolutionDir>
 
     <!-- This property sets the CscTask to print the full path of the csharp file on errors and warnings rather than just the filename. -->
@@ -18,7 +14,6 @@
       SourceLink is disabled by default since customer projects are still building our projects and therefore we don't want to force customers to use this.
       The PR (windows-vs-pr.yml) and CI (publish.yml() turn it back on.
     -->
-    <EnableSourceLink Condition="'$(EnableSourceLink)' == '' And '$(BuildingReactNativeWindowsRepo)' == 'true'">true</EnableSourceLink>
     <EnableSourceLink Condition="'$(EnableSourceLink)' == ''">false</EnableSourceLink>
     <!-- When bumping the Folly version, be sure to bump the git hash of that version's commit and build Folly.vcxproj (to update its cgmanifest.json) too. -->
     <FollyVersion>2023.03.06.00</FollyVersion>
@@ -75,7 +70,7 @@
     <OutputPath Condition="'$(MSBuildProjectExtension)' == '.csproj'">$(OutDir)</OutputPath>
 
     <RestorePackagesWithLockFile Condition="'$(RestorePackagesWithLockFile)' == ''">true</RestorePackagesWithLockFile>
-    <RestoreForceEvaluate Condition="'$(RestoreForceEvaluate)' == ''">true</RestoreForceEvaluate>
+    <RestoreForceEvaluate Condition="'$(RestoreForceEvaluate)' == ''">false</RestoreForceEvaluate>
 
   </PropertyGroup>
 
