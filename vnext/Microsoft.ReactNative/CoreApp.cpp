@@ -231,7 +231,7 @@ static void SetProperties(JsonObject const &json, RNCoreApp *app) {
       std::wstring nsName;
       std::wstring localName;
       if (lastDot != name.rend()) {
-        nsName = std::wstring{name.begin(), static_cast<uint64_t>(name.rend() - lastDot - 1)};
+        nsName = std::wstring{name.begin(), static_cast<size_t>(name.rend() - lastDot - 1)};
         localName = std::wstring{lastDot.base()};
       } else {
         localName = name;
