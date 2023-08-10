@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 10 Aug 2023 05:13:53 GMT",
+      "version": "0.0.0-canary.690",
+      "tag": "react-native-windows_v0.0.0-canary.690",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a00ea41c337dfeea6abd6d885a8b64b9b95ea25d",
+            "comment": "Implement Invoke"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 08 Aug 2023 05:13:01 GMT",
       "version": "0.0.0-canary.689",
       "tag": "react-native-windows_v0.0.0-canary.689",
