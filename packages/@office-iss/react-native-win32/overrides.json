@@ -222,12 +222,6 @@
       "issue": 5170
     },
     {
-      "type": "copy",
-      "file": "src/Libraries/DevToolsSettings/DevToolsSettingsManager.win32.js",
-      "baseFile": "packages/react-native/Libraries/DevToolsSettings/DevToolsSettingsManager.android.js",
-      "baseHash": "1c9eb481e8ed077fa650e3ea34837e2a31310366"
-    },
-    {
       "type": "platform",
       "file": "src/Libraries/Image/assetPaths.js"
     },
