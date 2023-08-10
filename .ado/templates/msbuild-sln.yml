@@ -27,36 +27,6 @@ steps:
     displayName: Disable WarnAsError
 
   - task: VSBuild@1
-    displayName: NuGet Restore ${{parameters.solutionName}}
-    inputs:
-      solution: ${{parameters.solutionDir}}/${{parameters.solutionName}}
-      msbuildArgs:
-        /t:Restore
-        /p:RestoreLockedMode=true
-        /p:RestoreForceEvaluate=true
-        /bl:$(BuildLogDirectory)\NuGetRestore.binlog
-        /flp1:errorsonly;logfile=$(BuildLogDirectory)\NuGetRestore.err.log
-
-  # - powershell: |
-  #     $changed = git status --porcelain=v1 */packages.lock.json
-  #     if ($changed -ne $null) {
-  #       Write-Host "##[warning] Detected packages.lock.json changes. See full log for details."
-  #       Write-Host "Files changed:\n$changed"
-  #     }
-
-  #     if (Test-Path "$(BuildLogDirectory)\NuGetRestore.err.log") {
-  #       $errorLines = Get-ChildItem -Path "$(BuildLogDirectory)\NuGetRestore.err.log"
-  #       $errorLines | Foreach {
-  #         if ($_ -like "Failed to download package '(.*)' from 'https://pkgs.dev.azure.com/ms/") {
-  #           $pkg = $_ -replace "package '(.*)' from", "$1"
-  #           Write-Host "Potential resolution, add $pkg to ADO feed."
-  #         }
-  #       }
-  #     }
-  #   displayName: Process NuGet Restore Result
-  #   condition: succeededOrFailed()
-
-  - task: VSBuild@1
     displayName: VSBuild ${{parameters.solutionName}}
     inputs:
       solution: ${{parameters.solutionDir}}/${{parameters.solutionName}}
@@ -70,11 +40,13 @@ steps:
       createLogFile: true
       logFileVerbosity: detailed
       msbuildArgs:
+        /restore
         /p:PreferredToolArchitecture=${{parameters.preferredToolArchitecture}}
         /p:PlatformToolset=${{parameters.platformToolset}}
         /p:PublishToolDuringBuild=true
         /p:EnableSourceLink=true
         /p:RestoreLockedMode=true
+        /p:RestoreForceEvaluate=true
         /bl:$(BuildLogDirectory)\MsBuild.binlog
         /flp1:errorsonly;logfile=$(BuildLogDirectory)\MsBuild.err.log
         /flp2:warningsonly;logfile=$(BuildLogDirectory)\MsBuild.wrn.log
