@@ -1076,7 +1076,9 @@ void WindowsTextInputComponentView::DrawText() noexcept {
 
       // draw text
       d2dDeviceContext->DrawTextLayout(
-          D2D1::Point2F(static_cast<FLOAT>(4.0f), static_cast<FLOAT>(4.0f)),
+          D2D1::Point2F(
+              static_cast<FLOAT>((offset.x + m_layoutMetrics.contentInsets.left) / m_layoutMetrics.pointScaleFactor),
+              static_cast<FLOAT>((offset.y + m_layoutMetrics.contentInsets.top) / m_layoutMetrics.pointScaleFactor)),
           m_textLayout.get(),
           brush.get(),
           D2D1_DRAW_TEXT_OPTIONS_ENABLE_COLOR_FONT);
