@@ -27,25 +27,20 @@ steps:
     displayName: Disable WarnAsError
 
   - task: VSBuild@1
-    displayName: NuGet Restore Force Evaluate ${{parameters.solutionName}}
+    displayName: NuGet Locked Restore ${{parameters.solutionName}}
     inputs:
       solution: ${{parameters.solutionDir}}/${{parameters.solutionName}}
       msbuildArgs:
         /t:Restore
         /p:RestoreLockedMode=true
-        /p:RestoreForceEvaluate=true
         /bl:$(BuildLogDirectory)\NuGetRestore.binlog
+        /flp1:errorsonly;logfile=$(BuildLogDirectory)\NuGetRestore.err
 
   - powershell: |
-      $changed = git status --porcelain=v1 packages.lock.json
-      $changed
-      if ($changed -ne $null) {
-        Write-Error "Detected packages.lock.json changes, please review the logs to identify if new packages need to be added to the ADO feed."
-        Write-Error "Files changed:\n$changed"
-        return 1
-      }
-    displayName: Verify NuGet Restore Force Evaluate
-    condition: succeededOrFailed()
+      $errorLog = Get-ChildItem $(BuildLogDirectory)\NuGetRestore.err
+      Write-Host $errorLog
+    displayName: Check NuGet Locked Restore Errors
+    condition: failed()
 
   - task: VSBuild@1
     displayName: VSBuild ${{parameters.solutionName}}
@@ -61,13 +56,10 @@ steps:
       createLogFile: true
       logFileVerbosity: detailed
       msbuildArgs:
-        /restore
         /p:PreferredToolArchitecture=${{parameters.preferredToolArchitecture}}
         /p:PlatformToolset=${{parameters.platformToolset}}
         /p:PublishToolDuringBuild=true
         /p:EnableSourceLink=true
-        /p:RestoreLockedMode=true
-        /p:RestoreForceEvaluate=true
         /bl:$(BuildLogDirectory)\MsBuild.binlog
         /flp1:errorsonly;logfile=$(BuildLogDirectory)\MsBuild.err
         /flp2:warningsonly;logfile=$(BuildLogDirectory)\MsBuild.wrn
