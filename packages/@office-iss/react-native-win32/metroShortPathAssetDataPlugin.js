@@ -4,11 +4,11 @@
  **/
 
 /**
- * @param {AssetData} asset
+ * @param {AssetData & {__useShortPath: boolean}} asset
  * @returns {Promise<AssetData>}
  */
 async function metroShortPathAssetDataPlugin(asset) {
-  asset['__useShortPath'] = true;
+  asset.__useShortPath = true;
   return Promise.resolve(asset);
   }
 

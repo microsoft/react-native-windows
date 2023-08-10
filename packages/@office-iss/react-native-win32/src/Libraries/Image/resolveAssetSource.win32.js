@@ -91,10 +91,12 @@ class AssetResolverLateScaleResolution {
 
   _getBasePath(local: boolean) {
     if (local) {
-      const safePath = this._resolver.asset.httpServerLocation.substr(1).replace(/\.\.\//g, '_');
+      const safePath = this._resolver.asset.httpServerLocation
+        .substr(1)
+        .replace(/\.\.\//g, '_');
       // If this asset was created with the newer saveAssetPlugin, then we should shorten the path
       // This conditional is added to allow back compat of older bundles which might have been created without the saveAssetPlugin
-      if (this.resolver.asset['__useShortPath']) {
+      if (this._resolver.asset.__useShortPath) {
         return ensureShortPath(safePath);
       }
       return safePath;
