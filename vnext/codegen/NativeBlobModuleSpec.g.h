@@ -8,18 +8,24 @@
  */
 #pragma once
 
-#include "NativeModules.h"
+#include <NativeModules.h>
 #include <tuple>
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(BlobModuleSpec_Constants)
 struct BlobModuleSpec_Constants {
-    REACT_FIELD(BLOB_URI_SCHEME)
     std::optional<std::string> BLOB_URI_SCHEME;
-    REACT_FIELD(BLOB_URI_HOST)
     std::optional<std::string> BLOB_URI_HOST;
 };
+
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(BlobModuleSpec_Constants*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"BLOB_URI_SCHEME", &BlobModuleSpec_Constants::BLOB_URI_SCHEME},
+        {L"BLOB_URI_HOST", &BlobModuleSpec_Constants::BLOB_URI_HOST},
+    };
+    return fieldMap;
+}
 
 struct BlobModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto constants = std::tuple{

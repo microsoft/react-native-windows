@@ -8,48 +8,69 @@
  */
 #pragma once
 
-#include "NativeModules.h"
+#include <NativeModules.h>
 #include <tuple>
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(ImageEditorSpec_Options_offset)
 struct ImageEditorSpec_Options_offset {
-    REACT_FIELD(x)
     double x;
-    REACT_FIELD(y)
     double y;
 };
 
-REACT_STRUCT(ImageEditorSpec_Options_size)
 struct ImageEditorSpec_Options_size {
-    REACT_FIELD(width)
     double width;
-    REACT_FIELD(height)
     double height;
 };
 
-REACT_STRUCT(ImageEditorSpec_Options_displaySize)
 struct ImageEditorSpec_Options_displaySize {
-    REACT_FIELD(width)
     double width;
-    REACT_FIELD(height)
     double height;
 };
 
-REACT_STRUCT(ImageEditorSpec_Options)
 struct ImageEditorSpec_Options {
-    REACT_FIELD(offset)
     ImageEditorSpec_Options_offset offset;
-    REACT_FIELD(size)
     ImageEditorSpec_Options_size size;
-    REACT_FIELD(displaySize)
     std::optional<ImageEditorSpec_Options_displaySize> displaySize;
-    REACT_FIELD(resizeMode)
     std::optional<std::string> resizeMode;
-    REACT_FIELD(allowExternalStorage)
     std::optional<bool> allowExternalStorage;
 };
+
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(ImageEditorSpec_Options_offset*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"x", &ImageEditorSpec_Options_offset::x},
+        {L"y", &ImageEditorSpec_Options_offset::y},
+    };
+    return fieldMap;
+}
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(ImageEditorSpec_Options_size*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"width", &ImageEditorSpec_Options_size::width},
+        {L"height", &ImageEditorSpec_Options_size::height},
+    };
+    return fieldMap;
+}
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(ImageEditorSpec_Options_displaySize*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"width", &ImageEditorSpec_Options_displaySize::width},
+        {L"height", &ImageEditorSpec_Options_displaySize::height},
+    };
+    return fieldMap;
+}
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(ImageEditorSpec_Options*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"offset", &ImageEditorSpec_Options::offset},
+        {L"size", &ImageEditorSpec_Options::size},
+        {L"displaySize", &ImageEditorSpec_Options::displaySize},
+        {L"resizeMode", &ImageEditorSpec_Options::resizeMode},
+        {L"allowExternalStorage", &ImageEditorSpec_Options::allowExternalStorage},
+    };
+    return fieldMap;
+}
 
 struct ImageEditorSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{

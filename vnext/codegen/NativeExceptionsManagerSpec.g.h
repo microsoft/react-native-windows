@@ -8,44 +8,55 @@
  */
 #pragma once
 
-#include "NativeModules.h"
+#include <NativeModules.h>
 #include <tuple>
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(ExceptionsManagerSpec_StackFrame)
 struct ExceptionsManagerSpec_StackFrame {
-    REACT_FIELD(column)
     std::optional<double> column;
-    REACT_FIELD(file)
     std::optional<std::string> file;
-    REACT_FIELD(lineNumber)
     std::optional<double> lineNumber;
-    REACT_FIELD(methodName)
     std::string methodName;
-    REACT_FIELD(collapse)
     std::optional<bool> collapse;
 };
 
-REACT_STRUCT(ExceptionsManagerSpec_ExceptionData)
 struct ExceptionsManagerSpec_ExceptionData {
-    REACT_FIELD(message)
     std::string message;
-    REACT_FIELD(originalMessage)
     std::optional<std::string> originalMessage;
-    REACT_FIELD(name)
     std::optional<std::string> name;
-    REACT_FIELD(componentStack)
     std::optional<std::string> componentStack;
-    REACT_FIELD(stack)
     std::vector<ExceptionsManagerSpec_StackFrame> stack;
-    REACT_FIELD(id)
     double id;
-    REACT_FIELD(isFatal)
     bool isFatal;
-    REACT_FIELD(extraData)
     std::optional<::React::JSValue> extraData;
 };
+
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(ExceptionsManagerSpec_StackFrame*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"column", &ExceptionsManagerSpec_StackFrame::column},
+        {L"file", &ExceptionsManagerSpec_StackFrame::file},
+        {L"lineNumber", &ExceptionsManagerSpec_StackFrame::lineNumber},
+        {L"methodName", &ExceptionsManagerSpec_StackFrame::methodName},
+        {L"collapse", &ExceptionsManagerSpec_StackFrame::collapse},
+    };
+    return fieldMap;
+}
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(ExceptionsManagerSpec_ExceptionData*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"message", &ExceptionsManagerSpec_ExceptionData::message},
+        {L"originalMessage", &ExceptionsManagerSpec_ExceptionData::originalMessage},
+        {L"name", &ExceptionsManagerSpec_ExceptionData::name},
+        {L"componentStack", &ExceptionsManagerSpec_ExceptionData::componentStack},
+        {L"stack", &ExceptionsManagerSpec_ExceptionData::stack},
+        {L"id", &ExceptionsManagerSpec_ExceptionData::id},
+        {L"isFatal", &ExceptionsManagerSpec_ExceptionData::isFatal},
+        {L"extraData", &ExceptionsManagerSpec_ExceptionData::extraData},
+    };
+    return fieldMap;
+}
 
 struct ExceptionsManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{

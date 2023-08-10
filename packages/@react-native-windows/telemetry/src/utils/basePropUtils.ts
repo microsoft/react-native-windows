@@ -5,7 +5,7 @@
  */
 
 import {execSync} from 'child_process';
-import {totalmem, cpus, arch, platform} from 'os';
+import {totalmem, cpus, platform} from 'os';
 
 import ci from 'ci-info';
 import {randomBytes} from 'crypto';
@@ -20,9 +20,12 @@ const DeviceIdRegKey = 'MachineId';
  */
 export async function deviceId(): Promise<string> {
   try {
-    const output = execSync(
-      `${process.env.windir}\\System32\\reg.exe query ${DeviceIdRegPath} /v ${DeviceIdRegKey}`,
-    ).toString();
+    let regCommand = `${process.env.windir}\\System32\\reg.exe query ${DeviceIdRegPath} /v ${DeviceIdRegKey}`;
+    if (deviceArchitecture() === 'x64') {
+      // Ensure we query the correct registry
+      regCommand += ' /reg:64';
+    }
+    const output = execSync(regCommand).toString();
 
     const result = output.match(/\{([0-9A-Fa-f-]{36})\}/);
     if (result && result.length > 1) {
@@ -33,11 +36,26 @@ export async function deviceId(): Promise<string> {
 }
 
 /**
- * Gets the device architecture, like x64/arm64.
+ * Gets the device architecture, like x86/x64/arm64.
  * @returns The device architecture.
  */
 export function deviceArchitecture(): string {
-  return arch();
+  const nodeArch = nodeArchitecture();
+
+  // Check if we're running x86 node on x64 hardware
+  if (nodeArch === 'x86' && process.env.PROCESSOR_ARCHITEW6432 === 'AMD64') {
+    return 'x64';
+  }
+
+  return nodeArch;
+}
+
+/**
+ * Gets the node architecture, like x86/x64/arm64.
+ * @returns The node architecture.
+ */
+export function nodeArchitecture(): string {
+  return process.arch === 'ia32' ? 'x86' : process.arch;
 }
 
 /**
