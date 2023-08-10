@@ -8,18 +8,24 @@
  */
 #pragma once
 
-#include "NativeModules.h"
+#include <NativeModules.h>
 #include <tuple>
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(FrameRateLoggerSpec_setGlobalOptions_options)
 struct FrameRateLoggerSpec_setGlobalOptions_options {
-    REACT_FIELD(debug)
     std::optional<bool> debug;
-    REACT_FIELD(reportStackTraces)
     std::optional<bool> reportStackTraces;
 };
+
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(FrameRateLoggerSpec_setGlobalOptions_options*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"debug", &FrameRateLoggerSpec_setGlobalOptions_options::debug},
+        {L"reportStackTraces", &FrameRateLoggerSpec_setGlobalOptions_options::reportStackTraces},
+    };
+    return fieldMap;
+}
 
 struct FrameRateLoggerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{

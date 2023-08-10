@@ -8,24 +8,30 @@
  */
 #pragma once
 
-#include "NativeModules.h"
+#include <NativeModules.h>
 #include <tuple>
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(ToastAndroidSpec_Constants)
 struct ToastAndroidSpec_Constants {
-    REACT_FIELD(SHORT)
     double SHORT;
-    REACT_FIELD(LONG)
     double LONG;
-    REACT_FIELD(TOP)
     double TOP;
-    REACT_FIELD(BOTTOM)
     double BOTTOM;
-    REACT_FIELD(CENTER)
     double CENTER;
 };
+
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(ToastAndroidSpec_Constants*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"SHORT", &ToastAndroidSpec_Constants::SHORT},
+        {L"LONG", &ToastAndroidSpec_Constants::LONG},
+        {L"TOP", &ToastAndroidSpec_Constants::TOP},
+        {L"BOTTOM", &ToastAndroidSpec_Constants::BOTTOM},
+        {L"CENTER", &ToastAndroidSpec_Constants::CENTER},
+    };
+    return fieldMap;
+}
 
 struct ToastAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto constants = std::tuple{

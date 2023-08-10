@@ -1,8 +1,28 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 05 Aug 2023 05:13:13 GMT and should not be manually modified.
+This log was last generated on Thu, 10 Aug 2023 05:13:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.690
+
+Thu, 10 Aug 2023 05:13:53 GMT
+
+### Changes
+
+- Implement Invoke (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.689
+
+Tue, 08 Aug 2023 05:13:01 GMT
+
+### Changes
+
+- Use Bubbling TopClick (34109996+chiaramooney@users.noreply.github.com)
+- Deprecate Microsoft.ReactNative.WindowsAppSDK project (jthysell@microsoft.com)
+- @rnw/codegen generates GetStructInfo instead of REACT_STRUCT (53799235+ZihanChen-MSFT@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.183
+- Bump @react-native-windows/codegen to v0.0.0-canary.67
 
 ## 0.0.0-canary.688
 
