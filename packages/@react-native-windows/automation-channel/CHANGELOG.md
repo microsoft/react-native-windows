@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/automation-channel
 
-This log was last generated on Tue, 08 Aug 2023 05:13:01 GMT and should not be manually modified.
+This log was last generated on Thu, 10 Aug 2023 05:13:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.12.29
+
+Thu, 10 Aug 2023 05:13:53 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.690
 
 ## 0.12.28
 
