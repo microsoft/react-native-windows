@@ -55,7 +55,7 @@ steps:
         ${{parameters.msbuildArguments}}
 
   - powershell: |
-      $changed = git status --porcelain=v1 */packages.lock.json
+      $changed = & git status --porcelain=v1 */packages.lock.json
       if ($changed -ne $null) {
         Write-Host "##[warning] Detected packages.lock.json changes. See full log for details."
         Write-Host "Files changed:\n$changed"
