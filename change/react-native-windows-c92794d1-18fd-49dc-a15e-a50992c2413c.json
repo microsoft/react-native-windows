@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix CoreApp build failure with latest VS version",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "dependentChangeType": "patch"
+}
