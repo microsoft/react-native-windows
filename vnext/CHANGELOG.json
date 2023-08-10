@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 10 Aug 2023 17:55:46 GMT",
+      "version": "0.0.0-canary.690",
+      "tag": "react-native-windows_v0.0.0-canary.690",
+      "comments": {
+        "none": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "dee25b21c4a15bb5f4226c5a8f3b32e82c3b368f",
+            "comment": "Test HttpServer build fix"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 10 Aug 2023 05:13:53 GMT",
       "version": "0.0.0-canary.690",
       "tag": "react-native-windows_v0.0.0-canary.690",
