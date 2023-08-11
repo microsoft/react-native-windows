@@ -80,14 +80,14 @@
     "metro-config": "0.76.2",
     "prettier": "^2.4.1",
     "react": "18.2.0",
-    "react-native": "0.73.0-nightly-20230722-e6dd22c62",
+    "react-native": "0.73.0-nightly-20230723-2b9349177",
     "react-native-platform-override": "^1.9.14",
     "react-refresh": "^0.4.0",
     "typescript": "^4.9.5"
   },
   "peerDependencies": {
     "react": "18.2.0",
-    "react-native": "0.73.0-nightly-20230722-e6dd22c62"
+    "react-native": "0.73.0-nightly-20230723-2b9349177"
   },
   "beachball": {
     "defaultNpmTag": "canary",
