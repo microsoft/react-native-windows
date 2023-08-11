@@ -23,9 +23,9 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "@jest/create-cache-key-function": "^29.2.1",
-    "@react-native-community/cli": "12.0.0-alpha.6",
-    "@react-native-community/cli-platform-android": "12.0.0-alpha.6",
-    "@react-native-community/cli-platform-ios": "12.0.0-alpha.6",
+    "@react-native-community/cli": "12.0.0-alpha.7",
+    "@react-native-community/cli-platform-android": "12.0.0-alpha.7",
+    "@react-native-community/cli-platform-ios": "12.0.0-alpha.7",
     "@react-native-windows/cli": "0.0.0-canary.183",
     "@react-native/assets": "1.0.0",
     "@react-native/assets-registry": "0.73.0-nightly-20230622-0201e51bb",
@@ -80,14 +80,14 @@
     "metro-config": "0.76.2",
     "prettier": "^2.4.1",
     "react": "18.2.0",
-    "react-native": "0.73.0-nightly-20230723-2b9349177",
+    "react-native": "0.73.0-nightly-20230724-75f458891",
     "react-native-platform-override": "^1.9.14",
     "react-refresh": "^0.4.0",
     "typescript": "^4.9.5"
   },
   "peerDependencies": {
     "react": "18.2.0",
-    "react-native": "0.73.0-nightly-20230723-2b9349177"
+    "react-native": "0.73.0-nightly-20230724-75f458891"
   },
   "beachball": {
     "defaultNpmTag": "canary",
