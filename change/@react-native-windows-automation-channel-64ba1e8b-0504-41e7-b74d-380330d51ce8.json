@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "e6dd22c62",
+  "packageName": "@react-native-windows/automation-channel",
+  "email": "tatianakapos@microsoft.com",
+  "dependentChangeType": "patch"
+}
