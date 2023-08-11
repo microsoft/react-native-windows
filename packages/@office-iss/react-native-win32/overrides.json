@@ -222,6 +222,10 @@
       "issue": 5170
     },
     {
+      "type": "platform",
+      "file": "src/Libraries/Image/assetPaths.js"
+    },
+    {
       "type": "derived",
       "file": "src/Libraries/Image/Image.win32.js",
       "baseFile": "Libraries/Image/Image.ios.js",
