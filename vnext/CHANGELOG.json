@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 11 Aug 2023 00:26:16 GMT",
+      "tag": "react-native-windows_v0.71.29",
+      "version": "0.71.29",
+      "comments": {
+        "patch": [
+          {
+            "author": "lyahdav@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a69f7556c341ec8f9c8ee4d1509f94e708e72044",
+            "comment": "Make ScrollView and ActivityIndicator not focusable by default"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 04 Aug 2023 23:49:15 GMT",
       "tag": "react-native-windows_v0.71.28",
       "version": "0.71.28",

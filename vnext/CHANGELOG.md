@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 04 Aug 2023 23:49:15 GMT and should not be manually modified.
+This log was last generated on Fri, 11 Aug 2023 00:26:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.29
+
+Fri, 11 Aug 2023 00:26:16 GMT
+
+### Patches
+
+- Make ScrollView and ActivityIndicator not focusable by default (lyahdav@users.noreply.github.com)
 
 ## 0.71.28
 

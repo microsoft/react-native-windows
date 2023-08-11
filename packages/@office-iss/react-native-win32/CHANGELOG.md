@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Fri, 04 Aug 2023 23:49:15 GMT and should not be manually modified.
+This log was last generated on Fri, 11 Aug 2023 00:26:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.14
+
+Fri, 11 Aug 2023 00:26:16 GMT
+
+### Patches
+
+- Add saveAssetPlugin to fix long path assets (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.71.13
 

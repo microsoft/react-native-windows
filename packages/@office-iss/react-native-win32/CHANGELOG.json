@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 11 Aug 2023 00:26:16 GMT",
+      "tag": "@office-iss/react-native-win32_v0.71.14",
+      "version": "0.71.14",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "819530506ec8814c704ca77907c632b75fc9d451",
+            "comment": "Add saveAssetPlugin to fix long path assets"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 04 Aug 2023 23:49:15 GMT",
       "tag": "@office-iss/react-native-win32_v0.71.13",
       "version": "0.71.13",
