@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 10 Aug 2023 05:13:53 GMT and should not be manually modified.
+This log was last generated on Fri, 11 Aug 2023 05:13:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.691
+
+Fri, 11 Aug 2023 05:13:37 GMT
+
+### Changes
+
+- Fix CoreApp build failure with latest VS version (acoates@microsoft.com)
 
 ## 0.0.0-canary.690
 
