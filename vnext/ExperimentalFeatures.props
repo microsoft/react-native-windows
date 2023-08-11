@@ -3,6 +3,7 @@
     <UseFabric>false</UseFabric>
   </PropertyGroup>
   <PropertyGroup>
+    <EnableSourceLink>true</EnableSourceLink>
     <ReactExperimentalFeaturesSet>true</ReactExperimentalFeaturesSet>
   </PropertyGroup>
 </Project>
