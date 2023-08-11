@@ -83,13 +83,13 @@
     "just-scripts": "^1.3.3",
     "prettier": "^2.4.1",
     "react": "18.2.0",
-    "react-native": "0.73.0-nightly-20230721-ccc50ddd2",
+    "react-native": "0.73.0-nightly-20230722-e6dd22c62",
     "react-native-platform-override": "^1.9.14",
     "typescript": "^4.9.5"
   },
   "peerDependencies": {
     "react": "18.2.0",
-    "react-native": "0.73.0-nightly-20230721-ccc50ddd2"
+    "react-native": "0.73.0-nightly-20230722-e6dd22c62"
   },
   "beachball": {
     "defaultNpmTag": "canary",

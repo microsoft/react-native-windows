@@ -6235,10 +6235,10 @@ flow-bin@^0.209.0:
   resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.209.0.tgz#616a002b94ef35e1b083add9a6d27dbe387bf4f0"
   integrity sha512-HRc6+bKE8AN23SnuKaxdUjcQcjaIp6pksrGJ6pltFO5tIEvZmPrbT99P7Yb3ybqwcKU/Ry8yfJbuW92Ed2V3nw==
 
-flow-bin@^0.212.0:
-  version "0.212.0"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.212.0.tgz#6ec26d4a26cbfe1e4e02a85cce87a1b08903b804"
-  integrity sha512-RbKhEsMoorfWbKca/Zdd8j5mQFTbnP5I3Q5vzR2ReVfMQUb5RaV8R9ejKeZzoq/nDf6UreXRTNjnffYJVmn4Fw==
+flow-bin@^0.213.0:
+  version "0.213.1"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.213.1.tgz#194a3b17aa19d6fb8319bc5e067b8fdd93cc0449"
+  integrity sha512-ptyG+RmHbWx9KEElAdxdLOrZ/qKc3m/aIB6VG0ExH7BEuJ2ruK5rdUfzuC329b9QFtbawjpW2jLGeiFHBdmBvQ==
 
 flow-enums-runtime@^0.0.5:
   version "0.0.5"
@@ -11068,10 +11068,10 @@ react-native-xaml@^0.0.74:
     "@types/react-native" "*"
     typescript "^4.4.3"
 
-react-native@0.73.0-nightly-20230721-ccc50ddd2:
-  version "0.73.0-nightly-20230721-ccc50ddd2"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.73.0-nightly-20230721-ccc50ddd2.tgz#30c95c7615f393822ac262c17a72a2289ee3faa0"
-  integrity sha512-n32nGtgGAFsFfqxBqYqy1rSzvyQE5mFBI3i1vEzT7yV7lTNvr/fwniJIIjj5j0hHyip2TZWKXLVYDVk6UJN7VA==
+react-native@0.73.0-nightly-20230722-e6dd22c62:
+  version "0.73.0-nightly-20230722-e6dd22c62"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.73.0-nightly-20230722-e6dd22c62.tgz#766fef4de11abfd8778ed3a0f280beb2bc50da78"
+  integrity sha512-sDiy5yM8tRZZjo5XsYRCWRPYsM71tW6mOv/Bbws+IznZYJ5zep+xbzfPayo9GTNvv/h5y9S6tsMngRHWnbZ7Lw==
   dependencies:
     "@jest/create-cache-key-function" "^29.2.1"
     "@react-native-community/cli" "12.0.0-alpha.6"
