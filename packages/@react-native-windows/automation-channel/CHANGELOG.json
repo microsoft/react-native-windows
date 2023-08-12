@@ -2,6 +2,27 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Sat, 12 Aug 2023 05:12:38 GMT",
+      "version": "0.12.31",
+      "tag": "@react-native-windows/automation-channel_v0.12.31",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "9917e3b45f72d366a14b9bcbd3d090736ca86b8e",
+            "comment": "Enable NuGet restore lock files for all projects"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.692",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 11 Aug 2023 05:13:37 GMT",
       "version": "0.12.30",
       "tag": "@react-native-windows/automation-channel_v0.12.30",

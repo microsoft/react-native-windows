@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/automation-channel
 
-This log was last generated on Fri, 11 Aug 2023 05:13:37 GMT and should not be manually modified.
+This log was last generated on Sat, 12 Aug 2023 05:12:38 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.12.31
+
+Sat, 12 Aug 2023 05:12:38 GMT
+
+### Patches
+
+- Enable NuGet restore lock files for all projects (jthysell@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.692
 
 ## 0.12.30
 

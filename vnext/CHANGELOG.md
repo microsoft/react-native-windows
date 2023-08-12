@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 11 Aug 2023 05:13:37 GMT and should not be manually modified.
+This log was last generated on Sat, 12 Aug 2023 05:12:38 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.692
+
+Sat, 12 Aug 2023 05:12:38 GMT
+
+### Changes
+
+- Enable NuGet restore lock files for all projects (jthysell@microsoft.com)
 
 ## 0.0.0-canary.691
 
