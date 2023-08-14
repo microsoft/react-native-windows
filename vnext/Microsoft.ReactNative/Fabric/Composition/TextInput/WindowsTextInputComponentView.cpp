@@ -1,4 +1,3 @@
-
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
@@ -776,7 +775,76 @@ void WindowsTextInputComponentView::UpdateText(const std::string &str) noexcept 
       m_textServices->TxSendMessage(EM_SETTYPOGRAPHYOPTIONS, 0x1000 | 0x2000, 0x1000 | 0x2000, nullptr));
 }
 
-void WindowsTextInputComponentView::setPlaceholderText(const std::string &str) noexcept {}
+void WindowsTextInputComponentView::DrawPlaceholderText(const std::string &str) noexcept {
+  m_needsRedraw = true;
+  if (m_cDrawBlock) {
+    return;
+  }
+
+  if (!m_drawingSurface)
+    return;
+
+  // Begin our update of the surface pixels. If this is our first update, we are required
+  // to specify the entire surface, which nullptr is shorthand for (but, as it works out,
+  // any time we make an update we touch the entire surface, so we always pass nullptr).
+  winrt::com_ptr<ID2D1DeviceContext> d2dDeviceContext;
+  POINT offset;
+
+  winrt::com_ptr<Composition::ICompositionDrawingSurfaceInterop> drawingSurfaceInterop;
+  m_drawingSurface.as(drawingSurfaceInterop);
+
+  m_drawing = true;
+  if (CheckForDeviceRemoved(drawingSurfaceInterop->BeginDraw(d2dDeviceContext.put(), &offset))) {
+    d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
+    assert(d2dDeviceContext->GetUnitMode() == D2D1_UNIT_MODE_DIPS);
+    const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
+    float oldDpiX, oldDpiY;
+    d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
+    d2dDeviceContext->SetDpi(dpi, dpi);
+
+    winrt::com_ptr<ID2D1SolidColorBrush> brush;
+    winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Green, 1.0f), brush.put()));
+
+    facebook::react::LayoutConstraints constraints;
+    constraints.maximumSize.width = static_cast<FLOAT>(offset.x) + static_cast<FLOAT>(m_imgWidth);
+    constraints.maximumSize.height = static_cast<FLOAT>(offset.y) + static_cast<FLOAT>(m_imgHeight);
+
+    // Create a fragment with text attributes
+    facebook::react::AttributedString attributedString;
+    facebook::react::AttributedString::Fragment fragment1;
+    facebook::react::TextAttributes textAttributes;
+    facebook::react::ShadowView parentShadowView;
+    m_textLayout = nullptr;
+
+    textAttributes.fontSize = 16.0f; // TODO: should be m_props->textAttributes.fontSize but breaks rntester
+    fragment1.string = m_placeholderText;
+    fragment1.textAttributes = textAttributes;
+    fragment1.parentShadowView = parentShadowView; // do I need to find the parent shadow view maybe??
+    attributedString.appendFragment(fragment1);
+
+    m_attributedStringBox = facebook::react::AttributedStringBox(attributedString);
+    facebook::react::TextLayoutManager::GetTextLayout(m_attributedStringBox, {} /*TODO*/, constraints, m_textLayout);
+
+    // draw text
+    d2dDeviceContext->DrawTextLayout(
+        D2D1::Point2F(
+            static_cast<FLOAT>((offset.x + m_layoutMetrics.contentInsets.left) / m_layoutMetrics.pointScaleFactor),
+            static_cast<FLOAT>((offset.y + m_layoutMetrics.contentInsets.top) / m_layoutMetrics.pointScaleFactor)),
+        m_textLayout.get(),
+        brush.get(),
+        D2D1_DRAW_TEXT_OPTIONS_ENABLE_COLOR_FONT);
+
+    // restore dpi state
+    d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
+
+    // Our update is done. EndDraw never indicates rendering device removed, so any
+    // failure here is unexpected and, therefore, fatal.
+    auto hrEndDraw = drawingSurfaceInterop->EndDraw();
+    winrt::check_hresult(hrEndDraw);
+  }
+  m_drawing = false;
+  m_needsRedraw = false;
+}
 
 void WindowsTextInputComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
@@ -836,6 +904,7 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
   // if (data.attributedString == newAttributedString)
   //    return;
   data.attributedString = getAttributedString();
+
   data.mostRecentEventCount = m_nativeEventCount;
   m_state->updateState(std::move(data));
 
@@ -884,6 +953,13 @@ void WindowsTextInputComponentView::finalizeUpdates(RNComponentViewUpdateMask up
   }
 
   ensureDrawingSurface();
+
+  if (!m_placeholderText.empty() && m_firstTextUpdate <= 1) {
+    m_firstTextUpdate++;
+    DrawPlaceholderText(m_placeholderText);
+    // m_firstTextUpdate = false; // this is commentted out just to be able to see the text placed, uncomment to work as
+    // attended (ie only being ran once the textinput is first drawn)
+  }
 }
 
 void WindowsTextInputComponentView::prepareForRecycle() noexcept {}
@@ -981,15 +1057,11 @@ void WindowsTextInputComponentView::ensureDrawingSurface() noexcept {
         winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
 
     m_rcClient = getClientRect();
-    winrt::check_hresult(m_textServices->OnTxInPlaceActivate(
-        &m_rcClient)); // Notifies the text services object that this control is in-place active.
+    winrt::check_hresult(m_textServices->OnTxInPlaceActivate(&m_rcClient));
 
     LRESULT lresult;
-    winrt::check_hresult(m_textServices->TxSendMessage(
-        EM_SETEVENTMASK,
-        0,
-        ENM_CHANGE | ENM_SELCHANGE | ENM_ENDCOMPOSITION,
-        &lresult)); // sets event mask for richEdit, ie which notification code to send to parent window
+    winrt::check_hresult(
+        m_textServices->TxSendMessage(EM_SETEVENTMASK, 0, ENM_CHANGE | ENM_SELCHANGE | ENM_ENDCOMPOSITION, &lresult));
 
     DrawText();
 
@@ -1047,55 +1119,11 @@ void WindowsTextInputComponentView::DrawText() noexcept {
         static_cast<LONG>(offset.x) + static_cast<LONG>(m_imgWidth),
         static_cast<LONG>(offset.y) + static_cast<LONG>(m_imgHeight)};
 
-    // draw text ontop of richedit
-    if (!m_placeholderText.empty() && m_firstTextUpdate <= 2) {
-      m_firstTextUpdate++; // TODO: Figure out why DrawText is/needs to be called twice to actually draw
-      winrt::com_ptr<ID2D1SolidColorBrush> brush;
-      winrt::check_hresult(
-          d2dDeviceContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Green, 1.0f), brush.put()));
+    winrt::check_hresult(m_textServices->OnTxInPlaceActivate(&rcClient));
 
-      facebook::react::LayoutConstraints constraints;
-      constraints.maximumSize.width = static_cast<FLOAT>(offset.x) + static_cast<FLOAT>(m_imgWidth);
-      constraints.maximumSize.height = static_cast<FLOAT>(offset.y) + static_cast<FLOAT>(m_imgHeight);
-
-      // Create a fragment with text attributes
-      facebook::react::AttributedString attributedString;
-      facebook::react::AttributedString::Fragment fragment1;
-      facebook::react::TextAttributes textAttributes;
-      // facebook::react::ShadowView parentShadowView;
-      m_textLayout = nullptr;
-
-      textAttributes.fontSize = 16.0f; // TODO: should be m_props->textAttributes.fontSize but breaks rntester
-      fragment1.string = m_placeholderText;
-      fragment1.textAttributes = textAttributes;
-      // fragment1.parentShadowView = parentShadowView; // do I need to find the parent shadow view maybe??
-      attributedString.appendFragment(fragment1);
-
-      m_attributedStringBox = facebook::react::AttributedStringBox(attributedString);
-      facebook::react::TextLayoutManager::GetTextLayout(m_attributedStringBox, {} /*TODO*/, constraints, m_textLayout);
-
-      // draw text
-      d2dDeviceContext->DrawTextLayout(
-          D2D1::Point2F(
-              static_cast<FLOAT>((offset.x + m_layoutMetrics.contentInsets.left) / m_layoutMetrics.pointScaleFactor),
-              static_cast<FLOAT>((offset.y + m_layoutMetrics.contentInsets.top) / m_layoutMetrics.pointScaleFactor)),
-          m_textLayout.get(),
-          brush.get(),
-          D2D1_DRAW_TEXT_OPTIONS_ENABLE_COLOR_FONT);
-    } else {
-      winrt::check_hresult(m_textServices->OnTxInPlaceActivate(
-          &rcClient)); // Notifies the text services object that this control is in-place active. (why do we have this
-                       // also in ensureDrawing surface?)
-
-      // TODO keep track of proper invalid rect
-      auto hrDraw = m_textServices->TxDrawD2D(
-          d2dDeviceContext.get(),
-          &rc,
-          nullptr,
-          TXTVIEW_ACTIVE); // Draws the text services object by using Direct2D rendering.
-      winrt::check_hresult(hrDraw);
-    }
-    // end draw text
+    // TODO keep track of proper invalid rect
+    auto hrDraw = m_textServices->TxDrawD2D(d2dDeviceContext.get(), &rc, nullptr, TXTVIEW_ACTIVE);
+    winrt::check_hresult(hrDraw);
 
     // restore dpi state
     d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
