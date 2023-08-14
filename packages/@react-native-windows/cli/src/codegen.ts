@@ -111,18 +111,18 @@ export class CodeGenWindows {
       }
     }
 
-    let allInOne = true;
-    if (pkgJson.codegenConfig.windows.allInOne !== undefined) {
-      switch (pkgJson.codegenConfig.windows.allInOne) {
+    let separateDataTypes = true;
+    if (pkgJson.codegenConfig.windows.separateDataTypes !== undefined) {
+      switch (pkgJson.codegenConfig.windows.separateDataTypes) {
         case true:
         case false:
-          allInOne = pkgJson.codegenConfig.windows.allInOne;
+          separateDataTypes = pkgJson.codegenConfig.windows.separateDataTypes;
           break;
         default:
           throw new CodedError(
             'InvalidCodegenConfig',
             `Value of ${chalk.bold(
-              'codegenConfig.windows.allInOne',
+              'codegenConfig.windows.separateDataTypes',
             )} in package.json should be either true or false`,
           );
       }
@@ -155,7 +155,7 @@ export class CodeGenWindows {
         }**/*Native*.[jt]s`,
       ],
       cppStringType,
-      allInOne,
+      separateDataTypes,
       libraryName: projectName,
       methodOnly: false,
       modulesCxx: generators.indexOf('modulesCxx') !== -1,

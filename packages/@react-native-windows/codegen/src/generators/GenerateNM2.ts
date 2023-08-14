@@ -82,12 +82,12 @@ export function createNM2Generator({
   methodOnly,
   namespace,
   cppStringType,
-  allInOne,
+  separateDataTypes,
 }: {
   methodOnly: boolean;
   namespace: string;
   cppStringType: CppStringTypes;
-  allInOne: boolean;
+  separateDataTypes: boolean;
 }) {
   return (
     _libraryName: string,
@@ -162,12 +162,7 @@ ${errors}`;
             .replace(/::_NAMESPACE_::/g, namespace);
         };
 
-        if (allInOne) {
-          files.set(
-            `Native${preferredModuleName}Spec.g.h`,
-            replaceContent(allInOneTemplate),
-          );
-        } else {
+        if (separateDataTypes) {
           if (customTypesExist) {
             files.set(
               `Native${preferredModuleName}Types.g.h`,
@@ -177,6 +172,11 @@ ${errors}`;
           files.set(
             `Native${preferredModuleName}Spec.g.h`,
             replaceContent(moduleOnlyTemplate),
+          );
+        } else {
+          files.set(
+            `Native${preferredModuleName}Spec.g.h`,
+            replaceContent(allInOneTemplate),
           );
         }
       }
