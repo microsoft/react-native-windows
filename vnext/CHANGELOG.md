@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 05 Jun 2023 15:11:23 GMT and should not be manually modified.
+This log was last generated on Mon, 14 Aug 2023 19:08:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.70.21
+
+Mon, 14 Aug 2023 19:08:18 GMT
+
+### Patches
+
+- Fix Secure Supply Chain compliance issues (jthysell@microsoft.com)
+- update nuget lock files (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.70.20
 
