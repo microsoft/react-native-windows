@@ -8,7 +8,7 @@
  */
 #pragma once
 
-// #include "NativeMyModuleTypes.g.h" before this file to use the generated type definition
+// #include "NativeMyModuleDataTypes.g.h" before this file to use the generated type definition
 #include <NativeModules.h>
 #include <tuple>
 

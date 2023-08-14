@@ -156,7 +156,7 @@ ${errors}`;
             .replace(
               /::_TYPE_DEFINITION_INCLUDE_::/g,
               customTypesExist
-                ? `// #include "Native${preferredModuleName}Types.g.h" before this file to use the generated type definition`
+                ? `// #include "Native${preferredModuleName}DataTypes.g.h" before this file to use the generated type definition`
                 : '',
             )
             .replace(/::_NAMESPACE_::/g, namespace);
@@ -165,7 +165,7 @@ ${errors}`;
         if (separateDataTypes) {
           if (customTypesExist) {
             files.set(
-              `Native${preferredModuleName}Types.g.h`,
+              `Native${preferredModuleName}DataTypes.g.h`,
               replaceContent(typeOnlyTemplate),
             );
           }
