@@ -3,8 +3,8 @@
 
 #pragma once
 
-// a demo of codegenConfig.windows.separateDataTypes to true in package.json
-// it generates data types in a separate files, but one doesn't include another
+// a demo of setting codegenConfig.windows.separateDataTypes to true in package.json
+// it generates data types in a separate file, but one doesn't include another
 // including them in a expected order is required
 #include "..\..\codegen\NativeMyModuleDataTypes.g.h"
 #include "..\..\codegen\NativeMyModuleSpec.g.h"
