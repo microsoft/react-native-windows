@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Add `allInOne` to @rnw/cli and @rnw/codegen",
+  "comment": "Add `separateDataFiles` to @rnw/cli and @rnw/codegen",
   "packageName": "@react-native-windows/cli",
   "email": "53799235+ZihanChen-MSFT@users.noreply.github.com",
   "dependentChangeType": "patch"
