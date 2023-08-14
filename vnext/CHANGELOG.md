@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 07 Aug 2023 15:13:38 GMT and should not be manually modified.
+This log was last generated on Mon, 14 Aug 2023 15:18:20 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.72.6
+
+Mon, 14 Aug 2023 15:18:20 GMT
+
+### Patches
+
+- Make ScrollView and ActivityIndicator not focusable by default (lyahdav@users.noreply.github.com)
+- Enable using newer CppWinRT versions that use WINRT_IMPL_LoadLibraryExW (jthysell@microsoft.com)
+- Fix warning compiler may not enforce left-to-right evaluation order in braced initializer list (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.72.2
 
 ## 0.72.5
 

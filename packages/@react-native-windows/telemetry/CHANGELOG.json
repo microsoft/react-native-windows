@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Mon, 14 Aug 2023 15:18:19 GMT",
+      "tag": "@react-native-windows/telemetry_v0.72.1",
+      "version": "0.72.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "219790d9b6aea56a6494dd8e97cc3054bddf47c4",
+            "comment": "Properly detect the correct machine architecture"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 23 Jun 2023 22:30:08 GMT",
       "tag": "@react-native-windows/telemetry_v0.72.0",
       "version": "0.72.0",

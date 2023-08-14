@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Fri, 23 Jun 2023 22:30:08 GMT and should not be manually modified.
+This log was last generated on Mon, 14 Aug 2023 15:18:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.72.1
+
+Mon, 14 Aug 2023 15:18:19 GMT
+
+### Patches
+
+- Properly detect the correct machine architecture (jthysell@microsoft.com)
 
 ## 0.72.0
 

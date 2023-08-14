@@ -1,8 +1,17 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Wed, 19 Jul 2023 18:43:52 GMT and should not be manually modified.
+This log was last generated on Mon, 14 Aug 2023 15:18:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.72.2
+
+Mon, 14 Aug 2023 15:18:19 GMT
+
+### Patches
+
+- add isDefaultButton check to win32 (email not defined)
+- Add saveAssetPlugin to fix long path assets (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.72.1
 

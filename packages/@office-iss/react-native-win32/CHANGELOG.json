@@ -2,6 +2,27 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 14 Aug 2023 15:18:19 GMT",
+      "tag": "@office-iss/react-native-win32_v0.72.2",
+      "version": "0.72.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "email not defined",
+            "package": "@office-iss/react-native-win32",
+            "commit": "3e3d2da8e1bc2899525dc48e80d86df4e32c104d",
+            "comment": "add isDefaultButton check to win32"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "30ecf04918029a8699096532c8b13d4ae7a4b4f3",
+            "comment": "Add saveAssetPlugin to fix long path assets"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 19 Jul 2023 18:43:52 GMT",
       "tag": "@office-iss/react-native-win32_v0.72.1",
       "version": "0.72.1",

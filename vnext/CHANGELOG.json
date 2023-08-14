@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 14 Aug 2023 15:18:20 GMT",
+      "tag": "react-native-windows_v0.72.6",
+      "version": "0.72.6",
+      "comments": {
+        "patch": [
+          {
+            "author": "lyahdav@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "6c35c44137843a6a4cb00db7ca85b9f27270f89e",
+            "comment": "Make ScrollView and ActivityIndicator not focusable by default"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "cef0edd96ccf4fb1b909260c1df99db09b4b816e",
+            "comment": "Enable using newer CppWinRT versions that use WINRT_IMPL_LoadLibraryExW"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "178ba9220cba610ae329ab1004c4759cae13c07b",
+            "comment": "Fix warning compiler may not enforce left-to-right evaluation order in braced initializer list"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.72.2",
+            "commit": "30ecf04918029a8699096532c8b13d4ae7a4b4f3"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 07 Aug 2023 15:13:38 GMT",
       "tag": "react-native-windows_v0.72.5",
       "version": "0.72.5",
