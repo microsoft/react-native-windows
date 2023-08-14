@@ -52,6 +52,7 @@ export interface SharedOptions {
   namespace: string;
   outputDirectory: string;
   cppStringType: CppStringTypes;
+  separateDataTypes: boolean;
 }
 
 interface Options extends SharedOptions {
@@ -216,6 +217,7 @@ export function generate(
     namespace,
     outputDirectory,
     cppStringType,
+    separateDataTypes,
     moduleSpecName,
     schema,
   }: Options,
@@ -240,6 +242,7 @@ export function generate(
     methodOnly,
     namespace,
     cppStringType,
+    separateDataTypes,
   });
 
   const generateJsiModuleH = require(path.resolve(
@@ -369,6 +372,7 @@ export function runCodeGen(options: CodeGenOptions): boolean {
     namespace,
     outputDirectory,
     cppStringType,
+    separateDataTypes,
   } = options;
   return generate(
     {
@@ -380,6 +384,7 @@ export function runCodeGen(options: CodeGenOptions): boolean {
       namespace,
       outputDirectory,
       cppStringType,
+      separateDataTypes,
       moduleSpecName,
       schema,
     },
