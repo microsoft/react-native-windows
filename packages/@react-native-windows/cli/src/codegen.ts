@@ -106,7 +106,24 @@ export class CodeGenWindows {
             'InvalidCodegenConfig',
             `Value of ${chalk.bold(
               'codegenConfig.windows.cppStringType',
-            )} package.json should be either 'std::string' or 'std::wstring'`,
+            )} in package.json should be either 'std::string' or 'std::wstring'`,
+          );
+      }
+    }
+
+    let separateDataTypes = true;
+    if (pkgJson.codegenConfig.windows.separateDataTypes !== undefined) {
+      switch (pkgJson.codegenConfig.windows.separateDataTypes) {
+        case true:
+        case false:
+          separateDataTypes = pkgJson.codegenConfig.windows.separateDataTypes;
+          break;
+        default:
+          throw new CodedError(
+            'InvalidCodegenConfig',
+            `Value of ${chalk.bold(
+              'codegenConfig.windows.separateDataTypes',
+            )} in package.json should be either true or false`,
           );
       }
     }
@@ -138,6 +155,7 @@ export class CodeGenWindows {
         }**/*Native*.[jt]s`,
       ],
       cppStringType,
+      separateDataTypes,
       libraryName: projectName,
       methodOnly: false,
       modulesCxx: generators.indexOf('modulesCxx') !== -1,
