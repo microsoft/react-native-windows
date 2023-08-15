@@ -74,6 +74,7 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
   void UpdateCharFormat() noexcept;
   void UpdateParaFormat() noexcept;
   void UpdateText(const std::string &str) noexcept;
+  void DrawPlaceholderText() noexcept;
   void OnTextUpdated() noexcept;
   void OnSelectionChanged(LONG start, LONG end) noexcept;
   std::string GetTextFromRichEdit() const noexcept;
@@ -101,6 +102,11 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
   int m_cDrawBlock{0};
   bool m_needsRedraw{false};
   bool m_drawing{false};
+
+  // Used by placeholder text
+  std::string m_placeholderText;
+  bool m_firstTextUpdate{true};
+  facebook::react::SharedColor m_placeholderTextColor;
 };
 
 } // namespace Microsoft::ReactNative
