@@ -8,24 +8,35 @@
  */
 #pragma once
 
-#include "NativeModules.h"
+#include <NativeModules.h>
 #include <tuple>
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(StatusBarManagerIOSSpec_getHeight_callback_result)
 struct StatusBarManagerIOSSpec_getHeight_callback_result {
-    REACT_FIELD(height)
     double height;
 };
 
-REACT_STRUCT(StatusBarManagerIOSSpec_Constants)
 struct StatusBarManagerIOSSpec_Constants {
-    REACT_FIELD(HEIGHT)
     double HEIGHT;
-    REACT_FIELD(DEFAULT_BACKGROUND_COLOR)
     std::optional<double> DEFAULT_BACKGROUND_COLOR;
 };
+
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(StatusBarManagerIOSSpec_getHeight_callback_result*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"height", &StatusBarManagerIOSSpec_getHeight_callback_result::height},
+    };
+    return fieldMap;
+}
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(StatusBarManagerIOSSpec_Constants*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"HEIGHT", &StatusBarManagerIOSSpec_Constants::HEIGHT},
+        {L"DEFAULT_BACKGROUND_COLOR", &StatusBarManagerIOSSpec_Constants::DEFAULT_BACKGROUND_COLOR},
+    };
+    return fieldMap;
+}
 
 struct StatusBarManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto constants = std::tuple{

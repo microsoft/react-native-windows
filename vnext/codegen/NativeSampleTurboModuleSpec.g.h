@@ -8,20 +8,26 @@
  */
 #pragma once
 
-#include "NativeModules.h"
+#include <NativeModules.h>
 #include <tuple>
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(SampleTurboModuleSpec_Constants)
 struct SampleTurboModuleSpec_Constants {
-    REACT_FIELD(const1)
     bool const1;
-    REACT_FIELD(const2)
     double const2;
-    REACT_FIELD(const3)
     std::string const3;
 };
+
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(SampleTurboModuleSpec_Constants*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"const1", &SampleTurboModuleSpec_Constants::const1},
+        {L"const2", &SampleTurboModuleSpec_Constants::const2},
+        {L"const3", &SampleTurboModuleSpec_Constants::const3},
+    };
+    return fieldMap;
+}
 
 struct SampleTurboModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto constants = std::tuple{

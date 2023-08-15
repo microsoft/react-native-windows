@@ -8,20 +8,26 @@
  */
 #pragma once
 
-#include "NativeModules.h"
+#include <NativeModules.h>
 #include <tuple>
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(I18nManagerSpec_Constants)
 struct I18nManagerSpec_Constants {
-    REACT_FIELD(isRTL)
     bool isRTL;
-    REACT_FIELD(doLeftAndRightSwapInRTL)
     bool doLeftAndRightSwapInRTL;
-    REACT_FIELD(localeIdentifier)
     std::optional<std::string> localeIdentifier;
 };
+
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(I18nManagerSpec_Constants*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"isRTL", &I18nManagerSpec_Constants::isRTL},
+        {L"doLeftAndRightSwapInRTL", &I18nManagerSpec_Constants::doLeftAndRightSwapInRTL},
+        {L"localeIdentifier", &I18nManagerSpec_Constants::localeIdentifier},
+    };
+    return fieldMap;
+}
 
 struct I18nManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto constants = std::tuple{

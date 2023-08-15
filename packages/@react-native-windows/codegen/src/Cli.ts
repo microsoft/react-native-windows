@@ -64,6 +64,11 @@ const argv = yargs.options({
       'C++ string type in generated code, should be "std::string" or "std::wstring"',
     default: 'std::string',
   },
+  separateDataTypes: {
+    type: 'boolean',
+    describe: 'generate data types in a separate file',
+    default: false,
+  },
 }).argv;
 
 if ((argv.file && argv.files) || (!argv.file && !argv.files)) {
