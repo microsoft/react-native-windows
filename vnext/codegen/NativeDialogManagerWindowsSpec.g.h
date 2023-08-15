@@ -8,46 +8,57 @@
  */
 #pragma once
 
-#include "NativeModules.h"
+#include <NativeModules.h>
 #include <tuple>
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(DialogManagerWindowsSpec_DialogOptions)
 struct DialogManagerWindowsSpec_DialogOptions {
-    REACT_FIELD(title)
     std::optional<std::string> title;
-    REACT_FIELD(message)
     std::optional<std::string> message;
-    REACT_FIELD(buttonPositive)
     std::optional<std::string> buttonPositive;
-    REACT_FIELD(buttonNegative)
     std::optional<std::string> buttonNegative;
-    REACT_FIELD(buttonNeutral)
     std::optional<std::string> buttonNeutral;
-    REACT_FIELD(items)
     std::optional<std::vector<std::string>> items;
-    REACT_FIELD(cancelable)
     std::optional<bool> cancelable;
-    REACT_FIELD(defaultButton)
     std::optional<int> defaultButton;
-    REACT_FIELD(rootTag)
     std::optional<int> rootTag;
 };
 
-REACT_STRUCT(DialogManagerWindowsSpec_Constants)
 struct DialogManagerWindowsSpec_Constants {
-    REACT_FIELD(buttonClicked)
     std::string buttonClicked;
-    REACT_FIELD(dismissed)
     std::string dismissed;
-    REACT_FIELD(buttonPositive)
     int buttonPositive;
-    REACT_FIELD(buttonNegative)
     int buttonNegative;
-    REACT_FIELD(buttonNeutral)
     int buttonNeutral;
 };
+
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(DialogManagerWindowsSpec_DialogOptions*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"title", &DialogManagerWindowsSpec_DialogOptions::title},
+        {L"message", &DialogManagerWindowsSpec_DialogOptions::message},
+        {L"buttonPositive", &DialogManagerWindowsSpec_DialogOptions::buttonPositive},
+        {L"buttonNegative", &DialogManagerWindowsSpec_DialogOptions::buttonNegative},
+        {L"buttonNeutral", &DialogManagerWindowsSpec_DialogOptions::buttonNeutral},
+        {L"items", &DialogManagerWindowsSpec_DialogOptions::items},
+        {L"cancelable", &DialogManagerWindowsSpec_DialogOptions::cancelable},
+        {L"defaultButton", &DialogManagerWindowsSpec_DialogOptions::defaultButton},
+        {L"rootTag", &DialogManagerWindowsSpec_DialogOptions::rootTag},
+    };
+    return fieldMap;
+}
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(DialogManagerWindowsSpec_Constants*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"buttonClicked", &DialogManagerWindowsSpec_Constants::buttonClicked},
+        {L"dismissed", &DialogManagerWindowsSpec_Constants::dismissed},
+        {L"buttonPositive", &DialogManagerWindowsSpec_Constants::buttonPositive},
+        {L"buttonNegative", &DialogManagerWindowsSpec_Constants::buttonNegative},
+        {L"buttonNeutral", &DialogManagerWindowsSpec_Constants::buttonNeutral},
+    };
+    return fieldMap;
+}
 
 struct DialogManagerWindowsSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto constants = std::tuple{
