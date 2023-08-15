@@ -25,7 +25,10 @@ IAsyncAction Server::ProcessAllClientRequests(uint16_t port, Windows::Foundation
     }
 
     strongServer->m_socket = StreamSocket();
-    auto connection = strongServer->m_socket.ConnectAsync(HostName(L"127.0.0.1"), winrt::to_hstring(port));
+    winrt::Windows::Foundation::IAsyncAction connection;
+    if (strongServer->m_socket) {
+      connection = strongServer->m_socket.ConnectAsync(HostName(L"127.0.0.1"), winrt::to_hstring(port));
+    }
     co_await lessthrow_await_adapter<IAsyncAction>{connection};
 
     auto hr = connection.ErrorCode();

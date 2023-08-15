@@ -25,7 +25,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microsoft.ReactNative.Share
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ReactCommon", "..\..\..\vnext\ReactCommon\ReactCommon.vcxproj", "{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AutomationChannel", "..\..\@react-native-windows\automation-channel\windows\AutomationChannel\AutomationChannel.vcxproj", "{C0A69310-6119-46DC-A6D6-0BAB7826DC92}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AutomationChannel", "..\..\..\node_modules\@react-native-windows\automation-channel\windows\AutomationChannel\AutomationChannel.vcxproj", "{C0A69310-6119-46DC-A6D6-0BAB7826DC92}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
