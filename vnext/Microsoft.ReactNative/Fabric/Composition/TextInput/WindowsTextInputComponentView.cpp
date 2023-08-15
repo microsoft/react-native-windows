@@ -640,7 +640,6 @@ void WindowsTextInputComponentView::updateProps(
 
   if (oldTextInputProps.placeholder != newTextInputProps.placeholder) {
     m_placeholderText = newTextInputProps.placeholder;
-    m_firstTextUpdate = true;
   }
 
   if (oldTextInputProps.placeholderTextColor != newTextInputProps.placeholderTextColor) {
@@ -776,83 +775,6 @@ void WindowsTextInputComponentView::UpdateText(const std::string &str) noexcept 
       m_textServices->TxSendMessage(EM_SETTYPOGRAPHYOPTIONS, 0x1000 | 0x2000, 0x1000 | 0x2000, nullptr));
 }
 
-void WindowsTextInputComponentView::DrawPlaceholderText() noexcept {
-  m_needsRedraw = true;
-  if (m_cDrawBlock) {
-    return;
-  }
-
-  if (!m_drawingSurface)
-    return;
-
-  // Begin our update of the surface pixels. If this is our first update, we are required
-  // to specify the entire surface, which nullptr is shorthand for (but, as it works out,
-  // any time we make an update we touch the entire surface, so we always pass nullptr).
-  winrt::com_ptr<ID2D1DeviceContext> d2dDeviceContext;
-  POINT offset;
-
-  winrt::com_ptr<Composition::ICompositionDrawingSurfaceInterop> drawingSurfaceInterop;
-  m_drawingSurface.as(drawingSurfaceInterop);
-
-  m_drawing = true;
-  if (CheckForDeviceRemoved(drawingSurfaceInterop->BeginDraw(d2dDeviceContext.put(), &offset))) {
-    d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
-    assert(d2dDeviceContext->GetUnitMode() == D2D1_UNIT_MODE_DIPS);
-    const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
-    float oldDpiX, oldDpiY;
-    d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
-    d2dDeviceContext->SetDpi(dpi, dpi);
-
-    facebook::react::LayoutConstraints constraints;
-    constraints.maximumSize.width = static_cast<FLOAT>(offset.x) + static_cast<FLOAT>(m_imgWidth);
-    constraints.maximumSize.height = static_cast<FLOAT>(offset.y) + static_cast<FLOAT>(m_imgHeight);
-
-    // set brush color
-    winrt::com_ptr<ID2D1SolidColorBrush> brush;
-    if (m_placeholderTextColor) {
-      auto color = m_placeholderTextColor.AsD2DColor();
-      winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(color, brush.put()));
-    } else {
-      winrt::check_hresult(
-          d2dDeviceContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Gray, 1.0f), brush.put()));
-    }
-
-    // Create a fragment with text attributes
-    winrt::com_ptr<::IDWriteTextLayout> textLayout = nullptr;
-    facebook::react::AttributedString attributedString;
-    facebook::react::AttributedString::Fragment fragment1;
-    facebook::react::TextAttributes textAttributes = m_props->textAttributes;
-    if (std::isnan(m_props->textAttributes.fontSize)) {
-      textAttributes.fontSize = 12.0f;
-    }
-    fragment1.string = m_placeholderText;
-    fragment1.textAttributes = textAttributes;
-    attributedString.appendFragment(fragment1);
-
-    facebook::react::TextLayoutManager::GetTextLayout(
-        facebook::react::AttributedStringBox(attributedString), {} /*TODO*/, constraints, textLayout);
-
-    // draw text
-    d2dDeviceContext->DrawTextLayout(
-        D2D1::Point2F(
-            static_cast<FLOAT>((offset.x + m_layoutMetrics.contentInsets.left) / m_layoutMetrics.pointScaleFactor),
-            static_cast<FLOAT>((offset.y + m_layoutMetrics.contentInsets.top) / m_layoutMetrics.pointScaleFactor)),
-        textLayout.get(),
-        brush.get(),
-        D2D1_DRAW_TEXT_OPTIONS_ENABLE_COLOR_FONT);
-
-    // restore dpi state
-    d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
-
-    // Our update is done. EndDraw never indicates rendering device removed, so any
-    // failure here is unexpected and, therefore, fatal.
-    auto hrEndDraw = drawingSurfaceInterop->EndDraw();
-    winrt::check_hresult(hrEndDraw);
-  }
-  m_drawing = false;
-  m_needsRedraw = false;
-}
-
 void WindowsTextInputComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
     facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
@@ -901,16 +823,6 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
   data.attributedString = getAttributedString();
   data.mostRecentEventCount = m_nativeEventCount;
 
-  // placeholder logic: clear placeholder text if this is the first text update or redraw the placeholder text if the
-  // string is empty
-  if (m_firstTextUpdate && !m_placeholderText.empty()) {
-    m_firstTextUpdate = false;
-    DrawText();
-  } else if (data.attributedString.isEmpty() && !m_placeholderText.empty()) {
-    m_firstTextUpdate = true;
-    DrawPlaceholderText();
-  }
-
   m_state->updateState(std::move(data));
 
   if (m_eventEmitter && !m_comingFromJS) {
@@ -956,12 +868,7 @@ void WindowsTextInputComponentView::finalizeUpdates(RNComponentViewUpdateMask up
     m_needsBorderUpdate = false;
     UpdateSpecialBorderLayers(m_layoutMetrics, *m_props);
   }
-
   ensureDrawingSurface();
-
-  if (!m_placeholderText.empty() && m_firstTextUpdate) {
-    DrawPlaceholderText();
-  }
 }
 
 void WindowsTextInputComponentView::prepareForRecycle() noexcept {}
@@ -1080,6 +987,29 @@ void WindowsTextInputComponentView::ShowCaret(bool show) noexcept {
   m_caretVisual.IsVisible(show);
 }
 
+winrt::com_ptr<::IDWriteTextLayout> WindowsTextInputComponentView::CreatePlaceholderLayout() {
+  // Create a fragment with text attributes
+  winrt::com_ptr<::IDWriteTextLayout> textLayout = nullptr;
+  facebook::react::AttributedString attributedString;
+  facebook::react::AttributedString::Fragment fragment1;
+  facebook::react::TextAttributes textAttributes = m_props->textAttributes;
+  if (std::isnan(m_props->textAttributes.fontSize)) {
+    textAttributes.fontSize = 12.0f;
+  }
+  fragment1.string = m_placeholderText;
+  fragment1.textAttributes = textAttributes;
+  attributedString.appendFragment(fragment1);
+
+  facebook::react::LayoutConstraints constraints;
+  constraints.maximumSize.width = static_cast<FLOAT>(m_imgWidth);
+  constraints.maximumSize.height = static_cast<FLOAT>(m_imgHeight);
+
+  facebook::react::TextLayoutManager::GetTextLayout(
+      facebook::react::AttributedStringBox(attributedString), {} /*TODO*/, constraints, textLayout);
+
+  return textLayout;
+}
+
 void WindowsTextInputComponentView::DrawText() noexcept {
   m_needsRedraw = true;
   if (m_cDrawBlock) {
@@ -1126,6 +1056,31 @@ void WindowsTextInputComponentView::DrawText() noexcept {
     // TODO keep track of proper invalid rect
     auto hrDraw = m_textServices->TxDrawD2D(d2dDeviceContext.get(), &rc, nullptr, TXTVIEW_ACTIVE);
     winrt::check_hresult(hrDraw);
+
+    // draw placeholder text if needed
+    if (!m_placeholderText.empty() && GetTextFromRichEdit().empty()) {
+      // set brush color
+      winrt::com_ptr<ID2D1SolidColorBrush> brush;
+      if (m_placeholderTextColor) {
+        auto color = m_placeholderTextColor.AsD2DColor();
+        winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(color, brush.put()));
+      } else {
+        winrt::check_hresult(
+            d2dDeviceContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Gray, 1.0f), brush.put()));
+      }
+
+      // Create placeholder text layout
+      winrt::com_ptr<::IDWriteTextLayout> textLayout = CreatePlaceholderLayout();
+
+      // draw text
+      d2dDeviceContext->DrawTextLayout(
+          D2D1::Point2F(
+              static_cast<FLOAT>((offset.x + m_layoutMetrics.contentInsets.left) / m_layoutMetrics.pointScaleFactor),
+              static_cast<FLOAT>((offset.y + m_layoutMetrics.contentInsets.top) / m_layoutMetrics.pointScaleFactor)),
+          textLayout.get(),
+          brush.get(),
+          D2D1_DRAW_TEXT_OPTIONS_ENABLE_COLOR_FONT);
+    }
 
     // restore dpi state
     d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);

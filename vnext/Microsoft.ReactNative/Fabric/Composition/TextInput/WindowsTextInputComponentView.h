@@ -71,6 +71,7 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
   void ensureDrawingSurface() noexcept;
   void DrawText() noexcept;
   void ShowCaret(bool show) noexcept;
+  winrt::com_ptr<::IDWriteTextLayout> CreatePlaceholderLayout();
   void UpdateCharFormat() noexcept;
   void UpdateParaFormat() noexcept;
   void UpdateText(const std::string &str) noexcept;
@@ -95,6 +96,8 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
   std::shared_ptr<facebook::react::WindowsTextInputProps const> m_props;
   std::shared_ptr<facebook::react::WindowsTextInputShadowNode::ConcreteState const> m_state;
   RECT m_rcClient;
+  std::string m_placeholderText;
+  facebook::react::SharedColor m_placeholderTextColor;
   int m_mostRecentEventCount{0};
   int m_nativeEventCount{0};
   bool m_comingFromJS{false};
@@ -102,11 +105,6 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
   int m_cDrawBlock{0};
   bool m_needsRedraw{false};
   bool m_drawing{false};
-
-  // Used by placeholder text
-  std::string m_placeholderText;
-  bool m_firstTextUpdate{true};
-  facebook::react::SharedColor m_placeholderTextColor;
 };
 
 } // namespace Microsoft::ReactNative
