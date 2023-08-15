@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 15 Aug 2023 17:22:28 GMT",
+      "tag": "react-native-windows_v0.71.30",
+      "version": "0.71.30",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "dec944ca90faef10d5c133353613a854a8d07057",
+            "comment": "Fix Secure Supply Chain compliance issues"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "dec944ca90faef10d5c133353613a854a8d07057",
+            "comment": "update nuget lock files"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 11 Aug 2023 00:26:16 GMT",
       "tag": "react-native-windows_v0.71.29",
       "version": "0.71.29",
