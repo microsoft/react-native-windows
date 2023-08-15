@@ -75,7 +75,6 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
   void UpdateCharFormat() noexcept;
   void UpdateParaFormat() noexcept;
   void UpdateText(const std::string &str) noexcept;
-  void DrawPlaceholderText() noexcept;
   void OnTextUpdated() noexcept;
   void OnSelectionChanged(LONG start, LONG end) noexcept;
   std::string GetTextFromRichEdit() const noexcept;
