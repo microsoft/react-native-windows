@@ -638,12 +638,9 @@ void WindowsTextInputComponentView::updateProps(
     }
   }
 
-  if (oldTextInputProps.placeholder != newTextInputProps.placeholder) {
-    m_placeholderText = newTextInputProps.placeholder;
-  }
-
-  if (oldTextInputProps.placeholderTextColor != newTextInputProps.placeholderTextColor) {
-    m_placeholderTextColor = newTextInputProps.placeholderTextColor;
+  if (oldTextInputProps.placeholder != newTextInputProps.placeholder ||
+      oldTextInputProps.placeholderTextColor != newTextInputProps.placeholderTextColor) {
+    m_needsRedraw = true;
   }
 
   /*
@@ -869,6 +866,9 @@ void WindowsTextInputComponentView::finalizeUpdates(RNComponentViewUpdateMask up
     UpdateSpecialBorderLayers(m_layoutMetrics, *m_props);
   }
   ensureDrawingSurface();
+  if (m_needsRedraw) {
+    DrawText();
+  }
 }
 
 void WindowsTextInputComponentView::prepareForRecycle() noexcept {}
@@ -996,7 +996,7 @@ winrt::com_ptr<::IDWriteTextLayout> WindowsTextInputComponentView::CreatePlaceho
   if (std::isnan(m_props->textAttributes.fontSize)) {
     textAttributes.fontSize = 12.0f;
   }
-  fragment1.string = m_placeholderText;
+  fragment1.string = m_props->placeholder;
   fragment1.textAttributes = textAttributes;
   attributedString.appendFragment(fragment1);
 
@@ -1058,11 +1058,11 @@ void WindowsTextInputComponentView::DrawText() noexcept {
     winrt::check_hresult(hrDraw);
 
     // draw placeholder text if needed
-    if (!m_placeholderText.empty() && GetTextFromRichEdit().empty()) {
+    if (!m_props->placeholder.empty() && GetTextFromRichEdit().empty()) {
       // set brush color
       winrt::com_ptr<ID2D1SolidColorBrush> brush;
-      if (m_placeholderTextColor) {
-        auto color = m_placeholderTextColor.AsD2DColor();
+      if (m_props->placeholderTextColor) {
+        auto color = m_props->placeholderTextColor.AsD2DColor();
         winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(color, brush.put()));
       } else {
         winrt::check_hresult(
