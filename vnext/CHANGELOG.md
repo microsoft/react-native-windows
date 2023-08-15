@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 12 Aug 2023 05:12:38 GMT and should not be manually modified.
+This log was last generated on Tue, 15 Aug 2023 05:14:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.693
+
+Tue, 15 Aug 2023 05:14:10 GMT
+
+### Changes
+
+- Add `separateDataFiles` to @rnw/cli and @rnw/codegen (53799235+ZihanChen-MSFT@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.184
+- Bump @react-native-windows/codegen to v0.0.0-canary.68
 
 ## 0.0.0-canary.692
 
