@@ -894,14 +894,15 @@ void WindowsTextInputComponentView::updateLayoutMetrics(
 
 // When we are notified by RichEdit that the text changed, we need to notify JS
 void WindowsTextInputComponentView::OnTextUpdated() noexcept {
-   auto data = m_state->getData();
+  auto data = m_state->getData();
   // auto newAttributedString = getAttributedString();
   // if (data.attributedString == newAttributedString)
   //    return;
   data.attributedString = getAttributedString();
   data.mostRecentEventCount = m_nativeEventCount;
 
-  // clear placeholder text if this is the first text update 
+  // placeholder logic: clear placeholder text if this is the first text update or redraw the placeholder text if the
+  // string is empty
   if (m_firstTextUpdate && !m_placeholderText.empty()) {
     m_firstTextUpdate = false;
     DrawText();
