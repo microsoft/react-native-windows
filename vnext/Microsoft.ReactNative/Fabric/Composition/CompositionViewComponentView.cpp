@@ -1094,6 +1094,9 @@ void CompositionBaseComponentView::updateAccessibilityProps(
 
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
       provider, UIA_ControlTypePropertyId, oldViewProps.accessibilityRole, newViewProps.accessibilityRole);
+  
+  winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+    provider, UIA_HelpTextPropertyId, oldViewProps.accessibilityHint, newViewProps.accessibilityHint);
 }
 
 void CompositionBaseComponentView::updateBorderLayoutMetrics(
