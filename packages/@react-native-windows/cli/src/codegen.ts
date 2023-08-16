@@ -111,7 +111,7 @@ export class CodeGenWindows {
       }
     }
 
-    let separateDataTypes = true;
+    let separateDataTypes = false;
     if (pkgJson.codegenConfig.windows.separateDataTypes !== undefined) {
       switch (pkgJson.codegenConfig.windows.separateDataTypes) {
         case true:
