@@ -2,6 +2,12 @@
   "version": 1,
   "dependencies": {
     "UAP,Version=v10.0.16299": {
+      "Microsoft.JavaScript.Hermes": {
+        "type": "Direct",
+        "requested": "[0.1.15, )",
+        "resolved": "0.1.15",
+        "contentHash": "My/u5RvxoymtwWokoweU6iVpuP79w271UjadcmSNqnQ9ESIv00tlVP4sHnIiN3t2lJNDeciyE1EVF4swGPECKQ=="
+      },
       "Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Direct",
         "requested": "[6.2.9, )",
@@ -30,6 +36,11 @@
         "type": "Transitive",
         "resolved": "1.76.0",
         "contentHash": "p+w3YvNdXL8Cu9Fzrmexssu0tZbWxuf6ywsQqHjDlKFE5ojXHof1HIyMC3zDLfLnh80dIeFcEUAuR2Asg/XHRA=="
+      },
+      "CDebug": {
+        "type": "Transitive",
+        "resolved": "0.0.3",
+        "contentHash": "C6pojNJ2rdJuOdhe0xhJ/FedNLRJkpCVLEEHsfgoU5d5kkOOVKK+7xlGWYgttB51nDB5dLDu/O8j03jSxu81oA=="
       },
       "Microsoft.Net.Native.Compiler": {
         "type": "Transitive",
@@ -69,11 +80,6 @@
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0"
         }
-      },
-      "ReactNative.Hermes.Windows": {
-        "type": "Transitive",
-        "resolved": "0.71.1",
-        "contentHash": "b6GLQSLaffgxAXwoTrxfj73W5cxlPxmNlQoVmyAnucXPCwV7HiL0rZsqGpBf+r2rdubUS35patY/c+8RiBR4+Q=="
       },
       "runtime.win10-arm.Microsoft.Net.Native.Compiler": {
         "type": "Transitive",
@@ -167,10 +173,10 @@
         "dependencies": {
           "Common": "[1.0.0, )",
           "Folly": "[1.0.0, )",
+          "Microsoft.JavaScript.Hermes": "[0.1.15, )",
           "Microsoft.UI.Xaml": "[2.7.0, )",
           "Microsoft.Windows.SDK.BuildTools": "[10.0.22000.194, )",
           "ReactCommon": "[1.0.0, )",
-          "ReactNative.Hermes.Windows": "[0.71.1, )",
           "boost": "[1.76.0, )"
         }
       },
@@ -198,6 +204,7 @@
       "reactnativexaml": {
         "type": "Project",
         "dependencies": {
+          "CDebug": "[0.0.3, )",
           "Microsoft.ReactNative": "[1.0.0, )",
           "Microsoft.UI.Xaml": "[2.7.0, )"
         }
