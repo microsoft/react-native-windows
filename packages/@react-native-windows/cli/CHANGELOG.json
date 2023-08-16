@@ -2,6 +2,60 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Tue, 15 Aug 2023 05:14:09 GMT",
+      "version": "0.0.0-canary.184",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.184",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "690d70c1c423405ff80b47671413791daa83ba6b",
+            "comment": "Add `separateDataFiles` to @rnw/cli and @rnw/codegen"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.68",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 08 Aug 2023 05:13:00 GMT",
+      "version": "0.0.0-canary.183",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.183",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "0547552180c58d1a738958165143a9fd9d01ba06",
+            "comment": "Properly detect the correct machine architecture"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "721231253918dd5c92854aa7911227fc99dd2f91",
+            "comment": "Deprecate Microsoft.ReactNative.WindowsAppSDK project"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.67",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.76",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 28 Jul 2023 05:14:53 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.182",
       "version": "0.0.0-canary.182",

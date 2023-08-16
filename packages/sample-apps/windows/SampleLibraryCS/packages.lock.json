@@ -19,6 +19,11 @@
         "resolved": "1.76.0",
         "contentHash": "p+w3YvNdXL8Cu9Fzrmexssu0tZbWxuf6ywsQqHjDlKFE5ojXHof1HIyMC3zDLfLnh80dIeFcEUAuR2Asg/XHRA=="
       },
+      "Microsoft.Build.Tasks.Git": {
+        "type": "Transitive",
+        "resolved": "1.1.1",
+        "contentHash": "AT3HlgTjsqHnWpBHSNeR0KxbLZD7bztlZVj7I8vgeYG9SYqbeFGh0TM/KVtC6fg53nrWHl3VfZFvb5BiQFcY6Q=="
+      },
       "Microsoft.JavaScript.Hermes": {
         "type": "Transitive",
         "resolved": "0.1.15",
@@ -50,6 +55,20 @@
         "resolved": "2.1.0",
         "contentHash": "ok+RPAtESz/9MUXeIEz6Lv5XAGQsaNmEYXMsgVALj4D7kqC8gveKWXWXbufLySR2fWrwZf8smyN5RmHu0e4BHA=="
       },
+      "Microsoft.SourceLink.Common": {
+        "type": "Transitive",
+        "resolved": "1.1.1",
+        "contentHash": "WMcGpWKrmJmzrNeuaEb23bEMnbtR/vLmvZtkAP5qWu7vQsY59GqfRJd65sFpBszbd2k/bQ8cs8eWawQKAabkVg=="
+      },
+      "Microsoft.SourceLink.GitHub": {
+        "type": "Transitive",
+        "resolved": "1.1.1",
+        "contentHash": "IaJGnOv/M7UQjRJks7B6p7pbPnOwisYGOIzqCz5ilGFTApZ3ktOR+6zJ12ZRPInulBmdAf1SrGdDG2MU8g6XTw==",
+        "dependencies": {
+          "Microsoft.Build.Tasks.Git": "1.1.1",
+          "Microsoft.SourceLink.Common": "1.1.1"
+        }
+      },
       "Microsoft.UI.Xaml": {
         "type": "Transitive",
         "resolved": "2.8.0",
@@ -62,11 +81,6 @@
         "type": "Transitive",
         "resolved": "1.0.1264.42",
         "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
-      },
-      "Microsoft.Windows.SDK.BuildTools": {
-        "type": "Transitive",
-        "resolved": "10.0.22000.194",
-        "contentHash": "4L0P3zqut466SIqT3VBeLTNUQTxCBDOrTRymRuROCRJKazcK7ibLz9yAO1nKWRt50ttCj39oAa2Iuz9ZTDmLlg=="
       },
       "NETStandard.Library": {
         "type": "Transitive",
@@ -152,8 +166,8 @@
       "folly": {
         "type": "Project",
         "dependencies": {
-          "Fmt": "[1.0.0, )",
-          "boost": "[1.76.0, )"
+          "boost": "[1.76.0, )",
+          "fmt": "[1.0.0, )"
         }
       },
       "microsoft.reactnative": {
@@ -162,8 +176,8 @@
           "Common": "[1.0.0, )",
           "Folly": "[1.0.0, )",
           "Microsoft.JavaScript.Hermes": "[0.1.15, )",
+          "Microsoft.SourceLink.GitHub": "[1.1.1, )",
           "Microsoft.UI.Xaml": "[2.8.0, )",
-          "Microsoft.Windows.SDK.BuildTools": "[10.0.22000.194, )",
           "ReactCommon": "[1.0.0, )",
           "boost": "[1.76.0, )"
         }

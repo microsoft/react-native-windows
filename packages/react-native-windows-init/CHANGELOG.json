@@ -2,6 +2,48 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Tue, 15 Aug 2023 05:14:10 GMT",
+      "version": "1.3.38",
+      "tag": "react-native-windows-init_v1.3.38",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.184",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 08 Aug 2023 05:13:01 GMT",
+      "version": "1.3.37",
+      "tag": "react-native-windows-init_v1.3.37",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows-init",
+            "commit": "0547552180c58d1a738958165143a9fd9d01ba06",
+            "comment": "Properly detect the correct machine architecture"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.76",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.183",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 28 Jul 2023 05:14:53 GMT",
       "tag": "react-native-windows-init_v1.3.36",
       "version": "1.3.36",

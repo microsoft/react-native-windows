@@ -36,6 +36,9 @@
     <ProjectDir Condition="'$(ProjectDir)' == ''">$(MSBuildProjectDirectory)\</ProjectDir>
     <UseExperimentalNuget Condition="'$(UseExperimentalNuget)' == ''">false</UseExperimentalNuget>
     <HermesNoDLLCopy Condition="'$(UseHermes)' != 'true'">true</HermesNoDLLCopy>
+
+    <RestorePackagesWithLockFile Condition="'$(RestorePackagesWithLockFile)' == ''">true</RestorePackagesWithLockFile>
+    <RestoreForceEvaluate Condition="'$(RestoreForceEvaluate)' == ''">false</RestoreForceEvaluate>
   </PropertyGroup>
 
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\NewAPIDeclarations.props" />

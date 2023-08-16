@@ -1,4 +1,3 @@
-
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
@@ -639,6 +638,11 @@ void WindowsTextInputComponentView::updateProps(
     }
   }
 
+  if (oldTextInputProps.placeholder != newTextInputProps.placeholder ||
+      oldTextInputProps.placeholderTextColor != newTextInputProps.placeholderTextColor) {
+    m_needsRedraw = true;
+  }
+
   /*
   if (oldTextInputProps.textAttributes.foregroundColor != newTextInputProps.textAttributes.foregroundColor) {
     if (newTextInputProps.textAttributes.foregroundColor)
@@ -673,10 +677,6 @@ void WindowsTextInputComponentView::updateProps(
 
   if (oldTextInputProps.allowFontScaling != newTextInputProps.allowFontScaling) {
     m_element.IsTextScaleFactorEnabled(newTextInputProps.allowFontScaling);
-  }
-
-  if (oldTextInputProps.placeholder != newTextInputProps.placeholder) {
-    m_element.PlaceholderText(winrt::to_hstring(newTextInputProps.placeholder));
   }
 
   if (oldTextInputProps.selection.start != newTextInputProps.selection.start ||
@@ -819,6 +819,7 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
   //    return;
   data.attributedString = getAttributedString();
   data.mostRecentEventCount = m_nativeEventCount;
+
   m_state->updateState(std::move(data));
 
   if (m_eventEmitter && !m_comingFromJS) {
@@ -865,7 +866,11 @@ void WindowsTextInputComponentView::finalizeUpdates(RNComponentViewUpdateMask up
     UpdateSpecialBorderLayers(m_layoutMetrics, *m_props);
   }
   ensureDrawingSurface();
+  if (m_needsRedraw) {
+    DrawText();
+  }
 }
+
 void WindowsTextInputComponentView::prepareForRecycle() noexcept {}
 facebook::react::Props::Shared WindowsTextInputComponentView::props() noexcept {
   return m_props;
@@ -982,6 +987,29 @@ void WindowsTextInputComponentView::ShowCaret(bool show) noexcept {
   m_caretVisual.IsVisible(show);
 }
 
+winrt::com_ptr<::IDWriteTextLayout> WindowsTextInputComponentView::CreatePlaceholderLayout() {
+  // Create a fragment with text attributes
+  winrt::com_ptr<::IDWriteTextLayout> textLayout = nullptr;
+  facebook::react::AttributedString attributedString;
+  facebook::react::AttributedString::Fragment fragment1;
+  facebook::react::TextAttributes textAttributes = m_props->textAttributes;
+  if (std::isnan(m_props->textAttributes.fontSize)) {
+    textAttributes.fontSize = 12.0f;
+  }
+  fragment1.string = m_props->placeholder;
+  fragment1.textAttributes = textAttributes;
+  attributedString.appendFragment(fragment1);
+
+  facebook::react::LayoutConstraints constraints;
+  constraints.maximumSize.width = static_cast<FLOAT>(m_imgWidth);
+  constraints.maximumSize.height = static_cast<FLOAT>(m_imgHeight);
+
+  facebook::react::TextLayoutManager::GetTextLayout(
+      facebook::react::AttributedStringBox(attributedString), {} /*TODO*/, constraints, textLayout);
+
+  return textLayout;
+}
+
 void WindowsTextInputComponentView::DrawText() noexcept {
   m_needsRedraw = true;
   if (m_cDrawBlock) {
@@ -1028,6 +1056,31 @@ void WindowsTextInputComponentView::DrawText() noexcept {
     // TODO keep track of proper invalid rect
     auto hrDraw = m_textServices->TxDrawD2D(d2dDeviceContext.get(), &rc, nullptr, TXTVIEW_ACTIVE);
     winrt::check_hresult(hrDraw);
+
+    // draw placeholder text if needed
+    if (!m_props->placeholder.empty() && GetTextFromRichEdit().empty()) {
+      // set brush color
+      winrt::com_ptr<ID2D1SolidColorBrush> brush;
+      if (m_props->placeholderTextColor) {
+        auto color = m_props->placeholderTextColor.AsD2DColor();
+        winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(color, brush.put()));
+      } else {
+        winrt::check_hresult(
+            d2dDeviceContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Gray, 1.0f), brush.put()));
+      }
+
+      // Create placeholder text layout
+      winrt::com_ptr<::IDWriteTextLayout> textLayout = CreatePlaceholderLayout();
+
+      // draw text
+      d2dDeviceContext->DrawTextLayout(
+          D2D1::Point2F(
+              static_cast<FLOAT>((offset.x + m_layoutMetrics.contentInsets.left) / m_layoutMetrics.pointScaleFactor),
+              static_cast<FLOAT>((offset.y + m_layoutMetrics.contentInsets.top) / m_layoutMetrics.pointScaleFactor)),
+          textLayout.get(),
+          brush.get(),
+          D2D1_DRAW_TEXT_OPTIONS_ENABLE_COLOR_FONT);
+    }
 
     // restore dpi state
     d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);

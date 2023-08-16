@@ -243,11 +243,6 @@ void ViewViewManager::GetExportedCustomDirectEventTypeConstants(
     const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
   Super::GetExportedCustomDirectEventTypeConstants(writer);
 
-  writer.WritePropertyName(L"topClick");
-  writer.WriteObjectBegin();
-  winrt::Microsoft::ReactNative::WriteProperty(writer, L"registrationName", L"onClick");
-  writer.WriteObjectEnd();
-
   writer.WritePropertyName(L"topAccessibilityTap");
   writer.WriteObjectBegin();
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"registrationName", L"onAccessibilityTap");

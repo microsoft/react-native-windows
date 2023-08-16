@@ -175,6 +175,8 @@ export class Telemetry {
       await basePropUtils.deviceId();
     Telemetry.client!.commonProperties.deviceArchitecture =
       basePropUtils.deviceArchitecture();
+    Telemetry.client!.commonProperties.nodeArchitecture =
+      basePropUtils.nodeArchitecture();
     Telemetry.client!.commonProperties.devicePlatform =
       basePropUtils.devicePlatform();
     Telemetry.client!.commonProperties.deviceLocale =

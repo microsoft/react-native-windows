@@ -8,16 +8,22 @@
  */
 #pragma once
 
-#include "NativeModules.h"
+#include <NativeModules.h>
 #include <tuple>
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(SourceCodeSpec_Constants)
 struct SourceCodeSpec_Constants {
-    REACT_FIELD(scriptURL)
     std::string scriptURL;
 };
+
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(SourceCodeSpec_Constants*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"scriptURL", &SourceCodeSpec_Constants::scriptURL},
+    };
+    return fieldMap;
+}
 
 struct SourceCodeSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto constants = std::tuple{

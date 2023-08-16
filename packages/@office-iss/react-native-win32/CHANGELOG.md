@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Fri, 28 Jul 2023 05:14:51 GMT and should not be manually modified.
+This log was last generated on Fri, 11 Aug 2023 05:13:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.210
+
+Fri, 11 Aug 2023 05:13:37 GMT
+
+### Changes
+
+- Add saveAssetPlugin to fix long path assets (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.209
 
