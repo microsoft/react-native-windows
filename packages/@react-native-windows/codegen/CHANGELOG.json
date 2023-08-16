@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Wed, 16 Aug 2023 13:28:46 GMT",
+      "tag": "@react-native-windows/codegen_v0.71.7",
+      "version": "0.71.7",
+      "comments": {
+        "patch": [
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "4b581576b7a684b3f957c01d5d95224bc44a02a6",
+            "comment": "Add `separateDataFiles` to @rnw/cli and @rnw/codegen"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 17 Jul 2023 15:14:58 GMT",
       "tag": "@react-native-windows/codegen_v0.71.6",
       "version": "0.71.6",
