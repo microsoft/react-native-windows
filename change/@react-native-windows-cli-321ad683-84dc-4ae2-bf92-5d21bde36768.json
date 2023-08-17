@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix codegenConfig.windows.separateDataTypes default value",
-  "packageName": "@react-native-windows/cli",
-  "email": "53799235+ZihanChen-MSFT@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

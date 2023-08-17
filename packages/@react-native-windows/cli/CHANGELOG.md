@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Thu, 17 Aug 2023 03:55:07 GMT and should not be manually modified.
+This log was last generated on Thu, 17 Aug 2023 14:36:56 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.17
+
+Thu, 17 Aug 2023 14:36:56 GMT
+
+### Patches
+
+- Fix codegenConfig.windows.separateDataTypes default value (53799235+ZihanChen-MSFT@users.noreply.github.com)
 
 ## 0.71.16
 
