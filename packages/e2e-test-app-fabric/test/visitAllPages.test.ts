@@ -4,8 +4,8 @@
  *
  * @format
  */
-import {goToApiExample, goToComponentExample} from './RNTesterNavigation';
-import {verifyNoErrorLogs} from './Helpers';
+//import {goToApiExample, goToComponentExample} from './RNTesterNavigation';
+//import {verifyNoErrorLogs} from './Helpers';
 
 type RNTesterExampleModule = {
   title: string;
