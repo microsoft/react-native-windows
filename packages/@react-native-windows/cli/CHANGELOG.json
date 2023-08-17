@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Thu, 17 Aug 2023 05:15:33 GMT",
+      "version": "0.0.0-canary.185",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.185",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "1ae6b0cdf1327f362b5d8b10673d86ba91695088",
+            "comment": "Fix codegenConfig.windows.separateDataTypes default value"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 15 Aug 2023 05:14:09 GMT",
       "version": "0.0.0-canary.184",
       "tag": "@react-native-windows/cli_v0.0.0-canary.184",

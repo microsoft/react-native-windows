@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 15 Aug 2023 05:14:10 GMT and should not be manually modified.
+This log was last generated on Thu, 17 Aug 2023 05:15:33 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.694
+
+Thu, 17 Aug 2023 05:15:33 GMT
+
+### Changes
+
+- implement placeholder text for fabric (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.185
 
 ## 0.0.0-canary.693
 
