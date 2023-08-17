@@ -15,6 +15,7 @@
 #include <winrt/Windows.Data.Json.h>
 #include <winrt/Microsoft.ReactNative.Composition.h>
 #include <winrt/Windows.UI.Composition.Desktop.h>
+#include <winrt/Windows.Foundation.h>
 
 #include "NativeModules.h"
 #include "ReactPropertyBag.h"
@@ -77,7 +78,7 @@ LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 int RunRNTester(int showCmd);
 winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::JsonValue payload);
 winrt::Windows::Data::Json::JsonObject DumpVisualTree(winrt::Windows::Data::Json::JsonValue payload);
-void LoopServer(winrt::AutomationChannel::Server &server);
+winrt::Windows::Foundation::IAsyncAction LoopServer(winrt::AutomationChannel::Server &server);
 
 struct WindowData {
   static HINSTANCE s_instance;
@@ -242,12 +243,12 @@ int RunRNTester(int showCmd) {
   WindowData::GetFromWindow(hwnd)->RenderApp(hwnd);
 
   HACCEL hAccelTable = LoadAccelerators(WindowData::s_instance, MAKEINTRESOURCE(IDC_RNTESTER_COMPOSITION));
-  // Set up servers for E2E Testing
 
+  // Set Up Servers for E2E Testing
   handler.BindOperation(L"DumpVisualTree", DumpVisualTree);
   handler.BindOperation(L"ListErrors", ListErrors);
   server = winrt::AutomationChannel::Server(handler);
-  LoopServer(server);
+  auto asyncAction = LoopServer(server);
 
   MSG msg = {};
   while (GetMessage(&msg, nullptr, 0, 0)) {
@@ -295,25 +296,25 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
 
 winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::JsonValue payload) {
   winrt::Windows::Data::Json::JsonObject result;
+  winrt::Windows::Data::Json::JsonArray jsonErrors;
+  winrt::Windows::Data::Json::JsonArray jsonWarnings;
+  // TODO: Add Error and Warnings
+  result.Insert(L"errors", jsonErrors);
+  result.Insert(L"warnings", jsonWarnings);
   return result;
 }
 
 winrt::Windows::Data::Json::JsonObject DumpVisualTree(winrt::Windows::Data::Json::JsonValue payload) {
   winrt::Windows::Data::Json::JsonObject result;
+  // TODO: Method should return a JSON of the Composition Visual Tree
   return result;
 }
 
-void LoopServer(winrt::AutomationChannel::Server &server) {
+winrt::Windows::Foundation::IAsyncAction LoopServer(winrt::AutomationChannel::Server &server) {
   while (true) {
     try {
-      auto task = [&server]() {
-        return server.ProcessAllClientRequests(8603, std::chrono::milliseconds(50));
-      };
-      // failing code
-      auto future_result = std::async(std::launch::async, task);
-      auto result = future_result.get();
+      co_await server.ProcessAllClientRequests(8603, std::chrono::milliseconds(50));
     } catch (const std::exception ex) {
-      // how come exception is not catching here?
     }
   }
 }
