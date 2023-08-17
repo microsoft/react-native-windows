@@ -247,7 +247,8 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
     }
     case UIA_NamePropertyId: {
       pRetVal->vt = VT_BSTR;
-      auto wideName = ::Microsoft::Common::Unicode::Utf8ToUtf16(props->accessibilityLabel);
+      auto wideName = ::Microsoft::Common::Unicode::Utf8ToUtf16(
+        props->accessibilityLabel.empty() ? baseView->DefaultAccessibleName() : props->accessibilityLabel);
       pRetVal->bstrVal = SysAllocString(wideName.c_str());
       hr = pRetVal->bstrVal != nullptr ? S_OK : E_OUTOFMEMORY;
       break;
