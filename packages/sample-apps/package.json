@@ -41,7 +41,7 @@
     "jsSrcsDir": "src",
     "windows": {
       "namespace": "SampleLibraryCodegen",
-      "separateDataFiles": true
+      "separateDataTypes": true
     }
   },
   "engines": {
