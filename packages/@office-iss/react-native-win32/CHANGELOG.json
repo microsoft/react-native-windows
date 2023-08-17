@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 11 Aug 2023 05:13:37 GMT",
+      "version": "0.0.0-canary.210",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.210",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "ecd0ad79873a263e74a41f53f42650778ddd2364",
+            "comment": "Add saveAssetPlugin to fix long path assets"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 28 Jul 2023 05:14:51 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.209",
       "version": "0.0.0-canary.209",

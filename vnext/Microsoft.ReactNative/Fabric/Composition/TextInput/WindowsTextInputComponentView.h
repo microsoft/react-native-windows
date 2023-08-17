@@ -71,6 +71,7 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
   void ensureDrawingSurface() noexcept;
   void DrawText() noexcept;
   void ShowCaret(bool show) noexcept;
+  winrt::com_ptr<::IDWriteTextLayout> CreatePlaceholderLayout();
   void UpdateCharFormat() noexcept;
   void UpdateParaFormat() noexcept;
   void UpdateText(const std::string &str) noexcept;

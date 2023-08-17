@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "dependencies": {
+    "native,Version=v0.0": {
+      "boost": {
+        "type": "Transitive",
+        "resolved": "1.76.0",
+        "contentHash": "p+w3YvNdXL8Cu9Fzrmexssu0tZbWxuf6ywsQqHjDlKFE5ojXHof1HIyMC3zDLfLnh80dIeFcEUAuR2Asg/XHRA=="
+      },
+      "fmt": {
+        "type": "Project"
+      },
+      "folly": {
+        "type": "Project",
+        "dependencies": {
+          "Fmt": "[1.0.0, )",
+          "boost": "[1.76.0, )"
+        }
+      }
+    },
+    "native,Version=v0.0/win": {},
+    "native,Version=v0.0/win-arm64": {},
+    "native,Version=v0.0/win-x64": {},
+    "native,Version=v0.0/win-x86": {}
+  }
+}
