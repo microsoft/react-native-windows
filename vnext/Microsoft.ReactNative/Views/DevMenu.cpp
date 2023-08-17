@@ -119,7 +119,7 @@ void DevMenuManager::CreateAndShowUI() noexcept {
 
     std::ostringstream os;
     if (Microsoft::ReactNative::HermesSamplingProfiler::IsStarted()) {
-      os << "Hermes Sampling profiler is running.. !";
+      os << "Hermes Sampling profiler is running!";
     } else {
       os << "Click to start.";
     }
@@ -210,9 +210,9 @@ void DevMenuManager::CreateAndShowUI() noexcept {
           if (auto strongThis = wkThis.lock()) {
             strongThis->Hide();
             if (!Microsoft::ReactNative::HermesSamplingProfiler::IsStarted()) {
-              Microsoft::ReactNative::HermesSamplingProfiler::Start();
+              Microsoft::ReactNative::HermesSamplingProfiler::Start(strongThis->m_context);
             } else {
-              auto traceFilePath = co_await Microsoft::ReactNative::HermesSamplingProfiler::Stop();
+              auto traceFilePath = co_await Microsoft::ReactNative::HermesSamplingProfiler::Stop(strongThis->m_context);
               auto uiDispatcher =
                   React::implementation::ReactDispatcher::GetUIDispatcher(strongThis->m_context->Properties());
               uiDispatcher.Post([traceFilePath]() {
