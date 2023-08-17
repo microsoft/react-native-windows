@@ -234,6 +234,10 @@
       "baseHash": "1c9eb481e8ed077fa650e3ea34837e2a31310366"
     },
     {
+      "type": "platform",
+      "file": "src/Libraries/Image/assetPaths.js"
+    },
+    {
       "type": "derived",
       "file": "src/Libraries/Image/Image.win32.js",
       "baseFile": "packages/react-native/Libraries/Image/Image.ios.js",

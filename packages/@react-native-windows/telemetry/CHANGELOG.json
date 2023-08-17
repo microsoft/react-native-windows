@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Tue, 08 Aug 2023 05:13:00 GMT",
+      "version": "0.0.0-canary.76",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.76",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "0547552180c58d1a738958165143a9fd9d01ba06",
+            "comment": "Properly detect the correct machine architecture"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 28 Jul 2023 05:14:53 GMT",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.75",
       "version": "0.0.0-canary.75",
