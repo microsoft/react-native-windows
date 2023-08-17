@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 17 Aug 2023 03:55:07 GMT",
+      "tag": "react-native-windows_v0.71.32",
+      "version": "0.71.32",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "fbed06a9b21ced5eb94aa9c8b42e7ac0934483c2",
+            "comment": "Re-apply cherry pick of PR #11696 with fixes"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.71.16",
+            "commit": "fbed06a9b21ced5eb94aa9c8b42e7ac0934483c2"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 16 Aug 2023 13:28:46 GMT",
       "tag": "react-native-windows_v0.71.31",
       "version": "0.71.31",
