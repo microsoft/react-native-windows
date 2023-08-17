@@ -10,10 +10,10 @@
 #include <DispatcherQueue.h>
 #include <UIAutomation.h>
 
-#include <winrt/Windows.Data.Json.h>
 #include <winrt/Microsoft.ReactNative.Composition.h>
-#include <winrt/Windows.UI.Composition.Desktop.h>
+#include <winrt/Windows.Data.Json.h>
 #include <winrt/Windows.Foundation.h>
+#include <winrt/Windows.UI.Composition.Desktop.h>
 
 #include "NativeModules.h"
 #include "ReactPropertyBag.h"
