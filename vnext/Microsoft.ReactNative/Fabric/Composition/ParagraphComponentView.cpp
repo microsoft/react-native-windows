@@ -46,7 +46,7 @@ void ParagraphComponentView::updateProps(
   if (oldViewProps.textAttributes.foregroundColor != newViewProps.textAttributes.foregroundColor) {
     m_requireRedraw = true;
   }
-if (oldViewProps.textAttributes.opacity != newViewProps.textAttributes.opacity) {
+  if (oldViewProps.textAttributes.opacity != newViewProps.textAttributes.opacity) {
     m_requireRedraw = true;
   }
 

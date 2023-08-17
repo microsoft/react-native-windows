@@ -1072,10 +1072,10 @@ void CompositionBaseComponentView::updateAccessibilityProps(
       provider, UIA_IsKeyboardFocusablePropertyId, oldViewProps.focusable, newViewProps.focusable);
 
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
-    provider,
-    UIA_NamePropertyId,
-    oldViewProps.accessibilityLabel,
-    newViewProps.accessibilityLabel.empty() ? DefaultAccessibleName() : newViewProps.accessibilityLabel);
+      provider,
+      UIA_NamePropertyId,
+      oldViewProps.accessibilityLabel,
+      newViewProps.accessibilityLabel.empty() ? DefaultAccessibleName() : newViewProps.accessibilityLabel);
 
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
       provider,
