@@ -9,8 +9,6 @@
 
 #include <DispatcherQueue.h>
 #include <UIAutomation.h>
-#include <thread>
-#include <future>
 
 #include <winrt/Windows.Data.Json.h>
 #include <winrt/Microsoft.ReactNative.Composition.h>
