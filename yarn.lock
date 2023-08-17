@@ -2394,10 +2394,17 @@
     semver "^7.5.2"
     shell-quote "^1.7.3"
 
-"@react-native-community/cli-types@12.0.0-alpha.6", "@react-native-community/cli-types@^12.0.0-alpha.3":
+"@react-native-community/cli-types@12.0.0-alpha.6":
   version "12.0.0-alpha.6"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-types/-/cli-types-12.0.0-alpha.6.tgz#cc7dbe57f9208ef894211c4efc05a168f1e2d2cd"
   integrity sha512-GaDYPxMbpPVszNRdmqgapCgxD7g3XGLnJp0oB1oL32/mFBPdfaiQzfFDvEqsTfxCzsti+kmkcE/04HrO2hYguQ==
+  dependencies:
+    joi "^17.2.1"
+
+"@react-native-community/cli-types@^12.0.0-alpha.3":
+  version "12.0.0-alpha.10"
+  resolved "https://registry.yarnpkg.com/@react-native-community/cli-types/-/cli-types-12.0.0-alpha.10.tgz#c8acc9f1a38fee164eb393e6a4485915a80470a0"
+  integrity sha512-uajigz2CO9RSD0BWgmhLjXrjIu/wcS7B4MoVAu5++vm2bFLhK8R0SKRV4o+zk++qqevPQ9lQbb+3BrcNJE2ERQ==
   dependencies:
     joi "^17.2.1"
 
