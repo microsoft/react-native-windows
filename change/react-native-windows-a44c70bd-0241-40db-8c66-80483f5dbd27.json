@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Re-apply cherry pick of PR #11696 with fixes",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}

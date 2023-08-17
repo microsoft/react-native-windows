@@ -27,10 +27,13 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\JsiApiContext.cpp">
       <Filter>JSI</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\NodeApiJsiRuntime.cpp">
-      <Filter>JSI</Filter>
-    </ClCompile>
     <ClCompile Include="$(Bridging_SourcePath)\LongLivedObject.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\NodeApiJsiLoader.cpp">
+      <Filter>NodeApiJsi</Filter>
+    </ClCompile>
+    <ClCompile Include="$(NodeApiJsiSrcDir)ApiLoaders\NodeApi.cpp" />
+    <ClCompile Include="$(NodeApiJsiSrcDir)ApiLoaders\JSRuntimeApi.cpp" />
+    <ClCompile Include="$(NodeApiJsiSrcDir)NodeApiJsiRuntime.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Crash.h" />
@@ -153,14 +156,19 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)XamlUtils.h">
       <Filter>UI</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\NodeApiJsiRuntime.h">
-      <Filter>JSI</Filter>
-    </ClInclude>
     <ClInclude Include="$(Bridging_SourcePath)\CallbackWrapper.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CoreApp.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\LongLivedJsiValue.h">
       <Filter>TurboModule</Filter>
     </ClInclude>
+    <ClInclude Include="$(NodeApiJsiSrcDir)ApiLoaders\NodeApi.h" />
+    <ClInclude Include="$(NodeApiJsiSrcDir)ApiLoaders\NodeApi.inc" />
+    <ClInclude Include="$(NodeApiJsiSrcDir)ApiLoaders\JSRuntimeApi.h" />
+    <ClInclude Include="$(NodeApiJsiSrcDir)ApiLoaders\JSRuntimeApi.inc" />
+    <ClInclude Include="$(NodeApiJsiSrcDir)NodeApiJsiRuntime.h" />
+    <ClInclude Include="$(NodeApiDir)js_native_api.h" />
+    <ClInclude Include="$(NodeApiDir)js_native_api_types.h" />
+    <ClInclude Include="$(NodeApiDir)js_runtime_api.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="JSI">
@@ -171,6 +179,9 @@
     </Filter>
     <Filter Include="TurboModule">
       <UniqueIdentifier>{b5c0294c-d72f-44fa-8509-369f7d3e4a56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NodeApiJsi">
+      <UniqueIdentifier>{a34cd50a-190c-4cbb-8fe1-6ff1e16fe389}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
