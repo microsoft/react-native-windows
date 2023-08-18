@@ -152,6 +152,8 @@ export type AccessibilityState = {
   checked?: ?boolean | 'mixed',
   busy?: boolean,
   expanded?: boolean,
+  multiselectable?: boolean,
+  required?: boolean,
   ...
 };
 
