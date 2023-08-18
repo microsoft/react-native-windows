@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Update V8 JSI version to 0.71.8",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch"
-}
