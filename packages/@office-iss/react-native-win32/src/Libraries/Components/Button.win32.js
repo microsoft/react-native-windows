@@ -328,6 +328,8 @@ class Button extends React.Component<ButtonProps> {
       disabled: ariaDisabled ?? accessibilityState?.disabled,
       expanded: ariaExpanded ?? accessibilityState?.expanded,
       selected: ariaSelected ?? accessibilityState?.selected,
+      multiselectable: accessibilityState?.multiselectable,
+      required: accessibilityState?.required,
     };
 
     const disabled =

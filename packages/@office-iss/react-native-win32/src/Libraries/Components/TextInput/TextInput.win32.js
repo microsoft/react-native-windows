@@ -1532,6 +1532,8 @@ function InternalTextInput(props: Props): React.Node {
       disabled: ariaDisabled ?? accessibilityState?.disabled,
       expanded: ariaExpanded ?? accessibilityState?.expanded,
       selected: ariaSelected ?? accessibilityState?.selected,
+      multiselectable: accessibilityState?.multiselectable,
+      required: accessibilityState?.required,
     };
   }
 
