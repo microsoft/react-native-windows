@@ -11041,10 +11041,10 @@ react-is@^18.0.0, react-is@^18.2.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.2.0.tgz#199431eeaaa2e09f86427efbb4f1473edb47609b"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
 
-react-native-xaml@^0.0.74:
-  version "0.0.74"
-  resolved "https://registry.yarnpkg.com/react-native-xaml/-/react-native-xaml-0.0.74.tgz#fc747308320eb1fda6dd69f5317bfeae37686b57"
-  integrity sha512-4F/kcx2//uUTOFJpePgRyu+yRje1lk9zSIhRUY5ZRIGXkkccS109uE9J+q5LqvMU8KuDEpDElE8n3UsYHZ0pKQ==
+react-native-xaml@^0.0.76:
+  version "0.0.76"
+  resolved "https://registry.yarnpkg.com/react-native-xaml/-/react-native-xaml-0.0.76.tgz#19b573643655a187cd2a054fae1c9868edca4c1f"
+  integrity sha512-OpEcnjtGyToOKXXqfGY+wrbFrSd4mIfMRb3c/Z2lFBjwb1y94xx0yNwZdxWZdVMTMdBJT+f1P4Zk04HAVNWrvQ==
   dependencies:
     "@types/react" "*"
     "@types/react-native" "*"
