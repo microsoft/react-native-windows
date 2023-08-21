@@ -1171,7 +1171,9 @@ void NativeUIManager::blur(int64_t reactTag) {
   if (auto shadowNode = static_cast<ShadowNodeBase *>(m_host->FindShadowNodeForTag(reactTag))) {
     // Only blur if current UI is focused to avoid problem described in PR #2687
     const auto xamlRoot = tryGetXamlRoot(shadowNode->m_rootTag);
-    if (shadowNode->GetView() == xaml::Input::FocusManager::GetFocusedElement(xamlRoot)) {
+    const auto focusedElement = xamlRoot ? xaml::Input::FocusManager::GetFocusedElement(xamlRoot)
+                                         : xaml::Input::FocusManager::GetFocusedElement();
+    if (shadowNode->GetView() == focusedElement) {
       if (auto reactControl = GetParentXamlReactControl(reactTag).get()) {
         reactControl.as<winrt::Microsoft::ReactNative::implementation::ReactRootView>()->blur(shadowNode->GetView());
       } else {
