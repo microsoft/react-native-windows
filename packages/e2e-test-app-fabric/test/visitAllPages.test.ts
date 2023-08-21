@@ -4,8 +4,12 @@
  *
  * @format
  */
-//import {goToApiExample, goToComponentExample} from './RNTesterNavigation';
-//import {verifyNoErrorLogs} from './Helpers';
+import {goToApiExample, goToComponentExample} from './RNTesterNavigation';
+import {verifyNoErrorLogs} from './Helpers';
+
+afterEach(async () => {
+  await verifyNoErrorLogs();
+});
 
 type RNTesterExampleModule = {
   title: string;
@@ -33,18 +37,30 @@ describe('visitAllPages', () => {
   });
 
   for (const component of componentExamples) {
-    test(component, () => {
-      expect(true).toBe(true);
-    });
+    if (component === 'Flyout' || component === 'XAML') {
+      continue;
+    }
+
+    test(component, async () => await goToComponentExample(component));
   }
 
   for (const api of apiExamples) {
-    if (api === 'Transforms')
+    if (
+      api === 'Transforms' ||
+      api === 'Keyboard Focus Example' ||
+      api === 'Alerts' ||
+      api === 'Linking' ||
+      api === 'AppState' ||
+      api === 'Border' ||
+      api === 'Crash' ||
+      api === 'Accessibility Windows' ||
+      api === 'Accessibility'
+    )
       // disable until either transformExample uses units, or that isn't an error
       continue;
 
-    test(api, () => {
-      expect(true).toBe(true);
+    test(api, async () => {
+      await goToApiExample(api);
     });
   }
 });

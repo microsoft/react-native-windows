@@ -11,8 +11,8 @@ import {app} from '@react-native-windows/automation';
  * Visit an example on the RNTester Components tab
  */
 export async function goToComponentExample(example: string) {
-  //const componentsTabButton = await app.findElementByTestID('components-tab');
-  //await componentsTabButton.click();
+  const componentsTabButton = await app.findElementByTestID('components-tab');
+  await componentsTabButton.click();
   await goToExample(example);
 }
 
@@ -28,7 +28,8 @@ export async function goToApiExample(example: string) {
 async function goToExample(example: string) {
   // Filter the list down to the one test, to improve the stability of selectors
   const searchBox = await app.findElementByTestID('explorer_search');
-  await searchBox.setValue(regexEscape(example));
+  // Only grab first three characters of string to reduce cases in WebDriverIO mistyping.
+  await searchBox.addValue(regexEscape(example.substring(0, 3)));
 
   const exampleButton = await app.findElementByTestID(example);
   await exampleButton.click();
