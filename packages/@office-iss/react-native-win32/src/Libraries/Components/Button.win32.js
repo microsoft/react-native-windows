@@ -163,6 +163,8 @@ type ButtonProps = $ReadOnly<{|
   'aria-disabled'?: ?boolean,
   'aria-expanded'?: ?boolean,
   'aria-selected'?: ?boolean,
+  'aria-multiselectable'?: ?boolean, // Win32
+  'aria-required'?: ?boolean, // Win32
 
   /**
    * [Android] Controlling if a view fires accessibility events and if it is reported to accessibility services.

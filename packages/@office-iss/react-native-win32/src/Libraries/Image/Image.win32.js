@@ -187,8 +187,9 @@ const BaseImage = (props: ImagePropsType, forwardedRef) => {
     checked: ariaChecked ?? props.accessibilityState?.checked,
     disabled: ariaDisabled ?? props.accessibilityState?.disabled,
     expanded: ariaExpanded ?? props.accessibilityState?.expanded,
-    multiselectable: ariaMultiselectable ?? accessibilityState?.multiselectable, // Win32
-    required: ariaRequired ?? accessibilityState?.required, // Win32
+    multiselectable:
+      ariaMultiselectable ?? props.accessibilityState?.multiselectable, // Win32
+    required: ariaRequired ?? props.accessibilityState?.required, // Win32
     selected: ariaSelected ?? props.accessibilityState?.selected,
   };
   const accessibilityLabel = props['aria-label'] ?? props.accessibilityLabel;

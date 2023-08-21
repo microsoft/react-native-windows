@@ -19,6 +19,8 @@ export type TextWin32TextStyle =
   | 'HugeStandard';
 
 export interface ITextWin32Props extends RN.TextProps {
+  'aria-multiselectable'?: boolean | undefined; // Win32
+  'aria-required'?: boolean | undefined; // Win32
   onKeyDown?: (args: IKeyboardEvent) => void;
   onKeyDownCapture?: (args: IKeyboardEvent) => void;
   onKeyUp?: (args: IKeyboardEvent) => void;

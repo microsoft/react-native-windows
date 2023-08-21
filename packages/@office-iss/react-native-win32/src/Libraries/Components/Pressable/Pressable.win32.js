@@ -74,6 +74,8 @@ type Props = $ReadOnly<{|
   'aria-disabled'?: ?boolean,
   'aria-expanded'?: ?boolean,
   'aria-selected'?: ?boolean,
+  'aria-multiselectable'?: ?boolean, // Win32
+  'aria-required'?: ?boolean, // Win32
   /**
    * A value indicating whether the accessibility elements contained within
    * this accessibility element are hidden.
