@@ -96,7 +96,8 @@ const View: React.AbstractComponent<
         checked: ariaChecked ?? accessibilityState?.checked,
         disabled: ariaDisabled ?? accessibilityState?.disabled,
         expanded: ariaExpanded ?? accessibilityState?.expanded,
-        multiselectable: ariaMultiselectable ?? accessibilityState?.multiselectable, // Win32
+        multiselectable:
+          ariaMultiselectable ?? accessibilityState?.multiselectable, // Win32
         required: ariaRequired ?? accessibilityState?.required, // Win32
         selected: ariaSelected ?? accessibilityState?.selected,
       };
