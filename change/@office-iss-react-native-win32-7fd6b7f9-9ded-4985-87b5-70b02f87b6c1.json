@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "add missing a11yState props on win32",
+  "comment": "fix a11yState and add support for aria-required and -multiselectable",
   "packageName": "@office-iss/react-native-win32",
   "email": "krsiler@microsoft.com",
   "dependentChangeType": "patch"
