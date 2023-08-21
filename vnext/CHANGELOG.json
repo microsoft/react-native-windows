@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 21 Aug 2023 15:14:00 GMT",
+      "tag": "react-native-windows_v0.72.7",
+      "version": "0.72.7",
+      "comments": {
+        "patch": [
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "043f4512862c8e16e5b2c72da9bf605fa596016c",
+            "comment": "Add `separateDataFiles` to @rnw/cli and @rnw/codegen"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.72.3",
+            "commit": "5ab549990254dfcf852cd41409cc99f0db9577be"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.72.2",
+            "commit": "5ab549990254dfcf852cd41409cc99f0db9577be"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 14 Aug 2023 15:18:20 GMT",
       "tag": "react-native-windows_v0.72.6",
       "version": "0.72.6",

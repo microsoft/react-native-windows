@@ -1,8 +1,18 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Mon, 14 Aug 2023 15:18:19 GMT and should not be manually modified.
+This log was last generated on Mon, 21 Aug 2023 15:14:01 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.72.3
+
+Mon, 21 Aug 2023 15:14:01 GMT
+
+### Patches
+
+- Add `separateDataFiles` to @rnw/cli and @rnw/codegen (53799235+ZihanChen-MSFT@users.noreply.github.com)
+- Fix codegenConfig.windows.separateDataTypes default value (53799235+ZihanChen-MSFT@users.noreply.github.com)
+- Bump @react-native-windows/codegen to v0.72.2
 
 ## 0.72.2
 
