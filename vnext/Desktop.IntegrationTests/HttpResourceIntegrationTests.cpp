@@ -169,7 +169,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
   }
 
   TEST_METHOD(RequestGetExplicitUserAgentSucceeds) {
-    string url = "https://api.github.com/repos/microsoft/react-native-xaml";
+    string url = "https://api.github.com/rate_limit";
 
     promise<void> rcPromise;
     string error;
@@ -206,7 +206,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
   }
 
   TEST_METHOD(RequestGetImplicitUserAgentSucceeds) {
-    string url = "https://api.github.com/repos/microsoft/react-native-windows";
+    string url = "https://api.github.com/rate_limit";
 
     promise<void> rcPromise;
     string error;
@@ -246,7 +246,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
 
   TEST_METHOD(RequestGetMissingUserAgentFails) {
     // string url = "http://localhost:" + std::to_string(s_port);
-    string url = "https://api.github.com/repos/microsoft/react-native-macos";
+    string url = "https://api.github.com/rate_limit";
 
     promise<void> rcPromise;
     string error;
