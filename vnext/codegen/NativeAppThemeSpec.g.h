@@ -8,38 +8,49 @@
  */
 #pragma once
 
-#include "NativeModules.h"
+#include <NativeModules.h>
 #include <tuple>
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(AppThemeSpec_HighContrastColors)
 struct AppThemeSpec_HighContrastColors {
-    REACT_FIELD(ButtonFaceColor)
     std::string ButtonFaceColor;
-    REACT_FIELD(ButtonTextColor)
     std::string ButtonTextColor;
-    REACT_FIELD(GrayTextColor)
     std::string GrayTextColor;
-    REACT_FIELD(HighlightColor)
     std::string HighlightColor;
-    REACT_FIELD(HighlightTextColor)
     std::string HighlightTextColor;
-    REACT_FIELD(HotlightColor)
     std::string HotlightColor;
-    REACT_FIELD(WindowColor)
     std::string WindowColor;
-    REACT_FIELD(WindowTextColor)
     std::string WindowTextColor;
 };
 
-REACT_STRUCT(AppThemeSpec_AppThemeData)
 struct AppThemeSpec_AppThemeData {
-    REACT_FIELD(isHighContrast)
     bool isHighContrast;
-    REACT_FIELD(highContrastColors)
     AppThemeSpec_HighContrastColors highContrastColors;
 };
+
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(AppThemeSpec_HighContrastColors*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"ButtonFaceColor", &AppThemeSpec_HighContrastColors::ButtonFaceColor},
+        {L"ButtonTextColor", &AppThemeSpec_HighContrastColors::ButtonTextColor},
+        {L"GrayTextColor", &AppThemeSpec_HighContrastColors::GrayTextColor},
+        {L"HighlightColor", &AppThemeSpec_HighContrastColors::HighlightColor},
+        {L"HighlightTextColor", &AppThemeSpec_HighContrastColors::HighlightTextColor},
+        {L"HotlightColor", &AppThemeSpec_HighContrastColors::HotlightColor},
+        {L"WindowColor", &AppThemeSpec_HighContrastColors::WindowColor},
+        {L"WindowTextColor", &AppThemeSpec_HighContrastColors::WindowTextColor},
+    };
+    return fieldMap;
+}
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(AppThemeSpec_AppThemeData*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"isHighContrast", &AppThemeSpec_AppThemeData::isHighContrast},
+        {L"highContrastColors", &AppThemeSpec_AppThemeData::highContrastColors},
+    };
+    return fieldMap;
+}
 
 struct AppThemeSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{

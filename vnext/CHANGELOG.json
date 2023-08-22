@@ -2,6 +2,153 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 17 Aug 2023 05:15:33 GMT",
+      "version": "0.0.0-canary.694",
+      "tag": "react-native-windows_v0.0.0-canary.694",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a8aa86022e182b3b5b4afebd160fe8584f511ee4",
+            "comment": "implement placeholder text for fabric"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.185",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 15 Aug 2023 05:14:10 GMT",
+      "version": "0.0.0-canary.693",
+      "tag": "react-native-windows_v0.0.0-canary.693",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "690d70c1c423405ff80b47671413791daa83ba6b",
+            "comment": "Add `separateDataFiles` to @rnw/cli and @rnw/codegen"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.184",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.68",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 12 Aug 2023 05:12:38 GMT",
+      "version": "0.0.0-canary.692",
+      "tag": "react-native-windows_v0.0.0-canary.692",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "9917e3b45f72d366a14b9bcbd3d090736ca86b8e",
+            "comment": "Enable NuGet restore lock files for all projects"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 11 Aug 2023 05:13:37 GMT",
+      "version": "0.0.0-canary.691",
+      "tag": "react-native-windows_v0.0.0-canary.691",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "acoates@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ecd0ad79873a263e74a41f53f42650778ddd2364",
+            "comment": "Fix CoreApp build failure with latest VS version"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 10 Aug 2023 17:55:46 GMT",
+      "version": "0.0.0-canary.690",
+      "tag": "react-native-windows_v0.0.0-canary.690",
+      "comments": {
+        "none": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "dee25b21c4a15bb5f4226c5a8f3b32e82c3b368f",
+            "comment": "Test HttpServer build fix"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 10 Aug 2023 05:13:53 GMT",
+      "version": "0.0.0-canary.690",
+      "tag": "react-native-windows_v0.0.0-canary.690",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a00ea41c337dfeea6abd6d885a8b64b9b95ea25d",
+            "comment": "Implement Invoke"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 08 Aug 2023 05:13:01 GMT",
+      "version": "0.0.0-canary.689",
+      "tag": "react-native-windows_v0.0.0-canary.689",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ea88135e79363f461efed6fe8baa4af716468c54",
+            "comment": "Use Bubbling TopClick"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "721231253918dd5c92854aa7911227fc99dd2f91",
+            "comment": "Deprecate Microsoft.ReactNative.WindowsAppSDK project"
+          },
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a5eb34c37cd76beffb419d2eacda3700d18bc3cb",
+            "comment": "@rnw/codegen generates GetStructInfo instead of REACT_STRUCT"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.183",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.67",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 05 Aug 2023 05:13:13 GMT",
       "version": "0.0.0-canary.688",
       "tag": "react-native-windows_v0.0.0-canary.688",

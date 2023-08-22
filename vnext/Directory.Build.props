@@ -68,6 +68,10 @@
 
     <IntermediateOutputPath Condition="'$(MSBuildProjectExtension)' == '.csproj'">$(IntDir)</IntermediateOutputPath>
     <OutputPath Condition="'$(MSBuildProjectExtension)' == '.csproj'">$(OutDir)</OutputPath>
+
+    <RestorePackagesWithLockFile Condition="'$(RestorePackagesWithLockFile)' == ''">true</RestorePackagesWithLockFile>
+    <RestoreForceEvaluate Condition="'$(RestoreForceEvaluate)' == ''">false</RestoreForceEvaluate>
+
   </PropertyGroup>
 
   <PropertyGroup Label="NuGet" Condition="'$(MSBuildProjectExtension)' == '.vcxproj'">

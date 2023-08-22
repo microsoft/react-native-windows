@@ -8,22 +8,33 @@
  */
 #pragma once
 
-#include "NativeModules.h"
+#include <NativeModules.h>
 #include <tuple>
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(ImageStoreIOSSpec_getBase64ForTag_errorCallback_error)
 struct ImageStoreIOSSpec_getBase64ForTag_errorCallback_error {
-    REACT_FIELD(message)
     std::string message;
 };
 
-REACT_STRUCT(ImageStoreIOSSpec_addImageFromBase64_errorCallback_error)
 struct ImageStoreIOSSpec_addImageFromBase64_errorCallback_error {
-    REACT_FIELD(message)
     std::string message;
 };
+
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(ImageStoreIOSSpec_getBase64ForTag_errorCallback_error*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"message", &ImageStoreIOSSpec_getBase64ForTag_errorCallback_error::message},
+    };
+    return fieldMap;
+}
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(ImageStoreIOSSpec_addImageFromBase64_errorCallback_error*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"message", &ImageStoreIOSSpec_addImageFromBase64_errorCallback_error::message},
+    };
+    return fieldMap;
+}
 
 struct ImageStoreIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
