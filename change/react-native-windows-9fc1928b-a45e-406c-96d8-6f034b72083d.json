@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Point Desktop.IntegrationTests::HttpResourceIntegrationTests to a non-rate limited API",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
