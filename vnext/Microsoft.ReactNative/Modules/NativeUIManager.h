@@ -26,7 +26,9 @@ namespace Microsoft::ReactNative {
 
 struct YogaNodeDeleter {
   void operator()(YGNodeRef node) {
+    const auto config = YGNodeGetConfig(node);
     YGNodeFree(node);
+    YGConfigFree(config);
   }
 };
 
@@ -103,6 +105,7 @@ class NativeUIManager final : public INativeUIManager {
 
   void DoLayout();
   void ApplyLayout(int64_t tag, float width = YGUndefined, float height = YGUndefined);
+  YGConfigRef GetYogaConfig(int64_t tag) const;
 
  private:
   void SetLayoutPropsRecursive(int64_t tag);
@@ -113,7 +116,6 @@ class NativeUIManager final : public INativeUIManager {
  private:
   INativeUIManagerHost *m_host = nullptr;
   winrt::Microsoft::ReactNative::ReactContext m_context;
-  YGConfigRef m_yogaConfig;
   bool m_inBatch = false;
 
   std::unordered_map<int64_t, YogaNodePtr> m_tagsToYogaNodes;

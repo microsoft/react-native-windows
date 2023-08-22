@@ -271,6 +271,7 @@ void ViewViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSVal
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"tabIndex", L"number");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"disabled", L"boolean");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"collapsable", L"boolean");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"experimental_layoutConformance", L"string");
 }
 
 bool ViewViewManager::UpdateProperty(

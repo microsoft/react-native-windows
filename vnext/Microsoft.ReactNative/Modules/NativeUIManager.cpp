@@ -7,8 +7,10 @@
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Input.h>
 #include <UI.Xaml.Media.h>
+#include <Utils/ShadowNodeVisitor.h>
 #include <Views/ShadowNodeBase.h>
 #include <cxxreact/SystraceSection.h>
+#include <yoga/YGNode.h>
 #include "Modules/I18nManagerModule.h"
 #include "NativeUIManager.h"
 
@@ -30,8 +32,29 @@ using namespace facebook::react;
 
 namespace Microsoft::ReactNative {
 
-static YogaNodePtr make_yoga_node(YGConfigRef config) {
-  YogaNodePtr result(YGNodeNewWithConfig(config));
+static YGConfigRef make_yoga_config(winrt::Microsoft::ReactNative::ReactContext const &context, YGLogger logger) {
+  const auto config = YGConfigNew();
+  if (React::implementation::QuirkSettings::GetUseWebFlexBasisBehavior(context.Properties()))
+    YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureWebFlexBasis, true);
+  auto errata = YGErrataAll;
+  if (!React::implementation::QuirkSettings::GetMatchAndroidAndIOSStretchBehavior(context.Properties()))
+    errata &= ~YGErrataStretchFlexBasis;
+  YGConfigSetErrata(config, errata);
+#if defined(_DEBUG)
+  YGConfigSetLogger(config, logger);
+
+  // To Debug Yoga layout, uncomment the following line.
+  // YGConfigSetPrintTreeFlag(config, true);
+
+  // Additional logging can be enabled editing yoga.cpp (e.g. gPrintChanges,
+  // gPrintSkips)
+#endif
+
+  return config;
+}
+
+static YogaNodePtr make_yoga_node(winrt::Microsoft::ReactNative::ReactContext const &context, YGLogger logger) {
+  YogaNodePtr result(YGNodeNewWithConfig(make_yoga_config(context, logger)));
   return result;
 }
 
@@ -69,11 +92,61 @@ static int YogaLog(
 }
 #endif
 
+class LayoutConformanceVisitor : public ShadowNodeVisitor {
+  using Super = ShadowNodeVisitor;
+
+ public:
+  LayoutConformanceVisitor(YGErrata errata) : m_errata{errata} {}
+
+ protected:
+  void VisitCore(ShadowNodeBase *node) override {
+    if (!node->m_layoutConformance.has_value()) {
+      ApplyYogaConfig(node);
+      Super::VisitCore(node);
+    }
+  }
+
+ private:
+  void ApplyYogaConfig(ShadowNodeBase *node) {
+    const auto uiManager = EnsureNativeUIManager(node);
+    const auto yogaConfig = uiManager->GetYogaConfig(node->m_tag);
+    if (yogaConfig && YGConfigGetErrata(yogaConfig) != m_errata) {
+      YGConfigSetErrata(yogaConfig, m_errata);
+      uiManager->DirtyYogaNode(node->m_tag);
+      node->m_appliedLayoutConformance = true;
+    }
+  }
+
+  YGErrata m_errata;
+};
+
+class LayoutConformanceParentVisitor : public ShadowNodeVisitor {
+ public:
+  std::optional<bool> inheritedLayoutConformance = std::nullopt;
+
+ protected:
+  void VisitCore(ShadowNodeBase *node) override {
+    if (node->m_layoutConformance.has_value()) {
+      inheritedLayoutConformance = node->m_layoutConformance;
+    } else {
+      Visit(GetShadowNode(node->m_parent));
+    }
+  }
+};
+
 YGNodeRef NativeUIManager::GetYogaNode(int64_t tag) const {
   auto iter = m_tagsToYogaNodes.find(tag);
   if (iter == m_tagsToYogaNodes.end())
     return nullptr;
   return iter->second.get();
+}
+
+YGConfigRef NativeUIManager::GetYogaConfig(int64_t tag) const {
+  if (const auto yogaNode = GetYogaNode(tag)) {
+    return YGNodeGetConfig(yogaNode);
+  }
+
+  return nullptr;
 }
 
 void NativeUIManager::DirtyYogaNode(int64_t tag) {
@@ -149,24 +222,7 @@ XamlView NativeUIManager::reactPeerOrContainerFrom(xaml::FrameworkElement fe) {
 }
 
 NativeUIManager::NativeUIManager(winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : m_context(reactContext) {
-  m_yogaConfig = YGConfigNew();
-  if (React::implementation::QuirkSettings::GetUseWebFlexBasisBehavior(m_context.Properties()))
-    YGConfigSetExperimentalFeatureEnabled(m_yogaConfig, YGExperimentalFeatureWebFlexBasis, true);
-  auto errata = YGErrataAll;
-  if (!React::implementation::QuirkSettings::GetMatchAndroidAndIOSStretchBehavior(m_context.Properties()))
-    errata &= ~YGErrataStretchFlexBasis;
-  YGConfigSetErrata(m_yogaConfig, errata);
-#if defined(_DEBUG)
-  YGConfigSetLogger(m_yogaConfig, &YogaLog);
-
-  // To Debug Yoga layout, uncomment the following line.
-  // YGConfigSetPrintTreeFlag(m_yogaConfig, true);
-
-  // Additional logging can be enabled editing yoga.cpp (e.g. gPrintChanges,
-  // gPrintSkips)
-#endif
-}
+    : m_context(reactContext) {}
 
 struct RootShadowNode final : public ShadowNodeBase {
   RootShadowNode(const RootShadowNode &that) = delete;
@@ -228,7 +284,7 @@ void NativeUIManager::AddRootView(ShadowNode &shadowNode, facebook::react::IReac
   view.as<xaml::FrameworkElement>().FlowDirection(
       I18nManager::IsRTL(m_context.Properties()) ? xaml::FlowDirection::RightToLeft : xaml::FlowDirection::LeftToRight);
 
-  m_tagsToYogaNodes.emplace(rootTag, make_yoga_node(m_yogaConfig));
+  m_tagsToYogaNodes.emplace(rootTag, make_yoga_node(m_context, &YogaLog));
 
   auto element = view.as<xaml::FrameworkElement>();
   Microsoft::ReactNative::SetTag(element, rootTag);
@@ -413,7 +469,8 @@ static void SetYogaValueAutoHelper(
 static void StyleYogaNode(
     ShadowNodeBase &shadowNode,
     const YGNodeRef yogaNode,
-    const winrt::Microsoft::ReactNative::JSValueObject &props) {
+    const winrt::Microsoft::ReactNative::JSValueObject &props,
+    const YGErrata defaultErrata) {
   for (const auto &pair : props) {
     const std::string &key = pair.first;
     const auto &value = pair.second;
@@ -775,6 +832,27 @@ static void StyleYogaNode(
       float result = NumberOrDefault(value, 0.0f /*default*/);
 
       YGNodeStyleSetBorder(yogaNode, YGEdgeBottom, result);
+    } else if (key == "experimental_layoutConformance") {
+      // Reset the current layout conformance value to prepare for visitors.
+      shadowNode.m_layoutConformance = std::nullopt;
+      auto layoutConformance = value.AsString() == "strict";
+
+      // Walk to find first ancestor with explicit layoutConformance prop value.
+      if (value.IsNull()) {
+        LayoutConformanceParentVisitor parentVisitor;
+        parentVisitor.Visit(&shadowNode);
+        layoutConformance = parentVisitor.inheritedLayoutConformance.value_or(false);
+      }
+
+      // Apply the correct YGErrata value for the layoutConformance prop to all descendants.
+      // When a descendant is reached with an explicit layoutConformance value, recursion stops.
+      LayoutConformanceVisitor visitor{layoutConformance ? YGErrataNone : defaultErrata};
+      visitor.Visit(&shadowNode);
+
+      // Update the stored layoutConformance value if it is explicit.
+      if (!value.IsNull()) {
+        shadowNode.m_layoutConformance = layoutConformance;
+      }
     }
   }
 }
@@ -790,10 +868,10 @@ void NativeUIManager::CreateView(ShadowNode &shadowNode, React::JSValueObject &p
       m_extraLayoutNodes.push_back(node.m_tag);
     }
 
-    auto result = m_tagsToYogaNodes.emplace(node.m_tag, make_yoga_node(m_yogaConfig));
+    auto result = m_tagsToYogaNodes.emplace(node.m_tag, make_yoga_node(m_context, &YogaLog));
     if (result.second == true) {
       YGNodeRef yogaNode = result.first->second.get();
-      StyleYogaNode(node, yogaNode, props);
+      StyleYogaNode(node, yogaNode, props, YGConfigGetErrata(GetYogaConfig(node.m_rootTag)));
 
       YGMeasureFunc func = pViewManager->GetYogaCustomMeasureFunc();
       if (func != nullptr) {
@@ -824,6 +902,12 @@ void NativeUIManager::AddView(ShadowNode &parentShadowNode, ShadowNode &childSha
     }
 
     YGNodeInsertChild(yogaNodeToManage, yogaNodeToAdd, static_cast<uint32_t>(index));
+
+    if (parentNode.m_appliedLayoutConformance) {
+      const auto parentConfig = YGNodeGetConfig(yogaNodeToManage);
+      LayoutConformanceVisitor visitor{YGConfigGetErrata(parentConfig)};
+      visitor.Visit(&childNode);
+    }
   }
 }
 
@@ -877,7 +961,7 @@ void NativeUIManager::UpdateView(ShadowNode &shadowNode, winrt::Microsoft::React
 
   if (pViewManager->RequiresYogaNode()) {
     YGNodeRef yogaNode = GetYogaNode(node.m_tag);
-    StyleYogaNode(node, yogaNode, props);
+    StyleYogaNode(node, yogaNode, props, YGConfigGetErrata(GetYogaConfig(node.m_rootTag)));
   }
 }
 

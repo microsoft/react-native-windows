@@ -141,6 +141,10 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public ShadowNode {
   double m_border[(int)ShadowEdges::CountEdges] = INIT_UNDEFINED_EDGES;
   double m_cornerRadius[(int)ShadowCorners::CountCorners] = INIT_UNDEFINED_CORNERS;
 
+  // Layout conformance
+  std::optional<bool> m_layoutConformance = std::nullopt;
+  bool m_appliedLayoutConformance = false;
+
   // Bound event types
   bool m_onLayoutRegistered = false;
   bool m_onMouseEnterRegistered = false;

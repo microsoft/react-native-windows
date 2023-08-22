@@ -237,6 +237,9 @@
     <ClCompile Include="Utils\ResourceBrushUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="Utils\ShadowNodeVisitor.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
     <ClCompile Include="Utils\UwpPreparedScriptStore.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
@@ -655,6 +658,9 @@
     <ClInclude Include="Utils\ShadowNodeTypeUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Utils\ShadowNodeVisitor.h">
+      <Filter>Utils</Filter>
+    </ClInclude>    
     <ClInclude Include="Views\Text\TextHighlighterVisitor.h">
       <Filter>Views\Text</Filter>
     </ClInclude>

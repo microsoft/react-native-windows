@@ -193,6 +193,7 @@
     </ClInclude>
     <ClInclude Include="ReactHost\JSCallInvokerScheduler.h" />
     <ClInclude Include="Utils\ShadowNodeTypeUtils.h" />
+    <ClInclude Include="Utils\ShadowNodeVisitor.h" />
     <ClInclude Include="Utils\BatchingEventEmitter.h" />
     <ClInclude Include="DevMenuControl.h">
       <DependentUpon>DevMenuControl.xaml</DependentUpon>
@@ -485,6 +486,7 @@
     <ClCompile Include="Utils\KeyboardUtils.cpp" />
     <ClCompile Include="Utils\LocalBundleReader.cpp" />
     <ClCompile Include="Utils\ResourceBrushUtils.cpp" />
+    <ClCompile Include="Utils\ShadowNodeVisitor.cpp" />
     <ClCompile Include="Utils\UwpPreparedScriptStore.cpp" />
     <ClCompile Include="Utils\UwpScriptStore.cpp" />
     <ClCompile Include="Utils\ValueUtils.cpp" />
