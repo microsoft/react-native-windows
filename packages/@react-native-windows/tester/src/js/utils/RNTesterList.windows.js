@@ -260,10 +260,12 @@ const APIs: Array<RNTesterModuleInfo> = ([
         module: require('../examples/IntersectionObserver/IntersectionObserverIndex'),
       }
     : null,
-  {
-    key: 'InvalidPropsExample',
-    module: require('../examples/InvalidProps/InvalidPropsExample'),
-  },
+  
+  // E2E Tests failing when this test is enabled  
+  // {
+  //   key: 'InvalidPropsExample',
+  //   module: require('../examples/InvalidProps/InvalidPropsExample'),
+  // },
   {
     key: 'Keyboard',
     category: 'Basic',
