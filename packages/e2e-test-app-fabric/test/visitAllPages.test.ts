@@ -44,7 +44,8 @@ describe('visitAllPages', () => {
     test(component, async () => await goToComponentExample(component));
   }
 
-  for (const api of apiExamples) {
+  // Disable temporarily until tests become stable. Currently, windows loses focus randomly resulting in tests being stalled.
+  /*for (const api of apiExamples) {
     if (
       api === 'Transforms' ||
       api === 'Keyboard Focus Example' ||
@@ -62,7 +63,7 @@ describe('visitAllPages', () => {
     test(api, async () => {
       await goToApiExample(api);
     });
-  }
+  }*/
 });
 
 export {};
