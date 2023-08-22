@@ -234,7 +234,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
   switch (propertyId) {
     case UIA_ControlTypePropertyId: {
       pRetVal->vt = VT_I4;
-      auto role = props->accessibilityRole == "" ? baseView.get()->DefaultControlType() : props->accessibilityRole;
+      auto role = props->accessibilityRole.empty() ? baseView->DefaultControlType() : props->accessibilityRole;
       pRetVal->lVal = GetControlType(role);
       break;
     }
