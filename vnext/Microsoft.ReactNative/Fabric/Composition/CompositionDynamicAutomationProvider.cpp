@@ -282,13 +282,6 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
       pRetVal->boolVal = (props->accessible && props->accessibilityRole != "none") ? VARIANT_TRUE : VARIANT_FALSE;
       break;
     }
-    case UIA_HelpTextPropertyId: {
-      pRetVal->vt = VT_BSTR;
-      auto helpText = ::Microsoft::Common::Unicode::Utf8ToUtf16(props->accessibilityHint);
-      pRetVal->bstrVal = SysAllocString(helpText.c_str());
-      hr = pRetVal->bstrVal != nullptr ? S_OK : E_OUTOFMEMORY;
-      break;
-    }
   }
 
   return hr;
