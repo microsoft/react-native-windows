@@ -12,6 +12,7 @@ import {app} from '@react-native-windows/automation';
  */
 export async function goToComponentExample(example: string) {
   const componentsTabButton = await app.findElementByTestID('components-tab');
+  await app.waitUntil(async () => await componentsTabButton.isDisplayed());
   await componentsTabButton.click();
   await goToExample(example);
 }
@@ -21,6 +22,7 @@ export async function goToComponentExample(example: string) {
  */
 export async function goToApiExample(example: string) {
   const componentsTabButton = await app.findElementByTestID('apis-tab');
+  await app.waitUntil(async () => await componentsTabButton.isDisplayed());
   await componentsTabButton.click();
   await goToExample(example);
 }
