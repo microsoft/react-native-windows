@@ -180,13 +180,15 @@ jobs:
                 feature: UseHermes
                 value: ${{ matrix.UseHermes }}
 
-            - template: ../templates/msbuild-sln.yml
+            - template: ../templates/run-windows-with-certificates.yml
               parameters:
-                solutionDir: packages/e2e-test-app-fabric/windows
-                solutionName: RNTesterApp-Fabric.sln
-                buildPlatform: ${{ matrix.BuildPlatform}}
+                buildEnvironment: ${{ parameters.BuildEnvironment }}
+                certificateName: reactUWPTestAppEncodedKey
                 buildConfiguration: Debug
-                warnAsError: false
+                buildPlatform: ${{ matrix.BuildPlatform }}
+                buildLogDirectory: $(BuildLogDirectory)
+                deployOption: '--no-deploy'
+                workingDirectory: packages/e2e-test-app-fabric
             
             - script: |
                 echo ##vso[task.setvariable variable=StartedFabricTests]true
@@ -217,7 +219,7 @@ jobs:
             - task: CopyFiles@2
               displayName: Copy RNTesterApp artifacts
               inputs:
-                sourceFolder: $(Build.SourcesDirectory)/packages/e2e-test-app-fabic/windows/RNTesterApp-Fabric
+                sourceFolder: $(Build.SourcesDirectory)/packages/e2e-test-app-fabric/windows/RNTesterApp-Fabric
                 targetFolder: $(Build.StagingDirectory)/RNTesterApp-Fabric
                 contents: AppPackages\**
               condition: failed()

@@ -5,11 +5,14 @@
 #include "RNTesterApp-Fabric.h"
 
 #include "../../../../vnext/codegen/NativeDeviceInfoSpec.g.h"
+#include "winrt/AutomationChannel.h"
 
 #include <DispatcherQueue.h>
 #include <UIAutomation.h>
 
 #include <winrt/Microsoft.ReactNative.Composition.h>
+#include <winrt/Windows.Data.Json.h>
+#include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Composition.Desktop.h>
 
 #include "NativeModules.h"
@@ -52,7 +55,6 @@ struct CompReactPackageProvider
  public: // IReactPackageProvider
   void CreatePackage(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept {
     AddAttributedModules(packageBuilder, true);
-    packageBuilder.AddTurboModule(L"DeviceInfo", winrt::Microsoft::ReactNative::MakeModuleProvider<DeviceInfo>());
   }
 };
 
@@ -62,6 +64,8 @@ WCHAR szWindowClass[MAX_LOADSTRING]; // the main window class name
 
 winrt::Windows::System::DispatcherQueueController g_dispatcherQueueController{nullptr};
 winrt::Windows::UI::Composition::Compositor g_compositor{nullptr};
+winrt::AutomationChannel::CommandHandler handler;
+winrt::AutomationChannel::Server server{nullptr};
 
 constexpr auto WindowDataProperty = L"WindowData";
 constexpr PCWSTR c_windowClassName = L"MS_REACTNATIVE_RNTESTER_COMPOSITION";
@@ -70,6 +74,9 @@ constexpr PCWSTR appName = L"RNTesterApp";
 // Forward declarations of functions included in this code module:
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 int RunRNTester(int showCmd);
+winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::JsonValue payload);
+winrt::Windows::Data::Json::JsonObject DumpVisualTree(winrt::Windows::Data::Json::JsonValue payload);
+winrt::Windows::Foundation::IAsyncAction LoopServer(winrt::AutomationChannel::Server &server);
 
 struct WindowData {
   static HINSTANCE s_instance;
@@ -136,6 +143,7 @@ struct WindowData {
     host.InstanceSettings().UseDeveloperSupport(true);
 
     host.PackageProviders().Append(winrt::make<CompReactPackageProvider>());
+    host.PackageProviders().Append(winrt::AutomationChannel::ReactPackageProvider());
     winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
         host.InstanceSettings().Properties(), reinterpret_cast<uint64_t>(hwnd));
 
@@ -196,7 +204,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 
         auto hwndHost = windowData->m_CompositionHwndHost;
         winrt::com_ptr<IRawElementProviderSimple> spReps;
-        hwndHost.UiaProvider().as(spReps);
+        if (!hwndHost.UiaProvider().try_as(spReps)) {
+          break;
+        }
         LRESULT lResult = UiaReturnRawElementProvider(hWnd, wParam, lParam, spReps.get());
         return lResult;
       }
@@ -231,6 +241,12 @@ int RunRNTester(int showCmd) {
   WindowData::GetFromWindow(hwnd)->RenderApp(hwnd);
 
   HACCEL hAccelTable = LoadAccelerators(WindowData::s_instance, MAKEINTRESOURCE(IDC_RNTESTER_COMPOSITION));
+
+  // Set Up Servers for E2E Testing
+  handler.BindOperation(L"DumpVisualTree", DumpVisualTree);
+  handler.BindOperation(L"ListErrors", ListErrors);
+  server = winrt::AutomationChannel::Server(handler);
+  auto asyncAction = LoopServer(server);
 
   MSG msg = {};
   while (GetMessage(&msg, nullptr, 0, 0)) {
@@ -272,5 +288,31 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
           winrt::put_abi(g_dispatcherQueueController))));
 
   g_compositor = winrt::Windows::UI::Composition::Compositor();
+
   return RunRNTester(showCmd);
+}
+
+winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::JsonValue payload) {
+  winrt::Windows::Data::Json::JsonObject result;
+  winrt::Windows::Data::Json::JsonArray jsonErrors;
+  winrt::Windows::Data::Json::JsonArray jsonWarnings;
+  // TODO: Add Error and Warnings
+  result.Insert(L"errors", jsonErrors);
+  result.Insert(L"warnings", jsonWarnings);
+  return result;
+}
+
+winrt::Windows::Data::Json::JsonObject DumpVisualTree(winrt::Windows::Data::Json::JsonValue payload) {
+  winrt::Windows::Data::Json::JsonObject result;
+  // TODO: Method should return a JSON of the Composition Visual Tree
+  return result;
+}
+
+winrt::Windows::Foundation::IAsyncAction LoopServer(winrt::AutomationChannel::Server &server) {
+  while (true) {
+    try {
+      co_await server.ProcessAllClientRequests(8603, std::chrono::milliseconds(50));
+    } catch (const std::exception ex) {
+    }
+  }
 }
