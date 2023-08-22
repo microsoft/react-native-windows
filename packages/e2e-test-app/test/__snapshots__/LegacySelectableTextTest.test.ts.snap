@@ -3,6 +3,9 @@
 exports[`LegacySelectableTextTest DoubleClickWhenNotSelectable 1`] = `
 {
   "AutomationId": "pressed-state",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Clip": null,
   "FlowDirection": "LeftToRight",
   "Foreground": "#FF000000",
@@ -23,6 +26,9 @@ exports[`LegacySelectableTextTest DoubleClickWhenNotSelectable 1`] = `
 exports[`LegacySelectableTextTest DoubleClickWhenSelectable 1`] = `
 {
   "AutomationId": "pressed-state",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Clip": null,
   "FlowDirection": "LeftToRight",
   "Foreground": "#FF000000",
@@ -43,6 +49,9 @@ exports[`LegacySelectableTextTest DoubleClickWhenSelectable 1`] = `
 exports[`LegacySelectableTextTest PressableWhenNotSelectable 1`] = `
 {
   "AutomationId": "pressed-state",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Clip": null,
   "FlowDirection": "LeftToRight",
   "Foreground": "#FF000000",
@@ -63,6 +72,9 @@ exports[`LegacySelectableTextTest PressableWhenNotSelectable 1`] = `
 exports[`LegacySelectableTextTest PressableWhenSelectable 1`] = `
 {
   "AutomationId": "pressed-state",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Clip": null,
   "FlowDirection": "LeftToRight",
   "Foreground": "#FF000000",

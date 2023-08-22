@@ -3,6 +3,9 @@
 exports[`LegacyImageTest ImageRTLTest 1`] = `
 {
   "AutomationId": "image-container",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": "#FFFFFF00",
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -21,7 +24,9 @@ exports[`LegacyImageTest ImageRTLTest 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
-      "AccessibilityRole": "Image",
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Left": 0,
       "Top": 0,
       "XamlType": "Windows.UI.Xaml.DependencyObject",
@@ -33,6 +38,9 @@ exports[`LegacyImageTest ImageRTLTest 1`] = `
 exports[`LegacyImageTest ImageWithBorderTest 1`] = `
 {
   "AutomationId": "image-container",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": "#FFFFFF00",
   "BorderBrush": "#5500FF00",
   "BorderThickness": "10,10,10,10",
@@ -51,7 +59,9 @@ exports[`LegacyImageTest ImageWithBorderTest 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
-      "AccessibilityRole": "Image",
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Left": 10,
       "Top": 10,
       "XamlType": "Windows.UI.Xaml.DependencyObject",
@@ -63,6 +73,9 @@ exports[`LegacyImageTest ImageWithBorderTest 1`] = `
 exports[`LegacyImageTest ImageWithoutBorderTest 1`] = `
 {
   "AutomationId": "image-container",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": "#FFFFFF00",
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -81,7 +94,9 @@ exports[`LegacyImageTest ImageWithoutBorderTest 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
-      "AccessibilityRole": "Image",
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Left": 0,
       "Top": 0,
       "XamlType": "Windows.UI.Xaml.DependencyObject",
@@ -93,6 +108,9 @@ exports[`LegacyImageTest ImageWithoutBorderTest 1`] = `
 exports[`LegacyImageTest ImageWithoutBorderTestOneMoreClick 1`] = `
 {
   "AutomationId": "image-container",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": "#FFFFFF00",
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -111,7 +129,9 @@ exports[`LegacyImageTest ImageWithoutBorderTestOneMoreClick 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
-      "AccessibilityRole": "Image",
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Left": 0,
       "Top": 0,
       "XamlType": "Windows.UI.Xaml.DependencyObject",

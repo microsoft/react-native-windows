@@ -3,6 +3,9 @@
 exports[`PressableTests Pressables can change text on press/rest, state rest 1`] = `
 {
   "AutomationId": "pressable_press_console",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Clip": null,
   "FlowDirection": "LeftToRight",
   "Foreground": "#FF000000",
@@ -23,6 +26,9 @@ exports[`PressableTests Pressables can change text on press/rest, state rest 1`]
 exports[`PressableTests Pressables can have customized borders and corners 1`] = `
 {
   "AutomationId": "advanced_borders_pressable",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -41,6 +47,9 @@ exports[`PressableTests Pressables can have customized borders and corners 1`] =
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -60,6 +69,9 @@ exports[`PressableTests Pressables can have customized borders and corners 1`] =
       "XamlType": "Microsoft.ReactNative.ViewControl",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -77,6 +89,9 @@ exports[`PressableTests Pressables can have customized borders and corners 1`] =
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#FF808080",
               "BorderBrush": "#FF0000FF",
               "BorderThickness": "10,20,15,5",
@@ -105,6 +120,9 @@ exports[`PressableTests Pressables can have customized borders and corners 1`] =
 exports[`PressableTests Pressables can have delayed event handlers 1`] = `
 {
   "AutomationId": "pressable_delay_events_button",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": null,
   "BorderThickness": "0,0,0,0",
@@ -124,6 +142,9 @@ exports[`PressableTests Pressables can have delayed event handlers 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewControl",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -141,6 +162,9 @@ exports[`PressableTests Pressables can have delayed event handlers 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": "#00FFFFFF",
           "BorderBrush": "#E4000000",
           "BorderThickness": "0,0,0,0",
@@ -159,6 +183,9 @@ exports[`PressableTests Pressables can have delayed event handlers 1`] = `
           "XamlType": "Microsoft.ReactNative.ViewPanel",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Foreground": "#FF007AFF",
@@ -184,8 +211,10 @@ exports[`PressableTests Pressables can have delayed event handlers 1`] = `
 
 exports[`PressableTests Pressables can have event handlers 1`] = `
 {
-  "AccessibilityRole": "Button",
   "AutomationId": "pressable_feedback_events_button",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": null,
   "BorderThickness": "0,0,0,0",
@@ -205,6 +234,9 @@ exports[`PressableTests Pressables can have event handlers 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewControl",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -222,6 +254,9 @@ exports[`PressableTests Pressables can have event handlers 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": "#00FFFFFF",
           "BorderBrush": "#E4000000",
           "BorderThickness": "0,0,0,0",
@@ -240,6 +275,9 @@ exports[`PressableTests Pressables can have event handlers 1`] = `
           "XamlType": "Microsoft.ReactNative.ViewPanel",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Foreground": "#FF007AFF",
@@ -266,6 +304,9 @@ exports[`PressableTests Pressables can have event handlers 1`] = `
 exports[`PressableTests Pressables can have hit slop functionality 1`] = `
 {
   "AutomationId": "pressable_hit_slop_button",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": null,
   "BorderThickness": "0,0,0,0",
@@ -285,6 +326,9 @@ exports[`PressableTests Pressables can have hit slop functionality 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewControl",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -302,6 +346,9 @@ exports[`PressableTests Pressables can have hit slop functionality 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": "#FFFF0000",
           "BorderBrush": "#E4000000",
           "BorderThickness": "0,0,0,0",
@@ -320,6 +367,9 @@ exports[`PressableTests Pressables can have hit slop functionality 1`] = `
           "XamlType": "Microsoft.ReactNative.ViewPanel",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Foreground": "#FFFFFFFF",
@@ -346,6 +396,9 @@ exports[`PressableTests Pressables can have hit slop functionality 1`] = `
 exports[`PressableTests Pressables can have ranging opacity 1`] = `
 {
   "AutomationId": "opacity_pressable",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -364,6 +417,9 @@ exports[`PressableTests Pressables can have ranging opacity 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -383,6 +439,9 @@ exports[`PressableTests Pressables can have ranging opacity 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewControl",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -400,6 +459,9 @@ exports[`PressableTests Pressables can have ranging opacity 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#FF000000",
               "BorderBrush": "#E4000000",
               "BorderThickness": "0,0,0,0",
@@ -422,6 +484,9 @@ exports[`PressableTests Pressables can have ranging opacity 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -441,6 +506,9 @@ exports[`PressableTests Pressables can have ranging opacity 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewControl",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -458,6 +526,9 @@ exports[`PressableTests Pressables can have ranging opacity 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#FF000000",
               "BorderBrush": "#E4000000",
               "BorderThickness": "0,0,0,0",
@@ -480,6 +551,9 @@ exports[`PressableTests Pressables can have ranging opacity 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -499,6 +573,9 @@ exports[`PressableTests Pressables can have ranging opacity 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewControl",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -516,6 +593,9 @@ exports[`PressableTests Pressables can have ranging opacity 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#FF000000",
               "BorderBrush": "#E4000000",
               "BorderThickness": "0,0,0,0",
@@ -538,6 +618,9 @@ exports[`PressableTests Pressables can have ranging opacity 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -557,6 +640,9 @@ exports[`PressableTests Pressables can have ranging opacity 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewControl",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -574,6 +660,9 @@ exports[`PressableTests Pressables can have ranging opacity 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#FF000000",
               "BorderBrush": "#E4000000",
               "BorderThickness": "0,0,0,0",
@@ -596,6 +685,9 @@ exports[`PressableTests Pressables can have ranging opacity 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -615,6 +707,9 @@ exports[`PressableTests Pressables can have ranging opacity 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewControl",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -632,6 +727,9 @@ exports[`PressableTests Pressables can have ranging opacity 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#FF000000",
               "BorderBrush": "#E4000000",
               "BorderThickness": "0,0,0,0",
@@ -654,6 +752,9 @@ exports[`PressableTests Pressables can have ranging opacity 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -673,6 +774,9 @@ exports[`PressableTests Pressables can have ranging opacity 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewControl",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -690,6 +794,9 @@ exports[`PressableTests Pressables can have ranging opacity 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#FF000000",
               "BorderBrush": "#E4000000",
               "BorderThickness": "0,0,0,0",
@@ -712,6 +819,9 @@ exports[`PressableTests Pressables can have ranging opacity 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -731,6 +841,9 @@ exports[`PressableTests Pressables can have ranging opacity 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewControl",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -748,6 +861,9 @@ exports[`PressableTests Pressables can have ranging opacity 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#FF000000",
               "BorderBrush": "#E4000000",
               "BorderThickness": "0,0,0,0",
@@ -770,6 +886,9 @@ exports[`PressableTests Pressables can have ranging opacity 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -789,6 +908,9 @@ exports[`PressableTests Pressables can have ranging opacity 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewControl",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -806,6 +928,9 @@ exports[`PressableTests Pressables can have ranging opacity 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#FF000000",
               "BorderBrush": "#E4000000",
               "BorderThickness": "0,0,0,0",
@@ -828,6 +953,9 @@ exports[`PressableTests Pressables can have ranging opacity 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -847,6 +975,9 @@ exports[`PressableTests Pressables can have ranging opacity 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewControl",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -864,6 +995,9 @@ exports[`PressableTests Pressables can have ranging opacity 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#FF000000",
               "BorderBrush": "#E4000000",
               "BorderThickness": "0,0,0,0",
@@ -886,6 +1020,9 @@ exports[`PressableTests Pressables can have ranging opacity 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -905,6 +1042,9 @@ exports[`PressableTests Pressables can have ranging opacity 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewControl",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -922,6 +1062,9 @@ exports[`PressableTests Pressables can have ranging opacity 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#FF000000",
               "BorderBrush": "#E4000000",
               "BorderThickness": "0,0,0,0",
@@ -944,6 +1087,9 @@ exports[`PressableTests Pressables can have ranging opacity 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -963,6 +1109,9 @@ exports[`PressableTests Pressables can have ranging opacity 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewControl",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -980,6 +1129,9 @@ exports[`PressableTests Pressables can have ranging opacity 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#FF000000",
               "BorderBrush": "#E4000000",
               "BorderThickness": "0,0,0,0",
@@ -1008,6 +1160,9 @@ exports[`PressableTests Pressables can have ranging opacity 1`] = `
 exports[`PressableTests Pressables can have their accessibility and keyboard focus removed 1`] = `
 {
   "AutomationId": "accessible_pressable",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -1026,6 +1181,9 @@ exports[`PressableTests Pressables can have their accessibility and keyboard foc
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -1045,6 +1203,9 @@ exports[`PressableTests Pressables can have their accessibility and keyboard foc
       "XamlType": "Microsoft.ReactNative.ViewControl",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -1062,6 +1223,9 @@ exports[`PressableTests Pressables can have their accessibility and keyboard foc
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#00FFFFFF",
               "BorderBrush": "#E4000000",
               "BorderThickness": "0,0,0,0",
@@ -1080,6 +1244,9 @@ exports[`PressableTests Pressables can have their accessibility and keyboard foc
               "XamlType": "Microsoft.ReactNative.ViewPanel",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "Foreground": "#FF000000",
@@ -1102,6 +1269,9 @@ exports[`PressableTests Pressables can have their accessibility and keyboard foc
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -1121,6 +1291,9 @@ exports[`PressableTests Pressables can have their accessibility and keyboard foc
       "XamlType": "Microsoft.ReactNative.ViewControl",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -1138,6 +1311,9 @@ exports[`PressableTests Pressables can have their accessibility and keyboard foc
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#00FFFFFF",
               "BorderBrush": "#E4000000",
               "BorderThickness": "0,0,0,0",
@@ -1156,6 +1332,9 @@ exports[`PressableTests Pressables can have their accessibility and keyboard foc
               "XamlType": "Microsoft.ReactNative.ViewPanel",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "Foreground": "#FF000000",
@@ -1178,6 +1357,9 @@ exports[`PressableTests Pressables can have their accessibility and keyboard foc
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": "#00FFFFFF",
       "BorderBrush": "#E4000000",
       "BorderThickness": "0,0,0,0",
@@ -1196,6 +1378,9 @@ exports[`PressableTests Pressables can have their accessibility and keyboard foc
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -1214,6 +1399,9 @@ exports[`PressableTests Pressables can have their accessibility and keyboard foc
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": "#00FFFFFF",
       "BorderBrush": "#E4000000",
       "BorderThickness": "0,0,0,0",
@@ -1232,6 +1420,9 @@ exports[`PressableTests Pressables can have their accessibility and keyboard foc
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -1256,6 +1447,9 @@ exports[`PressableTests Pressables can have their accessibility and keyboard foc
 exports[`PressableTests Pressables can have tooltips 1`] = `
 {
   "AutomationId": "tooltip_pressable",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -1274,6 +1468,9 @@ exports[`PressableTests Pressables can have tooltips 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -1294,6 +1491,9 @@ exports[`PressableTests Pressables can have tooltips 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewControl",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -1311,6 +1511,9 @@ exports[`PressableTests Pressables can have tooltips 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#00FFFFFF",
               "BorderBrush": "#E4000000",
               "BorderThickness": "0,0,0,0",
@@ -1329,6 +1532,9 @@ exports[`PressableTests Pressables can have tooltips 1`] = `
               "XamlType": "Microsoft.ReactNative.ViewPanel",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "Foreground": "#FF000000",
@@ -1357,6 +1563,9 @@ exports[`PressableTests Pressables can have tooltips 1`] = `
 exports[`PressableTests Pressables can hide their backface 1`] = `
 {
   "AutomationId": "backface_pressable",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -1375,6 +1584,9 @@ exports[`PressableTests Pressables can hide their backface 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1391,6 +1603,9 @@ exports[`PressableTests Pressables can hide their backface 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "0,0,0,0",
@@ -1409,6 +1624,9 @@ exports[`PressableTests Pressables can hide their backface 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -1428,6 +1646,9 @@ exports[`PressableTests Pressables can hide their backface 1`] = `
           "XamlType": "Microsoft.ReactNative.ViewControl",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -1445,6 +1666,9 @@ exports[`PressableTests Pressables can hide their backface 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": "#FF0000FF",
                   "BorderBrush": "#E4000000",
                   "BorderThickness": "0,0,0,0",
@@ -1463,6 +1687,9 @@ exports[`PressableTests Pressables can hide their backface 1`] = `
                   "XamlType": "Microsoft.ReactNative.ViewPanel",
                   "children": [
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
                       "Foreground": "#FF000000",
@@ -1485,6 +1712,9 @@ exports[`PressableTests Pressables can hide their backface 1`] = `
           ],
         },
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -1504,6 +1734,9 @@ exports[`PressableTests Pressables can hide their backface 1`] = `
           "XamlType": "Microsoft.ReactNative.ViewControl",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -1521,6 +1754,9 @@ exports[`PressableTests Pressables can hide their backface 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": "#FFFF0000",
                   "BorderBrush": "#E4000000",
                   "BorderThickness": "0,0,0,0",
@@ -1539,6 +1775,9 @@ exports[`PressableTests Pressables can hide their backface 1`] = `
                   "XamlType": "Microsoft.ReactNative.ViewPanel",
                   "children": [
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
                       "Foreground": "#FF000000",
@@ -1563,6 +1802,9 @@ exports[`PressableTests Pressables can hide their backface 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1579,6 +1821,9 @@ exports[`PressableTests Pressables can hide their backface 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "0,0,0,0",
@@ -1597,6 +1842,9 @@ exports[`PressableTests Pressables can hide their backface 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -1616,6 +1864,9 @@ exports[`PressableTests Pressables can hide their backface 1`] = `
           "XamlType": "Microsoft.ReactNative.ViewControl",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -1633,6 +1884,9 @@ exports[`PressableTests Pressables can hide their backface 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": "#FF0000FF",
                   "BorderBrush": "#E4000000",
                   "BorderThickness": "0,0,0,0",
@@ -1651,6 +1905,9 @@ exports[`PressableTests Pressables can hide their backface 1`] = `
                   "XamlType": "Microsoft.ReactNative.ViewPanel",
                   "children": [
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
                       "Foreground": "#FF000000",
@@ -1673,6 +1930,9 @@ exports[`PressableTests Pressables can hide their backface 1`] = `
           ],
         },
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -1692,6 +1952,9 @@ exports[`PressableTests Pressables can hide their backface 1`] = `
           "XamlType": "Microsoft.ReactNative.ViewControl",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -1709,6 +1972,9 @@ exports[`PressableTests Pressables can hide their backface 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": "#FFFF0000",
                   "BorderBrush": "#E4000000",
                   "BorderThickness": "0,0,0,0",
@@ -1727,6 +1993,9 @@ exports[`PressableTests Pressables can hide their backface 1`] = `
                   "XamlType": "Microsoft.ReactNative.ViewPanel",
                   "children": [
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
                       "Foreground": "#FF000000",
@@ -1757,6 +2026,9 @@ exports[`PressableTests Pressables can hide their backface 1`] = `
 exports[`PressableTests Pressables can hide their children from accessibility focus 1`] = `
 {
   "AutomationId": "no_hide_pressable",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -1775,6 +2047,9 @@ exports[`PressableTests Pressables can hide their children from accessibility fo
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -1794,6 +2069,9 @@ exports[`PressableTests Pressables can hide their children from accessibility fo
       "XamlType": "Microsoft.ReactNative.ViewControl",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -1811,6 +2089,9 @@ exports[`PressableTests Pressables can hide their children from accessibility fo
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#00FFFFFF",
               "BorderBrush": "#E4000000",
               "BorderThickness": "0,0,0,0",
@@ -1829,6 +2110,9 @@ exports[`PressableTests Pressables can hide their children from accessibility fo
               "XamlType": "Microsoft.ReactNative.ViewPanel",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "Foreground": "#FF000000",
@@ -1845,6 +2129,9 @@ exports[`PressableTests Pressables can hide their children from accessibility fo
                   "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
@@ -1864,6 +2151,9 @@ exports[`PressableTests Pressables can hide their children from accessibility fo
                   "XamlType": "Microsoft.ReactNative.ViewControl",
                   "children": [
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": null,
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -1881,6 +2171,9 @@ exports[`PressableTests Pressables can hide their children from accessibility fo
                       "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
                       "children": [
                         {
+                          "AutomationLevel": -1,
+                          "AutomationPositionInSet": -1,
+                          "AutomationSizeOfSet": -1,
                           "Background": "#00FFFFFF",
                           "BorderBrush": "#E4000000",
                           "BorderThickness": "0,0,0,0",
@@ -1899,6 +2192,9 @@ exports[`PressableTests Pressables can hide their children from accessibility fo
                           "XamlType": "Microsoft.ReactNative.ViewPanel",
                           "children": [
                             {
+                              "AutomationLevel": -1,
+                              "AutomationPositionInSet": -1,
+                              "AutomationSizeOfSet": -1,
                               "Clip": null,
                               "FlowDirection": "LeftToRight",
                               "Foreground": "#FF000000",

@@ -3,6 +3,9 @@
 exports[`ViewTests Views can adjust backface visibility 1`] = `
 {
   "AutomationId": "backface-visibility",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -21,6 +24,9 @@ exports[`ViewTests Views can adjust backface visibility 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "1,1,1,1",
@@ -39,6 +45,9 @@ exports[`ViewTests Views can adjust backface visibility 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": "#FFFF0000",
       "BorderBrush": "#E4000000",
       "BorderThickness": "0,0,0,0",
@@ -57,6 +66,9 @@ exports[`ViewTests Views can adjust backface visibility 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -81,6 +93,9 @@ exports[`ViewTests Views can adjust backface visibility 1`] = `
 exports[`ViewTests Views can adjust backface visibility 2 1`] = `
 {
   "AutomationId": "backface-visibility-2",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -99,6 +114,9 @@ exports[`ViewTests Views can adjust backface visibility 2 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "1,1,1,1",
@@ -117,6 +135,9 @@ exports[`ViewTests Views can adjust backface visibility 2 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "10,10,10,10",
@@ -135,6 +156,9 @@ exports[`ViewTests Views can adjust backface visibility 2 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "6,6,0,0",
@@ -153,6 +177,9 @@ exports[`ViewTests Views can adjust backface visibility 2 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "0,6,6,0",
@@ -171,6 +198,9 @@ exports[`ViewTests Views can adjust backface visibility 2 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "6,0,0,6",
@@ -189,6 +219,9 @@ exports[`ViewTests Views can adjust backface visibility 2 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "0,0,6,6",
@@ -213,6 +246,9 @@ exports[`ViewTests Views can adjust backface visibility 2 1`] = `
 exports[`ViewTests Views can have a custom nativeID 1`] = `
 {
   "AutomationId": "nativeid",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -231,6 +267,9 @@ exports[`ViewTests Views can have a custom nativeID 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -252,8 +291,10 @@ exports[`ViewTests Views can have a custom nativeID 1`] = `
 
 exports[`ViewTests Views can have accessibility customization 1`] = `
 {
-  "AccessibilityRole": "Unknown",
   "AutomationId": "accessibility",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": null,
   "BorderThickness": "0,0,0,0",
@@ -273,6 +314,9 @@ exports[`ViewTests Views can have accessibility customization 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewControl",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -290,6 +334,9 @@ exports[`ViewTests Views can have accessibility customization 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": "#E4000000",
           "BorderThickness": "0,0,0,0",
@@ -308,6 +355,9 @@ exports[`ViewTests Views can have accessibility customization 1`] = `
           "XamlType": "Microsoft.ReactNative.ViewPanel",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Foreground": "#FF000000",
@@ -324,6 +374,9 @@ exports[`ViewTests Views can have accessibility customization 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Foreground": "#FF000000",
@@ -340,6 +393,9 @@ exports[`ViewTests Views can have accessibility customization 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": "#E4000000",
               "BorderThickness": "0,0,0,0",
@@ -358,6 +414,9 @@ exports[`ViewTests Views can have accessibility customization 1`] = `
               "XamlType": "Microsoft.ReactNative.ViewPanel",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "Foreground": "#FF000000",
@@ -386,6 +445,9 @@ exports[`ViewTests Views can have accessibility customization 1`] = `
 exports[`ViewTests Views can have background colors 1`] = `
 {
   "AutomationId": "background-color",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": "#FF527FE4",
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -404,6 +466,9 @@ exports[`ViewTests Views can have background colors 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -426,6 +491,9 @@ exports[`ViewTests Views can have background colors 1`] = `
 exports[`ViewTests Views can have borders 1`] = `
 {
   "AutomationId": "border",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#FF527FE4",
   "BorderThickness": "5,5,5,5",
@@ -444,6 +512,9 @@ exports[`ViewTests Views can have borders 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -466,6 +537,9 @@ exports[`ViewTests Views can have borders 1`] = `
 exports[`ViewTests Views can have overflow 1`] = `
 {
   "AutomationId": "overflow",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -484,6 +558,9 @@ exports[`ViewTests Views can have overflow 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "1,1,1,1",
@@ -502,6 +579,9 @@ exports[`ViewTests Views can have overflow 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": "#E4000000",
           "BorderThickness": "0,0,0,0",
@@ -520,6 +600,9 @@ exports[`ViewTests Views can have overflow 1`] = `
           "XamlType": "Microsoft.ReactNative.ViewPanel",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Foreground": "#FF000000",
@@ -538,6 +621,9 @@ exports[`ViewTests Views can have overflow 1`] = `
           ],
         },
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": "#E4000000",
           "BorderThickness": "0,0,0,0",
@@ -556,6 +642,9 @@ exports[`ViewTests Views can have overflow 1`] = `
           "XamlType": "Microsoft.ReactNative.ViewPanel",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Foreground": "#FF000000",
@@ -574,6 +663,9 @@ exports[`ViewTests Views can have overflow 1`] = `
           ],
         },
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": "#E4000000",
           "BorderThickness": "0,0,0,0",
@@ -592,6 +684,9 @@ exports[`ViewTests Views can have overflow 1`] = `
           "XamlType": "Microsoft.ReactNative.ViewPanel",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Foreground": "#FF000000",
@@ -608,6 +703,9 @@ exports[`ViewTests Views can have overflow 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Foreground": "#FF000000",
@@ -634,6 +732,9 @@ exports[`ViewTests Views can have overflow 1`] = `
 exports[`ViewTests Views can have padding and margins 1`] = `
 {
   "AutomationId": "padding-margin",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#FFBB0000",
   "BorderThickness": "0.5,0.5,0.5,0.5",
@@ -652,6 +753,9 @@ exports[`ViewTests Views can have padding and margins 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": "#FF527FE4",
       "BorderBrush": "#FF000033",
       "BorderThickness": "1,1,1,1",
@@ -670,6 +774,9 @@ exports[`ViewTests Views can have padding and margins 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -688,6 +795,9 @@ exports[`ViewTests Views can have padding and margins 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": "#FF527FE4",
       "BorderBrush": "#FF000033",
       "BorderThickness": "1,1,1,1",
@@ -706,6 +816,9 @@ exports[`ViewTests Views can have padding and margins 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -724,6 +837,9 @@ exports[`ViewTests Views can have padding and margins 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": "#FF527FE4",
       "BorderBrush": "#E4000000",
       "BorderThickness": "0,0,0,0",
@@ -742,6 +858,9 @@ exports[`ViewTests Views can have padding and margins 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -766,6 +885,9 @@ exports[`ViewTests Views can have padding and margins 1`] = `
 exports[`ViewTests Views can have ranging opacity 1`] = `
 {
   "AutomationId": "opacity",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -784,6 +906,9 @@ exports[`ViewTests Views can have ranging opacity 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "0,0,0,0",
@@ -802,6 +927,9 @@ exports[`ViewTests Views can have ranging opacity 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -820,6 +948,9 @@ exports[`ViewTests Views can have ranging opacity 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "0,0,0,0",
@@ -838,6 +969,9 @@ exports[`ViewTests Views can have ranging opacity 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -856,6 +990,9 @@ exports[`ViewTests Views can have ranging opacity 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "0,0,0,0",
@@ -874,6 +1011,9 @@ exports[`ViewTests Views can have ranging opacity 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -892,6 +1032,9 @@ exports[`ViewTests Views can have ranging opacity 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "0,0,0,0",
@@ -910,6 +1053,9 @@ exports[`ViewTests Views can have ranging opacity 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -928,6 +1074,9 @@ exports[`ViewTests Views can have ranging opacity 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "0,0,0,0",
@@ -946,6 +1095,9 @@ exports[`ViewTests Views can have ranging opacity 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -964,6 +1116,9 @@ exports[`ViewTests Views can have ranging opacity 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "0,0,0,0",
@@ -982,6 +1137,9 @@ exports[`ViewTests Views can have ranging opacity 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -1000,6 +1158,9 @@ exports[`ViewTests Views can have ranging opacity 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "0,0,0,0",
@@ -1018,6 +1179,9 @@ exports[`ViewTests Views can have ranging opacity 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -1042,6 +1206,9 @@ exports[`ViewTests Views can have ranging opacity 1`] = `
 exports[`ViewTests Views can have rounded borders 1`] = `
 {
   "AutomationId": "rounded-borders",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -1060,6 +1227,9 @@ exports[`ViewTests Views can have rounded borders 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "1,1,1,1",
@@ -1078,6 +1248,9 @@ exports[`ViewTests Views can have rounded borders 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "10,10,10,10",
@@ -1096,6 +1269,9 @@ exports[`ViewTests Views can have rounded borders 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "1,1,1,1",
@@ -1114,6 +1290,9 @@ exports[`ViewTests Views can have rounded borders 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "10,10,10,10",
@@ -1132,6 +1311,9 @@ exports[`ViewTests Views can have rounded borders 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "6,6,0,0",
@@ -1150,6 +1332,9 @@ exports[`ViewTests Views can have rounded borders 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "0,6,6,0",
@@ -1168,6 +1353,9 @@ exports[`ViewTests Views can have rounded borders 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "6,0,0,6",
@@ -1186,6 +1374,9 @@ exports[`ViewTests Views can have rounded borders 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "0,0,6,6",
@@ -1210,6 +1401,9 @@ exports[`ViewTests Views can have rounded borders 1`] = `
 exports[`ViewTests Views can have tool tips 1`] = `
 {
   "AutomationId": "tool-tip",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -1229,6 +1423,9 @@ exports[`ViewTests Views can have tool tips 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1245,6 +1442,9 @@ exports[`ViewTests Views can have tool tips 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "0,0,0,0",
@@ -1264,6 +1464,9 @@ exports[`ViewTests Views can have tool tips 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -1282,6 +1485,9 @@ exports[`ViewTests Views can have tool tips 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "0,0,0,0",
@@ -1301,6 +1507,9 @@ exports[`ViewTests Views can have tool tips 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -1325,6 +1534,9 @@ exports[`ViewTests Views can have tool tips 1`] = `
 exports[`ViewTests Views can have unique border width and radius per edge/corner 1`] = `
 {
   "AutomationId": "advanced-border",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": "#FF808080",
   "BorderBrush": "#FFFFA500",
   "BorderThickness": "10,20,15,5",

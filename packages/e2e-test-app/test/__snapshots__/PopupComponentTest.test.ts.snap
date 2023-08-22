@@ -3,6 +3,9 @@
 exports[`PopupTests Popups can be anchored 1`] = `
 {
   "AutomationId": "anchor-popup",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -21,6 +24,9 @@ exports[`PopupTests Popups can be anchored 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -37,6 +43,9 @@ exports[`PopupTests Popups can be anchored 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "0,0,0,0",
@@ -55,6 +64,9 @@ exports[`PopupTests Popups can be anchored 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -71,6 +83,9 @@ exports[`PopupTests Popups can be anchored 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
         },
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": "#B3FFFFFF",
           "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
           "BorderThickness": "1,1,1,1",
@@ -91,6 +106,9 @@ exports[`PopupTests Popups can be anchored 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.TextBox",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -107,6 +125,9 @@ exports[`PopupTests Popups can be anchored 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": "#B3FFFFFF",
                   "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
                   "BorderThickness": "1,1,1,1",
@@ -124,6 +145,9 @@ exports[`PopupTests Popups can be anchored 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.Border",
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": "#00FFFFFF",
                   "BorderBrush": "#00FFFFFF",
                   "BorderThickness": "0,0,0,0",
@@ -142,6 +166,9 @@ exports[`PopupTests Popups can be anchored 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.ScrollViewer",
                   "children": [
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": null,
                       "BorderBrush": "#00FFFFFF",
                       "BorderThickness": "0,0,0,0",
@@ -159,6 +186,9 @@ exports[`PopupTests Popups can be anchored 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.Border",
                       "children": [
                         {
+                          "AutomationLevel": -1,
+                          "AutomationPositionInSet": -1,
+                          "AutomationSizeOfSet": -1,
                           "Background": "#00FFFFFF",
                           "BorderBrush": null,
                           "BorderThickness": "0,0,0,0",
@@ -175,6 +205,9 @@ exports[`PopupTests Popups can be anchored 1`] = `
                           "XamlType": "Windows.UI.Xaml.Controls.Grid",
                           "children": [
                             {
+                              "AutomationLevel": -1,
+                              "AutomationPositionInSet": -1,
+                              "AutomationSizeOfSet": -1,
                               "Background": null,
                               "BorderBrush": null,
                               "BorderThickness": "0,0,0,0",
@@ -193,6 +226,9 @@ exports[`PopupTests Popups can be anchored 1`] = `
                               "XamlType": "Windows.UI.Xaml.Controls.ScrollContentPresenter",
                               "children": [
                                 {
+                                  "AutomationLevel": -1,
+                                  "AutomationPositionInSet": -1,
+                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "HorizontalAlignment": "Stretch",
@@ -206,6 +242,9 @@ exports[`PopupTests Popups can be anchored 1`] = `
                               ],
                             },
                             {
+                              "AutomationLevel": -1,
+                              "AutomationPositionInSet": -1,
+                              "AutomationSizeOfSet": -1,
                               "Background": null,
                               "BorderBrush": null,
                               "BorderThickness": "0,0,0,0",
@@ -228,6 +267,9 @@ exports[`PopupTests Popups can be anchored 1`] = `
                   ],
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
@@ -252,6 +294,9 @@ exports[`PopupTests Popups can be anchored 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "0,0,0,0",
@@ -270,7 +315,9 @@ exports[`PopupTests Popups can be anchored 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
-          "AccessibilityRole": "Button",
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -290,6 +337,9 @@ exports[`PopupTests Popups can be anchored 1`] = `
           "XamlType": "Microsoft.ReactNative.ViewControl",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -307,6 +357,9 @@ exports[`PopupTests Popups can be anchored 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": "#B3FFFFFF",
                   "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
                   "BorderThickness": "1,1,1,1.5",
@@ -325,6 +378,9 @@ exports[`PopupTests Popups can be anchored 1`] = `
                   "XamlType": "Microsoft.ReactNative.ViewPanel",
                   "children": [
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": null,
                       "BorderBrush": "#E4000000",
                       "BorderThickness": "0,0,0,0",
@@ -343,6 +399,9 @@ exports[`PopupTests Popups can be anchored 1`] = `
                       "XamlType": "Microsoft.ReactNative.ViewPanel",
                       "children": [
                         {
+                          "AutomationLevel": -1,
+                          "AutomationPositionInSet": -1,
+                          "AutomationSizeOfSet": -1,
                           "Background": null,
                           "BorderBrush": "#E4000000",
                           "BorderThickness": "0,0,0,0",
@@ -361,6 +420,9 @@ exports[`PopupTests Popups can be anchored 1`] = `
                           "XamlType": "Microsoft.ReactNative.ViewPanel",
                           "children": [
                             {
+                              "AutomationLevel": -1,
+                              "AutomationPositionInSet": -1,
+                              "AutomationSizeOfSet": -1,
                               "Clip": null,
                               "FlowDirection": "LeftToRight",
                               "Foreground": "#E4000000",
@@ -395,6 +457,9 @@ exports[`PopupTests Popups can be anchored 1`] = `
 exports[`PopupTests Popups can have customized accessibility 1`] = `
 {
   "AutomationId": "popup-accessibility",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -413,7 +478,9 @@ exports[`PopupTests Popups can have customized accessibility 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
-      "AccessibilityRole": "Button",
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -433,6 +500,9 @@ exports[`PopupTests Popups can have customized accessibility 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewControl",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -450,6 +520,9 @@ exports[`PopupTests Popups can have customized accessibility 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#B3FFFFFF",
               "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
               "BorderThickness": "1,1,1,1.5",
@@ -468,6 +541,9 @@ exports[`PopupTests Popups can have customized accessibility 1`] = `
               "XamlType": "Microsoft.ReactNative.ViewPanel",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": "#E4000000",
                   "BorderThickness": "0,0,0,0",
@@ -486,6 +562,9 @@ exports[`PopupTests Popups can have customized accessibility 1`] = `
                   "XamlType": "Microsoft.ReactNative.ViewPanel",
                   "children": [
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": null,
                       "BorderBrush": "#E4000000",
                       "BorderThickness": "0,0,0,0",
@@ -504,6 +583,9 @@ exports[`PopupTests Popups can have customized accessibility 1`] = `
                       "XamlType": "Microsoft.ReactNative.ViewPanel",
                       "children": [
                         {
+                          "AutomationLevel": -1,
+                          "AutomationPositionInSet": -1,
+                          "AutomationSizeOfSet": -1,
                           "Clip": null,
                           "FlowDirection": "LeftToRight",
                           "Foreground": "#E4000000",
@@ -536,6 +618,9 @@ exports[`PopupTests Popups can have customized accessibility 1`] = `
 exports[`PopupTests Popups can have different placement 1`] = `
 {
   "AutomationId": "popup-placement",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -554,7 +639,9 @@ exports[`PopupTests Popups can have different placement 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
-      "AccessibilityRole": "Button",
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -574,6 +661,9 @@ exports[`PopupTests Popups can have different placement 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewControl",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -591,6 +681,9 @@ exports[`PopupTests Popups can have different placement 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#B3FFFFFF",
               "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
               "BorderThickness": "1,1,1,1.5",
@@ -609,6 +702,9 @@ exports[`PopupTests Popups can have different placement 1`] = `
               "XamlType": "Microsoft.ReactNative.ViewPanel",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": "#E4000000",
                   "BorderThickness": "0,0,0,0",
@@ -627,6 +723,9 @@ exports[`PopupTests Popups can have different placement 1`] = `
                   "XamlType": "Microsoft.ReactNative.ViewPanel",
                   "children": [
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": null,
                       "BorderBrush": "#E4000000",
                       "BorderThickness": "0,0,0,0",
@@ -645,6 +744,9 @@ exports[`PopupTests Popups can have different placement 1`] = `
                       "XamlType": "Microsoft.ReactNative.ViewPanel",
                       "children": [
                         {
+                          "AutomationLevel": -1,
+                          "AutomationPositionInSet": -1,
+                          "AutomationSizeOfSet": -1,
                           "Clip": null,
                           "FlowDirection": "LeftToRight",
                           "Foreground": "#E4000000",

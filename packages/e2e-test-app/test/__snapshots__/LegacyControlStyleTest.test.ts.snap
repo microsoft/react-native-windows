@@ -3,6 +3,9 @@
 exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
 {
   "AutomationId": "control-style-switch-view",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -21,7 +24,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
-      "AccessibilityRole": "Switch",
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": "#33E1E1E1",
       "BorderBrush": "#55FF00FF",
       "BorderThickness": "1,1,1,1",
@@ -41,6 +46,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.ToggleSwitch",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": "#33E1E1E1",
           "BorderBrush": "#55FF00FF",
           "BorderThickness": "1,1,1,1",
@@ -57,6 +65,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -73,6 +84,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": "#00FFFFFF",
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
@@ -90,6 +104,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.Grid",
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
@@ -108,6 +125,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
@@ -126,6 +146,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "Height": 20,
@@ -140,6 +163,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
                   "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "Height": 20,
@@ -154,6 +180,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
                   "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
@@ -173,6 +202,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.Grid",
                   "children": [
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": "#FF0000FF",
                       "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
                       "BorderThickness": "0,0,0,0",
@@ -192,6 +224,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.Border",
                     },
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
                       "Height": 12,
@@ -208,6 +243,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
                   ],
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": "#33000000",
                   "BorderBrush": "#00FFFFFF",
                   "BorderThickness": "1,1,1,1",
@@ -226,6 +264,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.Primitives.Thumb",
                   "children": [
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
                       "HorizontalAlignment": "Stretch",
@@ -245,6 +286,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": "#33E1E1E1",
       "BorderBrush": "#55FF00FF",
       "BorderThickness": "1,1,1,1",
@@ -265,6 +309,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBox",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -281,6 +328,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#33E1E1E1",
               "BorderBrush": "#55FF00FF",
               "BorderThickness": "1,1,1,1",
@@ -298,6 +348,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Border",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#00FFFFFF",
               "BorderBrush": "#00FFFFFF",
               "BorderThickness": "0,0,0,0",
@@ -316,6 +369,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ScrollViewer",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": "#00FFFFFF",
                   "BorderThickness": "0,0,0,0",
@@ -333,6 +389,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.Border",
                   "children": [
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": "#00FFFFFF",
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -349,6 +408,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.Grid",
                       "children": [
                         {
+                          "AutomationLevel": -1,
+                          "AutomationPositionInSet": -1,
+                          "AutomationSizeOfSet": -1,
                           "Background": null,
                           "BorderBrush": null,
                           "BorderThickness": "0,0,0,0",
@@ -367,6 +429,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
                           "XamlType": "Windows.UI.Xaml.Controls.ScrollContentPresenter",
                           "children": [
                             {
+                              "AutomationLevel": -1,
+                              "AutomationPositionInSet": -1,
+                              "AutomationSizeOfSet": -1,
                               "Clip": null,
                               "FlowDirection": "LeftToRight",
                               "HorizontalAlignment": "Stretch",
@@ -380,6 +445,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
                           ],
                         },
                         {
+                          "AutomationLevel": -1,
+                          "AutomationPositionInSet": -1,
+                          "AutomationSizeOfSet": -1,
                           "Background": null,
                           "BorderBrush": null,
                           "BorderThickness": "0,0,0,0",
@@ -402,6 +470,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
               ],
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Foreground": "#B3E1E1E1",
@@ -417,6 +488,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -439,6 +513,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": "#33E1E1E1",
       "BorderBrush": "#55FF00FF",
       "BorderThickness": "1,1,1,1",
@@ -458,6 +535,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.PasswordBox",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -474,6 +554,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#33E1E1E1",
               "BorderBrush": "#55FF00FF",
               "BorderThickness": "1,1,1,1",
@@ -491,6 +574,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Border",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#00FFFFFF",
               "BorderBrush": "#00FFFFFF",
               "BorderThickness": "0,0,0,0",
@@ -509,6 +595,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ScrollViewer",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": "#00FFFFFF",
                   "BorderThickness": "0,0,0,0",
@@ -526,6 +615,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.Border",
                   "children": [
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": "#00FFFFFF",
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -542,6 +634,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.Grid",
                       "children": [
                         {
+                          "AutomationLevel": -1,
+                          "AutomationPositionInSet": -1,
+                          "AutomationSizeOfSet": -1,
                           "Background": null,
                           "BorderBrush": null,
                           "BorderThickness": "0,0,0,0",
@@ -560,6 +655,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
                           "XamlType": "Windows.UI.Xaml.Controls.ScrollContentPresenter",
                           "children": [
                             {
+                              "AutomationLevel": -1,
+                              "AutomationPositionInSet": -1,
+                              "AutomationSizeOfSet": -1,
                               "Clip": null,
                               "FlowDirection": "LeftToRight",
                               "HorizontalAlignment": "Stretch",
@@ -573,6 +671,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
                           ],
                         },
                         {
+                          "AutomationLevel": -1,
+                          "AutomationPositionInSet": -1,
+                          "AutomationSizeOfSet": -1,
                           "Background": null,
                           "BorderBrush": null,
                           "BorderThickness": "0,0,0,0",
@@ -595,6 +696,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
               ],
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Foreground": "#B3E1E1E1",
@@ -610,6 +714,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -638,6 +745,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
 exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
 {
   "AutomationId": "control-style-switch-view",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -656,7 +766,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
-      "AccessibilityRole": "Switch",
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": "#33E1E1E1",
       "BorderBrush": "#55FF00FF",
       "BorderThickness": "1,1,1,1",
@@ -676,6 +788,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.ToggleSwitch",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": "#33E1E1E1",
           "BorderBrush": "#55FF00FF",
           "BorderThickness": "1,1,1,1",
@@ -692,6 +807,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -708,6 +826,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": "#00FFFFFF",
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
@@ -725,6 +846,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.Grid",
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
@@ -743,6 +867,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
@@ -761,6 +888,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "Height": 20,
@@ -775,6 +905,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
                   "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "Height": 20,
@@ -789,6 +922,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
                   "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
@@ -808,6 +944,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.Grid",
                   "children": [
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": "#FF0000FF",
                       "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
                       "BorderThickness": "0,0,0,0",
@@ -827,6 +966,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.Border",
                     },
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
                       "Height": 12,
@@ -843,6 +985,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
                   ],
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": "#33000000",
                   "BorderBrush": "#00FFFFFF",
                   "BorderThickness": "1,1,1,1",
@@ -861,6 +1006,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.Primitives.Thumb",
                   "children": [
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
                       "HorizontalAlignment": "Stretch",
@@ -880,6 +1028,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": "#33E1E1E1",
       "BorderBrush": "#55FF00FF",
       "BorderThickness": "1,1,1,1",
@@ -900,6 +1051,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBox",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -916,6 +1070,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#33E1E1E1",
               "BorderBrush": "#55FF00FF",
               "BorderThickness": "1,1,1,1",
@@ -933,6 +1090,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Border",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#00FFFFFF",
               "BorderBrush": "#00FFFFFF",
               "BorderThickness": "0,0,0,0",
@@ -951,6 +1111,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ScrollViewer",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": "#00FFFFFF",
                   "BorderThickness": "0,0,0,0",
@@ -968,6 +1131,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.Border",
                   "children": [
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": "#00FFFFFF",
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -984,6 +1150,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.Grid",
                       "children": [
                         {
+                          "AutomationLevel": -1,
+                          "AutomationPositionInSet": -1,
+                          "AutomationSizeOfSet": -1,
                           "Background": null,
                           "BorderBrush": null,
                           "BorderThickness": "0,0,0,0",
@@ -1002,6 +1171,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
                           "XamlType": "Windows.UI.Xaml.Controls.ScrollContentPresenter",
                           "children": [
                             {
+                              "AutomationLevel": -1,
+                              "AutomationPositionInSet": -1,
+                              "AutomationSizeOfSet": -1,
                               "Clip": null,
                               "FlowDirection": "LeftToRight",
                               "HorizontalAlignment": "Stretch",
@@ -1015,6 +1187,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
                           ],
                         },
                         {
+                          "AutomationLevel": -1,
+                          "AutomationPositionInSet": -1,
+                          "AutomationSizeOfSet": -1,
                           "Background": null,
                           "BorderBrush": null,
                           "BorderThickness": "0,0,0,0",
@@ -1037,6 +1212,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
               ],
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Foreground": "#B3E1E1E1",
@@ -1052,6 +1230,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -1074,6 +1255,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": "#33E1E1E1",
       "BorderBrush": "#55FF00FF",
       "BorderThickness": "1,1,1,1",
@@ -1093,6 +1277,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.PasswordBox",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -1109,6 +1296,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#33E1E1E1",
               "BorderBrush": "#55FF00FF",
               "BorderThickness": "1,1,1,1",
@@ -1126,6 +1316,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Border",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#00FFFFFF",
               "BorderBrush": "#00FFFFFF",
               "BorderThickness": "0,0,0,0",
@@ -1144,6 +1337,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ScrollViewer",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": "#00FFFFFF",
                   "BorderThickness": "0,0,0,0",
@@ -1161,6 +1357,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.Border",
                   "children": [
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": "#00FFFFFF",
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -1177,6 +1376,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.Grid",
                       "children": [
                         {
+                          "AutomationLevel": -1,
+                          "AutomationPositionInSet": -1,
+                          "AutomationSizeOfSet": -1,
                           "Background": null,
                           "BorderBrush": null,
                           "BorderThickness": "0,0,0,0",
@@ -1195,6 +1397,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
                           "XamlType": "Windows.UI.Xaml.Controls.ScrollContentPresenter",
                           "children": [
                             {
+                              "AutomationLevel": -1,
+                              "AutomationPositionInSet": -1,
+                              "AutomationSizeOfSet": -1,
                               "Clip": null,
                               "FlowDirection": "LeftToRight",
                               "HorizontalAlignment": "Stretch",
@@ -1208,6 +1413,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
                           ],
                         },
                         {
+                          "AutomationLevel": -1,
+                          "AutomationPositionInSet": -1,
+                          "AutomationSizeOfSet": -1,
                           "Background": null,
                           "BorderBrush": null,
                           "BorderThickness": "0,0,0,0",
@@ -1230,6 +1438,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
               ],
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Foreground": "#B3E1E1E1",
@@ -1245,6 +1456,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -1273,6 +1487,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
 exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
 {
   "AutomationId": "control-style-switch-view",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -1291,7 +1508,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
-      "AccessibilityRole": "Switch",
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": "#33000000",
       "BorderBrush": "#5500FF00",
       "BorderThickness": "10,10,10,10",
@@ -1311,6 +1530,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.ToggleSwitch",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": "#33000000",
           "BorderBrush": "#5500FF00",
           "BorderThickness": "10,10,10,10",
@@ -1327,6 +1549,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -1343,6 +1568,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": "#00FFFFFF",
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
@@ -1360,6 +1588,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.Grid",
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
@@ -1378,6 +1609,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
@@ -1396,6 +1630,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "Height": 20,
@@ -1410,6 +1647,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
                   "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "Height": 20,
@@ -1424,6 +1664,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
                   "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
@@ -1443,6 +1686,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.Grid",
                   "children": [
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": "#FF0000FF",
                       "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
                       "BorderThickness": "0,0,0,0",
@@ -1462,6 +1708,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.Border",
                     },
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
                       "Height": 12,
@@ -1478,6 +1727,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
                   ],
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": "#33000000",
                   "BorderBrush": "#00FFFFFF",
                   "BorderThickness": "1,1,1,1",
@@ -1496,6 +1748,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.Primitives.Thumb",
                   "children": [
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
                       "HorizontalAlignment": "Stretch",
@@ -1515,6 +1770,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": "#33000000",
       "BorderBrush": "#5500FF00",
       "BorderThickness": "10,10,10,10",
@@ -1535,6 +1793,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBox",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -1551,6 +1812,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#33000000",
               "BorderBrush": "#5500FF00",
               "BorderThickness": "10,10,10,10",
@@ -1568,6 +1832,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Border",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#00FFFFFF",
               "BorderBrush": "#00FFFFFF",
               "BorderThickness": "0,0,0,0",
@@ -1586,6 +1853,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ScrollViewer",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": "#00FFFFFF",
                   "BorderThickness": "0,0,0,0",
@@ -1603,6 +1873,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.Border",
                   "children": [
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": "#00FFFFFF",
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -1619,6 +1892,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.Grid",
                       "children": [
                         {
+                          "AutomationLevel": -1,
+                          "AutomationPositionInSet": -1,
+                          "AutomationSizeOfSet": -1,
                           "Background": null,
                           "BorderBrush": null,
                           "BorderThickness": "0,0,0,0",
@@ -1637,6 +1913,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
                           "XamlType": "Windows.UI.Xaml.Controls.ScrollContentPresenter",
                           "children": [
                             {
+                              "AutomationLevel": -1,
+                              "AutomationPositionInSet": -1,
+                              "AutomationSizeOfSet": -1,
                               "Clip": null,
                               "FlowDirection": "LeftToRight",
                               "HorizontalAlignment": "Stretch",
@@ -1650,6 +1929,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
                           ],
                         },
                         {
+                          "AutomationLevel": -1,
+                          "AutomationPositionInSet": -1,
+                          "AutomationSizeOfSet": -1,
                           "Background": null,
                           "BorderBrush": null,
                           "BorderThickness": "0,0,0,0",
@@ -1672,6 +1954,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
               ],
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Foreground": "#B3E1E1E1",
@@ -1687,6 +1972,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -1709,6 +1997,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": "#33000000",
       "BorderBrush": "#5500FF00",
       "BorderThickness": "10,10,10,10",
@@ -1728,6 +2019,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.PasswordBox",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -1744,6 +2038,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#33000000",
               "BorderBrush": "#5500FF00",
               "BorderThickness": "10,10,10,10",
@@ -1761,6 +2058,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Border",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#00FFFFFF",
               "BorderBrush": "#00FFFFFF",
               "BorderThickness": "0,0,0,0",
@@ -1779,6 +2079,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ScrollViewer",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": "#00FFFFFF",
                   "BorderThickness": "0,0,0,0",
@@ -1796,6 +2099,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.Border",
                   "children": [
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": "#00FFFFFF",
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -1812,6 +2118,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.Grid",
                       "children": [
                         {
+                          "AutomationLevel": -1,
+                          "AutomationPositionInSet": -1,
+                          "AutomationSizeOfSet": -1,
                           "Background": null,
                           "BorderBrush": null,
                           "BorderThickness": "0,0,0,0",
@@ -1830,6 +2139,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
                           "XamlType": "Windows.UI.Xaml.Controls.ScrollContentPresenter",
                           "children": [
                             {
+                              "AutomationLevel": -1,
+                              "AutomationPositionInSet": -1,
+                              "AutomationSizeOfSet": -1,
                               "Clip": null,
                               "FlowDirection": "LeftToRight",
                               "HorizontalAlignment": "Stretch",
@@ -1843,6 +2155,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
                           ],
                         },
                         {
+                          "AutomationLevel": -1,
+                          "AutomationPositionInSet": -1,
+                          "AutomationSizeOfSet": -1,
                           "Background": null,
                           "BorderBrush": null,
                           "BorderThickness": "0,0,0,0",
@@ -1865,6 +2180,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
               ],
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Foreground": "#B3E1E1E1",
@@ -1880,6 +2198,9 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",

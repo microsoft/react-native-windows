@@ -3,6 +3,9 @@
 exports[`LegacyTextHitTestTest BidirectionalTextPressable 1`] = `
 {
   "AutomationId": "pressed-state",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Clip": null,
   "FlowDirection": "LeftToRight",
   "Foreground": "#FF000000",
@@ -23,6 +26,9 @@ exports[`LegacyTextHitTestTest BidirectionalTextPressable 1`] = `
 exports[`LegacyTextHitTestTest BidirectionalTextPressableEdgeCaseNotPressable 1`] = `
 {
   "AutomationId": "pressed-state",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Clip": null,
   "FlowDirection": "LeftToRight",
   "Foreground": "#FF000000",
@@ -43,6 +49,9 @@ exports[`LegacyTextHitTestTest BidirectionalTextPressableEdgeCaseNotPressable 1`
 exports[`LegacyTextHitTestTest BidirectionalTextSeparateRunsEdgeCasePressable 1`] = `
 {
   "AutomationId": "pressed-state",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Clip": null,
   "FlowDirection": "LeftToRight",
   "Foreground": "#FF000000",
@@ -63,6 +72,9 @@ exports[`LegacyTextHitTestTest BidirectionalTextSeparateRunsEdgeCasePressable 1`
 exports[`LegacyTextHitTestTest BidirectionalTextSeparateRunsPressable 1`] = `
 {
   "AutomationId": "pressed-state",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Clip": null,
   "FlowDirection": "LeftToRight",
   "Foreground": "#FF000000",
@@ -83,6 +95,9 @@ exports[`LegacyTextHitTestTest BidirectionalTextSeparateRunsPressable 1`] = `
 exports[`LegacyTextHitTestTest InsertedVirtualTextPressable 1`] = `
 {
   "AutomationId": "pressed-state",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Clip": null,
   "FlowDirection": "LeftToRight",
   "Foreground": "#FF000000",
@@ -103,6 +118,9 @@ exports[`LegacyTextHitTestTest InsertedVirtualTextPressable 1`] = `
 exports[`LegacyTextHitTestTest LTRTextInRTLFlowPressable 1`] = `
 {
   "AutomationId": "pressed-state",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Clip": null,
   "FlowDirection": "LeftToRight",
   "Foreground": "#FF000000",
@@ -123,6 +141,9 @@ exports[`LegacyTextHitTestTest LTRTextInRTLFlowPressable 1`] = `
 exports[`LegacyTextHitTestTest MultilineRTLTextEdgeCaseNotPressable 1`] = `
 {
   "AutomationId": "pressed-state",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Clip": null,
   "FlowDirection": "LeftToRight",
   "Foreground": "#FF000000",
@@ -143,6 +164,9 @@ exports[`LegacyTextHitTestTest MultilineRTLTextEdgeCaseNotPressable 1`] = `
 exports[`LegacyTextHitTestTest MultilineRTLTextPressable 1`] = `
 {
   "AutomationId": "pressed-state",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Clip": null,
   "FlowDirection": "LeftToRight",
   "Foreground": "#FF000000",
@@ -163,6 +187,9 @@ exports[`LegacyTextHitTestTest MultilineRTLTextPressable 1`] = `
 exports[`LegacyTextHitTestTest MultilineTextPressable 1`] = `
 {
   "AutomationId": "pressed-state",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Clip": null,
   "FlowDirection": "LeftToRight",
   "Foreground": "#FF000000",
@@ -183,6 +210,9 @@ exports[`LegacyTextHitTestTest MultilineTextPressable 1`] = `
 exports[`LegacyTextHitTestTest RTLTextInRTLFlowPressable 1`] = `
 {
   "AutomationId": "pressed-state",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Clip": null,
   "FlowDirection": "LeftToRight",
   "Foreground": "#FF000000",
@@ -203,6 +233,9 @@ exports[`LegacyTextHitTestTest RTLTextInRTLFlowPressable 1`] = `
 exports[`LegacyTextHitTestTest RTLTextPressable 1`] = `
 {
   "AutomationId": "pressed-state",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Clip": null,
   "FlowDirection": "LeftToRight",
   "Foreground": "#FF000000",
@@ -223,6 +256,9 @@ exports[`LegacyTextHitTestTest RTLTextPressable 1`] = `
 exports[`LegacyTextHitTestTest TextPressableWithVirtualText 1`] = `
 {
   "AutomationId": "pressed-state",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Clip": null,
   "FlowDirection": "LeftToRight",
   "Foreground": "#FF000000",
@@ -243,6 +279,9 @@ exports[`LegacyTextHitTestTest TextPressableWithVirtualText 1`] = `
 exports[`LegacyTextHitTestTest ToggleVirtualTextPressable 1`] = `
 {
   "AutomationId": "pressed-state",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Clip": null,
   "FlowDirection": "LeftToRight",
   "Foreground": "#FF000000",
@@ -263,6 +302,9 @@ exports[`LegacyTextHitTestTest ToggleVirtualTextPressable 1`] = `
 exports[`LegacyTextHitTestTest VirtualTextPressable 1`] = `
 {
   "AutomationId": "pressed-state",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Clip": null,
   "FlowDirection": "LeftToRight",
   "Foreground": "#FF000000",
@@ -283,6 +325,9 @@ exports[`LegacyTextHitTestTest VirtualTextPressable 1`] = `
 exports[`LegacyTextHitTestTest WrappedLTRInRTLFlowEdgeCaseNotPressable 1`] = `
 {
   "AutomationId": "pressed-state",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Clip": null,
   "FlowDirection": "LeftToRight",
   "Foreground": "#FF000000",

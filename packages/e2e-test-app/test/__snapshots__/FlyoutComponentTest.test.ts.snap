@@ -3,6 +3,9 @@
 exports[`FlyoutTests Flyout 1`] = `
 {
   "AutomationId": "flyout",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -21,6 +24,9 @@ exports[`FlyoutTests Flyout 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "0,0,0,0",
@@ -39,6 +45,9 @@ exports[`FlyoutTests Flyout 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -55,11 +64,14 @@ exports[`FlyoutTests Flyout 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
         },
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": "#B3FFFFFF",
           "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
           "BorderThickness": "1,1,1,1",
           "Clip": null,
-          "CornerRadius": "4,4,4,4",
+          "CornerRadius": "0,0,0,0",
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
           "Height": 35,
@@ -75,6 +87,9 @@ exports[`FlyoutTests Flyout 1`] = `
           "XamlType": "ReactNativePicker.ReactPickerView",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -92,28 +107,14 @@ exports[`FlyoutTests Flyout 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
               "children": [
                 {
-                  "Background": "#B3FFFFFF",
-                  "BorderBrush": "#E4000000",
-                  "BorderThickness": "2,2,2,2",
-                  "Clip": null,
-                  "CornerRadius": "7,7,7,7",
-                  "FlowDirection": "LeftToRight",
-                  "HorizontalAlignment": "Stretch",
-                  "Left": 0,
-                  "Margin": "-4,-4,-4,-4",
-                  "Name": "HighlightBackground",
-                  "Padding": "0,0,0,0",
-                  "Top": 0,
-                  "VerticalAlignment": "Stretch",
-                  "Visibility": "Visible",
-                  "XamlType": "Windows.UI.Xaml.Controls.Border",
-                },
-                {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": "#B3FFFFFF",
                   "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
                   "BorderThickness": "1,1,1,1",
                   "Clip": null,
-                  "CornerRadius": "4,4,4,4",
+                  "CornerRadius": "0,0,0,0",
                   "FlowDirection": "LeftToRight",
                   "HorizontalAlignment": "Stretch",
                   "Left": 0,
@@ -126,20 +127,29 @@ exports[`FlyoutTests Flyout 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.Border",
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
+                  "Background": "#B3FFFFFF",
+                  "BorderBrush": "#0F000000",
+                  "BorderThickness": "1,1,1,1",
                   "Clip": null,
+                  "CornerRadius": "0,0,0,0",
                   "FlowDirection": "LeftToRight",
-                  "Height": 16,
-                  "HorizontalAlignment": "Left",
+                  "HorizontalAlignment": "Stretch",
                   "Left": 0,
-                  "Margin": "1,0,0,0",
-                  "Name": "Pill",
+                  "Margin": "0,0,0,0",
+                  "Name": "HighlightBackground",
+                  "Padding": "0,0,0,0",
                   "Top": 0,
                   "VerticalAlignment": "Stretch",
                   "Visibility": "Visible",
-                  "Width": 3,
-                  "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
+                  "XamlType": "Windows.UI.Xaml.Controls.Border",
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
@@ -158,6 +168,9 @@ exports[`FlyoutTests Flyout 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
                   "children": [
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
                       "Foreground": "#FF000000",
@@ -174,21 +187,25 @@ exports[`FlyoutTests Flyout 1`] = `
                   ],
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "Foreground": "#9E000000",
-                  "Height": 12,
                   "HorizontalAlignment": "Right",
                   "Left": 0,
-                  "Margin": "0,0,14,0",
+                  "Margin": "0,10,10,10",
                   "Name": "DropDownGlyph",
                   "Top": 0,
                   "VerticalAlignment": "Center",
                   "Visibility": "Visible",
-                  "Width": 12,
-                  "XamlType": "Microsoft.UI.Xaml.Controls.AnimatedIcon",
+                  "XamlType": "Windows.UI.Xaml.Controls.FontIcon",
                   "children": [
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": "#00000000",
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -203,11 +220,32 @@ exports[`FlyoutTests Flyout 1`] = `
                       "VerticalAlignment": "Stretch",
                       "Visibility": "Visible",
                       "XamlType": "Windows.UI.Xaml.Controls.Grid",
-                      "children": [],
+                      "children": [
+                        {
+                          "AutomationLevel": -1,
+                          "AutomationPositionInSet": -1,
+                          "AutomationSizeOfSet": -1,
+                          "Clip": null,
+                          "FlowDirection": "LeftToRight",
+                          "Foreground": "#9E000000",
+                          "HorizontalAlignment": "Stretch",
+                          "Left": 0,
+                          "Margin": "0,0,0,0",
+                          "Padding": "0,0,0,0",
+                          "Text": "",
+                          "Top": 0,
+                          "VerticalAlignment": "Center",
+                          "Visibility": "Visible",
+                          "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+                        },
+                      ],
                     },
                   ],
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
@@ -226,6 +264,9 @@ exports[`FlyoutTests Flyout 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "HorizontalAlignment": "Stretch",
@@ -244,6 +285,9 @@ exports[`FlyoutTests Flyout 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "0,0,0,0",
@@ -262,7 +306,9 @@ exports[`FlyoutTests Flyout 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
-          "AccessibilityRole": "Button",
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -282,6 +328,9 @@ exports[`FlyoutTests Flyout 1`] = `
           "XamlType": "Microsoft.ReactNative.ViewControl",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -299,6 +348,9 @@ exports[`FlyoutTests Flyout 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": "#B3FFFFFF",
                   "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
                   "BorderThickness": "1,1,1,1.5",
@@ -317,6 +369,9 @@ exports[`FlyoutTests Flyout 1`] = `
                   "XamlType": "Microsoft.ReactNative.ViewPanel",
                   "children": [
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": null,
                       "BorderBrush": "#E4000000",
                       "BorderThickness": "0,0,0,0",
@@ -335,6 +390,9 @@ exports[`FlyoutTests Flyout 1`] = `
                       "XamlType": "Microsoft.ReactNative.ViewPanel",
                       "children": [
                         {
+                          "AutomationLevel": -1,
+                          "AutomationPositionInSet": -1,
+                          "AutomationSizeOfSet": -1,
                           "Background": null,
                           "BorderBrush": "#E4000000",
                           "BorderThickness": "0,0,0,0",
@@ -353,6 +411,9 @@ exports[`FlyoutTests Flyout 1`] = `
                           "XamlType": "Microsoft.ReactNative.ViewPanel",
                           "children": [
                             {
+                              "AutomationLevel": -1,
+                              "AutomationPositionInSet": -1,
+                              "AutomationSizeOfSet": -1,
                               "Clip": null,
                               "FlowDirection": "LeftToRight",
                               "Foreground": "#E4000000",
@@ -381,6 +442,9 @@ exports[`FlyoutTests Flyout 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "0,0,0,0",
@@ -399,7 +463,9 @@ exports[`FlyoutTests Flyout 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
-          "AccessibilityRole": "Button",
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -419,6 +485,9 @@ exports[`FlyoutTests Flyout 1`] = `
           "XamlType": "Microsoft.ReactNative.ViewControl",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -436,6 +505,9 @@ exports[`FlyoutTests Flyout 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": "#B3FFFFFF",
                   "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
                   "BorderThickness": "1,1,1,1.5",
@@ -454,6 +526,9 @@ exports[`FlyoutTests Flyout 1`] = `
                   "XamlType": "Microsoft.ReactNative.ViewPanel",
                   "children": [
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": null,
                       "BorderBrush": "#E4000000",
                       "BorderThickness": "0,0,0,0",
@@ -472,6 +547,9 @@ exports[`FlyoutTests Flyout 1`] = `
                       "XamlType": "Microsoft.ReactNative.ViewPanel",
                       "children": [
                         {
+                          "AutomationLevel": -1,
+                          "AutomationPositionInSet": -1,
+                          "AutomationSizeOfSet": -1,
                           "Background": null,
                           "BorderBrush": "#E4000000",
                           "BorderThickness": "0,0,0,0",
@@ -490,6 +568,9 @@ exports[`FlyoutTests Flyout 1`] = `
                           "XamlType": "Microsoft.ReactNative.ViewPanel",
                           "children": [
                             {
+                              "AutomationLevel": -1,
+                              "AutomationPositionInSet": -1,
+                              "AutomationSizeOfSet": -1,
                               "Clip": null,
                               "FlowDirection": "LeftToRight",
                               "Foreground": "#E4000000",
@@ -518,6 +599,9 @@ exports[`FlyoutTests Flyout 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "0,0,0,0",
@@ -536,7 +620,9 @@ exports[`FlyoutTests Flyout 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
-          "AccessibilityRole": "Button",
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -556,6 +642,9 @@ exports[`FlyoutTests Flyout 1`] = `
           "XamlType": "Microsoft.ReactNative.ViewControl",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -573,6 +662,9 @@ exports[`FlyoutTests Flyout 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": "#B3FFFFFF",
                   "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
                   "BorderThickness": "1,1,1,1.5",
@@ -591,6 +683,9 @@ exports[`FlyoutTests Flyout 1`] = `
                   "XamlType": "Microsoft.ReactNative.ViewPanel",
                   "children": [
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": null,
                       "BorderBrush": "#E4000000",
                       "BorderThickness": "0,0,0,0",
@@ -609,6 +704,9 @@ exports[`FlyoutTests Flyout 1`] = `
                       "XamlType": "Microsoft.ReactNative.ViewPanel",
                       "children": [
                         {
+                          "AutomationLevel": -1,
+                          "AutomationPositionInSet": -1,
+                          "AutomationSizeOfSet": -1,
                           "Background": null,
                           "BorderBrush": "#E4000000",
                           "BorderThickness": "0,0,0,0",
@@ -627,6 +725,9 @@ exports[`FlyoutTests Flyout 1`] = `
                           "XamlType": "Microsoft.ReactNative.ViewPanel",
                           "children": [
                             {
+                              "AutomationLevel": -1,
+                              "AutomationPositionInSet": -1,
+                              "AutomationSizeOfSet": -1,
                               "Clip": null,
                               "FlowDirection": "LeftToRight",
                               "Foreground": "#E4000000",
@@ -655,6 +756,9 @@ exports[`FlyoutTests Flyout 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "0,0,0,0",
@@ -673,6 +777,9 @@ exports[`FlyoutTests Flyout 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -689,6 +796,9 @@ exports[`FlyoutTests Flyout 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
         },
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": "#B3FFFFFF",
           "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
           "BorderThickness": "1,1,1,1",
@@ -709,6 +819,9 @@ exports[`FlyoutTests Flyout 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.TextBox",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -725,6 +838,9 @@ exports[`FlyoutTests Flyout 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": "#B3FFFFFF",
                   "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
                   "BorderThickness": "1,1,1,1",
@@ -742,6 +858,9 @@ exports[`FlyoutTests Flyout 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.Border",
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": "#00FFFFFF",
                   "BorderBrush": "#00FFFFFF",
                   "BorderThickness": "0,0,0,0",
@@ -760,6 +879,9 @@ exports[`FlyoutTests Flyout 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.ScrollViewer",
                   "children": [
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": null,
                       "BorderBrush": "#00FFFFFF",
                       "BorderThickness": "0,0,0,0",
@@ -777,6 +899,9 @@ exports[`FlyoutTests Flyout 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.Border",
                       "children": [
                         {
+                          "AutomationLevel": -1,
+                          "AutomationPositionInSet": -1,
+                          "AutomationSizeOfSet": -1,
                           "Background": "#00FFFFFF",
                           "BorderBrush": null,
                           "BorderThickness": "0,0,0,0",
@@ -793,6 +918,9 @@ exports[`FlyoutTests Flyout 1`] = `
                           "XamlType": "Windows.UI.Xaml.Controls.Grid",
                           "children": [
                             {
+                              "AutomationLevel": -1,
+                              "AutomationPositionInSet": -1,
+                              "AutomationSizeOfSet": -1,
                               "Background": null,
                               "BorderBrush": null,
                               "BorderThickness": "0,0,0,0",
@@ -811,6 +939,9 @@ exports[`FlyoutTests Flyout 1`] = `
                               "XamlType": "Windows.UI.Xaml.Controls.ScrollContentPresenter",
                               "children": [
                                 {
+                                  "AutomationLevel": -1,
+                                  "AutomationPositionInSet": -1,
+                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "HorizontalAlignment": "Stretch",
@@ -824,6 +955,9 @@ exports[`FlyoutTests Flyout 1`] = `
                               ],
                             },
                             {
+                              "AutomationLevel": -1,
+                              "AutomationPositionInSet": -1,
+                              "AutomationSizeOfSet": -1,
                               "Background": null,
                               "BorderBrush": null,
                               "BorderThickness": "0,0,0,0",
@@ -846,6 +980,9 @@ exports[`FlyoutTests Flyout 1`] = `
                   ],
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",

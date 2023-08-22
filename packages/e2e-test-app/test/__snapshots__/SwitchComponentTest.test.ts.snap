@@ -2,8 +2,10 @@
 
 exports[`SwitchTests Change events can be detected, event bottom 1`] = `
 {
-  "AccessibilityRole": "Switch",
   "AutomationId": "event-switch-bottom",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": null,
   "BorderThickness": "0,0,0,0",
@@ -23,6 +25,9 @@ exports[`SwitchTests Change events can be detected, event bottom 1`] = `
   "XamlType": "Windows.UI.Xaml.Controls.ToggleSwitch",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -39,6 +44,9 @@ exports[`SwitchTests Change events can be detected, event bottom 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.Grid",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -55,6 +63,9 @@ exports[`SwitchTests Change events can be detected, event bottom 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#00FFFFFF",
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -72,6 +83,9 @@ exports[`SwitchTests Change events can be detected, event bottom 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -90,6 +104,9 @@ exports[`SwitchTests Change events can be detected, event bottom 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -108,6 +125,9 @@ exports[`SwitchTests Change events can be detected, event bottom 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Height": 20,
@@ -122,6 +142,9 @@ exports[`SwitchTests Change events can be detected, event bottom 1`] = `
               "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Height": 20,
@@ -136,6 +159,9 @@ exports[`SwitchTests Change events can be detected, event bottom 1`] = `
               "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -155,6 +181,9 @@ exports[`SwitchTests Change events can be detected, event bottom 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": "#FFFFFFFF",
                   "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
                   "BorderThickness": "0,0,0,0",
@@ -174,6 +203,9 @@ exports[`SwitchTests Change events can be detected, event bottom 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.Border",
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "Height": 12,
@@ -190,6 +222,9 @@ exports[`SwitchTests Change events can be detected, event bottom 1`] = `
               ],
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#33000000",
               "BorderBrush": "#00FFFFFF",
               "BorderThickness": "1,1,1,1",
@@ -208,6 +243,9 @@ exports[`SwitchTests Change events can be detected, event bottom 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Primitives.Thumb",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "HorizontalAlignment": "Stretch",
@@ -230,8 +268,10 @@ exports[`SwitchTests Change events can be detected, event bottom 1`] = `
 
 exports[`SwitchTests Change events can be detected, event regression top 1`] = `
 {
-  "AccessibilityRole": "Switch",
   "AutomationId": "event-switch-regression-top",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": null,
   "BorderThickness": "0,0,0,0",
@@ -251,6 +291,9 @@ exports[`SwitchTests Change events can be detected, event regression top 1`] = `
   "XamlType": "Windows.UI.Xaml.Controls.ToggleSwitch",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -267,6 +310,9 @@ exports[`SwitchTests Change events can be detected, event regression top 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.Grid",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -283,6 +329,9 @@ exports[`SwitchTests Change events can be detected, event regression top 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#00FFFFFF",
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -300,6 +349,9 @@ exports[`SwitchTests Change events can be detected, event regression top 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -318,6 +370,9 @@ exports[`SwitchTests Change events can be detected, event regression top 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -336,6 +391,9 @@ exports[`SwitchTests Change events can be detected, event regression top 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Height": 20,
@@ -350,6 +408,9 @@ exports[`SwitchTests Change events can be detected, event regression top 1`] = `
               "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Height": 20,
@@ -364,6 +425,9 @@ exports[`SwitchTests Change events can be detected, event regression top 1`] = `
               "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -383,6 +447,9 @@ exports[`SwitchTests Change events can be detected, event regression top 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": "#FFFFFFFF",
                   "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
                   "BorderThickness": "0,0,0,0",
@@ -402,6 +469,9 @@ exports[`SwitchTests Change events can be detected, event regression top 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.Border",
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "Height": 12,
@@ -418,6 +488,9 @@ exports[`SwitchTests Change events can be detected, event regression top 1`] = `
               ],
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#33000000",
               "BorderBrush": "#00FFFFFF",
               "BorderThickness": "1,1,1,1",
@@ -436,6 +509,9 @@ exports[`SwitchTests Change events can be detected, event regression top 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Primitives.Thumb",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "HorizontalAlignment": "Stretch",
@@ -458,8 +534,10 @@ exports[`SwitchTests Change events can be detected, event regression top 1`] = `
 
 exports[`SwitchTests Change events can be detected, event top 1`] = `
 {
-  "AccessibilityRole": "Switch",
   "AutomationId": "event-switch-top",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": null,
   "BorderThickness": "0,0,0,0",
@@ -479,6 +557,9 @@ exports[`SwitchTests Change events can be detected, event top 1`] = `
   "XamlType": "Windows.UI.Xaml.Controls.ToggleSwitch",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -495,6 +576,9 @@ exports[`SwitchTests Change events can be detected, event top 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.Grid",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -511,6 +595,9 @@ exports[`SwitchTests Change events can be detected, event top 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#00FFFFFF",
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -528,6 +615,9 @@ exports[`SwitchTests Change events can be detected, event top 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -546,6 +636,9 @@ exports[`SwitchTests Change events can be detected, event top 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -564,6 +657,9 @@ exports[`SwitchTests Change events can be detected, event top 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Height": 20,
@@ -578,6 +674,9 @@ exports[`SwitchTests Change events can be detected, event top 1`] = `
               "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Height": 20,
@@ -592,6 +691,9 @@ exports[`SwitchTests Change events can be detected, event top 1`] = `
               "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -611,6 +713,9 @@ exports[`SwitchTests Change events can be detected, event top 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": "#FFFFFFFF",
                   "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
                   "BorderThickness": "0,0,0,0",
@@ -630,6 +735,9 @@ exports[`SwitchTests Change events can be detected, event top 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.Border",
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "Height": 12,
@@ -646,6 +754,9 @@ exports[`SwitchTests Change events can be detected, event top 1`] = `
               ],
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#33000000",
               "BorderBrush": "#00FFFFFF",
               "BorderThickness": "1,1,1,1",
@@ -664,6 +775,9 @@ exports[`SwitchTests Change events can be detected, event top 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Primitives.Thumb",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "HorizontalAlignment": "Stretch",
@@ -686,8 +800,10 @@ exports[`SwitchTests Change events can be detected, event top 1`] = `
 
 exports[`SwitchTests Change events can be detected, events regression bottom 1`] = `
 {
-  "AccessibilityRole": "Switch",
   "AutomationId": "event-switch-regression-bottom",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": null,
   "BorderThickness": "0,0,0,0",
@@ -707,6 +823,9 @@ exports[`SwitchTests Change events can be detected, events regression bottom 1`]
   "XamlType": "Windows.UI.Xaml.Controls.ToggleSwitch",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -723,6 +842,9 @@ exports[`SwitchTests Change events can be detected, events regression bottom 1`]
       "XamlType": "Windows.UI.Xaml.Controls.Grid",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -739,6 +861,9 @@ exports[`SwitchTests Change events can be detected, events regression bottom 1`]
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#00FFFFFF",
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -756,6 +881,9 @@ exports[`SwitchTests Change events can be detected, events regression bottom 1`]
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -774,6 +902,9 @@ exports[`SwitchTests Change events can be detected, events regression bottom 1`]
               "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -792,6 +923,9 @@ exports[`SwitchTests Change events can be detected, events regression bottom 1`]
               "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Height": 20,
@@ -806,6 +940,9 @@ exports[`SwitchTests Change events can be detected, events regression bottom 1`]
               "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Height": 20,
@@ -820,6 +957,9 @@ exports[`SwitchTests Change events can be detected, events regression bottom 1`]
               "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -839,6 +979,9 @@ exports[`SwitchTests Change events can be detected, events regression bottom 1`]
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": "#FFFFFFFF",
                   "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
                   "BorderThickness": "0,0,0,0",
@@ -858,6 +1001,9 @@ exports[`SwitchTests Change events can be detected, events regression bottom 1`]
                   "XamlType": "Windows.UI.Xaml.Controls.Border",
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "Height": 12,
@@ -874,6 +1020,9 @@ exports[`SwitchTests Change events can be detected, events regression bottom 1`]
               ],
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#33000000",
               "BorderBrush": "#00FFFFFF",
               "BorderThickness": "1,1,1,1",
@@ -892,6 +1041,9 @@ exports[`SwitchTests Change events can be detected, events regression bottom 1`]
               "XamlType": "Windows.UI.Xaml.Controls.Primitives.Thumb",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "HorizontalAlignment": "Stretch",
@@ -914,8 +1066,10 @@ exports[`SwitchTests Change events can be detected, events regression bottom 1`]
 
 exports[`SwitchTests Controlled switch 1`] = `
 {
-  "AccessibilityRole": "Switch",
   "AutomationId": "controlled-switch",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": null,
   "BorderThickness": "0,0,0,0",
@@ -935,6 +1089,9 @@ exports[`SwitchTests Controlled switch 1`] = `
   "XamlType": "Windows.UI.Xaml.Controls.ToggleSwitch",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -951,6 +1108,9 @@ exports[`SwitchTests Controlled switch 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.Grid",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -967,6 +1127,9 @@ exports[`SwitchTests Controlled switch 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#00FFFFFF",
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -984,6 +1147,9 @@ exports[`SwitchTests Controlled switch 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -1002,6 +1168,9 @@ exports[`SwitchTests Controlled switch 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -1020,6 +1189,9 @@ exports[`SwitchTests Controlled switch 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Height": 20,
@@ -1034,6 +1206,9 @@ exports[`SwitchTests Controlled switch 1`] = `
               "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Height": 20,
@@ -1048,6 +1223,9 @@ exports[`SwitchTests Controlled switch 1`] = `
               "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -1067,6 +1245,9 @@ exports[`SwitchTests Controlled switch 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": "#FFFFFFFF",
                   "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
                   "BorderThickness": "0,0,0,0",
@@ -1086,6 +1267,9 @@ exports[`SwitchTests Controlled switch 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.Border",
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "Height": 12,
@@ -1102,6 +1286,9 @@ exports[`SwitchTests Controlled switch 1`] = `
               ],
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#33000000",
               "BorderBrush": "#00FFFFFF",
               "BorderThickness": "1,1,1,1",
@@ -1120,6 +1307,9 @@ exports[`SwitchTests Controlled switch 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Primitives.Thumb",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "HorizontalAlignment": "Stretch",
@@ -1142,8 +1332,10 @@ exports[`SwitchTests Controlled switch 1`] = `
 
 exports[`SwitchTests Custom colors can be provided, initial false 1`] = `
 {
-  "AccessibilityRole": "Switch",
   "AutomationId": "initial-false-switch",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": null,
   "BorderThickness": "0,0,0,0",
@@ -1163,6 +1355,9 @@ exports[`SwitchTests Custom colors can be provided, initial false 1`] = `
   "XamlType": "Windows.UI.Xaml.Controls.ToggleSwitch",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -1179,6 +1374,9 @@ exports[`SwitchTests Custom colors can be provided, initial false 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.Grid",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -1195,6 +1393,9 @@ exports[`SwitchTests Custom colors can be provided, initial false 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#00FFFFFF",
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -1212,6 +1413,9 @@ exports[`SwitchTests Custom colors can be provided, initial false 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -1230,6 +1434,9 @@ exports[`SwitchTests Custom colors can be provided, initial false 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -1248,6 +1455,9 @@ exports[`SwitchTests Custom colors can be provided, initial false 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Height": 20,
@@ -1262,6 +1472,9 @@ exports[`SwitchTests Custom colors can be provided, initial false 1`] = `
               "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Height": 20,
@@ -1276,6 +1489,9 @@ exports[`SwitchTests Custom colors can be provided, initial false 1`] = `
               "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -1295,6 +1511,9 @@ exports[`SwitchTests Custom colors can be provided, initial false 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": "#FF0000FF",
                   "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
                   "BorderThickness": "0,0,0,0",
@@ -1314,6 +1533,9 @@ exports[`SwitchTests Custom colors can be provided, initial false 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.Border",
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "Height": 12,
@@ -1330,6 +1552,9 @@ exports[`SwitchTests Custom colors can be provided, initial false 1`] = `
               ],
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#33000000",
               "BorderBrush": "#00FFFFFF",
               "BorderThickness": "1,1,1,1",
@@ -1348,6 +1573,9 @@ exports[`SwitchTests Custom colors can be provided, initial false 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Primitives.Thumb",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "HorizontalAlignment": "Stretch",
@@ -1370,8 +1598,10 @@ exports[`SwitchTests Custom colors can be provided, initial false 1`] = `
 
 exports[`SwitchTests Custom colors can be provided, initial true 1`] = `
 {
-  "AccessibilityRole": "Switch",
   "AutomationId": "initial-true-switch",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": null,
   "BorderThickness": "0,0,0,0",
@@ -1391,6 +1621,9 @@ exports[`SwitchTests Custom colors can be provided, initial true 1`] = `
   "XamlType": "Windows.UI.Xaml.Controls.ToggleSwitch",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -1407,6 +1640,9 @@ exports[`SwitchTests Custom colors can be provided, initial true 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.Grid",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -1423,6 +1659,9 @@ exports[`SwitchTests Custom colors can be provided, initial true 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#00FFFFFF",
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -1440,6 +1679,9 @@ exports[`SwitchTests Custom colors can be provided, initial true 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -1458,6 +1700,9 @@ exports[`SwitchTests Custom colors can be provided, initial true 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -1476,6 +1721,9 @@ exports[`SwitchTests Custom colors can be provided, initial true 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Height": 20,
@@ -1490,6 +1738,9 @@ exports[`SwitchTests Custom colors can be provided, initial true 1`] = `
               "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Height": 20,
@@ -1504,6 +1755,9 @@ exports[`SwitchTests Custom colors can be provided, initial true 1`] = `
               "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -1523,6 +1777,9 @@ exports[`SwitchTests Custom colors can be provided, initial true 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": "#FF0000FF",
                   "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
                   "BorderThickness": "0,0,0,0",
@@ -1542,6 +1799,9 @@ exports[`SwitchTests Custom colors can be provided, initial true 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.Border",
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "Height": 12,
@@ -1558,6 +1818,9 @@ exports[`SwitchTests Custom colors can be provided, initial true 1`] = `
               ],
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#33000000",
               "BorderBrush": "#00FFFFFF",
               "BorderThickness": "1,1,1,1",
@@ -1576,6 +1839,9 @@ exports[`SwitchTests Custom colors can be provided, initial true 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Primitives.Thumb",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "HorizontalAlignment": "Stretch",
@@ -1598,8 +1864,10 @@ exports[`SwitchTests Custom colors can be provided, initial true 1`] = `
 
 exports[`SwitchTests Switches can be disabled, initial false 1`] = `
 {
-  "AccessibilityRole": "Switch",
   "AutomationId": "disabled-initial-off",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": null,
   "BorderThickness": "0,0,0,0",
@@ -1619,6 +1887,9 @@ exports[`SwitchTests Switches can be disabled, initial false 1`] = `
   "XamlType": "Windows.UI.Xaml.Controls.ToggleSwitch",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -1635,6 +1906,9 @@ exports[`SwitchTests Switches can be disabled, initial false 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.Grid",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -1651,7 +1925,10 @@ exports[`SwitchTests Switches can be disabled, initial false 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
           "children": [
             {
-              "Background": "#00000034",
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
+              "Background": "#00000040",
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
               "Clip": null,
@@ -1668,6 +1945,9 @@ exports[`SwitchTests Switches can be disabled, initial false 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -1686,6 +1966,9 @@ exports[`SwitchTests Switches can be disabled, initial false 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -1704,6 +1987,9 @@ exports[`SwitchTests Switches can be disabled, initial false 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Height": 20,
@@ -1718,6 +2004,9 @@ exports[`SwitchTests Switches can be disabled, initial false 1`] = `
               "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Height": 20,
@@ -1732,6 +2021,9 @@ exports[`SwitchTests Switches can be disabled, initial false 1`] = `
               "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -1751,6 +2043,9 @@ exports[`SwitchTests Switches can be disabled, initial false 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": "#FFFFFFFF",
                   "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
                   "BorderThickness": "0,0,0,0",
@@ -1770,6 +2065,9 @@ exports[`SwitchTests Switches can be disabled, initial false 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.Border",
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "Height": 12,
@@ -1786,6 +2084,9 @@ exports[`SwitchTests Switches can be disabled, initial false 1`] = `
               ],
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#33000000",
               "BorderBrush": "#00FFFFFF",
               "BorderThickness": "1,1,1,1",
@@ -1804,6 +2105,9 @@ exports[`SwitchTests Switches can be disabled, initial false 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Primitives.Thumb",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "HorizontalAlignment": "Stretch",
@@ -1826,8 +2130,10 @@ exports[`SwitchTests Switches can be disabled, initial false 1`] = `
 
 exports[`SwitchTests Switches can be disabled, initial true 1`] = `
 {
-  "AccessibilityRole": "Switch",
   "AutomationId": "disabled-initial-on",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": null,
   "BorderThickness": "0,0,0,0",
@@ -1847,6 +2153,9 @@ exports[`SwitchTests Switches can be disabled, initial true 1`] = `
   "XamlType": "Windows.UI.Xaml.Controls.ToggleSwitch",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -1863,6 +2172,9 @@ exports[`SwitchTests Switches can be disabled, initial true 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.Grid",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -1879,7 +2191,10 @@ exports[`SwitchTests Switches can be disabled, initial true 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
           "children": [
             {
-              "Background": "#00000034",
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
+              "Background": "#00000040",
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
               "Clip": null,
@@ -1896,6 +2211,9 @@ exports[`SwitchTests Switches can be disabled, initial true 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -1914,6 +2232,9 @@ exports[`SwitchTests Switches can be disabled, initial true 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -1932,6 +2253,9 @@ exports[`SwitchTests Switches can be disabled, initial true 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Height": 20,
@@ -1946,6 +2270,9 @@ exports[`SwitchTests Switches can be disabled, initial true 1`] = `
               "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Height": 20,
@@ -1960,6 +2287,9 @@ exports[`SwitchTests Switches can be disabled, initial true 1`] = `
               "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -1979,6 +2309,9 @@ exports[`SwitchTests Switches can be disabled, initial true 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": "#FFFFFFFF",
                   "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
                   "BorderThickness": "0,0,0,0",
@@ -1998,6 +2331,9 @@ exports[`SwitchTests Switches can be disabled, initial true 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.Border",
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "Height": 12,
@@ -2014,6 +2350,9 @@ exports[`SwitchTests Switches can be disabled, initial true 1`] = `
               ],
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#33000000",
               "BorderBrush": "#00FFFFFF",
               "BorderThickness": "1,1,1,1",
@@ -2032,6 +2371,9 @@ exports[`SwitchTests Switches can be disabled, initial true 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Primitives.Thumb",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "HorizontalAlignment": "Stretch",
@@ -2054,8 +2396,10 @@ exports[`SwitchTests Switches can be disabled, initial true 1`] = `
 
 exports[`SwitchTests Switches can be set to true/false, initial false 1`] = `
 {
-  "AccessibilityRole": "Switch",
   "AutomationId": "on-off-initial-off",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": null,
   "BorderThickness": "0,0,0,0",
@@ -2075,6 +2419,9 @@ exports[`SwitchTests Switches can be set to true/false, initial false 1`] = `
   "XamlType": "Windows.UI.Xaml.Controls.ToggleSwitch",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -2091,6 +2438,9 @@ exports[`SwitchTests Switches can be set to true/false, initial false 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.Grid",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -2107,6 +2457,9 @@ exports[`SwitchTests Switches can be set to true/false, initial false 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#00FFFFFF",
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -2124,6 +2477,9 @@ exports[`SwitchTests Switches can be set to true/false, initial false 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -2142,6 +2498,9 @@ exports[`SwitchTests Switches can be set to true/false, initial false 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -2160,6 +2519,9 @@ exports[`SwitchTests Switches can be set to true/false, initial false 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Height": 20,
@@ -2174,6 +2536,9 @@ exports[`SwitchTests Switches can be set to true/false, initial false 1`] = `
               "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Height": 20,
@@ -2188,6 +2553,9 @@ exports[`SwitchTests Switches can be set to true/false, initial false 1`] = `
               "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -2207,6 +2575,9 @@ exports[`SwitchTests Switches can be set to true/false, initial false 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": "#FFFFFFFF",
                   "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
                   "BorderThickness": "0,0,0,0",
@@ -2226,6 +2597,9 @@ exports[`SwitchTests Switches can be set to true/false, initial false 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.Border",
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "Height": 12,
@@ -2242,6 +2616,9 @@ exports[`SwitchTests Switches can be set to true/false, initial false 1`] = `
               ],
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#33000000",
               "BorderBrush": "#00FFFFFF",
               "BorderThickness": "1,1,1,1",
@@ -2260,6 +2637,9 @@ exports[`SwitchTests Switches can be set to true/false, initial false 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Primitives.Thumb",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "HorizontalAlignment": "Stretch",
@@ -2282,8 +2662,10 @@ exports[`SwitchTests Switches can be set to true/false, initial false 1`] = `
 
 exports[`SwitchTests Switches can be set to true/false, initial true 1`] = `
 {
-  "AccessibilityRole": "Switch",
   "AutomationId": "on-off-initial-on",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": null,
   "BorderThickness": "0,0,0,0",
@@ -2303,6 +2685,9 @@ exports[`SwitchTests Switches can be set to true/false, initial true 1`] = `
   "XamlType": "Windows.UI.Xaml.Controls.ToggleSwitch",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -2319,6 +2704,9 @@ exports[`SwitchTests Switches can be set to true/false, initial true 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.Grid",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -2335,6 +2723,9 @@ exports[`SwitchTests Switches can be set to true/false, initial true 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#00FFFFFF",
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -2352,6 +2743,9 @@ exports[`SwitchTests Switches can be set to true/false, initial true 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -2370,6 +2764,9 @@ exports[`SwitchTests Switches can be set to true/false, initial true 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -2388,6 +2785,9 @@ exports[`SwitchTests Switches can be set to true/false, initial true 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Height": 20,
@@ -2402,6 +2802,9 @@ exports[`SwitchTests Switches can be set to true/false, initial true 1`] = `
               "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Height": 20,
@@ -2416,6 +2819,9 @@ exports[`SwitchTests Switches can be set to true/false, initial true 1`] = `
               "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -2435,6 +2841,9 @@ exports[`SwitchTests Switches can be set to true/false, initial true 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": "#FFFFFFFF",
                   "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
                   "BorderThickness": "0,0,0,0",
@@ -2454,6 +2863,9 @@ exports[`SwitchTests Switches can be set to true/false, initial true 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.Border",
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "Height": 12,
@@ -2470,6 +2882,9 @@ exports[`SwitchTests Switches can be set to true/false, initial true 1`] = `
               ],
             },
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#33000000",
               "BorderBrush": "#00FFFFFF",
               "BorderThickness": "1,1,1,1",
@@ -2488,6 +2903,9 @@ exports[`SwitchTests Switches can be set to true/false, initial true 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Primitives.Thumb",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "HorizontalAlignment": "Stretch",
@@ -2511,6 +2929,9 @@ exports[`SwitchTests Switches can be set to true/false, initial true 1`] = `
 exports[`SwitchTests Switches can have customized accessibility 1`] = `
 {
   "AutomationId": "accessibility-switch",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -2529,6 +2950,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "0,0,0,0",
@@ -2547,7 +2971,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
-          "AccessibilityRole": "Switch",
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -2567,6 +2993,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.ToggleSwitch",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -2583,6 +3012,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
@@ -2599,6 +3031,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.Grid",
                   "children": [
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": "#00FFFFFF",
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -2616,6 +3051,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.Grid",
                     },
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": null,
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -2634,6 +3072,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
                     },
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": null,
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -2652,6 +3093,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
                     },
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
                       "Height": 20,
@@ -2666,6 +3110,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                       "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
                     },
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
                       "Height": 20,
@@ -2680,6 +3127,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                       "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
                     },
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": null,
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -2699,6 +3149,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.Grid",
                       "children": [
                         {
+                          "AutomationLevel": -1,
+                          "AutomationPositionInSet": -1,
+                          "AutomationSizeOfSet": -1,
                           "Background": "#FFFFFFFF",
                           "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
                           "BorderThickness": "0,0,0,0",
@@ -2718,6 +3171,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                           "XamlType": "Windows.UI.Xaml.Controls.Border",
                         },
                         {
+                          "AutomationLevel": -1,
+                          "AutomationPositionInSet": -1,
+                          "AutomationSizeOfSet": -1,
                           "Clip": null,
                           "FlowDirection": "LeftToRight",
                           "Height": 12,
@@ -2734,6 +3190,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                       ],
                     },
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": "#33000000",
                       "BorderBrush": "#00FFFFFF",
                       "BorderThickness": "1,1,1,1",
@@ -2752,6 +3211,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.Primitives.Thumb",
                       "children": [
                         {
+                          "AutomationLevel": -1,
+                          "AutomationPositionInSet": -1,
+                          "AutomationSizeOfSet": -1,
                           "Clip": null,
                           "FlowDirection": "LeftToRight",
                           "HorizontalAlignment": "Stretch",
@@ -2771,7 +3233,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
           ],
         },
         {
-          "AccessibilityRole": "Switch",
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -2791,6 +3255,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.ToggleSwitch",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -2807,6 +3274,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
@@ -2823,6 +3293,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.Grid",
                   "children": [
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": "#00FFFFFF",
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -2840,6 +3313,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.Grid",
                     },
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": null,
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -2858,6 +3334,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
                     },
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": null,
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -2876,6 +3355,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
                     },
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
                       "Height": 20,
@@ -2890,6 +3372,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                       "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
                     },
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
                       "Height": 20,
@@ -2904,6 +3389,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                       "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
                     },
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": null,
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -2923,6 +3411,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.Grid",
                       "children": [
                         {
+                          "AutomationLevel": -1,
+                          "AutomationPositionInSet": -1,
+                          "AutomationSizeOfSet": -1,
                           "Background": "#FFFFFFFF",
                           "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
                           "BorderThickness": "0,0,0,0",
@@ -2942,6 +3433,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                           "XamlType": "Windows.UI.Xaml.Controls.Border",
                         },
                         {
+                          "AutomationLevel": -1,
+                          "AutomationPositionInSet": -1,
+                          "AutomationSizeOfSet": -1,
                           "Clip": null,
                           "FlowDirection": "LeftToRight",
                           "Height": 12,
@@ -2958,6 +3452,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                       ],
                     },
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": "#33000000",
                       "BorderBrush": "#00FFFFFF",
                       "BorderThickness": "1,1,1,1",
@@ -2976,6 +3473,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.Primitives.Thumb",
                       "children": [
                         {
+                          "AutomationLevel": -1,
+                          "AutomationPositionInSet": -1,
+                          "AutomationSizeOfSet": -1,
                           "Clip": null,
                           "FlowDirection": "LeftToRight",
                           "HorizontalAlignment": "Stretch",
@@ -2997,6 +3497,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "0,0,0,0",
@@ -3015,7 +3518,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
-          "AccessibilityRole": "Switch",
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -3035,6 +3540,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.ToggleSwitch",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -3051,6 +3559,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
@@ -3067,6 +3578,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.Grid",
                   "children": [
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": "#00FFFFFF",
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -3084,6 +3598,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.Grid",
                     },
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": null,
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -3102,6 +3619,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
                     },
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": null,
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -3120,6 +3640,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
                     },
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
                       "Height": 20,
@@ -3134,6 +3657,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                       "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
                     },
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
                       "Height": 20,
@@ -3148,6 +3674,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                       "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
                     },
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": null,
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -3167,6 +3696,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.Grid",
                       "children": [
                         {
+                          "AutomationLevel": -1,
+                          "AutomationPositionInSet": -1,
+                          "AutomationSizeOfSet": -1,
                           "Background": "#FFFFFFFF",
                           "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
                           "BorderThickness": "0,0,0,0",
@@ -3186,6 +3718,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                           "XamlType": "Windows.UI.Xaml.Controls.Border",
                         },
                         {
+                          "AutomationLevel": -1,
+                          "AutomationPositionInSet": -1,
+                          "AutomationSizeOfSet": -1,
                           "Clip": null,
                           "FlowDirection": "LeftToRight",
                           "Height": 12,
@@ -3202,6 +3737,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                       ],
                     },
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": "#33000000",
                       "BorderBrush": "#00FFFFFF",
                       "BorderThickness": "1,1,1,1",
@@ -3220,6 +3758,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.Primitives.Thumb",
                       "children": [
                         {
+                          "AutomationLevel": -1,
+                          "AutomationPositionInSet": -1,
+                          "AutomationSizeOfSet": -1,
                           "Clip": null,
                           "FlowDirection": "LeftToRight",
                           "HorizontalAlignment": "Stretch",
@@ -3239,7 +3780,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
           ],
         },
         {
-          "AccessibilityRole": "Switch",
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -3259,6 +3802,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.ToggleSwitch",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -3275,6 +3821,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
@@ -3291,6 +3840,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.Grid",
                   "children": [
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": "#00FFFFFF",
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -3308,6 +3860,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.Grid",
                     },
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": null,
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -3326,6 +3881,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
                     },
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": null,
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -3344,6 +3902,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
                     },
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
                       "Height": 20,
@@ -3358,6 +3919,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                       "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
                     },
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
                       "Height": 20,
@@ -3372,6 +3936,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                       "XamlType": "Windows.UI.Xaml.Shapes.Rectangle",
                     },
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": null,
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -3391,6 +3958,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.Grid",
                       "children": [
                         {
+                          "AutomationLevel": -1,
+                          "AutomationPositionInSet": -1,
+                          "AutomationSizeOfSet": -1,
                           "Background": "#FFFFFFFF",
                           "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
                           "BorderThickness": "0,0,0,0",
@@ -3410,6 +3980,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                           "XamlType": "Windows.UI.Xaml.Controls.Border",
                         },
                         {
+                          "AutomationLevel": -1,
+                          "AutomationPositionInSet": -1,
+                          "AutomationSizeOfSet": -1,
                           "Clip": null,
                           "FlowDirection": "LeftToRight",
                           "Height": 12,
@@ -3426,6 +3999,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                       ],
                     },
                     {
+                      "AutomationLevel": -1,
+                      "AutomationPositionInSet": -1,
+                      "AutomationSizeOfSet": -1,
                       "Background": "#33000000",
                       "BorderBrush": "#00FFFFFF",
                       "BorderThickness": "1,1,1,1",
@@ -3444,6 +4020,9 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.Primitives.Thumb",
                       "children": [
                         {
+                          "AutomationLevel": -1,
+                          "AutomationPositionInSet": -1,
+                          "AutomationSizeOfSet": -1,
                           "Clip": null,
                           "FlowDirection": "LeftToRight",
                           "HorizontalAlignment": "Stretch",

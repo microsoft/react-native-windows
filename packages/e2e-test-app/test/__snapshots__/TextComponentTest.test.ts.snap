@@ -3,6 +3,9 @@
 exports[`TextTest Text alignment 1`] = `
 {
   "AutomationId": "text-align",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -21,6 +24,9 @@ exports[`TextTest Text alignment 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -37,6 +43,9 @@ exports[`TextTest Text alignment 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -53,6 +62,9 @@ exports[`TextTest Text alignment 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -69,6 +81,9 @@ exports[`TextTest Text alignment 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -85,6 +100,9 @@ exports[`TextTest Text alignment 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -107,6 +125,9 @@ exports[`TextTest Text alignment 1`] = `
 exports[`TextTest Text background color 1`] = `
 {
   "AutomationId": "text-background-color",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -125,6 +146,9 @@ exports[`TextTest Text background color 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FFFFC0CB",
@@ -142,6 +166,9 @@ exports[`TextTest Text background color 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -159,6 +186,9 @@ exports[`TextTest Text background color 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -187,6 +217,9 @@ exports[`TextTest Text background color 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FFFFC0CB",
@@ -204,6 +237,9 @@ exports[`TextTest Text background color 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -242,6 +278,9 @@ exports[`TextTest Text background color 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FFFFA500",
@@ -280,6 +319,9 @@ exports[`TextTest Text background color 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FFFFA500",
@@ -308,6 +350,9 @@ exports[`TextTest Text background color 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FFFFA500",
@@ -336,6 +381,9 @@ exports[`TextTest Text background color 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -374,6 +422,9 @@ exports[`TextTest Text background color 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -402,6 +453,9 @@ exports[`TextTest Text background color 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -430,6 +484,9 @@ exports[`TextTest Text background color 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -458,6 +515,9 @@ exports[`TextTest Text background color 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -512,6 +572,9 @@ exports[`TextTest Text background color 1`] = `
 exports[`TextTest Text border 1`] = `
 {
   "AutomationId": "text-border",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -530,6 +593,9 @@ exports[`TextTest Text border 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#FF000000",
       "BorderThickness": "2,2,2,2",
@@ -548,6 +614,9 @@ exports[`TextTest Text border 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -566,6 +635,9 @@ exports[`TextTest Text border 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#FF008000",
       "BorderThickness": "3,3,3,3",
@@ -584,6 +656,9 @@ exports[`TextTest Text border 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -604,6 +679,9 @@ exports[`TextTest Text border 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -626,6 +704,9 @@ exports[`TextTest Text border 1`] = `
 exports[`TextTest Text can have advanced borders 1`] = `
 {
   "AutomationId": "advanced-borders",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -644,6 +725,9 @@ exports[`TextTest Text can have advanced borders 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#FFFF0000",
       "BorderThickness": "20,15,10,5",
@@ -662,6 +746,9 @@ exports[`TextTest Text can have advanced borders 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -680,6 +767,9 @@ exports[`TextTest Text can have advanced borders 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#FF0000FF",
       "BorderThickness": "20,15,10,5",
@@ -698,6 +788,9 @@ exports[`TextTest Text can have advanced borders 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -716,6 +809,9 @@ exports[`TextTest Text can have advanced borders 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#FF008000",
       "BorderThickness": "1,1,1,1",
@@ -734,6 +830,9 @@ exports[`TextTest Text can have advanced borders 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -758,6 +857,9 @@ exports[`TextTest Text can have advanced borders 1`] = `
 exports[`TextTest Text can have customized accessibility 1`] = `
 {
   "AutomationId": "text-accessibility",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": null,
   "BorderThickness": "0,0,0,0",
@@ -777,6 +879,9 @@ exports[`TextTest Text can have customized accessibility 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewControl",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -794,6 +899,9 @@ exports[`TextTest Text can have customized accessibility 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": "#E4000000",
           "BorderThickness": "0,0,0,0",
@@ -812,6 +920,9 @@ exports[`TextTest Text can have customized accessibility 1`] = `
           "XamlType": "Microsoft.ReactNative.ViewPanel",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Foreground": "#FF000000",
@@ -838,6 +949,9 @@ exports[`TextTest Text can have customized accessibility 1`] = `
 exports[`TextTest Text can have customized dimensions 1`] = `
 {
   "AutomationId": "text-height-width",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": null,
   "BorderThickness": "0,0,0,0",
@@ -857,6 +971,9 @@ exports[`TextTest Text can have customized dimensions 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewControl",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -874,6 +991,9 @@ exports[`TextTest Text can have customized dimensions 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": "#E4000000",
           "BorderThickness": "0,0,0,0",
@@ -892,6 +1012,9 @@ exports[`TextTest Text can have customized dimensions 1`] = `
           "XamlType": "Microsoft.ReactNative.ViewPanel",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Foreground": "#FF000000",
@@ -918,6 +1041,9 @@ exports[`TextTest Text can have customized dimensions 1`] = `
 exports[`TextTest Text can have font variants 1`] = `
 {
   "AutomationId": "font-variants",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -936,6 +1062,9 @@ exports[`TextTest Text can have font variants 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -952,6 +1081,9 @@ exports[`TextTest Text can have font variants 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -968,6 +1100,9 @@ exports[`TextTest Text can have font variants 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -984,6 +1119,9 @@ exports[`TextTest Text can have font variants 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1000,6 +1138,9 @@ exports[`TextTest Text can have font variants 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1022,6 +1163,9 @@ exports[`TextTest Text can have font variants 1`] = `
 exports[`TextTest Text color 1`] = `
 {
   "AutomationId": "text-color",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Clip": null,
   "FlowDirection": "LeftToRight",
   "Foreground": "#FFFF0000",
@@ -1042,6 +1186,9 @@ exports[`TextTest Text color 1`] = `
 exports[`TextTest Text color with children 1`] = `
 {
   "AutomationId": "text-outer-color",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Clip": null,
   "FlowDirection": "LeftToRight",
   "Foreground": "#FF000000",
@@ -1062,6 +1209,9 @@ exports[`TextTest Text color with children 1`] = `
 exports[`TextTest Text decoration solid linethrough 1`] = `
 {
   "AutomationId": "text-decoration-solid-linethru",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Clip": null,
   "FlowDirection": "LeftToRight",
   "Foreground": "#FF000000",
@@ -1082,6 +1232,9 @@ exports[`TextTest Text decoration solid linethrough 1`] = `
 exports[`TextTest Text decoration underline 1`] = `
 {
   "AutomationId": "text-decoration-underline",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Clip": null,
   "FlowDirection": "LeftToRight",
   "Foreground": "#FF000000",
@@ -1102,6 +1255,9 @@ exports[`TextTest Text decoration underline 1`] = `
 exports[`TextTest Text ellipsize 1`] = `
 {
   "AutomationId": "text-ellipsize",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -1120,6 +1276,9 @@ exports[`TextTest Text ellipsize 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1136,6 +1295,9 @@ exports[`TextTest Text ellipsize 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1152,6 +1314,9 @@ exports[`TextTest Text ellipsize 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1168,6 +1333,9 @@ exports[`TextTest Text ellipsize 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1184,6 +1352,9 @@ exports[`TextTest Text ellipsize 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1200,6 +1371,9 @@ exports[`TextTest Text ellipsize 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1216,6 +1390,9 @@ exports[`TextTest Text ellipsize 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1232,6 +1409,9 @@ exports[`TextTest Text ellipsize 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1254,6 +1434,9 @@ exports[`TextTest Text ellipsize 1`] = `
 exports[`TextTest Text font family 1`] = `
 {
   "AutomationId": "text-font-family",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Clip": null,
   "FlowDirection": "LeftToRight",
   "Foreground": "#FF000000",
@@ -1274,6 +1457,9 @@ exports[`TextTest Text font family 1`] = `
 exports[`TextTest Text font padding 1`] = `
 {
   "AutomationId": "text-font-padding",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -1292,6 +1478,9 @@ exports[`TextTest Text font padding 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "0,0,0,0",
@@ -1310,6 +1499,9 @@ exports[`TextTest Text font padding 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -1326,6 +1518,9 @@ exports[`TextTest Text font padding 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
         },
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -1344,6 +1539,9 @@ exports[`TextTest Text font padding 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "0,0,0,0",
@@ -1362,6 +1560,9 @@ exports[`TextTest Text font padding 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -1378,6 +1579,9 @@ exports[`TextTest Text font padding 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
         },
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -1402,6 +1606,9 @@ exports[`TextTest Text font padding 1`] = `
 exports[`TextTest Text force one line 1`] = `
 {
   "AutomationId": "text-one-line",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Clip": null,
   "FlowDirection": "LeftToRight",
   "Foreground": "#FF000000",
@@ -1422,6 +1629,9 @@ exports[`TextTest Text force one line 1`] = `
 exports[`TextTest Text is selectable 1`] = `
 {
   "AutomationId": "text-selectable",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Clip": null,
   "FlowDirection": "LeftToRight",
   "Foreground": "#FF000000",
@@ -1442,6 +1652,9 @@ exports[`TextTest Text is selectable 1`] = `
 exports[`TextTest Text letter spacing 1`] = `
 {
   "AutomationId": "text-letter-spacing",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -1460,6 +1673,9 @@ exports[`TextTest Text letter spacing 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1476,6 +1692,9 @@ exports[`TextTest Text letter spacing 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1492,6 +1711,9 @@ exports[`TextTest Text letter spacing 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1508,6 +1730,9 @@ exports[`TextTest Text letter spacing 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "0,0,0,0",
@@ -1526,6 +1751,9 @@ exports[`TextTest Text letter spacing 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -1544,6 +1772,9 @@ exports[`TextTest Text letter spacing 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1560,6 +1791,9 @@ exports[`TextTest Text letter spacing 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1582,6 +1816,9 @@ exports[`TextTest Text letter spacing 1`] = `
 exports[`TextTest Text line height 1`] = `
 {
   "AutomationId": "text-line-height",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -1600,6 +1837,9 @@ exports[`TextTest Text line height 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1616,6 +1856,9 @@ exports[`TextTest Text line height 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1638,6 +1881,9 @@ exports[`TextTest Text line height 1`] = `
 exports[`TextTest Text padding 1`] = `
 {
   "AutomationId": "text-padding",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Clip": null,
   "FlowDirection": "LeftToRight",
   "Foreground": "#FF000000",
@@ -1658,6 +1904,9 @@ exports[`TextTest Text padding 1`] = `
 exports[`TextTest Text ranging opacity 1`] = `
 {
   "AutomationId": "text-opacity",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -1676,6 +1925,9 @@ exports[`TextTest Text ranging opacity 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1692,6 +1944,9 @@ exports[`TextTest Text ranging opacity 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1708,6 +1963,9 @@ exports[`TextTest Text ranging opacity 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1724,6 +1982,9 @@ exports[`TextTest Text ranging opacity 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1740,6 +2001,9 @@ exports[`TextTest Text ranging opacity 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1756,6 +2020,9 @@ exports[`TextTest Text ranging opacity 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1772,6 +2039,9 @@ exports[`TextTest Text ranging opacity 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1788,6 +2058,9 @@ exports[`TextTest Text ranging opacity 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1804,6 +2077,9 @@ exports[`TextTest Text ranging opacity 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1820,6 +2096,9 @@ exports[`TextTest Text ranging opacity 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1842,6 +2121,9 @@ exports[`TextTest Text ranging opacity 1`] = `
 exports[`TextTest Text selection color 1`] = `
 {
   "AutomationId": "text-selection-color",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Clip": null,
   "FlowDirection": "LeftToRight",
   "Foreground": "#FF000000",
@@ -1862,6 +2144,9 @@ exports[`TextTest Text selection color 1`] = `
 exports[`TextTest Text shadows 1`] = `
 {
   "AutomationId": "text-shadow",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Clip": null,
   "FlowDirection": "LeftToRight",
   "Foreground": "#FF000000",
@@ -1882,6 +2167,9 @@ exports[`TextTest Text shadows 1`] = `
 exports[`TextTest Text size 1`] = `
 {
   "AutomationId": "text-size",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Clip": null,
   "FlowDirection": "LeftToRight",
   "Foreground": "#FF000000",
@@ -1902,6 +2190,9 @@ exports[`TextTest Text size 1`] = `
 exports[`TextTest Text transform 1`] = `
 {
   "AutomationId": "text-transform",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -1920,6 +2211,9 @@ exports[`TextTest Text transform 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1936,6 +2230,9 @@ exports[`TextTest Text transform 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1952,6 +2249,9 @@ exports[`TextTest Text transform 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1968,6 +2268,9 @@ exports[`TextTest Text transform 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -1984,6 +2287,9 @@ exports[`TextTest Text transform 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -2000,6 +2306,9 @@ exports[`TextTest Text transform 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -2016,6 +2325,9 @@ exports[`TextTest Text transform 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -2032,6 +2344,9 @@ exports[`TextTest Text transform 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -2048,6 +2363,9 @@ exports[`TextTest Text transform 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -2064,6 +2382,9 @@ exports[`TextTest Text transform 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -2083,6 +2404,9 @@ exports[`TextTest Text transform 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewControl",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -2100,6 +2424,9 @@ exports[`TextTest Text transform 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
           "children": [
             {
+              "AutomationLevel": -1,
+              "AutomationPositionInSet": -1,
+              "AutomationSizeOfSet": -1,
               "Background": "#00FFFFFF",
               "BorderBrush": "#E4000000",
               "BorderThickness": "0,0,0,0",
@@ -2118,6 +2445,9 @@ exports[`TextTest Text transform 1`] = `
               "XamlType": "Microsoft.ReactNative.ViewPanel",
               "children": [
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "Foreground": "#FF000000",
@@ -2134,6 +2464,9 @@ exports[`TextTest Text transform 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
                 },
                 {
+                  "AutomationLevel": -1,
+                  "AutomationPositionInSet": -1,
+                  "AutomationSizeOfSet": -1,
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
                   "Foreground": "#FF000000",
@@ -2162,6 +2495,9 @@ exports[`TextTest Text transform 1`] = `
 exports[`TextTest Text unicode characters 1`] = `
 {
   "AutomationId": "text-unicode",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -2180,6 +2516,9 @@ exports[`TextTest Text unicode characters 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "0,0,0,0",
@@ -2198,6 +2537,9 @@ exports[`TextTest Text unicode characters 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -2216,6 +2558,9 @@ exports[`TextTest Text unicode characters 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "0,0,0,0",
@@ -2234,6 +2579,9 @@ exports[`TextTest Text unicode characters 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -2252,6 +2600,9 @@ exports[`TextTest Text unicode characters 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "0,0,0,0",
@@ -2270,6 +2621,9 @@ exports[`TextTest Text unicode characters 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -2288,6 +2642,9 @@ exports[`TextTest Text unicode characters 1`] = `
       ],
     },
     {
+      "AutomationLevel": -1,
+      "AutomationPositionInSet": -1,
+      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#E4000000",
       "BorderThickness": "0,0,0,0",
@@ -2306,6 +2663,9 @@ exports[`TextTest Text unicode characters 1`] = `
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
+          "AutomationLevel": -1,
+          "AutomationPositionInSet": -1,
+          "AutomationSizeOfSet": -1,
           "Clip": null,
           "FlowDirection": "LeftToRight",
           "Foreground": "#FF000000",
@@ -2330,6 +2690,9 @@ exports[`TextTest Text unicode characters 1`] = `
 exports[`TextTest Text wrapping 1`] = `
 {
   "AutomationId": "text-wrap",
+  "AutomationLevel": -1,
+  "AutomationPositionInSet": -1,
+  "AutomationSizeOfSet": -1,
   "Clip": null,
   "FlowDirection": "LeftToRight",
   "Foreground": "#FF000000",
