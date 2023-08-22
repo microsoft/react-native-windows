@@ -96,6 +96,8 @@ export type TextProps = $ReadOnly<{|
   'aria-disabled'?: ?boolean,
   'aria-expanded'?: ?boolean,
   'aria-selected'?: ?boolean,
+  'aria-multiselectable'?: ?boolean, // Win32
+  'aria-required'?: ?boolean, // Win32
   'aria-controls'?: ?Stringish, // Win32
   'aria-describedby'?: ?Stringish, // Win32
   'aria-description'?: ?Stringish, // Win32
