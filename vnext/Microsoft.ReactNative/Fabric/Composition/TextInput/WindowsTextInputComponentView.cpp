@@ -798,8 +798,11 @@ void WindowsTextInputComponentView::updateLayoutMetrics(
   unsigned int newWidth = static_cast<unsigned int>(layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor);
   unsigned int newHeight = static_cast<unsigned int>(layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor);
 
-  if (newWidth != m_imgWidth || newHeight != m_imgHeight) {
-    m_drawingSurface = nullptr; // Invalidate surface if we get a size change
+  bool isMinimized =
+      layoutMetrics.frame.size.width <= (layoutMetrics.contentInsets.left + layoutMetrics.contentInsets.top +
+                                         layoutMetrics.contentInsets.bottom + layoutMetrics.contentInsets.right);
+  if (!isMinimized && (newWidth != m_imgWidth || newHeight != m_imgHeight)) {
+    m_drawingSurface = nullptr; // Invalidate surface if we get a size change that is not the app being minimized
   }
 
   m_imgWidth = newWidth;
