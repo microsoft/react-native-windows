@@ -181,7 +181,7 @@ class MultiSelectionExample extends React.Component<{}, IMultiSelectionExampleSt
 
   public render() {
     return (
-      <ViewWin32 accessible accessibilityRole="tablist" accessibilityState={{multiselectable: true}}>
+      <ViewWin32 accessible accessibilityRole="tablist" aria-required aria-multiselectable>
         <SelectionItemComponent
           value={1}
           color="#aee8fcff"
