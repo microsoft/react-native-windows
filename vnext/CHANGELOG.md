@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 17 Aug 2023 05:15:33 GMT and should not be manually modified.
+This log was last generated on Wed, 23 Aug 2023 05:13:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.695
+
+Wed, 23 Aug 2023 05:13:04 GMT
+
+### Changes
+
+- Revert "[Fabric] Add accessibilityHint support to UIA tree (#12036)" (email not defined)
+- Components can provide a default accessible name Text component falls back to the content if accessibleLabel isn't set (26607885+chrisglein@users.noreply.github.com)
+- Point Desktop.IntegrationTests::HttpResourceIntegrationTests to a non-rate limited API (jthysell@microsoft.com)
 
 ## 0.0.0-canary.694
 
