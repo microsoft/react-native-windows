@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Revert \"[Fabric] Add accessibilityHint support to UIA tree (#12036)\"",
-  "packageName": "react-native-windows",
-  "email": "email not defined",
-  "dependentChangeType": "patch"
-}

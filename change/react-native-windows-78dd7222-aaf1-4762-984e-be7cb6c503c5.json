@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Components can provide a default accessible name Text component falls back to the content if accessibleLabel isn't set",
-  "packageName": "react-native-windows",
-  "email": "26607885+chrisglein@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
