@@ -32,50 +32,6 @@ using namespace facebook::react;
 
 namespace Microsoft::ReactNative {
 
-static YGConfigRef make_yoga_config(winrt::Microsoft::ReactNative::ReactContext const &context, YGLogger logger) {
-  const auto config = YGConfigNew();
-  if (React::implementation::QuirkSettings::GetUseWebFlexBasisBehavior(context.Properties()))
-    YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureWebFlexBasis, true);
-  auto errata = YGErrataAll;
-  if (!React::implementation::QuirkSettings::GetMatchAndroidAndIOSStretchBehavior(context.Properties()))
-    errata &= ~YGErrataStretchFlexBasis;
-  YGConfigSetErrata(config, errata);
-#if defined(_DEBUG)
-  YGConfigSetLogger(config, logger);
-
-  // To Debug Yoga layout, uncomment the following line.
-  // YGConfigSetPrintTreeFlag(config, true);
-
-  // Additional logging can be enabled editing yoga.cpp (e.g. gPrintChanges,
-  // gPrintSkips)
-#endif
-
-  return config;
-}
-
-static void YogaNodeOnlyDeleter(YGNodeRef node) {
-  YGNodeFree(node);
-}
-
-static void YogaNodeAndConfigDeleter(YGNodeRef node) {
-  const auto config = YGNodeGetConfig(node);
-  YGNodeFree(node);
-  YGConfigFree(config);
-}
-
-static YogaNodePtr make_yoga_node(
-    YGConfigRef const &globalConfig,
-    winrt::Microsoft::ReactNative::ReactContext const &context,
-    YGLogger logger) {
-  const auto layoutConformanceEnabled =
-      winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetEnableExperimentalLayoutConformance(
-          context.Properties());
-  const auto config = layoutConformanceEnabled ? make_yoga_config(context, logger) : globalConfig;
-  YogaNodeDeleter deleter = layoutConformanceEnabled ? &YogaNodeAndConfigDeleter : &YogaNodeOnlyDeleter;
-  YogaNodePtr result(YGNodeNewWithConfig(config), deleter);
-  return result;
-}
-
 static inline bool YogaFloatEquals(float x, float y) {
   // Epsilon value of 0.0001f is taken from the YGFloatsEqual method in Yoga.
   return std::fabs(x - y) < 0.0001f;
@@ -109,6 +65,49 @@ static int YogaLog(
   return 0;
 }
 #endif
+
+static YGConfigRef make_yoga_config(winrt::Microsoft::ReactNative::ReactContext const &context) {
+  const auto config = YGConfigNew();
+  if (React::implementation::QuirkSettings::GetUseWebFlexBasisBehavior(context.Properties()))
+    YGConfigSetExperimentalFeatureEnabled(config, YGExperimentalFeatureWebFlexBasis, true);
+  auto errata = YGErrataAll;
+  if (!React::implementation::QuirkSettings::GetMatchAndroidAndIOSStretchBehavior(context.Properties()))
+    errata &= ~YGErrataStretchFlexBasis;
+  YGConfigSetErrata(config, errata);
+#if defined(_DEBUG)
+  YGConfigSetLogger(config, &YogaLog);
+
+  // To Debug Yoga layout, uncomment the following line.
+  // YGConfigSetPrintTreeFlag(config, true);
+
+  // Additional logging can be enabled editing yoga.cpp (e.g. gPrintChanges,
+  // gPrintSkips)
+#endif
+
+  return config;
+}
+
+static void YogaNodeOnlyDeleter(YGNodeRef node) {
+  YGNodeFree(node);
+}
+
+static void YogaNodeAndConfigDeleter(YGNodeRef node) {
+  const auto config = YGNodeGetConfig(node);
+  YGNodeFree(node);
+  YGConfigFree(config);
+}
+
+static YogaNodePtr make_yoga_node(
+    YGConfigRef const &globalConfig,
+    winrt::Microsoft::ReactNative::ReactContext const &context) {
+  const auto layoutConformanceEnabled =
+      winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetEnableExperimentalLayoutConformance(
+          context.Properties());
+  const auto config = layoutConformanceEnabled ? make_yoga_config(context) : globalConfig;
+  YogaNodeDeleter deleter = layoutConformanceEnabled ? &YogaNodeAndConfigDeleter : &YogaNodeOnlyDeleter;
+  YogaNodePtr result(YGNodeNewWithConfig(config), deleter);
+  return result;
+}
 
 class LayoutConformanceVisitor : public ShadowNodeVisitor {
   using Super = ShadowNodeVisitor;
@@ -243,7 +242,7 @@ XamlView NativeUIManager::reactPeerOrContainerFrom(xaml::FrameworkElement fe) {
 
 NativeUIManager::NativeUIManager(winrt::Microsoft::ReactNative::ReactContext const &reactContext)
     : m_context(reactContext) {
-  m_yogaConfig = make_yoga_config(m_context, &YogaLog);
+  m_yogaConfig = make_yoga_config(m_context);
 }
 
 struct RootShadowNode final : public ShadowNodeBase {
@@ -306,7 +305,7 @@ void NativeUIManager::AddRootView(ShadowNode &shadowNode, facebook::react::IReac
   view.as<xaml::FrameworkElement>().FlowDirection(
       I18nManager::IsRTL(m_context.Properties()) ? xaml::FlowDirection::RightToLeft : xaml::FlowDirection::LeftToRight);
 
-  m_tagsToYogaNodes.emplace(rootTag, make_yoga_node(m_yogaConfig, m_context, &YogaLog));
+  m_tagsToYogaNodes.emplace(rootTag, make_yoga_node(m_yogaConfig, m_context));
 
   auto element = view.as<xaml::FrameworkElement>();
   Microsoft::ReactNative::SetTag(element, rootTag);
@@ -900,7 +899,7 @@ void NativeUIManager::CreateView(ShadowNode &shadowNode, React::JSValueObject &p
       m_extraLayoutNodes.push_back(node.m_tag);
     }
 
-    auto result = m_tagsToYogaNodes.emplace(node.m_tag, make_yoga_node(m_yogaConfig, m_context, &YogaLog));
+    auto result = m_tagsToYogaNodes.emplace(node.m_tag, make_yoga_node(m_yogaConfig, m_context));
     if (result.second == true) {
       YGNodeRef yogaNode = result.first->second.get();
       StyleYogaNode(node, yogaNode, props);
