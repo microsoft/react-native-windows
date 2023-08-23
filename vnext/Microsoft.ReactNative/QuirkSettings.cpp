@@ -58,6 +58,12 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> MapWindowDeactivatedToAppSt
   return propId;
 }
 
+winrt::Microsoft::ReactNative::ReactPropertyId<bool> EnableExperimentalLayoutConformanceProperty() noexcept {
+  static winrt::Microsoft::ReactNative::ReactPropertyId<bool> propId{
+      L"ReactNative.QuirkSettings", L"EnableExperimentalLayoutConformanceProperty"};
+  return propId;
+}
+
 /*static*/ void QuirkSettings::SetMapWindowDeactivatedToAppStateInactive(
     winrt::Microsoft::ReactNative::ReactPropertyBag properties,
     bool value) noexcept {
@@ -109,6 +115,12 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> SuppressWindowFocusOnViewFo
   ReactPropertyBag(settings.Properties()).Set(SuppressWindowFocusOnViewFocusProperty(), value);
 }
 
+/*static*/ void QuirkSettings::SetEnableExperimentalLayoutConformance(
+    winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
+    bool value) noexcept {
+  ReactPropertyBag(settings.Properties()).Set(EnableExperimentalLayoutConformanceProperty(), value);
+}
+
 #pragma endregion IDL interface
 
 /*static*/ bool QuirkSettings::GetMatchAndroidAndIOSStretchBehavior(ReactPropertyBag properties) noexcept {
@@ -135,6 +147,10 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> SuppressWindowFocusOnViewFo
 
 /*static*/ bool QuirkSettings::GetSuppressWindowFocusOnViewFocus(ReactPropertyBag properties) noexcept {
   return properties.Get(SuppressWindowFocusOnViewFocusProperty()).value_or(false);
+}
+
+/*static*/ bool QuirkSettings::GetEnableExperimentalLayoutConformance(ReactPropertyBag properties) noexcept {
+  return properties.Get(EnableExperimentalLayoutConformanceProperty()).value_or(false);
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

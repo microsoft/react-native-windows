@@ -4,6 +4,7 @@
 #pragma once
 
 #include <Views/ShadowNodeBase.h>
+#include <Views/ViewManagerBase.h>
 
 namespace Microsoft::ReactNative {
 

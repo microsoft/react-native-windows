@@ -38,6 +38,8 @@ struct QuirkSettings : QuirkSettingsT<QuirkSettings> {
   static bool GetMapWindowDeactivatedToAppStateInactive(
       winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept;
 
+  static bool GetEnableExperimentalLayoutConformance(
+      winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept;
 #pragma region Public API - part of IDL interface
   static void SetMatchAndroidAndIOSStretchBehavior(
       winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
@@ -57,6 +59,10 @@ struct QuirkSettings : QuirkSettingsT<QuirkSettings> {
       bool value) noexcept;
 
   static void SetSuppressWindowFocusOnViewFocus(
+      winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
+      bool value) noexcept;
+
+  static void SetEnableExperimentalLayoutConformance(
       winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
       bool value) noexcept;
 #pragma endregion Public API - part of IDL interface

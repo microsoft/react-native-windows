@@ -59,5 +59,12 @@ namespace Microsoft.ReactNative
         "window of that view to get focus as well. Set this setting to true to prevent focus of a blurred "
         "window when a view in that window is programmatically focused.")
     static void SetSuppressWindowFocusOnViewFocus(ReactInstanceSettings settings, Boolean value);
+
+    DOC_STRING(
+        "In order to enable the `experimental_layoutConformance` prop on View, we need to switch from a per "
+        "root to a per node YGConfig value and recursively apply values to entire sub-trees. The purpose "
+        "of this flag is to ensure that React Native Windows apps that do not use the prop have similar "
+        "performance profiles (other than perhaps slightly more memory usage) when compared to those that don't.")
+    static void SetEnableExperimentalLayoutConformance(ReactInstanceSettings settings, Boolean value);
   }
 } // namespace Microsoft.ReactNative

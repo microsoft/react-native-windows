@@ -24,14 +24,7 @@ struct IXamlReactControl;
 
 namespace Microsoft::ReactNative {
 
-struct YogaNodeDeleter {
-  void operator()(YGNodeRef node) {
-    const auto config = YGNodeGetConfig(node);
-    YGNodeFree(node);
-    YGConfigFree(config);
-  }
-};
-
+typedef void (*YogaNodeDeleter)(YGNodeRef node);
 typedef std::unique_ptr<YGNode, YogaNodeDeleter> YogaNodePtr;
 
 class NativeUIManager final : public INativeUIManager {
@@ -110,12 +103,15 @@ class NativeUIManager final : public INativeUIManager {
  private:
   void SetLayoutPropsRecursive(int64_t tag);
   YGNodeRef GetYogaNode(int64_t tag) const;
+  void
+  StyleYogaNode(ShadowNode &node, const YGNodeRef yogaNode, const winrt::Microsoft::ReactNative::JSValueObject &props);
 
   winrt::weak_ref<winrt::Microsoft::ReactNative::ReactRootView> GetParentXamlReactControl(int64_t tag) const;
 
  private:
   INativeUIManagerHost *m_host = nullptr;
   winrt::Microsoft::ReactNative::ReactContext m_context;
+  YGConfigRef m_yogaConfig;
   bool m_inBatch = false;
 
   std::unordered_map<int64_t, YogaNodePtr> m_tagsToYogaNodes;

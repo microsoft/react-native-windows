@@ -51,6 +51,12 @@ struct ShadowNodeLayout {
   float Height{0.f};
 };
 
+enum LayoutConformance : int8_t {
+  Undefined,
+  Classic,
+  Strict,
+};
+
 extern const DECLSPEC_SELECTANY double c_UndefinedEdge = -1;
 #define INIT_UNDEFINED_EDGES                                                                              \
   {                                                                                                       \
@@ -142,7 +148,7 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public ShadowNode {
   double m_cornerRadius[(int)ShadowCorners::CountCorners] = INIT_UNDEFINED_CORNERS;
 
   // Layout conformance
-  std::optional<bool> m_layoutConformance = std::nullopt;
+  LayoutConformance m_layoutConformance = LayoutConformance::Undefined;
   bool m_appliedLayoutConformance = false;
 
   // Bound event types
