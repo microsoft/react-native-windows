@@ -54,6 +54,7 @@ void ParagraphComponentView::updateProps(
     updateTextAlignment(newViewProps.textAttributes.alignment);
   }
 
+  updateAccessibilityProps(oldViewProps, newViewProps);
   updateBorderProps(oldViewProps, newViewProps);
 
   m_props = std::static_pointer_cast<facebook::react::ParagraphProps const>(props);
@@ -477,6 +478,10 @@ void ParagraphComponentView::DrawText() noexcept {
 
 std::string ParagraphComponentView::DefaultControlType() const noexcept {
   return "text";
+}
+
+std::string ParagraphComponentView::DefaultAccessibleName() const noexcept {
+  return m_attributedStringBox.getValue().getString();
 }
 
 winrt::Microsoft::ReactNative::Composition::IVisual ParagraphComponentView::Visual() const noexcept {

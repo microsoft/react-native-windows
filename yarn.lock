@@ -2394,10 +2394,17 @@
     semver "^7.5.2"
     shell-quote "^1.7.3"
 
-"@react-native-community/cli-types@12.0.0-alpha.6", "@react-native-community/cli-types@^12.0.0-alpha.3":
+"@react-native-community/cli-types@12.0.0-alpha.6":
   version "12.0.0-alpha.6"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-types/-/cli-types-12.0.0-alpha.6.tgz#cc7dbe57f9208ef894211c4efc05a168f1e2d2cd"
   integrity sha512-GaDYPxMbpPVszNRdmqgapCgxD7g3XGLnJp0oB1oL32/mFBPdfaiQzfFDvEqsTfxCzsti+kmkcE/04HrO2hYguQ==
+  dependencies:
+    joi "^17.2.1"
+
+"@react-native-community/cli-types@^12.0.0-alpha.3":
+  version "12.0.0-alpha.11"
+  resolved "https://registry.yarnpkg.com/@react-native-community/cli-types/-/cli-types-12.0.0-alpha.11.tgz#140b96450c3d94cba2cec750f560dfea86350b65"
+  integrity sha512-iG4/Q4WDjJAlt8eeEKhlgnIpEHYcsYDepQClef7hq6mtuzQyn+Qk0LZbIwXBA1xdTp93+NTZJiHUS6iAk0sIOg==
   dependencies:
     joi "^17.2.1"
 
@@ -2601,9 +2608,9 @@
     find-up "^5.0.0"
 
 "@rnx-kit/metro-config@^1.3.5":
-  version "1.3.7"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-config/-/metro-config-1.3.7.tgz#f352d134472bad996b12ecc3a0e3182f6f6f842b"
-  integrity sha512-fIP/LWe02JY6a9cJ1ykUO28sEIZeO4D2snvtnMhekZo579dIbMEtXhFyjw8G5z6f38fJ2bjZF3+lugu/RpTP9g==
+  version "1.3.8"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-config/-/metro-config-1.3.8.tgz#ca5d4960c646f11b563ef675ff79be15d05809fd"
+  integrity sha512-jywzqKT43A4XlSNFMWEqxlqeshhdwwr6zAd+uV/Yx3HvwD7VNWMPAUlHqyVs1SAuNqnOrCQR23mI8hH8xyTQyA==
   dependencies:
     "@rnx-kit/babel-preset-metro-react-native" "^1.1.4"
     "@rnx-kit/console" "^1.0.0"
@@ -2968,9 +2975,9 @@
     "@types/node" "*"
 
 "@types/lodash@^4.14.168":
-  version "4.14.196"
-  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.196.tgz#a7c3d6fc52d8d71328b764e28e080b4169ec7a95"
-  integrity sha512-22y3o88f4a94mKljsZcanlNWPzO0uBsBdzLAngf2tp533LzZcQzb6+eZPJ+vCTt+bqF2XnvT9gejTLsAcJAJyQ==
+  version "4.14.197"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.197.tgz#e95c5ddcc814ec3e84c891910a01e0c8a378c54b"
+  integrity sha512-BMVOiWs0uNxHVlHBgzTIqJYmj+PgCo4euloGF+5m4okL3rEYzM2EEv78mw8zWSMM57dM7kVIgJ2QDvwHSoCI5g==
 
 "@types/minimatch@*", "@types/minimatch@^3.0.3":
   version "3.0.5"
@@ -11041,10 +11048,10 @@ react-is@^18.0.0, react-is@^18.2.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.2.0.tgz#199431eeaaa2e09f86427efbb4f1473edb47609b"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
 
-react-native-xaml@^0.0.74:
-  version "0.0.74"
-  resolved "https://registry.yarnpkg.com/react-native-xaml/-/react-native-xaml-0.0.74.tgz#fc747308320eb1fda6dd69f5317bfeae37686b57"
-  integrity sha512-4F/kcx2//uUTOFJpePgRyu+yRje1lk9zSIhRUY5ZRIGXkkccS109uE9J+q5LqvMU8KuDEpDElE8n3UsYHZ0pKQ==
+react-native-xaml@^0.0.76:
+  version "0.0.76"
+  resolved "https://registry.yarnpkg.com/react-native-xaml/-/react-native-xaml-0.0.76.tgz#19b573643655a187cd2a054fae1c9868edca4c1f"
+  integrity sha512-OpEcnjtGyToOKXXqfGY+wrbFrSd4mIfMRb3c/Z2lFBjwb1y94xx0yNwZdxWZdVMTMdBJT+f1P4Zk04HAVNWrvQ==
   dependencies:
     "@types/react" "*"
     "@types/react-native" "*"

@@ -234,7 +234,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
   switch (propertyId) {
     case UIA_ControlTypePropertyId: {
       pRetVal->vt = VT_I4;
-      auto role = props->accessibilityRole == "" ? baseView.get()->DefaultControlType() : props->accessibilityRole;
+      auto role = props->accessibilityRole.empty() ? baseView->DefaultControlType() : props->accessibilityRole;
       pRetVal->lVal = GetControlType(role);
       break;
     }
@@ -247,7 +247,8 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
     }
     case UIA_NamePropertyId: {
       pRetVal->vt = VT_BSTR;
-      auto wideName = ::Microsoft::Common::Unicode::Utf8ToUtf16(props->accessibilityLabel);
+      auto wideName = ::Microsoft::Common::Unicode::Utf8ToUtf16(
+          props->accessibilityLabel.empty() ? baseView->DefaultAccessibleName() : props->accessibilityLabel);
       pRetVal->bstrVal = SysAllocString(wideName.c_str());
       hr = pRetVal->bstrVal != nullptr ? S_OK : E_OUTOFMEMORY;
       break;
@@ -281,6 +282,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
       pRetVal->boolVal = (props->accessible && props->accessibilityRole != "none") ? VARIANT_TRUE : VARIANT_FALSE;
       break;
     }
+
     case UIA_HelpTextPropertyId: {
       pRetVal->vt = VT_BSTR;
       auto helpText = ::Microsoft::Common::Unicode::Utf8ToUtf16(props->accessibilityHint);

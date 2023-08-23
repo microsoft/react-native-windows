@@ -74,6 +74,8 @@ type Props = $ReadOnly<{|
   'aria-disabled'?: ?boolean,
   'aria-expanded'?: ?boolean,
   'aria-selected'?: ?boolean,
+  'aria-multiselectable'?: ?boolean, // Win32
+  'aria-required'?: ?boolean, // Win32
   /**
    * A value indicating whether the accessibility elements contained within
    * this accessibility element are hidden.
@@ -257,6 +259,8 @@ function Pressable(props: Props, forwardedRef): React.Node {
     'aria-disabled': ariaDisabled,
     'aria-expanded': ariaExpanded,
     'aria-label': ariaLabel,
+    'aria-multiselectable': ariaMultiselectable, // Win32
+    'aria-required': ariaRequired, // Win32
     'aria-selected': ariaSelected,
     cancelable,
     children,
@@ -297,6 +301,8 @@ function Pressable(props: Props, forwardedRef): React.Node {
     checked: ariaChecked ?? accessibilityState?.checked,
     disabled: ariaDisabled ?? accessibilityState?.disabled,
     expanded: ariaExpanded ?? accessibilityState?.expanded,
+    multiselectable: ariaMultiselectable ?? accessibilityState?.multiselectable, // Win32
+    required: ariaRequired ?? accessibilityState?.required, // Win32
     selected: ariaSelected ?? accessibilityState?.selected,
   };
 
