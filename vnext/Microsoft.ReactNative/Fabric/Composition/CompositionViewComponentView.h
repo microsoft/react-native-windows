@@ -67,6 +67,7 @@ struct CompositionBaseComponentView : public IComponentView,
   winrt::IInspectable EnsureUiaProvider() noexcept override;
 
   virtual std::string DefaultControlType() const noexcept;
+  virtual std::string DefaultAccessibleName() const noexcept;
 
  protected:
   std::array<winrt::Microsoft::ReactNative::Composition::SpriteVisual, SpecialBorderLayerCount>
