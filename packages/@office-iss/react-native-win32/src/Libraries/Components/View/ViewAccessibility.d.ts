@@ -57,6 +57,8 @@ export interface AccessibilityProps
   'aria-checked'?: boolean | 'mixed' | undefined;
   'aria-disabled'?: boolean | undefined;
   'aria-expanded'?: boolean | undefined;
+  'aria-multiselectable'?: boolean | undefined; // Win32
+  'aria-required'?: boolean | undefined; // Win32
   'aria-selected'?: boolean | undefined;
 
   /**
