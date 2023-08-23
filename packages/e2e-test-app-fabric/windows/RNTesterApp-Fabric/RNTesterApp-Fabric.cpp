@@ -87,7 +87,7 @@ struct WindowData {
   winrt::Microsoft::ReactNative::ReactNativeHost m_host{nullptr};
   winrt::Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
 
-  #if BUNDLE
+#if BUNDLE
   std::wstring m_bundleFile = L"index.windows";
   bool m_useWebDebugger{false};
   bool m_fastRefreshEnabled{false};

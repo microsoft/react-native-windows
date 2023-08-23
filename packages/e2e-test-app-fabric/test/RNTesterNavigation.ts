@@ -12,7 +12,7 @@ import {app} from '@react-native-windows/automation';
  */
 export async function goToComponentExample(example: string) {
   const componentsTabButton = await app.findElementByTestID('components-tab');
-  await app.waitUntil(async () => await componentsTabButton.isDisplayed());
+  await componentsTabButton.waitForDisplayed({timeout: 20000});
   await componentsTabButton.click();
   await goToExample(example);
 }
@@ -22,7 +22,7 @@ export async function goToComponentExample(example: string) {
  */
 export async function goToApiExample(example: string) {
   const componentsTabButton = await app.findElementByTestID('apis-tab');
-  await app.waitUntil(async () => await componentsTabButton.isDisplayed());
+  await componentsTabButton.waitForDisplayed({timeout: 20000});
   await componentsTabButton.click();
   await goToExample(example);
 }
@@ -32,7 +32,6 @@ async function goToExample(example: string) {
   const searchBox = await app.findElementByTestID('explorer_search');
   // Only grab first three characters of string to reduce cases in WebDriverIO mistyping.
   await searchBox.addValue(regexEscape(example.substring(0, 3)));
-
   const exampleButton = await app.findElementByTestID(example);
   await exampleButton.click();
 
