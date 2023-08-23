@@ -198,7 +198,7 @@ jobs:
               displayName: Copy Bundle
               inputs:
                 sourceFolder: packages/e2e-test-app-fabric/windows/x64/Release/Bundle
-                targetFolder: packages/e2e-test-app-fabric
+                targetFolder: packages/e2e-test-app-fabric/Bundle
                 contents: "**"
 
             - script: yarn e2etest
