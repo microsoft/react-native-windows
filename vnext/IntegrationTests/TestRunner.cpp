@@ -26,8 +26,11 @@ using std::vector;
 
 namespace Microsoft::React::Test {
 
+constexpr DWORD MarkTestSucceededEventTimeout =
+    static_cast<DWORD>(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::seconds(30)).count());
+
 void TestRunner::AwaitEvent(HANDLE &event, TestResult &result) {
-  DWORD done = ::WaitForSingleObject(event, INFINITE);
+  DWORD done = ::WaitForSingleObject(event, MarkTestSucceededEventTimeout);
 
   if (WAIT_OBJECT_0 != done)
     result.Status = TestStatus::Failed;

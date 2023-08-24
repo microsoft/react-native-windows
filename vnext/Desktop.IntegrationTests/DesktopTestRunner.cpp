@@ -83,7 +83,7 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
       std::move(jsQueue),
       std::move(nativeQueue),
       std::move(devSettings));
-  instanceWrapper->loadBundle(std::move(jsBundleFile));
+  instanceWrapper->loadBundleSync(std::move(jsBundleFile));
 
   return shared_ptr<ITestInstance>(new DesktopTestInstance(std::move(instanceWrapper)));
 }
