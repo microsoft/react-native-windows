@@ -45,7 +45,11 @@ describe('visitAllPages', () => {
   }
 
   for (const api of apiExamples) {
-    if (api === 'Transforms' || api === 'Keyboard Focus Example')
+    if (
+      api === 'Transforms' ||
+      api === 'Keyboard Focus Example' ||
+      api === 'Border'
+    )
       // Disable until tests are supported.
       continue;
 
