@@ -181,9 +181,6 @@ struct CompReactPackageProvider
   }
 };
 
-winrt::Windows::System::DispatcherQueueController g_dispatcherQueueController{nullptr};
-winrt::Windows::UI::Composition::Compositor g_compositor{nullptr};
-
 constexpr auto WindowDataProperty = L"WindowData";
 
 int RunPlayground(int showCmd, bool useWebDebugger);
@@ -197,6 +194,8 @@ struct WindowData {
   winrt::Microsoft::ReactNative::CompositionHwndHost m_CompositionHwndHost{nullptr};
   winrt::Microsoft::ReactNative::ReactNativeHost m_host{nullptr};
   winrt::Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
+  winrt::Windows::System::DispatcherQueueController m_dispatcherQueueController{nullptr};
+
 
   bool m_useWebDebugger{false};
   bool m_fastRefreshEnabled{true};
@@ -206,9 +205,6 @@ struct WindowData {
   xaml::ElementTheme m_theme{xaml::ElementTheme::Default};
 
   WindowData(const winrt::Microsoft::ReactNative::CompositionHwndHost &compHost) : m_CompositionHwndHost(compHost) {
-    winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositionContext(
-        InstanceSettings().Properties(),
-        winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::CreateContext(g_compositor));
   }
 
   static WindowData *GetFromWindow(HWND hwnd) {
@@ -471,7 +467,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
           hwnd, LOWORD(wparam), reinterpret_cast<HWND>(lparam), HIWORD(wparam));
     }
     case WM_DESTROY: {
-      delete WindowData::GetFromWindow(hwnd);
+      windowData->m_dispatcherQueueController.ShutdownQueueAsync();
+      delete windowData;
       SetProp(hwnd, WindowDataProperty, 0);
       PostQuitMessage(0);
       return 0;
@@ -505,10 +502,44 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
 
 constexpr PCWSTR c_windowClassName = L"MS_REACTNATIVE_PLAYGROUND_COMPOSITION";
 
+// The compositor could be running on a background or foreground thread.
+// Office runs it on a background thread, so its useful to be able to test that case
+void CreateCompositor(bool background, WindowData* windowData) {
+  DispatcherQueueOptions options{
+      sizeof(DispatcherQueueOptions), /* dwSize */
+      background ? DQTYPE_THREAD_CURRENT : DQTYPE_THREAD_DEDICATED, /* threadType */
+      DQTAT_COM_STA /* apartmentType */
+  };
+
+  // Need to have a Dispatcher on the current thread to be able to create a Compositor
+  winrt::check_hresult(CreateDispatcherQueueController(
+      options,
+      reinterpret_cast<ABI::Windows::System::IDispatcherQueueController **>(
+          winrt::put_abi(windowData->m_dispatcherQueueController))));
+
+  if (background) {
+    windowData->m_dispatcherQueueController.DispatcherQueue().TryEnqueue([windowData]() {
+       winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositionContext(
+          windowData->InstanceSettings().Properties(),
+          winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::CreateContext(
+              winrt::Windows::UI::Composition::Compositor()));
+    });
+  } else {
+     winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositionContext(
+         windowData->InstanceSettings().Properties(),
+     winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::CreateContext(
+         winrt::Windows::UI::Composition::Compositor()));
+
+  }
+}
+
 int RunPlayground(int showCmd, bool useWebDebugger) {
   constexpr PCWSTR appName = L"React Native Playground (Composition)";
 
   auto windowData = std::make_unique<WindowData>(winrt::Microsoft::ReactNative::CompositionHwndHost());
+
+  CreateCompositor(true /*background compositor*/, windowData.get());
+
   HWND hwnd = CreateWindow(
       c_windowClassName,
       appName,
@@ -560,18 +591,5 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   WINRT_VERIFY(classId);
   winrt::check_win32(!classId);
 
-  DispatcherQueueOptions options{
-      sizeof(DispatcherQueueOptions), /* dwSize */
-      DQTYPE_THREAD_CURRENT, /* threadType */
-      DQTAT_COM_ASTA /* apartmentType */
-  };
-
-  // Need to have a Dispatcher on the current thread to be able to create a Compositor
-  winrt::check_hresult(CreateDispatcherQueueController(
-      options,
-      reinterpret_cast<ABI::Windows::System::IDispatcherQueueController **>(
-          winrt::put_abi(g_dispatcherQueueController))));
-
-  g_compositor = winrt::Windows::UI::Composition::Compositor();
   return RunPlayground(showCmd, false);
 }
