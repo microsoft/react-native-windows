@@ -32,8 +32,10 @@ constexpr DWORD MarkTestSucceededEventTimeout =
 void TestRunner::AwaitEvent(HANDLE &event, TestResult &result) {
   DWORD done = ::WaitForSingleObject(event, MarkTestSucceededEventTimeout);
 
-  if (WAIT_OBJECT_0 != done)
+  if (WAIT_OBJECT_0 != done) {
     result.Status = TestStatus::Failed;
+    result.Message = L"Timeout waiting for markTestSucceeded() to be called.";
+  }
 }
 
 TestRunner::TestRunner() {}
