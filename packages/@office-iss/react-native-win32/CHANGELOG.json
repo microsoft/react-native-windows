@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 24 Aug 2023 05:14:48 GMT",
+      "version": "0.0.0-canary.211",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.211",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "krsiler@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "e6f6f3abf56445847ff3e0b57440861a58df48e0",
+            "comment": "fix a11yState and add support for aria-required and -multiselectable"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 11 Aug 2023 05:13:37 GMT",
       "version": "0.0.0-canary.210",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.210",
