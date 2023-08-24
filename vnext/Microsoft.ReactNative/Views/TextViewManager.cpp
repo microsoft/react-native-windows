@@ -8,7 +8,6 @@
 #include "Utils/ShadowNodeTypeUtils.h"
 #include "Utils/XamlIslandUtils.h"
 
-#include <Modules/PaperUIManagerModule.h>
 #include <Views/ShadowNodeBase.h>
 #include <Views/Text/TextVisitors.h>
 #include <Views/VirtualTextViewManager.h>
