@@ -3,9 +3,6 @@
 exports[`ScrollViewTests ScrollView has scrollTo method, scroll to bottom button 1`] = `
 {
   "AutomationId": "scroll_to_bottom_button",
-  "AutomationLevel": -1,
-  "AutomationPositionInSet": -1,
-  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": null,
   "BorderThickness": "0,0,0,0",
@@ -25,9 +22,6 @@ exports[`ScrollViewTests ScrollView has scrollTo method, scroll to bottom button
   "XamlType": "Microsoft.ReactNative.ViewControl",
   "children": [
     {
-      "AutomationLevel": -1,
-      "AutomationPositionInSet": -1,
-      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -45,9 +39,6 @@ exports[`ScrollViewTests ScrollView has scrollTo method, scroll to bottom button
       "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
       "children": [
         {
-          "AutomationLevel": -1,
-          "AutomationPositionInSet": -1,
-          "AutomationSizeOfSet": -1,
           "Background": "#FFCCCCCC",
           "BorderBrush": "#E4000000",
           "BorderThickness": "0,0,0,0",
@@ -66,9 +57,6 @@ exports[`ScrollViewTests ScrollView has scrollTo method, scroll to bottom button
           "XamlType": "Microsoft.ReactNative.ViewPanel",
           "children": [
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Foreground": "#FF000000",
@@ -95,9 +83,6 @@ exports[`ScrollViewTests ScrollView has scrollTo method, scroll to bottom button
 exports[`ScrollViewTests ScrollView has scrollTo method, scroll to end button 1`] = `
 {
   "AutomationId": "scroll_to_end_button",
-  "AutomationLevel": -1,
-  "AutomationPositionInSet": -1,
-  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": null,
   "BorderThickness": "0,0,0,0",
@@ -117,9 +102,6 @@ exports[`ScrollViewTests ScrollView has scrollTo method, scroll to end button 1`
   "XamlType": "Microsoft.ReactNative.ViewControl",
   "children": [
     {
-      "AutomationLevel": -1,
-      "AutomationPositionInSet": -1,
-      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -137,9 +119,6 @@ exports[`ScrollViewTests ScrollView has scrollTo method, scroll to end button 1`
       "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
       "children": [
         {
-          "AutomationLevel": -1,
-          "AutomationPositionInSet": -1,
-          "AutomationSizeOfSet": -1,
           "Background": "#FFCCCCCC",
           "BorderBrush": "#E4000000",
           "BorderThickness": "0,0,0,0",
@@ -158,9 +137,6 @@ exports[`ScrollViewTests ScrollView has scrollTo method, scroll to end button 1`
           "XamlType": "Microsoft.ReactNative.ViewPanel",
           "children": [
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Foreground": "#FF000000",
@@ -187,9 +163,6 @@ exports[`ScrollViewTests ScrollView has scrollTo method, scroll to end button 1`
 exports[`ScrollViewTests ScrollView has scrollTo method, scroll to start button 1`] = `
 {
   "AutomationId": "scroll_to_start_button",
-  "AutomationLevel": -1,
-  "AutomationPositionInSet": -1,
-  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": null,
   "BorderThickness": "0,0,0,0",
@@ -209,9 +182,6 @@ exports[`ScrollViewTests ScrollView has scrollTo method, scroll to start button 
   "XamlType": "Microsoft.ReactNative.ViewControl",
   "children": [
     {
-      "AutomationLevel": -1,
-      "AutomationPositionInSet": -1,
-      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -229,9 +199,6 @@ exports[`ScrollViewTests ScrollView has scrollTo method, scroll to start button 
       "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
       "children": [
         {
-          "AutomationLevel": -1,
-          "AutomationPositionInSet": -1,
-          "AutomationSizeOfSet": -1,
           "Background": "#FFCCCCCC",
           "BorderBrush": "#E4000000",
           "BorderThickness": "0,0,0,0",
@@ -250,9 +217,6 @@ exports[`ScrollViewTests ScrollView has scrollTo method, scroll to start button 
           "XamlType": "Microsoft.ReactNative.ViewPanel",
           "children": [
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Foreground": "#FF000000",
@@ -279,9 +243,6 @@ exports[`ScrollViewTests ScrollView has scrollTo method, scroll to start button 
 exports[`ScrollViewTests ScrollView has scrollTo method, scroll to top button 1`] = `
 {
   "AutomationId": "scroll_to_top_button",
-  "AutomationLevel": -1,
-  "AutomationPositionInSet": -1,
-  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": null,
   "BorderThickness": "0,0,0,0",
@@ -301,9 +262,6 @@ exports[`ScrollViewTests ScrollView has scrollTo method, scroll to top button 1`
   "XamlType": "Microsoft.ReactNative.ViewControl",
   "children": [
     {
-      "AutomationLevel": -1,
-      "AutomationPositionInSet": -1,
-      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -321,9 +279,6 @@ exports[`ScrollViewTests ScrollView has scrollTo method, scroll to top button 1`
       "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
       "children": [
         {
-          "AutomationLevel": -1,
-          "AutomationPositionInSet": -1,
-          "AutomationSizeOfSet": -1,
           "Background": "#FFCCCCCC",
           "BorderBrush": "#E4000000",
           "BorderThickness": "0,0,0,0",
@@ -342,9 +297,6 @@ exports[`ScrollViewTests ScrollView has scrollTo method, scroll to top button 1`
           "XamlType": "Microsoft.ReactNative.ViewPanel",
           "children": [
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Foreground": "#FF000000",
@@ -371,9 +323,6 @@ exports[`ScrollViewTests ScrollView has scrollTo method, scroll to top button 1`
 exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
 {
   "AutomationId": "scroll_multiple_sticky_headers",
-  "AutomationLevel": -1,
-  "AutomationPositionInSet": -1,
-  "AutomationSizeOfSet": -1,
   "Background": "#FFEEEEEE",
   "BorderBrush": "#00FFFFFF",
   "BorderThickness": "0,0,0,0",
@@ -393,9 +342,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
   "XamlType": "Windows.UI.Xaml.Controls.ScrollViewer",
   "children": [
     {
-      "AutomationLevel": -1,
-      "AutomationPositionInSet": -1,
-      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#00FFFFFF",
       "BorderThickness": "0,0,0,0",
@@ -413,9 +359,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.Border",
       "children": [
         {
-          "AutomationLevel": -1,
-          "AutomationPositionInSet": -1,
-          "AutomationSizeOfSet": -1,
           "Background": "#FFEEEEEE",
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -432,9 +375,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
           "children": [
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -453,17 +393,11 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ScrollContentPresenter",
               "children": [
                 {
-                  "AutomationLevel": -1,
-                  "AutomationPositionInSet": -1,
-                  "AutomationSizeOfSet": -1,
                   "Left": 0,
                   "Top": 0,
                   "XamlType": "Windows.UI.Xaml.DependencyObject",
                   "children": [
                     {
-                      "AutomationLevel": -1,
-                      "AutomationPositionInSet": -1,
-                      "AutomationSizeOfSet": -1,
                       "Background": null,
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -481,9 +415,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
                       "children": [
                         {
-                          "AutomationLevel": -1,
-                          "AutomationPositionInSet": -1,
-                          "AutomationSizeOfSet": -1,
                           "Background": null,
                           "BorderBrush": "#E4000000",
                           "BorderThickness": "0,0,0,0",
@@ -502,9 +433,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                           "XamlType": "Microsoft.ReactNative.ViewPanel",
                           "children": [
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFFFFF00",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -523,9 +451,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Background": "#FFCCCCCC",
                                   "BorderBrush": "#E4000000",
                                   "BorderThickness": "0,0,0,0",
@@ -544,9 +469,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                                   "XamlType": "Microsoft.ReactNative.ViewPanel",
                                   "children": [
                                     {
-                                      "AutomationLevel": -1,
-                                      "AutomationPositionInSet": -1,
-                                      "AutomationSizeOfSet": -1,
                                       "Clip": null,
                                       "FlowDirection": "LeftToRight",
                                       "Foreground": "#FF000000",
@@ -567,9 +489,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -588,9 +507,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -609,9 +525,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -630,9 +543,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -651,9 +561,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -672,9 +579,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -693,9 +597,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -714,9 +615,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -735,9 +633,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -756,9 +651,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -777,9 +669,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -798,9 +687,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -819,9 +705,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -840,9 +723,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -861,9 +741,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -882,9 +759,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -903,9 +777,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -924,9 +795,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -945,9 +813,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -966,9 +831,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -987,9 +849,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -1008,9 +867,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -1029,9 +885,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -1050,9 +903,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -1071,9 +921,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFFFFF00",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -1092,9 +939,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Background": "#FFCCCCCC",
                                   "BorderBrush": "#E4000000",
                                   "BorderThickness": "0,0,0,0",
@@ -1113,9 +957,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                                   "XamlType": "Microsoft.ReactNative.ViewPanel",
                                   "children": [
                                     {
-                                      "AutomationLevel": -1,
-                                      "AutomationPositionInSet": -1,
-                                      "AutomationSizeOfSet": -1,
                                       "Clip": null,
                                       "FlowDirection": "LeftToRight",
                                       "Foreground": "#FF000000",
@@ -1136,9 +977,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -1157,9 +995,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -1178,9 +1013,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -1199,9 +1031,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -1220,9 +1049,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -1241,9 +1067,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -1262,9 +1085,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -1283,9 +1103,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -1304,9 +1121,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -1325,9 +1139,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -1346,9 +1157,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -1367,9 +1175,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -1388,9 +1193,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -1409,9 +1211,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -1430,9 +1229,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -1451,9 +1247,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -1472,9 +1265,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -1493,9 +1283,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -1514,9 +1301,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -1535,9 +1319,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -1556,9 +1337,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -1577,9 +1355,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -1598,9 +1373,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -1619,9 +1391,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -1640,9 +1409,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFFFFF00",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -1661,9 +1427,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Background": "#FFCCCCCC",
                                   "BorderBrush": "#E4000000",
                                   "BorderThickness": "0,0,0,0",
@@ -1682,9 +1445,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                                   "XamlType": "Microsoft.ReactNative.ViewPanel",
                                   "children": [
                                     {
-                                      "AutomationLevel": -1,
-                                      "AutomationPositionInSet": -1,
-                                      "AutomationSizeOfSet": -1,
                                       "Clip": null,
                                       "FlowDirection": "LeftToRight",
                                       "Foreground": "#FF000000",
@@ -1705,9 +1465,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -1726,9 +1483,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -1747,9 +1501,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -1768,9 +1519,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -1789,9 +1537,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -1810,9 +1555,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -1831,9 +1573,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -1852,9 +1591,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -1873,9 +1609,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -1894,9 +1627,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -1915,9 +1645,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -1936,9 +1663,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -1957,9 +1681,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -1978,9 +1699,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -1999,9 +1717,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -2020,9 +1735,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -2041,9 +1753,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -2062,9 +1771,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -2083,9 +1789,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -2104,9 +1807,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -2125,9 +1825,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -2146,9 +1843,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -2167,9 +1861,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -2188,9 +1879,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -2217,9 +1905,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
               ],
             },
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -2236,9 +1921,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
             },
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -2265,9 +1947,6 @@ exports[`ScrollViewTests ScrollViews can have multiple sticky headers 1`] = `
 exports[`ScrollViewTests ScrollViews can have pressable sticky headers 1`] = `
 {
   "AutomationId": "scroll_pressable_sticky_header",
-  "AutomationLevel": -1,
-  "AutomationPositionInSet": -1,
-  "AutomationSizeOfSet": -1,
   "Background": "#00FFFFFF",
   "BorderBrush": "#00FFFFFF",
   "BorderThickness": "0,0,0,0",
@@ -2287,9 +1966,6 @@ exports[`ScrollViewTests ScrollViews can have pressable sticky headers 1`] = `
   "XamlType": "Windows.UI.Xaml.Controls.ScrollViewer",
   "children": [
     {
-      "AutomationLevel": -1,
-      "AutomationPositionInSet": -1,
-      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#00FFFFFF",
       "BorderThickness": "0,0,0,0",
@@ -2307,9 +1983,6 @@ exports[`ScrollViewTests ScrollViews can have pressable sticky headers 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.Border",
       "children": [
         {
-          "AutomationLevel": -1,
-          "AutomationPositionInSet": -1,
-          "AutomationSizeOfSet": -1,
           "Background": "#00FFFFFF",
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -2326,9 +1999,6 @@ exports[`ScrollViewTests ScrollViews can have pressable sticky headers 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
           "children": [
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -2347,17 +2017,11 @@ exports[`ScrollViewTests ScrollViews can have pressable sticky headers 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ScrollContentPresenter",
               "children": [
                 {
-                  "AutomationLevel": -1,
-                  "AutomationPositionInSet": -1,
-                  "AutomationSizeOfSet": -1,
                   "Left": 0,
                   "Top": 0,
                   "XamlType": "Windows.UI.Xaml.DependencyObject",
                   "children": [
                     {
-                      "AutomationLevel": -1,
-                      "AutomationPositionInSet": -1,
-                      "AutomationSizeOfSet": -1,
                       "Background": null,
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -2375,9 +2039,6 @@ exports[`ScrollViewTests ScrollViews can have pressable sticky headers 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
                       "children": [
                         {
-                          "AutomationLevel": -1,
-                          "AutomationPositionInSet": -1,
-                          "AutomationSizeOfSet": -1,
                           "Background": null,
                           "BorderBrush": "#E4000000",
                           "BorderThickness": "0,0,0,0",
@@ -2396,9 +2057,6 @@ exports[`ScrollViewTests ScrollViews can have pressable sticky headers 1`] = `
                           "XamlType": "Microsoft.ReactNative.ViewPanel",
                           "children": [
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": null,
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -2417,9 +2075,6 @@ exports[`ScrollViewTests ScrollViews can have pressable sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Background": "#FF0000FF",
                                   "BorderBrush": "#E4000000",
                                   "BorderThickness": "0,0,0,0",
@@ -2439,9 +2094,6 @@ exports[`ScrollViewTests ScrollViews can have pressable sticky headers 1`] = `
                                   "children": [
                                     {
                                       "AutomationId": "pressable_header",
-                                      "AutomationLevel": -1,
-                                      "AutomationPositionInSet": -1,
-                                      "AutomationSizeOfSet": -1,
                                       "Background": null,
                                       "BorderBrush": null,
                                       "BorderThickness": "0,0,0,0",
@@ -2461,9 +2113,6 @@ exports[`ScrollViewTests ScrollViews can have pressable sticky headers 1`] = `
                                       "XamlType": "Microsoft.ReactNative.ViewControl",
                                       "children": [
                                         {
-                                          "AutomationLevel": -1,
-                                          "AutomationPositionInSet": -1,
-                                          "AutomationSizeOfSet": -1,
                                           "Background": null,
                                           "BorderBrush": null,
                                           "BorderThickness": "0,0,0,0",
@@ -2481,9 +2130,6 @@ exports[`ScrollViewTests ScrollViews can have pressable sticky headers 1`] = `
                                           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
                                           "children": [
                                             {
-                                              "AutomationLevel": -1,
-                                              "AutomationPositionInSet": -1,
-                                              "AutomationSizeOfSet": -1,
                                               "Background": "#00FFFFFF",
                                               "BorderBrush": "#E4000000",
                                               "BorderThickness": "0,0,0,0",
@@ -2502,9 +2148,6 @@ exports[`ScrollViewTests ScrollViews can have pressable sticky headers 1`] = `
                                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                                               "children": [
                                                 {
-                                                  "AutomationLevel": -1,
-                                                  "AutomationPositionInSet": -1,
-                                                  "AutomationSizeOfSet": -1,
                                                   "Clip": null,
                                                   "FlowDirection": "LeftToRight",
                                                   "Foreground": "#FF000000",
@@ -2531,9 +2174,6 @@ exports[`ScrollViewTests ScrollViews can have pressable sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFFF0000",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -2552,9 +2192,6 @@ exports[`ScrollViewTests ScrollViews can have pressable sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFFF0000",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -2573,9 +2210,6 @@ exports[`ScrollViewTests ScrollViews can have pressable sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFFF0000",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -2594,9 +2228,6 @@ exports[`ScrollViewTests ScrollViews can have pressable sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFFF0000",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -2615,9 +2246,6 @@ exports[`ScrollViewTests ScrollViews can have pressable sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFFF0000",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -2636,9 +2264,6 @@ exports[`ScrollViewTests ScrollViews can have pressable sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFFF0000",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -2657,9 +2282,6 @@ exports[`ScrollViewTests ScrollViews can have pressable sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFFF0000",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -2678,9 +2300,6 @@ exports[`ScrollViewTests ScrollViews can have pressable sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFFF0000",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -2699,9 +2318,6 @@ exports[`ScrollViewTests ScrollViews can have pressable sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFFF0000",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -2728,9 +2344,6 @@ exports[`ScrollViewTests ScrollViews can have pressable sticky headers 1`] = `
               ],
             },
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -2757,9 +2370,6 @@ exports[`ScrollViewTests ScrollViews can have pressable sticky headers 1`] = `
 exports[`ScrollViewTests ScrollViews can have sticky headers 1`] = `
 {
   "AutomationId": "scroll_sticky_header",
-  "AutomationLevel": -1,
-  "AutomationPositionInSet": -1,
-  "AutomationSizeOfSet": -1,
   "Background": "#FFEEEEEE",
   "BorderBrush": "#00FFFFFF",
   "BorderThickness": "0,0,0,0",
@@ -2779,9 +2389,6 @@ exports[`ScrollViewTests ScrollViews can have sticky headers 1`] = `
   "XamlType": "Windows.UI.Xaml.Controls.ScrollViewer",
   "children": [
     {
-      "AutomationLevel": -1,
-      "AutomationPositionInSet": -1,
-      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#00FFFFFF",
       "BorderThickness": "0,0,0,0",
@@ -2799,9 +2406,6 @@ exports[`ScrollViewTests ScrollViews can have sticky headers 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.Border",
       "children": [
         {
-          "AutomationLevel": -1,
-          "AutomationPositionInSet": -1,
-          "AutomationSizeOfSet": -1,
           "Background": "#FFEEEEEE",
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -2818,9 +2422,6 @@ exports[`ScrollViewTests ScrollViews can have sticky headers 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
           "children": [
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -2839,17 +2440,11 @@ exports[`ScrollViewTests ScrollViews can have sticky headers 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ScrollContentPresenter",
               "children": [
                 {
-                  "AutomationLevel": -1,
-                  "AutomationPositionInSet": -1,
-                  "AutomationSizeOfSet": -1,
                   "Left": 0,
                   "Top": 0,
                   "XamlType": "Windows.UI.Xaml.DependencyObject",
                   "children": [
                     {
-                      "AutomationLevel": -1,
-                      "AutomationPositionInSet": -1,
-                      "AutomationSizeOfSet": -1,
                       "Background": null,
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -2867,9 +2462,6 @@ exports[`ScrollViewTests ScrollViews can have sticky headers 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
                       "children": [
                         {
-                          "AutomationLevel": -1,
-                          "AutomationPositionInSet": -1,
-                          "AutomationSizeOfSet": -1,
                           "Background": null,
                           "BorderBrush": "#E4000000",
                           "BorderThickness": "0,0,0,0",
@@ -2888,9 +2480,6 @@ exports[`ScrollViewTests ScrollViews can have sticky headers 1`] = `
                           "XamlType": "Microsoft.ReactNative.ViewPanel",
                           "children": [
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": null,
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -2909,9 +2498,6 @@ exports[`ScrollViewTests ScrollViews can have sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -2930,9 +2516,6 @@ exports[`ScrollViewTests ScrollViews can have sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -2951,9 +2534,6 @@ exports[`ScrollViewTests ScrollViews can have sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -2972,9 +2552,6 @@ exports[`ScrollViewTests ScrollViews can have sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -2993,9 +2570,6 @@ exports[`ScrollViewTests ScrollViews can have sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -3014,9 +2588,6 @@ exports[`ScrollViewTests ScrollViews can have sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -3035,9 +2606,6 @@ exports[`ScrollViewTests ScrollViews can have sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -3056,9 +2624,6 @@ exports[`ScrollViewTests ScrollViews can have sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -3077,9 +2642,6 @@ exports[`ScrollViewTests ScrollViews can have sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -3098,9 +2660,6 @@ exports[`ScrollViewTests ScrollViews can have sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -3119,9 +2678,6 @@ exports[`ScrollViewTests ScrollViews can have sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -3140,9 +2696,6 @@ exports[`ScrollViewTests ScrollViews can have sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -3161,9 +2714,6 @@ exports[`ScrollViewTests ScrollViews can have sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -3182,9 +2732,6 @@ exports[`ScrollViewTests ScrollViews can have sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -3203,9 +2750,6 @@ exports[`ScrollViewTests ScrollViews can have sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -3224,9 +2768,6 @@ exports[`ScrollViewTests ScrollViews can have sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -3245,9 +2786,6 @@ exports[`ScrollViewTests ScrollViews can have sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -3266,9 +2804,6 @@ exports[`ScrollViewTests ScrollViews can have sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -3287,9 +2822,6 @@ exports[`ScrollViewTests ScrollViews can have sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -3308,9 +2840,6 @@ exports[`ScrollViewTests ScrollViews can have sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -3329,9 +2858,6 @@ exports[`ScrollViewTests ScrollViews can have sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -3350,9 +2876,6 @@ exports[`ScrollViewTests ScrollViews can have sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -3371,9 +2894,6 @@ exports[`ScrollViewTests ScrollViews can have sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -3392,9 +2912,6 @@ exports[`ScrollViewTests ScrollViews can have sticky headers 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -3413,9 +2930,6 @@ exports[`ScrollViewTests ScrollViews can have sticky headers 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -3442,9 +2956,6 @@ exports[`ScrollViewTests ScrollViews can have sticky headers 1`] = `
               ],
             },
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -3461,9 +2972,6 @@ exports[`ScrollViewTests ScrollViews can have sticky headers 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
             },
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -3490,9 +2998,6 @@ exports[`ScrollViewTests ScrollViews can have sticky headers 1`] = `
 exports[`ScrollViewTests ScrollViews can scroll an item list horizontally 1`] = `
 {
   "AutomationId": "scroll_horizontal",
-  "AutomationLevel": -1,
-  "AutomationPositionInSet": -1,
-  "AutomationSizeOfSet": -1,
   "Background": "#FFEEEEEE",
   "BorderBrush": "#00FFFFFF",
   "BorderThickness": "0,0,0,0",
@@ -3512,9 +3017,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list horizontally 1`] = 
   "XamlType": "Windows.UI.Xaml.Controls.ScrollViewer",
   "children": [
     {
-      "AutomationLevel": -1,
-      "AutomationPositionInSet": -1,
-      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#00FFFFFF",
       "BorderThickness": "0,0,0,0",
@@ -3532,9 +3034,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list horizontally 1`] = 
       "XamlType": "Windows.UI.Xaml.Controls.Border",
       "children": [
         {
-          "AutomationLevel": -1,
-          "AutomationPositionInSet": -1,
-          "AutomationSizeOfSet": -1,
           "Background": "#FFEEEEEE",
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -3551,9 +3050,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list horizontally 1`] = 
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
           "children": [
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -3572,17 +3068,11 @@ exports[`ScrollViewTests ScrollViews can scroll an item list horizontally 1`] = 
               "XamlType": "Windows.UI.Xaml.Controls.ScrollContentPresenter",
               "children": [
                 {
-                  "AutomationLevel": -1,
-                  "AutomationPositionInSet": -1,
-                  "AutomationSizeOfSet": -1,
                   "Left": 0,
                   "Top": 0,
                   "XamlType": "Windows.UI.Xaml.DependencyObject",
                   "children": [
                     {
-                      "AutomationLevel": -1,
-                      "AutomationPositionInSet": -1,
-                      "AutomationSizeOfSet": -1,
                       "Background": null,
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -3600,9 +3090,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list horizontally 1`] = 
                       "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
                       "children": [
                         {
-                          "AutomationLevel": -1,
-                          "AutomationPositionInSet": -1,
-                          "AutomationSizeOfSet": -1,
                           "Background": null,
                           "BorderBrush": "#E4000000",
                           "BorderThickness": "0,0,0,0",
@@ -3621,9 +3108,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list horizontally 1`] = 
                           "XamlType": "Microsoft.ReactNative.ViewPanel",
                           "children": [
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -3642,9 +3126,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list horizontally 1`] = 
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -3663,9 +3144,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list horizontally 1`] = 
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -3684,9 +3162,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list horizontally 1`] = 
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -3705,9 +3180,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list horizontally 1`] = 
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -3726,9 +3198,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list horizontally 1`] = 
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -3747,9 +3216,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list horizontally 1`] = 
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -3768,9 +3234,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list horizontally 1`] = 
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -3789,9 +3252,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list horizontally 1`] = 
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -3810,9 +3270,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list horizontally 1`] = 
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -3831,9 +3288,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list horizontally 1`] = 
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -3852,9 +3306,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list horizontally 1`] = 
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -3873,9 +3324,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list horizontally 1`] = 
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -3894,9 +3342,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list horizontally 1`] = 
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -3915,9 +3360,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list horizontally 1`] = 
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -3936,9 +3378,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list horizontally 1`] = 
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -3957,9 +3396,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list horizontally 1`] = 
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -3978,9 +3414,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list horizontally 1`] = 
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -3999,9 +3432,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list horizontally 1`] = 
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -4020,9 +3450,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list horizontally 1`] = 
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -4041,9 +3468,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list horizontally 1`] = 
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -4062,9 +3486,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list horizontally 1`] = 
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -4083,9 +3504,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list horizontally 1`] = 
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -4104,9 +3522,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list horizontally 1`] = 
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -4133,9 +3548,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list horizontally 1`] = 
               ],
             },
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -4152,9 +3564,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list horizontally 1`] = 
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
             },
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -4180,10 +3589,8 @@ exports[`ScrollViewTests ScrollViews can scroll an item list horizontally 1`] = 
 
 exports[`ScrollViewTests ScrollViews can scroll an item list vertically 1`] = `
 {
+  "AccessibilityRole": "Unknown",
   "AutomationId": "scroll_vertical",
-  "AutomationLevel": -1,
-  "AutomationPositionInSet": -1,
-  "AutomationSizeOfSet": -1,
   "Background": "#FFEEEEEE",
   "BorderBrush": "#00FFFFFF",
   "BorderThickness": "0,0,0,0",
@@ -4203,9 +3610,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list vertically 1`] = `
   "XamlType": "Windows.UI.Xaml.Controls.ScrollViewer",
   "children": [
     {
-      "AutomationLevel": -1,
-      "AutomationPositionInSet": -1,
-      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": "#00FFFFFF",
       "BorderThickness": "0,0,0,0",
@@ -4223,9 +3627,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list vertically 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.Border",
       "children": [
         {
-          "AutomationLevel": -1,
-          "AutomationPositionInSet": -1,
-          "AutomationSizeOfSet": -1,
           "Background": "#FFEEEEEE",
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -4242,9 +3643,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list vertically 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
           "children": [
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -4263,17 +3661,11 @@ exports[`ScrollViewTests ScrollViews can scroll an item list vertically 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ScrollContentPresenter",
               "children": [
                 {
-                  "AutomationLevel": -1,
-                  "AutomationPositionInSet": -1,
-                  "AutomationSizeOfSet": -1,
                   "Left": 0,
                   "Top": 0,
                   "XamlType": "Windows.UI.Xaml.DependencyObject",
                   "children": [
                     {
-                      "AutomationLevel": -1,
-                      "AutomationPositionInSet": -1,
-                      "AutomationSizeOfSet": -1,
                       "Background": null,
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -4291,9 +3683,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list vertically 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
                       "children": [
                         {
-                          "AutomationLevel": -1,
-                          "AutomationPositionInSet": -1,
-                          "AutomationSizeOfSet": -1,
                           "Background": null,
                           "BorderBrush": "#E4000000",
                           "BorderThickness": "0,0,0,0",
@@ -4312,9 +3701,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list vertically 1`] = `
                           "XamlType": "Microsoft.ReactNative.ViewPanel",
                           "children": [
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -4333,9 +3719,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list vertically 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -4354,9 +3737,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list vertically 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -4375,9 +3755,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list vertically 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -4396,9 +3773,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list vertically 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -4417,9 +3791,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list vertically 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -4438,9 +3809,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list vertically 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -4459,9 +3827,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list vertically 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -4480,9 +3845,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list vertically 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -4501,9 +3863,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list vertically 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -4522,9 +3881,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list vertically 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -4543,9 +3899,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list vertically 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -4564,9 +3917,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list vertically 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -4585,9 +3935,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list vertically 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -4606,9 +3953,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list vertically 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -4627,9 +3971,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list vertically 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -4648,9 +3989,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list vertically 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -4669,9 +4007,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list vertically 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -4690,9 +4025,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list vertically 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -4711,9 +4043,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list vertically 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -4732,9 +4061,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list vertically 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -4753,9 +4079,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list vertically 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -4774,9 +4097,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list vertically 1`] = `
                               ],
                             },
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#FFCCCCCC",
                               "BorderBrush": "#E4000000",
                               "BorderThickness": "0,0,0,0",
@@ -4795,9 +4115,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list vertically 1`] = `
                               "XamlType": "Microsoft.ReactNative.ViewPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FF000000",
@@ -4824,9 +4141,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list vertically 1`] = `
               ],
             },
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -4843,9 +4157,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list vertically 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
             },
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -4872,9 +4183,6 @@ exports[`ScrollViewTests ScrollViews can scroll an item list vertically 1`] = `
 exports[`ScrollViewTests ScrollViews has flash scroll indicators 1`] = `
 {
   "AutomationId": "flash_scroll_indicators_button",
-  "AutomationLevel": -1,
-  "AutomationPositionInSet": -1,
-  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": null,
   "BorderThickness": "0,0,0,0",
@@ -4894,9 +4202,6 @@ exports[`ScrollViewTests ScrollViews has flash scroll indicators 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewControl",
   "children": [
     {
-      "AutomationLevel": -1,
-      "AutomationPositionInSet": -1,
-      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -4914,9 +4219,6 @@ exports[`ScrollViewTests ScrollViews has flash scroll indicators 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
       "children": [
         {
-          "AutomationLevel": -1,
-          "AutomationPositionInSet": -1,
-          "AutomationSizeOfSet": -1,
           "Background": "#FFCCCCCC",
           "BorderBrush": "#E4000000",
           "BorderThickness": "0,0,0,0",
@@ -4935,9 +4237,6 @@ exports[`ScrollViewTests ScrollViews has flash scroll indicators 1`] = `
           "XamlType": "Microsoft.ReactNative.ViewPanel",
           "children": [
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Foreground": "#FF000000",

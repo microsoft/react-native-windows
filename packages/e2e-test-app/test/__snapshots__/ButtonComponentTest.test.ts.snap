@@ -2,10 +2,9 @@
 
 exports[`ButtonTests Buttons can be disabled 1`] = `
 {
+  "AccessibilityRole": "Button",
+  "AccessibilityStateDisabled": true,
   "AutomationId": "disabled_button",
-  "AutomationLevel": -1,
-  "AutomationPositionInSet": -1,
-  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": null,
   "BorderThickness": "0,0,0,0",
@@ -25,9 +24,6 @@ exports[`ButtonTests Buttons can be disabled 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewControl",
   "children": [
     {
-      "AutomationLevel": -1,
-      "AutomationPositionInSet": -1,
-      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -45,9 +41,6 @@ exports[`ButtonTests Buttons can be disabled 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
       "children": [
         {
-          "AutomationLevel": -1,
-          "AutomationPositionInSet": -1,
-          "AutomationSizeOfSet": -1,
           "Background": "#00FFFFFF",
           "BorderBrush": "#E4000000",
           "BorderThickness": "0,0,0,0",
@@ -66,9 +59,6 @@ exports[`ButtonTests Buttons can be disabled 1`] = `
           "XamlType": "Microsoft.ReactNative.ViewPanel",
           "children": [
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Background": "#4DF9F9F9",
               "BorderBrush": "#0F000000",
               "BorderThickness": "1,1,1,1.5",
@@ -87,9 +77,6 @@ exports[`ButtonTests Buttons can be disabled 1`] = `
               "XamlType": "Microsoft.ReactNative.ViewPanel",
               "children": [
                 {
-                  "AutomationLevel": -1,
-                  "AutomationPositionInSet": -1,
-                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": "#E4000000",
                   "BorderThickness": "0,0,0,0",
@@ -108,9 +95,7 @@ exports[`ButtonTests Buttons can be disabled 1`] = `
                   "XamlType": "Microsoft.ReactNative.ViewPanel",
                   "children": [
                     {
-                      "AutomationLevel": -1,
-                      "AutomationPositionInSet": -1,
-                      "AutomationSizeOfSet": -1,
+                      "AccessibilityStateDisabled": true,
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
                       "Foreground": "#5C000000",
@@ -140,10 +125,8 @@ exports[`ButtonTests Buttons can be disabled 1`] = `
 
 exports[`ButtonTests Buttons can have accessibility labels 1`] = `
 {
+  "AccessibilityRole": "Button",
   "AutomationId": "accessibilityLabel_button",
-  "AutomationLevel": -1,
-  "AutomationPositionInSet": -1,
-  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": null,
   "BorderThickness": "0,0,0,0",
@@ -163,9 +146,6 @@ exports[`ButtonTests Buttons can have accessibility labels 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewControl",
   "children": [
     {
-      "AutomationLevel": -1,
-      "AutomationPositionInSet": -1,
-      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -183,9 +163,6 @@ exports[`ButtonTests Buttons can have accessibility labels 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
       "children": [
         {
-          "AutomationLevel": -1,
-          "AutomationPositionInSet": -1,
-          "AutomationSizeOfSet": -1,
           "Background": "#00FFFFFF",
           "BorderBrush": "#E4000000",
           "BorderThickness": "0,0,0,0",
@@ -204,9 +181,6 @@ exports[`ButtonTests Buttons can have accessibility labels 1`] = `
           "XamlType": "Microsoft.ReactNative.ViewPanel",
           "children": [
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Background": "#FF007AFF",
               "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
               "BorderThickness": "1,1,1,1.5",
@@ -225,9 +199,6 @@ exports[`ButtonTests Buttons can have accessibility labels 1`] = `
               "XamlType": "Microsoft.ReactNative.ViewPanel",
               "children": [
                 {
-                  "AutomationLevel": -1,
-                  "AutomationPositionInSet": -1,
-                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": "#E4000000",
                   "BorderThickness": "0,0,0,0",
@@ -246,9 +217,6 @@ exports[`ButtonTests Buttons can have accessibility labels 1`] = `
                   "XamlType": "Microsoft.ReactNative.ViewPanel",
                   "children": [
                     {
-                      "AutomationLevel": -1,
-                      "AutomationPositionInSet": -1,
-                      "AutomationSizeOfSet": -1,
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
                       "Foreground": "#E4000000",
@@ -278,10 +246,8 @@ exports[`ButtonTests Buttons can have accessibility labels 1`] = `
 
 exports[`ButtonTests Buttons can have accessibility props 1`] = `
 {
+  "AccessibilityRole": "Button",
   "AutomationId": "accessibility_props",
-  "AutomationLevel": -1,
-  "AutomationPositionInSet": -1,
-  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": null,
   "BorderThickness": "0,0,0,0",
@@ -301,9 +267,6 @@ exports[`ButtonTests Buttons can have accessibility props 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewControl",
   "children": [
     {
-      "AutomationLevel": -1,
-      "AutomationPositionInSet": -1,
-      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -321,9 +284,6 @@ exports[`ButtonTests Buttons can have accessibility props 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
       "children": [
         {
-          "AutomationLevel": -1,
-          "AutomationPositionInSet": -1,
-          "AutomationSizeOfSet": -1,
           "Background": "#B3FFFFFF",
           "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
           "BorderThickness": "1,1,1,1.5",
@@ -342,9 +302,6 @@ exports[`ButtonTests Buttons can have accessibility props 1`] = `
           "XamlType": "Microsoft.ReactNative.ViewPanel",
           "children": [
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": "#E4000000",
               "BorderThickness": "0,0,0,0",
@@ -363,9 +320,6 @@ exports[`ButtonTests Buttons can have accessibility props 1`] = `
               "XamlType": "Microsoft.ReactNative.ViewPanel",
               "children": [
                 {
-                  "AutomationLevel": -1,
-                  "AutomationPositionInSet": -1,
-                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": "#E4000000",
                   "BorderThickness": "0,0,0,0",
@@ -384,9 +338,6 @@ exports[`ButtonTests Buttons can have accessibility props 1`] = `
                   "XamlType": "Microsoft.ReactNative.ViewPanel",
                   "children": [
                     {
-                      "AutomationLevel": -1,
-                      "AutomationPositionInSet": -1,
-                      "AutomationSizeOfSet": -1,
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
                       "Foreground": "#E4000000",
@@ -416,10 +367,9 @@ exports[`ButtonTests Buttons can have accessibility props 1`] = `
 
 exports[`ButtonTests Buttons can have accessibility states 1`] = `
 {
+  "AccessibilityRole": "Button",
+  "AccessibilityStateDisabled": true,
   "AutomationId": "accessibilityState_button",
-  "AutomationLevel": -1,
-  "AutomationPositionInSet": -1,
-  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": null,
   "BorderThickness": "0,0,0,0",
@@ -439,9 +389,6 @@ exports[`ButtonTests Buttons can have accessibility states 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewControl",
   "children": [
     {
-      "AutomationLevel": -1,
-      "AutomationPositionInSet": -1,
-      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -459,9 +406,6 @@ exports[`ButtonTests Buttons can have accessibility states 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
       "children": [
         {
-          "AutomationLevel": -1,
-          "AutomationPositionInSet": -1,
-          "AutomationSizeOfSet": -1,
           "Background": "#00FFFFFF",
           "BorderBrush": "#E4000000",
           "BorderThickness": "0,0,0,0",
@@ -480,9 +424,6 @@ exports[`ButtonTests Buttons can have accessibility states 1`] = `
           "XamlType": "Microsoft.ReactNative.ViewPanel",
           "children": [
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Background": "#4DF9F9F9",
               "BorderBrush": "#0F000000",
               "BorderThickness": "1,1,1,1.5",
@@ -501,9 +442,6 @@ exports[`ButtonTests Buttons can have accessibility states 1`] = `
               "XamlType": "Microsoft.ReactNative.ViewPanel",
               "children": [
                 {
-                  "AutomationLevel": -1,
-                  "AutomationPositionInSet": -1,
-                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": "#E4000000",
                   "BorderThickness": "0,0,0,0",
@@ -522,9 +460,7 @@ exports[`ButtonTests Buttons can have accessibility states 1`] = `
                   "XamlType": "Microsoft.ReactNative.ViewPanel",
                   "children": [
                     {
-                      "AutomationLevel": -1,
-                      "AutomationPositionInSet": -1,
-                      "AutomationSizeOfSet": -1,
+                      "AccessibilityStateDisabled": true,
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
                       "Foreground": "#5C000000",
@@ -554,10 +490,8 @@ exports[`ButtonTests Buttons can have accessibility states 1`] = `
 
 exports[`ButtonTests Buttons can have custom colors 1`] = `
 {
+  "AccessibilityRole": "Button",
   "AutomationId": "cancel_button",
-  "AutomationLevel": -1,
-  "AutomationPositionInSet": -1,
-  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": null,
   "BorderThickness": "0,0,0,0",
@@ -577,9 +511,6 @@ exports[`ButtonTests Buttons can have custom colors 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewControl",
   "children": [
     {
-      "AutomationLevel": -1,
-      "AutomationPositionInSet": -1,
-      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -597,9 +528,6 @@ exports[`ButtonTests Buttons can have custom colors 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
       "children": [
         {
-          "AutomationLevel": -1,
-          "AutomationPositionInSet": -1,
-          "AutomationSizeOfSet": -1,
           "Background": "#00FFFFFF",
           "BorderBrush": "#E4000000",
           "BorderThickness": "0,0,0,0",
@@ -618,9 +546,6 @@ exports[`ButtonTests Buttons can have custom colors 1`] = `
           "XamlType": "Microsoft.ReactNative.ViewPanel",
           "children": [
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Background": "#FFFF3B30",
               "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
               "BorderThickness": "1,1,1,1.5",
@@ -639,9 +564,6 @@ exports[`ButtonTests Buttons can have custom colors 1`] = `
               "XamlType": "Microsoft.ReactNative.ViewPanel",
               "children": [
                 {
-                  "AutomationLevel": -1,
-                  "AutomationPositionInSet": -1,
-                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": "#E4000000",
                   "BorderThickness": "0,0,0,0",
@@ -660,9 +582,6 @@ exports[`ButtonTests Buttons can have custom colors 1`] = `
                   "XamlType": "Microsoft.ReactNative.ViewPanel",
                   "children": [
                     {
-                      "AutomationLevel": -1,
-                      "AutomationPositionInSet": -1,
-                      "AutomationSizeOfSet": -1,
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
                       "Foreground": "#E4000000",
@@ -693,9 +612,6 @@ exports[`ButtonTests Buttons can have custom colors 1`] = `
 exports[`ButtonTests Buttons can have their accessibility and keyboard focus disabled 1`] = `
 {
   "AutomationId": "accessible_focusable_button",
-  "AutomationLevel": -1,
-  "AutomationPositionInSet": -1,
-  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -714,10 +630,8 @@ exports[`ButtonTests Buttons can have their accessibility and keyboard focus dis
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
+      "AccessibilityRole": "Button",
       "AutomationId": "accessibility_props",
-      "AutomationLevel": -1,
-      "AutomationPositionInSet": -1,
-      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -737,9 +651,6 @@ exports[`ButtonTests Buttons can have their accessibility and keyboard focus dis
       "XamlType": "Microsoft.ReactNative.ViewControl",
       "children": [
         {
-          "AutomationLevel": -1,
-          "AutomationPositionInSet": -1,
-          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -757,9 +668,6 @@ exports[`ButtonTests Buttons can have their accessibility and keyboard focus dis
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
           "children": [
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Background": "#B3FFFFFF",
               "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
               "BorderThickness": "1,1,1,1.5",
@@ -778,9 +686,6 @@ exports[`ButtonTests Buttons can have their accessibility and keyboard focus dis
               "XamlType": "Microsoft.ReactNative.ViewPanel",
               "children": [
                 {
-                  "AutomationLevel": -1,
-                  "AutomationPositionInSet": -1,
-                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": "#E4000000",
                   "BorderThickness": "0,0,0,0",
@@ -799,9 +704,6 @@ exports[`ButtonTests Buttons can have their accessibility and keyboard focus dis
                   "XamlType": "Microsoft.ReactNative.ViewPanel",
                   "children": [
                     {
-                      "AutomationLevel": -1,
-                      "AutomationPositionInSet": -1,
-                      "AutomationSizeOfSet": -1,
                       "Background": null,
                       "BorderBrush": "#E4000000",
                       "BorderThickness": "0,0,0,0",
@@ -820,9 +722,6 @@ exports[`ButtonTests Buttons can have their accessibility and keyboard focus dis
                       "XamlType": "Microsoft.ReactNative.ViewPanel",
                       "children": [
                         {
-                          "AutomationLevel": -1,
-                          "AutomationPositionInSet": -1,
-                          "AutomationSizeOfSet": -1,
                           "Clip": null,
                           "FlowDirection": "LeftToRight",
                           "Foreground": "#E4000000",
@@ -849,10 +748,8 @@ exports[`ButtonTests Buttons can have their accessibility and keyboard focus dis
       ],
     },
     {
+      "AccessibilityRole": "Button",
       "AutomationId": "accessibility_props",
-      "AutomationLevel": -1,
-      "AutomationPositionInSet": -1,
-      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -872,9 +769,6 @@ exports[`ButtonTests Buttons can have their accessibility and keyboard focus dis
       "XamlType": "Microsoft.ReactNative.ViewControl",
       "children": [
         {
-          "AutomationLevel": -1,
-          "AutomationPositionInSet": -1,
-          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -892,9 +786,6 @@ exports[`ButtonTests Buttons can have their accessibility and keyboard focus dis
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
           "children": [
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Background": "#B3FFFFFF",
               "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
               "BorderThickness": "1,1,1,1.5",
@@ -913,9 +804,6 @@ exports[`ButtonTests Buttons can have their accessibility and keyboard focus dis
               "XamlType": "Microsoft.ReactNative.ViewPanel",
               "children": [
                 {
-                  "AutomationLevel": -1,
-                  "AutomationPositionInSet": -1,
-                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": "#E4000000",
                   "BorderThickness": "0,0,0,0",
@@ -934,9 +822,6 @@ exports[`ButtonTests Buttons can have their accessibility and keyboard focus dis
                   "XamlType": "Microsoft.ReactNative.ViewPanel",
                   "children": [
                     {
-                      "AutomationLevel": -1,
-                      "AutomationPositionInSet": -1,
-                      "AutomationSizeOfSet": -1,
                       "Background": null,
                       "BorderBrush": "#E4000000",
                       "BorderThickness": "0,0,0,0",
@@ -955,9 +840,6 @@ exports[`ButtonTests Buttons can have their accessibility and keyboard focus dis
                       "XamlType": "Microsoft.ReactNative.ViewPanel",
                       "children": [
                         {
-                          "AutomationLevel": -1,
-                          "AutomationPositionInSet": -1,
-                          "AutomationSizeOfSet": -1,
                           "Clip": null,
                           "FlowDirection": "LeftToRight",
                           "Foreground": "#E4000000",
@@ -984,10 +866,8 @@ exports[`ButtonTests Buttons can have their accessibility and keyboard focus dis
       ],
     },
     {
+      "AccessibilityRole": "Button",
       "AutomationId": "accessibility_props",
-      "AutomationLevel": -1,
-      "AutomationPositionInSet": -1,
-      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -1007,9 +887,6 @@ exports[`ButtonTests Buttons can have their accessibility and keyboard focus dis
       "XamlType": "Microsoft.ReactNative.ViewControl",
       "children": [
         {
-          "AutomationLevel": -1,
-          "AutomationPositionInSet": -1,
-          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -1027,9 +904,6 @@ exports[`ButtonTests Buttons can have their accessibility and keyboard focus dis
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
           "children": [
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Background": "#B3FFFFFF",
               "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
               "BorderThickness": "1,1,1,1.5",
@@ -1048,9 +922,6 @@ exports[`ButtonTests Buttons can have their accessibility and keyboard focus dis
               "XamlType": "Microsoft.ReactNative.ViewPanel",
               "children": [
                 {
-                  "AutomationLevel": -1,
-                  "AutomationPositionInSet": -1,
-                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": "#E4000000",
                   "BorderThickness": "0,0,0,0",
@@ -1069,9 +940,6 @@ exports[`ButtonTests Buttons can have their accessibility and keyboard focus dis
                   "XamlType": "Microsoft.ReactNative.ViewPanel",
                   "children": [
                     {
-                      "AutomationLevel": -1,
-                      "AutomationPositionInSet": -1,
-                      "AutomationSizeOfSet": -1,
                       "Background": null,
                       "BorderBrush": "#E4000000",
                       "BorderThickness": "0,0,0,0",
@@ -1090,9 +958,6 @@ exports[`ButtonTests Buttons can have their accessibility and keyboard focus dis
                       "XamlType": "Microsoft.ReactNative.ViewPanel",
                       "children": [
                         {
-                          "AutomationLevel": -1,
-                          "AutomationPositionInSet": -1,
-                          "AutomationSizeOfSet": -1,
                           "Clip": null,
                           "FlowDirection": "LeftToRight",
                           "Foreground": "#E4000000",
@@ -1119,10 +984,8 @@ exports[`ButtonTests Buttons can have their accessibility and keyboard focus dis
       ],
     },
     {
+      "AccessibilityRole": "Button",
       "AutomationId": "accessibility_props",
-      "AutomationLevel": -1,
-      "AutomationPositionInSet": -1,
-      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -1142,9 +1005,6 @@ exports[`ButtonTests Buttons can have their accessibility and keyboard focus dis
       "XamlType": "Microsoft.ReactNative.ViewControl",
       "children": [
         {
-          "AutomationLevel": -1,
-          "AutomationPositionInSet": -1,
-          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -1162,9 +1022,6 @@ exports[`ButtonTests Buttons can have their accessibility and keyboard focus dis
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
           "children": [
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Background": "#B3FFFFFF",
               "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
               "BorderThickness": "1,1,1,1.5",
@@ -1183,9 +1040,6 @@ exports[`ButtonTests Buttons can have their accessibility and keyboard focus dis
               "XamlType": "Microsoft.ReactNative.ViewPanel",
               "children": [
                 {
-                  "AutomationLevel": -1,
-                  "AutomationPositionInSet": -1,
-                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": "#E4000000",
                   "BorderThickness": "0,0,0,0",
@@ -1204,9 +1058,6 @@ exports[`ButtonTests Buttons can have their accessibility and keyboard focus dis
                   "XamlType": "Microsoft.ReactNative.ViewPanel",
                   "children": [
                     {
-                      "AutomationLevel": -1,
-                      "AutomationPositionInSet": -1,
-                      "AutomationSizeOfSet": -1,
                       "Background": null,
                       "BorderBrush": "#E4000000",
                       "BorderThickness": "0,0,0,0",
@@ -1225,9 +1076,6 @@ exports[`ButtonTests Buttons can have their accessibility and keyboard focus dis
                       "XamlType": "Microsoft.ReactNative.ViewPanel",
                       "children": [
                         {
-                          "AutomationLevel": -1,
-                          "AutomationPositionInSet": -1,
-                          "AutomationSizeOfSet": -1,
                           "Clip": null,
                           "FlowDirection": "LeftToRight",
                           "Foreground": "#E4000000",
@@ -1259,10 +1107,8 @@ exports[`ButtonTests Buttons can have their accessibility and keyboard focus dis
 
 exports[`ButtonTests Buttons have default styling 1`] = `
 {
+  "AccessibilityRole": "Button",
   "AutomationId": "button_default_styling",
-  "AutomationLevel": -1,
-  "AutomationPositionInSet": -1,
-  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": null,
   "BorderThickness": "0,0,0,0",
@@ -1282,9 +1128,6 @@ exports[`ButtonTests Buttons have default styling 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewControl",
   "children": [
     {
-      "AutomationLevel": -1,
-      "AutomationPositionInSet": -1,
-      "AutomationSizeOfSet": -1,
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -1302,9 +1145,6 @@ exports[`ButtonTests Buttons have default styling 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
       "children": [
         {
-          "AutomationLevel": -1,
-          "AutomationPositionInSet": -1,
-          "AutomationSizeOfSet": -1,
           "Background": "#B3FFFFFF",
           "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
           "BorderThickness": "1,1,1,1.5",
@@ -1323,9 +1163,6 @@ exports[`ButtonTests Buttons have default styling 1`] = `
           "XamlType": "Microsoft.ReactNative.ViewPanel",
           "children": [
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": "#E4000000",
               "BorderThickness": "0,0,0,0",
@@ -1344,9 +1181,6 @@ exports[`ButtonTests Buttons have default styling 1`] = `
               "XamlType": "Microsoft.ReactNative.ViewPanel",
               "children": [
                 {
-                  "AutomationLevel": -1,
-                  "AutomationPositionInSet": -1,
-                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": "#E4000000",
                   "BorderThickness": "0,0,0,0",
@@ -1365,9 +1199,6 @@ exports[`ButtonTests Buttons have default styling 1`] = `
                   "XamlType": "Microsoft.ReactNative.ViewPanel",
                   "children": [
                     {
-                      "AutomationLevel": -1,
-                      "AutomationPositionInSet": -1,
-                      "AutomationSizeOfSet": -1,
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
                       "Foreground": "#E4000000",

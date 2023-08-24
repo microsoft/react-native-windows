@@ -3,9 +3,6 @@
 exports[`DisplayNoneTest DisplayNoneDisabledTest 1`] = `
 {
   "AutomationId": "textbox-container",
-  "AutomationLevel": -1,
-  "AutomationPositionInSet": -1,
-  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -24,9 +21,6 @@ exports[`DisplayNoneTest DisplayNoneDisabledTest 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
-      "AutomationLevel": -1,
-      "AutomationPositionInSet": -1,
-      "AutomationSizeOfSet": -1,
       "Background": "#B3FFFFFF",
       "BorderBrush": "#FF808080",
       "BorderThickness": "1,1,1,1",
@@ -47,9 +41,6 @@ exports[`DisplayNoneTest DisplayNoneDisabledTest 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBox",
       "children": [
         {
-          "AutomationLevel": -1,
-          "AutomationPositionInSet": -1,
-          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -66,9 +57,6 @@ exports[`DisplayNoneTest DisplayNoneDisabledTest 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
           "children": [
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Background": "#B3FFFFFF",
               "BorderBrush": "#FF808080",
               "BorderThickness": "1,1,1,1",
@@ -86,9 +74,6 @@ exports[`DisplayNoneTest DisplayNoneDisabledTest 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Border",
             },
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Background": "#00FFFFFF",
               "BorderBrush": "#00FFFFFF",
               "BorderThickness": "0,0,0,0",
@@ -107,9 +92,6 @@ exports[`DisplayNoneTest DisplayNoneDisabledTest 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ScrollViewer",
               "children": [
                 {
-                  "AutomationLevel": -1,
-                  "AutomationPositionInSet": -1,
-                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": "#00FFFFFF",
                   "BorderThickness": "0,0,0,0",
@@ -127,9 +109,6 @@ exports[`DisplayNoneTest DisplayNoneDisabledTest 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.Border",
                   "children": [
                     {
-                      "AutomationLevel": -1,
-                      "AutomationPositionInSet": -1,
-                      "AutomationSizeOfSet": -1,
                       "Background": "#00FFFFFF",
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -146,9 +125,6 @@ exports[`DisplayNoneTest DisplayNoneDisabledTest 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.Grid",
                       "children": [
                         {
-                          "AutomationLevel": -1,
-                          "AutomationPositionInSet": -1,
-                          "AutomationSizeOfSet": -1,
                           "Background": null,
                           "BorderBrush": null,
                           "BorderThickness": "0,0,0,0",
@@ -167,9 +143,6 @@ exports[`DisplayNoneTest DisplayNoneDisabledTest 1`] = `
                           "XamlType": "Windows.UI.Xaml.Controls.ScrollContentPresenter",
                           "children": [
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Clip": null,
                               "FlowDirection": "LeftToRight",
                               "HorizontalAlignment": "Stretch",
@@ -183,9 +156,6 @@ exports[`DisplayNoneTest DisplayNoneDisabledTest 1`] = `
                           ],
                         },
                         {
-                          "AutomationLevel": -1,
-                          "AutomationPositionInSet": -1,
-                          "AutomationSizeOfSet": -1,
                           "Background": null,
                           "BorderBrush": null,
                           "BorderThickness": "0,0,0,0",
@@ -208,9 +178,6 @@ exports[`DisplayNoneTest DisplayNoneDisabledTest 1`] = `
               ],
             },
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -239,9 +206,6 @@ exports[`DisplayNoneTest DisplayNoneDisabledTest 1`] = `
 exports[`DisplayNoneTest DisplayNoneEnabledTest 1`] = `
 {
   "AutomationId": "textbox-container",
-  "AutomationLevel": -1,
-  "AutomationPositionInSet": -1,
-  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -260,9 +224,6 @@ exports[`DisplayNoneTest DisplayNoneEnabledTest 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
-      "AutomationLevel": -1,
-      "AutomationPositionInSet": -1,
-      "AutomationSizeOfSet": -1,
       "Background": "#B3FFFFFF",
       "BorderBrush": "#FF808080",
       "BorderThickness": "1,1,1,1",
@@ -283,9 +244,6 @@ exports[`DisplayNoneTest DisplayNoneEnabledTest 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBox",
       "children": [
         {
-          "AutomationLevel": -1,
-          "AutomationPositionInSet": -1,
-          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -302,9 +260,6 @@ exports[`DisplayNoneTest DisplayNoneEnabledTest 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
           "children": [
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Background": "#B3FFFFFF",
               "BorderBrush": "#FF808080",
               "BorderThickness": "1,1,1,1",
@@ -322,9 +277,6 @@ exports[`DisplayNoneTest DisplayNoneEnabledTest 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Border",
             },
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Background": "#00FFFFFF",
               "BorderBrush": "#00FFFFFF",
               "BorderThickness": "0,0,0,0",
@@ -343,9 +295,6 @@ exports[`DisplayNoneTest DisplayNoneEnabledTest 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ScrollViewer",
               "children": [
                 {
-                  "AutomationLevel": -1,
-                  "AutomationPositionInSet": -1,
-                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": "#00FFFFFF",
                   "BorderThickness": "0,0,0,0",
@@ -363,9 +312,6 @@ exports[`DisplayNoneTest DisplayNoneEnabledTest 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.Border",
                   "children": [
                     {
-                      "AutomationLevel": -1,
-                      "AutomationPositionInSet": -1,
-                      "AutomationSizeOfSet": -1,
                       "Background": "#00FFFFFF",
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -382,9 +328,6 @@ exports[`DisplayNoneTest DisplayNoneEnabledTest 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.Grid",
                       "children": [
                         {
-                          "AutomationLevel": -1,
-                          "AutomationPositionInSet": -1,
-                          "AutomationSizeOfSet": -1,
                           "Background": null,
                           "BorderBrush": null,
                           "BorderThickness": "0,0,0,0",
@@ -403,9 +346,6 @@ exports[`DisplayNoneTest DisplayNoneEnabledTest 1`] = `
                           "XamlType": "Windows.UI.Xaml.Controls.ScrollContentPresenter",
                           "children": [
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Clip": null,
                               "FlowDirection": "LeftToRight",
                               "HorizontalAlignment": "Stretch",
@@ -419,9 +359,6 @@ exports[`DisplayNoneTest DisplayNoneEnabledTest 1`] = `
                           ],
                         },
                         {
-                          "AutomationLevel": -1,
-                          "AutomationPositionInSet": -1,
-                          "AutomationSizeOfSet": -1,
                           "Background": null,
                           "BorderBrush": null,
                           "BorderThickness": "0,0,0,0",
@@ -444,9 +381,6 @@ exports[`DisplayNoneTest DisplayNoneEnabledTest 1`] = `
               ],
             },
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",

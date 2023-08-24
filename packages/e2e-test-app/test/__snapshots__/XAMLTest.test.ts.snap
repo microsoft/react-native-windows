@@ -3,9 +3,6 @@
 exports[`XamlTest Layout 1`] = `
 {
   "AutomationId": "ReactNativeXAMLRoot",
-  "AutomationLevel": -1,
-  "AutomationPositionInSet": -1,
-  "AutomationSizeOfSet": -1,
   "Background": null,
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -24,9 +21,6 @@ exports[`XamlTest Layout 1`] = `
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
-      "AutomationLevel": -1,
-      "AutomationPositionInSet": -1,
-      "AutomationSizeOfSet": -1,
       "Background": "#B3FFFFFF",
       "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
       "BorderThickness": "1,1,1,1",
@@ -47,9 +41,6 @@ exports[`XamlTest Layout 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBox",
       "children": [
         {
-          "AutomationLevel": -1,
-          "AutomationPositionInSet": -1,
-          "AutomationSizeOfSet": -1,
           "Background": null,
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -66,9 +57,6 @@ exports[`XamlTest Layout 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
           "children": [
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Background": "#B3FFFFFF",
               "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
               "BorderThickness": "1,1,1,1",
@@ -86,9 +74,6 @@ exports[`XamlTest Layout 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Border",
             },
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Background": "#00FFFFFF",
               "BorderBrush": "#00FFFFFF",
               "BorderThickness": "0,0,0,0",
@@ -107,9 +92,6 @@ exports[`XamlTest Layout 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.ScrollViewer",
               "children": [
                 {
-                  "AutomationLevel": -1,
-                  "AutomationPositionInSet": -1,
-                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": "#00FFFFFF",
                   "BorderThickness": "0,0,0,0",
@@ -127,9 +109,6 @@ exports[`XamlTest Layout 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.Border",
                   "children": [
                     {
-                      "AutomationLevel": -1,
-                      "AutomationPositionInSet": -1,
-                      "AutomationSizeOfSet": -1,
                       "Background": "#00FFFFFF",
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -146,9 +125,6 @@ exports[`XamlTest Layout 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.Grid",
                       "children": [
                         {
-                          "AutomationLevel": -1,
-                          "AutomationPositionInSet": -1,
-                          "AutomationSizeOfSet": -1,
                           "Background": null,
                           "BorderBrush": null,
                           "BorderThickness": "0,0,0,0",
@@ -167,9 +143,6 @@ exports[`XamlTest Layout 1`] = `
                           "XamlType": "Windows.UI.Xaml.Controls.ScrollContentPresenter",
                           "children": [
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Clip": null,
                               "FlowDirection": "LeftToRight",
                               "HorizontalAlignment": "Stretch",
@@ -183,9 +156,6 @@ exports[`XamlTest Layout 1`] = `
                           ],
                         },
                         {
-                          "AutomationLevel": -1,
-                          "AutomationPositionInSet": -1,
-                          "AutomationSizeOfSet": -1,
                           "Background": null,
                           "BorderBrush": null,
                           "BorderThickness": "0,0,0,0",
@@ -208,9 +178,6 @@ exports[`XamlTest Layout 1`] = `
               ],
             },
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -233,9 +200,6 @@ exports[`XamlTest Layout 1`] = `
       ],
     },
     {
-      "AutomationLevel": -1,
-      "AutomationPositionInSet": -1,
-      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FFFF0000",
@@ -253,9 +217,6 @@ exports[`XamlTest Layout 1`] = `
     },
     {
       "AutomationId": "tappableTextBlock",
-      "AutomationLevel": -1,
-      "AutomationPositionInSet": -1,
-      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Foreground": "#FF000000",
@@ -272,9 +233,6 @@ exports[`XamlTest Layout 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
-      "AutomationLevel": -1,
-      "AutomationPositionInSet": -1,
-      "AutomationSizeOfSet": -1,
       "Background": "#FF008000",
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -293,9 +251,6 @@ exports[`XamlTest Layout 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.Grid",
       "children": [
         {
-          "AutomationLevel": -1,
-          "AutomationPositionInSet": -1,
-          "AutomationSizeOfSet": -1,
           "Background": "#FF0000FF",
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -312,9 +267,6 @@ exports[`XamlTest Layout 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.Border",
           "children": [
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Background": "#B3FFFFFF",
               "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
               "BorderThickness": "1,1,1,1",
@@ -332,9 +284,6 @@ exports[`XamlTest Layout 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Button",
               "children": [
                 {
-                  "AutomationLevel": -1,
-                  "AutomationPositionInSet": -1,
-                  "AutomationSizeOfSet": -1,
                   "Background": "#B3FFFFFF",
                   "BorderBrush": "Windows.UI.Xaml.Media.LinearGradientBrush",
                   "BorderThickness": "1,1,1,1",
@@ -353,9 +302,6 @@ exports[`XamlTest Layout 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
                   "children": [
                     {
-                      "AutomationLevel": -1,
-                      "AutomationPositionInSet": -1,
-                      "AutomationSizeOfSet": -1,
                       "Background": null,
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -372,9 +318,6 @@ exports[`XamlTest Layout 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.StackPanel",
                       "children": [
                         {
-                          "AutomationLevel": -1,
-                          "AutomationPositionInSet": -1,
-                          "AutomationSizeOfSet": -1,
                           "Clip": null,
                           "FlowDirection": "LeftToRight",
                           "Foreground": "#FFFF0000",
@@ -387,9 +330,6 @@ exports[`XamlTest Layout 1`] = `
                           "XamlType": "Windows.UI.Xaml.Controls.SymbolIcon",
                           "children": [
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": "#00000000",
                               "BorderBrush": null,
                               "BorderThickness": "0,0,0,0",
@@ -406,9 +346,6 @@ exports[`XamlTest Layout 1`] = `
                               "XamlType": "Windows.UI.Xaml.Controls.Grid",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#FFFF0000",
@@ -427,9 +364,6 @@ exports[`XamlTest Layout 1`] = `
                           ],
                         },
                         {
-                          "AutomationLevel": -1,
-                          "AutomationPositionInSet": -1,
-                          "AutomationSizeOfSet": -1,
                           "Clip": null,
                           "FlowDirection": "LeftToRight",
                           "Foreground": "#FFFFFFFF",
@@ -454,9 +388,6 @@ exports[`XamlTest Layout 1`] = `
       ],
     },
     {
-      "AutomationLevel": -1,
-      "AutomationPositionInSet": -1,
-      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Height": 16,
@@ -470,9 +401,6 @@ exports[`XamlTest Layout 1`] = `
       "XamlType": "Windows.UI.Xaml.Shapes.Path",
     },
     {
-      "AutomationLevel": -1,
-      "AutomationPositionInSet": -1,
-      "AutomationSizeOfSet": -1,
       "Clip": null,
       "FlowDirection": "LeftToRight",
       "Height": 80,
@@ -486,16 +414,13 @@ exports[`XamlTest Layout 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.Image",
     },
     {
-      "AutomationLevel": -1,
-      "AutomationPositionInSet": -1,
-      "AutomationSizeOfSet": -1,
       "Background": "#00FFFFFF",
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
       "Clip": null,
       "CornerRadius": "0,0,0,0",
       "FlowDirection": "LeftToRight",
-      "Foreground": "#FF0067C0",
+      "Foreground": "#FF005A9E",
       "Height": 32,
       "HorizontalAlignment": "Center",
       "Left": 0,
@@ -508,9 +433,6 @@ exports[`XamlTest Layout 1`] = `
       "XamlType": "Microsoft.UI.Xaml.Controls.ProgressRing",
       "children": [
         {
-          "AutomationLevel": -1,
-          "AutomationPositionInSet": -1,
-          "AutomationSizeOfSet": -1,
           "Background": "#00FFFFFF",
           "BorderBrush": null,
           "BorderThickness": "0,0,0,0",
@@ -528,9 +450,6 @@ exports[`XamlTest Layout 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
           "children": [
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "HorizontalAlignment": "Stretch",
@@ -547,9 +466,6 @@ exports[`XamlTest Layout 1`] = `
       ],
     },
     {
-      "AutomationLevel": -1,
-      "AutomationPositionInSet": -1,
-      "AutomationSizeOfSet": -1,
       "Background": "#00FFFFFF",
       "BorderBrush": "#0F000000",
       "BorderThickness": "1,1,1,1",
@@ -569,9 +485,6 @@ exports[`XamlTest Layout 1`] = `
       "XamlType": "Microsoft.UI.Xaml.Controls.InfoBar",
       "children": [
         {
-          "AutomationLevel": -1,
-          "AutomationPositionInSet": -1,
-          "AutomationSizeOfSet": -1,
           "Background": "#FFDFF6DD",
           "BorderBrush": "#0F000000",
           "BorderThickness": "1,1,1,1",
@@ -589,9 +502,6 @@ exports[`XamlTest Layout 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.Border",
           "children": [
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Background": "#00FFFFFF",
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
@@ -608,9 +518,6 @@ exports[`XamlTest Layout 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Grid",
               "children": [
                 {
-                  "AutomationLevel": -1,
-                  "AutomationPositionInSet": -1,
-                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
@@ -628,9 +535,6 @@ exports[`XamlTest Layout 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.Grid",
                   "children": [
                     {
-                      "AutomationLevel": -1,
-                      "AutomationPositionInSet": -1,
-                      "AutomationSizeOfSet": -1,
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
                       "Foreground": "#FF0F7B0F",
@@ -646,9 +550,6 @@ exports[`XamlTest Layout 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
                     },
                     {
-                      "AutomationLevel": -1,
-                      "AutomationPositionInSet": -1,
-                      "AutomationSizeOfSet": -1,
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
                       "Foreground": "#FFFFFFFF",
@@ -666,9 +567,6 @@ exports[`XamlTest Layout 1`] = `
                   ],
                 },
                 {
-                  "AutomationLevel": -1,
-                  "AutomationPositionInSet": -1,
-                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "Clip": null,
                   "FlowDirection": "LeftToRight",
@@ -681,9 +579,6 @@ exports[`XamlTest Layout 1`] = `
                   "XamlType": "Microsoft.UI.Xaml.Controls.Primitives.InfoBarPanel",
                   "children": [
                     {
-                      "AutomationLevel": -1,
-                      "AutomationPositionInSet": -1,
-                      "AutomationSizeOfSet": -1,
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
                       "Foreground": "#E4000000",
@@ -699,9 +594,6 @@ exports[`XamlTest Layout 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
                     },
                     {
-                      "AutomationLevel": -1,
-                      "AutomationPositionInSet": -1,
-                      "AutomationSizeOfSet": -1,
                       "Clip": null,
                       "FlowDirection": "LeftToRight",
                       "Foreground": "#E4000000",
@@ -717,9 +609,6 @@ exports[`XamlTest Layout 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
                     },
                     {
-                      "AutomationLevel": -1,
-                      "AutomationPositionInSet": -1,
-                      "AutomationSizeOfSet": -1,
                       "Background": null,
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -739,9 +628,6 @@ exports[`XamlTest Layout 1`] = `
                   ],
                 },
                 {
-                  "AutomationLevel": -1,
-                  "AutomationPositionInSet": -1,
-                  "AutomationSizeOfSet": -1,
                   "Background": null,
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
@@ -759,9 +645,6 @@ exports[`XamlTest Layout 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
                 },
                 {
-                  "AutomationLevel": -1,
-                  "AutomationPositionInSet": -1,
-                  "AutomationSizeOfSet": -1,
                   "Background": "#00FFFFFF",
                   "BorderBrush": "#00FFFFFF",
                   "BorderThickness": "1,1,1,1",
@@ -783,9 +666,6 @@ exports[`XamlTest Layout 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.Button",
                   "children": [
                     {
-                      "AutomationLevel": -1,
-                      "AutomationPositionInSet": -1,
-                      "AutomationSizeOfSet": -1,
                       "Background": "#00FFFFFF",
                       "BorderBrush": "#00FFFFFF",
                       "BorderThickness": "1,1,1,1",
@@ -804,9 +684,6 @@ exports[`XamlTest Layout 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
                       "children": [
                         {
-                          "AutomationLevel": -1,
-                          "AutomationPositionInSet": -1,
-                          "AutomationSizeOfSet": -1,
                           "Clip": null,
                           "FlowDirection": "LeftToRight",
                           "Height": 16,
@@ -820,9 +697,6 @@ exports[`XamlTest Layout 1`] = `
                           "XamlType": "Windows.UI.Xaml.Controls.Viewbox",
                           "children": [
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": null,
                               "BorderBrush": null,
                               "BorderThickness": "0,0,0,0",
@@ -839,9 +713,6 @@ exports[`XamlTest Layout 1`] = `
                               "XamlType": "Windows.UI.Xaml.Controls.Border",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Clip": null,
                                   "FlowDirection": "LeftToRight",
                                   "Foreground": "#E4000000",
@@ -854,9 +725,6 @@ exports[`XamlTest Layout 1`] = `
                                   "XamlType": "Windows.UI.Xaml.Controls.SymbolIcon",
                                   "children": [
                                     {
-                                      "AutomationLevel": -1,
-                                      "AutomationPositionInSet": -1,
-                                      "AutomationSizeOfSet": -1,
                                       "Background": "#00000000",
                                       "BorderBrush": null,
                                       "BorderThickness": "0,0,0,0",
@@ -873,9 +741,6 @@ exports[`XamlTest Layout 1`] = `
                                       "XamlType": "Windows.UI.Xaml.Controls.Grid",
                                       "children": [
                                         {
-                                          "AutomationLevel": -1,
-                                          "AutomationPositionInSet": -1,
-                                          "AutomationSizeOfSet": -1,
                                           "Clip": null,
                                           "FlowDirection": "LeftToRight",
                                           "Foreground": "#E4000000",
@@ -913,9 +778,6 @@ exports[`XamlTest Layout 1`] = `
 
 exports[`XamlTest MenuFlyout IsOpen 1`] = `
 {
-  "AutomationLevel": -1,
-  "AutomationPositionInSet": -1,
-  "AutomationSizeOfSet": -1,
   "Background": "Windows.UI.Xaml.Media.AcrylicBrush",
   "BorderBrush": "#0F000000",
   "BorderThickness": "1,1,1,1",
@@ -933,9 +795,6 @@ exports[`XamlTest MenuFlyout IsOpen 1`] = `
   "XamlType": "Windows.UI.Xaml.Controls.MenuFlyoutPresenter",
   "children": [
     {
-      "AutomationLevel": -1,
-      "AutomationPositionInSet": -1,
-      "AutomationSizeOfSet": -1,
       "Background": "Windows.UI.Xaml.Media.AcrylicBrush",
       "BorderBrush": "#0F000000",
       "BorderThickness": "1,1,1,1",
@@ -952,9 +811,6 @@ exports[`XamlTest MenuFlyout IsOpen 1`] = `
       "XamlType": "Windows.UI.Xaml.Controls.Border",
       "children": [
         {
-          "AutomationLevel": -1,
-          "AutomationPositionInSet": -1,
-          "AutomationSizeOfSet": -1,
           "Background": "#00FFFFFF",
           "BorderBrush": "#00FFFFFF",
           "BorderThickness": "0,0,0,0",
@@ -973,9 +829,6 @@ exports[`XamlTest MenuFlyout IsOpen 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.ScrollViewer",
           "children": [
             {
-              "AutomationLevel": -1,
-              "AutomationPositionInSet": -1,
-              "AutomationSizeOfSet": -1,
               "Background": null,
               "BorderBrush": "#00FFFFFF",
               "BorderThickness": "0,0,0,0",
@@ -993,9 +846,6 @@ exports[`XamlTest MenuFlyout IsOpen 1`] = `
               "XamlType": "Windows.UI.Xaml.Controls.Border",
               "children": [
                 {
-                  "AutomationLevel": -1,
-                  "AutomationPositionInSet": -1,
-                  "AutomationSizeOfSet": -1,
                   "Background": "#00FFFFFF",
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
@@ -1012,9 +862,6 @@ exports[`XamlTest MenuFlyout IsOpen 1`] = `
                   "XamlType": "Windows.UI.Xaml.Controls.Grid",
                   "children": [
                     {
-                      "AutomationLevel": -1,
-                      "AutomationPositionInSet": -1,
-                      "AutomationSizeOfSet": -1,
                       "Background": null,
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
@@ -1033,9 +880,6 @@ exports[`XamlTest MenuFlyout IsOpen 1`] = `
                       "XamlType": "Windows.UI.Xaml.Controls.ScrollContentPresenter",
                       "children": [
                         {
-                          "AutomationLevel": -1,
-                          "AutomationPositionInSet": -1,
-                          "AutomationSizeOfSet": -1,
                           "Clip": null,
                           "FlowDirection": "LeftToRight",
                           "HorizontalAlignment": "Stretch",
@@ -1048,9 +892,6 @@ exports[`XamlTest MenuFlyout IsOpen 1`] = `
                           "XamlType": "Windows.UI.Xaml.Controls.ItemsPresenter",
                           "children": [
                             {
-                              "AutomationLevel": -1,
-                              "AutomationPositionInSet": -1,
-                              "AutomationSizeOfSet": -1,
                               "Background": null,
                               "BorderBrush": null,
                               "BorderThickness": "0,0,0,0",
@@ -1067,9 +908,6 @@ exports[`XamlTest MenuFlyout IsOpen 1`] = `
                               "XamlType": "Windows.UI.Xaml.Controls.StackPanel",
                               "children": [
                                 {
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Background": "#00FFFFFF",
                                   "BorderBrush": "#00FFFFFF",
                                   "BorderThickness": "0,0,0,0",
@@ -1088,9 +926,6 @@ exports[`XamlTest MenuFlyout IsOpen 1`] = `
                                   "XamlType": "Windows.UI.Xaml.Controls.MenuFlyoutItem",
                                   "children": [
                                     {
-                                      "AutomationLevel": -1,
-                                      "AutomationPositionInSet": -1,
-                                      "AutomationSizeOfSet": -1,
                                       "Background": "#00FFFFFF",
                                       "BorderBrush": "#00FFFFFF",
                                       "BorderThickness": "0,0,0,0",
@@ -1108,9 +943,6 @@ exports[`XamlTest MenuFlyout IsOpen 1`] = `
                                       "XamlType": "Windows.UI.Xaml.Controls.Grid",
                                       "children": [
                                         {
-                                          "AutomationLevel": -1,
-                                          "AutomationPositionInSet": -1,
-                                          "AutomationSizeOfSet": -1,
                                           "Clip": null,
                                           "FlowDirection": "LeftToRight",
                                           "Height": 16,
@@ -1125,9 +957,6 @@ exports[`XamlTest MenuFlyout IsOpen 1`] = `
                                           "XamlType": "Windows.UI.Xaml.Controls.Viewbox",
                                           "children": [
                                             {
-                                              "AutomationLevel": -1,
-                                              "AutomationPositionInSet": -1,
-                                              "AutomationSizeOfSet": -1,
                                               "Background": null,
                                               "BorderBrush": null,
                                               "BorderThickness": "0,0,0,0",
@@ -1144,9 +973,6 @@ exports[`XamlTest MenuFlyout IsOpen 1`] = `
                                               "XamlType": "Windows.UI.Xaml.Controls.Border",
                                               "children": [
                                                 {
-                                                  "AutomationLevel": -1,
-                                                  "AutomationPositionInSet": -1,
-                                                  "AutomationSizeOfSet": -1,
                                                   "Background": null,
                                                   "BorderBrush": null,
                                                   "BorderThickness": "0,0,0,0",
@@ -1165,9 +991,6 @@ exports[`XamlTest MenuFlyout IsOpen 1`] = `
                                                   "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
                                                   "children": [
                                                     {
-                                                      "AutomationLevel": -1,
-                                                      "AutomationPositionInSet": -1,
-                                                      "AutomationSizeOfSet": -1,
                                                       "Clip": null,
                                                       "FlowDirection": "LeftToRight",
                                                       "Foreground": "#E4000000",
@@ -1180,9 +1003,6 @@ exports[`XamlTest MenuFlyout IsOpen 1`] = `
                                                       "XamlType": "Windows.UI.Xaml.Controls.SymbolIcon",
                                                       "children": [
                                                         {
-                                                          "AutomationLevel": -1,
-                                                          "AutomationPositionInSet": -1,
-                                                          "AutomationSizeOfSet": -1,
                                                           "Background": "#00000000",
                                                           "BorderBrush": null,
                                                           "BorderThickness": "0,0,0,0",
@@ -1199,9 +1019,6 @@ exports[`XamlTest MenuFlyout IsOpen 1`] = `
                                                           "XamlType": "Windows.UI.Xaml.Controls.Grid",
                                                           "children": [
                                                             {
-                                                              "AutomationLevel": -1,
-                                                              "AutomationPositionInSet": -1,
-                                                              "AutomationSizeOfSet": -1,
                                                               "Clip": null,
                                                               "FlowDirection": "LeftToRight",
                                                               "Foreground": "#E4000000",
@@ -1226,9 +1043,6 @@ exports[`XamlTest MenuFlyout IsOpen 1`] = `
                                           ],
                                         },
                                         {
-                                          "AutomationLevel": -1,
-                                          "AutomationPositionInSet": -1,
-                                          "AutomationSizeOfSet": -1,
                                           "Clip": null,
                                           "FlowDirection": "LeftToRight",
                                           "Foreground": "#E4000000",
@@ -1249,9 +1063,6 @@ exports[`XamlTest MenuFlyout IsOpen 1`] = `
                                 },
                                 {
                                   "AutomationId": "menuOption2",
-                                  "AutomationLevel": -1,
-                                  "AutomationPositionInSet": -1,
-                                  "AutomationSizeOfSet": -1,
                                   "Background": "#00FFFFFF",
                                   "BorderBrush": "#00FFFFFF",
                                   "BorderThickness": "0,0,0,0",
@@ -1270,9 +1081,6 @@ exports[`XamlTest MenuFlyout IsOpen 1`] = `
                                   "XamlType": "Windows.UI.Xaml.Controls.MenuFlyoutItem",
                                   "children": [
                                     {
-                                      "AutomationLevel": -1,
-                                      "AutomationPositionInSet": -1,
-                                      "AutomationSizeOfSet": -1,
                                       "Background": "#00FFFFFF",
                                       "BorderBrush": "#00FFFFFF",
                                       "BorderThickness": "0,0,0,0",
@@ -1290,9 +1098,6 @@ exports[`XamlTest MenuFlyout IsOpen 1`] = `
                                       "XamlType": "Windows.UI.Xaml.Controls.Grid",
                                       "children": [
                                         {
-                                          "AutomationLevel": -1,
-                                          "AutomationPositionInSet": -1,
-                                          "AutomationSizeOfSet": -1,
                                           "Clip": null,
                                           "FlowDirection": "LeftToRight",
                                           "Height": 16,
@@ -1307,9 +1112,6 @@ exports[`XamlTest MenuFlyout IsOpen 1`] = `
                                           "XamlType": "Windows.UI.Xaml.Controls.Viewbox",
                                           "children": [
                                             {
-                                              "AutomationLevel": -1,
-                                              "AutomationPositionInSet": -1,
-                                              "AutomationSizeOfSet": -1,
                                               "Background": null,
                                               "BorderBrush": null,
                                               "BorderThickness": "0,0,0,0",
@@ -1326,9 +1128,6 @@ exports[`XamlTest MenuFlyout IsOpen 1`] = `
                                               "XamlType": "Windows.UI.Xaml.Controls.Border",
                                               "children": [
                                                 {
-                                                  "AutomationLevel": -1,
-                                                  "AutomationPositionInSet": -1,
-                                                  "AutomationSizeOfSet": -1,
                                                   "Background": null,
                                                   "BorderBrush": null,
                                                   "BorderThickness": "0,0,0,0",
@@ -1351,9 +1150,6 @@ exports[`XamlTest MenuFlyout IsOpen 1`] = `
                                           ],
                                         },
                                         {
-                                          "AutomationLevel": -1,
-                                          "AutomationPositionInSet": -1,
-                                          "AutomationSizeOfSet": -1,
                                           "Clip": null,
                                           "FlowDirection": "LeftToRight",
                                           "Foreground": "#E4000000",
@@ -1379,9 +1175,6 @@ exports[`XamlTest MenuFlyout IsOpen 1`] = `
                       ],
                     },
                     {
-                      "AutomationLevel": -1,
-                      "AutomationPositionInSet": -1,
-                      "AutomationSizeOfSet": -1,
                       "Background": null,
                       "BorderBrush": null,
                       "BorderThickness": "0,0,0,0",
