@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Fri, 11 Aug 2023 05:13:37 GMT and should not be manually modified.
+This log was last generated on Thu, 24 Aug 2023 05:14:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.211
+
+Thu, 24 Aug 2023 05:14:48 GMT
+
+### Changes
+
+- fix a11yState and add support for aria-required and -multiselectable (krsiler@microsoft.com)
 
 ## 0.0.0-canary.210
 
