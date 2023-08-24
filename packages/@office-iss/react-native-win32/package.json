@@ -1,6 +1,6 @@
 {
   "name": "@office-iss/react-native-win32",
-  "version": "0.0.0-canary.210",
+  "version": "0.0.0-canary.211",
   "description": "Implementation of react native on top of Office's Win32 platform.",
   "repository": {
     "type": "git",
