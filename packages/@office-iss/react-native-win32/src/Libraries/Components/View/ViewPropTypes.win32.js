@@ -483,6 +483,8 @@ type WindowsViewProps = $ReadOnly<{|
   'aria-level'?: ?number,
   'aria-controls'?: ?Stringish,
   'aria-describedby'?: ?Stringish,
+  'aria-multiselectable'?: ?boolean,
+  'aria-required'?: ?boolean,
 
   /**
    * Specifies if the control should show System focus visuals

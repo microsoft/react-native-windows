@@ -26,7 +26,7 @@ module.exports = {
   // This environment causes the app to launch and close after testing is complete.
   // Temporarily disabling due to breaks in UIA implementation.
   // disabled temporarily
-  // testEnvironment: '@react-native-windows/automation',
+  testEnvironment: '@react-native-windows/automation',
 
   // The pattern or patterns Jest uses to detect test files
   testRegex: ['.*\\.test\\.ts$', '.*\\.test\\.js$'],
@@ -60,9 +60,8 @@ module.exports = {
   setupFilesAfterEnv: ['react-native-windows/jest/setup', './jest.setup.js'],
 
   testEnvironmentOptions: {
-    app: `windows\\Debug\\RNTesterApp-Fabric.exe`,
+    app: `windows\\x64\\Debug\\RNTesterApp-Fabric.exe`,
     enableAutomationChannel: true,
-    winAppDriverBin: 'D:\\WindowsApplicationDriver\\WinAppDriver.exe',
   },
 
   moduleFileExtensions: [

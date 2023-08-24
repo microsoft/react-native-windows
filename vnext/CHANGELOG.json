@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 23 Aug 2023 05:13:04 GMT",
+      "version": "0.0.0-canary.695",
+      "tag": "react-native-windows_v0.0.0-canary.695",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "418de1335e587f481060321c93ebe7014f1cc97d",
+            "comment": "Revert \"[Fabric] Add accessibilityHint support to UIA tree (#12036)\""
+          },
+          {
+            "author": "26607885+chrisglein@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c030b7ca611dd10a2b3a97805d68a6c1fc153093",
+            "comment": "Components can provide a default accessible name Text component falls back to the content if accessibleLabel isn't set"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5fd67d7ce5c2baaa8f23cc4ce2bed6d3bf6e5c2d",
+            "comment": "Point Desktop.IntegrationTests::HttpResourceIntegrationTests to a non-rate limited API"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 17 Aug 2023 05:15:33 GMT",
       "version": "0.0.0-canary.694",
       "tag": "react-native-windows_v0.0.0-canary.694",

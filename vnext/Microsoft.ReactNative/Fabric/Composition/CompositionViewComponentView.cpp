@@ -1072,7 +1072,10 @@ void CompositionBaseComponentView::updateAccessibilityProps(
       provider, UIA_IsKeyboardFocusablePropertyId, oldViewProps.focusable, newViewProps.focusable);
 
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
-      provider, UIA_NamePropertyId, oldViewProps.accessibilityLabel, newViewProps.accessibilityLabel);
+      provider,
+      UIA_NamePropertyId,
+      oldViewProps.accessibilityLabel,
+      newViewProps.accessibilityLabel.empty() ? DefaultAccessibleName() : newViewProps.accessibilityLabel);
 
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
       provider,
@@ -1094,6 +1097,9 @@ void CompositionBaseComponentView::updateAccessibilityProps(
 
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
       provider, UIA_ControlTypePropertyId, oldViewProps.accessibilityRole, newViewProps.accessibilityRole);
+
+  winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+      provider, UIA_HelpTextPropertyId, oldViewProps.accessibilityHint, newViewProps.accessibilityHint);
 }
 
 void CompositionBaseComponentView::updateBorderLayoutMetrics(
@@ -1217,6 +1223,10 @@ bool CompositionBaseComponentView::focusable() const noexcept {
 
 std::string CompositionBaseComponentView::DefaultControlType() const noexcept {
   return "group";
+}
+
+std::string CompositionBaseComponentView::DefaultAccessibleName() const noexcept {
+  return "";
 }
 
 CompositionViewComponentView::CompositionViewComponentView(
