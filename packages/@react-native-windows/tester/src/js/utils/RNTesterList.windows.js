@@ -260,8 +260,8 @@ const APIs: Array<RNTesterModuleInfo> = ([
         module: require('../examples/IntersectionObserver/IntersectionObserverIndex'),
       }
     : null,
-  
-  // E2E Tests failing when this test is enabled  
+
+  // E2E Tests failing when this test is enabled
   // {
   //   key: 'InvalidPropsExample',
   //   module: require('../examples/InvalidProps/InvalidPropsExample'),
