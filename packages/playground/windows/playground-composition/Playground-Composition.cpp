@@ -196,7 +196,6 @@ struct WindowData {
   winrt::Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
   winrt::Windows::System::DispatcherQueueController m_dispatcherQueueController{nullptr};
 
-
   bool m_useWebDebugger{false};
   bool m_fastRefreshEnabled{true};
   bool m_useDirectDebugger{false};
@@ -204,8 +203,7 @@ struct WindowData {
   uint16_t m_debuggerPort{defaultDebuggerPort};
   xaml::ElementTheme m_theme{xaml::ElementTheme::Default};
 
-  WindowData(const winrt::Microsoft::ReactNative::CompositionHwndHost &compHost) : m_CompositionHwndHost(compHost) {
-  }
+  WindowData(const winrt::Microsoft::ReactNative::CompositionHwndHost &compHost) : m_CompositionHwndHost(compHost) {}
 
   static WindowData *GetFromWindow(HWND hwnd) {
     auto data = reinterpret_cast<WindowData *>(GetProp(hwnd, WindowDataProperty));
@@ -504,7 +502,7 @@ constexpr PCWSTR c_windowClassName = L"MS_REACTNATIVE_PLAYGROUND_COMPOSITION";
 
 // The compositor could be running on a background or foreground thread.
 // Office runs it on a background thread, so its useful to be able to test that case
-void CreateCompositor(bool background, WindowData* windowData) {
+void CreateCompositor(bool background, WindowData *windowData) {
   DispatcherQueueOptions options{
       sizeof(DispatcherQueueOptions), /* dwSize */
       background ? DQTYPE_THREAD_CURRENT : DQTYPE_THREAD_DEDICATED, /* threadType */
@@ -519,17 +517,16 @@ void CreateCompositor(bool background, WindowData* windowData) {
 
   if (background) {
     windowData->m_dispatcherQueueController.DispatcherQueue().TryEnqueue([windowData]() {
-       winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositionContext(
+      winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositionContext(
           windowData->InstanceSettings().Properties(),
           winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::CreateContext(
               winrt::Windows::UI::Composition::Compositor()));
     });
   } else {
-     winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositionContext(
-         windowData->InstanceSettings().Properties(),
-     winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::CreateContext(
-         winrt::Windows::UI::Composition::Compositor()));
-
+    winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositionContext(
+        windowData->InstanceSettings().Properties(),
+        winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::CreateContext(
+            winrt::Windows::UI::Composition::Compositor()));
   }
 }
 
