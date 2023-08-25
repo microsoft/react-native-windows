@@ -144,11 +144,17 @@ winrt::Windows::UI::Color ResolvePlatformColor(Color const *const color) {
 }
 
 D2D1::ColorF SharedColor::AsD2DColor() const {
+  if (!m_color) {
+    return D2D1::ColorF{0, 0.0};
+  }
   winrt::Windows::UI::Color color = ResolvePlatformColor(m_color.get());
   return {color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, color.A / 255.0f};
 }
 
 winrt::Windows::UI::Color SharedColor::AsWindowsColor() const {
+  if (!m_color) {
+    return winrt::Windows::UI::Color{0, 0, 0, 0};
+  }
   return ResolvePlatformColor(m_color.get());
 }
 
