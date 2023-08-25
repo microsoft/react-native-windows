@@ -84,6 +84,7 @@
 #include <tuple>
 #include "ChakraRuntimeHolder.h"
 
+#include <CppRuntimeOptions.h>
 #include <CreateModules.h>
 #include <Utils/Helpers.h>
 #include "CrashManager.h"
@@ -392,7 +393,9 @@ void ReactInstanceWin::LoadModules(
       L"Timing", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::Timing>());
 #endif
 
-  registerTurboModule(::Microsoft::React::GetBlobTurboModuleName(), ::Microsoft::React::GetBlobModuleProvider());
+  if (!Microsoft::React::GetRuntimeOptionBool("Blob.DisableModule")) {
+    registerTurboModule(::Microsoft::React::GetBlobTurboModuleName(), ::Microsoft::React::GetBlobModuleProvider());
+  }
 
   registerTurboModule(::Microsoft::React::GetHttpTurboModuleName(), ::Microsoft::React::GetHttpModuleProvider());
 
