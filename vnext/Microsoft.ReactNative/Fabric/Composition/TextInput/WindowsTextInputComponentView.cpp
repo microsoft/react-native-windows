@@ -340,8 +340,8 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Get the background (either opaque or transparent)
   HRESULT TxGetBackStyle(TXTBACKSTYLE *pstyle) override {
+    // We draw the background color as part of the composition visual, not the text
     *pstyle = TXTBACK_TRANSPARENT;
-    //*pstyle = TXTBACK_OPAQUE;
     return S_OK;
   }
 
@@ -600,6 +600,9 @@ std::string WindowsTextInputComponentView::DefaultControlType() const noexcept {
 void WindowsTextInputComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
+  const auto &oldViewProps = *std::static_pointer_cast<const facebook::react::ViewProps>(m_props);
+  const auto &newViewProps = *std::static_pointer_cast<const facebook::react::ViewProps>(props);
+
   const auto &oldTextInputProps = *std::static_pointer_cast<const facebook::react::WindowsTextInputProps>(m_props);
   const auto &newTextInputProps = *std::static_pointer_cast<const facebook::react::WindowsTextInputProps>(props);
 
@@ -640,6 +643,10 @@ void WindowsTextInputComponentView::updateProps(
 
   if (oldTextInputProps.placeholder != newTextInputProps.placeholder ||
       oldTextInputProps.placeholderTextColor != newTextInputProps.placeholderTextColor) {
+    m_needsRedraw = true;
+  }
+
+  if (oldViewProps.backgroundColor != newViewProps.backgroundColor) {
     m_needsRedraw = true;
   }
 
@@ -691,16 +698,6 @@ void WindowsTextInputComponentView::updateProps(
     } else { // anything else turns off autoCap (should be "None" but
              // we don't support "words"/"sentences" yet)
       m_element.CharacterCasing(xaml::Controls::CharacterCasing::Normal);
-    }
-  }
-
-  if (oldViewProps.backgroundColor != newViewProps.backgroundColor) {
-    auto color = *newViewProps.backgroundColor;
-
-    if (newViewProps.backgroundColor) {
-      m_element.ViewBackground(SolidColorBrushFrom(newViewProps.backgroundColor));
-    } else {
-      m_element.ClearValue(winrt::Microsoft::ReactNative::ViewPanel::ViewBackgroundProperty());
     }
   }
   */
@@ -1052,6 +1049,18 @@ void WindowsTextInputComponentView::DrawText() noexcept {
         static_cast<LONG>(offset.y) + static_cast<LONG>(m_imgHeight)};
 
     winrt::check_hresult(m_textServices->OnTxInPlaceActivate(&rcClient));
+
+    auto backgroundColor = m_props->backgroundColor.AsD2DColor();
+    if (backgroundColor.a > 0) {
+      winrt::com_ptr<ID2D1SolidColorBrush> backgroundBrush;
+      winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(backgroundColor, backgroundBrush.put()));
+      const D2D1_RECT_F fillRect = {
+          static_cast<float>(rcClient.left),
+          static_cast<float>(rcClient.top),
+          static_cast<float>(rcClient.right),
+          static_cast<float>(rcClient.bottom)};
+      d2dDeviceContext->FillRectangle(fillRect, backgroundBrush.get());
+    }
 
     // TODO keep track of proper invalid rect
     auto hrDraw = m_textServices->TxDrawD2D(d2dDeviceContext.get(), &rc, nullptr, TXTVIEW_ACTIVE);
