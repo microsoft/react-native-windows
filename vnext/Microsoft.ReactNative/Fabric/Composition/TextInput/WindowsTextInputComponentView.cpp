@@ -600,9 +600,6 @@ std::string WindowsTextInputComponentView::DefaultControlType() const noexcept {
 void WindowsTextInputComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
-  const auto &oldViewProps = *std::static_pointer_cast<const facebook::react::ViewProps>(m_props);
-  const auto &newViewProps = *std::static_pointer_cast<const facebook::react::ViewProps>(props);
-
   const auto &oldTextInputProps = *std::static_pointer_cast<const facebook::react::WindowsTextInputProps>(m_props);
   const auto &newTextInputProps = *std::static_pointer_cast<const facebook::react::WindowsTextInputProps>(props);
 
@@ -646,7 +643,7 @@ void WindowsTextInputComponentView::updateProps(
     m_needsRedraw = true;
   }
 
-  if (oldViewProps.backgroundColor != newViewProps.backgroundColor) {
+  if (oldTextInputProps.backgroundColor != newTextInputProps.backgroundColor) {
     m_needsRedraw = true;
   }
 
