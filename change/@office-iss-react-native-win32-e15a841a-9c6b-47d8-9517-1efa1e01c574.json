@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "resolved merge conflicts and build errors",
+  "comment": "Integrate RN Nightly Build 7/28",
   "packageName": "@office-iss/react-native-win32",
-  "email": "email not defined",
+  "email": "yajurgrover@microsoft.com",
   "dependentChangeType": "patch"
 }
