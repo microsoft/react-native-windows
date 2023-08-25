@@ -22,15 +22,7 @@ export async function goToComponentExample(example: string) {
  */
 export async function goToApiExample(example: string) {
   const componentsTabButton = await app.findElementByTestID('apis-tab');
-  const result = await componentsTabButton.waitForDisplayed({timeout: 20000});
-  // Work around for WebDriverIO inconsistent behavior.
-  if (!result) {
-    console.warn(
-      example,
-      'Page was skipped due to inconsistent WebDriverIO behavior. Please verify page can load locally or rerun this test.',
-    );
-    return;
-  }
+  await componentsTabButton.waitForDisplayed({timeout: 20000});
   await componentsTabButton.click();
   await goToExample(example);
 }
