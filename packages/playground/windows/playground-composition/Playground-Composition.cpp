@@ -505,7 +505,7 @@ constexpr PCWSTR c_windowClassName = L"MS_REACTNATIVE_PLAYGROUND_COMPOSITION";
 void CreateCompositor(bool background, WindowData *windowData) {
   DispatcherQueueOptions options{
       sizeof(DispatcherQueueOptions), /* dwSize */
-      background ? DQTYPE_THREAD_CURRENT : DQTYPE_THREAD_DEDICATED, /* threadType */
+      background ? DQTYPE_THREAD_DEDICATED : DQTYPE_THREAD_CURRENT, /* threadType */
       DQTAT_COM_STA /* apartmentType */
   };
 
