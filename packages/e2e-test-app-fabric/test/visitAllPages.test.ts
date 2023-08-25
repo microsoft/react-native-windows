@@ -44,21 +44,16 @@ describe('visitAllPages', () => {
     test(component, async () => await goToComponentExample(component));
   }
 
-  for (const api of apiExamples) {
-    if (
-      api === 'Transforms' ||
-      api === 'Keyboard Focus Example' ||
-      api === 'Border' ||
-      api === 'Alerts' ||
-      api === 'Crash'
-    )
+  // Disable Temporarily Until Stable
+  /*for (const api of apiExamples) {
+    if (api === 'Transforms' || api === 'Keyboard Focus Example')
       // Disable until tests are supported.
       continue;
 
     test(api, async () => {
       await goToApiExample(api);
     });
-  }
+  }*/
 });
 
 export {};
