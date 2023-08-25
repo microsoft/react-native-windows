@@ -1055,10 +1055,10 @@ void WindowsTextInputComponentView::DrawText() noexcept {
       winrt::com_ptr<ID2D1SolidColorBrush> backgroundBrush;
       winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(backgroundColor, backgroundBrush.put()));
       const D2D1_RECT_F fillRect = {
-          static_cast<float>(rcClient.left),
-          static_cast<float>(rcClient.top),
-          static_cast<float>(rcClient.right),
-          static_cast<float>(rcClient.bottom)};
+          static_cast<float>(rcClient.left) / m_layoutMetrics.pointScaleFactor,
+          static_cast<float>(rcClient.top) / m_layoutMetrics.pointScaleFactor,
+          static_cast<float>(rcClient.right) / m_layoutMetrics.pointScaleFactor,
+          static_cast<float>(rcClient.bottom) / m_layoutMetrics.pointScaleFactor};
       d2dDeviceContext->FillRectangle(fillRect, backgroundBrush.get());
     }
 
