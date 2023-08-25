@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  *
- * @flow strict-local
+ * Dont use flow here, since this file is used by saveAssetPlugin.js which will run without flow transform
  * @format
  */
 
@@ -12,7 +12,7 @@
 // https://learn.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation
 // Assets in nested node_modules (common when using pnpm) - end up creating very long paths
 // Using this function we shorten longer paths to prevent paths from hitting the path limit
-function ensureShortPath(str: string): string {
+function ensureShortPath(str) {
   if (str.length < 40) return str;
 
   const assetsPrefix = 'assets/';
