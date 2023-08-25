@@ -48,7 +48,9 @@ describe('visitAllPages', () => {
     if (
       api === 'Transforms' ||
       api === 'Keyboard Focus Example' ||
-      api === 'Border'
+      api === 'Border' ||
+      api === 'Alerts' ||
+      api === 'Crash'
     )
       // Disable until tests are supported.
       continue;
