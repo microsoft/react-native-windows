@@ -2661,9 +2661,9 @@
     semver "^7.0.0"
 
 "@rnx-kit/metro-serializer@^1.0.11":
-  version "1.0.11"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-serializer/-/metro-serializer-1.0.11.tgz#703a61c70dafa0e89253ad2df7f45f60eaac6bbb"
-  integrity sha512-NaXgAsglJg+1v6EjBrv/6eV0JWEvNVEohJQ6wbLqP0R1mFZGCIk7+R4truNd9v1oZE1ZsUBfrrY+dt2q7RO8SA==
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-serializer/-/metro-serializer-1.0.12.tgz#c244c2f26b3470ea26734588cd956043a4677c25"
+  integrity sha512-fAiY2UIeLsziZWAQ16BsljBvCACTcf6dakflnsY7/8C0MJXoo9gxImcV+r0Fgimcjm3bjmZLOcaLv8N/h0UAoA==
   dependencies:
     semver "^7.0.0"
 

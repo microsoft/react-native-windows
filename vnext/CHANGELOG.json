@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 25 Aug 2023 05:14:38 GMT",
+      "version": "0.0.0-canary.697",
+      "tag": "react-native-windows_v0.0.0-canary.697",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "8fec9dd58a708841614a40aa1d691c39697884aa",
+            "comment": "Prevent Desktop.IntegrationTests from hanging forever"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 24 Aug 2023 05:14:48 GMT",
       "version": "0.0.0-canary.696",
       "tag": "react-native-windows_v0.0.0-canary.696",
