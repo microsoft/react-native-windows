@@ -1047,8 +1047,8 @@ void WindowsTextInputComponentView::DrawText() noexcept {
 
     winrt::check_hresult(m_textServices->OnTxInPlaceActivate(&rcClient));
 
-    auto backgroundColor = m_props->backgroundColor.AsD2DColor();
-    if (backgroundColor.a > 0) {
+    if (facebook::react::isColorMeaningful(m_props->backgroundColor)) {
+      auto backgroundColor = m_props->backgroundColor.AsD2DColor();
       winrt::com_ptr<ID2D1SolidColorBrush> backgroundBrush;
       winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(backgroundColor, backgroundBrush.put()));
       const D2D1_RECT_F fillRect = {
