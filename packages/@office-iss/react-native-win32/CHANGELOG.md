@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Thu, 24 Aug 2023 05:14:48 GMT and should not be manually modified.
+This log was last generated on Sat, 26 Aug 2023 05:15:06 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.212
+
+Sat, 26 Aug 2023 05:15:06 GMT
+
+### Changes
+
+- Remove flow usage from saveAssetPlugin codeflow (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.211
 
