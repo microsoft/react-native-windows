@@ -340,8 +340,8 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Get the background (either opaque or transparent)
   HRESULT TxGetBackStyle(TXTBACKSTYLE *pstyle) override {
+    // We draw the background color as part of the composition visual, not the text
     *pstyle = TXTBACK_TRANSPARENT;
-    //*pstyle = TXTBACK_OPAQUE;
     return S_OK;
   }
 
@@ -643,6 +643,10 @@ void WindowsTextInputComponentView::updateProps(
     m_needsRedraw = true;
   }
 
+  if (oldTextInputProps.backgroundColor != newTextInputProps.backgroundColor) {
+    m_needsRedraw = true;
+  }
+
   /*
   if (oldTextInputProps.textAttributes.foregroundColor != newTextInputProps.textAttributes.foregroundColor) {
     if (newTextInputProps.textAttributes.foregroundColor)
@@ -691,16 +695,6 @@ void WindowsTextInputComponentView::updateProps(
     } else { // anything else turns off autoCap (should be "None" but
              // we don't support "words"/"sentences" yet)
       m_element.CharacterCasing(xaml::Controls::CharacterCasing::Normal);
-    }
-  }
-
-  if (oldViewProps.backgroundColor != newViewProps.backgroundColor) {
-    auto color = *newViewProps.backgroundColor;
-
-    if (newViewProps.backgroundColor) {
-      m_element.ViewBackground(SolidColorBrushFrom(newViewProps.backgroundColor));
-    } else {
-      m_element.ClearValue(winrt::Microsoft::ReactNative::ViewPanel::ViewBackgroundProperty());
     }
   }
   */
@@ -1052,6 +1046,18 @@ void WindowsTextInputComponentView::DrawText() noexcept {
         static_cast<LONG>(offset.y) + static_cast<LONG>(m_imgHeight)};
 
     winrt::check_hresult(m_textServices->OnTxInPlaceActivate(&rcClient));
+
+    if (facebook::react::isColorMeaningful(m_props->backgroundColor)) {
+      auto backgroundColor = m_props->backgroundColor.AsD2DColor();
+      winrt::com_ptr<ID2D1SolidColorBrush> backgroundBrush;
+      winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(backgroundColor, backgroundBrush.put()));
+      const D2D1_RECT_F fillRect = {
+          static_cast<float>(rcClient.left) / m_layoutMetrics.pointScaleFactor,
+          static_cast<float>(rcClient.top) / m_layoutMetrics.pointScaleFactor,
+          static_cast<float>(rcClient.right) / m_layoutMetrics.pointScaleFactor,
+          static_cast<float>(rcClient.bottom) / m_layoutMetrics.pointScaleFactor};
+      d2dDeviceContext->FillRectangle(fillRect, backgroundBrush.get());
+    }
 
     // TODO keep track of proper invalid rect
     auto hrDraw = m_textServices->TxDrawD2D(d2dDeviceContext.get(), &rc, nullptr, TXTVIEW_ACTIVE);
