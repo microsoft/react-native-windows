@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 28 Aug 2023 15:14:30 GMT",
+      "tag": "react-native-windows_v0.71.35",
+      "version": "0.71.35",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5cc488cbd29f20eab3e545bc282b5a20ae5e5b36",
+            "comment": "Test HttpServer build fix (#12001)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 18 Aug 2023 17:27:24 GMT",
       "tag": "react-native-windows_v0.71.34",
       "version": "0.71.34",

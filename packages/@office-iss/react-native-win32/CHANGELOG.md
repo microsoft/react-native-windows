@@ -1,8 +1,17 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Fri, 11 Aug 2023 00:26:16 GMT and should not be manually modified.
+This log was last generated on Mon, 28 Aug 2023 15:14:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.15
+
+Mon, 28 Aug 2023 15:14:29 GMT
+
+### Patches
+
+- fix a11yState and add support for aria-required and -multiselectable (krsiler@microsoft.com)
+- Remove flow usage from saveAssetPlugin codeflow (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.71.14
 
