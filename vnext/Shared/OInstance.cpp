@@ -539,7 +539,7 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
   // Also, MSRN has a different property bag mechanism incompatible with this method's transitionalProps variable.
 #if (defined(_MSC_VER) && !defined(WINRT))
   // Applications using the Windows ABI feature should loade the networking TurboModule variants instead.
-  if (!Microsoft::React::GetRuntimeOptionBool("UseWindowsAbi")) {
+  if (!Microsoft::React::GetRuntimeOptionBool("OmitNetworkingCxxModules")) {
     modules.push_back(std::make_unique<CxxNativeModule>(
         m_innerInstance,
         Microsoft::React::GetHttpModuleName(),
