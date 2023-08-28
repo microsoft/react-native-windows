@@ -2,6 +2,27 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 28 Aug 2023 15:14:10 GMT",
+      "tag": "@office-iss/react-native-win32_v0.72.3",
+      "version": "0.72.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "krsiler@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "e1ba8c787d9d100f4919e96ab5e39d8a21aa1600",
+            "comment": "fix a11yState and add support for aria-required and -multiselectable"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "89c50c302edadaa79f458f3e7252971f70d7dbb1",
+            "comment": "Remove flow usage from saveAssetPlugin codeflow"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 14 Aug 2023 15:18:19 GMT",
       "tag": "@office-iss/react-native-win32_v0.72.2",
       "version": "0.72.2",
