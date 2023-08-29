@@ -1663,17 +1663,7 @@
   dependencies:
     "@jest/types" "^29.6.1"
 
-"@jest/environment@^29.3.0", "@jest/environment@^29.6.2":
-  version "29.6.2"
-  resolved "https://registry.yarnpkg.com/@jest/environment/-/environment-29.6.2.tgz#794c0f769d85e7553439d107d3f43186dc6874a9"
-  integrity sha512-AEcW43C7huGd/vogTddNNTDRpO6vQ2zaQNrttvWV18ArBx9Z56h7BIsXkNFJVOO4/kblWEQz30ckw0+L3izc+Q==
-  dependencies:
-    "@jest/fake-timers" "^29.6.2"
-    "@jest/types" "^29.6.1"
-    "@types/node" "*"
-    jest-mock "^29.6.2"
-
-"@jest/environment@^29.6.4":
+"@jest/environment@^29.3.0", "@jest/environment@^29.6.2", "@jest/environment@^29.6.4":
   version "29.6.4"
   resolved "https://registry.yarnpkg.com/@jest/environment/-/environment-29.6.4.tgz#78ec2c9f8c8829a37616934ff4fea0c028c79f4f"
   integrity sha512-sQ0SULEjA1XUTHmkBRl7A1dyITM9yb1yb3ZNKPX3KlTd6IG7mWUe3e2yfExtC2Zz1Q+mMckOLHmL/qLiuQJrBQ==
@@ -1705,19 +1695,7 @@
     expect "^29.6.4"
     jest-snapshot "^29.6.4"
 
-"@jest/fake-timers@^29.6.2":
-  version "29.6.2"
-  resolved "https://registry.yarnpkg.com/@jest/fake-timers/-/fake-timers-29.6.2.tgz#fe9d43c5e4b1b901168fe6f46f861b3e652a2df4"
-  integrity sha512-euZDmIlWjm1Z0lJ1D0f7a0/y5Kh/koLFMUBE5SUYWrmy8oNhJpbTBDAP6CxKnadcMLDoDf4waRYCe35cH6G6PA==
-  dependencies:
-    "@jest/types" "^29.6.1"
-    "@sinonjs/fake-timers" "^10.0.2"
-    "@types/node" "*"
-    jest-message-util "^29.6.2"
-    jest-mock "^29.6.2"
-    jest-util "^29.6.2"
-
-"@jest/fake-timers@^29.6.4":
+"@jest/fake-timers@^29.6.2", "@jest/fake-timers@^29.6.4":
   version "29.6.4"
   resolved "https://registry.yarnpkg.com/@jest/fake-timers/-/fake-timers-29.6.4.tgz#45a27f093c43d5d989362a3e7a8c70c83188b4f6"
   integrity sha512-6UkCwzoBK60edXIIWb0/KWkuj7R7Qq91vVInOe3De6DSpaEiqjKcJw4F7XUet24Wupahj9J6PlR09JqJ5ySDHw==
@@ -7890,21 +7868,6 @@ jest-message-util@^29.5.0:
     slash "^3.0.0"
     stack-utils "^2.0.3"
 
-jest-message-util@^29.6.2:
-  version "29.6.2"
-  resolved "https://registry.yarnpkg.com/jest-message-util/-/jest-message-util-29.6.2.tgz#af7adc2209c552f3f5ae31e77cf0a261f23dc2bb"
-  integrity sha512-vnIGYEjoPSuRqV8W9t+Wow95SDp6KPX2Uf7EoeG9G99J2OVh7OSwpS4B6J0NfpEIpfkBNHlBZpA2rblEuEFhZQ==
-  dependencies:
-    "@babel/code-frame" "^7.12.13"
-    "@jest/types" "^29.6.1"
-    "@types/stack-utils" "^2.0.0"
-    chalk "^4.0.0"
-    graceful-fs "^4.2.9"
-    micromatch "^4.0.4"
-    pretty-format "^29.6.2"
-    slash "^3.0.0"
-    stack-utils "^2.0.3"
-
 jest-message-util@^29.6.3:
   version "29.6.3"
   resolved "https://registry.yarnpkg.com/jest-message-util/-/jest-message-util-29.6.3.tgz#bce16050d86801b165f20cfde34dc01d3cf85fbf"
@@ -7920,16 +7883,7 @@ jest-message-util@^29.6.3:
     slash "^3.0.0"
     stack-utils "^2.0.3"
 
-jest-mock@^29.6.2:
-  version "29.6.2"
-  resolved "https://registry.yarnpkg.com/jest-mock/-/jest-mock-29.6.2.tgz#ef9c9b4d38c34a2ad61010a021866dad41ce5e00"
-  integrity sha512-hoSv3lb3byzdKfwqCuT6uTscan471GUECqgNYykg6ob0yiAw3zYc7OrPnI9Qv8Wwoa4lC7AZ9hyS4AiIx5U2zg==
-  dependencies:
-    "@jest/types" "^29.6.1"
-    "@types/node" "*"
-    jest-util "^29.6.2"
-
-jest-mock@^29.6.3:
+jest-mock@^29.6.2, jest-mock@^29.6.3:
   version "29.6.3"
   resolved "https://registry.yarnpkg.com/jest-mock/-/jest-mock-29.6.3.tgz#433f3fd528c8ec5a76860177484940628bdf5e0a"
   integrity sha512-Z7Gs/mOyTSR4yPsaZ72a/MtuK6RnC3JYqWONe48oLaoEcYwEDxqvbXz85G4SJrm2Z5Ar9zp6MiHF4AlFlRM4Pg==
@@ -10460,15 +10414,6 @@ pretty-format@^29.0.0, pretty-format@^29.5.0:
   version "29.6.1"
   resolved "https://registry.yarnpkg.com/pretty-format/-/pretty-format-29.6.1.tgz#ec838c288850b7c4f9090b867c2d4f4edbfb0f3e"
   integrity sha512-7jRj+yXO0W7e4/tSJKoR7HRIHLPPjtNaUGG2xxKQnGvPNRkgWcQ0AZX6P4KBRJN4FcTBWb3sa7DVUJmocYuoog==
-  dependencies:
-    "@jest/schemas" "^29.6.0"
-    ansi-styles "^5.0.0"
-    react-is "^18.0.0"
-
-pretty-format@^29.6.2:
-  version "29.6.2"
-  resolved "https://registry.yarnpkg.com/pretty-format/-/pretty-format-29.6.2.tgz#3d5829261a8a4d89d8b9769064b29c50ed486a47"
-  integrity sha512-1q0oC8eRveTg5nnBEWMXAU2qpv65Gnuf2eCQzSjxpWFkPaPARwqZZDGuNE0zPAZfTCHzIk3A8dIjwlQKKLphyg==
   dependencies:
     "@jest/schemas" "^29.6.0"
     ansi-styles "^5.0.0"
