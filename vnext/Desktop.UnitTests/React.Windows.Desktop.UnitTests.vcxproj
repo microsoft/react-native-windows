@@ -45,7 +45,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(ReactNativeWindowsDir)Mso;$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)Desktop;$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)include\Shared;$(MSBuildThisFileDirectory);$(IncludePath)</IncludePath>
+    <IncludePath>$(ReactNativeWindowsDir)Mso;$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)Desktop;$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)include\Shared;$(ReactNativeWindowsDir)Microsoft.ReactNative.Cxx;$(MSBuildThisFileDirectory);$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -82,6 +82,10 @@
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
+  <ItemGroup>
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueReader.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueWriter.idl" />
+  </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AsyncStorageManagerTest.cpp" />
     <ClCompile Include="AsyncStorageTest.cpp" />
