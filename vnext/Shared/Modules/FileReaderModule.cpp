@@ -137,7 +137,7 @@ void FileReaderTurboModule::Initialize(msrn::ReactContext const &reactContext) n
 /// Either resolves or rejects the current method with a given text message.
 /// </param>
 ///
-void FileReaderTurboModule::ReadAsDataUrl(msrn::JSValue &&data, msrn::ReactPromise<string> &&result) noexcept {
+void FileReaderTurboModule::ReadAsDataUrl(msrn::JSValue &&data, msrn::ReactPromise<msrn::JSValue> &&result) noexcept {
   auto &blob = data.AsObject();
   auto blobId = blob["blobId"].AsString();
   auto offset = blob["offset"].AsInt64();
@@ -178,7 +178,7 @@ void FileReaderTurboModule::ReadAsDataUrl(msrn::JSValue &&data, msrn::ReactPromi
 void FileReaderTurboModule::ReadAsText(
     msrn::JSValue &&data,
     string &&encoding,
-    msrn::ReactPromise<string> &&result) noexcept {
+    msrn::ReactPromise<msrn::JSValue> &&result) noexcept {
   auto &blob = data.AsObject();
   auto blobId = blob["blobId"].AsString();
   auto offset = blob["offset"].AsInt64();

@@ -65,13 +65,13 @@ struct FileReaderTurboModule {
   REACT_METHOD(ReadAsDataUrl, L"readAsDataURL")
   void ReadAsDataUrl(
       winrt::Microsoft::ReactNative::JSValue &&data,
-      winrt::Microsoft::ReactNative::ReactPromise<std::string> &&result) noexcept;
+      winrt::Microsoft::ReactNative::ReactPromise<winrt::Microsoft::ReactNative::JSValue> &&result) noexcept;
 
   REACT_METHOD(ReadAsText, L"readAsText")
   void ReadAsText(
       winrt::Microsoft::ReactNative::JSValue &&data,
       std::string &&encoding,
-      winrt::Microsoft::ReactNative::ReactPromise<std::string> &&result) noexcept;
+      winrt::Microsoft::ReactNative::ReactPromise<winrt::Microsoft::ReactNative::JSValue> &&result) noexcept;
 
  private:
   std::shared_ptr<IFileReaderResource> m_resource;
