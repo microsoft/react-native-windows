@@ -5,8 +5,8 @@
 #include "MoveOnCopy.h"
 #include "MsoUtils.h"
 
-#include <Base/CoreNativeModules.h>
 #include <AppModelHelpers.h>
+#include <Base/CoreNativeModules.h>
 #include <Threading/MessageDispatchQueue.h>
 #include <Threading/MessageQueueThreadFactory.h>
 #include <appModel.h>
