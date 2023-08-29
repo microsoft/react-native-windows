@@ -236,7 +236,9 @@ std::map<string, dynamic> HttpModule::getConstants() {
 }
 
 // clang-format off
-  std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods() {
+std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods() {
+  // See CxxNativeModule::lazyInit()
+  SetUpHttpResource(m_resource, getInstance(), m_inspectableProperties);
 
   return
   {
@@ -249,12 +251,6 @@ std::map<string, dynamic> HttpModule::getConstants() {
           return;
         }
 
-        auto resource = holder->Module->m_resource;
-        if (!holder->Module->m_isResourceSetup)
-        {
-          SetUpHttpResource(resource, holder->Module->getInstance(), holder->Module->m_inspectableProperties);
-          holder->Module->m_isResourceSetup = true;
-        }
         holder->Module->m_requestId++;
 
         auto params = facebook::xplat::jsArgAsObject(args, 0);
@@ -263,7 +259,7 @@ std::map<string, dynamic> HttpModule::getConstants() {
           headers.emplace(header.first.getString(), header.second.getString());
         }
 
-        resource->SendRequest(
+        holder->Module->m_resource->SendRequest(
           params["method"].asString(),
           params["url"].asString(),
           holder->Module->m_requestId,
@@ -289,38 +285,24 @@ std::map<string, dynamic> HttpModule::getConstants() {
           return;
         }
 
-          auto resource = holder->Module->m_resource;
-          if (!holder->Module->m_isResourceSetup)
-          {
-            SetUpHttpResource(resource, holder->Module->getInstance(), holder->Module->m_inspectableProperties);
-            holder->Module->m_isResourceSetup = true;
-          }
-
-          resource->AbortRequest(facebook::xplat::jsArgAsInt(args, 0));
-        }
-      },
-      {
-        "clearCookies",
-        [weakHolder = weak_ptr<ModuleHolder>(m_holder)](dynamic args)
-        {
-          auto holder = weakHolder.lock();
-          if (!holder)
-          {
-            return;
-          }
-
-          auto resource = holder->Module->m_resource;
-          if (!holder->Module->m_isResourceSetup)
-          {
-            SetUpHttpResource(resource, holder->Module->getInstance(), holder->Module->m_inspectableProperties);
-            holder->Module->m_isResourceSetup = true;
-          }
-
-          resource->ClearCookies();
-        }
+        holder->Module->m_resource->AbortRequest(facebook::xplat::jsArgAsInt(args, 0));
       }
-    };
-  }
+    },
+    {
+      "clearCookies",
+      [weakHolder = weak_ptr<ModuleHolder>(m_holder)](dynamic args)
+      {
+        auto holder = weakHolder.lock();
+        if (!holder)
+        {
+          return;
+        }
+
+        holder->Module->m_resource->ClearCookies();
+      }
+    }
+  };
+}
 // clang-format on
 
 #pragma endregion CxxModule
@@ -329,6 +311,11 @@ std::map<string, dynamic> HttpModule::getConstants() {
 
 /*extern*/ const char *GetHttpModuleName() noexcept {
   return s_moduleName;
+}
+
+/*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateHttpModule(
+    IInspectable const &inspectableProperties) noexcept {
+  return std::make_unique<HttpModule>(inspectableProperties);
 }
 
 /*extern*/ const wchar_t *GetHttpTurboModuleName() noexcept {
