@@ -5,11 +5,6 @@
 #include "Composition.CompositionContextHelper.g.cpp"
 #endif
 
-#include <Composition.ActivityVisual.g.h>
-#include <Composition.ScrollPositionChangedArgs.g.h>
-#include <Composition.ScrollVisual.g.h>
-#include <Composition.SpriteVisual.g.h>
-#include <Composition.SurfaceBrush.g.h>
 #include <Windows.Graphics.Interop.h>
 #include <windows.ui.composition.interop.h>
 #include <winrt/Windows.Graphics.DirectX.Direct3D11.h>
@@ -108,8 +103,11 @@ struct CompBrush
   winrt::Windows::UI::Composition::CompositionBrush m_brush;
 };
 
-struct CompSurfaceBrush
-    : winrt::Microsoft::ReactNative::Composition::implementation::SurfaceBrushT<CompSurfaceBrush, ICompositionBrush> {
+struct CompSurfaceBrush : winrt::implements<
+                              CompSurfaceBrush,
+                              winrt::Microsoft::ReactNative::Composition::ISurfaceBrush,
+                              winrt::Microsoft::ReactNative::Composition::IBrush,
+                              ICompositionBrush> {
   CompSurfaceBrush(
       const winrt::Windows::UI::Composition::Compositor &compositor,
       const winrt::Microsoft::ReactNative::Composition::ICompositionDrawingSurface &drawingSurfaceInterop)
@@ -258,8 +256,12 @@ struct CompVisual : public winrt::implements<
   winrt::Windows::UI::Composition::Visual m_visual;
 };
 
-struct CompSpriteVisual : winrt::Microsoft::ReactNative::Composition::implementation::
-                              SpriteVisualT<CompSpriteVisual, ICompositionVisual, IVisualInterop> {
+struct CompSpriteVisual : winrt::implements<
+                              CompSpriteVisual,
+                              winrt::Microsoft::ReactNative::Composition::ISpriteVisual,
+                              winrt::Microsoft::ReactNative::Composition::IVisual,
+                              ICompositionVisual,
+                              IVisualInterop> {
   CompSpriteVisual(winrt::Windows::UI::Composition::SpriteVisual const &visual) : m_visual(visual) {}
 
   winrt::Windows::UI::Composition::Visual InnerVisual() const noexcept override {
@@ -368,9 +370,9 @@ struct CompSpriteVisual : winrt::Microsoft::ReactNative::Composition::implementa
   winrt::Windows::UI::Composition::SpriteVisual m_visual;
 };
 
-struct CompScrollPositionChangedArgs
-    : winrt::Microsoft::ReactNative::Composition::implementation::ScrollPositionChangedArgsT<
-          CompScrollPositionChangedArgs> {
+struct CompScrollPositionChangedArgs : winrt::implements<
+                                           CompScrollPositionChangedArgs,
+                                           winrt::Microsoft::ReactNative::Composition::IScrollPositionChangedArgs> {
   CompScrollPositionChangedArgs(winrt::Windows::Foundation::Numerics::float2 position) : m_position(position) {}
 
   winrt::Windows::Foundation::Numerics::float2 Position() {
@@ -381,8 +383,12 @@ struct CompScrollPositionChangedArgs
   winrt::Windows::Foundation::Numerics::float2 m_position;
 };
 
-struct CompScrollerVisual : winrt::Microsoft::ReactNative::Composition::implementation::
-                                ScrollVisualT<CompScrollerVisual, ICompositionVisual, IVisualInterop> {
+struct CompScrollerVisual : winrt::implements<
+                                CompScrollerVisual,
+                                winrt::Microsoft::ReactNative::Composition::IScrollVisual,
+                                winrt::Microsoft::ReactNative::Composition::IVisual,
+                                ICompositionVisual,
+                                IVisualInterop> {
   struct ScrollInteractionTrackerOwner : public winrt::implements<
                                              ScrollInteractionTrackerOwner,
                                              winrt::Windows::UI::Composition::Interactions::IInteractionTrackerOwner> {
@@ -558,7 +564,7 @@ struct CompScrollerVisual : winrt::Microsoft::ReactNative::Composition::implemen
 
   winrt::event_token ScrollPositionChanged(
       winrt::Windows::Foundation::EventHandler<
-          winrt::Microsoft::ReactNative::Composition::ScrollPositionChangedArgs> const &handler) {
+          winrt::Microsoft::ReactNative::Composition::IScrollPositionChangedArgs> const &handler) {
     return m_scrollPositionChangedEvent.add(handler);
   }
 
@@ -608,7 +614,7 @@ struct CompScrollerVisual : winrt::Microsoft::ReactNative::Composition::implemen
   winrt::Windows::Foundation::Numerics::float2 m_contentSize{0};
   winrt::Windows::Foundation::Numerics::float2 m_visualSize{0};
   winrt::event<
-      winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::Composition::ScrollPositionChangedArgs>>
+      winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::Composition::IScrollPositionChangedArgs>>
       m_scrollPositionChangedEvent;
   winrt::Windows::UI::Composition::SpriteVisual m_visual{nullptr};
   winrt::Windows::UI::Composition::SpriteVisual m_contentVisual{nullptr};
@@ -616,8 +622,12 @@ struct CompScrollerVisual : winrt::Microsoft::ReactNative::Composition::implemen
   winrt::Windows::UI::Composition::Interactions::VisualInteractionSource m_visualInteractionSource{nullptr};
 };
 
-struct CompActivityVisual : winrt::Microsoft::ReactNative::Composition::implementation::
-                                ActivityVisualT<CompActivityVisual, ICompositionVisual, IVisualInterop> {
+struct CompActivityVisual : winrt::implements<
+                                CompActivityVisual,
+                                winrt::Microsoft::ReactNative::Composition::IActivityVisual,
+                                winrt::Microsoft::ReactNative::Composition::IVisual,
+                                ICompositionVisual,
+                                IVisualInterop> {
   CompActivityVisual(winrt::Windows::UI::Composition::SpriteVisual const &visual) : m_visual(visual) {
     auto compositor = m_visual.Compositor();
     m_contentVisual = compositor.CreateSpriteVisual();
@@ -988,15 +998,15 @@ struct CompContext : winrt::implements<
         CompositionGraphicsDevice().CreateDrawingSurface(surfaceSize, pixelFormat, alphaMode));
   }
 
-  winrt::Microsoft::ReactNative::Composition::SpriteVisual CreateSpriteVisual() noexcept {
+  winrt::Microsoft::ReactNative::Composition::ISpriteVisual CreateSpriteVisual() noexcept {
     return winrt::make<Composition::CompSpriteVisual>(m_compositor.CreateSpriteVisual());
   }
 
-  winrt::Microsoft::ReactNative::Composition::ScrollVisual CreateScrollerVisual() noexcept {
+  winrt::Microsoft::ReactNative::Composition::IScrollVisual CreateScrollerVisual() noexcept {
     return winrt::make<Composition::CompScrollerVisual>(m_compositor.CreateSpriteVisual());
   }
 
-  winrt::Microsoft::ReactNative::Composition::ActivityVisual CreateActivityVisual() noexcept {
+  winrt::Microsoft::ReactNative::Composition::IActivityVisual CreateActivityVisual() noexcept {
     return winrt::make<Composition::CompActivityVisual>(m_compositor.CreateSpriteVisual());
   }
 
@@ -1008,7 +1018,7 @@ struct CompContext : winrt::implements<
     return winrt::make<Composition::CompBrush>(m_compositor.CreateColorBrush(color));
   }
 
-  winrt::Microsoft::ReactNative::Composition::SurfaceBrush CreateSurfaceBrush(
+  winrt::Microsoft::ReactNative::Composition::ISurfaceBrush CreateSurfaceBrush(
       const winrt::Microsoft::ReactNative::Composition::ICompositionDrawingSurface &surface) noexcept {
     return winrt::make<Composition::CompSurfaceBrush>(m_compositor, surface);
   }

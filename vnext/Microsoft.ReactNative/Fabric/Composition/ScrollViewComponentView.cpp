@@ -407,7 +407,7 @@ void ScrollViewComponentView::ensureVisual() noexcept {
         winrt::auto_revoke,
         [this](
             winrt::IInspectable const & /*sender*/,
-            winrt::Microsoft::ReactNative::Composition::ScrollPositionChangedArgs const &args) {
+            winrt::Microsoft::ReactNative::Composition::IScrollPositionChangedArgs const &args) {
           auto eventEmitter = GetEventEmitter();
           if (eventEmitter) {
             facebook::react::ScrollViewMetrics scrollMetrics;
