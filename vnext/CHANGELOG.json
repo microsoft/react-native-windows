@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 29 Aug 2023 05:13:36 GMT",
+      "version": "0.0.0-canary.698",
+      "tag": "react-native-windows_v0.0.0-canary.698",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "26607885+chrisglein@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "2f7e8f31d289f70536e4d2f2ba568acfd1de9e27",
+            "comment": "Render background color on Text Applies a fill rect to the composition visual Fixes #11763"
+          },
+          {
+            "author": "yajurgrover@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ae282e6dd9a90058827d02d134892ac84bd5ab32",
+            "comment": "Integrate RN Nightly Build 7/28"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 25 Aug 2023 05:14:38 GMT",
       "version": "0.0.0-canary.697",
       "tag": "react-native-windows_v0.0.0-canary.697",

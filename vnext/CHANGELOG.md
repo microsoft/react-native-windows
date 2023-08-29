@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 25 Aug 2023 05:14:38 GMT and should not be manually modified.
+This log was last generated on Tue, 29 Aug 2023 05:13:36 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.698
+
+Tue, 29 Aug 2023 05:13:36 GMT
+
+### Changes
+
+- Render background color on Text Applies a fill rect to the composition visual Fixes #11763 (26607885+chrisglein@users.noreply.github.com)
+- Integrate RN Nightly Build 7/28 (yajurgrover@microsoft.com)
 
 ## 0.0.0-canary.697
 

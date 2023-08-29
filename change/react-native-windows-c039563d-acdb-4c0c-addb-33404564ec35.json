@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Integrate RN Nightly Build 7/28",
-  "packageName": "react-native-windows",
-  "email": "yajurgrover@microsoft.com",
-  "dependentChangeType": "patch"
-}
