@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.73.0-nightly-20230721-ccc50ddd2",
+  "baseVersion": "0.73.0-nightly-20230728-c168a4f88",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "a854c8b1f0bc61fbb2a446d8f8bf2813a493034a"
+      "baseHash": "655336b4faa928e983df0b07e04947de3f98be90"
     },
     {
       "type": "derived",
@@ -239,7 +239,7 @@
     {
       "type": "derived",
       "file": "src/Libraries/Components/DrawerAndroid/DrawerLayoutAndroid.windows.js",
-      "baseFile": "packages/react-native/Libraries/Components/DrawerAndroid/DrawerLayoutAndroid.ios.js",
+      "baseFile": "packages/react-native/Libraries/Components/DrawerAndroid/DrawerLayoutAndroid.js",
       "baseHash": "09f143fc3f2ee80463764e1c2b3f23107d501a4c"
     },
     {
@@ -295,7 +295,7 @@
     {
       "type": "derived",
       "file": "src/Libraries/Components/ProgressBarAndroid/ProgressBarAndroid.windows.js",
-      "baseFile": "packages/react-native/Libraries/Components/ProgressBarAndroid/ProgressBarAndroid.ios.js",
+      "baseFile": "packages/react-native/Libraries/Components/ProgressBarAndroid/ProgressBarAndroid.js",
       "baseHash": "09f143fc3f2ee80463764e1c2b3f23107d501a4c"
     },
     {
@@ -305,10 +305,10 @@
       "baseHash": "7e6b0a8088ba49a28360a88fd59c08e8c0965130"
     },
     {
-      "type": "derived",
+      "type": "copy",
       "file": "src/Libraries/Components/SafeAreaView/SafeAreaView.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/SafeAreaView/SafeAreaView.js",
-      "baseHash": "8982fc8b7295200e987eea3454adddc5d650896c"
+      "baseHash": "8dbe05a71b7393e987b02d72af55d9ea3e0aa274"
     },
     {
       "type": "derived",
@@ -341,7 +341,7 @@
     {
       "type": "copy",
       "file": "src/Libraries/Components/ToastAndroid/ToastAndroid.windows.js",
-      "baseFile": "packages/react-native/Libraries/Components/ToastAndroid/ToastAndroid.ios.js",
+      "baseFile": "packages/react-native/Libraries/Components/ToastAndroid/ToastAndroid.js",
       "baseHash": "081bef4803b72c50eb6e8379451201afbde9806e"
     },
     {
@@ -494,8 +494,8 @@
     {
       "type": "derived",
       "file": "src/Libraries/Settings/Settings.windows.js",
-      "baseFile": "packages/react-native/Libraries/Settings/Settings.android.js",
-      "baseHash": "b76a462d5b5213cbf24aa4432b26f0080ed1b4ae"
+      "baseFile": "packages/react-native/Libraries/Settings/Settings.js",
+      "baseHash": "1aa8e2b8b3c8e1577f617383c3a47fe8499eb031"
     },
     {
       "type": "platform",
@@ -505,7 +505,7 @@
       "type": "derived",
       "file": "src/Libraries/Text/Text.windows.js",
       "baseFile": "packages/react-native/Libraries/Text/Text.js",
-      "baseHash": "dfec8a4812c7bb0ab749500d341d66d502c11e37"
+      "baseHash": "f56a969c163de4f20bcdefaa42792f31c3497888"
     },
     {
       "type": "derived",
