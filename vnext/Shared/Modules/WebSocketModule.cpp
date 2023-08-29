@@ -112,7 +112,7 @@ GetOrCreateWebSocket(int64_t id, string &&url, weak_ptr<WebSocketModule::SharedS
           if (!strongInstance)
             return;
 
-          dynamic args = dynamic::object("id", id)("type", isBinary ? "binary" : "text");
+          auto args = msrn::JSValueObject{{"id", id}, {"type", isBinary ? "binary" : "text"}};
           shared_ptr<Microsoft::React::IWebSocketModuleContentHandler> contentHandler;
           auto propId = ReactPropertyId<ReactNonAbiValue<weak_ptr<Microsoft::React::IWebSocketModuleContentHandler>>>{
               L"BlobModule.ContentHandler"};
@@ -134,7 +134,7 @@ GetOrCreateWebSocket(int64_t id, string &&url, weak_ptr<WebSocketModule::SharedS
             args["data"] = message;
           }
 
-          SendEvent(weakInstance, "websocketMessage", std::move(args));
+          SendEvent(weakInstance, "websocketMessage", Microsoft::React::Modules::ToDynamic(std::move(args)));
         });
     ws->SetOnClose([id, weakInstance](IWebSocketResource::CloseCode code, const string &reason) {
       auto strongInstance = weakInstance.lock();
