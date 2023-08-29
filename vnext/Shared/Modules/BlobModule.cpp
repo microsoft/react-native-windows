@@ -327,31 +327,29 @@ BlobModuleRequestBodyHandler::BlobModuleRequestBodyHandler(shared_ptr<IBlobPersi
 
 #pragma region IRequestBodyHandler
 
-bool BlobModuleRequestBodyHandler::Supports(dynamic &data) /*override*/ {
+bool BlobModuleRequestBodyHandler::Supports(msrn::JSValueObject &data) /*override*/ {
   auto itr = data.find(blobKey);
 
-  return itr != data.items().end() && !(*itr).second.empty();
+  return itr != data.cend() && !(*itr).second.AsString().empty();
 }
 
-dynamic BlobModuleRequestBodyHandler::ToRequestBody(dynamic &data, string &contentType) /*override*/ {
+msrn::JSValueObject BlobModuleRequestBodyHandler::ToRequestBody(
+    msrn::JSValueObject &data,
+    string &contentType) /*override*/ {
   auto type = contentType;
-  if (!data[typeKey].isNull() && !data[typeKey].asString().empty()) {
-    type = data[typeKey].asString();
+  auto itr = data.find(typeKey);
+  if (itr != data.cend() && !(*itr).second.AsString().empty()) {
+    type = (*itr).second.AsString();
   }
   if (type.empty()) {
     type = "application/octet-stream";
   }
 
-  auto blob = data[blobKey];
-  auto blobId = blob[blobIdKey].asString();
-  auto bytes = m_blobPersistor->ResolveMessage(std::move(blobId), blob[offsetKey].asInt(), blob[sizeKey].asInt());
+  auto &blob = data[blobKey].AsObject();
+  auto blobId = blob[blobIdKey].AsString();
+  auto bytes = m_blobPersistor->ResolveMessage(std::move(blobId), blob[offsetKey].AsInt64(), blob[sizeKey].AsInt64());
 
-  auto result = dynamic::object();
-  result(typeKey, type);
-  result(sizeKey, bytes.size());
-  result("bytes", dynamic(bytes.cbegin(), bytes.cend()));
-
-  return result;
+  return {{typeKey, type}, {sizeKey, bytes.size()}, {"bytes", msrn::JSValueArray(bytes.cbegin(), bytes.cend())}};
 }
 
 #pragma endregion IRequestBodyHandler
@@ -369,13 +367,8 @@ bool BlobModuleResponseHandler::Supports(string &responseType) /*override*/ {
   return blobKey == responseType;
 }
 
-dynamic BlobModuleResponseHandler::ToResponseData(vector<uint8_t> &&content) /*override*/ {
-  auto blob = dynamic::object();
-  blob(offsetKey, 0);
-  blob(sizeKey, content.size());
-  blob(blobIdKey, m_blobPersistor->StoreMessage(std::move(content)));
-
-  return blob;
+msrn::JSValueObject BlobModuleResponseHandler::ToResponseData(vector<uint8_t> &&content) /*override*/ {
+  return {{offsetKey, 0}, {sizeKey, content.size()}, {blobIdKey, m_blobPersistor->StoreMessage(std::move(content))}};
 }
 
 #pragma endregion IResponseHandler
