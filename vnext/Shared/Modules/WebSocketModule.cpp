@@ -4,10 +4,14 @@
 #include "pch.h"
 
 #include <Modules/WebSocketModule.h>
+#include <Modules/WebSocketTurboModule.h>
 
 #include <Modules/CxxModuleUtilities.h>
 #include <Modules/IWebSocketModuleContentHandler.h>
 #include <ReactPropertyBag.h>
+
+// fmt
+#include <fmt/format.h>
 
 // React Native
 #include <cxxreact/Instance.h>
@@ -19,6 +23,8 @@
 // Standard Libriary
 #include <iomanip>
 
+namespace msrn = winrt::Microsoft::ReactNative;
+
 using namespace facebook::xplat;
 
 using facebook::react::Instance;
@@ -26,6 +32,7 @@ using folly::dynamic;
 
 using std::shared_ptr;
 using std::string;
+using std::vector;
 using std::weak_ptr;
 
 using winrt::Microsoft::ReactNative::IReactPropertyBag;
@@ -42,7 +49,7 @@ using Microsoft::React::WebSocketModule;
 using Microsoft::React::Modules::SendEvent;
 using Microsoft::React::Networking::IWebSocketResource;
 
-constexpr char moduleName[] = "WebSocketModule";
+constexpr char s_moduleName[] = "WebSocketModule";
 
 static shared_ptr<IWebSocketResource>
 GetOrCreateWebSocket(int64_t id, string &&url, weak_ptr<WebSocketModule::SharedState> weakState) {
@@ -117,7 +124,7 @@ GetOrCreateWebSocket(int64_t id, string &&url, weak_ptr<WebSocketModule::SharedS
               auto buffer = CryptographicBuffer::DecodeFromBase64String(winrt::to_hstring(message));
               winrt::com_array<uint8_t> arr;
               CryptographicBuffer::CopyToByteArray(buffer, arr);
-              auto data = std::vector<uint8_t>(arr.begin(), arr.end());
+              auto data = vector<uint8_t>(arr.begin(), arr.end());
 
               contentHandler->ProcessMessage(std::move(data), args);
             } else {
@@ -179,7 +186,7 @@ void WebSocketModule::SetResourceFactory(
 }
 
 string WebSocketModule::getName() {
-  return moduleName;
+  return s_moduleName;
 }
 
 std::map<string, dynamic> WebSocketModule::getConstants() {
@@ -187,7 +194,7 @@ std::map<string, dynamic> WebSocketModule::getConstants() {
 }
 
 // clang-format off
-std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMethods()
+vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMethods()
 {
   return
   {
@@ -312,8 +319,170 @@ void WebSocketModuleProxy::SendBinary(std::string &&base64String, int64_t id) no
 
 #pragma endregion WebSocketModuleProxy
 
+#pragma region WebSocketTurboModule
+
+shared_ptr<IWebSocketResource> WebSocketTurboModule::CreateResource(int64_t id, string &&url) noexcept {
+  shared_ptr<IWebSocketResource> rc;
+  try {
+    rc = IWebSocketResource::Make();
+  } catch (const winrt::hresult_error &e) {
+    auto error = fmt::format("[0x{:0>8x}] {}", static_cast<uint32_t>(e.code()), winrt::to_string(e.message()));
+    SendEvent(m_context, L"webSocketFailed", {{"id", id}, {"message", std::move(error)}});
+
+    return nullptr;
+  } catch (const std::exception &e) {
+    SendEvent(m_context, L"webSocketFailed", {{"id", id}, {"message", e.what()}});
+
+    return nullptr;
+  } catch (...) {
+    SendEvent(
+        m_context, L"webSocketFailed", {{"id", id}, {"message", "Unidentified error creating IWebSocketResource"}});
+
+    return nullptr;
+  }
+
+  // Set up resource
+  rc->SetOnConnect([id, context = m_context]() { SendEvent(context, L"websocketOpen", {{"id", id}}); });
+
+  rc->SetOnMessage([id, context = m_context](size_t length, const string &message, bool isBinary) {
+    auto args = msrn::JSValueObject{{"id", id}, {"type", isBinary ? "binary" : "text"}};
+    shared_ptr<IWebSocketModuleContentHandler> contentHandler;
+    auto propId =
+        ReactPropertyId<ReactNonAbiValue<weak_ptr<IWebSocketModuleContentHandler>>>{L"BlobModule.ContentHandler"};
+    auto propBag = context.Properties();
+    if (auto prop = propBag.Get(propId))
+      contentHandler = prop.Value().lock();
+
+    if (contentHandler) {
+      if (isBinary) {
+        auto buffer = CryptographicBuffer::DecodeFromBase64String(winrt::to_hstring(message));
+        winrt::com_array<uint8_t> arr;
+        CryptographicBuffer::CopyToByteArray(buffer, arr);
+        auto data = vector<uint8_t>(arr.begin(), arr.end());
+
+        contentHandler->ProcessMessage(std::move(data), args);
+      } else {
+        contentHandler->ProcessMessage(string{message}, args);
+      }
+    } else {
+      args["data"] = message;
+    }
+
+    SendEvent(context, L"websocketMessage", std::move(args));
+  });
+
+  rc->SetOnClose([id, context = m_context](IWebSocketResource::CloseCode code, const string &reason) {
+    auto args = msrn::JSValueObject{{"id", id}, {"code", static_cast<uint16_t>(code)}, {"reason", reason}};
+
+    SendEvent(context, L"websocketClosed", std::move(args));
+  });
+
+  rc->SetOnError([id, context = m_context](const IWebSocketResource::Error &err) {
+    auto errorObj = msrn::JSValueObject{{"id", id}, {"message", err.Message}};
+
+    SendEvent(context, L"websocketFailed", std::move(errorObj));
+  });
+
+  m_resourceMap.emplace(static_cast<double>(id), rc);
+
+  return rc;
+}
+
+void WebSocketTurboModule::Initialize(msrn::ReactContext const &reactContext) noexcept {
+  m_context = reactContext.Handle();
+}
+
+void WebSocketTurboModule::Connect(
+    string &&url,
+    std::optional<vector<string>> protocols,
+    ReactNativeSpecs::WebSocketModuleSpec_connect_options &&options,
+    double socketID) noexcept {
+  IWebSocketResource::Protocols rcProtocols;
+  for (const auto &protocol : protocols.value_or(vector<string>{})) {
+    rcProtocols.push_back(protocol);
+  }
+
+  IWebSocketResource::Options rcOptions;
+  auto &optHeaders = options.headers;
+  if (optHeaders.has_value()) {
+    auto &headersVal = optHeaders.value();
+    for (const auto &headerVal : headersVal.AsArray()) {
+      // Each header JSValueObject should only contain one key-value pair
+      const auto &entry = *headerVal.AsObject().cbegin();
+      rcOptions.emplace(winrt::to_hstring(entry.first), entry.second.AsString());
+    }
+  }
+
+  weak_ptr<IWebSocketResource> weakRc;
+  auto rcItr = m_resourceMap.find(socketID);
+  if (rcItr != m_resourceMap.cend()) {
+    weakRc = (*rcItr).second;
+  } else {
+    weakRc = CreateResource(static_cast<int64_t>(socketID), string{url});
+  }
+
+  if (auto rc = weakRc.lock()) {
+    rc->Connect(std::move(url), rcProtocols, rcOptions);
+  }
+}
+
+void WebSocketTurboModule::Close(double code, string &&reason, double socketID) noexcept {
+  auto rcItr = m_resourceMap.find(socketID);
+  if (rcItr == m_resourceMap.cend()) {
+    return; // TODO: Send error instead?
+  }
+
+  weak_ptr<IWebSocketResource> weakRc = (*rcItr).second;
+  if (auto rc = weakRc.lock()) {
+    rc->Close(static_cast<IWebSocketResource::CloseCode>(code), std::move(reason));
+  }
+}
+
+void WebSocketTurboModule::Send(string &&message, double forSocketID) noexcept {
+  auto rcItr = m_resourceMap.find(forSocketID);
+  if (rcItr == m_resourceMap.cend()) {
+    return; // TODO: Send error instead?
+  }
+
+  weak_ptr<IWebSocketResource> weakRc = (*rcItr).second;
+  if (auto rc = weakRc.lock()) {
+    rc->Send(std::move(message));
+  }
+}
+
+void WebSocketTurboModule::SendBinary(string &&base64String, double forSocketID) noexcept {
+  auto rcItr = m_resourceMap.find(forSocketID);
+  if (rcItr == m_resourceMap.cend()) {
+    return; // TODO: Send error instead?
+  }
+
+  weak_ptr<IWebSocketResource> weakRc = (*rcItr).second;
+  if (auto rc = weakRc.lock()) {
+    rc->SendBinary(std::move(base64String));
+  }
+}
+
+void WebSocketTurboModule::Ping(double socketID) noexcept {
+  auto rcItr = m_resourceMap.find(socketID);
+  if (rcItr == m_resourceMap.cend()) {
+    return; // TODO: Send error instead?
+  }
+
+  weak_ptr<IWebSocketResource> weakRc = (*rcItr).second;
+  if (auto rc = weakRc.lock()) {
+    rc->Ping();
+  }
+}
+
+// See react-native/ReactAndroid/src/main/java/com/facebook/react/modules/websocket/WebSocketModule.java
+void WebSocketTurboModule::AddListener(string && /*eventName*/) noexcept {}
+
+void WebSocketTurboModule::RemoveListeners(double /*count*/) noexcept {}
+
+#pragma endregion WebSocketTurboModule
+
 /*extern*/ const char *GetWebSocketModuleName() noexcept {
-  return moduleName;
+  return s_moduleName;
 }
 
 /*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule(
