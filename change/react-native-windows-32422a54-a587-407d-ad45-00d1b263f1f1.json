@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Render background color on Text Applies a fill rect to the composition visual Fixes #11763",
-  "packageName": "react-native-windows",
-  "email": "26607885+chrisglein@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

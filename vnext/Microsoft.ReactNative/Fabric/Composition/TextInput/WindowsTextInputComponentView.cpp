@@ -1010,7 +1010,9 @@ void WindowsTextInputComponentView::DrawText() noexcept {
     return;
   }
 
-  if (!m_drawingSurface)
+  bool isZeroSized =
+      m_layoutMetrics.frame.size.width <= (m_layoutMetrics.contentInsets.left + m_layoutMetrics.contentInsets.right);
+  if (!m_drawingSurface || isZeroSized)
     return;
 
   // Begin our update of the surface pixels. If this is our first update, we are required
