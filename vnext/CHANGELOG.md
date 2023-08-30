@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 29 Aug 2023 05:13:36 GMT and should not be manually modified.
+This log was last generated on Wed, 30 Aug 2023 05:12:56 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.699
+
+Wed, 30 Aug 2023 05:12:56 GMT
+
+### Changes
+
+- Fix bug when blur command received on node without XamlRoot (erozell@outlook.com)
+- fix fabric textinput crashing on minimized (tatianakapos@microsoft.com)
 
 ## 0.0.0-canary.698
 
