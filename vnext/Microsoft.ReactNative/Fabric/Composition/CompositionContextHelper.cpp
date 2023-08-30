@@ -35,33 +35,6 @@ struct GeometrySource : public winrt::implements<
   winrt::com_ptr<ID2D1Geometry> m_geometry;
 };
 
-struct CompositionDrawingSurface : public winrt::implements<
-                                       CompositionDrawingSurface,
-                                       winrt::Microsoft::ReactNative::Composition::ICompositionDrawingSurface,
-                                       ICompositionDrawingSurfaceInterop,
-                                       ICompositionDrawingSurfaceInner> {
-  CompositionDrawingSurface(winrt::Windows::UI::Composition::CompositionDrawingSurface const &drawingSurface) {
-    drawingSurface.as(m_drawingSurfaceInterop);
-  }
-
-  HRESULT BeginDraw(ID2D1DeviceContext **deviceContextOut, POINT *offset) noexcept {
-    return m_drawingSurfaceInterop->BeginDraw(nullptr, __uuidof(ID2D1DeviceContext), (void **)deviceContextOut, offset);
-  }
-
-  HRESULT EndDraw() noexcept {
-    return m_drawingSurfaceInterop->EndDraw();
-  }
-
-  winrt::Windows::UI::Composition::ICompositionSurface Inner() const noexcept {
-    winrt::Windows::UI::Composition::ICompositionSurface surface;
-    m_drawingSurfaceInterop.as(surface);
-    return surface;
-  }
-
- private:
-  winrt::com_ptr<ABI::Windows::UI::Composition::ICompositionDrawingSurfaceInterop> m_drawingSurfaceInterop;
-};
-
 struct CompDropShadow
     : public winrt::
           implements<CompDropShadow, winrt::Microsoft::ReactNative::Composition::IDropShadow, ICompositionDropShadow> {
@@ -103,52 +76,76 @@ struct CompBrush
   winrt::Windows::UI::Composition::CompositionBrush m_brush;
 };
 
-struct CompSurfaceBrush : winrt::implements<
-                              CompSurfaceBrush,
-                              winrt::Microsoft::ReactNative::Composition::ISurfaceBrush,
-                              winrt::Microsoft::ReactNative::Composition::IBrush,
-                              ICompositionBrush> {
-  CompSurfaceBrush(
-      const winrt::Windows::UI::Composition::Compositor &compositor,
-      const winrt::Microsoft::ReactNative::Composition::ICompositionDrawingSurface &drawingSurfaceInterop)
-      : m_brush(compositor.CreateSurfaceBrush(
-            winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerSurface(
-                drawingSurfaceInterop))) {}
+struct CompDrawingSurfaceBrush : public winrt::implements<
+  CompDrawingSurfaceBrush,
+  winrt::Microsoft::ReactNative::Composition::IDrawingSurfaceBrush,
+  winrt::Microsoft::ReactNative::Composition::IBrush,
+  Microsoft::ReactNative::Composition::ICompositionBrush,
+  ICompositionDrawingSurfaceInterop,
+  ICompositionDrawingSurfaceInner>
+{
+  CompDrawingSurfaceBrush(const winrt::Windows::UI::Composition::Compositor& compositor, winrt::Windows::UI::Composition::CompositionDrawingSurface const& drawingSurface)
+    :m_brush(compositor.CreateSurfaceBrush(drawingSurface))
+  {
+    drawingSurface.as(m_drawingSurfaceInterop);
+  }
 
-  winrt::Windows::UI::Composition::CompositionBrush InnerBrush() const noexcept {
+  HRESULT BeginDraw(ID2D1DeviceContext** deviceContextOut, POINT* offset) noexcept
+  {
+    return m_drawingSurfaceInterop->BeginDraw(nullptr, __uuidof(ID2D1DeviceContext), (void**) deviceContextOut, offset);
+  }
+
+  HRESULT EndDraw() noexcept
+  {
+    return m_drawingSurfaceInterop->EndDraw();
+  }
+
+  winrt::Windows::UI::Composition::ICompositionSurface Inner() const noexcept
+  {
+    winrt::Windows::UI::Composition::ICompositionSurface surface;
+    m_drawingSurfaceInterop.as(surface);
+    return surface;
+  }
+
+  winrt::Windows::UI::Composition::CompositionBrush InnerBrush() const noexcept
+  {
     return m_brush;
   }
 
-  void HorizontalAlignmentRatio(float ratio) noexcept {
+  void HorizontalAlignmentRatio(float ratio) noexcept
+  {
     m_brush.HorizontalAlignmentRatio(ratio);
   }
-  void VerticalAlignmentRatio(float ratio) noexcept {
+  void VerticalAlignmentRatio(float ratio) noexcept
+  {
     m_brush.VerticalAlignmentRatio(ratio);
   }
 
-  void Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch mode) noexcept {
+  void Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch mode) noexcept
+  {
     static_assert(
-        static_cast<winrt::Microsoft::ReactNative::Composition::CompositionStretch>(
-            winrt::Windows::UI::Composition::CompositionStretch::None) ==
-        winrt::Microsoft::ReactNative::Composition::CompositionStretch::None);
+      static_cast<winrt::Microsoft::ReactNative::Composition::CompositionStretch>(
+        winrt::Windows::UI::Composition::CompositionStretch::None) ==
+      winrt::Microsoft::ReactNative::Composition::CompositionStretch::None);
     static_assert(
-        static_cast<winrt::Microsoft::ReactNative::Composition::CompositionStretch>(
-            winrt::Windows::UI::Composition::CompositionStretch::Fill) ==
-        winrt::Microsoft::ReactNative::Composition::CompositionStretch::Fill);
+      static_cast<winrt::Microsoft::ReactNative::Composition::CompositionStretch>(
+        winrt::Windows::UI::Composition::CompositionStretch::Fill) ==
+      winrt::Microsoft::ReactNative::Composition::CompositionStretch::Fill);
     static_assert(
-        static_cast<winrt::Microsoft::ReactNative::Composition::CompositionStretch>(
-            winrt::Windows::UI::Composition::CompositionStretch::Uniform) ==
-        winrt::Microsoft::ReactNative::Composition::CompositionStretch::Uniform);
+      static_cast<winrt::Microsoft::ReactNative::Composition::CompositionStretch>(
+        winrt::Windows::UI::Composition::CompositionStretch::Uniform) ==
+      winrt::Microsoft::ReactNative::Composition::CompositionStretch::Uniform);
     static_assert(
-        static_cast<winrt::Microsoft::ReactNative::Composition::CompositionStretch>(
-            winrt::Windows::UI::Composition::CompositionStretch::UniformToFill) ==
-        winrt::Microsoft::ReactNative::Composition::CompositionStretch::UniformToFill);
+      static_cast<winrt::Microsoft::ReactNative::Composition::CompositionStretch>(
+        winrt::Windows::UI::Composition::CompositionStretch::UniformToFill) ==
+      winrt::Microsoft::ReactNative::Composition::CompositionStretch::UniformToFill);
 
     m_brush.Stretch(static_cast<winrt::Windows::UI::Composition::CompositionStretch>(mode));
   }
 
- private:
+private:
   winrt::Windows::UI::Composition::CompositionSurfaceBrush m_brush;
+  winrt::com_ptr<ABI::Windows::UI::Composition::ICompositionDrawingSurfaceInterop> m_drawingSurfaceInterop;
 };
 
 struct CompVisual : public winrt::implements<
@@ -990,14 +987,6 @@ struct CompContext : winrt::implements<
     return m_d2dDevice;
   }
 
-  winrt::Microsoft::ReactNative::Composition::ICompositionDrawingSurface CreateDrawingSurface(
-      winrt::Windows::Foundation::Size surfaceSize,
-      winrt::Windows::Graphics::DirectX::DirectXPixelFormat pixelFormat,
-      winrt::Windows::Graphics::DirectX::DirectXAlphaMode alphaMode) noexcept {
-    return winrt::make<Composition::CompositionDrawingSurface>(
-        CompositionGraphicsDevice().CreateDrawingSurface(surfaceSize, pixelFormat, alphaMode));
-  }
-
   winrt::Microsoft::ReactNative::Composition::ISpriteVisual CreateSpriteVisual() noexcept {
     return winrt::make<Composition::CompSpriteVisual>(m_compositor.CreateSpriteVisual());
   }
@@ -1018,9 +1007,11 @@ struct CompContext : winrt::implements<
     return winrt::make<Composition::CompBrush>(m_compositor.CreateColorBrush(color));
   }
 
-  winrt::Microsoft::ReactNative::Composition::ISurfaceBrush CreateSurfaceBrush(
-      const winrt::Microsoft::ReactNative::Composition::ICompositionDrawingSurface &surface) noexcept {
-    return winrt::make<Composition::CompSurfaceBrush>(m_compositor, surface);
+  winrt::Microsoft::ReactNative::Composition::IDrawingSurfaceBrush CreateDrawingSurfaceBrush(
+    winrt::Windows::Foundation::Size surfaceSize,
+    winrt::Windows::Graphics::DirectX::DirectXPixelFormat pixelFormat,
+    winrt::Windows::Graphics::DirectX::DirectXAlphaMode alphaMode) noexcept {
+    return winrt::make<Composition::CompDrawingSurfaceBrush>(m_compositor, CompositionGraphicsDevice().CreateDrawingSurface(surfaceSize, pixelFormat, alphaMode));
   }
 
   winrt::Microsoft::ReactNative::Composition::ICaretVisual CreateCaretVisual() noexcept {
@@ -1102,7 +1093,7 @@ winrt::Windows::UI::Composition::CompositionBrush CompositionContextHelper::Inne
 }
 
 winrt::Windows::UI::Composition::ICompositionSurface CompositionContextHelper::InnerSurface(
-    ICompositionDrawingSurface surface) noexcept {
+    IDrawingSurfaceBrush surface) noexcept {
   winrt::com_ptr<::Microsoft::ReactNative::Composition::ICompositionDrawingSurfaceInner> s;
   surface.as(s);
   return s ? s->Inner() : nullptr;

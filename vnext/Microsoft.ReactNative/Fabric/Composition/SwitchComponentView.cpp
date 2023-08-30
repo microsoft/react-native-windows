@@ -206,16 +206,14 @@ void SwitchComponentView::ensureDrawingSurface() noexcept {
     winrt::Windows::Foundation::Size surfaceSize = {
         m_layoutMetrics.frame.size.width * m_layoutMetrics.pointScaleFactor,
         m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor};
-    m_drawingSurface = m_compContext.CreateDrawingSurface(
+    m_drawingSurface = m_compContext.CreateDrawingSurfaceBrush(
         surfaceSize,
         winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
         winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
 
     Draw();
 
-    auto surfaceBrush = m_compContext.CreateSurfaceBrush(m_drawingSurface);
-
-    m_visual.Brush(surfaceBrush);
+    m_visual.Brush(m_drawingSurface);
   }
 }
 

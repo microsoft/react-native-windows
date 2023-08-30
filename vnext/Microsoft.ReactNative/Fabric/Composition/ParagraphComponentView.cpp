@@ -229,15 +229,13 @@ void ParagraphComponentView::updateVisualBrush() noexcept {
       winrt::Windows::Foundation::Size surfaceSize = {
           m_layoutMetrics.frame.size.width * m_layoutMetrics.pointScaleFactor,
           m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor};
-      m_drawingSurface = m_compContext.CreateDrawingSurface(
+      m_drawingSurface = m_compContext.CreateDrawingSurfaceBrush(
           surfaceSize,
           winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
           winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
     }
 
     DrawText();
-
-    auto surfaceBrush = m_compContext.CreateSurfaceBrush(m_drawingSurface);
 
     // The surfaceBrush's size is based on the size the text takes up, which maybe smaller than the total visual
     // So we need to align the brush within the visual to match the text alignment.
@@ -268,10 +266,13 @@ void ParagraphComponentView::updateVisualBrush() noexcept {
     }
     */
     // TODO Using brush alignment to align the text makes it blurry...
-    surfaceBrush.HorizontalAlignmentRatio(horizAlignment);
-    surfaceBrush.VerticalAlignmentRatio(0.f);
-    surfaceBrush.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::None);
-    m_visual.Brush(surfaceBrush);
+    if (m_drawingSurface)
+    {
+      m_drawingSurface.HorizontalAlignmentRatio(horizAlignment);
+      m_drawingSurface.VerticalAlignmentRatio(0.f);
+      m_drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::None);
+    }
+    m_visual.Brush(m_drawingSurface);
   }
 
   if (m_requireRedraw) {

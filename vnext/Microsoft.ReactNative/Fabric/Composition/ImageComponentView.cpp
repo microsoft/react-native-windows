@@ -218,34 +218,32 @@ void ImageComponentView::ensureDrawingSurface() noexcept {
       drawingSurfaceSize = {drawingSurfaceSize.Width + bmpGrowth, drawingSurfaceSize.Height + bmpGrowth};
     }
 
-    m_drawingSurface = m_compContext.CreateDrawingSurface(
+    m_drawingSurface = m_compContext.CreateDrawingSurfaceBrush(
         drawingSurfaceSize,
         winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
         winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
 
     DrawImage();
 
-    auto surfaceBrush = m_compContext.CreateSurfaceBrush(m_drawingSurface);
-
     switch (imageProps->resizeMode) {
       case facebook::react::ImageResizeMode::Stretch:
-        surfaceBrush.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::Fill);
+        m_drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::Fill);
         break;
       case facebook::react::ImageResizeMode::Cover:
-        surfaceBrush.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::UniformToFill);
+        m_drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::UniformToFill);
         break;
       case facebook::react::ImageResizeMode::Contain:
-        surfaceBrush.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::Uniform);
+        m_drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::Uniform);
         break;
       case facebook::react::ImageResizeMode::Repeat:
         // TODO - set AlignmentRatio back to 0.5f when switching between resizeModes once we no longer recreate the
         // drawing surface on prop changes.
-        surfaceBrush.HorizontalAlignmentRatio(0.0f);
-        surfaceBrush.VerticalAlignmentRatio(0.0f);
+        m_drawingSurface.HorizontalAlignmentRatio(0.0f);
+        m_drawingSurface.VerticalAlignmentRatio(0.0f);
         // Repeat and Center use the same Stretch logic, so we can fallthrough here.
         [[fallthrough]];
       case facebook::react::ImageResizeMode::Center: {
-        surfaceBrush.Stretch(
+        m_drawingSurface.Stretch(
             (height < frame.height && width < frame.width)
                 ? winrt::Microsoft::ReactNative::Composition::CompositionStretch::None
                 : winrt::Microsoft::ReactNative::Composition::CompositionStretch::Uniform);
@@ -255,7 +253,7 @@ void ImageComponentView::ensureDrawingSurface() noexcept {
         assert(false);
     }
 
-    m_visual.Brush(surfaceBrush);
+    m_visual.Brush(m_drawingSurface);
   }
 }
 

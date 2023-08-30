@@ -954,7 +954,7 @@ void WindowsTextInputComponentView::ensureDrawingSurface() noexcept {
   assert(m_context.UIDispatcher().HasThreadAccess());
 
   if (!m_drawingSurface) {
-    m_drawingSurface = m_compContext.CreateDrawingSurface(
+    m_drawingSurface = m_compContext.CreateDrawingSurfaceBrush(
         {static_cast<float>(m_imgWidth), static_cast<float>(m_imgHeight)},
         winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
         winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
@@ -968,11 +968,10 @@ void WindowsTextInputComponentView::ensureDrawingSurface() noexcept {
 
     DrawText();
 
-    auto surfaceBrush = m_compContext.CreateSurfaceBrush(m_drawingSurface);
-    surfaceBrush.HorizontalAlignmentRatio(0.f);
-    surfaceBrush.VerticalAlignmentRatio(0.f);
-    surfaceBrush.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::None);
-    m_visual.Brush(surfaceBrush);
+    m_drawingSurface.HorizontalAlignmentRatio(0.f);
+    m_drawingSurface.VerticalAlignmentRatio(0.f);
+    m_drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::None);
+    m_visual.Brush(m_drawingSurface);
   }
 }
 

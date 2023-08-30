@@ -58,16 +58,15 @@ void UnimplementedNativeViewComponentView::updateLayoutMetrics(
 
     winrt::Windows::Foundation::Size surfaceSize = {
         width * m_layoutMetrics.pointScaleFactor, height * m_layoutMetrics.pointScaleFactor};
-    auto drawingSurface = m_compContext.CreateDrawingSurface(
+    auto drawingSurface = m_compContext.CreateDrawingSurfaceBrush(
         surfaceSize,
         winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
         winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
 
-    auto surfaceBrush = m_compContext.CreateSurfaceBrush(drawingSurface);
-    surfaceBrush.HorizontalAlignmentRatio(0.f);
-    surfaceBrush.VerticalAlignmentRatio(0.f);
-    surfaceBrush.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::None);
-    m_visual.Brush(surfaceBrush);
+    drawingSurface.HorizontalAlignmentRatio(0.f);
+    drawingSurface.VerticalAlignmentRatio(0.f);
+    drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::None);
+    m_visual.Brush(drawingSurface);
     m_visual.Size(surfaceSize);
     m_visual.Offset({
         layoutMetrics.frame.origin.x * layoutMetrics.pointScaleFactor,
