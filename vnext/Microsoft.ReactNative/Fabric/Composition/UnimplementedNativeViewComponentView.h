@@ -44,7 +44,7 @@ struct UnimplementedNativeViewComponentView : CompositionBaseComponentView {
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag);
   std::shared_ptr<facebook::react::UnimplementedNativeViewProps const> m_props;
-  winrt::Microsoft::ReactNative::Composition::SpriteVisual m_visual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
 };
 
 } // namespace Microsoft::ReactNative

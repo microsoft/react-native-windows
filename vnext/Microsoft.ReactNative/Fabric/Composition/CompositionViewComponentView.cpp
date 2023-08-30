@@ -191,16 +191,16 @@ bool CompositionBaseComponentView::ScrollWheel(facebook::react::Point pt, int32_
 }
 
 std::array<
-    winrt::Microsoft::ReactNative::Composition::SpriteVisual,
+    winrt::Microsoft::ReactNative::Composition::ISpriteVisual,
     CompositionBaseComponentView::SpecialBorderLayerCount>
 CompositionBaseComponentView::FindSpecialBorderLayers() const noexcept {
-  std::array<winrt::Microsoft::ReactNative::Composition::SpriteVisual, SpecialBorderLayerCount> layers{
+  std::array<winrt::Microsoft::ReactNative::Composition::ISpriteVisual, SpecialBorderLayerCount> layers{
       nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr};
 
   if (m_numBorderVisuals) {
     for (uint8_t i = 0; i < m_numBorderVisuals; i++) {
       auto visual = Visual().GetAt(i);
-      layers[i] = visual.as<winrt::Microsoft::ReactNative::Composition::SpriteVisual>();
+      layers[i] = visual.as<winrt::Microsoft::ReactNative::Composition::ISpriteVisual>();
     }
   }
 
@@ -471,7 +471,7 @@ struct AutoDrawHelper {
 template <typename TShape>
 void SetBorderLayerPropertiesCommon(
     winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-    winrt::Microsoft::ReactNative::Composition::SpriteVisual &layer,
+    winrt::Microsoft::ReactNative::Composition::ISpriteVisual &layer,
     TShape &shape,
     winrt::com_ptr<Composition::ICompositionDrawingSurfaceInterop> &borderTexture,
     const D2D1_RECT_F &textureRect,
@@ -560,7 +560,7 @@ void SetBorderLayerPropertiesCommon(
 template <typename TShape>
 void SetBorderLayerProperties(
     winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-    winrt::Microsoft::ReactNative::Composition::SpriteVisual &layer,
+    winrt::Microsoft::ReactNative::Composition::ISpriteVisual &layer,
     TShape &shape,
     winrt::com_ptr<Composition::ICompositionDrawingSurfaceInterop> &borderTexture,
     const D2D1_RECT_F &textureRect,
@@ -625,7 +625,7 @@ template <typename TShape>
 void DrawAllBorderLayers(
     winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     std::array<
-        winrt::Microsoft::ReactNative::Composition::SpriteVisual,
+        winrt::Microsoft::ReactNative::Composition::ISpriteVisual,
         CompositionBaseComponentView::SpecialBorderLayerCount> &spBorderLayers,
     TShape &shape,
     const facebook::react::BorderWidths &borderWidths,
@@ -920,7 +920,7 @@ facebook::react::BorderMetrics resolveAndAlignBorderMetrics(
 }
 
 bool CompositionBaseComponentView::TryUpdateSpecialBorderLayers(
-    std::array<winrt::Microsoft::ReactNative::Composition::SpriteVisual, SpecialBorderLayerCount> &spBorderVisuals,
+    std::array<winrt::Microsoft::ReactNative::Composition::ISpriteVisual, SpecialBorderLayerCount> &spBorderVisuals,
     facebook::react::LayoutMetrics const &layoutMetrics,
     const facebook::react::ViewProps &viewProps) noexcept {
   auto borderMetrics = resolveAndAlignBorderMetrics(layoutMetrics, viewProps);
@@ -1026,7 +1026,7 @@ void CompositionBaseComponentView::UpdateSpecialBorderLayers(
   if (!TryUpdateSpecialBorderLayers(spBorderLayers, layoutMetrics, viewProps)) {
     for (auto &spBorderLayer : spBorderLayers) {
       if (spBorderLayer) {
-        spBorderLayer.as<winrt::Microsoft::ReactNative::Composition::SpriteVisual>().Brush(nullptr);
+        spBorderLayer.as<winrt::Microsoft::ReactNative::Composition::ISpriteVisual>().Brush(nullptr);
       }
     }
   }
