@@ -1,0 +1,10 @@
+{
+    "Enabled": false,
+    "Tools": {
+        "CredScan": {
+            "Inputs": {
+                "suppressionsFile": "$(Build.SourcesDirectory)/.ado/config/CredScanSuppressions.json"
+            }
+        }
+    }
+}
