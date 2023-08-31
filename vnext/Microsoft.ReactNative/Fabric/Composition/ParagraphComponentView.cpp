@@ -266,8 +266,7 @@ void ParagraphComponentView::updateVisualBrush() noexcept {
     }
     */
     // TODO Using brush alignment to align the text makes it blurry...
-    if (m_drawingSurface)
-    {
+    if (m_drawingSurface) {
       m_drawingSurface.HorizontalAlignmentRatio(horizAlignment);
       m_drawingSurface.VerticalAlignmentRatio(0.f);
       m_drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::None);
