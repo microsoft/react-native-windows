@@ -2,6 +2,42 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 31 Aug 2023 05:13:19 GMT",
+      "version": "0.0.0-canary.700",
+      "tag": "react-native-windows_v0.0.0-canary.700",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "003dc5b1abbcae56460c405826f944a6c925ff73",
+            "comment": "[Fabric] Remove runtime classes in CompositionSwitcher"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 30 Aug 2023 05:12:56 GMT",
+      "version": "0.0.0-canary.699",
+      "tag": "react-native-windows_v0.0.0-canary.699",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "97a386c3f91e08abe948136ea9b0dab2321277b3",
+            "comment": "Fix bug when blur command received on node without XamlRoot"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3e17aa8438a47080145fb631b43a07fbee52e28c",
+            "comment": "fix fabric textinput crashing on minimized"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 29 Aug 2023 05:13:36 GMT",
       "version": "0.0.0-canary.698",
       "tag": "react-native-windows_v0.0.0-canary.698",

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix bug when blur command received on node without XamlRoot",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}

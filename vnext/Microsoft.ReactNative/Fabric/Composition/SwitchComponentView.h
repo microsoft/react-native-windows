@@ -55,7 +55,7 @@ struct SwitchComponentView : CompositionBaseComponentView {
   void ensureDrawingSurface() noexcept;
 
   facebook::react::Size m_contentSize;
-  winrt::Microsoft::ReactNative::Composition::SpriteVisual m_visual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
   winrt::Microsoft::ReactNative::ReactContext m_context;
   facebook::react::SharedViewProps m_props;
   winrt::Microsoft::ReactNative::Composition::ICompositionDrawingSurface m_drawingSurface;

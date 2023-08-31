@@ -50,8 +50,8 @@ struct ActivityIndicatorComponentView : CompositionBaseComponentView {
 
   void ensureVisual() noexcept;
 
-  winrt::Microsoft::ReactNative::Composition::SpriteVisual m_visual{nullptr};
-  winrt::Microsoft::ReactNative::Composition::ActivityVisual m_ActivityIndicatorVisual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::IActivityVisual m_ActivityIndicatorVisual{nullptr};
   winrt::Microsoft::ReactNative::ReactContext m_context;
   facebook::react::SharedViewProps m_props;
 };
