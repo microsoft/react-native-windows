@@ -101,7 +101,7 @@ struct DevSettings {
   bool enableDefaultCrashHandler{false};
 
   // Transitory. Used to indicate whether or not to load networking types in the default Cxx module registry.
-  bool omitNetworkingCxxModules { false };
+  bool omitNetworkingCxxModules{false};
 };
 
 } // namespace react

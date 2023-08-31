@@ -393,12 +393,12 @@ void ReactInstanceWin::LoadModules(
       L"Timing", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::Timing>());
 #endif
 
-  registerTurboModule(::Microsoft::React::GetHttpTurboModuleName(), ::Microsoft::React::GetHttpModuleProvider());
-
   registerTurboModule(
       ::Microsoft::React::GetWebSocketTurboModuleName(), ::Microsoft::React::GetWebSocketModuleProvider());
 
   if (!Microsoft::React::GetRuntimeOptionBool("Blob.DisableModule")) {
+    registerTurboModule(::Microsoft::React::GetHttpTurboModuleName(), ::Microsoft::React::GetHttpModuleProvider());
+
     registerTurboModule(::Microsoft::React::GetBlobTurboModuleName(), ::Microsoft::React::GetBlobModuleProvider());
 
     registerTurboModule(

@@ -542,22 +542,18 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
   if (!m_devSettings->omitNetworkingCxxModules) {
     modules.push_back(std::make_unique<CxxNativeModule>(
         m_innerInstance,
-        Microsoft::React::GetHttpModuleName(),
-        [nativeQueue, transitionalProps]() -> std::unique_ptr<xplat::module::CxxModule> {
-          return Microsoft::React::CreateHttpModule(transitionalProps);
-        },
-        nativeQueue));
-
-    modules.push_back(std::make_unique<CxxNativeModule>(
-        m_innerInstance,
         Microsoft::React::GetWebSocketModuleName(),
-        [nativeQueue, transitionalProps]() -> std::unique_ptr<xplat::module::CxxModule> {
-          return Microsoft::React::CreateWebSocketModule(transitionalProps);
-        },
+        [transitionalProps]() { return Microsoft::React::CreateWebSocketModule(transitionalProps); },
         nativeQueue));
 
     // Use in case the host app provides its a non-Blob-compatilbe HTTP module.
     if (!Microsoft::React::GetRuntimeOptionBool("Blob.DisableModule")) {
+      modules.push_back(std::make_unique<CxxNativeModule>(
+          m_innerInstance,
+          Microsoft::React::GetHttpModuleName(),
+          [transitionalProps]() { return Microsoft::React::CreateHttpModule(transitionalProps); },
+          nativeQueue));
+
       modules.push_back(std::make_unique<CxxNativeModule>(
           m_innerInstance,
           Microsoft::React::GetBlobModuleName(),
