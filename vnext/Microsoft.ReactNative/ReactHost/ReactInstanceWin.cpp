@@ -553,6 +553,9 @@ void ReactInstanceWin::Initialize() noexcept {
             // We need to keep the instance wrapper alive as its destruction shuts down the native queue.
             m_options.TurboModuleProvider->SetReactContext(
                 winrt::make<implementation::ReactContext>(Mso::Copy(m_reactContext)));
+            auto omitNetCxxPropName = ReactPropertyBagHelper::GetName(nullptr, L"OmitNetworkingCxxModules");
+            auto omitNetCxxPropValue = m_options.Properties.Get(omitNetCxxPropName);
+            devSettings->omitNetworkingCxxModules = winrt::unbox_value_or(omitNetCxxPropValue, false);
             auto bundleRootPath = devSettings->bundleRootPath;
             auto instanceWrapper = facebook::react::CreateReactInstance(
                 std::shared_ptr<facebook::react::Instance>(strongThis->m_instance.Load()),
