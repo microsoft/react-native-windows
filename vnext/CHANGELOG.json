@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 31 Aug 2023 05:13:19 GMT",
+      "version": "0.0.0-canary.700",
+      "tag": "react-native-windows_v0.0.0-canary.700",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "003dc5b1abbcae56460c405826f944a6c925ff73",
+            "comment": "[Fabric] Remove runtime classes in CompositionSwitcher"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 30 Aug 2023 05:12:56 GMT",
       "version": "0.0.0-canary.699",
       "tag": "react-native-windows_v0.0.0-canary.699",
