@@ -138,19 +138,22 @@
 <ol>
 <li>Make sure you have VS Code and the React Native Tools extension installed</li>
 <li>Open your project's root folder in VS Code</li>
-<li>Click on the <em>Run and Debug</em> button in the sidebar or press <code>Ctrl+Shift+D</code></li>
-<li>Click on the drop-down at the top of the sidebar and select <em>React Native...</em></li>
+<li>Click on <em>Run</em> in VS Code's menu bar and select <em>Add Configuration...</em> then <em>React Native</em></li>
 </ol>
 <blockquote>
-<p>If there's no drop-down, click on <em>Show all automatic debug configurations</em> then select <em>React Native...</em> from the drop-down that appears.</p>
+<p>If you don't see <em>React Native</em>, try again without a code file opened in the editor.</p>
 </blockquote>
-<ol start="5">
+<ol start="4">
 <li><p><strong>Option A:</strong> Let VS Code launch everything and start debugging</p>
 <ol>
-<li>Click on the ⚙️ to the right of <em>Debug Windows</em></li>
-<li>A new configuration should appear in your <code>launch.json</code> file. Rename it if you want but it should look like:</li>
+<li>Depending on whether or not you already have a <code>launch.json</code> file, the drop-down will either:
+<ol>
+<li>Provide a list of debug configurations. Check the box for <em>Debug Windows</em> and click <em>OK</em>. OR</li>
+<li>Guide you through a series of prompts. Select <em>Debug application</em>, <em>Windows</em>, <em>Classic application</em>.</li>
+</ol></li>
+<li>A new configuration should appear in your <code>launch.json</code> file. Rename it if you want but it should look like this:</li>
 </ol>
-<pre><code class="hljs css language-json"><span class="token punctuation">{</span><br />    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Debug Windows"</span><span class="token punctuation">,</span><br />    <span class="token property">"cwd"</span><span class="token operator">:</span> <span class="token string">"${workspaceFolder}"</span><span class="token punctuation">,</span><br />    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"reactnative"</span><span class="token punctuation">,</span><br />    <span class="token property">"request"</span><span class="token operator">:</span> <span class="token string">"launch"</span><span class="token punctuation">,</span><br />    <span class="token property">"platform"</span><span class="token operator">:</span> <span class="token string">"windows"</span><span class="token punctuation">,</span><br />    <span class="token property">"isDynamic"</span><span class="token operator">:</span> <span class="token boolean">true</span><br /><span class="token punctuation">}</span><br /></code></pre>
+<pre><code class="hljs css language-json"><span class="token punctuation">{</span><br />    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Debug Windows"</span><span class="token punctuation">,</span><br />    <span class="token property">"cwd"</span><span class="token operator">:</span> <span class="token string">"${workspaceFolder}"</span><span class="token punctuation">,</span><br />    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"reactnative"</span><span class="token punctuation">,</span><br />    <span class="token property">"request"</span><span class="token operator">:</span> <span class="token string">"launch"</span><span class="token punctuation">,</span><br />    <span class="token property">"platform"</span><span class="token operator">:</span> <span class="token string">"windows"</span><br /><span class="token punctuation">}</span><br /></code></pre>
 <ol start="3">
 <li>Make sure that Metro, your native app, and/or any browser Developer Tools are <strong>not</strong> already running</li>
 <li>Make sure the new config is selected at the top of the <em>Run and Debug</em> sidebar</li>
@@ -161,21 +164,23 @@
 </blockquote></li>
 <li><p><strong>Option B:</strong> Attach VS Code to Metro that's already running</p>
 <ol>
-<li>Click on the ⚙️ to the right of <em>Attach to packager</em></li>
-<li>A new configuration should appear in your <code>launch.json</code> file. Rename it if you want but it should look like:</li>
+<li>Depending on whether or not you already have a <code>launch.json</code> file, the drop-down will either:
+<ol>
+<li>Provide a list of debug configurations. Check the box for <em>Attach to packager</em> and click <em>OK</em>. OR</li>
+<li>Guide you through a series of prompts. Select <em>Attach to application</em>, <em>Classic application</em>, <code>localhost</code>, <code>8081</code>.</li>
+</ol></li>
+<li>A new configuration should appear in your <code>launch.json</code> file. Rename it if you want but it should look like this:</li>
 </ol>
-<pre><code class="hljs css language-json"><span class="token punctuation">{</span><br />    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Attach to packager"</span><span class="token punctuation">,</span><br />    <span class="token property">"cwd"</span><span class="token operator">:</span> <span class="token string">"${workspaceFolder}"</span><span class="token punctuation">,</span><br />    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"reactnative"</span><span class="token punctuation">,</span><br />    <span class="token property">"request"</span><span class="token operator">:</span> <span class="token string">"attach"</span><span class="token punctuation">,</span><br />    <span class="token property">"isDynamic"</span><span class="token operator">:</span> <span class="token boolean">true</span><br /><span class="token punctuation">}</span><br /></code></pre>
+<pre><code class="hljs css language-json"><span class="token punctuation">{</span><br />    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Attach to packager"</span><span class="token punctuation">,</span><br />    <span class="token property">"cwd"</span><span class="token operator">:</span> <span class="token string">"${workspaceFolder}"</span><span class="token punctuation">,</span><br />    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"reactnative"</span><span class="token punctuation">,</span><br />    <span class="token property">"request"</span><span class="token operator">:</span> <span class="token string">"attach"</span><br /><span class="token punctuation">}</span><br /></code></pre>
 <ol start="3">
 <li>Make sure that only Metro is already running (i.e. <code>npx react-native start</code>)</li>
 <li>Make sure the new config is selected at the top of the <em>Run and Debug</em> sidebar</li>
 <li>Click on the ▶️ button or press <code>F5</code> in VS Code</li>
-<li>Confirm the address of the Metro server (default: <code>localhost</code>)</li>
-<li>Confirm the port of the Metro server (default: <code>8081</code>)</li>
 </ol>
 <blockquote>
 <p>Watch VS Code's <em>Debug Console</em> output for a successful debugger connection.</p>
 </blockquote>
-<ol start="8">
+<ol start="6">
 <li>Manually launch your native app</li>
 </ol></li>
 </ol>
@@ -306,38 +311,33 @@
 </span></div></div><div id="tab-group-74-content-77" class="tab-pane" data-group="group_74" tabindex="-1"><div><span><h4><a class="anchor" aria-hidden="true" id="using-visual-studio-code"></a><a href="#using-visual-studio-code" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Using Visual Studio Code</h4>
 <p>You can direct debug RNW apps using the Hermes JS engine with <a href="http://code.visualstudio.com/">VS Code</a>'s built-in Node.js debugger.</p>
 <ol>
-<li>Make sure you have VS Code installed</li>
-<li>Open your project's root folder in VS Code</li>
-<li>Click on the <em>Run and Debug</em> button in the sidebar or press <code>Ctrl+Shift+D</code></li>
-<li>Click on the drop-down at the top of the sidebar and select <em>Add Configuration...</em></li>
-</ol>
-<blockquote>
-<p>If there's no drop-down, click on <em>Show all automatic debug configurations</em> then select <em>Add Configuration...</em> from the drop-down that appears.</p>
-</blockquote>
-<ol start="5">
+<li><p>Make sure you have VS Code installed</p></li>
+<li><p>Open your project's root folder in VS Code</p></li>
+<li><p>Click on <em>Run</em> in VS Code's menu bar and select <em>Add Configuration...</em></p></li>
 <li><p><strong>Option A:</strong> Let VS Code launch everything and start debugging</p>
 <blockquote>
 <p><strong>Important:</strong> This scenario isn't supported with the built-in automatic debug configurations in VS Code. If you want VS Code to launch everything for you, you'll need to install the React Native Tools extension.</p>
 </blockquote></li>
 <li><p><strong>Option B:</strong> Attach VS Code to Metro that's already running</p>
 <ol>
-<li>Select <em>Node.js: Attach</em></li>
-<li>A new configuration should appear in your <code>launch.json</code> file. Rename it if you want but be sure to change the <code>port</code> to <code>8081</code>, i.e.:</li>
-</ol>
-<pre><code class="hljs css language-json"><span class="token punctuation">{</span><br />    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Attach"</span><span class="token punctuation">,</span><br />    <span class="token property">"port"</span><span class="token operator">:</span> <span class="token number">8081</span><span class="token punctuation">,</span><br />    <span class="token property">"request"</span><span class="token operator">:</span> <span class="token string">"attach"</span><span class="token punctuation">,</span><br />    <span class="token property">"skipFiles"</span><span class="token operator">:</span> <span class="token punctuation">[</span><br />        <span class="token string">"&lt;node_internals>/**"</span><br />    <span class="token punctuation">]</span><span class="token punctuation">,</span><br />    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"node"</span><br /><span class="token punctuation">}</span><br /></code></pre>
-<ol start="3">
-<li>Make sure that Metro is already running (i.e. <code>npx react-native start</code>)</li>
-<li>Make sure the new config is selected at the top of the <em>Run and Debug</em> sidebar</li>
-<li>Click on the ▶️ button or press <code>F5</code> in VS Code</li>
-<li>Confirm the address of the Metro server (default: <code>localhost</code>)</li>
-<li>Confirm the port of the Metro server (default: <code>8081</code>)</li>
+<li>Depending on whether or not you already have a <code>launch.json</code> file, the drop-down will let you select <em>Node.js: Attach</em> (if it's available) or just <em>Node.js</em></li>
 </ol>
 <blockquote>
-<p>Watch VS Code's <em>Debug Console</em> output for a successful debugger connection.</p>
+<p>If you don't see <em>Node.js</em>, try again without a code file opened in the editor.</p>
 </blockquote>
-<ol start="8">
-<li>Manually launch your native app (if it wasn't already running)</li>
-</ol></li>
+<ol start="2">
+<li>A new configuration should appear in your <code>launch.json</code> file. Rename it if you want but it should look like this:</li>
+</ol>
+<pre><code class="hljs css language-json"><span class="token punctuation">{</span><br />    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Attach"</span><span class="token punctuation">,</span><br />    <span class="token property">"port"</span><span class="token operator">:</span> <span class="token number">8081</span><span class="token punctuation">,</span><br />    <span class="token property">"request"</span><span class="token operator">:</span> <span class="token string">"attach"</span><span class="token punctuation">,</span><br />    <span class="token property">"skipFiles"</span><span class="token operator">:</span> <span class="token punctuation">[</span><br />        <span class="token string">"&lt;node_internals>/**"</span><br />    <span class="token punctuation">]</span><span class="token punctuation">,</span><br />    <span class="token property">"outFiles"</span><span class="token operator">:</span> <span class="token punctuation">[</span><br />        <span class="token string">"${workspaceFolder}/**/*"</span><br />    <span class="token punctuation">]</span><span class="token punctuation">,</span><br />    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"node"</span><br /><span class="token punctuation">}</span><br /></code></pre>
+<ol start="3">
+<li>Make sure that your native app and Metro is already running (i.e. <code>npx react-native run-windows</code>)</li>
+<li>Open the <em>Run and Debug</em> sidebar by clicking on the button in the sidebar or by pressing <code>Ctrl+Shift+D</code></li>
+<li>Make sure the new config is selected at the top of the <em>Run and Debug</em> sidebar</li>
+<li>Click on the ▶️ button or press <code>F5</code> in VS Code</li>
+</ol>
+<blockquote>
+<p>Watch the <em>Call Stack</em> panel in the sidebar for <em>Attach: Remote Process</em> to indicate a successful debugger connection. Note, it may take VS Code a minute to scan your source before breakpoints will work properly.</p>
+</blockquote></li>
 </ol>
 <p>Once everything is running, you should be able to debug your RNW application. To set breakpoints, simply do so in your app's JS source files directly in VS Code.</p>
 <blockquote>
@@ -348,46 +348,50 @@
 <ol>
 <li>Make sure you have VS Code and the React Native Tools extension installed</li>
 <li>Open your project's root folder in VS Code</li>
-<li>Click on the <em>Run and Debug</em> button in the sidebar or press <code>Ctrl+Shift+D</code></li>
-<li>Click on the drop-down at the top of the sidebar and select <em>React Native...</em></li>
+<li>Click on <em>Run</em> in VS Code's menu bar and select <em>Add Configuration...</em> then <em>React Native</em></li>
 </ol>
 <blockquote>
-<p>If there's no drop-down, click on <em>Show all automatic debug configurations</em> then select <em>React Native...</em> from the drop-down that appears.</p>
+<p>If you don't see <em>React Native</em>, try again without a code file opened in the editor.</p>
 </blockquote>
-<ol start="5">
-<li><p><strong>Option A:</strong> Let VS Code launch everything and start debugging</p>
+<ol start="4">
+<li><strong>Option A:</strong> Let VS Code launch everything and start debugging
 <ol>
-<li>Click on the ⚙️ to the right of <em>Debug Windows Hermes - Experimental</em></li>
-<li>A new configuration should appear in your <code>launch.json</code> file. Rename it if you want but it should look like:</li>
+<li>Depending on whether or not you already have a <code>launch.json</code> file, the drop-down will either:
+<ol>
+<li>Provide a list of debug configurations. Check the box for <em>Debug Windows Hermes -Experimental</em> and click <em>OK</em>. OR</li>
+<li>Guide you through a series of prompts. Select <em>Debug application</em>, <em>Windows</em>, <em>Application in direct mode(Hermes)</em>.</li>
+</ol></li>
+<li>A new configuration should appear in your <code>launch.json</code> file. Rename it if you want but it should look like this:</li>
 </ol>
-<pre><code class="hljs css language-json"><span class="token punctuation">{</span><br />    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Debug Windows Hermes - Experimental"</span><span class="token punctuation">,</span><br />    <span class="token property">"cwd"</span><span class="token operator">:</span> <span class="token string">"${workspaceFolder}"</span><span class="token punctuation">,</span><br />    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"reactnativedirect"</span><span class="token punctuation">,</span><br />    <span class="token property">"request"</span><span class="token operator">:</span> <span class="token string">"launch"</span><span class="token punctuation">,</span><br />    <span class="token property">"platform"</span><span class="token operator">:</span> <span class="token string">"windows"</span><span class="token punctuation">,</span><br />    <span class="token property">"isDynamic"</span><span class="token operator">:</span> <span class="token boolean">true</span><br /><span class="token punctuation">}</span><br /></code></pre>
+<pre><code class="hljs css language-json"><span class="token punctuation">{</span><br />    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Debug Windows Hermes - Experimental"</span><span class="token punctuation">,</span><br />    <span class="token property">"cwd"</span><span class="token operator">:</span> <span class="token string">"${workspaceFolder}"</span><span class="token punctuation">,</span><br />    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"reactnativedirect"</span><span class="token punctuation">,</span><br />    <span class="token property">"request"</span><span class="token operator">:</span> <span class="token string">"launch"</span><span class="token punctuation">,</span><br />    <span class="token property">"platform"</span><span class="token operator">:</span> <span class="token string">"windows"</span><br /><span class="token punctuation">}</span><br /></code></pre>
 <ol start="3">
 <li>Make sure that Metro and your native app are <strong>not</strong> already running</li>
+<li>Open the <em>Run and Debug</em> sidebar by clicking on the button in the sidebar or by pressing <code>Ctrl+Shift+D</code></li>
 <li>Make sure the new config is selected at the top of the <em>Run and Debug</em> sidebar</li>
 <li>Click on the ▶️ button or press <code>F5</code> in VS Code</li>
 </ol>
 <blockquote>
 <p>Watch VS Code's <em>Debug Console</em> output for a successful debugger connection. This can be very slow, but VS Code should automatically launch Metro, establish the debugger connection, then launch your native app to download the bundle.</p>
 </blockquote></li>
-<li><p><strong>Option B:</strong> Attach VS Code to Metro that's already running</p>
+<li><strong>Option B:</strong> Attach VS Code to Metro that's already running
 <ol>
-<li>Click on the ⚙️ to the right of <em>Attach to Hermes application - Experimental</em></li>
-<li>A new configuration should appear in your <code>launch.json</code> file. Rename it if you want but it should look like:</li>
+<li>Depending on whether or not you already have a <code>launch.json</code> file, the drop-down will either:
+<ol>
+<li>Provide a list of debug configurations. Check the box for <em>Attach to Hermes application</em> and click <em>OK</em>. OR</li>
+<li>Guide you through a series of prompts. Select <em>Attach to application</em>, <em>Application in direct mode(Hermes)</em>, <em>Hermes engine</em>, <code>localhost</code>, <code>8081</code>.</li>
+</ol></li>
+<li>A new configuration should appear in your <code>launch.json</code> file. Rename it if you want but it should look like this:</li>
 </ol>
-<pre><code class="hljs css language-json"><span class="token punctuation">{</span><br />    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Attach to Hermes application - Experimental"</span><span class="token punctuation">,</span><br />    <span class="token property">"cwd"</span><span class="token operator">:</span> <span class="token string">"${workspaceFolder}"</span><span class="token punctuation">,</span><br />    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"reactnativedirect"</span><span class="token punctuation">,</span><br />    <span class="token property">"request"</span><span class="token operator">:</span> <span class="token string">"attach"</span><span class="token punctuation">,</span><br />    <span class="token property">"isDynamic"</span><span class="token operator">:</span> <span class="token boolean">true</span><br /><span class="token punctuation">}</span><br /></code></pre>
+<pre><code class="hljs css language-json"><span class="token punctuation">{</span><br />    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Attach to Hermes application - Experimental"</span><span class="token punctuation">,</span><br />    <span class="token property">"cwd"</span><span class="token operator">:</span> <span class="token string">"${workspaceFolder}"</span><span class="token punctuation">,</span><br />    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"reactnativedirect"</span><span class="token punctuation">,</span><br />    <span class="token property">"request"</span><span class="token operator">:</span> <span class="token string">"attach"</span><br /><span class="token punctuation">}</span><br /></code></pre>
 <ol start="3">
-<li>Make sure that Metro is already running (i.e. <code>npx react-native start</code>)</li>
+<li>Make sure that your native app and Metro is already running (i.e. <code>npx react-native run-windows</code>)</li>
+<li>Open the <em>Run and Debug</em> sidebar by clicking on the button in the sidebar or by pressing <code>Ctrl+Shift+D</code></li>
 <li>Make sure the new config is selected at the top of the <em>Run and Debug</em> sidebar</li>
 <li>Click on the ▶️ button or press <code>F5</code> in VS Code</li>
-<li>Confirm the address of the Metro server (default: <code>localhost</code>)</li>
-<li>Confirm the port of the Metro server (default: <code>8081</code>)</li>
 </ol>
 <blockquote>
-<p>Watch VS Code's <em>Debug Console</em> output for a successful debugger connection.</p>
-</blockquote>
-<ol start="8">
-<li>Manually launch your native app (if it wasn't already running)</li>
-</ol></li>
+<p>Watch the <em>Call Stack</em> panel in the sidebar for <em>Attach: Remote Process</em> to indicate a successful debugger connection.</p>
+</blockquote></li>
 </ol>
 <p>Once everything is running, you should be able to debug your RNW application. To set breakpoints, simply do so in your app's JS source files directly in VS Code.</p>
 <blockquote>
