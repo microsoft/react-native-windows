@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Skip networking Cxx modules if turbo modules are requested (#12083)",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
