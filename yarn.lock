@@ -3182,9 +3182,9 @@
     "@types/node" "*"
 
 "@types/xml-parser@^1.2.29":
-  version "1.2.30"
-  resolved "https://registry.yarnpkg.com/@types/xml-parser/-/xml-parser-1.2.30.tgz#16792b77a8dd5514bd0533931259fca17d6d4ad9"
-  integrity sha512-QBCRpkCoGdtUgLzLHcA5E7Dg9fJNdhuZd6IshuPxmf3EbVqrslWVTHOIDEWGx//16FoMElpOXxIR3utIWsPoIA==
+  version "1.2.31"
+  resolved "https://registry.yarnpkg.com/@types/xml-parser/-/xml-parser-1.2.31.tgz#f106da62ad0b8ff87f135665ffebce0703e99017"
+  integrity sha512-i32QIaFQt67V3ckSDN5lByufDH9i29vMAKzHIeB7+si8qTIQk+XOTbM8QGK0MBd8juEAdY2NGjccBg6GwZvwTQ==
 
 "@types/xml2js@^0.4.8":
   version "0.4.11"
