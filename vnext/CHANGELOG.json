@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 01 Sep 2023 05:13:31 GMT",
+      "version": "0.0.0-canary.701",
+      "tag": "react-native-windows_v0.0.0-canary.701",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "7f99d6048a4c220da68733a010e472168a774c7b",
+            "comment": "Skip networking Cxx modules if UseWindowsAbi is set"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 31 Aug 2023 05:13:19 GMT",
       "version": "0.0.0-canary.700",
       "tag": "react-native-windows_v0.0.0-canary.700",
