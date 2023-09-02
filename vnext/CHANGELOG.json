@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 02 Sep 2023 04:52:24 GMT",
+      "tag": "react-native-windows_v0.71.36",
+      "version": "0.71.36",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "95cd4c91aab6d83e0bfcfbb2bee0310374d35911",
+            "comment": "Skip networking Cxx modules if turbo modules are requested (#12083)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 28 Aug 2023 15:14:30 GMT",
       "tag": "react-native-windows_v0.71.35",
       "version": "0.71.35",

@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 28 Aug 2023 15:14:30 GMT and should not be manually modified.
+This log was last generated on Sat, 02 Sep 2023 04:52:24 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.36
+
+Sat, 02 Sep 2023 04:52:24 GMT
+
+### Patches
+
+- Skip networking Cxx modules if turbo modules are requested (#12083) (julio.rocha@microsoft.com)
 
 ## 0.71.35
 
