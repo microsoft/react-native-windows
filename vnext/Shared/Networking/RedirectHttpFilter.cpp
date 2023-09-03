@@ -32,6 +32,8 @@ using winrt::Windows::Web::Http::HttpMethod;
 using winrt::Windows::Web::Http::HttpRequestMessage;
 using winrt::Windows::Web::Http::HttpResponseMessage;
 using winrt::Windows::Web::Http::HttpStatusCode;
+using winrt::Windows::Web::Http::Filters::HttpCacheReadBehavior;
+using winrt::Windows::Web::Http::Filters::HttpCacheWriteBehavior;
 using winrt::Windows::Web::Http::Filters::IHttpBaseProtocolFilter;
 using winrt::Windows::Web::Http::Filters::IHttpFilter;
 
@@ -50,10 +52,14 @@ RedirectHttpFilter::RedirectHttpFilter(
   if (auto baseFilter = m_innerFilter.try_as<IHttpBaseProtocolFilter>()) {
     baseFilter.AllowAutoRedirect(false);
     baseFilter.AllowUI(false);
+    baseFilter.CacheControl().ReadBehavior(HttpCacheReadBehavior::NoCache);
+    baseFilter.CacheControl().WriteBehavior(HttpCacheWriteBehavior::NoCache);
   }
   if (auto baseFilter = m_innerFilterWithNoCredentials.try_as<IHttpBaseProtocolFilter>()) {
     baseFilter.AllowAutoRedirect(false);
     baseFilter.AllowUI(false);
+    baseFilter.CacheControl().ReadBehavior(HttpCacheReadBehavior::NoCache);
+    baseFilter.CacheControl().WriteBehavior(HttpCacheWriteBehavior::NoCache);
   }
 }
 
