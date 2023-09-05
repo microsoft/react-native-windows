@@ -11,6 +11,7 @@
 #include <react/renderer/components/text/ParagraphState.h>
 #include <unicode.h>
 #include <winrt/Microsoft.ReactNative.Composition.h>
+#include "Composition/AutoDraw.h"
 #include "CompositionDynamicAutomationProvider.h"
 #include "CompositionHelpers.h"
 
@@ -289,189 +290,181 @@ void ParagraphComponentView::DrawText() noexcept {
     return;
   }
 
-  // Begin our update of the surface pixels. If this is our first update, we are required
-  // to specify the entire surface, which nullptr is shorthand for (but, as it works out,
-  // any time we make an update we touch the entire surface, so we always pass nullptr).
-  winrt::com_ptr<ID2D1DeviceContext> d2dDeviceContext;
   POINT offset;
+  {
+    ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(m_drawingSurface, &offset);
+    if (auto d2dDeviceContext = autoDraw.GetRenderTarget()) {
+      d2dDeviceContext->Clear(
+          m_props->backgroundColor ? m_props->backgroundColor.AsD2DColor() : D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
+      assert(d2dDeviceContext->GetUnitMode() == D2D1_UNIT_MODE_DIPS);
+      const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
+      float oldDpiX, oldDpiY;
+      d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
+      d2dDeviceContext->SetDpi(dpi, dpi);
 
-  winrt::com_ptr<Composition::ICompositionDrawingSurfaceInterop> drawingSurfaceInterop;
-  m_drawingSurface.as(drawingSurfaceInterop);
+      float offsetX = static_cast<float>(offset.x / m_layoutMetrics.pointScaleFactor);
+      float offsetY = static_cast<float>(offset.y / m_layoutMetrics.pointScaleFactor);
 
-  if (CheckForDeviceRemoved(drawingSurfaceInterop->BeginDraw(d2dDeviceContext.put(), &offset))) {
-    d2dDeviceContext->Clear(
-        m_props->backgroundColor ? m_props->backgroundColor.AsD2DColor() : D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
-    assert(d2dDeviceContext->GetUnitMode() == D2D1_UNIT_MODE_DIPS);
-    const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
-    float oldDpiX, oldDpiY;
-    d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
-    d2dDeviceContext->SetDpi(dpi, dpi);
+      const auto &paragraphProps = *std::static_pointer_cast<const facebook::react::ParagraphProps>(m_props);
 
-    float offsetX = static_cast<float>(offset.x / m_layoutMetrics.pointScaleFactor);
-    float offsetY = static_cast<float>(offset.y / m_layoutMetrics.pointScaleFactor);
-
-    const auto &paragraphProps = *std::static_pointer_cast<const facebook::react::ParagraphProps>(m_props);
-
-    // Create a solid color brush for the text. A more sophisticated application might want
-    // to cache and reuse a brush across all text elements instead, taking care to recreate
-    // it in the event of device removed.
-    winrt::com_ptr<ID2D1SolidColorBrush> brush;
-    if (paragraphProps.textAttributes.foregroundColor) {
-      auto color = paragraphProps.textAttributes.foregroundColor.AsD2DColor();
-      winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(color, brush.put()));
-    } else {
-      winrt::check_hresult(
-          d2dDeviceContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Black, 1.0f), brush.put()));
-    }
-
-    if (paragraphProps.textAttributes.textDecorationLineType) {
-      DWRITE_TEXT_RANGE range = {0, std::numeric_limits<uint32_t>::max()};
-      if (*(paragraphProps.textAttributes.textDecorationLineType) ==
-              facebook::react::TextDecorationLineType::Underline ||
-          *(paragraphProps.textAttributes.textDecorationLineType) ==
-              facebook::react::TextDecorationLineType::UnderlineStrikethrough) {
-        m_textLayout->SetUnderline(true, range);
+      // Create a solid color brush for the text. A more sophisticated application might want
+      // to cache and reuse a brush across all text elements instead, taking care to recreate
+      // it in the event of device removed.
+      winrt::com_ptr<ID2D1SolidColorBrush> brush;
+      if (paragraphProps.textAttributes.foregroundColor) {
+        auto color = paragraphProps.textAttributes.foregroundColor.AsD2DColor();
+        winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(color, brush.put()));
       } else {
-        m_textLayout->SetUnderline(false, range);
+        winrt::check_hresult(
+            d2dDeviceContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Black, 1.0f), brush.put()));
       }
-    }
 
-    if (paragraphProps.textAttributes.textDecorationLineType) {
-      DWRITE_TEXT_RANGE range = {0, std::numeric_limits<uint32_t>::max()};
-      if (*(paragraphProps.textAttributes.textDecorationLineType) ==
-              facebook::react::TextDecorationLineType::Strikethrough ||
-          *(paragraphProps.textAttributes.textDecorationLineType) ==
-              facebook::react::TextDecorationLineType::UnderlineStrikethrough) {
-        m_textLayout->SetStrikethrough(true, range);
-      } else {
-        m_textLayout->SetStrikethrough(false, range);
-      }
-    }
-
-    if (!isnan(paragraphProps.opacity)) {
-      m_visual.Opacity(paragraphProps.opacity);
-    }
-
-    // Create color effects for individual text fragments.
-    unsigned int position = 0;
-    unsigned int length = 0;
-    for (auto fragment : m_attributedStringBox.getValue().getFragments()) {
-      length = static_cast<UINT32>(fragment.string.length());
-      DWRITE_TEXT_RANGE range = {position, length};
-      if (fragment.textAttributes.foregroundColor &&
-              (fragment.textAttributes.foregroundColor != paragraphProps.textAttributes.foregroundColor) ||
-          !isnan(fragment.textAttributes.opacity)) {
-        winrt::com_ptr<ID2D1SolidColorBrush> fragmentBrush;
-        if (fragment.textAttributes.foregroundColor) {
-          auto color = fragment.textAttributes.foregroundColor.AsD2DColor();
-          winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(color, fragmentBrush.put()));
+      if (paragraphProps.textAttributes.textDecorationLineType) {
+        DWRITE_TEXT_RANGE range = {0, std::numeric_limits<uint32_t>::max()};
+        if (*(paragraphProps.textAttributes.textDecorationLineType) ==
+                facebook::react::TextDecorationLineType::Underline ||
+            *(paragraphProps.textAttributes.textDecorationLineType) ==
+                facebook::react::TextDecorationLineType::UnderlineStrikethrough) {
+          m_textLayout->SetUnderline(true, range);
         } else {
-          winrt::check_hresult(
-              d2dDeviceContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Black, 1.0f), fragmentBrush.put()));
-        }
-
-        if (fragment.textAttributes.textDecorationLineType) {
-          if (*(fragment.textAttributes.textDecorationLineType) == facebook::react::TextDecorationLineType::Underline ||
-              *(fragment.textAttributes.textDecorationLineType) ==
-                  facebook::react::TextDecorationLineType::UnderlineStrikethrough) {
-            m_textLayout->SetUnderline(true, range);
-          } else {
-            m_textLayout->SetUnderline(false, range);
-          }
-        }
-
-        if (fragment.textAttributes.textDecorationLineType) {
-          if (*(fragment.textAttributes.textDecorationLineType) ==
-                  facebook::react::TextDecorationLineType::Strikethrough ||
-              *(fragment.textAttributes.textDecorationLineType) ==
-                  facebook::react::TextDecorationLineType::UnderlineStrikethrough) {
-            m_textLayout->SetStrikethrough(true, range);
-          } else {
-            m_textLayout->SetStrikethrough(false, range);
-          }
-        }
-
-        if (!isnan(fragment.textAttributes.opacity)) {
-          fragmentBrush->SetOpacity(fragment.textAttributes.opacity);
-        }
-        m_textLayout->SetDrawingEffect(fragmentBrush.get(), range);
-
-        // DWrite doesn't handle background highlight colors, so we manually draw the background color for ranges
-        if (facebook::react::isColorMeaningful(fragment.textAttributes.backgroundColor)) {
-          UINT32 actualHitTestCount = 0;
-          if (range.length > 0) {
-            m_textLayout->HitTestTextRange(
-                range.startPosition,
-                range.length,
-                0, // x
-                0, // y
-                NULL,
-                0, // metrics count
-                &actualHitTestCount);
-          }
-
-          // Allocate enough room to return all hit-test metrics.
-          std::vector<DWRITE_HIT_TEST_METRICS> hitTestMetrics(actualHitTestCount);
-          if (range.length > 0) {
-            m_textLayout->HitTestTextRange(
-                range.startPosition,
-                range.length,
-                0, // x
-                0, // y
-                &hitTestMetrics[0],
-                static_cast<UINT32>(hitTestMetrics.size()),
-                &actualHitTestCount);
-          }
-
-          // Draw the selection ranges behind the text.
-          if (actualHitTestCount > 0) {
-            // Note that an ideal layout will return fractional values,
-            // so you may see slivers between the selection ranges due
-            // to the per-primitive anti-aliasing of the edges unless
-            // it is disabled (better for performance anyway).
-            auto oldAliasMode = d2dDeviceContext->GetAntialiasMode();
-            d2dDeviceContext->SetAntialiasMode(D2D1_ANTIALIAS_MODE_ALIASED);
-
-            winrt::com_ptr<ID2D1SolidColorBrush> textHighlightBrush;
-            winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(
-                fragment.textAttributes.backgroundColor.AsD2DColor(), textHighlightBrush.put()));
-
-            for (size_t i = 0; i < actualHitTestCount; ++i) {
-              const DWRITE_HIT_TEST_METRICS &htm = hitTestMetrics[i];
-
-              const D2D1_RECT_F rect = {
-                  std::round(htm.left + offsetX),
-                  std::round(htm.top + offsetY),
-                  std::round(htm.left + htm.width + offsetX),
-                  std::round(htm.top + htm.height + offsetY)};
-
-              d2dDeviceContext->FillRectangle(rect, textHighlightBrush.get());
-            }
-            d2dDeviceContext->SetAntialiasMode(oldAliasMode);
-          }
+          m_textLayout->SetUnderline(false, range);
         }
       }
 
-      position += length;
+      if (paragraphProps.textAttributes.textDecorationLineType) {
+        DWRITE_TEXT_RANGE range = {0, std::numeric_limits<uint32_t>::max()};
+        if (*(paragraphProps.textAttributes.textDecorationLineType) ==
+                facebook::react::TextDecorationLineType::Strikethrough ||
+            *(paragraphProps.textAttributes.textDecorationLineType) ==
+                facebook::react::TextDecorationLineType::UnderlineStrikethrough) {
+          m_textLayout->SetStrikethrough(true, range);
+        } else {
+          m_textLayout->SetStrikethrough(false, range);
+        }
+      }
+
+      if (!isnan(paragraphProps.opacity)) {
+        m_visual.Opacity(paragraphProps.opacity);
+      }
+
+      // Create color effects for individual text fragments.
+      unsigned int position = 0;
+      unsigned int length = 0;
+      for (auto fragment : m_attributedStringBox.getValue().getFragments()) {
+        length = static_cast<UINT32>(fragment.string.length());
+        DWRITE_TEXT_RANGE range = {position, length};
+        if (fragment.textAttributes.foregroundColor &&
+                (fragment.textAttributes.foregroundColor != paragraphProps.textAttributes.foregroundColor) ||
+            !isnan(fragment.textAttributes.opacity)) {
+          winrt::com_ptr<ID2D1SolidColorBrush> fragmentBrush;
+          if (fragment.textAttributes.foregroundColor) {
+            auto color = fragment.textAttributes.foregroundColor.AsD2DColor();
+            winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(color, fragmentBrush.put()));
+          } else {
+            winrt::check_hresult(
+                d2dDeviceContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Black, 1.0f), fragmentBrush.put()));
+          }
+
+          if (fragment.textAttributes.textDecorationLineType) {
+            if (*(fragment.textAttributes.textDecorationLineType) ==
+                    facebook::react::TextDecorationLineType::Underline ||
+                *(fragment.textAttributes.textDecorationLineType) ==
+                    facebook::react::TextDecorationLineType::UnderlineStrikethrough) {
+              m_textLayout->SetUnderline(true, range);
+            } else {
+              m_textLayout->SetUnderline(false, range);
+            }
+          }
+
+          if (fragment.textAttributes.textDecorationLineType) {
+            if (*(fragment.textAttributes.textDecorationLineType) ==
+                    facebook::react::TextDecorationLineType::Strikethrough ||
+                *(fragment.textAttributes.textDecorationLineType) ==
+                    facebook::react::TextDecorationLineType::UnderlineStrikethrough) {
+              m_textLayout->SetStrikethrough(true, range);
+            } else {
+              m_textLayout->SetStrikethrough(false, range);
+            }
+          }
+
+          if (!isnan(fragment.textAttributes.opacity)) {
+            fragmentBrush->SetOpacity(fragment.textAttributes.opacity);
+          }
+          m_textLayout->SetDrawingEffect(fragmentBrush.get(), range);
+
+          // DWrite doesn't handle background highlight colors, so we manually draw the background color for ranges
+          if (facebook::react::isColorMeaningful(fragment.textAttributes.backgroundColor)) {
+            UINT32 actualHitTestCount = 0;
+            if (range.length > 0) {
+              m_textLayout->HitTestTextRange(
+                  range.startPosition,
+                  range.length,
+                  0, // x
+                  0, // y
+                  NULL,
+                  0, // metrics count
+                  &actualHitTestCount);
+            }
+
+            // Allocate enough room to return all hit-test metrics.
+            std::vector<DWRITE_HIT_TEST_METRICS> hitTestMetrics(actualHitTestCount);
+            if (range.length > 0) {
+              m_textLayout->HitTestTextRange(
+                  range.startPosition,
+                  range.length,
+                  0, // x
+                  0, // y
+                  &hitTestMetrics[0],
+                  static_cast<UINT32>(hitTestMetrics.size()),
+                  &actualHitTestCount);
+            }
+
+            // Draw the selection ranges behind the text.
+            if (actualHitTestCount > 0) {
+              // Note that an ideal layout will return fractional values,
+              // so you may see slivers between the selection ranges due
+              // to the per-primitive anti-aliasing of the edges unless
+              // it is disabled (better for performance anyway).
+              auto oldAliasMode = d2dDeviceContext->GetAntialiasMode();
+              d2dDeviceContext->SetAntialiasMode(D2D1_ANTIALIAS_MODE_ALIASED);
+
+              winrt::com_ptr<ID2D1SolidColorBrush> textHighlightBrush;
+              winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(
+                  fragment.textAttributes.backgroundColor.AsD2DColor(), textHighlightBrush.put()));
+
+              for (size_t i = 0; i < actualHitTestCount; ++i) {
+                const DWRITE_HIT_TEST_METRICS &htm = hitTestMetrics[i];
+
+                const D2D1_RECT_F rect = {
+                    std::round(htm.left + offsetX),
+                    std::round(htm.top + offsetY),
+                    std::round(htm.left + htm.width + offsetX),
+                    std::round(htm.top + htm.height + offsetY)};
+
+                d2dDeviceContext->FillRectangle(rect, textHighlightBrush.get());
+              }
+              d2dDeviceContext->SetAntialiasMode(oldAliasMode);
+            }
+          }
+        }
+
+        position += length;
+      }
+
+      // Draw the line of text at the specified offset, which corresponds to the top-left
+      // corner of our drawing surface. Notice we don't call BeginDraw on the D2D device
+      // context; this has already been done for us by the composition API.
+      d2dDeviceContext->DrawTextLayout(
+          D2D1::Point2F(
+              static_cast<FLOAT>((offset.x + m_layoutMetrics.contentInsets.left) / m_layoutMetrics.pointScaleFactor),
+              static_cast<FLOAT>((offset.y + m_layoutMetrics.contentInsets.top) / m_layoutMetrics.pointScaleFactor)),
+          m_textLayout.get(),
+          brush.get(),
+          D2D1_DRAW_TEXT_OPTIONS_ENABLE_COLOR_FONT);
+
+      // restore dpi to old state
+      d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
     }
-
-    // Draw the line of text at the specified offset, which corresponds to the top-left
-    // corner of our drawing surface. Notice we don't call BeginDraw on the D2D device
-    // context; this has already been done for us by the composition API.
-    d2dDeviceContext->DrawTextLayout(
-        D2D1::Point2F(
-            static_cast<FLOAT>((offset.x + m_layoutMetrics.contentInsets.left) / m_layoutMetrics.pointScaleFactor),
-            static_cast<FLOAT>((offset.y + m_layoutMetrics.contentInsets.top) / m_layoutMetrics.pointScaleFactor)),
-        m_textLayout.get(),
-        brush.get(),
-        D2D1_DRAW_TEXT_OPTIONS_ENABLE_COLOR_FONT);
-
-    // restore dpi to old state
-    d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
-
-    // Our update is done. EndDraw never indicates rendering device removed, so any
-    // failure here is unexpected and, therefore, fatal.
-    winrt::check_hresult(drawingSurfaceInterop->EndDraw());
     m_requireRedraw = false;
   }
 }

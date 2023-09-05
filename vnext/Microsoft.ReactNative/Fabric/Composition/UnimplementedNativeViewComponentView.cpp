@@ -7,6 +7,7 @@
 #include "UnimplementedNativeViewComponentView.h"
 
 #include <Fabric/DWriteHelpers.h>
+#include "Composition/AutoDraw.h"
 #include "CompositionDynamicAutomationProvider.h"
 #include "Unicode.h"
 
@@ -75,52 +76,49 @@ void UnimplementedNativeViewComponentView::updateLayoutMetrics(
         0.0f,
     });
 
-    winrt::com_ptr<ID2D1DeviceContext> d2dDeviceContext;
     POINT offset;
+    {
+      ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(drawingSurface, &offset);
+      if (auto d2dDeviceContext = autoDraw.GetRenderTarget()) {
+        d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Red, 0.3f));
+        assert(d2dDeviceContext->GetUnitMode() == D2D1_UNIT_MODE_DIPS);
+        const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
+        float oldDpiX, oldDpiY;
+        d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
+        d2dDeviceContext->SetDpi(dpi, dpi);
 
-    winrt::com_ptr<Composition::ICompositionDrawingSurfaceInterop> drawingSurfaceInterop;
-    drawingSurface.as(drawingSurfaceInterop);
+        float offsetX = static_cast<float>(offset.x / m_layoutMetrics.pointScaleFactor);
+        float offsetY = static_cast<float>(offset.y / m_layoutMetrics.pointScaleFactor);
 
-    if (CheckForDeviceRemoved(drawingSurfaceInterop->BeginDraw(d2dDeviceContext.put(), &offset))) {
-      d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Red, 0.3f));
-      assert(d2dDeviceContext->GetUnitMode() == D2D1_UNIT_MODE_DIPS);
-      const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
-      float oldDpiX, oldDpiY;
-      d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
-      d2dDeviceContext->SetDpi(dpi, dpi);
+        winrt::com_ptr<IDWriteTextFormat> spTextFormat;
+        winrt::check_hresult(Microsoft::ReactNative::DWriteFactory()->CreateTextFormat(
+            L"Segoe UI",
+            nullptr, // Font collection (nullptr sets it to use the system font collection).
+            DWRITE_FONT_WEIGHT_REGULAR,
+            DWRITE_FONT_STYLE_NORMAL,
+            DWRITE_FONT_STRETCH_NORMAL,
+            12,
+            L"",
+            spTextFormat.put()));
 
-      float offsetX = static_cast<float>(offset.x / m_layoutMetrics.pointScaleFactor);
-      float offsetY = static_cast<float>(offset.y / m_layoutMetrics.pointScaleFactor);
+        winrt::com_ptr<ID2D1SolidColorBrush> textBrush;
+        winrt::check_hresult(
+            d2dDeviceContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::White), textBrush.put()));
 
-      winrt::com_ptr<IDWriteTextFormat> spTextFormat;
-      winrt::check_hresult(Microsoft::ReactNative::DWriteFactory()->CreateTextFormat(
-          L"Segoe UI",
-          nullptr, // Font collection (nullptr sets it to use the system font collection).
-          DWRITE_FONT_WEIGHT_REGULAR,
-          DWRITE_FONT_STYLE_NORMAL,
-          DWRITE_FONT_STRETCH_NORMAL,
-          12,
-          L"",
-          spTextFormat.put()));
+        const D2D1_RECT_F rect = {
+            static_cast<float>(offset.x), static_cast<float>(offset.y), width + offset.x, height + offset.y};
+        // const D2D1_RECT_F rect = {0.f, 0.f, width, height};
 
-      winrt::com_ptr<ID2D1SolidColorBrush> textBrush;
-      winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::White), textBrush.put()));
-
-      const D2D1_RECT_F rect = {
-          static_cast<float>(offset.x), static_cast<float>(offset.y), width + offset.x, height + offset.y};
-      // const D2D1_RECT_F rect = {0.f, 0.f, width, height};
-
-      auto label = Microsoft::Common::Unicode::Utf8ToUtf16(std::string("Unimplemented component: ") + m_props->name);
-      d2dDeviceContext->DrawText(
-          label.c_str(),
-          static_cast<UINT32>(label.length()),
-          spTextFormat.get(),
-          rect,
-          textBrush.get(),
-          D2D1_DRAW_TEXT_OPTIONS_NONE,
-          DWRITE_MEASURING_MODE_NATURAL);
-
-      winrt::check_hresult(drawingSurfaceInterop->EndDraw());
+        auto label = Microsoft::Common::Unicode::Utf8ToUtf16(std::string("Unimplemented component: ") + m_props->name);
+        d2dDeviceContext->DrawText(
+            label.c_str(),
+            static_cast<UINT32>(label.length()),
+            spTextFormat.get(),
+            rect,
+            textBrush.get(),
+            D2D1_DRAW_TEXT_OPTIONS_NONE,
+            DWRITE_MEASURING_MODE_NATURAL);
+      }
     }
   }
   m_layoutMetrics = layoutMetrics;
