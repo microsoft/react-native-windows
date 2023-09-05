@@ -6,12 +6,12 @@
 
 import path from 'path';
 import {commanderNameToOptionName} from '@react-native-windows/telemetry';
-import {projectConfigWindows} from '../config/projectConfig';
+import {projectConfigWindows} from '../commands/config/projectConfig';
+import {AutolinkWindows} from '../commands/autolinkWindows/autolinkWindows';
 import {
-  AutolinkWindows,
+  AutolinkOptions,
   autolinkOptions,
-  AutoLinkOptions,
-} from '../runWindows/utils/autolink';
+} from '../commands/autolinkWindows/autolinkWindowsOptions';
 import {DOMParser} from '@xmldom/xmldom';
 import {ensureCppAppProject, ensureWinUI3Project} from './projectConfig.utils';
 
@@ -436,7 +436,7 @@ test('Indirect autolink dependency', () => {
 
 function validateOptionName(
   name: string,
-  optionName: keyof AutoLinkOptions,
+  optionName: keyof AutolinkOptions,
 ): boolean {
   // Do not add a default case here. Every item must explicitly return true
   switch (optionName) {
@@ -448,7 +448,7 @@ function validateOptionName(
       return true;
   }
   throw new Error(
-    `Unable to find ${optionName} to match '${name}' in AutoLinkOptions.`,
+    `Unable to find ${optionName} to match '${name}' in AutolinkOptions.`,
   );
 }
 
@@ -470,12 +470,12 @@ test('autolinkOptions - validate options', () => {
     expect(commandOption.description).not.toBeNull();
     expect(commandOption.description!).toBe(commandOption.description!.trim());
 
-    // Validate all command options are present in AutoLinkOptions
+    // Validate all command options are present in AutolinkOptions
     const optionName = commanderNameToOptionName(commandOption.name);
     expect(
       validateOptionName(
         commandOption.name,
-        optionName as keyof AutoLinkOptions,
+        optionName as keyof AutolinkOptions,
       ),
     ).toBe(true);
   }

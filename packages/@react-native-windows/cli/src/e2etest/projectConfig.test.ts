@@ -10,9 +10,9 @@ import path from 'path';
 import {
   projectConfigWindows,
   WindowsProjectConfig,
-} from '../config/projectConfig';
+} from '../commands/config/projectConfig';
 
-import {AutolinkWindows} from '../runWindows/utils/autolink';
+import {AutolinkWindows} from '../commands/autolinkWindows/autolinkWindows';
 import {
   ensureCppAppProject,
   ensureCSharpAppProject,
