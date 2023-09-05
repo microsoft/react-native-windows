@@ -5,6 +5,7 @@
 #pragma once
 
 #include "SwitchComponentView.h"
+#include "Composition/AutoDraw.h"
 #include "CompositionDynamicAutomationProvider.h"
 
 namespace Microsoft::ReactNative {
@@ -92,16 +93,10 @@ void SwitchComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) 
 }
 
 void SwitchComponentView::Draw() noexcept {
-  // Begin our update of the surface pixels. If this is our first update, we are required
-  // to specify the entire surface, which nullptr is shorthand for (but, as it works out,
-  // any time we make an update we touch the entire surface, so we always pass nullptr).
-  winrt::com_ptr<ID2D1DeviceContext> d2dDeviceContext;
   POINT offset;
 
-  winrt::com_ptr<Composition::ICompositionDrawingSurfaceInterop> drawingSurfaceInterop;
-  m_drawingSurface.as(drawingSurfaceInterop);
-
-  if (CheckForDeviceRemoved(drawingSurfaceInterop->BeginDraw(d2dDeviceContext.put(), &offset))) {
+  ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(m_drawingSurface, &offset);
+  if (auto d2dDeviceContext = autoDraw.GetRenderTarget()) {
     const auto switchProps = std::static_pointer_cast<const facebook::react::SwitchProps>(m_props);
 
     d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
@@ -181,10 +176,6 @@ void SwitchComponentView::Draw() noexcept {
 
     // Restore old dpi setting
     d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
-
-    // Our update is done. EndDraw never indicates rendering device removed, so any
-    // failure here is unexpected and, therefore, fatal.
-    winrt::check_hresult(drawingSurfaceInterop->EndDraw());
   }
 }
 
