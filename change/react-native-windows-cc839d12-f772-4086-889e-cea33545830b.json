@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "extract shadow properties to baseComponentView",
+  "packageName": "react-native-windows",
+  "email": "tatianakapos@microsoft.com",
+  "dependentChangeType": "patch"
+}
