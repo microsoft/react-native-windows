@@ -54,6 +54,7 @@ void ParagraphComponentView::updateProps(
     updateTextAlignment(newViewProps.textAttributes.alignment);
   }
 
+  updateStyleProps(oldViewProps, newViewProps, m_visual);
   updateAccessibilityProps(oldViewProps, newViewProps);
   updateBorderProps(oldViewProps, newViewProps);
 

@@ -1060,6 +1060,24 @@ void CompositionBaseComponentView::updateBorderProps(
   }
 }
 
+void CompositionBaseComponentView::updateStyleProps(
+    const facebook::react::ViewProps &oldViewProps,
+    const facebook::react::ViewProps &newViewProps,
+    winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual) noexcept {
+  // Shadow Properties
+  if (oldViewProps.shadowOffset != newViewProps.shadowOffset || oldViewProps.shadowColor != newViewProps.shadowColor ||
+      oldViewProps.shadowOpacity != newViewProps.shadowOpacity ||
+      oldViewProps.shadowRadius != newViewProps.shadowRadius) {
+    auto shadow = m_compContext.CreateDropShadow();
+    shadow.Offset({newViewProps.shadowOffset.width, newViewProps.shadowOffset.height, 0});
+    shadow.Opacity(newViewProps.shadowOpacity);
+    shadow.BlurRadius(newViewProps.shadowRadius);
+    if (newViewProps.shadowColor)
+      shadow.Color(newViewProps.shadowColor.AsWindowsColor());
+    m_visual.Shadow(shadow);
+  }
+}
+
 void CompositionBaseComponentView::updateAccessibilityProps(
     const facebook::react::ViewProps &oldViewProps,
     const facebook::react::ViewProps &newViewProps) noexcept {
@@ -1288,19 +1306,7 @@ void CompositionViewComponentView::updateProps(
 
   updateAccessibilityProps(oldViewProps, newViewProps);
   updateBorderProps(oldViewProps, newViewProps);
-
-  // Shadow
-  if (oldViewProps.shadowOffset != newViewProps.shadowOffset || oldViewProps.shadowColor != newViewProps.shadowColor ||
-      oldViewProps.shadowOpacity != newViewProps.shadowOpacity ||
-      oldViewProps.shadowRadius != newViewProps.shadowRadius) {
-    auto shadow = m_compContext.CreateDropShadow();
-    shadow.Offset({newViewProps.shadowOffset.width, newViewProps.shadowOffset.height, 0});
-    shadow.Opacity(newViewProps.shadowOpacity);
-    shadow.BlurRadius(newViewProps.shadowRadius);
-    if (newViewProps.shadowColor)
-      shadow.Color(newViewProps.shadowColor.AsWindowsColor());
-    m_visual.Shadow(shadow);
-  }
+  updateStyleProps(oldViewProps, newViewProps, m_visual);
 
   if (oldViewProps.backfaceVisibility != newViewProps.backfaceVisibility) {
     static_assert(
