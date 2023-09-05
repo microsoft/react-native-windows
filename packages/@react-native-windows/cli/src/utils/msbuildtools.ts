@@ -300,8 +300,6 @@ export default class MSBuildTools {
       const msbuildEvalScriptPath = path.resolve(
         __dirname,
         '..',
-        '..',
-        '..',
         'powershell',
         'Eval-MsBuildProperties.ps1',
       );

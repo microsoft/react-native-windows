@@ -178,8 +178,6 @@ function getWindowsStoreAppUtils(options: RunWindowsOptions) {
   const windowsStoreAppUtilsPath = path.resolve(
     __dirname,
     '..',
-    '..',
-    '..',
     'powershell',
     'WindowsStoreAppUtils.ps1',
   );
