@@ -24,7 +24,7 @@ import {
   ProjectConfig,
 } from '@react-native-community/cli-types';
 import {Telemetry, CodedError} from '@react-native-windows/telemetry';
-import {AutolinkOptions, autolinkOptions} from './autolinkWindowsOptions';
+import {AutoLinkOptions, autolinkOptions} from './autolinkWindowsOptions';
 
 import {
   newSpinner,
@@ -44,7 +44,7 @@ import {
 } from '../config/dependencyConfig';
 import {Project, WindowsProjectConfig} from '../config/projectConfig';
 
-export class AutolinkWindows {
+export class AutoLinkWindows {
   private changesNecessary: boolean;
   protected windowsAppConfig: WindowsProjectConfig;
 
@@ -67,7 +67,7 @@ export class AutolinkWindows {
   constructor(
     readonly projectConfig: ProjectConfig,
     readonly dependenciesConfig: {[key: string]: DependencyConfig},
-    readonly options: AutolinkOptions,
+    readonly options: AutoLinkOptions,
   ) {
     this.changesNecessary = false;
     if (
@@ -887,7 +887,7 @@ function verboseMessage(message: any, verbose?: boolean) {
  * @param value The unsanitized value of the option.
  * @returns The sanitized value of the option.
  */
-function optionSanitizer(key: keyof AutolinkOptions, value: any): any {
+function optionSanitizer(key: keyof AutoLinkOptions, value: any): any {
   // Do not add a default case here.
   // Strings risking PII should just return true if present, false otherwise.
   // All others should return the value (or false if undefined).
@@ -920,7 +920,7 @@ async function getExtraProps(): Promise<Record<string, any>> {
 async function autolinkWindows(
   args: string[],
   config: Config,
-  options: AutolinkOptions,
+  options: AutoLinkOptions,
 ) {
   await startTelemetrySession(
     'autolink-windows',
@@ -952,14 +952,14 @@ async function autolinkWindows(
 export async function autolinkWindowsInternal(
   args: string[],
   config: Config,
-  options: AutolinkOptions,
+  options: AutoLinkOptions,
 ) {
   const startTime = performance.now();
   const spinner = newSpinner(
     options.check ? 'Checking auto-linked files...' : 'Auto-linking...',
   );
   try {
-    const autolink = new AutolinkWindows(
+    const autolink = new AutoLinkWindows(
       config.project,
       config.dependencies,
       options,

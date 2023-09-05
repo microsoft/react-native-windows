@@ -28,7 +28,7 @@ import * as info from '../../utils/info';
 import MSBuildTools from '../../utils/msbuildtools';
 import {runWindowsOptions, RunWindowsOptions} from './runWindowsOptions';
 import {autolinkWindowsInternal} from '../autolinkWindows/autolinkWindows';
-import {AutolinkOptions} from '../autolinkWindows/autolinkWindowsOptions';
+import {AutoLinkOptions} from '../autolinkWindows/autolinkWindowsOptions';
 
 /**
  * Sanitizes the given option for telemetry.
@@ -287,7 +287,7 @@ async function runWindowsInternal(
     try {
       const autolinkArgs: string[] = [];
       const autolinkConfig = config;
-      const autolinkOptions: AutolinkOptions = {
+      const autolinkOptions: AutoLinkOptions = {
         logging: options.logging,
         check: false,
         proj: options.proj,

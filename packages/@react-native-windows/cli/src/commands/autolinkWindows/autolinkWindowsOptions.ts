@@ -6,7 +6,7 @@
 
 import {CommandOption} from '@react-native-community/cli-types';
 
-export interface AutolinkOptions {
+export interface AutoLinkOptions {
   logging?: boolean;
   check?: boolean;
   sln?: string;

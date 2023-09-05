@@ -7,9 +7,9 @@
 import path from 'path';
 import {commanderNameToOptionName} from '@react-native-windows/telemetry';
 import {projectConfigWindows} from '../commands/config/projectConfig';
-import {AutolinkWindows} from '../commands/autolinkWindows/autolinkWindows';
+import {AutoLinkWindows} from '../commands/autolinkWindows/autolinkWindows';
 import {
-  AutolinkOptions,
+  AutoLinkOptions,
   autolinkOptions,
 } from '../commands/autolinkWindows/autolinkWindowsOptions';
 import {DOMParser} from '@xmldom/xmldom';
@@ -33,7 +33,7 @@ test('autolink with incomplete windows project', () => {
   }).toThrowError();
 });
 
-class AutolinkTest extends AutolinkWindows {
+class AutolinkTest extends AutoLinkWindows {
   public getWindowsProjectConfig() {
     return this.windowsAppConfig;
   }
@@ -436,7 +436,7 @@ test('Indirect autolink dependency', () => {
 
 function validateOptionName(
   name: string,
-  optionName: keyof AutolinkOptions,
+  optionName: keyof AutoLinkOptions,
 ): boolean {
   // Do not add a default case here. Every item must explicitly return true
   switch (optionName) {
@@ -475,7 +475,7 @@ test('autolinkOptions - validate options', () => {
     expect(
       validateOptionName(
         commandOption.name,
-        optionName as keyof AutolinkOptions,
+        optionName as keyof AutoLinkOptions,
       ),
     ).toBe(true);
   }
