@@ -485,13 +485,13 @@ void SetBorderLayerPropertiesCommon(
   if ((textureRect.right - textureRect.left) <= 0 && (textureRect.bottom - textureRect.top) <= 0)
     return;
 
-  auto surface = compContext.CreateDrawingSurface(
+  auto surface = compContext.CreateDrawingSurfaceBrush(
       {(textureRect.right - textureRect.left), (textureRect.bottom - textureRect.top)},
       winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
       winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
   surface.as(borderTexture);
 
-  layer.Brush(compContext.CreateSurfaceBrush(surface));
+  layer.Brush(surface);
   layer.Offset({anchorOffset.x, anchorOffset.y, 0}, {anchorPoint.x, anchorPoint.y, 0});
   layer.RelativeSizeWithOffset(size, relativeSizeAdjustment);
 

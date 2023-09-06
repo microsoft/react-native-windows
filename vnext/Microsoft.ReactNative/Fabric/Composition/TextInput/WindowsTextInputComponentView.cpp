@@ -12,6 +12,7 @@
 #include <winrt/Windows.UI.h>
 #include "../CompositionHelpers.h"
 #include "../RootComponentView.h"
+#include "Composition/AutoDraw.h"
 #include "WindowsTextInputShadowNode.h"
 #include "WindowsTextInputState.h"
 #include "guid/msoGuid.h"
@@ -954,7 +955,7 @@ void WindowsTextInputComponentView::ensureDrawingSurface() noexcept {
   assert(m_context.UIDispatcher().HasThreadAccess());
 
   if (!m_drawingSurface) {
-    m_drawingSurface = m_compContext.CreateDrawingSurface(
+    m_drawingSurface = m_compContext.CreateDrawingSurfaceBrush(
         {static_cast<float>(m_imgWidth), static_cast<float>(m_imgHeight)},
         winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
         winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
@@ -968,11 +969,10 @@ void WindowsTextInputComponentView::ensureDrawingSurface() noexcept {
 
     DrawText();
 
-    auto surfaceBrush = m_compContext.CreateSurfaceBrush(m_drawingSurface);
-    surfaceBrush.HorizontalAlignmentRatio(0.f);
-    surfaceBrush.VerticalAlignmentRatio(0.f);
-    surfaceBrush.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::None);
-    m_visual.Brush(surfaceBrush);
+    m_drawingSurface.HorizontalAlignmentRatio(0.f);
+    m_drawingSurface.VerticalAlignmentRatio(0.f);
+    m_drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::None);
+    m_visual.Brush(m_drawingSurface);
   }
 }
 
@@ -1015,88 +1015,79 @@ void WindowsTextInputComponentView::DrawText() noexcept {
   if (!m_drawingSurface || isZeroSized)
     return;
 
-  // Begin our update of the surface pixels. If this is our first update, we are required
-  // to specify the entire surface, which nullptr is shorthand for (but, as it works out,
-  // any time we make an update we touch the entire surface, so we always pass nullptr).
-  winrt::com_ptr<ID2D1DeviceContext> d2dDeviceContext;
   POINT offset;
 
   assert(m_context.UIDispatcher().HasThreadAccess());
 
-  winrt::com_ptr<Composition::ICompositionDrawingSurfaceInterop> drawingSurfaceInterop;
-  m_drawingSurface.as(drawingSurfaceInterop);
-
   m_drawing = true;
-  if (CheckForDeviceRemoved(drawingSurfaceInterop->BeginDraw(d2dDeviceContext.put(), &offset))) {
-    d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
-    assert(d2dDeviceContext->GetUnitMode() == D2D1_UNIT_MODE_DIPS);
-    const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
-    float oldDpiX, oldDpiY;
-    d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
-    d2dDeviceContext->SetDpi(dpi, dpi);
+  {
+    ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(m_drawingSurface, &offset);
+    if (auto d2dDeviceContext = autoDraw.GetRenderTarget()) {
+      d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
+      assert(d2dDeviceContext->GetUnitMode() == D2D1_UNIT_MODE_DIPS);
+      const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
+      float oldDpiX, oldDpiY;
+      d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
+      d2dDeviceContext->SetDpi(dpi, dpi);
 
-    RECTL rc{
-        static_cast<LONG>(offset.x),
-        static_cast<LONG>(offset.y),
-        static_cast<LONG>(offset.x) + static_cast<LONG>(m_imgWidth),
-        static_cast<LONG>(offset.y) + static_cast<LONG>(m_imgHeight)};
+      RECTL rc{
+          static_cast<LONG>(offset.x),
+          static_cast<LONG>(offset.y),
+          static_cast<LONG>(offset.x) + static_cast<LONG>(m_imgWidth),
+          static_cast<LONG>(offset.y) + static_cast<LONG>(m_imgHeight)};
 
-    RECT rcClient{
-        static_cast<LONG>(offset.x),
-        static_cast<LONG>(offset.y),
-        static_cast<LONG>(offset.x) + static_cast<LONG>(m_imgWidth),
-        static_cast<LONG>(offset.y) + static_cast<LONG>(m_imgHeight)};
+      RECT rcClient{
+          static_cast<LONG>(offset.x),
+          static_cast<LONG>(offset.y),
+          static_cast<LONG>(offset.x) + static_cast<LONG>(m_imgWidth),
+          static_cast<LONG>(offset.y) + static_cast<LONG>(m_imgHeight)};
 
-    winrt::check_hresult(m_textServices->OnTxInPlaceActivate(&rcClient));
+      winrt::check_hresult(m_textServices->OnTxInPlaceActivate(&rcClient));
 
-    if (facebook::react::isColorMeaningful(m_props->backgroundColor)) {
-      auto backgroundColor = m_props->backgroundColor.AsD2DColor();
-      winrt::com_ptr<ID2D1SolidColorBrush> backgroundBrush;
-      winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(backgroundColor, backgroundBrush.put()));
-      const D2D1_RECT_F fillRect = {
-          static_cast<float>(rcClient.left) / m_layoutMetrics.pointScaleFactor,
-          static_cast<float>(rcClient.top) / m_layoutMetrics.pointScaleFactor,
-          static_cast<float>(rcClient.right) / m_layoutMetrics.pointScaleFactor,
-          static_cast<float>(rcClient.bottom) / m_layoutMetrics.pointScaleFactor};
-      d2dDeviceContext->FillRectangle(fillRect, backgroundBrush.get());
-    }
-
-    // TODO keep track of proper invalid rect
-    auto hrDraw = m_textServices->TxDrawD2D(d2dDeviceContext.get(), &rc, nullptr, TXTVIEW_ACTIVE);
-    winrt::check_hresult(hrDraw);
-
-    // draw placeholder text if needed
-    if (!m_props->placeholder.empty() && GetTextFromRichEdit().empty()) {
-      // set brush color
-      winrt::com_ptr<ID2D1SolidColorBrush> brush;
-      if (m_props->placeholderTextColor) {
-        auto color = m_props->placeholderTextColor.AsD2DColor();
-        winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(color, brush.put()));
-      } else {
-        winrt::check_hresult(
-            d2dDeviceContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Gray, 1.0f), brush.put()));
+      if (facebook::react::isColorMeaningful(m_props->backgroundColor)) {
+        auto backgroundColor = m_props->backgroundColor.AsD2DColor();
+        winrt::com_ptr<ID2D1SolidColorBrush> backgroundBrush;
+        winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(backgroundColor, backgroundBrush.put()));
+        const D2D1_RECT_F fillRect = {
+            static_cast<float>(rcClient.left) / m_layoutMetrics.pointScaleFactor,
+            static_cast<float>(rcClient.top) / m_layoutMetrics.pointScaleFactor,
+            static_cast<float>(rcClient.right) / m_layoutMetrics.pointScaleFactor,
+            static_cast<float>(rcClient.bottom) / m_layoutMetrics.pointScaleFactor};
+        d2dDeviceContext->FillRectangle(fillRect, backgroundBrush.get());
       }
 
-      // Create placeholder text layout
-      winrt::com_ptr<::IDWriteTextLayout> textLayout = CreatePlaceholderLayout();
+      // TODO keep track of proper invalid rect
+      auto hrDraw = m_textServices->TxDrawD2D(d2dDeviceContext, &rc, nullptr, TXTVIEW_ACTIVE);
+      winrt::check_hresult(hrDraw);
 
-      // draw text
-      d2dDeviceContext->DrawTextLayout(
-          D2D1::Point2F(
-              static_cast<FLOAT>((offset.x + m_layoutMetrics.contentInsets.left) / m_layoutMetrics.pointScaleFactor),
-              static_cast<FLOAT>((offset.y + m_layoutMetrics.contentInsets.top) / m_layoutMetrics.pointScaleFactor)),
-          textLayout.get(),
-          brush.get(),
-          D2D1_DRAW_TEXT_OPTIONS_ENABLE_COLOR_FONT);
+      // draw placeholder text if needed
+      if (!m_props->placeholder.empty() && GetTextFromRichEdit().empty()) {
+        // set brush color
+        winrt::com_ptr<ID2D1SolidColorBrush> brush;
+        if (m_props->placeholderTextColor) {
+          auto color = m_props->placeholderTextColor.AsD2DColor();
+          winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(color, brush.put()));
+        } else {
+          winrt::check_hresult(
+              d2dDeviceContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Gray, 1.0f), brush.put()));
+        }
+
+        // Create placeholder text layout
+        winrt::com_ptr<::IDWriteTextLayout> textLayout = CreatePlaceholderLayout();
+
+        // draw text
+        d2dDeviceContext->DrawTextLayout(
+            D2D1::Point2F(
+                static_cast<FLOAT>((offset.x + m_layoutMetrics.contentInsets.left) / m_layoutMetrics.pointScaleFactor),
+                static_cast<FLOAT>((offset.y + m_layoutMetrics.contentInsets.top) / m_layoutMetrics.pointScaleFactor)),
+            textLayout.get(),
+            brush.get(),
+            D2D1_DRAW_TEXT_OPTIONS_ENABLE_COLOR_FONT);
+      }
+
+      // restore dpi state
+      d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
     }
-
-    // restore dpi state
-    d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
-
-    // Our update is done. EndDraw never indicates rendering device removed, so any
-    // failure here is unexpected and, therefore, fatal.
-    auto hrEndDraw = drawingSurfaceInterop->EndDraw();
-    winrt::check_hresult(hrEndDraw);
   }
   m_drawing = false;
   m_needsRedraw = false;

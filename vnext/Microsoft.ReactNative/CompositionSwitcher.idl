@@ -30,7 +30,7 @@ namespace Microsoft.ReactNative.Composition
 
   [webhosthidden]
   [experimental]
-  interface ISurfaceBrush requires IBrush
+  interface IDrawingSurfaceBrush requires IBrush
   {
     void HorizontalAlignmentRatio(Single value);
     void VerticalAlignmentRatio(Single value);
@@ -100,14 +100,6 @@ namespace Microsoft.ReactNative.Composition
   }
 
   [webhosthidden]
-  [uuid("a74bfffc-7f2d-432f-8291-654782ab0d52")] // uuid needed for empty interfaces
-  [version(0)]
-  [experimental]
-  interface ICompositionDrawingSurface
-  {
-  }
-
-  [webhosthidden]
   [experimental]
   interface ICaretVisual
   {
@@ -130,10 +122,6 @@ namespace Microsoft.ReactNative.Composition
   [experimental]
   interface ICompositionContext
   {
-    ICompositionDrawingSurface CreateDrawingSurface(Windows.Foundation.Size surfaceSize,
-      Windows.Graphics.DirectX.DirectXPixelFormat pixelFormat,
-      Windows.Graphics.DirectX.DirectXAlphaMode alphaMode);
-
     ISpriteVisual CreateSpriteVisual();
     IScrollVisual CreateScrollerVisual();
     IActivityVisual CreateActivityVisual();
@@ -141,7 +129,9 @@ namespace Microsoft.ReactNative.Composition
     IFocusVisual CreateFocusVisual();
     IDropShadow CreateDropShadow();
     IBrush CreateColorBrush(Windows.UI.Color color);
-    ISurfaceBrush CreateSurfaceBrush(ICompositionDrawingSurface surface);
+    IDrawingSurfaceBrush CreateDrawingSurfaceBrush(Windows.Foundation.Size surfaceSize,
+      Windows.Graphics.DirectX.DirectXPixelFormat pixelFormat,
+      Windows.Graphics.DirectX.DirectXAlphaMode alphaMode);
 
     // TODO Add and hook up to rootnode - to notify the tree
     // event Windows.Foundation.EventHandler<RenderingDeviceReplacedArgs> RenderingDeviceReplaced;

@@ -33,7 +33,7 @@ winrt::Windows::UI::Composition::CompositionBrush CompositionContextHelper::Inne
 }
 
 winrt::Windows::UI::Composition::ICompositionSurface CompositionContextHelper::InnerSurface(
-    ICompositionDrawingSurface) noexcept {
+    IDrawingSurfaceBrush) noexcept {
   return nullptr;
 }
 
