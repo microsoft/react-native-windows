@@ -105,9 +105,9 @@ void ReactApplication::BundleAppId(hstring const &value) noexcept {
   InstanceSettings().BundleAppId(value);
 }
 
-void ReactApplication::OnActivated(Windows::ApplicationModel::Activation::IActivatedEventArgs const &e) {
-  if (e.Kind() == Windows::ApplicationModel::Activation::ActivationKind::Protocol) {
-    auto protocolActivatedEventArgs{e.as<Windows::ApplicationModel::Activation::ProtocolActivatedEventArgs>()};
+void ReactApplication::OnActivated(winrt::Windows::ApplicationModel::Activation::IActivatedEventArgs const &e) {
+  if (e.Kind() == winrt::Windows::ApplicationModel::Activation::ActivationKind::Protocol) {
+    auto protocolActivatedEventArgs{e.as<winrt::Windows::ApplicationModel::Activation::ProtocolActivatedEventArgs>()};
     ::Microsoft::ReactNative::LinkingManager::OpenUri(protocolActivatedEventArgs.Uri());
   }
   this->OnCreate(e);
@@ -115,7 +115,7 @@ void ReactApplication::OnActivated(Windows::ApplicationModel::Activation::IActiv
 
 void ReactApplication::OnLaunched(activation::LaunchActivatedEventArgs const &e_) {
   base_type::OnLaunched(e_);
-  Windows::ApplicationModel::Activation::LaunchActivatedEventArgs e =
+  winrt::Windows::ApplicationModel::Activation::LaunchActivatedEventArgs e =
 #ifdef USE_WINUI3
       e_.UWPLaunchActivatedEventArgs();
 #else
@@ -165,9 +165,9 @@ void ApplyArguments(ReactNative::ReactNativeHost const &host, std::wstring const
 /// specific file.
 /// </summary>
 /// <param name="e">Details about the launch request and process.</param>
-void ReactApplication::OnCreate(Windows::ApplicationModel::Activation::IActivatedEventArgs const &e) {
+void ReactApplication::OnCreate(winrt::Windows::ApplicationModel::Activation::IActivatedEventArgs const &e) {
   bool isPrelaunchActivated = false;
-  if (auto prelaunchActivatedArgs = e.try_as<Windows::ApplicationModel::Activation::IPrelaunchActivatedEventArgs>()) {
+  if (auto prelaunchActivatedArgs = e.try_as<winrt::Windows::ApplicationModel::Activation::IPrelaunchActivatedEventArgs>()) {
     isPrelaunchActivated = prelaunchActivatedArgs.PrelaunchActivated();
   }
 
@@ -192,7 +192,7 @@ void ReactApplication::OnCreate(Windows::ApplicationModel::Activation::IActivate
 
     rootFrame.NavigationFailed({this, &ReactApplication::OnNavigationFailed});
 
-    if (e.PreviousExecutionState() == Windows::ApplicationModel::Activation::ApplicationExecutionState::Terminated) {
+    if (e.PreviousExecutionState() == winrt::Windows::ApplicationModel::Activation::ApplicationExecutionState::Terminated) {
       // Restore the saved session state only when appropriate, scheduling the
       // final launch steps after the restore is complete
     }
@@ -222,7 +222,7 @@ void ReactApplication::OnCreate(Windows::ApplicationModel::Activation::IActivate
 /// <param name="e">Details about the suspend request.</param>
 void ReactApplication::OnSuspending(
     [[maybe_unused]] IInspectable const &sender,
-    [[maybe_unused]] Windows::ApplicationModel::SuspendingEventArgs const &e) {
+    [[maybe_unused]] winrt::Windows::ApplicationModel::SuspendingEventArgs const &e) {
   // Save application state and stop any background activity
 }
 

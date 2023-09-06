@@ -53,7 +53,7 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
 
   IReactNotificationService Notifications() noexcept;
 
-  Windows::Foundation::Collections::IVector<IReactPackageProvider> PackageProviders() noexcept;
+  winrt::Windows::Foundation::Collections::IVector<IReactPackageProvider> PackageProviders() noexcept;
 
   //! This controls the availability of various developer support functionality including
   //! RedBox, and the Developer Menu
@@ -147,17 +147,17 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   void JSIEngineOverride(JSIEngine value) noexcept;
 
   winrt::event_token InstanceCreated(
-      Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::InstanceCreatedEventArgs> const
+    winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::InstanceCreatedEventArgs> const
           &handler) noexcept;
   void InstanceCreated(winrt::event_token const &token) noexcept;
 
   winrt::event_token InstanceLoaded(
-      Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::InstanceLoadedEventArgs> const
+    winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::InstanceLoadedEventArgs> const
           &handler) noexcept;
   void InstanceLoaded(winrt::event_token const &token) noexcept;
 
   winrt::event_token InstanceDestroyed(
-      Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::InstanceDestroyedEventArgs> const
+    winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::InstanceDestroyedEventArgs> const
           &handler) noexcept;
   void InstanceDestroyed(winrt::event_token const &token) noexcept;
 
@@ -174,7 +174,7 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
  private:
   IReactPropertyBag m_properties{ReactPropertyBagHelper::CreatePropertyBag()};
   IReactNotificationService m_notifications{ReactNotificationServiceHelper::CreateNotificationService()};
-  Windows::Foundation::Collections::IVector<IReactPackageProvider> m_packageProviders{
+  ::winrt::Windows::Foundation::Collections::IVector<IReactPackageProvider> m_packageProviders{
       single_threaded_vector<IReactPackageProvider>()};
   hstring m_javaScriptBundleFile{};
   hstring m_bundleAppId{};
@@ -223,7 +223,7 @@ inline IReactNotificationService ReactInstanceSettings::Notifications() noexcept
   return m_notifications;
 }
 
-inline Windows::Foundation::Collections::IVector<IReactPackageProvider>
+inline winrt::Windows::Foundation::Collections::IVector<IReactPackageProvider>
 ReactInstanceSettings::PackageProviders() noexcept {
   return m_packageProviders;
 }

@@ -165,7 +165,7 @@ struct ReactPropertyBag {
   // T is returned for types inherited from IInspectable.
   // The std::optional<T> is returned for all other types.
   template <class T>
-  using ResultType = std::conditional_t<std::is_base_of_v<Windows::Foundation::IInspectable, T>, T, std::optional<T>>;
+  using ResultType = std::conditional_t<std::is_base_of_v<winrt::Windows::Foundation::IInspectable, T>, T, std::optional<T>>;
 
   // Create a new empty instance of ReactPropertyBag.
   ReactPropertyBag(std::nullptr_t = nullptr) noexcept {}
@@ -186,7 +186,7 @@ struct ReactPropertyBag {
   // Get property value by property name.
   template <class T>
   static ResultType<T> Get(IReactPropertyBag const &handle, ReactPropertyId<T> const &propertyId) noexcept {
-    Windows::Foundation::IInspectable propertyValue = handle ? handle.Get(propertyId.Handle()) : nullptr;
+    winrt::Windows::Foundation::IInspectable propertyValue = handle ? handle.Get(propertyId.Handle()) : nullptr;
     return FromObject<T>(propertyValue);
   }
 
@@ -197,7 +197,7 @@ struct ReactPropertyBag {
       IReactPropertyBag const &handle,
       ReactPropertyId<T> const &propertyId,
       TCreateValue const &createValue) noexcept {
-    Windows::Foundation::IInspectable propertyValue = handle
+    winrt::Windows::Foundation::IInspectable propertyValue = handle
         ? handle.GetOrCreate(propertyId.Handle(), [&createValue]() noexcept { return ToObject<T>(createValue()); })
         : nullptr;
     return FromObject<T>(propertyValue);
@@ -247,7 +247,7 @@ struct ReactPropertyBag {
 
   // Box value to an ABI-safe object.
   template <class T, class TValue, std::enable_if_t<!IsReactNonAbiValueV<T> || std::is_same_v<T, TValue>, int> = 0>
-  static Windows::Foundation::IInspectable ToObject(TValue const &value) noexcept {
+  static winrt::Windows::Foundation::IInspectable ToObject(TValue const &value) noexcept {
     // We box WinRT types and return IInspectable-inherited values as-is.
     // The ReactNonAbiValue<U> is treated as IInspectable-inherited value if TValue=='ReactNonAbiValue<U>'.
     return box_value(value);
@@ -255,7 +255,7 @@ struct ReactPropertyBag {
 
   // Box value to an ABI-safe object.
   template <class T, class TValue, std::enable_if_t<IsReactNonAbiValueV<T> && !std::is_same_v<T, TValue>, int> = 0>
-  static Windows::Foundation::IInspectable ToObject(TValue &&value) noexcept {
+  static winrt::Windows::Foundation::IInspectable ToObject(TValue &&value) noexcept {
     // Create ReactNonAbiValue<U> with newly allocated wrapper for U and pass TValue as an argument to the U
     // constructor. For example, we can pass TValue=='const char*' to U=='std::string' where
     // T=='ReactNonAbiValue<std::string>'.
@@ -264,33 +264,33 @@ struct ReactPropertyBag {
 
   // Box value to an ABI-safe object.
   template <class T>
-  static Windows::Foundation::IInspectable ToObject(std::optional<T> const &value) noexcept {
+  static winrt::Windows::Foundation::IInspectable ToObject(std::optional<T> const &value) noexcept {
     return value ? ToObject<T>(*value) : nullptr;
   }
 
   // Unbox value from an ABI-safe object.
   template <class T>
-  static auto FromObject(Windows::Foundation::IInspectable const &obj) noexcept {
+  static auto FromObject(winrt::Windows::Foundation::IInspectable const &obj) noexcept {
     // The code mostly borrowed from the winrt::unbox_value_or implementation to return
     // empty std::optional in case if obj is null or has a wrong type.
-    if constexpr (std::is_base_of_v<Windows::Foundation::IInspectable, T>) {
+    if constexpr (std::is_base_of_v<winrt::Windows::Foundation::IInspectable, T>) {
       return obj.try_as<T>();
 #ifndef __APPLE__
     } else if constexpr (impl::has_category_v<T>) {
       if (obj) {
 #ifdef WINRT_IMPL_IUNKNOWN_DEFINED
         if constexpr (std::is_same_v<T, GUID>) {
-          if (auto temp = obj.try_as<Windows::Foundation::IReference<guid>>()) {
+          if (auto temp = obj.try_as<winrt::Windows::Foundation::IReference<guid>>()) {
             return std::optional<T>{temp.Value()};
           }
         }
 #endif
-        if (auto temp = obj.try_as<Windows::Foundation::IReference<T>>()) {
+        if (auto temp = obj.try_as<winrt::Windows::Foundation::IReference<T>>()) {
           return std::optional<T>{temp.Value()};
         }
 
         if constexpr (std::is_enum_v<T>) {
-          if (auto temp = obj.try_as<Windows::Foundation::IReference<std::underlying_type_t<T>>>()) {
+          if (auto temp = obj.try_as<winrt::Windows::Foundation::IReference<std::underlying_type_t<T>>>()) {
             return std::optional<T>{static_cast<T>(temp.Value())};
           }
         }

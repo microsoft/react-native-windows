@@ -60,11 +60,11 @@ struct ReactViewHost : public winrt::implements<ReactViewHost, IReactViewHost> {
       Mso::React::IReactViewHost &viewHost,
       const winrt::Microsoft::ReactNative::IReactDispatcher &uiDispatcher);
 
-  Windows::Foundation::IAsyncAction ReloadViewInstance() noexcept;
-  Windows::Foundation::IAsyncAction ReloadViewInstanceWithOptions(ReactNative::ReactViewOptions options) noexcept;
-  Windows::Foundation::IAsyncAction UnloadViewInstance() noexcept;
-  Windows::Foundation::IAsyncAction AttachViewInstance(IReactViewInstance viewInstance) noexcept;
-  Windows::Foundation::IAsyncAction DetachViewInstance() noexcept;
+  winrt::Windows::Foundation::IAsyncAction ReloadViewInstance() noexcept;
+  winrt::Windows::Foundation::IAsyncAction ReloadViewInstanceWithOptions(ReactNative::ReactViewOptions options) noexcept;
+  winrt::Windows::Foundation::IAsyncAction UnloadViewInstance() noexcept;
+  winrt::Windows::Foundation::IAsyncAction AttachViewInstance(IReactViewInstance viewInstance) noexcept;
+  winrt::Windows::Foundation::IAsyncAction DetachViewInstance() noexcept;
   winrt::Microsoft::ReactNative::ReactNativeHost ReactNativeHost() noexcept;
 
  private:

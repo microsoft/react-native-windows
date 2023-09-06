@@ -73,9 +73,9 @@ struct DynamicAutomationProperties : DynamicAutomationPropertiesT<DynamicAutomat
 
   static void SetAccessibilityActions(
       xaml::UIElement const &element,
-      Windows::Foundation::Collections::IVector<Microsoft::ReactNative::AccessibilityAction> const &value);
+    winrt::Windows::Foundation::Collections::IVector<Microsoft::ReactNative::AccessibilityAction> const &value);
 
-  static Windows::Foundation::Collections::IVector<Microsoft::ReactNative::AccessibilityAction> GetAccessibilityActions(
+  static winrt::Windows::Foundation::Collections::IVector<Microsoft::ReactNative::AccessibilityAction> GetAccessibilityActions(
       xaml::UIElement const &element);
 
   static void DispatchAccessibilityAction(xaml::UIElement const &element, std::wstring_view const &actionName);

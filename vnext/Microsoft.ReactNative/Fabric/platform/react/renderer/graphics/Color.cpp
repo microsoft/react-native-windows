@@ -37,60 +37,60 @@ winrt::Windows::UI::Color ResolvePlatformColor(Color const *const color) {
       // Accent colors
       // https://learn.microsoft.com/en-us/uwp/api/windows.ui.viewmanagement.uicolortype?view=winrt-22621
       static std::
-          unordered_map<std::string, ui::ViewManagement::UIColorType, std::hash<std::string_view>, std::equal_to<>>
+          unordered_map<std::string, winrt::Windows::UI::ViewManagement::UIColorType, std::hash<std::string_view>, std::equal_to<>>
               s_uiColorTypes = {
-                  {"Accent", ui::ViewManagement::UIColorType::Accent},
-                  {"AccentDark1", ui::ViewManagement::UIColorType::AccentDark1},
-                  {"AccentDark2", ui::ViewManagement::UIColorType::AccentDark2},
-                  {"AccentDark3", ui::ViewManagement::UIColorType::AccentDark3},
-                  {"AccentLight1", ui::ViewManagement::UIColorType::AccentLight1},
-                  {"AccentLight2", ui::ViewManagement::UIColorType::AccentLight2},
-                  {"AccentLight3", ui::ViewManagement::UIColorType::AccentLight3},
-                  {"Background", ui::ViewManagement::UIColorType::Background},
-                  {"Complement", ui::ViewManagement::UIColorType::Complement},
-                  {"Foreground", ui::ViewManagement::UIColorType::Foreground}};
+                  {"Accent", winrt::Windows::UI::ViewManagement::UIColorType::Accent},
+                  {"AccentDark1", winrt::Windows::UI::ViewManagement::UIColorType::AccentDark1},
+                  {"AccentDark2", winrt::Windows::UI::ViewManagement::UIColorType::AccentDark2},
+                  {"AccentDark3", winrt::Windows::UI::ViewManagement::UIColorType::AccentDark3},
+                  {"AccentLight1", winrt::Windows::UI::ViewManagement::UIColorType::AccentLight1},
+                  {"AccentLight2", winrt::Windows::UI::ViewManagement::UIColorType::AccentLight2},
+                  {"AccentLight3", winrt::Windows::UI::ViewManagement::UIColorType::AccentLight3},
+                  {"Background", winrt::Windows::UI::ViewManagement::UIColorType::Background},
+                  {"Complement", winrt::Windows::UI::ViewManagement::UIColorType::Complement},
+                  {"Foreground", winrt::Windows::UI::ViewManagement::UIColorType::Foreground}};
 
       auto uiColor = s_uiColorTypes.find(platformColor);
       if (uiColor != s_uiColorTypes.end()) {
-        auto uiSettings{ui::ViewManagement::UISettings()};
+        auto uiSettings{ winrt::Windows::UI::ViewManagement::UISettings()};
         return uiSettings.GetColorValue(uiColor->second);
       }
 
       // UI element colors
       // https://learn.microsoft.com/en-us/uwp/api/windows.ui.viewmanagement.uielementtype?view=winrt-22621
       static std::
-          unordered_map<std::string, ui::ViewManagement::UIElementType, std::hash<std::string_view>, std::equal_to<>>
+          unordered_map<std::string, winrt::Windows::UI::ViewManagement::UIElementType, std::hash<std::string_view>, std::equal_to<>>
               s_uiElementTypes = {
-                  {"AccentColor", ui::ViewManagement::UIElementType::AccentColor},
-                  {"ActiveCaption", ui::ViewManagement::UIElementType::ActiveCaption},
-                  {"Background", ui::ViewManagement::UIElementType::Background},
-                  {"ButtonFace", ui::ViewManagement::UIElementType::ButtonFace},
-                  {"ButtonText", ui::ViewManagement::UIElementType::ButtonText},
-                  {"CaptionText", ui::ViewManagement::UIElementType::CaptionText},
-                  {"GrayText", ui::ViewManagement::UIElementType::GrayText},
-                  {"Highlight", ui::ViewManagement::UIElementType::Highlight},
-                  {"HighlightText", ui::ViewManagement::UIElementType::HighlightText},
-                  {"Hotlight", ui::ViewManagement::UIElementType::Hotlight},
-                  {"InactiveCaption", ui::ViewManagement::UIElementType::InactiveCaption},
-                  {"InactiveCaptionText", ui::ViewManagement::UIElementType::InactiveCaptionText},
-                  {"NonTextHigh", ui::ViewManagement::UIElementType::NonTextHigh},
-                  {"NonTextLow", ui::ViewManagement::UIElementType::NonTextLow},
-                  {"NonTextMedium", ui::ViewManagement::UIElementType::NonTextMedium},
-                  {"NonTextMediumHigh", ui::ViewManagement::UIElementType::NonTextMediumHigh},
-                  {"NonTextMediumLow", ui::ViewManagement::UIElementType::NonTextMediumLow},
-                  {"OverlayOutsidePopup", ui::ViewManagement::UIElementType::OverlayOutsidePopup},
-                  {"PageBackground", ui::ViewManagement::UIElementType::PageBackground},
-                  {"PopupBackground", ui::ViewManagement::UIElementType::PopupBackground},
-                  {"TextContrastWithHigh", ui::ViewManagement::UIElementType::TextContrastWithHigh},
-                  {"TextHigh", ui::ViewManagement::UIElementType::TextHigh},
-                  {"TextLow", ui::ViewManagement::UIElementType::TextLow},
-                  {"TextMedium", ui::ViewManagement::UIElementType::TextMedium},
-                  {"Window", ui::ViewManagement::UIElementType::Window},
-                  {"WindowText", ui::ViewManagement::UIElementType::WindowText}};
+                  {"AccentColor", winrt::Windows::UI::ViewManagement::UIElementType::AccentColor},
+                  {"ActiveCaption", winrt::Windows::UI::ViewManagement::UIElementType::ActiveCaption},
+                  {"Background", winrt::Windows::UI::ViewManagement::UIElementType::Background},
+                  {"ButtonFace", winrt::Windows::UI::ViewManagement::UIElementType::ButtonFace},
+                  {"ButtonText", winrt::Windows::UI::ViewManagement::UIElementType::ButtonText},
+                  {"CaptionText", winrt::Windows::UI::ViewManagement::UIElementType::CaptionText},
+                  {"GrayText", winrt::Windows::UI::ViewManagement::UIElementType::GrayText},
+                  {"Highlight", winrt::Windows::UI::ViewManagement::UIElementType::Highlight},
+                  {"HighlightText", winrt::Windows::UI::ViewManagement::UIElementType::HighlightText},
+                  {"Hotlight", winrt::Windows::UI::ViewManagement::UIElementType::Hotlight},
+                  {"InactiveCaption", winrt::Windows::UI::ViewManagement::UIElementType::InactiveCaption},
+                  {"InactiveCaptionText", winrt::Windows::UI::ViewManagement::UIElementType::InactiveCaptionText},
+                  {"NonTextHigh", winrt::Windows::UI::ViewManagement::UIElementType::NonTextHigh},
+                  {"NonTextLow", winrt::Windows::UI::ViewManagement::UIElementType::NonTextLow},
+                  {"NonTextMedium", winrt::Windows::UI::ViewManagement::UIElementType::NonTextMedium},
+                  {"NonTextMediumHigh", winrt::Windows::UI::ViewManagement::UIElementType::NonTextMediumHigh},
+                  {"NonTextMediumLow", winrt::Windows::UI::ViewManagement::UIElementType::NonTextMediumLow},
+                  {"OverlayOutsidePopup", winrt::Windows::UI::ViewManagement::UIElementType::OverlayOutsidePopup},
+                  {"PageBackground", winrt::Windows::UI::ViewManagement::UIElementType::PageBackground},
+                  {"PopupBackground", winrt::Windows::UI::ViewManagement::UIElementType::PopupBackground},
+                  {"TextContrastWithHigh", winrt::Windows::UI::ViewManagement::UIElementType::TextContrastWithHigh},
+                  {"TextHigh", winrt::Windows::UI::ViewManagement::UIElementType::TextHigh},
+                  {"TextLow", winrt::Windows::UI::ViewManagement::UIElementType::TextLow},
+                  {"TextMedium", winrt::Windows::UI::ViewManagement::UIElementType::TextMedium},
+                  {"Window", winrt::Windows::UI::ViewManagement::UIElementType::Window},
+                  {"WindowText", winrt::Windows::UI::ViewManagement::UIElementType::WindowText}};
 
       auto uiElement = s_uiElementTypes.find(platformColor);
       if (uiElement != s_uiElementTypes.end()) {
-        auto uiSettings{ui::ViewManagement::UISettings()};
+        auto uiSettings{ winrt::Windows::UI::ViewManagement::UISettings()};
         return uiSettings.UIElementColor(uiElement->second);
       }
 
@@ -102,7 +102,7 @@ winrt::Windows::UI::Color ResolvePlatformColor(Color const *const color) {
       // are needed, they should be taken from that section (not "Dark" or "HighContrast").
       // For control-specific values, they will be in a theme resource file for that control. Example:
       // https://github.com/microsoft/microsoft-ui-xaml/blob/9052972906c8a0a1b6cb5d5c61b27d6d27cd7f11/dev/CommonStyles/Button_themeresources.xaml
-      static std::unordered_map<std::string, ui::Color, std::hash<std::string_view>, std::equal_to<>> s_xamlBrushes = {
+      static std::unordered_map<std::string, winrt::Windows::UI::Color, std::hash<std::string_view>, std::equal_to<>> s_xamlBrushes = {
           {"SolidBackgroundFillColorBase", {0xFF, 0xF3, 0xF3, 0xF3}},
           {"ControlFillColorDefault", {0xB3, 0xFF, 0xFF, 0xFF}},
           {"ControlFillColorSecondary", {0x80, 0xF9, 0xF9, 0xF9}},
@@ -171,11 +171,11 @@ xaml::Media::Brush SharedColor::AsWindowsBrush() const {
 
 SharedColor colorFromComponents(ColorComponents components) {
   float ratio = 255;
-  return {ui::ColorHelper::FromArgb(
-      (int)round(components.alpha * ratio) & 0xff,
-      (int)round(components.red * ratio) & 0xff,
-      (int)round(components.green * ratio) & 0xff,
-      (int)round(components.blue * ratio) & 0xff)};
+  return winrt::Windows::UI::Color{
+      static_cast<uint8_t>((int)round(components.alpha * ratio) & 0xff),
+      static_cast<uint8_t>((int)round(components.red * ratio) & 0xff),
+      static_cast<uint8_t>((int)round(components.green * ratio) & 0xff),
+      static_cast<uint8_t>((int)round(components.blue * ratio) & 0xff)};
 }
 
 ColorComponents colorComponentsFromColor(SharedColor const &sharedColor) {

@@ -100,7 +100,7 @@ IReactDispatcher ReactContext::JSDispatcher() noexcept {
   return Properties().Get(ReactDispatcherHelper::JSDispatcherProperty()).try_as<IReactDispatcher>();
 }
 
-Windows::Foundation::IInspectable ReactContext::JSRuntime() noexcept {
+winrt::Windows::Foundation::IInspectable ReactContext::JSRuntime() noexcept {
   return m_context->JsiRuntime();
 }
 

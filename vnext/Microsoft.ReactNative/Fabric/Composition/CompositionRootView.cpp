@@ -191,7 +191,7 @@ int64_t CompositionRootView::SendMessage(uint32_t msg, uint64_t wParam, int64_t 
   return 0;
 }
 
-void CompositionRootView::OnScrollWheel(Windows::Foundation::Point point, int32_t delta) noexcept {
+void CompositionRootView::OnScrollWheel(winrt::Windows::Foundation::Point point, int32_t delta) noexcept {
   if (m_rootTag == -1)
     return;
 
@@ -303,8 +303,8 @@ void CompositionRootView::ShowInstanceLoading() noexcept {
   // TODO: Show loading UI here
 }
 
-Windows::Foundation::Size CompositionRootView::Measure(Windows::Foundation::Size const &availableSize) const {
-  Windows::Foundation::Size size{0.0f, 0.0f};
+winrt::Windows::Foundation::Size CompositionRootView::Measure(winrt::Windows::Foundation::Size const &availableSize) const {
+  winrt::Windows::Foundation::Size size{0.0f, 0.0f};
 
   if (m_isInitialized && m_rootTag != -1) {
     if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
@@ -336,7 +336,7 @@ Windows::Foundation::Size CompositionRootView::Measure(Windows::Foundation::Size
   return size;
 }
 
-Windows::Foundation::Size CompositionRootView::Arrange(Windows::Foundation::Size finalSize) const {
+winrt::Windows::Foundation::Size CompositionRootView::Arrange(winrt::Windows::Foundation::Size finalSize) const {
   if (m_isInitialized && m_rootTag != -1) {
     if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
             winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties()))) {
