@@ -1060,7 +1060,7 @@ void CompositionBaseComponentView::updateBorderProps(
   }
 }
 
-void CompositionBaseComponentView::updateStyleProps(
+void CompositionBaseComponentView::updateShadowProps(
     const facebook::react::ViewProps &oldViewProps,
     const facebook::react::ViewProps &newViewProps,
     winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual) noexcept {
@@ -1306,7 +1306,7 @@ void CompositionViewComponentView::updateProps(
 
   updateAccessibilityProps(oldViewProps, newViewProps);
   updateBorderProps(oldViewProps, newViewProps);
-  updateStyleProps(oldViewProps, newViewProps, m_visual);
+  updateShadowProps(oldViewProps, newViewProps, m_visual);
 
   if (oldViewProps.backfaceVisibility != newViewProps.backfaceVisibility) {
     static_assert(
