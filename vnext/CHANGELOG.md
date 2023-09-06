@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 01 Sep 2023 05:13:31 GMT and should not be manually modified.
+This log was last generated on Wed, 06 Sep 2023 05:14:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.702
+
+Wed, 06 Sep 2023 05:14:10 GMT
+
+### Changes
+
+- [Fabric] Merge ISurfaceBrush and ICompositionDrawingSurface into a single object (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.701
 

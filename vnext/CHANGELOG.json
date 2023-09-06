@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 06 Sep 2023 05:14:10 GMT",
+      "version": "0.0.0-canary.702",
+      "tag": "react-native-windows_v0.0.0-canary.702",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ffeafc3f722bb240d49b0c4d6bfa975cb6e344db",
+            "comment": "[Fabric] Merge ISurfaceBrush and ICompositionDrawingSurface into a single object"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 01 Sep 2023 05:13:31 GMT",
       "version": "0.0.0-canary.701",
       "tag": "react-native-windows_v0.0.0-canary.701",

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "[Fabric] Merge ISurfaceBrush and ICompositionDrawingSurface into a single object",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
