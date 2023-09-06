@@ -81,9 +81,9 @@ struct DynamicAutomationPeer : DynamicAutomationPeerT<DynamicAutomationPeer> {
   static xaml::DependencyProperty AccessibilityActionsProperty();
   static void SetAccessibilityActions(
       xaml::UIElement const &element,
-      Windows::Foundation::Collections::IVector<Microsoft::ReactNative::AccessibilityAction> const &value);
-  static Windows::Foundation::Collections::IVector<Microsoft::ReactNative::AccessibilityAction> GetAccessibilityActions(
-      xaml::UIElement const &element);
+      winrt::Windows::Foundation::Collections::IVector<Microsoft::ReactNative::AccessibilityAction> const &value);
+  static winrt::Windows::Foundation::Collections::IVector<Microsoft::ReactNative::AccessibilityAction>
+  GetAccessibilityActions(xaml::UIElement const &element);
   static void DispatchAccessibilityAction(xaml::UIElement const &element, std::wstring_view const &actionName);
   static xaml::DependencyProperty AccessibilityActionEventHandlerProperty();
   static void SetAccessibilityActionEventHandler(

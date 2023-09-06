@@ -112,7 +112,7 @@ void JsiHostObjectWrapper::SetProperty(
   throw;
 }
 
-Windows::Foundation::Collections::IVector<JsiPropertyIdRef> JsiHostObjectWrapper::GetPropertyIds(
+winrt::Windows::Foundation::Collections::IVector<JsiPropertyIdRef> JsiHostObjectWrapper::GetPropertyIds(
     JsiRuntime const &runtime) try {
   JsiAbiRuntime *rt{JsiAbiRuntime::GetFromJsiRuntime(runtime)};
   auto names = m_hostObject->getPropertyNames(*rt);
