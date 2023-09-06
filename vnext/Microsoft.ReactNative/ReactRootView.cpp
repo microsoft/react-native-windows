@@ -430,7 +430,8 @@ void ReactRootView::ReactViewHost(Mso::React::IReactViewHost *viewHost) noexcept
   }
 }
 
-winrt::Windows::Foundation::Size ReactRootView::MeasureOverride(winrt::Windows::Foundation::Size const &availableSize) const {
+winrt::Windows::Foundation::Size ReactRootView::MeasureOverride(
+    winrt::Windows::Foundation::Size const &availableSize) const {
   winrt::Windows::Foundation::Size size{0.0f, 0.0f};
 
   for (xaml::UIElement child : Children()) {

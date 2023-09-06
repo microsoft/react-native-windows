@@ -167,7 +167,8 @@ void ApplyArguments(ReactNative::ReactNativeHost const &host, std::wstring const
 /// <param name="e">Details about the launch request and process.</param>
 void ReactApplication::OnCreate(winrt::Windows::ApplicationModel::Activation::IActivatedEventArgs const &e) {
   bool isPrelaunchActivated = false;
-  if (auto prelaunchActivatedArgs = e.try_as<winrt::Windows::ApplicationModel::Activation::IPrelaunchActivatedEventArgs>()) {
+  if (auto prelaunchActivatedArgs =
+          e.try_as<winrt::Windows::ApplicationModel::Activation::IPrelaunchActivatedEventArgs>()) {
     isPrelaunchActivated = prelaunchActivatedArgs.PrelaunchActivated();
   }
 
@@ -192,7 +193,8 @@ void ReactApplication::OnCreate(winrt::Windows::ApplicationModel::Activation::IA
 
     rootFrame.NavigationFailed({this, &ReactApplication::OnNavigationFailed});
 
-    if (e.PreviousExecutionState() == winrt::Windows::ApplicationModel::Activation::ApplicationExecutionState::Terminated) {
+    if (e.PreviousExecutionState() ==
+        winrt::Windows::ApplicationModel::Activation::ApplicationExecutionState::Terminated) {
       // Restore the saved session state only when appropriate, scheduling the
       // final launch steps after the restore is complete
     }

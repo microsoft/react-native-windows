@@ -165,7 +165,8 @@ struct ReactPropertyBag {
   // T is returned for types inherited from IInspectable.
   // The std::optional<T> is returned for all other types.
   template <class T>
-  using ResultType = std::conditional_t<std::is_base_of_v<winrt::Windows::Foundation::IInspectable, T>, T, std::optional<T>>;
+  using ResultType =
+      std::conditional_t<std::is_base_of_v<winrt::Windows::Foundation::IInspectable, T>, T, std::optional<T>>;
 
   // Create a new empty instance of ReactPropertyBag.
   ReactPropertyBag(std::nullptr_t = nullptr) noexcept {}

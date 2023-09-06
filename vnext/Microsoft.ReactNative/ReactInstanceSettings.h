@@ -147,17 +147,17 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   void JSIEngineOverride(JSIEngine value) noexcept;
 
   winrt::event_token InstanceCreated(
-    winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::InstanceCreatedEventArgs> const
+      winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::InstanceCreatedEventArgs> const
           &handler) noexcept;
   void InstanceCreated(winrt::event_token const &token) noexcept;
 
   winrt::event_token InstanceLoaded(
-    winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::InstanceLoadedEventArgs> const
+      winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::InstanceLoadedEventArgs> const
           &handler) noexcept;
   void InstanceLoaded(winrt::event_token const &token) noexcept;
 
   winrt::event_token InstanceDestroyed(
-    winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::InstanceDestroyedEventArgs> const
+      winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::InstanceDestroyedEventArgs> const
           &handler) noexcept;
   void InstanceDestroyed(winrt::event_token const &token) noexcept;
 

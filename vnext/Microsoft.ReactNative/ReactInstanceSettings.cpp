@@ -160,7 +160,7 @@ template <typename argsT>
 winrt::event_token subscribeToNotifications(
     IReactNotificationService const &notifications,
     IReactPropertyName const &property,
-  winrt::Windows::Foundation::EventHandler<argsT> const &handler) {
+    winrt::Windows::Foundation::EventHandler<argsT> const &handler) {
   auto subscription = notifications.Subscribe(
       property,
       nullptr,
@@ -185,7 +185,7 @@ void unsubscribeFromNotifications(winrt::event_token const &token) {
 }
 
 winrt::event_token ReactInstanceSettings::InstanceCreated(
-  winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::InstanceCreatedEventArgs> const
+    winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::InstanceCreatedEventArgs> const
         &handler) noexcept {
   return subscribeToNotifications(Notifications(), InstanceCreatedEventName(), handler);
 }
@@ -195,7 +195,8 @@ void ReactInstanceSettings::InstanceCreated(winrt::event_token const &token) noe
 }
 
 winrt::event_token ReactInstanceSettings::InstanceLoaded(
-  winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::InstanceLoadedEventArgs> const &handler) noexcept {
+    winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::InstanceLoadedEventArgs> const
+        &handler) noexcept {
   return subscribeToNotifications(Notifications(), InstanceLoadedEventName(), handler);
 }
 
@@ -204,7 +205,7 @@ void ReactInstanceSettings::InstanceLoaded(winrt::event_token const &token) noex
 }
 
 winrt::event_token ReactInstanceSettings::InstanceDestroyed(
-  winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::InstanceDestroyedEventArgs> const
+    winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::InstanceDestroyedEventArgs> const
         &handler) noexcept {
   return subscribeToNotifications(Notifications(), InstanceDestroyedEventName(), handler);
 }

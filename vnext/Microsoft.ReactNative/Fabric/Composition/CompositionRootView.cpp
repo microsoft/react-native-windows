@@ -303,7 +303,8 @@ void CompositionRootView::ShowInstanceLoading() noexcept {
   // TODO: Show loading UI here
 }
 
-winrt::Windows::Foundation::Size CompositionRootView::Measure(winrt::Windows::Foundation::Size const &availableSize) const {
+winrt::Windows::Foundation::Size CompositionRootView::Measure(
+    winrt::Windows::Foundation::Size const &availableSize) const {
   winrt::Windows::Foundation::Size size{0.0f, 0.0f};
 
   if (m_isInitialized && m_rootTag != -1) {

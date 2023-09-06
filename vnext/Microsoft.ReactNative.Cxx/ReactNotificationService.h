@@ -129,15 +129,16 @@ struct ReactNotificationArgs : ReactNotificationArgsBase {
 };
 
 template <class THandle, class TData>
-inline constexpr bool IsValidHandlerV =
-    std::is_invocable_v<THandle, winrt::Windows::Foundation::IInspectable const &, ReactNotificationArgs<TData> const &>;
+inline constexpr bool IsValidHandlerV = std::
+    is_invocable_v<THandle, winrt::Windows::Foundation::IInspectable const &, ReactNotificationArgs<TData> const &>;
 
 struct ReactNotificationService {
   // Notification data result type is either T or std::optional<T>.
   // T is returned for types inherited from IInspectable.
   // The std::optional<T> is returned for all other types.
   template <class T>
-  using ResultType = std::conditional_t<std::is_base_of_v<winrt::Windows::Foundation::IInspectable, T>, T, std::optional<T>>;
+  using ResultType =
+      std::conditional_t<std::is_base_of_v<winrt::Windows::Foundation::IInspectable, T>, T, std::optional<T>>;
 
   // Create a new empty instance of ReactNotificationService.
   ReactNotificationService(std::nullptr_t = nullptr) noexcept {}
@@ -165,7 +166,7 @@ struct ReactNotificationService {
               notificationId.Handle(),
               dispatcher.Handle(),
               [handler = std::forward<THandler>(handler)](
-                winrt::Windows::Foundation::IInspectable const &sender, IReactNotificationArgs const &args) noexcept {
+                  winrt::Windows::Foundation::IInspectable const &sender, IReactNotificationArgs const &args) noexcept {
                 handler(sender, ReactNotificationArgs<TData>{args});
               })
         : nullptr;
@@ -192,7 +193,7 @@ struct ReactNotificationService {
               notificationId.Handle(),
               dispatcher.Handle(),
               [handler = std::forward<THandler>(handler)](
-                winrt::Windows::Foundation::IInspectable const &sender, IReactNotificationArgs const &args) noexcept {
+                  winrt::Windows::Foundation::IInspectable const &sender, IReactNotificationArgs const &args) noexcept {
                 handler(sender, ReactNotificationArgs<TData>{args});
               })
         : nullptr;
@@ -211,7 +212,7 @@ struct ReactNotificationService {
   static void SendNotification(
       IReactNotificationService const &handle,
       ReactNotificationId<TData> const &notificationId,
-    ::winrt::Windows::Foundation::IInspectable const &sender,
+      ::winrt::Windows::Foundation::IInspectable const &sender,
       TValue &&value) noexcept {
     if (handle) {
       handle.SendNotification(
@@ -222,7 +223,7 @@ struct ReactNotificationService {
   static void SendNotification(
       IReactNotificationService const &handle,
       ReactNotificationId<void> const &notificationId,
-    winrt::Windows::Foundation::IInspectable const &sender) noexcept {
+      winrt::Windows::Foundation::IInspectable const &sender) noexcept {
     if (handle) {
       handle.SendNotification(notificationId.Handle(), sender, nullptr);
     }
@@ -279,14 +280,14 @@ struct ReactNotificationService {
   template <class TData, class TValue, std::enable_if_t<!std::is_void_v<TData>, int> = 0>
   void SendNotification(
       ReactNotificationId<TData> const &notificationId,
-    winrt::Windows::Foundation::IInspectable const &sender,
+      winrt::Windows::Foundation::IInspectable const &sender,
       TValue &&value) const noexcept {
     SendNotification(m_handle, notificationId, sender, std::forward<TValue>(value));
   }
 
   void SendNotification(
       ReactNotificationId<void> const &notificationId,
-    winrt::Windows::Foundation::IInspectable const &sender) const noexcept {
+      winrt::Windows::Foundation::IInspectable const &sender) const noexcept {
     SendNotification(m_handle, notificationId, sender);
   }
 
