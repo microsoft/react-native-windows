@@ -609,7 +609,9 @@ void WindowsTextInputComponentView::updateProps(
 
   ensureVisual();
 
+  // update BaseComponentView props
   updateShadowProps(oldTextInputProps, newTextInputProps, m_visual);
+  updateTransformProps(oldTextInputProps, newTextInputProps, m_visual);
   updateBorderProps(oldTextInputProps, newTextInputProps);
 
   if (!facebook::react::floatEquality(

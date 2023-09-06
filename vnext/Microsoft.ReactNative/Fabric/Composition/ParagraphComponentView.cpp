@@ -55,8 +55,10 @@ void ParagraphComponentView::updateProps(
     updateTextAlignment(newViewProps.textAttributes.alignment);
   }
 
-  updateShadowProps(oldViewProps, newViewProps, m_visual);
+  // update BaseComponentView props
   updateAccessibilityProps(oldViewProps, newViewProps);
+  updateShadowProps(oldViewProps, newViewProps, m_visual);
+  updateTransformProps(oldViewProps, newViewProps, m_visual);
   updateBorderProps(oldViewProps, newViewProps);
 
   m_props = std::static_pointer_cast<facebook::react::ParagraphProps const>(props);

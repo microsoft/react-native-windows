@@ -56,7 +56,9 @@ void SwitchComponentView::updateProps(
     m_drawingSurface = nullptr;
   }
 
+  // update BaseComponentView props
   updateShadowProps(oldViewProps, newViewProps, m_visual);
+  updateTransformProps(oldViewProps, newViewProps, m_visual);
   updateBorderProps(oldViewProps, newViewProps);
   m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
 }
