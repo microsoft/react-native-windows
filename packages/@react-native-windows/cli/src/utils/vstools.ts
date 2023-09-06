@@ -7,7 +7,7 @@
 import fs from '@react-native-windows/fs';
 import path from 'path';
 import chalk from 'chalk';
-import {Project} from '../../config/projectConfig';
+import {Project} from '../commands/config/projectConfig';
 import {CodedError} from '@react-native-windows/telemetry';
 
 const projectTypeGuidsByLanguage = {

@@ -7,30 +7,26 @@
 import path from 'path';
 import chalk from 'chalk';
 import {performance} from 'perf_hooks';
+import {Ora} from 'ora';
 
-import {
-  newSpinner,
-  setExitProcessWithError,
-} from './runWindows/utils/commandWithProgress';
-
-import {
-  Command,
-  CommandOption,
-  Config,
-} from '@react-native-community/cli-types';
+import {Command, Config} from '@react-native-community/cli-types';
 import {Telemetry, CodedError} from '@react-native-windows/telemetry';
-import {
-  getDefaultOptions,
-  startTelemetrySession,
-  endTelemetrySession,
-} from './runWindows/utils/telemetryHelpers';
-
 import {
   CodeGenOptions as RnwCodeGenOptions,
   CppStringTypes,
   runCodeGen,
 } from '@react-native-windows/codegen';
-import {Ora} from 'ora';
+
+import {
+  newSpinner,
+  setExitProcessWithError,
+} from '../../utils/commandWithProgress';
+import {
+  getDefaultOptions,
+  startTelemetrySession,
+  endTelemetrySession,
+} from '../../utils/telemetryHelpers';
+import {CodeGenOptions, codegenOptions} from './codegenWindowsOptions';
 
 export class CodeGenWindows {
   private changesNecessary: boolean;
@@ -313,28 +309,6 @@ export async function codegenWindowsInternal(
     throw e;
   }
 }
-
-export interface CodeGenOptions {
-  logging?: boolean;
-  check?: boolean;
-  telemetry?: boolean;
-}
-
-export const codegenOptions: CommandOption[] = [
-  {
-    name: '--logging',
-    description: 'Verbose output logging',
-  },
-  {
-    name: '--check',
-    description: 'Only check whether any codegen files need to change',
-  },
-  {
-    name: '--no-telemetry',
-    description:
-      'Disables sending telemetry that allows analysis of usage and failures of the react-native-windows CLI',
-  },
-];
 
 /**
  * Performs codegen for RNW native modules.

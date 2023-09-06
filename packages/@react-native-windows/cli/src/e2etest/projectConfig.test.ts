@@ -10,9 +10,9 @@ import path from 'path';
 import {
   projectConfigWindows,
   WindowsProjectConfig,
-} from '../config/projectConfig';
+} from '../commands/config/projectConfig';
 
-import {AutolinkWindows} from '../runWindows/utils/autolink';
+import {AutoLinkWindows} from '../commands/autolinkWindows/autolinkWindows';
 import {
   ensureCppAppProject,
   ensureCSharpAppProject,
@@ -144,7 +144,7 @@ test('useWinUI3=true in react-native.config.js, UseWinUI3=false in ExperimentalF
   expect(startingExperimentalFeatures.replace(/\r/g, '')).toMatchSnapshot();
 
   // Run Autolink to sync the files
-  const al = new AutolinkWindows(
+  const al = new AutoLinkWindows(
     {windows: config},
     {},
     {

@@ -9,7 +9,11 @@ import path from 'path';
 import MSBuildTools from './msbuildtools';
 import Version from './version';
 import {newError} from './commandWithProgress';
-import {RunWindowsOptions, BuildConfig, BuildArch} from '../runWindowsOptions';
+import {
+  RunWindowsOptions,
+  BuildConfig,
+  BuildArch,
+} from '../commands/runWindows/runWindowsOptions';
 import {Config} from '@react-native-community/cli-types';
 import {CodedError} from '@react-native-windows/telemetry';
 

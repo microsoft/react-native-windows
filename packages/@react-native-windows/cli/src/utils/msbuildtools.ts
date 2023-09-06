@@ -22,7 +22,7 @@ import {
   powershell,
 } from './commandWithProgress';
 import {execSync} from 'child_process';
-import {BuildArch, BuildConfig} from '../runWindowsOptions';
+import {BuildArch, BuildConfig} from '../commands/runWindows/runWindowsOptions';
 import {findLatestVsInstall} from './vsInstalls';
 import {CodedError} from '@react-native-windows/telemetry';
 
@@ -301,7 +301,7 @@ export default class MSBuildTools {
         __dirname,
         '..',
         '..',
-        '..',
+        'src',
         'powershell',
         'Eval-MsBuildProperties.ps1',
       );
