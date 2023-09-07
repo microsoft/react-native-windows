@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Thu, 17 Aug 2023 05:15:33 GMT and should not be manually modified.
+This log was last generated on Thu, 07 Sep 2023 05:14:09 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.186
+
+Thu, 07 Sep 2023 05:14:09 GMT
+
+### Changes
+
+- Refactor `@react-native-windows/cli` into command folders (jthysell@microsoft.com)
 
 ## 0.0.0-canary.185
 

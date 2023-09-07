@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 06 Sep 2023 05:14:10 GMT and should not be manually modified.
+This log was last generated on Thu, 07 Sep 2023 05:14:09 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.703
+
+Thu, 07 Sep 2023 05:14:09 GMT
+
+### Changes
+
+- Be more explicit when using winrt::Windows types, to avoid conflicts with WinAppSDK (30809111+acoates-ms@users.noreply.github.com)
+- extract shadow properties to baseComponentView (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.186
 
 ## 0.0.0-canary.702
 

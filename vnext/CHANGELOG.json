@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 07 Sep 2023 05:14:09 GMT",
+      "version": "0.0.0-canary.703",
+      "tag": "react-native-windows_v0.0.0-canary.703",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "6421f83754775ea0e87a6c9a072747be17ce6a71",
+            "comment": "Be more explicit when using winrt::Windows types, to avoid conflicts with WinAppSDK"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "cff3261701fa1c13e67663a51ec5a51175c02f6b",
+            "comment": "extract shadow properties to baseComponentView"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.186",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 06 Sep 2023 05:14:10 GMT",
       "version": "0.0.0-canary.702",
       "tag": "react-native-windows_v0.0.0-canary.702",

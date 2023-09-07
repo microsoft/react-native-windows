@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Be more explicit when using winrt::Windows types, to avoid conflicts with WinAppSDK",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
