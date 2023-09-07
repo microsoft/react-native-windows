@@ -33,7 +33,8 @@
     "eslint": "^8.19.0",
     "just-scripts": "^1.3.3",
     "prettier": "^2.4.1",
-    "react-test-renderer": "18.2.0"
+    "react-test-renderer": "18.2.0",
+    "metro-config": "^0.77.0"
   },
   "codegenConfig": {
     "name": "SampleApp",

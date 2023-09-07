@@ -33,6 +33,7 @@ import {
 import * as vstools from '../../utils/vstools';
 import * as generatorCommon from '../../generator-common';
 import * as configUtils from '../config/configUtils';
+import * as pathHelpers from '../../utils/pathHelpers';
 import {
   getDefaultOptions,
   startTelemetrySession,
@@ -853,12 +854,7 @@ export class AutoLinkWindows {
  * @param config project configuration
  */
 function resolveRnwRoot(projectConfig: WindowsProjectConfig) {
-  const rnwPackage = path.dirname(
-    require.resolve('react-native-windows/package.json', {
-      paths: [projectConfig.folder],
-    }),
-  );
-  return rnwPackage;
+  return pathHelpers.resolveRnwRoot(projectConfig.folder);
 }
 
 /**
@@ -1016,7 +1012,7 @@ export async function autolinkWindowsInternal(
  */
 export const autolinkCommand: Command = {
   name: 'autolink-windows',
-  description: 'performs autolinking',
+  description: 'Runs Windows-specific autolinking',
   func: autolinkWindows,
   options: autolinkOptions,
 };

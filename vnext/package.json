@@ -122,6 +122,7 @@
     "/Shared",
     "/stubs",
     "/template",
+    "/templates",
     "/types",
     "/.flowconfig",
     "/Directory.Build.props",
