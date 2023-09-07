@@ -108,7 +108,9 @@ void ImageComponentView::updateProps(
 
   ensureVisual();
 
+  // update BaseComponentView props
   updateShadowProps(oldImageProps, newImageProps, m_visual);
+  updateTransformProps(oldImageProps, newImageProps, m_visual);
   updateBorderProps(oldImageProps, newImageProps);
 
   if (oldImageProps.backgroundColor != newImageProps.backgroundColor ||

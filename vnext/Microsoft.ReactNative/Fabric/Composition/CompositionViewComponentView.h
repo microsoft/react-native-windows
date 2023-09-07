@@ -54,6 +54,10 @@ struct CompositionBaseComponentView : public IComponentView,
       const facebook::react::ViewProps &oldViewProps,
       const facebook::react::ViewProps &newViewProps,
       winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual) noexcept;
+  void updateTransformProps(
+      const facebook::react::ViewProps &oldViewProps,
+      const facebook::react::ViewProps &newViewProps,
+      winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual) noexcept;
   void updateAccessibilityProps(
       const facebook::react::ViewProps &oldView,
       const facebook::react::ViewProps &newViewProps) noexcept;
