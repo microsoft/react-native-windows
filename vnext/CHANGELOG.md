@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 07 Sep 2023 05:14:09 GMT and should not be manually modified.
+This log was last generated on Fri, 08 Sep 2023 05:13:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.704
+
+Fri, 08 Sep 2023 05:13:10 GMT
+
+### Changes
+
+- extracts transform and backfaceVisibility to baseComponent (tatianakapos@microsoft.com)
 
 ## 0.0.0-canary.703
 

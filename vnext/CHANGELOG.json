@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 08 Sep 2023 05:13:10 GMT",
+      "version": "0.0.0-canary.704",
+      "tag": "react-native-windows_v0.0.0-canary.704",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e37345b7ed2e567eec8298f6d04f4862486b6d64",
+            "comment": "extracts transform and backfaceVisibility to baseComponent"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 07 Sep 2023 05:14:09 GMT",
       "version": "0.0.0-canary.703",
       "tag": "react-native-windows_v0.0.0-canary.703",
