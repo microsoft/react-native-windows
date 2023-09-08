@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "add size to Fabric ActivityIndicator",
+  "packageName": "react-native-windows",
+  "email": "tatianakapos@microsoft.com",
+  "dependentChangeType": "patch"
+}
