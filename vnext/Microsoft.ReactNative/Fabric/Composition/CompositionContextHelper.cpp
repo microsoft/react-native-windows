@@ -622,9 +622,9 @@ struct CompActivityVisual : winrt::implements<
     auto compositor = m_visual.Compositor();
     m_contentVisual = compositor.CreateSpriteVisual();
 
-    // Create loading circles
+    // Create loading circles (radiusSmall is the default)
     for (int i = 0; i < 4; i++) {
-      auto loadingCircle = createLoadingCircle(compositor, i * 200);
+      auto loadingCircle = createLoadingCircle(compositor, i * 200, 8.0f);
       m_visual.Children().InsertAtTop(loadingCircle);
     }
   }
@@ -638,20 +638,39 @@ struct CompActivityVisual : winrt::implements<
     }
   }
 
-  winrt::Windows::UI::Composition::ShapeVisual createLoadingCircle(
-      winrt::Windows::UI::Composition::Compositor compositor,
-      int delay) {
+  void updateSize(float radius) noexcept {
+    auto compositor = m_visual.Compositor();
+    m_contentVisual = compositor.CreateSpriteVisual();
+
+    // clear old animation
+    m_visual.Children().RemoveAll();
+    m_spriteVisuals.clear();
+
+    // Create loading circles
+    for (int i = 0; i < 4; i++) {
+      auto loadingCircle = createLoadingCircle(compositor, i * 200, radius);
+      m_visual.Children().InsertAtTop(loadingCircle);
+    }
+  }
+
+  winrt::Windows::UI::Composition::ShapeVisual
+  createLoadingCircle(winrt::Windows::UI::Composition::Compositor compositor, int delay, float radius) {
+    // center
+    float ringWidth = radius / 4.5f;
+    float centerX = radius + ringWidth;
+    float centerY = radius + ringWidth;
+
     // Create circle
     auto ellipse = compositor.CreateEllipseGeometry();
-    ellipse.Radius({m_ringWidth, m_ringWidth});
+    ellipse.Radius({ringWidth, ringWidth});
     auto spriteShape = compositor.CreateSpriteShape();
     spriteShape.Geometry(ellipse);
-    spriteShape.Offset(winrt::Windows::Foundation::Numerics::float2(m_centerX, m_centerY + m_radiusSmall));
+    spriteShape.Offset(winrt::Windows::Foundation::Numerics::float2(centerX, centerY + radius));
     auto spriteVisualBrush = compositor.CreateColorBrush(winrt::Windows::UI::Colors::LightGray());
     spriteShape.FillBrush(spriteVisualBrush);
     auto circleShape = compositor.CreateShapeVisual();
     circleShape.Shapes().Append(spriteShape);
-    circleShape.Size({100.0f, 100.0f});
+    circleShape.Size({radius * 12.5f, radius * 12.5f});
     circleShape.Opacity(0.0f);
     m_spriteVisuals.push_back(spriteShape);
 
@@ -677,8 +696,8 @@ struct CompActivityVisual : winrt::implements<
     // create path animation
     float progress = 2.0f * static_cast<float>(M_PI); // specifies the end of the keyframe progress
     for (float angle = 0.0f; angle < progress; angle += 0.1f) {
-      float x = m_centerX + m_radiusSmall * cos(angle);
-      float y = m_centerY + m_radiusSmall * sin(angle);
+      float x = centerX + radius * cos(angle);
+      float y = centerY + radius * sin(angle);
       animation.InsertKeyFrame(
           angle / (2.0f * static_cast<float>(M_PI)), winrt::Windows::Foundation::Numerics::float2(x, y));
     }
@@ -790,13 +809,6 @@ struct CompActivityVisual : winrt::implements<
   winrt::Windows::UI::Composition::SpriteVisual m_visual{nullptr};
   winrt::Windows::UI::Composition::SpriteVisual m_contentVisual{nullptr};
   std::vector<winrt::Windows::UI::Composition::CompositionSpriteShape> m_spriteVisuals;
-
-  // constants
-  float m_radiusSmall = 8.0f;
-  float m_radiusLarge = 16.0f;
-  float m_ringWidth = 2.0f;
-  float m_centerX = m_radiusSmall + m_ringWidth;
-  float m_centerY = m_radiusSmall + m_ringWidth;
 };
 
 struct CompCaretVisual : winrt::implements<CompCaretVisual, winrt::Microsoft::ReactNative::Composition::ICaretVisual> {

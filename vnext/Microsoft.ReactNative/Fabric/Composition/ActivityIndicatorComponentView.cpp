@@ -52,6 +52,15 @@ void ActivityIndicatorComponentView::updateProps(
 
   ensureVisual();
 
+  // update size if needed
+  if (newViewProps->size != oldViewProps->size) {
+    if (newViewProps->size == facebook::react::ActivityIndicatorViewSize::Small) {
+      m_ActivityIndicatorVisual.updateSize(8.0f);
+    } else {
+      m_ActivityIndicatorVisual.updateSize(16.0f);
+    }
+  }
+
   // update color if needed
   if (newViewProps->color && (!oldProps || newViewProps->color != oldViewProps->color)) {
     m_ActivityIndicatorVisual.updateColor(newViewProps->color.AsWindowsColor());
