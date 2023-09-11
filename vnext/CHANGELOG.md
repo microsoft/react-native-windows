@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 02 Sep 2023 04:52:54 GMT and should not be manually modified.
+This log was last generated on Mon, 11 Sep 2023 15:14:55 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.72.9
+
+Mon, 11 Sep 2023 15:14:55 GMT
+
+### Patches
+
+- Test HttpServer build fix (#12001) (julio.rocha@microsoft.com)
 
 ## 0.72.8
 

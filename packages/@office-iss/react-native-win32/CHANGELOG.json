@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 11 Sep 2023 15:14:55 GMT",
+      "tag": "@office-iss/react-native-win32_v0.72.4",
+      "version": "0.72.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "7564111bec1b57cfc4aecc22dea06c895804be99",
+            "comment": "Webpack assets do not prefix paths with /, which causes a lost char in asset path"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 28 Aug 2023 15:14:10 GMT",
       "tag": "@office-iss/react-native-win32_v0.72.3",
       "version": "0.72.3",
