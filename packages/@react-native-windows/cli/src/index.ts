@@ -12,11 +12,11 @@ import {
   installScriptsAndDependencies,
 } from './generator-windows';
 
-import {autoLinkCommand} from './runWindows/utils/autolink';
-import {codegenCommand} from './codegen';
-import {runWindowsCommand} from './runWindows/runWindows';
-import {dependencyConfigWindows} from './config/dependencyConfig';
-import {projectConfigWindows} from './config/projectConfig';
+import {autolinkCommand} from './commands/autolinkWindows/autolinkWindows';
+import {codegenCommand} from './commands/codegenWindows/codegenWindows';
+import {runWindowsCommand} from './commands/runWindows/runWindows';
+import {dependencyConfigWindows} from './commands/config/dependencyConfig';
+import {projectConfigWindows} from './commands/config/projectConfig';
 
 /**
  * Project generation options
@@ -95,7 +95,7 @@ const assertStableInterface: typeof generateWindows extends (
   : never = true;
 assertStableInterface;
 
-export const commands = [autoLinkCommand, codegenCommand, runWindowsCommand];
+export const commands = [autolinkCommand, codegenCommand, runWindowsCommand];
 export const dependencyConfig = dependencyConfigWindows;
 export const projectConfig = projectConfigWindows;
-export * from './healthChecks';
+export * from './commands/healthCheck/healthChecks';

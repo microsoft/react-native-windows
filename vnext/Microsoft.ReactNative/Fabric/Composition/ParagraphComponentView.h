@@ -62,7 +62,7 @@ struct ParagraphComponentView : CompositionBaseComponentView {
   facebook::react::ParagraphAttributes m_paragraphAttributes;
 
   bool m_requireRedraw{true};
-  winrt::Microsoft::ReactNative::Composition::ICompositionDrawingSurface m_drawingSurface;
+  winrt::Microsoft::ReactNative::Composition::IDrawingSurfaceBrush m_drawingSurface;
 };
 
 } // namespace Microsoft::ReactNative

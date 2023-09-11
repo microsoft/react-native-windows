@@ -123,9 +123,9 @@
     semver "^6.3.1"
 
 "@babel/eslint-parser@^7.18.2", "@babel/eslint-parser@^7.19.0", "@babel/eslint-parser@^7.20.0":
-  version "7.22.10"
-  resolved "https://registry.yarnpkg.com/@babel/eslint-parser/-/eslint-parser-7.22.10.tgz#bfdf3d1b32ad573fe7c1c3447e0b485e3a41fd09"
-  integrity sha512-0J8DNPRXQRLeR9rPaUMM3fA+RbixjnVLe/MRMYCkp3hzgsSuxCHQ8NN8xQG1wIHKJ4a1DTROTvFJdW+B5/eOsg==
+  version "7.22.15"
+  resolved "https://registry.yarnpkg.com/@babel/eslint-parser/-/eslint-parser-7.22.15.tgz#263f059c476e29ca4972481a17b8b660cb025a34"
+  integrity sha512-yc8OOBIQk1EcRrpizuARSQS0TWAcOMpEJ1aafhNznaeYkeL+OhqnDObGFylB8ka8VFF/sZc+S4RzHyO+3LjQxg==
   dependencies:
     "@nicolo-ribaudo/eslint-scope-5-internals" "5.1.1-v1"
     eslint-visitor-keys "^2.1.0"
@@ -2991,9 +2991,9 @@
     form-data "^3.0.0"
 
 "@types/node@*", "@types/node@^18.0.0":
-  version "18.17.3"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.17.3.tgz#409febdc84478b452306a8112c692e800ad9f6fe"
-  integrity sha512-2x8HWtFk0S99zqVQABU9wTpr8wPoaDHZUcAkoTKH+nL7kPv3WUI9cRi/Kk5Mz4xdqXSqTkKP7IWNoQQYCnDsTA==
+  version "18.17.14"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.17.14.tgz#a621ad26e7eb076d6846dd3d39557ddf9d89f04b"
+  integrity sha512-ZE/5aB73CyGqgQULkLG87N9GnyGe5TcQjv34pwS8tfBs1IkCh0ASM69mydb2znqd6v0eX+9Ytvk6oQRqu8T1Vw==
 
 "@types/node@12.20.24":
   version "12.20.24"
@@ -3087,9 +3087,9 @@
     "@types/react" "*"
 
 "@types/react@*", "@types/react@^18.0.18":
-  version "18.2.19"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.19.tgz#f77cb2c8307368e624d464a25b9675fa35f95a8b"
-  integrity sha512-e2S8wmY1ePfM517PqCG80CcE48Xs5k0pwJzuDZsfE8IZRRBfOMCF+XqnFxu6mWtyivum1MQm4aco+WIt6Coimw==
+  version "18.2.21"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.21.tgz#774c37fd01b522d0b91aed04811b58e4e0514ed9"
+  integrity sha512-neFKG/sBAwGxHgXiIxnbm3/AAVQ/cMRS93hvBpg8xYRbeQSPVABp9U2bRnPf0iI4+Ucdv3plSxKK+3CW2ENJxA==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -3182,14 +3182,14 @@
     "@types/node" "*"
 
 "@types/xml-parser@^1.2.29":
-  version "1.2.30"
-  resolved "https://registry.yarnpkg.com/@types/xml-parser/-/xml-parser-1.2.30.tgz#16792b77a8dd5514bd0533931259fca17d6d4ad9"
-  integrity sha512-QBCRpkCoGdtUgLzLHcA5E7Dg9fJNdhuZd6IshuPxmf3EbVqrslWVTHOIDEWGx//16FoMElpOXxIR3utIWsPoIA==
+  version "1.2.31"
+  resolved "https://registry.yarnpkg.com/@types/xml-parser/-/xml-parser-1.2.31.tgz#f106da62ad0b8ff87f135665ffebce0703e99017"
+  integrity sha512-i32QIaFQt67V3ckSDN5lByufDH9i29vMAKzHIeB7+si8qTIQk+XOTbM8QGK0MBd8juEAdY2NGjccBg6GwZvwTQ==
 
 "@types/xml2js@^0.4.8":
-  version "0.4.11"
-  resolved "https://registry.yarnpkg.com/@types/xml2js/-/xml2js-0.4.11.tgz#bf46a84ecc12c41159a7bd9cf51ae84129af0e79"
-  integrity sha512-JdigeAKmCyoJUiQljjr7tQG3if9NkqGUgwEUqBvV0N7LM4HyQk7UXCnusRa1lnvXAEYJ8mw8GtZWioagNztOwA==
+  version "0.4.12"
+  resolved "https://registry.yarnpkg.com/@types/xml2js/-/xml2js-0.4.12.tgz#d9aae03295476fd5cbc74e0b572816208dbec6d1"
+  integrity sha512-CZPpQKBZ8db66EP5hCjwvYrLThgZvnyZrPXK2W+UI1oOaWezGt34iOaUCX4Jah2X8+rQqjvl9VKEIT8TR1I0rA==
   dependencies:
     "@types/node" "*"
 
@@ -12428,9 +12428,9 @@ webpack-merge@^5.7.3:
     wildcard "^2.0.0"
 
 whatwg-fetch@^3.0.0:
-  version "3.6.17"
-  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.6.17.tgz#009bbbfc122b227b74ba1ff31536b3a1a0e0e212"
-  integrity sha512-c4ghIvG6th0eudYwKZY5keb81wtFz9/WeAHAoy8+r18kcWlitUIrmGFQ2rWEl4UCKUilD3zCLHOIPheHx5ypRQ==
+  version "3.6.18"
+  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.6.18.tgz#2f640cdee315abced7daeaed2309abd1e44e62d4"
+  integrity sha512-ltN7j66EneWn5TFDO4L9inYC1D+Czsxlrw2SalgjMmEMkLfA5SIZxEFdE6QtHFiiM6Q7WL32c7AkI3w6yxM84Q==
 
 whatwg-url@^5.0.0:
   version "5.0.0"

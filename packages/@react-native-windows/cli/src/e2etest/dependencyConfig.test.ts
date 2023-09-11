@@ -9,7 +9,7 @@ import path from 'path';
 import {
   dependencyConfigWindows,
   WindowsDependencyConfig,
-} from '../config/dependencyConfig';
+} from '../commands/config/dependencyConfig';
 
 import {
   ensureCppAppProject,

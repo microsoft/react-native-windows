@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Tue, 29 Aug 2023 05:13:35 GMT and should not be manually modified.
+This log was last generated on Sat, 09 Sep 2023 05:12:55 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.214
+
+Sat, 09 Sep 2023 05:12:55 GMT
+
+### Changes
+
+- Webpack assets do not prefix paths with /, which causes a lost char in asset path (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.213
 
