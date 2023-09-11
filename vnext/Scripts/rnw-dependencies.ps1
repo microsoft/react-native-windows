@@ -512,11 +512,26 @@ $requirements = @(
     }
 );
 
+function EnsureWinGetForInstall {
+    Write-Verbose "Checking for WinGet...";
+    try {
+        # Check if winget.exe is in PATH
+        if (Get-Command "winget.exe" -CommandType Application -ErrorAction Ignore) {
+            Write-Verbose "WinGet found in PATH.";
+            return;
+        }
+    } catch { Write-Debug $_ }
+
+    Write-Host "WinGet is required to install dependencies. See https://learn.microsoft.com/en-us/windows/package-manager/winget/ for more information.";
+    throw "WinGet needed to install.";
+}
+
 function WinGetInstall {
     param(
         [string]$wingetPackage
     )
 
+    EnsureWinGetForInstall;
     Write-Verbose "Executing `winget install `"$wingetPackage`"";
     & winget install "$wingetPackage"
  }
