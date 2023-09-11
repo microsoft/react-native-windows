@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 28 Aug 2023 15:14:29 GMT and should not be manually modified.
+This log was last generated on Mon, 11 Sep 2023 15:13:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.16
+
+Mon, 11 Sep 2023 15:13:29 GMT
+
+### Patches
+
+- Webpack assets do not prefix paths with /, which causes a lost char in asset path (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.71.15
 
