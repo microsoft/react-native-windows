@@ -52,8 +52,9 @@ void ReactCompositionViewComponentBuilder::SetMessageHandler(MessageHandler impl
 }
 
 winrt::Windows::Foundation::IInspectable ReactCompositionViewComponentBuilder::CreateView(
+    IReactContext reactContext,
     ICompositionContext context) noexcept {
-  return m_createView(context);
+  return m_createView(reactContext, context);
 }
 
 bool ReactCompositionViewComponentBuilder::HandelCommand(

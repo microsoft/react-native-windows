@@ -112,8 +112,9 @@ struct CustomComponent : winrt::implements<CustomComponent, winrt::IInspectable>
           auto compBuilder =
               builder.as<winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder>();
           compBuilder.SetCreateView(
-              [](winrt::Microsoft::ReactNative::Composition::ICompositionContext context) noexcept {
-                return winrt::make<CustomComponent>(context);
+              [](winrt::Microsoft::ReactNative::IReactContext reactContext,
+                 winrt::Microsoft::ReactNative::Composition::ICompositionContext context) noexcept {
+                return winrt::make<CustomComponent>(reactContext, context);
               });
           compBuilder.SetPropsUpdater([](winrt::Windows::Foundation::IInspectable handle,
                                          winrt::Microsoft::ReactNative::IComponentProps props) noexcept {
