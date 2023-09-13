@@ -23,68 +23,60 @@ WindowsViewProps::WindowsViewProps(
       windowsEvents(sourceProps.windowsEvents),
       enableFocusRing(sourceProps.enableFocusRing),
       elevation(
-          CoreFeatures::enablePropIteratorSetter ? sourceProps.elevation
-                                                 : convertRawProp(
-                                                       context,
-                                                       rawProps,
-                                                       "elevation",
-                                                       sourceProps.elevation,
-                                                       {})),
+          CoreFeatures::enablePropIteratorSetter
+              ? sourceProps.elevation
+              : convertRawProp(context, rawProps, "elevation", sourceProps.elevation, {})),
       focusable(
-          CoreFeatures::enablePropIteratorSetter ? sourceProps.focusable
-                                                 : convertRawProp(
-                                                       context,
-                                                       rawProps,
-                                                       "focusable",
-                                                       sourceProps.focusable,
-                                                       {})) {}
-      // [Windows
-      /*nativeBackground(
           CoreFeatures::enablePropIteratorSetter
-              ? sourceProps.nativeBackground
-              : convertRawProp(
-                    context,
-                    rawProps,
-                    "nativeBackgroundAndroid",
-                    sourceProps.nativeBackground,
-                    {})),
-      nativeForeground(
-          CoreFeatures::enablePropIteratorSetter
-              ? sourceProps.nativeForeground
-              : convertRawProp(
-                    context,
-                    rawProps,
-                    "nativeForegroundAndroid",
-                    sourceProps.nativeForeground,
-                    {})),
-      hasTVPreferredFocus(
-          CoreFeatures::enablePropIteratorSetter
-              ? sourceProps.hasTVPreferredFocus
-              : convertRawProp(
-                    context,
-                    rawProps,
-                    "hasTVPreferredFocus",
-                    sourceProps.hasTVPreferredFocus,
-                    {})),
-      needsOffscreenAlphaCompositing(
-          CoreFeatures::enablePropIteratorSetter
-              ? sourceProps.needsOffscreenAlphaCompositing
-              : convertRawProp(
-                    context,
-                    rawProps,
-                    "needsOffscreenAlphaCompositing",
-                    sourceProps.needsOffscreenAlphaCompositing,
-                    {})),
-      renderToHardwareTextureAndroid(
-          CoreFeatures::enablePropIteratorSetter
-              ? sourceProps.renderToHardwareTextureAndroid
-              : convertRawProp(
-                    context,
-                    rawProps,
-                    "renderToHardwareTextureAndroid",
-                    sourceProps.renderToHardwareTextureAndroid,
-                    {})) {}*/
-      // Windows]
+              ? sourceProps.focusable
+              : convertRawProp(context, rawProps, "focusable", sourceProps.focusable, {})) {}
+// [Windows
+/*nativeBackground(
+    CoreFeatures::enablePropIteratorSetter
+        ? sourceProps.nativeBackground
+        : convertRawProp(
+              context,
+              rawProps,
+              "nativeBackgroundAndroid",
+              sourceProps.nativeBackground,
+              {})),
+nativeForeground(
+    CoreFeatures::enablePropIteratorSetter
+        ? sourceProps.nativeForeground
+        : convertRawProp(
+              context,
+              rawProps,
+              "nativeForegroundAndroid",
+              sourceProps.nativeForeground,
+              {})),
+hasTVPreferredFocus(
+    CoreFeatures::enablePropIteratorSetter
+        ? sourceProps.hasTVPreferredFocus
+        : convertRawProp(
+              context,
+              rawProps,
+              "hasTVPreferredFocus",
+              sourceProps.hasTVPreferredFocus,
+              {})),
+needsOffscreenAlphaCompositing(
+    CoreFeatures::enablePropIteratorSetter
+        ? sourceProps.needsOffscreenAlphaCompositing
+        : convertRawProp(
+              context,
+              rawProps,
+              "needsOffscreenAlphaCompositing",
+              sourceProps.needsOffscreenAlphaCompositing,
+              {})),
+renderToHardwareTextureAndroid(
+    CoreFeatures::enablePropIteratorSetter
+        ? sourceProps.renderToHardwareTextureAndroid
+        : convertRawProp(
+              context,
+              rawProps,
+              "renderToHardwareTextureAndroid",
+              sourceProps.renderToHardwareTextureAndroid,
+              {})) {}*/
+// Windows]
 
 #define WINDOWS_VIEW_EVENT_CASE(eventType)                    \
   case CONSTEXPR_RAW_PROPS_KEY_HASH("on" #eventType): {       \
@@ -119,18 +111,17 @@ void WindowsViewProps::setProp(
     RAW_SET_PROP_SWITCH_CASE_BASIC(enableFocusRing);
     RAW_SET_PROP_SWITCH_CASE_BASIC(elevation);
     // [Windows
-    //RAW_SET_PROP_SWITCH_CASE(nativeBackground, "nativeBackgroundAndroid");
-    //RAW_SET_PROP_SWITCH_CASE(nativeForeground, "nativeForegroundAndroid");
-    //RAW_SET_PROP_SWITCH_CASE_BASIC(hasTVPreferredFocus);
-    //RAW_SET_PROP_SWITCH_CASE_BASIC(needsOffscreenAlphaCompositing);
-    //RAW_SET_PROP_SWITCH_CASE_BASIC(renderToHardwareTextureAndroid);
+    // RAW_SET_PROP_SWITCH_CASE(nativeBackground, "nativeBackgroundAndroid");
+    // RAW_SET_PROP_SWITCH_CASE(nativeForeground, "nativeForegroundAndroid");
+    // RAW_SET_PROP_SWITCH_CASE_BASIC(hasTVPreferredFocus);
+    // RAW_SET_PROP_SWITCH_CASE_BASIC(needsOffscreenAlphaCompositing);
+    // RAW_SET_PROP_SWITCH_CASE_BASIC(renderToHardwareTextureAndroid);
     // Windows]
   }
 }
 
 #ifdef ANDROID
-bool WindowsViewProps::getProbablyMoreHorizontalThanVertical_DEPRECATED()
-    const {
+bool WindowsViewProps::getProbablyMoreHorizontalThanVertical_DEPRECATED() const {
   return yogaStyle.flexDirection() == YGFlexDirectionRow;
 }
 #endif

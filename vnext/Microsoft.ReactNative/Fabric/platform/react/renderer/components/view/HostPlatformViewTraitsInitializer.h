@@ -18,10 +18,8 @@ inline bool formsStackingContext(ViewProps const &viewProps) {
 
 inline bool formsView(ViewProps const &viewProps) {
 #ifdef ANDROID
-  return viewProps.nativeBackground.has_value() ||
-      viewProps.nativeForeground.has_value() || viewProps.focusable ||
-      viewProps.hasTVPreferredFocus ||
-      viewProps.needsOffscreenAlphaCompositing ||
+  return viewProps.nativeBackground.has_value() || viewProps.nativeForeground.has_value() || viewProps.focusable ||
+      viewProps.hasTVPreferredFocus || viewProps.needsOffscreenAlphaCompositing ||
       viewProps.renderToHardwareTextureAndroid;
 #endif
   return viewProps.focusable;

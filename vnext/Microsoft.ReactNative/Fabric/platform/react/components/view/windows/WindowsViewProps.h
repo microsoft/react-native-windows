@@ -17,11 +17,11 @@ class WindowsViewProps : public BaseViewProps {
       const RawProps &rawProps,
       bool shouldSetRawProps = true);
 
-  void setProp(const PropsParserContext &context, RawPropsPropNameHash hash, const char *propName, RawValue const &value);
+  void
+  setProp(const PropsParserContext &context, RawPropsPropNameHash hash, const char *propName, RawValue const &value);
 
 #ifdef ANDROID
-  void propsDiffMapBuffer(Props const *oldProps, MapBufferBuilder &builder)
-      const override;
+  void propsDiffMapBuffer(Props const *oldProps, MapBufferBuilder &builder) const override;
 #endif
 
   static bool requiresFormsStackingContext(const WindowsViewProps &props) noexcept;
