@@ -11,8 +11,8 @@
 import RCTDeviceEventEmitter from '../EventEmitter/RCTDeviceEventEmitter';
 const RCTNetworkingNative =
   require('../BatchedBridge/NativeModules').Networking; // [Windows]
-import {type NativeResponseType} from './XMLHttpRequest';
 import convertRequestBody, {type RequestBody} from './convertRequestBody';
+import {type NativeResponseType} from './XMLHttpRequest';
 import {type EventSubscription} from '../vendor/emitter/EventEmitter';
 
 type RCTNetworkingEventDefinitions = $ReadOnly<{

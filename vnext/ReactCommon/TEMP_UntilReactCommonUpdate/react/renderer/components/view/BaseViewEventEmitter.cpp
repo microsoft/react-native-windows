@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-#include "ViewEventEmitter.h"
+#include "BaseViewEventEmitter.h"
 
 namespace facebook::react {
 
 #pragma mark - Accessibility
 
-void ViewEventEmitter::onAccessibilityAction(std::string const &name) const {
+void BaseViewEventEmitter::onAccessibilityAction(std::string const &name) const {
   dispatchEvent("accessibilityAction", [name](jsi::Runtime &runtime) {
     auto payload = jsi::Object(runtime);
     payload.setProperty(runtime, "actionName", name);
@@ -19,21 +19,21 @@ void ViewEventEmitter::onAccessibilityAction(std::string const &name) const {
   });
 }
 
-void ViewEventEmitter::onAccessibilityTap() const {
+void BaseViewEventEmitter::onAccessibilityTap() const {
   dispatchEvent("accessibilityTap");
 }
 
-void ViewEventEmitter::onAccessibilityMagicTap() const {
+void BaseViewEventEmitter::onAccessibilityMagicTap() const {
   dispatchEvent("magicTap");
 }
 
-void ViewEventEmitter::onAccessibilityEscape() const {
+void BaseViewEventEmitter::onAccessibilityEscape() const {
   dispatchEvent("accessibilityEscape");
 }
 
 #pragma mark - Layout
 
-void ViewEventEmitter::onLayout(const LayoutMetrics &layoutMetrics) const {
+void BaseViewEventEmitter::onLayout(const LayoutMetrics &layoutMetrics) const {
   // A copy of a shared pointer (`layoutEventState_`) establishes shared
   // ownership that will be captured by lambda.
   auto layoutEventState = layoutEventState_;
@@ -54,7 +54,7 @@ void ViewEventEmitter::onLayout(const LayoutMetrics &layoutMetrics) const {
   //  - Ordering is preserved.
 
   {
-    std::lock_guard<std::mutex> guard(layoutEventState->mutex);
+    std::scoped_lock guard(layoutEventState->mutex);
 
     // If a *particular* `frame` was already dispatched to the JavaScript side,
     // no other work is required.
@@ -84,7 +84,7 @@ void ViewEventEmitter::onLayout(const LayoutMetrics &layoutMetrics) const {
         auto frame = Rect{};
 
         {
-          std::lock_guard<std::mutex> guard(layoutEventState->mutex);
+          std::scoped_lock guard(layoutEventState->mutex);
 
           layoutEventState->isDispatching = false;
 
@@ -115,12 +115,12 @@ void ViewEventEmitter::onLayout(const LayoutMetrics &layoutMetrics) const {
 }
 
 // [Windows]
-void ViewEventEmitter::onFocus() const {
+void BaseViewEventEmitter::onFocus() const {
   dispatchEvent("focus");
 }
 
 // [Windows]
-void ViewEventEmitter::onBlur() const {
+void BaseViewEventEmitter::onBlur() const {
   dispatchEvent("blur");
 }
 
@@ -139,7 +139,7 @@ static jsi::Value keyboardEventPayload(
 }
 
 // [Windows]
-void ViewEventEmitter::onKeyUp(KeyboardEvent const &event) const {
+void BaseViewEventEmitter::onKeyUp(KeyboardEvent const &event) const {
   dispatchEvent(
     "keyUp",
     [event](jsi::Runtime &runtime) {
@@ -148,7 +148,7 @@ void ViewEventEmitter::onKeyUp(KeyboardEvent const &event) const {
 }
 
 // [Windows]
-void ViewEventEmitter::onKeyDown(KeyboardEvent const &event) const {
+void BaseViewEventEmitter::onKeyDown(KeyboardEvent const &event) const {
     dispatchEvent(
     "keyDown",
     [event](jsi::Runtime &runtime) {

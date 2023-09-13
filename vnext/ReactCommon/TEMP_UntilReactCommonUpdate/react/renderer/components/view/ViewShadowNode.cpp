@@ -7,6 +7,7 @@
 
 #include "ViewShadowNode.h"
 #include <react/config/ReactNativeConfig.h>
+#include <react/renderer/components/view/HostPlatformViewTraitsInitializer.h>
 #include <react/renderer/components/view/primitives.h>
 #include <react/utils/CoreFeatures.h>
 
@@ -54,28 +55,16 @@ void ViewShadowNode::initialize() noexcept {
       viewProps.accessibilityElementsHidden ||
       viewProps.accessibilityViewIsModal ||
       viewProps.importantForAccessibility != ImportantForAccessibility::Auto ||
-      viewProps.removeClippedSubviews;
+      viewProps.removeClippedSubviews ||
+      HostPlatformViewTraitsInitializer::formsStackingContext(viewProps);
 
-#ifdef ANDROID
-  formsStackingContext = formsStackingContext || viewProps.elevation != 0;
-#endif
-
-  formsStackingContext = formsStackingContext || HostPlatformViewProps::requiresFormsStackingContext(viewProps); // [Windows]
+  formsStackingContext = formsStackingContext || WindowsViewProps::requiresFormsStackingContext(viewProps); // [Windows]
 
   bool formsView = formsStackingContext ||
       isColorMeaningful(viewProps.backgroundColor) ||
       !(viewProps.yogaStyle.border() == YGStyle::Edges{}) ||
-      !viewProps.testId.empty();
-
-  formsView = formsView || HostPlatformViewProps::requiresFormsView(viewProps); // [Windows]
-
-#ifdef ANDROID
-  formsView = formsView || viewProps.nativeBackground.has_value() ||
-      viewProps.nativeForeground.has_value() || viewProps.focusable ||
-      viewProps.hasTVPreferredFocus ||
-      viewProps.needsOffscreenAlphaCompositing ||
-      viewProps.renderToHardwareTextureAndroid;
-#endif
+      !viewProps.testId.empty() ||
+      HostPlatformViewTraitsInitializer::formsView(viewProps);
 
   if (formsView) {
     traits_.set(ShadowNodeTraits::Trait::FormsView);
@@ -89,9 +78,7 @@ void ViewShadowNode::initialize() noexcept {
     traits_.unset(ShadowNodeTraits::Trait::FormsStackingContext);
   }
 
-#ifdef ANDROID
-  traits_.set(ShadowNodeTraits::Trait::AndroidMapBufferPropsSupported);
-#endif
+  traits_.set(HostPlatformViewTraitsInitializer::extraTraits());
 }
 
 } // namespace facebook::react

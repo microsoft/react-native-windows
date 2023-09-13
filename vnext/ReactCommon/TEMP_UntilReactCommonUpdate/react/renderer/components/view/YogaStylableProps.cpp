@@ -105,10 +105,9 @@ void YogaStylableProps::setProp(
     const char *propName,
     RawValue const &value) {
   static const auto ygDefaults = YGStyle{};
+  static const auto defaults = YogaStylableProps{};
 
   Props::setProp(context, hash, propName, value);
-
-  static const auto defaults = YogaStylableProps{};
 
   switch (hash) {
     REBUILD_FIELD_SWITCH_CASE_YSP(direction);

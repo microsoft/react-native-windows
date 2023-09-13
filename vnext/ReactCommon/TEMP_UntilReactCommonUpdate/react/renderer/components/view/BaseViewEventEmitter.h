@@ -30,11 +30,9 @@ struct KeyboardEvent {
   std::string code{};
 };
 
-class ViewEventEmitter;
+class BaseViewEventEmitter;
 
-using SharedViewEventEmitter = std::shared_ptr<const ViewEventEmitter>;
-
-class ViewEventEmitter : public TouchEventEmitter {
+class BaseViewEventEmitter : public TouchEventEmitter {
  public:
   using TouchEventEmitter::TouchEventEmitter;
 

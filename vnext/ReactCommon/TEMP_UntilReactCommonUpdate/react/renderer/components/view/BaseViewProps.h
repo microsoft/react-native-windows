@@ -9,7 +9,6 @@
 
 #include <react/renderer/components/view/AccessibilityProps.h>
 #include <react/renderer/components/view/YogaStylableProps.h>
-#include <react/renderer/components/view/HostPlatformViewProps.h> // [Windows]
 #include <react/renderer/components/view/primitives.h>
 #include <react/renderer/core/LayoutMetrics.h>
 #include <react/renderer/core/Props.h>
@@ -21,16 +20,14 @@
 
 namespace facebook::react {
 
-class ViewProps;
+class BaseViewProps;
 
-using SharedViewProps = std::shared_ptr<ViewProps const>;
-
-class ViewProps : public YogaStylableProps, public AccessibilityProps, public HostPlatformViewProps  { // [Windows] added HostPlatformViewProps
+class BaseViewProps : public YogaStylableProps, public AccessibilityProps{
  public:
-  ViewProps() = default;
-  ViewProps(
+  BaseViewProps() = default;
+  BaseViewProps(
       const PropsParserContext &context,
-      ViewProps const &sourceProps,
+      BaseViewProps const &sourceProps,
       RawProps const &rawProps,
       bool shouldSetRawProps = true);
 
@@ -79,6 +76,8 @@ class ViewProps : public YogaStylableProps, public AccessibilityProps, public Ho
   bool collapsable{true};
 
   bool removeClippedSubviews{false};
+
+  LayoutConformance experimental_layoutConformance{};
 
   Float elevation{}; /* Android-only */
 
