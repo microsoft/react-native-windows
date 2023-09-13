@@ -6,29 +6,29 @@
 
 import fs from '@react-native-windows/fs';
 import path from 'path';
-import {Telemetry, CodedError} from '@react-native-windows/telemetry';
 
-import * as build from './utils/build';
+import {Telemetry, CodedError} from '@react-native-windows/telemetry';
+import {Command, Config} from '@react-native-community/cli-types';
+
+import * as build from '../../utils/build';
 import chalk from 'chalk';
-import * as deploy from './utils/deploy';
+import * as deploy from '../../utils/deploy';
 import {
   newError,
   newInfo,
   newWarn,
   setExitProcessWithError,
-} from './utils/commandWithProgress';
+} from '../../utils/commandWithProgress';
 import {
   getDefaultOptions,
   startTelemetrySession,
   endTelemetrySession,
-} from './utils/telemetryHelpers';
-import * as info from './utils/info';
-import MSBuildTools from './utils/msbuildtools';
-
-import {Command, Config} from '@react-native-community/cli-types';
+} from '../../utils/telemetryHelpers';
+import * as info from '../../utils/info';
+import MSBuildTools from '../../utils/msbuildtools';
 import {runWindowsOptions, RunWindowsOptions} from './runWindowsOptions';
-
-import {autolinkWindowsInternal, AutoLinkOptions} from './utils/autolink';
+import {autolinkWindowsInternal} from '../autolinkWindows/autolinkWindows';
+import {AutoLinkOptions} from '../autolinkWindows/autolinkWindowsOptions';
 
 /**
  * Sanitizes the given option for telemetry.
@@ -287,7 +287,7 @@ async function runWindowsInternal(
     try {
       const autolinkArgs: string[] = [];
       const autolinkConfig = config;
-      const autoLinkOptions: AutoLinkOptions = {
+      const autolinkOptions: AutoLinkOptions = {
         logging: options.logging,
         check: false,
         proj: options.proj,
@@ -297,7 +297,7 @@ async function runWindowsInternal(
       await autolinkWindowsInternal(
         autolinkArgs,
         autolinkConfig,
-        autoLinkOptions,
+        autolinkOptions,
       );
     } catch (e) {
       newError(`Autolinking failed. ${(e as Error).message}`);

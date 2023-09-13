@@ -56,13 +56,13 @@ struct ParagraphComponentView : CompositionBaseComponentView {
   void updateTextAlignment(const std::optional<facebook::react::TextAlignment> &fbAlignment) noexcept;
 
   std::shared_ptr<facebook::react::ParagraphProps const> m_props;
-  winrt::Microsoft::ReactNative::Composition::SpriteVisual m_visual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
   winrt::com_ptr<::IDWriteTextLayout> m_textLayout;
   facebook::react::AttributedStringBox m_attributedStringBox;
   facebook::react::ParagraphAttributes m_paragraphAttributes;
 
   bool m_requireRedraw{true};
-  winrt::Microsoft::ReactNative::Composition::ICompositionDrawingSurface m_drawingSurface;
+  winrt::Microsoft::ReactNative::Composition::IDrawingSurfaceBrush m_drawingSurface;
 };
 
 } // namespace Microsoft::ReactNative

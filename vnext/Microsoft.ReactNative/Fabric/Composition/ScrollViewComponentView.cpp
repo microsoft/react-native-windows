@@ -169,7 +169,11 @@ void ScrollViewComponentView::updateProps(
   }
   */
 
+  // update BaseComponentView props
+  updateShadowProps(oldViewProps, newViewProps, m_visual);
+  updateTransformProps(oldViewProps, newViewProps, m_visual);
   updateBorderProps(oldViewProps, newViewProps);
+
   m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
 }
 
@@ -407,7 +411,7 @@ void ScrollViewComponentView::ensureVisual() noexcept {
         winrt::auto_revoke,
         [this](
             winrt::IInspectable const & /*sender*/,
-            winrt::Microsoft::ReactNative::Composition::ScrollPositionChangedArgs const &args) {
+            winrt::Microsoft::ReactNative::Composition::IScrollPositionChangedArgs const &args) {
           auto eventEmitter = GetEventEmitter();
           if (eventEmitter) {
             facebook::react::ScrollViewMetrics scrollMetrics;

@@ -5,12 +5,6 @@
 #include "Composition.CompositionContextHelper.g.cpp"
 #endif
 
-#include <Composition.ActivityVisual.g.h>
-#include <Composition.ScrollPositionChangedArgs.g.h>
-#include <Composition.ScrollVisual.g.h>
-#include <Composition.SpriteVisual.g.h>
-#include <Composition.SurfaceBrush.g.h>
-
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 ICompositionContext CompositionContextHelper::CreateContext(
@@ -39,7 +33,7 @@ winrt::Windows::UI::Composition::CompositionBrush CompositionContextHelper::Inne
 }
 
 winrt::Windows::UI::Composition::ICompositionSurface CompositionContextHelper::InnerSurface(
-    ICompositionDrawingSurface) noexcept {
+    IDrawingSurfaceBrush) noexcept {
   return nullptr;
 }
 

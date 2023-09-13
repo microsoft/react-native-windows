@@ -90,9 +90,9 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   void updateContentVisualSize() noexcept;
 
   facebook::react::Size m_contentSize;
-  winrt::Microsoft::ReactNative::Composition::IVisual m_visual{nullptr};
-  winrt::Microsoft::ReactNative::Composition::ScrollVisual m_scrollVisual{nullptr};
-  winrt::Microsoft::ReactNative::Composition::ScrollVisual::ScrollPositionChanged_revoker
+  winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::IScrollVisual m_scrollVisual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::IScrollVisual::ScrollPositionChanged_revoker
       m_scrollPositionChangedRevoker{};
 
   facebook::react::SharedViewProps m_props;

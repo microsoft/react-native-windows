@@ -138,7 +138,7 @@ struct CustomComponent : winrt::implements<CustomComponent, winrt::IInspectable>
  private:
   winrt::Windows::UI::Composition::SpotLight m_spotlight{nullptr};
 
-  winrt::Microsoft::ReactNative::Composition::SpriteVisual m_visual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
   winrt::Microsoft::ReactNative::Composition::ICompositionContext m_compContext;
 };
 

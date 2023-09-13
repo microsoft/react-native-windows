@@ -59,8 +59,8 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
   double ScaleFactor() noexcept;
   void ScaleFactor(double value) noexcept;
 
-  Windows::Foundation::Size Measure(Windows::Foundation::Size const &availableSize) const;
-  Windows::Foundation::Size Arrange(Windows::Foundation::Size finalSize) const;
+  winrt::Windows::Foundation::Size Measure(winrt::Windows::Foundation::Size const &availableSize) const;
+  winrt::Windows::Foundation::Size Arrange(winrt::Windows::Foundation::Size finalSize) const;
 
   winrt::Microsoft::ReactNative::FocusNavigationResult NavigateFocus(
       const winrt::Microsoft::ReactNative::FocusNavigationRequest &request) noexcept;
@@ -70,7 +70,7 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
   IInspectable GetUiaProvider() noexcept;
 
   int64_t SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept;
-  void OnScrollWheel(Windows::Foundation::Point point, int32_t delta) noexcept;
+  void OnScrollWheel(winrt::Windows::Foundation::Point point, int32_t delta) noexcept;
 
  public: // ICompositionRootView
   winrt::Microsoft::ReactNative::Composition::IVisual GetVisual() const noexcept override;

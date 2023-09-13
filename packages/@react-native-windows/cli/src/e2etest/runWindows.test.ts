@@ -9,7 +9,7 @@ import {commanderNameToOptionName} from '@react-native-windows/telemetry';
 import {
   runWindowsOptions,
   RunWindowsOptions,
-} from '../runWindows/runWindowsOptions';
+} from '../commands/runWindows/runWindowsOptions';
 
 // eslint-disable-next-line complexity
 function validateOptionName(

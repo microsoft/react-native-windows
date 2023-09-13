@@ -1,8 +1,59 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 29 Aug 2023 05:13:36 GMT and should not be manually modified.
+This log was last generated on Fri, 08 Sep 2023 05:13:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.704
+
+Fri, 08 Sep 2023 05:13:10 GMT
+
+### Changes
+
+- extracts transform and backfaceVisibility to baseComponent (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.703
+
+Thu, 07 Sep 2023 05:14:09 GMT
+
+### Changes
+
+- Be more explicit when using winrt::Windows types, to avoid conflicts with WinAppSDK (30809111+acoates-ms@users.noreply.github.com)
+- extract shadow properties to baseComponentView (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.186
+
+## 0.0.0-canary.702
+
+Wed, 06 Sep 2023 05:14:10 GMT
+
+### Changes
+
+- [Fabric] Merge ISurfaceBrush and ICompositionDrawingSurface into a single object (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.701
+
+Fri, 01 Sep 2023 05:13:31 GMT
+
+### Changes
+
+- Skip networking Cxx modules if UseWindowsAbi is set (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.700
+
+Thu, 31 Aug 2023 05:13:19 GMT
+
+### Changes
+
+- [Fabric] Remove runtime classes in CompositionSwitcher (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.699
+
+Wed, 30 Aug 2023 05:12:56 GMT
+
+### Changes
+
+- Fix bug when blur command received on node without XamlRoot (erozell@outlook.com)
+- fix fabric textinput crashing on minimized (tatianakapos@microsoft.com)
 
 ## 0.0.0-canary.698
 

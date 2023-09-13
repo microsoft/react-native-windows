@@ -80,10 +80,10 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
   std::string GetTextFromRichEdit() const noexcept;
 
   winrt::Windows::UI::Composition::CompositionSurfaceBrush m_brush{nullptr};
-  winrt::Microsoft::ReactNative::Composition::SpriteVisual m_visual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
   winrt::Microsoft::ReactNative::Composition::ICaretVisual m_caretVisual{nullptr};
   winrt::Microsoft::ReactNative::ReactContext m_context;
-  winrt::Microsoft::ReactNative::Composition::ICompositionDrawingSurface m_drawingSurface{nullptr};
+  winrt::Microsoft::ReactNative::Composition::IDrawingSurfaceBrush m_drawingSurface{nullptr};
 
   // Used by ITextHost impl
   CHARFORMAT2W m_cf;
