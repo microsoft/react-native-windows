@@ -471,7 +471,7 @@ void YogaLayoutableShadowNode::configureYogaTree(
   // need to reconfigure it if the context values passed to the Node have
   // changed.
   // [Windows]
-  for (int32_t i = 0; i < yogaLayoutableChildren_.size(); i++) {
+  for (size_t i = 0; i < yogaLayoutableChildren_.size(); i++) {
     const auto &child = *yogaLayoutableChildren_[i];
     auto childLayoutMetrics = child.getLayoutMetrics();
     auto childErrata =
@@ -489,7 +489,7 @@ void YogaLayoutableShadowNode::configureYogaTree(
       mutableChild.configureYogaTree(
           pointScaleFactor, child.resolveErrata(errata), swapLeftAndRight);
     } else {
-      cloneChildInPlace(i).configureYogaTree(
+      cloneChildInPlace(static_cast<int32_t>(i)).configureYogaTree(
           pointScaleFactor, errata, swapLeftAndRight);
     }
   }
