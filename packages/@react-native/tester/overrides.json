@@ -248,10 +248,10 @@
     },
     {
       "type": "copy",
-      "file": "js/examples/Performance/PerformanceApiExample.js",
-      "baseFile": "packages/rn-tester/js/examples/Performance/PerformanceApiExample.js",
-      "baseHash": "79acc41d2fa365104d4cb15c5b178a4765158cee",
-      "issue": 11373
+      "directory": "js/examples/Performance",
+      "baseDirectory": "packages/rn-tester/js/examples/Performance",
+      "baseHash": "0d49d4b44b5d4844eadac22355e27d77762f22b9",
+      "issue": 0
     },
     {
       "type": "copy",

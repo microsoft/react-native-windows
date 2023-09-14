@@ -83,8 +83,7 @@
       "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/BaseViewEventEmitter.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/BaseViewEventEmitter.h",
-      "baseHash": "32ffb909ddb2ead19952b6cdaba13e885babaad1",
-      "issue": 0
+      "baseHash": "32ffb909ddb2ead19952b6cdaba13e885babaad1"
     },
     {
       "type": "derived",
@@ -96,8 +95,7 @@
       "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/BaseViewProps.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/BaseViewProps.h",
-      "baseHash": "cff8b44d2c675d73f26dbb5562f4caa3a3fb5cf0",
-      "issue": 0
+      "baseHash": "cff8b44d2c675d73f26dbb5562f4caa3a3fb5cf0"
     },
     {
       "type": "derived",
