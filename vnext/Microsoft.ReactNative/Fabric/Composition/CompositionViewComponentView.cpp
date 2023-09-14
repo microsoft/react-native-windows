@@ -485,13 +485,13 @@ void SetBorderLayerPropertiesCommon(
   if ((textureRect.right - textureRect.left) <= 0 && (textureRect.bottom - textureRect.top) <= 0)
     return;
 
-  auto surface = compContext.CreateDrawingSurface(
+  auto surface = compContext.CreateDrawingSurfaceBrush(
       {(textureRect.right - textureRect.left), (textureRect.bottom - textureRect.top)},
       winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
       winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
   surface.as(borderTexture);
 
-  layer.Brush(compContext.CreateSurfaceBrush(surface));
+  layer.Brush(surface);
   layer.Offset({anchorOffset.x, anchorOffset.y, 0}, {anchorPoint.x, anchorPoint.y, 0});
   layer.RelativeSizeWithOffset(size, relativeSizeAdjustment);
 
@@ -1060,6 +1060,73 @@ void CompositionBaseComponentView::updateBorderProps(
   }
 }
 
+void CompositionBaseComponentView::updateShadowProps(
+    const facebook::react::ViewProps &oldViewProps,
+    const facebook::react::ViewProps &newViewProps,
+    winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual) noexcept {
+  // Shadow Properties
+  if (oldViewProps.shadowOffset != newViewProps.shadowOffset || oldViewProps.shadowColor != newViewProps.shadowColor ||
+      oldViewProps.shadowOpacity != newViewProps.shadowOpacity ||
+      oldViewProps.shadowRadius != newViewProps.shadowRadius) {
+    auto shadow = m_compContext.CreateDropShadow();
+    shadow.Offset({newViewProps.shadowOffset.width, newViewProps.shadowOffset.height, 0});
+    shadow.Opacity(newViewProps.shadowOpacity);
+    shadow.BlurRadius(newViewProps.shadowRadius);
+    if (newViewProps.shadowColor)
+      shadow.Color(newViewProps.shadowColor.AsWindowsColor());
+    m_visual.Shadow(shadow);
+  }
+}
+
+void CompositionBaseComponentView::updateTransformProps(
+    const facebook::react::ViewProps &oldViewProps,
+    const facebook::react::ViewProps &newViewProps,
+    winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual) noexcept {
+  // check for backfaceVisibility prop
+  if (oldViewProps.backfaceVisibility != newViewProps.backfaceVisibility) {
+    static_assert(
+        static_cast<facebook::react::BackfaceVisibility>(
+            winrt::Microsoft::ReactNative::Composition::BackfaceVisibility::Inherit) ==
+        facebook::react::BackfaceVisibility::Auto);
+    static_assert(
+        static_cast<facebook::react::BackfaceVisibility>(
+            winrt::Microsoft::ReactNative::Composition::BackfaceVisibility::Visible) ==
+        facebook::react::BackfaceVisibility::Visible);
+    static_assert(
+        static_cast<facebook::react::BackfaceVisibility>(
+            winrt::Microsoft::ReactNative::Composition::BackfaceVisibility::Hidden) ==
+        facebook::react::BackfaceVisibility::Hidden);
+    m_visual.BackfaceVisibility(
+        static_cast<winrt::Microsoft::ReactNative::Composition::BackfaceVisibility>(newViewProps.backfaceVisibility));
+  }
+
+  // Transform - TODO doesn't handle multiple of the same kind of transform -- Doesn't handle hittesting updates
+  if (oldViewProps.transform != newViewProps.transform) {
+    winrt::Windows::Foundation::Numerics::float4x4 transformMatrix;
+    transformMatrix.m11 = newViewProps.transform.matrix[0];
+    transformMatrix.m12 = newViewProps.transform.matrix[1];
+    transformMatrix.m13 = newViewProps.transform.matrix[2];
+    transformMatrix.m14 = newViewProps.transform.matrix[3];
+    transformMatrix.m21 = newViewProps.transform.matrix[4];
+    transformMatrix.m22 = newViewProps.transform.matrix[5];
+    transformMatrix.m23 = newViewProps.transform.matrix[6];
+    transformMatrix.m24 = newViewProps.transform.matrix[7];
+    transformMatrix.m31 = newViewProps.transform.matrix[8];
+    transformMatrix.m32 = newViewProps.transform.matrix[9];
+    transformMatrix.m33 = newViewProps.transform.matrix[10];
+    transformMatrix.m34 = newViewProps.transform.matrix[11];
+    transformMatrix.m41 = newViewProps.transform.matrix[12];
+    transformMatrix.m42 = newViewProps.transform.matrix[13];
+    transformMatrix.m43 = newViewProps.transform.matrix[14];
+    transformMatrix.m44 = newViewProps.transform.matrix[15];
+
+    auto centerPointPropSet = EnsureCenterPointPropertySet();
+    centerPointPropSet.InsertMatrix4x4(L"transform", transformMatrix);
+
+    EnsureTransformMatrixFacade();
+  }
+}
+
 void CompositionBaseComponentView::updateAccessibilityProps(
     const facebook::react::ViewProps &oldViewProps,
     const facebook::react::ViewProps &newViewProps) noexcept {
@@ -1286,64 +1353,11 @@ void CompositionViewComponentView::updateProps(
     m_visual.Opacity(newViewProps.opacity);
   }
 
+  // update BaseComponentView props
   updateAccessibilityProps(oldViewProps, newViewProps);
+  updateShadowProps(oldViewProps, newViewProps, m_visual);
+  updateTransformProps(oldViewProps, newViewProps, m_visual);
   updateBorderProps(oldViewProps, newViewProps);
-
-  // Shadow
-  if (oldViewProps.shadowOffset != newViewProps.shadowOffset || oldViewProps.shadowColor != newViewProps.shadowColor ||
-      oldViewProps.shadowOpacity != newViewProps.shadowOpacity ||
-      oldViewProps.shadowRadius != newViewProps.shadowRadius) {
-    auto shadow = m_compContext.CreateDropShadow();
-    shadow.Offset({newViewProps.shadowOffset.width, newViewProps.shadowOffset.height, 0});
-    shadow.Opacity(newViewProps.shadowOpacity);
-    shadow.BlurRadius(newViewProps.shadowRadius);
-    if (newViewProps.shadowColor)
-      shadow.Color(newViewProps.shadowColor.AsWindowsColor());
-    m_visual.Shadow(shadow);
-  }
-
-  if (oldViewProps.backfaceVisibility != newViewProps.backfaceVisibility) {
-    static_assert(
-        static_cast<facebook::react::BackfaceVisibility>(
-            winrt::Microsoft::ReactNative::Composition::BackfaceVisibility::Inherit) ==
-        facebook::react::BackfaceVisibility::Auto);
-    static_assert(
-        static_cast<facebook::react::BackfaceVisibility>(
-            winrt::Microsoft::ReactNative::Composition::BackfaceVisibility::Visible) ==
-        facebook::react::BackfaceVisibility::Visible);
-    static_assert(
-        static_cast<facebook::react::BackfaceVisibility>(
-            winrt::Microsoft::ReactNative::Composition::BackfaceVisibility::Hidden) ==
-        facebook::react::BackfaceVisibility::Hidden);
-    m_visual.BackfaceVisibility(
-        static_cast<winrt::Microsoft::ReactNative::Composition::BackfaceVisibility>(newViewProps.backfaceVisibility));
-  }
-
-  // Transform - TODO doesn't handle multiple of the same kind of transform -- Doesn't handle hittesting updates
-  if (oldViewProps.transform != newViewProps.transform) {
-    winrt::Windows::Foundation::Numerics::float4x4 transformMatrix;
-    transformMatrix.m11 = newViewProps.transform.matrix[0];
-    transformMatrix.m12 = newViewProps.transform.matrix[1];
-    transformMatrix.m13 = newViewProps.transform.matrix[2];
-    transformMatrix.m14 = newViewProps.transform.matrix[3];
-    transformMatrix.m21 = newViewProps.transform.matrix[4];
-    transformMatrix.m22 = newViewProps.transform.matrix[5];
-    transformMatrix.m23 = newViewProps.transform.matrix[6];
-    transformMatrix.m24 = newViewProps.transform.matrix[7];
-    transformMatrix.m31 = newViewProps.transform.matrix[8];
-    transformMatrix.m32 = newViewProps.transform.matrix[9];
-    transformMatrix.m33 = newViewProps.transform.matrix[10];
-    transformMatrix.m34 = newViewProps.transform.matrix[11];
-    transformMatrix.m41 = newViewProps.transform.matrix[12];
-    transformMatrix.m42 = newViewProps.transform.matrix[13];
-    transformMatrix.m43 = newViewProps.transform.matrix[14];
-    transformMatrix.m44 = newViewProps.transform.matrix[15];
-
-    auto centerPointPropSet = EnsureCenterPointPropertySet();
-    centerPointPropSet.InsertMatrix4x4(L"transform", transformMatrix);
-
-    EnsureTransformMatrixFacade();
-  }
 
   m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
 }

@@ -20,6 +20,7 @@
 #include <winrt/Windows.UI.Composition.h>
 #include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/Windows.Web.Http.h>
+#include "Composition/AutoDraw.h"
 #include "CompositionDynamicAutomationProvider.h"
 #include "CompositionHelpers.h"
 
@@ -107,6 +108,9 @@ void ImageComponentView::updateProps(
 
   ensureVisual();
 
+  // update BaseComponentView props
+  updateShadowProps(oldImageProps, newImageProps, m_visual);
+  updateTransformProps(oldImageProps, newImageProps, m_visual);
   updateBorderProps(oldImageProps, newImageProps);
 
   if (oldImageProps.backgroundColor != newImageProps.backgroundColor ||
@@ -218,34 +222,32 @@ void ImageComponentView::ensureDrawingSurface() noexcept {
       drawingSurfaceSize = {drawingSurfaceSize.Width + bmpGrowth, drawingSurfaceSize.Height + bmpGrowth};
     }
 
-    m_drawingSurface = m_compContext.CreateDrawingSurface(
+    m_drawingSurface = m_compContext.CreateDrawingSurfaceBrush(
         drawingSurfaceSize,
         winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
         winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
 
     DrawImage();
 
-    auto surfaceBrush = m_compContext.CreateSurfaceBrush(m_drawingSurface);
-
     switch (imageProps->resizeMode) {
       case facebook::react::ImageResizeMode::Stretch:
-        surfaceBrush.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::Fill);
+        m_drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::Fill);
         break;
       case facebook::react::ImageResizeMode::Cover:
-        surfaceBrush.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::UniformToFill);
+        m_drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::UniformToFill);
         break;
       case facebook::react::ImageResizeMode::Contain:
-        surfaceBrush.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::Uniform);
+        m_drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::Uniform);
         break;
       case facebook::react::ImageResizeMode::Repeat:
         // TODO - set AlignmentRatio back to 0.5f when switching between resizeModes once we no longer recreate the
         // drawing surface on prop changes.
-        surfaceBrush.HorizontalAlignmentRatio(0.0f);
-        surfaceBrush.VerticalAlignmentRatio(0.0f);
+        m_drawingSurface.HorizontalAlignmentRatio(0.0f);
+        m_drawingSurface.VerticalAlignmentRatio(0.0f);
         // Repeat and Center use the same Stretch logic, so we can fallthrough here.
         [[fallthrough]];
       case facebook::react::ImageResizeMode::Center: {
-        surfaceBrush.Stretch(
+        m_drawingSurface.Stretch(
             (height < frame.height && width < frame.width)
                 ? winrt::Microsoft::ReactNative::Composition::CompositionStretch::None
                 : winrt::Microsoft::ReactNative::Composition::CompositionStretch::Uniform);
@@ -255,7 +257,7 @@ void ImageComponentView::ensureDrawingSurface() noexcept {
         assert(false);
     }
 
-    m_visual.Brush(surfaceBrush);
+    m_visual.Brush(m_drawingSurface);
   }
 }
 
@@ -263,15 +265,12 @@ void ImageComponentView::DrawImage() noexcept {
   // Begin our update of the surface pixels. If this is our first update, we are required
   // to specify the entire surface, which nullptr is shorthand for (but, as it works out,
   // any time we make an update we touch the entire surface, so we always pass nullptr).
-  winrt::com_ptr<ID2D1DeviceContext> d2dDeviceContext;
   POINT offset;
 
   assert(m_context.UIDispatcher().HasThreadAccess());
 
-  winrt::com_ptr<Composition::ICompositionDrawingSurfaceInterop> drawingSurfaceInterop;
-  m_drawingSurface.as(drawingSurfaceInterop);
-
-  if (CheckForDeviceRemoved(drawingSurfaceInterop->BeginDraw(d2dDeviceContext.put(), &offset))) {
+  ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(m_drawingSurface, &offset);
+  if (auto d2dDeviceContext = autoDraw.GetRenderTarget()) {
     winrt::com_ptr<ID2D1Bitmap1> bitmap;
     winrt::check_hresult(d2dDeviceContext->CreateBitmapFromWicBitmap(m_wicbmp.get(), nullptr, bitmap.put()));
 
@@ -355,10 +354,6 @@ void ImageComponentView::DrawImage() noexcept {
       // Restore old dpi setting
       d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
     }
-
-    // Our update is done. EndDraw never indicates rendering device removed, so any
-    // failure here is unexpected and, therefore, fatal.
-    winrt::check_hresult(drawingSurfaceInterop->EndDraw());
   }
 }
 

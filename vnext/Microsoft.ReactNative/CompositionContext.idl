@@ -25,7 +25,7 @@ namespace Microsoft.ReactNative.Composition
     static COMP_NAMESPACE.Visual InnerVisual(IVisual visual);
     static COMP_NAMESPACE.DropShadow InnerDropShadow(IDropShadow shadow);
     static COMP_NAMESPACE.CompositionBrush InnerBrush(IBrush brush);
-    static COMP_NAMESPACE.ICompositionSurface InnerSurface(ICompositionDrawingSurface surface);
+    static COMP_NAMESPACE.ICompositionSurface InnerSurface(IDrawingSurfaceBrush surface);
   }
 
 } // namespace Microsoft.ReactNative.Composition

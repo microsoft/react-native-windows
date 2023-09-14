@@ -2,6 +2,63 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 08 Sep 2023 05:13:10 GMT",
+      "version": "0.0.0-canary.704",
+      "tag": "react-native-windows_v0.0.0-canary.704",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e37345b7ed2e567eec8298f6d04f4862486b6d64",
+            "comment": "extracts transform and backfaceVisibility to baseComponent"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 07 Sep 2023 05:14:09 GMT",
+      "version": "0.0.0-canary.703",
+      "tag": "react-native-windows_v0.0.0-canary.703",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "6421f83754775ea0e87a6c9a072747be17ce6a71",
+            "comment": "Be more explicit when using winrt::Windows types, to avoid conflicts with WinAppSDK"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "cff3261701fa1c13e67663a51ec5a51175c02f6b",
+            "comment": "extract shadow properties to baseComponentView"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.186",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 06 Sep 2023 05:14:10 GMT",
+      "version": "0.0.0-canary.702",
+      "tag": "react-native-windows_v0.0.0-canary.702",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ffeafc3f722bb240d49b0c4d6bfa975cb6e344db",
+            "comment": "[Fabric] Merge ISurfaceBrush and ICompositionDrawingSurface into a single object"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 01 Sep 2023 05:13:31 GMT",
       "version": "0.0.0-canary.701",
       "tag": "react-native-windows_v0.0.0-canary.701",

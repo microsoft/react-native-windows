@@ -20,15 +20,15 @@ struct ReactNativeHost : ReactNativeHostT<ReactNativeHost> {
   static ReactNative::ReactNativeHost FromContext(ReactNative::IReactContext const &reactContext) noexcept;
 
   // property PackageProviders
-  Windows::Foundation::Collections::IVector<IReactPackageProvider> PackageProviders() noexcept;
+  winrt::Windows::Foundation::Collections::IVector<IReactPackageProvider> PackageProviders() noexcept;
 
   // property InstanceSettings
   ReactNative::ReactInstanceSettings InstanceSettings() noexcept;
   void InstanceSettings(ReactNative::ReactInstanceSettings const &value) noexcept;
 
-  Windows::Foundation::IAsyncAction LoadInstance() noexcept;
-  Windows::Foundation::IAsyncAction ReloadInstance() noexcept;
-  Windows::Foundation::IAsyncAction UnloadInstance() noexcept;
+  winrt::Windows::Foundation::IAsyncAction LoadInstance() noexcept;
+  winrt::Windows::Foundation::IAsyncAction ReloadInstance() noexcept;
+  winrt::Windows::Foundation::IAsyncAction UnloadInstance() noexcept;
 
  public:
   Mso::React::IReactHost *ReactHost() noexcept;

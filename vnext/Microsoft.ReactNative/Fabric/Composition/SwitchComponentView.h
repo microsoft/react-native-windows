@@ -58,7 +58,7 @@ struct SwitchComponentView : CompositionBaseComponentView {
   winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
   winrt::Microsoft::ReactNative::ReactContext m_context;
   facebook::react::SharedViewProps m_props;
-  winrt::Microsoft::ReactNative::Composition::ICompositionDrawingSurface m_drawingSurface;
+  winrt::Microsoft::ReactNative::Composition::IDrawingSurfaceBrush m_drawingSurface;
 };
 
 } // namespace Microsoft::ReactNative

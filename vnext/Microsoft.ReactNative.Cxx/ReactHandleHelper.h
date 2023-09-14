@@ -27,7 +27,7 @@ auto TestHandle(int *) -> void;
 
 template <class T>
 inline constexpr bool HasHandleV =
-    std::is_base_of_v<Windows::Foundation::IInspectable, std::decay_t<decltype(Internal::TestHandle<T>(0))>>;
+    std::is_base_of_v<winrt::Windows::Foundation::IInspectable, std::decay_t<decltype(Internal::TestHandle<T>(0))>>;
 
 // True if two types with Handle() have the same handle.
 template <class T, std::enable_if_t<HasHandleV<T>, int> = 0>

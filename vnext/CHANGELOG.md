@@ -1,8 +1,34 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 01 Sep 2023 05:13:31 GMT and should not be manually modified.
+This log was last generated on Fri, 08 Sep 2023 05:13:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.704
+
+Fri, 08 Sep 2023 05:13:10 GMT
+
+### Changes
+
+- extracts transform and backfaceVisibility to baseComponent (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.703
+
+Thu, 07 Sep 2023 05:14:09 GMT
+
+### Changes
+
+- Be more explicit when using winrt::Windows types, to avoid conflicts with WinAppSDK (30809111+acoates-ms@users.noreply.github.com)
+- extract shadow properties to baseComponentView (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.186
+
+## 0.0.0-canary.702
+
+Wed, 06 Sep 2023 05:14:10 GMT
+
+### Changes
+
+- [Fabric] Merge ISurfaceBrush and ICompositionDrawingSurface into a single object (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.701
 
