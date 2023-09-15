@@ -70,22 +70,24 @@ function StartupTimingExample(): React.Node {
           title="Click to update React startup timing"
         />
         <View>
-          <Text>{`startTime: ${String(startUpTiming?.startTime)} ms`}</Text>
-          <Text>{`initializeRuntimeStart: ${String(
-            startUpTiming?.initializeRuntimeStart,
-          )} ms`}</Text>
+          <Text>{`startTime: ${
+            startUpTiming == null ? 'N/A' : startUpTiming.startTime
+          } ms`}</Text>
           <Text>
-            {`executeJavaScriptBundleEntryPointStart: ${String(
-              startUpTiming?.executeJavaScriptBundleEntryPointStart,
-            )} ms`}
+            {`executeJavaScriptBundleEntryPointStart: ${
+              startUpTiming == null
+                ? 'N/A'
+                : startUpTiming.executeJavaScriptBundleEntryPointStart
+            } ms`}
           </Text>
-          <Text>{`executeJavaScriptBundleEntryPointEnd: ${String(
-            startUpTiming?.executeJavaScriptBundleEntryPointEnd,
-          )} ms`}</Text>
-          <Text>{`initializeRuntimeEnd: ${String(
-            startUpTiming?.initializeRuntimeEnd,
-          )} ms`}</Text>
-          <Text>{`endTime: ${String(startUpTiming?.endTime)} ms`}</Text>
+          <Text>{`executeJavaScriptBundleEntryPointEnd: ${
+            startUpTiming == null
+              ? 'N/A'
+              : startUpTiming.executeJavaScriptBundleEntryPointEnd
+          } ms`}</Text>
+          <Text>{`endTime: ${
+            startUpTiming == null ? 'N/A' : startUpTiming.endTime
+          } ms`}</Text>
         </View>
       </View>
     </RNTesterPage>
