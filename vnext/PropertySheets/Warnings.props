@@ -34,12 +34,6 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <WarningLevel>Level4</WarningLevel>
     </ClCompile>
-    <Link>
-      <!--
-        LNK4199: /DELAYLOAD:v8jsi.dll ignored; no imports found from v8jsi.dll
-      -->
-      <AdditionalOptions>/ignore:4199 %(AdditionalOptions)</AdditionalOptions>
-    </Link>
   </ItemDefinitionGroup>
 
 </Project>
