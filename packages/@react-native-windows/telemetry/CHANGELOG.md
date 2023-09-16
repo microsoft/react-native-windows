@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Thu, 17 Aug 2023 03:55:07 GMT and should not be manually modified.
+This log was last generated on Sat, 16 Sep 2023 01:11:25 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.9
+
+Sat, 16 Sep 2023 01:11:25 GMT
+
+### Patches
+
+- Revert "[0.71] ABI-safe Hermes API and new JSI for Node-API (#11696) (#12033)" (julio.rocha@microsoft.com)
 
 ## 0.71.8
 
