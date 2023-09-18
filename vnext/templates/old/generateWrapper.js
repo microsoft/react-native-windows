@@ -6,13 +6,9 @@
  * @format
  */
 
-// This template calls the old generateWindows template system,
-// without any experimental features, i.e. the equivalence of:
-// npx react-native-windows --language cpp --projectType app
-
 const generateWindows = require('../../generate');
 
-export function makeGenerateWindowsWrapper(
+function makeGenerateWindowsWrapper(
   language = 'cpp',
   projectType = 'app',
   isDefault = false,
@@ -65,3 +61,7 @@ export function makeGenerateWindowsWrapper(
     postInstall,
   };
 }
+
+module.exports = {
+  makeGenerateWindowsWrapper,
+};
