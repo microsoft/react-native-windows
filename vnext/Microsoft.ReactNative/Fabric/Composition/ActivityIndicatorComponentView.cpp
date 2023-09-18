@@ -57,6 +57,10 @@ void ActivityIndicatorComponentView::updateProps(
     m_ActivityIndicatorVisual.updateColor(newViewProps->color.AsWindowsColor());
   }
 
+  if (newViewProps->animating != oldViewProps->animating) {
+    m_ActivityIndicatorVisual.IsVisible(newViewProps->animating);
+  }
+
   updateBorderProps(*oldViewProps, *newViewProps);
   m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
 }
