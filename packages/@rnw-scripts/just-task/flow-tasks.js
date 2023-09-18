@@ -51,9 +51,9 @@ async function downloadFilesFromReactNative(
   overwrite = false,
 ) {
   // Create target path if necessary
-  const destTypedPath = path.resolve(destRootPath, srcPath);
-  if (!fs.existsSync(destTypedPath)) {
-    fs.mkdirSync(destTypedPath, {recursive: true});
+  const destPath = path.resolve(destRootPath, srcPath);
+  if (!fs.existsSync(destPath)) {
+    fs.mkdirSync(destPath, {recursive: true});
   }
 
   const octokit = new Octokit({
