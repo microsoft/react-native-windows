@@ -488,9 +488,9 @@
   integrity sha512-6V0qdPUaiVHH3RtZeLIsc+6pDhbYzHR8ogA8w+f+Wc77DuXto19g2QUwveINoS34Uw+W8/hQDGJCx+i4n7xcng==
 
 "@babel/parser@^7.1.0", "@babel/parser@^7.11.5", "@babel/parser@^7.13.16", "@babel/parser@^7.14.7", "@babel/parser@^7.16.4", "@babel/parser@^7.20.0", "@babel/parser@^7.22.5", "@babel/parser@^7.22.7":
-  version "7.22.7"
-  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.22.7.tgz#df8cf085ce92ddbdbf668a7f186ce848c9036cae"
-  integrity sha512-7NF8pOkHP5o2vpmGgNGcfAeCvOYhGLyA3Z4eBQkT1RJlWu47n63bCs93QfJ2hIAFCil7L5P2IWhs1oToVgrL0Q==
+  version "7.22.16"
+  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.22.16.tgz#180aead7f247305cce6551bea2720934e2fa2c95"
+  integrity sha512-+gPfKv8UWeKKeJTUxe59+OobVcrYHETCsORl61EmSkmgymguYk/X5bp7GuUIXaFsc6y++v8ZxPsLSSuujqDphA==
 
 "@babel/plugin-bugfix-safari-id-destructuring-collision-in-function-expression@^7.22.5":
   version "7.22.5"
@@ -1838,11 +1838,11 @@
     strip-ansi "^6.0.0"
 
 "@jest/create-cache-key-function@^29.2.1":
-  version "29.6.2"
-  resolved "https://registry.yarnpkg.com/@jest/create-cache-key-function/-/create-cache-key-function-29.6.2.tgz#b6b74fb741a7b7d9aa399c179694db8272283527"
-  integrity sha512-oGVRMr8na9h1vUiem1E/Uoxb/NR9BdfKb7IBZ+pNWxJQmTYSbDF0dsVBAGqNU7MBQwYJDyRx0H7H/0itiqAgQg==
+  version "29.7.0"
+  resolved "https://registry.yarnpkg.com/@jest/create-cache-key-function/-/create-cache-key-function-29.7.0.tgz#793be38148fab78e65f40ae30c36785f4ad859f0"
+  integrity sha512-4QqS3LY5PBmTRHj9sAg1HLoPzqAI0uOX6wI/TRqHIcOxlFidy6YEmCQJk6FSZjNLGCeubDMfmkWL+qaLKhSGQA==
   dependencies:
-    "@jest/types" "^29.6.1"
+    "@jest/types" "^29.6.3"
 
 "@jest/environment@^29.3.0", "@jest/environment@^29.6.2", "@jest/environment@^29.6.4":
   version "29.6.4"
@@ -8633,9 +8633,9 @@ kleur@^3.0.3:
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
 lage@^2.7.1:
-  version "2.7.6"
-  resolved "https://registry.yarnpkg.com/lage/-/lage-2.7.6.tgz#16d562eb97d94b288d440b8681f536c82ba95dca"
-  integrity sha512-c7RZaXpJk1oLC7rkc7HzrZ2LTZqfKqz9FRGfjdmk4eROTq78miIKZx+wHcrR2H3NhFoZTpQiU89Q03rnyvxv0A==
+  version "2.7.8"
+  resolved "https://registry.yarnpkg.com/lage/-/lage-2.7.8.tgz#c2eca17f7999535dbecc68a108bb9e48dc118e27"
+  integrity sha512-c/jTsDReIxShCSQzaWMFkQBWHImR2NjLDE5b7LYkWZyFKnJVE6VQWibc5X0uNZyfPDEvr/GBD9OnIL+/WORmpA==
   dependencies:
     glob-hasher "^1.3.0"
   optionalDependencies:
