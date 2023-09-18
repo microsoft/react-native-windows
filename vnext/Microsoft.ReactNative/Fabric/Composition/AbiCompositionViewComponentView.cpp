@@ -13,23 +13,25 @@
 namespace Microsoft::ReactNative {
 
 AbiCompositionViewComponentView::AbiCompositionViewComponentView(
+    const winrt::Microsoft::ReactNative::IReactContext &reactContext,
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::IReactViewComponentBuilder builder)
     : Super(compContext, tag), m_builder(builder) {
   static auto const defaultProps = std::make_shared<AbiViewProps const>();
   m_props = defaultProps;
-  m_handle = Builder().CreateView(compContext);
+  m_handle = Builder().CreateView(reactContext, compContext);
   m_visual = Builder().CreateVisual(m_handle);
   OuterVisual().InsertAt(m_visual, 0);
 }
 
 std::shared_ptr<AbiCompositionViewComponentView> AbiCompositionViewComponentView::Create(
+    const winrt::Microsoft::ReactNative::IReactContext &reactContext,
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::IReactViewComponentBuilder builder) noexcept {
   return std::shared_ptr<AbiCompositionViewComponentView>(
-      new AbiCompositionViewComponentView(compContext, tag, builder));
+      new AbiCompositionViewComponentView(reactContext, compContext, tag, builder));
 }
 
 winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder &

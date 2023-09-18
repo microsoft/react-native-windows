@@ -4,6 +4,7 @@
 #include "DocString.h"
 import "CompositionSwitcher.idl";
 import "IJSValueReader.idl";
+import "IReactContext.idl";
 import "ViewProps.idl";
 
 namespace Microsoft.ReactNative.Composition
@@ -17,7 +18,7 @@ namespace Microsoft.ReactNative.Composition
 
   [experimental]
   DOC_STRING("Provides a factory method to create an instance of a ViewComponent. See @IReactCompositionViewComponentBuilder.SetCreateView")
-  delegate Object CompositionComponentFactory(ICompositionContext context);
+  delegate Object CompositionComponentFactory(Microsoft.ReactNative.IReactContext reactContext, ICompositionContext context);
 
   // TODO should make an event args, with a handled bit instead of return value
   [experimental]
