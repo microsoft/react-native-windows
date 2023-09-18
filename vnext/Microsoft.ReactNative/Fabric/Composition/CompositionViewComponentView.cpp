@@ -1434,7 +1434,7 @@ bool CompositionViewComponentView::onKeyDown(const facebook::react::KeyboardEven
 }
 
 bool CompositionViewComponentView::onKeyUp(const facebook::react::KeyboardEvent &event) noexcept {
-  for (const auto &handledKey : m_props->keyDownEvents) {
+  for (const auto &handledKey : m_props->keyUpEvents) {
     if (handledKey.code == event.code && handledKey.altKey == event.altKey && handledKey.ctrlKey == event.ctrlKey &&
         handledKey.metaKey == event.metaKey && handledKey.shiftKey == event.shiftKey &&
         handledKey.eventPhase == facebook::react::HandledKeyEvent ::EventPhase::Bubbling) {
