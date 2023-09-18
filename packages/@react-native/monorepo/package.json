@@ -23,7 +23,6 @@
     "format": "npm run prettier && npm run clang-format",
     "lint-ci": "./scripts/circleci/analyze_code.sh && yarn shellcheck",
     "lint-java": "node ./scripts/lint-java.js",
-    "lint": "eslint .",
     "prettier": "prettier --write \"./**/*.{js,md,yml,ts,tsx}\"",
     "shellcheck": "./scripts/circleci/analyze_scripts.sh",
     "start": "cd packages/rn-tester && npm run start",
