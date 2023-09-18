@@ -161,12 +161,30 @@ int64_t CompositionBaseComponentView::sendMessage(uint32_t msg, uint64_t wParam,
     event.code = CodeFromVirtualKey(static_cast<winrt::Windows::System::VirtualKey>(wParam));
     if (msg == WM_KEYUP) {
       m_eventEmitter->onKeyUp(event);
+      return onKeyUp(event) ? 0 : 1;
     } else {
       m_eventEmitter->onKeyDown(event);
+      return onKeyUp(event) ? 0 : 1;
     }
   }
 
   return 0;
+}
+
+bool CompositionBaseComponentView::onKeyDown(const facebook::react::KeyboardEvent &event) noexcept {
+  if (m_parent) {
+    return m_parent->onKeyDown(event);
+  }
+
+  return false;
+}
+
+bool CompositionBaseComponentView::onKeyUp(const facebook::react::KeyboardEvent &event) noexcept {
+  if (m_parent) {
+    return m_parent->onKeyUp(event);
+  }
+
+  return false;
 }
 
 RECT CompositionBaseComponentView::getClientRect() const noexcept {
@@ -1400,6 +1418,32 @@ bool CompositionViewComponentView::ScrollWheel(facebook::react::Point pt, int32_
     return true;
 
   return false;
+}
+
+bool CompositionViewComponentView::onKeyDown(const facebook::react::KeyboardEvent &event) noexcept {
+  for (const auto &handledKey : m_props->keyDownEvents) {
+    if (handledKey.code == event.code && handledKey.altKey == event.altKey && handledKey.ctrlKey == event.ctrlKey &&
+        handledKey.metaKey == event.metaKey && handledKey.shiftKey == event.shiftKey &&
+        handledKey.eventPhase == facebook::react::HandledKeyEvent ::EventPhase::Bubbling) {
+      // Stop bubbling event if marked as handled from JS
+      return true;
+    }
+  }
+
+  return Super::onKeyDown(event);
+}
+
+bool CompositionViewComponentView::onKeyUp(const facebook::react::KeyboardEvent &event) noexcept {
+  for (const auto &handledKey : m_props->keyDownEvents) {
+    if (handledKey.code == event.code && handledKey.altKey == event.altKey && handledKey.ctrlKey == event.ctrlKey &&
+        handledKey.metaKey == event.metaKey && handledKey.shiftKey == event.shiftKey &&
+        handledKey.eventPhase == facebook::react::HandledKeyEvent ::EventPhase::Bubbling) {
+      // Stop bubbling event if marked as handled from JS
+      return true;
+    }
+  }
+
+  return Super::onKeyUp(event);
 }
 
 void CompositionViewComponentView::updateState(

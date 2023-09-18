@@ -38,5 +38,16 @@ inline static bool operator!=(WindowsViewEvents const &lhs, WindowsViewEvents co
   return lhs.bits != rhs.bits;
 }
 
+struct HandledKeyEvent {
+  enum class EventPhase { Capturing = 1, Bubbling = 3 };
+
+  EventPhase eventPhase{EventPhase::Bubbling};
+  bool altKey{false};
+  bool ctrlKey{false};
+  bool metaKey{false};
+  bool shiftKey{false};
+  std::string code;
+};
+
 } // namespace react
 } // namespace facebook

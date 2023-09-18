@@ -28,7 +28,7 @@ class WindowsViewProps {
   bool focusable{false};
   // std::optional<std::string> overflowAnchor{};
   // std::optional<std::string> tooltip{};
-  // std::vector<HandledKeyEvent> keyDownEvents{};
-  // std::vector<HandledKeyEvent> keyUpEvents{};
+  std::vector<HandledKeyEvent> keyDownEvents{};
+  std::vector<HandledKeyEvent> keyUpEvents{};
 };
 } // namespace facebook::react
