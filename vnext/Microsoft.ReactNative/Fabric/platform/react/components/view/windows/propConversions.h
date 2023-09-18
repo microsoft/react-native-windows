@@ -4,19 +4,15 @@
 #pragma once
 
 #include <react/debug/react_native_expect.h>
-#include "primitives.h"
 #include <react/renderer/core/PropsParserContext.h>
 #include <react/renderer/core/propsConversions.h>
+#include "primitives.h"
 
 namespace facebook::react {
 
-inline void fromRawValue(
-  const PropsParserContext& context,
-  const RawValue& value,
-  HandledKeyEvent::EventPhase& result)
-{
-  if (value.hasType<int>())
-  {
+inline void
+fromRawValue(const PropsParserContext &context, const RawValue &value, HandledKeyEvent::EventPhase &result) {
+  if (value.hasType<int>()) {
     result = (HandledKeyEvent::EventPhase)(int)value;
     return;
   }
@@ -24,10 +20,7 @@ inline void fromRawValue(
   LOG(ERROR) << "Unsupported HandledKeyEvent::EventPhase type";
 }
 
-inline void fromRawValue(
-    const PropsParserContext &context,
-    const RawValue &value,
-    HandledKeyEvent &result) {
+inline void fromRawValue(const PropsParserContext &context, const RawValue &value, HandledKeyEvent &result) {
   if (value.hasType<butter::map<std::string, RawValue>>()) {
     auto map = (butter::map<std::string, RawValue>)value;
 
