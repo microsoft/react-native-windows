@@ -63,6 +63,7 @@ async function downloadFlowTypes(overwrite = false) {
   }
 
   const octokit = new Octokit({
+    auth: process.env.PLATFORM_OVERRIDE_GITHUB_TOKEN, // Used to make sure CI doesn't get rate-throttled
     userAgent: 'RNW Just Task Script',
   });
 
