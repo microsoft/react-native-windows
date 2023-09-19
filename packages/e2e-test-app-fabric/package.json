@@ -13,13 +13,13 @@
     "e2etest:debug": "jest --config ./jest.debug.config.js"
   },
   "dependencies": {
-    "@react-native-windows/automation-channel": "^0.12.43",
+    "@react-native-windows/automation-channel": "^0.12.44",
     "@react-native-windows/tester": "0.0.1",
     "@typescript-eslint/eslint-plugin": "^5.21.0",
     "@typescript-eslint/parser": "^5.21.0",
     "react": "18.2.0",
     "react-native": "0.73.0-nightly-20230728-c168a4f88",
-    "react-native-windows": "^0.0.0-canary.704"
+    "react-native-windows": "^0.0.0-canary.705"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
@@ -27,8 +27,8 @@
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-typescript": "^7.8.3",
     "@babel/runtime": "^7.8.4",
-    "@react-native-windows/automation": "^0.3.125",
-    "@react-native-windows/automation-commands": "^0.1.145",
+    "@react-native-windows/automation": "^0.3.126",
+    "@react-native-windows/automation-commands": "^0.1.146",
     "@react-native/babel-plugin-codegen": "0.73.0",
     "@rnw-scripts/babel-node-config": "2.3.1",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
