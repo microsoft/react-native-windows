@@ -232,7 +232,7 @@ void CompositionEventHandler::onKeyDown(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
   if (auto focusedComponent = RootComponentView().GetFocusedComponent()) {
-    focusedComponent->onKeyDown(keyboardSource, args);
+    focusedComponent->onKeyDown(source, args);
 
     if (args.Handled())
       return;
@@ -264,7 +264,7 @@ void CompositionEventHandler::onKeyUp(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
   if (auto focusedComponent = RootComponentView().GetFocusedComponent()) {
-    focusedComponent->onKeyUp(keyboardSource, args);
+    focusedComponent->onKeyUp(source, args);
 
     if (args.Handled())
       return;
