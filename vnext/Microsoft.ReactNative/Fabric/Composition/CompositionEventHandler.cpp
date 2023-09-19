@@ -216,48 +216,59 @@ int64_t CompositionEventHandler::SendMessage(uint32_t msg, uint64_t wParam, int6
           wParam,
           lParam);
       auto keyboardSource = winrt::make<CompositionKeyboardSource>(this);
-
-      if (focusedComponent) {
-        if (msg == WM_KEYDOWN || msg == WM_SYSKEYDOWN) {
-          focusedComponent->onKeyDown(keyboardSource, args); // TODO should onSysKeyDown be a separate event?
-        } else {
-          focusedComponent->onKeyUp(keyboardSource, args);
-        }
-        winrt::get_self<CompositionKeyboardSource>(keyboardSource)->Disconnect();
-
-        if (args.Handled())
-          return 1;
+      if (msg == WM_KEYDOWN || msg == WM_SYSKEYDOWN) {
+        onKeyDown(keyboardSource, args);
+      } else {
+        onKeyUp(keyboardSource, args);
       }
-
-      bool fShift = GetKeyState(winrt::Windows::System::VirtualKey::Shift) ==
-          winrt::Windows::UI::Core::CoreVirtualKeyStates::Down;
-      bool fCtrl = GetKeyState(winrt::Windows::System::VirtualKey::Control) ==
-          winrt::Windows::UI::Core::CoreVirtualKeyStates::Down;
-
-      if (fShift && fCtrl && msg == WM_KEYDOWN &&
-          args.Key() == static_cast<winrt::Windows::System::VirtualKey>(VkKeyScanA('d')) &&
-          Mso::React::ReactOptions::UseDeveloperSupport(m_context.Properties().Handle())) {
-        auto contextSelf = winrt::get_self<React::implementation::ReactContext>(m_context.Handle());
-        Microsoft::ReactNative::DevMenuManager::Show(Mso::CntPtr<Mso::React::IReactContext>(&contextSelf->GetInner()));
-        args.Handled(true);
-        return 1;
-      }
-
-      if (!fCtrl && msg == WM_KEYDOWN && args.Key() == winrt::Windows::System::VirtualKey::Tab) {
-        if (RootComponentView().TryMoveFocus(!fShift)) {
-          args.Handled(true);
-          return 1;
-        }
-
-        // TODO notify rootview that host should move focus
-        return 1;
-      }
-
-      return 0;
+      winrt::get_self<CompositionKeyboardSource>(keyboardSource)->Disconnect();
     }
   }
 
   return 0;
+}
+
+void CompositionEventHandler::onKeyDown(
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
+  if (focusedComponent) {
+    focusedComponent->onKeyDown(keyboardSource, args);
+
+    if (args.Handled())
+      return;
+  }
+
+  bool fShift = source.GetKeyState(winrt::Windows::System::VirtualKey::Shift) ==
+      winrt::Windows::UI::Core::CoreVirtualKeyStates::Down;
+  bool fCtrl =
+      GetKeyState(winrt::Windows::System::VirtualKey::Control) == winrt::Windows::UI::Core::CoreVirtualKeyStates::Down;
+
+  if (fShift && fCtrl && args.Key() == static_cast<winrt::Windows::System::VirtualKey>(VkKeyScanA('d')) &&
+      Mso::React::ReactOptions::UseDeveloperSupport(m_context.Properties().Handle())) {
+    auto contextSelf = winrt::get_self<React::implementation::ReactContext>(m_context.Handle());
+    Microsoft::ReactNative::DevMenuManager::Show(Mso::CntPtr<Mso::React::IReactContext>(&contextSelf->GetInner()));
+    args.Handled(true);
+    return;
+  }
+
+  if (!fCtrl && args.Key() == winrt::Windows::System::VirtualKey::Tab) {
+    if (RootComponentView().TryMoveFocus(!fShift)) {
+      args.Handled(true);
+    }
+
+    // TODO notify rootview that host should move focus
+  }
+}
+
+void CompositionEventHandler::onKeyUp(
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
+  if (focusedComponent) {
+    focusedComponent->onKeyUp(keyboardSource, args);
+
+    if (args.Handled())
+      return;
+  }
 }
 
 std::vector<IComponentView *> GetTouchableViewsInPathToRoot(IComponentView *view) {

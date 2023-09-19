@@ -46,6 +46,13 @@ class CompositionEventHandler {
   void PointerUp(uint32_t msg, uint64_t wParam, int64_t lParam);
   void MouseMove(uint32_t msg, uint64_t wParam, int64_t lParam);
 
+  void onKeyDown(
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept;
+  void onKeyUp(
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept;
+
   facebook::react::SurfaceId SurfaceId() noexcept;
   RootComponentView &RootComponentView() noexcept;
 

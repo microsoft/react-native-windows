@@ -586,7 +586,8 @@ void WindowsTextInputComponentView::onKeyDown(
 
     LRESULT lresult;
     DrawBlock db(*this);
-    auto hr = m_textServices->TxSendMessage(WM_KEYDOWN, wParam, lParam, &lresult);
+    auto hr = m_textServices->TxSendMessage(
+        args.KeyStatus().IsMenuKeyDown ? WM_SYSKEYDOWN : WM_KEYDOWN, wParam, lParam, &lresult);
     if (hr >= 0 && lresult) {
       args.Handled(true);
     }
@@ -616,7 +617,8 @@ void WindowsTextInputComponentView::onKeyUp(
 
     LRESULT lresult;
     DrawBlock db(*this);
-    auto hr = m_textServices->TxSendMessage(WM_KEYDOWN, wParam, lParam, &lresult);
+    auto hr = m_textServices->TxSendMessage(
+        args.KeyStatus().IsMenuKeyDown ? WM_SYSKEYUP : WM_KEYUP, wParam, lParam, &lresult);
     if (hr >= 0 && lresult) {
       args.Handled(true);
     }
