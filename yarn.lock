@@ -2859,9 +2859,9 @@
     chalk "*"
 
 "@types/diff-match-patch@^1.0.32":
-  version "1.0.32"
-  resolved "https://registry.yarnpkg.com/@types/diff-match-patch/-/diff-match-patch-1.0.32.tgz#d9c3b8c914aa8229485351db4865328337a3d09f"
-  integrity sha512-bPYT5ECFiblzsVzyURaNhljBH2Gh1t9LowgUwciMrNAhFewLkHT2H0Mto07Y4/3KCOGZHRQll3CTtQZ0X11D/A==
+  version "1.0.33"
+  resolved "https://registry.yarnpkg.com/@types/diff-match-patch/-/diff-match-patch-1.0.33.tgz#aaef78118ad1f58d75cd7a194cd0a5dafe38820c"
+  integrity sha512-vj/5GCXzmfMueY4ltw0VAmcmT73uy//wA+epKjvzqwIRkFO2Ir2nwawFfMD/VlAjeeOfeRinoxr8tbyfunaL2Q==
 
 "@types/envinfo@^7.8.1":
   version "7.8.1"
