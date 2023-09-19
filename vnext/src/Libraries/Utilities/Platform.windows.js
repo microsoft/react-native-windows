@@ -6,16 +6,14 @@
  * @flow strict
  */
 
+import type {
+  Platform as PlatformType,
+  PlatformSelectSpec,
+} from './Platform.flow';
+
 import NativePlatformConstantsWin from './NativePlatformConstantsWin';
 
-export type PlatformSelectSpec<T> = {
-  windows?: T,
-  native?: T,
-  default?: T,
-  ...
-};
-
-const Platform = {
+const Platform: PlatformType = {
   __constants: null,
   OS: 'windows',
   // $FlowFixMe[unsafe-getters-setters]

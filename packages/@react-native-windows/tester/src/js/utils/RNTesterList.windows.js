@@ -184,6 +184,11 @@ const Components: Array<RNTesterModuleInfo> = [
     key: 'LegacyTextHitTestTest',
     module: require('../examples-win/LegacyTests/TextHitTestPage'),
   },
+  {
+    key: 'PerformanceComparisonExample',
+    category: 'Basic',
+    module: require('../examples/Performance/PerformanceComparisonExample'),
+  },
 ];
 
 const APIs: Array<RNTesterModuleInfo> = ([
