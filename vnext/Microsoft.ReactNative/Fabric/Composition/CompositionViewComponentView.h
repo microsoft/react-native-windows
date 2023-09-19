@@ -35,8 +35,12 @@ struct CompositionBaseComponentView : public IComponentView,
   bool runOnChildren(bool forward, Mso::Functor<bool(IComponentView &)> &fn) noexcept override;
   void onFocusLost() noexcept override;
   void onFocusGained() noexcept override;
-  bool onKeyDown(const facebook::react::KeyboardEvent &event) noexcept override;
-  bool onKeyUp(const facebook::react::KeyboardEvent &event) noexcept override;
+  void onKeyDown(
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
+  void onKeyUp(
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
   bool focusable() const noexcept override;
   std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept
       override;
@@ -129,8 +133,12 @@ struct CompositionViewComponentView : public CompositionBaseComponentView {
   void finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept override;
   void prepareForRecycle() noexcept override;
   bool focusable() const noexcept override;
-  bool onKeyDown(const facebook::react::KeyboardEvent &event) noexcept override;
-  bool onKeyUp(const facebook::react::KeyboardEvent &event) noexcept override;
+  void onKeyDown(
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
+  void onKeyUp(
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
   std::string DefaultControlType() const noexcept override;
 
   facebook::react::Props::Shared props() noexcept override;

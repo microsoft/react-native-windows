@@ -31,6 +31,10 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\ComponentViewRegistry.cpp">
       <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\Composition.Input.cpp">
+      <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
+      <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\Composition.Input.idl</DependentUpon>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionContextHelper.cpp">
       <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
       <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionContext.idl</DependentUpon>
@@ -530,6 +534,7 @@
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\RedBoxHandler.idl" />
   </ItemGroup>
   <ItemGroup Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'">
+    <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Composition.Input.idl" />
     <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionContext.idl" />
     <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionHwndHost.idl" />
     <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionRootView.idl" />

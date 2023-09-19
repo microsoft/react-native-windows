@@ -323,6 +323,12 @@
       "baseHash": "625be8cb73e6fcbd89643812e322beed7208ac79"
     },
     {
+      "type": "derived",
+      "file": "src/Libraries/Components/Switch/Switch.windows.js",
+      "baseFile": "packages/react-native/Libraries/Components/Switch/Switch.js",
+      "baseHash": "31b8cd62b5acb1a237f5373d1618869f5afebdd3"
+    },
+    {
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
