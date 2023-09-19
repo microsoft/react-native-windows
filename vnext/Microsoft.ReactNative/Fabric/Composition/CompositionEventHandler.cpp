@@ -205,6 +205,7 @@ int64_t CompositionEventHandler::SendMessage(uint32_t msg, uint64_t wParam, int6
     case WM_KEYUP:
     case WM_SYSKEYDOWN:
     case WM_SYSKEYUP: {
+      auto focusedComponent = RootComponentView().GetFocusedComponent();
       auto args = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::KeyRoutedEventArgs>(
           focusedComponent
               ? focusedComponent->tag()
