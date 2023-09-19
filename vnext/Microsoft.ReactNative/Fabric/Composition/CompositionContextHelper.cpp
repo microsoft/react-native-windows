@@ -846,6 +846,7 @@ struct CompCaretVisual : winrt::implements<CompCaretVisual, winrt::Microsoft::Re
       m_compVisual.StartAnimation(L"opacity", m_opacityAnimation);
     } else {
       m_compVisual.StopAnimation(L"opacity");
+      m_compVisual.Opacity(0.0f);
     }
   }
 

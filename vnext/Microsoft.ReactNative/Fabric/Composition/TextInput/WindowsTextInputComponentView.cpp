@@ -583,6 +583,7 @@ void WindowsTextInputComponentView::unmountChildComponentView(
 void WindowsTextInputComponentView::onFocusLost() noexcept {
   Super::onFocusLost();
   sendMessage(WM_KILLFOCUS, 0, 0);
+  m_caretVisual.IsVisible(false);
 }
 
 void WindowsTextInputComponentView::onFocusGained() noexcept {
