@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 19 Sep 2023 05:13:03 GMT",
+      "version": "0.0.0-canary.705",
+      "tag": "react-native-windows_v0.0.0-canary.705",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "3eec5ce50936eb97cd2e867ad80fa7d5d5a60c17",
+            "comment": "[Fabric] Custom native components should have access to the ReactContext"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3cf0d7ad6b48d94e1b56f3299ee516aac67e55f9",
+            "comment": "add Fabric ActivityIndicator animating property"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 08 Sep 2023 05:13:10 GMT",
       "version": "0.0.0-canary.704",
       "tag": "react-native-windows_v0.0.0-canary.704",

@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 08 Sep 2023 05:13:10 GMT and should not be manually modified.
+This log was last generated on Tue, 19 Sep 2023 05:13:03 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.705
+
+Tue, 19 Sep 2023 05:13:03 GMT
+
+### Changes
+
+- [Fabric] Custom native components should have access to the ReactContext (30809111+acoates-ms@users.noreply.github.com)
+- add Fabric ActivityIndicator animating property (tatianakapos@microsoft.com)
 
 ## 0.0.0-canary.704
 
