@@ -205,7 +205,6 @@ int64_t CompositionEventHandler::SendMessage(uint32_t msg, uint64_t wParam, int6
     case WM_KEYUP:
     case WM_SYSKEYDOWN:
     case WM_SYSKEYUP: {
-      auto focusedComponent = RootComponentView().GetFocusedComponent();
       auto args = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::KeyRoutedEventArgs>(
           focusedComponent
               ? focusedComponent->tag()
@@ -231,7 +230,7 @@ int64_t CompositionEventHandler::SendMessage(uint32_t msg, uint64_t wParam, int6
 void CompositionEventHandler::onKeyDown(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
-  if (focusedComponent) {
+  if (auto focusedComponent = RootComponentView().GetFocusedComponent()) {
     focusedComponent->onKeyDown(keyboardSource, args);
 
     if (args.Handled())
@@ -263,7 +262,7 @@ void CompositionEventHandler::onKeyDown(
 void CompositionEventHandler::onKeyUp(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
-  if (focusedComponent) {
+  if (auto focusedComponent = RootComponentView().GetFocusedComponent()) {
     focusedComponent->onKeyUp(keyboardSource, args);
 
     if (args.Handled())
