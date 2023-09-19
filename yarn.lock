@@ -8894,7 +8894,7 @@ metro-config@0.76.0:
     metro-core "0.76.0"
     metro-runtime "0.76.0"
 
-metro-config@0.77.0, metro-config@^0.77.0:
+metro-config@0.77.0:
   version "0.77.0"
   resolved "https://registry.yarnpkg.com/metro-config/-/metro-config-0.77.0.tgz#dadcafd6a95b1dc0de2e6029e100e59c53af777d"
   integrity sha512-Ac5TjRC2ULLGObuWJYAzpgJFjAx1ytCcV0GyA56BWo0MEaugW/90Rj6DX/eWywIO8NySnEhB0XalPCTcqOEPvw==
