@@ -829,6 +829,10 @@ struct CompCaretVisual : winrt::implements<CompCaretVisual, winrt::Microsoft::Re
     return m_visual;
   }
 
+  void updateColor(winrt::Windows::UI::Color color) noexcept {
+    m_compVisual.Brush(m_compositor.CreateColorBrush(color));
+  }
+
   void Size(winrt::Windows::Foundation::Numerics::float2 size) noexcept {
     m_compVisual.Size(size);
   }
