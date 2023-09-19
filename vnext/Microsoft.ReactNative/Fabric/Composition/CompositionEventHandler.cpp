@@ -205,7 +205,7 @@ int64_t CompositionEventHandler::SendMessage(uint32_t msg, uint64_t wParam, int6
     case WM_KEYUP:
     case WM_SYSKEYDOWN:
     case WM_SYSKEYUP: {
-     auto focusedComponent = RootComponentView().GetFocusedComponent();
+      auto focusedComponent = RootComponentView().GetFocusedComponent();
       auto args = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::KeyRoutedEventArgs>(
           focusedComponent
               ? focusedComponent->tag()
@@ -230,9 +230,9 @@ int64_t CompositionEventHandler::SendMessage(uint32_t msg, uint64_t wParam, int6
       }
 
       bool fShift = GetKeyState(winrt::Windows::System::VirtualKey::Shift) ==
-                     winrt::Windows::UI::Core::CoreVirtualKeyStates::Down;
+          winrt::Windows::UI::Core::CoreVirtualKeyStates::Down;
       bool fCtrl = GetKeyState(winrt::Windows::System::VirtualKey::Control) ==
-                    winrt::Windows::UI::Core::CoreVirtualKeyStates::Down;
+          winrt::Windows::UI::Core::CoreVirtualKeyStates::Down;
 
       if (fShift && fCtrl && msg == WM_KEYDOWN &&
           args.Key() == static_cast<winrt::Windows::System::VirtualKey>(VkKeyScanA('d')) &&

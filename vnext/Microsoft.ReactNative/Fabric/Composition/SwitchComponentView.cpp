@@ -237,9 +237,11 @@ int64_t SwitchComponentView::sendMessage(uint32_t msg, uint64_t wParam, int64_t 
   switch (msg) {
     case WM_LBUTTONDOWN:
     case WM_POINTERDOWN: {
+      const auto switchProps = std::static_pointer_cast<const facebook::react::SwitchProps>(m_props);
+
       if (!switchProps->disabled) {
         if (auto root = rootComponentView()) {
-            root->TrySetFocusedComponent(*this);
+          root->TrySetFocusedComponent(*this);
         }
         toggle();
       }

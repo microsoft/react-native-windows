@@ -35,6 +35,7 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
 
   void SetKeyDownHandler(KeyHandler impl) noexcept;
   void SetKeyUpHandler(KeyHandler impl) noexcept;
+
  public:
   IComponentProps CreateProps(ViewProps props) noexcept;
 
@@ -66,7 +67,7 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
   UpdateFinalizer m_finalizer;
   VisualCreator m_visualCreator;
   MessageHandler m_messageHandler;
-    KeyHandler m_keyUp;
+  KeyHandler m_keyUp;
   KeyHandler m_keyDown;
 };
 

@@ -1396,14 +1396,15 @@ void CompositionViewComponentView::onKeyDown(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
   auto eventCode = CodeFromVirtualKey(args.Key());
   bool fShift = source.GetKeyState(winrt::Windows::System::VirtualKey::Shift) !=
-                 winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
+      winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
   bool fAlt = source.GetKeyState(winrt::Windows::System::VirtualKey::Menu) !=
-               winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
+      winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
   bool fCtrl = source.GetKeyState(winrt::Windows::System::VirtualKey::Control) !=
-                winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
+      winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
   bool fMeta = (source.GetKeyState(winrt::Windows::System::VirtualKey::LeftWindows) !=
-                winrt::Windows::UI::Core::CoreVirtualKeyStates::None) || (source.GetKeyState(winrt::Windows::System::VirtualKey::RightWindows) !=
-                  winrt::Windows::UI::Core::CoreVirtualKeyStates::None);
+                winrt::Windows::UI::Core::CoreVirtualKeyStates::None) ||
+      (source.GetKeyState(winrt::Windows::System::VirtualKey::RightWindows) !=
+       winrt::Windows::UI::Core::CoreVirtualKeyStates::None);
 
   if (args.OriginalSource() == tag()) {
     facebook::react::KeyboardEvent event;
@@ -1434,14 +1435,15 @@ void CompositionViewComponentView::onKeyUp(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
   auto eventCode = CodeFromVirtualKey(args.Key());
   bool fShift = source.GetKeyState(winrt::Windows::System::VirtualKey::LeftShift) !=
-                 winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
+      winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
   bool fAlt = source.GetKeyState(winrt::Windows::System::VirtualKey::LeftMenu) !=
-               winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
+      winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
   bool fCtrl = source.GetKeyState(winrt::Windows::System::VirtualKey::LeftControl) !=
-                winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
+      winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
   bool fMeta = (source.GetKeyState(winrt::Windows::System::VirtualKey::LeftWindows) !=
-    winrt::Windows::UI::Core::CoreVirtualKeyStates::None) || (source.GetKeyState(winrt::Windows::System::VirtualKey::RightWindows) !=
-      winrt::Windows::UI::Core::CoreVirtualKeyStates::None);
+                winrt::Windows::UI::Core::CoreVirtualKeyStates::None) ||
+      (source.GetKeyState(winrt::Windows::System::VirtualKey::RightWindows) !=
+       winrt::Windows::UI::Core::CoreVirtualKeyStates::None);
 
   if (args.OriginalSource() == tag()) {
     facebook::react::KeyboardEvent event;

@@ -38,7 +38,7 @@ class CompositionEventHandler {
   void ScrollWheel(facebook::react::Point pt, uint32_t delta);
   void RemoveTouchHandlers();
   winrt::Windows::UI::Core::CoreVirtualKeyStates GetKeyState(winrt::Windows::System::VirtualKey key) noexcept;
-  
+
  private:
   void ButtonDown(uint32_t msg, uint64_t wParam, int64_t lParam);
   void PointerPressed(uint32_t msg, uint64_t wParam, int64_t lParam);
