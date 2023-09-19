@@ -13,17 +13,22 @@
 import type {ColorValue, NativeColorValue} from './StyleSheet';
 import type {ProcessedColorValue} from './processColor';
 
+/** The actual type of the opaque NativeColorValue on Windows platform */
 type LocalNativeColorValue = {
   windowsbrush?: Array<string>,
 };
 
 export const PlatformColor = (...names: Array<string>): ColorValue => {
+  /* $FlowExpectedError[incompatible-return]
+   * LocalNativeColorValue is the actual type of the opaque NativeColorValue on Windows platform */
   return ({windowsbrush: names}: LocalNativeColorValue);
 };
 
 export const normalizeColorObject = (
   color: NativeColorValue,
 ): ?ProcessedColorValue => {
+  /* $FlowExpectedError[incompatible-cast]
+   * LocalNativeColorValue is the actual type of the opaque NativeColorValue on Windows platform */
   if ('windowsbrush' in (color: LocalNativeColorValue)) {
     return color;
   }

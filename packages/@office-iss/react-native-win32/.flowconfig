@@ -33,6 +33,7 @@
 <PROJECT_ROOT>/Libraries/Types/CoreEventTypes.js
 <PROJECT_ROOT>/Libraries/Utilities/DeviceInfo.js
 <PROJECT_ROOT>/Libraries/Utilities/Dimensions.js
+<PROJECT_ROOT>/Libraries/Utilities/Platform.flow.js
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorCodeFrame.js
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorHeader.js
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorStackFrame.js

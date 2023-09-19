@@ -486,6 +486,13 @@
     },
     {
       "type": "derived",
+      "file": "src/Libraries/Utilities/Platform.flow.win32.js",
+      "baseFile": "packages/react-native/Libraries/Utilities/Platform.flow.js",
+      "baseHash": "c0a203e8d15f99ff00edaab6c4a40a49606a99f0",
+      "issue": 0
+    },
+    {
+      "type": "derived",
       "file": "src/Libraries/Utilities/Platform.win32.js",
       "baseFile": "packages/react-native/Libraries/Utilities/Platform.android.js",
       "baseHash": "a09b2fdd9859584069281df3311ef188a5640b00"
