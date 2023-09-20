@@ -54,8 +54,8 @@ inline void fromRawValue(const PropsParserContext &context, const RawValue &valu
     }
   }
   // Windows]
-
   result = colorFromComponents(colorComponents);
+  return;
 }
 
 #ifdef ANDROID

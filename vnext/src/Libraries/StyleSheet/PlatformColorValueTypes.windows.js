@@ -10,21 +10,26 @@
 
 'use strict';
 
-import type {ColorValue} from './StyleSheet';
+import type {ColorValue, NativeColorValue} from './StyleSheet';
 import type {ProcessedColorValue} from './processColor';
 
-export opaque type NativeColorValue = {
+/** The actual type of the opaque NativeColorValue on Windows platform */
+type LocalNativeColorValue = {
   windowsbrush?: Array<string>,
 };
 
 export const PlatformColor = (...names: Array<string>): ColorValue => {
-  return {windowsbrush: names};
+  /* $FlowExpectedError[incompatible-return]
+   * LocalNativeColorValue is the actual type of the opaque NativeColorValue on Windows platform */
+  return ({windowsbrush: names}: LocalNativeColorValue);
 };
 
 export const normalizeColorObject = (
   color: NativeColorValue,
 ): ?ProcessedColorValue => {
-  if ('windowsbrush' in color) {
+  /* $FlowExpectedError[incompatible-cast]
+   * LocalNativeColorValue is the actual type of the opaque NativeColorValue on Windows platform */
+  if ('windowsbrush' in (color: LocalNativeColorValue)) {
     return color;
   }
   return null;

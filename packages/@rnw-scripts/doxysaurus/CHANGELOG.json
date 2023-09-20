@@ -2,6 +2,27 @@
   "name": "@rnw-scripts/doxysaurus",
   "entries": [
     {
+      "date": "Wed, 20 Sep 2023 05:17:49 GMT",
+      "version": "0.4.16",
+      "tag": "@rnw-scripts/doxysaurus_v0.4.16",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/doxysaurus",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.28",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/doxysaurus",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.16",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 28 Jul 2023 05:14:53 GMT",
       "tag": "@rnw-scripts/doxysaurus_v0.4.15",
       "version": "0.4.15",
