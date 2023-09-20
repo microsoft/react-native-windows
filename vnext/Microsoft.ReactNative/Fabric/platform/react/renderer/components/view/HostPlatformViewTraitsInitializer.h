@@ -1,9 +1,5 @@
-/*
- * Copyright (c) Meta Platforms, Inc. and affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 
 #pragma once
 
@@ -13,20 +9,15 @@
 namespace facebook::react::HostPlatformViewTraitsInitializer {
 
 inline bool formsStackingContext(ViewProps const &viewProps) {
-  return viewProps.elevation != 0;
+  return viewProps.windowsEvents.bits.any();
 }
 
 inline bool formsView(ViewProps const &viewProps) {
-#ifdef ANDROID
-  return viewProps.nativeBackground.has_value() || viewProps.nativeForeground.has_value() || viewProps.focusable ||
-      viewProps.hasTVPreferredFocus || viewProps.needsOffscreenAlphaCompositing ||
-      viewProps.renderToHardwareTextureAndroid;
-#endif
   return viewProps.focusable;
 }
 
 inline ShadowNodeTraits::Trait extraTraits() {
-  return ShadowNodeTraits::Trait::AndroidMapBufferPropsSupported;
+  return ShadowNodeTraits::Trait::None;
 }
 
 } // namespace facebook::react::HostPlatformViewTraitsInitializer

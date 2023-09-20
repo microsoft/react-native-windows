@@ -93,12 +93,6 @@
     },
     {
       "type": "derived",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/BaseViewProps.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/BaseViewProps.h",
-      "baseHash": "cff8b44d2c675d73f26dbb5562f4caa3a3fb5cf0"
-    },
-    {
-      "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/primitives.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/primitives.h",
       "baseHash": "ad53fd4887145b0b804d730fd6cd8731b029419d"
@@ -114,12 +108,6 @@
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/TouchEventEmitter.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/TouchEventEmitter.h",
       "baseHash": "a76c1bf4ee03ffa180990c86d31af2c3d9d08d62"
-    },
-    {
-      "type": "derived",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/ViewShadowNode.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/ViewShadowNode.cpp",
-      "baseHash": "de36b7ec602114a18ec8e1f4a0371ac8bbc99743"
     },
     {
       "type": "patch",
