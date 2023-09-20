@@ -10746,6 +10746,7 @@ exports[`snapshotAllPages FlatList 1`] = `
         onScroll={[Function]}
         onScrollBeginDrag={[Function]}
         onScrollEndDrag={[Function]}
+        onScrollToIndexFailed={[Function]}
         onStartReached={[Function]}
         onViewableItemsChanged={[Function]}
         refreshControl={
@@ -10757,7 +10758,7 @@ exports[`snapshotAllPages FlatList 1`] = `
         refreshing={false}
         removeClippedSubviews={false}
         renderItem={[Function]}
-        scrollEventThrottle={0.0001}
+        scrollEventThrottle={50}
         stickyHeaderIndices={[]}
         style={{}}
         viewabilityConfig={
@@ -31785,6 +31786,489 @@ exports[`snapshotAllPages Performance API Examples 2`] = `
           endTime: N/A ms
         </Text>
       </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages Performance Comparison Examples 1`] = `
+<View
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      {
+        "backgroundColor": "#f2f2f7ff",
+      },
+    ]
+  }
+>
+  <View
+    style={
+      {
+        "flex": 1,
+        "paddingVertical": 10,
+        "rowGap": 30,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "paddingHorizontal": 5,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "borderBottomWidth": 1,
+            "borderColor": "gray",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginBottom": 5,
+          }
+        }
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "alignItems": "center",
+                "backgroundColor": "#d3d3d3",
+                "borderColor": "#696969",
+                "borderRadius": 8,
+                "borderWidth": 1,
+                "justifyContent": "center",
+                "margin": 5,
+                "padding": 10,
+              },
+              false,
+            ]
+          }
+        >
+          <Text>
+            Show Bad
+          </Text>
+        </View>
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "alignItems": "center",
+                "backgroundColor": "#d3d3d3",
+                "borderColor": "#696969",
+                "borderRadius": 8,
+                "borderWidth": 1,
+                "justifyContent": "center",
+                "margin": 5,
+                "padding": 10,
+              },
+              false,
+            ]
+          }
+        >
+          <Text>
+            Show Good
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          {
+            "backgroundColor": "white",
+            "flex": 1,
+          }
+        }
+      />
+    </View>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages Performance Comparison Examples 2`] = `
+<View
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      {
+        "backgroundColor": "#f2f2f7ff",
+      },
+    ]
+  }
+>
+  <View
+    style={
+      {
+        "flex": 1,
+        "paddingVertical": 10,
+        "rowGap": 30,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "paddingHorizontal": 5,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "borderBottomWidth": 1,
+            "borderColor": "gray",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginBottom": 5,
+          }
+        }
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "alignItems": "center",
+                "backgroundColor": "#d3d3d3",
+                "borderColor": "#696969",
+                "borderRadius": 8,
+                "borderWidth": 1,
+                "justifyContent": "center",
+                "margin": 5,
+                "padding": 10,
+              },
+              false,
+            ]
+          }
+        >
+          <Text>
+            Show Bad
+          </Text>
+        </View>
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "alignItems": "center",
+                "backgroundColor": "#d3d3d3",
+                "borderColor": "#696969",
+                "borderRadius": 8,
+                "borderWidth": 1,
+                "justifyContent": "center",
+                "margin": 5,
+                "padding": 10,
+              },
+              false,
+            ]
+          }
+        >
+          <Text>
+            Show Good
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          {
+            "backgroundColor": "white",
+            "flex": 1,
+          }
+        }
+      />
+    </View>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages Performance Comparison Examples 3`] = `
+<View
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      {
+        "backgroundColor": "#f2f2f7ff",
+      },
+    ]
+  }
+>
+  <View
+    style={
+      {
+        "flex": 1,
+        "paddingVertical": 10,
+        "rowGap": 30,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "paddingHorizontal": 5,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "borderBottomWidth": 1,
+            "borderColor": "gray",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginBottom": 5,
+          }
+        }
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "alignItems": "center",
+                "backgroundColor": "#d3d3d3",
+                "borderColor": "#696969",
+                "borderRadius": 8,
+                "borderWidth": 1,
+                "justifyContent": "center",
+                "margin": 5,
+                "padding": 10,
+              },
+              false,
+            ]
+          }
+        >
+          <Text>
+            Show Bad
+          </Text>
+        </View>
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "alignItems": "center",
+                "backgroundColor": "#d3d3d3",
+                "borderColor": "#696969",
+                "borderRadius": 8,
+                "borderWidth": 1,
+                "justifyContent": "center",
+                "margin": 5,
+                "padding": 10,
+              },
+              false,
+            ]
+          }
+        >
+          <Text>
+            Show Good
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          {
+            "backgroundColor": "white",
+            "flex": 1,
+          }
+        }
+      />
     </View>
   </View>
 </View>
@@ -63217,7 +63701,7 @@ exports[`snapshotAllPages SectionList 7`] = `
       }
       refreshing={false}
       renderItem={[Function]}
-      scrollEventThrottle={0.0001}
+      scrollEventThrottle={50}
       stickyHeaderIndices={
         [
           1,
@@ -78908,6 +79392,124 @@ exports[`snapshotAllPages View 27`] = `
 `;
 
 exports[`snapshotAllPages View 28`] = `
+<View
+  style={
+    {
+      "flexDirection": "row",
+      "gap": 10,
+    }
+  }
+>
+  <View>
+    <Text>
+      Unset
+    </Text>
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "blue",
+          "flexDirection": "row",
+          "height": 100,
+          "width": 100,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "flexDirection": "row",
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "backgroundColor": "red",
+              "flexGrow": 1,
+              "height": 50,
+            }
+          }
+        />
+      </View>
+    </View>
+  </View>
+  <View
+    experimental_layoutConformance="classic"
+  >
+    <Text>
+      Classic
+    </Text>
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "blue",
+          "flexDirection": "row",
+          "height": 100,
+          "width": 100,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "flexDirection": "row",
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "backgroundColor": "red",
+              "flexGrow": 1,
+              "height": 50,
+            }
+          }
+        />
+      </View>
+    </View>
+  </View>
+  <View
+    experimental_layoutConformance="strict"
+  >
+    <Text>
+      Strict
+    </Text>
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "blue",
+          "flexDirection": "row",
+          "height": 100,
+          "width": 100,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "flexDirection": "row",
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "backgroundColor": "red",
+              "flexGrow": 1,
+              "height": 50,
+            }
+          }
+        />
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages View 29`] = `
 <View
   nativeID="native-id-view"
   testID="nativeid"

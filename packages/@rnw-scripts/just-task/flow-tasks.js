@@ -44,6 +44,60 @@ function downloadFile(url, destPath, overwrite = false) {
   });
 }
 
+async function downloadFilesFromReactNative(
+  reactNativeRef,
+  srcPath,
+  destRootPath,
+  overwrite = false,
+) {
+  // Create target path if necessary
+  const destPath = path.resolve(destRootPath, srcPath);
+  if (!fs.existsSync(destPath)) {
+    fs.mkdirSync(destPath, {recursive: true});
+  }
+
+  const octokit = new Octokit({
+    auth: process.env.PLATFORM_OVERRIDE_GITHUB_TOKEN, // Used to make sure CI doesn't get rate-throttled
+    userAgent: 'RNW Just Task Script',
+  });
+
+  logger.verbose(
+    `Getting list of files in react-native@${reactNativeRef} under /${srcPath}`,
+  );
+
+  const ghResponse = await octokit.rest.repos.getContent({
+    owner: 'facebook',
+    repo: 'react-native',
+    ref: reactNativeRef,
+    path: srcPath,
+  });
+
+  if (ghResponse.status !== 200) {
+    throw new Error(
+      `Failed to get list of files, Status Code: ${ghResponse.status}.`,
+    );
+  }
+
+  if (ghResponse.status === 200) {
+    for (const fileEntry of ghResponse.data) {
+      if (fileEntry.type === 'dir') {
+        await downloadFilesFromReactNative(
+          reactNativeRef,
+          fileEntry.path,
+          destRootPath,
+          overwrite,
+        );
+      } else if (fileEntry.type === 'file') {
+        await downloadFile(
+          fileEntry.download_url,
+          path.resolve(destRootPath, fileEntry.path),
+          overwrite,
+        );
+      }
+    }
+  }
+}
+
 async function downloadFlowTypes(overwrite = false) {
   const rnDir = path.dirname(require.resolve('react-native/package.json'));
   const reactNativeVersion = require(path.resolve(
@@ -56,42 +110,12 @@ async function downloadFlowTypes(overwrite = false) {
   const typedPath = 'flow-typed/npm';
   const destRootPath = path.resolve(rnDir, '../.flow/');
 
-  // Create target path if necessary
-  const destTypedPath = path.resolve(destRootPath, typedPath);
-  if (!fs.existsSync(destTypedPath)) {
-    fs.mkdirSync(destTypedPath, {recursive: true});
-  }
-
-  const octokit = new Octokit({
-    userAgent: 'RNW Just Task Script',
-  });
-
-  logger.verbose(
-    `Getting list of files in react-native@${reactNativeVersion} under /${typedPath}`,
+  await downloadFilesFromReactNative(
+    reactNativeRef,
+    typedPath,
+    destRootPath,
+    overwrite,
   );
-
-  const ghResponse = await octokit.rest.repos.getContent({
-    owner: 'facebook',
-    repo: 'react-native',
-    ref: reactNativeRef,
-    path: typedPath,
-  });
-
-  if (ghResponse.status !== 200) {
-    throw new Error(
-      `Failed to get list of files, Status Code: ${ghResponse.status}.`,
-    );
-  }
-
-  if (ghResponse.status === 200) {
-    for (const fileEntry of ghResponse.data) {
-      await downloadFile(
-        fileEntry.download_url,
-        path.resolve(destRootPath, fileEntry.path),
-        overwrite,
-      );
-    }
-  }
 }
 
 task('downloadFlowTypes', async () => await downloadFlowTypes(false));

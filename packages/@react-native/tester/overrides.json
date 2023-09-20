@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.73.0-nightly-20230728-c168a4f88",
+  "baseVersion": "0.73.0-nightly-20230811-68c7cfe62",
   "overrides": [
     {
       "type": "copy",
@@ -19,7 +19,7 @@
       "type": "copy",
       "directory": "js/examples/Accessibility",
       "baseDirectory": "packages/rn-tester/js/examples/Accessibility",
-      "baseHash": "a135d63c1eac573b34b9137e99bfd7b32681801c",
+      "baseHash": "fdd48206c954b8444e4045d377464f9362aa6438",
       "issue": 4054
     },
     {
@@ -131,7 +131,7 @@
       "type": "copy",
       "directory": "js/examples/FlatList",
       "baseDirectory": "packages/rn-tester/js/examples/FlatList",
-      "baseHash": "f6167eecc6961381dc84ecc33f3f636409e7494e",
+      "baseHash": "66135399742a11d8346d2477f6f001cf3cf3137a",
       "issue": 4054
     },
     {
@@ -248,10 +248,10 @@
     },
     {
       "type": "copy",
-      "file": "js/examples/Performance/PerformanceApiExample.js",
-      "baseFile": "packages/rn-tester/js/examples/Performance/PerformanceApiExample.js",
-      "baseHash": "79acc41d2fa365104d4cb15c5b178a4765158cee",
-      "issue": 11373
+      "directory": "js/examples/Performance",
+      "baseDirectory": "packages/rn-tester/js/examples/Performance",
+      "baseHash": "0d49d4b44b5d4844eadac22355e27d77762f22b9",
+      "issue": 0
     },
     {
       "type": "copy",
@@ -320,7 +320,7 @@
       "type": "copy",
       "directory": "js/examples/ScrollView",
       "baseDirectory": "packages/rn-tester/js/examples/ScrollView",
-      "baseHash": "7dc879d2261076815e87856d3e87247c4f935040",
+      "baseHash": "fdedf87695c4108c8238b543984c6d76941b111e",
       "issue": 4054
     },
     {
@@ -376,14 +376,14 @@
       "type": "copy",
       "directory": "js/examples/Text",
       "baseDirectory": "packages/rn-tester/js/examples/Text",
-      "baseHash": "7625ee9e11e8bdd38f4bc9acecfa778321fe713e",
+      "baseHash": "e154fcbf15afa81ec3355b751e5a0a6f82a7d43a",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/TextInput",
       "baseDirectory": "packages/rn-tester/js/examples/TextInput",
-      "baseHash": "6e61eec46d392c9e092476dfe235adef1801ff9b",
+      "baseHash": "bef0609b40ac07fc2f605a44bc1405f55618532f",
       "issue": 4054
     },
     {
@@ -397,7 +397,7 @@
       "type": "copy",
       "directory": "js/examples/ToastAndroid",
       "baseDirectory": "packages/rn-tester/js/examples/ToastAndroid",
-      "baseHash": "64d883f128dfa36fe9c65b9ef0db6bead3a6c024",
+      "baseHash": "10cbb0a09a2e4140992b206a5f4d4574dfe8f970",
       "issue": 4054
     },
     {
@@ -439,14 +439,14 @@
       "type": "copy",
       "directory": "js/examples/View",
       "baseDirectory": "packages/rn-tester/js/examples/View",
-      "baseHash": "9e293e3249ffcc454f81bada415e942ea725d8a8",
+      "baseHash": "37a5a839b874e74b994e44ccf62f0843311cf2b4",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/WebSocket",
       "baseDirectory": "packages/rn-tester/js/examples/WebSocket",
-      "baseHash": "00ed9ce9813cdea4f51e4a6cd4a504b310f194dd",
+      "baseHash": "541427267ab79bb92aa296cc75563b20c3ff89dd",
       "issue": 4054
     },
     {
@@ -488,7 +488,7 @@
       "type": "copy",
       "directory": "js/utils",
       "baseDirectory": "packages/rn-tester/js/utils",
-      "baseHash": "26a61de7e4ea92da96348b705130e752c1525dcd",
+      "baseHash": "bfdb7156f819e6a39959235af7f2dc80742e9311",
       "issue": 4054
     },
     {
