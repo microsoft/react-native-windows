@@ -140,7 +140,7 @@ void CompositionBaseComponentView::handleCommand(std::string const &commandName,
 
 int64_t CompositionBaseComponentView::sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
   if (msg == WM_KEYUP || msg == WM_KEYDOWN) {
-    facebook::react::KeyboardEvent event;
+    facebook::react::KeyEvent event;
     BYTE bKeys[256];
     if (GetKeyboardState(bKeys)) {
       if (bKeys[VK_LSHIFT] & 0x80 || bKeys[VK_RSHIFT] & 0x80) {
