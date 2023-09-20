@@ -652,7 +652,7 @@ void WindowsTextInputComponentView::updateProps(
   }
 
   if (oldTextInputProps.cursorColor != newTextInputProps.cursorColor) {
-    m_caretVisual.updateColor(newTextInputProps.cursorColor.AsWindowsColor());
+    m_caretVisual.Color(newTextInputProps.cursorColor.AsWindowsColor());
   }
 
   /*
