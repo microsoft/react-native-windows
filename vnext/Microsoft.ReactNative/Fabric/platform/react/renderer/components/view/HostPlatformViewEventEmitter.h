@@ -21,6 +21,11 @@ class HostPlatformViewEventEmitter : public BaseViewEventEmitter {
 
   void onFocus() const;
   void onBlur() const;
+
+#pragma mark - Mouse Events
+
+  void onMouseEnter(PointerEvent const &pointerEvent) const;
+  void onMouseLeave(PointerEvent const &pointerEvent) const;
 };
 
 } // namespace facebook::react
