@@ -1460,7 +1460,7 @@ void CompositionViewComponentView::onKeyUp(
   for (const auto &handledKey : m_props->keyUpEvents) {
     if (handledKey.code == eventCode && handledKey.altKey == fAlt && handledKey.ctrlKey == fCtrl &&
         handledKey.metaKey == fMeta && handledKey.shiftKey == fShift &&
-      handledKey.handledEventPhase == facebook::react::HandledEventPhase::Bubbling) {
+        handledKey.handledEventPhase == facebook::react::HandledEventPhase::Bubbling) {
       // Stop bubbling event if marked as handled from JS
       args.Handled(true);
     }

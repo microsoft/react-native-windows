@@ -3,10 +3,10 @@
 
 #pragma once
 
-#include <react/renderer/graphics/Float.h>
-#include <string>
 #include <react/renderer/core/PropsParserContext.h>
 #include <react/renderer/core/propsConversions.h>
+#include <react/renderer/graphics/Float.h>
+#include <string>
 
 namespace facebook::react {
 
@@ -51,8 +51,7 @@ inline static bool operator==(const BaseKeyEvent &lhs, const BaseKeyEvent &rhs) 
  */
 enum class HandledEventPhase { Capturing = 1, Bubbling = 3 };
 
-inline void
-fromRawValue(const PropsParserContext &context, const RawValue &value, HandledEventPhase &result) {
+inline void fromRawValue(const PropsParserContext &context, const RawValue &value, HandledEventPhase &result) {
   if (value.hasType<int>()) {
     result = static_cast<HandledEventPhase>((int)value);
     return;

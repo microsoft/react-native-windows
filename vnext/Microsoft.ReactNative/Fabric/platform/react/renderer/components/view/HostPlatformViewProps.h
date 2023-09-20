@@ -5,8 +5,8 @@
 
 #include <react/renderer/components/view/BaseViewProps.h>
 #include <react/renderer/core/PropsParserContext.h>
-#include "WindowsViewEvents.h"
 #include "KeyEvent.h"
+#include "WindowsViewEvents.h"
 
 namespace facebook::react {
 class HostPlatformViewProps : public BaseViewProps {
