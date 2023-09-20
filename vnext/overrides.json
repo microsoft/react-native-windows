@@ -75,18 +75,6 @@
     },
     {
       "type": "derived",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/BaseViewEventEmitter.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/BaseViewEventEmitter.cpp",
-      "baseHash": "f74be15aabe10df4262975df06040ba18da8d88c"
-    },
-    {
-      "type": "derived",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/BaseViewEventEmitter.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/BaseViewEventEmitter.h",
-      "baseHash": "32ffb909ddb2ead19952b6cdaba13e885babaad1"
-    },
-    {
-      "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/BaseViewProps.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/BaseViewProps.cpp",
       "baseHash": "a9be2d4068cb18a94b8ee8f289afae6695a2f35e"
