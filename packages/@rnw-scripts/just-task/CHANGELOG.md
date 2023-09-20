@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/just-task
 
-This log was last generated on Fri, 28 Jul 2023 05:14:52 GMT and should not be manually modified.
+This log was last generated on Wed, 20 Sep 2023 05:17:49 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.3.16
+
+Wed, 20 Sep 2023 05:17:49 GMT
+
+### Patches
+
+- Integrate 8/11 (34109996+chiaramooney@users.noreply.github.com)
 
 ## 2.3.15
 
