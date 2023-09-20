@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Test disabling HTTP caching",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
