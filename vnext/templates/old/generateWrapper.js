@@ -15,20 +15,20 @@ function makeGenerateWindowsWrapper(
 ) {
   const name =
     projectType === 'lib'
-      ? `React Native Windows Library (Paper, ${
+      ? `React Native Windows Library (Old Arch, UWP, ${
           language === 'cs' ? 'C#' : 'C++'
-        }, UWP)`
-      : `React Native Windows Application (Paper, ${
+        })`
+      : `React Native Windows Application (Old Arch, UWP, ${
           language === 'cs' ? 'C#' : 'C++'
-        }, UWP, Chakra)`;
+        }, Chakra)`;
   const description =
     projectType === 'lib'
-      ? `A UWP module written in ${
+      ? `A RNW module written in ${
           language === 'cs' ? 'C#' : 'C++'
-        }, using the Paper architecture.`
-      : `A UWP app written in ${
+        }, targeting UWP and RN's old architecture.`
+      : `A RNW app written in ${
           language === 'cs' ? 'C#' : 'C++'
-        }, using the Paper architecture and defaulting to the Chakra JS engine.`;
+        }, targeting UWP and RN's old architecture, with the Chakra JS engine.`;
 
   const postInstall = async (config = {}, options = {}) => {
     const experimentalFeatures = config?.project?.windows?.experimentalFeatures;
