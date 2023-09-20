@@ -1275,11 +1275,11 @@ void CompositionBaseComponentView::EnsureTransformMatrixFacade() noexcept {
       .StartAnimation(L"TransformMatrix", expression);
 }
 
-facebook::react::SharedTouchEventEmitter CompositionBaseComponentView::touchEventEmitter() noexcept {
+facebook::react::SharedViewEventEmitter CompositionBaseComponentView::eventEmitter() noexcept {
   return m_eventEmitter;
 }
 
-facebook::react::SharedTouchEventEmitter CompositionBaseComponentView::touchEventEmitterAtPoint(
+facebook::react::SharedViewEventEmitter CompositionBaseComponentView::eventEmitterAtPoint(
     facebook::react::Point /*pt*/) noexcept {
   return m_eventEmitter;
 }

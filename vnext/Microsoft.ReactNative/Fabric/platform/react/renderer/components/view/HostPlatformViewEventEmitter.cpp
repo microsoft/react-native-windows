@@ -36,6 +36,24 @@ void HostPlatformViewEventEmitter::onBlur() const {
   dispatchEvent("blur");
 }
 
+#pragma mark - Mouse Events
+
+void HostPlatformViewEventEmitter::onMouseEnter(PointerEvent const &pointerEvent) const {
+  dispatchEvent(
+      "mouseEnter",
+      std::make_shared<PointerEvent>(pointerEvent),
+      EventPriority::AsynchronousBatched,
+      RawEvent::Category::ContinuousStart);
+}
+
+void HostPlatformViewEventEmitter::onMouseLeave(PointerEvent const &pointerEvent) const {
+  dispatchEvent(
+      "mouseLeave",
+      std::make_shared<PointerEvent>(pointerEvent),
+      EventPriority::AsynchronousBatched,
+      RawEvent::Category::ContinuousStart);
+}
+
 } // namespace facebook::react
 
 // @generated SignedSource<<a6f36c63efa0edf80beb29b0187deb77>>
