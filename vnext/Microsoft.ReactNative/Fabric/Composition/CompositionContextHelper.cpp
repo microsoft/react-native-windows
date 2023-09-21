@@ -622,11 +622,8 @@ struct CompActivityVisual : winrt::implements<
     auto compositor = m_visual.Compositor();
     m_contentVisual = compositor.CreateSpriteVisual();
 
-    // Create loading circles (radiusSmall is the default)
-    for (int i = 0; i < 4; i++) {
-      auto loadingCircle = createLoadingCircle(compositor, i * 200, 8.0f);
-      m_visual.Children().InsertAtTop(loadingCircle);
-    }
+    // radiusSmall is the default size
+    updateSize(8.0f);
   }
 
   void updateColor(winrt::Windows::UI::Color color) noexcept {
