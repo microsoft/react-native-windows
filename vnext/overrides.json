@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.73.0-nightly-20230811-68c7cfe62",
+  "baseVersion": "0.73.0-nightly-20230825-18c4cb119",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "314ff8652c2a9480d2d72fa6366d3772508acb1d"
+      "baseHash": "dfebac850c932dd852f2993f7734cb1f94bbfd60"
     },
     {
       "type": "derived",
@@ -91,7 +91,7 @@
       "type": "copy",
       "directory": "ReactCopies/IntegrationTests",
       "baseDirectory": "packages/rn-tester/IntegrationTests",
-      "baseHash": "32df20054b84f65a716ba8ac1874de70fb413dcf",
+      "baseHash": "8fd47c2c52cd707af269a848e3e80acbd5395e6c",
       "issue": 4054
     },
     {
@@ -248,7 +248,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/ProgressBarAndroid/ProgressBarAndroid.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/ProgressBarAndroid/ProgressBarAndroid.js",
-      "baseHash": "09f143fc3f2ee80463764e1c2b3f23107d501a4c"
+      "baseHash": "e69c4f61d26361e6aeb62b6d3f31d1c1bb78e4ae"
     },
     {
       "type": "patch",
@@ -266,7 +266,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/ScrollView/ScrollView.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/ScrollView/ScrollView.js",
-      "baseHash": "7d162bb43bce3f9da78b7c304530b3f804d21658"
+      "baseHash": "1254528d4082b82fe26d147676b812940bff63ac"
     },
     {
       "type": "derived",
@@ -332,7 +332,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/View.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/View/View.js",
-      "baseHash": "e5f834b15f3c739957547f627f50d14b607c3c5e"
+      "baseHash": "f6813acaf2043e39f0d57fa9f667c5bbb5202daa"
     },
     {
       "type": "derived",
@@ -488,8 +488,7 @@
       "type": "derived",
       "file": "src/Libraries/Utilities/Platform.flow.windows.js",
       "baseFile": "packages/react-native/Libraries/Utilities/Platform.flow.js",
-      "baseHash": "c0a203e8d15f99ff00edaab6c4a40a49606a99f0",
-      "issue": 0
+      "baseHash": "c0a203e8d15f99ff00edaab6c4a40a49606a99f0"
     },
     {
       "type": "derived",

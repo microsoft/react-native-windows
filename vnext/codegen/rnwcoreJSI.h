@@ -4774,62 +4774,7 @@ private:
 };
 
 
-  #pragma mark - NativePerformanceCxxBaseReactNativeStartupTiming
-
-template <typename P0, typename P1, typename P2, typename P3>
-struct NativePerformanceCxxBaseReactNativeStartupTiming {
-  P0 startTime;
-  P1 endTime;
-  P2 executeJavaScriptBundleEntryPointStart;
-  P3 executeJavaScriptBundleEntryPointEnd;
-  bool operator==(const NativePerformanceCxxBaseReactNativeStartupTiming &other) const {
-    return startTime == other.startTime && endTime == other.endTime && executeJavaScriptBundleEntryPointStart == other.executeJavaScriptBundleEntryPointStart && executeJavaScriptBundleEntryPointEnd == other.executeJavaScriptBundleEntryPointEnd;
-  }
-};
-
-template <typename P0, typename P1, typename P2, typename P3>
-struct NativePerformanceCxxBaseReactNativeStartupTimingBridging {
-  static NativePerformanceCxxBaseReactNativeStartupTiming<P0, P1, P2, P3> fromJs(
-      jsi::Runtime &rt,
-      const jsi::Object &value,
-      const std::shared_ptr<CallInvoker> &jsInvoker) {
-    NativePerformanceCxxBaseReactNativeStartupTiming<P0, P1, P2, P3> result{
-      bridging::fromJs<P0>(rt, value.getProperty(rt, "startTime"), jsInvoker),
-      bridging::fromJs<P1>(rt, value.getProperty(rt, "endTime"), jsInvoker),
-      bridging::fromJs<P2>(rt, value.getProperty(rt, "executeJavaScriptBundleEntryPointStart"), jsInvoker),
-      bridging::fromJs<P3>(rt, value.getProperty(rt, "executeJavaScriptBundleEntryPointEnd"), jsInvoker)};
-    return result;
-  }
-
-#ifdef DEBUG
-  static double startTimeToJs(jsi::Runtime &rt, P0 value) {
-    return bridging::toJs(rt, value);
-  }
-  static double endTimeToJs(jsi::Runtime &rt, P1 value) {
-    return bridging::toJs(rt, value);
-  }
-  static double executeJavaScriptBundleEntryPointStartToJs(jsi::Runtime &rt, P2 value) {
-    return bridging::toJs(rt, value);
-  }
-  static double executeJavaScriptBundleEntryPointEndToJs(jsi::Runtime &rt, P3 value) {
-    return bridging::toJs(rt, value);
-  }
-#endif
-
-  static jsi::Object toJs(
-    jsi::Runtime &rt,
-    const NativePerformanceCxxBaseReactNativeStartupTiming<P0, P1, P2, P3> &value,
-    const std::shared_ptr<CallInvoker> &jsInvoker) {
-      auto result = facebook::jsi::Object(rt);
-          result.setProperty(rt, "startTime", bridging::toJs(rt, value.startTime, jsInvoker));
-    result.setProperty(rt, "endTime", bridging::toJs(rt, value.endTime, jsInvoker));
-    result.setProperty(rt, "executeJavaScriptBundleEntryPointStart", bridging::toJs(rt, value.executeJavaScriptBundleEntryPointStart, jsInvoker));
-    result.setProperty(rt, "executeJavaScriptBundleEntryPointEnd", bridging::toJs(rt, value.executeJavaScriptBundleEntryPointEnd, jsInvoker));
-          return result;
-        }
-      };
-
-class JSI_EXPORT NativePerformanceCxxSpecJSI : public TurboModule {
+  class JSI_EXPORT NativePerformanceCxxSpecJSI : public TurboModule {
 protected:
   NativePerformanceCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
 
