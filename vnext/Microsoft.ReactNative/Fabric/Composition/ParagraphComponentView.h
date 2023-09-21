@@ -39,7 +39,7 @@ struct ParagraphComponentView : CompositionBaseComponentView {
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt, bool ignorePointerEvents)
       const noexcept override;
   void OnRenderingDeviceLost() noexcept override;
-  facebook::react::SharedTouchEventEmitter touchEventEmitterAtPoint(facebook::react::Point pt) noexcept override;
+  facebook::react::SharedViewEventEmitter eventEmitterAtPoint(facebook::react::Point pt) noexcept override;
 
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
   virtual std::string DefaultControlType() const noexcept override;

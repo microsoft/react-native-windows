@@ -133,7 +133,7 @@ facebook::react::Tag ParagraphComponentView::hitTest(
   return -1;
 }
 
-facebook::react::SharedTouchEventEmitter ParagraphComponentView::touchEventEmitterAtPoint(
+facebook::react::SharedViewEventEmitter ParagraphComponentView::eventEmitterAtPoint(
     facebook::react::Point pt) noexcept {
   if (m_attributedStringBox.getValue().getFragments().size()) {
     BOOL isTrailingHit = false;
@@ -145,7 +145,7 @@ facebook::react::SharedTouchEventEmitter ParagraphComponentView::touchEventEmitt
 
       for (auto fragment : m_attributedStringBox.getValue().getFragments()) {
         if (textPosition < fragment.string.length()) {
-          return std::static_pointer_cast<const facebook::react::TouchEventEmitter>(
+          return std::static_pointer_cast<const facebook::react::ViewEventEmitter>(
               fragment.parentShadowView.eventEmitter);
         }
         textPosition -= static_cast<uint32_t>(fragment.string.length());

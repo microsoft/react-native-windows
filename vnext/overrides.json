@@ -74,30 +74,6 @@
       "issue": 7821
     },
     {
-      "type": "derived",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/BaseViewProps.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/BaseViewProps.cpp",
-      "baseHash": "a9be2d4068cb18a94b8ee8f289afae6695a2f35e"
-    },
-    {
-      "type": "derived",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/primitives.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/primitives.h",
-      "baseHash": "ad53fd4887145b0b804d730fd6cd8731b029419d"
-    },
-    {
-      "type": "derived",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/TouchEventEmitter.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/TouchEventEmitter.cpp",
-      "baseHash": "76ca148d4715dd053ffb0279782c472e8dcc0ba9"
-    },
-    {
-      "type": "derived",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/TouchEventEmitter.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/TouchEventEmitter.h",
-      "baseHash": "a76c1bf4ee03ffa180990c86d31af2c3d9d08d62"
-    },
-    {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/YogaLayoutableShadowNode.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/YogaLayoutableShadowNode.cpp",

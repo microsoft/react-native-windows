@@ -33,6 +33,14 @@ bool IsViewListeningToEvent(IComponentView *view, facebook::react::ViewEvents::O
   return false;
 }
 
+bool IsViewListeningToEvent(IComponentView *view, facebook::react::WindowsViewEvents::Offset eventType) {
+  if (view) {
+    auto const &viewProps = *std::static_pointer_cast<facebook::react::ViewProps const>(view->props());
+    return viewProps.windowsEvents[eventType];
+  }
+  return false;
+}
+
 bool IsAnyViewInPathListeningToEvent(
     std::vector<IComponentView *> &path,
     facebook::react::ViewEvents::Offset eventType) {
@@ -46,7 +54,7 @@ bool IsAnyViewInPathListeningToEvent(
 
 IComponentView *FindClosestFabricManagedTouchableView(IComponentView *componentView) {
   while (componentView) {
-    if (componentView->touchEventEmitter()) {
+    if (componentView->eventEmitter()) {
       return componentView;
     }
     componentView = componentView->parent();
@@ -274,7 +282,7 @@ void CompositionEventHandler::onKeyUp(
 std::vector<IComponentView *> GetTouchableViewsInPathToRoot(IComponentView *view) {
   std::vector<IComponentView *> results;
   while (view) {
-    if (view->touchEventEmitter()) {
+    if (view->eventEmitter()) {
       results.push_back(view);
     }
     view = view->parent();
@@ -317,7 +325,7 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
   if (targetView != nullptr && previousTargetTag != targetView->tag()) {
     bool shouldEmitOverEvent =
         IsAnyViewInPathListeningToEvent(eventPathViews, facebook::react::ViewEvents::Offset::PointerOver);
-    facebook::react::SharedTouchEventEmitter eventEmitter = targetView->touchEventEmitterAtPoint(event.offsetPoint);
+    const auto eventEmitter = targetView->eventEmitterAtPoint(event.offsetPoint);
     if (shouldEmitOverEvent && eventEmitter != nullptr) {
       eventEmitter->onPointerOver(event);
     }
@@ -339,12 +347,12 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
     bool shouldEmitEvent = componentView != nullptr &&
         (hasParentEnterListener ||
          IsViewListeningToEvent(componentView, facebook::react::ViewEvents::Offset::PointerEnter) ||
-         IsViewListeningToEvent(componentView, facebook::react::ViewEvents::Offset::MouseEnter));
+         IsViewListeningToEvent(componentView, facebook::react::WindowsViewEvents::Offset::MouseEnter));
 
     if (shouldEmitEvent &&
         std::find(currentlyHoveredViews.begin(), currentlyHoveredViews.end(), componentView) ==
             currentlyHoveredViews.end()) {
-      facebook::react::SharedTouchEventEmitter eventEmitter = componentView->touchEventEmitter();
+      const auto eventEmitter = componentView->eventEmitter();
       if (eventEmitter) {
         eventEmitter->onPointerEnter(event);
         if (IsMousePointerEvent(event)) {
@@ -365,7 +373,7 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
   if (previousTargetTag != -1 && previousTargetTag != (targetView ? targetView->tag() : -1)) {
     bool shouldEmitOutEvent =
         IsAnyViewInPathListeningToEvent(currentlyHoveredViews, facebook::react::ViewEvents::Offset::PointerOut);
-    facebook::react::SharedTouchEventEmitter eventEmitter = prevTargetView->touchEventEmitter();
+    const auto eventEmitter = prevTargetView->eventEmitter();
     if (shouldEmitOutEvent && eventEmitter != nullptr) {
       eventEmitter->onPointerOut(event);
     }
@@ -390,7 +398,7 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
     bool shouldEmitEvent = componentView != nullptr &&
         (hasParentLeaveListener ||
          IsViewListeningToEvent(componentView, facebook::react::ViewEvents::Offset::PointerLeave) ||
-         IsViewListeningToEvent(componentView, facebook::react::ViewEvents::Offset::MouseLeave));
+         IsViewListeningToEvent(componentView, facebook::react::WindowsViewEvents::Offset::MouseLeave));
 
     if (shouldEmitEvent &&
         std::find(eventPathViews.begin(), eventPathViews.end(), componentView) == eventPathViews.end()) {
@@ -406,7 +414,7 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
        itComponentView++) { //  for (UIView *componentView in [viewsToEmitLeaveEventsTo reverseObjectEnumerator]) {
     auto componentView = *itComponentView;
 
-    facebook::react::SharedTouchEventEmitter eventEmitter = componentView->touchEventEmitter();
+    const auto eventEmitter = componentView->eventEmitter();
     if (eventEmitter) {
       eventEmitter->onPointerLeave(event);
       if (IsMousePointerEvent(event)) {
@@ -503,8 +511,7 @@ void CompositionEventHandler::MouseMove(uint32_t msg, uint64_t wParam, int64_t l
     facebook::react::PointerEvent pointerEvent = CreatePointerEventFromIncompleteHoverData(ptScaled, ptLocal);
 
     auto handler = [targetView, &pointerEvent](std::vector<IComponentView *> &eventPathViews) {
-      facebook::react::SharedTouchEventEmitter eventEmitter =
-          targetView ? targetView->touchEventEmitterAtPoint(pointerEvent.offsetPoint) : nullptr;
+      const auto eventEmitter = targetView ? targetView->eventEmitterAtPoint(pointerEvent.offsetPoint) : nullptr;
       bool hasMoveEventListeners =
           IsAnyViewInPathListeningToEvent(eventPathViews, facebook::react::ViewEvents::Offset::PointerMove) ||
           IsAnyViewInPathListeningToEvent(eventPathViews, facebook::react::ViewEvents::Offset::PointerMoveCapture);
@@ -569,7 +576,7 @@ void CompositionEventHandler::PointerPressed(uint32_t msg, uint64_t wParam, int6
 
     auto componentView = targetComponentView;
     while (componentView) {
-      if (auto eventEmitter = componentView->touchEventEmitter()) {
+      if (auto eventEmitter = componentView->eventEmitter()) {
         activeTouch.eventEmitter = eventEmitter;
         activeTouch.touch.target = componentView->tag();
         // activeTouch.componentView = componentView;
@@ -633,7 +640,7 @@ void CompositionEventHandler::ButtonDown(uint32_t msg, uint64_t wParam, int64_t 
 
     auto componentView = targetComponentView;
     while (componentView) {
-      if (auto eventEmitter = componentView->touchEventEmitterAtPoint(ptLocal)) {
+      if (auto eventEmitter = componentView->eventEmitterAtPoint(ptLocal)) {
         activeTouch.eventEmitter = eventEmitter;
         activeTouch.touch.target = componentView->tag();
         // activeTouch.componentView = componentView;
