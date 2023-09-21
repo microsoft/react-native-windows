@@ -9646,7 +9646,6 @@ exports[`snapshotAllPages FlatList 1`] = `
     style={
       {
         "flex": 1,
-        "paddingVertical": 10,
         "rowGap": 30,
       }
     }
@@ -16512,7 +16511,6 @@ exports[`snapshotAllPages FlatList 8`] = `
     style={
       {
         "flex": 1,
-        "paddingVertical": 10,
         "rowGap": 30,
       }
     }
@@ -24978,7 +24976,6 @@ exports[`snapshotAllPages FlatList 10`] = `
     style={
       {
         "flex": 1,
-        "paddingVertical": 10,
         "rowGap": 30,
       }
     }
@@ -28255,6 +28252,16 @@ exports[`snapshotAllPages Layout Events 1`] = `
 </View>
 `;
 
+exports[`snapshotAllPages Legacy Native Module 1`] = `
+<View
+  style={
+    {
+      "flex": 1,
+    }
+  }
+/>
+`;
+
 exports[`snapshotAllPages LegacyControlStyleTest 1`] = `
 <View>
   <View
@@ -31382,7 +31389,6 @@ exports[`snapshotAllPages PanResponder Sample 1`] = `
     style={
       {
         "flex": 1,
-        "paddingVertical": 10,
         "rowGap": 30,
       }
     }
@@ -31489,7 +31495,6 @@ exports[`snapshotAllPages Performance API Examples 1`] = `
     style={
       {
         "flex": 1,
-        "paddingVertical": 10,
         "rowGap": 30,
       }
     }
@@ -31650,7 +31655,6 @@ exports[`snapshotAllPages Performance API Examples 2`] = `
     style={
       {
         "flex": 1,
-        "paddingVertical": 10,
         "rowGap": 30,
       }
     }
@@ -31746,16 +31750,22 @@ exports[`snapshotAllPages Performance API Examples 2`] = `
       </View>
       <View>
         <Text>
-          startTime: N/A ms
+          startTime: undefined ms
         </Text>
         <Text>
-          executeJavaScriptBundleEntryPointStart: N/A ms
+          initializeRuntimeStart: undefined ms
         </Text>
         <Text>
-          executeJavaScriptBundleEntryPointEnd: N/A ms
+          executeJavaScriptBundleEntryPointStart: undefined ms
         </Text>
         <Text>
-          endTime: N/A ms
+          executeJavaScriptBundleEntryPointEnd: undefined ms
+        </Text>
+        <Text>
+          initializeRuntimeEnd: undefined ms
+        </Text>
+        <Text>
+          endTime: undefined ms
         </Text>
       </View>
     </View>
@@ -31780,7 +31790,6 @@ exports[`snapshotAllPages Performance Comparison Examples 1`] = `
     style={
       {
         "flex": 1,
-        "paddingVertical": 10,
         "rowGap": 30,
       }
     }
@@ -31941,7 +31950,6 @@ exports[`snapshotAllPages Performance Comparison Examples 2`] = `
     style={
       {
         "flex": 1,
-        "paddingVertical": 10,
         "rowGap": 30,
       }
     }
@@ -32102,7 +32110,486 @@ exports[`snapshotAllPages Performance Comparison Examples 3`] = `
     style={
       {
         "flex": 1,
-        "paddingVertical": 10,
+        "rowGap": 30,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "paddingHorizontal": 5,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "borderBottomWidth": 1,
+            "borderColor": "gray",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginBottom": 5,
+          }
+        }
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "alignItems": "center",
+                "backgroundColor": "#d3d3d3",
+                "borderColor": "#696969",
+                "borderRadius": 8,
+                "borderWidth": 1,
+                "justifyContent": "center",
+                "margin": 5,
+                "padding": 10,
+              },
+              false,
+            ]
+          }
+        >
+          <Text>
+            Show Bad
+          </Text>
+        </View>
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "alignItems": "center",
+                "backgroundColor": "#d3d3d3",
+                "borderColor": "#696969",
+                "borderRadius": 8,
+                "borderWidth": 1,
+                "justifyContent": "center",
+                "margin": 5,
+                "padding": 10,
+              },
+              false,
+            ]
+          }
+        >
+          <Text>
+            Show Good
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          {
+            "backgroundColor": "white",
+            "flex": 1,
+          }
+        }
+      />
+    </View>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages Performance Comparison Examples 4`] = `
+<View
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      {
+        "backgroundColor": "#f2f2f7ff",
+      },
+    ]
+  }
+>
+  <View
+    style={
+      {
+        "flex": 1,
+        "rowGap": 30,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "paddingHorizontal": 5,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "borderBottomWidth": 1,
+            "borderColor": "gray",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginBottom": 5,
+          }
+        }
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "alignItems": "center",
+                "backgroundColor": "#d3d3d3",
+                "borderColor": "#696969",
+                "borderRadius": 8,
+                "borderWidth": 1,
+                "justifyContent": "center",
+                "margin": 5,
+                "padding": 10,
+              },
+              false,
+            ]
+          }
+        >
+          <Text>
+            Show Bad
+          </Text>
+        </View>
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "alignItems": "center",
+                "backgroundColor": "#d3d3d3",
+                "borderColor": "#696969",
+                "borderRadius": 8,
+                "borderWidth": 1,
+                "justifyContent": "center",
+                "margin": 5,
+                "padding": 10,
+              },
+              false,
+            ]
+          }
+        >
+          <Text>
+            Show Good
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          {
+            "backgroundColor": "white",
+            "flex": 1,
+          }
+        }
+      />
+    </View>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages Performance Comparison Examples 5`] = `
+<View
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      {
+        "backgroundColor": "#f2f2f7ff",
+      },
+    ]
+  }
+>
+  <View
+    style={
+      {
+        "flex": 1,
+        "rowGap": 30,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "paddingHorizontal": 5,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "borderBottomWidth": 1,
+            "borderColor": "gray",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginBottom": 5,
+          }
+        }
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "alignItems": "center",
+                "backgroundColor": "#d3d3d3",
+                "borderColor": "#696969",
+                "borderRadius": 8,
+                "borderWidth": 1,
+                "justifyContent": "center",
+                "margin": 5,
+                "padding": 10,
+              },
+              false,
+            ]
+          }
+        >
+          <Text>
+            Show Bad
+          </Text>
+        </View>
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "alignItems": "center",
+                "backgroundColor": "#d3d3d3",
+                "borderColor": "#696969",
+                "borderRadius": 8,
+                "borderWidth": 1,
+                "justifyContent": "center",
+                "margin": 5,
+                "padding": 10,
+              },
+              false,
+            ]
+          }
+        >
+          <Text>
+            Show Good
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          {
+            "backgroundColor": "white",
+            "flex": 1,
+          }
+        }
+      />
+    </View>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages Performance Comparison Examples 6`] = `
+<View
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      {
+        "backgroundColor": "#f2f2f7ff",
+      },
+    ]
+  }
+>
+  <View
+    style={
+      {
+        "flex": 1,
         "rowGap": 30,
       }
     }
@@ -56546,7 +57033,6 @@ exports[`snapshotAllPages SectionList 7`] = `
     style={
       {
         "flex": 1,
-        "paddingVertical": 10,
         "rowGap": 30,
       }
     }
