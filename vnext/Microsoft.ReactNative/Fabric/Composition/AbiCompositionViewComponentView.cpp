@@ -105,6 +105,20 @@ int64_t AbiCompositionViewComponentView::sendMessage(uint32_t msg, uint64_t wPar
   return Builder().SendMessage(m_handle, msg, wParam, lParam);
 }
 
+void AbiCompositionViewComponentView::onKeyDown(
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
+  Builder().OnKeyDown(source, args);
+  Super::onKeyDown(source, args);
+}
+
+void AbiCompositionViewComponentView::onKeyUp(
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
+  Builder().OnKeyUp(source, args);
+  Super::onKeyUp(source, args);
+}
+
 std::vector<facebook::react::ComponentDescriptorProvider>
 AbiCompositionViewComponentView::supplementalComponentDescriptorProviders() noexcept {
   return {};
