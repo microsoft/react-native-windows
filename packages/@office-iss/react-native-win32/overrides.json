@@ -85,11 +85,11 @@
       "issue": 6240
     },
     {
-      "type": "copy",
+      "type": "patch",
       "file": "src/Libraries/Components/ProgressBarAndroid/ProgressBarAndroid.js",
       "baseFile": "packages/react-native/Libraries/Components/ProgressBarAndroid/ProgressBarAndroid.js",
       "baseHash": "e69c4f61d26361e6aeb62b6d3f31d1c1bb78e4ae",
-      "issue": 4378
+      "issue": 0
     },
     {
       "type": "copy",
