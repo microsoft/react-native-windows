@@ -10,7 +10,7 @@
 
 'use strict';
 
-import type {ColorValue} from './StyleSheet';
+import type {ColorValue, NativeColorValue} from './StyleSheet';
 import type {ProcessedColorValue} from './processColor';
 
 type GradientColorStop = {|
@@ -23,26 +23,36 @@ export type GradientColorValueWin32 = {|
   colorStops: Array<GradientColorStop>,
 |};
 
-export opaque type NativeColorValue =
+/** The actual type of the opaque NativeColorValue on Windows platform */
+type LocalNativeColorValue =
   | $ReadOnly<GradientColorValueWin32>
   | $ReadOnly<{|
       resource_paths?: Array<string>,
     |}>;
 
 export const PlatformColor = (...names: Array<string>): ColorValue => {
-  return {resource_paths: names};
+  // $FlowExpectedError[incompatible-return] LocalNativeColorValue is the Windows LocalNativeColorValue type
+  return ({resource_paths: names}: LocalNativeColorValue);
 };
 
 export const ColorGradientWin32Private = (
   gradientColor: GradientColorValueWin32,
 ): ColorValue => {
+  // $FlowExpectedError[incompatible-return]
   return gradientColor;
 };
 
 export const normalizeColorObject = (
   color: NativeColorValue,
 ): ?ProcessedColorValue => {
-  if ('resource_paths' in color || 'gradientDirection' in color) {
+  /* $FlowExpectedError[incompatible-cast]
+   * LocalNativeColorValue is the actual type of the opaque NativeColorValue on Windows platform */
+  if (
+    // $FlowExpectedError[incompatible-cast]
+    'resource_paths' in (color: LocalNativeColorValue) ||
+    // $FlowExpectedError[incompatible-cast]
+    'gradientDirection' in (color: LocalNativeColorValue)
+  ) {
     return color;
   }
   return null;

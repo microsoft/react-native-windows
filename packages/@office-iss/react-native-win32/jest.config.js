@@ -8,7 +8,7 @@ module.exports = require('@rnx-kit/jest-preset')("win32", {
   transformIgnorePatterns: ['jest-runner'],
   fakeTimers: {
     enableGlobally: true,
-    legacyFakeTimers: true,
+    legacyFakeTimers: false,
   },
   snapshotFormat: {
     escapeString: true,

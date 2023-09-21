@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "extracts transform and backfaceVisibility to baseComponent",
+  "comment": "add fabric textinput's cursorColor",
   "packageName": "react-native-windows",
   "email": "tatianakapos@microsoft.com",
   "dependentChangeType": "patch"

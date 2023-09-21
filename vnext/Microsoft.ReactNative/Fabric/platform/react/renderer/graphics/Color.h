@@ -7,7 +7,6 @@
 
 #pragma once
 
-#include <cmath>
 #include <functional>
 #include <limits>
 
@@ -35,7 +34,9 @@ struct Color {
  * On Android, a color can be represented as 32 bits integer, so there is no
  * need to instantiate complex color objects and then pass them as shared
  * pointers. Hence instead of using shared_ptr, we use a simple wrapper class
- * which provides a pointer-like interface.
+ * which provides a pointer-like interface. On other platforms, colors may be
+ * represented by more complex objects that cannot be represented as 32-bits
+ * integers, so we hide the implementation detail in HostPlatformColor.h.
  */
 class SharedColor {
   friend std::hash<SharedColor>;

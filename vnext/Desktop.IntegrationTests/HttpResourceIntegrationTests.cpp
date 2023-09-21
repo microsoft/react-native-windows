@@ -654,6 +654,75 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     Assert::AreEqual({"[0x800705b4] This operation returned because the timeout period expired."}, error);
     Assert::AreEqual(0, statusCode);
   }
+
+  TEST_METHOD(GetDisableThenReenableCacheSucceeds) {
+    string url = "http://localhost:" + std::to_string(s_port);
+
+    std::vector<promise<void>> promises;
+    promises.push_back(promise<void>());
+    promises.push_back(promise<void>());
+    promises.push_back(promise<void>());
+    promises.push_back(promise<void>());
+    promises.push_back(promise<void>());
+    promises.push_back(promise<void>());
+
+    string error;
+    int statusCode = 0;
+    int requestCount = 0;
+    int body = 1;
+    string result;
+
+    auto server = make_shared<HttpServer>(s_port);
+    server->Callbacks().OnGet = [&requestCount, &body](const DynamicRequest &request) -> ResponseWrapper {
+      DynamicResponse response;
+      response.result(http::status::ok);
+      // Re-enable cache after the third request.
+      // Subsequent responses should be fetched from the client cache.
+      if (requestCount < 3)
+        response.insert(http::field::cache_control, "no-cache");
+      response.body() = Test::CreateStringResponseBody(std::to_string(body++));
+
+      return {std::move(response)};
+    };
+    server->Start();
+
+    auto resource = IHttpResource::Make();
+    resource->SetOnResponse([&statusCode, &promises](int64_t, IHttpResource::Response response) {
+      statusCode = static_cast<int>(response.StatusCode);
+    });
+    resource->SetOnData([&result, &requestCount, &promises](int64_t, string &&content) {
+      result += std::move(content);
+
+      promises[requestCount++].set_value();
+    });
+    resource->SetOnError([&error, &promises](int64_t, string &&message, bool) {
+      error = std::move(message);
+      for (auto &p : promises)
+        p.set_value();
+    });
+
+    for (auto &p : promises) {
+      resource->SendRequest(
+          "GET",
+          string{url},
+          0, /*requestId*/
+          {}, /*headers*/
+          {}, /*data*/
+          "text",
+          false, /*incremental*/
+          0 /*timeout*/,
+          false /*withCredentials*/,
+          [](int64_t) {});
+
+      // Synchronize response.
+      p.get_future().wait();
+    }
+    server->Stop();
+
+    Assert::AreEqual({}, error);
+    Assert::AreEqual(200, statusCode);
+    Assert::AreEqual({"123444"}, result);
+  }
 };
 
 /*static*/ uint16_t HttpResourceIntegrationTest::s_port = 4444;

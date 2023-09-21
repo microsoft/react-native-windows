@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/create-github-releases",
-  "version": "1.4.21",
+  "version": "1.4.22",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -19,8 +19,8 @@
   },
   "dependencies": {
     "@octokit/rest": "^18.5.3",
-    "@react-native-windows/find-repo-root": "^0.0.0-canary.56",
-    "@react-native-windows/fs": "^0.0.0-canary.27",
+    "@react-native-windows/find-repo-root": "^0.0.0-canary.57",
+    "@react-native-windows/fs": "^0.0.0-canary.28",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.57.1",
     "chalk": "^4.1.0",
@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "@rnw-scripts/eslint-config": "1.2.2",
-    "@rnw-scripts/just-task": "2.3.15",
+    "@rnw-scripts/just-task": "2.3.16",
     "@rnw-scripts/ts-config": "2.0.5",
     "@types/chalk": "^2.2.0",
     "@types/glob": "^7.1.3",

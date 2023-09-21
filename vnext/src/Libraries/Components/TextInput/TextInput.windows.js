@@ -1469,6 +1469,7 @@ function InternalTextInput(props: Props): React.Node {
 
   const config = React.useMemo(
     () => ({
+      hitSlop: props.hitSlop,
       onPress: (event: PressEvent) => {
         if (props.editable !== false) {
           if (inputRef.current != null) {
@@ -1483,6 +1484,7 @@ function InternalTextInput(props: Props): React.Node {
     }),
     [
       props.editable,
+      props.hitSlop,
       props.onPressIn,
       props.onPressOut,
       props.rejectResponderTermination,

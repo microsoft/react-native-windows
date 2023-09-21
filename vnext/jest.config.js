@@ -10,7 +10,7 @@ module.exports = {
   setupFiles: ['./jest/setup.js'],
   fakeTimers: {
     enableGlobally: true,
-    legacyFakeTimers: true,
+    legacyFakeTimers: false,
   },
   snapshotFormat: {
     escapeString: true,

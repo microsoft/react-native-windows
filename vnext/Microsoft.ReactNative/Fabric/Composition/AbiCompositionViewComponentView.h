@@ -19,6 +19,7 @@ struct AbiCompositionViewComponentView : CompositionBaseComponentView {
   using Super = CompositionBaseComponentView;
 
   [[nodiscard]] static std::shared_ptr<AbiCompositionViewComponentView> Create(
+      const winrt::Microsoft::ReactNative::IReactContext &reactContext,
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::IReactViewComponentBuilder builder) noexcept;
@@ -40,6 +41,12 @@ struct AbiCompositionViewComponentView : CompositionBaseComponentView {
   void prepareForRecycle() noexcept override;
   bool focusable() const noexcept override;
   int64_t sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept override;
+  void onKeyDown(
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
+  void onKeyUp(
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
   std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept
       override;
   facebook::react::Props::Shared props() noexcept override;
@@ -49,6 +56,7 @@ struct AbiCompositionViewComponentView : CompositionBaseComponentView {
 
  private:
   AbiCompositionViewComponentView(
+      const winrt::Microsoft::ReactNative::IReactContext &reactContext,
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::IReactViewComponentBuilder builder);

@@ -24,6 +24,7 @@ import {
   startTelemetrySession,
   endTelemetrySession,
 } from '../../utils/telemetryHelpers';
+import * as pathHelpers from '../../utils/pathHelpers';
 import * as info from '../../utils/info';
 import MSBuildTools from '../../utils/msbuildtools';
 import {runWindowsOptions, RunWindowsOptions} from './runWindowsOptions';
@@ -172,14 +173,8 @@ async function runWindows(
     Telemetry.trackException(runWindowsError);
 
     if (!hasRunRnwDependencies) {
-      const rnwPkgJsonPath = require.resolve(
-        'react-native-windows/package.json',
-        {
-          paths: [process.cwd(), __dirname],
-        },
-      );
       const rnwDependenciesPath = path.join(
-        path.dirname(rnwPkgJsonPath),
+        pathHelpers.resolveRnwRoot([process.cwd(), __dirname]),
         'scripts/rnw-dependencies.ps1',
       );
 
@@ -401,7 +396,7 @@ runWindows({
 export const runWindowsCommand: Command = {
   name: 'run-windows',
   description:
-    'builds your app and starts it on a connected Windows desktop, emulator or device',
+    'Builds your app and starts it on a connected Windows desktop, emulator or device',
   func: runWindows,
   options: runWindowsOptions,
 };

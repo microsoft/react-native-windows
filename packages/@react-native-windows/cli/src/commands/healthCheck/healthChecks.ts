@@ -6,12 +6,11 @@
 
 import path from 'path';
 
-const rnDir = path.dirname(
-  require.resolve('react-native/package.json', {paths: [process.cwd()]}),
-);
-const cliDir = path.dirname(
-  require.resolve('@react-native-community/cli/package.json', {paths: [rnDir]}),
-);
+import * as pathHelpers from '../../utils/pathHelpers';
+
+const rnDir = pathHelpers.resolveRnRoot(process.cwd());
+const cliDir = pathHelpers.resolveRnCliRoot(rnDir);
+
 const execaPath = require.resolve('execa', {paths: [cliDir]});
 const execa = require(execaPath);
 
@@ -53,11 +52,7 @@ function getHealthChecksUnsafe(): HealthCheckCategory[] | undefined {
   }
 
   const rnwDepScriptPath = path.join(
-    path.dirname(
-      require.resolve('react-native-windows/package.json', {
-        paths: [process.cwd()],
-      }),
-    ),
+    pathHelpers.resolveRnwRoot(process.cwd()),
     'Scripts/rnw-dependencies.ps1',
   );
 

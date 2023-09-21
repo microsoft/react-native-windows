@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.73.0-nightly-20230728-c168a4f88",
+  "baseVersion": "0.73.0-nightly-20230811-68c7cfe62",
   "overrides": [
     {
       "type": "patch",
@@ -45,14 +45,14 @@
       "type": "patch",
       "file": "src/js/examples/TextInput/TextInputExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputExample.android.js",
-      "baseHash": "83f515b9ce6b0ec2a311b4d976275ce99749b200",
+      "baseHash": "6b509d45d39695cb1ebf4cfea9ec30edbbe699b6",
       "issue": 5688
     },
     {
       "type": "patch",
       "file": "src/js/examples/View/ViewExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/View/ViewExample.js",
-      "baseHash": "e1dc93da9b73d01b214c8eceea9321bbb7d03750"
+      "baseHash": "49688bf21c5a2f64aa185180983fb1a81a0e1312"
     },
     {
       "type": "copy",
@@ -65,7 +65,7 @@
       "type": "derived",
       "file": "src/js/utils/RNTesterList.windows.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "f00c367ae55adce25316bd050910d65e0bb4910b"
+      "baseHash": "b74a7b2dbeb16cad3d0cdad80a440a8206f351ad"
     }
   ]
 }
