@@ -10311,14 +10311,6 @@ metro-runtime@0.76.0:
     "@babel/runtime" "^7.0.0"
     react-refresh "^0.4.0"
 
-metro-runtime@0.76.7:
-  version "0.76.7"
-  resolved "https://registry.yarnpkg.com/metro-runtime/-/metro-runtime-0.76.7.tgz#4d75f2dbbcd19a4f01e0d89494e140b0ba8247e4"
-  integrity sha512-MuWHubQHymUWBpZLwuKZQgA/qbb35WnDAKPo83rk7JRLIFPvzXSvFaC18voPuzJBt1V98lKQIonh6MiC9gd8Ug==
-  dependencies:
-    "@babel/runtime" "^7.0.0"
-    react-refresh "^0.4.0"
-
 metro-runtime@0.77.0:
   version "0.77.0"
   resolved "https://registry.yarnpkg.com/metro-runtime/-/metro-runtime-0.77.0.tgz#ccb3bfbce06acd5b8d0b611d0f55972a0ca28039"
@@ -10346,20 +10338,6 @@ metro-source-map@0.76.0:
     metro-symbolicate "0.76.0"
     nullthrows "^1.1.1"
     ob1 "0.76.0"
-    source-map "^0.5.6"
-    vlq "^1.0.0"
-
-metro-source-map@0.76.7:
-  version "0.76.7"
-  resolved "https://registry.yarnpkg.com/metro-source-map/-/metro-source-map-0.76.7.tgz#9a4aa3a35e1e8ffde9a74cd7ab5f49d9d4a4da14"
-  integrity sha512-Prhx7PeRV1LuogT0Kn5VjCuFu9fVD68eefntdWabrksmNY6mXK8pRqzvNJOhTojh6nek+RxBzZeD6MIOOyXS6w==
-  dependencies:
-    "@babel/traverse" "^7.20.0"
-    "@babel/types" "^7.20.0"
-    invariant "^2.2.4"
-    metro-symbolicate "0.76.7"
-    nullthrows "^1.1.1"
-    ob1 "0.76.7"
     source-map "^0.5.6"
     vlq "^1.0.0"
 
@@ -10398,18 +10376,6 @@ metro-symbolicate@0.76.0:
   dependencies:
     invariant "^2.2.4"
     metro-source-map "0.76.0"
-    nullthrows "^1.1.1"
-    source-map "^0.5.6"
-    through2 "^2.0.1"
-    vlq "^1.0.0"
-
-metro-symbolicate@0.76.7:
-  version "0.76.7"
-  resolved "https://registry.yarnpkg.com/metro-symbolicate/-/metro-symbolicate-0.76.7.tgz#1720e6b4ce5676935d7a8a440f25d3f16638e87a"
-  integrity sha512-p0zWEME5qLSL1bJb93iq+zt5fz3sfVn9xFYzca1TJIpY5MommEaS64Va87lp56O0sfEIvh4307Oaf/ZzRjuLiQ==
-  dependencies:
-    invariant "^2.2.4"
-    metro-source-map "0.76.7"
     nullthrows "^1.1.1"
     source-map "^0.5.6"
     through2 "^2.0.1"
@@ -11104,11 +11070,6 @@ ob1@0.76.0:
   version "0.76.0"
   resolved "https://registry.yarnpkg.com/ob1/-/ob1-0.76.0.tgz#d36e1a2f2e7ff4534cf25aaf2ab27b48161a408f"
   integrity sha512-ZLPDN2wCuFRAno0S2BSitMse+l0ipfjQQCDlYZMjZn9YnOGsRneifMlvN+3mWgTA8TOHsoAMYQdciBylgsfAmA==
-
-ob1@0.76.7:
-  version "0.76.7"
-  resolved "https://registry.yarnpkg.com/ob1/-/ob1-0.76.7.tgz#95b68fadafd47e7a6a0ad64cf80f3140dd6d1124"
-  integrity sha512-BQdRtxxoUNfSoZxqeBGOyuT9nEYSn18xZHwGMb0mMVpn2NBcYbnyKY4BK2LIHRgw33CBGlUmE+KMaNvyTpLLtQ==
 
 ob1@0.77.0:
   version "0.77.0"
