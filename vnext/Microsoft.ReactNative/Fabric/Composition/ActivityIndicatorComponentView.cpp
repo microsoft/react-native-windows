@@ -54,7 +54,7 @@ void ActivityIndicatorComponentView::updateProps(
 
   // update color if needed
   if (newViewProps->color && (!oldProps || newViewProps->color != oldViewProps->color)) {
-    m_ActivityIndicatorVisual.updateColor(newViewProps->color.AsWindowsColor());
+    m_ActivityIndicatorVisual.Color(newViewProps->color.AsWindowsColor());
   }
 
   if (newViewProps->animating != oldViewProps->animating) {
