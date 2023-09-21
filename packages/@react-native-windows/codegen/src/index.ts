@@ -259,7 +259,7 @@ export function generate(
   )).generate;
   const generatorPropsCPP = require(path.resolve(
     rncodegenPath,
-    'lib/generators/components/GeneratePropsCPP',
+    'lib/generators/components/GeneratePropsCpp',
   )).generate;
   const generatorShadowNodeH = require(path.resolve(
     rncodegenPath,
@@ -267,7 +267,7 @@ export function generate(
   )).generate;
   const generatorShadowNodeCPP = require(path.resolve(
     rncodegenPath,
-    'lib/generators/components/GenerateShadowNodeCPP',
+    'lib/generators/components/GenerateShadowNodeCpp',
   )).generate;
   const generatorComponentDescriptorH = require(path.resolve(
     rncodegenPath,
