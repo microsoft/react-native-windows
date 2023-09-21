@@ -651,6 +651,10 @@ void WindowsTextInputComponentView::updateProps(
     m_needsRedraw = true;
   }
 
+  if (oldTextInputProps.cursorColor != newTextInputProps.cursorColor) {
+    m_caretVisual.Color(newTextInputProps.cursorColor.AsWindowsColor());
+  }
+
   /*
   if (oldTextInputProps.textAttributes.foregroundColor != newTextInputProps.textAttributes.foregroundColor) {
     if (newTextInputProps.textAttributes.foregroundColor)

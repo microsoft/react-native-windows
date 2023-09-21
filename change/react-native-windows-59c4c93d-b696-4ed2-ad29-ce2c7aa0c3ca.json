@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "Test disabling HTTP caching",
+  "comment": "add fabric textinput's cursorColor",
   "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
+  "email": "tatianakapos@microsoft.com",
   "dependentChangeType": "patch"
 }

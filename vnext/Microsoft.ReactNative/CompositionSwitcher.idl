@@ -96,7 +96,7 @@ namespace Microsoft.ReactNative.Composition
   [experimental]
   interface IActivityVisual requires IVisual
   {
-    void updateColor(Windows.UI.Color color);
+    void Color(Windows.UI.Color color);
   }
 
   [webhosthidden]
@@ -107,6 +107,7 @@ namespace Microsoft.ReactNative.Composition
     void Size(Windows.Foundation.Numerics.Vector2 size);
     void Position(Windows.Foundation.Numerics.Vector2 position);
     Boolean IsVisible { get; set; };
+    void Color(Windows.UI.Color color);
   }
 
   [webhosthidden]
