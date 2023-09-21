@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 20 Sep 2023 05:17:49 GMT and should not be manually modified.
+This log was last generated on Thu, 21 Sep 2023 05:13:49 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.707
+
+Thu, 21 Sep 2023 05:13:49 GMT
+
+### Changes
+
+- [Fabric] Replace overrides in BaseViewEventEmitter (email not defined)
+- Test disabling HTTP caching (julio.rocha@microsoft.com)
+- [Fabric] Eliminate forks needed for onMouseEnter/Leave (erozell@outlook.com)
+- [Fabric] Cleans up overrides for HostPlatformViewProps (email not defined)
 
 ## 0.0.0-canary.706
 

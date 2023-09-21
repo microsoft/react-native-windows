@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 21 Sep 2023 05:13:49 GMT",
+      "version": "0.0.0-canary.707",
+      "tag": "react-native-windows_v0.0.0-canary.707",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "bb94c7d2763de94452734259b44b41d25fb683a5",
+            "comment": "[Fabric] Replace overrides in BaseViewEventEmitter"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "7f45f2add487e1506f75b966b0c020004cba0f46",
+            "comment": "Test disabling HTTP caching"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "c62e76f33025871d91cf20180ecef9a4ddeb23ef",
+            "comment": "[Fabric] Eliminate forks needed for onMouseEnter/Leave"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "93a156b14d081c6606b75ef20d2f7bc8f2a9f6c3",
+            "comment": "[Fabric] Cleans up overrides for HostPlatformViewProps"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 20 Sep 2023 05:17:49 GMT",
       "version": "0.0.0-canary.706",
       "tag": "react-native-windows_v0.0.0-canary.706",
