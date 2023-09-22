@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 #pragma once
 
+#ifdef USE_WINUI3
 #include "Composition.MicrosoftCompositionContextHelper.g.h"
+#endif
 #include "Composition.WindowsCompositionContextHelper.g.h"
 
 #include <d2d1_1.h>
