@@ -7,6 +7,7 @@
 #include "SwitchComponentView.h"
 #include "Composition/AutoDraw.h"
 #include "CompositionDynamicAutomationProvider.h"
+#include "RootComponentView.h"
 
 namespace Microsoft::ReactNative {
 
@@ -238,20 +239,44 @@ int64_t SwitchComponentView::sendMessage(uint32_t msg, uint64_t wParam, int64_t 
     case WM_POINTERDOWN: {
       const auto switchProps = std::static_pointer_cast<const facebook::react::SwitchProps>(m_props);
 
-      if (!switchProps->disabled && m_eventEmitter) {
-        auto switchEventEmitter = std::static_pointer_cast<facebook::react::SwitchEventEmitter const>(m_eventEmitter);
-
-        facebook::react::SwitchEventEmitter::OnChange args;
-        args.value = !(switchProps->value);
-        args.target = tag();
-
-        switchEventEmitter->onChange(args);
+      if (!switchProps->disabled) {
+        if (auto root = rootComponentView()) {
+          root->TrySetFocusedComponent(*this);
+        }
+        toggle();
       }
       break;
     }
   }
 
   return 0;
+}
+
+void SwitchComponentView::onKeyUp(
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
+  if (args.Key() == winrt::Windows::System::VirtualKey::Space) {
+    if (toggle()) {
+      args.Handled(true);
+    }
+  }
+  Super::onKeyUp(source, args);
+}
+
+bool SwitchComponentView::toggle() noexcept {
+  const auto switchProps = std::static_pointer_cast<const facebook::react::SwitchProps>(m_props);
+
+  if (switchProps->disabled || !m_eventEmitter)
+    return false;
+
+  auto switchEventEmitter = std::static_pointer_cast<facebook::react::SwitchEventEmitter const>(m_eventEmitter);
+
+  facebook::react::SwitchEventEmitter::OnChange args;
+  args.value = !(switchProps->value);
+  args.target = tag();
+
+  switchEventEmitter->onChange(args);
+  return true;
 }
 
 bool SwitchComponentView::focusable() const noexcept {

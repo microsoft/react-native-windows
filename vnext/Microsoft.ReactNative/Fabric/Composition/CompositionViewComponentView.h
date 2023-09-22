@@ -35,11 +35,17 @@ struct CompositionBaseComponentView : public IComponentView,
   bool runOnChildren(bool forward, Mso::Functor<bool(IComponentView &)> &fn) noexcept override;
   void onFocusLost() noexcept override;
   void onFocusGained() noexcept override;
+  void onKeyDown(
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
+  void onKeyUp(
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
   bool focusable() const noexcept override;
   std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept
       override;
-  facebook::react::SharedTouchEventEmitter touchEventEmitter() noexcept override;
-  facebook::react::SharedTouchEventEmitter touchEventEmitterAtPoint(facebook::react::Point pt) noexcept override;
+  facebook::react::SharedViewEventEmitter eventEmitter() noexcept override;
+  facebook::react::SharedViewEventEmitter eventEmitterAtPoint(facebook::react::Point pt) noexcept override;
   facebook::react::Tag tag() const noexcept override;
   int64_t sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept override;
 
@@ -127,6 +133,12 @@ struct CompositionViewComponentView : public CompositionBaseComponentView {
   void finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept override;
   void prepareForRecycle() noexcept override;
   bool focusable() const noexcept override;
+  void onKeyDown(
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
+  void onKeyUp(
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
   std::string DefaultControlType() const noexcept override;
 
   facebook::react::Props::Shared props() noexcept override;

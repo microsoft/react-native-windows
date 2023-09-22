@@ -37,6 +37,7 @@ class CompositionEventHandler {
   int64_t SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept;
   void ScrollWheel(facebook::react::Point pt, uint32_t delta);
   void RemoveTouchHandlers();
+  winrt::Windows::UI::Core::CoreVirtualKeyStates GetKeyState(winrt::Windows::System::VirtualKey key) noexcept;
 
  private:
   void ButtonDown(uint32_t msg, uint64_t wParam, int64_t lParam);
@@ -44,6 +45,13 @@ class CompositionEventHandler {
   void ButtonUp(uint32_t msg, uint64_t wParam, int64_t lParam);
   void PointerUp(uint32_t msg, uint64_t wParam, int64_t lParam);
   void MouseMove(uint32_t msg, uint64_t wParam, int64_t lParam);
+
+  void onKeyDown(
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept;
+  void onKeyUp(
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept;
 
   facebook::react::SurfaceId SurfaceId() noexcept;
   RootComponentView &RootComponentView() noexcept;

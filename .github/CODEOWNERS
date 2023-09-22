@@ -52,6 +52,7 @@
 
 # CLI for the new project templates
 /vnext/template/**  @microsoft/react-native-windows-cli @microsoft/react-native-windows-write
+/vnext/templates/**  @microsoft/react-native-windows-cli @microsoft/react-native-windows-write
 
 # Ownership by specific files or file types
 # This section MUST stay at the bottom of the CODEOWNERS file.

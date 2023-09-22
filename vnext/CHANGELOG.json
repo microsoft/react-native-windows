@@ -2,6 +2,78 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 22 Sep 2023 05:13:32 GMT",
+      "version": "0.0.0-canary.708",
+      "tag": "react-native-windows_v0.0.0-canary.708",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ff73a5669674b6fee011f0515958f5d5b3e57036",
+            "comment": "[Fabric] Add support for native key event handling"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "7c9768c23f26fdf0b6ef39e6d11871949fbeab72",
+            "comment": "add fabric textinput's cursorColor"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "de07af904a160d260136645727de394e44662acc",
+            "comment": "Create new CLI init-windows command"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.188",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.70",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 21 Sep 2023 05:13:49 GMT",
+      "version": "0.0.0-canary.707",
+      "tag": "react-native-windows_v0.0.0-canary.707",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "bb94c7d2763de94452734259b44b41d25fb683a5",
+            "comment": "[Fabric] Replace overrides in BaseViewEventEmitter"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "7f45f2add487e1506f75b966b0c020004cba0f46",
+            "comment": "Test disabling HTTP caching"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "c62e76f33025871d91cf20180ecef9a4ddeb23ef",
+            "comment": "[Fabric] Eliminate forks needed for onMouseEnter/Leave"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "93a156b14d081c6606b75ef20d2f7bc8f2a9f6c3",
+            "comment": "[Fabric] Cleans up overrides for HostPlatformViewProps"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 20 Sep 2023 05:17:49 GMT",
       "version": "0.0.0-canary.706",
       "tag": "react-native-windows_v0.0.0-canary.706",

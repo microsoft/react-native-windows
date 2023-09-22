@@ -74,54 +74,6 @@
       "issue": 7821
     },
     {
-      "type": "derived",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/BaseViewEventEmitter.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/BaseViewEventEmitter.cpp",
-      "baseHash": "f74be15aabe10df4262975df06040ba18da8d88c"
-    },
-    {
-      "type": "derived",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/BaseViewEventEmitter.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/BaseViewEventEmitter.h",
-      "baseHash": "32ffb909ddb2ead19952b6cdaba13e885babaad1"
-    },
-    {
-      "type": "derived",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/BaseViewProps.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/BaseViewProps.cpp",
-      "baseHash": "a9be2d4068cb18a94b8ee8f289afae6695a2f35e"
-    },
-    {
-      "type": "derived",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/BaseViewProps.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/BaseViewProps.h",
-      "baseHash": "cff8b44d2c675d73f26dbb5562f4caa3a3fb5cf0"
-    },
-    {
-      "type": "derived",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/primitives.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/primitives.h",
-      "baseHash": "ad53fd4887145b0b804d730fd6cd8731b029419d"
-    },
-    {
-      "type": "derived",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/TouchEventEmitter.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/TouchEventEmitter.cpp",
-      "baseHash": "76ca148d4715dd053ffb0279782c472e8dcc0ba9"
-    },
-    {
-      "type": "derived",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/TouchEventEmitter.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/TouchEventEmitter.h",
-      "baseHash": "a76c1bf4ee03ffa180990c86d31af2c3d9d08d62"
-    },
-    {
-      "type": "derived",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/ViewShadowNode.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/ViewShadowNode.cpp",
-      "baseHash": "de36b7ec602114a18ec8e1f4a0371ac8bbc99743"
-    },
-    {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/YogaLayoutableShadowNode.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/YogaLayoutableShadowNode.cpp",
@@ -321,6 +273,12 @@
       "file": "src/Libraries/Components/ScrollView/ScrollViewNativeComponent.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/ScrollView/ScrollViewNativeComponent.js",
       "baseHash": "625be8cb73e6fcbd89643812e322beed7208ac79"
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/Components/Switch/Switch.windows.js",
+      "baseFile": "packages/react-native/Libraries/Components/Switch/Switch.js",
+      "baseHash": "31b8cd62b5acb1a237f5373d1618869f5afebdd3"
     },
     {
       "type": "patch",
