@@ -61,7 +61,8 @@ void CompositionHwndHost::Initialize(uint64_t hwnd) noexcept {
 
   m_compRootView.ScaleFactor(ScaleFactor());
   m_compRootView.RootVisual(
-      winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::CreateVisual(RootVisual()));
+      winrt::Microsoft::ReactNative::Composition::implementation::WindowsCompositionContextHelper::CreateVisual(
+          RootVisual()));
 
   UpdateSize();
 }
@@ -149,7 +150,7 @@ winrt::Windows::UI::Composition::Compositor CompositionHwndHost::Compositor() co
       winrt::Microsoft::ReactNative::Composition::implementation::CompositionUIService::GetCompositionContext(
           m_reactViewHost.ReactNativeHost().InstanceSettings().Properties());
 
-  return winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::InnerCompositor(
+  return winrt::Microsoft::ReactNative::Composition::implementation::WindowsCompositionContextHelper::InnerCompositor(
       compositionContext);
 }
 

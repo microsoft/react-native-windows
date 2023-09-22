@@ -6,7 +6,9 @@
 #include <DesktopWindowBridge.h>
 #include <IReactDispatcher.h>
 #include <IReactPropertyBag.h>
+#ifndef USE_WINUI3
 #include <UI.Xaml.Hosting.DesktopWindowXamlSource.h>
+#endif
 #include <Utils/Helpers.h>
 #include <XamlUIService.h>
 #include <XamlUtils.h>

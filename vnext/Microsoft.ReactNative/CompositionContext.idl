@@ -11,21 +11,42 @@ namespace Microsoft.ReactNative.Composition
   [default_interface]
   [experimental]
   DOC_STRING("A helper static class for to create a @ICompositionContext based on Windows.Composition Visuals.  And to access the underlying Windows.Composition objects from the abstraction.")
-  static runtimeclass CompositionContextHelper
+  static runtimeclass WindowsCompositionContextHelper
   {
     DOC_STRING(
       "Creates a @ICompositionContext from a Compositor")
-    static ICompositionContext CreateContext(COMP_NAMESPACE.Compositor compositor);
+    static ICompositionContext CreateContext(Windows.UI.Composition.Compositor compositor);
 
     DOC_STRING(
       "Creates a @IVisual from a Visual")
-    static IVisual CreateVisual(COMP_NAMESPACE.Visual visual);
+    static IVisual CreateVisual(Windows.UI.Composition.Visual visual);
 
-    static COMP_NAMESPACE.Compositor InnerCompositor(ICompositionContext context);
-    static COMP_NAMESPACE.Visual InnerVisual(IVisual visual);
-    static COMP_NAMESPACE.DropShadow InnerDropShadow(IDropShadow shadow);
-    static COMP_NAMESPACE.CompositionBrush InnerBrush(IBrush brush);
-    static COMP_NAMESPACE.ICompositionSurface InnerSurface(IDrawingSurfaceBrush surface);
+    static Windows.UI.Composition.Compositor InnerCompositor(ICompositionContext context);
+    static Windows.UI.Composition.Visual InnerVisual(IVisual visual);
+    static Windows.UI.Composition.DropShadow InnerDropShadow(IDropShadow shadow);
+    static Windows.UI.Composition.CompositionBrush InnerBrush(IBrush brush);
+    static Windows.UI.Composition.ICompositionSurface InnerSurface(IDrawingSurfaceBrush surface);
+  }
+
+  [webhosthidden]
+  [default_interface]
+  [experimental]
+  DOC_STRING("A helper static class for to create a @ICompositionContext based on Microsoft.Composition Visuals.  And to access the underlying Microsoft.Composition objects from the abstraction.")
+  static runtimeclass MicrosoftCompositionContextHelper
+  {
+    DOC_STRING(
+      "Creates a @ICompositionContext from a Compositor")
+    static ICompositionContext CreateContext(Microsoft.UI.Composition.Compositor compositor);
+
+    DOC_STRING(
+      "Creates a @IVisual from a Visual")
+    static IVisual CreateVisual(Microsoft.UI.Composition.Visual visual);
+
+    static Microsoft.UI.Composition.Compositor InnerCompositor(ICompositionContext context);
+    static Microsoft.UI.Composition.Visual InnerVisual(IVisual visual);
+    static Microsoft.UI.Composition.DropShadow InnerDropShadow(IDropShadow shadow);
+    static Microsoft.UI.Composition.CompositionBrush InnerBrush(IBrush brush);
+    static Microsoft.UI.Composition.ICompositionSurface InnerSurface(IDrawingSurfaceBrush surface);
   }
 
 } // namespace Microsoft.ReactNative.Composition

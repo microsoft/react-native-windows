@@ -1,8 +1,11 @@
 
 #include "pch.h"
 #include "CompositionContextHelper.h"
-#if __has_include("Composition.CompositionContextHelper.g.cpp")
-#include "Composition.CompositionContextHelper.g.cpp"
+#if __has_include("Composition.WindowsCompositionContextHelper.g.cpp")
+#include "Composition.WindowsCompositionContextHelper.g.cpp"
+#endif
+#if __has_include("Composition.MicrosoftCompositionContextHelper.g.cpp")
+#include "Composition.MicrosoftCompositionContextHelper.g.cpp"
 #endif
 
 #include <Windows.Graphics.Interop.h>
@@ -12,7 +15,126 @@
 #include <winrt/Windows.UI.Composition.interactions.h>
 #include "CompositionHelpers.h"
 
+#ifdef USE_WINUI3
+#include <microsoft.ui.composition.interop.h>
+#include <winrt/Microsoft.UI.Composition.h>
+#include <winrt/Microsoft.UI.Composition.interactions.h>
+#endif
+
 namespace Microsoft::ReactNative::Composition {
+
+template <typename TSpriteVisual>
+struct CompositionTypeTraits {};
+
+struct WindowsTypeTag;
+template <>
+struct CompositionTypeTraits<WindowsTypeTag> {
+  using AnimationDelayBehavior = winrt::Windows::UI::Composition::AnimationDelayBehavior;
+  using AnimationDirection = winrt::Windows::UI::Composition::AnimationDirection;
+  using AnimationIterationBehavior = winrt::Windows::UI::Composition::AnimationIterationBehavior;
+  using CompositionBackfaceVisibility = winrt::Windows::UI::Composition::CompositionBackfaceVisibility;
+  using CompositionBrush = winrt::Windows::UI::Composition::CompositionBrush;
+  using CompositionDrawingSurface = winrt::Windows::UI::Composition::CompositionDrawingSurface;
+  using CompositionNineGridBrush = winrt::Windows::UI::Composition::CompositionNineGridBrush;
+  using CompositionPath = winrt::Windows::UI::Composition::CompositionPath;
+  using CompositionSpriteShape = winrt::Windows::UI::Composition::CompositionSpriteShape;
+  using CompositionStretch = winrt::Windows::UI::Composition::CompositionStretch;
+  using CompositionSurfaceBrush = winrt::Windows::UI::Composition::CompositionSurfaceBrush;
+  using Compositor = winrt::Windows::UI::Composition::Compositor;
+  using ContainerVisual = winrt::Windows::UI::Composition::ContainerVisual;
+  using DropShadow = winrt::Windows::UI::Composition::DropShadow;
+  using ICompositionSurface = winrt::Windows::UI::Composition::ICompositionSurface;
+  using IInteractionTrackerOwner = winrt::Windows::UI::Composition::Interactions::IInteractionTrackerOwner;
+  using InteractionSourceMode = winrt::Windows::UI::Composition::Interactions::InteractionSourceMode;
+  using InteractionTracker = winrt::Windows::UI::Composition::Interactions::InteractionTracker;
+  using InteractionTrackerCustomAnimationStateEnteredArgs =
+      winrt::Windows::UI::Composition::Interactions::InteractionTrackerCustomAnimationStateEnteredArgs;
+  using InteractionTrackerIdleStateEnteredArgs =
+      winrt::Windows::UI::Composition::Interactions::InteractionTrackerIdleStateEnteredArgs;
+  using InteractionTrackerInertiaStateEnteredArgs =
+      winrt::Windows::UI::Composition::Interactions::InteractionTrackerInertiaStateEnteredArgs;
+  using InteractionTrackerInteractingStateEnteredArgs =
+      winrt::Windows::UI::Composition::Interactions::InteractionTrackerInteractingStateEnteredArgs;
+  using InteractionTrackerRequestIgnoredArgs =
+      winrt::Windows::UI::Composition::Interactions::InteractionTrackerRequestIgnoredArgs;
+  using InteractionTrackerValuesChangedArgs =
+      winrt::Windows::UI::Composition::Interactions::InteractionTrackerValuesChangedArgs;
+  using ScalarKeyFrameAnimation = winrt::Windows::UI::Composition::ScalarKeyFrameAnimation;
+  using ShapeVisual = winrt::Windows::UI::Composition::ShapeVisual;
+  using SpriteVisual = winrt::Windows::UI::Composition::SpriteVisual;
+  using Visual = winrt::Windows::UI::Composition::Visual;
+  using VisualInteractionSource = winrt::Windows::UI::Composition::Interactions::VisualInteractionSource;
+  using VisualInteractionSourceRedirectionMode =
+      winrt::Windows::UI::Composition::Interactions::VisualInteractionSourceRedirectionMode;
+  using CompositionGraphicsDevice = winrt::Windows::UI::Composition::CompositionGraphicsDevice;
+
+  using ICompositionDrawingSurfaceInterop = ABI::Windows::UI::Composition::ICompositionDrawingSurfaceInterop;
+  using ICompositorInterop = ABI::Windows::UI::Composition::ICompositorInterop;
+  using ICompositionGraphicsDevice = ABI::Windows::UI::Composition::ICompositionGraphicsDevice;
+
+  using IInnerCompositionDropShadow = IWindowsCompositionDropShadow;
+  using IInnerCompositionVisual = IWindowsCompositionVisual;
+  using IInnerCompositionBrush = IWindowsCompositionBrush;
+  using IInnerCompositionDrawingSurface = IWindowsCompositionDrawingSurfaceInner;
+  using CompositionContextHelper = winrt::Microsoft::ReactNative::Composition::WindowsCompositionContextHelper;
+};
+using WindowsTypeRedirects = CompositionTypeTraits<WindowsTypeTag>;
+
+#ifdef USE_WINUI3
+struct MicrosoftTypeTag;
+template <>
+struct CompositionTypeTraits<MicrosoftTypeTag> {
+  using AnimationDelayBehavior = winrt::Microsoft::UI::Composition::AnimationDelayBehavior;
+  using AnimationDirection = winrt::Microsoft::UI::Composition::AnimationDirection;
+  using AnimationIterationBehavior = winrt::Microsoft::UI::Composition::AnimationIterationBehavior;
+  using CompositionBackfaceVisibility = winrt::Microsoft::UI::Composition::CompositionBackfaceVisibility;
+  using CompositionBrush = winrt::Microsoft::UI::Composition::CompositionBrush;
+  using CompositionDrawingSurface = winrt::Microsoft::UI::Composition::CompositionDrawingSurface;
+  using CompositionNineGridBrush = winrt::Microsoft::UI::Composition::CompositionNineGridBrush;
+  using CompositionPath = winrt::Microsoft::UI::Composition::CompositionPath;
+  using CompositionSpriteShape = winrt::Microsoft::UI::Composition::CompositionSpriteShape;
+  using CompositionStretch = winrt::Microsoft::UI::Composition::CompositionStretch;
+  using CompositionSurfaceBrush = winrt::Microsoft::UI::Composition::CompositionSurfaceBrush;
+  using Compositor = winrt::Microsoft::UI::Composition::Compositor;
+  using ContainerVisual = winrt::Microsoft::UI::Composition::ContainerVisual;
+  using DropShadow = winrt::Microsoft::UI::Composition::DropShadow;
+  using ICompositionSurface = winrt::Microsoft::UI::Composition::ICompositionSurface;
+  using IInteractionTrackerOwner = winrt::Microsoft::UI::Composition::Interactions::IInteractionTrackerOwner;
+  using InteractionSourceMode = winrt::Microsoft::UI::Composition::Interactions::InteractionSourceMode;
+  using InteractionTracker = winrt::Microsoft::UI::Composition::Interactions::InteractionTracker;
+  using InteractionTrackerCustomAnimationStateEnteredArgs =
+      winrt::Microsoft::UI::Composition::Interactions::InteractionTrackerCustomAnimationStateEnteredArgs;
+  using InteractionTrackerIdleStateEnteredArgs =
+      winrt::Microsoft::UI::Composition::Interactions::InteractionTrackerIdleStateEnteredArgs;
+  using InteractionTrackerInertiaStateEnteredArgs =
+      winrt::Microsoft::UI::Composition::Interactions::InteractionTrackerInertiaStateEnteredArgs;
+  using InteractionTrackerInteractingStateEnteredArgs =
+      winrt::Microsoft::UI::Composition::Interactions::InteractionTrackerInteractingStateEnteredArgs;
+  using InteractionTrackerRequestIgnoredArgs =
+      winrt::Microsoft::UI::Composition::Interactions::InteractionTrackerRequestIgnoredArgs;
+  using InteractionTrackerValuesChangedArgs =
+      winrt::Microsoft::UI::Composition::Interactions::InteractionTrackerValuesChangedArgs;
+  using ScalarKeyFrameAnimation = winrt::Microsoft::UI::Composition::ScalarKeyFrameAnimation;
+  using ShapeVisual = winrt::Microsoft::UI::Composition::ShapeVisual;
+  using SpriteVisual = winrt::Microsoft::UI::Composition::SpriteVisual;
+  using Visual = winrt::Microsoft::UI::Composition::Visual;
+  using VisualInteractionSource = winrt::Microsoft::UI::Composition::Interactions::VisualInteractionSource;
+  using VisualInteractionSourceRedirectionMode =
+      winrt::Microsoft::UI::Composition::Interactions::VisualInteractionSourceRedirectionMode;
+  using CompositionGraphicsDevice = winrt::Microsoft::UI::Composition::CompositionGraphicsDevice;
+
+  using ICompositionDrawingSurfaceInterop = ABI::Microsoft::UI::Composition::ICompositionDrawingSurfaceInterop;
+  using ICompositorInterop = ABI::Microsoft::UI::Composition::ICompositorInterop;
+  using ICompositionGraphicsDevice = ABI::Microsoft::UI::Composition::ICompositionGraphicsDevice;
+
+  using IInnerCompositionDropShadow = IMicrosoftCompositionDropShadow;
+  using IInnerCompositionVisual = IMicrosoftCompositionVisual;
+  using IInnerCompositionBrush = IMicrosoftCompositionBrush;
+  using IInnerCompositionDrawingSurface = IMicrosoftCompositionDrawingSurfaceInner;
+  using CompositionContextHelper = winrt::Microsoft::ReactNative::Composition::MicrosoftCompositionContextHelper;
+};
+using MicrosoftTypeRedirects = CompositionTypeTraits<MicrosoftTypeTag>;
+#endif
 
 struct GeometrySource : public winrt::implements<
                             GeometrySource,
@@ -35,12 +157,14 @@ struct GeometrySource : public winrt::implements<
   winrt::com_ptr<ID2D1Geometry> m_geometry;
 };
 
-struct CompDropShadow
-    : public winrt::
-          implements<CompDropShadow, winrt::Microsoft::ReactNative::Composition::IDropShadow, ICompositionDropShadow> {
-  CompDropShadow(winrt::Windows::UI::Composition::DropShadow const &shadow) : m_shadow(shadow) {}
+template <typename TTypeRedirects>
+struct CompDropShadow : public winrt::implements<
+                            CompDropShadow<TTypeRedirects>,
+                            winrt::Microsoft::ReactNative::Composition::IDropShadow,
+                            typename TTypeRedirects::IInnerCompositionDropShadow> {
+  CompDropShadow(typename TTypeRedirects::DropShadow const &shadow) : m_shadow(shadow) {}
 
-  winrt::Windows::UI::Composition::DropShadow InnerShadow() const noexcept override {
+  typename TTypeRedirects::DropShadow InnerShadow() const noexcept override {
     return m_shadow;
   }
 
@@ -61,31 +185,43 @@ struct CompDropShadow
   }
 
  private:
-  winrt::Windows::UI::Composition::DropShadow m_shadow;
+  typename TTypeRedirects::DropShadow m_shadow;
 };
+using WindowsCompDropShadow = CompDropShadow<WindowsTypeRedirects>;
+#ifdef USE_WINUI3
+using MicrosoftCompDropShadow = CompDropShadow<MicrosoftTypeRedirects>;
+#endif
 
-struct CompBrush
-    : public winrt::implements<CompBrush, winrt::Microsoft::ReactNative::Composition::IBrush, ICompositionBrush> {
-  CompBrush(winrt::Windows::UI::Composition::CompositionBrush const &brush) : m_brush(brush) {}
+template <typename TTypeRedirects>
+struct CompBrush : public winrt::implements<
+                       CompBrush<TTypeRedirects>,
+                       winrt::Microsoft::ReactNative::Composition::IBrush,
+                       typename TTypeRedirects::IInnerCompositionBrush> {
+  CompBrush(typename TTypeRedirects::CompositionBrush const &brush) : m_brush(brush) {}
 
-  winrt::Windows::UI::Composition::CompositionBrush InnerBrush() const noexcept {
+  typename TTypeRedirects::CompositionBrush InnerBrush() const noexcept {
     return m_brush;
   }
 
  private:
-  winrt::Windows::UI::Composition::CompositionBrush m_brush;
+  typename TTypeRedirects::CompositionBrush m_brush;
 };
+using WindowsCompBrush = CompBrush<WindowsTypeRedirects>;
+#ifdef USE_WINUI3
+using MicrosoftCompBrush = CompBrush<MicrosoftTypeRedirects>;
+#endif
 
+template <typename TTypeRedirects>
 struct CompDrawingSurfaceBrush : public winrt::implements<
-                                     CompDrawingSurfaceBrush,
+                                     CompDrawingSurfaceBrush<TTypeRedirects>,
                                      winrt::Microsoft::ReactNative::Composition::IDrawingSurfaceBrush,
                                      winrt::Microsoft::ReactNative::Composition::IBrush,
-                                     Microsoft::ReactNative::Composition::ICompositionBrush,
+                                     typename TTypeRedirects::IInnerCompositionBrush,
                                      ICompositionDrawingSurfaceInterop,
-                                     ICompositionDrawingSurfaceInner> {
+                                     typename TTypeRedirects::IInnerCompositionDrawingSurface> {
   CompDrawingSurfaceBrush(
-      const winrt::Windows::UI::Composition::Compositor &compositor,
-      winrt::Windows::UI::Composition::CompositionDrawingSurface const &drawingSurface)
+      const typename TTypeRedirects::Compositor &compositor,
+      typename TTypeRedirects::CompositionDrawingSurface const &drawingSurface)
       : m_brush(compositor.CreateSurfaceBrush(drawingSurface)) {
     drawingSurface.as(m_drawingSurfaceInterop);
   }
@@ -98,13 +234,13 @@ struct CompDrawingSurfaceBrush : public winrt::implements<
     return m_drawingSurfaceInterop->EndDraw();
   }
 
-  winrt::Windows::UI::Composition::ICompositionSurface Inner() const noexcept {
-    winrt::Windows::UI::Composition::ICompositionSurface surface;
+  typename TTypeRedirects::ICompositionSurface Inner() const noexcept {
+    typename TTypeRedirects::ICompositionSurface surface;
     m_drawingSurfaceInterop.as(surface);
     return surface;
   }
 
-  winrt::Windows::UI::Composition::CompositionBrush InnerBrush() const noexcept {
+  typename TTypeRedirects::CompositionBrush InnerBrush() const noexcept {
     return m_brush;
   }
 
@@ -118,43 +254,48 @@ struct CompDrawingSurfaceBrush : public winrt::implements<
   void Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch mode) noexcept {
     static_assert(
         static_cast<winrt::Microsoft::ReactNative::Composition::CompositionStretch>(
-            winrt::Windows::UI::Composition::CompositionStretch::None) ==
+            TTypeRedirects::CompositionStretch::None) ==
         winrt::Microsoft::ReactNative::Composition::CompositionStretch::None);
     static_assert(
         static_cast<winrt::Microsoft::ReactNative::Composition::CompositionStretch>(
-            winrt::Windows::UI::Composition::CompositionStretch::Fill) ==
+            TTypeRedirects::CompositionStretch::Fill) ==
         winrt::Microsoft::ReactNative::Composition::CompositionStretch::Fill);
     static_assert(
         static_cast<winrt::Microsoft::ReactNative::Composition::CompositionStretch>(
-            winrt::Windows::UI::Composition::CompositionStretch::Uniform) ==
+            TTypeRedirects::CompositionStretch::Uniform) ==
         winrt::Microsoft::ReactNative::Composition::CompositionStretch::Uniform);
     static_assert(
         static_cast<winrt::Microsoft::ReactNative::Composition::CompositionStretch>(
-            winrt::Windows::UI::Composition::CompositionStretch::UniformToFill) ==
+            TTypeRedirects::CompositionStretch::UniformToFill) ==
         winrt::Microsoft::ReactNative::Composition::CompositionStretch::UniformToFill);
 
-    m_brush.Stretch(static_cast<winrt::Windows::UI::Composition::CompositionStretch>(mode));
+    m_brush.Stretch(static_cast<typename TTypeRedirects::CompositionStretch>(mode));
   }
 
  private:
-  winrt::Windows::UI::Composition::CompositionSurfaceBrush m_brush;
-  winrt::com_ptr<ABI::Windows::UI::Composition::ICompositionDrawingSurfaceInterop> m_drawingSurfaceInterop;
+  typename TTypeRedirects::CompositionSurfaceBrush m_brush;
+  winrt::com_ptr<typename TTypeRedirects::ICompositionDrawingSurfaceInterop> m_drawingSurfaceInterop;
 };
+using WindowsCompDrawingSurfaceBrush = CompDrawingSurfaceBrush<WindowsTypeRedirects>;
+#ifdef USE_WINUI3
+using MicrosoftCompDrawingSurfaceBrush = CompDrawingSurfaceBrush<MicrosoftTypeRedirects>;
+#endif
 
+template <typename TTypeRedirects>
 struct CompVisual : public winrt::implements<
-                        CompVisual,
+                        CompVisual<TTypeRedirects>,
                         winrt::Microsoft::ReactNative::Composition::IVisual,
-                        ICompositionVisual,
+                        typename TTypeRedirects::IInnerCompositionVisual,
                         IVisualInterop> {
-  CompVisual(winrt::Windows::UI::Composition::Visual const &visual) : m_visual(visual) {}
+  CompVisual(typename TTypeRedirects::Visual const &visual) : m_visual(visual) {}
 
-  winrt::Windows::UI::Composition::Visual InnerVisual() const noexcept override {
+  typename TTypeRedirects::Visual InnerVisual() const noexcept override {
     return m_visual;
   }
 
   void InsertAt(const winrt::Microsoft::ReactNative::Composition::IVisual &visual, uint32_t index) noexcept {
-    auto containerChildren = m_visual.as<winrt::Windows::UI::Composition::ContainerVisual>().Children();
-    auto compVisual = winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerVisual(visual);
+    auto containerChildren = m_visual.as<typename TTypeRedirects::ContainerVisual>().Children();
+    auto compVisual = TTypeRedirects::CompositionContextHelper::InnerVisual(visual);
     if (index == 0 || containerChildren.Count() == 0) {
       containerChildren.InsertAtTop(compVisual);
       return;
@@ -166,18 +307,17 @@ struct CompVisual : public winrt::implements<
   }
 
   void Remove(const winrt::Microsoft::ReactNative::Composition::IVisual &visual) noexcept {
-    auto compVisual = winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerVisual(visual);
-    auto containerChildren = m_visual.as<winrt::Windows::UI::Composition::ContainerVisual>().Children();
+    auto compVisual = TTypeRedirects::CompositionContextHelper::InnerVisual(visual);
+    auto containerChildren = m_visual.as<typename TTypeRedirects::ContainerVisual>().Children();
     containerChildren.Remove(compVisual);
   }
 
   winrt::Microsoft::ReactNative::Composition::IVisual GetAt(uint32_t index) noexcept {
-    auto containerChildren = m_visual.as<winrt::Windows::UI::Composition::ContainerVisual>().Children();
+    auto containerChildren = m_visual.as<typename TTypeRedirects::ContainerVisual>().Children();
     auto it = containerChildren.First();
     for (uint32_t i = 0; i < index; i++)
       it.MoveNext();
-    return winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::CreateVisual(
-        it.Current());
+    return TTypeRedirects::CompositionContextHelper::CreateVisual(it.Current());
   }
 
   void SetClippingPath(ID2D1Geometry *clippingPath) noexcept {
@@ -186,7 +326,7 @@ struct CompVisual : public winrt::implements<
       return;
     }
     auto geometry = winrt::make<GeometrySource>(clippingPath);
-    auto path = winrt::Windows::UI::Composition::CompositionPath(geometry);
+    auto path = typename TTypeRedirects::CompositionPath(geometry);
     auto pathgeo = m_visual.Compositor().CreatePathGeometry(path);
     auto clip = m_visual.Compositor().CreateGeometricClip(pathgeo);
     m_visual.Clip(clip);
@@ -239,28 +379,33 @@ struct CompVisual : public winrt::implements<
   }
 
   void BackfaceVisibility(winrt::Microsoft::ReactNative::Composition::BackfaceVisibility value) {
-    m_visual.BackfaceVisibility(static_cast<winrt::Windows::UI::Composition::CompositionBackfaceVisibility>(value));
+    m_visual.BackfaceVisibility(static_cast<typename TTypeRedirects::CompositionBackfaceVisibility>(value));
   }
 
  private:
-  winrt::Windows::UI::Composition::Visual m_visual;
+  typename TTypeRedirects::Visual m_visual;
 };
+using WindowsCompVisual = CompVisual<WindowsTypeRedirects>;
+#ifdef USE_WINUI3
+using MicrosoftCompVisual = CompVisual<MicrosoftTypeRedirects>;
+#endif
 
+template <typename TTypeRedirects>
 struct CompSpriteVisual : winrt::implements<
-                              CompSpriteVisual,
+                              CompSpriteVisual<TTypeRedirects>,
                               winrt::Microsoft::ReactNative::Composition::ISpriteVisual,
                               winrt::Microsoft::ReactNative::Composition::IVisual,
-                              ICompositionVisual,
+                              typename TTypeRedirects::IInnerCompositionVisual,
                               IVisualInterop> {
-  CompSpriteVisual(winrt::Windows::UI::Composition::SpriteVisual const &visual) : m_visual(visual) {}
+  CompSpriteVisual(typename TTypeRedirects::SpriteVisual const &visual) : m_visual(visual) {}
 
-  winrt::Windows::UI::Composition::Visual InnerVisual() const noexcept override {
+  typename TTypeRedirects::Visual InnerVisual() const noexcept override {
     return m_visual;
   }
 
   void InsertAt(const winrt::Microsoft::ReactNative::Composition::IVisual &visual, uint32_t index) noexcept {
     auto containerChildren = m_visual.Children();
-    auto compVisual = winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerVisual(visual);
+    auto compVisual = TTypeRedirects::CompositionContextHelper::InnerVisual(visual);
     if (index == 0) {
       containerChildren.InsertAtBottom(compVisual);
       return;
@@ -272,22 +417,21 @@ struct CompSpriteVisual : winrt::implements<
   }
 
   void Remove(const winrt::Microsoft::ReactNative::Composition::IVisual &visual) noexcept {
-    auto compVisual = winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerVisual(visual);
+    auto compVisual = TTypeRedirects::CompositionContextHelper::InnerVisual(visual);
     auto containerChildren = m_visual.Children();
     containerChildren.Remove(compVisual);
   }
 
   winrt::Microsoft::ReactNative::Composition::IVisual GetAt(uint32_t index) noexcept {
-    auto containerChildren = m_visual.as<winrt::Windows::UI::Composition::ContainerVisual>().Children();
+    auto containerChildren = m_visual.as<typename TTypeRedirects::ContainerVisual>().Children();
     auto it = containerChildren.First();
     for (uint32_t i = 0; i < index; i++)
       it.MoveNext();
-    return winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::CreateVisual(
-        it.Current());
+    return TTypeRedirects::CompositionContextHelper::CreateVisual(it.Current());
   }
 
   void Brush(const winrt::Microsoft::ReactNative::Composition::IBrush &brush) noexcept {
-    m_visual.Brush(winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerBrush(brush));
+    m_visual.Brush(TTypeRedirects::CompositionContextHelper::InnerBrush(brush));
   }
 
   void Opacity(float opacity) noexcept {
@@ -337,7 +481,7 @@ struct CompSpriteVisual : winrt::implements<
   }
 
   void BackfaceVisibility(winrt::Microsoft::ReactNative::Composition::BackfaceVisibility value) {
-    m_visual.BackfaceVisibility(static_cast<winrt::Windows::UI::Composition::CompositionBackfaceVisibility>(value));
+    m_visual.BackfaceVisibility(static_cast<typename TTypeRedirects::CompositionBackfaceVisibility>(value));
   }
 
   void SetClippingPath(ID2D1Geometry *clippingPath) noexcept {
@@ -346,19 +490,23 @@ struct CompSpriteVisual : winrt::implements<
       return;
     }
     auto geometry = winrt::make<GeometrySource>(clippingPath);
-    auto path = winrt::Windows::UI::Composition::CompositionPath(geometry);
+    auto path = TTypeRedirects::CompositionPath(geometry);
     auto pathgeo = m_visual.Compositor().CreatePathGeometry(path);
     auto clip = m_visual.Compositor().CreateGeometricClip(pathgeo);
     m_visual.Clip(clip);
   }
 
   void Shadow(const winrt::Microsoft::ReactNative::Composition::IDropShadow &shadow) noexcept {
-    m_visual.Shadow(winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerDropShadow(shadow));
+    m_visual.Shadow(TTypeRedirects::CompositionContextHelper::InnerDropShadow(shadow));
   }
 
  private:
-  winrt::Windows::UI::Composition::SpriteVisual m_visual;
+  typename TTypeRedirects::SpriteVisual m_visual;
 };
+using WindowsCompSpriteVisual = CompSpriteVisual<WindowsTypeRedirects>;
+#ifdef USE_WINUI3
+using MicrosoftCompSpriteVisual = CompSpriteVisual<MicrosoftTypeRedirects>;
+#endif
 
 struct CompScrollPositionChangedArgs : winrt::implements<
                                            CompScrollPositionChangedArgs,
@@ -373,36 +521,35 @@ struct CompScrollPositionChangedArgs : winrt::implements<
   winrt::Windows::Foundation::Numerics::float2 m_position;
 };
 
+template <typename TTypeRedirects>
 struct CompScrollerVisual : winrt::implements<
-                                CompScrollerVisual,
+                                CompScrollerVisual<TTypeRedirects>,
                                 winrt::Microsoft::ReactNative::Composition::IScrollVisual,
                                 winrt::Microsoft::ReactNative::Composition::IVisual,
-                                ICompositionVisual,
+                                typename TTypeRedirects::IInnerCompositionVisual,
                                 IVisualInterop> {
-  struct ScrollInteractionTrackerOwner : public winrt::implements<
-                                             ScrollInteractionTrackerOwner,
-                                             winrt::Windows::UI::Composition::Interactions::IInteractionTrackerOwner> {
+  struct ScrollInteractionTrackerOwner
+      : public winrt::implements<ScrollInteractionTrackerOwner, typename TTypeRedirects::IInteractionTrackerOwner> {
     ScrollInteractionTrackerOwner(CompScrollerVisual *outer) : m_outer(outer){};
 
     void CustomAnimationStateEntered(
-        winrt::Windows::UI::Composition::Interactions::InteractionTracker sender,
-        winrt::Windows::UI::Composition::Interactions::InteractionTrackerCustomAnimationStateEnteredArgs
-            args) noexcept {}
+        typename TTypeRedirects::InteractionTracker sender,
+        typename TTypeRedirects::InteractionTrackerCustomAnimationStateEnteredArgs args) noexcept {}
     void IdleStateEntered(
-        winrt::Windows::UI::Composition::Interactions::InteractionTracker sender,
-        winrt::Windows::UI::Composition::Interactions::InteractionTrackerIdleStateEnteredArgs args) noexcept {}
+        typename TTypeRedirects::InteractionTracker sender,
+        typename TTypeRedirects::InteractionTrackerIdleStateEnteredArgs args) noexcept {}
     void InertiaStateEntered(
-        winrt::Windows::UI::Composition::Interactions::InteractionTracker sender,
-        winrt::Windows::UI::Composition::Interactions::InteractionTrackerInertiaStateEnteredArgs args) noexcept {}
+        typename TTypeRedirects::InteractionTracker sender,
+        typename TTypeRedirects::InteractionTrackerInertiaStateEnteredArgs args) noexcept {}
     void InteractingStateEntered(
-        winrt::Windows::UI::Composition::Interactions::InteractionTracker sender,
-        winrt::Windows::UI::Composition::Interactions::InteractionTrackerInteractingStateEnteredArgs args) noexcept {}
+        typename TTypeRedirects::InteractionTracker sender,
+        typename TTypeRedirects::InteractionTrackerInteractingStateEnteredArgs args) noexcept {}
     void RequestIgnored(
-        winrt::Windows::UI::Composition::Interactions::InteractionTracker sender,
-        winrt::Windows::UI::Composition::Interactions::InteractionTrackerRequestIgnoredArgs args) noexcept {}
+        typename TTypeRedirects::InteractionTracker sender,
+        typename TTypeRedirects::InteractionTrackerRequestIgnoredArgs args) noexcept {}
     void ValuesChanged(
-        winrt::Windows::UI::Composition::Interactions::InteractionTracker sender,
-        winrt::Windows::UI::Composition::Interactions::InteractionTrackerValuesChangedArgs args) noexcept {
+        typename TTypeRedirects::InteractionTracker sender,
+        typename TTypeRedirects::InteractionTrackerValuesChangedArgs args) noexcept {
       m_outer->FireScrollPositionChanged({args.Position().x, args.Position().y});
     }
 
@@ -410,7 +557,7 @@ struct CompScrollerVisual : winrt::implements<
     CompScrollerVisual *m_outer;
   };
 
-  CompScrollerVisual(winrt::Windows::UI::Composition::SpriteVisual const &visual) : m_visual(visual) {
+  CompScrollerVisual(typename TTypeRedirects::SpriteVisual const &visual) : m_visual(visual) {
     auto compositor = m_visual.Compositor();
     m_contentVisual = compositor.CreateSpriteVisual();
 
@@ -422,25 +569,20 @@ struct CompScrollerVisual : winrt::implements<
 
     m_visual.Clip(compositor.CreateInsetClip(0, 0, 0, 0));
 
-    m_interactionTracker = winrt::Windows::UI::Composition::Interactions::InteractionTracker::CreateWithOwner(
+    m_interactionTracker = TTypeRedirects::InteractionTracker::CreateWithOwner(
         compositor, winrt::make<ScrollInteractionTrackerOwner>(this));
 
     m_interactionTracker.MinScale(1.0);
     m_interactionTracker.MaxScale(1.0);
 
-    m_visualInteractionSource =
-        winrt::Windows::UI::Composition::Interactions::VisualInteractionSource::Create(m_visual);
+    m_visualInteractionSource = TTypeRedirects::VisualInteractionSource::Create(m_visual);
 
-    m_visualInteractionSource.PositionXSourceMode(
-        winrt::Windows::UI::Composition::Interactions::InteractionSourceMode::EnabledWithInertia);
-    m_visualInteractionSource.PositionYSourceMode(
-        winrt::Windows::UI::Composition::Interactions::InteractionSourceMode::EnabledWithInertia);
-    m_visualInteractionSource.ScaleSourceMode(
-        winrt::Windows::UI::Composition::Interactions::InteractionSourceMode::Disabled);
+    m_visualInteractionSource.PositionXSourceMode(TTypeRedirects::InteractionSourceMode::EnabledWithInertia);
+    m_visualInteractionSource.PositionYSourceMode(TTypeRedirects::InteractionSourceMode::EnabledWithInertia);
+    m_visualInteractionSource.ScaleSourceMode(TTypeRedirects::InteractionSourceMode::Disabled);
 
     m_visualInteractionSource.ManipulationRedirectionMode(
-        winrt::Windows::UI::Composition::Interactions::VisualInteractionSourceRedirectionMode::
-            CapableTouchpadAndPointerWheel);
+        TTypeRedirects::VisualInteractionSourceRedirectionMode::CapableTouchpadAndPointerWheel);
     m_interactionTracker.InteractionSources().Add(m_visualInteractionSource);
 
     auto positionExpression = compositor.CreateExpressionAnimation(L"-tracker.Position");
@@ -448,13 +590,13 @@ struct CompScrollerVisual : winrt::implements<
     m_contentVisual.StartAnimation(L"Offset", positionExpression);
   }
 
-  winrt::Windows::UI::Composition::Visual InnerVisual() const noexcept {
+  typename TTypeRedirects::Visual InnerVisual() const noexcept {
     return m_visual;
   }
 
   void InsertAt(const winrt::Microsoft::ReactNative::Composition::IVisual &visual, uint32_t index) noexcept {
     auto containerChildren = m_contentVisual.Children();
-    auto compVisual = winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerVisual(visual);
+    auto compVisual = TTypeRedirects::CompositionContextHelper::InnerVisual(visual);
     if (index == 0 || containerChildren.Count() == 0) {
       containerChildren.InsertAtTop(compVisual);
       return;
@@ -466,22 +608,21 @@ struct CompScrollerVisual : winrt::implements<
   }
 
   void Remove(const winrt::Microsoft::ReactNative::Composition::IVisual &visual) noexcept {
-    auto compVisual = winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerVisual(visual);
+    auto compVisual = TTypeRedirects::CompositionContextHelper::InnerVisual(visual);
     auto containerChildren = m_contentVisual.Children();
     containerChildren.Remove(compVisual);
   }
 
   winrt::Microsoft::ReactNative::Composition::IVisual GetAt(uint32_t index) noexcept {
-    auto containerChildren = m_visual.as<winrt::Windows::UI::Composition::ContainerVisual>().Children();
+    auto containerChildren = m_visual.as<typename TTypeRedirects::ContainerVisual>().Children();
     auto it = containerChildren.First();
     for (uint32_t i = 0; i < index; i++)
       it.MoveNext();
-    return winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::CreateVisual(
-        it.Current());
+    return TTypeRedirects::CompositionContextHelper::CreateVisual(it.Current());
   }
 
   void Brush(const winrt::Microsoft::ReactNative::Composition::IBrush &brush) noexcept {
-    m_visual.Brush(winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerBrush(brush));
+    m_visual.Brush(TTypeRedirects::CompositionContextHelper::InnerBrush(brush));
   }
 
   void Opacity(float opacity) noexcept {
@@ -533,7 +674,7 @@ struct CompScrollerVisual : winrt::implements<
   }
 
   void BackfaceVisibility(winrt::Microsoft::ReactNative::Composition::BackfaceVisibility value) {
-    m_visual.BackfaceVisibility(static_cast<winrt::Windows::UI::Composition::CompositionBackfaceVisibility>(value));
+    m_visual.BackfaceVisibility(static_cast<typename TTypeRedirects::CompositionBackfaceVisibility>(value));
   }
 
   void SetClippingPath(ID2D1Geometry *clippingPath) noexcept {
@@ -542,14 +683,14 @@ struct CompScrollerVisual : winrt::implements<
       return;
     }
     auto geometry = winrt::make<GeometrySource>(clippingPath);
-    auto path = winrt::Windows::UI::Composition::CompositionPath(geometry);
+    auto path = TTypeRedirects::CompositionPath(geometry);
     auto pathgeo = m_visual.Compositor().CreatePathGeometry(path);
     auto clip = m_visual.Compositor().CreateGeometricClip(pathgeo);
     m_visual.Clip(clip);
   }
 
   void Shadow(const winrt::Microsoft::ReactNative::Composition::IDropShadow &shadow) noexcept {
-    m_visual.Shadow(winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerDropShadow(shadow));
+    m_visual.Shadow(TTypeRedirects::CompositionContextHelper::InnerDropShadow(shadow));
   }
 
   winrt::event_token ScrollPositionChanged(
@@ -606,19 +747,24 @@ struct CompScrollerVisual : winrt::implements<
   winrt::event<
       winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::Composition::IScrollPositionChangedArgs>>
       m_scrollPositionChangedEvent;
-  winrt::Windows::UI::Composition::SpriteVisual m_visual{nullptr};
-  winrt::Windows::UI::Composition::SpriteVisual m_contentVisual{nullptr};
-  winrt::Windows::UI::Composition::Interactions::InteractionTracker m_interactionTracker{nullptr};
-  winrt::Windows::UI::Composition::Interactions::VisualInteractionSource m_visualInteractionSource{nullptr};
+  typename TTypeRedirects::SpriteVisual m_visual{nullptr};
+  typename TTypeRedirects::SpriteVisual m_contentVisual{nullptr};
+  typename TTypeRedirects::InteractionTracker m_interactionTracker{nullptr};
+  typename TTypeRedirects::VisualInteractionSource m_visualInteractionSource{nullptr};
 };
+using WindowsCompScrollerVisual = CompScrollerVisual<WindowsTypeRedirects>;
+#ifdef USE_WINUI3
+using MicrosoftCompScrollerVisual = CompScrollerVisual<MicrosoftTypeRedirects>;
+#endif
 
+template <typename TTypeRedirects>
 struct CompActivityVisual : winrt::implements<
-                                CompActivityVisual,
+                                CompActivityVisual<TTypeRedirects>,
                                 winrt::Microsoft::ReactNative::Composition::IActivityVisual,
                                 winrt::Microsoft::ReactNative::Composition::IVisual,
-                                ICompositionVisual,
+                                typename TTypeRedirects::IInnerCompositionVisual,
                                 IVisualInterop> {
-  CompActivityVisual(winrt::Windows::UI::Composition::SpriteVisual const &visual) : m_visual(visual) {
+  CompActivityVisual(typename TTypeRedirects::SpriteVisual const &visual) : m_visual(visual) {
     auto compositor = m_visual.Compositor();
     m_contentVisual = compositor.CreateSpriteVisual();
 
@@ -638,9 +784,7 @@ struct CompActivityVisual : winrt::implements<
     }
   }
 
-  winrt::Windows::UI::Composition::ShapeVisual createLoadingCircle(
-      winrt::Windows::UI::Composition::Compositor compositor,
-      int delay) {
+  typename TTypeRedirects::ShapeVisual createLoadingCircle(typename TTypeRedirects::Compositor compositor, int delay) {
     // Create circle
     auto ellipse = compositor.CreateEllipseGeometry();
     ellipse.Radius({m_ringWidth, m_ringWidth});
@@ -658,7 +802,7 @@ struct CompActivityVisual : winrt::implements<
     // Create an OpacityAnimation
     auto opacityAnimation = compositor.CreateScalarKeyFrameAnimation();
     opacityAnimation.Duration(std::chrono::seconds(2));
-    opacityAnimation.IterationBehavior(winrt::Windows::UI::Composition::AnimationIterationBehavior::Forever);
+    opacityAnimation.IterationBehavior(TTypeRedirects::AnimationIterationBehavior::Forever);
     opacityAnimation.DelayTime(std::chrono::milliseconds(650 + delay));
 
     opacityAnimation.InsertKeyFrame(0.0f, 0.0f); // Initial opacity (fully transparent)
@@ -669,10 +813,10 @@ struct CompActivityVisual : winrt::implements<
     // create an animation for the Offset property of the ShapeVisual
     auto animation = compositor.CreateVector2KeyFrameAnimation();
     animation.Duration(std::chrono::seconds(2));
-    animation.Direction(winrt::Windows::UI::Composition::AnimationDirection::Normal);
-    animation.IterationBehavior(winrt::Windows::UI::Composition::AnimationIterationBehavior::Forever);
+    animation.Direction(TTypeRedirects::AnimationDirection::Normal);
+    animation.IterationBehavior(TTypeRedirects::AnimationIterationBehavior::Forever);
     animation.DelayTime(std::chrono::milliseconds(delay));
-    animation.DelayBehavior(winrt::Windows::UI::Composition::AnimationDelayBehavior::SetInitialValueAfterDelay);
+    animation.DelayBehavior(TTypeRedirects::AnimationDelayBehavior::SetInitialValueAfterDelay);
 
     // create path animation
     float progress = 2.0f * static_cast<float>(M_PI); // specifies the end of the keyframe progress
@@ -690,13 +834,13 @@ struct CompActivityVisual : winrt::implements<
     return circleShape;
   }
 
-  winrt::Windows::UI::Composition::Visual InnerVisual() const noexcept {
+  typename TTypeRedirects::Visual InnerVisual() const noexcept {
     return m_visual;
   }
 
   void InsertAt(const winrt::Microsoft::ReactNative::Composition::IVisual &visual, uint32_t index) noexcept {
     auto containerChildren = m_contentVisual.Children();
-    auto compVisual = winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerVisual(visual);
+    auto compVisual = typename TTypeRedirects::CompositionContextHelper::InnerVisual(visual);
     if (index == 0 || containerChildren.Count() == 0) {
       containerChildren.InsertAtTop(compVisual);
       return;
@@ -708,18 +852,17 @@ struct CompActivityVisual : winrt::implements<
   }
 
   void Remove(const winrt::Microsoft::ReactNative::Composition::IVisual &visual) noexcept {
-    auto compVisual = winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerVisual(visual);
+    auto compVisual = typename TTypeRedirects::CompositionContextHelper::InnerVisual(visual);
     auto containerChildren = m_contentVisual.Children();
     containerChildren.Remove(compVisual);
   }
 
   winrt::Microsoft::ReactNative::Composition::IVisual GetAt(uint32_t index) noexcept {
-    auto containerChildren = m_visual.as<winrt::Windows::UI::Composition::ContainerVisual>().Children();
+    auto containerChildren = m_visual.as<typename TTypeRedirects::ContainerVisual>().Children();
     auto it = containerChildren.First();
     for (uint32_t i = 0; i < index; i++)
       it.MoveNext();
-    return winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::CreateVisual(
-        it.Current());
+    return typename TTypeRedirects::CompositionContextHelper::CreateVisual(it.Current());
   }
 
   void Opacity(float opacity) noexcept {
@@ -770,7 +913,7 @@ struct CompActivityVisual : winrt::implements<
   }
 
   void BackfaceVisibility(winrt::Microsoft::ReactNative::Composition::BackfaceVisibility value) {
-    m_visual.BackfaceVisibility(static_cast<winrt::Windows::UI::Composition::CompositionBackfaceVisibility>(value));
+    m_visual.BackfaceVisibility(static_cast<typename TTypeRedirects::CompositionBackfaceVisibility>(value));
   }
 
   void SetClippingPath(ID2D1Geometry *clippingPath) noexcept {
@@ -779,7 +922,7 @@ struct CompActivityVisual : winrt::implements<
       return;
     }
     auto geometry = winrt::make<GeometrySource>(clippingPath);
-    auto path = winrt::Windows::UI::Composition::CompositionPath(geometry);
+    auto path = typename TTypeRedirects::CompositionPath(geometry);
     auto pathgeo = m_visual.Compositor().CreatePathGeometry(path);
     auto clip = m_visual.Compositor().CreateGeometricClip(pathgeo);
     m_visual.Clip(clip);
@@ -787,9 +930,9 @@ struct CompActivityVisual : winrt::implements<
 
  private:
   winrt::Windows::Foundation::Numerics::float2 m_visualSize{0};
-  winrt::Windows::UI::Composition::SpriteVisual m_visual{nullptr};
-  winrt::Windows::UI::Composition::SpriteVisual m_contentVisual{nullptr};
-  std::vector<winrt::Windows::UI::Composition::CompositionSpriteShape> m_spriteVisuals;
+  typename TTypeRedirects::SpriteVisual m_visual{nullptr};
+  typename TTypeRedirects::SpriteVisual m_contentVisual{nullptr};
+  std::vector<typename TTypeRedirects::CompositionSpriteShape> m_spriteVisuals;
 
   // constants
   float m_radiusSmall = 8.0f;
@@ -798,13 +941,19 @@ struct CompActivityVisual : winrt::implements<
   float m_centerX = m_radiusSmall + m_ringWidth;
   float m_centerY = m_radiusSmall + m_ringWidth;
 };
+using WindowsCompActivityVisual = CompActivityVisual<WindowsTypeRedirects>;
+#ifdef USE_WINUI3
+using MicrosoftCompActivityVisual = CompActivityVisual<MicrosoftTypeRedirects>;
+#endif
 
-struct CompCaretVisual : winrt::implements<CompCaretVisual, winrt::Microsoft::ReactNative::Composition::ICaretVisual> {
-  CompCaretVisual(winrt::Windows::UI::Composition::Compositor const &compositor)
+template <typename TTypeRedirects>
+struct CompCaretVisual
+    : winrt::implements<CompCaretVisual<TTypeRedirects>, winrt::Microsoft::ReactNative::Composition::ICaretVisual> {
+  CompCaretVisual(typename TTypeRedirects::Compositor const &compositor)
       : m_compositor(compositor),
         m_compVisual(compositor.CreateSpriteVisual()),
         m_opacityAnimation(compositor.CreateScalarKeyFrameAnimation()) {
-    m_visual = winrt::make<Composition::CompSpriteVisual>(m_compVisual);
+    m_visual = CreateVisual();
 
     // TODO should make the caret use an invert brush by default
     m_compVisual.Brush(m_compositor.CreateColorBrush(winrt::Windows::UI::Colors::Black()));
@@ -821,9 +970,11 @@ struct CompCaretVisual : winrt::implements<CompCaretVisual, winrt::Microsoft::Re
     m_opacityAnimation.InsertKeyFrame(stayVisFrame + fadeVisFrame + stayVisFrame, 0.0f);
     m_opacityAnimation.InsertKeyFrame(1.0f, 1.0f, m_compositor.CreateLinearEasingFunction());
     m_opacityAnimation.Duration(std::chrono::milliseconds{1000});
-    m_opacityAnimation.IterationBehavior(winrt::Windows::UI::Composition::AnimationIterationBehavior::Count);
+    m_opacityAnimation.IterationBehavior(TTypeRedirects::AnimationIterationBehavior::Count);
     m_opacityAnimation.IterationCount(500);
   }
+
+  winrt::Microsoft::ReactNative::Composition::IVisual CreateVisual() const noexcept;
 
   winrt::Microsoft::ReactNative::Composition::IVisual InnerVisual() const noexcept {
     return m_visual;
@@ -855,16 +1006,32 @@ struct CompCaretVisual : winrt::implements<CompCaretVisual, winrt::Microsoft::Re
 
  private:
   bool m_isVisible{false};
-  winrt::Windows::UI::Composition::SpriteVisual m_compVisual;
+  typename TTypeRedirects::SpriteVisual m_compVisual;
   winrt::Microsoft::ReactNative::Composition::IVisual m_visual;
-  winrt::Windows::UI::Composition::ScalarKeyFrameAnimation m_opacityAnimation;
-  winrt::Windows::UI::Composition::Compositor m_compositor{nullptr};
+  typename TTypeRedirects::ScalarKeyFrameAnimation m_opacityAnimation;
+  typename TTypeRedirects::Compositor m_compositor{nullptr};
 };
 
-struct CompFocusVisual : winrt::implements<CompFocusVisual, winrt::Microsoft::ReactNative::Composition::IFocusVisual> {
-  CompFocusVisual(winrt::Windows::UI::Composition::Compositor const &compositor)
+winrt::Microsoft::ReactNative::Composition::IVisual CompCaretVisual<WindowsTypeRedirects>::CreateVisual()
+    const noexcept {
+  return winrt::make<Composition::WindowsCompSpriteVisual>(m_compVisual);
+}
+using WindowsCompCaretVisual = CompCaretVisual<WindowsTypeRedirects>;
+
+#ifdef USE_WINUI3
+winrt::Microsoft::ReactNative::Composition::IVisual CompCaretVisual<MicrosoftTypeRedirects>::CreateVisual()
+    const noexcept {
+  return winrt::make<Composition::MicrosoftCompSpriteVisual>(m_compVisual);
+}
+using MicrosoftCompCaretVisual = CompCaretVisual<MicrosoftTypeRedirects>;
+#endif
+
+template <typename TTypeRedirects>
+struct CompFocusVisual
+    : winrt::implements<CompFocusVisual<TTypeRedirects>, winrt::Microsoft::ReactNative::Composition::IFocusVisual> {
+  CompFocusVisual(typename TTypeRedirects::Compositor const &compositor)
       : m_compVisual(compositor.CreateSpriteVisual()), m_brush(compositor.CreateNineGridBrush()) {
-    m_visual = winrt::make<Composition::CompSpriteVisual>(m_compVisual);
+    m_visual = CreateVisual();
 
     m_compVisual.Opacity(1.0f);
     m_compVisual.RelativeSizeAdjustment({1, 1});
@@ -872,6 +1039,8 @@ struct CompFocusVisual : winrt::implements<CompFocusVisual, winrt::Microsoft::Re
     m_brush.Source(compositor.CreateColorBrush(winrt::Windows::UI::Colors::Black()));
     m_brush.IsCenterHollow(true);
   }
+
+  winrt::Microsoft::ReactNative::Composition::IVisual CreateVisual() noexcept;
 
   winrt::Microsoft::ReactNative::Composition::IVisual InnerVisual() const noexcept {
     return m_visual;
@@ -904,16 +1073,29 @@ struct CompFocusVisual : winrt::implements<CompFocusVisual, winrt::Microsoft::Re
 
  private:
   float m_scaleFactor{0};
-  const winrt::Windows::UI::Composition::CompositionNineGridBrush m_brush;
-  const winrt::Windows::UI::Composition::SpriteVisual m_compVisual;
+  typename TTypeRedirects::CompositionNineGridBrush m_brush;
+  typename TTypeRedirects::SpriteVisual m_compVisual;
   winrt::Microsoft::ReactNative::Composition::IVisual m_visual{nullptr};
 };
 
+winrt::Microsoft::ReactNative::Composition::IVisual CompFocusVisual<WindowsTypeRedirects>::CreateVisual() noexcept {
+  return winrt::make<Composition::WindowsCompSpriteVisual>(m_compVisual);
+}
+using WindowsCompFocusVisual = CompFocusVisual<WindowsTypeRedirects>;
+
+#ifdef USE_WINUI3
+winrt::Microsoft::ReactNative::Composition::IVisual CompFocusVisual<MicrosoftTypeRedirects>::CreateVisual() noexcept {
+  return winrt::make<Composition::MicrosoftCompSpriteVisual>(m_compVisual);
+}
+using MicrosoftCompFocusVisual = CompFocusVisual<MicrosoftTypeRedirects>;
+#endif
+
+template <typename TTypeRedirects>
 struct CompContext : winrt::implements<
-                         CompContext,
+                         CompContext<TTypeRedirects>,
                          winrt::Microsoft::ReactNative::Composition::ICompositionContext,
                          ICompositionContextInterop> {
-  CompContext(winrt::Windows::UI::Composition::Compositor const &compositor) : m_compositor(compositor) {}
+  CompContext(typename TTypeRedirects::Compositor const &compositor) : m_compositor(compositor) {}
 
   winrt::com_ptr<ID2D1Factory1> D2DFactory() noexcept {
     if (!m_d2dFactory) {
@@ -984,51 +1166,34 @@ struct CompContext : winrt::implements<
     return m_d2dDevice;
   }
 
-  winrt::Microsoft::ReactNative::Composition::ISpriteVisual CreateSpriteVisual() noexcept {
-    return winrt::make<Composition::CompSpriteVisual>(m_compositor.CreateSpriteVisual());
-  }
+  winrt::Microsoft::ReactNative::Composition::ISpriteVisual CreateSpriteVisual() noexcept;
 
-  winrt::Microsoft::ReactNative::Composition::IScrollVisual CreateScrollerVisual() noexcept {
-    return winrt::make<Composition::CompScrollerVisual>(m_compositor.CreateSpriteVisual());
-  }
+  winrt::Microsoft::ReactNative::Composition::IScrollVisual CreateScrollerVisual() noexcept;
 
-  winrt::Microsoft::ReactNative::Composition::IActivityVisual CreateActivityVisual() noexcept {
-    return winrt::make<Composition::CompActivityVisual>(m_compositor.CreateSpriteVisual());
-  }
+  winrt::Microsoft::ReactNative::Composition::IActivityVisual CreateActivityVisual() noexcept;
 
-  winrt::Microsoft::ReactNative::Composition::IDropShadow CreateDropShadow() noexcept {
-    return winrt::make<Composition::CompDropShadow>(m_compositor.CreateDropShadow());
-  }
+  winrt::Microsoft::ReactNative::Composition::IDropShadow CreateDropShadow() noexcept;
 
-  winrt::Microsoft::ReactNative::Composition::IBrush CreateColorBrush(winrt::Windows::UI::Color color) noexcept {
-    return winrt::make<Composition::CompBrush>(m_compositor.CreateColorBrush(color));
-  }
+  winrt::Microsoft::ReactNative::Composition::IBrush CreateColorBrush(winrt::Windows::UI::Color color) noexcept;
 
   winrt::Microsoft::ReactNative::Composition::IDrawingSurfaceBrush CreateDrawingSurfaceBrush(
       winrt::Windows::Foundation::Size surfaceSize,
       winrt::Windows::Graphics::DirectX::DirectXPixelFormat pixelFormat,
-      winrt::Windows::Graphics::DirectX::DirectXAlphaMode alphaMode) noexcept {
-    return winrt::make<Composition::CompDrawingSurfaceBrush>(
-        m_compositor, CompositionGraphicsDevice().CreateDrawingSurface(surfaceSize, pixelFormat, alphaMode));
-  }
+      winrt::Windows::Graphics::DirectX::DirectXAlphaMode alphaMode) noexcept;
 
-  winrt::Microsoft::ReactNative::Composition::ICaretVisual CreateCaretVisual() noexcept {
-    return winrt::make<Composition::CompCaretVisual>(m_compositor);
-  }
+  winrt::Microsoft::ReactNative::Composition::ICaretVisual CreateCaretVisual() noexcept;
 
-  winrt::Microsoft::ReactNative::Composition::IFocusVisual CreateFocusVisual() noexcept {
-    return winrt::make<Composition::CompFocusVisual>(m_compositor);
-  }
+  winrt::Microsoft::ReactNative::Composition::IFocusVisual CreateFocusVisual() noexcept;
 
-  winrt::Windows::UI::Composition::CompositionGraphicsDevice CompositionGraphicsDevice() noexcept {
+  typename TTypeRedirects::CompositionGraphicsDevice CompositionGraphicsDevice() noexcept {
     if (!m_compositionGraphicsDevice) {
       // To create a composition graphics device, we need to QI for another interface
 
-      winrt::com_ptr<ABI::Windows::UI::Composition::ICompositorInterop> compositorInterop{
-          m_compositor.as<ABI::Windows::UI::Composition::ICompositorInterop>()};
+      winrt::com_ptr<typename TTypeRedirects::ICompositorInterop> compositorInterop{
+          m_compositor.as<typename TTypeRedirects::ICompositorInterop>()};
 
       // Create a graphics device backed by our D3D device
-      winrt::com_ptr<ABI::Windows::UI::Composition::ICompositionGraphicsDevice> compositionGraphicsDeviceIface;
+      winrt::com_ptr<typename TTypeRedirects::ICompositionGraphicsDevice> compositionGraphicsDeviceIface;
       winrt::check_hresult(
           compositorInterop->CreateGraphicsDevice(D2DDevice().get(), compositionGraphicsDeviceIface.put()));
 
@@ -1037,64 +1202,209 @@ struct CompContext : winrt::implements<
     return m_compositionGraphicsDevice;
   }
 
-  winrt::Windows::UI::Composition::Compositor InnerCompositor() noexcept {
+  typename TTypeRedirects::Compositor InnerCompositor() noexcept {
     return m_compositor;
   }
 
  private:
-  winrt::Windows::UI::Composition::Compositor m_compositor{nullptr};
+  typename TTypeRedirects::Compositor m_compositor{nullptr};
   winrt::com_ptr<ID2D1Factory1> m_d2dFactory;
   winrt::com_ptr<ID3D11Device> m_d3dDevice;
   winrt::com_ptr<ID2D1Device> m_d2dDevice;
-  winrt::Windows::UI::Composition::CompositionGraphicsDevice m_compositionGraphicsDevice{nullptr};
+  typename TTypeRedirects::CompositionGraphicsDevice m_compositionGraphicsDevice{nullptr};
   winrt::com_ptr<ID3D11DeviceContext> m_d3dDeviceContext;
 };
+
+winrt::Microsoft::ReactNative::Composition::ISpriteVisual
+CompContext<WindowsTypeRedirects>::CreateSpriteVisual() noexcept {
+  return winrt::make<Composition::WindowsCompSpriteVisual>(m_compositor.CreateSpriteVisual());
+}
+
+winrt::Microsoft::ReactNative::Composition::IScrollVisual
+CompContext<WindowsTypeRedirects>::CreateScrollerVisual() noexcept {
+  return winrt::make<Composition::WindowsCompScrollerVisual>(m_compositor.CreateSpriteVisual());
+}
+
+winrt::Microsoft::ReactNative::Composition::IActivityVisual
+CompContext<WindowsTypeRedirects>::CreateActivityVisual() noexcept {
+  return winrt::make<Composition::WindowsCompActivityVisual>(m_compositor.CreateSpriteVisual());
+}
+
+winrt::Microsoft::ReactNative::Composition::IDropShadow CompContext<WindowsTypeRedirects>::CreateDropShadow() noexcept {
+  return winrt::make<Composition::WindowsCompDropShadow>(m_compositor.CreateDropShadow());
+}
+
+winrt::Microsoft::ReactNative::Composition::IBrush CompContext<WindowsTypeRedirects>::CreateColorBrush(
+    winrt::Windows::UI::Color color) noexcept {
+  return winrt::make<Composition::WindowsCompBrush>(m_compositor.CreateColorBrush(color));
+}
+
+winrt::Microsoft::ReactNative::Composition::IDrawingSurfaceBrush
+CompContext<WindowsTypeRedirects>::CreateDrawingSurfaceBrush(
+    winrt::Windows::Foundation::Size surfaceSize,
+    winrt::Windows::Graphics::DirectX::DirectXPixelFormat pixelFormat,
+    winrt::Windows::Graphics::DirectX::DirectXAlphaMode alphaMode) noexcept {
+  return winrt::make<Composition::WindowsCompDrawingSurfaceBrush>(
+      m_compositor, CompositionGraphicsDevice().CreateDrawingSurface(surfaceSize, pixelFormat, alphaMode));
+}
+
+winrt::Microsoft::ReactNative::Composition::ICaretVisual
+CompContext<WindowsTypeRedirects>::CreateCaretVisual() noexcept {
+  return winrt::make<Composition::WindowsCompCaretVisual>(m_compositor);
+}
+
+winrt::Microsoft::ReactNative::Composition::IFocusVisual
+CompContext<WindowsTypeRedirects>::CreateFocusVisual() noexcept {
+  return winrt::make<Composition::WindowsCompFocusVisual>(m_compositor);
+}
+
+using WindowsCompContext = CompContext<WindowsTypeRedirects>;
+
+#ifdef USE_WINUI3
+winrt::Microsoft::ReactNative::Composition::ISpriteVisual
+CompContext<MicrosoftTypeRedirects>::CreateSpriteVisual() noexcept {
+  return winrt::make<Composition::MicrosoftCompSpriteVisual>(m_compositor.CreateSpriteVisual());
+}
+
+winrt::Microsoft::ReactNative::Composition::IScrollVisual
+CompContext<MicrosoftTypeRedirects>::CreateScrollerVisual() noexcept {
+  return winrt::make<Composition::MicrosoftCompScrollerVisual>(m_compositor.CreateSpriteVisual());
+}
+
+winrt::Microsoft::ReactNative::Composition::IActivityVisual
+CompContext<MicrosoftTypeRedirects>::CreateActivityVisual() noexcept {
+  return winrt::make<Composition::MicrosoftCompActivityVisual>(m_compositor.CreateSpriteVisual());
+}
+
+winrt::Microsoft::ReactNative::Composition::IDropShadow
+CompContext<MicrosoftTypeRedirects>::CreateDropShadow() noexcept {
+  return winrt::make<Composition::MicrosoftCompDropShadow>(m_compositor.CreateDropShadow());
+}
+
+winrt::Microsoft::ReactNative::Composition::IBrush CompContext<MicrosoftTypeRedirects>::CreateColorBrush(
+    winrt::Windows::UI::Color color) noexcept {
+  return winrt::make<Composition::MicrosoftCompBrush>(m_compositor.CreateColorBrush(color));
+}
+
+winrt::Microsoft::ReactNative::Composition::IDrawingSurfaceBrush
+CompContext<MicrosoftTypeRedirects>::CreateDrawingSurfaceBrush(
+    winrt::Windows::Foundation::Size surfaceSize,
+    winrt::Windows::Graphics::DirectX::DirectXPixelFormat pixelFormat,
+    winrt::Windows::Graphics::DirectX::DirectXAlphaMode alphaMode) noexcept {
+  return winrt::make<Composition::MicrosoftCompDrawingSurfaceBrush>(
+      m_compositor,
+      CompositionGraphicsDevice().CreateDrawingSurface(
+          surfaceSize,
+          static_cast<winrt::Microsoft::Graphics::DirectX::DirectXPixelFormat>(pixelFormat),
+          static_cast<winrt::Microsoft::Graphics::DirectX::DirectXAlphaMode>(alphaMode)));
+}
+
+winrt::Microsoft::ReactNative::Composition::ICaretVisual
+CompContext<MicrosoftTypeRedirects>::CreateCaretVisual() noexcept {
+  return winrt::make<Composition::MicrosoftCompCaretVisual>(m_compositor);
+}
+
+winrt::Microsoft::ReactNative::Composition::IFocusVisual
+CompContext<MicrosoftTypeRedirects>::CreateFocusVisual() noexcept {
+  return winrt::make<Composition::MicrosoftCompFocusVisual>(m_compositor);
+}
+using MicrosoftCompContext = CompContext<MicrosoftTypeRedirects>;
+#endif
 
 } // namespace Microsoft::ReactNative::Composition
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
-ICompositionContext CompositionContextHelper::CreateContext(
+ICompositionContext WindowsCompositionContextHelper::CreateContext(
     winrt::Windows::UI::Composition::Compositor const &compositor) noexcept {
-  return winrt::make<::Microsoft::ReactNative::Composition::CompContext>(compositor);
+  return winrt::make<::Microsoft::ReactNative::Composition::WindowsCompContext>(compositor);
 }
 
-IVisual CompositionContextHelper::CreateVisual(winrt::Windows::UI::Composition::Visual const &visual) noexcept {
+IVisual WindowsCompositionContextHelper::CreateVisual(winrt::Windows::UI::Composition::Visual const &visual) noexcept {
   if (auto spriteVisual = visual.try_as<winrt::Windows::UI::Composition::SpriteVisual>())
-    return winrt::make<::Microsoft::ReactNative::Composition::CompSpriteVisual>(spriteVisual);
-  return winrt::make<::Microsoft::ReactNative::Composition::CompVisual>(visual);
+    return winrt::make<::Microsoft::ReactNative::Composition::WindowsCompSpriteVisual>(spriteVisual);
+  return winrt::make<::Microsoft::ReactNative::Composition::WindowsCompVisual>(visual);
 }
 
-winrt::Windows::UI::Composition::Compositor CompositionContextHelper::InnerCompositor(
+winrt::Windows::UI::Composition::Compositor WindowsCompositionContextHelper::InnerCompositor(
     ICompositionContext context) noexcept {
-  winrt::com_ptr<::Microsoft::ReactNative::Composition::CompContext> s;
+  winrt::com_ptr<::Microsoft::ReactNative::Composition::WindowsCompContext> s;
   context.as(s);
   return s ? s->InnerCompositor() : nullptr;
 }
 
-winrt::Windows::UI::Composition::Visual CompositionContextHelper::InnerVisual(IVisual visual) noexcept {
-  winrt::com_ptr<::Microsoft::ReactNative::Composition::ICompositionVisual> s;
+winrt::Windows::UI::Composition::Visual WindowsCompositionContextHelper::InnerVisual(IVisual visual) noexcept {
+  winrt::com_ptr<::Microsoft::ReactNative::Composition::IWindowsCompositionVisual> s;
   visual.as(s);
   return s ? s->InnerVisual() : nullptr;
 }
 
-winrt::Windows::UI::Composition::DropShadow CompositionContextHelper::InnerDropShadow(IDropShadow shadow) noexcept {
-  winrt::com_ptr<::Microsoft::ReactNative::Composition::ICompositionDropShadow> s;
+winrt::Windows::UI::Composition::DropShadow WindowsCompositionContextHelper::InnerDropShadow(
+    IDropShadow shadow) noexcept {
+  winrt::com_ptr<::Microsoft::ReactNative::Composition::IWindowsCompositionDropShadow> s;
   shadow.as(s);
   return s ? s->InnerShadow() : nullptr;
 }
 
-winrt::Windows::UI::Composition::CompositionBrush CompositionContextHelper::InnerBrush(IBrush brush) noexcept {
-  winrt::com_ptr<::Microsoft::ReactNative::Composition::ICompositionBrush> s;
+winrt::Windows::UI::Composition::CompositionBrush WindowsCompositionContextHelper::InnerBrush(IBrush brush) noexcept {
+  winrt::com_ptr<::Microsoft::ReactNative::Composition::IWindowsCompositionBrush> s;
   brush.as(s);
   return s ? s->InnerBrush() : nullptr;
 }
 
-winrt::Windows::UI::Composition::ICompositionSurface CompositionContextHelper::InnerSurface(
+winrt::Windows::UI::Composition::ICompositionSurface WindowsCompositionContextHelper::InnerSurface(
     IDrawingSurfaceBrush surface) noexcept {
-  winrt::com_ptr<::Microsoft::ReactNative::Composition::ICompositionDrawingSurfaceInner> s;
+  winrt::com_ptr<::Microsoft::ReactNative::Composition::IWindowsCompositionDrawingSurfaceInner> s;
   surface.as(s);
   return s ? s->Inner() : nullptr;
 }
+
+#ifdef USE_WINUI3
+ICompositionContext MicrosoftCompositionContextHelper::CreateContext(
+    winrt::Microsoft::UI::Composition::Compositor const &compositor) noexcept {
+  return winrt::make<::Microsoft::ReactNative::Composition::MicrosoftCompContext>(compositor);
+}
+
+IVisual MicrosoftCompositionContextHelper::CreateVisual(
+    winrt::Microsoft::UI::Composition::Visual const &visual) noexcept {
+  if (auto spriteVisual = visual.try_as<winrt::Microsoft::UI::Composition::SpriteVisual>())
+    return winrt::make<::Microsoft::ReactNative::Composition::MicrosoftCompSpriteVisual>(spriteVisual);
+  return winrt::make<::Microsoft::ReactNative::Composition::MicrosoftCompVisual>(visual);
+}
+
+winrt::Microsoft::UI::Composition::Compositor MicrosoftCompositionContextHelper::InnerCompositor(
+    ICompositionContext context) noexcept {
+  winrt::com_ptr<::Microsoft::ReactNative::Composition::MicrosoftCompContext> s;
+  context.as(s);
+  return s ? s->InnerCompositor() : nullptr;
+}
+
+winrt::Microsoft::UI::Composition::Visual MicrosoftCompositionContextHelper::InnerVisual(IVisual visual) noexcept {
+  winrt::com_ptr<::Microsoft::ReactNative::Composition::IMicrosoftCompositionVisual> s;
+  visual.as(s);
+  return s ? s->InnerVisual() : nullptr;
+}
+
+winrt::Microsoft::UI::Composition::DropShadow MicrosoftCompositionContextHelper::InnerDropShadow(
+    IDropShadow shadow) noexcept {
+  winrt::com_ptr<::Microsoft::ReactNative::Composition::IMicrosoftCompositionDropShadow> s;
+  shadow.as(s);
+  return s ? s->InnerShadow() : nullptr;
+}
+
+winrt::Microsoft::UI::Composition::CompositionBrush MicrosoftCompositionContextHelper::InnerBrush(
+    IBrush brush) noexcept {
+  winrt::com_ptr<::Microsoft::ReactNative::Composition::IMicrosoftCompositionBrush> s;
+  brush.as(s);
+  return s ? s->InnerBrush() : nullptr;
+}
+
+winrt::Microsoft::UI::Composition::ICompositionSurface MicrosoftCompositionContextHelper::InnerSurface(
+    IDrawingSurfaceBrush surface) noexcept {
+  winrt::com_ptr<::Microsoft::ReactNative::Composition::IMicrosoftCompositionDrawingSurfaceInner> s;
+  surface.as(s);
+  return s ? s->Inner() : nullptr;
+}
+#endif
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

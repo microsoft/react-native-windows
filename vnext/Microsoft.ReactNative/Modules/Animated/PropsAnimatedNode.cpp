@@ -181,9 +181,8 @@ void PropsAnimatedNode::StartAnimations() {
             view.m_element.RotationAxis(m_rotationAxis);
 #ifdef USE_FABRIC
           } else {
-            auto visual =
-                winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::InnerVisual(
-                    view.m_componentView->Visual());
+            auto visual = winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerVisual(
+                view.m_componentView->Visual());
             visual.RotationAxis(m_rotationAxis);
 #endif
           }
@@ -393,7 +392,7 @@ void PropsAnimatedNode::StartAnimation(
     view.m_element.StartAnimation(animation);
 #ifdef USE_FABRIC
   } else if (view.m_componentView) {
-    auto visual = winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::InnerVisual(
+    auto visual = winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerVisual(
         view.m_componentView->Visual());
     if (visual) {
       auto targetProp = animation.Target();
