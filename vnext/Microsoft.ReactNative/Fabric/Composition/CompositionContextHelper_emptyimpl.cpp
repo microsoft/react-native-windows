@@ -21,7 +21,8 @@ IVisual WindowsCompositionContextHelper::CreateVisual(winrt::Windows::UI::Compos
   return nullptr;
 }
 
-winrt::Windows::UI::Composition::Compositor WindowsCompositionContextHelper::InnerCompositor(ICompositionContext) noexcept {
+winrt::Windows::UI::Composition::Compositor WindowsCompositionContextHelper::InnerCompositor(
+    ICompositionContext) noexcept {
   return nullptr;
 }
 
@@ -52,7 +53,8 @@ IVisual MicrosoftCompositionContextHelper::CreateVisual(winrt::Windows::UI::Comp
   return nullptr;
 }
 
-winrt::Windows::UI::Composition::Compositor MicrosoftCompositionContextHelper::InnerCompositor(ICompositionContext) noexcept {
+winrt::Windows::UI::Composition::Compositor MicrosoftCompositionContextHelper::InnerCompositor(
+    ICompositionContext) noexcept {
   return nullptr;
 }
 
