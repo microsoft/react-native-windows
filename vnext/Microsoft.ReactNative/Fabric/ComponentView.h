@@ -7,9 +7,11 @@
 #include <functional/functor.h>
 #include <inspectable.h>
 #include <react/renderer/componentregistry/ComponentDescriptorProvider.h>
-#include <react/renderer/components/view/TouchEventEmitter.h>
+#include <react/renderer/components/view/ViewEventEmitter.h>
 #include <react/renderer/components/view/ViewProps.h>
 #include <react/renderer/core/LayoutMetrics.h>
+
+#include <winrt/Microsoft.ReactNative.Composition.Input.h>
 
 namespace Microsoft::ReactNative {
 
@@ -67,9 +69,15 @@ struct IComponentView {
   virtual RECT getClientRect() const noexcept = 0;
   virtual void onFocusLost() noexcept = 0;
   virtual void onFocusGained() noexcept = 0;
+  virtual void onKeyDown(
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept = 0;
+  virtual void onKeyUp(
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept = 0;
   virtual bool focusable() const noexcept = 0;
-  virtual facebook::react::SharedTouchEventEmitter touchEventEmitterAtPoint(facebook::react::Point pt) noexcept = 0;
-  virtual facebook::react::SharedTouchEventEmitter touchEventEmitter() noexcept = 0;
+  virtual facebook::react::SharedViewEventEmitter eventEmitterAtPoint(facebook::react::Point pt) noexcept = 0;
+  virtual facebook::react::SharedViewEventEmitter eventEmitter() noexcept = 0;
   virtual facebook::react::Tag tag() const noexcept = 0;
   // By default, hitTests according the pointerEvents prop on the Component.
   // If ignorePointerEvents = true, all Components are treated as valid targets
