@@ -4,8 +4,10 @@
 #if __has_include("Composition.WindowsCompositionContextHelper.g.cpp")
 #include "Composition.WindowsCompositionContextHelper.g.cpp"
 #endif
+#ifdef USE_WINUI3
 #if __has_include("Composition.MicrosoftCompositionContextHelper.g.cpp")
 #include "Composition.MicrosoftCompositionContextHelper.g.cpp"
+#endif
 #endif
 
 #include <Windows.Graphics.Interop.h>
