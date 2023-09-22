@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add new architecture `cpp-app` template for `init-windows`",
+  "packageName": "@react-native-windows/cli",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
