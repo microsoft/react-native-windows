@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix some incorrectly cased requires",
-  "packageName": "@react-native-windows/codegen",
-  "email": "ngerlem@fb.com",
-  "dependentChangeType": "patch"
-}
