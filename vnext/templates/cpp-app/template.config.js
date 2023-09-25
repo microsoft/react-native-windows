@@ -34,17 +34,7 @@ async function getFileMappings(config = {}, options = {}) {
   const packageGuid = uuid.v4();
   const currentUser = username.sync(); // Gets the current username depending on the platform.
 
-  const cppNugetPackages = [
-    {id: 'boost', version: '1.76.0.0'},
-    {
-      id: 'Microsoft.Toolkit.Win32.UI.XamlApplication',
-      version: '6.1.3',
-    },
-    {
-      id: 'Microsoft.VCRTForwarders.140',
-      version: '1.0.2-rc',
-    },
-  ];
+  const cppNugetPackages = [];
 
   const replacements = {
     useMustache: true,
