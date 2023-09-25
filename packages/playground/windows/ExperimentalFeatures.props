@@ -18,4 +18,8 @@
     <WinUI2xVersion>2.7.0-prerelease.210913003</WinUI2xVersion>
   </PropertyGroup>
 
+  <PropertyGroup Label="WinUI3 for fabric" Condition="'$(SolutionName)'=='playground-composition'">
+    <UseWinUI3>true</UseWinUI3>
+  </PropertyGroup>
+
 </Project>

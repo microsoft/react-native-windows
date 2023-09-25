@@ -31,6 +31,12 @@
         "requested": "[0.1.15, 0.1.15]",
         "resolved": "0.1.15",
         "contentHash": "My/u5RvxoymtwWokoweU6iVpuP79w271UjadcmSNqnQ9ESIv00tlVP4sHnIiN3t2lJNDeciyE1EVF4swGPECKQ=="
+      },
+      "Microsoft.WindowsAppSDK": {
+        "type": "Direct",
+        "requested": "[1.4.230913002, 1.4.230913002]",
+        "resolved": "1.4.230913002",
+        "contentHash": "l+9RshN4TsTuxL0ijFp5smbs3Y07RO7CxKBHNM/RsrsGtWvuk6edITMp4oqL9C3ufEAmpYk3dqOZRSf+sFH4Zg=="
       }
     }
   }
