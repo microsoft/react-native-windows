@@ -13,7 +13,7 @@
   <Import Project="$(ProjectDir)\AutolinkedNativeModules.g.props"
           Condition="Exists('$(ProjectDir)\AutolinkedNativeModules.g.props')" />
 
-  <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.Win32.Common.props" />
+  <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.Composition.Common.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Appx.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Autolink.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Codegen.props" />

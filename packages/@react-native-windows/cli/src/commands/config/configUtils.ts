@@ -117,7 +117,7 @@ export function isRnwDependencyProject(filePath: string): boolean {
       ) ||
       importProjectExists(
         projectContents,
-        'Microsoft.ReactNative.Win32.CppLib.targets',
+        'Microsoft.ReactNative.Composition.CppLib.targets',
       )
     );
   }
@@ -206,7 +206,7 @@ function isRnwAppProject(filePath: string): boolean {
       ) ||
       importProjectExists(
         projectContents,
-        'Microsoft.ReactNative.Win32.CppApp.targets',
+        'Microsoft.ReactNative.Composition.CppApp.targets',
       )
     );
   }
