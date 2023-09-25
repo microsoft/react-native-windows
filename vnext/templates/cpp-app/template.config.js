@@ -65,7 +65,8 @@ async function getFileMappings(config = {}, options = {}) {
     projectGuidUpper: `{${projectGuid.toUpperCase()}}`,
 
     // packaging and signing variables:
-    packageGuid: packageGuid,
+    packageGuidLower: `{${packageGuid.toLowerCase()}}`,
+    packageGuidUpper: `{${packageGuid.toUpperCase()}}`,
     currentUser: currentUser,
 
     devMode,

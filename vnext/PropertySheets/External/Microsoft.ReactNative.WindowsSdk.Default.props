@@ -18,7 +18,7 @@
     <WindowsTargetPlatformMinVersion Condition="'$(UseWinUI3)'=='true' And $([MSBuild]::VersionLessThan('$(WindowsTargetPlatformMinVersion)', '10.0.17763.0'))">10.0.17763.0</WindowsTargetPlatformMinVersion>
   </PropertyGroup>
 
-  <PropertyGroup Label="Globals" Condition="'$(MSBuildProjectExtension)' == '.csproj'">
+  <PropertyGroup Label="Globals" Condition="'$(MSBuildProjectExtension)' == '.csproj' Or '$(MSBuildProjectExtension)' == '.wapproj'">
     <TargetPlatformVersion Condition="'$(TargetPlatformVersion)'==''">10.0.19041.0</TargetPlatformVersion>
     <TargetPlatformMinVersion Condition="'$(TargetPlatformMinVersion)'==''">10.0.17763.0</TargetPlatformMinVersion>
 
