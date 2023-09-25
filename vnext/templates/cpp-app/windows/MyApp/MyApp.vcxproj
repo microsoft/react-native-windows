@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- This project was created with react-native-windows {{ rnwVersion }} -->
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(SolutionDir)\ExperimentalFeatures.props" Condition="Exists('$(SolutionDir)\ExperimentalFeatures.props')" />
   <PropertyGroup Label="Globals">
-      <CppWinRTOptimized>true</CppWinRTOptimized>
-      <MinimalCoreWin>true</MinimalCoreWin>
-    <ProjectGuid>{3719BE61-52D1-4F42-8A4C-E575BA16E65F}</ProjectGuid>
-    <ProjectName>RNTesterApp-Fabric</ProjectName>
+    <CppWinRTOptimized>true</CppWinRTOptimized>
+    <MinimalCoreWin>true</MinimalCoreWin>
+    <ProjectGuid>{{ projectGuidUpper }}</ProjectGuid>
+    <ProjectName>{{ name }}</ProjectName>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>RNTesterApp</RootNamespace>
+    <RootNamespace>{{ namespace }}</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>17.0</MinimumVisualStudioVersion>
@@ -57,7 +58,6 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <Import Project="$(ReactNativeWindowsDir)PropertySheets\Warnings.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
@@ -99,13 +99,13 @@
   </ItemDefinitionGroup>
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
-    <ClInclude Include="RNTesterApp-Fabric.h" />
+    <ClInclude Include="{{ name }}.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="RNTesterApp-Fabric.cpp" />
+    <ClCompile Include="{{ name }}.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -114,10 +114,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="RNTesterApp-Fabric.rc" />
+    <ResourceCompile Include="{{ name }}.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="RNTesterApp-Fabric.ico" />
+    <Image Include="{{ name }}.ico" />
     <Image Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -127,6 +127,11 @@
   <ImportGroup Label="ReactNativeWindowsTargets">
     <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Composition.CppApp.targets" Condition="Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Composition.CppApp.targets')" />
   </ImportGroup>
+  <ItemGroup>
+    {{#cppNugetPackages}}
+    <PackageReference Include="{{ id }}" Version="{{ version }}"{{#privateAssets}} PrivateAssets="all"{{/privateAssets}} />
+    {{/cppNugetPackages}}
+  </ItemGroup>
   <Target Name="EnsureReactNativeWindowsTargets" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references targets in your node_modules\react-native-windows folder. The missing file is {0}.</ErrorText>
