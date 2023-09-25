@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.72.3",
+  "baseVersion": "0.72.4",
   "overrides": [
     {
       "type": "derived",
@@ -320,13 +320,13 @@
       "type": "derived",
       "file": "src/Libraries/Components/ScrollView/ScrollViewNativeComponent.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/ScrollView/ScrollViewNativeComponent.js",
-      "baseHash": "2687db4c3ff9516440a308bb9da23b0421a8f49b"
+      "baseHash": "625be8cb73e6fcbd89643812e322beed7208ac79"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "a817f8d62ee3ba4c56b772bd0cfb852739cb4aa7"
+      "baseHash": "90f4b32a3efe6ed28d47946ab9d0f9737dbe0174"
     },
     {
       "type": "patch",
