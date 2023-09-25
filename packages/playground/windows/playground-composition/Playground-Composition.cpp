@@ -580,7 +580,7 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
 
 #ifdef USE_WINUI3
   g_liftedDispatcherQueueController =
-    winrt::Microsoft::UI::Dispatching::DispatcherQueueController::CreateOnCurrentThread();
+      winrt::Microsoft::UI::Dispatching::DispatcherQueueController::CreateOnCurrentThread();
 #endif
 
   g_compositor = winrt::Windows::UI::Composition::Compositor();
