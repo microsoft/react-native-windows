@@ -51,13 +51,21 @@ void ReactCompositionViewComponentBuilder::SetMessageHandler(MessageHandler impl
   m_messageHandler = impl;
 }
 
+void ReactCompositionViewComponentBuilder::SetKeyDownHandler(KeyHandler impl) noexcept {
+  m_keyDown = impl;
+}
+
+void ReactCompositionViewComponentBuilder::SetKeyUpHandler(KeyHandler impl) noexcept {
+  m_keyUp = impl;
+}
+
 winrt::Windows::Foundation::IInspectable ReactCompositionViewComponentBuilder::CreateView(
     IReactContext reactContext,
     ICompositionContext context) noexcept {
   return m_createView(reactContext, context);
 }
 
-bool ReactCompositionViewComponentBuilder::HandelCommand(
+bool ReactCompositionViewComponentBuilder::HandleCommand(
     winrt::Windows::Foundation::IInspectable handle,
     winrt::hstring commandName,
     IJSValueReader args) noexcept {
@@ -102,6 +110,22 @@ int64_t ReactCompositionViewComponentBuilder::SendMessage(
     return 0;
   }
   return m_messageHandler(handle, msg, wparam, lparam);
+}
+
+void ReactCompositionViewComponentBuilder::OnKeyDown(
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
+  if (m_keyDown) {
+    m_keyDown(source, args);
+  }
+}
+
+void ReactCompositionViewComponentBuilder::OnKeyUp(
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
+  if (m_keyUp) {
+    m_keyUp(source, args);
+  }
 }
 
 } // namespace winrt::Microsoft::ReactNative::Composition

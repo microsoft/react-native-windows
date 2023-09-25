@@ -59,8 +59,10 @@ void HostPlatformViewProps::setProp(
     WINDOWS_VIEW_EVENT_CASE(KeyDown);
     WINDOWS_VIEW_EVENT_CASE(MouseEnter);
     WINDOWS_VIEW_EVENT_CASE(MouseLeave);
-    RAW_SET_PROP_SWITCH_CASE_BASIC(focusable);
     RAW_SET_PROP_SWITCH_CASE_BASIC(enableFocusRing);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(focusable);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(keyDownEvents);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(keyUpEvents);
   }
 }
 

@@ -77,6 +77,7 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\PropertySheets\WinUI.props" Condition="'$(UseWinUI3)'=='true'" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -271,6 +272,7 @@
     <PackageReference Include="Microsoft.JavaScript.Hermes" Version="$(HermesVersion)" />
     <PackageReference Include="ReactWindows.OpenSSL.StdCall.Static" Version="1.0.2-p.5" />
     <PackageReference Include="$(V8PackageName)" Version="$(V8Version)" Condition="'$(UseV8)' == 'true'" />
+    <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" Condition="'$(UseWinUI3)'=='true'" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(EnableSourceLink)' == 'true'">

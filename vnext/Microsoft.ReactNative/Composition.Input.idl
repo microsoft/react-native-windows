@@ -1,0 +1,28 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+#include "NamespaceRedirect.h"
+#include "DocString.h"
+
+namespace Microsoft.ReactNative.Composition.Input
+{
+  interface KeyboardSource
+  {
+    Windows.UI.Core.CoreVirtualKeyStates GetKeyState(Windows.System.VirtualKey key);
+  }
+
+  interface RoutedEventArgs
+  {
+    Int32 OriginalSource { get; };
+  }
+
+  interface KeyRoutedEventArgs requires RoutedEventArgs
+  {
+    String DeviceId { get; };
+    Boolean Handled { get; set; };
+    Windows.System.VirtualKey Key { get; };
+    Windows.UI.Core.CorePhysicalKeyStatus KeyStatus { get; };
+    Windows.System.VirtualKey OriginalKey { get; };
+  }
+
+} // namespace Microsoft.ReactNative.Composition.Input
