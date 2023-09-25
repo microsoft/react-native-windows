@@ -37,6 +37,9 @@ struct SwitchComponentView : CompositionBaseComponentView {
   void prepareForRecycle() noexcept override;
   facebook::react::Props::Shared props() noexcept override;
   bool focusable() const noexcept override;
+  void onKeyUp(
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept;
 
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt, bool ignorePointerEvents)
       const noexcept override;
@@ -53,6 +56,7 @@ struct SwitchComponentView : CompositionBaseComponentView {
   void ensureVisual() noexcept;
   void Draw() noexcept;
   void ensureDrawingSurface() noexcept;
+  bool toggle() noexcept;
 
   facebook::react::Size m_contentSize;
   winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};

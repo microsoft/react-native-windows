@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Wed, 20 Sep 2023 05:17:49 GMT and should not be manually modified.
+This log was last generated on Fri, 22 Sep 2023 05:13:32 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.78
+
+Fri, 22 Sep 2023 05:13:32 GMT
+
+### Changes
+
+- Create new CLI init-windows command (jthysell@microsoft.com)
 
 ## 0.0.0-canary.77
 

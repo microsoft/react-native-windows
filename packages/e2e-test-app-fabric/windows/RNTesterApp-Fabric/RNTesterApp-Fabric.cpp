@@ -105,7 +105,7 @@ struct WindowData {
   WindowData(const winrt::Microsoft::ReactNative::CompositionHwndHost &compHost) : m_CompositionHwndHost(compHost) {
     winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositionContext(
         InstanceSettings().Properties(),
-        winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::CreateContext(g_compositor));
+        winrt::Microsoft::ReactNative::Composition::WindowsCompositionContextHelper::CreateContext(g_compositor));
   }
 
   static WindowData *GetFromWindow(HWND hwnd) {
