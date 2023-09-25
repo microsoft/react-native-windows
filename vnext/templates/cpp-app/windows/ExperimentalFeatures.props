@@ -9,13 +9,4 @@
     <ReactExperimentalFeaturesSet>true</ReactExperimentalFeaturesSet>
   </PropertyGroup>
 
-  <PropertyGroup Label="Unpackaged {{ name }}" Condition="'$(SolutionName)'=='{{ name }}'">
-    <!--
-      WARNING - DO NOT MAKE THE VERSION OF MICROSOFT.UI.XAML BE ANYTHING BUT PRERELEASE.
-      Playground-Win32 is an unpackaged win32 app, and needs to use Microsoft.UI.Xaml from a prerelease,
-      to be able to carry WinUI in-app instead of using the Framework Package
-    -->
-    <WinUI2xVersion>2.7.0-prerelease.210913003</WinUI2xVersion>
-  </PropertyGroup>
-
 </Project>
