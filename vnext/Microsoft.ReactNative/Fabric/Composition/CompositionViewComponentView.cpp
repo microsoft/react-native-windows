@@ -1207,14 +1207,13 @@ CompositionBaseComponentView::supplementalComponentDescriptorProviders() noexcep
 
 comp::CompositionPropertySet CompositionBaseComponentView::EnsureCenterPointPropertySet() noexcept {
   if (m_centerPropSet == nullptr) {
-    auto compositor =
-        winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::InnerCompositor(
-            m_compContext);
-
-    m_centerPropSet = compositor.CreatePropertySet();
-    UpdateCenterPropertySet();
-    m_centerPropSet.InsertMatrix4x4(L"transform", winrt::Windows::Foundation::Numerics::float4x4::identity());
-    m_centerPropSet.InsertVector3(L"translation", {0, 0, 0});
+    if (auto compositor =
+            winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerCompositor(m_compContext)) {
+      m_centerPropSet = compositor.CreatePropertySet();
+      UpdateCenterPropertySet();
+      m_centerPropSet.InsertMatrix4x4(L"transform", winrt::Windows::Foundation::Numerics::float4x4::identity());
+      m_centerPropSet.InsertVector3(L"translation", {0, 0, 0});
+    }
   }
 
   return m_centerPropSet;
@@ -1253,15 +1252,15 @@ void CompositionBaseComponentView::EnsureTransformMatrixFacade() noexcept {
   m_hasTransformMatrixFacade = true;
 
   auto centerPointPropSet = EnsureCenterPointPropertySet();
-  // TODO cache expression instead of creating new ones all the time
-  auto expression =
-      winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::InnerCompositor(
-          m_compContext)
-          .CreateExpressionAnimation(
-              L"Matrix4x4.CreateFromScale(PS.dpiScale3Inv) * Matrix4x4.CreateFromTranslation(PS.translation) * PS.transform * Matrix4x4.CreateFromScale(PS.dpiScale3)");
-  expression.SetReferenceParameter(L"PS", centerPointPropSet);
-  winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::InnerVisual(OuterVisual())
-      .StartAnimation(L"TransformMatrix", expression);
+  if (auto compositor =
+          winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerCompositor(m_compContext)) {
+    // TODO cache expression instead of creating new ones all the time
+    auto expression = compositor.CreateExpressionAnimation(
+        L"Matrix4x4.CreateFromScale(PS.dpiScale3Inv) * Matrix4x4.CreateFromTranslation(PS.translation) * PS.transform * Matrix4x4.CreateFromScale(PS.dpiScale3)");
+    expression.SetReferenceParameter(L"PS", centerPointPropSet);
+    winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerVisual(OuterVisual())
+        .StartAnimation(L"TransformMatrix", expression);
+  }
 }
 
 facebook::react::SharedViewEventEmitter CompositionBaseComponentView::eventEmitter() noexcept {
