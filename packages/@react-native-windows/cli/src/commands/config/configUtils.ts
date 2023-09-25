@@ -110,9 +110,15 @@ export function isRnwDependencyProject(filePath: string): boolean {
       'Microsoft.ReactNative.Uwp.CSharpLib.targets',
     );
   } else if (projectLang === 'cpp') {
-    return importProjectExists(
-      projectContents,
-      'Microsoft.ReactNative.Uwp.CppLib.targets',
+    return (
+      importProjectExists(
+        projectContents,
+        'Microsoft.ReactNative.Uwp.CppLib.targets',
+      ) ||
+      importProjectExists(
+        projectContents,
+        'Microsoft.ReactNative.Composition.CppLib.targets',
+      )
     );
   }
 
@@ -193,9 +199,15 @@ function isRnwAppProject(filePath: string): boolean {
       'Microsoft.ReactNative.Uwp.CSharpApp.targets',
     );
   } else if (projectLang === 'cpp') {
-    return importProjectExists(
-      projectContents,
-      'Microsoft.ReactNative.Uwp.CppApp.targets',
+    return (
+      importProjectExists(
+        projectContents,
+        'Microsoft.ReactNative.Uwp.CppApp.targets',
+      ) ||
+      importProjectExists(
+        projectContents,
+        'Microsoft.ReactNative.Composition.CppApp.targets',
+      )
     );
   }
 
