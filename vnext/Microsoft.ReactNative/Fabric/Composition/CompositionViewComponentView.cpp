@@ -139,34 +139,23 @@ void CompositionBaseComponentView::handleCommand(std::string const &commandName,
 }
 
 int64_t CompositionBaseComponentView::sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
-  if (msg == WM_KEYUP || msg == WM_KEYDOWN) {
-    facebook::react::KeyEvent event;
-    BYTE bKeys[256];
-    if (GetKeyboardState(bKeys)) {
-      if (bKeys[VK_LSHIFT] & 0x80 || bKeys[VK_RSHIFT] & 0x80) {
-        event.shiftKey = true;
-      }
-      if (bKeys[VK_LCONTROL] & 0x80 || bKeys[VK_RCONTROL] & 0x80) {
-        event.ctrlKey = true;
-      }
-      if (bKeys[VK_LMENU] & 0x80 || bKeys[VK_RMENU] & 0x80) {
-        event.altKey = true;
-      }
-
-      event.metaKey = (GetKeyState(VK_LWIN) < 0) || (GetKeyState(VK_RWIN) < 0);
-    }
-
-    event.key = FromVirtualKey(
-        static_cast<winrt::Windows::System::VirtualKey>(wParam), event.shiftKey, !!(GetKeyState(VK_CAPITAL) & 1));
-    event.code = CodeFromVirtualKey(static_cast<winrt::Windows::System::VirtualKey>(wParam));
-    if (msg == WM_KEYUP) {
-      m_eventEmitter->onKeyUp(event);
-    } else {
-      m_eventEmitter->onKeyDown(event);
-    }
-  }
-
   return 0;
+}
+
+void CompositionBaseComponentView::onKeyDown(
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
+  if (m_parent && !args.Handled()) {
+    m_parent->onKeyDown(source, args);
+  }
+}
+
+void CompositionBaseComponentView::onKeyUp(
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
+  if (m_parent && !args.Handled()) {
+    m_parent->onKeyUp(source, args);
+  }
 }
 
 RECT CompositionBaseComponentView::getClientRect() const noexcept {
@@ -1218,14 +1207,13 @@ CompositionBaseComponentView::supplementalComponentDescriptorProviders() noexcep
 
 comp::CompositionPropertySet CompositionBaseComponentView::EnsureCenterPointPropertySet() noexcept {
   if (m_centerPropSet == nullptr) {
-    auto compositor =
-        winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::InnerCompositor(
-            m_compContext);
-
-    m_centerPropSet = compositor.CreatePropertySet();
-    UpdateCenterPropertySet();
-    m_centerPropSet.InsertMatrix4x4(L"transform", winrt::Windows::Foundation::Numerics::float4x4::identity());
-    m_centerPropSet.InsertVector3(L"translation", {0, 0, 0});
+    if (auto compositor =
+            winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerCompositor(m_compContext)) {
+      m_centerPropSet = compositor.CreatePropertySet();
+      UpdateCenterPropertySet();
+      m_centerPropSet.InsertMatrix4x4(L"transform", winrt::Windows::Foundation::Numerics::float4x4::identity());
+      m_centerPropSet.InsertVector3(L"translation", {0, 0, 0});
+    }
   }
 
   return m_centerPropSet;
@@ -1264,15 +1252,15 @@ void CompositionBaseComponentView::EnsureTransformMatrixFacade() noexcept {
   m_hasTransformMatrixFacade = true;
 
   auto centerPointPropSet = EnsureCenterPointPropertySet();
-  // TODO cache expression instead of creating new ones all the time
-  auto expression =
-      winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::InnerCompositor(
-          m_compContext)
-          .CreateExpressionAnimation(
-              L"Matrix4x4.CreateFromScale(PS.dpiScale3Inv) * Matrix4x4.CreateFromTranslation(PS.translation) * PS.transform * Matrix4x4.CreateFromScale(PS.dpiScale3)");
-  expression.SetReferenceParameter(L"PS", centerPointPropSet);
-  winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::InnerVisual(OuterVisual())
-      .StartAnimation(L"TransformMatrix", expression);
+  if (auto compositor =
+          winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerCompositor(m_compContext)) {
+    // TODO cache expression instead of creating new ones all the time
+    auto expression = compositor.CreateExpressionAnimation(
+        L"Matrix4x4.CreateFromScale(PS.dpiScale3Inv) * Matrix4x4.CreateFromTranslation(PS.translation) * PS.transform * Matrix4x4.CreateFromScale(PS.dpiScale3)");
+    expression.SetReferenceParameter(L"PS", centerPointPropSet);
+    winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerVisual(OuterVisual())
+        .StartAnimation(L"TransformMatrix", expression);
+  }
 }
 
 facebook::react::SharedViewEventEmitter CompositionBaseComponentView::eventEmitter() noexcept {
@@ -1400,6 +1388,84 @@ bool CompositionViewComponentView::ScrollWheel(facebook::react::Point pt, int32_
     return true;
 
   return false;
+}
+
+void CompositionViewComponentView::onKeyDown(
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
+  auto eventCode = CodeFromVirtualKey(args.Key());
+  bool fShift = source.GetKeyState(winrt::Windows::System::VirtualKey::Shift) !=
+      winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
+  bool fAlt = source.GetKeyState(winrt::Windows::System::VirtualKey::Menu) !=
+      winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
+  bool fCtrl = source.GetKeyState(winrt::Windows::System::VirtualKey::Control) !=
+      winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
+  bool fMeta = (source.GetKeyState(winrt::Windows::System::VirtualKey::LeftWindows) !=
+                winrt::Windows::UI::Core::CoreVirtualKeyStates::None) ||
+      (source.GetKeyState(winrt::Windows::System::VirtualKey::RightWindows) !=
+       winrt::Windows::UI::Core::CoreVirtualKeyStates::None);
+
+  if (args.OriginalSource() == tag()) {
+    facebook::react::KeyEvent event;
+    event.shiftKey = fShift;
+    event.ctrlKey = fCtrl;
+    event.altKey = fAlt;
+    event.metaKey = fMeta;
+
+    event.key = FromVirtualKey(args.Key(), event.shiftKey, !!(GetKeyState(VK_CAPITAL) & 1));
+    event.code = eventCode;
+    m_eventEmitter->onKeyDown(event);
+  }
+
+  for (const auto &handledKey : m_props->keyDownEvents) {
+    if (handledKey.code == eventCode && handledKey.altKey == fAlt && handledKey.ctrlKey == fCtrl &&
+        handledKey.metaKey == fMeta && handledKey.shiftKey == fShift &&
+        handledKey.handledEventPhase == facebook::react::HandledEventPhase::Bubbling) {
+      // Stop bubbling event if marked as handled from JS
+      args.Handled(true);
+    }
+  }
+
+  Super::onKeyDown(source, args);
+}
+
+void CompositionViewComponentView::onKeyUp(
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
+  auto eventCode = CodeFromVirtualKey(args.Key());
+  bool fShift = source.GetKeyState(winrt::Windows::System::VirtualKey::Shift) !=
+      winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
+  bool fAlt = source.GetKeyState(winrt::Windows::System::VirtualKey::Menu) !=
+      winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
+  bool fCtrl = source.GetKeyState(winrt::Windows::System::VirtualKey::Control) !=
+      winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
+  bool fMeta = (source.GetKeyState(winrt::Windows::System::VirtualKey::LeftWindows) !=
+                winrt::Windows::UI::Core::CoreVirtualKeyStates::None) ||
+      (source.GetKeyState(winrt::Windows::System::VirtualKey::RightWindows) !=
+       winrt::Windows::UI::Core::CoreVirtualKeyStates::None);
+
+  if (args.OriginalSource() == tag()) {
+    facebook::react::KeyEvent event;
+    event.shiftKey = fShift;
+    event.ctrlKey = fCtrl;
+    event.altKey = fAlt;
+    event.metaKey = fMeta;
+
+    event.key = FromVirtualKey(args.Key(), event.shiftKey, !!(GetKeyState(VK_CAPITAL) & 1));
+    event.code = eventCode;
+    m_eventEmitter->onKeyUp(event);
+  }
+
+  for (const auto &handledKey : m_props->keyUpEvents) {
+    if (handledKey.code == eventCode && handledKey.altKey == fAlt && handledKey.ctrlKey == fCtrl &&
+        handledKey.metaKey == fMeta && handledKey.shiftKey == fShift &&
+        handledKey.handledEventPhase == facebook::react::HandledEventPhase::Bubbling) {
+      // Stop bubbling event if marked as handled from JS
+      args.Handled(true);
+    }
+  }
+
+  Super::onKeyUp(source, args);
 }
 
 void CompositionViewComponentView::updateState(

@@ -2107,6 +2107,7 @@ exports[`snapshotAllPages Animated 1`] = `
       </Text>
       <RCTSwitch
         accessibilityRole="switch"
+        focusable={true}
         onChange={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
@@ -3029,6 +3030,7 @@ exports[`snapshotAllPages Animated 2`] = `
       </Text>
       <RCTSwitch
         accessibilityRole="switch"
+        focusable={true}
         onChange={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
@@ -3216,6 +3218,7 @@ exports[`snapshotAllPages Animated 3`] = `
       </Text>
       <RCTSwitch
         accessibilityRole="switch"
+        focusable={true}
         onChange={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
@@ -3345,6 +3348,7 @@ exports[`snapshotAllPages Animated 4`] = `
       </Text>
       <RCTSwitch
         accessibilityRole="switch"
+        focusable={true}
         onChange={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
@@ -4600,6 +4604,7 @@ exports[`snapshotAllPages Animated 5`] = `
       </Text>
       <RCTSwitch
         accessibilityRole="switch"
+        focusable={true}
         onChange={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
@@ -5625,6 +5630,7 @@ exports[`snapshotAllPages Animated 7`] = `
       </Text>
       <RCTSwitch
         accessibilityRole="switch"
+        focusable={true}
         onChange={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
@@ -5750,6 +5756,7 @@ exports[`snapshotAllPages Animated 8`] = `
       </Text>
       <RCTSwitch
         accessibilityRole="switch"
+        focusable={true}
         onChange={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
@@ -6068,6 +6075,7 @@ exports[`snapshotAllPages Animated 9`] = `
       </Text>
       <RCTSwitch
         accessibilityRole="switch"
+        focusable={true}
         onChange={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
@@ -6197,6 +6205,7 @@ exports[`snapshotAllPages Animated 10`] = `
       </Text>
       <RCTSwitch
         accessibilityRole="switch"
+        focusable={true}
         onChange={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
@@ -9243,6 +9252,7 @@ exports[`snapshotAllPages Display:none Style 1`] = `
               </Text>
               <RCTSwitch
                 accessibilityRole="switch"
+                focusable={true}
                 onChange={[Function]}
                 onResponderTerminationRequest={[Function]}
                 onStartShouldSetResponder={[Function]}
@@ -9742,6 +9752,7 @@ exports[`snapshotAllPages FlatList 1`] = `
             </Text>
             <RCTSwitch
               accessibilityRole="switch"
+              focusable={true}
               onChange={[Function]}
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
@@ -9769,6 +9780,7 @@ exports[`snapshotAllPages FlatList 1`] = `
             </Text>
             <RCTSwitch
               accessibilityRole="switch"
+              focusable={true}
               onChange={[Function]}
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
@@ -9796,6 +9808,7 @@ exports[`snapshotAllPages FlatList 1`] = `
             </Text>
             <RCTSwitch
               accessibilityRole="switch"
+              focusable={true}
               onChange={[Function]}
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
@@ -9823,6 +9836,7 @@ exports[`snapshotAllPages FlatList 1`] = `
             </Text>
             <RCTSwitch
               accessibilityRole="switch"
+              focusable={true}
               onChange={[Function]}
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
@@ -9850,6 +9864,7 @@ exports[`snapshotAllPages FlatList 1`] = `
             </Text>
             <RCTSwitch
               accessibilityRole="switch"
+              focusable={true}
               onChange={[Function]}
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
@@ -9877,6 +9892,7 @@ exports[`snapshotAllPages FlatList 1`] = `
             </Text>
             <RCTSwitch
               accessibilityRole="switch"
+              focusable={true}
               onChange={[Function]}
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
@@ -9904,6 +9920,7 @@ exports[`snapshotAllPages FlatList 1`] = `
             </Text>
             <RCTSwitch
               accessibilityRole="switch"
+              focusable={true}
               onChange={[Function]}
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
@@ -9931,6 +9948,7 @@ exports[`snapshotAllPages FlatList 1`] = `
             </Text>
             <RCTSwitch
               accessibilityRole="switch"
+              focusable={true}
               onChange={[Function]}
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
@@ -9958,6 +9976,7 @@ exports[`snapshotAllPages FlatList 1`] = `
             </Text>
             <RCTSwitch
               accessibilityRole="switch"
+              focusable={true}
               onChange={[Function]}
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
@@ -9985,6 +10004,7 @@ exports[`snapshotAllPages FlatList 1`] = `
             </Text>
             <RCTSwitch
               accessibilityRole="switch"
+              focusable={true}
               onChange={[Function]}
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
@@ -10012,6 +10032,7 @@ exports[`snapshotAllPages FlatList 1`] = `
             </Text>
             <RCTSwitch
               accessibilityRole="switch"
+              focusable={true}
               onChange={[Function]}
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
@@ -10039,6 +10060,7 @@ exports[`snapshotAllPages FlatList 1`] = `
             </Text>
             <RCTSwitch
               accessibilityRole="switch"
+              focusable={true}
               onChange={[Function]}
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
@@ -16600,6 +16622,7 @@ exports[`snapshotAllPages FlatList 8`] = `
           </Text>
           <RCTSwitch
             accessibilityRole="switch"
+            focusable={true}
             onChange={[Function]}
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
@@ -16627,6 +16650,7 @@ exports[`snapshotAllPages FlatList 8`] = `
           </Text>
           <RCTSwitch
             accessibilityRole="switch"
+            focusable={true}
             onChange={[Function]}
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
@@ -16654,6 +16678,7 @@ exports[`snapshotAllPages FlatList 8`] = `
           </Text>
           <RCTSwitch
             accessibilityRole="switch"
+            focusable={true}
             onChange={[Function]}
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
@@ -28269,6 +28294,7 @@ exports[`snapshotAllPages LegacyControlStyleTest 1`] = `
   >
     <RCTSwitch
       accessibilityRole="switch"
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
@@ -31297,6 +31323,7 @@ exports[`snapshotAllPages Native Animated Example 14`] = `
     </Text>
     <RCTSwitch
       accessibilityRole="switch"
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
@@ -31323,6 +31350,7 @@ exports[`snapshotAllPages Native Animated Example 14`] = `
     </Text>
     <RCTSwitch
       accessibilityRole="switch"
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
@@ -35698,6 +35726,7 @@ exports[`snapshotAllPages Pressable 14`] = `
     </View>
     <RCTSwitch
       accessibilityRole="switch"
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
@@ -36956,6 +36985,7 @@ exports[`snapshotAllPages RTLExample 1`] = `
     >
       <RCTSwitch
         accessibilityRole="switch"
+        focusable={true}
         onChange={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
@@ -57090,6 +57120,7 @@ exports[`snapshotAllPages SectionList 7`] = `
           </Text>
           <RCTSwitch
             accessibilityRole="switch"
+            focusable={true}
             onChange={[Function]}
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
@@ -57117,6 +57148,7 @@ exports[`snapshotAllPages SectionList 7`] = `
           </Text>
           <RCTSwitch
             accessibilityRole="switch"
+            focusable={true}
             onChange={[Function]}
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
@@ -57144,6 +57176,7 @@ exports[`snapshotAllPages SectionList 7`] = `
           </Text>
           <RCTSwitch
             accessibilityRole="switch"
+            focusable={true}
             onChange={[Function]}
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
@@ -57171,6 +57204,7 @@ exports[`snapshotAllPages SectionList 7`] = `
           </Text>
           <RCTSwitch
             accessibilityRole="switch"
+            focusable={true}
             onChange={[Function]}
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
@@ -65590,6 +65624,7 @@ exports[`snapshotAllPages Switch 1`] = `
   >
     <RCTSwitch
       accessibilityRole="switch"
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
@@ -65622,6 +65657,7 @@ exports[`snapshotAllPages Switch 1`] = `
   >
     <RCTSwitch
       accessibilityRole="switch"
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
@@ -65658,6 +65694,7 @@ exports[`snapshotAllPages Switch 2`] = `
     <RCTSwitch
       accessibilityRole="switch"
       disabled={true}
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
@@ -65689,6 +65726,7 @@ exports[`snapshotAllPages Switch 2`] = `
     <RCTSwitch
       accessibilityRole="switch"
       disabled={true}
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
@@ -65722,6 +65760,7 @@ exports[`snapshotAllPages Switch 3`] = `
   <View>
     <RCTSwitch
       accessibilityRole="switch"
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
@@ -65741,6 +65780,7 @@ exports[`snapshotAllPages Switch 3`] = `
     />
     <RCTSwitch
       accessibilityRole="switch"
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
@@ -65767,6 +65807,7 @@ exports[`snapshotAllPages Switch 3`] = `
   <View>
     <RCTSwitch
       accessibilityRole="switch"
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
@@ -65786,6 +65827,7 @@ exports[`snapshotAllPages Switch 3`] = `
     />
     <RCTSwitch
       accessibilityRole="switch"
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
@@ -65815,6 +65857,7 @@ exports[`snapshotAllPages Switch 3`] = `
 exports[`snapshotAllPages Switch 4`] = `
 <RCTSwitch
   accessibilityRole="switch"
+  focusable={true}
   onChange={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
@@ -65833,6 +65876,7 @@ exports[`snapshotAllPages Switch 5`] = `
 <View>
   <RCTSwitch
     accessibilityRole="switch"
+    focusable={true}
     onChange={[Function]}
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
@@ -65855,6 +65899,7 @@ exports[`snapshotAllPages Switch 5`] = `
   />
   <RCTSwitch
     accessibilityRole="switch"
+    focusable={true}
     onChange={[Function]}
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
@@ -65877,6 +65922,7 @@ exports[`snapshotAllPages Switch 6`] = `
 <View>
   <RCTSwitch
     accessibilityRole="switch"
+    focusable={true}
     onChange={[Function]}
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
@@ -65895,6 +65941,7 @@ exports[`snapshotAllPages Switch 7`] = `
 <View>
   <RCTSwitch
     accessibilityRole="switch"
+    focusable={true}
     onChange={[Function]}
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
@@ -65933,6 +65980,7 @@ exports[`snapshotAllPages Switch 8`] = `
       accessibilityHint="Switch"
       accessibilityLabel="This is a Switch"
       accessibilityRole="switch"
+      focusable={true}
       nativeID="accessibility-switch"
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
@@ -65949,6 +65997,7 @@ exports[`snapshotAllPages Switch 8`] = `
       accessibilityHint="Switch"
       accessibilityLabel="This is a Switch with focusable set to false"
       accessibilityRole="switch"
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
@@ -65975,6 +66024,7 @@ exports[`snapshotAllPages Switch 8`] = `
       accessibilityHint="Switch"
       accessibilityLabel="This is a Switch with accessible set to false"
       accessibilityRole="switch"
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
@@ -65990,6 +66040,7 @@ exports[`snapshotAllPages Switch 8`] = `
       accessibilityHint="Switch"
       accessibilityLabel="This is a Switch with focusable and accessible set to false"
       accessibilityRole="switch"
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
@@ -69524,6 +69575,7 @@ exports[`snapshotAllPages Text 1`] = `
               </Text>
               <RCTSwitch
                 accessibilityRole="switch"
+                focusable={true}
                 onChange={[Function]}
                 onResponderTerminationRequest={[Function]}
                 onStartShouldSetResponder={[Function]}
@@ -73980,6 +74032,7 @@ exports[`snapshotAllPages TextInput 28`] = `
     </Text>
     <RCTSwitch
       accessibilityRole="switch"
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
@@ -73996,6 +74049,7 @@ exports[`snapshotAllPages TextInput 28`] = `
     </Text>
     <RCTSwitch
       accessibilityRole="switch"
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
@@ -74407,6 +74461,7 @@ exports[`snapshotAllPages TextInput 36`] = `
   </Text>,
   <RCTSwitch
     accessibilityRole="switch"
+    focusable={true}
     onChange={[Function]}
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
@@ -80502,6 +80557,7 @@ exports[`snapshotAllPages XMLHttpRequest 1`] = `
     </Text>
     <RCTSwitch
       accessibilityRole="switch"
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
@@ -80529,6 +80585,7 @@ exports[`snapshotAllPages XMLHttpRequest 1`] = `
     </Text>
     <RCTSwitch
       accessibilityRole="switch"
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
@@ -80556,6 +80613,7 @@ exports[`snapshotAllPages XMLHttpRequest 1`] = `
     </Text>
     <RCTSwitch
       accessibilityRole="switch"
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}

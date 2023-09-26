@@ -1,8 +1,26 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Wed, 20 Sep 2023 05:17:49 GMT and should not be manually modified.
+This log was last generated on Tue, 26 Sep 2023 05:13:15 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.189
+
+Tue, 26 Sep 2023 05:13:15 GMT
+
+### Changes
+
+- Add new architecture `cpp-app` template for `init-windows` (jthysell@microsoft.com)
+
+## 0.0.0-canary.188
+
+Fri, 22 Sep 2023 05:13:32 GMT
+
+### Changes
+
+- Create new CLI init-windows command (jthysell@microsoft.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.70
+- Bump @react-native-windows/telemetry to v0.0.0-canary.78
 
 ## 0.0.0-canary.187
 

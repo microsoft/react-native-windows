@@ -33,11 +33,14 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
   // (Object handle, UInt32 Msg, UInt64 WParam, Int64 LParam) => Int64
   void SetMessageHandler(MessageHandler impl) noexcept;
 
+  void SetKeyDownHandler(KeyHandler impl) noexcept;
+  void SetKeyUpHandler(KeyHandler impl) noexcept;
+
  public:
   IComponentProps CreateProps(ViewProps props) noexcept;
 
   winrt::Windows::Foundation::IInspectable CreateView(IReactContext reactContext, ICompositionContext context) noexcept;
-  bool HandelCommand(
+  bool HandleCommand(
       winrt::Windows::Foundation::IInspectable handle,
       winrt::hstring commandName,
       IJSValueReader args) noexcept;
@@ -47,6 +50,12 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
   IVisual CreateVisual(winrt::Windows::Foundation::IInspectable handle) noexcept;
   int64_t
   SendMessage(winrt::Windows::Foundation::IInspectable handle, uint32_t Msg, uint64_t WParam, int64_t LParam) noexcept;
+  void OnKeyDown(
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept;
+  void OnKeyUp(
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept;
 
  private:
   ViewPropsFactory m_propsFactory;
@@ -58,6 +67,8 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
   UpdateFinalizer m_finalizer;
   VisualCreator m_visualCreator;
   MessageHandler m_messageHandler;
+  KeyHandler m_keyUp;
+  KeyHandler m_keyDown;
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition

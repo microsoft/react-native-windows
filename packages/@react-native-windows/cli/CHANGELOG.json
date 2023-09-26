@@ -2,6 +2,48 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Tue, 26 Sep 2023 05:13:15 GMT",
+      "version": "0.0.0-canary.189",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.189",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "c7282e51f9afec33ecc18ad836b02d84bcc17379",
+            "comment": "Add new architecture `cpp-app` template for `init-windows`"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 22 Sep 2023 05:13:32 GMT",
+      "version": "0.0.0-canary.188",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.188",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "de07af904a160d260136645727de394e44662acc",
+            "comment": "Create new CLI init-windows command"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.70",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.78",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 20 Sep 2023 05:17:49 GMT",
       "version": "0.0.0-canary.187",
       "tag": "@react-native-windows/cli_v0.0.0-canary.187",

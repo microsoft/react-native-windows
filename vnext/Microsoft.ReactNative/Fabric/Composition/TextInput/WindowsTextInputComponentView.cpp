@@ -545,7 +545,7 @@ void WindowsTextInputComponentView::handleCommand(std::string const &commandName
 int64_t WindowsTextInputComponentView::sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
   // Do not forward tab keys into the TextInput, since we want that to do the tab loop instead.  This aligns with WinUI
   // behavior We do forward Ctrl+Tab to the textinput.
-  if (((msg == WM_KEYDOWN || msg == WM_KEYUP) && wParam == VK_TAB) || (msg == WM_CHAR && wParam == '\t')) {
+  if ((msg == WM_CHAR && wParam == '\t')) {
     BYTE bKeys[256];
     if (GetKeyboardState(bKeys)) {
       bool fCtrl = false;
@@ -564,6 +564,67 @@ int64_t WindowsTextInputComponentView::sendMessage(uint32_t msg, uint64_t wParam
     }
   }
   return Super::sendMessage(msg, wParam, lParam);
+}
+
+void WindowsTextInputComponentView::onKeyDown(
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
+  // Do not forward tab keys into the TextInput, since we want that to do the tab loop instead.  This aligns with WinUI
+  // behavior We do forward Ctrl+Tab to the textinput.
+  if (args.Key() != winrt::Windows::System::VirtualKey::Tab ||
+      source.GetKeyState(winrt::Windows::System::VirtualKey::Control) ==
+          winrt::Windows::UI::Core::CoreVirtualKeyStates::Down) {
+    WPARAM wParam = static_cast<WPARAM>(args.Key());
+    LPARAM lParam = 0;
+    lParam = args.KeyStatus().RepeatCount; // bits 0-15
+    lParam |= args.KeyStatus().ScanCode << 16; // bits 16-23
+    if (args.KeyStatus().IsExtendedKey)
+      lParam |= 0x01000000; // bit 24
+    // if sysKey - bit 29 = 1, otherwise 0
+    if (args.KeyStatus().WasKeyDown)
+      lParam |= 0x40000000; // bit 30
+
+    LRESULT lresult;
+    DrawBlock db(*this);
+    auto hr = m_textServices->TxSendMessage(
+        args.KeyStatus().IsMenuKeyDown ? WM_SYSKEYDOWN : WM_KEYDOWN, wParam, lParam, &lresult);
+    if (hr >= 0 && lresult) {
+      args.Handled(true);
+    }
+  }
+
+  Super::onKeyDown(source, args);
+}
+
+void WindowsTextInputComponentView::onKeyUp(
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
+  // Do not forward tab keys into the TextInput, since we want that to do the tab loop instead.  This aligns with WinUI
+  // behavior We do forward Ctrl+Tab to the textinput.
+  if (args.Key() != winrt::Windows::System::VirtualKey::Tab ||
+      source.GetKeyState(winrt::Windows::System::VirtualKey::Control) ==
+          winrt::Windows::UI::Core::CoreVirtualKeyStates::Down) {
+    WPARAM wParam = static_cast<WPARAM>(args.Key());
+    LPARAM lParam = 1;
+    lParam = args.KeyStatus().RepeatCount; // bits 0-15
+    lParam |= args.KeyStatus().ScanCode << 16; // bits 16-23
+    if (args.KeyStatus().IsExtendedKey)
+      lParam |= 0x01000000; // bit 24
+    // if sysKey - bit 29 = 1, otherwise 0
+    if (args.KeyStatus().WasKeyDown)
+      lParam |= 0x40000000; // bit 30
+    lParam |= 0x80000000; // bit 31 always 1 for WM_KEYUP
+
+    LRESULT lresult;
+    DrawBlock db(*this);
+    auto hr = m_textServices->TxSendMessage(
+        args.KeyStatus().IsMenuKeyDown ? WM_SYSKEYUP : WM_KEYUP, wParam, lParam, &lresult);
+    if (hr >= 0 && lresult) {
+      args.Handled(true);
+    }
+  }
+
+  Super::onKeyDown(source, args);
 }
 
 void WindowsTextInputComponentView::mountChildComponentView(

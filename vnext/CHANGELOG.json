@@ -2,6 +2,72 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 26 Sep 2023 05:13:15 GMT",
+      "version": "0.0.0-canary.709",
+      "tag": "react-native-windows_v0.0.0-canary.709",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "59bb63ce1903fa4fda4a19db9967202fd49dcb24",
+            "comment": "Enable fabric usage against lifted comp, or system comp"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "c7282e51f9afec33ecc18ad836b02d84bcc17379",
+            "comment": "Add new architecture `cpp-app` template for `init-windows`"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.189",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 22 Sep 2023 05:13:32 GMT",
+      "version": "0.0.0-canary.708",
+      "tag": "react-native-windows_v0.0.0-canary.708",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ff73a5669674b6fee011f0515958f5d5b3e57036",
+            "comment": "[Fabric] Add support for native key event handling"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "7c9768c23f26fdf0b6ef39e6d11871949fbeab72",
+            "comment": "add fabric textinput's cursorColor"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "de07af904a160d260136645727de394e44662acc",
+            "comment": "Create new CLI init-windows command"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.188",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.70",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 21 Sep 2023 05:13:49 GMT",
       "version": "0.0.0-canary.707",
       "tag": "react-native-windows_v0.0.0-canary.707",
