@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "[0.71] Restore \"Update V8 JSI version to 0.71.8 (#12043)\"",
-  "packageName": "@react-native-windows/telemetry",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 26 Sep 2023 21:15:59 GMT",
+      "tag": "react-native-windows_v0.71.38",
+      "version": "0.71.38",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "93bf07fbdd1a632214530d881c82c75ff985d5a8",
+            "comment": "Restore \"Update V8 JSI version to 0.71.8 (#12043)\""
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.71.19",
+            "commit": "93bf07fbdd1a632214530d881c82c75ff985d5a8"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 16 Sep 2023 01:11:25 GMT",
       "tag": "react-native-windows_v0.71.37",
       "version": "0.71.37",

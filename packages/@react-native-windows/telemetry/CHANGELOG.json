@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Tue, 26 Sep 2023 21:15:59 GMT",
+      "tag": "@react-native-windows/telemetry_v0.71.10",
+      "version": "0.71.10",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "93bf07fbdd1a632214530d881c82c75ff985d5a8",
+            "comment": "Restore \"Update V8 JSI version to 0.71.8 (#12043)\""
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 16 Sep 2023 01:11:25 GMT",
       "tag": "@react-native-windows/telemetry_v0.71.9",
       "version": "0.71.9",

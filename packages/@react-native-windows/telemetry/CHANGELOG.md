@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Sat, 16 Sep 2023 01:11:25 GMT and should not be manually modified.
+This log was last generated on Tue, 26 Sep 2023 21:15:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.10
+
+Tue, 26 Sep 2023 21:15:59 GMT
+
+### Patches
+
+- Restore "Update V8 JSI version to 0.71.8 (#12043)" (julio.rocha@microsoft.com)
 
 ## 0.71.9
 
