@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.72.3",
+  "baseVersion": "0.72.5",
   "overrides": [
     {
       "type": "derived",
@@ -123,7 +123,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "a817f8d62ee3ba4c56b772bd0cfb852739cb4aa7"
+      "baseHash": "90f4b32a3efe6ed28d47946ab9d0f9737dbe0174"
     },
     {
       "type": "patch",
