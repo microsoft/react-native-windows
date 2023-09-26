@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "fix fabric textinput's caret on focus lost",
+  "packageName": "react-native-windows",
+  "email": "tatianakapos@microsoft.com",
+  "dependentChangeType": "patch"
+}

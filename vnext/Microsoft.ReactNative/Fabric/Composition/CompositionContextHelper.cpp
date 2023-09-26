@@ -1003,6 +1003,7 @@ struct CompCaretVisual
       m_compVisual.StartAnimation(L"opacity", m_opacityAnimation);
     } else {
       m_compVisual.StopAnimation(L"opacity");
+      m_compVisual.Opacity(0.0f);
     }
   }
 
