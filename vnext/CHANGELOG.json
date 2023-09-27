@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 27 Sep 2023 21:02:34 GMT",
+      "tag": "react-native-windows_v0.72.10",
+      "version": "0.72.10",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "117602962a0c8314c21805380f8cd097827deed1",
+            "comment": "Bump react-native dependency to 0.72.5"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 11 Sep 2023 15:14:55 GMT",
       "tag": "react-native-windows_v0.72.9",
       "version": "0.72.9",

@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 27 Sep 2023 21:02:34 GMT",
+      "tag": "@office-iss/react-native-win32_v0.72.5",
+      "version": "0.72.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "117602962a0c8314c21805380f8cd097827deed1",
+            "comment": "Bump react-native dependency to 0.72.5"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 11 Sep 2023 15:14:55 GMT",
       "tag": "@office-iss/react-native-win32_v0.72.4",
       "version": "0.72.4",

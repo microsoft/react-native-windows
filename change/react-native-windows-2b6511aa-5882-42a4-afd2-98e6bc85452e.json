@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Bump react-native dependency to 0.72.5",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

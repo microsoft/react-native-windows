@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 11 Sep 2023 15:14:55 GMT and should not be manually modified.
+This log was last generated on Wed, 27 Sep 2023 21:02:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.72.5
+
+Wed, 27 Sep 2023 21:02:34 GMT
+
+### Patches
+
+- Bump react-native dependency to 0.72.5 (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.72.4
 
