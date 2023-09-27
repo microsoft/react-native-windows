@@ -726,10 +726,18 @@ struct CompScrollerVisual : winrt::implements<
       auto cubicBezier = compositor.CreateCubicBezierEasingFunction({0.17f, 0.67f}, {1.0f, 1.0f});
       auto kfa = compositor.CreateVector3KeyFrameAnimation();
       kfa.Duration(std::chrono::seconds{1});
-      kfa.InsertKeyFrame(1.0f, {std::min(maxPosition.x, position.x), std::min(maxPosition.y, position.y), std::min(maxPosition.z, position.z)}, cubicBezier);
+      kfa.InsertKeyFrame(
+          1.0f,
+          {std::min(maxPosition.x, position.x),
+           std::min(maxPosition.y, position.y),
+           std::min(maxPosition.z, position.z)},
+          cubicBezier);
       m_interactionTracker.TryUpdatePositionWithAnimation(kfa);
     } else {
-      m_interactionTracker.TryUpdatePosition({std::min(maxPosition.x, position.x), std::min(maxPosition.y, position.y), std::min(maxPosition.z, position.z)});
+      m_interactionTracker.TryUpdatePosition(
+          {std::min(maxPosition.x, position.x),
+           std::min(maxPosition.y, position.y),
+           std::min(maxPosition.z, position.z)});
     }
   }
 

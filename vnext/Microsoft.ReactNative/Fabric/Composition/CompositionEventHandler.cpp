@@ -156,7 +156,8 @@ void CompositionEventHandler::ScrollWheel(facebook::react::Point pt, uint32_t de
     facebook::react::Point ptLocal;
 
     facebook::react::Point ptScaled = {
-        static_cast<float>(pt.x / m_compRootView.ScaleFactor()), static_cast<float>(pt.y / m_compRootView.ScaleFactor())};
+        static_cast<float>(pt.x / m_compRootView.ScaleFactor()),
+        static_cast<float>(pt.y / m_compRootView.ScaleFactor())};
     auto tag = RootComponentView().hitTest(ptScaled, ptLocal);
 
     if (tag == -1) {

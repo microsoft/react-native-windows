@@ -322,8 +322,8 @@ void ScrollViewComponentView::onKeyDown(
 }
 
 bool ScrollViewComponentView::scrollToEnd(bool animate) noexcept {
-  if ((((m_contentSize.height - m_layoutMetrics.frame.size.height) * m_layoutMetrics.pointScaleFactor) - m_scrollVisual.ScrollPosition().y) < 1.0f)
-  {
+  if ((((m_contentSize.height - m_layoutMetrics.frame.size.height) * m_layoutMetrics.pointScaleFactor) -
+       m_scrollVisual.ScrollPosition().y) < 1.0f) {
     return false;
   }
 
@@ -351,8 +351,8 @@ bool ScrollViewComponentView::pageUp(bool animate) noexcept {
 }
 
 bool ScrollViewComponentView::pageDown(bool animate) noexcept {
-  if ((((m_contentSize.height - m_layoutMetrics.frame.size.height) * m_layoutMetrics.pointScaleFactor) - m_scrollVisual.ScrollPosition().y) < 1.0f)
-  {
+  if ((((m_contentSize.height - m_layoutMetrics.frame.size.height) * m_layoutMetrics.pointScaleFactor) -
+       m_scrollVisual.ScrollPosition().y) < 1.0f) {
     return false;
   }
 
@@ -384,7 +384,8 @@ bool ScrollViewComponentView::lineLeft(bool animate) noexcept {
 }
 
 bool ScrollViewComponentView::lineRight(bool animate) noexcept {
-  if ((((m_contentSize.width - m_layoutMetrics.frame.size.width) * m_layoutMetrics.pointScaleFactor) - m_scrollVisual.ScrollPosition().x) < 1.0f) {
+  if ((((m_contentSize.width - m_layoutMetrics.frame.size.width) * m_layoutMetrics.pointScaleFactor) -
+       m_scrollVisual.ScrollPosition().x) < 1.0f) {
     return false;
   }
 
@@ -396,8 +397,9 @@ bool ScrollViewComponentView::lineRight(bool animate) noexcept {
 }
 
 bool ScrollViewComponentView::scrollDown(float delta, bool animate) noexcept {
-  if (((m_contentSize.height - m_layoutMetrics.frame.size.height) * m_layoutMetrics.pointScaleFactor) - m_scrollVisual.ScrollPosition().y < 1.0f)
-  {
+  if (((m_contentSize.height - m_layoutMetrics.frame.size.height) * m_layoutMetrics.pointScaleFactor) -
+          m_scrollVisual.ScrollPosition().y <
+      1.0f) {
     return false;
   }
 
@@ -417,7 +419,6 @@ bool ScrollViewComponentView::scrollUp(float delta, bool animate) noexcept {
   m_scrollVisual.TryUpdatePosition({scrollToHorizontal, scrollToVertical, 0.0f}, false /*animate*/);
   return true;
 }
-
 
 void ScrollViewComponentView::handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept {
   if (commandName == "scrollTo") {
