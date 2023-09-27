@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "uncommented changes",
+  "comment": "Set UIA Name and HelpText properties on TextInput to match placeholder prop value",
   "packageName": "react-native-windows",
   "email": "yajurgrover24@gmail.com",
   "dependentChangeType": "patch"
