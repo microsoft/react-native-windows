@@ -1284,6 +1284,10 @@ std::string CompositionBaseComponentView::DefaultAccessibleName() const noexcept
   return "";
 }
 
+std::string CompositionBaseComponentView::DefaultHelpText() const noexcept {
+  return "";
+}
+
 CompositionViewComponentView::CompositionViewComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag)
