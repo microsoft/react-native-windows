@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Use glob to look through folders recursively",
+  "packageName": "@react-native-windows/cli",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}

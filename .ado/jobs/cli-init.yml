@@ -96,6 +96,20 @@ parameters:
             platform: x64
             projectType: app
             lowResource: true
+          - Name: FabricX64Release
+            language: cpp
+            configuration: Release
+            platform: x64
+            projectType: app
+            initPath: InitWindows
+            additionalRunArguments: --no-autolink
+          - Name: FabricX86Debug
+            language: cpp
+            configuration: Debug
+            platform: x86
+            projectType: app
+            initPath: InitWindows
+            additionalRunArguments: --no-autolink
       - BuildEnvironment: Continuous
         Matrix:
           - Name: X64ReleaseCpp
@@ -269,6 +283,34 @@ parameters:
             platform: x64
             projectType: app
             lowResource: true
+          - Name: FabricX64Debug
+            language: cpp
+            configuration: Debug
+            platform: x64
+            projectType: app
+            initPath: InitWindows
+            additionalRunArguments: --no-autolink
+          - Name: FabricX64Release
+            language: cpp
+            configuration: Release
+            platform: x64
+            projectType: app
+            initPath: InitWindows
+            additionalRunArguments: --no-autolink
+          - Name: FabricX86Debug
+            language: cpp
+            configuration: Debug
+            platform: x86
+            projectType: app
+            initPath: InitWindows
+            additionalRunArguments: --no-autolink
+          - Name: FabricX86Release
+            language: cpp
+            configuration: Release
+            platform: x86
+            projectType: app
+            initPath: InitWindows
+            additionalRunArguments: --no-autolink
 jobs:
   - ${{ each config in parameters.buildMatrix }}:
     - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
@@ -315,6 +357,7 @@ jobs:
                   configuration: ${{ matrix.configuration }}
                   platform: ${{ matrix.platform }}
                   projectType: ${{ matrix.projectType }}
+                  initPath: ${{ coalesce(matrix.initPath, 'ReactNativeWindowsInit') }}
                   additionalInitArguments: ${{ matrix.additionalInitArguments }}
                   additionalRunArguments: ${{ matrix.additionalRunArguments }}
                   runWack: ${{ coalesce(matrix.runWack, false) }}

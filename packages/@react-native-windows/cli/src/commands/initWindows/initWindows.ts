@@ -7,9 +7,13 @@
 import fs from '@react-native-windows/fs';
 import path from 'path';
 import chalk from 'chalk';
+import {glob as globFunc} from 'glob';
 import _ from 'lodash';
 import {performance} from 'perf_hooks';
 import {Ora} from 'ora';
+import util from 'util';
+
+const glob = util.promisify(globFunc);
 
 import {Command, Config} from '@react-native-community/cli-types';
 import {CodedError, Telemetry} from '@react-native-windows/telemetry';
@@ -60,20 +64,21 @@ export class InitWindows {
 
   protected async loadTemplates() {
     const templatesRoot = path.join(this.rnwPath, 'templates');
-    for (const file of (await fs.readdir(templatesRoot, {
-      recursive: true,
-    })) as string[]) {
-      if (path.basename(file) === 'template.config.js') {
-        const templateName = path.dirname(file).replace('\\', '/');
-        const templateConfig: InitWindowsTemplateConfig = require(path.join(
-          templatesRoot,
-          file,
-        ));
-        this.templates.set(templateName, templateConfig);
-      }
+    for (const file of await glob('**/template.config.js', {
+      cwd: templatesRoot,
+    })) {
+      const templateName = path.dirname(file).replace('\\', '/');
+      const templateConfig: InitWindowsTemplateConfig = require(path.join(
+        templatesRoot,
+        file,
+      ));
+      this.templates.set(templateName, templateConfig);
     }
     if (this.templates.size === 0) {
-      throw new CodedError('NoTemplatesFound', 'No templates were found.');
+      throw new CodedError(
+        'NoTemplatesFound',
+        `No templates were found in ${templatesRoot}.`,
+      );
     }
   }
 
@@ -182,7 +187,7 @@ export class InitWindows {
         );
 
         if (!(await fs.exists(targetDir))) {
-          await fs.mkdir(targetDir);
+          await fs.mkdir(targetDir, {recursive: true});
         }
 
         await copyAndReplaceWithChangedCallback(
