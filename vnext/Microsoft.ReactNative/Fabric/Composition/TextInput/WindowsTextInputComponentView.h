@@ -53,7 +53,7 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
   void onFocusGained() noexcept override;
   bool focusable() const noexcept override;
   std::string DefaultControlType() const noexcept override;
-//   std::string DefaultAccessibleName() const noexcept override;
+  std::string DefaultAccessibleName() const noexcept override;
   void onKeyDown(
       const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
       const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept;
