@@ -660,6 +660,10 @@ std::string WindowsTextInputComponentView::DefaultControlType() const noexcept {
   return "textinput";
 }
 
+// std::string WindowsTextInputComponentView::DefaultAccessibleName() const noexcept {
+//   return m_props->placeholder;
+// }
+
 void WindowsTextInputComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
