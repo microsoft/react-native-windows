@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 26 Sep 2023 05:13:15 GMT and should not be manually modified.
+This log was last generated on Wed, 27 Sep 2023 06:10:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.710
+
+Wed, 27 Sep 2023 06:10:53 GMT
+
+### Changes
+
+- fix fabric textinput's caret on focus lost (tatianakapos@microsoft.com)
 
 ## 0.0.0-canary.709
 
