@@ -1,8 +1,42 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 18 Aug 2023 17:27:24 GMT and should not be manually modified.
+This log was last generated on Tue, 26 Sep 2023 21:15:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.38
+
+Tue, 26 Sep 2023 21:15:59 GMT
+
+### Patches
+
+- Restore "Update V8 JSI version to 0.71.8 (#12043)" (julio.rocha@microsoft.com)
+- Bump @react-native-windows/cli to v0.71.19
+
+## 0.71.37
+
+Sat, 16 Sep 2023 01:11:25 GMT
+
+### Patches
+
+- Revert "[0.71] Update V8 JSI version to 0.71.8 (#12043)" (julio.rocha@microsoft.com)
+- Bump @react-native-windows/cli to v0.71.18
+
+## 0.71.36
+
+Sat, 02 Sep 2023 04:52:24 GMT
+
+### Patches
+
+- Skip networking Cxx modules if turbo modules are requested (#12083) (julio.rocha@microsoft.com)
+
+## 0.71.35
+
+Mon, 28 Aug 2023 15:14:30 GMT
+
+### Patches
+
+- Test HttpServer build fix (#12001) (julio.rocha@microsoft.com)
 
 ## 0.71.34
 

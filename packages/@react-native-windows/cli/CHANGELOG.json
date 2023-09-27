@@ -2,6 +2,36 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Tue, 26 Sep 2023 21:15:59 GMT",
+      "tag": "@react-native-windows/cli_v0.71.19",
+      "version": "0.71.19",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.71.10",
+            "commit": "93bf07fbdd1a632214530d881c82c75ff985d5a8"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 16 Sep 2023 01:11:25 GMT",
+      "tag": "@react-native-windows/cli_v0.71.18",
+      "version": "0.71.18",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.71.9",
+            "commit": "128d9f0ba8221d29a3d9aa1030d2bde04a42a85e"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 17 Aug 2023 14:36:56 GMT",
       "tag": "@react-native-windows/cli_v0.71.17",
       "version": "0.71.17",

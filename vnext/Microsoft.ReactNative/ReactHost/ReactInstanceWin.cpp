@@ -76,6 +76,7 @@
 #include <tuple>
 #include "ChakraRuntimeHolder.h"
 
+#include <CppRuntimeOptions.h>
 #include <CreateModules.h>
 #include <Utils/Helpers.h>
 #include "CrashManager.h"
@@ -372,15 +373,17 @@ void ReactInstanceWin::LoadModules(
       L"Timing", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::Timing>());
 #endif
 
-  registerTurboModule(::Microsoft::React::GetBlobTurboModuleName(), ::Microsoft::React::GetBlobModuleProvider());
-
-  registerTurboModule(::Microsoft::React::GetHttpTurboModuleName(), ::Microsoft::React::GetHttpModuleProvider());
-
-  registerTurboModule(
-      ::Microsoft::React::GetFileReaderTurboModuleName(), ::Microsoft::React::GetFileReaderModuleProvider());
-
   registerTurboModule(
       ::Microsoft::React::GetWebSocketTurboModuleName(), ::Microsoft::React::GetWebSocketModuleProvider());
+
+  if (!Microsoft::React::GetRuntimeOptionBool("Blob.DisableModule")) {
+    registerTurboModule(::Microsoft::React::GetHttpTurboModuleName(), ::Microsoft::React::GetHttpModuleProvider());
+
+    registerTurboModule(::Microsoft::React::GetBlobTurboModuleName(), ::Microsoft::React::GetBlobModuleProvider());
+
+    registerTurboModule(
+        ::Microsoft::React::GetFileReaderTurboModuleName(), ::Microsoft::React::GetFileReaderModuleProvider());
+  }
 }
 
 //! Initialize() is called from the native queue.
@@ -508,6 +511,9 @@ void ReactInstanceWin::Initialize() noexcept {
             // We need to keep the instance wrapper alive as its destruction shuts down the native queue.
             m_options.TurboModuleProvider->SetReactContext(
                 winrt::make<implementation::ReactContext>(Mso::Copy(m_reactContext)));
+            auto omitNetCxxPropName = ReactPropertyBagHelper::GetName(nullptr, L"OmitNetworkingCxxModules");
+            auto omitNetCxxPropValue = m_options.Properties.Get(omitNetCxxPropName);
+            devSettings->omitNetworkingCxxModules = winrt::unbox_value_or(omitNetCxxPropValue, false);
             auto bundleRootPath = devSettings->bundleRootPath;
             auto instanceWrapper = facebook::react::CreateReactInstance(
                 std::shared_ptr<facebook::react::Instance>(strongThis->m_instance.Load()),

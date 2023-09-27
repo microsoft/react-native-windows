@@ -2,6 +2,78 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 26 Sep 2023 21:15:59 GMT",
+      "tag": "react-native-windows_v0.71.38",
+      "version": "0.71.38",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "93bf07fbdd1a632214530d881c82c75ff985d5a8",
+            "comment": "Restore \"Update V8 JSI version to 0.71.8 (#12043)\""
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.71.19",
+            "commit": "93bf07fbdd1a632214530d881c82c75ff985d5a8"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 16 Sep 2023 01:11:25 GMT",
+      "tag": "react-native-windows_v0.71.37",
+      "version": "0.71.37",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "128d9f0ba8221d29a3d9aa1030d2bde04a42a85e",
+            "comment": "Revert \"[0.71] Update V8 JSI version to 0.71.8 (#12043)\""
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.71.18",
+            "commit": "128d9f0ba8221d29a3d9aa1030d2bde04a42a85e"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 02 Sep 2023 04:52:24 GMT",
+      "tag": "react-native-windows_v0.71.36",
+      "version": "0.71.36",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "95cd4c91aab6d83e0bfcfbb2bee0310374d35911",
+            "comment": "Skip networking Cxx modules if turbo modules are requested (#12083)"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 28 Aug 2023 15:14:30 GMT",
+      "tag": "react-native-windows_v0.71.35",
+      "version": "0.71.35",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5cc488cbd29f20eab3e545bc282b5a20ae5e5b36",
+            "comment": "Test HttpServer build fix (#12001)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 18 Aug 2023 17:27:24 GMT",
       "tag": "react-native-windows_v0.71.34",
       "version": "0.71.34",

@@ -1101,6 +1101,8 @@ function InternalTextInput(props: Props): React.Node {
     'aria-disabled': ariaDisabled,
     'aria-expanded': ariaExpanded,
     'aria-selected': ariaSelected,
+    'aria-multiselectable': ariaMultiselectable, // Win32
+    'aria-required': ariaRequired, // Win32
     accessibilityState,
     id,
     tabIndex,
@@ -1491,6 +1493,8 @@ function InternalTextInput(props: Props): React.Node {
     ariaChecked != null ||
     ariaDisabled != null ||
     ariaExpanded != null ||
+    ariaMultiselectable != null ||
+    ariaRequired != null ||
     ariaSelected != null
   ) {
     _accessibilityState = {
@@ -1498,6 +1502,9 @@ function InternalTextInput(props: Props): React.Node {
       checked: ariaChecked ?? accessibilityState?.checked,
       disabled: ariaDisabled ?? accessibilityState?.disabled,
       expanded: ariaExpanded ?? accessibilityState?.expanded,
+      multiselectable:
+        ariaMultiselectable ?? accessibilityState?.multiselectable, // Win32
+      required: ariaRequired ?? accessibilityState?.required, // Win32
       selected: ariaSelected ?? accessibilityState?.selected,
     };
   }

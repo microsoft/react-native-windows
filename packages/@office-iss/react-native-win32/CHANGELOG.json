@@ -2,6 +2,42 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 11 Sep 2023 15:13:29 GMT",
+      "tag": "@office-iss/react-native-win32_v0.71.16",
+      "version": "0.71.16",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "18112893dd511de823af08cc36b01b818cb305f1",
+            "comment": "Webpack assets do not prefix paths with /, which causes a lost char in asset path"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 28 Aug 2023 15:14:29 GMT",
+      "tag": "@office-iss/react-native-win32_v0.71.15",
+      "version": "0.71.15",
+      "comments": {
+        "patch": [
+          {
+            "author": "krsiler@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "3183aace3dc9e1a687df06c6c86792d96619c285",
+            "comment": "fix a11yState and add support for aria-required and -multiselectable"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "acc90938f92e73823f2137ae2d8d958c8983f310",
+            "comment": "Remove flow usage from saveAssetPlugin codeflow"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 11 Aug 2023 00:26:16 GMT",
       "tag": "@office-iss/react-native-win32_v0.71.14",
       "version": "0.71.14",
