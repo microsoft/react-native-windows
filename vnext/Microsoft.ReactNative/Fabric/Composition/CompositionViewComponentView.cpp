@@ -176,6 +176,11 @@ const facebook::react::SharedViewEventEmitter &CompositionBaseComponentView::Get
 }
 
 bool CompositionBaseComponentView::ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept {
+  if (m_parent) {
+    pt.x += m_layoutMetrics.frame.origin.x * m_layoutMetrics.pointScaleFactor;
+    pt.y += m_layoutMetrics.frame.origin.y * m_layoutMetrics.pointScaleFactor;
+    return m_parent->ScrollWheel(pt, delta);
+  }
   return false;
 }
 
@@ -1375,19 +1380,6 @@ facebook::react::Tag CompositionViewComponentView::hitTest(
   }
 
   return -1;
-}
-
-bool CompositionViewComponentView::ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept {
-  facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
-
-  facebook::react::Tag tag;
-  if (std::any_of(m_children.rbegin(), m_children.rend(), [ptLocal, delta](auto child) {
-        return const_cast<CompositionBaseComponentView *>(static_cast<const CompositionBaseComponentView *>(child))
-            ->ScrollWheel(ptLocal, delta);
-      }))
-    return true;
-
-  return false;
 }
 
 void CompositionViewComponentView::onKeyDown(
