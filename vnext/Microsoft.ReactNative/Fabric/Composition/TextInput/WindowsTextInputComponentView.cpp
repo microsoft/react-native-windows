@@ -664,6 +664,10 @@ std::string WindowsTextInputComponentView::DefaultAccessibleName() const noexcep
   return m_props->placeholder;
 }
 
+std::string WindowsTextInputComponentView::DefaultHelpText() const noexcept {
+  return m_props->placeholder;
+}
+
 void WindowsTextInputComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
