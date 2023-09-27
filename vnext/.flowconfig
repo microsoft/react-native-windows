@@ -37,6 +37,7 @@
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorHeader.js
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorStackFrame.js
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorReactFrames.js
+<PROJECT_ROOT>/Libraries/Utilities/Platform.flow.js
 
 ; Ignore react-native files in node_modules since they are copied into project root
 .*/node_modules/react-native/.*
@@ -83,10 +84,8 @@ flow/
 ../node_modules/.flow/flow-typed/
 
 [options]
+experimental.global_find_ref=true
 enums=true
-conditional_type=true
-mapped_type=true
-type_guards=true
 
 emoji=true
 
@@ -135,4 +134,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.212.0
+^0.214.0

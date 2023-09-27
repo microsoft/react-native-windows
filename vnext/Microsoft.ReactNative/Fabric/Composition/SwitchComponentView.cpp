@@ -5,7 +5,9 @@
 #pragma once
 
 #include "SwitchComponentView.h"
+#include "Composition/AutoDraw.h"
 #include "CompositionDynamicAutomationProvider.h"
+#include "RootComponentView.h"
 
 namespace Microsoft::ReactNative {
 
@@ -55,6 +57,9 @@ void SwitchComponentView::updateProps(
     m_drawingSurface = nullptr;
   }
 
+  // update BaseComponentView props
+  updateShadowProps(oldViewProps, newViewProps, m_visual);
+  updateTransformProps(oldViewProps, newViewProps, m_visual);
   updateBorderProps(oldViewProps, newViewProps);
   m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
 }
@@ -92,16 +97,10 @@ void SwitchComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) 
 }
 
 void SwitchComponentView::Draw() noexcept {
-  // Begin our update of the surface pixels. If this is our first update, we are required
-  // to specify the entire surface, which nullptr is shorthand for (but, as it works out,
-  // any time we make an update we touch the entire surface, so we always pass nullptr).
-  winrt::com_ptr<ID2D1DeviceContext> d2dDeviceContext;
   POINT offset;
 
-  winrt::com_ptr<Composition::ICompositionDrawingSurfaceInterop> drawingSurfaceInterop;
-  m_drawingSurface.as(drawingSurfaceInterop);
-
-  if (CheckForDeviceRemoved(drawingSurfaceInterop->BeginDraw(d2dDeviceContext.put(), &offset))) {
+  ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(m_drawingSurface, &offset);
+  if (auto d2dDeviceContext = autoDraw.GetRenderTarget()) {
     const auto switchProps = std::static_pointer_cast<const facebook::react::SwitchProps>(m_props);
 
     d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
@@ -181,10 +180,6 @@ void SwitchComponentView::Draw() noexcept {
 
     // Restore old dpi setting
     d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
-
-    // Our update is done. EndDraw never indicates rendering device removed, so any
-    // failure here is unexpected and, therefore, fatal.
-    winrt::check_hresult(drawingSurfaceInterop->EndDraw());
   }
 }
 
@@ -206,16 +201,14 @@ void SwitchComponentView::ensureDrawingSurface() noexcept {
     winrt::Windows::Foundation::Size surfaceSize = {
         m_layoutMetrics.frame.size.width * m_layoutMetrics.pointScaleFactor,
         m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor};
-    m_drawingSurface = m_compContext.CreateDrawingSurface(
+    m_drawingSurface = m_compContext.CreateDrawingSurfaceBrush(
         surfaceSize,
         winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
         winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
 
     Draw();
 
-    auto surfaceBrush = m_compContext.CreateSurfaceBrush(m_drawingSurface);
-
-    m_visual.Brush(surfaceBrush);
+    m_visual.Brush(m_drawingSurface);
   }
 }
 
@@ -246,20 +239,44 @@ int64_t SwitchComponentView::sendMessage(uint32_t msg, uint64_t wParam, int64_t 
     case WM_POINTERDOWN: {
       const auto switchProps = std::static_pointer_cast<const facebook::react::SwitchProps>(m_props);
 
-      if (!switchProps->disabled && m_eventEmitter) {
-        auto switchEventEmitter = std::static_pointer_cast<facebook::react::SwitchEventEmitter const>(m_eventEmitter);
-
-        facebook::react::SwitchEventEmitter::OnChange args;
-        args.value = !(switchProps->value);
-        args.target = tag();
-
-        switchEventEmitter->onChange(args);
+      if (!switchProps->disabled) {
+        if (auto root = rootComponentView()) {
+          root->TrySetFocusedComponent(*this);
+        }
+        toggle();
       }
       break;
     }
   }
 
   return 0;
+}
+
+void SwitchComponentView::onKeyUp(
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
+  if (args.Key() == winrt::Windows::System::VirtualKey::Space) {
+    if (toggle()) {
+      args.Handled(true);
+    }
+  }
+  Super::onKeyUp(source, args);
+}
+
+bool SwitchComponentView::toggle() noexcept {
+  const auto switchProps = std::static_pointer_cast<const facebook::react::SwitchProps>(m_props);
+
+  if (switchProps->disabled || !m_eventEmitter)
+    return false;
+
+  auto switchEventEmitter = std::static_pointer_cast<facebook::react::SwitchEventEmitter const>(m_eventEmitter);
+
+  facebook::react::SwitchEventEmitter::OnChange args;
+  args.value = !(switchProps->value);
+  args.target = tag();
+
+  switchEventEmitter->onChange(args);
+  return true;
 }
 
 bool SwitchComponentView::focusable() const noexcept {

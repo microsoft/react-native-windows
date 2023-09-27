@@ -6,7 +6,7 @@
  * @ts-check
  */
 
-const {mergeConfig} = require('metro-config');
+const {mergeConfig} = require('@react-native/metro-config');
 
 const MetroConfig = require('@rnx-kit/metro-config');
 const {MetroSerializer} = require('@rnx-kit/metro-serializer');

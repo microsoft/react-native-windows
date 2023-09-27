@@ -2,6 +2,42 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Fri, 22 Sep 2023 05:13:32 GMT",
+      "version": "0.0.0-canary.78",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.78",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "de07af904a160d260136645727de394e44662acc",
+            "comment": "Create new CLI init-windows command"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 20 Sep 2023 05:17:49 GMT",
+      "version": "0.0.0-canary.77",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.77",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/telemetry",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.28",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/telemetry",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.16",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 08 Aug 2023 05:13:00 GMT",
       "version": "0.0.0-canary.76",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.76",

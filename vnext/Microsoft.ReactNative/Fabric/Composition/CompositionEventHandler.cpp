@@ -7,10 +7,12 @@
 
 #include <Fabric/FabricUIManagerModule.h>
 #include <IReactContext.h>
+#include <React.h>
 #include <Views/DevMenu.h>
 #include <Views/ShadowNodeBase.h>
 #include <windows.h>
 #include <windowsx.h>
+#include "Composition.Input.h"
 #include "CompositionRootView.h"
 #include "CompositionViewComponentView.h"
 #include "RootComponentView.h"
@@ -31,6 +33,14 @@ bool IsViewListeningToEvent(IComponentView *view, facebook::react::ViewEvents::O
   return false;
 }
 
+bool IsViewListeningToEvent(IComponentView *view, facebook::react::WindowsViewEvents::Offset eventType) {
+  if (view) {
+    auto const &viewProps = *std::static_pointer_cast<facebook::react::ViewProps const>(view->props());
+    return viewProps.windowsEvents[eventType];
+  }
+  return false;
+}
+
 bool IsAnyViewInPathListeningToEvent(
     std::vector<IComponentView *> &path,
     facebook::react::ViewEvents::Offset eventType) {
@@ -44,7 +54,7 @@ bool IsAnyViewInPathListeningToEvent(
 
 IComponentView *FindClosestFabricManagedTouchableView(IComponentView *componentView) {
   while (componentView) {
-    if (componentView->touchEventEmitter()) {
+    if (componentView->eventEmitter()) {
       return componentView;
     }
     componentView = componentView->parent();
@@ -71,6 +81,24 @@ facebook::react::SharedEventEmitter EventEmitterForComponent(
 
   return nullptr;
 }
+
+struct CompositionKeyboardSource
+    : winrt::implements<CompositionKeyboardSource, winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource> {
+  CompositionKeyboardSource(CompositionEventHandler *outer) : m_outer(outer) {}
+
+  winrt::Windows::UI::Core::CoreVirtualKeyStates GetKeyState(winrt::Windows::System::VirtualKey key) noexcept {
+    if (!m_outer)
+      return winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
+    return m_outer->GetKeyState(key);
+  }
+
+  void Disconnect() noexcept {
+    m_outer = nullptr;
+  }
+
+ private:
+  CompositionEventHandler *m_outer;
+};
 
 CompositionEventHandler::CompositionEventHandler(const winrt::Microsoft::ReactNative::ReactContext &context)
     : m_context(context) {}
@@ -134,6 +162,21 @@ void CompositionEventHandler::ScrollWheel(facebook::react::Point pt, uint32_t de
   }
 }
 
+winrt::Windows::UI::Core::CoreVirtualKeyStates CompositionEventHandler::GetKeyState(
+    winrt::Windows::System::VirtualKey key) noexcept {
+  winrt::Windows::UI::Core::CoreVirtualKeyStates coreKeyState = winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
+  SHORT keyState = ::GetKeyState(static_cast<int>(key));
+  if (keyState & 0x01) {
+    coreKeyState = winrt::Windows::UI::Core::CoreVirtualKeyStates::Locked;
+  }
+  if (keyState & 0x8000) {
+    coreKeyState = static_cast<winrt::Windows::UI::Core::CoreVirtualKeyStates>(
+        static_cast<int>(coreKeyState) | static_cast<int>(winrt::Windows::UI::Core::CoreVirtualKeyStates::Down));
+  }
+
+  return coreKeyState;
+}
+
 int64_t CompositionEventHandler::SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
   switch (msg) {
     case WM_LBUTTONDOWN: {
@@ -170,48 +213,76 @@ int64_t CompositionEventHandler::SendMessage(uint32_t msg, uint64_t wParam, int6
     case WM_KEYUP:
     case WM_SYSKEYDOWN:
     case WM_SYSKEYUP: {
-      // TODO full bubbling of events
-      if (auto focusedComponent = RootComponentView().GetFocusedComponent()) {
-        auto result = focusedComponent->sendMessage(msg, wParam, lParam);
-        if (result)
-          return result;
+      auto focusedComponent = RootComponentView().GetFocusedComponent();
+      auto args = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::KeyRoutedEventArgs>(
+          focusedComponent
+              ? focusedComponent->tag()
+              : static_cast<facebook::react::Tag>(
+                    winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(m_compRootView)
+                        ->GetTag()),
+          msg,
+          wParam,
+          lParam);
+      auto keyboardSource = winrt::make<CompositionKeyboardSource>(this);
+      if (msg == WM_KEYDOWN || msg == WM_SYSKEYDOWN) {
+        onKeyDown(keyboardSource, args);
+      } else {
+        onKeyUp(keyboardSource, args);
       }
-
-      BYTE bKeys[256];
-      if (GetKeyboardState(bKeys)) {
-        bool fShift = false;
-        if (bKeys[VK_LSHIFT] & 0x80)
-          fShift = true;
-        if (bKeys[VK_RSHIFT] & 0x80)
-          fShift = true;
-        bool fCtrl = false;
-        if (bKeys[VK_LCONTROL] & 0x80)
-          fCtrl = true;
-        if (bKeys[VK_RCONTROL] & 0x80)
-          fCtrl = true;
-        if (msg == WM_KEYDOWN && wParam == VkKeyScanA('d') && fShift && fCtrl) {
-          auto contextSelf = winrt::get_self<React::implementation::ReactContext>(m_context.Handle());
-          Microsoft::ReactNative::DevMenuManager::Show(
-              Mso::CntPtr<Mso::React::IReactContext>(&contextSelf->GetInner()));
-        }
-        if (!fCtrl && msg == WM_KEYDOWN && wParam == VK_TAB) {
-          if (!RootComponentView().TryMoveFocus(!fShift)) {
-            // TODO notify rootview that host should move focus
-          }
-          return 1;
-        }
-      }
-      return 0;
+      winrt::get_self<CompositionKeyboardSource>(keyboardSource)->Disconnect();
     }
   }
 
   return 0;
 }
 
+void CompositionEventHandler::onKeyDown(
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
+  if (auto focusedComponent = RootComponentView().GetFocusedComponent()) {
+    focusedComponent->onKeyDown(source, args);
+
+    if (args.Handled())
+      return;
+  }
+
+  bool fShift = source.GetKeyState(winrt::Windows::System::VirtualKey::Shift) ==
+      winrt::Windows::UI::Core::CoreVirtualKeyStates::Down;
+  bool fCtrl =
+      GetKeyState(winrt::Windows::System::VirtualKey::Control) == winrt::Windows::UI::Core::CoreVirtualKeyStates::Down;
+
+  if (fShift && fCtrl && args.Key() == static_cast<winrt::Windows::System::VirtualKey>(VkKeyScanA('d')) &&
+      Mso::React::ReactOptions::UseDeveloperSupport(m_context.Properties().Handle())) {
+    auto contextSelf = winrt::get_self<React::implementation::ReactContext>(m_context.Handle());
+    Microsoft::ReactNative::DevMenuManager::Show(Mso::CntPtr<Mso::React::IReactContext>(&contextSelf->GetInner()));
+    args.Handled(true);
+    return;
+  }
+
+  if (!fCtrl && args.Key() == winrt::Windows::System::VirtualKey::Tab) {
+    if (RootComponentView().TryMoveFocus(!fShift)) {
+      args.Handled(true);
+    }
+
+    // TODO notify rootview that host should move focus
+  }
+}
+
+void CompositionEventHandler::onKeyUp(
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
+  if (auto focusedComponent = RootComponentView().GetFocusedComponent()) {
+    focusedComponent->onKeyUp(source, args);
+
+    if (args.Handled())
+      return;
+  }
+}
+
 std::vector<IComponentView *> GetTouchableViewsInPathToRoot(IComponentView *view) {
   std::vector<IComponentView *> results;
   while (view) {
-    if (view->touchEventEmitter()) {
+    if (view->eventEmitter()) {
       results.push_back(view);
     }
     view = view->parent();
@@ -254,7 +325,7 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
   if (targetView != nullptr && previousTargetTag != targetView->tag()) {
     bool shouldEmitOverEvent =
         IsAnyViewInPathListeningToEvent(eventPathViews, facebook::react::ViewEvents::Offset::PointerOver);
-    facebook::react::SharedTouchEventEmitter eventEmitter = targetView->touchEventEmitterAtPoint(event.offsetPoint);
+    const auto eventEmitter = targetView->eventEmitterAtPoint(event.offsetPoint);
     if (shouldEmitOverEvent && eventEmitter != nullptr) {
       eventEmitter->onPointerOver(event);
     }
@@ -276,12 +347,12 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
     bool shouldEmitEvent = componentView != nullptr &&
         (hasParentEnterListener ||
          IsViewListeningToEvent(componentView, facebook::react::ViewEvents::Offset::PointerEnter) ||
-         IsViewListeningToEvent(componentView, facebook::react::ViewEvents::Offset::MouseEnter));
+         IsViewListeningToEvent(componentView, facebook::react::WindowsViewEvents::Offset::MouseEnter));
 
     if (shouldEmitEvent &&
         std::find(currentlyHoveredViews.begin(), currentlyHoveredViews.end(), componentView) ==
             currentlyHoveredViews.end()) {
-      facebook::react::SharedTouchEventEmitter eventEmitter = componentView->touchEventEmitter();
+      const auto eventEmitter = componentView->eventEmitter();
       if (eventEmitter) {
         eventEmitter->onPointerEnter(event);
         if (IsMousePointerEvent(event)) {
@@ -302,7 +373,7 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
   if (previousTargetTag != -1 && previousTargetTag != (targetView ? targetView->tag() : -1)) {
     bool shouldEmitOutEvent =
         IsAnyViewInPathListeningToEvent(currentlyHoveredViews, facebook::react::ViewEvents::Offset::PointerOut);
-    facebook::react::SharedTouchEventEmitter eventEmitter = prevTargetView->touchEventEmitter();
+    const auto eventEmitter = prevTargetView->eventEmitter();
     if (shouldEmitOutEvent && eventEmitter != nullptr) {
       eventEmitter->onPointerOut(event);
     }
@@ -327,7 +398,7 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
     bool shouldEmitEvent = componentView != nullptr &&
         (hasParentLeaveListener ||
          IsViewListeningToEvent(componentView, facebook::react::ViewEvents::Offset::PointerLeave) ||
-         IsViewListeningToEvent(componentView, facebook::react::ViewEvents::Offset::MouseLeave));
+         IsViewListeningToEvent(componentView, facebook::react::WindowsViewEvents::Offset::MouseLeave));
 
     if (shouldEmitEvent &&
         std::find(eventPathViews.begin(), eventPathViews.end(), componentView) == eventPathViews.end()) {
@@ -343,7 +414,7 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
        itComponentView++) { //  for (UIView *componentView in [viewsToEmitLeaveEventsTo reverseObjectEnumerator]) {
     auto componentView = *itComponentView;
 
-    facebook::react::SharedTouchEventEmitter eventEmitter = componentView->touchEventEmitter();
+    const auto eventEmitter = componentView->eventEmitter();
     if (eventEmitter) {
       eventEmitter->onPointerLeave(event);
       if (IsMousePointerEvent(event)) {
@@ -440,8 +511,7 @@ void CompositionEventHandler::MouseMove(uint32_t msg, uint64_t wParam, int64_t l
     facebook::react::PointerEvent pointerEvent = CreatePointerEventFromIncompleteHoverData(ptScaled, ptLocal);
 
     auto handler = [targetView, &pointerEvent](std::vector<IComponentView *> &eventPathViews) {
-      facebook::react::SharedTouchEventEmitter eventEmitter =
-          targetView ? targetView->touchEventEmitterAtPoint(pointerEvent.offsetPoint) : nullptr;
+      const auto eventEmitter = targetView ? targetView->eventEmitterAtPoint(pointerEvent.offsetPoint) : nullptr;
       bool hasMoveEventListeners =
           IsAnyViewInPathListeningToEvent(eventPathViews, facebook::react::ViewEvents::Offset::PointerMove) ||
           IsAnyViewInPathListeningToEvent(eventPathViews, facebook::react::ViewEvents::Offset::PointerMoveCapture);
@@ -506,7 +576,7 @@ void CompositionEventHandler::PointerPressed(uint32_t msg, uint64_t wParam, int6
 
     auto componentView = targetComponentView;
     while (componentView) {
-      if (auto eventEmitter = componentView->touchEventEmitter()) {
+      if (auto eventEmitter = componentView->eventEmitter()) {
         activeTouch.eventEmitter = eventEmitter;
         activeTouch.touch.target = componentView->tag();
         // activeTouch.componentView = componentView;
@@ -570,7 +640,7 @@ void CompositionEventHandler::ButtonDown(uint32_t msg, uint64_t wParam, int64_t 
 
     auto componentView = targetComponentView;
     while (componentView) {
-      if (auto eventEmitter = componentView->touchEventEmitterAtPoint(ptLocal)) {
+      if (auto eventEmitter = componentView->eventEmitterAtPoint(ptLocal)) {
         activeTouch.eventEmitter = eventEmitter;
         activeTouch.touch.target = componentView->tag();
         // activeTouch.componentView = componentView;

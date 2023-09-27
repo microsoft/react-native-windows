@@ -2,6 +2,42 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Fri, 22 Sep 2023 05:13:32 GMT",
+      "version": "0.0.0-canary.70",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.70",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@fb.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "7adbe3ec4dd17828e45a5356bc5d96c1c794aa70",
+            "comment": "Fix some incorrectly cased requires"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 20 Sep 2023 05:17:49 GMT",
+      "version": "0.0.0-canary.69",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.69",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.28",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.16",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 15 Aug 2023 05:14:09 GMT",
       "version": "0.0.0-canary.68",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.68",

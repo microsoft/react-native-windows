@@ -4,8 +4,12 @@
  *
  * @format
  */
-//import {goToApiExample, goToComponentExample} from './RNTesterNavigation';
-//import {verifyNoErrorLogs} from './Helpers';
+import {goToComponentExample} from './RNTesterNavigation';
+import {verifyNoErrorLogs} from './Helpers';
+
+afterEach(async () => {
+  await verifyNoErrorLogs();
+});
 
 type RNTesterExampleModule = {
   title: string;
@@ -24,7 +28,7 @@ type RNTesterList = {
 
 const testerList: RNTesterList = require('@react-native-windows/tester/js/utils/RNTesterList');
 
-const apiExamples = testerList.APIs.map(e => e.module.title);
+//const apiExamples = testerList.APIs.map(e => e.module.title);
 const componentExamples = testerList.Components.map(e => e.module.title);
 
 describe('visitAllPages', () => {
@@ -33,20 +37,23 @@ describe('visitAllPages', () => {
   });
 
   for (const component of componentExamples) {
-    test(component, () => {
-      expect(true).toBe(true);
-    });
+    if (component === 'Flyout' || component === 'XAML') {
+      continue;
+    }
+
+    test(component, async () => await goToComponentExample(component));
   }
 
-  for (const api of apiExamples) {
-    if (api === 'Transforms')
-      // disable until either transformExample uses units, or that isn't an error
+  // Disable Temporarily Until Stable
+  /*for (const api of apiExamples) {
+    if (api === 'Transforms' || api === 'Keyboard Focus Example')
+      // Disable until tests are supported.
       continue;
 
-    test(api, () => {
-      expect(true).toBe(true);
+    test(api, async () => {
+      await goToApiExample(api);
     });
-  }
+  }*/
 });
 
 export {};

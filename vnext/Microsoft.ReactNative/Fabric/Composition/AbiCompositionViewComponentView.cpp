@@ -13,23 +13,25 @@
 namespace Microsoft::ReactNative {
 
 AbiCompositionViewComponentView::AbiCompositionViewComponentView(
+    const winrt::Microsoft::ReactNative::IReactContext &reactContext,
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::IReactViewComponentBuilder builder)
     : Super(compContext, tag), m_builder(builder) {
   static auto const defaultProps = std::make_shared<AbiViewProps const>();
   m_props = defaultProps;
-  m_handle = Builder().CreateView(compContext);
+  m_handle = Builder().CreateView(reactContext, compContext);
   m_visual = Builder().CreateVisual(m_handle);
   OuterVisual().InsertAt(m_visual, 0);
 }
 
 std::shared_ptr<AbiCompositionViewComponentView> AbiCompositionViewComponentView::Create(
+    const winrt::Microsoft::ReactNative::IReactContext &reactContext,
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::IReactViewComponentBuilder builder) noexcept {
   return std::shared_ptr<AbiCompositionViewComponentView>(
-      new AbiCompositionViewComponentView(compContext, tag, builder));
+      new AbiCompositionViewComponentView(reactContext, compContext, tag, builder));
 }
 
 winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder &
@@ -101,6 +103,20 @@ bool AbiCompositionViewComponentView::focusable() const noexcept {
 
 int64_t AbiCompositionViewComponentView::sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
   return Builder().SendMessage(m_handle, msg, wParam, lParam);
+}
+
+void AbiCompositionViewComponentView::onKeyDown(
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
+  Builder().OnKeyDown(source, args);
+  Super::onKeyDown(source, args);
+}
+
+void AbiCompositionViewComponentView::onKeyUp(
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
+  Builder().OnKeyUp(source, args);
+  Super::onKeyUp(source, args);
 }
 
 std::vector<facebook::react::ComponentDescriptorProvider>

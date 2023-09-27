@@ -1,8 +1,121 @@
 # Change Log - @react-native-windows/automation-commands
 
-This log was last generated on Thu, 24 Aug 2023 05:14:49 GMT and should not be manually modified.
+This log was last generated on Wed, 27 Sep 2023 06:10:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.151
+
+Wed, 27 Sep 2023 06:10:53 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.49
+
+## 0.1.150
+
+Tue, 26 Sep 2023 05:13:15 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.48
+
+## 0.1.149
+
+Fri, 22 Sep 2023 05:13:33 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.47
+
+## 0.1.148
+
+Thu, 21 Sep 2023 05:13:50 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.46
+
+## 0.1.147
+
+Wed, 20 Sep 2023 05:17:49 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.45
+- Bump @rnw-scripts/just-task to v2.3.16
+
+## 0.1.146
+
+Tue, 19 Sep 2023 05:13:03 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.44
+
+## 0.1.145
+
+Fri, 08 Sep 2023 05:13:10 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.43
+
+## 0.1.144
+
+Thu, 07 Sep 2023 05:14:10 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.42
+
+## 0.1.143
+
+Wed, 06 Sep 2023 05:14:11 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.41
+
+## 0.1.142
+
+Fri, 01 Sep 2023 05:13:31 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.40
+
+## 0.1.141
+
+Thu, 31 Aug 2023 05:13:19 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.39
+
+## 0.1.140
+
+Wed, 30 Aug 2023 05:12:57 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.38
+
+## 0.1.139
+
+Tue, 29 Aug 2023 05:13:36 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.37
+
+## 0.1.138
+
+Fri, 25 Aug 2023 05:14:38 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.36
 
 ## 0.1.137
 

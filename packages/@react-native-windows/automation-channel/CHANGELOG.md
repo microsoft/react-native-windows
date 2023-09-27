@@ -1,8 +1,123 @@
 # Change Log - @react-native-windows/automation-channel
 
-This log was last generated on Thu, 24 Aug 2023 05:14:49 GMT and should not be manually modified.
+This log was last generated on Wed, 27 Sep 2023 06:10:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.12.49
+
+Wed, 27 Sep 2023 06:10:53 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.710
+
+## 0.12.48
+
+Tue, 26 Sep 2023 05:13:15 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.709
+
+## 0.12.47
+
+Fri, 22 Sep 2023 05:13:33 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.708
+
+## 0.12.46
+
+Thu, 21 Sep 2023 05:13:50 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.707
+
+## 0.12.45
+
+Wed, 20 Sep 2023 05:17:49 GMT
+
+### Patches
+
+- Integrate 8/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/just-task to v2.3.16
+- Bump react-native-windows to v0.0.0-canary.706
+
+## 0.12.44
+
+Tue, 19 Sep 2023 05:13:03 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.705
+
+## 0.12.43
+
+Fri, 08 Sep 2023 05:13:10 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.704
+
+## 0.12.42
+
+Thu, 07 Sep 2023 05:14:10 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.703
+
+## 0.12.41
+
+Wed, 06 Sep 2023 05:14:11 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.702
+
+## 0.12.40
+
+Fri, 01 Sep 2023 05:13:31 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.701
+
+## 0.12.39
+
+Thu, 31 Aug 2023 05:13:19 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.700
+
+## 0.12.38
+
+Wed, 30 Aug 2023 05:12:57 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.699
+
+## 0.12.37
+
+Tue, 29 Aug 2023 05:13:36 GMT
+
+### Patches
+
+- Integrate RN Nightly Build 7/28 (yajurgrover@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.698
+
+## 0.12.36
+
+Fri, 25 Aug 2023 05:14:38 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.697
 
 ## 0.12.35
 

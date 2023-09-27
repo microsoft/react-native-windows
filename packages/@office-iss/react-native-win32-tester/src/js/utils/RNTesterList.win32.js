@@ -141,6 +141,11 @@ const Components: Array<RNTesterModuleInfo> = [
     key: 'ViewWin32Test',
     module: require('../components/ViewWin32Test'),
   },
+  {
+    key: 'PerformanceComparisonExample',
+    category: 'Basic',
+    module: require('../examples/Performance/PerformanceComparisonExample'),
+  },
 ];
 
 const APIs: Array<RNTesterModuleInfo> = ([

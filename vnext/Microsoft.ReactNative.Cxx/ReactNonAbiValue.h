@@ -44,7 +44,7 @@ struct ReactNonAbiValue : implements<ReactNonAbiValue<T>, IReactNonAbiValue> {
 // a new instance of implementation::ReactNonAbiValue. The std::in_place allows to disambiguate the calls to
 // other constructors.
 template <class T>
-struct ReactNonAbiValue : Windows::Foundation::IInspectable {
+struct ReactNonAbiValue : winrt::Windows::Foundation::IInspectable {
   // Create a new instance of implementation::ReactNonAbiValue with args and keep a ref-counted pointer to it.
   template <class... TArgs>
   ReactNonAbiValue(std::in_place_t, TArgs &&...args) noexcept

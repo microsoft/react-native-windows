@@ -42,7 +42,9 @@ struct CustomProps : winrt::implements<CustomProps, winrt::Microsoft::ReactNativ
 };
 
 struct CustomComponent : winrt::implements<CustomComponent, winrt::IInspectable> {
-  CustomComponent(winrt::Microsoft::ReactNative::Composition::ICompositionContext compContext)
+  CustomComponent(
+      winrt::Microsoft::ReactNative::IReactContext reactContext,
+      winrt::Microsoft::ReactNative::Composition::ICompositionContext compContext)
       : m_compContext(compContext) {}
 
   void UpdateProps(winrt::Microsoft::ReactNative::IComponentProps props) noexcept {
@@ -58,7 +60,7 @@ struct CustomComponent : winrt::implements<CustomComponent, winrt::IInspectable>
     m_visual.Brush(m_compContext.CreateColorBrush(winrt::Windows::UI::Colors::White()));
 
     auto compositor =
-        winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerCompositor(m_compContext);
+        winrt::Microsoft::ReactNative::Composition::WindowsCompositionContextHelper::InnerCompositor(m_compContext);
 
     m_spotlight = compositor.CreateSpotLight();
     m_spotlight.InnerConeAngleInDegrees(50.0f);
@@ -69,9 +71,9 @@ struct CustomComponent : winrt::implements<CustomComponent, winrt::IInspectable>
     m_spotlight.LinearAttenuation(0.253f);
     m_spotlight.QuadraticAttenuation(0.58f);
     m_spotlight.CoordinateSpace(
-        winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerVisual(m_visual));
+        winrt::Microsoft::ReactNative::Composition::WindowsCompositionContextHelper::InnerVisual(m_visual));
     m_spotlight.Targets().Add(
-        winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerVisual(m_visual));
+        winrt::Microsoft::ReactNative::Composition::WindowsCompositionContextHelper::InnerVisual(m_visual));
 
     auto animation = compositor.CreateVector3KeyFrameAnimation();
     auto easeIn = compositor.CreateCubicBezierEasingFunction({0.5f, 0.0f}, {1.0f, 1.0f});
@@ -112,8 +114,9 @@ struct CustomComponent : winrt::implements<CustomComponent, winrt::IInspectable>
           auto compBuilder =
               builder.as<winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder>();
           compBuilder.SetCreateView(
-              [](winrt::Microsoft::ReactNative::Composition::ICompositionContext context) noexcept {
-                return winrt::make<CustomComponent>(context);
+              [](winrt::Microsoft::ReactNative::IReactContext reactContext,
+                 winrt::Microsoft::ReactNative::Composition::ICompositionContext context) noexcept {
+                return winrt::make<CustomComponent>(reactContext, context);
               });
           compBuilder.SetPropsUpdater([](winrt::Windows::Foundation::IInspectable handle,
                                          winrt::Microsoft::ReactNative::IComponentProps props) noexcept {
@@ -138,7 +141,7 @@ struct CustomComponent : winrt::implements<CustomComponent, winrt::IInspectable>
  private:
   winrt::Windows::UI::Composition::SpotLight m_spotlight{nullptr};
 
-  winrt::Microsoft::ReactNative::Composition::SpriteVisual m_visual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
   winrt::Microsoft::ReactNative::Composition::ICompositionContext m_compContext;
 };
 
@@ -208,7 +211,7 @@ struct WindowData {
   WindowData(const winrt::Microsoft::ReactNative::CompositionHwndHost &compHost) : m_CompositionHwndHost(compHost) {
     winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositionContext(
         InstanceSettings().Properties(),
-        winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::CreateContext(g_compositor));
+        winrt::Microsoft::ReactNative::Composition::WindowsCompositionContextHelper::CreateContext(g_compositor));
   }
 
   static WindowData *GetFromWindow(HWND hwnd) {

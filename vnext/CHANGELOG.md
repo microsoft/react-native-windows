@@ -1,8 +1,138 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 24 Aug 2023 05:14:48 GMT and should not be manually modified.
+This log was last generated on Wed, 27 Sep 2023 06:10:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.710
+
+Wed, 27 Sep 2023 06:10:53 GMT
+
+### Changes
+
+- fix fabric textinput's caret on focus lost (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.709
+
+Tue, 26 Sep 2023 05:13:15 GMT
+
+### Changes
+
+- Enable fabric usage against lifted comp, or system comp (30809111+acoates-ms@users.noreply.github.com)
+- Add new architecture `cpp-app` template for `init-windows` (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.189
+
+## 0.0.0-canary.708
+
+Fri, 22 Sep 2023 05:13:32 GMT
+
+### Changes
+
+- [Fabric] Add support for native key event handling (30809111+acoates-ms@users.noreply.github.com)
+- add fabric textinput's cursorColor (tatianakapos@microsoft.com)
+- Create new CLI init-windows command (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.188
+- Bump @react-native-windows/codegen to v0.0.0-canary.70
+
+## 0.0.0-canary.707
+
+Thu, 21 Sep 2023 05:13:49 GMT
+
+### Changes
+
+- [Fabric] Replace overrides in BaseViewEventEmitter (email not defined)
+- Test disabling HTTP caching (julio.rocha@microsoft.com)
+- [Fabric] Eliminate forks needed for onMouseEnter/Leave (erozell@outlook.com)
+- [Fabric] Cleans up overrides for HostPlatformViewProps (email not defined)
+
+## 0.0.0-canary.706
+
+Wed, 20 Sep 2023 05:17:49 GMT
+
+### Changes
+
+- Integrate 8/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.187
+- Bump @react-native-windows/codegen to v0.0.0-canary.69
+- Bump @rnw-scripts/just-task to v2.3.16
+- Bump react-native-platform-override to v1.9.15
+
+## 0.0.0-canary.705
+
+Tue, 19 Sep 2023 05:13:03 GMT
+
+### Changes
+
+- [Fabric] Custom native components should have access to the ReactContext (30809111+acoates-ms@users.noreply.github.com)
+- add Fabric ActivityIndicator animating property (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.704
+
+Fri, 08 Sep 2023 05:13:10 GMT
+
+### Changes
+
+- extracts transform and backfaceVisibility to baseComponent (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.703
+
+Thu, 07 Sep 2023 05:14:09 GMT
+
+### Changes
+
+- Be more explicit when using winrt::Windows types, to avoid conflicts with WinAppSDK (30809111+acoates-ms@users.noreply.github.com)
+- extract shadow properties to baseComponentView (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.186
+
+## 0.0.0-canary.702
+
+Wed, 06 Sep 2023 05:14:10 GMT
+
+### Changes
+
+- [Fabric] Merge ISurfaceBrush and ICompositionDrawingSurface into a single object (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.701
+
+Fri, 01 Sep 2023 05:13:31 GMT
+
+### Changes
+
+- Skip networking Cxx modules if UseWindowsAbi is set (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.700
+
+Thu, 31 Aug 2023 05:13:19 GMT
+
+### Changes
+
+- [Fabric] Remove runtime classes in CompositionSwitcher (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.699
+
+Wed, 30 Aug 2023 05:12:56 GMT
+
+### Changes
+
+- Fix bug when blur command received on node without XamlRoot (erozell@outlook.com)
+- fix fabric textinput crashing on minimized (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.698
+
+Tue, 29 Aug 2023 05:13:36 GMT
+
+### Changes
+
+- Render background color on Text Applies a fill rect to the composition visual Fixes #11763 (26607885+chrisglein@users.noreply.github.com)
+- Integrate RN Nightly Build 7/28 (yajurgrover@microsoft.com)
+
+## 0.0.0-canary.697
+
+Fri, 25 Aug 2023 05:14:38 GMT
+
+### Changes
+
+- Prevent Desktop.IntegrationTests from hanging forever (jthysell@microsoft.com)
 
 ## 0.0.0-canary.696
 

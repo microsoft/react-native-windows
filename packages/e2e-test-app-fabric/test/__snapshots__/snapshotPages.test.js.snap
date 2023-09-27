@@ -2107,6 +2107,7 @@ exports[`snapshotAllPages Animated 1`] = `
       </Text>
       <RCTSwitch
         accessibilityRole="switch"
+        focusable={true}
         onChange={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
@@ -3029,6 +3030,7 @@ exports[`snapshotAllPages Animated 2`] = `
       </Text>
       <RCTSwitch
         accessibilityRole="switch"
+        focusable={true}
         onChange={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
@@ -3216,6 +3218,7 @@ exports[`snapshotAllPages Animated 3`] = `
       </Text>
       <RCTSwitch
         accessibilityRole="switch"
+        focusable={true}
         onChange={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
@@ -3345,6 +3348,7 @@ exports[`snapshotAllPages Animated 4`] = `
       </Text>
       <RCTSwitch
         accessibilityRole="switch"
+        focusable={true}
         onChange={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
@@ -4600,6 +4604,7 @@ exports[`snapshotAllPages Animated 5`] = `
       </Text>
       <RCTSwitch
         accessibilityRole="switch"
+        focusable={true}
         onChange={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
@@ -5625,6 +5630,7 @@ exports[`snapshotAllPages Animated 7`] = `
       </Text>
       <RCTSwitch
         accessibilityRole="switch"
+        focusable={true}
         onChange={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
@@ -5750,6 +5756,7 @@ exports[`snapshotAllPages Animated 8`] = `
       </Text>
       <RCTSwitch
         accessibilityRole="switch"
+        focusable={true}
         onChange={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
@@ -6068,6 +6075,7 @@ exports[`snapshotAllPages Animated 9`] = `
       </Text>
       <RCTSwitch
         accessibilityRole="switch"
+        focusable={true}
         onChange={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
@@ -6197,6 +6205,7 @@ exports[`snapshotAllPages Animated 10`] = `
       </Text>
       <RCTSwitch
         accessibilityRole="switch"
+        focusable={true}
         onChange={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
@@ -9243,6 +9252,7 @@ exports[`snapshotAllPages Display:none Style 1`] = `
               </Text>
               <RCTSwitch
                 accessibilityRole="switch"
+                focusable={true}
                 onChange={[Function]}
                 onResponderTerminationRequest={[Function]}
                 onStartShouldSetResponder={[Function]}
@@ -9743,6 +9753,7 @@ exports[`snapshotAllPages FlatList 1`] = `
             </Text>
             <RCTSwitch
               accessibilityRole="switch"
+              focusable={true}
               onChange={[Function]}
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
@@ -9770,6 +9781,7 @@ exports[`snapshotAllPages FlatList 1`] = `
             </Text>
             <RCTSwitch
               accessibilityRole="switch"
+              focusable={true}
               onChange={[Function]}
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
@@ -9797,6 +9809,7 @@ exports[`snapshotAllPages FlatList 1`] = `
             </Text>
             <RCTSwitch
               accessibilityRole="switch"
+              focusable={true}
               onChange={[Function]}
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
@@ -9824,6 +9837,7 @@ exports[`snapshotAllPages FlatList 1`] = `
             </Text>
             <RCTSwitch
               accessibilityRole="switch"
+              focusable={true}
               onChange={[Function]}
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
@@ -9851,6 +9865,7 @@ exports[`snapshotAllPages FlatList 1`] = `
             </Text>
             <RCTSwitch
               accessibilityRole="switch"
+              focusable={true}
               onChange={[Function]}
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
@@ -9878,6 +9893,7 @@ exports[`snapshotAllPages FlatList 1`] = `
             </Text>
             <RCTSwitch
               accessibilityRole="switch"
+              focusable={true}
               onChange={[Function]}
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
@@ -9905,6 +9921,7 @@ exports[`snapshotAllPages FlatList 1`] = `
             </Text>
             <RCTSwitch
               accessibilityRole="switch"
+              focusable={true}
               onChange={[Function]}
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
@@ -9932,6 +9949,7 @@ exports[`snapshotAllPages FlatList 1`] = `
             </Text>
             <RCTSwitch
               accessibilityRole="switch"
+              focusable={true}
               onChange={[Function]}
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
@@ -9959,6 +9977,7 @@ exports[`snapshotAllPages FlatList 1`] = `
             </Text>
             <RCTSwitch
               accessibilityRole="switch"
+              focusable={true}
               onChange={[Function]}
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
@@ -9986,6 +10005,7 @@ exports[`snapshotAllPages FlatList 1`] = `
             </Text>
             <RCTSwitch
               accessibilityRole="switch"
+              focusable={true}
               onChange={[Function]}
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
@@ -10013,6 +10033,7 @@ exports[`snapshotAllPages FlatList 1`] = `
             </Text>
             <RCTSwitch
               accessibilityRole="switch"
+              focusable={true}
               onChange={[Function]}
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
@@ -10040,6 +10061,7 @@ exports[`snapshotAllPages FlatList 1`] = `
             </Text>
             <RCTSwitch
               accessibilityRole="switch"
+              focusable={true}
               onChange={[Function]}
               onResponderTerminationRequest={[Function]}
               onStartShouldSetResponder={[Function]}
@@ -10706,6 +10728,7 @@ exports[`snapshotAllPages FlatList 1`] = `
         initialScrollIndex={50}
         invertStickyHeaders={false}
         inverted={false}
+        isInvertedVirtualizedList={false}
         keyExtractor={[Function]}
         keyboardDismissMode="on-drag"
         keyboardShouldPersistTaps="always"
@@ -10723,6 +10746,7 @@ exports[`snapshotAllPages FlatList 1`] = `
         onScroll={[Function]}
         onScrollBeginDrag={[Function]}
         onScrollEndDrag={[Function]}
+        onScrollToIndexFailed={[Function]}
         onStartReached={[Function]}
         onViewableItemsChanged={[Function]}
         refreshControl={
@@ -10734,7 +10758,7 @@ exports[`snapshotAllPages FlatList 1`] = `
         refreshing={false}
         removeClippedSubviews={false}
         renderItem={[Function]}
-        scrollEventThrottle={0.0001}
+        scrollEventThrottle={50}
         stickyHeaderIndices={[]}
         style={{}}
         viewabilityConfig={
@@ -14095,6 +14119,7 @@ exports[`snapshotAllPages FlatList 5`] = `
     getItemCount={[Function]}
     invertStickyHeaders={false}
     inverted={false}
+    isInvertedVirtualizedList={false}
     keyExtractor={[Function]}
     onContentSizeChange={[Function]}
     onLayout={[Function]}
@@ -16599,6 +16624,7 @@ exports[`snapshotAllPages FlatList 8`] = `
           </Text>
           <RCTSwitch
             accessibilityRole="switch"
+            focusable={true}
             onChange={[Function]}
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
@@ -16626,6 +16652,7 @@ exports[`snapshotAllPages FlatList 8`] = `
           </Text>
           <RCTSwitch
             accessibilityRole="switch"
+            focusable={true}
             onChange={[Function]}
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
@@ -16653,6 +16680,7 @@ exports[`snapshotAllPages FlatList 8`] = `
           </Text>
           <RCTSwitch
             accessibilityRole="switch"
+            focusable={true}
             onChange={[Function]}
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
@@ -28259,6 +28287,7 @@ exports[`snapshotAllPages LegacyControlStyleTest 1`] = `
   >
     <RCTSwitch
       accessibilityRole="switch"
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
@@ -31287,6 +31316,7 @@ exports[`snapshotAllPages Native Animated Example 14`] = `
     </Text>
     <RCTSwitch
       accessibilityRole="switch"
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
@@ -31313,6 +31343,7 @@ exports[`snapshotAllPages Native Animated Example 14`] = `
     </Text>
     <RCTSwitch
       accessibilityRole="switch"
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
@@ -31755,6 +31786,489 @@ exports[`snapshotAllPages Performance API Examples 2`] = `
           endTime: N/A ms
         </Text>
       </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages Performance Comparison Examples 1`] = `
+<View
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      {
+        "backgroundColor": "#f2f2f7ff",
+      },
+    ]
+  }
+>
+  <View
+    style={
+      {
+        "flex": 1,
+        "paddingVertical": 10,
+        "rowGap": 30,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "paddingHorizontal": 5,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "borderBottomWidth": 1,
+            "borderColor": "gray",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginBottom": 5,
+          }
+        }
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "alignItems": "center",
+                "backgroundColor": "#d3d3d3",
+                "borderColor": "#696969",
+                "borderRadius": 8,
+                "borderWidth": 1,
+                "justifyContent": "center",
+                "margin": 5,
+                "padding": 10,
+              },
+              false,
+            ]
+          }
+        >
+          <Text>
+            Show Bad
+          </Text>
+        </View>
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "alignItems": "center",
+                "backgroundColor": "#d3d3d3",
+                "borderColor": "#696969",
+                "borderRadius": 8,
+                "borderWidth": 1,
+                "justifyContent": "center",
+                "margin": 5,
+                "padding": 10,
+              },
+              false,
+            ]
+          }
+        >
+          <Text>
+            Show Good
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          {
+            "backgroundColor": "white",
+            "flex": 1,
+          }
+        }
+      />
+    </View>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages Performance Comparison Examples 2`] = `
+<View
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      {
+        "backgroundColor": "#f2f2f7ff",
+      },
+    ]
+  }
+>
+  <View
+    style={
+      {
+        "flex": 1,
+        "paddingVertical": 10,
+        "rowGap": 30,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "paddingHorizontal": 5,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "borderBottomWidth": 1,
+            "borderColor": "gray",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginBottom": 5,
+          }
+        }
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "alignItems": "center",
+                "backgroundColor": "#d3d3d3",
+                "borderColor": "#696969",
+                "borderRadius": 8,
+                "borderWidth": 1,
+                "justifyContent": "center",
+                "margin": 5,
+                "padding": 10,
+              },
+              false,
+            ]
+          }
+        >
+          <Text>
+            Show Bad
+          </Text>
+        </View>
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "alignItems": "center",
+                "backgroundColor": "#d3d3d3",
+                "borderColor": "#696969",
+                "borderRadius": 8,
+                "borderWidth": 1,
+                "justifyContent": "center",
+                "margin": 5,
+                "padding": 10,
+              },
+              false,
+            ]
+          }
+        >
+          <Text>
+            Show Good
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          {
+            "backgroundColor": "white",
+            "flex": 1,
+          }
+        }
+      />
+    </View>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages Performance Comparison Examples 3`] = `
+<View
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      {
+        "backgroundColor": "#f2f2f7ff",
+      },
+    ]
+  }
+>
+  <View
+    style={
+      {
+        "flex": 1,
+        "paddingVertical": 10,
+        "rowGap": 30,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "paddingHorizontal": 5,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "borderBottomWidth": 1,
+            "borderColor": "gray",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginBottom": 5,
+          }
+        }
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "alignItems": "center",
+                "backgroundColor": "#d3d3d3",
+                "borderColor": "#696969",
+                "borderRadius": 8,
+                "borderWidth": 1,
+                "justifyContent": "center",
+                "margin": 5,
+                "padding": 10,
+              },
+              false,
+            ]
+          }
+        >
+          <Text>
+            Show Bad
+          </Text>
+        </View>
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "alignItems": "center",
+                "backgroundColor": "#d3d3d3",
+                "borderColor": "#696969",
+                "borderRadius": 8,
+                "borderWidth": 1,
+                "justifyContent": "center",
+                "margin": 5,
+                "padding": 10,
+              },
+              false,
+            ]
+          }
+        >
+          <Text>
+            Show Good
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          {
+            "backgroundColor": "white",
+            "flex": 1,
+          }
+        }
+      />
     </View>
   </View>
 </View>
@@ -34725,6 +35239,7 @@ exports[`snapshotAllPages Pressable 14`] = `
     </View>
     <RCTSwitch
       accessibilityRole="switch"
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
@@ -35983,6 +36498,7 @@ exports[`snapshotAllPages RTLExample 1`] = `
     >
       <RCTSwitch
         accessibilityRole="switch"
+        focusable={true}
         onChange={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
@@ -55591,6 +56107,7 @@ exports[`snapshotAllPages SectionList 6`] = `
     getItemCount={[Function]}
     invertStickyHeaders={false}
     inverted={false}
+    isInvertedVirtualizedList={false}
     keyExtractor={[Function]}
     onContentSizeChange={[Function]}
     onLayout={[Function]}
@@ -56117,6 +56634,7 @@ exports[`snapshotAllPages SectionList 7`] = `
           </Text>
           <RCTSwitch
             accessibilityRole="switch"
+            focusable={true}
             onChange={[Function]}
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
@@ -56144,6 +56662,7 @@ exports[`snapshotAllPages SectionList 7`] = `
           </Text>
           <RCTSwitch
             accessibilityRole="switch"
+            focusable={true}
             onChange={[Function]}
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
@@ -56171,6 +56690,7 @@ exports[`snapshotAllPages SectionList 7`] = `
           </Text>
           <RCTSwitch
             accessibilityRole="switch"
+            focusable={true}
             onChange={[Function]}
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
@@ -56198,6 +56718,7 @@ exports[`snapshotAllPages SectionList 7`] = `
           </Text>
           <RCTSwitch
             accessibilityRole="switch"
+            focusable={true}
             onChange={[Function]}
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
@@ -63158,6 +63679,7 @@ exports[`snapshotAllPages SectionList 7`] = `
       initialNumToRender={10}
       invertStickyHeaders={false}
       inverted={false}
+      isInvertedVirtualizedList={false}
       keyExtractor={[Function]}
       onContentSizeChange={[Function]}
       onEndReached={[Function]}
@@ -63179,7 +63701,7 @@ exports[`snapshotAllPages SectionList 7`] = `
       }
       refreshing={false}
       renderItem={[Function]}
-      scrollEventThrottle={0.0001}
+      scrollEventThrottle={50}
       stickyHeaderIndices={
         [
           1,
@@ -64616,6 +65138,7 @@ exports[`snapshotAllPages Switch 1`] = `
   >
     <RCTSwitch
       accessibilityRole="switch"
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
@@ -64648,6 +65171,7 @@ exports[`snapshotAllPages Switch 1`] = `
   >
     <RCTSwitch
       accessibilityRole="switch"
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
@@ -64684,6 +65208,7 @@ exports[`snapshotAllPages Switch 2`] = `
     <RCTSwitch
       accessibilityRole="switch"
       disabled={true}
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
@@ -64715,6 +65240,7 @@ exports[`snapshotAllPages Switch 2`] = `
     <RCTSwitch
       accessibilityRole="switch"
       disabled={true}
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
@@ -64748,6 +65274,7 @@ exports[`snapshotAllPages Switch 3`] = `
   <View>
     <RCTSwitch
       accessibilityRole="switch"
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
@@ -64767,6 +65294,7 @@ exports[`snapshotAllPages Switch 3`] = `
     />
     <RCTSwitch
       accessibilityRole="switch"
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
@@ -64793,6 +65321,7 @@ exports[`snapshotAllPages Switch 3`] = `
   <View>
     <RCTSwitch
       accessibilityRole="switch"
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
@@ -64812,6 +65341,7 @@ exports[`snapshotAllPages Switch 3`] = `
     />
     <RCTSwitch
       accessibilityRole="switch"
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
@@ -64841,6 +65371,7 @@ exports[`snapshotAllPages Switch 3`] = `
 exports[`snapshotAllPages Switch 4`] = `
 <RCTSwitch
   accessibilityRole="switch"
+  focusable={true}
   onChange={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
@@ -64859,6 +65390,7 @@ exports[`snapshotAllPages Switch 5`] = `
 <View>
   <RCTSwitch
     accessibilityRole="switch"
+    focusable={true}
     onChange={[Function]}
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
@@ -64881,6 +65413,7 @@ exports[`snapshotAllPages Switch 5`] = `
   />
   <RCTSwitch
     accessibilityRole="switch"
+    focusable={true}
     onChange={[Function]}
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
@@ -64903,6 +65436,7 @@ exports[`snapshotAllPages Switch 6`] = `
 <View>
   <RCTSwitch
     accessibilityRole="switch"
+    focusable={true}
     onChange={[Function]}
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
@@ -64921,6 +65455,7 @@ exports[`snapshotAllPages Switch 7`] = `
 <View>
   <RCTSwitch
     accessibilityRole="switch"
+    focusable={true}
     onChange={[Function]}
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
@@ -64959,6 +65494,7 @@ exports[`snapshotAllPages Switch 8`] = `
       accessibilityHint="Switch"
       accessibilityLabel="This is a Switch"
       accessibilityRole="switch"
+      focusable={true}
       nativeID="accessibility-switch"
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
@@ -64975,6 +65511,7 @@ exports[`snapshotAllPages Switch 8`] = `
       accessibilityHint="Switch"
       accessibilityLabel="This is a Switch with focusable set to false"
       accessibilityRole="switch"
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
@@ -65001,6 +65538,7 @@ exports[`snapshotAllPages Switch 8`] = `
       accessibilityHint="Switch"
       accessibilityLabel="This is a Switch with accessible set to false"
       accessibilityRole="switch"
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
@@ -65016,6 +65554,7 @@ exports[`snapshotAllPages Switch 8`] = `
       accessibilityHint="Switch"
       accessibilityLabel="This is a Switch with focusable and accessible set to false"
       accessibilityRole="switch"
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
@@ -68550,6 +69089,7 @@ exports[`snapshotAllPages Text 1`] = `
               </Text>
               <RCTSwitch
                 accessibilityRole="switch"
+                focusable={true}
                 onChange={[Function]}
                 onResponderTerminationRequest={[Function]}
                 onStartShouldSetResponder={[Function]}
@@ -73006,6 +73546,7 @@ exports[`snapshotAllPages TextInput 28`] = `
     </Text>
     <RCTSwitch
       accessibilityRole="switch"
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
@@ -73022,6 +73563,7 @@ exports[`snapshotAllPages TextInput 28`] = `
     </Text>
     <RCTSwitch
       accessibilityRole="switch"
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
@@ -73433,6 +73975,7 @@ exports[`snapshotAllPages TextInput 36`] = `
   </Text>,
   <RCTSwitch
     accessibilityRole="switch"
+    focusable={true}
     onChange={[Function]}
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
@@ -78850,6 +79393,124 @@ exports[`snapshotAllPages View 27`] = `
 
 exports[`snapshotAllPages View 28`] = `
 <View
+  style={
+    {
+      "flexDirection": "row",
+      "gap": 10,
+    }
+  }
+>
+  <View>
+    <Text>
+      Unset
+    </Text>
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "blue",
+          "flexDirection": "row",
+          "height": 100,
+          "width": 100,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "flexDirection": "row",
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "backgroundColor": "red",
+              "flexGrow": 1,
+              "height": 50,
+            }
+          }
+        />
+      </View>
+    </View>
+  </View>
+  <View
+    experimental_layoutConformance="classic"
+  >
+    <Text>
+      Classic
+    </Text>
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "blue",
+          "flexDirection": "row",
+          "height": 100,
+          "width": 100,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "flexDirection": "row",
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "backgroundColor": "red",
+              "flexGrow": 1,
+              "height": 50,
+            }
+          }
+        />
+      </View>
+    </View>
+  </View>
+  <View
+    experimental_layoutConformance="strict"
+  >
+    <Text>
+      Strict
+    </Text>
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "blue",
+          "flexDirection": "row",
+          "height": 100,
+          "width": 100,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "flexDirection": "row",
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "backgroundColor": "red",
+              "flexGrow": 1,
+              "height": 50,
+            }
+          }
+        />
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages View 29`] = `
+<View
   nativeID="native-id-view"
   testID="nativeid"
 >
@@ -79410,6 +80071,7 @@ exports[`snapshotAllPages XMLHttpRequest 1`] = `
     </Text>
     <RCTSwitch
       accessibilityRole="switch"
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
@@ -79437,6 +80099,7 @@ exports[`snapshotAllPages XMLHttpRequest 1`] = `
     </Text>
     <RCTSwitch
       accessibilityRole="switch"
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
@@ -79464,6 +80127,7 @@ exports[`snapshotAllPages XMLHttpRequest 1`] = `
     </Text>
     <RCTSwitch
       accessibilityRole="switch"
+      focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}

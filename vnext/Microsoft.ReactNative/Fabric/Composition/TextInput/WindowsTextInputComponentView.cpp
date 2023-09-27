@@ -12,6 +12,7 @@
 #include <winrt/Windows.UI.h>
 #include "../CompositionHelpers.h"
 #include "../RootComponentView.h"
+#include "Composition/AutoDraw.h"
 #include "WindowsTextInputShadowNode.h"
 #include "WindowsTextInputState.h"
 #include "guid/msoGuid.h"
@@ -340,8 +341,8 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Get the background (either opaque or transparent)
   HRESULT TxGetBackStyle(TXTBACKSTYLE *pstyle) override {
+    // We draw the background color as part of the composition visual, not the text
     *pstyle = TXTBACK_TRANSPARENT;
-    //*pstyle = TXTBACK_OPAQUE;
     return S_OK;
   }
 
@@ -544,7 +545,7 @@ void WindowsTextInputComponentView::handleCommand(std::string const &commandName
 int64_t WindowsTextInputComponentView::sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
   // Do not forward tab keys into the TextInput, since we want that to do the tab loop instead.  This aligns with WinUI
   // behavior We do forward Ctrl+Tab to the textinput.
-  if (((msg == WM_KEYDOWN || msg == WM_KEYUP) && wParam == VK_TAB) || (msg == WM_CHAR && wParam == '\t')) {
+  if ((msg == WM_CHAR && wParam == '\t')) {
     BYTE bKeys[256];
     if (GetKeyboardState(bKeys)) {
       bool fCtrl = false;
@@ -565,6 +566,67 @@ int64_t WindowsTextInputComponentView::sendMessage(uint32_t msg, uint64_t wParam
   return Super::sendMessage(msg, wParam, lParam);
 }
 
+void WindowsTextInputComponentView::onKeyDown(
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
+  // Do not forward tab keys into the TextInput, since we want that to do the tab loop instead.  This aligns with WinUI
+  // behavior We do forward Ctrl+Tab to the textinput.
+  if (args.Key() != winrt::Windows::System::VirtualKey::Tab ||
+      source.GetKeyState(winrt::Windows::System::VirtualKey::Control) ==
+          winrt::Windows::UI::Core::CoreVirtualKeyStates::Down) {
+    WPARAM wParam = static_cast<WPARAM>(args.Key());
+    LPARAM lParam = 0;
+    lParam = args.KeyStatus().RepeatCount; // bits 0-15
+    lParam |= args.KeyStatus().ScanCode << 16; // bits 16-23
+    if (args.KeyStatus().IsExtendedKey)
+      lParam |= 0x01000000; // bit 24
+    // if sysKey - bit 29 = 1, otherwise 0
+    if (args.KeyStatus().WasKeyDown)
+      lParam |= 0x40000000; // bit 30
+
+    LRESULT lresult;
+    DrawBlock db(*this);
+    auto hr = m_textServices->TxSendMessage(
+        args.KeyStatus().IsMenuKeyDown ? WM_SYSKEYDOWN : WM_KEYDOWN, wParam, lParam, &lresult);
+    if (hr >= 0 && lresult) {
+      args.Handled(true);
+    }
+  }
+
+  Super::onKeyDown(source, args);
+}
+
+void WindowsTextInputComponentView::onKeyUp(
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
+  // Do not forward tab keys into the TextInput, since we want that to do the tab loop instead.  This aligns with WinUI
+  // behavior We do forward Ctrl+Tab to the textinput.
+  if (args.Key() != winrt::Windows::System::VirtualKey::Tab ||
+      source.GetKeyState(winrt::Windows::System::VirtualKey::Control) ==
+          winrt::Windows::UI::Core::CoreVirtualKeyStates::Down) {
+    WPARAM wParam = static_cast<WPARAM>(args.Key());
+    LPARAM lParam = 1;
+    lParam = args.KeyStatus().RepeatCount; // bits 0-15
+    lParam |= args.KeyStatus().ScanCode << 16; // bits 16-23
+    if (args.KeyStatus().IsExtendedKey)
+      lParam |= 0x01000000; // bit 24
+    // if sysKey - bit 29 = 1, otherwise 0
+    if (args.KeyStatus().WasKeyDown)
+      lParam |= 0x40000000; // bit 30
+    lParam |= 0x80000000; // bit 31 always 1 for WM_KEYUP
+
+    LRESULT lresult;
+    DrawBlock db(*this);
+    auto hr = m_textServices->TxSendMessage(
+        args.KeyStatus().IsMenuKeyDown ? WM_SYSKEYUP : WM_KEYUP, wParam, lParam, &lresult);
+    if (hr >= 0 && lresult) {
+      args.Handled(true);
+    }
+  }
+
+  Super::onKeyDown(source, args);
+}
+
 void WindowsTextInputComponentView::mountChildComponentView(
     IComponentView &childComponentView,
     uint32_t index) noexcept {
@@ -582,6 +644,7 @@ void WindowsTextInputComponentView::unmountChildComponentView(
 void WindowsTextInputComponentView::onFocusLost() noexcept {
   Super::onFocusLost();
   sendMessage(WM_KILLFOCUS, 0, 0);
+  m_caretVisual.IsVisible(false);
 }
 
 void WindowsTextInputComponentView::onFocusGained() noexcept {
@@ -608,6 +671,9 @@ void WindowsTextInputComponentView::updateProps(
 
   ensureVisual();
 
+  // update BaseComponentView props
+  updateShadowProps(oldTextInputProps, newTextInputProps, m_visual);
+  updateTransformProps(oldTextInputProps, newTextInputProps, m_visual);
   updateBorderProps(oldTextInputProps, newTextInputProps);
 
   if (!facebook::react::floatEquality(
@@ -641,6 +707,14 @@ void WindowsTextInputComponentView::updateProps(
   if (oldTextInputProps.placeholder != newTextInputProps.placeholder ||
       oldTextInputProps.placeholderTextColor != newTextInputProps.placeholderTextColor) {
     m_needsRedraw = true;
+  }
+
+  if (oldTextInputProps.backgroundColor != newTextInputProps.backgroundColor) {
+    m_needsRedraw = true;
+  }
+
+  if (oldTextInputProps.cursorColor != newTextInputProps.cursorColor) {
+    m_caretVisual.Color(newTextInputProps.cursorColor.AsWindowsColor());
   }
 
   /*
@@ -691,16 +765,6 @@ void WindowsTextInputComponentView::updateProps(
     } else { // anything else turns off autoCap (should be "None" but
              // we don't support "words"/"sentences" yet)
       m_element.CharacterCasing(xaml::Controls::CharacterCasing::Normal);
-    }
-  }
-
-  if (oldViewProps.backgroundColor != newViewProps.backgroundColor) {
-    auto color = *newViewProps.backgroundColor;
-
-    if (newViewProps.backgroundColor) {
-      m_element.ViewBackground(SolidColorBrushFrom(newViewProps.backgroundColor));
-    } else {
-      m_element.ClearValue(winrt::Microsoft::ReactNative::ViewPanel::ViewBackgroundProperty());
     }
   }
   */
@@ -960,7 +1024,7 @@ void WindowsTextInputComponentView::ensureDrawingSurface() noexcept {
   assert(m_context.UIDispatcher().HasThreadAccess());
 
   if (!m_drawingSurface) {
-    m_drawingSurface = m_compContext.CreateDrawingSurface(
+    m_drawingSurface = m_compContext.CreateDrawingSurfaceBrush(
         {static_cast<float>(m_imgWidth), static_cast<float>(m_imgHeight)},
         winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
         winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
@@ -974,11 +1038,10 @@ void WindowsTextInputComponentView::ensureDrawingSurface() noexcept {
 
     DrawText();
 
-    auto surfaceBrush = m_compContext.CreateSurfaceBrush(m_drawingSurface);
-    surfaceBrush.HorizontalAlignmentRatio(0.f);
-    surfaceBrush.VerticalAlignmentRatio(0.f);
-    surfaceBrush.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::None);
-    m_visual.Brush(surfaceBrush);
+    m_drawingSurface.HorizontalAlignmentRatio(0.f);
+    m_drawingSurface.VerticalAlignmentRatio(0.f);
+    m_drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::None);
+    m_visual.Brush(m_drawingSurface);
   }
 }
 
@@ -1016,79 +1079,84 @@ void WindowsTextInputComponentView::DrawText() noexcept {
     return;
   }
 
-  if (!m_drawingSurface)
+  bool isZeroSized =
+      m_layoutMetrics.frame.size.width <= (m_layoutMetrics.contentInsets.left + m_layoutMetrics.contentInsets.right);
+  if (!m_drawingSurface || isZeroSized)
     return;
 
-  // Begin our update of the surface pixels. If this is our first update, we are required
-  // to specify the entire surface, which nullptr is shorthand for (but, as it works out,
-  // any time we make an update we touch the entire surface, so we always pass nullptr).
-  winrt::com_ptr<ID2D1DeviceContext> d2dDeviceContext;
   POINT offset;
 
   assert(m_context.UIDispatcher().HasThreadAccess());
 
-  winrt::com_ptr<Composition::ICompositionDrawingSurfaceInterop> drawingSurfaceInterop;
-  m_drawingSurface.as(drawingSurfaceInterop);
-
   m_drawing = true;
-  if (CheckForDeviceRemoved(drawingSurfaceInterop->BeginDraw(d2dDeviceContext.put(), &offset))) {
-    d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
-    assert(d2dDeviceContext->GetUnitMode() == D2D1_UNIT_MODE_DIPS);
-    const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
-    float oldDpiX, oldDpiY;
-    d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
-    d2dDeviceContext->SetDpi(dpi, dpi);
+  {
+    ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(m_drawingSurface, &offset);
+    if (auto d2dDeviceContext = autoDraw.GetRenderTarget()) {
+      d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
+      assert(d2dDeviceContext->GetUnitMode() == D2D1_UNIT_MODE_DIPS);
+      const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
+      float oldDpiX, oldDpiY;
+      d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
+      d2dDeviceContext->SetDpi(dpi, dpi);
 
-    RECTL rc{
-        static_cast<LONG>(offset.x),
-        static_cast<LONG>(offset.y),
-        static_cast<LONG>(offset.x) + static_cast<LONG>(m_imgWidth),
-        static_cast<LONG>(offset.y) + static_cast<LONG>(m_imgHeight)};
+      RECTL rc{
+          static_cast<LONG>(offset.x),
+          static_cast<LONG>(offset.y),
+          static_cast<LONG>(offset.x) + static_cast<LONG>(m_imgWidth),
+          static_cast<LONG>(offset.y) + static_cast<LONG>(m_imgHeight)};
 
-    RECT rcClient{
-        static_cast<LONG>(offset.x),
-        static_cast<LONG>(offset.y),
-        static_cast<LONG>(offset.x) + static_cast<LONG>(m_imgWidth),
-        static_cast<LONG>(offset.y) + static_cast<LONG>(m_imgHeight)};
+      RECT rcClient{
+          static_cast<LONG>(offset.x),
+          static_cast<LONG>(offset.y),
+          static_cast<LONG>(offset.x) + static_cast<LONG>(m_imgWidth),
+          static_cast<LONG>(offset.y) + static_cast<LONG>(m_imgHeight)};
 
-    winrt::check_hresult(m_textServices->OnTxInPlaceActivate(&rcClient));
+      winrt::check_hresult(m_textServices->OnTxInPlaceActivate(&rcClient));
 
-    // TODO keep track of proper invalid rect
-    auto hrDraw = m_textServices->TxDrawD2D(d2dDeviceContext.get(), &rc, nullptr, TXTVIEW_ACTIVE);
-    winrt::check_hresult(hrDraw);
-
-    // draw placeholder text if needed
-    if (!m_props->placeholder.empty() && GetTextFromRichEdit().empty()) {
-      // set brush color
-      winrt::com_ptr<ID2D1SolidColorBrush> brush;
-      if (m_props->placeholderTextColor) {
-        auto color = m_props->placeholderTextColor.AsD2DColor();
-        winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(color, brush.put()));
-      } else {
-        winrt::check_hresult(
-            d2dDeviceContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Gray, 1.0f), brush.put()));
+      if (facebook::react::isColorMeaningful(m_props->backgroundColor)) {
+        auto backgroundColor = m_props->backgroundColor.AsD2DColor();
+        winrt::com_ptr<ID2D1SolidColorBrush> backgroundBrush;
+        winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(backgroundColor, backgroundBrush.put()));
+        const D2D1_RECT_F fillRect = {
+            static_cast<float>(rcClient.left) / m_layoutMetrics.pointScaleFactor,
+            static_cast<float>(rcClient.top) / m_layoutMetrics.pointScaleFactor,
+            static_cast<float>(rcClient.right) / m_layoutMetrics.pointScaleFactor,
+            static_cast<float>(rcClient.bottom) / m_layoutMetrics.pointScaleFactor};
+        d2dDeviceContext->FillRectangle(fillRect, backgroundBrush.get());
       }
 
-      // Create placeholder text layout
-      winrt::com_ptr<::IDWriteTextLayout> textLayout = CreatePlaceholderLayout();
+      // TODO keep track of proper invalid rect
+      auto hrDraw = m_textServices->TxDrawD2D(d2dDeviceContext, &rc, nullptr, TXTVIEW_ACTIVE);
+      winrt::check_hresult(hrDraw);
 
-      // draw text
-      d2dDeviceContext->DrawTextLayout(
-          D2D1::Point2F(
-              static_cast<FLOAT>((offset.x + m_layoutMetrics.contentInsets.left) / m_layoutMetrics.pointScaleFactor),
-              static_cast<FLOAT>((offset.y + m_layoutMetrics.contentInsets.top) / m_layoutMetrics.pointScaleFactor)),
-          textLayout.get(),
-          brush.get(),
-          D2D1_DRAW_TEXT_OPTIONS_ENABLE_COLOR_FONT);
+      // draw placeholder text if needed
+      if (!m_props->placeholder.empty() && GetTextFromRichEdit().empty()) {
+        // set brush color
+        winrt::com_ptr<ID2D1SolidColorBrush> brush;
+        if (m_props->placeholderTextColor) {
+          auto color = m_props->placeholderTextColor.AsD2DColor();
+          winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(color, brush.put()));
+        } else {
+          winrt::check_hresult(
+              d2dDeviceContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Gray, 1.0f), brush.put()));
+        }
+
+        // Create placeholder text layout
+        winrt::com_ptr<::IDWriteTextLayout> textLayout = CreatePlaceholderLayout();
+
+        // draw text
+        d2dDeviceContext->DrawTextLayout(
+            D2D1::Point2F(
+                static_cast<FLOAT>((offset.x + m_layoutMetrics.contentInsets.left) / m_layoutMetrics.pointScaleFactor),
+                static_cast<FLOAT>((offset.y + m_layoutMetrics.contentInsets.top) / m_layoutMetrics.pointScaleFactor)),
+            textLayout.get(),
+            brush.get(),
+            D2D1_DRAW_TEXT_OPTIONS_ENABLE_COLOR_FONT);
+      }
+
+      // restore dpi state
+      d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
     }
-
-    // restore dpi state
-    d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
-
-    // Our update is done. EndDraw never indicates rendering device removed, so any
-    // failure here is unexpected and, therefore, fatal.
-    auto hrEndDraw = drawingSurfaceInterop->EndDraw();
-    winrt::check_hresult(hrEndDraw);
   }
   m_drawing = false;
   m_needsRedraw = false;

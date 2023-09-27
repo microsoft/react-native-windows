@@ -35,11 +35,17 @@ struct CompositionBaseComponentView : public IComponentView,
   bool runOnChildren(bool forward, Mso::Functor<bool(IComponentView &)> &fn) noexcept override;
   void onFocusLost() noexcept override;
   void onFocusGained() noexcept override;
+  void onKeyDown(
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
+  void onKeyUp(
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
   bool focusable() const noexcept override;
   std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept
       override;
-  facebook::react::SharedTouchEventEmitter touchEventEmitter() noexcept override;
-  facebook::react::SharedTouchEventEmitter touchEventEmitterAtPoint(facebook::react::Point pt) noexcept override;
+  facebook::react::SharedViewEventEmitter eventEmitter() noexcept override;
+  facebook::react::SharedViewEventEmitter eventEmitterAtPoint(facebook::react::Point pt) noexcept override;
   facebook::react::Tag tag() const noexcept override;
   int64_t sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept override;
 
@@ -50,6 +56,14 @@ struct CompositionBaseComponentView : public IComponentView,
   void updateBorderProps(
       const facebook::react::ViewProps &oldViewProps,
       const facebook::react::ViewProps &newViewProps) noexcept;
+  void updateShadowProps(
+      const facebook::react::ViewProps &oldViewProps,
+      const facebook::react::ViewProps &newViewProps,
+      winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual) noexcept;
+  void updateTransformProps(
+      const facebook::react::ViewProps &oldViewProps,
+      const facebook::react::ViewProps &newViewProps,
+      winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual) noexcept;
   void updateAccessibilityProps(
       const facebook::react::ViewProps &oldView,
       const facebook::react::ViewProps &newViewProps) noexcept;
@@ -70,10 +84,10 @@ struct CompositionBaseComponentView : public IComponentView,
   virtual std::string DefaultAccessibleName() const noexcept;
 
  protected:
-  std::array<winrt::Microsoft::ReactNative::Composition::SpriteVisual, SpecialBorderLayerCount>
+  std::array<winrt::Microsoft::ReactNative::Composition::ISpriteVisual, SpecialBorderLayerCount>
   FindSpecialBorderLayers() const noexcept;
   bool TryUpdateSpecialBorderLayers(
-      std::array<winrt::Microsoft::ReactNative::Composition::SpriteVisual, SpecialBorderLayerCount> &spBorderVisuals,
+      std::array<winrt::Microsoft::ReactNative::Composition::ISpriteVisual, SpecialBorderLayerCount> &spBorderVisuals,
       facebook::react::LayoutMetrics const &layoutMetrics,
       const facebook::react::ViewProps &viewProps) noexcept;
   void UpdateSpecialBorderLayers(
@@ -119,6 +133,12 @@ struct CompositionViewComponentView : public CompositionBaseComponentView {
   void finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept override;
   void prepareForRecycle() noexcept override;
   bool focusable() const noexcept override;
+  void onKeyDown(
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
+  void onKeyUp(
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
   std::string DefaultControlType() const noexcept override;
 
   facebook::react::Props::Shared props() noexcept override;
@@ -138,7 +158,7 @@ struct CompositionViewComponentView : public CompositionBaseComponentView {
 
  private:
   facebook::react::SharedViewProps m_props;
-  winrt::Microsoft::ReactNative::Composition::SpriteVisual m_visual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
 };
 
 } // namespace Microsoft::ReactNative

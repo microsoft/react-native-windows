@@ -6,8 +6,8 @@
 
 import {execSync} from 'child_process';
 import path from 'path';
-import {powershell} from '../runWindows/utils/commandWithProgress';
-import {HealthCheckList} from '../healthCheckList';
+import {powershell} from '../utils/commandWithProgress';
+import {HealthCheckList} from '../commands/healthCheck/healthCheckList';
 
 test('Verify list of health checks aligns with rnw-dependencies', async () => {
   const rnwDepScriptPath = path.join(
