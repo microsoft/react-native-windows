@@ -23,7 +23,6 @@
     <AppContainerApplication>false</AppContainerApplication>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <Import Project="$(MSBuildThisFileDirectory)HybridCRT.props" Condition="'$(UseWinUI3)'=='true'"/>
   <PropertyGroup Label="ReactNativeWindowsProps">
     <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native-windows\package.json'))\node_modules\react-native-windows\</ReactNativeWindowsDir>
     <!-- https://github.com/microsoft/react-native-windows/issues/8591 -->
@@ -68,7 +67,6 @@
   </ImportGroup>
   <ImportGroup Label="ReactNativeWindowsPropertySheets">
     <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Composition.CppApp.props" />
-    <Import Project="$(MSBuildThisFileDirectory)\..\packages\Microsoft.WindowsAppSDK.$(WinUIPackageVersion)\build\native\Microsoft.WindowsAppSDK.props" Condition="Exists('$(MSBuildThisFileDirectory)\..\packages\Microsoft.WindowsAppSDK.$(WinUIPackageVersion)\build\native\Microsoft.WindowsAppSDK.props') AND '$(UseWinUI3)'=='true'" />
   </ImportGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -172,7 +170,6 @@
   </Target>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ReactNativeWindowsTargets">
-    <Import Project="$(MSBuildThisFileDirectory)\..\packages\Microsoft.WindowsAppSDK.$(WinUIPackageVersion)\build\native\Microsoft.WindowsAppSDK.targets" Condition="Exists('$(MSBuildThisFileDirectory)\..\packages\Microsoft.WindowsAppSDK.$(WinUIPackageVersion)\build\native\Microsoft.WindowsAppSDK.targets') AND '$(UseWinUI3)'=='true'" />
     <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Composition.CppApp.targets" Condition="Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Composition.CppApp.targets')" />
   </ImportGroup>
   <ItemGroup>
