@@ -739,8 +739,8 @@ struct CompScrollerVisual : winrt::implements<
     auto positionAnimation = compositor.CreateVector3KeyFrameAnimation();
 
     positionAnimation.InsertKeyFrame(1.0f, {x, y, 0.0f});
-    positionAnimation.Duration(winrt::TimeSpan::duration(
-        std::clamp(distance * s_offsetsChangeMsPerUnit, s_offsetsChangeMinMs, s_offsetsChangeMaxMs) * 10000));
+    positionAnimation.Duration(std::chrono::milliseconds(
+        std::clamp(distance * s_offsetsChangeMsPerUnit, s_offsetsChangeMinMs, s_offsetsChangeMaxMs)));
 
     return positionAnimation;
   }
