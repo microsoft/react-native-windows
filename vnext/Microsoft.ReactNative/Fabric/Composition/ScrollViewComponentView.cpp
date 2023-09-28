@@ -157,20 +157,6 @@ void ScrollViewComponentView::updateProps(
     }
   }
 
-  /*
-  if (oldViewProps.borderColors != newViewProps.borderColors) {
-    if (newViewProps.borderColors.all) {
-      m_element.BorderBrush(SolidColorBrushFrom(*newViewProps.borderColors.all));
-    } else {
-      m_element.ClearValue(winrt::Microsoft::ReactNative::ViewPanel::BorderBrushProperty());
-    }
-  }
-
-  if (oldViewProps.borderStyles != newViewProps.borderStyles) {
-    m_needsBorderUpdate = true;
-  }
-  */
-
   // update BaseComponentView props
   updateShadowProps(oldViewProps, newViewProps, m_visual);
   updateTransformProps(oldViewProps, newViewProps, m_visual);
@@ -178,8 +164,6 @@ void ScrollViewComponentView::updateProps(
 
   m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
 }
-
-void ScrollViewComponentView::updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {}
 
 void ScrollViewComponentView::updateState(
     facebook::react::State::Shared const &state,
@@ -295,28 +279,28 @@ void ScrollViewComponentView::onKeyDown(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
   switch (args.Key()) {
     case winrt::Windows::System::VirtualKey::End:
-      args.Handled(scrollToEnd(false));
+      args.Handled(scrollToEnd(true));
       break;
     case winrt::Windows::System::VirtualKey::Home:
-      args.Handled(scrollToStart(false));
+      args.Handled(scrollToStart(true));
       break;
     case winrt::Windows::System::VirtualKey::PageDown:
-      args.Handled(pageDown(false));
+      args.Handled(pageDown(true));
       break;
     case winrt::Windows::System::VirtualKey::PageUp:
-      args.Handled(pageUp(false));
+      args.Handled(pageUp(true));
       break;
     case winrt::Windows::System::VirtualKey::Up:
-      args.Handled(lineUp(false));
+      args.Handled(lineUp(true));
       break;
     case winrt::Windows::System::VirtualKey::Down:
-      args.Handled(lineDown(false));
+      args.Handled(lineDown(true));
       break;
     case winrt::Windows::System::VirtualKey::Left:
-      args.Handled(lineLeft(false));
+      args.Handled(lineLeft(true));
       break;
     case winrt::Windows::System::VirtualKey::Right:
-      args.Handled(lineRight(false));
+      args.Handled(lineRight(true));
       break;
   }
 }
@@ -339,28 +323,11 @@ bool ScrollViewComponentView::scrollToStart(bool animate) noexcept {
 }
 
 bool ScrollViewComponentView::pageUp(bool animate) noexcept {
-  if (m_scrollVisual.ScrollPosition().y <= 0.0f) {
-    return false;
-  }
-
-  float scrollToVertical =
-      m_scrollVisual.ScrollPosition().y - (m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor);
-  float scrollToHorizontal = m_scrollVisual.ScrollPosition().x;
-  m_scrollVisual.TryUpdatePosition({scrollToHorizontal, scrollToVertical, 0.0f}, false /*animate*/);
-  return true;
+  return scrollUp(m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor, animate);
 }
 
 bool ScrollViewComponentView::pageDown(bool animate) noexcept {
-  if ((((m_contentSize.height - m_layoutMetrics.frame.size.height) * m_layoutMetrics.pointScaleFactor) -
-       m_scrollVisual.ScrollPosition().y) < 1.0f) {
-    return false;
-  }
-
-  float scrollToVertical =
-      m_scrollVisual.ScrollPosition().y + (m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor);
-  float scrollToHorizontal = m_scrollVisual.ScrollPosition().x;
-  m_scrollVisual.TryUpdatePosition({scrollToHorizontal, scrollToVertical, 0.0f}, false /*animate*/);
-  return true;
+  return scrollDown(m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor, animate);
 }
 
 bool ScrollViewComponentView::lineUp(bool animate) noexcept {
@@ -376,10 +343,7 @@ bool ScrollViewComponentView::lineLeft(bool animate) noexcept {
     return false;
   }
 
-  float scrollToVertical = m_scrollVisual.ScrollPosition().y;
-  float scrollToHorizontal =
-      m_scrollVisual.ScrollPosition().x - (c_scrollerLineDelta * m_layoutMetrics.pointScaleFactor);
-  m_scrollVisual.TryUpdatePosition({scrollToHorizontal, scrollToVertical, 0.0f}, false /*animate*/);
+  m_scrollVisual.ScrollBy({-c_scrollerLineDelta * m_layoutMetrics.pointScaleFactor, 0, 0}, animate);
   return true;
 }
 
@@ -389,10 +353,7 @@ bool ScrollViewComponentView::lineRight(bool animate) noexcept {
     return false;
   }
 
-  float scrollToVertical = m_scrollVisual.ScrollPosition().y;
-  float scrollToHorizontal =
-      m_scrollVisual.ScrollPosition().x + (c_scrollerLineDelta * m_layoutMetrics.pointScaleFactor);
-  m_scrollVisual.TryUpdatePosition({scrollToHorizontal, scrollToVertical, 0.0f}, false /*animate*/);
+  m_scrollVisual.ScrollBy({c_scrollerLineDelta * m_layoutMetrics.pointScaleFactor, 0, 0}, animate);
   return true;
 }
 
@@ -403,9 +364,7 @@ bool ScrollViewComponentView::scrollDown(float delta, bool animate) noexcept {
     return false;
   }
 
-  float scrollToVertical = m_scrollVisual.ScrollPosition().y + delta;
-  float scrollToHorizontal = m_scrollVisual.ScrollPosition().x;
-  m_scrollVisual.TryUpdatePosition({scrollToHorizontal, scrollToVertical, 0.0f}, false /*animate*/);
+  m_scrollVisual.ScrollBy({0, delta, 0}, animate);
   return true;
 }
 
@@ -414,9 +373,7 @@ bool ScrollViewComponentView::scrollUp(float delta, bool animate) noexcept {
     return false;
   }
 
-  float scrollToVertical = m_scrollVisual.ScrollPosition().y - delta;
-  float scrollToHorizontal = m_scrollVisual.ScrollPosition().x;
-  m_scrollVisual.TryUpdatePosition({scrollToHorizontal, scrollToVertical, 0.0f}, false /*animate*/);
+  m_scrollVisual.ScrollBy({0, -delta, 0}, animate);
   return true;
 }
 
