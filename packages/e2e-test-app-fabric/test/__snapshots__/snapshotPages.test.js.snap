@@ -79190,7 +79190,7 @@ exports[`snapshotAllPages View 23`] = `
   }
   accessibilityHint="Accessibility Hint"
   accessibilityLabel="A View with accessibility values"
-  accessibilityRole="View"
+  accessibilityRole="none"
   accessibilityValue={0}
   accessible={true}
   focusable={true}
