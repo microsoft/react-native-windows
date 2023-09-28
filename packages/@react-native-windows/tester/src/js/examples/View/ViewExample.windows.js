@@ -400,7 +400,7 @@ class AccessibilityExample extends React.Component<
       <View
         accessibilityLabel="A View with accessibility values"
         accessibilityHint="Accessibility Hint"
-        accessibilityRole="View"
+        accessibilityRole="none"
         accessibilityValue={0}
         accessibilityActions={[
           {name: 'cut', label: 'cut'},
