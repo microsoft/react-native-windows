@@ -728,9 +728,9 @@ struct CompScrollerVisual : winrt::implements<
   }
 
   // ChangeOffsets scrolling constants
-  static constexpr int s_offsetsChangeMsPerUnit{5};
-  static constexpr int s_offsetsChangeMinMs{50};
-  static constexpr int s_offsetsChangeMaxMs{1000};
+  static constexpr int64_t s_offsetsChangeMsPerUnit{5};
+  static constexpr int64_t s_offsetsChangeMinMs{50};
+  static constexpr int64_t s_offsetsChangeMaxMs{1000};
 
   typename TTypeRedirects::CompositionAnimation GetPositionAnimation(float x, float y) {
     const int64_t distance =
@@ -768,16 +768,7 @@ struct CompScrollerVisual : winrt::implements<
   void TryUpdatePosition(winrt::Windows::Foundation::Numerics::float3 const &position, bool animate) noexcept {
     auto maxPosition = m_interactionTracker.MaxPosition();
     if (animate) {
-      auto compositor = m_visual.Compositor();
-      auto cubicBezier = compositor.CreateCubicBezierEasingFunction({0.17f, 0.67f}, {1.0f, 1.0f});
-      auto kfa = compositor.CreateVector3KeyFrameAnimation();
-      kfa.Duration(std::chrono::seconds{1});
-      kfa.InsertKeyFrame(
-          1.0f,
-          {std::min(maxPosition.x, position.x),
-           std::min(maxPosition.y, position.y),
-           std::min(maxPosition.z, position.z)},
-          cubicBezier);
+      auto kfa = GetPositionAnimation(std::min(maxPosition.x, position.x), std::min(maxPosition.y, position.y));
       m_interactionTracker.TryUpdatePositionWithAnimation(kfa);
     } else {
       m_interactionTracker.TryUpdatePosition(
