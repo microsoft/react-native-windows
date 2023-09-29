@@ -65,7 +65,7 @@ class SharedColor {
     return *m_color;
   }
 
-  bool operator==(const SharedColor &otherColor) const {
+  bool operator==(const SharedColor& otherColor) const {
     if (!m_color && !otherColor.m_color)
       return true;
     if (!m_color || !otherColor.m_color)
@@ -73,7 +73,7 @@ class SharedColor {
     return *m_color == *otherColor.m_color;
   }
 
-  bool operator!=(const SharedColor &otherColor) const {
+  bool operator!=(const SharedColor& otherColor) const {
     if (!m_color && !otherColor.m_color)
       return false;
     if (!m_color || !otherColor.m_color)
@@ -105,7 +105,7 @@ class SharedColor {
   std::shared_ptr<Color> m_color;
 };
 
-bool isColorMeaningful(SharedColor const &color) noexcept;
+bool isColorMeaningful(const SharedColor& color) noexcept;
 SharedColor colorFromComponents(ColorComponents components);
 ColorComponents colorComponentsFromColor(SharedColor const &color);
 

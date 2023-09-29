@@ -7,7 +7,8 @@
 
 #pragma once
 
-#include <butter/map.h>
+#include <unordered_map>
+
 #include <glog/logging.h>
 #include <react/debug/react_native_expect.h>
 #include <react/renderer/core/PropsParserContext.h>
@@ -27,7 +28,7 @@ namespace facebook::react {
 
 #pragma mark - Color
 
-inline void fromRawValue(const PropsParserContext &context, const RawValue &value, SharedColor &result) {
+inline void fromRawValue(const PropsParserContext& context, const RawValue& value, SharedColor& result) {
   ColorComponents colorComponents = {0, 0, 0, 0};
 
   if (value.hasType<int>()) {
@@ -46,8 +47,8 @@ inline void fromRawValue(const PropsParserContext &context, const RawValue &valu
     colorComponents.blue = items.at(2);
     colorComponents.alpha = length == 4 ? items.at(3) : 1.0f;
     // [Windows - Embed WindowBrush into SharedColor instead of trying to parse PlatformColor into RGB
-  } else if (value.hasType<butter::map<std::string, std::vector<std::string>>>()) {
-    auto map = (butter::map<std::string, std::vector<std::string>>)value;
+  } else if (value.hasType<std::unordered_map<std::string, std::vector<std::string>>>()) {
+    auto map = (std::unordered_map<std::string, std::vector<std::string>>)value;
     if (map.find("windowsbrush") != map.end()) {
       result = SharedColor(std::move(map["windowsbrush"]));
       return;
@@ -59,12 +60,12 @@ inline void fromRawValue(const PropsParserContext &context, const RawValue &valu
 }
 
 #ifdef ANDROID
-inline int toAndroidRepr(const SharedColor &color) {
+inline int toAndroidRepr(const SharedColor& color) {
   return *color;
 }
 #endif
 
-inline std::string toString(const SharedColor &value) {
+inline std::string toString(const SharedColor& value) {
   ColorComponents components = colorComponentsFromColor(value);
   auto ratio = 255.f;
   return "rgba(" + folly::to<std::string>(round(components.red * ratio)) + ", " +
@@ -75,10 +76,10 @@ inline std::string toString(const SharedColor &value) {
 
 #pragma mark - Geometry
 
-inline void fromRawValue(const PropsParserContext &context, const RawValue &value, Point &result) {
-  if (value.hasType<butter::map<std::string, Float>>()) {
-    auto map = (butter::map<std::string, Float>)value;
-    for (const auto &pair : map) {
+inline void fromRawValue(const PropsParserContext& context, const RawValue& value, Point& result) {
+  if (value.hasType<std::unordered_map<std::string, Float>>()) {
+    auto map = (std::unordered_map<std::string, Float>)value;
+    for (const auto& pair : map) {
       if (pair.first == "x") {
         result.x = pair.second;
       } else if (pair.first == "y") {
@@ -103,10 +104,10 @@ inline void fromRawValue(const PropsParserContext &context, const RawValue &valu
   }
 }
 
-inline void fromRawValue(const PropsParserContext &context, const RawValue &value, Size &result) {
-  if (value.hasType<butter::map<std::string, Float>>()) {
-    auto map = (butter::map<std::string, Float>)value;
-    for (const auto &pair : map) {
+inline void fromRawValue(const PropsParserContext& context, const RawValue& value, Size& result) {
+  if (value.hasType<std::unordered_map<std::string, Float>>()) {
+    auto map = (std::unordered_map<std::string, Float>)value;
+    for (const auto& pair : map) {
       if (pair.first == "width") {
         result.width = pair.second;
       } else if (pair.first == "height") {
@@ -134,16 +135,19 @@ inline void fromRawValue(const PropsParserContext &context, const RawValue &valu
   }
 }
 
-inline void fromRawValue(const PropsParserContext &context, const RawValue &value, EdgeInsets &result) {
+inline void fromRawValue(
+    const PropsParserContext& context,
+    const RawValue& value,
+    EdgeInsets& result) {
   if (value.hasType<Float>()) {
     auto number = (Float)value;
     result = {number, number, number, number};
     return;
   }
 
-  if (value.hasType<butter::map<std::string, Float>>()) {
-    auto map = (butter::map<std::string, Float>)value;
-    for (const auto &pair : map) {
+  if (value.hasType<std::unordered_map<std::string, Float>>()) {
+    auto map = (std::unordered_map<std::string, Float>)value;
+    for (const auto& pair : map) {
       if (pair.first == "top") {
         result.top = pair.second;
       } else if (pair.first == "left") {
@@ -175,16 +179,19 @@ inline void fromRawValue(const PropsParserContext &context, const RawValue &valu
   }
 }
 
-inline void fromRawValue(const PropsParserContext &context, const RawValue &value, CornerInsets &result) {
+inline void fromRawValue(
+    const PropsParserContext& context,
+    const RawValue& value,
+    CornerInsets& result) {
   if (value.hasType<Float>()) {
     auto number = (Float)value;
     result = {number, number, number, number};
     return;
   }
 
-  if (value.hasType<butter::map<std::string, Float>>()) {
-    auto map = (butter::map<std::string, Float>)value;
-    for (const auto &pair : map) {
+  if (value.hasType<std::unordered_map<std::string, Float>>()) {
+    auto map = (std::unordered_map<std::string, Float>)value;
+    for (const auto& pair : map) {
       if (pair.first == "topLeft") {
         result.topLeft = pair.second;
       } else if (pair.first == "topRight") {
@@ -218,27 +225,30 @@ inline void fromRawValue(const PropsParserContext &context, const RawValue &valu
   LOG(ERROR) << "Unsupported CornerInsets type";
 }
 
-inline std::string toString(const Point &point) {
+inline std::string toString(const Point& point) {
   return "{" + folly::to<std::string>(point.x) + ", " + folly::to<std::string>(point.y) + "}";
 }
 
-inline std::string toString(const Size &size) {
+inline std::string toString(const Size& size) {
   return "{" + folly::to<std::string>(size.width) + ", " + folly::to<std::string>(size.height) + "}";
 }
 
-inline std::string toString(const Rect &rect) {
+inline std::string toString(const Rect& rect) {
   return "{" + toString(rect.origin) + ", " + toString(rect.size) + "}";
 }
 
-inline std::string toString(const EdgeInsets &edgeInsets) {
-  return "{" + folly::to<std::string>(edgeInsets.left) + ", " + folly::to<std::string>(edgeInsets.top) + ", " +
-      folly::to<std::string>(edgeInsets.right) + ", " + folly::to<std::string>(edgeInsets.bottom) + "}";
+inline std::string toString(const EdgeInsets& edgeInsets) {
+  return "{" + folly::to<std::string>(edgeInsets.left) + ", " +
+      folly::to<std::string>(edgeInsets.top) + ", " +
+      folly::to<std::string>(edgeInsets.right) + ", " +
+      folly::to<std::string>(edgeInsets.bottom) + "}";
 }
 
-inline std::string toString(const CornerInsets &cornerInsets) {
-  return "{" + folly::to<std::string>(cornerInsets.topLeft) + ", " + folly::to<std::string>(cornerInsets.topRight) +
-      ", " + folly::to<std::string>(cornerInsets.bottomLeft) + ", " + folly::to<std::string>(cornerInsets.bottomRight) +
-      "}";
+inline std::string toString(const CornerInsets& cornerInsets) {
+  return "{" + folly::to<std::string>(cornerInsets.topLeft) + ", " +
+      folly::to<std::string>(cornerInsets.topRight) + ", " +
+      folly::to<std::string>(cornerInsets.bottomLeft) + ", " +
+      folly::to<std::string>(cornerInsets.bottomRight) + "}";
 }
 
 } // namespace facebook::react

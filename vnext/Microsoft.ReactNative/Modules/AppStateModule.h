@@ -14,7 +14,7 @@ namespace Microsoft::ReactNative {
 REACT_MODULE(AppState)
 struct AppState : public std::enable_shared_from_this<AppState> {
   using ModuleSpec = ReactNativeSpecs::AppStateSpec;
-  using AppStateChangeArgs = ReactNativeSpecs::AppStateSpec_getCurrentAppState_success_appState;
+  using AppStateChangeArgs = ReactNativeSpecs::AppStateSpec_AppState;
 
   REACT_INIT(Initialize)
   void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
@@ -31,7 +31,7 @@ struct AppState : public std::enable_shared_from_this<AppState> {
   void RemoveListeners(double count) noexcept;
 
   REACT_GET_CONSTANTS(GetConstants)
-  ReactNativeSpecs::AppStateSpec_Constants GetConstants() noexcept;
+  ReactNativeSpecs::AppStateSpec_AppStateConstants GetConstants() noexcept;
 
   REACT_EVENT(AppStateDidChange, L"appStateDidChange")
   std::function<void(AppStateChangeArgs const &)> AppStateDidChange;

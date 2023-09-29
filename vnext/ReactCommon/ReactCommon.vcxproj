@@ -131,14 +131,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector\InspectorInterfaces.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\logger\react_native_log.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\reactperflogger\reactperflogger\BridgeNativeModulePerfLogger.cpp" />
-    <ClCompile Include="$(YogaDir)\yoga\log.cpp" />
-    <ClCompile Include="$(YogaDir)\yoga\Utils.cpp" />
-    <ClCompile Include="$(YogaDir)\yoga\YGConfig.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\YGEnums.cpp" />
-    <ClCompile Include="$(YogaDir)\yoga\YGLayout.cpp" />
-    <ClCompile Include="$(YogaDir)\yoga\YGNode.cpp" />
-    <ClCompile Include="$(YogaDir)\yoga\YGNodePrint.cpp" />
-    <ClCompile Include="$(YogaDir)\yoga\YGStyle.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\YGValue.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\Sealable.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\DebugStringConvertible.cpp" />

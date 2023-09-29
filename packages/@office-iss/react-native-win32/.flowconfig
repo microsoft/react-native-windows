@@ -71,6 +71,9 @@
 
 .*/node_modules/resolve/test/resolver/malformed_package_json/package\.json$
 
+; Checked-in build output
+<PROJECT_ROOT>/packages/debugger-frontend/dist/
+
 [untyped]
 .*/node_modules/@react-native-community/cli/.*/.*
 ; Should work out how to do this properly
@@ -143,4 +146,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.215.1
+^0.216.1

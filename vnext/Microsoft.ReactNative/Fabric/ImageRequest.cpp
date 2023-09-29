@@ -21,7 +21,7 @@ void ImageRequest::cancel() const {
   cancelRequest_();
 }
 
-const ImageSource &ImageRequest::getImageSource() const {
+const ImageSource& ImageRequest::getImageSource() const {
   return imageSource_;
 }
 
