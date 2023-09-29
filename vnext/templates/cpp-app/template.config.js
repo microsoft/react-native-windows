@@ -8,10 +8,12 @@
 
 const chalk = require('chalk');
 const existsSync = require('fs').existsSync;
-const fs = require('fs').promises;
 const path = require('path');
 const username = require('username');
 const uuid = require('uuid');
+const util = require('util');
+
+const glob = util.promisify(require('glob'));
 
 async function preInstall(config = {}, options = {}) {}
 
@@ -21,7 +23,7 @@ async function getFileMappings(config = {}, options = {}) {
   );
   const rnwVersion = require(path.join(rnwPath, 'package.json')).version;
 
-  const devMode = await existsSync(path.join(rnwPath, 'src'));
+  const devMode = existsSync(path.join(rnwPath, 'src'));
 
   const projectName =
     config?.project?.windows?.project?.projectName ?? options?.name ?? 'MyApp';
@@ -66,31 +68,30 @@ async function getFileMappings(config = {}, options = {}) {
 
   let fileMappings = [];
 
-  const templateFiles = await fs.readdir(__dirname, {recursive: true});
+  const templateFiles = await glob('**/*', {
+    cwd: __dirname,
+    ignore: 'template.config.js',
+    nodir: true,
+  });
 
   for (const file of templateFiles) {
     const fileMapping = {
-      from: path.resolve(__dirname, file),
-      to: file,
+      from: path.resolve(__dirname, path.normalize(file)),
+      to: path.normalize(file),
       replacements,
     };
-
-    // Don't include this file nor directories
-    if (
-      file === 'template.config.js' ||
-      (await fs.stat(fileMapping.from)).isDirectory()
-    ) {
-      continue;
-    }
 
     // Perform simple file renames
     const fileName = path.basename(fileMapping.to);
     switch (fileName) {
       case '_gitignore':
-        fileMapping.to = path.join(path.dirname(file), '.gitignore');
+        fileMapping.to = path.join(path.dirname(fileMapping.to), '.gitignore');
         break;
       case 'NuGet_Config':
-        fileMapping.to = path.join(path.dirname(file), 'NuGet.config');
+        fileMapping.to = path.join(
+          path.dirname(fileMapping.to),
+          'NuGet.config',
+        );
         break;
     }
 
@@ -104,7 +105,7 @@ async function getFileMappings(config = {}, options = {}) {
 }
 
 function postInstall(config = {}, options = {}) {
-  console.log(chalk.white.bold('To run your app on UWP:'));
+  console.log(chalk.white.bold('To run your new windows app:'));
   console.log(chalk.white('   npx react-native run-windows'));
 }
 

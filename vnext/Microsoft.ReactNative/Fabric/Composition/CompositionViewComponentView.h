@@ -82,6 +82,7 @@ struct CompositionBaseComponentView : public IComponentView,
 
   virtual std::string DefaultControlType() const noexcept;
   virtual std::string DefaultAccessibleName() const noexcept;
+  virtual std::string DefaultHelpText() const noexcept;
 
  protected:
   std::array<winrt::Microsoft::ReactNative::Composition::ISpriteVisual, SpecialBorderLayerCount>

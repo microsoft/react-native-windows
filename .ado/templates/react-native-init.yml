@@ -30,6 +30,12 @@ parameters:
   - name: runWack
     type: boolean
     default: false
+  - name: initPath
+    type: string
+    default: ReactNativeWindowsInit
+    values:
+      - ReactNativeWindowsInit
+      - InitWindows
   - name: additionalInitArguments
     type: string
     default: ''
@@ -96,29 +102,48 @@ steps:
   - script: yarn config set registry http://localhost:4873
     displayName: Modify yarn config to point to local verdaccio server
 
-  - ${{ if eq(parameters.useNuget, true) }}:
-    - script: |
-        npx --yes react-native-windows-init@latest --verbose --version $(npmVersion) --overwrite --language ${{ parameters.language }} --projectType ${{ parameters.projectType }} ${{ parameters.additionalInitArguments }} --experimentalNuGetDependency true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed
-      displayName: Apply windows template (with nuget)
-      workingDirectory: $(Agent.BuildDirectory)\testcli
-      env:
-        npm_config_registry: http://localhost:4873
+  - ${{ if eq(parameters.initPath, 'ReactNativeWindowsInit') }}:
 
-  - ${{ if eq(parameters.useNuget, false) }}:
-    - script: |
-        npx --yes react-native-windows-init@latest --verbose --version $(npmVersion) --overwrite --language ${{ parameters.language }} --projectType ${{ parameters.projectType }} ${{ parameters.additionalInitArguments }}
-      displayName: Apply windows template (without nuget)
-      workingDirectory: $(Agent.BuildDirectory)\testcli
-      env:
-        npm_config_registry: http://localhost:4873
+    - ${{ if eq(parameters.useNuget, true) }}:
+      - script: |
+          npx --yes react-native-windows-init@latest --verbose --version $(npmVersion) --overwrite --language ${{ parameters.language }} --projectType ${{ parameters.projectType }} ${{ parameters.additionalInitArguments }} --experimentalNuGetDependency true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed
+        displayName: Apply windows template (with nuget)
+        workingDirectory: $(Agent.BuildDirectory)\testcli
+        env:
+          npm_config_registry: http://localhost:4873
 
-  - ${{ if eq(parameters.projectType, 'app') }}:
-    - powershell: |
-        [xml] $manifest = Get-Content .\Package.appxmanifest
-        $manifest.Package.Identity.Name = 'ReactNative.InitTest'
-        $manifest.Save("$pwd\Package.appxmanifest")
-      displayName: Set AppX package name to "ReactNative.InitTest"
-      workingDirectory: $(Agent.BuildDirectory)\testcli\windows\testcli
+    - ${{ if eq(parameters.useNuget, false) }}:
+      - script: |
+          npx --yes react-native-windows-init@latest --verbose --version $(npmVersion) --overwrite --language ${{ parameters.language }} --projectType ${{ parameters.projectType }} ${{ parameters.additionalInitArguments }}
+        displayName: Apply windows template (without nuget)
+        workingDirectory: $(Agent.BuildDirectory)\testcli
+        env:
+          npm_config_registry: http://localhost:4873
+
+    - ${{ if eq(parameters.projectType, 'app') }}:
+      - powershell: |
+          [xml] $manifest = Get-Content .\Package.appxmanifest
+          $manifest.Package.Identity.Name = 'ReactNative.InitTest'
+          $manifest.Save("$pwd\Package.appxmanifest")
+        displayName: Set AppX package name to "ReactNative.InitTest"
+        workingDirectory: $(Agent.BuildDirectory)\testcli\windows\testcli
+  
+  - ${{ if eq(parameters.initPath, 'InitWindows') }}:
+    - ${{ if and(eq(parameters.projectType, 'app'), eq(parameters.language, 'cpp')) }}:
+      - script: |
+          call yarn add react-native-windows@$(npmVersion)
+          call yarn react-native init-windows --template cpp-app --overwrite --logging ${{ parameters.additionalInitArguments }}
+        displayName: Call react-native init-windows
+        workingDirectory: $(Agent.BuildDirectory)\testcli
+        env:
+          npm_config_registry: http://localhost:4873
+      
+      - powershell: |
+          [xml] $manifest = Get-Content .\Package.appxmanifest
+          $manifest.Package.Identity.Name = 'ReactNative.InitTest'
+          $manifest.Save("$pwd\Package.appxmanifest")
+        displayName: Set AppX package name to "ReactNative.InitTest"
+        workingDirectory: $(Agent.BuildDirectory)\testcli\windows\testcli.Package
 
   # Reclaim memory used by Verdaccio to reduce the chance of build OOM issues
   - script: tskill node

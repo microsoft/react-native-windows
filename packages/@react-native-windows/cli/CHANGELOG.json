@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Thu, 28 Sep 2023 05:13:18 GMT",
+      "version": "0.0.0-canary.190",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.190",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "407dcc0a589aaf5146df7fd5ac5f9ecd78f3e26e",
+            "comment": "Use glob to look through folders recursively"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 26 Sep 2023 05:13:15 GMT",
       "version": "0.0.0-canary.189",
       "tag": "@react-native-windows/cli_v0.0.0-canary.189",
