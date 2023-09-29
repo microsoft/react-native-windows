@@ -1029,6 +1029,82 @@ winrt::Microsoft::ReactNative::Composition::IVisual CompCaretVisual<MicrosoftTyp
 using MicrosoftCompCaretVisual = CompCaretVisual<MicrosoftTypeRedirects>;
 #endif
 
+// Switch Thumb animations
+template <typename TTypeRedirects>
+struct CompSwitchThumbVisual
+    : winrt::implements<CompSwitchThumbVisual<TTypeRedirects>, winrt::Microsoft::ReactNative::Composition::ISwitchThumbVisual> {
+  CompSwitchThumbVisual(typename TTypeRedirects::Compositor const &compositor)
+      : m_compositor(compositor),
+        m_compVisual(compositor.CreateSpriteVisual()),
+        m_opacityAnimation(compositor.CreateScalarKeyFrameAnimation()) {
+    m_visual = CreateVisual();
+
+    // Create circle
+    auto ellipse = m_compositor.CreateEllipseGeometry();
+    ellipse.Radius({10.0f, 10.0f});
+    auto spriteShape = m_compositor.CreateSpriteShape();
+    spriteShape.Geometry(ellipse);
+    spriteShape.Offset(winrt::Windows::Foundation::Numerics::float2(0.0f, 0.0f));
+    auto spriteVisualBrush = m_compositor.CreateColorBrush(winrt::Windows::UI::Colors::Green());
+    spriteShape.FillBrush(spriteVisualBrush);
+    auto circleShape = m_compositor.CreateShapeVisual();
+    circleShape.Shapes().Append(spriteShape);
+    circleShape.Size({100.0f, 100.0f});
+
+    m_compVisual.Children().InsertAtTop(circleShape);
+
+  }
+
+  winrt::Microsoft::ReactNative::Composition::IVisual CreateVisual() const noexcept;
+
+  winrt::Microsoft::ReactNative::Composition::IVisual InnerVisual() const noexcept {
+    return m_visual;
+  }
+
+  void Color(winrt::Windows::UI::Color color) noexcept {
+    m_compVisual.Brush(m_compositor.CreateColorBrush(color));
+  }
+
+  void Size(winrt::Windows::Foundation::Numerics::float2 size) noexcept {
+    m_compVisual.Size(size);
+  }
+
+  void Position(winrt::Windows::Foundation::Numerics::float2 position) noexcept {
+    m_compVisual.Offset({position.x, position.y, 0.0f});
+  }
+
+  bool IsVisible() const noexcept {
+    return m_isVisible;
+  }
+
+  void IsVisible(bool value) noexcept {
+  }
+
+ private:
+  bool m_isVisible{true};
+  typename TTypeRedirects::SpriteVisual m_compVisual;
+  winrt::Microsoft::ReactNative::Composition::IVisual m_visual;
+  typename TTypeRedirects::ScalarKeyFrameAnimation m_opacityAnimation;
+  typename TTypeRedirects::Compositor m_compositor{nullptr};
+};
+
+winrt::Microsoft::ReactNative::Composition::IVisual CompSwitchThumbVisual<WindowsTypeRedirects>::CreateVisual()
+    const noexcept {
+  return winrt::make<Composition::WindowsCompSpriteVisual>(m_compVisual);
+}
+using WindowsCompSwitchThumbVisual = CompSwitchThumbVisual<WindowsTypeRedirects>;
+
+#ifdef USE_WINUI3
+winrt::Microsoft::ReactNative::Composition::IVisual CompSwitchThumbVisual<MicrosoftTypeRedirects>::CreateVisual()
+    const noexcept {
+  return winrt::make<Composition::MicrosoftCompSwitchThumbVisual>(m_compVisual);
+}
+using MicrosoftCompSwitchThumbVisual = CompSwitchThumbVisual<MicrosoftTypeRedirects>;
+#endif
+
+
+// ending
+
 template <typename TTypeRedirects>
 struct CompFocusVisual
     : winrt::implements<CompFocusVisual<TTypeRedirects>, winrt::Microsoft::ReactNative::Composition::IFocusVisual> {
@@ -1186,6 +1262,8 @@ struct CompContext : winrt::implements<
 
   winrt::Microsoft::ReactNative::Composition::ICaretVisual CreateCaretVisual() noexcept;
 
+  winrt::Microsoft::ReactNative::Composition::ISwitchThumbVisual CreateSwitchThumbVisual() noexcept;
+
   winrt::Microsoft::ReactNative::Composition::IFocusVisual CreateFocusVisual() noexcept;
 
   typename TTypeRedirects::CompositionGraphicsDevice CompositionGraphicsDevice() noexcept {
@@ -1256,6 +1334,11 @@ CompContext<WindowsTypeRedirects>::CreateCaretVisual() noexcept {
   return winrt::make<Composition::WindowsCompCaretVisual>(m_compositor);
 }
 
+winrt::Microsoft::ReactNative::Composition::ISwitchThumbVisual
+CompContext<WindowsTypeRedirects>::CreateSwitchThumbVisual() noexcept {
+  return winrt::make<Composition::WindowsCompSwitchThumbVisual>(m_compositor);
+}
+
 winrt::Microsoft::ReactNative::Composition::IFocusVisual
 CompContext<WindowsTypeRedirects>::CreateFocusVisual() noexcept {
   return winrt::make<Composition::WindowsCompFocusVisual>(m_compositor);
@@ -1305,6 +1388,11 @@ CompContext<MicrosoftTypeRedirects>::CreateDrawingSurfaceBrush(
 winrt::Microsoft::ReactNative::Composition::ICaretVisual
 CompContext<MicrosoftTypeRedirects>::CreateCaretVisual() noexcept {
   return winrt::make<Composition::MicrosoftCompCaretVisual>(m_compositor);
+}
+
+winrt::Microsoft::ReactNative::Composition::ISwitchThumbVisual
+CompContext<MicrosoftTypeRedirects>::CreateSwitchThumbVisual() noexcept {
+  return winrt::make<Composition::MicrosoftCompSwitchThumbVisual>(m_compositor);
 }
 
 winrt::Microsoft::ReactNative::Composition::IFocusVisual

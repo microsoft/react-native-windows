@@ -194,6 +194,12 @@ void SwitchComponentView::ensureVisual() noexcept {
     m_visual = m_compContext.CreateSpriteVisual();
     OuterVisual().InsertAt(m_visual, 0);
   }
+
+   if (!m_thumbVisual) {
+    m_thumbVisual = m_compContext.CreateSwitchThumbVisual();
+    m_visual.InsertAt(m_thumbVisual.InnerVisual(), 0);
+    m_thumbVisual.IsVisible(true);
+  }
 }
 
 void SwitchComponentView::ensureDrawingSurface() noexcept {
