@@ -82,13 +82,6 @@
     },
     {
       "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/YogaLayoutableShadowNode.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/YogaLayoutableShadowNode.cpp",
-      "baseHash": "047770f470684457e40e20fb4e445e75e173fbeb",
-      "issue": 12136
-    },
-    {
-      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mounting/ShadowTree.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/mounting/ShadowTree.cpp",
       "baseHash": "6a1ef351833bd02ce27544dd3db205c1bf2c4139",
