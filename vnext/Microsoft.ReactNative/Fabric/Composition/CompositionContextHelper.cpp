@@ -18,9 +18,9 @@
 #include "CompositionHelpers.h"
 
 #ifdef USE_WINUI3
-#include <winrt/Microsoft.UI.Composition.interop.h>
 #include <winrt/Microsoft.UI.Composition.h>
 #include <winrt/Microsoft.UI.Composition.interactions.h>
+#include <winrt/Microsoft.UI.Composition.interop.h>
 #endif
 
 namespace Microsoft::ReactNative::Composition {
@@ -1244,8 +1244,9 @@ CompContext<WindowsTypeRedirects>::CreateFocusVisual() noexcept {
   return winrt::make<Composition::WindowsCompFocusVisual>(m_compositor);
 }
 
-template<>
-winrt::Windows::UI::Composition::CompositionGraphicsDevice CompContext<WindowsTypeRedirects>::CompositionGraphicsDevice() noexcept {
+template <>
+winrt::Windows::UI::Composition::CompositionGraphicsDevice
+CompContext<WindowsTypeRedirects>::CompositionGraphicsDevice() noexcept {
   if (!m_compositionGraphicsDevice) {
     // To create a composition graphics device, we need to QI for another interface
 
@@ -1261,7 +1262,6 @@ winrt::Windows::UI::Composition::CompositionGraphicsDevice CompContext<WindowsTy
   }
   return m_compositionGraphicsDevice;
 }
-
 
 using WindowsCompContext = CompContext<WindowsTypeRedirects>;
 
@@ -1314,14 +1314,15 @@ CompContext<MicrosoftTypeRedirects>::CreateFocusVisual() noexcept {
   return winrt::make<Composition::MicrosoftCompFocusVisual>(m_compositor);
 }
 
-template<>
-winrt::Microsoft::UI::Composition::CompositionGraphicsDevice CompContext<MicrosoftTypeRedirects>::CompositionGraphicsDevice() noexcept {
-    if (!m_compositionGraphicsDevice) {
-      winrt::check_hresult(
-        m_compositor.as<winrt::Microsoft::UI::Composition::ICompositorInterop>()->CreateGraphicsDevice(D2DDevice().get(), &m_compositionGraphicsDevice));
-    }
-    return m_compositionGraphicsDevice;
+template <>
+winrt::Microsoft::UI::Composition::CompositionGraphicsDevice
+CompContext<MicrosoftTypeRedirects>::CompositionGraphicsDevice() noexcept {
+  if (!m_compositionGraphicsDevice) {
+    winrt::check_hresult(m_compositor.as<winrt::Microsoft::UI::Composition::ICompositorInterop>()->CreateGraphicsDevice(
+        D2DDevice().get(), &m_compositionGraphicsDevice));
   }
+  return m_compositionGraphicsDevice;
+}
 
 using MicrosoftCompContext = CompContext<MicrosoftTypeRedirects>;
 #endif
