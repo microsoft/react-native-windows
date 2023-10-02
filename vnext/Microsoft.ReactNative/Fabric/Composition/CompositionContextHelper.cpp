@@ -18,7 +18,7 @@
 #include "CompositionHelpers.h"
 
 #ifdef USE_WINUI3
-#include <microsoft.ui.composition.interop.h>
+#include <winrt/Microsoft.UI.Composition.interop.h>
 #include <winrt/Microsoft.UI.Composition.h>
 #include <winrt/Microsoft.UI.Composition.interactions.h>
 #endif
@@ -72,7 +72,6 @@ struct CompositionTypeTraits<WindowsTypeTag> {
 
   using ICompositionDrawingSurfaceInterop = ABI::Windows::UI::Composition::ICompositionDrawingSurfaceInterop;
   using ICompositorInterop = ABI::Windows::UI::Composition::ICompositorInterop;
-  using ICompositionGraphicsDevice = ABI::Windows::UI::Composition::ICompositionGraphicsDevice;
 
   using IInnerCompositionDropShadow = IWindowsCompositionDropShadow;
   using IInnerCompositionVisual = IWindowsCompositionVisual;
@@ -125,9 +124,8 @@ struct CompositionTypeTraits<MicrosoftTypeTag> {
       winrt::Microsoft::UI::Composition::Interactions::VisualInteractionSourceRedirectionMode;
   using CompositionGraphicsDevice = winrt::Microsoft::UI::Composition::CompositionGraphicsDevice;
 
-  using ICompositionDrawingSurfaceInterop = ABI::Microsoft::UI::Composition::ICompositionDrawingSurfaceInterop;
-  using ICompositorInterop = ABI::Microsoft::UI::Composition::ICompositorInterop;
-  using ICompositionGraphicsDevice = ABI::Microsoft::UI::Composition::ICompositionGraphicsDevice;
+  using ICompositionDrawingSurfaceInterop = winrt::Microsoft::UI::Composition::ICompositionDrawingSurfaceInterop;
+  using ICompositorInterop = winrt::Microsoft::UI::Composition::ICompositorInterop;
 
   using IInnerCompositionDropShadow = IMicrosoftCompositionDropShadow;
   using IInnerCompositionVisual = IMicrosoftCompositionVisual;
@@ -1188,22 +1186,7 @@ struct CompContext : winrt::implements<
 
   winrt::Microsoft::ReactNative::Composition::IFocusVisual CreateFocusVisual() noexcept;
 
-  typename TTypeRedirects::CompositionGraphicsDevice CompositionGraphicsDevice() noexcept {
-    if (!m_compositionGraphicsDevice) {
-      // To create a composition graphics device, we need to QI for another interface
-
-      winrt::com_ptr<typename TTypeRedirects::ICompositorInterop> compositorInterop{
-          m_compositor.as<typename TTypeRedirects::ICompositorInterop>()};
-
-      // Create a graphics device backed by our D3D device
-      winrt::com_ptr<typename TTypeRedirects::ICompositionGraphicsDevice> compositionGraphicsDeviceIface;
-      winrt::check_hresult(
-          compositorInterop->CreateGraphicsDevice(D2DDevice().get(), compositionGraphicsDeviceIface.put()));
-
-      compositionGraphicsDeviceIface.as(m_compositionGraphicsDevice);
-    }
-    return m_compositionGraphicsDevice;
-  }
+  typename TTypeRedirects::CompositionGraphicsDevice CompositionGraphicsDevice() noexcept;
 
   typename TTypeRedirects::Compositor InnerCompositor() noexcept {
     return m_compositor;
@@ -1261,6 +1244,25 @@ CompContext<WindowsTypeRedirects>::CreateFocusVisual() noexcept {
   return winrt::make<Composition::WindowsCompFocusVisual>(m_compositor);
 }
 
+template<>
+winrt::Windows::UI::Composition::CompositionGraphicsDevice CompContext<WindowsTypeRedirects>::CompositionGraphicsDevice() noexcept {
+  if (!m_compositionGraphicsDevice) {
+    // To create a composition graphics device, we need to QI for another interface
+
+    winrt::com_ptr<ABI::Windows::UI::Composition::ICompositorInterop> compositorInterop{
+        m_compositor.as<ABI::Windows::UI::Composition::ICompositorInterop>()};
+
+    // Create a graphics device backed by our D3D device
+    winrt::com_ptr<ABI::Windows::UI::Composition::ICompositionGraphicsDevice> compositionGraphicsDeviceIface;
+    winrt::check_hresult(
+        compositorInterop->CreateGraphicsDevice(D2DDevice().get(), compositionGraphicsDeviceIface.put()));
+
+    compositionGraphicsDeviceIface.as(m_compositionGraphicsDevice);
+  }
+  return m_compositionGraphicsDevice;
+}
+
+
 using WindowsCompContext = CompContext<WindowsTypeRedirects>;
 
 #ifdef USE_WINUI3
@@ -1311,6 +1313,16 @@ winrt::Microsoft::ReactNative::Composition::IFocusVisual
 CompContext<MicrosoftTypeRedirects>::CreateFocusVisual() noexcept {
   return winrt::make<Composition::MicrosoftCompFocusVisual>(m_compositor);
 }
+
+template<>
+winrt::Microsoft::UI::Composition::CompositionGraphicsDevice CompContext<MicrosoftTypeRedirects>::CompositionGraphicsDevice() noexcept {
+    if (!m_compositionGraphicsDevice) {
+      winrt::check_hresult(
+        m_compositor.as<winrt::Microsoft::UI::Composition::ICompositorInterop>()->CreateGraphicsDevice(D2DDevice().get(), &m_compositionGraphicsDevice));
+    }
+    return m_compositionGraphicsDevice;
+  }
+
 using MicrosoftCompContext = CompContext<MicrosoftTypeRedirects>;
 #endif
 
