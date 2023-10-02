@@ -95,12 +95,9 @@ namespace Microsoft.ReactNative.Composition.Input
 
   runtimeclass PointerRoutedEventArgs : RoutedEventArgs
   {
-    PointerPoint CurrentPoint { get; };
+    PointerPoint GetCurrentPoint(Int32 tag);
     Boolean Handled;
     Windows.System.VirtualKeyModifiers KeyModifiers { get; };
-    Windows.Foundation.Collections.IVector<PointerPoint> GetIntermediatePoints();
-    Windows.Foundation.Collections.IVector<PointerPoint> GetIntermediateTransformedPoints(
-        IPointerPointTransform transform);
   };
 
 } // namespace Microsoft.ReactNative.Composition.Input

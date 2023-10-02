@@ -179,7 +179,27 @@ winrt::Windows::UI::Core::CoreVirtualKeyStates CompositionEventHandler::GetKeySt
 
 int64_t CompositionEventHandler::SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
   switch (msg) {
+    case WM_POINTERCAPTURECHANGED:
+    case WM_POINTERENTER:
+    case WM_POINTERLEAVE:
+    case WM_POINTERUPDATE:
+    case WM_POINTERROUTEDAWAY:
+    case WM_POINTERROUTEDRELEASED:
+    case WM_POINTERROUTEDTO:
+    case WM_POINTERWHEEL:
+    case WM_POINTERHWHEEL:
+    case DM_POINTERHITTEST:
+    case WM_SETCURSOR:
+    case WM_CAPTURECHANGED:
+      {
+        return 0;
+      }
+
     case WM_LBUTTONDOWN: {
+
+      // This pointer point should be in rootview coords - or we need an offset args for the rootview (which islands would provide)
+      //auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(winrt::Windows::UI::Input::GetCurrentPoint(uint32_t const& pointerId))
+
       ButtonDown(msg, wParam, lParam);
       return 0;
     }
