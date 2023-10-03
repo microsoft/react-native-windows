@@ -68,6 +68,7 @@ import typeof Networking from './Libraries/Network/RCTNetworking';
 import typeof PanResponder from './Libraries/Interaction/PanResponder';
 import typeof PermissionsAndroid from './Libraries/PermissionsAndroid/PermissionsAndroid';
 import typeof PixelRatio from './Libraries/Utilities/PixelRatio';
+import typeof PressabilityConfig, PressabilityEventHandlers from './Libraries/Pressability/Pressability';
 import typeof PushNotificationIOS from './Libraries/PushNotificationIOS/PushNotificationIOS';
 import typeof Settings from './Libraries/Settings/Settings';
 import typeof Share from './Libraries/Share/Share';
@@ -96,7 +97,8 @@ import typeof {RootTagContext} from './Libraries/ReactNative/RootTag';
 import type {HostComponent as _HostComponentInternal} from './Libraries/Renderer/shims/ReactNativeTypes';
 
 // Windows types
-import typeof {ColorGradientWin32} from './Libraries/StyleSheet/PlatformColorValueTypesWin32';
+import typeof {ColorGradientWin32}import Pressability from './Libraries/Pressability/Pressability.win32';
+ from './Libraries/StyleSheet/PlatformColorValueTypesWin32';
 
 export type HostComponent<T> = _HostComponentInternal<T>;
 
@@ -291,6 +293,12 @@ module.exports = {
   },
   get PixelRatio(): PixelRatio {
     return require('./Libraries/Utilities/PixelRatio').default;
+  },
+  get Pressability(): Pressability {
+    return require('./Libraries/Pressability/Pressability');
+  },
+  get PressabilityConfig(): PressabilityConfig {
+    return require('./Libraries/Pressability/Pressability');
   },
   get PushNotificationIOS(): PushNotificationIOS {
     warnOnce(
