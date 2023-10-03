@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Wed, 20 Sep 2023 05:17:49 GMT and should not be manually modified.
+This log was last generated on Tue, 03 Oct 2023 05:13:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.216
+
+Tue, 03 Oct 2023 05:13:16 GMT
+
+### Changes
+
+- Have RCTNetworking.win32 fork RCTNetworking.ios (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.215
 
