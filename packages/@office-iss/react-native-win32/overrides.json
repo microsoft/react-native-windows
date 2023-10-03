@@ -321,7 +321,7 @@
     {
       "type": "copy",
       "file": "src/Libraries/Network/RCTNetworking.win32.js",
-      "baseFile": "packages/react-native/Libraries/Network/RCTNetworking.ios.js",
+      "baseFile": "Libraries/Network/RCTNetworking.ios.js",
       "baseHash": "b9d169d83ea1ccd04321190896b5e5e02809f940",
       "issue": 4318
     },
