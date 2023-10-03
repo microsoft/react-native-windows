@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 03 Oct 2023 05:13:16 GMT",
+      "version": "0.0.0-canary.712",
+      "tag": "react-native-windows_v0.0.0-canary.712",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d64dc2a331ecda6f1df921285a0087f417950e15",
+            "comment": "Have RCTNetworking.win32 fork RCTNetworking.ios"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 28 Sep 2023 05:13:18 GMT",
       "version": "0.0.0-canary.711",
       "tag": "react-native-windows_v0.0.0-canary.711",
