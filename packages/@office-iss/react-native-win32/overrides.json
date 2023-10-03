@@ -343,10 +343,10 @@
       "baseHash": "daeb879969c322e67efcb9595d6bb171b9dad6d8"
     },
     {
-      "type": "derived",
+      "type": "copy",
       "file": "src/Libraries/Network/RCTNetworking.win32.js",
-      "baseFile": "packages/react-native/Libraries/Network/RCTNetworking.android.js",
-      "baseHash": "67d0d4757fcd7a1c2c0f6de642f713f0fa300e28",
+      "baseFile": "packages/react-native/Libraries/Network/RCTNetworking.ios.js",
+      "baseHash": "39fc8e1003b0f6345ec4fea060f455d06939a321",
       "issue": 4318
     },
     {

@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Have RCTNetworking.win32 fork RCTNetworking.ios (#12199)",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
