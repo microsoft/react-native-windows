@@ -40,3 +40,9 @@ end_of_line = crlf
 # Shell scripts
 [*.{cmd,bat,ps1}]
 end_of_line = crlf
+
+[overrides.json]
+insert_final_newline = false
+
+[package.json]
+insert_final_newline = false
