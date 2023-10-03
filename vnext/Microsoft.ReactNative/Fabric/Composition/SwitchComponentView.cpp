@@ -113,7 +113,7 @@ void SwitchComponentView::Draw() noexcept {
 
     // https://github.com/microsoft/microsoft-ui-xaml/blob/main/dev/CommonStyles/ToggleSwitch_themeresources.xaml
     constexpr float thumbMargin = 3.0f;
-    constexpr float thumbRadius = 7.0f;
+    constexpr float thumbRadius = 7.0f ;
     constexpr float trackWidth = 40.0f;
     constexpr float trackHeight = 20.0f;
     constexpr float trackCornerRadius = 10.0f;
@@ -177,6 +177,16 @@ void SwitchComponentView::Draw() noexcept {
     D2D1_POINT_2F thumbCenter = D2D1 ::Point2F(thumbX, (trackRect.top + trackRect.bottom) / 2);
     D2D1_ELLIPSE thumb = D2D1::Ellipse(thumbCenter, thumbRadius, thumbRadius);
     d2dDeviceContext->FillEllipse(thumb, thumbBrush.get());
+
+    // NEW
+    float thumbXnew = (trackMarginX + (thumbMargin * m_layoutMetrics.pointScaleFactor) + 1.0f);
+    float thumbYnew = (trackMarginY + (thumbMargin * m_layoutMetrics.pointScaleFactor) + 1.0f);
+
+    if (switchProps->value) {
+      thumbXnew = thumbXnew + (trackWidth - thumbRadius - thumbRadius);
+    }
+
+    m_thumbVisual.Position({thumbXnew, thumbYnew});
 
     // Restore old dpi setting
     d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);

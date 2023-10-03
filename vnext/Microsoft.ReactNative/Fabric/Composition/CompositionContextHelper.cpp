@@ -1039,17 +1039,17 @@ struct CompSwitchThumbVisual
         m_opacityAnimation(compositor.CreateScalarKeyFrameAnimation()) {
     m_visual = CreateVisual();
 
-    // Create circle
+    // Create Thumb
     auto ellipse = m_compositor.CreateEllipseGeometry();
-    ellipse.Radius({10.0f, 10.0f});
+    ellipse.Radius({8.25f, 8.25}); // controls the size
     auto spriteShape = m_compositor.CreateSpriteShape();
     spriteShape.Geometry(ellipse);
-    spriteShape.Offset(winrt::Windows::Foundation::Numerics::float2(0.0f, 0.0f));
+    spriteShape.Offset(winrt::Windows::Foundation::Numerics::float2(9.0f, 9.0f)); // controls the offset but gets cut off if outside of container 
     auto spriteVisualBrush = m_compositor.CreateColorBrush(winrt::Windows::UI::Colors::Green());
     spriteShape.FillBrush(spriteVisualBrush);
     auto circleShape = m_compositor.CreateShapeVisual();
     circleShape.Shapes().Append(spriteShape);
-    circleShape.Size({100.0f, 100.0f});
+    circleShape.Size({150.0f, 150.0f});
 
     m_compVisual.Children().InsertAtTop(circleShape);
 
@@ -1069,8 +1069,18 @@ struct CompSwitchThumbVisual
     m_compVisual.Size(size);
   }
 
-  void Position(winrt::Windows::Foundation::Numerics::float2 position) noexcept {
-    m_compVisual.Offset({position.x, position.y, 0.0f});
+  void Position(winrt::Windows::Foundation::Numerics::float2 position) noexcept { 
+    if (!isDrawn) {
+      isDrawn = true;
+      m_compVisual.Offset({position.x, position.y, 0.0f});
+    } else {
+      auto animation = m_compositor.CreateVector3KeyFrameAnimation();
+      animation.Duration(std::chrono::milliseconds(250));
+      animation.Direction(TTypeRedirects::AnimationDirection::Normal);
+      animation.InsertKeyFrame(1.0f, {position.x, position.y, 0.0f});
+
+      m_compVisual.StartAnimation(L"Offset", animation);
+    }
   }
 
   bool IsVisible() const noexcept {
@@ -1082,6 +1092,8 @@ struct CompSwitchThumbVisual
 
  private:
   bool m_isVisible{true};
+  bool isDrawn{false};
+  winrt::Windows::Foundation::Numerics::float2 position;
   typename TTypeRedirects::SpriteVisual m_compVisual;
   winrt::Microsoft::ReactNative::Composition::IVisual m_visual;
   typename TTypeRedirects::ScalarKeyFrameAnimation m_opacityAnimation;
