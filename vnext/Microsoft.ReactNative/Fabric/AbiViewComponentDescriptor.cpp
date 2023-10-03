@@ -153,7 +153,7 @@ facebook::react::SharedEventEmitter AbiViewComponentDescriptor::createEventEmitt
  *   - Set `ShadowNode`'s size from state in
  * `ModalHostViewComponentDescriptor`.
  */
-void AbiViewComponentDescriptor::adopt(facebook::react::ShadowNode& shadowNode) const {
+void AbiViewComponentDescriptor::adopt(facebook::react::ShadowNode &shadowNode) const {
   // Default implementation does nothing.
   react_native_assert(shadowNode.getComponentHandle() == getComponentHandle());
 }

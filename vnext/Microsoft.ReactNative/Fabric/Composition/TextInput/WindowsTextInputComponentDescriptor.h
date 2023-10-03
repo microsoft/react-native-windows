@@ -20,7 +20,7 @@ namespace facebook::react {
  */
 class WindowsTextInputComponentDescriptor final : public ConcreteComponentDescriptor<WindowsTextInputShadowNode> {
  public:
-  WindowsTextInputComponentDescriptor(const ComponentDescriptorParameters& parameters)
+  WindowsTextInputComponentDescriptor(const ComponentDescriptorParameters &parameters)
       : ConcreteComponentDescriptor<WindowsTextInputShadowNode>(parameters) {
     // Every single `WindowsTextInputShadowNode` will have a reference to
     // a shared `TextLayoutManager`.
@@ -79,14 +79,14 @@ class WindowsTextInputComponentDescriptor final : public ConcreteComponentDescri
   */
 
  protected:
-  void adopt(ShadowNode& shadowNode) const override {
-    auto& textInputShadowNode = static_cast<WindowsTextInputShadowNode&>(shadowNode);
+  void adopt(ShadowNode &shadowNode) const override {
+    auto &textInputShadowNode = static_cast<WindowsTextInputShadowNode &>(shadowNode);
 
     // `ParagraphShadowNode` uses `TextLayoutManager` to measure text content
     // and communicate text rendering metrics to mounting layer.
     textInputShadowNode.setTextLayoutManager(m_textLayoutManager);
 
-    textInputShadowNode.setContextContainer(const_cast<ContextContainer*>(getContextContainer().get()));
+    textInputShadowNode.setContextContainer(const_cast<ContextContainer *>(getContextContainer().get()));
 
     /*
         int surfaceId = textInputShadowNode->getSurfaceId();

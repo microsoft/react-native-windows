@@ -89,6 +89,13 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/uimanager/UIManagerBinding.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/uimanager/UIManagerBinding.cpp",
+      "baseHash": "307bdef4d1e494461a8e19a4ac77763b68dd2f0c",
+      "issue": 12195
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/bits/NumericBitfield.h",
       "baseFile": "packages/react-native/ReactCommon/yoga/yoga/bits/NumericBitfield.h",
       "baseHash": "26ae37f6d9d9bf6e8d9c6eb488d825bb6aba6fba",
@@ -107,6 +114,13 @@
       "baseFile": "packages/react-native/ReactCommon/yoga/yoga/node/LayoutResults.h",
       "baseHash": "bce90f359ab86c20a9d4a3b1dcf1a85f45b421b0",
       "issue": 12195
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/node/Node.cpp",
+      "baseFile": "packages/react-native/ReactCommon/yoga/yoga/node/Node.cpp",
+      "baseHash": "f264594ad7693905cacb1eced2c593ca279a5606",
+      "issue": 12194
     },
     {
       "type": "patch",

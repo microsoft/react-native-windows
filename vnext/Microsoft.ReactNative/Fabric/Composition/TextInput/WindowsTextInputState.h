@@ -64,7 +64,7 @@ class WindowsTextInputState final {
       float defaultThemePaddingBottom);
 
   WindowsTextInputState() = default;
-  WindowsTextInputState(const WindowsTextInputState& previousState, const folly::dynamic& data);
+  WindowsTextInputState(const WindowsTextInputState &previousState, const folly::dynamic &data);
   folly::dynamic getDynamic() const;
   MapBuffer getMapBuffer() const;
 };
