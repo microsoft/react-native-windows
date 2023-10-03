@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 28 Sep 2023 05:13:18 GMT and should not be manually modified.
+This log was last generated on Tue, 03 Oct 2023 05:13:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.712
+
+Tue, 03 Oct 2023 05:13:16 GMT
+
+### Changes
+
+- Have RCTNetworking.win32 fork RCTNetworking.ios (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.711
 

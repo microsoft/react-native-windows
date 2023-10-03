@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Have RCTNetworking.win32 fork RCTNetworking.ios",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}
