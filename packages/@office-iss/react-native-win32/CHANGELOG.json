@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Tue, 03 Oct 2023 02:37:00 GMT",
+      "tag": "@office-iss/react-native-win32_v0.71.17",
+      "version": "0.71.17",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "2dabf59f4f401cba6b7f83ec350bd79cb82fed19",
+            "comment": "Have RCTNetworking.win32 fork RCTNetworking.ios (#12199)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 11 Sep 2023 15:13:29 GMT",
       "tag": "@office-iss/react-native-win32_v0.71.16",
       "version": "0.71.16",

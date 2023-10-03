@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 11 Sep 2023 15:13:29 GMT and should not be manually modified.
+This log was last generated on Tue, 03 Oct 2023 02:37:00 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.17
+
+Tue, 03 Oct 2023 02:37:00 GMT
+
+### Patches
+
+- Have RCTNetworking.win32 fork RCTNetworking.ios (#12199) (julio.rocha@microsoft.com)
 
 ## 0.71.16
 

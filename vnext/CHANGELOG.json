@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 03 Oct 2023 02:37:00 GMT",
+      "tag": "react-native-windows_v0.71.39",
+      "version": "0.71.39",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "2dabf59f4f401cba6b7f83ec350bd79cb82fed19",
+            "comment": "Have RCTNetworking.win32 fork RCTNetworking.ios (#12199)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 26 Sep 2023 21:15:59 GMT",
       "tag": "react-native-windows_v0.71.38",
       "version": "0.71.38",
