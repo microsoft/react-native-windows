@@ -1096,8 +1096,6 @@ struct CompSwitchThumbVisual : winrt::implements<
   typename TTypeRedirects::Compositor m_compositor{nullptr};
   typename TTypeRedirects::CompositionSpriteShape m_spiritShape{nullptr};
   typename TTypeRedirects::CompositionEllipseGeometry m_geometry{nullptr};
-  // winrt::Windows::UI::Composition::CompositionEllipseGeometry m_geometry{nullptr};
-  // winrt::Windows::UI::Composition::CompositionSpriteShape m_spiritShape{nullptr};
 };
 
 winrt::Microsoft::ReactNative::Composition::IVisual CompSwitchThumbVisual<WindowsTypeRedirects>::CreateVisual()
@@ -1113,8 +1111,6 @@ winrt::Microsoft::ReactNative::Composition::IVisual CompSwitchThumbVisual<Micros
 }
 using MicrosoftCompSwitchThumbVisual = CompSwitchThumbVisual<MicrosoftTypeRedirects>;
 #endif
-
-// ending
 
 template <typename TTypeRedirects>
 struct CompFocusVisual

@@ -198,7 +198,6 @@ void SwitchComponentView::ensureVisual() noexcept {
   if (!m_thumbVisual) {
     m_thumbVisual = m_compContext.CreateSwitchThumbVisual();
     m_visual.InsertAt(m_thumbVisual.InnerVisual(), 0);
-    m_thumbVisual.IsVisible(true);
   }
 }
 
@@ -216,14 +215,6 @@ void SwitchComponentView::ensureDrawingSurface() noexcept {
 
     m_visual.Brush(m_drawingSurface);
   }
-}
-
-void SwitchComponentView::onFocusLost() noexcept {
-  Super::onFocusLost();
-}
-
-void SwitchComponentView::onFocusGained() noexcept {
-  Super::onFocusGained();
 }
 
 facebook::react::Tag SwitchComponentView::hitTest(
