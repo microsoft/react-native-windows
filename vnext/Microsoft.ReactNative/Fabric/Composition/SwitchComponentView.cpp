@@ -128,13 +128,6 @@ void SwitchComponentView::Draw() noexcept {
         offsetX + trackMarginX + trackWidth,
         offsetY + trackMarginY + trackHeight);
 
-    // switchProps->value = false
-    float thumbX = trackRect.left + thumbMargin + thumbRadius;
-
-    if (switchProps->value) {
-      thumbX = trackRect.right - thumbMargin - thumbRadius;
-    }
-
     winrt::com_ptr<ID2D1SolidColorBrush> defaultBrush;
 
     D2D1_COLOR_F defaultColor =
@@ -142,12 +135,11 @@ void SwitchComponentView::Draw() noexcept {
 
     winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(defaultColor, defaultBrush.put()));
 
-    winrt::com_ptr<ID2D1SolidColorBrush> thumbBrush;
+    winrt::Windows::UI::Color thumbColor;
     if (!switchProps->disabled && switchProps->thumbTintColor) {
-      winrt::check_hresult(
-          d2dDeviceContext->CreateSolidColorBrush(switchProps->thumbTintColor.AsD2DColor(), thumbBrush.put()));
+      thumbColor = switchProps->thumbTintColor.AsWindowsColor();
     } else {
-      thumbBrush = defaultBrush;
+      thumbColor = winrt::Windows::UI::Colors::Gray();
     }
 
     const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
@@ -173,20 +165,18 @@ void SwitchComponentView::Draw() noexcept {
       d2dDeviceContext->FillRoundedRectangle(track, trackBrush.get());
     }
 
-    // switch thumb
-    D2D1_POINT_2F thumbCenter = D2D1 ::Point2F(thumbX, (trackRect.top + trackRect.bottom) / 2);
-    D2D1_ELLIPSE thumb = D2D1::Ellipse(thumbCenter, thumbRadius, thumbRadius);
-    d2dDeviceContext->FillEllipse(thumb, thumbBrush.get());
-
-    // NEW
-    float thumbXnew = (trackMarginX + (thumbMargin * m_layoutMetrics.pointScaleFactor) + 1.0f);
-    float thumbYnew = (trackMarginY + (thumbMargin * m_layoutMetrics.pointScaleFactor) + 1.0f);
+    // switch thumb - made with composition
+    float thumbX = (trackMarginX + thumbMargin) * m_layoutMetrics.pointScaleFactor;
+    float thumbY = (trackMarginY + thumbMargin) * m_layoutMetrics.pointScaleFactor;
 
     if (switchProps->value) {
-      thumbXnew = thumbXnew + (trackWidth - thumbRadius - thumbRadius);
+      thumbX = (trackMarginX + trackWidth - thumbRadius - thumbRadius - thumbMargin) * m_layoutMetrics.pointScaleFactor;
     }
 
-    m_thumbVisual.Position({thumbXnew, thumbYnew});
+    m_thumbVisual.Size({thumbRadius * m_layoutMetrics.pointScaleFactor, thumbRadius * m_layoutMetrics.pointScaleFactor});
+    m_thumbVisual.Position({thumbX, thumbY});
+    m_thumbVisual.Color(thumbColor);
+
 
     // Restore old dpi setting
     d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
@@ -226,6 +216,14 @@ void SwitchComponentView::ensureDrawingSurface() noexcept {
 
     m_visual.Brush(m_drawingSurface);
   }
+}
+
+void SwitchComponentView::onFocusLost() noexcept {
+  Super::onFocusLost();
+}
+
+void SwitchComponentView::onFocusGained() noexcept {
+  Super::onFocusGained();
 }
 
 facebook::react::Tag SwitchComponentView::hitTest(

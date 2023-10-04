@@ -56,6 +56,8 @@ struct SwitchComponentView : CompositionBaseComponentView {
   void ensureVisual() noexcept;
   void Draw() noexcept;
   void ensureDrawingSurface() noexcept;
+  void onFocusLost() noexcept;
+  void onFocusGained() noexcept;
   bool toggle() noexcept;
 
   facebook::react::Size m_contentSize;

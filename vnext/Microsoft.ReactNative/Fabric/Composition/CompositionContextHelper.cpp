@@ -1035,24 +1035,18 @@ struct CompSwitchThumbVisual
     : winrt::implements<CompSwitchThumbVisual<TTypeRedirects>, winrt::Microsoft::ReactNative::Composition::ISwitchThumbVisual> {
   CompSwitchThumbVisual(typename TTypeRedirects::Compositor const &compositor)
       : m_compositor(compositor),
-        m_compVisual(compositor.CreateSpriteVisual()),
-        m_opacityAnimation(compositor.CreateScalarKeyFrameAnimation()) {
+        m_compVisual(compositor.CreateSpriteVisual()) {
     m_visual = CreateVisual();
 
     // Create Thumb
-    auto ellipse = m_compositor.CreateEllipseGeometry();
-    ellipse.Radius({8.25f, 8.25}); // controls the size
-    auto spriteShape = m_compositor.CreateSpriteShape();
-    spriteShape.Geometry(ellipse);
-    spriteShape.Offset(winrt::Windows::Foundation::Numerics::float2(9.0f, 9.0f)); // controls the offset but gets cut off if outside of container 
-    auto spriteVisualBrush = m_compositor.CreateColorBrush(winrt::Windows::UI::Colors::Green());
-    spriteShape.FillBrush(spriteVisualBrush);
+    m_geometry = m_compositor.CreateEllipseGeometry();
+    m_spiritShape = m_compositor.CreateSpriteShape();
+    m_spiritShape.Geometry(m_geometry);
     auto circleShape = m_compositor.CreateShapeVisual();
-    circleShape.Shapes().Append(spriteShape);
+    circleShape.Shapes().Append(m_spiritShape);
     circleShape.Size({150.0f, 150.0f});
 
     m_compVisual.Children().InsertAtTop(circleShape);
-
   }
 
   winrt::Microsoft::ReactNative::Composition::IVisual CreateVisual() const noexcept;
@@ -1062,15 +1056,18 @@ struct CompSwitchThumbVisual
   }
 
   void Color(winrt::Windows::UI::Color color) noexcept {
-    m_compVisual.Brush(m_compositor.CreateColorBrush(color));
+    m_spiritShape.FillBrush(m_compositor.CreateColorBrush(color));
   }
 
   void Size(winrt::Windows::Foundation::Numerics::float2 size) noexcept {
+    m_geometry.Radius(size);
+    m_spiritShape.Offset(size);
     m_compVisual.Size(size);
   }
 
   void Position(winrt::Windows::Foundation::Numerics::float2 position) noexcept { 
     if (!isDrawn) {
+      // we don't want to animate if this is the first time the switch is drawn on screen
       isDrawn = true;
       m_compVisual.Offset({position.x, position.y, 0.0f});
     } else {
@@ -1093,11 +1090,11 @@ struct CompSwitchThumbVisual
  private:
   bool m_isVisible{true};
   bool isDrawn{false};
-  winrt::Windows::Foundation::Numerics::float2 position;
   typename TTypeRedirects::SpriteVisual m_compVisual;
   winrt::Microsoft::ReactNative::Composition::IVisual m_visual;
-  typename TTypeRedirects::ScalarKeyFrameAnimation m_opacityAnimation;
   typename TTypeRedirects::Compositor m_compositor{nullptr};
+  winrt::Windows::UI::Composition::CompositionEllipseGeometry m_geometry{nullptr};
+  winrt::Windows::UI::Composition::CompositionSpriteShape m_spiritShape{nullptr};
 };
 
 winrt::Microsoft::ReactNative::Composition::IVisual CompSwitchThumbVisual<WindowsTypeRedirects>::CreateVisual()
