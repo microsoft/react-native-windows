@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 03 Oct 2023 05:13:16 GMT and should not be manually modified.
+This log was last generated on Wed, 04 Oct 2023 05:12:45 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.713
+
+Wed, 04 Oct 2023 05:12:45 GMT
+
+### Changes
+
+- Allow usage of WinAppSDK in fabric (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Add keyboard handlers to ScrollView (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.712
 
