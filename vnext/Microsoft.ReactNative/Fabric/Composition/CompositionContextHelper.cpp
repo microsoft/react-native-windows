@@ -1107,7 +1107,7 @@ using WindowsCompSwitchThumbVisual = CompSwitchThumbVisual<WindowsTypeRedirects>
 #ifdef USE_WINUI3
 winrt::Microsoft::ReactNative::Composition::IVisual CompSwitchThumbVisual<MicrosoftTypeRedirects>::CreateVisual()
     const noexcept {
-  return winrt::make<Composition::MicrosoftCompSwitchThumbVisual>(m_compVisual);
+  return winrt::make<Composition::MicrosoftCompSpriteVisual>(m_compVisual);
 }
 using MicrosoftCompSwitchThumbVisual = CompSwitchThumbVisual<MicrosoftTypeRedirects>;
 #endif
