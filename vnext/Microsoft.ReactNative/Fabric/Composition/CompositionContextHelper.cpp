@@ -37,6 +37,7 @@ struct CompositionTypeTraits<WindowsTypeTag> {
   using CompositionBackfaceVisibility = winrt::Windows::UI::Composition::CompositionBackfaceVisibility;
   using CompositionBrush = winrt::Windows::UI::Composition::CompositionBrush;
   using CompositionDrawingSurface = winrt::Windows::UI::Composition::CompositionDrawingSurface;
+  using CompositionEllipseGeometry = winrt::Windows::UI::Composition::CompositionEllipseGeometry;
   using CompositionNineGridBrush = winrt::Windows::UI::Composition::CompositionNineGridBrush;
   using CompositionPath = winrt::Windows::UI::Composition::CompositionPath;
   using CompositionSpriteShape = winrt::Windows::UI::Composition::CompositionSpriteShape;
@@ -92,6 +93,7 @@ struct CompositionTypeTraits<MicrosoftTypeTag> {
   using CompositionBackfaceVisibility = winrt::Microsoft::UI::Composition::CompositionBackfaceVisibility;
   using CompositionBrush = winrt::Microsoft::UI::Composition::CompositionBrush;
   using CompositionDrawingSurface = winrt::Microsoft::UI::Composition::CompositionDrawingSurface;
+  using CompositionEllipseGeometry = winrt::Microsoft::UI::Composition::CompositionEllipseGeometry;
   using CompositionNineGridBrush = winrt::Microsoft::UI::Composition::CompositionNineGridBrush;
   using CompositionPath = winrt::Microsoft::UI::Composition::CompositionPath;
   using CompositionSpriteShape = winrt::Microsoft::UI::Composition::CompositionSpriteShape;
@@ -1031,11 +1033,11 @@ using MicrosoftCompCaretVisual = CompCaretVisual<MicrosoftTypeRedirects>;
 
 // Switch Thumb animations
 template <typename TTypeRedirects>
-struct CompSwitchThumbVisual
-    : winrt::implements<CompSwitchThumbVisual<TTypeRedirects>, winrt::Microsoft::ReactNative::Composition::ISwitchThumbVisual> {
+struct CompSwitchThumbVisual : winrt::implements<
+                                   CompSwitchThumbVisual<TTypeRedirects>,
+                                   winrt::Microsoft::ReactNative::Composition::ISwitchThumbVisual> {
   CompSwitchThumbVisual(typename TTypeRedirects::Compositor const &compositor)
-      : m_compositor(compositor),
-        m_compVisual(compositor.CreateSpriteVisual()) {
+      : m_compositor(compositor), m_compVisual(compositor.CreateSpriteVisual()) {
     m_visual = CreateVisual();
 
     // Create Thumb
@@ -1065,7 +1067,7 @@ struct CompSwitchThumbVisual
     m_compVisual.Size(size);
   }
 
-  void Position(winrt::Windows::Foundation::Numerics::float2 position) noexcept { 
+  void Position(winrt::Windows::Foundation::Numerics::float2 position) noexcept {
     if (!isDrawn) {
       // we don't want to animate if this is the first time the switch is drawn on screen
       isDrawn = true;
@@ -1084,8 +1086,7 @@ struct CompSwitchThumbVisual
     return m_isVisible;
   }
 
-  void IsVisible(bool value) noexcept {
-  }
+  void IsVisible(bool value) noexcept {}
 
  private:
   bool m_isVisible{true};
@@ -1093,8 +1094,10 @@ struct CompSwitchThumbVisual
   typename TTypeRedirects::SpriteVisual m_compVisual;
   winrt::Microsoft::ReactNative::Composition::IVisual m_visual;
   typename TTypeRedirects::Compositor m_compositor{nullptr};
-  winrt::Windows::UI::Composition::CompositionEllipseGeometry m_geometry{nullptr};
-  winrt::Windows::UI::Composition::CompositionSpriteShape m_spiritShape{nullptr};
+  typename TTypeRedirects::CompositionSpriteShape m_spiritShape{nullptr};
+  typename TTypeRedirects::CompositionEllipseGeometry m_geometry{nullptr};
+  // winrt::Windows::UI::Composition::CompositionEllipseGeometry m_geometry{nullptr};
+  // winrt::Windows::UI::Composition::CompositionSpriteShape m_spiritShape{nullptr};
 };
 
 winrt::Microsoft::ReactNative::Composition::IVisual CompSwitchThumbVisual<WindowsTypeRedirects>::CreateVisual()
@@ -1110,7 +1113,6 @@ winrt::Microsoft::ReactNative::Composition::IVisual CompSwitchThumbVisual<Micros
 }
 using MicrosoftCompSwitchThumbVisual = CompSwitchThumbVisual<MicrosoftTypeRedirects>;
 #endif
-
 
 // ending
 

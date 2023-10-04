@@ -113,7 +113,7 @@ void SwitchComponentView::Draw() noexcept {
 
     // https://github.com/microsoft/microsoft-ui-xaml/blob/main/dev/CommonStyles/ToggleSwitch_themeresources.xaml
     constexpr float thumbMargin = 3.0f;
-    constexpr float thumbRadius = 7.0f ;
+    constexpr float thumbRadius = 7.0f;
     constexpr float trackWidth = 40.0f;
     constexpr float trackHeight = 20.0f;
     constexpr float trackCornerRadius = 10.0f;
@@ -173,10 +173,10 @@ void SwitchComponentView::Draw() noexcept {
       thumbX = (trackMarginX + trackWidth - thumbRadius - thumbRadius - thumbMargin) * m_layoutMetrics.pointScaleFactor;
     }
 
-    m_thumbVisual.Size({thumbRadius * m_layoutMetrics.pointScaleFactor, thumbRadius * m_layoutMetrics.pointScaleFactor});
+    m_thumbVisual.Size(
+        {thumbRadius * m_layoutMetrics.pointScaleFactor, thumbRadius * m_layoutMetrics.pointScaleFactor});
     m_thumbVisual.Position({thumbX, thumbY});
     m_thumbVisual.Color(thumbColor);
-
 
     // Restore old dpi setting
     d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
@@ -195,7 +195,7 @@ void SwitchComponentView::ensureVisual() noexcept {
     OuterVisual().InsertAt(m_visual, 0);
   }
 
-   if (!m_thumbVisual) {
+  if (!m_thumbVisual) {
     m_thumbVisual = m_compContext.CreateSwitchThumbVisual();
     m_visual.InsertAt(m_thumbVisual.InnerVisual(), 0);
     m_thumbVisual.IsVisible(true);
