@@ -34,6 +34,7 @@ struct CompositionTypeTraits<WindowsTypeTag> {
   using AnimationDelayBehavior = winrt::Windows::UI::Composition::AnimationDelayBehavior;
   using AnimationDirection = winrt::Windows::UI::Composition::AnimationDirection;
   using AnimationIterationBehavior = winrt::Windows::UI::Composition::AnimationIterationBehavior;
+  using CompositionAnimation = winrt::Windows::UI::Composition::CompositionAnimation;
   using CompositionBackfaceVisibility = winrt::Windows::UI::Composition::CompositionBackfaceVisibility;
   using CompositionBrush = winrt::Windows::UI::Composition::CompositionBrush;
   using CompositionDrawingSurface = winrt::Windows::UI::Composition::CompositionDrawingSurface;
@@ -89,6 +90,7 @@ struct CompositionTypeTraits<MicrosoftTypeTag> {
   using AnimationDelayBehavior = winrt::Microsoft::UI::Composition::AnimationDelayBehavior;
   using AnimationDirection = winrt::Microsoft::UI::Composition::AnimationDirection;
   using AnimationIterationBehavior = winrt::Microsoft::UI::Composition::AnimationIterationBehavior;
+  using CompositionAnimation = winrt::Microsoft::UI::Composition::CompositionAnimation;
   using CompositionBackfaceVisibility = winrt::Microsoft::UI::Composition::CompositionBackfaceVisibility;
   using CompositionBrush = winrt::Microsoft::UI::Composition::CompositionBrush;
   using CompositionDrawingSurface = winrt::Microsoft::UI::Composition::CompositionDrawingSurface;
@@ -536,13 +538,22 @@ struct CompScrollerVisual : winrt::implements<
 
     void CustomAnimationStateEntered(
         typename TTypeRedirects::InteractionTracker sender,
-        typename TTypeRedirects::InteractionTrackerCustomAnimationStateEnteredArgs args) noexcept {}
+        typename TTypeRedirects::InteractionTrackerCustomAnimationStateEnteredArgs args) noexcept {
+      m_outer->m_custom = true;
+      m_outer->m_inertia = false;
+    }
     void IdleStateEntered(
         typename TTypeRedirects::InteractionTracker sender,
-        typename TTypeRedirects::InteractionTrackerIdleStateEnteredArgs args) noexcept {}
+        typename TTypeRedirects::InteractionTrackerIdleStateEnteredArgs args) noexcept {
+      m_outer->m_custom = false;
+      m_outer->m_inertia = false;
+    }
     void InertiaStateEntered(
         typename TTypeRedirects::InteractionTracker sender,
-        typename TTypeRedirects::InteractionTrackerInertiaStateEnteredArgs args) noexcept {}
+        typename TTypeRedirects::InteractionTrackerInertiaStateEnteredArgs args) noexcept {
+      m_outer->m_custom = false;
+      m_outer->m_inertia = true;
+    }
     void InteractingStateEntered(
         typename TTypeRedirects::InteractionTracker sender,
         typename TTypeRedirects::InteractionTrackerInteractingStateEnteredArgs args) noexcept {}
@@ -552,6 +563,7 @@ struct CompScrollerVisual : winrt::implements<
     void ValuesChanged(
         typename TTypeRedirects::InteractionTracker sender,
         typename TTypeRedirects::InteractionTrackerValuesChangedArgs args) noexcept {
+      m_outer->m_currentPosition = args.Position();
       m_outer->FireScrollPositionChanged({args.Position().x, args.Position().y});
     }
 
@@ -715,20 +727,54 @@ struct CompScrollerVisual : winrt::implements<
     return m_interactionTracker.Position();
   }
 
-  void ScrollBy(winrt::Windows::Foundation::Numerics::float3 const &offset) noexcept {
-    m_interactionTracker.TryUpdatePositionBy(offset);
+  // ChangeOffsets scrolling constants
+  static constexpr int64_t s_offsetsChangeMsPerUnit{5};
+  static constexpr int64_t s_offsetsChangeMinMs{50};
+  static constexpr int64_t s_offsetsChangeMaxMs{1000};
+
+  typename TTypeRedirects::CompositionAnimation GetPositionAnimation(float x, float y) {
+    const int64_t distance =
+        static_cast<int64_t>(std::sqrt(std::pow(x - m_currentPosition.x, 2.0f) + pow(y - m_currentPosition.y, 2.0f)));
+    auto compositor = m_visual.Compositor();
+    auto positionAnimation = compositor.CreateVector3KeyFrameAnimation();
+
+    positionAnimation.InsertKeyFrame(1.0f, {x, y, 0.0f});
+    positionAnimation.Duration(std::chrono::milliseconds(
+        std::clamp(distance * s_offsetsChangeMsPerUnit, s_offsetsChangeMinMs, s_offsetsChangeMaxMs)));
+
+    return positionAnimation;
+  }
+
+  void ScrollBy(winrt::Windows::Foundation::Numerics::float3 const &offset, bool animate) noexcept {
+    auto restingPosition = m_inertia ? m_interactionTracker.NaturalRestingPosition() : m_interactionTracker.Position();
+    if (m_custom) {
+      restingPosition = m_targetPosition;
+    }
+    if (animate) {
+      auto maxPosition = m_interactionTracker.MaxPosition();
+      m_custom = true;
+      m_targetPosition = {
+          std::clamp(restingPosition.x + offset.x, 0.0f, maxPosition.x),
+          std::clamp(restingPosition.y + offset.y, 0.0f, maxPosition.y),
+          std::clamp(restingPosition.z + offset.z, 0.0f, maxPosition.z)};
+
+      auto kfa = GetPositionAnimation(m_targetPosition.x, m_targetPosition.y);
+      m_interactionTracker.TryUpdatePositionWithAnimation(kfa);
+    } else {
+      m_interactionTracker.TryUpdatePositionBy(offset);
+    }
   };
 
   void TryUpdatePosition(winrt::Windows::Foundation::Numerics::float3 const &position, bool animate) noexcept {
+    auto maxPosition = m_interactionTracker.MaxPosition();
     if (animate) {
-      auto compositor = m_visual.Compositor();
-      auto cubicBezier = compositor.CreateCubicBezierEasingFunction({0.17f, 0.67f}, {1.0f, 1.0f});
-      auto kfa = compositor.CreateVector3KeyFrameAnimation();
-      kfa.Duration(std::chrono::seconds{1});
-      kfa.InsertKeyFrame(1.0f, position, cubicBezier);
+      auto kfa = GetPositionAnimation(std::min(maxPosition.x, position.x), std::min(maxPosition.y, position.y));
       m_interactionTracker.TryUpdatePositionWithAnimation(kfa);
     } else {
-      m_interactionTracker.TryUpdatePosition(position);
+      m_interactionTracker.TryUpdatePosition(
+          {std::min(maxPosition.x, position.x),
+           std::min(maxPosition.y, position.y),
+           std::min(maxPosition.z, position.z)});
     }
   }
 
@@ -744,6 +790,10 @@ struct CompScrollerVisual : winrt::implements<
          0});
   }
 
+  bool m_inertia{false};
+  bool m_custom{false};
+  winrt::Windows::Foundation::Numerics::float3 m_targetPosition;
+  winrt::Windows::Foundation::Numerics::float3 m_currentPosition;
   winrt::Windows::Foundation::Numerics::float2 m_contentSize{0};
   winrt::Windows::Foundation::Numerics::float2 m_visualSize{0};
   winrt::event<

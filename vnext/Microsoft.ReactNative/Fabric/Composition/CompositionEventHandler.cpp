@@ -155,10 +155,18 @@ void CompositionEventHandler::ScrollWheel(facebook::react::Point pt, uint32_t de
           ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties())) {
     facebook::react::Point ptLocal;
 
-    RootComponentView().ScrollWheel(
-        {static_cast<float>(pt.x / m_compRootView.ScaleFactor()),
-         static_cast<float>(pt.y / m_compRootView.ScaleFactor())},
-        delta);
+    facebook::react::Point ptScaled = {
+        static_cast<float>(pt.x / m_compRootView.ScaleFactor()),
+        static_cast<float>(pt.y / m_compRootView.ScaleFactor())};
+    auto tag = RootComponentView().hitTest(ptScaled, ptLocal);
+
+    if (tag == -1) {
+      return;
+    }
+
+    IComponentView *targetComponentView =
+        fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(tag).view.get();
+    static_cast<CompositionBaseComponentView *>(targetComponentView)->ScrollWheel(ptLocal, delta);
   }
 }
 
