@@ -88,7 +88,7 @@ namespace Microsoft.ReactNative.Composition
     event Windows.Foundation.EventHandler<IScrollPositionChangedArgs> ScrollPositionChanged;
     void ContentSize(Windows.Foundation.Numerics.Vector2 size);
     Windows.Foundation.Numerics.Vector3 ScrollPosition { get; };
-    void ScrollBy(Windows.Foundation.Numerics.Vector3 offset);
+    void ScrollBy(Windows.Foundation.Numerics.Vector3 offset, Boolean animate);
     void TryUpdatePosition(Windows.Foundation.Numerics.Vector3 position, Boolean animate);
   }
 

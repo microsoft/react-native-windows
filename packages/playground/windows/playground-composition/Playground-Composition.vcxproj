@@ -17,7 +17,10 @@
     <AppContainerApplication>false</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.22000.0</WindowsTargetPlatformVersion>
+    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+    <WindowsPackageType>None</WindowsPackageType>
+    <AppContainerApplication>false</AppContainerApplication>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Label="ReactNativeWindowsProps">
@@ -161,7 +164,7 @@
       This file is supposed to be a merge of all the pri files the app depends on plus the app's own resources.
       In the case of playground-Composition we don't have our own pri so we can just take MUXC's and rename the pri to resources.pri.
   -->
-  <Target Name="FakeResourcesPriMerge" BeforeTargets="FinalizeBuildStatus" DependsOnTargets="CopyFilesToOutputDirectory">
+  <Target Name="FakeResourcesPriMerge" BeforeTargets="FinalizeBuildStatus" DependsOnTargets="CopyFilesToOutputDirectory" Condition="'$(UseWinUI3)'!='true'">
     <Message Text="Renaming Microsoft.UI.Xaml.pri to resources.pri" />
     <Move SourceFiles="$(OutDir)\Microsoft.UI.Xaml.pri" DestinationFiles="$(OutDir)\resources.pri" />
   </Target>

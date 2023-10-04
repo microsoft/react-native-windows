@@ -21,6 +21,8 @@
 
 namespace Microsoft::ReactNative {
 
+constexpr float c_scrollerLineDelta = 16.0f;
+
 std::shared_ptr<ScrollViewComponentView> ScrollViewComponentView::Create(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag) noexcept {
@@ -155,20 +157,6 @@ void ScrollViewComponentView::updateProps(
     }
   }
 
-  /*
-  if (oldViewProps.borderColors != newViewProps.borderColors) {
-    if (newViewProps.borderColors.all) {
-      m_element.BorderBrush(SolidColorBrushFrom(*newViewProps.borderColors.all));
-    } else {
-      m_element.ClearValue(winrt::Microsoft::ReactNative::ViewPanel::BorderBrushProperty());
-    }
-  }
-
-  if (oldViewProps.borderStyles != newViewProps.borderStyles) {
-    m_needsBorderUpdate = true;
-  }
-  */
-
   // update BaseComponentView props
   updateShadowProps(oldViewProps, newViewProps, m_visual);
   updateTransformProps(oldViewProps, newViewProps, m_visual);
@@ -176,8 +164,6 @@ void ScrollViewComponentView::updateProps(
 
   m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
 }
-
-void ScrollViewComponentView::updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {}
 
 void ScrollViewComponentView::updateState(
     facebook::react::State::Shared const &state,
@@ -272,37 +258,136 @@ void ScrollViewComponentView::OnPointerDown(const winrt::Windows::UI::Input::Poi
 */
 
 bool ScrollViewComponentView::ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept {
-  facebook::react::Point ptViewport{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
-
-  facebook::react::Point ptContent{
-      ptViewport.x + m_scrollVisual.ScrollPosition().x / m_layoutMetrics.pointScaleFactor,
-      ptViewport.y + m_scrollVisual.ScrollPosition().y / m_layoutMetrics.pointScaleFactor};
-
-  if (std::any_of(m_children.rbegin(), m_children.rend(), [ptContent, delta](auto child) {
-        return const_cast<CompositionBaseComponentView *>(static_cast<const CompositionBaseComponentView *>(child))
-            ->ScrollWheel(ptContent, delta);
-      }))
-    return true;
-
-  if (ptViewport.x >= 0 && ptViewport.x <= m_layoutMetrics.frame.size.width && ptViewport.y >= 0 &&
-      ptViewport.y <= m_layoutMetrics.frame.size.height) {
-    m_scrollVisual.ScrollBy({0, static_cast<float>(-delta), 0});
-    return true;
+  if (delta > 0) {
+    if (scrollUp(static_cast<float>(delta) * m_layoutMetrics.pointScaleFactor, true)) {
+      return true;
+    }
+  } else if (delta < 0) {
+    if (scrollDown(-static_cast<float>(delta) * m_layoutMetrics.pointScaleFactor, true)) {
+      return true;
+    };
   }
 
-  return false;
+  // Adjust pt for viewport before it goes to the parent
+  pt.x -= m_scrollVisual.ScrollPosition().x;
+  pt.y -= m_scrollVisual.ScrollPosition().y;
+  return Super::ScrollWheel(pt, delta);
+}
+
+void ScrollViewComponentView::onKeyDown(
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
+  switch (args.Key()) {
+    case winrt::Windows::System::VirtualKey::End:
+      args.Handled(scrollToEnd(true));
+      break;
+    case winrt::Windows::System::VirtualKey::Home:
+      args.Handled(scrollToStart(true));
+      break;
+    case winrt::Windows::System::VirtualKey::PageDown:
+      args.Handled(pageDown(true));
+      break;
+    case winrt::Windows::System::VirtualKey::PageUp:
+      args.Handled(pageUp(true));
+      break;
+    case winrt::Windows::System::VirtualKey::Up:
+      args.Handled(lineUp(true));
+      break;
+    case winrt::Windows::System::VirtualKey::Down:
+      args.Handled(lineDown(true));
+      break;
+    case winrt::Windows::System::VirtualKey::Left:
+      args.Handled(lineLeft(true));
+      break;
+    case winrt::Windows::System::VirtualKey::Right:
+      args.Handled(lineRight(true));
+      break;
+  }
+}
+
+bool ScrollViewComponentView::scrollToEnd(bool animate) noexcept {
+  if ((((m_contentSize.height - m_layoutMetrics.frame.size.height) * m_layoutMetrics.pointScaleFactor) -
+       m_scrollVisual.ScrollPosition().y) < 1.0f) {
+    return false;
+  }
+
+  auto x = (m_contentSize.width - m_layoutMetrics.frame.size.width) * m_layoutMetrics.pointScaleFactor;
+  auto y = (m_contentSize.height - m_layoutMetrics.frame.size.height) * m_layoutMetrics.pointScaleFactor;
+  m_scrollVisual.TryUpdatePosition({static_cast<float>(x), static_cast<float>(y), 0.0f}, animate);
+  return true;
+}
+
+bool ScrollViewComponentView::scrollToStart(bool animate) noexcept {
+  m_scrollVisual.TryUpdatePosition({0.0f, 0.0f, 0.0f}, animate);
+  return true;
+}
+
+bool ScrollViewComponentView::pageUp(bool animate) noexcept {
+  return scrollUp(m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor, animate);
+}
+
+bool ScrollViewComponentView::pageDown(bool animate) noexcept {
+  return scrollDown(m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor, animate);
+}
+
+bool ScrollViewComponentView::lineUp(bool animate) noexcept {
+  return scrollUp(c_scrollerLineDelta * m_layoutMetrics.pointScaleFactor, animate);
+}
+
+bool ScrollViewComponentView::lineDown(bool animate) noexcept {
+  return scrollDown(c_scrollerLineDelta * m_layoutMetrics.pointScaleFactor, animate);
+}
+
+bool ScrollViewComponentView::lineLeft(bool animate) noexcept {
+  if (m_scrollVisual.ScrollPosition().x <= 0.0f) {
+    return false;
+  }
+
+  m_scrollVisual.ScrollBy({-c_scrollerLineDelta * m_layoutMetrics.pointScaleFactor, 0, 0}, animate);
+  return true;
+}
+
+bool ScrollViewComponentView::lineRight(bool animate) noexcept {
+  if ((((m_contentSize.width - m_layoutMetrics.frame.size.width) * m_layoutMetrics.pointScaleFactor) -
+       m_scrollVisual.ScrollPosition().x) < 1.0f) {
+    return false;
+  }
+
+  m_scrollVisual.ScrollBy({c_scrollerLineDelta * m_layoutMetrics.pointScaleFactor, 0, 0}, animate);
+  return true;
+}
+
+bool ScrollViewComponentView::scrollDown(float delta, bool animate) noexcept {
+  if (((m_contentSize.height - m_layoutMetrics.frame.size.height) * m_layoutMetrics.pointScaleFactor) -
+          m_scrollVisual.ScrollPosition().y <
+      1.0f) {
+    return false;
+  }
+
+  m_scrollVisual.ScrollBy({0, delta, 0}, animate);
+  return true;
+}
+
+bool ScrollViewComponentView::scrollUp(float delta, bool animate) noexcept {
+  if (m_scrollVisual.ScrollPosition().y <= 0.0f) {
+    return false;
+  }
+
+  m_scrollVisual.ScrollBy({0, -delta, 0}, animate);
+  return true;
 }
 
 void ScrollViewComponentView::handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept {
   if (commandName == "scrollTo") {
-    auto x = arg[0].asDouble();
-    auto y = arg[1].asDouble();
+    auto x = arg[0].asDouble() * m_layoutMetrics.pointScaleFactor;
+    auto y = arg[1].asDouble() * m_layoutMetrics.pointScaleFactor;
     auto animate = arg[2].asBool();
     m_scrollVisual.TryUpdatePosition({static_cast<float>(x), static_cast<float>(y), 0.0f}, animate);
   } else if (commandName == "flashScrollIndicators") {
     // No-op for now
   } else if (commandName == "scrollToEnd") {
-    // No-op for now
+    auto animate = arg[0].asBool();
+    scrollToEnd(animate);
   } else if (commandName == "zoomToRect") {
     // No-op for now
   } else {

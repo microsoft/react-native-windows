@@ -2,35 +2,94 @@
   "version": 1,
   "dependencies": {
     "native,Version=v0.0": {
-      "Microsoft.Toolkit.Win32.UI.XamlApplication": {
+      "boost": {
         "type": "Direct",
-        "requested": "[6.1.3, 6.1.3]",
-        "resolved": "6.1.3",
-        "contentHash": "0YtzPNOzfxe+S+fOHw+CsD/RaHIl3FNIBFPh9uzNaORGguopUws/cU7uXoG6ykaJ221k3Vr0nq50iyb+kR/ERg=="
+        "requested": "[1.76.0, )",
+        "resolved": "1.76.0",
+        "contentHash": "p+w3YvNdXL8Cu9Fzrmexssu0tZbWxuf6ywsQqHjDlKFE5ojXHof1HIyMC3zDLfLnh80dIeFcEUAuR2Asg/XHRA=="
       },
-      "Microsoft.UI.Xaml": {
+      "Microsoft.JavaScript.Hermes": {
         "type": "Direct",
-        "requested": "[2.7.0-prerelease.210913003, 2.7.0-prerelease.210913003]",
-        "resolved": "2.7.0-prerelease.210913003",
-        "contentHash": "eLUEu31PenwzXowSTm/HPRaaEClPd0FKPLirfHLM84wH3nPDHX18l/ngHm1Ny2rnwVyc1cYngPjYEv6DOQmw1A=="
+        "requested": "[0.1.15, )",
+        "resolved": "0.1.15",
+        "contentHash": "My/u5RvxoymtwWokoweU6iVpuP79w271UjadcmSNqnQ9ESIv00tlVP4sHnIiN3t2lJNDeciyE1EVF4swGPECKQ=="
       },
       "Microsoft.VCRTForwarders.140": {
         "type": "Direct",
-        "requested": "[1.0.2-rc, 1.0.2-rc]",
+        "requested": "[1.0.2-rc, )",
         "resolved": "1.0.2-rc",
         "contentHash": "/r+sjtEeCIGyDhobIZ5hSmYhC/dSyGZxf1SxYJpElUhB0LMCktOMFs9gXrauXypIFECpVynNyVjAmJt6hjJ5oQ=="
       },
       "Microsoft.Windows.CppWinRT": {
         "type": "Direct",
-        "requested": "[2.0.210312.4, 2.0.210312.4]",
-        "resolved": "2.0.210312.4",
-        "contentHash": "uRxz7Z8Scm7A2JjaaxCzQWTMrQC9RvXYhb7RU8pSqGo/0i0aPJszUeA3N6EhcJU5+FsDr2xzk2iln0x2Lwa6AA=="
+        "requested": "[2.0.211028.7, )",
+        "resolved": "2.0.211028.7",
+        "contentHash": "JBGI0c3WLoU6aYJRy9Qo0MLDQfObEp+d4nrhR95iyzf7+HOgjRunHDp/6eGFREd7xq3OI1mll9ecJrMfzBvlyg=="
       },
-      "Microsoft.JavaScript.Hermes": {
+      "Microsoft.WindowsAppSDK": {
         "type": "Direct",
-        "requested": "[0.1.15, 0.1.15]",
-        "resolved": "0.1.15",
-        "contentHash": "My/u5RvxoymtwWokoweU6iVpuP79w271UjadcmSNqnQ9ESIv00tlVP4sHnIiN3t2lJNDeciyE1EVF4swGPECKQ=="
+        "requested": "[1.4.230913002, )",
+        "resolved": "1.4.230913002",
+        "contentHash": "l+9RshN4TsTuxL0ijFp5smbs3Y07RO7CxKBHNM/RsrsGtWvuk6edITMp4oqL9C3ufEAmpYk3dqOZRSf+sFH4Zg==",
+        "dependencies": {
+          "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
+        }
+      },
+      "Microsoft.Build.Tasks.Git": {
+        "type": "Transitive",
+        "resolved": "1.1.1",
+        "contentHash": "AT3HlgTjsqHnWpBHSNeR0KxbLZD7bztlZVj7I8vgeYG9SYqbeFGh0TM/KVtC6fg53nrWHl3VfZFvb5BiQFcY6Q=="
+      },
+      "Microsoft.SourceLink.Common": {
+        "type": "Transitive",
+        "resolved": "1.1.1",
+        "contentHash": "WMcGpWKrmJmzrNeuaEb23bEMnbtR/vLmvZtkAP5qWu7vQsY59GqfRJd65sFpBszbd2k/bQ8cs8eWawQKAabkVg=="
+      },
+      "Microsoft.SourceLink.GitHub": {
+        "type": "Transitive",
+        "resolved": "1.1.1",
+        "contentHash": "IaJGnOv/M7UQjRJks7B6p7pbPnOwisYGOIzqCz5ilGFTApZ3ktOR+6zJ12ZRPInulBmdAf1SrGdDG2MU8g6XTw==",
+        "dependencies": {
+          "Microsoft.Build.Tasks.Git": "1.1.1",
+          "Microsoft.SourceLink.Common": "1.1.1"
+        }
+      },
+      "Microsoft.Windows.SDK.BuildTools": {
+        "type": "Transitive",
+        "resolved": "10.0.22621.1",
+        "contentHash": "Sp1DkYvg7yxuhamwxv+qFC66KC3paKQpwK8Q1J6XuAh6nzXIInmsDcpJ3szr0XGud4ysXojqwTfGdW01gvZ/0g=="
+      },
+      "common": {
+        "type": "Project"
+      },
+      "fmt": {
+        "type": "Project"
+      },
+      "folly": {
+        "type": "Project",
+        "dependencies": {
+          "boost": "[1.76.0, )",
+          "fmt": "[1.0.0, )"
+        }
+      },
+      "microsoft.reactnative": {
+        "type": "Project",
+        "dependencies": {
+          "Common": "[1.0.0, )",
+          "Folly": "[1.0.0, )",
+          "Microsoft.JavaScript.Hermes": "[0.1.15, )",
+          "Microsoft.SourceLink.GitHub": "[1.1.1, )",
+          "Microsoft.WindowsAppSDK": "[1.4.230913002, )",
+          "ReactCommon": "[1.0.0, )",
+          "boost": "[1.76.0, )"
+        }
+      },
+      "reactcommon": {
+        "type": "Project",
+        "dependencies": {
+          "Folly": "[1.0.0, )",
+          "boost": "[1.76.0, )"
+        }
       }
     }
   }

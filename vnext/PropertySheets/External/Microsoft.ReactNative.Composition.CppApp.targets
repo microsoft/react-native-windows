@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <PackageReference Include="boost" Version="1.76.0.0" />
-    <PackageReference Include="Microsoft.Toolkit.Win32.UI.XamlApplication" Version="6.1.3" />
     <PackageReference Include="Microsoft.VCRTForwarders.140" Version="1.0.2-rc" />
   </ItemGroup>
 
