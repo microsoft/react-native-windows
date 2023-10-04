@@ -197,7 +197,7 @@ jobs:
             - task: CopyFiles@2
               displayName: Copy Bundle
               inputs:
-                sourceFolder: packages/e2e-test-app-fabric/windows/x64/Release/Bundle
+                sourceFolder: packages/e2e-test-app-fabric/windows/${{ matrix.BuildPlatform }}/Release/Bundle
                 targetFolder: packages/e2e-test-app-fabric/Bundle
                 contents: "**"
 
