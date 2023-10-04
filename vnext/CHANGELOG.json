@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 04 Oct 2023 05:12:45 GMT",
+      "version": "0.0.0-canary.713",
+      "tag": "react-native-windows_v0.0.0-canary.713",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "377e2d0ee3f6cc957a4c3820f7048cd80fd37a72",
+            "comment": "Allow usage of WinAppSDK in fabric"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c8ef8e39cb5072a89e2fc0145bf1158bce18d975",
+            "comment": "[Fabric] Add keyboard handlers to ScrollView"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 03 Oct 2023 05:13:16 GMT",
       "version": "0.0.0-canary.712",
       "tag": "react-native-windows_v0.0.0-canary.712",
