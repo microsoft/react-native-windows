@@ -35,6 +35,15 @@ struct CompositionBaseComponentView : public IComponentView,
   bool runOnChildren(bool forward, Mso::Functor<bool(IComponentView &)> &fn) noexcept override;
   void onFocusLost() noexcept override;
   void onFocusGained() noexcept override;
+  void onPointerPressed(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
+  void onPointerReleased(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
+  void onPointerMoved(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
+  void onPointerWheelChanged(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
+
   void onKeyDown(
       const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
       const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
@@ -49,7 +58,6 @@ struct CompositionBaseComponentView : public IComponentView,
   facebook::react::Tag tag() const noexcept override;
   int64_t sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept override;
 
-  bool ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept override;
   RECT getClientRect() const noexcept override;
 
   void indexOffsetForBorder(uint32_t &index) const noexcept;
