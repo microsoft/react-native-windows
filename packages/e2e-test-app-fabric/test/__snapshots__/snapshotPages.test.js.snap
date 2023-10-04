@@ -322,7 +322,7 @@ exports[`snapshotAllPages Accessibility Windows 4`] = `
     onScrollEndDrag={[Function]}
     removeClippedSubviews={false}
     renderItem={[Function]}
-    scrollEventThrottle={50}
+    scrollEventThrottle={0.0001}
     stickyHeaderIndices={[]}
     viewabilityConfigCallbackPairs={[]}
   >
@@ -778,7 +778,7 @@ exports[`snapshotAllPages Accessibility Windows 5`] = `
       onScrollEndDrag={[Function]}
       removeClippedSubviews={false}
       renderItem={[Function]}
-      scrollEventThrottle={50}
+      scrollEventThrottle={0.0001}
       stickyHeaderIndices={[]}
       viewabilityConfigCallbackPairs={[]}
     >
@@ -881,7 +881,7 @@ exports[`snapshotAllPages Accessibility Windows 5`] = `
       onScrollEndDrag={[Function]}
       removeClippedSubviews={false}
       renderItem={[Function]}
-      scrollEventThrottle={50}
+      scrollEventThrottle={0.0001}
       stickyHeaderIndices={[]}
       viewabilityConfigCallbackPairs={[]}
     >
@@ -1032,6 +1032,7 @@ exports[`snapshotAllPages Accessibility Windows 5`] = `
 
 exports[`snapshotAllPages ActivityIndicator 1`] = `
 <ActivityIndicator
+  accessibilityLabel="Wait for content to load!"
   color="white"
   style={
     [
@@ -1045,6 +1046,7 @@ exports[`snapshotAllPages ActivityIndicator 1`] = `
       },
     ]
   }
+  testID="default_activity_indicator"
 />
 `;
 
@@ -3400,7 +3402,7 @@ exports[`snapshotAllPages Animated 4`] = `
     onScrollEndDrag={[Function]}
     removeClippedSubviews={false}
     renderItem={[Function]}
-    scrollEventThrottle={50}
+    scrollEventThrottle={0.0001}
     stickyHeaderIndices={[]}
     viewabilityConfigCallbackPairs={[]}
   >
@@ -4707,7 +4709,7 @@ exports[`snapshotAllPages Animated 5`] = `
     onScrollBeginDrag={[Function]}
     onScrollEndDrag={[Function]}
     renderItem={[Function]}
-    scrollEventThrottle={50}
+    scrollEventThrottle={0.0001}
     stickyHeaderIndices={[]}
   >
     <View>
@@ -9703,6 +9705,7 @@ exports[`snapshotAllPages FlatList 1`] = `
                 "paddingVertical": 0,
               }
             }
+            testID="search_bar_flat_list"
             underlineColorAndroid="transparent"
             value=""
           />
@@ -10757,7 +10760,7 @@ exports[`snapshotAllPages FlatList 1`] = `
         refreshing={false}
         removeClippedSubviews={false}
         renderItem={[Function]}
-        scrollEventThrottle={50}
+        scrollEventThrottle={0.0001}
         stickyHeaderIndices={[]}
         style={{}}
         viewabilityConfig={
@@ -11899,7 +11902,7 @@ exports[`snapshotAllPages FlatList 2`] = `
     onStartReachedThreshold={0}
     removeClippedSubviews={false}
     renderItem={[Function]}
-    scrollEventThrottle={50}
+    scrollEventThrottle={0.0001}
     stickyHeaderIndices={[]}
     style={
       {
@@ -12449,7 +12452,7 @@ exports[`snapshotAllPages FlatList 3`] = `
     onScrollEndDrag={[Function]}
     removeClippedSubviews={false}
     renderItem={[Function]}
-    scrollEventThrottle={50}
+    scrollEventThrottle={0.0001}
     stickyHeaderIndices={[]}
     style={
       {
@@ -13309,7 +13312,7 @@ exports[`snapshotAllPages FlatList 4`] = `
       onScrollEndDrag={[Function]}
       removeClippedSubviews={false}
       renderItem={[Function]}
-      scrollEventThrottle={50}
+      scrollEventThrottle={0.0001}
       stickyHeaderIndices={[]}
       style={
         {
@@ -14129,7 +14132,7 @@ exports[`snapshotAllPages FlatList 5`] = `
     onScrollEndDrag={[Function]}
     removeClippedSubviews={false}
     renderItem={[Function]}
-    scrollEventThrottle={50}
+    scrollEventThrottle={0.0001}
     stickyHeaderIndices={[]}
     style={
       {
@@ -14861,7 +14864,7 @@ exports[`snapshotAllPages FlatList 6`] = `
     onViewableItemsChanged={[Function]}
     removeClippedSubviews={false}
     renderItem={[Function]}
-    scrollEventThrottle={50}
+    scrollEventThrottle={0.0001}
     stickyHeaderIndices={[]}
     style={
       {
@@ -15589,7 +15592,7 @@ exports[`snapshotAllPages FlatList 7`] = `
     onScrollEndDrag={[Function]}
     removeClippedSubviews={false}
     renderItem={[Function]}
-    scrollEventThrottle={50}
+    scrollEventThrottle={0.0001}
     stickyHeaderIndices={[]}
     style={
       {
@@ -15682,6 +15685,7 @@ exports[`snapshotAllPages FlatList 7`] = `
                 "fontSize": 10,
               }
             }
+            testID="flat_list_separator"
           >
             Separator for leading Pizza and trailing undefined has not been pressed
           </Text>
@@ -15769,6 +15773,7 @@ exports[`snapshotAllPages FlatList 7`] = `
                 "fontSize": 10,
               }
             }
+            testID="flat_list_separator"
           >
             Separator for leading Burger and trailing undefined has not been pressed
           </Text>
@@ -15856,6 +15861,7 @@ exports[`snapshotAllPages FlatList 7`] = `
                 "fontSize": 10,
               }
             }
+            testID="flat_list_separator"
           >
             Separator for leading Risotto and trailing undefined has not been pressed
           </Text>
@@ -15943,6 +15949,7 @@ exports[`snapshotAllPages FlatList 7`] = `
                 "fontSize": 10,
               }
             }
+            testID="flat_list_separator"
           >
             Separator for leading French Fries and trailing undefined has not been pressed
           </Text>
@@ -16030,6 +16037,7 @@ exports[`snapshotAllPages FlatList 7`] = `
                 "fontSize": 10,
               }
             }
+            testID="flat_list_separator"
           >
             Separator for leading Onion Rings and trailing undefined has not been pressed
           </Text>
@@ -16117,6 +16125,7 @@ exports[`snapshotAllPages FlatList 7`] = `
                 "fontSize": 10,
               }
             }
+            testID="flat_list_separator"
           >
             Separator for leading Fried Shrimps and trailing undefined has not been pressed
           </Text>
@@ -16204,6 +16213,7 @@ exports[`snapshotAllPages FlatList 7`] = `
                 "fontSize": 10,
               }
             }
+            testID="flat_list_separator"
           >
             Separator for leading Water and trailing undefined has not been pressed
           </Text>
@@ -16291,6 +16301,7 @@ exports[`snapshotAllPages FlatList 7`] = `
                 "fontSize": 10,
               }
             }
+            testID="flat_list_separator"
           >
             Separator for leading Coke and trailing undefined has not been pressed
           </Text>
@@ -16378,6 +16389,7 @@ exports[`snapshotAllPages FlatList 7`] = `
                 "fontSize": 10,
               }
             }
+            testID="flat_list_separator"
           >
             Separator for leading Beer and trailing undefined has not been pressed
           </Text>
@@ -16465,6 +16477,7 @@ exports[`snapshotAllPages FlatList 7`] = `
                 "fontSize": 10,
               }
             }
+            testID="flat_list_separator"
           >
             Separator for leading Cheesecake and trailing undefined has not been pressed
           </Text>
@@ -22731,7 +22744,7 @@ exports[`snapshotAllPages FlatList 8`] = `
       refreshing={false}
       removeClippedSubviews={false}
       renderItem={[Function]}
-      scrollEventThrottle={50}
+      scrollEventThrottle={0.0001}
       stickyHeaderIndices={[]}
       viewabilityConfigCallbackPairs={
         [
@@ -24707,7 +24720,7 @@ exports[`snapshotAllPages FlatList 9`] = `
   onScrollEndDrag={[Function]}
   removeClippedSubviews={false}
   renderItem={[Function]}
-  scrollEventThrottle={50}
+  scrollEventThrottle={0.0001}
   stickyHeaderIndices={
     [
       0,
@@ -25107,7 +25120,7 @@ exports[`snapshotAllPages FlatList 10`] = `
       onViewableItemsChanged={[Function]}
       removeClippedSubviews={false}
       renderItem={[Function]}
-      scrollEventThrottle={50}
+      scrollEventThrottle={0.0001}
       stickyHeaderIndices={[]}
       style={
         {
@@ -34512,6 +34525,7 @@ exports[`snapshotAllPages Pressable 1`] = `
             "fontSize": 16,
           }
         }
+        testID="one_press_me_button"
       >
         Press Me
       </Text>
@@ -47215,7 +47229,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        testID="scroll_view_item"
+      >
         Item 0
       </Text>
     </View>
@@ -47266,7 +47282,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        testID="scroll_view_item"
+      >
         Item 1
       </Text>
     </View>
@@ -47317,7 +47335,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        testID="scroll_view_item"
+      >
         Item 2
       </Text>
     </View>
@@ -47368,7 +47388,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        testID="scroll_view_item"
+      >
         Item 3
       </Text>
     </View>
@@ -47423,7 +47445,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 0
           </Text>
         </View>
@@ -47474,7 +47498,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 1
           </Text>
         </View>
@@ -47525,7 +47551,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 2
           </Text>
         </View>
@@ -47576,7 +47604,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 3
           </Text>
         </View>
@@ -47627,7 +47657,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 4
           </Text>
         </View>
@@ -47678,7 +47710,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 5
           </Text>
         </View>
@@ -47729,7 +47763,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 6
           </Text>
         </View>
@@ -47780,7 +47816,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 7
           </Text>
         </View>
@@ -47831,7 +47869,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 8
           </Text>
         </View>
@@ -47882,7 +47922,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 9
           </Text>
         </View>
@@ -47933,7 +47975,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 10
           </Text>
         </View>
@@ -47984,7 +48028,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 11
           </Text>
         </View>
@@ -48035,7 +48081,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 12
           </Text>
         </View>
@@ -48086,7 +48134,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 13
           </Text>
         </View>
@@ -48137,7 +48187,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 14
           </Text>
         </View>
@@ -48188,7 +48240,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 15
           </Text>
         </View>
@@ -48239,7 +48293,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 16
           </Text>
         </View>
@@ -48290,7 +48346,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 17
           </Text>
         </View>
@@ -48341,7 +48399,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 18
           </Text>
         </View>
@@ -48392,7 +48452,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 19
           </Text>
         </View>
@@ -48445,7 +48507,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        testID="scroll_view_item"
+      >
         Item 5
       </Text>
     </View>
@@ -48496,7 +48560,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        testID="scroll_view_item"
+      >
         Item 6
       </Text>
     </View>
@@ -48547,7 +48613,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        testID="scroll_view_item"
+      >
         Item 7
       </Text>
     </View>
@@ -48598,7 +48666,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        testID="scroll_view_item"
+      >
         Item 8
       </Text>
     </View>
@@ -48649,7 +48719,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        testID="scroll_view_item"
+      >
         Item 9
       </Text>
     </View>
@@ -48700,7 +48772,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        testID="scroll_view_item"
+      >
         Item 10
       </Text>
     </View>
@@ -48751,7 +48825,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        testID="scroll_view_item"
+      >
         Item 11
       </Text>
     </View>
@@ -48802,7 +48878,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        testID="scroll_view_item"
+      >
         Item 12
       </Text>
     </View>
@@ -48853,7 +48931,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        testID="scroll_view_item"
+      >
         Item 13
       </Text>
     </View>
@@ -48904,7 +48984,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        testID="scroll_view_item"
+      >
         Item 14
       </Text>
     </View>
@@ -48955,7 +49037,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        testID="scroll_view_item"
+      >
         Item 15
       </Text>
     </View>
@@ -49006,7 +49090,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        testID="scroll_view_item"
+      >
         Item 16
       </Text>
     </View>
@@ -49057,7 +49143,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        testID="scroll_view_item"
+      >
         Item 17
       </Text>
     </View>
@@ -49108,7 +49196,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        testID="scroll_view_item"
+      >
         Item 18
       </Text>
     </View>
@@ -49159,7 +49249,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        testID="scroll_view_item"
+      >
         Item 19
       </Text>
     </View>
@@ -49217,7 +49309,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 0
           </Text>
         </View>
@@ -49269,7 +49363,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 1
           </Text>
         </View>
@@ -49321,7 +49417,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 2
           </Text>
         </View>
@@ -49373,7 +49471,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 3
           </Text>
         </View>
@@ -49425,7 +49525,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 4
           </Text>
         </View>
@@ -49477,7 +49579,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 5
           </Text>
         </View>
@@ -49529,7 +49633,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 6
           </Text>
         </View>
@@ -49581,7 +49687,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 7
           </Text>
         </View>
@@ -49633,7 +49741,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 8
           </Text>
         </View>
@@ -49685,7 +49795,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 9
           </Text>
         </View>
@@ -49737,7 +49849,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 10
           </Text>
         </View>
@@ -49789,7 +49903,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 11
           </Text>
         </View>
@@ -49841,7 +49957,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 12
           </Text>
         </View>
@@ -49893,7 +50011,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 13
           </Text>
         </View>
@@ -49945,7 +50065,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 14
           </Text>
         </View>
@@ -49997,7 +50119,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 15
           </Text>
         </View>
@@ -50049,7 +50173,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 16
           </Text>
         </View>
@@ -50101,7 +50227,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 17
           </Text>
         </View>
@@ -50153,7 +50281,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 18
           </Text>
         </View>
@@ -50205,7 +50335,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 19
           </Text>
         </View>
@@ -50265,7 +50397,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 0
           </Text>
         </View>
@@ -50317,7 +50451,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 1
           </Text>
         </View>
@@ -50369,7 +50505,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 2
           </Text>
         </View>
@@ -50421,7 +50559,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 3
           </Text>
         </View>
@@ -50473,7 +50613,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 4
           </Text>
         </View>
@@ -50525,7 +50667,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 5
           </Text>
         </View>
@@ -50577,7 +50721,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 6
           </Text>
         </View>
@@ -50629,7 +50775,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 7
           </Text>
         </View>
@@ -50681,7 +50829,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 8
           </Text>
         </View>
@@ -50733,7 +50883,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 9
           </Text>
         </View>
@@ -50785,7 +50937,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 10
           </Text>
         </View>
@@ -50837,7 +50991,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 11
           </Text>
         </View>
@@ -50889,7 +51045,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 12
           </Text>
         </View>
@@ -50941,7 +51099,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 13
           </Text>
         </View>
@@ -50993,7 +51153,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 14
           </Text>
         </View>
@@ -51045,7 +51207,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 15
           </Text>
         </View>
@@ -51097,7 +51261,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 16
           </Text>
         </View>
@@ -51149,7 +51315,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 17
           </Text>
         </View>
@@ -51201,7 +51369,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 18
           </Text>
         </View>
@@ -51253,7 +51423,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 19
           </Text>
         </View>
@@ -51313,7 +51485,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 0
           </Text>
         </View>
@@ -51365,7 +51539,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 1
           </Text>
         </View>
@@ -51417,7 +51593,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 2
           </Text>
         </View>
@@ -51469,7 +51647,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 3
           </Text>
         </View>
@@ -51521,7 +51701,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 4
           </Text>
         </View>
@@ -51573,7 +51755,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 5
           </Text>
         </View>
@@ -51625,7 +51809,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 6
           </Text>
         </View>
@@ -51677,7 +51863,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 7
           </Text>
         </View>
@@ -51729,7 +51917,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 8
           </Text>
         </View>
@@ -51781,7 +51971,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 9
           </Text>
         </View>
@@ -51833,7 +52025,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 10
           </Text>
         </View>
@@ -51885,7 +52079,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 11
           </Text>
         </View>
@@ -51937,7 +52133,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 12
           </Text>
         </View>
@@ -51989,7 +52187,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 13
           </Text>
         </View>
@@ -52041,7 +52241,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 14
           </Text>
         </View>
@@ -52093,7 +52295,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 15
           </Text>
         </View>
@@ -52145,7 +52349,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 16
           </Text>
         </View>
@@ -52197,7 +52403,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 17
           </Text>
         </View>
@@ -52249,7 +52457,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 18
           </Text>
         </View>
@@ -52301,7 +52511,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 19
           </Text>
         </View>
@@ -52361,7 +52573,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 0
           </Text>
         </View>
@@ -52413,7 +52627,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 1
           </Text>
         </View>
@@ -52465,7 +52681,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 2
           </Text>
         </View>
@@ -52517,7 +52735,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 3
           </Text>
         </View>
@@ -52569,7 +52789,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 4
           </Text>
         </View>
@@ -52621,7 +52843,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 5
           </Text>
         </View>
@@ -52673,7 +52897,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 6
           </Text>
         </View>
@@ -52725,7 +52951,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 7
           </Text>
         </View>
@@ -52777,7 +53005,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 8
           </Text>
         </View>
@@ -52829,7 +53059,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 9
           </Text>
         </View>
@@ -52881,7 +53113,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 10
           </Text>
         </View>
@@ -52933,7 +53167,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 11
           </Text>
         </View>
@@ -52985,7 +53221,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 12
           </Text>
         </View>
@@ -53037,7 +53275,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 13
           </Text>
         </View>
@@ -53089,7 +53329,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 14
           </Text>
         </View>
@@ -53141,7 +53383,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 15
           </Text>
         </View>
@@ -53193,7 +53437,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 16
           </Text>
         </View>
@@ -53245,7 +53491,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 17
           </Text>
         </View>
@@ -53297,7 +53545,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 18
           </Text>
         </View>
@@ -53349,7 +53599,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 19
           </Text>
         </View>
@@ -53567,7 +53819,7 @@ exports[`snapshotAllPages SectionList 1`] = `
       onScrollBeginDrag={[Function]}
       onScrollEndDrag={[Function]}
       renderItem={[Function]}
-      scrollEventThrottle={50}
+      scrollEventThrottle={0.0001}
       stickyHeaderIndices={[]}
       style={
         {
@@ -54174,7 +54426,7 @@ exports[`snapshotAllPages SectionList 2`] = `
     onScrollBeginDrag={[Function]}
     onScrollEndDrag={[Function]}
     renderItem={[Function]}
-    scrollEventThrottle={50}
+    scrollEventThrottle={0.0001}
     stickyHeaderIndices={[]}
     style={
       {
@@ -54696,7 +54948,7 @@ exports[`snapshotAllPages SectionList 3`] = `
     onScrollEndDrag={[Function]}
     onViewableItemsChanged={[Function]}
     renderItem={[Function]}
-    scrollEventThrottle={50}
+    scrollEventThrottle={0.0001}
     stickyHeaderIndices={[]}
     style={
       {
@@ -55201,7 +55453,7 @@ exports[`snapshotAllPages SectionList 4`] = `
     onScrollBeginDrag={[Function]}
     onScrollEndDrag={[Function]}
     renderItem={[Function]}
-    scrollEventThrottle={50}
+    scrollEventThrottle={0.0001}
     stickyHeaderIndices={[]}
     style={
       {
@@ -55995,7 +56247,7 @@ exports[`snapshotAllPages SectionList 5`] = `
     onScrollBeginDrag={[Function]}
     onScrollEndDrag={[Function]}
     renderItem={[Function]}
-    scrollEventThrottle={50}
+    scrollEventThrottle={0.0001}
     stickyHeaderIndices={[]}
     style={
       {
@@ -56604,7 +56856,7 @@ exports[`snapshotAllPages SectionList 6`] = `
     onScrollBeginDrag={[Function]}
     onScrollEndDrag={[Function]}
     renderItem={[Function]}
-    scrollEventThrottle={50}
+    scrollEventThrottle={0.0001}
     stickyHeaderIndices={[]}
     style={
       {
@@ -64187,7 +64439,7 @@ exports[`snapshotAllPages SectionList 7`] = `
       }
       refreshing={false}
       renderItem={[Function]}
-      scrollEventThrottle={50}
+      scrollEventThrottle={0.0001}
       stickyHeaderIndices={
         [
           1,
@@ -65107,7 +65359,7 @@ exports[`snapshotAllPages SwipeableCard 1`] = `
           onScrollEndDrag={[Function]}
           removeClippedSubviews={false}
           renderItem={[Function]}
-          scrollEventThrottle={50}
+          scrollEventThrottle={0.0001}
           stickyHeaderIndices={[]}
           style={
             {
@@ -65396,7 +65648,7 @@ exports[`snapshotAllPages SwipeableCard 1`] = `
           onScrollEndDrag={[Function]}
           removeClippedSubviews={false}
           renderItem={[Function]}
-          scrollEventThrottle={50}
+          scrollEventThrottle={0.0001}
           stickyHeaderIndices={[]}
           style={
             {
