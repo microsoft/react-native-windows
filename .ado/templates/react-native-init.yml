@@ -89,9 +89,13 @@ steps:
   - ${{ if eq(parameters.projectType, 'lib') }}:
     - script: |
         npx --yes create-react-native-module@0.20.2 --package-name "testcli" testcli
-        rd /s /q testcli\android
       displayName: Init new lib project
       workingDirectory: $(Agent.BuildDirectory)
+
+    - script: |
+        rmdir /s /q android
+      displayName: Remove broken android folder # See issue https://github.com/microsoft/react-native-windows/issues/12209
+      workingDirectory: $(Agent.BuildDirectory)\testcli
 
     - script: |
         call yarn install
