@@ -105,7 +105,7 @@ class SharedColor {
   std::shared_ptr<Color> m_color;
 };
 
-bool isColorMeaningful(SharedColor const &color) noexcept;
+bool isColorMeaningful(const SharedColor &color) noexcept;
 SharedColor colorFromComponents(ColorComponents components);
 ColorComponents colorComponentsFromColor(SharedColor const &color);
 

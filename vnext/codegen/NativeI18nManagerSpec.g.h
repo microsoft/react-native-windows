@@ -13,26 +13,23 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
-struct I18nManagerSpec_Constants {
-    bool isRTL;
+struct I18nManagerSpec_I18nManagerConstants {
     bool doLeftAndRightSwapInRTL;
+    bool isRTL;
     std::optional<std::string> localeIdentifier;
 };
 
 
-inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(I18nManagerSpec_Constants*) noexcept {
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(I18nManagerSpec_I18nManagerConstants*) noexcept {
     winrt::Microsoft::ReactNative::FieldMap fieldMap {
-        {L"isRTL", &I18nManagerSpec_Constants::isRTL},
-        {L"doLeftAndRightSwapInRTL", &I18nManagerSpec_Constants::doLeftAndRightSwapInRTL},
-        {L"localeIdentifier", &I18nManagerSpec_Constants::localeIdentifier},
+        {L"doLeftAndRightSwapInRTL", &I18nManagerSpec_I18nManagerConstants::doLeftAndRightSwapInRTL},
+        {L"isRTL", &I18nManagerSpec_I18nManagerConstants::isRTL},
+        {L"localeIdentifier", &I18nManagerSpec_I18nManagerConstants::localeIdentifier},
     };
     return fieldMap;
 }
 
 struct I18nManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
-  static constexpr auto constants = std::tuple{
-      TypedConstant<I18nManagerSpec_Constants>{0},
-  };
   static constexpr auto methods = std::tuple{
       Method<void(bool) noexcept>{0, L"allowRTL"},
       Method<void(bool) noexcept>{1, L"forceRTL"},
@@ -41,14 +38,7 @@ struct I18nManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
 
   template <class TModule>
   static constexpr void ValidateModule() noexcept {
-    constexpr auto constantCheckResults = CheckConstants<TModule, I18nManagerSpec>();
     constexpr auto methodCheckResults = CheckMethods<TModule, I18nManagerSpec>();
-
-    REACT_SHOW_CONSTANT_SPEC_ERRORS(
-          0,
-          "I18nManagerSpec_Constants",
-          "    REACT_GET_CONSTANTS(GetConstants) I18nManagerSpec_Constants GetConstants() noexcept {/*implementation*/}\n"
-          "    REACT_GET_CONSTANTS(GetConstants) static I18nManagerSpec_Constants GetConstants() noexcept {/*implementation*/}\n");
 
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,

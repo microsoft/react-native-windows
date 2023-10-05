@@ -13,17 +13,17 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
-struct PlatformConstantsAndroidSpec_Constants_reactNativeVersion {
+struct PlatformConstantsAndroidSpec_ReactNativeVersionAndroid {
     double major;
     double minor;
     double patch;
     std::optional<double> prerelease;
 };
 
-struct PlatformConstantsAndroidSpec_Constants {
+struct PlatformConstantsAndroidSpec_PlatformConstantsAndroid {
     bool isTesting;
     std::optional<bool> isDisableAnimations;
-    PlatformConstantsAndroidSpec_Constants_reactNativeVersion reactNativeVersion;
+    PlatformConstantsAndroidSpec_ReactNativeVersionAndroid reactNativeVersion;
     double Version;
     std::string Release;
     std::string Serial;
@@ -36,52 +36,42 @@ struct PlatformConstantsAndroidSpec_Constants {
 };
 
 
-inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PlatformConstantsAndroidSpec_Constants_reactNativeVersion*) noexcept {
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PlatformConstantsAndroidSpec_ReactNativeVersionAndroid*) noexcept {
     winrt::Microsoft::ReactNative::FieldMap fieldMap {
-        {L"major", &PlatformConstantsAndroidSpec_Constants_reactNativeVersion::major},
-        {L"minor", &PlatformConstantsAndroidSpec_Constants_reactNativeVersion::minor},
-        {L"patch", &PlatformConstantsAndroidSpec_Constants_reactNativeVersion::patch},
-        {L"prerelease", &PlatformConstantsAndroidSpec_Constants_reactNativeVersion::prerelease},
+        {L"major", &PlatformConstantsAndroidSpec_ReactNativeVersionAndroid::major},
+        {L"minor", &PlatformConstantsAndroidSpec_ReactNativeVersionAndroid::minor},
+        {L"patch", &PlatformConstantsAndroidSpec_ReactNativeVersionAndroid::patch},
+        {L"prerelease", &PlatformConstantsAndroidSpec_ReactNativeVersionAndroid::prerelease},
     };
     return fieldMap;
 }
 
-inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PlatformConstantsAndroidSpec_Constants*) noexcept {
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PlatformConstantsAndroidSpec_PlatformConstantsAndroid*) noexcept {
     winrt::Microsoft::ReactNative::FieldMap fieldMap {
-        {L"isTesting", &PlatformConstantsAndroidSpec_Constants::isTesting},
-        {L"isDisableAnimations", &PlatformConstantsAndroidSpec_Constants::isDisableAnimations},
-        {L"reactNativeVersion", &PlatformConstantsAndroidSpec_Constants::reactNativeVersion},
-        {L"Version", &PlatformConstantsAndroidSpec_Constants::Version},
-        {L"Release", &PlatformConstantsAndroidSpec_Constants::Release},
-        {L"Serial", &PlatformConstantsAndroidSpec_Constants::Serial},
-        {L"Fingerprint", &PlatformConstantsAndroidSpec_Constants::Fingerprint},
-        {L"Model", &PlatformConstantsAndroidSpec_Constants::Model},
-        {L"ServerHost", &PlatformConstantsAndroidSpec_Constants::ServerHost},
-        {L"uiMode", &PlatformConstantsAndroidSpec_Constants::uiMode},
-        {L"Brand", &PlatformConstantsAndroidSpec_Constants::Brand},
-        {L"Manufacturer", &PlatformConstantsAndroidSpec_Constants::Manufacturer},
+        {L"isTesting", &PlatformConstantsAndroidSpec_PlatformConstantsAndroid::isTesting},
+        {L"isDisableAnimations", &PlatformConstantsAndroidSpec_PlatformConstantsAndroid::isDisableAnimations},
+        {L"reactNativeVersion", &PlatformConstantsAndroidSpec_PlatformConstantsAndroid::reactNativeVersion},
+        {L"Version", &PlatformConstantsAndroidSpec_PlatformConstantsAndroid::Version},
+        {L"Release", &PlatformConstantsAndroidSpec_PlatformConstantsAndroid::Release},
+        {L"Serial", &PlatformConstantsAndroidSpec_PlatformConstantsAndroid::Serial},
+        {L"Fingerprint", &PlatformConstantsAndroidSpec_PlatformConstantsAndroid::Fingerprint},
+        {L"Model", &PlatformConstantsAndroidSpec_PlatformConstantsAndroid::Model},
+        {L"ServerHost", &PlatformConstantsAndroidSpec_PlatformConstantsAndroid::ServerHost},
+        {L"uiMode", &PlatformConstantsAndroidSpec_PlatformConstantsAndroid::uiMode},
+        {L"Brand", &PlatformConstantsAndroidSpec_PlatformConstantsAndroid::Brand},
+        {L"Manufacturer", &PlatformConstantsAndroidSpec_PlatformConstantsAndroid::Manufacturer},
     };
     return fieldMap;
 }
 
 struct PlatformConstantsAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
-  static constexpr auto constants = std::tuple{
-      TypedConstant<PlatformConstantsAndroidSpec_Constants>{0},
-  };
   static constexpr auto methods = std::tuple{
       SyncMethod<std::string() noexcept>{0, L"getAndroidID"},
   };
 
   template <class TModule>
   static constexpr void ValidateModule() noexcept {
-    constexpr auto constantCheckResults = CheckConstants<TModule, PlatformConstantsAndroidSpec>();
     constexpr auto methodCheckResults = CheckMethods<TModule, PlatformConstantsAndroidSpec>();
-
-    REACT_SHOW_CONSTANT_SPEC_ERRORS(
-          0,
-          "PlatformConstantsAndroidSpec_Constants",
-          "    REACT_GET_CONSTANTS(GetConstants) PlatformConstantsAndroidSpec_Constants GetConstants() noexcept {/*implementation*/}\n"
-          "    REACT_GET_CONSTANTS(GetConstants) static PlatformConstantsAndroidSpec_Constants GetConstants() noexcept {/*implementation*/}\n");
 
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,

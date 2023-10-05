@@ -93,6 +93,11 @@ steps:
       workingDirectory: $(Agent.BuildDirectory)
 
     - script: |
+        rmdir /s /q android
+      displayName: Remove broken android folder # See issue https://github.com/microsoft/react-native-windows/issues/12209
+      workingDirectory: $(Agent.BuildDirectory)\testcli
+
+    - script: |
         call yarn install
         call yarn upgrade react@$(reactDevDependency) --dev
         call yarn upgrade react-native@$(reactNativeDevDependency) --dev
