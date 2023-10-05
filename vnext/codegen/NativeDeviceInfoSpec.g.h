@@ -35,7 +35,7 @@ struct DeviceInfoSpec_DimensionsPayload {
     std::optional<DeviceInfoSpec_DisplayMetricsAndroid> screenPhysicalPixels;
 };
 
-struct DeviceInfoSpec_Constants {
+struct DeviceInfoSpec_DeviceInfoConstants {
     DeviceInfoSpec_DimensionsPayload Dimensions;
     std::optional<bool> isIPhoneX_deprecated;
 };
@@ -72,32 +72,22 @@ inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(DeviceInfoSpec_Dime
     return fieldMap;
 }
 
-inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(DeviceInfoSpec_Constants*) noexcept {
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(DeviceInfoSpec_DeviceInfoConstants*) noexcept {
     winrt::Microsoft::ReactNative::FieldMap fieldMap {
-        {L"Dimensions", &DeviceInfoSpec_Constants::Dimensions},
-        {L"isIPhoneX_deprecated", &DeviceInfoSpec_Constants::isIPhoneX_deprecated},
+        {L"Dimensions", &DeviceInfoSpec_DeviceInfoConstants::Dimensions},
+        {L"isIPhoneX_deprecated", &DeviceInfoSpec_DeviceInfoConstants::isIPhoneX_deprecated},
     };
     return fieldMap;
 }
 
 struct DeviceInfoSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
-  static constexpr auto constants = std::tuple{
-      TypedConstant<DeviceInfoSpec_Constants>{0},
-  };
   static constexpr auto methods = std::tuple{
 
   };
 
   template <class TModule>
   static constexpr void ValidateModule() noexcept {
-    constexpr auto constantCheckResults = CheckConstants<TModule, DeviceInfoSpec>();
     constexpr auto methodCheckResults = CheckMethods<TModule, DeviceInfoSpec>();
-
-    REACT_SHOW_CONSTANT_SPEC_ERRORS(
-          0,
-          "DeviceInfoSpec_Constants",
-          "    REACT_GET_CONSTANTS(GetConstants) DeviceInfoSpec_Constants GetConstants() noexcept {/*implementation*/}\n"
-          "    REACT_GET_CONSTANTS(GetConstants) static DeviceInfoSpec_Constants GetConstants() noexcept {/*implementation*/}\n");
 
 
   }

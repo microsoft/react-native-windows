@@ -17,6 +17,7 @@ const {
 function makeMetroConfig(customConfig = {}) {
   return mergeConfig(MetroConfig.makeMetroConfig(customConfig), {
     resolver: {
+      enableGlobalPackages: true,
       blockList: MetroConfig.exclusionList([
         // This prevents "react-native run-windows" from hitting: EBUSY: resource
         // busy or locked for files produced by MSBuild

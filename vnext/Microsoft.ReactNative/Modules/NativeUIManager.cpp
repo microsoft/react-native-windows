@@ -42,8 +42,8 @@ static inline bool YogaFloatEquals(float x, float y) {
 
 #if defined(_DEBUG)
 static int YogaLog(
-    const YGConfigRef /*config*/,
-    const YGNodeRef /*node*/,
+    const YGConfigConstRef /*config*/,
+    const YGNodeConstRef /*node*/,
     YGLogLevel /*level*/,
     const char *format,
     va_list args) {
@@ -835,8 +835,8 @@ void NativeUIManager::RemoveView(ShadowNode &shadowNode, bool removeChildren /*=
 
     YGNodeRef yogaNode = pViewManager->RequiresYogaNode() ? GetYogaNode(node.m_tag) : nullptr;
     if (yogaNode != nullptr && !pViewManager->IsNativeControlWithSelfLayout()) {
-      uint32_t childCount = YGNodeGetChildCount(yogaNode);
-      for (uint32_t i = childCount; i > 0; --i) {
+      auto childCount = YGNodeGetChildCount(yogaNode);
+      for (auto i = childCount; i > 0; --i) {
         YGNodeRef yogaNodeToRemove = YGNodeGetChild(yogaNode, i - 1);
         YGNodeRemoveChild(yogaNode, yogaNodeToRemove);
       }
