@@ -35,6 +35,7 @@
     "@react-native/community-cli-plugin": "^0.73.0",
     "@react-native/gradle-plugin": "0.73.0-nightly-20230918-1ac3dab6e",
     "@react-native/js-polyfills": "0.73.0-nightly-20230622-0201e51bb",
+    "@react-native/metro-config": "^0.73.0",
     "@react-native/normalize-colors": "0.73.0-nightly-20230622-0201e51bb",
     "@react-native/virtualized-lists": "0.73.0-nightly-20230912-0e5ea2890",
     "abort-controller": "^3.0.0",
