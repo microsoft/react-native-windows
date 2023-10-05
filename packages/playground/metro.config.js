@@ -145,7 +145,6 @@ function tryResolveDevRelativeImport(
 }
 
 module.exports = makeMetroConfig({
-  projectRoot: __dirname,
   resolver: {
     resolveRequest: devResolveRequest,
   },
