@@ -89,6 +89,7 @@ steps:
   - ${{ if eq(parameters.projectType, 'lib') }}:
     - script: |
         npx --yes create-react-native-module@0.20.2 --package-name "testcli" testcli
+        rd /s /q testcli\android
       displayName: Init new lib project
       workingDirectory: $(Agent.BuildDirectory)
 
