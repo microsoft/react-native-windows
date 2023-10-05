@@ -75,6 +75,13 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUPdate/jsi/jsi/test/testlib.cpp",
+      "baseFile": "packages/react-native/ReactCommon/jsi/jsi/test/testlib.cpp",
+      "baseHash": "e9c021f2e7812ef254e9b30af0950becc3c7e9cd",
+      "issue": 12210
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/conversions.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/conversions.h",
       "baseHash": "d35c79f6fb115a9697f6073298c65d0bb0f36181",
