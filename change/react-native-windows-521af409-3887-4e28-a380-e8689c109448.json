@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Switch between V8 JSI and V8 Node-API",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}
