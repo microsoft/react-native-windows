@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Fri, 06 Oct 2023 05:13:51 GMT",
+      "version": "0.0.0-canary.191",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.191",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "4af86020f103c1fc4d9a7f9d1d33163e2c210c00",
+            "comment": "Integrate 9/20"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 28 Sep 2023 05:13:18 GMT",
       "version": "0.0.0-canary.190",
       "tag": "@react-native-windows/cli_v0.0.0-canary.190",
