@@ -16,7 +16,7 @@ struct CompWindowsTextInputSelectionStruct {
 
 static inline void
 fromRawValue(const PropsParserContext &context, const RawValue &value, CompWindowsTextInputSelectionStruct &result) {
-  auto map = (butter::map<std::string, RawValue>)value;
+  auto map = (std::unordered_map<std::string, RawValue>)value;
 
   auto tmp_start = map.find("start");
   if (tmp_start != map.end()) {
@@ -44,7 +44,7 @@ static inline void fromRawValue(
     const PropsParserContext &context,
     const RawValue &value,
     CompWindowsTextInputSubmitKeyEventsStruct &result) {
-  auto map = (butter::map<std::string, RawValue>)value;
+  auto map = (std::unordered_map<std::string, RawValue>)value;
 
   auto tmp_altKey = map.find("altKey");
   if (tmp_altKey != map.end()) {

@@ -16,7 +16,8 @@
     "regex": "cpp",
     "utility": "cpp",
     "ratio": "cpp",
-    "memory": "cpp"
+    "memory": "cpp",
+    "array": "cpp"
   },
   "search.exclude": {
     "**/dist/**/*.js": true,

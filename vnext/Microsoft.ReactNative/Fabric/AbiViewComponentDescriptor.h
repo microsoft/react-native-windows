@@ -79,7 +79,7 @@ class AbiViewComponentDescriptor : public facebook::react::ComponentDescriptor {
    *   - Set `ShadowNode`'s size from state in
    * `ModalHostViewComponentDescriptor`.
    */
-  virtual void adopt(facebook::react::ShadowNode::Unshared const &shadowNode) const;
+  virtual void adopt(facebook::react::ShadowNode &shadowNode) const;
 
  private:
   winrt::Microsoft::ReactNative::IReactViewComponentBuilder m_builder;

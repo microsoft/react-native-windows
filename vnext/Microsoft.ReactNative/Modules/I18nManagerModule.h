@@ -24,7 +24,7 @@ struct I18nManager {
   void Initialize(React::ReactContext const &reactContext) noexcept;
 
   REACT_GET_CONSTANTS(GetConstants)
-  ReactNativeSpecs::I18nManagerSpec_Constants GetConstants() noexcept;
+  ReactNativeSpecs::I18nManagerSpec_I18nManagerConstants GetConstants() noexcept;
 
   REACT_METHOD(AllowRTL, L"allowRTL")
   void AllowRTL(bool allowRTL) noexcept;

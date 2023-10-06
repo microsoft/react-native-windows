@@ -33,8 +33,8 @@ struct DeviceInfo {
   }
 
   REACT_GET_CONSTANTS(GetConstants)
-  Microsoft::ReactNativeSpecs::DeviceInfoSpec_Constants GetConstants() noexcept {
-    Microsoft::ReactNativeSpecs::DeviceInfoSpec_Constants constants;
+  Microsoft::ReactNativeSpecs::DeviceInfoSpec_DeviceInfoConstants GetConstants() noexcept {
+    Microsoft::ReactNativeSpecs::DeviceInfoSpec_DeviceInfoConstants constants;
     Microsoft::ReactNativeSpecs::DeviceInfoSpec_DisplayMetrics screenDisplayMetrics;
     screenDisplayMetrics.fontScale = 1;
     screenDisplayMetrics.height = 1024;

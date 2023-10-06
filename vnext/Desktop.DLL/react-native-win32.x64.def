@@ -71,14 +71,9 @@ MicrosoftReactGetRuntimeOptionBool
 MicrosoftReactGetRuntimeOptionInt
 MicrosoftReactGetRuntimeOptionString
 
-YGAssert
-YGAssertWithConfig
-YGAssertWithNode
-YGConfigCopy
 YGConfigFree
 YGConfigGetContext
 YGConfigGetDefault
-YGConfigGetInstanceCount
 YGConfigGetUseWebDefaults
 YGConfigIsExperimentalFeatureEnabled
 YGConfigNew
@@ -86,7 +81,6 @@ YGConfigSetContext
 YGConfigSetExperimentalFeatureEnabled
 YGConfigSetLogger
 YGConfigSetPointScaleFactor
-YGConfigSetUseLegacyStretchBehaviour
 YGConfigSetUseWebDefaults
 YGFloatIsUndefined
 YGNodeCalculateLayout

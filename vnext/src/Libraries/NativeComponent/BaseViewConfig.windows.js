@@ -225,6 +225,7 @@ const validAttributesForNonEventProps = {
   overflow: true,
   shouldRasterizeIOS: true,
   transform: {diff: require('../Utilities/differ/matricesDiffer')},
+  transformOrigin: true,
   accessibilityRole: true,
   accessibilityState: true,
   nativeID: true,
