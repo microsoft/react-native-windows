@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Thu, 28 Sep 2023 05:13:18 GMT and should not be manually modified.
+This log was last generated on Fri, 06 Oct 2023 05:13:51 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.191
+
+Fri, 06 Oct 2023 05:13:51 GMT
+
+### Changes
+
+- Integrate 9/20 (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.0.0-canary.190
 
