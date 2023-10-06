@@ -382,13 +382,26 @@ const AccessibilityInfo = {
    * - `announcement`: The string announced by the screen reader.
    * - `options`: An object that configures the reading options.
    *   - `queue`: The announcement will be queued behind existing announcements. iOS only.
+   *   - `nativeID`: The nativeID of the element we're sending the announcement from. win32 only.
    */
   announceForAccessibilityWithOptions(
     announcement: string,
-    options: {queue?: boolean},
+    options: {
+      queue?: boolean,
+      nativeID?: string // win32
+    },
   ): void {
-    if (Platform.OS === 'android' || Platform.OS === 'win32') {
+    if (Platform.OS === 'android') {
       NativeAccessibilityInfo?.announceForAccessibility(announcement);
+    } else if (Platform.OS === 'win32') {
+      if (NativeAccessibilityInfo?.announceForAccessibilityWithOptions) {
+        NativeAccessibilityInfo?.announceForAccessibilityWithOptions(
+          announcement,
+          options,
+        );
+      } else {
+        NativeAccessibilityInfo?.announceForAccessibility(announcement);
+      }
     } else {
       if (NativeAccessibilityManagerIOS?.announceForAccessibilityWithOptions) {
         NativeAccessibilityManagerIOS?.announceForAccessibilityWithOptions(

@@ -23,6 +23,10 @@ const Components: Array<RNTesterModuleInfo> = [
     module: require('../examples-win32/Accessibility/AccessibilityExampleWin32'),
   },*/
   {
+    key: 'AccessibilityExampleWin32',
+    module: require('../examples-win32/Accessibility/AccessibilityExampleWin32'),
+  },
+  {
     key: 'ActivityIndicatorExample',
     category: 'UI',
     module: require('../examples/ActivityIndicator/ActivityIndicatorExample'),
