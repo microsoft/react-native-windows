@@ -31,7 +31,7 @@ class V8JSIRuntimeHolder : public Microsoft::JSI::RuntimeHolderLazyInit {
         jsQueue_(std::move(jsQueue)),
         scriptStore_(std::move(scriptStore)),
         preparedScriptStore_(std::move(preparedScriptStore)),
-        enableMultiThreadingSupport_(enableMultiThreadingSupport){}
+        enableMultiThreadingSupport_(enableMultiThreadingSupport) {}
 
  private:
   void initRuntime() noexcept;
