@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 06 Oct 2023 17:54:59 GMT",
+      "tag": "react-native-windows_v0.71.40",
+      "version": "0.71.40",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "75b42021dbf4734610a01134b86399210b2b62ed",
+            "comment": "Switch between V8 JSI and V8 Node-API"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 03 Oct 2023 02:37:00 GMT",
       "tag": "react-native-windows_v0.71.39",
       "version": "0.71.39",

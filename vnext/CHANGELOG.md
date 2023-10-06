@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 03 Oct 2023 02:37:00 GMT and should not be manually modified.
+This log was last generated on Fri, 06 Oct 2023 17:54:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.40
+
+Fri, 06 Oct 2023 17:54:59 GMT
+
+### Patches
+
+- Switch between V8 JSI and V8 Node-API (vmorozov@microsoft.com)
 
 ## 0.71.39
 
