@@ -81,9 +81,9 @@ struct PointerPointProperties : PointerPointPropertiesT<PointerPointProperties> 
   float YTilt() noexcept;
 
  private:
-  winrt::Windows::UI::Input::PointerPointProperties m_systemPPP{nullptr};
+  winrt::Windows::UI::Input::PointerPointProperties m_sysPointerPointProps{nullptr};
 
-  // When not using m_systemPPP
+  // When not using m_sysPointerPointProps
   bool m_isBarrelButtonPressed : 1;
   bool m_isCanceled : 1;
   bool m_isEraser : 1;
@@ -124,7 +124,7 @@ struct PointerPoint : PointerPointT<PointerPoint> {
   bool IsPointerMessage(uint32_t message) noexcept;
 
   // Windows::Input
-  winrt::Windows::UI::Input::PointerPoint m_systemPP{nullptr};
+  winrt::Windows::UI::Input::PointerPoint m_sysPointerPoint{nullptr};
   // WM_POINTER*
   POINTER_INFO m_pi = {0};
   // WM_*MOUSE
@@ -148,7 +148,7 @@ struct PointerRoutedEventArgs : PointerRoutedEventArgsT<PointerRoutedEventArgs> 
  private:
   facebook::react::Tag m_tag{-1};
   bool m_handled{false};
-  winrt::Microsoft::ReactNative::Composition::Input::PointerPoint m_pp{nullptr};
+  winrt::Microsoft::ReactNative::Composition::Input::PointerPoint m_pointerPoint{nullptr};
   winrt::Windows::System::VirtualKeyModifiers m_virtualKeyModifiers;
 };
 
