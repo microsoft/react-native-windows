@@ -309,7 +309,7 @@ vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMethods()
 WebSocketModuleProxy::WebSocketModuleProxy(IInspectable const &inspectableProperties) noexcept
     : m_inspectableProps{inspectableProperties} {}
 
-void WebSocketModuleProxy::SendBinary(std::string &&base64String, int64_t id) noexcept /*override*/ {
+void WebSocketModuleProxy::SendBinary(string &&base64String, int64_t id) noexcept /*override*/ {
   auto propBag = ReactPropertyBag{m_inspectableProps.try_as<IReactPropertyBag>()};
   auto sharedPropId =
       ReactPropertyId<ReactNonAbiValue<weak_ptr<WebSocketModule::SharedState>>>{L"WebSocketModule.SharedState"};
@@ -396,6 +396,11 @@ shared_ptr<IWebSocketResource> WebSocketTurboModule::CreateResource(int64_t id, 
 
 void WebSocketTurboModule::Initialize(msrn::ReactContext const &reactContext) noexcept {
   m_context = reactContext.Handle();
+  m_proxy = std::make_shared<WebSocketTurboModuleProxy>(m_resourceMap);
+
+  auto proxyPropId = ReactPropertyId<ReactNonAbiValue<weak_ptr<IWebSocketModuleProxy>>>{L"WebSocketModule.Proxy"};
+  auto proxy = weak_ptr<IWebSocketModuleProxy>{m_proxy};
+  m_context.Properties().Set(proxyPropId, std::move(proxy));
 }
 
 void WebSocketTurboModule::Connect(
@@ -486,6 +491,29 @@ void WebSocketTurboModule::AddListener(string && /*eventName*/) noexcept {}
 void WebSocketTurboModule::RemoveListeners(double /*count*/) noexcept {}
 
 #pragma endregion WebSocketTurboModule
+
+#pragma region WebSocketTurboModuleProxy
+
+WebSocketTurboModuleProxy::WebSocketTurboModuleProxy(
+    std::unordered_map<double, shared_ptr<IWebSocketResource>> &resourceMap) noexcept
+    : m_resourceMap{resourceMap} {}
+
+#pragma endregion WebSocketTurboModuleProxy
+
+void WebSocketTurboModuleProxy::SendBinary(string &&base64String, int64_t id) noexcept /*override*/
+{
+  auto rcItr = m_resourceMap.find(static_cast<double>(id));
+  if (rcItr == m_resourceMap.cend()) {
+    return;
+  }
+
+  weak_ptr<IWebSocketResource> weakRc = (*rcItr).second;
+  if (auto rc = weakRc.lock()) {
+    rc->SendBinary(std::move(base64String));
+  }
+}
+
+#pragma region WebSocketTurboModule
 
 /*extern*/ const char *GetWebSocketModuleName() noexcept {
   return s_moduleName;
