@@ -8,7 +8,6 @@ import {
   Text,
   TouchableHighlight,
   ListRenderItemInfo,
-  Button,
 } from 'react-native';
 import { ViewWin32 } from '@office-iss/react-native-win32';
 import { IHandledKeyboardEvent, Pressable, TextWin32 } from '@office-iss/react-native-win32';
@@ -480,14 +479,24 @@ const AccessibilityInfoExample: React.FunctionComponent<{}> =() => {
     setTimeout(() => {
       AccessibilityInfo.announceForAccessibilityWithOptions(
         'AccessibilityInfo announcement succeeded!',
-        { queue: undefined, nativeID: 'AnnouncementTarget' });
+        // @ts-ignore
+        { nativeID: 'AnnouncementTarget' });
       }, 3000);
   }, []);
 
   return (
-    <View style={styles.box}>
-      <Button onPress={onClick} title='AccessibilityInfo.announceForAccessibility' />
-      <Button onPress={onClickDelayed} title='AccessibilityInfo.announceForAccessibilityWithOptions' />
+    <View>
+      <TouchableHighlight onPress={onClick} underlayColor={'transparent'}>
+        <ViewWin32 style={styles.box} accessible focusable>
+            <Text>AccessibilityInfo.announceForAccessibility</Text>
+        </ViewWin32>
+      </TouchableHighlight>
+
+      <TouchableHighlight onPress={onClickDelayed} underlayColor={'transparent'}>
+        <ViewWin32 style={styles.box} accessible focusable nativeID={'AnnouncementTarget'}>
+            <Text>AccessibilityInfo.announceForAccessibilityWithOptions</Text>
+        </ViewWin32>
+      </TouchableHighlight>
     </View>
   );
 };
