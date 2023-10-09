@@ -49,6 +49,9 @@ namespace Microsoft.ReactNative.Composition
   [experimental]
   delegate void KeyHandler(Microsoft.ReactNative.Composition.Input.KeyboardSource source, Microsoft.ReactNative.Composition.Input.KeyRoutedEventArgs args);
 
+  [experimental]
+  delegate void PointerHandler(Microsoft.ReactNative.Composition.Input.PointerRoutedEventArgs args);
+
   [webhosthidden]
   [experimental]
   DOC_STRING(".")
@@ -90,6 +93,11 @@ namespace Microsoft.ReactNative.Composition
 
     DOC_STRING("Used to handle key up events when this component is focused, or if a child component did not handle the key up")
     void SetKeyUpHandler(KeyHandler impl);
+
+    void SetPointerPressedHandler(PointerHandler impl);
+    void SetPointerReleasedHandler(PointerHandler impl);
+    void SetPointerMovedHandler(PointerHandler impl);
+    void SetPointerWheelChangedHandler(PointerHandler impl);
   };
 
 

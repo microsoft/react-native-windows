@@ -36,6 +36,11 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
   void SetKeyDownHandler(KeyHandler impl) noexcept;
   void SetKeyUpHandler(KeyHandler impl) noexcept;
 
+  void SetPointerReleasedHandler(PointerHandler impl) noexcept;
+  void SetPointerPressedHandler(PointerHandler impl) noexcept;
+  void SetPointerMovedHandler(PointerHandler impl) noexcept;
+  void SetPointerWheelChangedHandler(PointerHandler impl) noexcept;
+
  public:
   IComponentProps CreateProps(ViewProps props) noexcept;
 
@@ -56,6 +61,12 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
   void OnKeyUp(
       const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
       const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept;
+  void OnPointerPressed(const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept;
+  void OnPointerReleased(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept;
+  void OnPointerMoved(const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept;
+  void OnPointerWheelChanged(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept;
 
  private:
   ViewPropsFactory m_propsFactory;
@@ -69,6 +80,10 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
   MessageHandler m_messageHandler;
   KeyHandler m_keyUp;
   KeyHandler m_keyDown;
+  PointerHandler m_pointerReleased;
+  PointerHandler m_pointerPressed;
+  PointerHandler m_pointerMoved;
+  PointerHandler m_pointerWheelChanged;
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition

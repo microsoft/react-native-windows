@@ -70,7 +70,6 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
   IInspectable GetUiaProvider() noexcept;
 
   int64_t SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept;
-  void OnScrollWheel(winrt::Windows::Foundation::Point point, int32_t delta) noexcept;
 
  public: // ICompositionRootView
   winrt::Microsoft::ReactNative::Composition::IVisual GetVisual() const noexcept override;

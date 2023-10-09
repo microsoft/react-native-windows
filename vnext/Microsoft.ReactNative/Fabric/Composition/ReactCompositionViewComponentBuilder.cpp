@@ -59,6 +59,22 @@ void ReactCompositionViewComponentBuilder::SetKeyUpHandler(KeyHandler impl) noex
   m_keyUp = impl;
 }
 
+void ReactCompositionViewComponentBuilder::SetPointerReleasedHandler(PointerHandler impl) noexcept {
+  m_pointerReleased = impl;
+}
+
+void ReactCompositionViewComponentBuilder::SetPointerPressedHandler(PointerHandler impl) noexcept {
+  m_pointerPressed = impl;
+}
+
+void ReactCompositionViewComponentBuilder::SetPointerMovedHandler(PointerHandler impl) noexcept {
+  m_pointerMoved = impl;
+}
+
+void ReactCompositionViewComponentBuilder::SetPointerWheelChangedHandler(PointerHandler impl) noexcept {
+  m_pointerWheelChanged = impl;
+}
+
 winrt::Windows::Foundation::IInspectable ReactCompositionViewComponentBuilder::CreateView(
     IReactContext reactContext,
     ICompositionContext context) noexcept {
@@ -125,6 +141,34 @@ void ReactCompositionViewComponentBuilder::OnKeyUp(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
   if (m_keyUp) {
     m_keyUp(source, args);
+  }
+}
+
+void ReactCompositionViewComponentBuilder::OnPointerPressed(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  if (m_pointerPressed) {
+    m_pointerPressed(args);
+  }
+}
+
+void ReactCompositionViewComponentBuilder::OnPointerReleased(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  if (m_pointerReleased) {
+    m_pointerReleased(args);
+  }
+}
+
+void ReactCompositionViewComponentBuilder::OnPointerMoved(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  if (m_pointerMoved) {
+    m_pointerMoved(args);
+  }
+}
+
+void ReactCompositionViewComponentBuilder::OnPointerWheelChanged(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  if (m_pointerWheelChanged) {
+    m_pointerWheelChanged(args);
   }
 }
 
