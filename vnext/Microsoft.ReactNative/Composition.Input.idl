@@ -25,4 +25,79 @@ namespace Microsoft.ReactNative.Composition.Input
     Windows.System.VirtualKey OriginalKey { get; };
   }
 
+  interface IPointerPointTransform
+  {
+    IPointerPointTransform Inverse { get; };
+    Boolean TryTransform(Windows.Foundation.Point inPoint, out Windows.Foundation.Point outPoint);
+    Boolean TryTransformBounds(Windows.Foundation.Rect inRect, out Windows.Foundation.Rect outRect);
+  };
+
+  enum PointerDeviceType
+  {
+    Touch = 0,
+    Pen,
+    Mouse,
+    Touchpad,
+  };
+
+  enum PointerUpdateKind
+  {
+      Other = 0,
+      LeftButtonPressed,
+      LeftButtonReleased,
+      RightButtonPressed,
+      RightButtonReleased,
+      MiddleButtonPressed,
+      MiddleButtonReleased,
+      XButton1Pressed,
+      XButton1Released,
+      XButton2Pressed,
+      XButton2Released,
+  };
+
+  runtimeclass PointerPointProperties
+  {
+    Windows.Foundation.Rect ContactRect { get; };
+    Boolean IsBarrelButtonPressed { get; };
+    Boolean IsCanceled { get; };
+    Boolean IsEraser { get; };
+    Boolean IsHorizontalMouseWheel { get; };
+    Boolean IsInRange { get; };
+    Boolean IsInverted { get; };
+    Boolean IsLeftButtonPressed { get; };
+    Boolean IsMiddleButtonPressed { get; };
+    Boolean IsPrimary { get; };
+    Boolean IsRightButtonPressed { get; };
+    Boolean IsXButton1Pressed { get; };
+    Boolean IsXButton2Pressed { get; };
+    Int32 MouseWheelDelta { get; };
+    Single Orientation { get; };
+    PointerUpdateKind PointerUpdateKind{ get; };
+    Single Pressure { get; };
+    Boolean TouchConfidence { get; };
+    Single Twist { get; };
+    Single XTilt { get; };
+    Single YTilt { get; };
+  };
+
+  runtimeclass PointerPoint
+  {
+    UInt32 FrameId { get; };
+    Boolean IsInContact{ get; };
+    PointerDeviceType PointerDeviceType { get; };
+    UInt32 PointerId{ get; };
+    Windows.Foundation.Point Position { get; };
+    PointerPointProperties Properties{ get; };
+    UInt64 Timestamp { get; };
+    PointerPoint GetTransformedPoint(
+        IPointerPointTransform transform);
+  };
+
+  runtimeclass PointerRoutedEventArgs : RoutedEventArgs
+  {
+    PointerPoint GetCurrentPoint(Int32 tag);
+    Boolean Handled;
+    Windows.System.VirtualKeyModifiers KeyModifiers { get; };
+  };
+
 } // namespace Microsoft.ReactNative.Composition.Input

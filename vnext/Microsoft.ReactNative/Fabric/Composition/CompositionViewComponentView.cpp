@@ -158,6 +158,34 @@ void CompositionBaseComponentView::onKeyUp(
   }
 }
 
+void CompositionBaseComponentView::onPointerPressed(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  if (m_parent && !args.Handled()) {
+    m_parent->onPointerPressed(args);
+  }
+}
+
+void CompositionBaseComponentView::onPointerReleased(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  if (m_parent && !args.Handled()) {
+    m_parent->onPointerReleased(args);
+  }
+}
+
+void CompositionBaseComponentView::onPointerMoved(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  if (m_parent && !args.Handled()) {
+    m_parent->onPointerMoved(args);
+  }
+}
+
+void CompositionBaseComponentView::onPointerWheelChanged(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  if (m_parent && !args.Handled()) {
+    m_parent->onPointerWheelChanged(args);
+  }
+}
+
 RECT CompositionBaseComponentView::getClientRect() const noexcept {
   RECT rc{0};
   if (m_parent) {
@@ -173,15 +201,6 @@ RECT CompositionBaseComponentView::getClientRect() const noexcept {
 
 const facebook::react::SharedViewEventEmitter &CompositionBaseComponentView::GetEventEmitter() const noexcept {
   return m_eventEmitter;
-}
-
-bool CompositionBaseComponentView::ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept {
-  if (m_parent) {
-    pt.x += m_layoutMetrics.frame.origin.x * m_layoutMetrics.pointScaleFactor;
-    pt.y += m_layoutMetrics.frame.origin.y * m_layoutMetrics.pointScaleFactor;
-    return m_parent->ScrollWheel(pt, delta);
-  }
-  return false;
 }
 
 std::array<

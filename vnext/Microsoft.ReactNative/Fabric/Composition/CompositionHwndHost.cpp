@@ -91,23 +91,6 @@ LRESULT CompositionHwndHost::TranslateMessage(int msg, uint64_t wParam, int64_t 
     return 0;
 
   switch (msg) {
-    case WM_MOUSEWHEEL: {
-      POINT pt = {GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam)};
-      ::ScreenToClient(m_hwnd, &pt);
-      int32_t delta = GET_WHEEL_DELTA_WPARAM(wParam);
-      m_compRootView.OnScrollWheel({static_cast<float>(pt.x), static_cast<float>(pt.y)}, delta);
-      return 0;
-    }
-    /*
-    case WM_POINTERDOWN: {
-      m_compRootView.OnPointerPressed({GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam)});
-      return 0;
-    }
-    case WM_LBUTTONUP: {
-      m_compRootView.OnMouseUp({static_cast<float>(GET_X_LPARAM(lParam)), static_cast<float>(GET_Y_LPARAM(lParam))});
-      return 0;
-    }
-    */
     case WM_WINDOWPOSCHANGED: {
       UpdateSize();
       /*
