@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 27 Sep 2023 21:02:34 GMT and should not be manually modified.
+This log was last generated on Mon, 09 Oct 2023 15:13:28 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.72.11
+
+Mon, 09 Oct 2023 15:13:28 GMT
+
+### Patches
+
+- Have RCTNetworking.win32 fork RCTNetworking.ios (#12199) (julio.rocha@microsoft.com)
 
 ## 0.72.10
 
