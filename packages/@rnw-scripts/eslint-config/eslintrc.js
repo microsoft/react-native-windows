@@ -7,7 +7,12 @@
  */
 
 module.exports = {
-  extends: ['plugin:@microsoft/sdl/required', '@react-native', 'prettier'],
+  extends: [
+    'plugin:@microsoft/sdl/required',
+    'plugin:@microsoft/sdl/typescript',
+    '@react-native',
+    'prettier'
+  ],
   rules: {
     'jest/no-disabled-tests': 'off',
     'react-native/no-inline-styles': 'off',
