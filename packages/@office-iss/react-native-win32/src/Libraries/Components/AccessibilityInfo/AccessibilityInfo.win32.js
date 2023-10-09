@@ -17,6 +17,7 @@ import {sendAccessibilityEvent} from '../../ReactNative/RendererProxy';
 import Platform from '../../Utilities/Platform';
 import legacySendAccessibilityEvent from './legacySendAccessibilityEvent';
 import NativeAccessibilityInfo from './NativeAccessibilityInfo';
+import NativeAccessibilityInfoWin32 from './NativeAccessibilityInfoWin32';
 import NativeAccessibilityManagerIOS from './NativeAccessibilityManager';
 
 // Events that are only supported on Android.
@@ -166,9 +167,15 @@ const AccessibilityInfo = {
    */
   isReduceMotionEnabled(): Promise<boolean> {
     return new Promise((resolve, reject) => {
-      if (Platform.OS === 'android' || Platform.OS === 'win32') {
+      if (Platform.OS === 'android') {
         if (NativeAccessibilityInfo != null) {
           NativeAccessibilityInfo.isReduceMotionEnabled(resolve);
+        } else {
+          reject(null);
+        }
+      } else if (Platform.OS === 'win32') {
+        if (NativeAccessibilityInfoWin32 != null) {
+          NativeAccessibilityInfoWin32.isReduceMotionEnabled(resolve);
         } else {
           reject(null);
         }
@@ -248,9 +255,15 @@ const AccessibilityInfo = {
    */
   isScreenReaderEnabled(): Promise<boolean> {
     return new Promise((resolve, reject) => {
-      if (Platform.OS === 'android' || Platform.OS === 'win32') {
+      if (Platform.OS === 'android') {
         if (NativeAccessibilityInfo != null) {
           NativeAccessibilityInfo.isTouchExplorationEnabled(resolve);
+        } else {
+          reject(null);
+        }
+      } else if (Platform.OS === 'win32') {
+        if (NativeAccessibilityInfoWin32 != null) {
+          NativeAccessibilityInfoWin32.isTouchExplorationEnabled(resolve);
         } else {
           reject(null);
         }
@@ -370,8 +383,10 @@ const AccessibilityInfo = {
    * See https://reactnative.dev/docs/accessibilityinfo#announceforaccessibility
    */
   announceForAccessibility(announcement: string): void {
-    if (Platform.OS === 'android' || Platform.OS === 'win32') {
+    if (Platform.OS === 'android') {
       NativeAccessibilityInfo?.announceForAccessibility(announcement);
+    } else if (Platform.OS === 'win32') {
+      NativeAccessibilityInfoWin32?.announceForAccessibility(announcement);
     } else {
       NativeAccessibilityManagerIOS?.announceForAccessibility(announcement);
     }
@@ -394,13 +409,13 @@ const AccessibilityInfo = {
     if (Platform.OS === 'android') {
       NativeAccessibilityInfo?.announceForAccessibility(announcement);
     } else if (Platform.OS === 'win32') {
-      if (NativeAccessibilityInfo?.announceForAccessibilityWithOptions) {
-        NativeAccessibilityInfo?.announceForAccessibilityWithOptions(
+      if (NativeAccessibilityInfoWin32?.announceForAccessibilityWithOptions) {
+        NativeAccessibilityInfoWin32?.announceForAccessibilityWithOptions(
           announcement,
           options,
         );
       } else {
-        NativeAccessibilityInfo?.announceForAccessibility(announcement);
+        NativeAccessibilityInfoWin32?.announceForAccessibility(announcement);
       }
     } else {
       if (NativeAccessibilityManagerIOS?.announceForAccessibilityWithOptions) {
@@ -420,10 +435,21 @@ const AccessibilityInfo = {
    * See https://reactnative.dev/docs/accessibilityinfo#getrecommendedtimeoutmillis
    */
   getRecommendedTimeoutMillis(originalTimeout: number): Promise<number> {
-    if (Platform.OS === 'android' || Platform.OS === 'win32') {
+    if (Platform.OS === 'android') {
       return new Promise((resolve, reject) => {
         if (NativeAccessibilityInfo?.getRecommendedTimeoutMillis) {
           NativeAccessibilityInfo.getRecommendedTimeoutMillis(
+            originalTimeout,
+            resolve,
+          );
+        } else {
+          resolve(originalTimeout);
+        }
+      });
+    } else if (Platform.OS === 'win32') {
+      return new Promise((resolve, reject) => {
+        if (NativeAccessibilityInfoWin32?.getRecommendedTimeoutMillis) {
+          NativeAccessibilityInfoWin32.getRecommendedTimeoutMillis(
             originalTimeout,
             resolve,
           );

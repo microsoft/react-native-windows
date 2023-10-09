@@ -1,11 +1,9 @@
 /**
- * Copyright (c) Meta Platforms, Inc. and affiliates.
+ * Copyright (c) Microsoft Corporation.
+ * Licensed under the MIT License.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- * @flow strict
  * @format
+ * @flow
  */
 
 import type {TurboModule} from '../../TurboModule/RCTExport';
@@ -24,13 +22,12 @@ export interface Spec extends TurboModule {
   ) => void;
   +setAccessibilityFocus: (reactTag: number) => void;
   +announceForAccessibility: (announcement: string) => void;
+  // [Win32
   +announceForAccessibilityWithOptions?: (
     announcement: string,
-    options: {
-      queue?: boolean,
-      nativeID?: string // win32
-    }
+    options: {nativeID?: string},
   ) => void;
+  // Win32]
   +getRecommendedTimeoutMillis?: (
     mSec: number,
     onSuccess: (recommendedTimeoutMillis: number) => void,
