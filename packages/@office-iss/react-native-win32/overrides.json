@@ -40,6 +40,12 @@
     },
     {
       "type": "derived",
+      "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.d.ts",
+      "baseFile": "packages/react-native/Libraries/Components/AccessibilityInfo/AccessibilityInfo.d.ts",
+      "baseHash": "f55fda723b8dc0f9836f2fa4a4a766ed45c71c00"
+    },
+    {
+      "type": "derived",
       "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/AccessibilityInfo/AccessibilityInfo.js",
       "baseHash": "163927cc271b53109f06eaf5fc6d30a9af8cb27e"
