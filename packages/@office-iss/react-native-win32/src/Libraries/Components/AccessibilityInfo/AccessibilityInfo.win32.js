@@ -397,7 +397,7 @@ const AccessibilityInfo = {
    * - `announcement`: The string announced by the screen reader.
    * - `options`: An object that configures the reading options.
    *   - `queue`: The announcement will be queued behind existing announcements. iOS only.
-   *   - `nativeID`: The nativeID of the element we're sending the announcement from. win32 only.
+   *   - `nativeID`: The nativeID of the element to send the announcement from. win32 only.
    */
   announceForAccessibilityWithOptions(
     announcement: string,

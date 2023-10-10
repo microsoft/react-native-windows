@@ -479,7 +479,6 @@ const AccessibilityInfoExample: React.FunctionComponent<{}> =() => {
     setTimeout(() => {
       AccessibilityInfo.announceForAccessibilityWithOptions(
         'AccessibilityInfo announcement succeeded!',
-        // @ts-ignore
         { nativeID: 'AnnouncementTarget' });
       }, 3000);
   }, []);
