@@ -102,6 +102,9 @@ struct DevSettings {
 
   // Transitory. Used to indicate whether or not to load networking types in the default Cxx module registry.
   bool omitNetworkingCxxModules{false};
+
+  // OC:8368383 - Memory leak under investigation.
+  bool useWebSocketTurboModule{false};
 };
 
 } // namespace react
