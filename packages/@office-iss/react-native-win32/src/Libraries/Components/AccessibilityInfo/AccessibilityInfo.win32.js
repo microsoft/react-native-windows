@@ -403,7 +403,7 @@ const AccessibilityInfo = {
     announcement: string,
     options: {
       queue?: boolean,
-      nativeID?: string // win32
+      nativeID?: string, // win32
     },
   ): void {
     if (Platform.OS === 'android') {
