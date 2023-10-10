@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 09 Oct 2023 15:13:28 GMT and should not be manually modified.
+This log was last generated on Tue, 10 Oct 2023 21:08:01 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.72.12
+
+Tue, 10 Oct 2023 21:08:01 GMT
+
+### Patches
+
+- Cherry pick PR #12211 #12143 (vmorozov@microsoft.com)
 
 ## 0.72.11
 
