@@ -25,7 +25,7 @@ export interface Spec extends TurboModule {
   // [Win32
   +announceForAccessibilityWithOptions?: (
     announcement: string,
-    options: {nativeID?: string},
+    options: {queue?: boolean, nativeID?: string},
   ) => void;
   // Win32]
   +getRecommendedTimeoutMillis?: (
