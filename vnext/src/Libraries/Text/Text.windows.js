@@ -253,21 +253,37 @@ const Text: React.AbstractComponent<
   const _hasOnPressOrOnLongPress =
     props.onPress != null || props.onLongPress != null;
 
-  if (hasTextAncestor) {
-    return (
-      <NativeVirtualText
+  return hasTextAncestor ? (
+    <NativeVirtualText
+      {...restProps}
+      {...eventHandlersForText}
+      accessibilityLabel={ariaLabel ?? accessibilityLabel}
+      accessibilityState={_accessibilityState}
+      isHighlighted={isHighlighted}
+      isPressable={isPressable}
+      nativeID={id ?? nativeID}
+      numberOfLines={numberOfLines}
+      ref={forwardedRef}
+      selectable={_selectable}
+      selectionColor={selectionColor}
+      style={style}
+    />
+  ) : (
+    <TextAncestor.Provider value={true}>
+      <NativeText
         {...restProps}
         {...eventHandlersForText}
         accessibilityLabel={ariaLabel ?? accessibilityLabel}
-        accessibilityLevel={ariaLevel ?? accessibilityLevel} // Windows
-        accessibilityPosInSet={ariaPosinset ?? accessibilityPosInSet} // Windows
-        accessibilitySetSize={ariaSetsize ?? accessibilitySetSize} // Windows
-        accessibilityState={_accessibilityState}
+        accessibilityState={nativeTextAccessibilityState}
+        accessible={
+          accessible == null && Platform.OS === 'android'
+            ? _hasOnPressOrOnLongPress
+            : _accessible
+        }
         allowFontScaling={allowFontScaling !== false}
         disabled={_disabled}
         ellipsizeMode={ellipsizeMode ?? 'tail'}
         isHighlighted={isHighlighted}
-        isPressable={isPressable}
         nativeID={id ?? nativeID}
         numberOfLines={numberOfLines}
         ref={forwardedRef}
@@ -275,108 +291,8 @@ const Text: React.AbstractComponent<
         selectionColor={selectionColor}
         style={style}
       />
-    );
-  } else {
-    let styleProps: ViewStyleProp = (restProps.style: any);
-    if (
-      styleProps &&
-      styleProps.borderColor &&
-      (styleProps.borderWidth ||
-        styleProps.borderBottomWidth ||
-        styleProps.borderEndWidth ||
-        styleProps.borderLeftWidth ||
-        styleProps.borderRightWidth ||
-        styleProps.borderStartWidth ||
-        styleProps.borderTopWidth)
-    ) {
-      let textStyleProps = Array.isArray(styleProps)
-        ? // $FlowFixMe[underconstrained-implicit-instantiation]
-          flattenStyle(styleProps)
-        : styleProps;
-      let {
-        margin,
-        marginBottom,
-        marginEnd,
-        marginHorizontal,
-        marginLeft,
-        marginRight,
-        marginStart,
-        marginTop,
-        marginVertical,
-        padding,
-        paddingBottom,
-        paddingEnd,
-        paddingHorizontal,
-        paddingLeft,
-        paddingRight,
-        paddingStart,
-        paddingTop,
-        paddingVertical,
-        ...rest
-      } = textStyleProps != null ? textStyleProps : {};
-
-      let {style, ...textPropsLessStyle} = props;
-      return (
-        <View style={styleProps}>
-          <TextAncestor.Provider value={true}>
-            <NativeText
-              {...textPropsLessStyle}
-              {...eventHandlersForText}
-              accessibilityLabel={ariaLabel ?? accessibilityLabel}
-              accessibilityLevel={ariaLevel ?? accessibilityLevel} // Windows
-              accessibilityPosInSet={ariaPosinset ?? accessibilityPosInSet} // Windows
-              accessibilitySetSize={ariaSetsize ?? accessibilitySetSize} // Windows
-              accessibilityState={nativeTextAccessibilityState}
-              accessible={
-                accessible == null && Platform.OS === 'android'
-                  ? _hasOnPressOrOnLongPress
-                  : _accessible
-              }
-              allowFontScaling={allowFontScaling !== false}
-              disabled={_disabled}
-              ellipsizeMode={ellipsizeMode ?? 'tail'}
-              isHighlighted={isHighlighted}
-              nativeID={id ?? nativeID}
-              numberOfLines={numberOfLines}
-              ref={forwardedRef}
-              selectable={_selectable}
-              selectionColor={selectionColor}
-              style={((rest: any): TextStyleProp)}
-            />
-          </TextAncestor.Provider>
-        </View>
-      );
-    } else {
-      return (
-        <TextAncestor.Provider value={true}>
-          <NativeText
-            {...restProps}
-            {...eventHandlersForText}
-            accessibilityLabel={ariaLabel ?? accessibilityLabel}
-            accessibilityLevel={ariaLevel ?? accessibilityLevel} // Windows
-            accessibilityPosInSet={ariaPosinset ?? accessibilityPosInSet} // Windows
-            accessibilitySetSize={ariaSetsize ?? accessibilitySetSize} // Windows
-            accessibilityState={nativeTextAccessibilityState}
-            accessible={
-              accessible == null && Platform.OS === 'android'
-                ? _hasOnPressOrOnLongPress
-                : _accessible
-            }
-            allowFontScaling={allowFontScaling !== false}
-            disabled={_disabled}
-            ellipsizeMode={ellipsizeMode ?? 'tail'}
-            isHighlighted={isHighlighted}
-            nativeID={id ?? nativeID}
-            numberOfLines={numberOfLines}
-            ref={forwardedRef}
-            selectable={_selectable}
-            selectionColor={selectionColor}
-            style={style}
-          />
-        </TextAncestor.Provider>
-      );
-    }
-  }
+    </TextAncestor.Provider>
+  );
 });
 
 Text.displayName = 'Text';
