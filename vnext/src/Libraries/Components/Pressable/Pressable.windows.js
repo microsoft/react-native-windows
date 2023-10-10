@@ -28,6 +28,7 @@ import type {
 import {PressabilityDebugView} from '../../Pressability/PressabilityDebug';
 import usePressability from '../../Pressability/usePressability';
 import {type RectOrSize} from '../../StyleSheet/Rect';
+import useMergeRefs from '../../Utilities/useMergeRefs';
 import View from '../View/View';
 import useAndroidRippleForView, {
   type RippleConfig,
@@ -287,7 +288,7 @@ function Pressable(props: Props, forwardedRef): React.Node {
   } = props;
 
   const viewRef = useRef<React.ElementRef<typeof View> | null>(null);
-  useImperativeHandle(forwardedRef, () => viewRef.current);
+  const mergedRef = useMergeRefs(forwardedRef, viewRef);
 
   const android_rippleConfig = useAndroidRippleForView(android_ripple, viewRef);
 
@@ -402,7 +403,7 @@ function Pressable(props: Props, forwardedRef): React.Node {
     <View
       {...restPropsWithDefaults}
       {...eventHandlers}
-      ref={viewRef}
+      ref={mergedRef}
       style={typeof style === 'function' ? style({pressed}) : style}>
       {typeof children === 'function' ? children({pressed}) : children}
       {__DEV__ ? <PressabilityDebugView color="red" hitSlop={hitSlop} /> : null}

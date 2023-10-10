@@ -71,8 +71,8 @@ struct HandledKeyEvent : BaseKeyEvent {
 };
 
 inline void fromRawValue(const PropsParserContext &context, const RawValue &value, HandledKeyEvent &result) {
-  if (value.hasType<butter::map<std::string, RawValue>>()) {
-    auto map = (butter::map<std::string, RawValue>)value;
+  if (value.hasType<std::unordered_map<std::string, RawValue>>()) {
+    auto map = (std::unordered_map<std::string, RawValue>)value;
 
     auto attrIterator = map.find("handledEventPhase");
     if (attrIterator != map.end())

@@ -69,13 +69,20 @@ struct IComponentView {
   virtual RECT getClientRect() const noexcept = 0;
   virtual void onFocusLost() noexcept = 0;
   virtual void onFocusGained() noexcept = 0;
+  virtual void onPointerPressed(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept = 0;
+  virtual void onPointerReleased(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept = 0;
+  virtual void onPointerMoved(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept = 0;
+  virtual void onPointerWheelChanged(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept = 0;
   virtual void onKeyDown(
       const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
       const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept = 0;
   virtual void onKeyUp(
       const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
       const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept = 0;
-  virtual bool ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept = 0;
   virtual bool focusable() const noexcept = 0;
   virtual facebook::react::SharedViewEventEmitter eventEmitterAtPoint(facebook::react::Point pt) noexcept = 0;
   virtual facebook::react::SharedViewEventEmitter eventEmitter() noexcept = 0;

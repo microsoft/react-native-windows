@@ -42,7 +42,7 @@ facebook::react::ShadowNode::Shared AbiViewComponentDescriptor::createShadowNode
     facebook::react::ShadowNodeFamily::Shared const &family) const {
   auto shadowNode = std::make_shared<ShadowNodeT>(fragment, family, getTraits());
 
-  adopt(shadowNode);
+  adopt(*shadowNode);
 
   return shadowNode;
 }
@@ -52,7 +52,7 @@ facebook::react::ShadowNode::Unshared AbiViewComponentDescriptor::cloneShadowNod
     const facebook::react::ShadowNodeFragment &fragment) const {
   auto shadowNode = std::make_shared<ShadowNodeT>(sourceShadowNode, fragment);
 
-  adopt(shadowNode);
+  adopt(*shadowNode);
   return shadowNode;
 }
 
@@ -153,9 +153,9 @@ facebook::react::SharedEventEmitter AbiViewComponentDescriptor::createEventEmitt
  *   - Set `ShadowNode`'s size from state in
  * `ModalHostViewComponentDescriptor`.
  */
-void AbiViewComponentDescriptor::adopt(facebook::react::ShadowNode::Unshared const &shadowNode) const {
+void AbiViewComponentDescriptor::adopt(facebook::react::ShadowNode &shadowNode) const {
   // Default implementation does nothing.
-  react_native_assert(shadowNode->getComponentHandle() == getComponentHandle());
+  react_native_assert(shadowNode.getComponentHandle() == getComponentHandle());
 }
 
 } // namespace Microsoft::ReactNative

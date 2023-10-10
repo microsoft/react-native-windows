@@ -71,14 +71,9 @@ MicrosoftReactGetRuntimeOptionInt
 MicrosoftReactGetRuntimeOptionString
 
 _YGAlignToString@4
-_YGAssert@8
-_YGAssertWithConfig@12
-_YGAssertWithNode@12
-_YGConfigCopy@8
 _YGConfigFree@4
 _YGConfigGetContext@4
 _YGConfigGetDefault@0
-_YGConfigGetInstanceCount@0
 _YGConfigGetUseWebDefaults@4
 _YGConfigIsExperimentalFeatureEnabled@8
 _YGConfigNew@0
@@ -86,7 +81,6 @@ _YGConfigSetContext@8
 _YGConfigSetExperimentalFeatureEnabled@12
 _YGConfigSetLogger@8
 _YGConfigSetPointScaleFactor@8
-_YGConfigSetUseLegacyStretchBehaviour@8
 _YGConfigSetUseWebDefaults@8
 _YGDimensionToString@4
 _YGDirectionToString@4

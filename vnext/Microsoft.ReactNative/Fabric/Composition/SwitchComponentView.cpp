@@ -233,23 +233,18 @@ winrt::Microsoft::ReactNative::Composition::IVisual SwitchComponentView::Visual(
   return m_visual;
 }
 
-int64_t SwitchComponentView::sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
-  switch (msg) {
-    case WM_LBUTTONDOWN:
-    case WM_POINTERDOWN: {
-      const auto switchProps = std::static_pointer_cast<const facebook::react::SwitchProps>(m_props);
+void SwitchComponentView::onPointerPressed(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  const auto switchProps = std::static_pointer_cast<const facebook::react::SwitchProps>(m_props);
 
-      if (!switchProps->disabled) {
-        if (auto root = rootComponentView()) {
-          root->TrySetFocusedComponent(*this);
-        }
-        toggle();
-      }
-      break;
+  if (!switchProps->disabled) {
+    if (auto root = rootComponentView()) {
+      root->TrySetFocusedComponent(*this);
+    }
+    if (toggle()) {
+      args.Handled(true);
     }
   }
-
-  return 0;
 }
 
 void SwitchComponentView::onKeyUp(

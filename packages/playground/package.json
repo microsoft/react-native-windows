@@ -15,13 +15,14 @@
     "@typescript-eslint/eslint-plugin": "^5.21.0",
     "@typescript-eslint/parser": "^5.21.0",
     "react": "18.2.0",
-    "react-native": "0.73.0-nightly-20230811-68c7cfe62",
-    "react-native-windows": "^0.0.0-canary.713"
+    "react-native": "0.73.0-nightly-20230920-630cf3b21",
+    "react-native-windows": "^0.0.0-canary.715"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@babel/runtime": "^7.8.4",
     "@react-native/babel-plugin-codegen": "0.73.0",
+    "@react-native/metro-config": "^0.73.0",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.2",
     "@rnw-scripts/just-task": "2.3.16",

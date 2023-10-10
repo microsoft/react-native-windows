@@ -61,7 +61,7 @@ void I18nManager::SwapLeftAndRightInRTL(bool /*flipStyles*/) noexcept {
   // TODO - https://github.com/microsoft/react-native-windows/issues/4662
 }
 
-ReactNativeSpecs::I18nManagerSpec_Constants I18nManager::GetConstants() noexcept {
+ReactNativeSpecs::I18nManagerSpec_I18nManagerConstants I18nManager::GetConstants() noexcept {
   std::string locale = "en-us";
 
   auto langs = winrt::Windows::Globalization::ApplicationLanguages::Languages();
@@ -69,7 +69,7 @@ ReactNativeSpecs::I18nManagerSpec_Constants I18nManager::GetConstants() noexcept
     locale = Microsoft::Common::Unicode::Utf16ToUtf8(langs.GetAt(0));
   }
 
-  ReactNativeSpecs::I18nManagerSpec_Constants constants;
+  ReactNativeSpecs::I18nManagerSpec_I18nManagerConstants constants;
   constants.localeIdentifier = locale;
   constants.doLeftAndRightSwapInRTL = false;
   constants.isRTL = IsRTL(m_context.Properties());

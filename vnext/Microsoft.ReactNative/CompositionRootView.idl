@@ -71,10 +71,6 @@ namespace Microsoft.ReactNative
     Int64 SendMessage(UInt32 Msg, UInt64 WParam, Int64 LParam);
 
     Object GetUiaProvider();
-
-    //void OnPointerPressed(PointerPressedArgs args);
-    //void OnMouseUp(Windows.Foundation.Point point);
-    void OnScrollWheel(Windows.Foundation.Point point, Int32 delta);
   }
 
 } // namespace Microsoft.ReactNative
