@@ -76,7 +76,9 @@
 
 #if defined(USE_V8)
 #include <winrt/Windows.Storage.h>
+#include "BaseScriptStoreImpl.h"
 #include "JSI/V8RuntimeHolder.h"
+#include "V8JSIRuntimeHolder.h"
 #endif // USE_V8
 
 #include "RedBox.h"
@@ -491,7 +493,6 @@ void ReactInstanceWin::Initialize() noexcept {
 
           switch (m_options.JsiEngine()) {
             case JSIEngine::Hermes: {
-              // TODO: Should we use UwpPreparedScriptStore?
               if (Microsoft::ReactNative::HasPackageIdentity()) {
                 preparedScriptStore =
                     std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(getApplicationTempFolder());
@@ -529,8 +530,18 @@ void ReactInstanceWin::Initialize() noexcept {
               enableMultiThreadSupport = Microsoft::ReactNative::IsFabricEnabled(m_reactContext->Properties());
 #endif // USE_FABRIC
 
-              devSettings->jsiRuntimeHolder = std::make_shared<Microsoft::ReactNative::V8RuntimeHolder>(
-                  devSettings, m_jsMessageThread.Load(), std::move(preparedScriptStore), enableMultiThreadSupport);
+              if (m_options.JsiEngineV8NodeApi()) {
+                devSettings->jsiRuntimeHolder = std::make_shared<Microsoft::ReactNative::V8RuntimeHolder>(
+                    devSettings, m_jsMessageThread.Load(), std::move(preparedScriptStore), enableMultiThreadSupport);
+              } else {
+                devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
+                    devSettings,
+                    m_jsMessageThread.Load(),
+                    std::move(scriptStore),
+                    std::move(preparedScriptStore),
+                    enableMultiThreadSupport);
+              }
+
               break;
             }
 #endif // USE_V8

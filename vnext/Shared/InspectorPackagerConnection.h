@@ -18,8 +18,8 @@ class InspectorPackagerConnection final : public std::enable_shared_from_this<In
     bool m_isLastDownloadSuccess;
     int64_t m_updateTimestamp = -1;
 
-    BundleStatus(bool isLastDownloadSucess, long updateTimestamp)
-        : m_isLastDownloadSuccess(isLastDownloadSucess), m_updateTimestamp(updateTimestamp) {}
+    BundleStatus(bool isLastDownloadSuccess, long updateTimestamp)
+        : m_isLastDownloadSuccess(isLastDownloadSuccess), m_updateTimestamp(updateTimestamp) {}
     BundleStatus() : m_isLastDownloadSuccess(false), m_updateTimestamp(-1) {}
   };
 

@@ -16,7 +16,7 @@ namespace {
 
 class V8FuncResolver : public IFuncResolver {
  public:
-  V8FuncResolver() : libHandle_(SafeLoadLibrary(L"v8jsi.dll")) {}
+  V8FuncResolver() : libHandle_(LoadLibraryAsPeerFirst(L"v8jsi.dll")) {}
 
   FuncPtr getFuncPtr(const char *funcName) override {
     return reinterpret_cast<FuncPtr>(GetProcAddress(libHandle_, funcName));
@@ -238,8 +238,6 @@ void V8RuntimeHolder::initRuntime() noexcept {
   jsr_runtime runtime{};
   CRASH_ON_ERROR(api.jsr_create_runtime(config, &runtime));
   CRASH_ON_ERROR(api.jsr_delete_config(config));
-
-  CRASH_ON_ERROR(api.jsr_create_runtime(config, &runtime));
 
   napi_env env{};
   CRASH_ON_ERROR(api.jsr_runtime_get_node_api_env(runtime, &env));
