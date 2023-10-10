@@ -491,7 +491,6 @@ void ReactInstanceWin::Initialize() noexcept {
 
           switch (m_options.JsiEngine()) {
             case JSIEngine::Hermes: {
-              // TODO: Should we use UwpPreparedScriptStore?
               if (Microsoft::ReactNative::HasPackageIdentity()) {
                 preparedScriptStore =
                     std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(getApplicationTempFolder());
