@@ -419,6 +419,7 @@ const AccessibilityInfo = {
       }
     } else {
       if (NativeAccessibilityManagerIOS?.announceForAccessibilityWithOptions) {
+        // $FlowFixMe[prop-missing]
         NativeAccessibilityManagerIOS?.announceForAccessibilityWithOptions(
           announcement,
           options,
