@@ -112,6 +112,17 @@ namespace Microsoft.ReactNative.Composition
 
   [webhosthidden]
   [experimental]
+  interface ISwitchThumbVisual
+  {
+    IVisual InnerVisual { get; };
+    void Size(Windows.Foundation.Numerics.Vector2 size);
+    void Position(Windows.Foundation.Numerics.Vector2 position);
+    Boolean IsVisible { get; set; };
+    void Color(Windows.UI.Color color);
+  }
+
+  [webhosthidden]
+  [experimental]
   interface IFocusVisual
   {
     IVisual InnerVisual { get; };
@@ -127,6 +138,7 @@ namespace Microsoft.ReactNative.Composition
     IScrollVisual CreateScrollerVisual();
     IActivityVisual CreateActivityVisual();
     ICaretVisual CreateCaretVisual();
+    ISwitchThumbVisual CreateSwitchThumbVisual();
     IFocusVisual CreateFocusVisual();
     IDropShadow CreateDropShadow();
     IBrush CreateColorBrush(Windows.UI.Color color);
