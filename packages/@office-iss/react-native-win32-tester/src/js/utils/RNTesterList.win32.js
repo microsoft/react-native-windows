@@ -19,8 +19,6 @@ const Components: Array<RNTesterModuleInfo> = [
     key: 'DrawerLayoutAndroid',
     category: 'UI',
     module: require('../examples/DrawerLayoutAndroid/DrawerLayoutAndroidExample'),
-    key: 'AccessibilityExampleWin32',
-    module: require('../examples-win32/Accessibility/AccessibilityExampleWin32'),
   },*/
   {
     key: 'AccessibilityExampleWin32',
