@@ -321,6 +321,8 @@ std::vector<IComponentView *> GetTouchableViewsInPathToRoot(IComponentView *view
 void CompositionEventHandler::HandleIncomingPointerEvent(
     facebook::react::PointerEvent &event,
     IComponentView *targetView,
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
+    winrt::Windows::System::VirtualKeyModifiers keyModifiers,
     std::function<void(std::vector<IComponentView *> &)> handler) {
   int pointerId = event.pointerId;
   // CGPoint clientLocation = CGPointMake(event.clientPoint.x, event.clientPoint.y);
@@ -359,6 +361,7 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
   // for native to distinguish between capturing listeners and not could be an optimization to further reduce the
   // number of events we send to JS
   bool hasParentEnterListener = false;
+  bool emittedNativeEnteredEvent = false;
 
   for (auto itComponentView = eventPathViews.rbegin(); itComponentView != eventPathViews.rend();
        itComponentView++) { //  for (RCTReactTaggedView *taggedView in [eventPathViews reverseObjectEnumerator]) {
@@ -369,15 +372,24 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
          IsViewListeningToEvent(componentView, facebook::react::ViewEvents::Offset::PointerEnter) ||
          IsViewListeningToEvent(componentView, facebook::react::WindowsViewEvents::Offset::MouseEnter));
 
-    if (shouldEmitEvent &&
+    if ((shouldEmitEvent || !emittedNativeEnteredEvent) &&
         std::find(currentlyHoveredViews.begin(), currentlyHoveredViews.end(), componentView) ==
             currentlyHoveredViews.end()) {
-      const auto eventEmitter = componentView->eventEmitter();
-      if (eventEmitter) {
-        eventEmitter->onPointerEnter(event);
-        if (IsMousePointerEvent(event)) {
-          eventEmitter->onMouseEnter(event);
+      if (shouldEmitEvent) {
+        const auto eventEmitter = componentView->eventEmitter();
+        if (eventEmitter) {
+          eventEmitter->onPointerEnter(event);
+          if (IsMousePointerEvent(event)) {
+            eventEmitter->onMouseEnter(event);
+          }
         }
+      }
+      if (!emittedNativeEnteredEvent) {
+        emittedNativeEnteredEvent = true;
+        auto args =
+            winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerRoutedEventArgs>(
+                componentView->tag(), pointerPoint, keyModifiers);
+        static_cast<CompositionBaseComponentView *>(componentView)->onPointerEntered(args);
       }
     }
 
@@ -408,6 +420,8 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
   std::vector<IComponentView *> viewsToEmitLeaveEventsTo; // NSMutableOrderedSet<UIView *> *viewsToEmitLeaveEventsTo =
                                                           // [NSMutableOrderedSet orderedSet];
 
+  IComponentView *viewToEmitNativeExitedEvent = nullptr;
+
   bool hasParentLeaveListener = false;
   for (auto itComponentView = currentlyHoveredViews.rbegin(); itComponentView != currentlyHoveredViews.rend();
        itComponentView++) { //  for (RCTReactTaggedView *taggedView in [currentlyHoveredViews
@@ -420,14 +434,25 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
          IsViewListeningToEvent(componentView, facebook::react::ViewEvents::Offset::PointerLeave) ||
          IsViewListeningToEvent(componentView, facebook::react::WindowsViewEvents::Offset::MouseLeave));
 
-    if (shouldEmitEvent &&
+    if ((shouldEmitEvent || !viewToEmitNativeExitedEvent) &&
         std::find(eventPathViews.begin(), eventPathViews.end(), componentView) == eventPathViews.end()) {
-      viewsToEmitLeaveEventsTo.push_back(componentView);
+      if (shouldEmitEvent) {
+        viewsToEmitLeaveEventsTo.push_back(componentView);
+      }
+      if (!viewToEmitNativeExitedEvent) {
+        viewToEmitNativeExitedEvent = componentView;
+      }
     }
 
     if (shouldEmitEvent && !hasParentLeaveListener) {
       hasParentLeaveListener = true;
     }
+  }
+
+  if (viewToEmitNativeExitedEvent) {
+    auto args = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerRoutedEventArgs>(
+        viewToEmitNativeExitedEvent->tag(), pointerPoint, keyModifiers);
+    static_cast<CompositionBaseComponentView *>(viewToEmitNativeExitedEvent)->onPointerExited(args);
   }
 
   for (auto itComponentView = viewsToEmitLeaveEventsTo.rbegin(); itComponentView != viewsToEmitLeaveEventsTo.rend();
@@ -549,7 +574,7 @@ void CompositionEventHandler::onPointerMoved(
       }
     };
 
-    HandleIncomingPointerEvent(pointerEvent, targetView, handler);
+    HandleIncomingPointerEvent(pointerEvent, targetView, pointerPoint, keyModifiers, handler);
   }
 }
 
@@ -617,7 +642,7 @@ void CompositionEventHandler::onPointerPressed(
 
     m_activeTouches.emplace(pointerId, activeTouch);
 
-    DispatchTouchEvent(eventType, pointerId);
+    DispatchTouchEvent(eventType, pointerId, pointerPoint, keyModifiers);
   }
 }
 
@@ -655,7 +680,7 @@ void CompositionEventHandler::onPointerReleased(
     std::static_pointer_cast<CompositionBaseComponentView>(targetComponentView)->onPointerReleased(args);
 
     UpdateActiveTouch(activeTouch->second, ptScaled, ptLocal);
-    DispatchTouchEvent(TouchEventType::End, pointerId);
+    DispatchTouchEvent(TouchEventType::End, pointerId, pointerPoint, keyModifiers);
     m_activeTouches.erase(pointerId);
   }
 }
@@ -736,7 +761,11 @@ facebook::react::PointerEvent CompositionEventHandler::CreatePointerEventFromAct
 }
 
 // If we have events that include multiple pointer updates, we should change arg from pointerId to vector<pointerId>
-void CompositionEventHandler::DispatchTouchEvent(TouchEventType eventType, PointerId pointerId) {
+void CompositionEventHandler::DispatchTouchEvent(
+    TouchEventType eventType,
+    PointerId pointerId,
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
+    winrt::Windows::System::VirtualKeyModifiers keyModifiers) {
   auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties());
 
   if (!fabricuiManager)
@@ -797,7 +826,7 @@ void CompositionEventHandler::DispatchTouchEvent(TouchEventType eventType, Point
       }
     };
 
-    HandleIncomingPointerEvent(pointerEvent, targetView, handler);
+    HandleIncomingPointerEvent(pointerEvent, targetView, pointerPoint, keyModifiers, handler);
   }
 
   for (const auto &pair : m_activeTouches) {

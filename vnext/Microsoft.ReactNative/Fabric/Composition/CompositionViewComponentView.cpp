@@ -158,6 +158,20 @@ void CompositionBaseComponentView::onKeyUp(
   }
 }
 
+void CompositionBaseComponentView::onPointerEntered(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  if (m_parent && !args.Handled()) {
+    m_parent->onPointerEntered(args);
+  }
+}
+
+void CompositionBaseComponentView::onPointerExited(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  if (m_parent && !args.Handled()) {
+    m_parent->onPointerExited(args);
+  }
+}
+
 void CompositionBaseComponentView::onPointerPressed(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
   if (m_parent && !args.Handled()) {
