@@ -538,14 +538,18 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
   // If this code is enabled, we will have unused module instances.
   // Also, MSRN has a different property bag mechanism incompatible with this method's transitionalProps variable.
 #if (defined(_MSC_VER) && !defined(WINRT))
-  // Applications using the Windows ABI feature should loade the networking TurboModule variants instead.
-  if (!m_devSettings->omitNetworkingCxxModules) {
+
+  // OC:8368383 - Memory leak under investigation.
+  if (!m_devSettings->useWebSocketTurboModule) {
     modules.push_back(std::make_unique<CxxNativeModule>(
         m_innerInstance,
         Microsoft::React::GetWebSocketModuleName(),
         [transitionalProps]() { return Microsoft::React::CreateWebSocketModule(transitionalProps); },
         nativeQueue));
+  }
 
+  // Applications using the Windows ABI feature should loade the networking TurboModule variants instead.
+  if (!m_devSettings->omitNetworkingCxxModules) {
     // Use in case the host app provides its a non-Blob-compatilbe HTTP module.
     if (!Microsoft::React::GetRuntimeOptionBool("Blob.DisableModule")) {
       modules.push_back(std::make_unique<CxxNativeModule>(
