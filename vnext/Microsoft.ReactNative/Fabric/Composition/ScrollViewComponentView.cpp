@@ -257,21 +257,31 @@ void ScrollViewComponentView::OnPointerDown(const winrt::Windows::UI::Input::Poi
 }
 */
 
-bool ScrollViewComponentView::ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept {
-  if (delta > 0) {
-    if (scrollUp(static_cast<float>(delta) * m_layoutMetrics.pointScaleFactor, true)) {
-      return true;
+void ScrollViewComponentView::onPointerWheelChanged(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  auto ppp = args.GetCurrentPoint(-1).Properties();
+  auto delta = static_cast<float>(ppp.MouseWheelDelta());
+  if (ppp.IsHorizontalMouseWheel()) {
+    if (delta > 0) {
+      if (scrollLeft(delta * m_layoutMetrics.pointScaleFactor, true)) {
+        args.Handled(true);
+      }
+    } else if (delta < 0) {
+      if (scrollRight(-delta * m_layoutMetrics.pointScaleFactor, true)) {
+        args.Handled(true);
+      }
     }
-  } else if (delta < 0) {
-    if (scrollDown(-static_cast<float>(delta) * m_layoutMetrics.pointScaleFactor, true)) {
-      return true;
-    };
+  } else {
+    if (delta > 0) {
+      if (scrollUp(delta * m_layoutMetrics.pointScaleFactor, true)) {
+        args.Handled(true);
+      }
+    } else if (delta < 0) {
+      if (scrollDown(-delta * m_layoutMetrics.pointScaleFactor, true)) {
+        args.Handled(true);
+      }
+    }
   }
-
-  // Adjust pt for viewport before it goes to the parent
-  pt.x -= m_scrollVisual.ScrollPosition().x;
-  pt.y -= m_scrollVisual.ScrollPosition().y;
-  return Super::ScrollWheel(pt, delta);
 }
 
 void ScrollViewComponentView::onKeyDown(
@@ -339,22 +349,11 @@ bool ScrollViewComponentView::lineDown(bool animate) noexcept {
 }
 
 bool ScrollViewComponentView::lineLeft(bool animate) noexcept {
-  if (m_scrollVisual.ScrollPosition().x <= 0.0f) {
-    return false;
-  }
-
-  m_scrollVisual.ScrollBy({-c_scrollerLineDelta * m_layoutMetrics.pointScaleFactor, 0, 0}, animate);
-  return true;
+  return scrollLeft(c_scrollerLineDelta * m_layoutMetrics.pointScaleFactor, animate);
 }
 
 bool ScrollViewComponentView::lineRight(bool animate) noexcept {
-  if ((((m_contentSize.width - m_layoutMetrics.frame.size.width) * m_layoutMetrics.pointScaleFactor) -
-       m_scrollVisual.ScrollPosition().x) < 1.0f) {
-    return false;
-  }
-
-  m_scrollVisual.ScrollBy({c_scrollerLineDelta * m_layoutMetrics.pointScaleFactor, 0, 0}, animate);
-  return true;
+  return scrollRight(c_scrollerLineDelta * m_layoutMetrics.pointScaleFactor, animate);
 }
 
 bool ScrollViewComponentView::scrollDown(float delta, bool animate) noexcept {
@@ -374,6 +373,26 @@ bool ScrollViewComponentView::scrollUp(float delta, bool animate) noexcept {
   }
 
   m_scrollVisual.ScrollBy({0, -delta, 0}, animate);
+  return true;
+}
+
+bool ScrollViewComponentView::scrollLeft(float delta, bool animate) noexcept {
+  if (m_scrollVisual.ScrollPosition().x <= 0.0f) {
+    return false;
+  }
+
+  m_scrollVisual.ScrollBy({delta, 0, 0}, animate);
+  return true;
+}
+
+bool ScrollViewComponentView::scrollRight(float delta, bool animate) noexcept {
+  if (((m_contentSize.width - m_layoutMetrics.frame.size.width) * m_layoutMetrics.pointScaleFactor) -
+          m_scrollVisual.ScrollPosition().x <
+      1.0f) {
+    return false;
+  }
+
+  m_scrollVisual.ScrollBy({delta, 0, 0}, animate);
   return true;
 }
 

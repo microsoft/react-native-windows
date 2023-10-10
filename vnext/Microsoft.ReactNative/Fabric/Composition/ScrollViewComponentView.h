@@ -77,8 +77,8 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
       const noexcept override;
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
 
-  // void OnPointerDown(const winrt::Windows::UI::Input::PointerPoint &pp) noexcept override;
-  bool ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept override;
+  void onPointerWheelChanged(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
 
   void StartBringIntoView(BringIntoViewOptions &&args) noexcept override;
   virtual std::string DefaultControlType() const noexcept;
@@ -100,6 +100,8 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   bool lineRight(bool animate) noexcept;
   bool scrollDown(float delta, bool animate) noexcept;
   bool scrollUp(float delta, bool animate) noexcept;
+  bool scrollLeft(float delta, bool aniamte) noexcept;
+  bool scrollRight(float delta, bool animate) noexcept;
 
   facebook::react::Size m_contentSize;
   winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};

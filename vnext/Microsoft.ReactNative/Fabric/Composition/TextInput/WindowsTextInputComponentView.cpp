@@ -9,6 +9,7 @@
 #include <Utils/ValueUtils.h>
 #include <tom.h>
 #include <unicode.h>
+#include <winrt/Windows.System.h>
 #include <winrt/Windows.UI.h>
 #include "../CompositionHelpers.h"
 #include "../RootComponentView.h"
@@ -564,6 +565,194 @@ int64_t WindowsTextInputComponentView::sendMessage(uint32_t msg, uint64_t wParam
     }
   }
   return Super::sendMessage(msg, wParam, lParam);
+}
+
+WPARAM PointerPointToPointerWParam(const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pp) noexcept {
+  WPARAM wParam = pp.PointerId();
+  wParam |= (POINTER_MESSAGE_FLAG_NEW << 16);
+  auto ppp = pp.Properties();
+  if (ppp.IsInRange()) {
+    wParam |= (POINTER_MESSAGE_FLAG_INRANGE << 16);
+  }
+  if (pp.IsInContact()) {
+    wParam |= (POINTER_MESSAGE_FLAG_INCONTACT << 16);
+  }
+  if (ppp.IsLeftButtonPressed()) {
+    wParam |= (POINTER_MESSAGE_FLAG_FIRSTBUTTON << 16);
+  }
+  if (ppp.IsRightButtonPressed()) {
+    wParam |= (POINTER_MESSAGE_FLAG_SECONDBUTTON << 16);
+  }
+  if (ppp.IsMiddleButtonPressed()) {
+    wParam |= (POINTER_MESSAGE_FLAG_THIRDBUTTON << 16);
+  }
+  if (ppp.IsXButton1Pressed()) {
+    wParam |= (POINTER_MESSAGE_FLAG_FOURTHBUTTON << 16);
+  }
+  if (ppp.IsXButton2Pressed()) {
+    wParam |= (POINTER_MESSAGE_FLAG_FIFTHBUTTON << 16);
+  }
+  if (ppp.IsPrimary()) {
+    wParam |= (POINTER_MESSAGE_FLAG_PRIMARY << 16);
+  }
+  if (ppp.TouchConfidence()) {
+    wParam |= (POINTER_MESSAGE_FLAG_CONFIDENCE << 16);
+  }
+  if (ppp.IsCanceled()) {
+    wParam |= (POINTER_MESSAGE_FLAG_CANCELED << 16);
+  }
+  return wParam;
+}
+
+WPARAM PointerRoutedEventArgsToMouseWParam(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  WPARAM wParam = 0;
+  auto pp = args.GetCurrentPoint(-1);
+
+  auto keyModifiers = args.KeyModifiers();
+  if ((keyModifiers & winrt::Windows::System::VirtualKeyModifiers::Control) ==
+      winrt::Windows::System::VirtualKeyModifiers::Control) {
+    wParam |= MK_CONTROL;
+  }
+  if ((keyModifiers & winrt::Windows::System::VirtualKeyModifiers::Shift) ==
+      winrt::Windows::System::VirtualKeyModifiers::Shift) {
+    wParam |= MK_SHIFT;
+  }
+
+  auto ppp = pp.Properties();
+  if (ppp.IsLeftButtonPressed()) {
+    wParam |= MK_LBUTTON;
+  }
+  if (ppp.IsMiddleButtonPressed()) {
+    wParam |= MK_MBUTTON;
+  }
+  if (ppp.IsRightButtonPressed()) {
+    wParam |= MK_RBUTTON;
+  }
+  if (ppp.IsXButton1Pressed()) {
+    wParam |= MK_XBUTTON1;
+  }
+  if (ppp.IsXButton2Pressed()) {
+    wParam |= MK_XBUTTON2;
+  }
+  return wParam;
+}
+
+void WindowsTextInputComponentView::onPointerPressed(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  UINT msg = 0;
+  LPARAM lParam = 0;
+  WPARAM wParam = 0;
+
+  auto pp = args.GetCurrentPoint(-1); // TODO use local coords?
+  auto position = pp.Position();
+  POINT ptContainer = {static_cast<LONG>(position.X), static_cast<LONG>(position.Y)};
+  lParam = static_cast<LPARAM>(POINTTOPOINTS(ptContainer));
+
+  if (pp.PointerDeviceType() == winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Mouse) {
+    switch (pp.Properties().PointerUpdateKind()) {
+      case winrt::Microsoft::ReactNative::Composition::Input::PointerUpdateKind::LeftButtonPressed:
+        msg = WM_LBUTTONDOWN;
+        break;
+      case winrt::Microsoft::ReactNative::Composition::Input::PointerUpdateKind::MiddleButtonPressed:
+        msg = WM_MBUTTONDOWN;
+        break;
+      case winrt::Microsoft::ReactNative::Composition::Input::PointerUpdateKind::RightButtonPressed:
+        msg = WM_RBUTTONDOWN;
+        break;
+      case winrt::Microsoft::ReactNative::Composition::Input::PointerUpdateKind::XButton1Pressed:
+        msg = WM_XBUTTONDOWN;
+        wParam |= (XBUTTON1 << 16);
+        break;
+      case winrt::Microsoft::ReactNative::Composition::Input::PointerUpdateKind::XButton2Pressed:
+        msg = WM_XBUTTONDOWN;
+        wParam |= (XBUTTON2 << 16);
+        break;
+    }
+    wParam = PointerRoutedEventArgsToMouseWParam(args);
+  } else {
+    msg = WM_POINTERDOWN;
+    wParam = PointerPointToPointerWParam(pp);
+  }
+
+  if (m_textServices && msg) {
+    LRESULT lresult;
+    DrawBlock db(*this);
+    auto hr = m_textServices->TxSendMessage(msg, static_cast<WPARAM>(wParam), static_cast<LPARAM>(lParam), &lresult);
+    args.Handled(hr != S_FALSE);
+  }
+}
+
+void WindowsTextInputComponentView::onPointerReleased(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  UINT msg = 0;
+  LPARAM lParam = 0;
+  WPARAM wParam = 0;
+
+  auto pp = args.GetCurrentPoint(-1);
+  auto position = pp.Position();
+  POINT ptContainer = {static_cast<LONG>(position.X), static_cast<LONG>(position.Y)};
+  lParam = static_cast<LPARAM>(POINTTOPOINTS(ptContainer));
+
+  if (pp.PointerDeviceType() == winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Mouse) {
+    switch (pp.Properties().PointerUpdateKind()) {
+      case winrt::Microsoft::ReactNative::Composition::Input::PointerUpdateKind::LeftButtonReleased:
+        msg = WM_LBUTTONUP;
+        break;
+      case winrt::Microsoft::ReactNative::Composition::Input::PointerUpdateKind::MiddleButtonReleased:
+        msg = WM_MBUTTONUP;
+        break;
+      case winrt::Microsoft::ReactNative::Composition::Input::PointerUpdateKind::RightButtonReleased:
+        msg = WM_RBUTTONUP;
+        break;
+      case winrt::Microsoft::ReactNative::Composition::Input::PointerUpdateKind::XButton1Released:
+        msg = WM_XBUTTONUP;
+        wParam |= (XBUTTON1 << 16);
+        break;
+      case winrt::Microsoft::ReactNative::Composition::Input::PointerUpdateKind::XButton2Released:
+        msg = WM_XBUTTONUP;
+        wParam |= (XBUTTON2 << 16);
+        break;
+    }
+    wParam = PointerRoutedEventArgsToMouseWParam(args);
+  } else {
+    msg = WM_POINTERUP;
+    wParam = PointerPointToPointerWParam(pp);
+  }
+
+  if (m_textServices && msg) {
+    LRESULT lresult;
+    DrawBlock db(*this);
+    auto hr = m_textServices->TxSendMessage(msg, static_cast<WPARAM>(wParam), static_cast<LPARAM>(lParam), &lresult);
+    args.Handled(hr != S_FALSE);
+  }
+}
+
+void WindowsTextInputComponentView::onPointerMoved(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  UINT msg = 0;
+  LPARAM lParam = 0;
+  WPARAM wParam = 0;
+
+  auto pp = args.GetCurrentPoint(-1);
+  auto position = pp.Position();
+  POINT ptContainer = {static_cast<LONG>(position.X), static_cast<LONG>(position.Y)};
+  lParam = static_cast<LPARAM>(POINTTOPOINTS(ptContainer));
+
+  if (pp.PointerDeviceType() == winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Mouse) {
+    msg = WM_MOUSEMOVE;
+    wParam = PointerRoutedEventArgsToMouseWParam(args);
+  } else {
+    msg = WM_POINTERUP;
+    wParam = PointerPointToPointerWParam(pp);
+  }
+
+  if (m_textServices) {
+    LRESULT lresult;
+    DrawBlock db(*this);
+    auto hr = m_textServices->TxSendMessage(msg, static_cast<WPARAM>(wParam), static_cast<LPARAM>(lParam), &lresult);
+    args.Handled(hr != S_FALSE);
+  }
 }
 
 void WindowsTextInputComponentView::onKeyDown(

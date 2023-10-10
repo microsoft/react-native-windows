@@ -39,12 +39,13 @@ struct SwitchComponentView : CompositionBaseComponentView {
   bool focusable() const noexcept override;
   void onKeyUp(
       const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
-      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept;
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
+  void onPointerPressed(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
 
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt, bool ignorePointerEvents)
       const noexcept override;
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
-  int64_t sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept override;
   std::string DefaultControlType() const noexcept override;
 
  private:

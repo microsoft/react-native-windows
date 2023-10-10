@@ -1047,6 +1047,9 @@ struct CompCaretVisual
   }
 
   void IsVisible(bool value) noexcept {
+    if (m_isVisible == value)
+      return;
+    m_isVisible = value;
     if (value) {
       m_compVisual.StartAnimation(L"opacity", m_opacityAnimation);
     } else {

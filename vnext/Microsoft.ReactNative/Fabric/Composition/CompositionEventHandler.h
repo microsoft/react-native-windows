@@ -35,17 +35,22 @@ class CompositionEventHandler {
   virtual ~CompositionEventHandler();
 
   int64_t SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept;
-  void ScrollWheel(facebook::react::Point pt, uint32_t delta);
   void RemoveTouchHandlers();
   winrt::Windows::UI::Core::CoreVirtualKeyStates GetKeyState(winrt::Windows::System::VirtualKey key) noexcept;
 
  private:
-  void ButtonDown(uint32_t msg, uint64_t wParam, int64_t lParam);
-  void PointerPressed(uint32_t msg, uint64_t wParam, int64_t lParam);
-  void ButtonUp(uint32_t msg, uint64_t wParam, int64_t lParam);
-  void PointerUp(uint32_t msg, uint64_t wParam, int64_t lParam);
-  void MouseMove(uint32_t msg, uint64_t wParam, int64_t lParam);
-
+  void onPointerPressed(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
+      winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept;
+  void onPointerReleased(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
+      winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept;
+  void onPointerMoved(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
+      winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept;
+  void onPointerWheelChanged(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
+      winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept;
   void onKeyDown(
       const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
       const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept;
