@@ -285,7 +285,9 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
 
     case UIA_HelpTextPropertyId: {
       pRetVal->vt = VT_BSTR;
-      auto helpText = ::Microsoft::Common::Unicode::Utf8ToUtf16(props->accessibilityHint);
+      auto helpText = props->accessibilityHint.empty()
+          ? ::Microsoft::Common::Unicode::Utf8ToUtf16(baseView->DefaultHelpText())
+          : ::Microsoft::Common::Unicode::Utf8ToUtf16(props->accessibilityHint);
       pRetVal->bstrVal = SysAllocString(helpText.c_str());
       hr = pRetVal->bstrVal != nullptr ? S_OK : E_OUTOFMEMORY;
       break;

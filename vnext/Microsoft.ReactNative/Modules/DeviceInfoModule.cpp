@@ -177,8 +177,8 @@ void DeviceInfoHolder::updateDeviceInfo() noexcept {
   }
 }
 
-ReactNativeSpecs::DeviceInfoSpec_Constants DeviceInfo::GetConstants() noexcept {
-  ReactNativeSpecs::DeviceInfoSpec_Constants constants;
+ReactNativeSpecs::DeviceInfoSpec_DeviceInfoConstants DeviceInfo::GetConstants() noexcept {
+  ReactNativeSpecs::DeviceInfoSpec_DeviceInfoConstants constants;
   constants.Dimensions = DeviceInfoHolder::GetDimensions(m_context.Properties());
   return constants;
 }

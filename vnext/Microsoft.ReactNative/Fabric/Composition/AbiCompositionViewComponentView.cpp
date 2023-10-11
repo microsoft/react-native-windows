@@ -119,6 +119,30 @@ void AbiCompositionViewComponentView::onKeyUp(
   Super::onKeyUp(source, args);
 }
 
+void AbiCompositionViewComponentView::onPointerPressed(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  Builder().OnPointerPressed(args);
+  Super::onPointerPressed(args);
+}
+
+void AbiCompositionViewComponentView::onPointerReleased(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  Builder().OnPointerReleased(args);
+  Super::onPointerReleased(args);
+}
+
+void AbiCompositionViewComponentView::onPointerMoved(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  Builder().OnPointerMoved(args);
+  Super::onPointerMoved(args);
+}
+
+void AbiCompositionViewComponentView::onPointerWheelChanged(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  Builder().OnPointerWheelChanged(args);
+  Super::onPointerWheelChanged(args);
+}
+
 std::vector<facebook::react::ComponentDescriptorProvider>
 AbiCompositionViewComponentView::supplementalComponentDescriptorProviders() noexcept {
   return {};

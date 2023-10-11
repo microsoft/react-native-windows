@@ -305,6 +305,10 @@ const APIs: Array<RNTesterModuleInfo> = ([
     module: require('../examples/TurboModule/TurboModuleExample'),
   },
   {
+    key: 'LegacyModuleExample',
+    module: require('../examples/TurboModule/LegacyModuleExample'),
+  },
+  {
     key: 'TurboCxxModuleExample',
     category: 'Basic',
     module: require('../examples/TurboModule/TurboCxxModuleExample'),

@@ -1,8 +1,61 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 27 Sep 2023 06:10:53 GMT and should not be manually modified.
+This log was last generated on Wed, 11 Oct 2023 05:13:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.716
+
+Wed, 11 Oct 2023 05:13:16 GMT
+
+### Changes
+
+- add fabric switch path animation (tatianakapos@microsoft.com)
+- Conditionally register WebSocket Cxx module (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.715
+
+Tue, 10 Oct 2023 05:13:38 GMT
+
+### Changes
+
+- [Fabric] Add pointer pressed, released, moved and wheelch changed events (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.714
+
+Fri, 06 Oct 2023 05:13:51 GMT
+
+### Changes
+
+- Integrate 9/20 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.191
+
+## 0.0.0-canary.713
+
+Wed, 04 Oct 2023 05:12:45 GMT
+
+### Changes
+
+- Allow usage of WinAppSDK in fabric (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Add keyboard handlers to ScrollView (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.712
+
+Tue, 03 Oct 2023 05:13:16 GMT
+
+### Changes
+
+- Have RCTNetworking.win32 fork RCTNetworking.ios (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.711
+
+Thu, 28 Sep 2023 05:13:18 GMT
+
+### Changes
+
+- Use glob to look through folders recursively (jthysell@microsoft.com)
+- Set UIA Name and HelpText properties on TextInput to match placeholder prop value (yajurgrover24@gmail.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.190
 
 ## 0.0.0-canary.710
 

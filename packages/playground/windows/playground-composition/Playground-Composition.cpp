@@ -157,8 +157,8 @@ struct DeviceInfo {
   }
 
   REACT_GET_CONSTANTS(GetConstants)
-  Microsoft::ReactNativeSpecs::DeviceInfoSpec_Constants GetConstants() noexcept {
-    Microsoft::ReactNativeSpecs::DeviceInfoSpec_Constants constants;
+  Microsoft::ReactNativeSpecs::DeviceInfoSpec_DeviceInfoConstants GetConstants() noexcept {
+    Microsoft::ReactNativeSpecs::DeviceInfoSpec_DeviceInfoConstants constants;
     Microsoft::ReactNativeSpecs::DeviceInfoSpec_DisplayMetrics screenDisplayMetrics;
     screenDisplayMetrics.fontScale = 1;
     screenDisplayMetrics.height = 1024;
@@ -184,6 +184,9 @@ struct CompReactPackageProvider
   }
 };
 
+#ifdef USE_WINUI3
+winrt::Microsoft::UI::Dispatching::DispatcherQueueController g_liftedDispatcherQueueController{nullptr};
+#endif
 winrt::Windows::System::DispatcherQueueController g_dispatcherQueueController{nullptr};
 winrt::Windows::UI::Composition::Compositor g_compositor{nullptr};
 
@@ -574,6 +577,11 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
       options,
       reinterpret_cast<ABI::Windows::System::IDispatcherQueueController **>(
           winrt::put_abi(g_dispatcherQueueController))));
+
+#ifdef USE_WINUI3
+  g_liftedDispatcherQueueController =
+      winrt::Microsoft::UI::Dispatching::DispatcherQueueController::CreateOnCurrentThread();
+#endif
 
   g_compositor = winrt::Windows::UI::Composition::Compositor();
   return RunPlayground(showCmd, false);

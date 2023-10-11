@@ -83,8 +83,6 @@ int64_t CompositionRootView::SendMessage(uint32_t, uint64_t, int64_t) noexcept {
   return 0;
 }
 
-void CompositionRootView::OnScrollWheel(Windows::Foundation::Point, int32_t) noexcept {}
-
 void CompositionRootView::InitRootView(
     winrt::Microsoft::ReactNative::IReactContext &&,
     winrt::Microsoft::ReactNative::ReactViewOptions &&) noexcept {}

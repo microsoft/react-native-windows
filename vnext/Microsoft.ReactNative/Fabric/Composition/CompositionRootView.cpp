@@ -191,15 +191,6 @@ int64_t CompositionRootView::SendMessage(uint32_t msg, uint64_t wParam, int64_t 
   return 0;
 }
 
-void CompositionRootView::OnScrollWheel(winrt::Windows::Foundation::Point point, int32_t delta) noexcept {
-  if (m_rootTag == -1)
-    return;
-
-  if (m_CompositionEventHandler) {
-    m_CompositionEventHandler->ScrollWheel({point.X, point.Y}, delta);
-  }
-}
-
 void CompositionRootView::InitRootView(
     winrt::Microsoft::ReactNative::IReactContext &&context,
     winrt::Microsoft::ReactNative::ReactViewOptions &&viewOptions) noexcept {

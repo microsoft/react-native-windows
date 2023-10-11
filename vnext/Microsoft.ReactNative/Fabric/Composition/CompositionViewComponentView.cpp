@@ -158,6 +158,34 @@ void CompositionBaseComponentView::onKeyUp(
   }
 }
 
+void CompositionBaseComponentView::onPointerPressed(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  if (m_parent && !args.Handled()) {
+    m_parent->onPointerPressed(args);
+  }
+}
+
+void CompositionBaseComponentView::onPointerReleased(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  if (m_parent && !args.Handled()) {
+    m_parent->onPointerReleased(args);
+  }
+}
+
+void CompositionBaseComponentView::onPointerMoved(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  if (m_parent && !args.Handled()) {
+    m_parent->onPointerMoved(args);
+  }
+}
+
+void CompositionBaseComponentView::onPointerWheelChanged(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  if (m_parent && !args.Handled()) {
+    m_parent->onPointerWheelChanged(args);
+  }
+}
+
 RECT CompositionBaseComponentView::getClientRect() const noexcept {
   RECT rc{0};
   if (m_parent) {
@@ -173,10 +201,6 @@ RECT CompositionBaseComponentView::getClientRect() const noexcept {
 
 const facebook::react::SharedViewEventEmitter &CompositionBaseComponentView::GetEventEmitter() const noexcept {
   return m_eventEmitter;
-}
-
-bool CompositionBaseComponentView::ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept {
-  return false;
 }
 
 std::array<
@@ -1284,6 +1308,10 @@ std::string CompositionBaseComponentView::DefaultAccessibleName() const noexcept
   return "";
 }
 
+std::string CompositionBaseComponentView::DefaultHelpText() const noexcept {
+  return "";
+}
+
 CompositionViewComponentView::CompositionViewComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag)
@@ -1375,19 +1403,6 @@ facebook::react::Tag CompositionViewComponentView::hitTest(
   }
 
   return -1;
-}
-
-bool CompositionViewComponentView::ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept {
-  facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
-
-  facebook::react::Tag tag;
-  if (std::any_of(m_children.rbegin(), m_children.rend(), [ptLocal, delta](auto child) {
-        return const_cast<CompositionBaseComponentView *>(static_cast<const CompositionBaseComponentView *>(child))
-            ->ScrollWheel(ptLocal, delta);
-      }))
-    return true;
-
-  return false;
 }
 
 void CompositionViewComponentView::onKeyDown(
