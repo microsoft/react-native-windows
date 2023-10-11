@@ -98,6 +98,9 @@ namespace Microsoft.ReactNative.Composition
     void SetPointerReleasedHandler(PointerHandler impl);
     void SetPointerMovedHandler(PointerHandler impl);
     void SetPointerWheelChangedHandler(PointerHandler impl);
+    void SetPointerEnteredHandler(PointerHandler impl);
+    void SetPointerExitedHandler(PointerHandler impl);
+
   };
 
 
