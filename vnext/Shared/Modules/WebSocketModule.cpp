@@ -54,6 +54,7 @@ constexpr char s_moduleName[] = "WebSocketModule";
 constexpr wchar_t s_moduleNameW[] = L"WebSocketModule";
 constexpr wchar_t s_proxyNameW[] = L"WebSocketModule.Proxy";
 constexpr wchar_t s_sharedStateNameW[] = L"WebSocketModule.SharedState";
+constexpr wchar_t s_contentHandlerNameW[] = L"BlobModule.ContentHandler";
 
 msrn::ReactModuleProvider s_moduleProvider = msrn::MakeTurboModuleProvider<Microsoft::React::WebSocketTurboModule>();
 
@@ -121,7 +122,7 @@ GetOrCreateWebSocket(int64_t id, string &&url, weak_ptr<WebSocketModule::SharedS
           auto args = msrn::JSValueObject{{"id", id}, {"type", isBinary ? "binary" : "text"}};
           shared_ptr<Microsoft::React::IWebSocketModuleContentHandler> contentHandler;
           auto propId = ReactPropertyId<ReactNonAbiValue<weak_ptr<Microsoft::React::IWebSocketModuleContentHandler>>>{
-              L"BlobModule.ContentHandler"};
+              s_contentHandlerNameW};
           if (auto prop = propBag.Get(propId))
             contentHandler = prop.Value().lock();
 
@@ -356,7 +357,7 @@ shared_ptr<IWebSocketResource> WebSocketTurboModule::CreateResource(int64_t id, 
     auto args = msrn::JSValueObject{{"id", id}, {"type", isBinary ? "binary" : "text"}};
     shared_ptr<IWebSocketModuleContentHandler> contentHandler;
     auto propId =
-        ReactPropertyId<ReactNonAbiValue<weak_ptr<IWebSocketModuleContentHandler>>>{L"BlobModule.ContentHandler"};
+        ReactPropertyId<ReactNonAbiValue<weak_ptr<IWebSocketModuleContentHandler>>>{s_contentHandlerNameW};
     auto propBag = context.Properties();
     if (auto prop = propBag.Get(propId))
       contentHandler = prop.Value().lock();
