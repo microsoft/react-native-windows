@@ -9,6 +9,8 @@
 
 #include <DispatcherQueue.h>
 #include <UIAutomation.h>
+#include <combaseapi.h>
+#include <unknwn.h>
 
 #include <winrt/Microsoft.ReactNative.Composition.h>
 #include <winrt/Windows.Data.Json.h>
@@ -61,6 +63,7 @@ struct CompReactPackageProvider
 // Global Variables:
 WCHAR szTitle[MAX_LOADSTRING]; // The title bar text
 WCHAR szWindowClass[MAX_LOADSTRING]; // the main window class name
+HWND global_hwnd;
 
 winrt::Windows::System::DispatcherQueueController g_dispatcherQueueController{nullptr};
 winrt::Windows::UI::Composition::Compositor g_compositor{nullptr};
@@ -239,6 +242,7 @@ int RunRNTester(int showCmd) {
       windowData.get());
 
   WINRT_VERIFY(hwnd);
+  global_hwnd = hwnd;
 
   windowData.release();
 
@@ -312,6 +316,48 @@ winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::Js
 winrt::Windows::Data::Json::JsonObject DumpVisualTree(winrt::Windows::Data::Json::JsonValue payload) {
   winrt::Windows::Data::Json::JsonObject result;
   // TODO: Method should return a JSON of the Composition Visual Tree
+  // Initialize
+  IUIAutomation* pAutomation;
+  IUIAutomationElement* pRootElement;
+  IUIAutomationTreeWalker* pWalker;
+  CoInitializeEx(nullptr, COINIT_MULTITHREADED);
+  CoCreateInstance(__uuidof(CUIAutomation8), nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pAutomation));
+  pAutomation->get_ContentViewWalker(&pWalker);
+  pAutomation->ElementFromHandle(global_hwnd, &pRootElement);
+  //IUIAutomationElement* pChild;
+  //pWalker->GetFirstChildElement(pRootElement, &pChild);
+
+  //Find Element with Matching AutomationID'
+  IUIAutomationElement* pChild;
+  IUIAutomationCondition *pCondition;
+  VARIANT varAutomationId;
+  VariantInit(&varAutomationId);
+
+  varAutomationId.vt = VT_BSTR;
+  varAutomationId.bstrVal = SysAllocString(L"explorer_search");
+  pAutomation->CreatePropertyCondition(UIA_AutomationIdPropertyId, varAutomationId, &pCondition);
+  pRootElement->FindFirst(TreeScope_Descendants, pCondition, &pChild);
+  if (pChild == nullptr) {
+    return result;
+  }
+
+  // Converting to JSON
+  BSTR automationId;
+  CONTROLTYPEID controlType;
+  BSTR helpText;
+  BOOL isEnabled;
+  BSTR name;
+
+  pChild->get_CurrentAutomationId(&automationId);
+  pChild->get_CurrentControlType(&controlType);
+  pChild->get_CurrentHelpText(&helpText);
+  pChild->get_CurrentIsEnabled(&isEnabled);
+  pChild->get_CurrentName(&name);
+  result.Insert(L"AutomationId", winrt::Windows::Data::Json::JsonValue::CreateStringValue(automationId));
+  result.Insert(L"ControlType", winrt::Windows::Data::Json::JsonValue::CreateNumberValue(controlType));
+  result.Insert(L"HelpText", winrt::Windows::Data::Json::JsonValue::CreateStringValue(helpText));
+  result.Insert(L"IsEnabled", winrt::Windows::Data::Json::JsonValue::CreateBooleanValue(isEnabled));
+  result.Insert(L"Name", winrt::Windows::Data::Json::JsonValue::CreateStringValue(name));
   return result;
 }
 
