@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.73.0-nightly-20230925-2de964cfd",
+  "baseVersion": "0.73.0-nightly-20230920-630cf3b21",
   "overrides": [
     {
       "type": "copy",
@@ -131,7 +131,7 @@
       "type": "copy",
       "directory": "js/examples/FlatList",
       "baseDirectory": "packages/rn-tester/js/examples/FlatList",
-      "baseHash": "d2ff0b9731d3cda9476defe61d56f8ba7df3dc0c",
+      "baseHash": "b269fa4b6e0bd62df276813a6c84274d1be675d5",
       "issue": 4054
     },
     {

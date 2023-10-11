@@ -81,6 +81,22 @@ inline yoga::FloatOptional yogaOptionalFloatFromFloat(Float value) {
   return yoga::FloatOptional((float)value);
 }
 
+/*
+ * `YGValue` <-> `React Native's `Float`
+ *
+ * `YGValue` represents optional dimensionful (a real number and some unit, e.g.
+ * pixels).
+ */
+inline YGValue yogaStyleValueFromFloat(
+    const Float& value,
+    YGUnit unit = YGUnitPoint) {
+  if (!std::isfinite(value)) {
+    return YGValueUndefined;
+  }
+
+  return {(float)value, unit};
+}
+
 inline std::optional<Float> optionalFloatFromYogaValue(
     const YGValue value,
     std::optional<Float> base = {}) {
@@ -393,7 +409,7 @@ inline void fromRawValue(
     const RawValue& value,
     yoga::Style::ValueRepr& result) {
   if (value.hasType<Float>()) {
-    result = yoga::CompactValue::ofMaybe<YGUnitPoint>((float)value);
+    result = yogaStyleValueFromFloat((Float)value);
     return;
   } else if (value.hasType<std::string>()) {
     const auto stringValue = (std::string)value;

@@ -22,6 +22,7 @@ struct LayoutResults {
   static constexpr int32_t MaxCachedMeasurements = 8;
 
   std::array<float, 4> position = {};
+  std::array<float, 2> dimensions = {{YGUndefined, YGUndefined}};
   std::array<float, 4> margin = {};
   std::array<float, 4> border = {};
   std::array<float, 4> padding = {};
@@ -29,9 +30,6 @@ struct LayoutResults {
  private:
   Direction direction_ = Direction::Inherit;
   bool hadOverflow_ = false;
-
-  std::array<float, 2> dimensions_ = {{YGUndefined, YGUndefined}};
-  std::array<float, 2> measuredDimensions_ = {{YGUndefined, YGUndefined}};
 
  public:
   uint32_t computedFlexBasisGeneration = 0;
@@ -44,6 +42,7 @@ struct LayoutResults {
 
   uint32_t nextCachedMeasurementsIndex = 0;
   std::array<CachedMeasurement, MaxCachedMeasurements> cachedMeasurements = {};
+  std::array<float, 2> measuredDimensions = {{YGUndefined, YGUndefined}};
 
   CachedMeasurement cachedLayout{};
 
@@ -58,25 +57,8 @@ struct LayoutResults {
   bool hadOverflow() const {
     return hadOverflow_;
   }
-
   void setHadOverflow(bool hadOverflow) {
     hadOverflow_ = hadOverflow;
-  }
-
-  float dimension(YGDimension axis) const {
-    return dimensions_[axis];
-  }
-
-  void setDimension(YGDimension axis, float dimension) {
-    dimensions_[axis] = dimension;
-  }
-
-  float measuredDimension(YGDimension axis) const {
-    return measuredDimensions_[axis];
-  }
-
-  void setMeasuredDimension(YGDimension axis, float dimension) {
-    measuredDimensions_[axis] = dimension;
   }
 
   bool operator==(LayoutResults layout) const;

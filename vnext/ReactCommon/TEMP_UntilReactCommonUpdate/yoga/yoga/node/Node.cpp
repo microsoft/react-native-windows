@@ -340,7 +340,8 @@ void Node::setLayoutComputedFlexBasisGeneration(
 void Node::setLayoutMeasuredDimension(
     float measuredDimension,
     YGDimension dimension) {
-  layout_.setMeasuredDimension(dimension, measuredDimension);
+  layout_.measuredDimensions[static_cast<size_t>(dimension)] =
+      measuredDimension;
 }
 
 void Node::setLayoutHadOverflow(bool hadOverflow) {
@@ -348,7 +349,7 @@ void Node::setLayoutHadOverflow(bool hadOverflow) {
 }
 
 void Node::setLayoutDimension(float dimensionValue, YGDimension dimension) {
-  layout_.setDimension(dimension, dimensionValue);
+  layout_.dimensions[static_cast<size_t>(dimension)] = dimensionValue;
 }
 
 // If both left and right are defined, then use left. Otherwise return +left or
@@ -436,11 +437,12 @@ void Node::resolveDimension() {
   using namespace yoga;
   const Style& style = getStyle();
   for (auto dim : {YGDimensionWidth, YGDimensionHeight}) {
-    if (!style.maxDimension(dim).isUndefined() &&
-        yoga::inexactEquals(style.maxDimension(dim), style.minDimension(dim))) {
-      resolvedDimensions_[dim] = style.maxDimension(dim);
+    if (!style.maxDimensions()[dim].isUndefined() &&
+        yoga::inexactEquals(
+            style.maxDimensions()[dim], style.minDimensions()[dim])) {
+      resolvedDimensions_[dim] = style.maxDimensions()[dim];
     } else {
-      resolvedDimensions_[dim] = style.dimension(dim);
+      resolvedDimensions_[dim] = style.dimensions()[dim];
     }
   }
 }

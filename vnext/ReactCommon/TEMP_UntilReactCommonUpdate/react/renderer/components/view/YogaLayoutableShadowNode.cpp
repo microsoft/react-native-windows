@@ -532,10 +532,8 @@ void YogaLayoutableShadowNode::setSize(Size size) const {
   ensureUnsealed();
 
   auto style = yogaNode_.getStyle();
-  style.setDimension(
-      YGDimensionWidth, yoga::CompactValue::ofMaybe<YGUnitPoint>(size.width));
-  style.setDimension(
-      YGDimensionHeight, yoga::CompactValue::ofMaybe<YGUnitPoint>(size.height));
+  style.dimensions()[YGDimensionWidth] = yogaStyleValueFromFloat(size.width);
+  style.dimensions()[YGDimensionHeight] = yogaStyleValueFromFloat(size.height);
   yogaNode_.setStyle(style);
   yogaNode_.setDirty(true);
 }
@@ -545,23 +543,19 @@ void YogaLayoutableShadowNode::setPadding(RectangleEdges<Float> padding) const {
 
   auto style = yogaNode_.getStyle();
 
-  auto leftPadding = yoga::CompactValue::ofMaybe<YGUnitPoint>(padding.left);
-  auto topPadding = yoga::CompactValue::ofMaybe<YGUnitPoint>(padding.top);
-  auto rightPadding = yoga::CompactValue::ofMaybe<YGUnitPoint>(padding.right);
-  auto bottomPadding = yoga::CompactValue::ofMaybe<YGUnitPoint>(padding.bottom);
+  auto leftPadding = yogaStyleValueFromFloat(padding.left);
+  auto topPadding = yogaStyleValueFromFloat(padding.top);
+  auto rightPadding = yogaStyleValueFromFloat(padding.right);
+  auto bottomPadding = yogaStyleValueFromFloat(padding.bottom);
 
   if (leftPadding != style.padding()[YGEdgeLeft] ||
       topPadding != style.padding()[YGEdgeTop] ||
       rightPadding != style.padding()[YGEdgeRight] ||
       bottomPadding != style.padding()[YGEdgeBottom]) {
-    style.padding()[YGEdgeTop] =
-        yoga::CompactValue::ofMaybe<YGUnitPoint>(padding.top);
-    style.padding()[YGEdgeLeft] =
-        yoga::CompactValue::ofMaybe<YGUnitPoint>(padding.left);
-    style.padding()[YGEdgeRight] =
-        yoga::CompactValue::ofMaybe<YGUnitPoint>(padding.right);
-    style.padding()[YGEdgeBottom] =
-        yoga::CompactValue::ofMaybe<YGUnitPoint>(padding.bottom);
+    style.padding()[YGEdgeTop] = yogaStyleValueFromFloat(padding.top);
+    style.padding()[YGEdgeLeft] = yogaStyleValueFromFloat(padding.left);
+    style.padding()[YGEdgeRight] = yogaStyleValueFromFloat(padding.right);
+    style.padding()[YGEdgeBottom] = yogaStyleValueFromFloat(padding.bottom);
     yogaNode_.setStyle(style);
     yogaNode_.setDirty(true);
   }
@@ -630,21 +624,22 @@ void YogaLayoutableShadowNode::layoutTree(
   auto ownerWidth = yogaFloatFromFloat(maximumSize.width);
   auto ownerHeight = yogaFloatFromFloat(maximumSize.height);
 
-  yogaStyle.setMaxDimension(
-      YGDimensionWidth,
-      yoga::CompactValue::ofMaybe<YGUnitPoint>(maximumSize.width));
+  yogaStyle.maxDimensions()[YGDimensionWidth] = std::isfinite(maximumSize.width)
+      ? yogaStyleValueFromFloat(maximumSize.width)
+      : YGValueUndefined;
 
-  yogaStyle.setMaxDimension(
-      YGDimensionHeight,
-      yoga::CompactValue::ofMaybe<YGUnitPoint>(maximumSize.height));
+  yogaStyle.maxDimensions()[YGDimensionHeight] =
+      std::isfinite(maximumSize.height)
+      ? yogaStyleValueFromFloat(maximumSize.height)
+      : YGValueUndefined;
 
-  yogaStyle.setMinDimension(
-      YGDimensionWidth,
-      yoga::CompactValue::ofMaybe<YGUnitPoint>(minimumSize.width));
+  yogaStyle.minDimensions()[YGDimensionWidth] = minimumSize.width > 0
+      ? yogaStyleValueFromFloat(minimumSize.width)
+      : YGValueUndefined;
 
-  yogaStyle.setMinDimension(
-      YGDimensionHeight,
-      yoga::CompactValue::ofMaybe<YGUnitPoint>(minimumSize.height));
+  yogaStyle.minDimensions()[YGDimensionHeight] = minimumSize.height > 0
+      ? yogaStyleValueFromFloat(minimumSize.height)
+      : YGValueUndefined;
 
   auto direction =
       yogaDirectionFromLayoutDirection(layoutConstraints.layoutDirection);

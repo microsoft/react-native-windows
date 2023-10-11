@@ -16,7 +16,7 @@
     "@typescript-eslint/parser": "^5.21.0",
     "chai": "^4.2.0",
     "react": "18.2.0",
-    "react-native": "0.73.0-nightly-20230925-2de964cfd",
+    "react-native": "0.73.0-nightly-20230920-630cf3b21",
     "react-native-windows": "^0.0.0-canary.716"
   },
   "devDependencies": {

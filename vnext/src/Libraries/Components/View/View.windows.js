@@ -110,7 +110,6 @@ const View: React.AbstractComponent<
     // $FlowFixMe[underconstrained-implicit-instantiation]
     let style = flattenStyle(otherProps.style);
 
-    // $FlowFixMe[sketchy-null-mixed]
     const newPointerEvents = style?.pointerEvents || pointerEvents;
     const collapsableOverride =
       ReactNativeFeatureFlags.shouldForceUnflattenForElevation()
@@ -251,7 +250,6 @@ const View: React.AbstractComponent<
               }
               nativeID={id ?? nativeID}
               style={style}
-              // $FlowFixMe[incompatible-type]
               pointerEvents={newPointerEvents}
               ref={forwardedRef}
               onKeyDown={_keyDown}

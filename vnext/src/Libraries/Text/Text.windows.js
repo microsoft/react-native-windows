@@ -225,28 +225,18 @@ const Text: React.AbstractComponent<
   style = flattenStyle(style);
 
   if (typeof style?.fontWeight === 'number') {
-    // $FlowFixMe[prop-missing]
-    // $FlowFixMe[cannot-write]
     style.fontWeight = style?.fontWeight.toString();
   }
 
   let _selectable = restProps.selectable;
   if (style?.userSelect != null) {
-    // $FlowFixMe[invalid-computed-prop]
     _selectable = userSelectToSelectableMap[style.userSelect];
-    // $FlowFixMe[prop-missing]
-    // $FlowFixMe[cannot-write]
     delete style.userSelect;
   }
 
   if (style?.verticalAlign != null) {
-    // $FlowFixMe[prop-missing]
-    // $FlowFixMe[cannot-write]
     style.textAlignVertical =
-      // $FlowFixMe[invalid-computed-prop]
       verticalAlignToTextAlignVerticalMap[style.verticalAlign];
-    // $FlowFixMe[prop-missing]
-    // $FlowFixMe[cannot-write]
     delete style.verticalAlign;
   }
 
@@ -294,43 +284,24 @@ const Text: React.AbstractComponent<
           flattenStyle(styleProps)
         : styleProps;
       let {
-        // $FlowFixMe[prop-missing]
         margin,
-        // $FlowFixMe[prop-missing]
         marginBottom,
-        // $FlowFixMe[prop-missing]
         marginEnd,
-        // $FlowFixMe[prop-missing]
         marginHorizontal,
-        // $FlowFixMe[prop-missing]
         marginLeft,
-        // $FlowFixMe[prop-missing]
         marginRight,
-        // $FlowFixMe[prop-missing]
         marginStart,
-        // $FlowFixMe[prop-missing]
         marginTop,
-        // $FlowFixMe[prop-missing]
         marginVertical,
-        // $FlowFixMe[prop-missing]
         padding,
-        // $FlowFixMe[prop-missing]
         paddingBottom,
-        // $FlowFixMe[prop-missing]
         paddingEnd,
-        // $FlowFixMe[prop-missing]
         paddingHorizontal,
-        // $FlowFixMe[prop-missing]
         paddingLeft,
-        // $FlowFixMe[prop-missing]
         paddingRight,
-        // $FlowFixMe[prop-missing]
         paddingStart,
-        // $FlowFixMe[prop-missing]
         paddingTop,
-        // $FlowFixMe[prop-missing]
         paddingVertical,
-        // $FlowFixMe[not-an-object]
         ...rest
       } = textStyleProps != null ? textStyleProps : {};
 
