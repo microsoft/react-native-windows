@@ -6,6 +6,8 @@ exports[`dumpUIA control 1`] = `
   "ControlType": 50004,
   "HelpText": "Search...",
   "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "edit",
   "Name": "Search...",
 }
 `;
