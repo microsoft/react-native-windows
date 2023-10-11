@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 11 Oct 2023 05:13:16 GMT",
+      "version": "0.0.0-canary.716",
+      "tag": "react-native-windows_v0.0.0-canary.716",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a562e559216c3bc037495fe6d0412ff3d3742110",
+            "comment": "add fabric switch path animation"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3875e1f800bc03b7066430aae08def1dbf8dedfe",
+            "comment": "Conditionally register WebSocket Cxx module"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 10 Oct 2023 05:13:38 GMT",
       "version": "0.0.0-canary.715",
       "tag": "react-native-windows_v0.0.0-canary.715",
