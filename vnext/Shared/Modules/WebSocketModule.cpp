@@ -52,6 +52,7 @@ using Microsoft::React::Networking::IWebSocketResource;
 
 constexpr char s_moduleName[] = "WebSocketModule";
 constexpr wchar_t s_moduleNameW[] = L"WebSocketModule";
+constexpr wchar_t s_proxyNameW[] = L"WebSocketModule.Proxy";
 
 msrn::ReactModuleProvider s_moduleProvider = msrn::MakeTurboModuleProvider<Microsoft::React::WebSocketTurboModule>();
 
@@ -171,7 +172,7 @@ WebSocketModule::WebSocketModule(winrt::Windows::Foundation::IInspectable const 
 
   auto propBag = ReactPropertyBag{m_sharedState->InspectableProps.try_as<IReactPropertyBag>()};
 
-  auto proxyPropId = ReactPropertyId<ReactNonAbiValue<weak_ptr<IWebSocketModuleProxy>>>{L"WebSocketModule.Proxy"};
+  auto proxyPropId = ReactPropertyId<ReactNonAbiValue<weak_ptr<IWebSocketModuleProxy>>>{s_proxyNameW};
   auto proxy = weak_ptr<IWebSocketModuleProxy>{m_proxy};
   propBag.Set(proxyPropId, std::move(proxy));
 
@@ -398,7 +399,7 @@ void WebSocketTurboModule::Initialize(msrn::ReactContext const &reactContext) no
   m_context = reactContext.Handle();
   m_proxy = std::make_shared<WebSocketTurboModuleProxy>(m_resourceMap);
 
-  auto proxyPropId = ReactPropertyId<ReactNonAbiValue<weak_ptr<IWebSocketModuleProxy>>>{L"WebSocketModule.Proxy"};
+  auto proxyPropId = ReactPropertyId<ReactNonAbiValue<weak_ptr<IWebSocketModuleProxy>>>{s_proxyNameW};
   auto proxy = weak_ptr<IWebSocketModuleProxy>{m_proxy};
   m_context.Properties().Set(proxyPropId, std::move(proxy));
 }
