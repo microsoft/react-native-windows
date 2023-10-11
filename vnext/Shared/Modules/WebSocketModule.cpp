@@ -53,6 +53,7 @@ using Microsoft::React::Networking::IWebSocketResource;
 constexpr char s_moduleName[] = "WebSocketModule";
 constexpr wchar_t s_moduleNameW[] = L"WebSocketModule";
 constexpr wchar_t s_proxyNameW[] = L"WebSocketModule.Proxy";
+constexpr wchar_t s_sharedStateNameW[] = L"WebSocketModule.SharedState";
 
 msrn::ReactModuleProvider s_moduleProvider = msrn::MakeTurboModuleProvider<Microsoft::React::WebSocketTurboModule>();
 
@@ -176,7 +177,7 @@ WebSocketModule::WebSocketModule(winrt::Windows::Foundation::IInspectable const 
   auto proxy = weak_ptr<IWebSocketModuleProxy>{m_proxy};
   propBag.Set(proxyPropId, std::move(proxy));
 
-  auto statePropId = ReactPropertyId<ReactNonAbiValue<weak_ptr<SharedState>>>{L"WebSocketModule.SharedState"};
+  auto statePropId = ReactPropertyId<ReactNonAbiValue<weak_ptr<SharedState>>>{s_sharedStateNameW};
   auto state = weak_ptr<SharedState>{m_sharedState};
   propBag.Set(statePropId, std::move(state));
 }
@@ -313,7 +314,7 @@ WebSocketModuleProxy::WebSocketModuleProxy(IInspectable const &inspectableProper
 void WebSocketModuleProxy::SendBinary(string &&base64String, int64_t id) noexcept /*override*/ {
   auto propBag = ReactPropertyBag{m_inspectableProps.try_as<IReactPropertyBag>()};
   auto sharedPropId =
-      ReactPropertyId<ReactNonAbiValue<weak_ptr<WebSocketModule::SharedState>>>{L"WebSocketModule.SharedState"};
+      ReactPropertyId<ReactNonAbiValue<weak_ptr<WebSocketModule::SharedState>>>{s_sharedStateNameW};
   auto state = propBag.Get(sharedPropId).Value();
 
   weak_ptr weakWs = GetOrCreateWebSocket(id, {}, std::move(state));
