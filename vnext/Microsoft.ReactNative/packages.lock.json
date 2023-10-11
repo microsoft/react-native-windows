@@ -24,20 +24,20 @@
           "Microsoft.SourceLink.Common": "1.1.1"
         }
       },
-      "Microsoft.UI.Xaml": {
-        "type": "Direct",
-        "requested": "[2.8.0, )",
-        "resolved": "2.8.0",
-        "contentHash": "vxdHxTr63s5KVtNddMFpgvjBjUH50z7seq/5jLWmmSuf8poxg+sXrywkofUdE8ZstbpO9y3FL/IXXUcPYbeesA==",
-        "dependencies": {
-          "Microsoft.Web.WebView2": "1.0.1264.42"
-        }
-      },
       "Microsoft.Windows.CppWinRT": {
         "type": "Direct",
         "requested": "[2.0.211028.7, )",
         "resolved": "2.0.211028.7",
         "contentHash": "JBGI0c3WLoU6aYJRy9Qo0MLDQfObEp+d4nrhR95iyzf7+HOgjRunHDp/6eGFREd7xq3OI1mll9ecJrMfzBvlyg=="
+      },
+      "Microsoft.WindowsAppSDK": {
+        "type": "Direct",
+        "requested": "[1.4.230913002, )",
+        "resolved": "1.4.230913002",
+        "contentHash": "l+9RshN4TsTuxL0ijFp5smbs3Y07RO7CxKBHNM/RsrsGtWvuk6edITMp4oqL9C3ufEAmpYk3dqOZRSf+sFH4Zg==",
+        "dependencies": {
+          "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
+        }
       },
       "Microsoft.Build.Tasks.Git": {
         "type": "Transitive",
@@ -49,10 +49,10 @@
         "resolved": "1.1.1",
         "contentHash": "WMcGpWKrmJmzrNeuaEb23bEMnbtR/vLmvZtkAP5qWu7vQsY59GqfRJd65sFpBszbd2k/bQ8cs8eWawQKAabkVg=="
       },
-      "Microsoft.Web.WebView2": {
+      "Microsoft.Windows.SDK.BuildTools": {
         "type": "Transitive",
-        "resolved": "1.0.1264.42",
-        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
+        "resolved": "10.0.22621.1",
+        "contentHash": "Sp1DkYvg7yxuhamwxv+qFC66KC3paKQpwK8Q1J6XuAh6nzXIInmsDcpJ3szr0XGud4ysXojqwTfGdW01gvZ/0g=="
       },
       "common": {
         "type": "Project"
@@ -76,52 +76,80 @@
       }
     },
     "native,Version=v0.0/win10-arm": {
-      "Microsoft.Web.WebView2": {
-        "type": "Transitive",
-        "resolved": "1.0.1264.42",
-        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
+      "Microsoft.WindowsAppSDK": {
+        "type": "Direct",
+        "requested": "[1.4.230913002, )",
+        "resolved": "1.4.230913002",
+        "contentHash": "l+9RshN4TsTuxL0ijFp5smbs3Y07RO7CxKBHNM/RsrsGtWvuk6edITMp4oqL9C3ufEAmpYk3dqOZRSf+sFH4Zg==",
+        "dependencies": {
+          "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
+        }
       }
     },
     "native,Version=v0.0/win10-arm-aot": {
-      "Microsoft.Web.WebView2": {
-        "type": "Transitive",
-        "resolved": "1.0.1264.42",
-        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
+      "Microsoft.WindowsAppSDK": {
+        "type": "Direct",
+        "requested": "[1.4.230913002, )",
+        "resolved": "1.4.230913002",
+        "contentHash": "l+9RshN4TsTuxL0ijFp5smbs3Y07RO7CxKBHNM/RsrsGtWvuk6edITMp4oqL9C3ufEAmpYk3dqOZRSf+sFH4Zg==",
+        "dependencies": {
+          "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
+        }
       }
     },
     "native,Version=v0.0/win10-arm64-aot": {
-      "Microsoft.Web.WebView2": {
-        "type": "Transitive",
-        "resolved": "1.0.1264.42",
-        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
+      "Microsoft.WindowsAppSDK": {
+        "type": "Direct",
+        "requested": "[1.4.230913002, )",
+        "resolved": "1.4.230913002",
+        "contentHash": "l+9RshN4TsTuxL0ijFp5smbs3Y07RO7CxKBHNM/RsrsGtWvuk6edITMp4oqL9C3ufEAmpYk3dqOZRSf+sFH4Zg==",
+        "dependencies": {
+          "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
+        }
       }
     },
     "native,Version=v0.0/win10-x64": {
-      "Microsoft.Web.WebView2": {
-        "type": "Transitive",
-        "resolved": "1.0.1264.42",
-        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
+      "Microsoft.WindowsAppSDK": {
+        "type": "Direct",
+        "requested": "[1.4.230913002, )",
+        "resolved": "1.4.230913002",
+        "contentHash": "l+9RshN4TsTuxL0ijFp5smbs3Y07RO7CxKBHNM/RsrsGtWvuk6edITMp4oqL9C3ufEAmpYk3dqOZRSf+sFH4Zg==",
+        "dependencies": {
+          "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
+        }
       }
     },
     "native,Version=v0.0/win10-x64-aot": {
-      "Microsoft.Web.WebView2": {
-        "type": "Transitive",
-        "resolved": "1.0.1264.42",
-        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
+      "Microsoft.WindowsAppSDK": {
+        "type": "Direct",
+        "requested": "[1.4.230913002, )",
+        "resolved": "1.4.230913002",
+        "contentHash": "l+9RshN4TsTuxL0ijFp5smbs3Y07RO7CxKBHNM/RsrsGtWvuk6edITMp4oqL9C3ufEAmpYk3dqOZRSf+sFH4Zg==",
+        "dependencies": {
+          "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
+        }
       }
     },
     "native,Version=v0.0/win10-x86": {
-      "Microsoft.Web.WebView2": {
-        "type": "Transitive",
-        "resolved": "1.0.1264.42",
-        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
+      "Microsoft.WindowsAppSDK": {
+        "type": "Direct",
+        "requested": "[1.4.230913002, )",
+        "resolved": "1.4.230913002",
+        "contentHash": "l+9RshN4TsTuxL0ijFp5smbs3Y07RO7CxKBHNM/RsrsGtWvuk6edITMp4oqL9C3ufEAmpYk3dqOZRSf+sFH4Zg==",
+        "dependencies": {
+          "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
+        }
       }
     },
     "native,Version=v0.0/win10-x86-aot": {
-      "Microsoft.Web.WebView2": {
-        "type": "Transitive",
-        "resolved": "1.0.1264.42",
-        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
+      "Microsoft.WindowsAppSDK": {
+        "type": "Direct",
+        "requested": "[1.4.230913002, )",
+        "resolved": "1.4.230913002",
+        "contentHash": "l+9RshN4TsTuxL0ijFp5smbs3Y07RO7CxKBHNM/RsrsGtWvuk6edITMp4oqL9C3ufEAmpYk3dqOZRSf+sFH4Zg==",
+        "dependencies": {
+          "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
+        }
       }
     }
   }

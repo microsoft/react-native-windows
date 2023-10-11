@@ -1777,6 +1777,7 @@ const autoCompleteWebToTextContentTypeMap = {
 const ExportedForwardRef: React.AbstractComponent<
   React.ElementConfig<typeof InternalTextInput>,
   TextInputInstance,
+  // $FlowFixMe[incompatible-call]
 > = React.forwardRef(function TextInput(
   {
     allowFontScaling = true,
@@ -1799,8 +1800,13 @@ const ExportedForwardRef: React.AbstractComponent<
   let style = flattenStyle(restProps.style);
 
   if (style?.verticalAlign != null) {
+    // $FlowFixMe[prop-missing]
+    // $FlowFixMe[cannot-write]
     style.textAlignVertical =
+      // $FlowFixMe[invalid-computed-prop]
       verticalAlignToTextAlignVerticalMap[style.verticalAlign];
+    // $FlowFixMe[prop-missing]
+    // $FlowFixMe[cannot-write]
     delete style.verticalAlign;
   }
 

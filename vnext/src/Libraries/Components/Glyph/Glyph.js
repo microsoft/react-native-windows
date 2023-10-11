@@ -36,7 +36,7 @@ export const Glyph: React.AbstractComponent<
   const nativeSwitchRef = React.useRef<React.ElementRef<
     typeof GlyphNativeComponent,
   > | null>(null);
-
+  // $FlowFixMe[incompatible-call]
   const ref = useMergeRefs(nativeSwitchRef, forwardedRef);
 
   return <GlyphNativeComponent {...props} ref={ref} />;

@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.73.0-nightly-20230920-630cf3b21",
+  "baseVersion": "0.73.0-nightly-20230925-2de964cfd",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "df2115e026fe77aef6f344f7523b09dd83be5626"
+      "baseHash": "fd2609719419d6fd262c1e7f993eb566ad2444f6"
     },
     {
       "type": "derived",
@@ -101,7 +101,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/ScrollView/ScrollView.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/ScrollView/ScrollView.js",
-      "baseHash": "1254528d4082b82fe26d147676b812940bff63ac"
+      "baseHash": "87a276aff215fedb38d7ced5d9aef61224ebe0c2"
     },
     {
       "type": "platform",
@@ -119,7 +119,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "b3075e093f75337144dc7e54194d9d01d4a82aa1"
+      "baseHash": "4e2811777a14ba8f87dc0a36ca11fcf390bd8def"
     },
     {
       "type": "patch",
@@ -183,7 +183,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/View.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/View/View.js",
-      "baseHash": "f6813acaf2043e39f0d57fa9f667c5bbb5202daa"
+      "baseHash": "f25ca9bd8f25d1dd05d98d40946a41b19fac87f1"
     },
     {
       "type": "derived",
@@ -241,7 +241,7 @@
       "type": "derived",
       "file": "src/Libraries/Image/Image.win32.js",
       "baseFile": "packages/react-native/Libraries/Image/Image.ios.js",
-      "baseHash": "69dca1ad9864b7f2468e8f6026203cb98332c690",
+      "baseHash": "ead4aaa048a5ae0186d3f8ade054b970a2115a3a",
       "issue": 4320
     },
     {
@@ -423,13 +423,13 @@
       "type": "patch",
       "file": "src/Libraries/StyleSheet/StyleSheet.win32.js",
       "baseFile": "packages/react-native/Libraries/StyleSheet/StyleSheet.js",
-      "baseHash": "e28351df47b41e47fce71a2a5850f70bd337b78f"
+      "baseHash": "e73098e3a22f8f74328e0a9f387839bb03322bb6"
     },
     {
       "type": "derived",
       "file": "src/Libraries/Text/Text.win32.js",
       "baseFile": "packages/react-native/Libraries/Text/Text.js",
-      "baseHash": "f56a969c163de4f20bcdefaa42792f31c3497888"
+      "baseHash": "02a8ebee89958ab16c6014c2fe1d5b6253113918"
     },
     {
       "type": "derived",
