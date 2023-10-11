@@ -33,6 +33,19 @@ KeyRoutedEventArgs::KeyRoutedEventArgs(facebook::react::Tag tag, uint32_t msg, u
   m_key = static_cast<winrt::Windows::System::VirtualKey>(wParam);
 }
 
+#ifdef USE_WINUI3
+KeyRoutedEventArgs::KeyRoutedEventArgs(facebook::react::Tag tag, winrt::Microsoft::UI::Input::KeyEventArgs const& args) : m_tag(tag) {
+  auto keyStatus = args.KeyStatus();
+  m_keyStatus.RepeatCount = keyStatus.RepeatCount;
+  m_keyStatus.ScanCode = keyStatus.ScanCode;
+  m_keyStatus.IsExtendedKey = keyStatus.IsExtendedKey;
+  m_keyStatus.IsMenuKeyDown = keyStatus.IsMenuKeyDown;
+  m_keyStatus.WasKeyDown = keyStatus.WasKeyDown;
+  m_keyStatus.IsKeyReleased = keyStatus.IsKeyReleased;
+  m_key = args.VirtualKey();
+}
+#endif
+
 int32_t KeyRoutedEventArgs::OriginalSource() noexcept {
   return m_tag;
 }
@@ -61,8 +74,10 @@ winrt::Windows::System::VirtualKey KeyRoutedEventArgs::OriginalKey() noexcept {
   return m_key;
 }
 
-PointerPointProperties::PointerPointProperties(const winrt::Windows::UI::Input::PointerPointProperties &ppp)
+#ifdef USE_WINUI3
+PointerPointProperties::PointerPointProperties(const winrt::Microsoft::UI::Input::PointerPointProperties &ppp)
     : m_sysPointerPointProps(ppp) {}
+#endif
 
 PointerPointProperties::PointerPointProperties(
     bool isBarrelButtonPressed,
@@ -107,92 +122,198 @@ PointerPointProperties::PointerPointProperties(
       m_yTilt(yTilt) {}
 
 winrt::Windows::Foundation::Rect PointerPointProperties::ContactRect() noexcept {
+#ifdef USE_WINUI3
   return m_sysPointerPointProps.ContactRect();
+#else
+  assert(false);
+  return {};
+#endif
 }
 
 bool PointerPointProperties::IsBarrelButtonPressed() noexcept {
-  return m_sysPointerPointProps ? m_sysPointerPointProps.IsBarrelButtonPressed() : m_isBarrelButtonPressed;
+#ifdef USE_WINUI3
+  if (m_sysPointerPointProps) {
+    return m_sysPointerPointProps.IsBarrelButtonPressed();
+  }
+#endif
+  return m_isBarrelButtonPressed;
 }
 
 bool PointerPointProperties::IsCanceled() noexcept {
-  return m_sysPointerPointProps ? m_sysPointerPointProps.IsCanceled() : m_isCanceled;
+#ifdef USE_WINUI3
+  if (m_sysPointerPointProps) {
+    return m_sysPointerPointProps.IsCanceled();
+  }
+#endif
+  return m_isCanceled;
 }
 
 bool PointerPointProperties::IsEraser() noexcept {
-  return m_sysPointerPointProps ? m_sysPointerPointProps.IsEraser() : m_isEraser;
+#ifdef USE_WINUI3
+  if (m_sysPointerPointProps) {
+    return m_sysPointerPointProps.IsEraser();
+  }
+#endif
+  return m_isEraser;
 }
 
 bool PointerPointProperties::IsHorizontalMouseWheel() noexcept {
-  return m_sysPointerPointProps ? m_sysPointerPointProps.IsHorizontalMouseWheel() : m_isHorizontalMouseWheel;
+#ifdef USE_WINUI3
+  if (m_sysPointerPointProps) {
+  return m_sysPointerPointProps.IsHorizontalMouseWheel();
+  }
+#endif
+  return m_isHorizontalMouseWheel;
 }
 
 bool PointerPointProperties::IsInRange() noexcept {
-  return m_sysPointerPointProps ? m_sysPointerPointProps.IsInRange() : m_isInRange;
+#ifdef USE_WINUI3
+  if (m_sysPointerPointProps) {
+    return m_sysPointerPointProps.IsInRange();
+  }
+#endif
+  return m_isInRange;
 }
 
 bool PointerPointProperties::IsInverted() noexcept {
-  return m_sysPointerPointProps ? m_sysPointerPointProps.IsInverted() : m_isInverted;
+#ifdef USE_WINUI3
+  if (m_sysPointerPointProps) {
+    return m_sysPointerPointProps.IsInverted();
+  }
+#endif
+  return m_isInverted;
 }
 
 bool PointerPointProperties::IsLeftButtonPressed() noexcept {
-  return m_sysPointerPointProps ? m_sysPointerPointProps.IsLeftButtonPressed() : m_isLeftButtonPressed;
+#ifdef USE_WINUI3
+  if (m_sysPointerPointProps) {
+    return m_sysPointerPointProps.IsLeftButtonPressed();
+  }
+#endif
+  return m_isLeftButtonPressed;
 }
 
 bool PointerPointProperties::IsMiddleButtonPressed() noexcept {
-  return m_sysPointerPointProps ? m_sysPointerPointProps.IsMiddleButtonPressed() : m_isMiddleButtonPressed;
+#ifdef USE_WINUI3
+  if (m_sysPointerPointProps) {
+    return m_sysPointerPointProps.IsMiddleButtonPressed();
+  }
+#endif
+  return m_isMiddleButtonPressed;
 }
 
 bool PointerPointProperties::IsPrimary() noexcept {
-  return m_sysPointerPointProps ? m_sysPointerPointProps.IsPrimary() : m_isPrimary;
+#ifdef USE_WINUI3
+  if (m_sysPointerPointProps) {
+    return m_sysPointerPointProps.IsPrimary();
+  }
+#endif
+  return m_isPrimary;
 }
 
 bool PointerPointProperties::IsRightButtonPressed() noexcept {
-  return m_sysPointerPointProps ? m_sysPointerPointProps.IsRightButtonPressed() : m_isRightButtonPressed;
+#ifdef USE_WINUI3
+  if (m_sysPointerPointProps) {
+    return m_sysPointerPointProps.IsRightButtonPressed();
+  }
+#endif
+  return m_isRightButtonPressed;
 }
 
 bool PointerPointProperties::IsXButton1Pressed() noexcept {
-  return m_sysPointerPointProps ? m_sysPointerPointProps.IsXButton1Pressed() : m_isXButton1Pressed;
+#ifdef USE_WINUI3
+  if (m_sysPointerPointProps) {
+    return m_sysPointerPointProps.IsXButton1Pressed();
+  }
+#endif
+  return m_isXButton1Pressed;
 }
 
 bool PointerPointProperties::IsXButton2Pressed() noexcept {
-  return m_sysPointerPointProps ? m_sysPointerPointProps.IsXButton2Pressed() : m_isXButton2Pressed;
+#ifdef USE_WINUI3
+  if (m_sysPointerPointProps) {
+    return m_sysPointerPointProps.IsXButton2Pressed();
+  }
+#endif
+  return m_isXButton2Pressed;
 }
 
 int32_t PointerPointProperties::MouseWheelDelta() noexcept {
-  return m_sysPointerPointProps ? m_sysPointerPointProps.MouseWheelDelta() : m_mouseWheelDelta;
+#ifdef USE_WINUI3
+  if (m_sysPointerPointProps) {
+    return m_sysPointerPointProps.MouseWheelDelta();
+  }
+#endif
+  return m_mouseWheelDelta;
 }
 
 float PointerPointProperties::Orientation() noexcept {
-  return m_sysPointerPointProps ? m_sysPointerPointProps.Orientation() : m_orientation;
+#ifdef USE_WINUI3
+  if (m_sysPointerPointProps) {
+    return m_sysPointerPointProps.Orientation();
+  }
+#endif
+  return m_orientation;
 }
 
 PointerUpdateKind PointerPointProperties::PointerUpdateKind() noexcept {
-  return m_sysPointerPointProps ? static_cast<winrt::Microsoft::ReactNative::Composition::Input::PointerUpdateKind>(
-                                      m_sysPointerPointProps.PointerUpdateKind())
-                                : m_pointerUpdateKind;
+#ifdef USE_WINUI3
+  if (m_sysPointerPointProps) {
+    return static_cast<winrt::Microsoft::ReactNative::Composition::Input::PointerUpdateKind>(
+                                      m_sysPointerPointProps.PointerUpdateKind());
+  }
+#endif
+  return m_pointerUpdateKind;
 }
 
 float PointerPointProperties::Pressure() noexcept {
-  return m_sysPointerPointProps ? m_sysPointerPointProps.Pressure() : m_pressure;
+#ifdef USE_WINUI3
+  if (m_sysPointerPointProps) {
+    return m_sysPointerPointProps.Pressure();
+  }
+#endif
+  return m_pressure;
 }
 
 bool PointerPointProperties::TouchConfidence() noexcept {
-  return m_sysPointerPointProps ? m_sysPointerPointProps.TouchConfidence() : m_touchConfidence;
+#ifdef USE_WINUI3
+  if (m_sysPointerPointProps) {
+    return m_sysPointerPointProps.TouchConfidence();
+  }
+#endif
+  return m_touchConfidence;
 }
 
 float PointerPointProperties::Twist() noexcept {
-  return m_sysPointerPointProps ? m_sysPointerPointProps.Twist() : m_twist;
+#ifdef USE_WINUI3
+  if (m_sysPointerPointProps) {
+    return m_sysPointerPointProps.Twist();
+  }
+#endif
+  return m_twist;
 }
 
 float PointerPointProperties::XTilt() noexcept {
-  return m_sysPointerPointProps ? m_sysPointerPointProps.XTilt() : m_xTilt;
+#ifdef USE_WINUI3
+  if (m_sysPointerPointProps) {
+    return m_sysPointerPointProps.XTilt();
+  }
+#endif
+  return m_xTilt;
 }
 
 float PointerPointProperties::YTilt() noexcept {
-  return m_sysPointerPointProps ? m_sysPointerPointProps.YTilt() : m_yTilt;
+#ifdef USE_WINUI3
+  if (m_sysPointerPointProps) {
+    return m_sysPointerPointProps.YTilt();
+  }
+#endif
+  return m_yTilt;
 }
 
-PointerPoint::PointerPoint(const winrt::Windows::UI::Input::PointerPoint &pp) : m_sysPointerPoint(pp) {}
+#ifdef USE_WINUI3
+PointerPoint::PointerPoint(const winrt::Microsoft::UI::Input::PointerPoint &pp) : m_sysPointerPoint(pp) {}
+#endif
 
 PointerPoint::PointerPoint(uint32_t msg, uint64_t wParam, int64_t lParam) {
   m_msg = msg;
@@ -206,19 +327,30 @@ PointerPoint::PointerPoint(uint32_t msg, uint64_t wParam, int64_t lParam) {
 }
 
 uint32_t PointerPoint::FrameId() noexcept {
-  return m_sysPointerPoint ? m_sysPointerPoint.FrameId() : m_pi.frameId;
+#ifdef USE_WINUI3
+if (m_sysPointerPoint) {
+  return m_sysPointerPoint.FrameId();
+}
+#endif
+  return m_pi.frameId;
 }
 
 bool PointerPoint::IsInContact() noexcept {
-  return m_sysPointerPoint ? m_sysPointerPoint.IsInContact()
-                           : ((m_pi.pointerFlags & POINTER_FLAG_INCONTACT) == POINTER_FLAG_INCONTACT);
+#ifdef USE_WINUI3
+  if (m_sysPointerPoint) {
+    return m_sysPointerPoint.IsInContact();
+  }
+#endif
+  return ((m_pi.pointerFlags & POINTER_FLAG_INCONTACT) == POINTER_FLAG_INCONTACT);
 }
 
 winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType PointerPoint::PointerDeviceType() noexcept {
+#ifdef USE_WINUI3
   if (m_sysPointerPoint) {
     return static_cast<winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType>(
-        m_sysPointerPoint.PointerDevice().PointerDeviceType());
+        m_sysPointerPoint.PointerDeviceType());
   }
+#endif
 
   if (m_pi.pointerId) {
     switch (m_pi.pointerType) {
@@ -239,7 +371,12 @@ winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType PointerPoin
 }
 
 uint32_t PointerPoint::PointerId() noexcept {
-  return m_sysPointerPoint ? m_sysPointerPoint.PointerId() : (m_pi.pointerId ? m_pi.pointerId : 1 /* MOUSE */);
+#ifdef USE_WINUI3
+  if (m_sysPointerPoint) {
+    return m_sysPointerPoint.PointerId();
+  }
+#endif
+  return (m_pi.pointerId ? m_pi.pointerId : 1 /* MOUSE */);
 }
 
 winrt::Windows::Foundation::Point PointerPoint::Position() noexcept {

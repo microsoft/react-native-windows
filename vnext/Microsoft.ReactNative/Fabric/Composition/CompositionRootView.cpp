@@ -21,6 +21,10 @@
 #include "ReactNativeHost.h"
 #include "RootComponentView.h"
 
+#ifdef USE_WINUI3
+#include <winrt/Microsoft.UI.Content.h>
+#endif
+
 namespace winrt::Microsoft::ReactNative::implementation {
 
 //! This class ensures that we access ReactRootView from UI thread.
@@ -97,6 +101,10 @@ inline Mso::Future<void> CompositionReactViewInstance::PostInUIQueue(TAction &&a
 }
 
 CompositionRootView::CompositionRootView() noexcept {}
+
+#ifdef USE_WINUI3
+CompositionRootView::CompositionRootView(winrt::Microsoft::UI::Composition::Compositor compositor) noexcept : m_compositor(compositor) {}
+#endif
 
 ReactNative::IReactViewHost CompositionRootView::ReactViewHost() noexcept {
   return m_reactViewHost;
@@ -355,6 +363,31 @@ winrt::Windows::Foundation::Size CompositionRootView::Arrange(winrt::Windows::Fo
   }
   return finalSize;
 }
+
+#ifdef USE_WINUI3
+winrt::Microsoft::UI::Content::ContentIsland CompositionRootView::Island() noexcept {
+  if (!m_compositor) {
+    return nullptr;
+  }
+
+  if (!m_island) {
+    auto testBrush = m_compositor.CreateColorBrush(winrt::Windows::UI::Colors::Red()); // TODO remove
+    auto rootVisual = m_compositor.CreateSpriteVisual();
+    rootVisual.RelativeSizeAdjustment({1, 1});
+
+    // Display a border around the root to help debug sizing of island
+    auto nine = m_compositor.CreateNineGridBrush(); // TODO remove
+    nine.SetInsets(10);
+    nine.IsCenterHollow(true);
+    nine.Source(testBrush);
+    rootVisual.Brush(nine);
+
+    RootVisual(winrt::Microsoft::ReactNative::Composition::MicrosoftCompositionContextHelper::CreateVisual(rootVisual));
+    m_island = winrt::Microsoft::UI::Content::ContentIsland::Create(rootVisual);
+  }
+  return m_island;
+}
+#endif
 
 ::Microsoft::ReactNative::RootComponentView *CompositionRootView::GetComponentView() noexcept {
   if (!m_context || m_context.Handle().LoadingState() != winrt::Microsoft::ReactNative::LoadingState::Loaded)

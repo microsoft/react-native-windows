@@ -43,6 +43,11 @@ struct FocusNavigationResult : FocusNavigationResultT<FocusNavigationResult> {
 struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Microsoft::ReactNative::ICompositionRootView {
   CompositionRootView() noexcept;
 
+#ifdef USE_WINUI3
+  CompositionRootView(winrt::Microsoft::UI::Composition::Compositor compositor) noexcept;
+  winrt::Microsoft::UI::Content::ContentIsland Island() noexcept;
+#endif
+
   // property ReactViewHost
   ReactNative::IReactViewHost ReactViewHost() noexcept;
   void ReactViewHost(ReactNative::IReactViewHost const &value) noexcept;
@@ -89,6 +94,11 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
   void UninitRootView() noexcept;
 
  private:
+#ifdef USE_WINUI3
+  winrt::Microsoft::UI::Composition::Compositor m_compositor{nullptr};
+  winrt::Microsoft::UI::Content::ContentIsland m_island{nullptr};
+#endif
+
   bool m_isInitialized{false};
   bool m_isJSViewAttached{false};
   IReactDispatcher m_uiDispatcher{nullptr};
