@@ -548,6 +548,9 @@ void ReactInstanceWin::Initialize() noexcept {
             auto omitNetCxxPropName = ReactPropertyBagHelper::GetName(nullptr, L"OmitNetworkingCxxModules");
             auto omitNetCxxPropValue = m_options.Properties.Get(omitNetCxxPropName);
             devSettings->omitNetworkingCxxModules = winrt::unbox_value_or(omitNetCxxPropValue, false);
+            auto useWebSocketTurboModulePropName = ReactPropertyBagHelper::GetName(nullptr, L"UseWebSocketTurboModule");
+            auto useWebSocketTurboModulePropValue = m_options.Properties.Get(useWebSocketTurboModulePropName);
+            devSettings->useWebSocketTurboModule = winrt::unbox_value_or(useWebSocketTurboModulePropValue, false);
             auto bundleRootPath = devSettings->bundleRootPath;
             auto instanceWrapper = facebook::react::CreateReactInstance(
                 std::shared_ptr<facebook::react::Instance>(strongThis->m_instance.Load()),
