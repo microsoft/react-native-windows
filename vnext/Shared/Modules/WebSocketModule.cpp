@@ -314,8 +314,7 @@ WebSocketModuleProxy::WebSocketModuleProxy(IInspectable const &inspectableProper
 
 void WebSocketModuleProxy::SendBinary(string &&base64String, int64_t id) noexcept /*override*/ {
   auto propBag = ReactPropertyBag{m_inspectableProps.try_as<IReactPropertyBag>()};
-  auto sharedPropId =
-      ReactPropertyId<ReactNonAbiValue<weak_ptr<WebSocketModule::SharedState>>>{s_sharedStateNameW};
+  auto sharedPropId = ReactPropertyId<ReactNonAbiValue<weak_ptr<WebSocketModule::SharedState>>>{s_sharedStateNameW};
   auto state = propBag.Get(sharedPropId).Value();
 
   weak_ptr weakWs = GetOrCreateWebSocket(id, {}, std::move(state));
@@ -356,8 +355,7 @@ shared_ptr<IWebSocketResource> WebSocketTurboModule::CreateResource(int64_t id, 
   rc->SetOnMessage([id, context = m_context](size_t length, const string &message, bool isBinary) {
     auto args = msrn::JSValueObject{{"id", id}, {"type", isBinary ? "binary" : "text"}};
     shared_ptr<IWebSocketModuleContentHandler> contentHandler;
-    auto propId =
-        ReactPropertyId<ReactNonAbiValue<weak_ptr<IWebSocketModuleContentHandler>>>{s_contentHandlerNameW};
+    auto propId = ReactPropertyId<ReactNonAbiValue<weak_ptr<IWebSocketModuleContentHandler>>>{s_contentHandlerNameW};
     auto propBag = context.Properties();
     if (auto prop = propBag.Get(propId))
       contentHandler = prop.Value().lock();
