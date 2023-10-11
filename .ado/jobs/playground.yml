@@ -147,7 +147,8 @@ jobs:
               # of debug feature tests. In the future, these tests should be performed against a host app
               # better suited for automated tests (probably the E2E test app).
               - powershell: |
-                  $appRecipeToolPath = Join-Path (Get-CimInstance MSFT_VSInstance | Sort-Object -Property 'Version' -Descending)[0].InstallLocation "Common7\IDE\DeployAppRecipe.exe"
+                  $vspath = & "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe"  -latest -property installationPath
+                  $appRecipeToolPath = Join-Path (& "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe"  -latest -property installationPath) "Common7\IDE\DeployAppRecipe.exe"
                   if (!(Test-Path $appRecipeToolPath)) { throw "can't find '$appRecipeToolPath'" }
                   $platDirs = @{ "x64" = "x64\"; "x86" = ""} # map from ADO BuildPlatform arg to VS build output dir part 
                   $appRecipePath = "$(Build.SourcesDirectory)\packages\playground\windows\$($platDirs['${{ matrix.BuildPlatform }}'])${{ matrix.BuildConfiguration }}\playground\playground.build.appxrecipe"
