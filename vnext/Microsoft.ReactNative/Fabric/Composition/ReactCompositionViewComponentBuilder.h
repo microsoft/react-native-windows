@@ -36,6 +36,8 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
   void SetKeyDownHandler(KeyHandler impl) noexcept;
   void SetKeyUpHandler(KeyHandler impl) noexcept;
 
+  void SetPointerEnteredHandler(PointerHandler impl) noexcept;
+  void SetPointerExitedHandler(PointerHandler impl) noexcept;
   void SetPointerReleasedHandler(PointerHandler impl) noexcept;
   void SetPointerPressedHandler(PointerHandler impl) noexcept;
   void SetPointerMovedHandler(PointerHandler impl) noexcept;
@@ -61,6 +63,8 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
   void OnKeyUp(
       const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
       const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept;
+  void OnPointerEntered(const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept;
+  void OnPointerExited(const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept;
   void OnPointerPressed(const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept;
   void OnPointerReleased(
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept;
@@ -80,6 +84,8 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
   MessageHandler m_messageHandler;
   KeyHandler m_keyUp;
   KeyHandler m_keyDown;
+  PointerHandler m_pointerEntered;
+  PointerHandler m_pointerExited;
   PointerHandler m_pointerReleased;
   PointerHandler m_pointerPressed;
   PointerHandler m_pointerMoved;
