@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 06 Oct 2023 17:54:59 GMT and should not be manually modified.
+This log was last generated on Wed, 11 Oct 2023 23:26:49 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.41
+
+Wed, 11 Oct 2023 23:26:49 GMT
+
+### Patches
+
+- Conditionally register WebSocket Cxx module (#12218) (julio.rocha@microsoft.com)
 
 ## 0.71.40
 

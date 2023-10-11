@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 11 Oct 2023 23:26:49 GMT",
+      "tag": "react-native-windows_v0.71.41",
+      "version": "0.71.41",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "1ea6771bb3652003c202235e97a86e842024d5e1",
+            "comment": "Conditionally register WebSocket Cxx module (#12218)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 06 Oct 2023 17:54:59 GMT",
       "tag": "react-native-windows_v0.71.40",
       "version": "0.71.40",
