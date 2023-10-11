@@ -59,6 +59,14 @@ void ReactCompositionViewComponentBuilder::SetKeyUpHandler(KeyHandler impl) noex
   m_keyUp = impl;
 }
 
+void ReactCompositionViewComponentBuilder::SetPointerEnteredHandler(PointerHandler impl) noexcept {
+  m_pointerEntered = impl;
+}
+
+void ReactCompositionViewComponentBuilder::SetPointerExitedHandler(PointerHandler impl) noexcept {
+  m_pointerExited = impl;
+}
+
 void ReactCompositionViewComponentBuilder::SetPointerReleasedHandler(PointerHandler impl) noexcept {
   m_pointerReleased = impl;
 }
@@ -141,6 +149,20 @@ void ReactCompositionViewComponentBuilder::OnKeyUp(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
   if (m_keyUp) {
     m_keyUp(source, args);
+  }
+}
+
+void ReactCompositionViewComponentBuilder::OnPointerEntered(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  if (m_pointerEntered) {
+    m_pointerEntered(args);
+  }
+}
+
+void ReactCompositionViewComponentBuilder::OnPointerExited(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  if (m_pointerExited) {
+    m_pointerExited(args);
   }
 }
 
