@@ -34,7 +34,8 @@ KeyRoutedEventArgs::KeyRoutedEventArgs(facebook::react::Tag tag, uint32_t msg, u
 }
 
 #ifdef USE_WINUI3
-KeyRoutedEventArgs::KeyRoutedEventArgs(facebook::react::Tag tag, winrt::Microsoft::UI::Input::KeyEventArgs const& args) : m_tag(tag) {
+KeyRoutedEventArgs::KeyRoutedEventArgs(facebook::react::Tag tag, winrt::Microsoft::UI::Input::KeyEventArgs const &args)
+    : m_tag(tag) {
   auto keyStatus = args.KeyStatus();
   m_keyStatus.RepeatCount = keyStatus.RepeatCount;
   m_keyStatus.ScanCode = keyStatus.ScanCode;
@@ -160,7 +161,7 @@ bool PointerPointProperties::IsEraser() noexcept {
 bool PointerPointProperties::IsHorizontalMouseWheel() noexcept {
 #ifdef USE_WINUI3
   if (m_sysPointerPointProps) {
-  return m_sysPointerPointProps.IsHorizontalMouseWheel();
+    return m_sysPointerPointProps.IsHorizontalMouseWheel();
   }
 #endif
   return m_isHorizontalMouseWheel;
@@ -260,7 +261,7 @@ PointerUpdateKind PointerPointProperties::PointerUpdateKind() noexcept {
 #ifdef USE_WINUI3
   if (m_sysPointerPointProps) {
     return static_cast<winrt::Microsoft::ReactNative::Composition::Input::PointerUpdateKind>(
-                                      m_sysPointerPointProps.PointerUpdateKind());
+        m_sysPointerPointProps.PointerUpdateKind());
   }
 #endif
   return m_pointerUpdateKind;
@@ -328,9 +329,9 @@ PointerPoint::PointerPoint(uint32_t msg, uint64_t wParam, int64_t lParam) {
 
 uint32_t PointerPoint::FrameId() noexcept {
 #ifdef USE_WINUI3
-if (m_sysPointerPoint) {
-  return m_sysPointerPoint.FrameId();
-}
+  if (m_sysPointerPoint) {
+    return m_sysPointerPoint.FrameId();
+  }
 #endif
   return m_pi.frameId;
 }

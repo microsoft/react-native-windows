@@ -192,8 +192,8 @@ struct WindowData {
 
             auto appContent = m_compRootView.Island();
 
-            //auto invScale = static_cast<float>(1.0 / ScaleFactor(hwnd));
-            //m_compRootView.RootVisual().Scale({invScale, invScale, 1});
+            // auto invScale = static_cast<float>(1.0 / ScaleFactor(hwnd));
+            // m_compRootView.RootVisual().Scale({invScale, invScale, 1});
 
             /*
               // Future versions of WinAppSDK will have more capabilities around scale and size
@@ -201,7 +201,6 @@ struct WindowData {
               auto siteWindow = site.Environment();
               auto displayScale = siteWindow.DisplayScale();
 
-              // Size the island to be half the size of the custom component, to more easily test behavior across the island
               site.ParentScale(displayScale);
               site.ActualSize({metrics.Frame.Width / 2, metrics.Frame.Height / 2});
               site.ClientSize(
@@ -209,12 +208,12 @@ struct WindowData {
                   static_cast<int32_t>(metrics.Frame.Height / 2 * metrics.PointScaleFactor)});
             */
 
-            //bridge.OverrideScale(static_cast<float>(ScaleFactor(hwnd)));
+            // bridge.OverrideScale(static_cast<float>(ScaleFactor(hwnd)));
             bridge.Connect(appContent);
             bridge.Show();
 
             m_compRootView.ScaleFactor(ScaleFactor(hwnd));
-            //m_compRootView.ScaleFactor(1);
+            // m_compRootView.ScaleFactor(1);
             m_compRootView.Size(
                 {static_cast<float>(m_width / ScaleFactor(hwnd)), static_cast<float>(m_height / ScaleFactor(hwnd))});
 

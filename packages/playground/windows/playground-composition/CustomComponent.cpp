@@ -1,9 +1,9 @@
 #include "pch.h"
 
-#include <winrt/Windows.UI.h>
-#include <winrt/Windows.UI.Composition.h>
-#include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Microsoft.ReactNative.Composition.h>
+#include <winrt/Microsoft.ReactNative.h>
+#include <winrt/Windows.UI.Composition.h>
+#include <winrt/Windows.UI.h>
 
 /*
  * Custom Properties can be passed from JS to this native component
@@ -119,5 +119,5 @@ struct CustomComponent : winrt::implements<CustomComponent, winrt::IInspectable>
 };
 
 void RegisterCustomComponent(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept {
-    CustomComponent::RegisterViewComponent(packageBuilder);
+  CustomComponent::RegisterViewComponent(packageBuilder);
 }

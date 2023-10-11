@@ -21,7 +21,7 @@ struct KeyRoutedEventArgs : winrt::implements<
                                 winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs> {
   KeyRoutedEventArgs(facebook::react::Tag tag, uint32_t msg, uint64_t wParam, int64_t lParam);
 #ifdef USE_WINUI3
-  KeyRoutedEventArgs(facebook::react::Tag tag, winrt::Microsoft::UI::Input::KeyEventArgs const& args);
+  KeyRoutedEventArgs(facebook::react::Tag tag, winrt::Microsoft::UI::Input::KeyEventArgs const &args);
 #endif
 
   int32_t OriginalSource() noexcept;

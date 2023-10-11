@@ -23,6 +23,7 @@
 
 #ifdef USE_WINUI3
 #include <winrt/Microsoft.UI.Content.h>
+#include "CompositionRootAutomationProvider.h"
 #endif
 
 namespace winrt::Microsoft::ReactNative::implementation {
@@ -103,7 +104,8 @@ inline Mso::Future<void> CompositionReactViewInstance::PostInUIQueue(TAction &&a
 CompositionRootView::CompositionRootView() noexcept {}
 
 #ifdef USE_WINUI3
-CompositionRootView::CompositionRootView(winrt::Microsoft::UI::Composition::Compositor compositor) noexcept : m_compositor(compositor) {}
+CompositionRootView::CompositionRootView(winrt::Microsoft::UI::Composition::Compositor compositor) noexcept
+    : m_compositor(compositor) {}
 #endif
 
 ReactNative::IReactViewHost CompositionRootView::ReactViewHost() noexcept {
@@ -384,6 +386,21 @@ winrt::Microsoft::UI::Content::ContentIsland CompositionRootView::Island() noexc
 
     RootVisual(winrt::Microsoft::ReactNative::Composition::MicrosoftCompositionContextHelper::CreateVisual(rootVisual));
     m_island = winrt::Microsoft::UI::Content::ContentIsland::Create(rootVisual);
+
+    m_island.AutomationProviderRequested(
+        [this](
+            winrt::Microsoft::UI::Content::ContentIsland const &,
+            winrt::Microsoft::UI::Content::ContentIslandAutomationProviderRequestedEventArgs const &args) {
+          auto provider = GetUiaProvider();
+          auto pRootProvider =
+              static_cast<winrt::Microsoft::ReactNative::implementation::CompositionRootAutomationProvider *>(
+                  provider.as<IRawElementProviderSimple>().get());
+          if (pRootProvider != nullptr) {
+            pRootProvider->SetIsland(m_island);
+          }
+          args.AutomationProvider(std::move(provider));
+          args.Handled(true);
+        });
   }
   return m_island;
 }
