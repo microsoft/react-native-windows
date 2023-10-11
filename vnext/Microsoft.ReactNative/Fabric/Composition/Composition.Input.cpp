@@ -518,12 +518,22 @@ winrt::Microsoft::ReactNative::Composition::Input::PointerPointProperties Pointe
 }
 
 uint64_t PointerPoint::Timestamp() noexcept {
-  return m_sysPointerPoint ? m_sysPointerPoint.Timestamp() : m_pi.dwTime;
+#ifdef USE_WINUI3
+  if (m_sysPointerPoint) {
+    return m_sysPointerPoint.Timestamp();
+  }
+#endif
+  return m_pi.dwTime;
 }
 
 winrt::Microsoft::ReactNative::Composition::Input::PointerPoint PointerPoint::GetTransformedPoint(
     const IPointerPointTransform &transform) noexcept {
-  return winrt::make<PointerPoint>(m_sysPointerPoint);
+#ifdef USE_WINUI3
+  if (m_sysPointerPoint) {
+    return winrt::make<PointerPoint>(m_sysPointerPoint);
+  }
+#endif
+  return winrt::make<PointerPoint>(m_msg, m_wParam, m_lParam, m_scaleFactor);
 }
 
 bool PointerPoint::IsPointerMessage(uint32_t message) noexcept {

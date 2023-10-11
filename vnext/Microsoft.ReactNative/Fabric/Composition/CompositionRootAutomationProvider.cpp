@@ -184,9 +184,11 @@ void CompositionRootAutomationProvider::SetHwnd(HWND hwnd) noexcept {
   m_hwnd = hwnd;
 }
 
+#ifdef USE_WINUI3
 void CompositionRootAutomationProvider::SetIsland(winrt::Microsoft::UI::Content::ContentIsland &island) noexcept {
   m_island = island;
 }
+#endif
 
 HRESULT __stdcall CompositionRootAutomationProvider::Navigate(
     NavigateDirection direction,

@@ -117,7 +117,9 @@ struct PointerPointProperties : PointerPointPropertiesT<PointerPointProperties> 
 };
 
 struct PointerPoint : PointerPointT<PointerPoint> {
+#ifdef USE_WINUI3
   PointerPoint(const winrt::Microsoft::UI::Input::PointerPoint &pp);
+#endif
   PointerPoint(uint32_t msg, uint64_t wParam, int64_t lParam, float scaleFactor);
 
   uint32_t FrameId() noexcept;
