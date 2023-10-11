@@ -533,7 +533,7 @@ function WinGetInstall {
 
     EnsureWinGetForInstall;
     Write-Verbose "Executing `winget install `"$wingetPackage`"";
-    & winget install "$wingetPackage"
+    & winget install "$wingetPackage" --accept-source-agreements --accept-package-agreements
  }
  
 function IsElevated {
