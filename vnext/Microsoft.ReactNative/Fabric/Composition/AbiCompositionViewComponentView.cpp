@@ -119,6 +119,18 @@ void AbiCompositionViewComponentView::onKeyUp(
   Super::onKeyUp(source, args);
 }
 
+void AbiCompositionViewComponentView::onPointerEntered(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  Builder().OnPointerEntered(args);
+  Super::onPointerEntered(args);
+}
+
+void AbiCompositionViewComponentView::onPointerExited(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  Builder().OnPointerExited(args);
+  Super::onPointerExited(args);
+}
+
 void AbiCompositionViewComponentView::onPointerPressed(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
   Builder().OnPointerPressed(args);
