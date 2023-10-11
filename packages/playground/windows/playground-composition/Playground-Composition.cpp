@@ -192,8 +192,8 @@ struct WindowData {
 
             auto appContent = m_compRootView.Island();
 
-            // auto invScale = static_cast<float>(1.0 / ScaleFactor(hwnd));
-            // m_compRootView.RootVisual().Scale({invScale, invScale, 1});
+            auto invScale = 1.0f / ScaleFactor(hwnd);
+            m_compRootView.RootVisual().Scale({invScale, invScale, invScale});
 
             /*
               // Future versions of WinAppSDK will have more capabilities around scale and size
@@ -208,14 +208,13 @@ struct WindowData {
                   static_cast<int32_t>(metrics.Frame.Height / 2 * metrics.PointScaleFactor)});
             */
 
-            // bridge.OverrideScale(static_cast<float>(ScaleFactor(hwnd)));
+            // bridge.OverrideScale(ScaleFactor(hwnd));
             bridge.Connect(appContent);
             bridge.Show();
 
             m_compRootView.ScaleFactor(ScaleFactor(hwnd));
             // m_compRootView.ScaleFactor(1);
-            m_compRootView.Size(
-                {static_cast<float>(m_width / ScaleFactor(hwnd)), static_cast<float>(m_height / ScaleFactor(hwnd))});
+            m_compRootView.Size({m_width / ScaleFactor(hwnd), m_height / ScaleFactor(hwnd)});
 
             bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
 
@@ -243,8 +242,7 @@ struct WindowData {
             m_compRootView.RootVisual(
                 winrt::Microsoft::ReactNative::Composition::WindowsCompositionContextHelper::CreateVisual(root));
             m_compRootView.ScaleFactor(ScaleFactor(hwnd));
-            m_compRootView.Size(
-                {static_cast<float>(m_width / ScaleFactor(hwnd)), static_cast<float>(m_height / ScaleFactor(hwnd))});
+            m_compRootView.Size({m_width / ScaleFactor(hwnd), m_height / ScaleFactor(hwnd)});
           }
         }
 
@@ -276,8 +274,8 @@ struct WindowData {
     return 0;
   }
 
-  double ScaleFactor(HWND hwnd) noexcept {
-    return GetDpiForWindow(hwnd) / 96.0;
+  float ScaleFactor(HWND hwnd) noexcept {
+    return GetDpiForWindow(hwnd) / 96.0f;
   }
 
   void UpdateSize(HWND hwnd) noexcept {
@@ -288,8 +286,7 @@ struct WindowData {
         m_width = rc.right - rc.left;
 
         if (m_compRootView) {
-          winrt::Windows::Foundation::Size size{
-              static_cast<float>(m_width / ScaleFactor(hwnd)), static_cast<float>(m_height / ScaleFactor(hwnd))};
+          winrt::Windows::Foundation::Size size{m_width / ScaleFactor(hwnd), m_height / ScaleFactor(hwnd)};
           m_compRootView.Arrange(size);
           m_compRootView.Size(size);
         }

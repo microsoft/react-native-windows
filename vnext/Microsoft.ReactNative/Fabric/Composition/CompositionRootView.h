@@ -61,8 +61,8 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
   void Size(winrt::Windows::Foundation::Size value) noexcept;
 
   // ScaleFactor (DPI)
-  double ScaleFactor() noexcept;
-  void ScaleFactor(double value) noexcept;
+  float ScaleFactor() noexcept;
+  void ScaleFactor(float value) noexcept;
 
   winrt::Windows::Foundation::Size Measure(winrt::Windows::Foundation::Size const &availableSize) const;
   winrt::Windows::Foundation::Size Arrange(winrt::Windows::Foundation::Size finalSize) const;
@@ -103,7 +103,7 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
   bool m_isJSViewAttached{false};
   IReactDispatcher m_uiDispatcher{nullptr};
   int64_t m_rootTag{-1};
-  double m_scaleFactor{1.0};
+  float m_scaleFactor{1.0};
   winrt::Windows::Foundation::Size m_size;
   winrt::Microsoft::ReactNative::ReactContext m_context;
   winrt::Microsoft::ReactNative::IReactViewHost m_reactViewHost;

@@ -148,11 +148,11 @@ void CompositionRootView::Size(winrt::Windows::Foundation::Size value) noexcept 
   m_size = value;
 }
 
-double CompositionRootView::ScaleFactor() noexcept {
+float CompositionRootView::ScaleFactor() noexcept {
   return m_scaleFactor;
 }
 
-void CompositionRootView::ScaleFactor(double value) noexcept {
+void CompositionRootView::ScaleFactor(float value) noexcept {
   m_scaleFactor = value;
 }
 
@@ -373,16 +373,8 @@ winrt::Microsoft::UI::Content::ContentIsland CompositionRootView::Island() noexc
   }
 
   if (!m_island) {
-    auto testBrush = m_compositor.CreateColorBrush(winrt::Windows::UI::Colors::Red()); // TODO remove
     auto rootVisual = m_compositor.CreateSpriteVisual();
     rootVisual.RelativeSizeAdjustment({1, 1});
-
-    // Display a border around the root to help debug sizing of island
-    auto nine = m_compositor.CreateNineGridBrush(); // TODO remove
-    nine.SetInsets(10);
-    nine.IsCenterHollow(true);
-    nine.Source(testBrush);
-    rootVisual.Brush(nine);
 
     RootVisual(winrt::Microsoft::ReactNative::Composition::MicrosoftCompositionContextHelper::CreateVisual(rootVisual));
     m_island = winrt::Microsoft::UI::Content::ContentIsland::Create(rootVisual);

@@ -240,9 +240,7 @@ void CompositionEventHandler::onPointerWheelChanged(
     auto position = pointerPoint.Position();
 
     facebook::react::Point ptLocal;
-    facebook::react::Point ptScaled = {
-        static_cast<float>(position.X / m_compRootView.ScaleFactor()),
-        static_cast<float>(position.Y / m_compRootView.ScaleFactor())};
+    facebook::react::Point ptScaled = {static_cast<float>(position.X), static_cast<float>(position.Y)};
 
     auto tag = RootComponentView().hitTest(ptScaled, ptLocal);
 
@@ -293,37 +291,37 @@ int64_t CompositionEventHandler::SendMessage(uint32_t msg, uint64_t wParam, int6
   switch (msg) {
     case WM_LBUTTONDOWN: {
       auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
-          msg, wParam, lParam);
+          msg, wParam, lParam, m_compRootView.ScaleFactor());
       onPointerPressed(pp, GetKeyModifiers(wParam));
       return 0;
     }
     case WM_POINTERDOWN: {
       auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
-          msg, wParam, lParam);
+          msg, wParam, lParam, m_compRootView.ScaleFactor());
       onPointerPressed(pp, GetKeyModifiers(wParam));
       return 0;
     }
     case WM_LBUTTONUP: {
       auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
-          msg, wParam, lParam);
+          msg, wParam, lParam, m_compRootView.ScaleFactor());
       onPointerReleased(pp, GetKeyModifiers(wParam));
       return 0;
     }
     case WM_POINTERUP: {
       auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
-          msg, wParam, lParam);
+          msg, wParam, lParam, m_compRootView.ScaleFactor());
       onPointerReleased(pp, GetKeyModifiers(wParam));
       return 0;
     }
     case WM_MOUSEMOVE: {
       auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
-          msg, wParam, lParam);
+          msg, wParam, lParam, m_compRootView.ScaleFactor());
       onPointerMoved(pp, GetKeyModifiers(wParam));
       return 0;
     }
     case WM_MOUSEWHEEL: {
       auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
-          msg, wParam, lParam);
+          msg, wParam, lParam, m_compRootView.ScaleFactor());
       onPointerWheelChanged(pp, GetKeyModifiers(wParam));
     }
     case WM_CHAR:
@@ -629,9 +627,7 @@ void CompositionEventHandler::onPointerMoved(
           ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties())) {
     facebook::react::Point ptLocal;
 
-    facebook::react::Point ptScaled = {
-        static_cast<float>(position.X / m_compRootView.ScaleFactor()),
-        static_cast<float>(position.Y / m_compRootView.ScaleFactor())};
+    facebook::react::Point ptScaled = {position.X, position.Y};
     auto tag = RootComponentView().hitTest(ptScaled, ptLocal);
 
     if (tag == -1)
@@ -685,9 +681,7 @@ void CompositionEventHandler::onPointerPressed(
           ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties())) {
     facebook::react::Point ptLocal;
 
-    facebook::react::Point ptScaled = {
-        static_cast<float>(position.X / m_compRootView.ScaleFactor()),
-        static_cast<float>(position.Y / m_compRootView.ScaleFactor())};
+    facebook::react::Point ptScaled = {position.X, position.Y};
     auto tag = RootComponentView().hitTest(ptScaled, ptLocal);
 
     if (tag == -1)
@@ -750,9 +744,7 @@ void CompositionEventHandler::onPointerReleased(
           ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties())) {
     facebook::react::Point ptLocal;
 
-    facebook::react::Point ptScaled = {
-        static_cast<float>(position.X / m_compRootView.ScaleFactor()),
-        static_cast<float>(position.Y / m_compRootView.ScaleFactor())};
+    facebook::react::Point ptScaled = {position.X, position.Y};
     auto tag = RootComponentView().hitTest(ptScaled, ptLocal);
 
     if (tag == -1)

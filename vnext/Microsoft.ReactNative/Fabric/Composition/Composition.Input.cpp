@@ -316,10 +316,11 @@ float PointerPointProperties::YTilt() noexcept {
 PointerPoint::PointerPoint(const winrt::Microsoft::UI::Input::PointerPoint &pp) : m_sysPointerPoint(pp) {}
 #endif
 
-PointerPoint::PointerPoint(uint32_t msg, uint64_t wParam, int64_t lParam) {
+PointerPoint::PointerPoint(uint32_t msg, uint64_t wParam, int64_t lParam, float scaleFactor) {
   m_msg = msg;
   m_wParam = wParam;
   m_lParam = lParam;
+  m_scaleFactor = scaleFactor;
   if (IsPointerMessage(msg)) {
     const unsigned int pointerId = GET_POINTERID_WPARAM(wParam);
     bool result = ::GetPointerInfo(pointerId, &m_pi);
@@ -381,19 +382,25 @@ uint32_t PointerPoint::PointerId() noexcept {
 }
 
 winrt::Windows::Foundation::Point PointerPoint::Position() noexcept {
-  return m_sysPointerPoint
-      ? m_sysPointerPoint.Position()
-      : (m_pi.pointerId
-             ? winrt::Windows::Foundation::
-                   Point{static_cast<float>(m_pi.ptPixelLocation.x), static_cast<float>(m_pi.ptPixelLocation.y)}
-             : winrt::Windows::Foundation::Point{
-                   static_cast<float>(GET_X_LPARAM(m_lParam)), static_cast<float>(GET_Y_LPARAM(m_lParam))});
+#ifdef USE_WINUI3
+  if (m_sysPointerPoint) {
+    return m_sysPointerPoint.Position();
+  }
+#endif
+  return m_pi.pointerId
+      ? winrt::Windows::Foundation::
+            Point{static_cast<float>(m_pi.ptPixelLocation.x / m_scaleFactor), static_cast<float>(m_pi.ptPixelLocation.y / m_scaleFactor)}
+      : winrt::Windows::Foundation::Point{
+            static_cast<float>(GET_X_LPARAM(m_lParam) / m_scaleFactor),
+            static_cast<float>(GET_Y_LPARAM(m_lParam) / m_scaleFactor)};
 }
 
 winrt::Microsoft::ReactNative::Composition::Input::PointerPointProperties PointerPoint::Properties() noexcept {
+#ifdef USE_WINUI3
   if (m_sysPointerPoint) {
     return winrt::make<PointerPointProperties>(m_sysPointerPoint.Properties());
   }
+#endif
 
   if (m_pi.pointerId) {
     auto pointerUpdateKind = winrt::Microsoft::ReactNative::Composition::Input::PointerUpdateKind::Other;

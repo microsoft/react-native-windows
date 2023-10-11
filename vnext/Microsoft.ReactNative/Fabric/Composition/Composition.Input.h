@@ -118,7 +118,7 @@ struct PointerPointProperties : PointerPointPropertiesT<PointerPointProperties> 
 
 struct PointerPoint : PointerPointT<PointerPoint> {
   PointerPoint(const winrt::Microsoft::UI::Input::PointerPoint &pp);
-  PointerPoint(uint32_t msg, uint64_t wParam, int64_t lParam);
+  PointerPoint(uint32_t msg, uint64_t wParam, int64_t lParam, float scaleFactor);
 
   uint32_t FrameId() noexcept;
   bool IsInContact() noexcept;
@@ -143,6 +143,7 @@ struct PointerPoint : PointerPointT<PointerPoint> {
   uint32_t m_msg;
   uint64_t m_wParam;
   int64_t m_lParam;
+  float m_scaleFactor;
 };
 
 struct PointerRoutedEventArgs : PointerRoutedEventArgsT<PointerRoutedEventArgs> {
