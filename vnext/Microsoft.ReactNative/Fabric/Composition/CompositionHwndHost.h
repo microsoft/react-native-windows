@@ -38,7 +38,7 @@ struct CompositionHwndHost : CompositionHwndHostT<CompositionHwndHost> {
   void CreateDesktopWindowTarget(HWND window);
   void CreateCompositionRoot();
   void UpdateSize() noexcept;
-  double ScaleFactor() noexcept;
+  float ScaleFactor() noexcept;
 
   HWND m_hwnd;
   winrt::Microsoft::ReactNative::CompositionRootView m_compRootView{nullptr};

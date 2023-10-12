@@ -116,6 +116,8 @@
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="CustomComponent.cpp" />
+    <ClCompile Include="DeviceInfoModule.cpp" />
     <ClCompile Include="Playground-Composition.cpp" />
   </ItemGroup>
   <ItemGroup>
