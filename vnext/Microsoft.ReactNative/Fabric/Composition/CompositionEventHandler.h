@@ -28,7 +28,6 @@ typedef int PointerId;
 
 class CompositionEventHandler {
  public:
-  CompositionEventHandler(const winrt::Microsoft::ReactNative::ReactContext &context);
   CompositionEventHandler(
       const winrt::Microsoft::ReactNative::ReactContext &context,
       const winrt::Microsoft::ReactNative::CompositionRootView &CompositionRootView);

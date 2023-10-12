@@ -9,6 +9,9 @@
 #include <winrt/Microsoft.ReactNative.Composition.Input.h>
 #include <winrt/Windows.System.h>
 #include <winrt/Windows.UI.Input.h>
+#ifdef USE_WINUI3
+#include <winrt/Microsoft.UI.Input.h>
+#endif
 
 namespace winrt::Microsoft::ReactNative::Composition::Input::implementation {
 
@@ -17,6 +20,9 @@ struct KeyRoutedEventArgs : winrt::implements<
                                 winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs,
                                 winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs> {
   KeyRoutedEventArgs(facebook::react::Tag tag, uint32_t msg, uint64_t wParam, int64_t lParam);
+#ifdef USE_WINUI3
+  KeyRoutedEventArgs(facebook::react::Tag tag, winrt::Microsoft::UI::Input::KeyEventArgs const &args);
+#endif
 
   int32_t OriginalSource() noexcept;
   winrt::hstring DeviceId() noexcept;
@@ -34,7 +40,9 @@ struct KeyRoutedEventArgs : winrt::implements<
 };
 
 struct PointerPointProperties : PointerPointPropertiesT<PointerPointProperties> {
-  PointerPointProperties(const winrt::Windows::UI::Input::PointerPointProperties &ppp);
+#ifdef USE_WINUI3
+  PointerPointProperties(const winrt::Microsoft::UI::Input::PointerPointProperties &ppp);
+#endif
 
   PointerPointProperties(
       bool isBarrelButtonPressed,
@@ -81,7 +89,9 @@ struct PointerPointProperties : PointerPointPropertiesT<PointerPointProperties> 
   float YTilt() noexcept;
 
  private:
-  winrt::Windows::UI::Input::PointerPointProperties m_sysPointerPointProps{nullptr};
+#ifdef USE_WINUI3
+  winrt::Microsoft::UI::Input::PointerPointProperties m_sysPointerPointProps{nullptr};
+#endif
 
   // When not using m_sysPointerPointProps
   bool m_isBarrelButtonPressed : 1;
@@ -107,8 +117,10 @@ struct PointerPointProperties : PointerPointPropertiesT<PointerPointProperties> 
 };
 
 struct PointerPoint : PointerPointT<PointerPoint> {
-  PointerPoint(const winrt::Windows::UI::Input::PointerPoint &pp);
-  PointerPoint(uint32_t msg, uint64_t wParam, int64_t lParam);
+#ifdef USE_WINUI3
+  PointerPoint(const winrt::Microsoft::UI::Input::PointerPoint &pp);
+#endif
+  PointerPoint(uint32_t msg, uint64_t wParam, int64_t lParam, float scaleFactor);
 
   uint32_t FrameId() noexcept;
   bool IsInContact() noexcept;
@@ -124,13 +136,16 @@ struct PointerPoint : PointerPointT<PointerPoint> {
   bool IsPointerMessage(uint32_t message) noexcept;
 
   // Windows::Input
-  winrt::Windows::UI::Input::PointerPoint m_sysPointerPoint{nullptr};
+#ifdef USE_WINUI3
+  winrt::Microsoft::UI::Input::PointerPoint m_sysPointerPoint{nullptr};
+#endif
   // WM_POINTER*
   POINTER_INFO m_pi = {0};
   // WM_*MOUSE
   uint32_t m_msg;
   uint64_t m_wParam;
   int64_t m_lParam;
+  float m_scaleFactor;
 };
 
 struct PointerRoutedEventArgs : PointerRoutedEventArgsT<PointerRoutedEventArgs> {
