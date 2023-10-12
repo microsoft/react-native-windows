@@ -132,9 +132,6 @@
     <ClCompile Include="$(YogaDir)\yoga\YGNodePrint.cpp">
       <Filter>yoga</Filter>
     </ClCompile>
-    <ClCompile Include="$(YogaDir)\yoga\YGStyle.cpp">
-      <Filter>yoga</Filter>
-    </ClCompile>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi.cpp">
       <Filter>jsi\jsi</Filter>
     </ClCompile>
