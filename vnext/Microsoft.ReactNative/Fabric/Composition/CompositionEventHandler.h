@@ -133,6 +133,15 @@ class CompositionEventHandler {
   std::map<PointerId, std::vector<ReactTaggedView>> m_currentlyHoveredViewsPerPointer;
   winrt::Microsoft::ReactNative::CompositionRootView m_compRootView{nullptr};
   winrt::Microsoft::ReactNative::ReactContext m_context;
+
+#ifdef USE_WINUI3
+  winrt::event_token m_pointerPressedToken;
+  winrt::event_token m_pointerReleasedToken;
+  winrt::event_token m_pointerMovedToken;
+  winrt::event_token m_pointerWheelChangedToken;
+  winrt::event_token m_keyDownToken;
+  winrt::event_token m_keyUpToken;
+#endif
 };
 
 } // namespace Microsoft::ReactNative

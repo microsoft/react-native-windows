@@ -36,10 +36,7 @@
 #if USE_WINUI3
 winrt::Microsoft::UI::Dispatching::DispatcherQueueController g_liftedDispatcherQueueController{nullptr};
 winrt::Microsoft::UI::Composition::Compositor g_liftedCompositor{nullptr};
-
 #endif
-
-HWND g_hwndTopLevel;
 
 void RegisterCustomComponent(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept;
 
@@ -202,18 +199,14 @@ struct WindowData {
               auto displayScale = siteWindow.DisplayScale();
 
               site.ParentScale(displayScale);
-              site.ActualSize({metrics.Frame.Width / 2, metrics.Frame.Height / 2});
-              site.ClientSize(
-                  {static_cast<int32_t>(metrics.Frame.Width / 2 * metrics.PointScaleFactor),
-                  static_cast<int32_t>(metrics.Frame.Height / 2 * metrics.PointScaleFactor)});
+              site.ActualSize({m_width / displayScale, m_height / displayScale});
+              site.ClientSize({m_width / displayScale, m_height / displayScale});
             */
 
-            // bridge.OverrideScale(ScaleFactor(hwnd));
             bridge.Connect(appContent);
             bridge.Show();
 
             m_compRootView.ScaleFactor(ScaleFactor(hwnd));
-            // m_compRootView.ScaleFactor(1);
             m_compRootView.Size({m_width / ScaleFactor(hwnd), m_height / ScaleFactor(hwnd)});
 
             bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
@@ -275,7 +268,7 @@ struct WindowData {
   }
 
   float ScaleFactor(HWND hwnd) noexcept {
-    return GetDpiForWindow(hwnd) / 96.0f;
+    return GetDpiForWindow(hwnd) / static_cast<float>(USER_DEFAULT_SCREEN_DPI);
   }
 
   void UpdateSize(HWND hwnd) noexcept {
@@ -468,7 +461,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
       break;
     }
     case WM_GETOBJECT: {
-      if (lparam == UiaRootObjectId) {
+      if (!windowData->m_useLiftedComposition && lparam == UiaRootObjectId) {
         auto windowData = WindowData::GetFromWindow(hwnd);
         if (windowData == nullptr || !windowData->m_compRootView)
           break;
@@ -513,8 +506,6 @@ int RunPlayground(int showCmd, bool useWebDebugger) {
 
   WINRT_VERIFY(hwnd);
 
-  g_hwndTopLevel = hwnd; // Temporary for prototyping
-
   windowData.release();
 
   ShowWindow(hwnd, showCmd);
@@ -523,25 +514,9 @@ int RunPlayground(int showCmd, bool useWebDebugger) {
 
   HACCEL hAccelTable = LoadAccelerators(WindowData::s_instance, MAKEINTRESOURCE(IDC_PLAYGROUND_COMPOSITION));
 
-  MSG msg = {};
+  g_liftedDispatcherQueueController.DispatcherQueue().RunEventLoop();
 
-  // This would be the same as the loop below. - Using the lower loop right now for easier debugging.
-  // g_liftedDispatcherQueueController.DispatcherQueue().RunEventLoop();
-
-  while (GetMessage(&msg, nullptr, 0, 0)) {
-#if USE_WINUI3
-    // if (!ContentPreTranslateMessage(&msg)) {
-#endif
-    if (!TranslateAccelerator(hwnd, hAccelTable, &msg)) {
-      TranslateMessage(&msg);
-      DispatchMessage(&msg);
-    }
-#if USE_WINUI3
-    // }
-#endif
-  }
-
-  return static_cast<int>(msg.wParam);
+  return 0;
 }
 
 _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR /* commandLine */, int showCmd) {
