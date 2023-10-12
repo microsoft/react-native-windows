@@ -52,6 +52,9 @@ using Microsoft::React::Networking::IWebSocketResource;
 
 constexpr char s_moduleName[] = "WebSocketModule";
 constexpr wchar_t s_moduleNameW[] = L"WebSocketModule";
+constexpr wchar_t s_proxyNameW[] = L"WebSocketModule.Proxy";
+constexpr wchar_t s_sharedStateNameW[] = L"WebSocketModule.SharedState";
+constexpr wchar_t s_contentHandlerNameW[] = L"BlobModule.ContentHandler";
 
 msrn::ReactModuleProvider s_moduleProvider = msrn::MakeTurboModuleProvider<Microsoft::React::WebSocketTurboModule>();
 
@@ -119,7 +122,7 @@ GetOrCreateWebSocket(int64_t id, string &&url, weak_ptr<WebSocketModule::SharedS
           auto args = msrn::JSValueObject{{"id", id}, {"type", isBinary ? "binary" : "text"}};
           shared_ptr<Microsoft::React::IWebSocketModuleContentHandler> contentHandler;
           auto propId = ReactPropertyId<ReactNonAbiValue<weak_ptr<Microsoft::React::IWebSocketModuleContentHandler>>>{
-              L"BlobModule.ContentHandler"};
+              s_contentHandlerNameW};
           if (auto prop = propBag.Get(propId))
             contentHandler = prop.Value().lock();
 
@@ -171,11 +174,11 @@ WebSocketModule::WebSocketModule(winrt::Windows::Foundation::IInspectable const 
 
   auto propBag = ReactPropertyBag{m_sharedState->InspectableProps.try_as<IReactPropertyBag>()};
 
-  auto proxyPropId = ReactPropertyId<ReactNonAbiValue<weak_ptr<IWebSocketModuleProxy>>>{L"WebSocketModule.Proxy"};
+  auto proxyPropId = ReactPropertyId<ReactNonAbiValue<weak_ptr<IWebSocketModuleProxy>>>{s_proxyNameW};
   auto proxy = weak_ptr<IWebSocketModuleProxy>{m_proxy};
   propBag.Set(proxyPropId, std::move(proxy));
 
-  auto statePropId = ReactPropertyId<ReactNonAbiValue<weak_ptr<SharedState>>>{L"WebSocketModule.SharedState"};
+  auto statePropId = ReactPropertyId<ReactNonAbiValue<weak_ptr<SharedState>>>{s_sharedStateNameW};
   auto state = weak_ptr<SharedState>{m_sharedState};
   propBag.Set(statePropId, std::move(state));
 }
@@ -309,10 +312,9 @@ vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMethods()
 WebSocketModuleProxy::WebSocketModuleProxy(IInspectable const &inspectableProperties) noexcept
     : m_inspectableProps{inspectableProperties} {}
 
-void WebSocketModuleProxy::SendBinary(std::string &&base64String, int64_t id) noexcept /*override*/ {
+void WebSocketModuleProxy::SendBinary(string &&base64String, int64_t id) noexcept /*override*/ {
   auto propBag = ReactPropertyBag{m_inspectableProps.try_as<IReactPropertyBag>()};
-  auto sharedPropId =
-      ReactPropertyId<ReactNonAbiValue<weak_ptr<WebSocketModule::SharedState>>>{L"WebSocketModule.SharedState"};
+  auto sharedPropId = ReactPropertyId<ReactNonAbiValue<weak_ptr<WebSocketModule::SharedState>>>{s_sharedStateNameW};
   auto state = propBag.Get(sharedPropId).Value();
 
   weak_ptr weakWs = GetOrCreateWebSocket(id, {}, std::move(state));
@@ -353,8 +355,7 @@ shared_ptr<IWebSocketResource> WebSocketTurboModule::CreateResource(int64_t id, 
   rc->SetOnMessage([id, context = m_context](size_t length, const string &message, bool isBinary) {
     auto args = msrn::JSValueObject{{"id", id}, {"type", isBinary ? "binary" : "text"}};
     shared_ptr<IWebSocketModuleContentHandler> contentHandler;
-    auto propId =
-        ReactPropertyId<ReactNonAbiValue<weak_ptr<IWebSocketModuleContentHandler>>>{L"BlobModule.ContentHandler"};
+    auto propId = ReactPropertyId<ReactNonAbiValue<weak_ptr<IWebSocketModuleContentHandler>>>{s_contentHandlerNameW};
     auto propBag = context.Properties();
     if (auto prop = propBag.Get(propId))
       contentHandler = prop.Value().lock();
@@ -396,6 +397,11 @@ shared_ptr<IWebSocketResource> WebSocketTurboModule::CreateResource(int64_t id, 
 
 void WebSocketTurboModule::Initialize(msrn::ReactContext const &reactContext) noexcept {
   m_context = reactContext.Handle();
+  m_proxy = std::make_shared<WebSocketTurboModuleProxy>(m_resourceMap);
+
+  auto proxyPropId = ReactPropertyId<ReactNonAbiValue<weak_ptr<IWebSocketModuleProxy>>>{s_proxyNameW};
+  auto proxy = weak_ptr<IWebSocketModuleProxy>{m_proxy};
+  m_context.Properties().Set(proxyPropId, std::move(proxy));
 }
 
 void WebSocketTurboModule::Connect(
@@ -486,6 +492,29 @@ void WebSocketTurboModule::AddListener(string && /*eventName*/) noexcept {}
 void WebSocketTurboModule::RemoveListeners(double /*count*/) noexcept {}
 
 #pragma endregion WebSocketTurboModule
+
+#pragma region WebSocketTurboModuleProxy
+
+WebSocketTurboModuleProxy::WebSocketTurboModuleProxy(
+    std::unordered_map<double, shared_ptr<IWebSocketResource>> &resourceMap) noexcept
+    : m_resourceMap{resourceMap} {}
+
+#pragma endregion WebSocketTurboModuleProxy
+
+void WebSocketTurboModuleProxy::SendBinary(string &&base64String, int64_t id) noexcept /*override*/
+{
+  auto rcItr = m_resourceMap.find(static_cast<double>(id));
+  if (rcItr == m_resourceMap.cend()) {
+    return;
+  }
+
+  weak_ptr<IWebSocketResource> weakRc = (*rcItr).second;
+  if (auto rc = weakRc.lock()) {
+    rc->SendBinary(std::move(base64String));
+  }
+}
+
+#pragma region WebSocketTurboModule
 
 /*extern*/ const char *GetWebSocketModuleName() noexcept {
   return s_moduleName;
