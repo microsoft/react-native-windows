@@ -342,11 +342,15 @@ winrt::Windows::Data::Json::JsonObject DumpUIATree(IUIAutomationElement *pTarget
   IUIAutomationElement *pChild;
   IUIAutomationElement *pSibling;
   pWalker->GetFirstChildElement(pTarget, &pChild);
+  winrt::Windows::Data::Json::JsonArray children;
   while (pChild != nullptr) {
-    result.Insert(L"Child", DumpUIATree(pChild, pWalker));
+    children.Append(DumpUIATree(pChild, pWalker));
     pWalker->GetNextSiblingElement(pChild, &pSibling);
     pChild = pSibling;
     pSibling = nullptr;
+  }
+  if (children.Size() > 0) {
+    result.Insert(L"Children", children);
   }
   return result;
 }
@@ -364,14 +368,14 @@ winrt::Windows::Data::Json::JsonObject DumpVisualTree(winrt::Windows::Data::Json
   //IUIAutomationElement* pChild;
   //pWalker->GetFirstChildElement(pRootElement, &pChild);
 
-  //Find Element with Matching AutomationID'
+  //Find Element with Matching AutomationID
   IUIAutomationElement* pTarget;
   IUIAutomationCondition *pCondition;
   VARIANT varAutomationId;
   VariantInit(&varAutomationId);
 
   varAutomationId.vt = VT_BSTR;
-  varAutomationId.bstrVal = SysAllocString(L"components-tab");
+  varAutomationId.bstrVal = SysAllocString(L"Button");
   pAutomation->CreatePropertyCondition(UIA_AutomationIdPropertyId, varAutomationId, &pCondition);
   pRootElement->FindFirst(TreeScope_Descendants, pCondition, &pTarget);
   if (pTarget == nullptr) {
