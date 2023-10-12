@@ -149,43 +149,58 @@ CompositionEventHandler::CompositionEventHandler(
   if (auto island = m_compRootView.Island()) {
     auto pointerSource = winrt::Microsoft::UI::Input::InputPointerSource::GetForIsland(island);
 
-    pointerSource.PointerPressed([this](
-                                     winrt::Microsoft::UI::Input::InputPointerSource const &,
-                                     winrt::Microsoft::UI::Input::PointerEventArgs const &args) {
-      auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
-          args.CurrentPoint());
-      onPointerPressed(pp, args.KeyModifiers());
-    });
+    m_pointerPressedToken =
+        pointerSource.PointerPressed([this](
+                                         winrt::Microsoft::UI::Input::InputPointerSource const &,
+                                         winrt::Microsoft::UI::Input::PointerEventArgs const &args) {
+          if (SurfaceId() == -1)
+            return;
 
-    pointerSource.PointerReleased([this](
-                                      winrt::Microsoft::UI::Input::InputPointerSource const &,
-                                      winrt::Microsoft::UI::Input::PointerEventArgs const &args) {
-      auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
-          args.CurrentPoint());
-      onPointerReleased(pp, args.KeyModifiers());
-    });
+          auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
+              args.CurrentPoint());
+          onPointerPressed(pp, args.KeyModifiers());
+        });
 
-    pointerSource.PointerMoved([this](
-                                   winrt::Microsoft::UI::Input::InputPointerSource const &,
-                                   winrt::Microsoft::UI::Input::PointerEventArgs const &args) {
+    m_pointerReleasedToken =
+        pointerSource.PointerReleased([this](
+                                          winrt::Microsoft::UI::Input::InputPointerSource const &,
+                                          winrt::Microsoft::UI::Input::PointerEventArgs const &args) {
+          if (SurfaceId() == -1)
+            return;
+
+          auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
+              args.CurrentPoint());
+          onPointerReleased(pp, args.KeyModifiers());
+        });
+
+    m_pointerMovedToken = pointerSource.PointerMoved([this](
+                                                         winrt::Microsoft::UI::Input::InputPointerSource const &,
+                                                         winrt::Microsoft::UI::Input::PointerEventArgs const &args) {
       auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
           args.CurrentPoint());
       onPointerMoved(pp, args.KeyModifiers());
     });
 
-    pointerSource.PointerWheelChanged([this](
-                                          winrt::Microsoft::UI::Input::InputPointerSource const &,
-                                          winrt::Microsoft::UI::Input::PointerEventArgs const &args) {
-      auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
-          args.CurrentPoint());
-      onPointerWheelChanged(pp, args.KeyModifiers());
-    });
+    m_pointerWheelChangedToken =
+        pointerSource.PointerWheelChanged([this](
+                                              winrt::Microsoft::UI::Input::InputPointerSource const &,
+                                              winrt::Microsoft::UI::Input::PointerEventArgs const &args) {
+          if (SurfaceId() == -1)
+            return;
+
+          auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
+              args.CurrentPoint());
+          onPointerWheelChanged(pp, args.KeyModifiers());
+        });
 
     auto keyboardSource = winrt::Microsoft::UI::Input::InputKeyboardSource::GetForIsland(island);
 
-    keyboardSource.KeyDown([this](
-                               winrt::Microsoft::UI::Input::InputKeyboardSource const &source,
-                               winrt::Microsoft::UI::Input::KeyEventArgs const &args) {
+    m_keyDownToken = keyboardSource.KeyDown([this](
+                                                winrt::Microsoft::UI::Input::InputKeyboardSource const &source,
+                                                winrt::Microsoft::UI::Input::KeyEventArgs const &args) {
+      if (SurfaceId() == -1)
+        return;
+
       auto focusedComponent = RootComponentView().GetFocusedComponent();
       auto keyArgs = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::KeyRoutedEventArgs>(
           focusedComponent
@@ -199,9 +214,12 @@ CompositionEventHandler::CompositionEventHandler(
       winrt::get_self<CompositionInputKeyboardSource>(keyboardSource)->Disconnect();
     });
 
-    keyboardSource.KeyUp([this](
-                             winrt::Microsoft::UI::Input::InputKeyboardSource const &source,
-                             winrt::Microsoft::UI::Input::KeyEventArgs const &args) {
+    m_keyUpToken = keyboardSource.KeyUp([this](
+                                            winrt::Microsoft::UI::Input::InputKeyboardSource const &source,
+                                            winrt::Microsoft::UI::Input::KeyEventArgs const &args) {
+      if (SurfaceId() == -1)
+        return;
+
       auto focusedComponent = RootComponentView().GetFocusedComponent();
       auto keyArgs = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::KeyRoutedEventArgs>(
           focusedComponent
@@ -218,7 +236,20 @@ CompositionEventHandler::CompositionEventHandler(
 #endif
 };
 
-CompositionEventHandler::~CompositionEventHandler() {}
+CompositionEventHandler::~CompositionEventHandler() {
+#ifdef USE_WINUI3
+  if (auto island = m_compRootView.Island()) {
+    auto pointerSource = winrt::Microsoft::UI::Input::InputPointerSource::GetForIsland(island);
+    pointerSource.PointerPressed(m_pointerPressedToken);
+    pointerSource.PointerReleased(m_pointerReleasedToken);
+    pointerSource.PointerMoved(m_pointerMovedToken);
+    pointerSource.PointerWheelChanged(m_pointerWheelChangedToken);
+    auto keyboardSource = winrt::Microsoft::UI::Input::InputKeyboardSource::GetForIsland(island);
+    keyboardSource.KeyDown(m_keyDownToken);
+    keyboardSource.KeyUp(m_keyUpToken);
+  }
+#endif
+}
 
 facebook::react::SurfaceId CompositionEventHandler::SurfaceId() noexcept {
   return static_cast<facebook::react::SurfaceId>(

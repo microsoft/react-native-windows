@@ -1,9 +1,13 @@
 #include "pch.h"
 
+#include <winrt/Microsoft.ReactNative.Composition.Input.h>
 #include <winrt/Microsoft.ReactNative.Composition.h>
 #include <winrt/Microsoft.ReactNative.h>
-#include <winrt/Windows.UI.Composition.h>
 #include <winrt/Windows.UI.h>
+
+#ifdef USE_WINUI3
+#include <winrt/Microsoft.UI.Composition.h>
+#endif
 
 /*
  * Custom Properties can be passed from JS to this native component
@@ -36,52 +40,85 @@ struct CustomComponent : winrt::implements<CustomComponent, winrt::IInspectable>
     auto customProps = props.as<CustomProps>();
   }
 
-  void UpdateLayoutMetrics(winrt::Microsoft::ReactNative::Composition::LayoutMetrics metrics) noexcept {
-    m_visual.Size({metrics.Frame.Width, metrics.Frame.Height});
+  void UpdateLayoutMetrics(winrt::Microsoft::ReactNative::Composition::LayoutMetrics layoutMetrics) noexcept {
+    m_layoutMetrics = layoutMetrics;
+    m_visual.Size(
+        {m_layoutMetrics.Frame.Width * m_layoutMetrics.PointScaleFactor,
+         m_layoutMetrics.Frame.Height * m_layoutMetrics.PointScaleFactor});
   }
 
   winrt::Microsoft::ReactNative::Composition::IVisual CreateVisual() noexcept {
     m_visual = m_compContext.CreateSpriteVisual();
     m_visual.Brush(m_compContext.CreateColorBrush(winrt::Windows::UI::Colors::White()));
 
+#ifdef USE_WINUI3
     auto compositor =
-        winrt::Microsoft::ReactNative::Composition::WindowsCompositionContextHelper::InnerCompositor(m_compContext);
+        winrt::Microsoft::ReactNative::Composition::MicrosoftCompositionContextHelper::InnerCompositor(m_compContext);
 
-    m_spotlight = compositor.CreateSpotLight();
-    m_spotlight.InnerConeAngleInDegrees(50.0f);
-    m_spotlight.InnerConeColor(winrt::Windows::UI::Colors::FloralWhite());
-    m_spotlight.InnerConeIntensity(5.0f);
-    m_spotlight.OuterConeAngleInDegrees(0.0f);
-    m_spotlight.ConstantAttenuation(1.0f);
-    m_spotlight.LinearAttenuation(0.253f);
-    m_spotlight.QuadraticAttenuation(0.58f);
-    m_spotlight.CoordinateSpace(
-        winrt::Microsoft::ReactNative::Composition::WindowsCompositionContextHelper::InnerVisual(m_visual));
-    m_spotlight.Targets().Add(
-        winrt::Microsoft::ReactNative::Composition::WindowsCompositionContextHelper::InnerVisual(m_visual));
+    if (compositor) {
+      m_spotlight = compositor.CreateSpotLight();
+      m_spotlight.InnerConeAngleInDegrees(50.0f);
+      m_spotlight.InnerConeColor(winrt::Windows::UI::Colors::FloralWhite());
+      m_spotlight.InnerConeIntensity(5.0f);
+      m_spotlight.OuterConeAngleInDegrees(0.0f);
+      m_spotlight.ConstantAttenuation(1.0f);
+      m_spotlight.LinearAttenuation(0.253f);
+      m_spotlight.QuadraticAttenuation(0.58f);
+      m_spotlight.CoordinateSpace(
+          winrt::Microsoft::ReactNative::Composition::MicrosoftCompositionContextHelper::InnerVisual(m_visual));
+      m_spotlight.Targets().Add(
+          winrt::Microsoft::ReactNative::Composition::MicrosoftCompositionContextHelper::InnerVisual(m_visual));
 
-    auto animation = compositor.CreateVector3KeyFrameAnimation();
-    auto easeIn = compositor.CreateCubicBezierEasingFunction({0.5f, 0.0f}, {1.0f, 1.0f});
-    animation.InsertKeyFrame(0.00f, {100.0f, 100.0f, 35.0f});
-    animation.InsertKeyFrame(0.25f, {300.0f, 200.0f, 75.0f}, easeIn);
-    animation.InsertKeyFrame(0.50f, {050.0f, 300.0f, 15.0f}, easeIn);
-    animation.InsertKeyFrame(0.75f, {300.0f, 050.0f, 75.0f}, easeIn);
-    animation.InsertKeyFrame(1.00f, {100.0f, 100.0f, 35.0f}, easeIn);
-    animation.Duration(std::chrono::milliseconds(4000));
-    animation.IterationBehavior(winrt::Windows::UI::Composition::AnimationIterationBehavior::Forever);
-
-    m_spotlight.StartAnimation(L"Offset", animation);
+      auto implicitAnimations = compositor.CreateImplicitAnimationCollection();
+      implicitAnimations.Insert(L"Offset", CreateAnimation(compositor));
+      m_spotlight.ImplicitAnimations(implicitAnimations);
+    }
+#endif
 
     return m_visual;
   }
 
-  // TODO - Once we get more complete native eventing we can move spotlight based on pointer position
-  void OnPointerMove() noexcept {
-    // m_spotlight.Offset({(float)x, (float)y, 15.0f});
+#ifdef USE_WINUI3
+  winrt::Microsoft::UI::Composition::Vector3KeyFrameAnimation CreateAnimation(
+      winrt::Microsoft::UI::Composition::Compositor compositor) {
+    auto animation = compositor.CreateVector3KeyFrameAnimation();
+    animation.InsertExpressionKeyFrame(0.0f, L"this.StartingValue");
+    animation.InsertExpressionKeyFrame(
+        1.0f, L"this.FinalValue", compositor.CreateCubicBezierEasingFunction({.38f, .29f}, {.64f, 1.52f}));
+    animation.Target(L"Offset");
+    animation.Duration(std::chrono::milliseconds(250));
+    return animation;
+  }
+#endif
 
-    // m_propSet.InsertVector2(L"Position", {x, y});
-    //  TODO expose coordinate translation methods
-    //  TODO convert x/y into local coordinates
+  void PointerMoved(const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+    // Ideally we'd get the coords based on this view's tag, but that is NYI - so we'll just mod the coords to keep them
+    // in view for now
+    auto position = args.GetCurrentPoint(-1).Position();
+#ifdef USE_WINUI3
+    m_spotlight.Offset(
+        {std::fmodf(
+             position.X * m_layoutMetrics.PointScaleFactor,
+             m_layoutMetrics.Frame.Width * m_layoutMetrics.PointScaleFactor),
+         std::fmodf(
+             position.Y * m_layoutMetrics.PointScaleFactor,
+             m_layoutMetrics.Frame.Height * m_layoutMetrics.PointScaleFactor),
+         std::fmodf((position.X + position.Y) / 40, 50) + 15.0f});
+#endif
+  }
+
+  void PointerEntered(const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+    m_visual.Brush(m_compContext.CreateColorBrush(winrt::Windows::UI::Colors::Red()));
+  }
+
+  void PointerExited(const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+    m_visual.Brush(m_compContext.CreateColorBrush(winrt::Windows::UI::Colors::White()));
+#ifdef USE_WINUI3
+    m_spotlight.Offset(
+        {m_layoutMetrics.Frame.Width / 2.0f * m_layoutMetrics.PointScaleFactor,
+         m_layoutMetrics.Frame.Height / 2 * m_layoutMetrics.PointScaleFactor,
+         75.0f});
+#endif
   }
 
   static void RegisterViewComponent(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) {
@@ -108,12 +145,30 @@ struct CustomComponent : winrt::implements<CustomComponent, winrt::IInspectable>
           compBuilder.SetVisualCreator([](winrt::Windows::Foundation::IInspectable handle) noexcept {
             return handle.as<CustomComponent>()->CreateVisual();
           });
+          compBuilder.SetPointerMovedHandler(
+              [](winrt::Windows::Foundation::IInspectable handle,
+                 const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+                return handle.as<CustomComponent>()->PointerMoved(args);
+              });
+          compBuilder.SetPointerEnteredHandler(
+              [](winrt::Windows::Foundation::IInspectable handle,
+                 const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+                return handle.as<CustomComponent>()->PointerEntered(args);
+              });
+          compBuilder.SetPointerExitedHandler(
+              [](winrt::Windows::Foundation::IInspectable handle,
+                 const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+                return handle.as<CustomComponent>()->PointerExited(args);
+              });
         });
   }
 
  private:
-  winrt::Windows::UI::Composition::SpotLight m_spotlight{nullptr};
+#ifdef USE_WINUI3
+  winrt::Microsoft::UI::Composition::SpotLight m_spotlight{nullptr};
+#endif
 
+  winrt::Microsoft::ReactNative::Composition::LayoutMetrics m_layoutMetrics;
   winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
   winrt::Microsoft::ReactNative::Composition::ICompositionContext m_compContext;
 };
