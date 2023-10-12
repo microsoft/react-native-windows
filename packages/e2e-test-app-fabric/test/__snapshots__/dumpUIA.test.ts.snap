@@ -1,5 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`dumpUIA Search Bar UIA Dump 1`] = `
+{
+  "AutomationId": "components-tab",
+  "Child": {
+    "AutomationId": "",
+    "ControlType": 50020,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "text",
+    "Name": "Components",
+  },
+  "ControlType": 50026,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "group",
+  "Name": "",
+}
+`;
+
 exports[`dumpUIA control 1`] = `
 {
   "AutomationId": "explorer_search",

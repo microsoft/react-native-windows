@@ -313,9 +313,46 @@ winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::Js
   return result;
 }
 
+winrt::Windows::Data::Json::JsonObject DumpUIATree(IUIAutomationElement *pTarget, IUIAutomationTreeWalker *pWalker) {
+  winrt::Windows::Data::Json::JsonObject result;
+  BSTR automationId;
+  CONTROLTYPEID controlType;
+  BSTR helpText;
+  BOOL isEnabled;
+  BOOL isKeyboardFocusable;
+  BSTR localizedControlType;
+  BSTR name;
+
+  pTarget->get_CurrentAutomationId(&automationId);
+  pTarget->get_CurrentControlType(&controlType);
+  pTarget->get_CurrentHelpText(&helpText);
+  pTarget->get_CurrentIsEnabled(&isEnabled);
+  pTarget->get_CurrentIsKeyboardFocusable(&isKeyboardFocusable);
+  pTarget->get_CurrentLocalizedControlType(&localizedControlType);
+  pTarget->get_CurrentName(&name);
+  result.Insert(L"AutomationId", winrt::Windows::Data::Json::JsonValue::CreateStringValue(automationId));
+  result.Insert(L"ControlType", winrt::Windows::Data::Json::JsonValue::CreateNumberValue(controlType));
+  result.Insert(L"HelpText", winrt::Windows::Data::Json::JsonValue::CreateStringValue(helpText));
+  result.Insert(L"IsEnabled", winrt::Windows::Data::Json::JsonValue::CreateBooleanValue(isEnabled));
+  result.Insert(L"IsKeyboardFocusable", winrt::Windows::Data::Json::JsonValue::CreateBooleanValue(isKeyboardFocusable));
+  result.Insert(
+      L"LocalizedControlType", winrt::Windows::Data::Json::JsonValue::CreateStringValue(localizedControlType));
+  result.Insert(L"Name", winrt::Windows::Data::Json::JsonValue::CreateStringValue(name));
+
+  IUIAutomationElement *pChild;
+  IUIAutomationElement *pSibling;
+  pWalker->GetFirstChildElement(pTarget, &pChild);
+  while (pChild != nullptr) {
+    result.Insert(L"Child", DumpUIATree(pChild, pWalker));
+    pWalker->GetNextSiblingElement(pChild, &pSibling);
+    pChild = pSibling;
+    pSibling = nullptr;
+  }
+  return result;
+}
+
 winrt::Windows::Data::Json::JsonObject DumpVisualTree(winrt::Windows::Data::Json::JsonValue payload) {
   winrt::Windows::Data::Json::JsonObject result;
-  // TODO: Method should return a JSON of the Composition Visual Tree
   // Initialize
   IUIAutomation* pAutomation;
   IUIAutomationElement* pRootElement;
@@ -328,43 +365,27 @@ winrt::Windows::Data::Json::JsonObject DumpVisualTree(winrt::Windows::Data::Json
   //pWalker->GetFirstChildElement(pRootElement, &pChild);
 
   //Find Element with Matching AutomationID'
-  IUIAutomationElement* pChild;
+  IUIAutomationElement* pTarget;
   IUIAutomationCondition *pCondition;
   VARIANT varAutomationId;
   VariantInit(&varAutomationId);
 
   varAutomationId.vt = VT_BSTR;
-  varAutomationId.bstrVal = SysAllocString(L"explorer_search");
+  varAutomationId.bstrVal = SysAllocString(L"components-tab");
   pAutomation->CreatePropertyCondition(UIA_AutomationIdPropertyId, varAutomationId, &pCondition);
-  pRootElement->FindFirst(TreeScope_Descendants, pCondition, &pChild);
-  if (pChild == nullptr) {
+  pRootElement->FindFirst(TreeScope_Descendants, pCondition, &pTarget);
+  if (pTarget == nullptr) {
     return result;
   }
 
-  // Converting to JSON
-  BSTR automationId;
-  CONTROLTYPEID controlType;
-  BSTR helpText;
-  BOOL isEnabled;
-  BOOL isKeyboardFocusable;
-  BSTR localizedControlType;
-  BSTR name;
+  //Make Recursive
+  // Dump Current Node Contents to Json object 
+  // If node has children, for each child add Json object field and recurse on the child.
+  // Base Case: node is null 
 
-  pChild->get_CurrentAutomationId(&automationId);
-  pChild->get_CurrentControlType(&controlType);
-  pChild->get_CurrentHelpText(&helpText);
-  pChild->get_CurrentIsEnabled(&isEnabled);
-  pChild->get_CurrentIsKeyboardFocusable(&isKeyboardFocusable);
-  pChild->get_CurrentLocalizedControlType(&localizedControlType);
-  pChild->get_CurrentName(&name);
-  result.Insert(L"AutomationId", winrt::Windows::Data::Json::JsonValue::CreateStringValue(automationId));
-  result.Insert(L"ControlType", winrt::Windows::Data::Json::JsonValue::CreateNumberValue(controlType));
-  result.Insert(L"HelpText", winrt::Windows::Data::Json::JsonValue::CreateStringValue(helpText));
-  result.Insert(L"IsEnabled", winrt::Windows::Data::Json::JsonValue::CreateBooleanValue(isEnabled));
-  result.Insert(L"IsKeyboardFocusable", winrt::Windows::Data::Json::JsonValue::CreateBooleanValue(isKeyboardFocusable));
-  result.Insert(L"LocalizedControlType", winrt::Windows::Data::Json::JsonValue::CreateStringValue(localizedControlType));
-  result.Insert(L"Name", winrt::Windows::Data::Json::JsonValue::CreateStringValue(name));
-  return result;
+  // Converting to JSON
+
+  return DumpUIATree(pTarget, pWalker);
 }
 
 winrt::Windows::Foundation::IAsyncAction LoopServer(winrt::AutomationChannel::Server &server) {
