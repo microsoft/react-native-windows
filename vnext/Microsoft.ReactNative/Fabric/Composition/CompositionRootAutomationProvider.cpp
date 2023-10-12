@@ -81,6 +81,21 @@ HRESULT __stdcall CompositionRootAutomationProvider::get_BoundingRectangle(UiaRe
   if (pRetVal == nullptr)
     return E_POINTER;
 
+#ifdef USE_WINUI3
+  if (m_island) {
+    auto cc = m_island.CoordinateConverter();
+    auto origin = cc.ConvertLocalToScreen(winrt::Windows::Foundation::Point{0, 0});
+    pRetVal->left = origin.X;
+    pRetVal->top = origin.Y;
+
+    auto size = m_island.ActualSize();
+    pRetVal->width = size.x;
+    pRetVal->height = size.y;
+
+    return S_OK;
+  }
+#endif
+
   // TODO: Need host site offsets
   // Assume we're hosted in some other visual-based hosting site
   if (m_hwnd == nullptr || !IsWindow(m_hwnd)) {
