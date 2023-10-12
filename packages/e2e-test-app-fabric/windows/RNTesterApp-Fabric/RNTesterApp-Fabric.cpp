@@ -356,40 +356,40 @@ winrt::Windows::Data::Json::JsonObject DumpUIATree(IUIAutomationElement *pTarget
 }
 
 winrt::Windows::Data::Json::JsonObject DumpVisualTree(winrt::Windows::Data::Json::JsonValue payload) {
+  winrt::Windows::Data::Json::JsonObject payloadObj = payload.GetObject();
+  auto accessibilityId = payloadObj.GetNamedString(L"accessibilityId");
+
   winrt::Windows::Data::Json::JsonObject result;
-  // Initialize
-  IUIAutomation* pAutomation;
+
+  IUIAutomation *pAutomation;
   IUIAutomationElement* pRootElement;
   IUIAutomationTreeWalker* pWalker;
-  CoInitializeEx(nullptr, COINIT_MULTITHREADED);
+
   CoCreateInstance(__uuidof(CUIAutomation8), nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pAutomation));
   pAutomation->get_ContentViewWalker(&pWalker);
   pAutomation->ElementFromHandle(global_hwnd, &pRootElement);
-  //IUIAutomationElement* pChild;
-  //pWalker->GetFirstChildElement(pRootElement, &pChild);
-
-  //Find Element with Matching AutomationID
-  IUIAutomationElement* pTarget;
+  
+  IUIAutomationElement *pTarget;
   IUIAutomationCondition *pCondition;
   VARIANT varAutomationId;
   VariantInit(&varAutomationId);
 
   varAutomationId.vt = VT_BSTR;
-  varAutomationId.bstrVal = SysAllocString(L"Button");
+  varAutomationId.bstrVal = SysAllocString(accessibilityId.c_str());
   pAutomation->CreatePropertyCondition(UIA_AutomationIdPropertyId, varAutomationId, &pCondition);
   pRootElement->FindFirst(TreeScope_Descendants, pCondition, &pTarget);
   if (pTarget == nullptr) {
     return result;
   }
 
-  //Make Recursive
-  // Dump Current Node Contents to Json object 
-  // If node has children, for each child add Json object field and recurse on the child.
-  // Base Case: node is null 
+  result = DumpUIATree(pTarget, pWalker);
 
-  // Converting to JSON
+  pWalker->Release();
+  pRootElement->Release();
+  pAutomation->Release();
+  pCondition->Release();
 
-  return DumpUIATree(pTarget, pWalker);
+  return result;
 }
 
 winrt::Windows::Foundation::IAsyncAction LoopServer(winrt::AutomationChannel::Server &server) {

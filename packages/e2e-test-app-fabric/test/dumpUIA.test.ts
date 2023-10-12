@@ -14,10 +14,18 @@ afterEach(async () => {
 });
 
 describe('dumpUIA', () => {
-  test('Search Bar UIA Dump', async () => {
+  test('Button UIA Dump', async () => {
     const componentsTabButton = await app.findElementByTestID('components-tab');
     await componentsTabButton.waitForDisplayed({timeout: 20000});
-    const dump = await dumpVisualTree('explorer-search');
+    const dump = await dumpVisualTree('components-tab');
+    expect(dump).toMatchSnapshot();
+  });
+  test('Search Bar UIA Dump', async () => {
+    const dump = await dumpVisualTree('apis-tab');
+    expect(dump).toMatchSnapshot();
+  });
+  test('Search Bar UIA Dump', async () => {
+    const dump = await dumpVisualTree('explorer_search');
     expect(dump).toMatchSnapshot();
   });
 });

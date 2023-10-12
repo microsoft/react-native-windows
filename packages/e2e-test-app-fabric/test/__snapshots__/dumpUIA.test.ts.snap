@@ -1,17 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`dumpUIA Search Bar UIA Dump 1`] = `
+exports[`dumpUIA Button UIA Dump 1`] = `
 {
   "AutomationId": "components-tab",
-  "Child": {
-    "AutomationId": "",
-    "ControlType": 50020,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
-    "LocalizedControlType": "text",
-    "Name": "Components",
-  },
+  "Children": [
+    {
+      "AutomationId": "",
+      "ControlType": 50020,
+      "HelpText": "",
+      "IsEnabled": true,
+      "IsKeyboardFocusable": false,
+      "LocalizedControlType": "text",
+      "Name": "Components",
+    },
+  ],
   "ControlType": 50026,
   "HelpText": "",
   "IsEnabled": true,
@@ -21,7 +23,30 @@ exports[`dumpUIA Search Bar UIA Dump 1`] = `
 }
 `;
 
-exports[`dumpUIA control 1`] = `
+exports[`dumpUIA Search Bar UIA Dump 1`] = `
+{
+  "AutomationId": "apis-tab",
+  "Children": [
+    {
+      "AutomationId": "",
+      "ControlType": 50020,
+      "HelpText": "",
+      "IsEnabled": true,
+      "IsKeyboardFocusable": false,
+      "LocalizedControlType": "text",
+      "Name": "APIs",
+    },
+  ],
+  "ControlType": 50026,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "group",
+  "Name": "",
+}
+`;
+
+exports[`dumpUIA Search Bar UIA Dump 2`] = `
 {
   "AutomationId": "explorer_search",
   "ControlType": 50004,
