@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/eslint-config
 
-This log was last generated on Fri, 14 Jul 2023 05:17:06 GMT and should not be manually modified.
+This log was last generated on Thu, 12 Oct 2023 05:15:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.2.3
+
+Thu, 12 Oct 2023 05:15:53 GMT
+
+### Patches
+
+- Add `@microsoft/eslint-plugin-sdl` to `@rnw-scripts/eslint-config` (jthysell@microsoft.com)
 
 ## 1.2.2
 
