@@ -75,6 +75,7 @@ struct CompositionTypeTraits<WindowsTypeTag> {
   using ICompositionDrawingSurfaceInterop = ABI::Windows::UI::Composition::ICompositionDrawingSurfaceInterop;
   using ICompositorInterop = ABI::Windows::UI::Composition::ICompositorInterop;
 
+  using IInnerCompositionCompositor = IWindowsCompositionCompositor;
   using IInnerCompositionDropShadow = IWindowsCompositionDropShadow;
   using IInnerCompositionVisual = IWindowsCompositionVisual;
   using IInnerCompositionBrush = IWindowsCompositionBrush;
@@ -131,6 +132,7 @@ struct CompositionTypeTraits<MicrosoftTypeTag> {
   using ICompositionDrawingSurfaceInterop = winrt::Microsoft::UI::Composition::ICompositionDrawingSurfaceInterop;
   using ICompositorInterop = winrt::Microsoft::UI::Composition::ICompositorInterop;
 
+  using IInnerCompositionCompositor = IMicrosoftCompositionCompositor;
   using IInnerCompositionDropShadow = IMicrosoftCompositionDropShadow;
   using IInnerCompositionVisual = IMicrosoftCompositionVisual;
   using IInnerCompositionBrush = IMicrosoftCompositionBrush;
@@ -1231,6 +1233,7 @@ template <typename TTypeRedirects>
 struct CompContext : winrt::implements<
                          CompContext<TTypeRedirects>,
                          winrt::Microsoft::ReactNative::Composition::ICompositionContext,
+                         typename TTypeRedirects::IInnerCompositionCompositor,
                          ICompositionContextInterop> {
   CompContext(typename TTypeRedirects::Compositor const &compositor) : m_compositor(compositor) {}
 
@@ -1326,7 +1329,7 @@ struct CompContext : winrt::implements<
 
   typename TTypeRedirects::CompositionGraphicsDevice CompositionGraphicsDevice() noexcept;
 
-  typename TTypeRedirects::Compositor InnerCompositor() noexcept {
+  typename TTypeRedirects::Compositor InnerCompositor() const noexcept {
     return m_compositor;
   }
 
@@ -1492,34 +1495,34 @@ IVisual WindowsCompositionContextHelper::CreateVisual(winrt::Windows::UI::Compos
 
 winrt::Windows::UI::Composition::Compositor WindowsCompositionContextHelper::InnerCompositor(
     ICompositionContext context) noexcept {
-  winrt::com_ptr<::Microsoft::ReactNative::Composition::WindowsCompContext> s;
-  context.as(s);
+  winrt::com_ptr<::Microsoft::ReactNative::Composition::IWindowsCompositionCompositor> s;
+  context.try_as(s);
   return s ? s->InnerCompositor() : nullptr;
 }
 
 winrt::Windows::UI::Composition::Visual WindowsCompositionContextHelper::InnerVisual(IVisual visual) noexcept {
   winrt::com_ptr<::Microsoft::ReactNative::Composition::IWindowsCompositionVisual> s;
-  visual.as(s);
+  visual.try_as(s);
   return s ? s->InnerVisual() : nullptr;
 }
 
 winrt::Windows::UI::Composition::DropShadow WindowsCompositionContextHelper::InnerDropShadow(
     IDropShadow shadow) noexcept {
   winrt::com_ptr<::Microsoft::ReactNative::Composition::IWindowsCompositionDropShadow> s;
-  shadow.as(s);
+  shadow.try_as(s);
   return s ? s->InnerShadow() : nullptr;
 }
 
 winrt::Windows::UI::Composition::CompositionBrush WindowsCompositionContextHelper::InnerBrush(IBrush brush) noexcept {
   winrt::com_ptr<::Microsoft::ReactNative::Composition::IWindowsCompositionBrush> s;
-  brush.as(s);
+  brush.try_as(s);
   return s ? s->InnerBrush() : nullptr;
 }
 
 winrt::Windows::UI::Composition::ICompositionSurface WindowsCompositionContextHelper::InnerSurface(
     IDrawingSurfaceBrush surface) noexcept {
   winrt::com_ptr<::Microsoft::ReactNative::Composition::IWindowsCompositionDrawingSurfaceInner> s;
-  surface.as(s);
+  surface.try_as(s);
   return s ? s->Inner() : nullptr;
 }
 
@@ -1538,35 +1541,35 @@ IVisual MicrosoftCompositionContextHelper::CreateVisual(
 
 winrt::Microsoft::UI::Composition::Compositor MicrosoftCompositionContextHelper::InnerCompositor(
     ICompositionContext context) noexcept {
-  winrt::com_ptr<::Microsoft::ReactNative::Composition::MicrosoftCompContext> s;
-  context.as(s);
+  winrt::com_ptr<::Microsoft::ReactNative::Composition::IMicrosoftCompositionCompositor> s;
+  context.try_as(s);
   return s ? s->InnerCompositor() : nullptr;
 }
 
 winrt::Microsoft::UI::Composition::Visual MicrosoftCompositionContextHelper::InnerVisual(IVisual visual) noexcept {
   winrt::com_ptr<::Microsoft::ReactNative::Composition::IMicrosoftCompositionVisual> s;
-  visual.as(s);
+  visual.try_as(s);
   return s ? s->InnerVisual() : nullptr;
 }
 
 winrt::Microsoft::UI::Composition::DropShadow MicrosoftCompositionContextHelper::InnerDropShadow(
     IDropShadow shadow) noexcept {
   winrt::com_ptr<::Microsoft::ReactNative::Composition::IMicrosoftCompositionDropShadow> s;
-  shadow.as(s);
+  shadow.try_as(s);
   return s ? s->InnerShadow() : nullptr;
 }
 
 winrt::Microsoft::UI::Composition::CompositionBrush MicrosoftCompositionContextHelper::InnerBrush(
     IBrush brush) noexcept {
   winrt::com_ptr<::Microsoft::ReactNative::Composition::IMicrosoftCompositionBrush> s;
-  brush.as(s);
+  brush.try_as(s);
   return s ? s->InnerBrush() : nullptr;
 }
 
 winrt::Microsoft::UI::Composition::ICompositionSurface MicrosoftCompositionContextHelper::InnerSurface(
     IDrawingSurfaceBrush surface) noexcept {
   winrt::com_ptr<::Microsoft::ReactNative::Composition::IMicrosoftCompositionDrawingSurfaceInner> s;
-  surface.as(s);
+  surface.try_as(s);
   return s ? s->Inner() : nullptr;
 }
 #endif

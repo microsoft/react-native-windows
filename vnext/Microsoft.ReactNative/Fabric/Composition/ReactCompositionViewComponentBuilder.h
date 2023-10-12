@@ -58,18 +58,30 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
   int64_t
   SendMessage(winrt::Windows::Foundation::IInspectable handle, uint32_t Msg, uint64_t WParam, int64_t LParam) noexcept;
   void OnKeyDown(
+      winrt::Windows::Foundation::IInspectable handle,
       const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
       const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept;
   void OnKeyUp(
+      winrt::Windows::Foundation::IInspectable handle,
       const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
       const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept;
-  void OnPointerEntered(const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept;
-  void OnPointerExited(const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept;
-  void OnPointerPressed(const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept;
-  void OnPointerReleased(
+  void OnPointerEntered(
+      winrt::Windows::Foundation::IInspectable handle,
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept;
-  void OnPointerMoved(const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept;
+  void OnPointerExited(
+      winrt::Windows::Foundation::IInspectable handle,
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept;
+  void OnPointerPressed(
+      winrt::Windows::Foundation::IInspectable handle,
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept;
+  void OnPointerReleased(
+      winrt::Windows::Foundation::IInspectable handle,
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept;
+  void OnPointerMoved(
+      winrt::Windows::Foundation::IInspectable handle,
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept;
   void OnPointerWheelChanged(
+      winrt::Windows::Foundation::IInspectable handle,
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept;
 
  private:
