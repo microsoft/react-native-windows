@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Add `@microsoft/eslint-plugin-sdl` to `@rnw-scripts/eslint-config`",
-  "packageName": "react-native-windows-init",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}

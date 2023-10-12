@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/eslint-config",
   "entries": [
     {
+      "date": "Thu, 12 Oct 2023 05:15:53 GMT",
+      "version": "1.2.3",
+      "tag": "@rnw-scripts/eslint-config_v1.2.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "042b25fd38a02d24e433349efceaad92338a3f96",
+            "comment": "Add `@microsoft/eslint-plugin-sdl` to `@rnw-scripts/eslint-config`"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 14 Jul 2023 05:17:06 GMT",
       "tag": "@rnw-scripts/eslint-config_v1.2.2",
       "version": "1.2.2",
