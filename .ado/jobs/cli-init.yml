@@ -13,7 +13,7 @@ parameters:
   - name: buildMatrix
     type: object
     default:
-      - BuildEnvironment: PullRequest
+      - BuildEnvironment: Continuous
         Matrix:
           - Name: X64ReleaseCpp
             language: cpp

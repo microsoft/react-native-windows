@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.73.0-nightly-20230925-2de964cfd",
+  "baseVersion": "0.73.0-rc.1",
   "overrides": [
     {
       "type": "derived",
@@ -224,7 +224,7 @@
       "type": "patch",
       "file": "src/Libraries/Core/ReactNativeVersionCheck.win32.js",
       "baseFile": "packages/react-native/Libraries/Core/ReactNativeVersionCheck.js",
-      "baseHash": "a7a9ebb513e71e59d61124f358c8cb9c8846e2eb",
+      "baseHash": "44de206d0f29cc9562dd1c4dcc61d852664b2a0f",
       "issue": 5170
     },
     {

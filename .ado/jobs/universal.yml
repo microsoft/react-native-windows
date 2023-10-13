@@ -10,7 +10,7 @@
     - name: buildMatrix
       type: object
       default:
-        - BuildEnvironment: PullRequest
+        - BuildEnvironment: Continuous
           Matrix:
             - Name: X64Release
               BuildConfiguration: Release
