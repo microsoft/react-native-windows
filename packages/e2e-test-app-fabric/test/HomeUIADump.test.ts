@@ -33,18 +33,18 @@ afterEach(async () => {
   await verifyNoErrorLogs();
 });
 
-describe('Home Page UIA Tree Dump', () => {
-  test('Components Tab UIA Dump', async () => {
+describe('Home UIA Tree Dump', () => {
+  test('Components Tab', async () => {
     const componentsTabButton = await app.findElementByTestID('components-tab');
     await componentsTabButton.waitForDisplayed({timeout: 20000});
     const dump = await dumpVisualTree('components-tab');
     expect(dump).toMatchSnapshot();
   });
-  test('APIs Tab UIA Dump', async () => {
+  test('APIs Tab', async () => {
     const dump = await dumpVisualTree('apis-tab');
     expect(dump).toMatchSnapshot();
   });
-  test('Search Bar UIA Dump', async () => {
+  test('Search Bar', async () => {
     const dump = await dumpVisualTree('explorer_search');
     expect(dump).toMatchSnapshot();
   });

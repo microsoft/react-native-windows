@@ -1,0 +1,156 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ViewTests Views can have a z-index 1`] = `
+{
+  "AutomationId": "z-index-button",
+  "Children": [
+    {
+      "AutomationId": "",
+      "ControlType": 50020,
+      "HelpText": "",
+      "IsEnabled": true,
+      "IsKeyboardFocusable": false,
+      "LocalizedControlType": "text",
+      "Name": "ZIndex -1",
+    },
+    {
+      "AutomationId": "",
+      "ControlType": 50020,
+      "HelpText": "",
+      "IsEnabled": true,
+      "IsKeyboardFocusable": false,
+      "LocalizedControlType": "text",
+      "Name": "Tap to flip sorting order",
+    },
+    {
+      "AutomationId": "",
+      "ControlType": 50020,
+      "HelpText": "",
+      "IsEnabled": true,
+      "IsKeyboardFocusable": false,
+      "LocalizedControlType": "text",
+      "Name": "ZIndex 0",
+    },
+    {
+      "AutomationId": "",
+      "ControlType": 50020,
+      "HelpText": "",
+      "IsEnabled": true,
+      "IsKeyboardFocusable": false,
+      "LocalizedControlType": "text",
+      "Name": "ZIndex 1",
+    },
+    {
+      "AutomationId": "",
+      "ControlType": 50020,
+      "HelpText": "",
+      "IsEnabled": true,
+      "IsKeyboardFocusable": false,
+      "LocalizedControlType": "text",
+      "Name": "ZIndex 2",
+    },
+  ],
+  "ControlType": 50026,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "group",
+  "Name": "",
+}
+`;
+
+exports[`ViewTests Views can have border styles 1`] = `
+{
+  "AutomationId": "border-style-button",
+  "Children": [
+    {
+      "AutomationId": "",
+      "ControlType": 50020,
+      "HelpText": "",
+      "IsEnabled": true,
+      "IsKeyboardFocusable": false,
+      "LocalizedControlType": "text",
+      "Name": "Dashed border style",
+    },
+    {
+      "AutomationId": "",
+      "ControlType": 50020,
+      "HelpText": "",
+      "IsEnabled": true,
+      "IsKeyboardFocusable": false,
+      "LocalizedControlType": "text",
+      "Name": "Dotted border style",
+    },
+  ],
+  "ControlType": 50026,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "group",
+  "Name": "",
+}
+`;
+
+exports[`ViewTests Views can have display: none 1`] = `
+{
+  "AutomationId": "display-none-button",
+  "Children": [
+    {
+      "AutomationId": "",
+      "ControlType": 50020,
+      "HelpText": "",
+      "IsEnabled": true,
+      "IsKeyboardFocusable": false,
+      "LocalizedControlType": "text",
+      "Name": "Press to toggle \`display: none\`",
+    },
+  ],
+  "ControlType": 50026,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "group",
+  "Name": "",
+}
+`;
+
+exports[`ViewTests Views can have offscreen alpha compositing 1`] = `
+{
+  "AutomationId": "offscreen-alpha-compositing-button",
+  "Children": [
+    {
+      "AutomationId": "",
+      "ControlType": 50020,
+      "HelpText": "",
+      "IsEnabled": true,
+      "IsKeyboardFocusable": false,
+      "LocalizedControlType": "text",
+      "Name": "Blobs",
+    },
+    {
+      "AutomationId": "",
+      "ControlType": 50020,
+      "HelpText": "",
+      "IsEnabled": true,
+      "IsKeyboardFocusable": false,
+      "LocalizedControlType": "text",
+      "Name": "Same blobs, but their shared container have 0.5 opacity",
+    },
+    {
+      "AutomationId": "",
+      "ControlType": 50020,
+      "HelpText": "",
+      "IsEnabled": true,
+      "IsKeyboardFocusable": false,
+      "LocalizedControlType": "text",
+      "Name": "Tap to deactivate needsOffscreenAlphaCompositing",
+    },
+  ],
+  "ControlType": 50026,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "group",
+  "Name": "",
+}
+`;

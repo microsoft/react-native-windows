@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Home Page UIA Tree Dump APIs Tab UIA Dump 1`] = `
+exports[`Home UIA Tree Dump APIs Tab 1`] = `
 {
   "AutomationId": "apis-tab",
   "Children": [
@@ -23,7 +23,7 @@ exports[`Home Page UIA Tree Dump APIs Tab UIA Dump 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Accessibility 1`] = `
+exports[`Home UIA Tree Dump Accessibility 1`] = `
 {
   "AutomationId": "Accessibility",
   "Children": [
@@ -91,7 +91,7 @@ exports[`Home Page UIA Tree Dump Accessibility 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Accessibility Windows 1`] = `
+exports[`Home UIA Tree Dump Accessibility Windows 1`] = `
 {
   "AutomationId": "Accessibility Windows",
   "Children": [
@@ -159,7 +159,7 @@ exports[`Home Page UIA Tree Dump Accessibility Windows 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump AccessibilityInfo 1`] = `
+exports[`Home UIA Tree Dump AccessibilityInfo 1`] = `
 {
   "AutomationId": "AccessibilityInfo",
   "Children": [
@@ -227,7 +227,7 @@ exports[`Home Page UIA Tree Dump AccessibilityInfo 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump ActivityIndicator 1`] = `
+exports[`Home UIA Tree Dump ActivityIndicator 1`] = `
 {
   "AutomationId": "ActivityIndicator",
   "Children": [
@@ -295,7 +295,7 @@ exports[`Home Page UIA Tree Dump ActivityIndicator 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Alerts 1`] = `
+exports[`Home UIA Tree Dump Alerts 1`] = `
 {
   "AutomationId": "Alerts",
   "Children": [
@@ -363,7 +363,7 @@ exports[`Home Page UIA Tree Dump Alerts 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Animated - Gratuitous App 1`] = `
+exports[`Home UIA Tree Dump Animated - Gratuitous App 1`] = `
 {
   "AutomationId": "Animated - Gratuitous App",
   "Children": [
@@ -431,7 +431,7 @@ exports[`Home Page UIA Tree Dump Animated - Gratuitous App 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Animated 1`] = `
+exports[`Home UIA Tree Dump Animated 1`] = `
 {
   "AutomationId": "Animated",
   "Children": [
@@ -499,7 +499,7 @@ exports[`Home Page UIA Tree Dump Animated 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump AppState 1`] = `
+exports[`Home UIA Tree Dump AppState 1`] = `
 {
   "AutomationId": "AppState",
   "Children": [
@@ -567,7 +567,7 @@ exports[`Home Page UIA Tree Dump AppState 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Appearance 1`] = `
+exports[`Home UIA Tree Dump Appearance 1`] = `
 {
   "AutomationId": "Appearance",
   "Children": [
@@ -635,7 +635,7 @@ exports[`Home Page UIA Tree Dump Appearance 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Border 1`] = `
+exports[`Home UIA Tree Dump Border 1`] = `
 {
   "AutomationId": "Border",
   "Children": [
@@ -703,7 +703,7 @@ exports[`Home Page UIA Tree Dump Border 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Button 1`] = `
+exports[`Home UIA Tree Dump Button 1`] = `
 {
   "AutomationId": "Button",
   "Children": [
@@ -771,7 +771,7 @@ exports[`Home Page UIA Tree Dump Button 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Components Tab UIA Dump 1`] = `
+exports[`Home UIA Tree Dump Components Tab 1`] = `
 {
   "AutomationId": "components-tab",
   "Children": [
@@ -794,7 +794,7 @@ exports[`Home Page UIA Tree Dump Components Tab UIA Dump 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Composition Bugs Example 1`] = `
+exports[`Home UIA Tree Dump Composition Bugs Example 1`] = `
 {
   "AutomationId": "Composition Bugs Example",
   "Children": [
@@ -862,7 +862,7 @@ exports[`Home Page UIA Tree Dump Composition Bugs Example 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Crash 1`] = `
+exports[`Home UIA Tree Dump Crash 1`] = `
 {
   "AutomationId": "Crash",
   "Children": [
@@ -930,7 +930,7 @@ exports[`Home Page UIA Tree Dump Crash 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Cxx TurboModule 1`] = `
+exports[`Home UIA Tree Dump Cxx TurboModule 1`] = `
 {
   "AutomationId": "Cxx TurboModule",
   "Children": [
@@ -998,7 +998,7 @@ exports[`Home Page UIA Tree Dump Cxx TurboModule 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump DevSettings 1`] = `
+exports[`Home UIA Tree Dump DevSettings 1`] = `
 {
   "AutomationId": "DevSettings",
   "Children": [
@@ -1066,7 +1066,7 @@ exports[`Home Page UIA Tree Dump DevSettings 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Dimensions 1`] = `
+exports[`Home UIA Tree Dump Dimensions 1`] = `
 {
   "AutomationId": "Dimensions",
   "Children": [
@@ -1134,7 +1134,7 @@ exports[`Home Page UIA Tree Dump Dimensions 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Display:none Style 1`] = `
+exports[`Home UIA Tree Dump Display:none Style 1`] = `
 {
   "AutomationId": "Display:none Style",
   "Children": [
@@ -1202,7 +1202,7 @@ exports[`Home Page UIA Tree Dump Display:none Style 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Fast Path Texts 1`] = `
+exports[`Home UIA Tree Dump Fast Path Texts 1`] = `
 {
   "AutomationId": "Fast Path Texts",
   "Children": [
@@ -1270,7 +1270,7 @@ exports[`Home Page UIA Tree Dump Fast Path Texts 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump FlatList 1`] = `
+exports[`Home UIA Tree Dump FlatList 1`] = `
 {
   "AutomationId": "FlatList",
   "Children": [
@@ -1338,7 +1338,7 @@ exports[`Home Page UIA Tree Dump FlatList 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Flyout 1`] = `
+exports[`Home UIA Tree Dump Flyout 1`] = `
 {
   "AutomationId": "Flyout",
   "Children": [
@@ -1406,7 +1406,7 @@ exports[`Home Page UIA Tree Dump Flyout 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Glyph UWP 1`] = `
+exports[`Home UIA Tree Dump Glyph UWP 1`] = `
 {
   "AutomationId": "Glyph UWP",
   "Children": [
@@ -1474,7 +1474,7 @@ exports[`Home Page UIA Tree Dump Glyph UWP 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Image 1`] = `
+exports[`Home UIA Tree Dump Image 1`] = `
 {
   "AutomationId": "Image",
   "Children": [
@@ -1542,7 +1542,7 @@ exports[`Home Page UIA Tree Dump Image 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Keyboard 1`] = `
+exports[`Home UIA Tree Dump Keyboard 1`] = `
 {
   "AutomationId": "Keyboard",
   "Children": [
@@ -1610,7 +1610,7 @@ exports[`Home Page UIA Tree Dump Keyboard 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Keyboard 2`] = `
+exports[`Home UIA Tree Dump Keyboard 2`] = `
 {
   "AutomationId": "Keyboard",
   "Children": [
@@ -1678,7 +1678,7 @@ exports[`Home Page UIA Tree Dump Keyboard 2`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Keyboard Focus Example 1`] = `
+exports[`Home UIA Tree Dump Keyboard Focus Example 1`] = `
 {
   "AutomationId": "Keyboard Focus Example",
   "Children": [
@@ -1746,7 +1746,7 @@ exports[`Home Page UIA Tree Dump Keyboard Focus Example 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Keyboard extension Example 1`] = `
+exports[`Home UIA Tree Dump Keyboard extension Example 1`] = `
 {
   "AutomationId": "Keyboard extension Example",
   "Children": [
@@ -1814,7 +1814,7 @@ exports[`Home Page UIA Tree Dump Keyboard extension Example 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Layout - Flexbox 1`] = `
+exports[`Home UIA Tree Dump Layout - Flexbox 1`] = `
 {
   "AutomationId": "Layout - Flexbox",
   "Children": [
@@ -1882,7 +1882,7 @@ exports[`Home Page UIA Tree Dump Layout - Flexbox 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Layout Events 1`] = `
+exports[`Home UIA Tree Dump Layout Events 1`] = `
 {
   "AutomationId": "Layout Events",
   "Children": [
@@ -1950,7 +1950,7 @@ exports[`Home Page UIA Tree Dump Layout Events 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Legacy Native Module 1`] = `
+exports[`Home UIA Tree Dump Legacy Native Module 1`] = `
 {
   "AutomationId": "Legacy Native Module",
   "Children": [
@@ -2018,7 +2018,7 @@ exports[`Home Page UIA Tree Dump Legacy Native Module 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump LegacyControlStyleTest 1`] = `
+exports[`Home UIA Tree Dump LegacyControlStyleTest 1`] = `
 {
   "AutomationId": "LegacyControlStyleTest",
   "Children": [
@@ -2086,7 +2086,7 @@ exports[`Home Page UIA Tree Dump LegacyControlStyleTest 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump LegacyImageTest 1`] = `
+exports[`Home UIA Tree Dump LegacyImageTest 1`] = `
 {
   "AutomationId": "LegacyImageTest",
   "Children": [
@@ -2154,7 +2154,7 @@ exports[`Home Page UIA Tree Dump LegacyImageTest 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump LegacyLoginTest 1`] = `
+exports[`Home UIA Tree Dump LegacyLoginTest 1`] = `
 {
   "AutomationId": "LegacyLoginTest",
   "Children": [
@@ -2222,7 +2222,7 @@ exports[`Home Page UIA Tree Dump LegacyLoginTest 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump LegacySelectableTextTest 1`] = `
+exports[`Home UIA Tree Dump LegacySelectableTextTest 1`] = `
 {
   "AutomationId": "LegacySelectableTextTest",
   "Children": [
@@ -2290,7 +2290,7 @@ exports[`Home Page UIA Tree Dump LegacySelectableTextTest 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump LegacyTextHitTestTest 1`] = `
+exports[`Home UIA Tree Dump LegacyTextHitTestTest 1`] = `
 {
   "AutomationId": "LegacyTextHitTestTest",
   "Children": [
@@ -2358,7 +2358,7 @@ exports[`Home Page UIA Tree Dump LegacyTextHitTestTest 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump LegacyTextInputTest 1`] = `
+exports[`Home UIA Tree Dump LegacyTextInputTest 1`] = `
 {
   "AutomationId": "LegacyTextInputTest",
   "Children": [
@@ -2426,7 +2426,7 @@ exports[`Home Page UIA Tree Dump LegacyTextInputTest 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Linking 1`] = `
+exports[`Home UIA Tree Dump Linking 1`] = `
 {
   "AutomationId": "Linking",
   "Children": [
@@ -2494,7 +2494,7 @@ exports[`Home Page UIA Tree Dump Linking 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Mouse Click Events 1`] = `
+exports[`Home UIA Tree Dump Mouse Click Events 1`] = `
 {
   "AutomationId": "Mouse Click Events",
   "Children": [
@@ -2562,7 +2562,7 @@ exports[`Home Page UIA Tree Dump Mouse Click Events 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Mouse Events 1`] = `
+exports[`Home UIA Tree Dump Mouse Events 1`] = `
 {
   "AutomationId": "Mouse Events",
   "Children": [
@@ -2630,7 +2630,7 @@ exports[`Home Page UIA Tree Dump Mouse Events 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Native Animated Example 1`] = `
+exports[`Home UIA Tree Dump Native Animated Example 1`] = `
 {
   "AutomationId": "Native Animated Example",
   "Children": [
@@ -2698,7 +2698,7 @@ exports[`Home Page UIA Tree Dump Native Animated Example 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump New App Screen 1`] = `
+exports[`Home UIA Tree Dump New App Screen 1`] = `
 {
   "AutomationId": "New App Screen",
   "Children": [
@@ -2766,7 +2766,7 @@ exports[`Home Page UIA Tree Dump New App Screen 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump PanResponder Sample 1`] = `
+exports[`Home UIA Tree Dump PanResponder Sample 1`] = `
 {
   "AutomationId": "PanResponder Sample",
   "Children": [
@@ -2834,7 +2834,7 @@ exports[`Home Page UIA Tree Dump PanResponder Sample 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Performance API Examples 1`] = `
+exports[`Home UIA Tree Dump Performance API Examples 1`] = `
 {
   "AutomationId": "Performance API Examples",
   "Children": [
@@ -2902,7 +2902,7 @@ exports[`Home Page UIA Tree Dump Performance API Examples 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Performance Comparison Examples 1`] = `
+exports[`Home UIA Tree Dump Performance Comparison Examples 1`] = `
 {
   "AutomationId": "Performance Comparison Examples",
   "Children": [
@@ -2970,7 +2970,7 @@ exports[`Home Page UIA Tree Dump Performance Comparison Examples 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump PlatformColor 1`] = `
+exports[`Home UIA Tree Dump PlatformColor 1`] = `
 {
   "AutomationId": "PlatformColor",
   "Children": [
@@ -3038,7 +3038,7 @@ exports[`Home Page UIA Tree Dump PlatformColor 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Pointer Events 1`] = `
+exports[`Home UIA Tree Dump Pointer Events 1`] = `
 {
   "AutomationId": "Pointer Events",
   "Children": [
@@ -3106,7 +3106,7 @@ exports[`Home Page UIA Tree Dump Pointer Events 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Popup 1`] = `
+exports[`Home UIA Tree Dump Popup 1`] = `
 {
   "AutomationId": "Popup",
   "Children": [
@@ -3174,7 +3174,7 @@ exports[`Home Page UIA Tree Dump Popup 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Pressable 1`] = `
+exports[`Home UIA Tree Dump Pressable 1`] = `
 {
   "AutomationId": "Pressable",
   "Children": [
@@ -3242,7 +3242,7 @@ exports[`Home Page UIA Tree Dump Pressable 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump RTLExample 1`] = `
+exports[`Home UIA Tree Dump RTLExample 1`] = `
 {
   "AutomationId": "RTLExample",
   "Children": [
@@ -3310,7 +3310,7 @@ exports[`Home Page UIA Tree Dump RTLExample 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump ScrollView 1`] = `
+exports[`Home UIA Tree Dump ScrollView 1`] = `
 {
   "AutomationId": "ScrollView",
   "Children": [
@@ -3378,7 +3378,7 @@ exports[`Home Page UIA Tree Dump ScrollView 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump ScrollViewAnimated 1`] = `
+exports[`Home UIA Tree Dump ScrollViewAnimated 1`] = `
 {
   "AutomationId": "ScrollViewAnimated",
   "Children": [
@@ -3446,7 +3446,7 @@ exports[`Home Page UIA Tree Dump ScrollViewAnimated 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump ScrollViewSimpleExample 1`] = `
+exports[`Home UIA Tree Dump ScrollViewSimpleExample 1`] = `
 {
   "AutomationId": "ScrollViewSimpleExample",
   "Children": [
@@ -3514,7 +3514,7 @@ exports[`Home Page UIA Tree Dump ScrollViewSimpleExample 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Search Bar UIA Dump 1`] = `
+exports[`Home UIA Tree Dump Search Bar 1`] = `
 {
   "AutomationId": "explorer_search",
   "ControlType": 50004,
@@ -3526,7 +3526,7 @@ exports[`Home Page UIA Tree Dump Search Bar UIA Dump 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump SectionList 1`] = `
+exports[`Home UIA Tree Dump SectionList 1`] = `
 {
   "AutomationId": "SectionList",
   "Children": [
@@ -3594,7 +3594,7 @@ exports[`Home Page UIA Tree Dump SectionList 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Share 1`] = `
+exports[`Home UIA Tree Dump Share 1`] = `
 {
   "AutomationId": "Share",
   "Children": [
@@ -3662,7 +3662,7 @@ exports[`Home Page UIA Tree Dump Share 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump SwipeableCard 1`] = `
+exports[`Home UIA Tree Dump SwipeableCard 1`] = `
 {
   "AutomationId": "SwipeableCard",
   "Children": [
@@ -3730,7 +3730,7 @@ exports[`Home Page UIA Tree Dump SwipeableCard 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Switch 1`] = `
+exports[`Home UIA Tree Dump Switch 1`] = `
 {
   "AutomationId": "Switch",
   "Children": [
@@ -3798,7 +3798,7 @@ exports[`Home Page UIA Tree Dump Switch 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Text 1`] = `
+exports[`Home UIA Tree Dump Text 1`] = `
 {
   "AutomationId": "Text",
   "Children": [
@@ -3866,7 +3866,7 @@ exports[`Home Page UIA Tree Dump Text 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump TextInput 1`] = `
+exports[`Home UIA Tree Dump TextInput 1`] = `
 {
   "AutomationId": "TextInput",
   "Children": [
@@ -3934,7 +3934,7 @@ exports[`Home Page UIA Tree Dump TextInput 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump TextInputs with key prop 1`] = `
+exports[`Home UIA Tree Dump TextInputs with key prop 1`] = `
 {
   "AutomationId": "TextInputs with key prop",
   "Children": [
@@ -4002,7 +4002,7 @@ exports[`Home Page UIA Tree Dump TextInputs with key prop 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Timers 1`] = `
+exports[`Home UIA Tree Dump Timers 1`] = `
 {
   "AutomationId": "Timers",
   "Children": [
@@ -4070,7 +4070,7 @@ exports[`Home Page UIA Tree Dump Timers 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Touchable* and onPress 1`] = `
+exports[`Home UIA Tree Dump Touchable* and onPress 1`] = `
 {
   "AutomationId": "Touchable* and onPress",
   "Children": [
@@ -4138,7 +4138,7 @@ exports[`Home Page UIA Tree Dump Touchable* and onPress 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump TransferProperties 1`] = `
+exports[`Home UIA Tree Dump TransferProperties 1`] = `
 {
   "AutomationId": "TransferProperties",
   "Children": [
@@ -4206,7 +4206,7 @@ exports[`Home Page UIA Tree Dump TransferProperties 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump Transforms 1`] = `
+exports[`Home UIA Tree Dump Transforms 1`] = `
 {
   "AutomationId": "Transforms",
   "Children": [
@@ -4274,7 +4274,7 @@ exports[`Home Page UIA Tree Dump Transforms 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump TransparentHitTestExample 1`] = `
+exports[`Home UIA Tree Dump TransparentHitTestExample 1`] = `
 {
   "AutomationId": "TransparentHitTestExample",
   "Children": [
@@ -4342,7 +4342,7 @@ exports[`Home Page UIA Tree Dump TransparentHitTestExample 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump TurboModule 1`] = `
+exports[`Home UIA Tree Dump TurboModule 1`] = `
 {
   "AutomationId": "TurboModule",
   "Children": [
@@ -4410,7 +4410,7 @@ exports[`Home Page UIA Tree Dump TurboModule 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump View 1`] = `
+exports[`Home UIA Tree Dump View 1`] = `
 {
   "AutomationId": "View",
   "Children": [
@@ -4478,7 +4478,7 @@ exports[`Home Page UIA Tree Dump View 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump WebSocket 1`] = `
+exports[`Home UIA Tree Dump WebSocket 1`] = `
 {
   "AutomationId": "WebSocket",
   "Children": [
@@ -4546,7 +4546,7 @@ exports[`Home Page UIA Tree Dump WebSocket 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump XAML 1`] = `
+exports[`Home UIA Tree Dump XAML 1`] = `
 {
   "AutomationId": "XAML",
   "Children": [
@@ -4614,7 +4614,7 @@ exports[`Home Page UIA Tree Dump XAML 1`] = `
 }
 `;
 
-exports[`Home Page UIA Tree Dump XMLHttpRequest 1`] = `
+exports[`Home UIA Tree Dump XMLHttpRequest 1`] = `
 {
   "AutomationId": "XMLHttpRequest",
   "Children": [

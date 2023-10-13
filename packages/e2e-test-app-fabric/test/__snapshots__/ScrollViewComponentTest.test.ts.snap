@@ -1,0 +1,116 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ScrollViewTests ScrollView has scrollTo method, scroll to bottom button 1`] = `
+{
+  "AutomationId": "scroll_to_bottom_button",
+  "Children": [
+    {
+      "AutomationId": "",
+      "ControlType": 50020,
+      "HelpText": "",
+      "IsEnabled": true,
+      "IsKeyboardFocusable": false,
+      "LocalizedControlType": "text",
+      "Name": "Scroll to bottom",
+    },
+  ],
+  "ControlType": 50026,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "group",
+  "Name": "",
+}
+`;
+
+exports[`ScrollViewTests ScrollView has scrollTo method, scroll to end button 1`] = `
+{
+  "AutomationId": "scroll_to_end_button",
+  "Children": [
+    {
+      "AutomationId": "",
+      "ControlType": 50020,
+      "HelpText": "",
+      "IsEnabled": true,
+      "IsKeyboardFocusable": false,
+      "LocalizedControlType": "text",
+      "Name": "Scroll to end",
+    },
+  ],
+  "ControlType": 50026,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "group",
+  "Name": "",
+}
+`;
+
+exports[`ScrollViewTests ScrollView has scrollTo method, scroll to start button 1`] = `
+{
+  "AutomationId": "scroll_to_start_button",
+  "Children": [
+    {
+      "AutomationId": "",
+      "ControlType": 50020,
+      "HelpText": "",
+      "IsEnabled": true,
+      "IsKeyboardFocusable": false,
+      "LocalizedControlType": "text",
+      "Name": "Scroll to start",
+    },
+  ],
+  "ControlType": 50026,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "group",
+  "Name": "",
+}
+`;
+
+exports[`ScrollViewTests ScrollView has scrollTo method, scroll to top button 1`] = `
+{
+  "AutomationId": "scroll_to_top_button",
+  "Children": [
+    {
+      "AutomationId": "",
+      "ControlType": 50020,
+      "HelpText": "",
+      "IsEnabled": true,
+      "IsKeyboardFocusable": false,
+      "LocalizedControlType": "text",
+      "Name": "Scroll to top",
+    },
+  ],
+  "ControlType": 50026,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "group",
+  "Name": "",
+}
+`;
+
+exports[`ScrollViewTests ScrollViews has flash scroll indicators 1`] = `
+{
+  "AutomationId": "flash_scroll_indicators_button",
+  "Children": [
+    {
+      "AutomationId": "",
+      "ControlType": 50020,
+      "HelpText": "",
+      "IsEnabled": true,
+      "IsKeyboardFocusable": false,
+      "LocalizedControlType": "text",
+      "Name": "Flash scroll indicators",
+    },
+  ],
+  "ControlType": 50026,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "group",
+  "Name": "",
+}
+`;
