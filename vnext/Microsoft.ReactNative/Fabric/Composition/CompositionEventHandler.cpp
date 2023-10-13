@@ -381,7 +381,8 @@ int64_t CompositionEventHandler::SendMessage(uint32_t msg, uint64_t wParam, int6
     case WM_CHAR:
     case WM_SYSCHAR: {
       auto focusedComponent = RootComponentView().GetFocusedComponent();
-      auto args = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::CharacterReceivedRoutedEventArgs>(
+      auto args = winrt::make<
+          winrt::Microsoft::ReactNative::Composition::Input::implementation::CharacterReceivedRoutedEventArgs>(
           focusedComponent
               ? focusedComponent->tag()
               : static_cast<facebook::react::Tag>(

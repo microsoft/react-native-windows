@@ -842,8 +842,7 @@ void WindowsTextInputComponentView::unmountChildComponentView(
 
 void WindowsTextInputComponentView::onFocusLost() noexcept {
   Super::onFocusLost();
-  if (m_textServices)
-  {
+  if (m_textServices) {
     LRESULT lresult;
     DrawBlock db(*this);
     m_textServices->TxSendMessage(WM_KILLFOCUS, 0, 0, &lresult);
@@ -853,8 +852,7 @@ void WindowsTextInputComponentView::onFocusLost() noexcept {
 
 void WindowsTextInputComponentView::onFocusGained() noexcept {
   Super::onFocusGained();
-  if (m_textServices)
-  {
+  if (m_textServices) {
     LRESULT lresult;
     DrawBlock db(*this);
     m_textServices->TxSendMessage(WM_SETFOCUS, 0, 0, &lresult);
