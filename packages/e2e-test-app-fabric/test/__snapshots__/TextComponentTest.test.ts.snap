@@ -1,0 +1,135 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Text Tests Padding can be added to Text 1`] = `
+{
+  "AutomationId": "text-padding",
+  "ControlType": 50020,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": false,
+  "LocalizedControlType": "text",
+  "Name": "This text is indented by 10px padding on all sides.",
+}
+`;
+
+exports[`Text Tests Text can be restricted to one line 1`] = `
+{
+  "AutomationId": "text-one-line",
+  "ControlType": 50020,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": false,
+  "LocalizedControlType": "text",
+  "Name": "Maximum of one line no matter now much I write here. If I keep writing it'll just truncate after one line. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus felis eget augue condimentum suscipit. Suspendisse hendrerit, libero aliquet malesuada tempor, urna nibh consectetur tellus, vitae efficitur quam erat non mi. Maecenas vitae eros sit amet quam vestibulum porta sed sit amet tellus. Fusce quis lectus congue, fringilla arcu id, luctus urna. Cras sagittis ornare mauris sit amet dictum. Vestibulum feugiat laoreet fringilla. Vivamus ac diam vehicula felis venenatis sagittis vitae ultrices elit. Curabitur libero augue, laoreet quis orci vitae, congue euismod massa. Aenean nec odio sed urna vehicula fermentum non a magna. Quisque ut commodo neque, eget eleifend odio. Sed sit amet lacinia sem. Suspendisse in metus in purus scelerisque vestibulum. Nam metus dui, efficitur nec metus non, tincidunt pharetra sapien. Praesent id convallis metus, ut malesuada arcu. Quisque quam libero, pharetra eu tellus ac, aliquam fringilla erat. Quisque tempus in lorem ac suscipit.",
+}
+`;
+
+exports[`Text Tests Text can be selectable 1`] = `
+{
+  "AutomationId": "text-selectable",
+  "ControlType": 50020,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": false,
+  "LocalizedControlType": "text",
+  "Name": "This text is selectable if you click-and-hold, and will offer the native Android selection menus.",
+}
+`;
+
+exports[`Text Tests Text can have a color 1`] = `
+{
+  "AutomationId": "text-color",
+  "ControlType": 50020,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": false,
+  "LocalizedControlType": "text",
+  "Name": "Red color",
+}
+`;
+
+exports[`Text Tests Text can have a customized selection color 1`] = `
+{
+  "AutomationId": "text-selection-color",
+  "ControlType": 50020,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": false,
+  "LocalizedControlType": "text",
+  "Name": "This text will have a orange highlight on selection.",
+}
+`;
+
+exports[`Text Tests Text can have a font family 1`] = `{}`;
+
+exports[`Text Tests Text can have a size 1`] = `
+{
+  "AutomationId": "text-size",
+  "ControlType": 50020,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": false,
+  "LocalizedControlType": "text",
+  "Name": "Size 23",
+}
+`;
+
+exports[`Text Tests Text can have an outer color 1`] = `
+{
+  "AutomationId": "text-outer-color",
+  "ControlType": 50020,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": false,
+  "LocalizedControlType": "text",
+  "Name": "(Normal text,(R)red(G)green(B)blue(C)cyan(M)magenta(Y)yellow(K)black(and bold(and tiny bold italic blue(and tiny normal blue))))",
+}
+`;
+
+exports[`Text Tests Text can have decoration lines: Solid Line Through 1`] = `
+{
+  "AutomationId": "text-decoration-solid-linethru",
+  "ControlType": 50020,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": false,
+  "LocalizedControlType": "text",
+  "Name": "Solid line-through",
+}
+`;
+
+exports[`Text Tests Text can have decoration lines: Underline 1`] = `
+{
+  "AutomationId": "text-decoration-underline",
+  "ControlType": 50020,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": false,
+  "LocalizedControlType": "text",
+  "Name": "Solid underline",
+}
+`;
+
+exports[`Text Tests Text can have shadows 1`] = `
+{
+  "AutomationId": "text-shadow",
+  "ControlType": 50020,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": false,
+  "LocalizedControlType": "text",
+  "Name": "Demo text shadow",
+}
+`;
+
+exports[`Text Tests Text can wrap 1`] = `
+{
+  "AutomationId": "text-wrap",
+  "ControlType": 50020,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": false,
+  "LocalizedControlType": "text",
+  "Name": "The text should wrap if it goes on multiple lines. See, this is going to the next line. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus felis eget augue condimentum suscipit. Suspendisse hendrerit, libero aliquet malesuada tempor, urna nibh consectetur tellus, vitae efficitur quam erat non mi. Maecenas vitae eros sit amet quam vestibulum porta sed sit amet tellus. Fusce quis lectus congue, fringilla arcu id, luctus urna. Cras sagittis ornare mauris sit amet dictum. Vestibulum feugiat laoreet fringilla. Vivamus ac diam vehicula felis venenatis sagittis vitae ultrices elit. Curabitur libero augue, laoreet quis orci vitae, congue euismod massa. Aenean nec odio sed urna vehicula fermentum non a magna. Quisque ut commodo neque, eget eleifend odio. Sed sit amet lacinia sem. Suspendisse in metus in purus scelerisque vestibulum. Nam metus dui, efficitur nec metus non, tincidunt pharetra sapien. Praesent id convallis metus, ut malesuada arcu. Quisque quam libero, pharetra eu tellus ac, aliquam fringilla erat. Quisque tempus in lorem ac suscipit.",
+}
+`;
