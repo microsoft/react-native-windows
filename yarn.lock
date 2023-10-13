@@ -3212,9 +3212,9 @@
   integrity sha512-sNFeK6X2ATlhlvzyH4kKYQlfHXE2f2/wxtB9ClvYXevWpmwkUT7VaSrjIN9E76Qebz8qP5JOJJ9jD3QoD/Z9TA==
 
 "@types/async@^3.2.5":
-  version "3.2.20"
-  resolved "https://registry.yarnpkg.com/@types/async/-/async-3.2.20.tgz#53517caaa68c94f99da1c4e986cf7f2954981515"
-  integrity sha512-6jSBQQugzyX1aWto0CbvOnmxrU9tMoXfA9gc4IrLEtvr3dTwSg5GLGoWiZnGLI6UG/kqpB3JOQKQrqnhUWGKQA==
+  version "3.2.21"
+  resolved "https://registry.yarnpkg.com/@types/async/-/async-3.2.21.tgz#470b06c25fc104c169e80a9c91866e8204e91175"
+  integrity sha512-msYM0OYxzkwpiDJZZDo7XsYuFIpiAOh+o3hygudSpSzeW+R0DAEKZvdQriHYT95m9CvscLDg5s0Mxlrlhoy2qw==
 
 "@types/babel__core@^7.1.14":
   version "7.1.19"
