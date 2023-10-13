@@ -13,7 +13,7 @@ parameters:
   - name: buildMatrix
     type: object
     default:
-      - BuildEnvironment: Continuous
+      - BuildEnvironment: PullRequest
         Matrix:
           - Name: X64ReleaseCpp
             language: cpp
@@ -78,9 +78,33 @@ parameters:
             projectType: app
             additionalInitArguments: --useHermes
             runWack: true
-          - Name: X64DebugCppNuget
+          - Name: X86DebugCppNuget
             language: cpp
             configuration: Debug
+            platform: x86
+            projectType: app
+            useNuGet: true
+          - Name: X86DebugCsNuget
+            language: cs
+            configuration: Debug
+            platform: x86
+            projectType: app
+            useNuGet: true
+          - Name: X86ReleaseCppNuget
+            language: cpp
+            configuration: Release
+            platform: x86
+            projectType: app
+            useNuGet: true
+          - Name: X86ReleaseCsNuget
+            language: cs
+            configuration: Release
+            platform: x86
+            projectType: app
+            useNuGet: true
+          - Name: X64ReleaseCppNuget
+            language: cpp
+            configuration: Release
             platform: x64
             projectType: app
             useNuGet: true
@@ -90,12 +114,85 @@ parameters:
             platform: x64
             projectType: app
             useNuGet: true
+          - Name: Arm64ReleaseCppNuget
+            language: cpp
+            configuration: Release
+            platform: ARM64
+            projectType: app
+            additionalRunArguments: --no-deploy
+            useNuGet: true
+          - Name: Arm64ReleaseCsNuget
+            language: cs
+            configuration: Release
+            platform: ARM64
+            projectType: app
+            additionalRunArguments: --no-deploy
+            useNuGet: true
+          - Name: Arm64DebugCpp
+            language: cpp
+            configuration: Debug
+            platform: ARM64
+            projectType: app
+            additionalRunArguments: --no-deploy # We don't have Arm agents
+          - Name: Arm64DebugCs
+            language: cs
+            configuration: Debug
+            platform: ARM64
+            projectType: app
+            additionalRunArguments: --no-deploy # We don't have Arm agents
+          - Name: Arm64ReleaseCpp
+            language: cpp
+            configuration: Release
+            platform: ARM64
+            projectType: app
+            additionalRunArguments: --no-deploy # We don't have Arm agents
+          - Name: Arm64ReleaseCs
+            language: cs
+            configuration: Release
+            platform: ARM64
+            projectType: app
+            additionalRunArguments: --no-deploy # We don't have Arm agents
+          - Name: X86ReleaseCpp
+            language: cpp
+            configuration: Release
+            platform: x86
+            projectType: app
+            runWack: true
+          - Name: X86ReleaseCs
+            language: cs
+            configuration: Release
+            platform: x86
+            projectType: app
+            runWack: true
+          - Name: X64DebugCpp
+            language: cpp
+            configuration: Debug
+            platform: x64
+            projectType: app
+          - Name: X64DebugCs
+            language: cs
+            configuration: Debug
+            platform: x64
+            projectType: app
           - Name: X64DebugCppLowResource
             language: cpp
             configuration: Debug
             platform: x64
             projectType: app
             lowResource: true
+          - Name: X64ReleaseCppLowResource
+            language: cpp
+            configuration: Release
+            platform: x64
+            projectType: app
+            lowResource: true
+          - Name: FabricX64Debug
+            language: cpp
+            configuration: Debug
+            platform: x64
+            projectType: app
+            initPath: InitWindows
+            additionalRunArguments: --no-autolink
           - Name: FabricX64Release
             language: cpp
             configuration: Release
@@ -106,6 +203,13 @@ parameters:
           - Name: FabricX86Debug
             language: cpp
             configuration: Debug
+            platform: x86
+            projectType: app
+            initPath: InitWindows
+            additionalRunArguments: --no-autolink
+          - Name: FabricX86Release
+            language: cpp
+            configuration: Release
             platform: x86
             projectType: app
             initPath: InitWindows

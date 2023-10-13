@@ -11,13 +11,19 @@ parameters:
   - name: buildMatrix
     type: object
     default:
-      - BuildEnvironment: Continuous
+      - BuildEnvironment: PullRequest
         Matrix:
           - Name: X64Chakra
             BuildPlatform: x64
             UseHermes: false
           - Name: X64Hermes
             BuildPlatform: x64
+            UseHermes: true
+          - Name: X86Chakra
+            BuildPlatform: x86
+            UseHermes: false
+          - Name: X86Hermes
+            BuildPlatform: x86
             UseHermes: true
       - BuildEnvironment: Continuous
         Matrix:
