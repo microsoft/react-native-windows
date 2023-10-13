@@ -17,7 +17,7 @@ afterEach(async () => {
   await verifyNoErrorLogs();
 });
 
-describe('ButtonTests', () => {
+describe('TextInput Tests', () => {
   test('TextInputs can rewrite characters: Replace Space with Underscore', async () => {
     const dump = await dumpVisualTree('rewrite_sp_underscore_input');
     expect(dump).toMatchSnapshot();

@@ -17,7 +17,7 @@ afterEach(async () => {
   await verifyNoErrorLogs();
 });
 
-describe('PressableTests', () => {
+describe('Pressable Tests', () => {
   test('Pressables can change text on press/rest, state rest', async () => {
     const dump = await dumpVisualTree('pressable_press_console');
     expect(dump).toMatchSnapshot();

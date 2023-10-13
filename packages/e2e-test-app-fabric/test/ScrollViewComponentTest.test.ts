@@ -17,7 +17,7 @@ afterEach(async () => {
   await verifyNoErrorLogs();
 });
 
-describe('ScrollViewTests', () => {
+describe('ScrollView Tests', () => {
   // Disable tests where testID is not found.
   /*test('ScrollViews can scroll an item list vertically', async () => {
     const dump = await dumpVisualTree('scroll_vertical');

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ButtonTests Buttons can be disabled 1`] = `
+exports[`Button Tests Buttons can be disabled 1`] = `
 {
   "AutomationId": "disabled_button",
   "Children": [
@@ -23,7 +23,7 @@ exports[`ButtonTests Buttons can be disabled 1`] = `
 }
 `;
 
-exports[`ButtonTests Buttons can have accessibility labels 1`] = `
+exports[`Button Tests Buttons can have accessibility labels 1`] = `
 {
   "AutomationId": "accessibilityLabel_button",
   "Children": [
@@ -46,7 +46,7 @@ exports[`ButtonTests Buttons can have accessibility labels 1`] = `
 }
 `;
 
-exports[`ButtonTests Buttons can have accessibility props 1`] = `
+exports[`Button Tests Buttons can have accessibility props 1`] = `
 {
   "AutomationId": "accessibility_props",
   "Children": [
@@ -69,7 +69,7 @@ exports[`ButtonTests Buttons can have accessibility props 1`] = `
 }
 `;
 
-exports[`ButtonTests Buttons can have accessibility states 1`] = `
+exports[`Button Tests Buttons can have accessibility states 1`] = `
 {
   "AutomationId": "accessibilityState_button",
   "Children": [
@@ -92,7 +92,7 @@ exports[`ButtonTests Buttons can have accessibility states 1`] = `
 }
 `;
 
-exports[`ButtonTests Buttons can have custom colors 1`] = `
+exports[`Button Tests Buttons can have custom colors 1`] = `
 {
   "AutomationId": "cancel_button",
   "Children": [
@@ -115,9 +115,7 @@ exports[`ButtonTests Buttons can have custom colors 1`] = `
 }
 `;
 
-exports[`ButtonTests Buttons can have their accessibility and keyboard focus disabled 1`] = `{}`;
-
-exports[`ButtonTests Buttons have default styling 1`] = `
+exports[`Button Tests Buttons have default styling 1`] = `
 {
   "AutomationId": "button_default_styling",
   "Children": [

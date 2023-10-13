@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PressableTests Pressables can change text on press/rest, state rest 1`] = `
+exports[`Pressable Tests Pressables can change text on press/rest, state rest 1`] = `
 {
   "AutomationId": "pressable_press_console",
   "ControlType": 50020,
@@ -12,7 +12,7 @@ exports[`PressableTests Pressables can change text on press/rest, state rest 1`]
 }
 `;
 
-exports[`PressableTests Pressables can have delayed event handlers 1`] = `
+exports[`Pressable Tests Pressables can have delayed event handlers 1`] = `
 {
   "AutomationId": "pressable_delay_events_button",
   "Children": [
@@ -35,7 +35,7 @@ exports[`PressableTests Pressables can have delayed event handlers 1`] = `
 }
 `;
 
-exports[`PressableTests Pressables can have event handlers 1`] = `
+exports[`Pressable Tests Pressables can have event handlers 1`] = `
 {
   "AutomationId": "pressable_feedback_events_button",
   "Children": [
@@ -58,7 +58,7 @@ exports[`PressableTests Pressables can have event handlers 1`] = `
 }
 `;
 
-exports[`PressableTests Pressables can have hit slop functionality 1`] = `
+exports[`Pressable Tests Pressables can have hit slop functionality 1`] = `
 {
   "AutomationId": "pressable_hit_slop_button",
   "Children": [

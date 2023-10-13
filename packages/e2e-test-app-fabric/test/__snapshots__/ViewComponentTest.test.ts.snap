@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ViewTests Views can have a z-index 1`] = `
+exports[`View Tests Views can have a z-index 1`] = `
 {
   "AutomationId": "z-index-button",
   "Children": [
@@ -59,7 +59,7 @@ exports[`ViewTests Views can have a z-index 1`] = `
 }
 `;
 
-exports[`ViewTests Views can have border styles 1`] = `
+exports[`View Tests Views can have border styles 1`] = `
 {
   "AutomationId": "border-style-button",
   "Children": [
@@ -91,7 +91,7 @@ exports[`ViewTests Views can have border styles 1`] = `
 }
 `;
 
-exports[`ViewTests Views can have display: none 1`] = `
+exports[`View Tests Views can have display: none 1`] = `
 {
   "AutomationId": "display-none-button",
   "Children": [
@@ -114,7 +114,7 @@ exports[`ViewTests Views can have display: none 1`] = `
 }
 `;
 
-exports[`ViewTests Views can have offscreen alpha compositing 1`] = `
+exports[`View Tests Views can have offscreen alpha compositing 1`] = `
 {
   "AutomationId": "offscreen-alpha-compositing-button",
   "Children": [

@@ -18,7 +18,7 @@ afterEach(async () => {
   await verifyNoErrorLogs();
 });
 
-describe('ViewTests', () => {
+describe('View Tests', () => {
   test('Views can have border styles', async () => {
     const dump = await dumpVisualTree('border-style-button');
     expect(dump).toMatchSnapshot();

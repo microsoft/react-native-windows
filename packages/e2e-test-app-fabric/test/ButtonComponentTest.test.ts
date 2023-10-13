@@ -17,7 +17,7 @@ afterEach(async () => {
   await verifyNoErrorLogs();
 });
 
-describe('ButtonTests', () => {
+describe('Button Tests', () => {
   test('Buttons have default styling', async () => {
     const dump = await dumpVisualTree('button_default_styling');
     expect(dump).toMatchSnapshot();
@@ -40,10 +40,6 @@ describe('ButtonTests', () => {
   });
   test('Buttons can have accessibility props', async () => {
     const dump = await dumpVisualTree('accessibility_props');
-    expect(dump).toMatchSnapshot();
-  });
-  test('Buttons can have their accessibility and keyboard focus disabled', async () => {
-    const dump = await dumpVisualTree('accessible_focusable_button');
     expect(dump).toMatchSnapshot();
   });
 });
