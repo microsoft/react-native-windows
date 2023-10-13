@@ -105,10 +105,6 @@ bool AbiCompositionViewComponentView::focusable() const noexcept {
   return m_props->focusable;
 }
 
-int64_t AbiCompositionViewComponentView::sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
-  return Builder().SendMessage(m_handle, msg, wParam, lParam);
-}
-
 void AbiCompositionViewComponentView::onKeyDown(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {

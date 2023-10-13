@@ -100,7 +100,6 @@ struct IComponentView {
       facebook::react::Point pt,
       facebook::react::Point &localPt,
       bool ignorePointerEvents = false) const noexcept = 0;
-  virtual int64_t sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept = 0;
   virtual winrt::IInspectable EnsureUiaProvider() noexcept = 0;
   // Notify up the tree to bring the rect into view by scrolling as needed
   virtual void StartBringIntoView(BringIntoViewOptions &&args) noexcept = 0;

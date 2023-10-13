@@ -380,13 +380,19 @@ int64_t CompositionEventHandler::SendMessage(uint32_t msg, uint64_t wParam, int6
     }
     case WM_CHAR:
     case WM_SYSCHAR: {
-      // TODO full bubbling of events
-      if (auto focusedComponent = RootComponentView().GetFocusedComponent()) {
-        auto result = focusedComponent->sendMessage(msg, wParam, lParam);
-        if (result)
-          return result;
-      }
-      break;
+      auto focusedComponent = RootComponentView().GetFocusedComponent();
+      auto args = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::CharacterReceivedRoutedEventArgs>(
+          focusedComponent
+              ? focusedComponent->tag()
+              : static_cast<facebook::react::Tag>(
+                    winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(m_compRootView)
+                        ->GetTag()),
+          msg,
+          wParam,
+          lParam);
+      auto keyboardSource = winrt::make<CompositionKeyboardSource>(this);
+      onCharacterRecieved(keyboardSource, args);
+      winrt::get_self<CompositionKeyboardSource>(keyboardSource)->Disconnect();
     }
     case WM_KEYDOWN:
     case WM_KEYUP:

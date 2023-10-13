@@ -46,10 +46,6 @@ void ReactCompositionViewComponentBuilder::SetUpdateFinalizer(UpdateFinalizer im
 void ReactCompositionViewComponentBuilder::SetVisualCreator(Composition::VisualCreator impl) noexcept {
   m_visualCreator = impl;
 }
-// (Object handle, UInt32 Msg, UInt64 WParam, Int64 LParam) => Int64
-void ReactCompositionViewComponentBuilder::SetMessageHandler(MessageHandler impl) noexcept {
-  m_messageHandler = impl;
-}
 
 void ReactCompositionViewComponentBuilder::SetKeyDownHandler(KeyHandler impl) noexcept {
   m_keyDown = impl;
@@ -123,17 +119,6 @@ void ReactCompositionViewComponentBuilder::FinalizeUpdates(winrt::Windows::Found
 
 IVisual ReactCompositionViewComponentBuilder::CreateVisual(winrt::Windows::Foundation::IInspectable handle) noexcept {
   return m_visualCreator(handle);
-}
-
-int64_t ReactCompositionViewComponentBuilder::SendMessage(
-    winrt::Windows::Foundation::IInspectable handle,
-    uint32_t msg,
-    uint64_t wparam,
-    int64_t lparam) noexcept {
-  if (!m_messageHandler) {
-    return 0;
-  }
-  return m_messageHandler(handle, msg, wparam, lparam);
 }
 
 void ReactCompositionViewComponentBuilder::OnKeyDown(

@@ -65,7 +65,6 @@ struct CompositionBaseComponentView : public IComponentView,
   facebook::react::SharedViewEventEmitter eventEmitter() noexcept override;
   facebook::react::SharedViewEventEmitter eventEmitterAtPoint(facebook::react::Point pt) noexcept override;
   facebook::react::Tag tag() const noexcept override;
-  int64_t sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept override;
 
   RECT getClientRect() const noexcept override;
 

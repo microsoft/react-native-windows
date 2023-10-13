@@ -138,10 +138,6 @@ void CompositionBaseComponentView::handleCommand(std::string const &commandName,
   assert(false); // Unhandled command
 }
 
-int64_t CompositionBaseComponentView::sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
-  return 0;
-}
-
 void CompositionBaseComponentView::onKeyDown(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {

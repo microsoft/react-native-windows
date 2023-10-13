@@ -42,7 +42,6 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
   void prepareForRecycle() noexcept override;
   facebook::react::Props::Shared props() noexcept override;
   void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept override;
-  int64_t sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept override;
   facebook::react::Tag hitTest(
       facebook::react::Point pt,
       facebook::react::Point &localPt,

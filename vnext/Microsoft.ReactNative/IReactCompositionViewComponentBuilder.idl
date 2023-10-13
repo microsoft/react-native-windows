@@ -43,10 +43,6 @@ namespace Microsoft.ReactNative.Composition
   delegate IVisual VisualCreator(Object handle);
 
   [experimental]
-  DOC_STRING("A delegate that handles input messages for an instance of a ViewComponent. See @IReactCompositionViewComponentBuilder.SetMessageHandler")
-  delegate Int64 MessageHandler(Object handle, UInt32 Msg, UInt64 WParam, Int64 LParam);
-
-  [experimental]
   delegate void KeyHandler(Object handle, Microsoft.ReactNative.Composition.Input.KeyboardSource source, Microsoft.ReactNative.Composition.Input.KeyRoutedEventArgs args);
 
   [experimental]
@@ -83,10 +79,6 @@ namespace Microsoft.ReactNative.Composition
     DOC_STRING("This visual will be added to the visual tree, and should be used to display this component.")
     // (Object handle) => IVisual
     void SetVisualCreator(VisualCreator impl);
-
-    DOC_STRING("Used to handle native input into this component.")
-    // (Object handle, UInt32 Msg, UInt64 WParam, Int64 LParam) => Int64
-    void SetMessageHandler(MessageHandler impl);
 
     DOC_STRING("Used to handle key down events when this component is focused, or if a child component did not handle the key down")
     void SetKeyDownHandler(KeyHandler impl);
