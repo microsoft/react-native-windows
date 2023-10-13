@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 13 Oct 2023 05:15:18 GMT",
+      "version": "0.0.0-canary.718",
+      "tag": "react-native-windows_v0.0.0-canary.718",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "3836f7e1625b935afda4b1e88afb651e7a72788e",
+            "comment": "[Fabric] Support hosting in ContentIsland"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a0946739c12f78f5151c1168ec73b57f0af9cbe9",
+            "comment": "[Fabric] Fix offset for automation provider when running in islands"
+          },
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "react-native-windows",
+            "commit": "e62dd1a966d0c4b7e49a891537ab963cc1b9353b",
+            "comment": "reverted package.lock changes"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 12 Oct 2023 05:15:53 GMT",
       "version": "0.0.0-canary.717",
       "tag": "react-native-windows_v0.0.0-canary.717",
