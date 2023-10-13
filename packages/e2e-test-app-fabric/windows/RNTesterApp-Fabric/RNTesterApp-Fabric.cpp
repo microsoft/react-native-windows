@@ -91,7 +91,7 @@ winrt::Microsoft::ReactNative::ReactNativeHost CreateReactNativeHost(
   host.InstanceSettings().BundleRootPath(
       std::wstring(L"file:").append(workingDir).append(L"\\windows\\RNTesterApp-Fabric\\Bundle\\").c_str());
   host.InstanceSettings().DebuggerBreakOnNextLine(false);
-#ifdef BUNDLE
+#if BUNDLE
   host.InstanceSettings().UseFastRefresh(true);
 #endif
   // host.InstanceSettings().DebuggerPort(9229);
