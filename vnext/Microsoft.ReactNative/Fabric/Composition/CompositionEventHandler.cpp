@@ -232,9 +232,31 @@ CompositionEventHandler::CompositionEventHandler(
       onKeyUp(keyboardSource, keyArgs);
       winrt::get_self<CompositionInputKeyboardSource>(keyboardSource)->Disconnect();
     });
+
+    m_characterReceivedToken =
+        keyboardSource.CharacterReceived([this](
+                                             winrt::Microsoft::UI::Input::InputKeyboardSource const &source,
+                                             winrt::Microsoft::UI::Input::CharacterReceivedEventArgs const &args) {
+          if (SurfaceId() == -1)
+            return;
+
+          auto focusedComponent = RootComponentView().GetFocusedComponent();
+          auto charArgs = winrt::make<
+              winrt::Microsoft::ReactNative::Composition::Input::implementation::CharacterReceivedRoutedEventArgs>(
+              focusedComponent
+                  ? focusedComponent->tag()
+                  : static_cast<facebook::react::Tag>(
+                        winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(
+                            m_compRootView)
+                            ->GetTag()),
+              args);
+          auto keyboardSource = winrt::make<CompositionInputKeyboardSource>(source);
+          onCharacterRecieved(keyboardSource, charArgs);
+          winrt::get_self<CompositionInputKeyboardSource>(keyboardSource)->Disconnect();
+        });
   }
 #endif
-};
+}
 
 CompositionEventHandler::~CompositionEventHandler() {
 #ifdef USE_WINUI3
@@ -247,6 +269,7 @@ CompositionEventHandler::~CompositionEventHandler() {
     auto keyboardSource = winrt::Microsoft::UI::Input::InputKeyboardSource::GetForIsland(island);
     keyboardSource.KeyDown(m_keyDownToken);
     keyboardSource.KeyUp(m_keyUpToken);
+    keyboardSource.CharacterReceived(m_characterReceivedToken);
   }
 #endif
 }
@@ -435,6 +458,17 @@ void CompositionEventHandler::onKeyUp(
   }
 }
 
+void CompositionEventHandler::onCharacterRecieved(
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+    const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept {
+  if (auto focusedComponent = RootComponentView().GetFocusedComponent()) {
+    focusedComponent->onCharacterRecieved(source, args);
+
+    if (args.Handled())
+      return;
+  }
+}
+
 std::vector<IComponentView *> GetTouchableViewsInPathToRoot(IComponentView *view) {
   std::vector<IComponentView *> results;
   while (view) {
@@ -448,11 +482,11 @@ std::vector<IComponentView *> GetTouchableViewsInPathToRoot(IComponentView *view
 
 /**
  * Private method which is used for tracking the location of pointer events to manage the entering/leaving events.
- * The primary idea is that a pointer's presence & movement is dictated by a variety of underlying events such as down,
- * move, and up — and they should all be treated the same when it comes to tracking the entering & leaving of pointers
- * to views. This method accomplishes that by receiving the pointer event, the target view (can be null in cases when
- * the event indicates that the pointer has left the screen entirely), and a block/callback where the underlying event
- * should be fired.
+ * The primary idea is that a pointer's presence & movement is dictated by a variety of underlying events such as
+ * down, move, and up — and they should all be treated the same when it comes to tracking the entering & leaving of
+ * pointers to views. This method accomplishes that by receiving the pointer event, the target view (can be null in
+ * cases when the event indicates that the pointer has left the screen entirely), and a block/callback where the
+ * underlying event should be fired.
  */
 void CompositionEventHandler::HandleIncomingPointerEvent(
     facebook::react::PointerEvent &event,

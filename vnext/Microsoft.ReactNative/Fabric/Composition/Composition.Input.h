@@ -39,6 +39,31 @@ struct KeyRoutedEventArgs : winrt::implements<
   winrt::Windows::UI::Core::CorePhysicalKeyStatus m_keyStatus;
 };
 
+struct CharacterReceivedRoutedEventArgs
+    : winrt::implements<
+          CharacterReceivedRoutedEventArgs,
+          winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs,
+          winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs> {
+  CharacterReceivedRoutedEventArgs(facebook::react::Tag tag, uint32_t msg, uint64_t wParam, int64_t lParam);
+#ifdef USE_WINUI3
+  CharacterReceivedRoutedEventArgs(
+      facebook::react::Tag tag,
+      winrt::Microsoft::UI::Input::CharacterReceivedEventArgs const &args);
+#endif
+
+  int32_t OriginalSource() noexcept;
+  bool Handled() noexcept;
+  void Handled(bool value) noexcept;
+  int32_t KeyCode() noexcept;
+  winrt::Windows::UI::Core::CorePhysicalKeyStatus KeyStatus() noexcept;
+
+ private:
+  facebook::react::Tag m_tag{-1};
+  bool m_handled{false};
+  int32_t m_keycode;
+  winrt::Windows::UI::Core::CorePhysicalKeyStatus m_keyStatus;
+};
+
 struct PointerPointProperties : PointerPointPropertiesT<PointerPointProperties> {
 #ifdef USE_WINUI3
   PointerPointProperties(const winrt::Microsoft::UI::Input::PointerPointProperties &ppp);

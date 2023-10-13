@@ -75,6 +75,46 @@ winrt::Windows::System::VirtualKey KeyRoutedEventArgs::OriginalKey() noexcept {
   return m_key;
 }
 
+CharacterReceivedRoutedEventArgs::CharacterReceivedRoutedEventArgs(
+    facebook::react::Tag tag,
+    uint32_t msg,
+    uint64_t wParam,
+    int64_t lParam) {
+  assert(false); // TODO
+}
+
+#ifdef USE_WINUI3
+CharacterReceivedRoutedEventArgs::CharacterReceivedRoutedEventArgs(
+    facebook::react::Tag tag,
+    winrt::Microsoft::UI::Input::CharacterReceivedEventArgs const &args)
+    : m_tag(tag) {
+  auto keyStatus = args.KeyStatus();
+  m_keyStatus.RepeatCount = keyStatus.RepeatCount;
+  m_keyStatus.ScanCode = keyStatus.ScanCode;
+  m_keyStatus.IsExtendedKey = keyStatus.IsExtendedKey;
+  m_keyStatus.IsMenuKeyDown = keyStatus.IsMenuKeyDown;
+  m_keyStatus.WasKeyDown = keyStatus.WasKeyDown;
+  m_keyStatus.IsKeyReleased = keyStatus.IsKeyReleased;
+  m_keycode = args.KeyCode();
+}
+#endif
+
+int32_t CharacterReceivedRoutedEventArgs::OriginalSource() noexcept {
+  return m_tag;
+}
+bool CharacterReceivedRoutedEventArgs::Handled() noexcept {
+  return m_handled;
+}
+void CharacterReceivedRoutedEventArgs::Handled(bool value) noexcept {
+  m_handled = value;
+}
+int32_t CharacterReceivedRoutedEventArgs::KeyCode() noexcept {
+  return m_keycode;
+}
+winrt::Windows::UI::Core::CorePhysicalKeyStatus CharacterReceivedRoutedEventArgs::KeyStatus() noexcept {
+  return m_keyStatus;
+}
+
 #ifdef USE_WINUI3
 PointerPointProperties::PointerPointProperties(const winrt::Microsoft::UI::Input::PointerPointProperties &ppp)
     : m_sysPointerPointProps(ppp) {}

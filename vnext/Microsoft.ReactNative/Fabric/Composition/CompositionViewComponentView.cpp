@@ -158,6 +158,14 @@ void CompositionBaseComponentView::onKeyUp(
   }
 }
 
+void CompositionBaseComponentView::onCharacterRecieved(
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+    const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept {
+  if (m_parent && !args.Handled()) {
+    m_parent->onCharacterRecieved(source, args);
+  }
+}
+
 void CompositionBaseComponentView::onPointerEntered(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
   if (m_parent && !args.Handled()) {

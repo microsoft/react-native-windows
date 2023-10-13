@@ -57,7 +57,11 @@ void AbiCompositionViewComponentView::updateProps(
   const auto &oldViewProps = *std::static_pointer_cast<const AbiViewProps>(m_props);
   const auto &newViewProps = *std::static_pointer_cast<const AbiViewProps>(props);
 
+  updateAccessibilityProps(oldViewProps, newViewProps);
+  // updateShadowProps(oldViewProps, newViewProps, m_visual);
+  // updateTransformProps(oldViewProps, newViewProps, m_visual);
   updateBorderProps(oldViewProps, newViewProps);
+
   Builder().UpdateProps(m_handle, newViewProps.UserProps());
 
   m_props = std::static_pointer_cast<AbiViewProps const>(props);
