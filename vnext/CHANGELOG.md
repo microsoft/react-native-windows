@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 12 Oct 2023 05:15:53 GMT and should not be manually modified.
+This log was last generated on Fri, 13 Oct 2023 05:15:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.718
+
+Fri, 13 Oct 2023 05:15:18 GMT
+
+### Changes
+
+- [Fabric] Support hosting in ContentIsland (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Fix offset for automation provider when running in islands (30809111+acoates-ms@users.noreply.github.com)
+- reverted package.lock changes (yajurgrover24@gmail.com)
 
 ## 0.0.0-canary.717
 
