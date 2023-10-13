@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.73.0-nightly-20230925-2de964cfd",
+  "baseVersion": "0.73.0-nightly-20231002-0371014a3",
   "overrides": [
     {
       "type": "copy",
@@ -425,7 +425,7 @@
       "type": "copy",
       "directory": "js/examples/TurboModule",
       "baseDirectory": "packages/rn-tester/js/examples/TurboModule",
-      "baseHash": "ca77c10cb5eec44375e9c3fe09125ac9b12dace4",
+      "baseHash": "4840f6e3a1fc223ca176bc1e57499756f0fb1b5b",
       "issue": 4054
     },
     {
@@ -474,7 +474,7 @@
       "type": "copy",
       "file": "js/RNTesterAppShared.js",
       "baseFile": "packages/rn-tester/js/RNTesterAppShared.js",
-      "baseHash": "60347ef4094fcb58c89f0e2b204e1616e56d6b31",
+      "baseHash": "2b14fd09f68f828ba56342745f4d3e1d721b71f3",
       "issue": 4054
     },
     {
