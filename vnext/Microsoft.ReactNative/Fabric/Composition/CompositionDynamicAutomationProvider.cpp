@@ -137,6 +137,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
   if (props == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
   auto accessibilityRole = props->accessibilityRole;
+  auto accessibilityValue = props->accessibilityValue;
   // Invoke control pattern is used to support controls that do not maintain state
   // when activated but rather initiate or perform a single, unambiguous action.
   if (patternId == UIA_InvokePatternId &&
@@ -144,6 +145,11 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
        accessibilityRole == "splitbutton" || (accessibilityRole == "menuitem" && props->onAccessibilityTap) ||
        (accessibilityRole == "treeitem" && props->onAccessibilityTap))) {
     *pRetVal = static_cast<IInvokeProvider *>(this);
+    AddRef();
+  }
+
+  if (patternId == UIA_ValuePatternId && accessibilityValue.text.has_value()) {
+    *pRetVal = static_cast<IValueProvider *>(this);
     AddRef();
   }
 
@@ -324,6 +330,64 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::Invoke() {
     UiaRaiseAutomationEvent(spProviderSimple.get(), UIA_Invoke_InvokedEventId);
   }
 
+  return S_OK;
+}
+
+std::string convertLPCWSTRToString(LPCWSTR val) {
+  int strLength = WideCharToMultiByte(CP_UTF8, 0, val, -1, nullptr, 0, nullptr, nullptr);
+  std::string str(strLength, 0);
+  WideCharToMultiByte(CP_UTF8, 0, val, -1, &str[0], strLength, nullptr, nullptr);
+  return str;
+}
+
+BSTR StringToBSTR(const std::string &str) {
+  // Calculate the required BSTR size in bytes
+  int len = MultiByteToWideChar(CP_UTF8, 0, str.c_str(), -1, nullptr, 0);
+  if (len == 0) {
+    return nullptr; // Conversion error
+  }
+
+  // Allocate memory for the BSTR
+  BSTR bstr = SysAllocStringLen(nullptr, len - 1); // len includes the null terminator
+
+  // Convert the std::string to BSTR
+  MultiByteToWideChar(CP_UTF8, 0, str.c_str(), -1, bstr, len);
+
+  return bstr;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::SetValue(LPCWSTR val) {
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  auto props = std::static_pointer_cast<const facebook::react::ViewProps>(strongView->props());
+  std::string value = convertLPCWSTRToString(val);
+  auto baseView = std::static_pointer_cast<::Microsoft::ReactNative::CompositionBaseComponentView>(strongView);
+  if (baseView == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+  winrt::IInspectable uiaProvider = baseView->EnsureUiaProvider();
+  UpdateUiaProperty(uiaProvider, UIA_ValueValuePropertyId, *props->accessibilityValue.text, value);
+
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_Value(BSTR* pRetVal) {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  auto props = std::static_pointer_cast<const facebook::react::ViewProps>(strongView->props());
+  *pRetVal = StringToBSTR(*props->accessibilityValue.text);
+
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_IsReadOnly(BOOL* pRetVal) {
   return S_OK;
 }
 
