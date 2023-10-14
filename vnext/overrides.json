@@ -441,6 +441,13 @@
       "issue": 4590
     },
     {
+      "type": "patch",
+      "file": "src/Libraries/Image/resolveAssetSource.windows.js",
+      "baseFile": "packages/react-native/Libraries/Image/resolveAssetSource.js",
+      "baseHash": "594d34126769664b671f742d0b73376de6507a04",
+      "issue": 10619
+    },
+    {
       "type": "derived",
       "file": "src/Libraries/LogBox/UI/LogBoxInspectorCodeFrame.windows.js",
       "baseFile": "packages/react-native/Libraries/LogBox/UI/LogBoxInspectorCodeFrame.js",
