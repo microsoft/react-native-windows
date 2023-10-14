@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 13 Oct 2023 05:15:18 GMT and should not be manually modified.
+This log was last generated on Sat, 14 Oct 2023 05:13:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.719
+
+Sat, 14 Oct 2023 05:13:11 GMT
+
+### Changes
+
+- [PR] Fixes issues with packaged asset resolution (#10621) (erozell@outlook.com)
 
 ## 0.0.0-canary.718
 
