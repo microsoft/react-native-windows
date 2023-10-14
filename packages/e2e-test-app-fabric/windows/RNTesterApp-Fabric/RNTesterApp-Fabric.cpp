@@ -4,29 +4,21 @@
 #include "pch.h"
 #include "RNTesterApp-Fabric.h"
 
-#include "../../../../vnext/codegen/NativeDeviceInfoSpec.g.h"
-#include "winrt/AutomationChannel.h"
-
-#include <DispatcherQueue.h>
-#include <UIAutomation.h>
-
 #include <winrt/Microsoft.ReactNative.Composition.h>
 #include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Microsoft.UI.Composition.h>
 #include <winrt/Microsoft.UI.Content.h>
 #include <winrt/Microsoft.UI.Dispatching.h>
-#include <winrt/Microsoft.UI.Input.h>
 #include <winrt/Microsoft.UI.Windowing.h>
 #include <winrt/Microsoft.UI.interop.h>
 #include <winrt/Windows.Data.Json.h>
 #include <winrt/Windows.Foundation.h>
-
-#include "NativeModules.h"
-#include "ReactPropertyBag.h"
+#include "winrt/AutomationChannel.h"
 
 // Work around crash in DeviceInfo when running outside of XAML environment
 // TODO rework built-in DeviceInfo to allow it to be driven without use of HWNDs or XamlApps
 // Issue Tracking #11414
+#include "../../../../vnext/codegen/NativeDeviceInfoSpec.g.h"
 REACT_MODULE(DeviceInfo)
 struct DeviceInfo {
   using ModuleSpec = Microsoft::ReactNativeSpecs::DeviceInfoSpec;
@@ -53,8 +45,8 @@ struct DeviceInfo {
   winrt::Microsoft::ReactNative::ReactContext m_context;
 };
 
-struct CompReactPackageProvider
-    : winrt::implements<CompReactPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
+struct RNTesterAppReactPackageProvider
+    : winrt::implements<RNTesterAppReactPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
  public: // IReactPackageProvider
   void CreatePackage(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept {
     AddAttributedModules(packageBuilder, true);
@@ -72,6 +64,17 @@ float ScaleFactor(HWND hwnd) noexcept {
   return GetDpiForWindow(hwnd) / static_cast<float>(USER_DEFAULT_SCREEN_DPI);
 }
 
+void UpdateRootViewSizeToAppWindow(
+    winrt::Microsoft::ReactNative::CompositionRootView const &rootView,
+    winrt::Microsoft::UI::Windowing::AppWindow const &window) {
+  auto hwnd = winrt::Microsoft::UI::GetWindowFromWindowId(window.Id());
+  auto scaleFactor = ScaleFactor(hwnd);
+  winrt::Windows::Foundation::Size size{
+      window.ClientSize().Width / scaleFactor, window.ClientSize().Height / scaleFactor};
+  rootView.Arrange(size);
+  rootView.Size(size);
+}
+
 // Create and configure the ReactNativeHost
 winrt::Microsoft::ReactNative::ReactNativeHost CreateReactNativeHost(
     HWND hwnd,
@@ -83,6 +86,8 @@ winrt::Microsoft::ReactNative::ReactNativeHost CreateReactNativeHost(
   // Disable until we have a 3rd party story for custom components
   // RegisterAutolinkedNativeModulePackages(host.PackageProviders()); // Includes any
   // autolinked modules
+  host.PackageProviders().Append(winrt::make<RNTesterAppReactPackageProvider>());
+  host.PackageProviders().Append(winrt::AutomationChannel::ReactPackageProvider());
 
   host.InstanceSettings().JavaScriptBundleFile(L"index.windows");
   host.InstanceSettings().DebugBundlePath(L"index");
@@ -91,14 +96,11 @@ winrt::Microsoft::ReactNative::ReactNativeHost CreateReactNativeHost(
   host.InstanceSettings().BundleRootPath(
       std::wstring(L"file:").append(workingDir).append(L"\\windows\\RNTesterApp-Fabric\\Bundle\\").c_str());
   host.InstanceSettings().DebuggerBreakOnNextLine(false);
-#if BUNDLE
+#if _DEBUG
   host.InstanceSettings().UseFastRefresh(true);
 #endif
-  // host.InstanceSettings().DebuggerPort(9229);
   host.InstanceSettings().UseDeveloperSupport(true);
 
-  host.PackageProviders().Append(winrt::make<CompReactPackageProvider>());
-  host.PackageProviders().Append(winrt::AutomationChannel::ReactPackageProvider());
   winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
       host.InstanceSettings().Properties(), reinterpret_cast<uint64_t>(hwnd));
 
@@ -131,50 +133,48 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   window.Resize({1000, 1000});
   window.Show();
   auto hwnd = winrt::Microsoft::UI::GetWindowFromWindowId(window.Id());
+  auto scaleFactor = ScaleFactor(hwnd);
 
   auto host = CreateReactNativeHost(hwnd, compositor);
 
-  // Nudge the ReactNativeHost to create the instance and wrapping context
+  // Start the react-native instance, which will create a JavaScript runtime and load the applications bundle
   host.ReloadInstance();
 
+  // Create a RootView which will present a react-native component
   winrt::Microsoft::ReactNative::ReactViewOptions viewOptions;
   viewOptions.ComponentName(appName);
+  auto rootView = winrt::Microsoft::ReactNative::CompositionRootView(compositor);
+  rootView.ReactViewHost(winrt::Microsoft::ReactNative::ReactCoreInjection::MakeViewHost(host, viewOptions));
 
-  auto compRootView = winrt::Microsoft::ReactNative::CompositionRootView(compositor);
-  compRootView.ReactViewHost(winrt::Microsoft::ReactNative::ReactCoreInjection::MakeViewHost(host, viewOptions));
-
-  window.Changed([wkRootView = winrt::make_weak(compRootView)](
+  // Update the size of the RootView when the AppWindow changes size
+  window.Changed([wkRootView = winrt::make_weak(rootView)](
                      winrt::Microsoft::UI::Windowing::AppWindow const &window,
                      winrt::Microsoft::UI::Windowing::AppWindowChangedEventArgs const &args) {
     if (args.DidSizeChange()) {
       if (auto rootView = wkRootView.get()) {
-        auto hwnd = winrt::Microsoft::UI::GetWindowFromWindowId(window.Id());
-        winrt::Windows::Foundation::Size size{
-            window.ClientSize().Width / ScaleFactor(hwnd), window.ClientSize().Height / ScaleFactor(hwnd)};
-        rootView.Arrange(size);
-        rootView.Size(size);
+        UpdateRootViewSizeToAppWindow(rootView, window);
       }
     }
   });
 
-  // Quit App when main window is closed
+  // Quit application when main window is closed
   window.Destroying([](winrt::Microsoft::UI::Windowing::AppWindow const &window, winrt::IInspectable const & /*args*/) {
     PostQuitMessage(0);
   });
 
+  // DesktopChildSiteBridge create a ContentSite that can host the RootView ContentIsland
   auto bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(compositor, window.Id());
+  bridge.Connect(rootView.Island());
+  bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
 
-  bridge.Connect(compRootView.Island());
+  auto invScale = 1.0f / scaleFactor;
+  rootView.RootVisual().Scale({invScale, invScale, invScale});
+  rootView.ScaleFactor(scaleFactor);
 
-  auto invScale = 1.0f / ScaleFactor(hwnd);
-  compRootView.RootVisual().Scale({invScale, invScale, invScale});
+  // Set the intialSize of the root view
+  UpdateRootViewSizeToAppWindow(rootView, window);
 
   bridge.Show();
-
-  compRootView.ScaleFactor(ScaleFactor(hwnd));
-  compRootView.Size({window.ClientSize().Width / ScaleFactor(hwnd), window.ClientSize().Height / ScaleFactor(hwnd)});
-
-  bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
 
   // Set Up Servers for E2E Testing
   winrt::AutomationChannel::CommandHandler handler;
@@ -184,6 +184,7 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   auto server = winrt::AutomationChannel::Server(handler);
   auto asyncAction = LoopServer(server);
 
+  // Run the main application event loop
   dispatcherQueueController.DispatcherQueue().RunEventLoop();
 
   // Rundown the DispatcherQueue. This drains the queue and raises events to let components
