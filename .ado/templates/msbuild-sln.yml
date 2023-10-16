@@ -14,6 +14,7 @@ parameters:
   buildConfiguration: Debug
   msbuildArguments: ''
   warnAsError: true
+  oneESMode: false
 
 steps:
   - powershell: |
@@ -69,3 +70,4 @@ steps:
   - template: upload-build-logs.yml
     parameters:
       buildLogDirectory: $(BuildLogDirectory)
+      oneESMode: ${{ parameters.oneESMode }}
