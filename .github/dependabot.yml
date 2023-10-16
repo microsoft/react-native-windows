@@ -2,6 +2,25 @@ version: 2
 updates:
 - package-ecosystem: npm
   directory: "/"
+  groups:
+    babel:
+      patterns:
+        - '@babel*'
+      update-types:
+        - 'minor'
+        - 'patch'
+    jest:
+      patterns:
+        - '@jest*'
+      update-types:
+        - 'minor'
+        - 'patch'
+    rnx-kit:
+      patterns:
+        - '@rnx-kit*'
+      update-types:
+        - 'minor'
+        - 'patch'
   schedule:
     interval: daily
     time: "05:00"
