@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 14 Oct 2023 05:13:11 GMT",
+      "version": "0.0.0-canary.719",
+      "tag": "react-native-windows_v0.0.0-canary.719",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "e3c7f0238d493b2daa61b40d6b279c9f42924138",
+            "comment": "[PR] Fixes issues with packaged asset resolution (#10621)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 13 Oct 2023 05:15:18 GMT",
       "version": "0.0.0-canary.718",
       "tag": "react-native-windows_v0.0.0-canary.718",
