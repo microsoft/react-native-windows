@@ -16,6 +16,8 @@ const defaultTransform = [
   require('@rnw-scripts/babel-node-config'),
 ];
 
+const appWorkingDir = 'windows\\x64\\Release\\RNTesterApp-Fabric';
+
 module.exports = {
   preset: '@rnx-kit/jest-preset',
 
@@ -60,7 +62,8 @@ module.exports = {
   setupFilesAfterEnv: ['react-native-windows/jest/setup', './jest.setup.js'],
 
   testEnvironmentOptions: {
-    app: `windows\\x64\\Release\\RNTesterApp-Fabric\\RNTesterApp-Fabric.exe`,
+    app: `${appWorkingDir}\\RNTesterApp-Fabric.exe`,
+    appWorkingDir: appWorkingDir,
     enableAutomationChannel: true,
     /* -- Enable for more detailed logging
     webdriverOptions: {

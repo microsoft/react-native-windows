@@ -92,11 +92,11 @@ winrt::Microsoft::ReactNative::ReactNativeHost CreateReactNativeHost(
   host.InstanceSettings().JavaScriptBundleFile(L"index.windows");
   host.InstanceSettings().DebugBundlePath(L"index");
 
-  host.InstanceSettings().UseDirectDebugger(true);
   host.InstanceSettings().BundleRootPath(
-      std::wstring(L"file:").append(workingDir).append(L"\\windows\\RNTesterApp-Fabric\\Bundle\\").c_str());
+      std::wstring(L"file:").append(workingDir).append(L"\\Bundle\\").c_str());
   host.InstanceSettings().DebuggerBreakOnNextLine(false);
 #if _DEBUG
+  host.InstanceSettings().UseDirectDebugger(true);
   host.InstanceSettings().UseFastRefresh(true);
 #endif
   host.InstanceSettings().UseDeveloperSupport(true);
