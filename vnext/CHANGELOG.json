@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 16 Oct 2023 23:50:47 GMT",
+      "tag": "react-native-windows_v0.72.14",
+      "version": "0.72.14",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "9cf08d5f6bc6d07b1490a6ead29994a7e14ad1ef",
+            "comment": "Integrate RN 0.72.6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 16 Oct 2023 15:15:26 GMT",
       "tag": "react-native-windows_v0.72.13",
       "version": "0.72.13",
