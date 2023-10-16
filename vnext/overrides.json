@@ -96,6 +96,20 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/RawPropsParser.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/core/RawPropsParser.cpp",
+      "baseHash": "caa209ccd7c1eceb4bb34558720ebcbe43f3db5a",
+      "issue": 12300
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/ShadowNode.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/core/ShadowNode.cpp",
+      "baseHash": "e4feb272298f6625461f5bdca2fca4d64e1a5894",
+      "issue": 12300
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mounting/ShadowTree.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/mounting/ShadowTree.cpp",
       "baseHash": "6a1ef351833bd02ce27544dd3db205c1bf2c4139",

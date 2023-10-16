@@ -120,7 +120,7 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
   std::shared_ptr<facebook::react::WindowsTextInputProps const> m_props;
   std::shared_ptr<facebook::react::WindowsTextInputShadowNode::ConcreteState const> m_state;
   RECT m_rcClient;
-  int m_mostRecentEventCount{0};
+  int64_t m_mostRecentEventCount{0};
   int m_nativeEventCount{0};
   bool m_comingFromJS{false};
   bool m_comingFromState{false};
