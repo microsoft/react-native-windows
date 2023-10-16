@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 10 Oct 2023 21:08:01 GMT and should not be manually modified.
+This log was last generated on Mon, 16 Oct 2023 15:15:26 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.72.13
+
+Mon, 16 Oct 2023 15:15:26 GMT
+
+### Patches
+
+- Implement WebSocketTurboModuleProxy (#12214) (julio.rocha@microsoft.com)
 
 ## 0.72.12
 
