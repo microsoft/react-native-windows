@@ -792,7 +792,7 @@ void WindowsTextInputComponentView::onKeyUp(
   Super::onKeyDown(source, args);
 }
 
-void WindowsTextInputComponentView::onCharacterRecieved(
+void WindowsTextInputComponentView::onCharacterReceived(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept {
   // Do not forward tab keys into the TextInput, since we want that to do the tab loop instead.  This aligns with WinUI

@@ -55,6 +55,10 @@ void ReactCompositionViewComponentBuilder::SetKeyUpHandler(KeyHandler impl) noex
   m_keyUp = impl;
 }
 
+void ReactCompositionViewComponentBuilder::SetCharacterReceivedHandler(CharacterReceivedHandler impl) noexcept {
+  m_characterReceived = impl;
+}
+
 void ReactCompositionViewComponentBuilder::SetPointerEnteredHandler(PointerHandler impl) noexcept {
   m_pointerEntered = impl;
 }
@@ -136,6 +140,15 @@ void ReactCompositionViewComponentBuilder::OnKeyUp(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
   if (m_keyUp) {
     m_keyUp(handle, source, args);
+  }
+}
+
+void ReactCompositionViewComponentBuilder::OnCharacterReceived(
+    winrt::Windows::Foundation::IInspectable handle,
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+    const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept {
+  if (m_characterReceived) {
+    m_characterReceived(handle, source, args);
   }
 }
 

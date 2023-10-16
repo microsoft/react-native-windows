@@ -119,6 +119,13 @@ void AbiCompositionViewComponentView::onKeyUp(
   Super::onKeyUp(source, args);
 }
 
+void AbiCompositionViewComponentView::onCharacterReceived(
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+    const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept {
+  Builder().OnCharacterReceived(m_handle, source, args);
+  Super::onCharacterReceived(source, args);
+}
+
 void AbiCompositionViewComponentView::onPointerEntered(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
   Builder().OnPointerEntered(m_handle, args);

@@ -251,7 +251,7 @@ CompositionEventHandler::CompositionEventHandler(
                             ->GetTag()),
               args);
           auto keyboardSource = winrt::make<CompositionInputKeyboardSource>(source);
-          onCharacterRecieved(keyboardSource, charArgs);
+          onCharacterReceived(keyboardSource, charArgs);
           winrt::get_self<CompositionInputKeyboardSource>(keyboardSource)->Disconnect();
         });
   }
@@ -392,7 +392,7 @@ int64_t CompositionEventHandler::SendMessage(uint32_t msg, uint64_t wParam, int6
           wParam,
           lParam);
       auto keyboardSource = winrt::make<CompositionKeyboardSource>(this);
-      onCharacterRecieved(keyboardSource, args);
+      onCharacterReceived(keyboardSource, args);
       winrt::get_self<CompositionKeyboardSource>(keyboardSource)->Disconnect();
     }
     case WM_KEYDOWN:
@@ -465,11 +465,11 @@ void CompositionEventHandler::onKeyUp(
   }
 }
 
-void CompositionEventHandler::onCharacterRecieved(
+void CompositionEventHandler::onCharacterReceived(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept {
   if (auto focusedComponent = RootComponentView().GetFocusedComponent()) {
-    focusedComponent->onCharacterRecieved(source, args);
+    focusedComponent->onCharacterReceived(source, args);
 
     if (args.Handled())
       return;
