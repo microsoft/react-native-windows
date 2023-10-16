@@ -28,7 +28,6 @@ typedef int PointerId;
 
 class CompositionEventHandler {
  public:
-  CompositionEventHandler(const winrt::Microsoft::ReactNative::ReactContext &context);
   CompositionEventHandler(
       const winrt::Microsoft::ReactNative::ReactContext &context,
       const winrt::Microsoft::ReactNative::CompositionRootView &CompositionRootView);
@@ -67,10 +66,16 @@ class CompositionEventHandler {
     Touch,
   };
   enum class TouchEventType { Start = 0, End, Move, Cancel, CaptureLost, PointerEntered, PointerExited, PointerMove };
-  void DispatchTouchEvent(TouchEventType eventType, PointerId pointerId);
+  void DispatchTouchEvent(
+      TouchEventType eventType,
+      PointerId pointerId,
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
+      winrt::Windows::System::VirtualKeyModifiers keyModifiers);
   void HandleIncomingPointerEvent(
       facebook::react::PointerEvent &pe,
       IComponentView *targetView,
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
+      winrt::Windows::System::VirtualKeyModifiers keyModifiers,
       std::function<void(std::vector<IComponentView *> &)> handler);
 
   struct ActiveTouch {
@@ -128,6 +133,15 @@ class CompositionEventHandler {
   std::map<PointerId, std::vector<ReactTaggedView>> m_currentlyHoveredViewsPerPointer;
   winrt::Microsoft::ReactNative::CompositionRootView m_compRootView{nullptr};
   winrt::Microsoft::ReactNative::ReactContext m_context;
+
+#ifdef USE_WINUI3
+  winrt::event_token m_pointerPressedToken;
+  winrt::event_token m_pointerReleasedToken;
+  winrt::event_token m_pointerMovedToken;
+  winrt::event_token m_pointerWheelChangedToken;
+  winrt::event_token m_keyDownToken;
+  winrt::event_token m_keyUpToken;
+#endif
 };
 
 } // namespace Microsoft::ReactNative

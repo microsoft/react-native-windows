@@ -1,0 +1,90 @@
+parameters:
+  - name: buildEnvironment
+    type: string
+    default: PullRequest
+    values:
+      - PullRequest
+      - Continuous
+  - name: AgentPool
+    type: object
+  - name: buildMatrix
+    type: object
+    default:
+      - BuildEnvironment: PullRequest
+        Matrix:
+          - Name: FabricX64Release
+            template: cpp-app
+            configuration: Release
+            platform: x64
+            additionalRunArguments: --no-autolink
+          - Name: FabricX86Debug
+            template: cpp-app
+            configuration: Debug
+            platform: x86
+            additionalRunArguments: --no-autolink
+      - BuildEnvironment: Continuous
+        Matrix:
+          - Name: FabricX64Debug
+            template: cpp-app
+            configuration: Debug
+            platform: x64
+            additionalRunArguments: --no-autolink
+          - Name: FabricX64Release
+            template: cpp-app
+            configuration: Release
+            platform: x64
+            additionalRunArguments: --no-autolink
+          - Name: FabricX86Debug
+            template: cpp-app
+            configuration: Debug
+            platform: x86
+            additionalRunArguments: --no-autolink
+          - Name: FabricX86Release
+            template: cpp-app
+            configuration: Release
+            platform: x86
+            additionalRunArguments: --no-autolink
+jobs:
+  - ${{ each config in parameters.buildMatrix }}:
+    - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
+      - ${{ each matrix in config.Matrix }}:
+          - job: CliInitWindows${{ matrix.Name }}
+            displayName: Verify CliInitWindows ${{ matrix.Name }}
+
+            variables: [template: ../variables/windows.yml]
+
+            ${{ if eq(matrix.lowResource, true) }}:
+              pool: ${{ parameters.AgentPool.Small }}
+            ${{ else }}:
+              pool: ${{ parameters.AgentPool.Medium }}
+            timeoutInMinutes: 60
+            cancelTimeoutInMinutes: 5
+
+            steps:
+              - template: ../templates/checkout-full.yml
+                parameters:
+                  persistCredentials: false # We don't need git creds in this job
+
+              - template: ../templates/prepare-js-env.yml
+
+              - template: ../templates/prepare-build-env.yml
+                parameters:
+                  platform: ${{ parameters.platform }}
+                  configuration: ${{ parameters.configuration }}
+                  buildEnvironment: ${{ parameters.buildEnvironment }}
+
+              - task: CmdLine@2
+                displayName: Create npm directory
+                name: createNpmDirectory
+                inputs:
+                  script: mkdir %APPDATA%\npm
+                  
+              - template: ../templates/react-native-init-windows.yml
+                parameters:
+                  template: ${{ matrix.template }}
+                  configuration: ${{ matrix.configuration }}
+                  platform: ${{ matrix.platform }}
+                  additionalInitArguments: ${{ matrix.additionalInitArguments }}
+                  additionalRunArguments: ${{ matrix.additionalRunArguments }}
+                  runWack: ${{ coalesce(matrix.runWack, false) }}
+                  buildEnvironment: ${{ parameters.buildEnvironment }}

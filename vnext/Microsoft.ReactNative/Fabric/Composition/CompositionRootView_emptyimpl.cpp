@@ -47,11 +47,11 @@ winrt::Windows::Foundation::Size CompositionRootView::Size() noexcept {
 
 void CompositionRootView::Size(winrt::Windows::Foundation::Size) noexcept {}
 
-double CompositionRootView::ScaleFactor() noexcept {
+float CompositionRootView::ScaleFactor() noexcept {
   return 0;
 }
 
-void CompositionRootView::ScaleFactor(double) noexcept {}
+void CompositionRootView::ScaleFactor(float) noexcept {}
 
 winrt::IInspectable CompositionRootView::GetUiaProvider() noexcept {
   return nullptr;

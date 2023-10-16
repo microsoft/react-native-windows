@@ -67,8 +67,8 @@ void CompositionHwndHost::Initialize(uint64_t hwnd) noexcept {
   UpdateSize();
 }
 
-double CompositionHwndHost::ScaleFactor() noexcept {
-  return GetDpiForWindow(m_hwnd) / 96.0;
+float CompositionHwndHost::ScaleFactor() noexcept {
+  return GetDpiForWindow(m_hwnd) / 96.0f;
 }
 
 void CompositionHwndHost::UpdateSize() noexcept {

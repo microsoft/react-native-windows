@@ -10,6 +10,7 @@
 #include <array>
 
 #include <yoga/bits/NumericBitfield.h>
+#include <yoga/enums/Dimension.h>
 #include <yoga/enums/Direction.h>
 #include <yoga/node/CachedMeasurement.h>
 #include <yoga/numeric/FloatOptional.h>
@@ -22,7 +23,6 @@ struct LayoutResults {
   static constexpr int32_t MaxCachedMeasurements = 8;
 
   std::array<float, 4> position = {};
-  std::array<float, 2> dimensions = {{YGUndefined, YGUndefined}};
   std::array<float, 4> margin = {};
   std::array<float, 4> border = {};
   std::array<float, 4> padding = {};
@@ -30,6 +30,9 @@ struct LayoutResults {
  private:
   Direction direction_ = Direction::Inherit;
   bool hadOverflow_ = false;
+
+  std::array<float, 2> dimensions_ = {{YGUndefined, YGUndefined}};
+  std::array<float, 2> measuredDimensions_ = {{YGUndefined, YGUndefined}};
 
  public:
   uint32_t computedFlexBasisGeneration = 0;
@@ -42,7 +45,6 @@ struct LayoutResults {
 
   uint32_t nextCachedMeasurementsIndex = 0;
   std::array<CachedMeasurement, MaxCachedMeasurements> cachedMeasurements = {};
-  std::array<float, 2> measuredDimensions = {{YGUndefined, YGUndefined}};
 
   CachedMeasurement cachedLayout{};
 
@@ -57,8 +59,25 @@ struct LayoutResults {
   bool hadOverflow() const {
     return hadOverflow_;
   }
+
   void setHadOverflow(bool hadOverflow) {
     hadOverflow_ = hadOverflow;
+  }
+
+  float dimension(Dimension axis) const {
+    return dimensions_[yoga::to_underlying(axis)];
+  }
+
+  void setDimension(Dimension axis, float dimension) {
+    dimensions_[yoga::to_underlying(axis)] = dimension;
+  }
+
+  float measuredDimension(Dimension axis) const {
+    return measuredDimensions_[yoga::to_underlying(axis)];
+  }
+
+  void setMeasuredDimension(Dimension axis, float dimension) {
+    measuredDimensions_[yoga::to_underlying(axis)] = dimension;
   }
 
   bool operator==(LayoutResults layout) const;
