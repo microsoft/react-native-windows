@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 16 Oct 2023 15:14:35 GMT",
+      "tag": "react-native-windows_v0.71.42",
+      "version": "0.71.42",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d755604625a3cf4b704edb607e823f0f7367ebb5",
+            "comment": "Implement WebSocketTurboModuleProxy (#12214)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 11 Oct 2023 23:26:49 GMT",
       "tag": "react-native-windows_v0.71.41",
       "version": "0.71.41",
