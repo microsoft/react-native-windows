@@ -33,6 +33,8 @@ export type EnvironmentOptions = {
    */
   appArguments?: string;
 
+  appWorkingDir?: string;
+
   enableAutomationChannel?: boolean;
   automationChannelPort?: number;
   winAppDriverBin?: string;
@@ -81,7 +83,9 @@ export default class AutomationEnvironment extends NodeEnvironment {
       port: 4723,
       capabilities: {
         app: resolveAppName(passedOptions.app),
-
+        ...(passedOptions.appWorkingDir && {
+          appWorkingDir: passedOptions.appWorkingDir,
+        }),
         ...(passedOptions.appArguments && {
           appArguments: passedOptions.appArguments,
         }),
