@@ -55,6 +55,10 @@ struct RNTesterAppReactPackageProvider
 
 constexpr PCWSTR appName = L"RNTesterApp";
 
+// Keep track of errors and warnings to be able to report them to automation
+std::vector<std::string> g_Errors;
+std::vector<std::string> g_Warnings;
+
 // Forward declarations of functions included in this code module:
 winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::JsonValue payload);
 winrt::Windows::Data::Json::JsonObject DumpVisualTree(winrt::Windows::Data::Json::JsonValue payload);
@@ -92,14 +96,23 @@ winrt::Microsoft::ReactNative::ReactNativeHost CreateReactNativeHost(
   host.InstanceSettings().JavaScriptBundleFile(L"index.windows");
   host.InstanceSettings().DebugBundlePath(L"index");
 
-  host.InstanceSettings().BundleRootPath(
-      std::wstring(L"file:").append(workingDir).append(L"\\Bundle\\").c_str());
+  host.InstanceSettings().BundleRootPath(std::wstring(L"file:").append(workingDir).append(L"\\Bundle\\").c_str());
   host.InstanceSettings().DebuggerBreakOnNextLine(false);
 #if _DEBUG
   host.InstanceSettings().UseDirectDebugger(true);
   host.InstanceSettings().UseFastRefresh(true);
 #endif
   host.InstanceSettings().UseDeveloperSupport(true);
+
+  // Test App hooks into JS console.log implementation to record errors/warnings
+  host.InstanceSettings().NativeLogger([](winrt::Microsoft::ReactNative::LogLevel level, winrt::hstring message) {
+    if (level == winrt::Microsoft::ReactNative::LogLevel::Error ||
+        level == winrt::Microsoft::ReactNative::LogLevel::Fatal) {
+      g_Errors.push_back(winrt::to_string(message));
+    } else if (level == winrt::Microsoft::ReactNative::LogLevel::Warning) {
+      g_Warnings.push_back(winrt::to_string(message));
+    }
+  });
 
   winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
       host.InstanceSettings().Properties(), reinterpret_cast<uint64_t>(hwnd));
@@ -200,9 +213,19 @@ winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::Js
   winrt::Windows::Data::Json::JsonObject result;
   winrt::Windows::Data::Json::JsonArray jsonErrors;
   winrt::Windows::Data::Json::JsonArray jsonWarnings;
-  // TODO: Add Error and Warnings
+
+  for (auto &err : g_Errors) {
+    jsonErrors.InsertAt(0, winrt::Windows::Data::Json::JsonValue::CreateStringValue(winrt::to_hstring(err)));
+  }
+  g_Errors.clear();
+  for (auto &warn : g_Warnings) {
+    jsonWarnings.InsertAt(0, winrt::Windows::Data::Json::JsonValue::CreateStringValue(winrt::to_hstring(warn)));
+  }
+  g_Warnings.clear();
+
   result.Insert(L"errors", jsonErrors);
   result.Insert(L"warnings", jsonWarnings);
+
   return result;
 }
 
