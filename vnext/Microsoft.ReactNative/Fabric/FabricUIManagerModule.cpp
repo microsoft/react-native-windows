@@ -183,8 +183,8 @@ void FabricUIManager::startSurface(
 
   facebook::react::LayoutContext context;
   facebook::react::LayoutConstraints constraints;
-  context.pointScaleFactor = static_cast<float>(CompositionRootView->ScaleFactor());
-  context.fontSizeMultiplier = static_cast<float>(CompositionRootView->ScaleFactor());
+  context.pointScaleFactor = CompositionRootView->ScaleFactor();
+  context.fontSizeMultiplier = CompositionRootView->ScaleFactor();
   constraints.minimumSize.height = static_cast<float>(CompositionRootView->GetActualHeight());
   constraints.minimumSize.width = static_cast<float>(CompositionRootView->GetActualWidth());
   constraints.maximumSize.height = static_cast<float>(CompositionRootView->GetActualHeight());

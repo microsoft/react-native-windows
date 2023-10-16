@@ -69,6 +69,10 @@ struct IComponentView {
   virtual RECT getClientRect() const noexcept = 0;
   virtual void onFocusLost() noexcept = 0;
   virtual void onFocusGained() noexcept = 0;
+  virtual void onPointerEntered(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept = 0;
+  virtual void onPointerExited(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept = 0;
   virtual void onPointerPressed(
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept = 0;
   virtual void onPointerReleased(

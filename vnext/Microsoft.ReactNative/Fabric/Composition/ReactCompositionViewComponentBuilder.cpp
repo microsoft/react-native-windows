@@ -59,6 +59,14 @@ void ReactCompositionViewComponentBuilder::SetKeyUpHandler(KeyHandler impl) noex
   m_keyUp = impl;
 }
 
+void ReactCompositionViewComponentBuilder::SetPointerEnteredHandler(PointerHandler impl) noexcept {
+  m_pointerEntered = impl;
+}
+
+void ReactCompositionViewComponentBuilder::SetPointerExitedHandler(PointerHandler impl) noexcept {
+  m_pointerExited = impl;
+}
+
 void ReactCompositionViewComponentBuilder::SetPointerReleasedHandler(PointerHandler impl) noexcept {
   m_pointerReleased = impl;
 }
@@ -129,46 +137,68 @@ int64_t ReactCompositionViewComponentBuilder::SendMessage(
 }
 
 void ReactCompositionViewComponentBuilder::OnKeyDown(
+    winrt::Windows::Foundation::IInspectable handle,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
   if (m_keyDown) {
-    m_keyDown(source, args);
+    m_keyDown(handle, source, args);
   }
 }
 
 void ReactCompositionViewComponentBuilder::OnKeyUp(
+    winrt::Windows::Foundation::IInspectable handle,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
   if (m_keyUp) {
-    m_keyUp(source, args);
+    m_keyUp(handle, source, args);
+  }
+}
+
+void ReactCompositionViewComponentBuilder::OnPointerEntered(
+    winrt::Windows::Foundation::IInspectable handle,
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  if (m_pointerEntered) {
+    m_pointerEntered(handle, args);
+  }
+}
+
+void ReactCompositionViewComponentBuilder::OnPointerExited(
+    winrt::Windows::Foundation::IInspectable handle,
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  if (m_pointerExited) {
+    m_pointerExited(handle, args);
   }
 }
 
 void ReactCompositionViewComponentBuilder::OnPointerPressed(
+    winrt::Windows::Foundation::IInspectable handle,
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
   if (m_pointerPressed) {
-    m_pointerPressed(args);
+    m_pointerPressed(handle, args);
   }
 }
 
 void ReactCompositionViewComponentBuilder::OnPointerReleased(
+    winrt::Windows::Foundation::IInspectable handle,
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
   if (m_pointerReleased) {
-    m_pointerReleased(args);
+    m_pointerReleased(handle, args);
   }
 }
 
 void ReactCompositionViewComponentBuilder::OnPointerMoved(
+    winrt::Windows::Foundation::IInspectable handle,
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
   if (m_pointerMoved) {
-    m_pointerMoved(args);
+    m_pointerMoved(handle, args);
   }
 }
 
 void ReactCompositionViewComponentBuilder::OnPointerWheelChanged(
+    winrt::Windows::Foundation::IInspectable handle,
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
   if (m_pointerWheelChanged) {
-    m_pointerWheelChanged(args);
+    m_pointerWheelChanged(handle, args);
   }
 }
 

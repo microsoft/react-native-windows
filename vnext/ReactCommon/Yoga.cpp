@@ -418,6 +418,15 @@ void updateIndexedStyleProp(
       [idx, prop](Style& s, CompactValue x) { (s.*prop)()[idx] = x; });
 }
 
+template <auto GetterT, auto SetterT, typename IdxT>
+void updateIndexedStyleProp(YGNodeRef node, IdxT idx, CompactValue value) {
+  updateStyle(
+      resolveRef(node),
+      value,
+      [idx](Style& s, CompactValue x) { return (s.*GetterT)(idx) != x; },
+      [idx](Style& s, CompactValue x) { (s.*SetterT)(idx, x); });
+}
+
 } // namespace
 
 // MSVC has trouble inferring the return type of pointer to member functions
@@ -513,12 +522,10 @@ YGDisplay YGNodeStyleGetDisplay(const YGNodeConstRef node) {
   return unscopedEnum(resolveRef(node)->getStyle().display());
 }
 
-// TODO(T26792433): Change the API to accept FloatOptional.
 void YGNodeStyleSetFlex(const YGNodeRef node, const float flex) {
   updateStyle<MSVC_HINT(flex)>(node, &Style::flex, FloatOptional{flex});
 }
 
-// TODO(T26792433): Change the API to accept FloatOptional.
 float YGNodeStyleGetFlex(const YGNodeConstRef nodeRef) {
   const auto node = resolveRef(nodeRef);
   return node->getStyle().flex().isUndefined()
@@ -526,13 +533,11 @@ float YGNodeStyleGetFlex(const YGNodeConstRef nodeRef) {
       : node->getStyle().flex().unwrap();
 }
 
-// TODO(T26792433): Change the API to accept FloatOptional.
 void YGNodeStyleSetFlexGrow(const YGNodeRef node, const float flexGrow) {
   updateStyle<MSVC_HINT(flexGrow)>(
       node, &Style::flexGrow, FloatOptional{flexGrow});
 }
 
-// TODO(T26792433): Change the API to accept FloatOptional.
 void YGNodeStyleSetFlexShrink(const YGNodeRef node, const float flexShrink) {
   updateStyle<MSVC_HINT(flexShrink)>(
       node, &Style::flexShrink, FloatOptional{flexShrink});
@@ -541,7 +546,6 @@ void YGNodeStyleSetFlexShrink(const YGNodeRef node, const float flexShrink) {
 YGValue YGNodeStyleGetFlexBasis(const YGNodeConstRef node) {
   YGValue flexBasis = resolveRef(node)->getStyle().flexBasis();
   if (flexBasis.unit == YGUnitUndefined || flexBasis.unit == YGUnitAuto) {
-    // TODO(T26792433): Get rid off the use of YGUndefined at client side
     flexBasis.value = YGUndefined;
   }
   return flexBasis;
@@ -608,7 +612,6 @@ YGValue YGNodeStyleGetPadding(YGNodeConstRef node, YGEdge edge) {
   return resolveRef(node)->getStyle().padding()[edge];
 }
 
-// TODO(T26792433): Change the API to accept FloatOptional.
 void YGNodeStyleSetBorder(
     const YGNodeRef node,
     const YGEdge edge,
@@ -620,8 +623,6 @@ void YGNodeStyleSetBorder(
 float YGNodeStyleGetBorder(const YGNodeConstRef node, const YGEdge edge) {
   auto border = resolveRef(node)->getStyle().border()[edge];
   if (border.isUndefined() || border.isAuto()) {
-    // TODO(T26792433): Rather than returning YGUndefined, change the api to
-    // return FloatOptional.
     return YGUndefined;
   }
 
@@ -639,8 +640,6 @@ void YGNodeStyleSetGap(
 float YGNodeStyleGetGap(const YGNodeConstRef node, const YGGutter gutter) {
   auto gapLength = resolveRef(node)->getStyle().gap()[gutter];
   if (gapLength.isUndefined() || gapLength.isAuto()) {
-    // TODO(T26792433): Rather than returning YGUndefined, change the api to
-    // return FloatOptional.
     return YGUndefined;
   }
 
@@ -649,13 +648,11 @@ float YGNodeStyleGetGap(const YGNodeConstRef node, const YGGutter gutter) {
 
 // Yoga specific properties, not compatible with flexbox specification
 
-// TODO(T26792433): Change the API to accept FloatOptional.
 float YGNodeStyleGetAspectRatio(const YGNodeConstRef node) {
   const FloatOptional op = resolveRef(node)->getStyle().aspectRatio();
   return op.isUndefined() ? YGUndefined : op.unwrap();
 }
 
-// TODO(T26792433): Change the API to accept FloatOptional.
 void YGNodeStyleSetAspectRatio(const YGNodeRef node, const float aspectRatio) {
   updateStyle<MSVC_HINT(aspectRatio)>(
       node, &Style::aspectRatio, FloatOptional{aspectRatio});
@@ -663,98 +660,98 @@ void YGNodeStyleSetAspectRatio(const YGNodeRef node, const float aspectRatio) {
 
 void YGNodeStyleSetWidth(YGNodeRef node, float points) {
   auto value = CompactValue::ofMaybe<YGUnitPoint>(points);
-  updateIndexedStyleProp<MSVC_HINT(dimensions)>(
-      node, &Style::dimensions, YGDimensionWidth, value);
+  updateIndexedStyleProp<&Style::dimension, &Style::setDimension>(
+      node, Dimension::Width, value);
 }
 void YGNodeStyleSetWidthPercent(YGNodeRef node, float percent) {
   auto value = CompactValue::ofMaybe<YGUnitPercent>(percent);
-  updateIndexedStyleProp<MSVC_HINT(dimensions)>(
-      node, &Style::dimensions, YGDimensionWidth, value);
+  updateIndexedStyleProp<&Style::dimension, &Style::setDimension>(
+      node, Dimension::Width, value);
 }
 void YGNodeStyleSetWidthAuto(YGNodeRef node) {
-  updateIndexedStyleProp<MSVC_HINT(dimensions)>(
-      node, &Style::dimensions, YGDimensionWidth, CompactValue::ofAuto());
+  updateIndexedStyleProp<&Style::dimension, &Style::setDimension>(
+      node, Dimension::Width, CompactValue::ofAuto());
 }
 YGValue YGNodeStyleGetWidth(YGNodeConstRef node) {
-  return resolveRef(node)->getStyle().dimensions()[YGDimensionWidth];
+  return resolveRef(node)->getStyle().dimension(Dimension::Width);
 }
 
 void YGNodeStyleSetHeight(YGNodeRef node, float points) {
   auto value = CompactValue::ofMaybe<YGUnitPoint>(points);
-  updateIndexedStyleProp<MSVC_HINT(dimensions)>(
-      node, &Style::dimensions, YGDimensionHeight, value);
+  updateIndexedStyleProp<&Style::dimension, &Style::setDimension>(
+      node, Dimension::Height, value);
 }
 void YGNodeStyleSetHeightPercent(YGNodeRef node, float percent) {
   auto value = CompactValue::ofMaybe<YGUnitPercent>(percent);
-  updateIndexedStyleProp<MSVC_HINT(dimensions)>(
-      node, &Style::dimensions, YGDimensionHeight, value);
+  updateIndexedStyleProp<&Style::dimension, &Style::setDimension>(
+      node, Dimension::Height, value);
 }
 void YGNodeStyleSetHeightAuto(YGNodeRef node) {
-  updateIndexedStyleProp<MSVC_HINT(dimensions)>(
-      node, &Style::dimensions, YGDimensionHeight, CompactValue::ofAuto());
+  updateIndexedStyleProp<&Style::dimension, &Style::setDimension>(
+      node, Dimension::Height, CompactValue::ofAuto());
 }
 YGValue YGNodeStyleGetHeight(YGNodeConstRef node) {
-  return resolveRef(node)->getStyle().dimensions()[YGDimensionHeight];
+  return resolveRef(node)->getStyle().dimension(Dimension::Height);
 }
 
 void YGNodeStyleSetMinWidth(const YGNodeRef node, const float minWidth) {
   auto value = CompactValue::ofMaybe<YGUnitPoint>(minWidth);
-  updateIndexedStyleProp<MSVC_HINT(minDimensions)>(
-      node, &Style::minDimensions, YGDimensionWidth, value);
+  updateIndexedStyleProp<&Style::minDimension, &Style::setMinDimension>(
+      node, Dimension::Width, value);
 }
 void YGNodeStyleSetMinWidthPercent(const YGNodeRef node, const float minWidth) {
   auto value = CompactValue::ofMaybe<YGUnitPercent>(minWidth);
-  updateIndexedStyleProp<MSVC_HINT(minDimensions)>(
-      node, &Style::minDimensions, YGDimensionWidth, value);
+  updateIndexedStyleProp<&Style::minDimension, &Style::setMinDimension>(
+      node, Dimension::Width, value);
 }
 YGValue YGNodeStyleGetMinWidth(const YGNodeConstRef node) {
-  return resolveRef(node)->getStyle().minDimensions()[YGDimensionWidth];
+  return resolveRef(node)->getStyle().minDimension(Dimension::Width);
 }
 
 void YGNodeStyleSetMinHeight(const YGNodeRef node, const float minHeight) {
   auto value = CompactValue::ofMaybe<YGUnitPoint>(minHeight);
-  updateIndexedStyleProp<MSVC_HINT(minDimensions)>(
-      node, &Style::minDimensions, YGDimensionHeight, value);
+  updateIndexedStyleProp<&Style::minDimension, &Style::setMinDimension>(
+      node, Dimension::Height, value);
 }
 void YGNodeStyleSetMinHeightPercent(
     const YGNodeRef node,
     const float minHeight) {
   auto value = CompactValue::ofMaybe<YGUnitPercent>(minHeight);
-  updateIndexedStyleProp<MSVC_HINT(minDimensions)>(
-      node, &Style::minDimensions, YGDimensionHeight, value);
+  updateIndexedStyleProp<&Style::minDimension, &Style::setMinDimension>(
+      node, Dimension::Height, value);
 }
 YGValue YGNodeStyleGetMinHeight(const YGNodeConstRef node) {
-  return resolveRef(node)->getStyle().minDimensions()[YGDimensionHeight];
+  return resolveRef(node)->getStyle().minDimension(Dimension::Height);
 }
 
 void YGNodeStyleSetMaxWidth(const YGNodeRef node, const float maxWidth) {
   auto value = CompactValue::ofMaybe<YGUnitPoint>(maxWidth);
-  updateIndexedStyleProp<MSVC_HINT(maxDimensions)>(
-      node, &Style::maxDimensions, YGDimensionWidth, value);
+  updateIndexedStyleProp<&Style::maxDimension, &Style::setMaxDimension>(
+      node, Dimension::Width, value);
 }
 void YGNodeStyleSetMaxWidthPercent(const YGNodeRef node, const float maxWidth) {
   auto value = CompactValue::ofMaybe<YGUnitPercent>(maxWidth);
-  updateIndexedStyleProp<MSVC_HINT(maxDimensions)>(
-      node, &Style::maxDimensions, YGDimensionWidth, value);
+  updateIndexedStyleProp<&Style::maxDimension, &Style::setMaxDimension>(
+      node, Dimension::Width, value);
 }
 YGValue YGNodeStyleGetMaxWidth(const YGNodeConstRef node) {
-  return resolveRef(node)->getStyle().maxDimensions()[YGDimensionWidth];
+  return resolveRef(node)->getStyle().maxDimension(Dimension::Width);
 }
 
 void YGNodeStyleSetMaxHeight(const YGNodeRef node, const float maxHeight) {
   auto value = CompactValue::ofMaybe<YGUnitPoint>(maxHeight);
-  updateIndexedStyleProp<MSVC_HINT(maxDimensions)>(
-      node, &Style::maxDimensions, YGDimensionHeight, value);
+  updateIndexedStyleProp<&Style::maxDimension, &Style::setMaxDimension>(
+      node, Dimension::Height, value);
 }
 void YGNodeStyleSetMaxHeightPercent(
     const YGNodeRef node,
     const float maxHeight) {
   auto value = CompactValue::ofMaybe<YGUnitPercent>(maxHeight);
-  updateIndexedStyleProp<MSVC_HINT(maxDimensions)>(
-      node, &Style::maxDimensions, YGDimensionHeight, value);
+  updateIndexedStyleProp<&Style::maxDimension, &Style::setMaxDimension>(
+      node, Dimension::Height, value);
 }
 YGValue YGNodeStyleGetMaxHeight(const YGNodeConstRef node) {
-  return resolveRef(node)->getStyle().maxDimensions()[YGDimensionHeight];
+  return resolveRef(node)->getStyle().maxDimension(Dimension::Height);
 }
 
 namespace {
@@ -807,11 +804,11 @@ float YGNodeLayoutGetBottom(const YGNodeConstRef node) {
 }
 
 float YGNodeLayoutGetWidth(const YGNodeConstRef node) {
-  return resolveRef(node)->getLayout().dimensions[YGDimensionWidth];
+  return resolveRef(node)->getLayout().dimension(Dimension::Width);
 }
 
 float YGNodeLayoutGetHeight(const YGNodeConstRef node) {
-  return resolveRef(node)->getLayout().dimensions[YGDimensionHeight];
+  return resolveRef(node)->getLayout().dimension(Dimension::Height);
 }
 
 YGDirection YGNodeLayoutGetDirection(const YGNodeConstRef node) {

@@ -1,8 +1,52 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 10 Oct 2023 05:13:38 GMT and should not be manually modified.
+This log was last generated on Sat, 14 Oct 2023 05:13:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.719
+
+Sat, 14 Oct 2023 05:13:11 GMT
+
+### Changes
+
+- [PR] Fixes issues with packaged asset resolution (#10621) (erozell@outlook.com)
+
+## 0.0.0-canary.718
+
+Fri, 13 Oct 2023 05:15:18 GMT
+
+### Changes
+
+- [Fabric] Support hosting in ContentIsland (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Fix offset for automation provider when running in islands (30809111+acoates-ms@users.noreply.github.com)
+- reverted package.lock changes (yajurgrover24@gmail.com)
+
+## 0.0.0-canary.717
+
+Thu, 12 Oct 2023 05:15:53 GMT
+
+### Changes
+
+- [Fabric] Add native PointerEntered+PointerExited events (30809111+acoates-ms@users.noreply.github.com)
+- Integrate 9/25 (yajurgrover24@gmail.com)
+- Add `@microsoft/eslint-plugin-sdl` to `@rnw-scripts/eslint-config` (jthysell@microsoft.com)
+- Implement WebSocketTurboModuleProxy (julio.rocha@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.192
+- Bump @react-native-windows/codegen to v0.0.0-canary.71
+- Bump @rnw-scripts/eslint-config to v1.2.3
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.6
+- Bump @rnw-scripts/just-task to v2.3.17
+- Bump react-native-platform-override to v1.9.16
+
+## 0.0.0-canary.716
+
+Wed, 11 Oct 2023 05:13:16 GMT
+
+### Changes
+
+- add fabric switch path animation (tatianakapos@microsoft.com)
+- Conditionally register WebSocket Cxx module (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.715
 

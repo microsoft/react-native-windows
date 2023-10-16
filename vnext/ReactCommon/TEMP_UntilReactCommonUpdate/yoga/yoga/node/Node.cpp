@@ -202,13 +202,13 @@ FloatOptional Node::getMarginForAxis(
   return getLeadingMargin(axis, widthSize) + getTrailingMargin(axis, widthSize);
 }
 
-FloatOptional Node::getGapForAxis(
-    const FlexDirection axis,
-    const float widthSize) const {
+float Node::getGapForAxis(const FlexDirection axis, const float widthSize)
+    const {
   auto gap = isRow(axis)
-      ? computeColumnGap(style_.gap(), CompactValue::ofZero())
-      : computeRowGap(style_.gap(), CompactValue::ofZero());
-  return yoga::resolveValue(gap, widthSize);
+      ? computeColumnGap(style_.gap(), CompactValue::ofUndefined())
+      : computeRowGap(style_.gap(), CompactValue::ofUndefined());
+  auto resolvedGap = yoga::resolveValue(gap, widthSize);
+  return maxOrDefined(resolvedGap.unwrap(), 0);
 }
 
 YGSize Node::measure(
@@ -339,17 +339,16 @@ void Node::setLayoutComputedFlexBasisGeneration(
 
 void Node::setLayoutMeasuredDimension(
     float measuredDimension,
-    YGDimension dimension) {
-  layout_.measuredDimensions[static_cast<size_t>(dimension)] =
-      measuredDimension;
+    Dimension dimension) {
+  layout_.setMeasuredDimension(dimension, measuredDimension);
 }
 
 void Node::setLayoutHadOverflow(bool hadOverflow) {
   layout_.setHadOverflow(hadOverflow);
 }
 
-void Node::setLayoutDimension(float dimensionValue, YGDimension dimension) {
-  layout_.dimensions[static_cast<size_t>(dimension)] = dimensionValue;
+void Node::setLayoutDimension(float dimensionValue, Dimension dimension) {
+  layout_.setDimension(dimension, dimensionValue);
 }
 
 // If both left and right are defined, then use left. Otherwise return +left or
@@ -434,15 +433,13 @@ YGValue Node::resolveFlexBasisPtr() const {
 }
 
 void Node::resolveDimension() {
-  using namespace yoga;
   const Style& style = getStyle();
-  for (auto dim : {YGDimensionWidth, YGDimensionHeight}) {
-    if (!style.maxDimensions()[dim].isUndefined() &&
-        yoga::inexactEquals(
-            style.maxDimensions()[dim], style.minDimensions()[dim])) {
-      resolvedDimensions_[dim] = style.maxDimensions()[dim];
+  for (auto dim : {Dimension::Width, Dimension::Height}) {
+    if (!style.maxDimension(dim).isUndefined() &&
+        yoga::inexactEquals(style.maxDimension(dim), style.minDimension(dim))) {
+      resolvedDimensions_[yoga::to_underlying(dim)] = style.maxDimension(dim);
     } else {
-      resolvedDimensions_[dim] = style.dimensions()[dim];
+      resolvedDimensions_[yoga::to_underlying(dim)] = style.dimension(dim);
     }
   }
 }
