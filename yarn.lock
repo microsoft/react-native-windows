@@ -3272,9 +3272,9 @@
     chalk "*"
 
 "@types/diff-match-patch@^1.0.32":
-  version "1.0.33"
-  resolved "https://registry.yarnpkg.com/@types/diff-match-patch/-/diff-match-patch-1.0.33.tgz#aaef78118ad1f58d75cd7a194cd0a5dafe38820c"
-  integrity sha512-vj/5GCXzmfMueY4ltw0VAmcmT73uy//wA+epKjvzqwIRkFO2Ir2nwawFfMD/VlAjeeOfeRinoxr8tbyfunaL2Q==
+  version "1.0.34"
+  resolved "https://registry.yarnpkg.com/@types/diff-match-patch/-/diff-match-patch-1.0.34.tgz#a4c1bbf2f992ac272047a76f3de4da6f867fde18"
+  integrity sha512-GPT65LkqMpttT0BrYBzSv4FYgiEh7TXYxxFW8ufxn3+d6PhEJKdD4OAS4s0n8reeEku1ki56J2zj5FIPi5unVQ==
 
 "@types/envinfo@^7.8.1":
   version "7.8.1"
