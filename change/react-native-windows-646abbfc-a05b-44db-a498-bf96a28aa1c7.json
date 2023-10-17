@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "Integrate 10/02",
+  "comment": "add fabric switch path animation",
   "packageName": "react-native-windows",
-  "email": "yajurgrover24@gmail.com",
+  "email": "tatianakapos@microsoft.com",
   "dependentChangeType": "patch"
 }
