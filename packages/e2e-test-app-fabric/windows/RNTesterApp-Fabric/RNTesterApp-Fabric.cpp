@@ -362,13 +362,13 @@ winrt::Windows::Data::Json::JsonObject DumpVisualTree(winrt::Windows::Data::Json
   winrt::Windows::Data::Json::JsonObject result;
 
   IUIAutomation *pAutomation;
-  IUIAutomationElement* pRootElement;
-  IUIAutomationTreeWalker* pWalker;
+  IUIAutomationElement *pRootElement;
+  IUIAutomationTreeWalker *pWalker;
 
   CoCreateInstance(__uuidof(CUIAutomation8), nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pAutomation));
   pAutomation->get_ContentViewWalker(&pWalker);
   pAutomation->ElementFromHandle(global_hwnd, &pRootElement);
-  
+
   IUIAutomationElement *pTarget;
   IUIAutomationCondition *pCondition;
   VARIANT varAutomationId;
