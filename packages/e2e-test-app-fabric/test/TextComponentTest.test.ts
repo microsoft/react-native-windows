@@ -8,6 +8,7 @@
 import {dumpVisualTree} from '@react-native-windows/automation-commands';
 import {goToComponentExample} from './RNTesterNavigation';
 import {verifyNoErrorLogs} from './Helpers';
+import {app} from '@react-native-windows/automation';
 
 beforeAll(async () => {
   await goToComponentExample('Text');
@@ -19,10 +20,14 @@ afterEach(async () => {
 
 describe('Text Tests', () => {
   test('Text can wrap', async () => {
+    const componentsTab = await app.findElementByTestID('text-wrap');
+    await componentsTab.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('text-wrap');
     expect(dump).toMatchSnapshot();
   });
   test('Padding can be added to Text', async () => {
+    const componentsTab = await app.findElementByTestID('text-padding');
+    await componentsTab.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('text-padding');
     expect(dump).toMatchSnapshot();
   });
