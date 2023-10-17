@@ -8,6 +8,7 @@
 import {dumpVisualTree} from '@react-native-windows/automation-commands';
 import {goToComponentExample} from './RNTesterNavigation';
 import {verifyNoErrorLogs} from './Helpers';
+import {app} from '@react-native-windows/automation';
 
 beforeAll(async () => {
   await goToComponentExample('TextInput');
@@ -19,6 +20,8 @@ afterEach(async () => {
 
 describe('TextInput Tests', () => {
   test('TextInputs can rewrite characters: Replace Space with Underscore', async () => {
+    const componentsTab = await app.findElementByTestID('rewrite_sp_underscore_input');
+    await componentsTab.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('rewrite_sp_underscore_input');
     expect(dump).toMatchSnapshot();
   });

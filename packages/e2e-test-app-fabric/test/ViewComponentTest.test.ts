@@ -8,6 +8,8 @@
 import {dumpVisualTree} from '@react-native-windows/automation-commands';
 import {goToComponentExample} from './RNTesterNavigation';
 import {verifyNoErrorLogs} from './Helpers';
+import {app} from '@react-native-windows/automation';
+
 
 beforeAll(async () => {
   await goToComponentExample('View');
@@ -19,18 +21,26 @@ afterEach(async () => {
 
 describe('View Tests', () => {
   test('Views can have border styles', async () => {
+    const componentsTab = await app.findElementByTestID('border-style-button');
+    await componentsTab.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('border-style-button');
     expect(dump).toMatchSnapshot();
   });
   test('Views can have offscreen alpha compositing', async () => {
+    const componentsTab = await app.findElementByTestID('offscreen-alpha-compositing-button');
+    await componentsTab.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('offscreen-alpha-compositing-button');
     expect(dump).toMatchSnapshot();
   });
   test('Views can have a z-index', async () => {
+    const componentsTab = await app.findElementByTestID('z-index-button');
+    await componentsTab.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('z-index-button');
     expect(dump).toMatchSnapshot();
   });
   test('Views can have display: none', async () => {
+    const componentsTab = await app.findElementByTestID('display-none-button');
+    await componentsTab.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('display-none-button');
     expect(dump).toMatchSnapshot();
   });
