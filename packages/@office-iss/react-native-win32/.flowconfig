@@ -10,6 +10,7 @@
 ; initRNLibraries build step
 <PROJECT_ROOT>/index.js
 <PROJECT_ROOT>/Libraries/Alert/Alert.js
+<PROJECT_ROOT>/Libraries/Components/AccessibilityInfo/AccessibilityInfo.js
 <PROJECT_ROOT>/Libraries/Components/Button.js
 <PROJECT_ROOT>/Libraries/Components/Pressable/Pressable.js
 <PROJECT_ROOT>/Libraries/Components/SafeAreaView/SafeAreaView.js
