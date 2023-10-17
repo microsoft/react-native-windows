@@ -8,7 +8,6 @@
 import {dumpVisualTree} from '@react-native-windows/automation-commands';
 import {goToComponentExample} from './RNTesterNavigation';
 import {verifyNoErrorLogs} from './Helpers';
-import {app} from '@react-native-windows/automation';
 
 beforeAll(async () => {
   await goToComponentExample('View');
