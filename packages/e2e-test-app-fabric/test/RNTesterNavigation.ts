@@ -34,6 +34,7 @@ async function goToExample(example: string) {
   // Only grab first three characters of string to reduce cases in WebDriverIO mistyping.
   await searchBox.addValue(regexEscape(example.substring(0, 3)));
   const exampleButton = await app.findElementByTestID(example);
+  await exampleButton.waitForDisplayed({timeout: 5000});
   await exampleButton.click();
 
   const componentsTab = await app.findElementByTestID('components-tab');
