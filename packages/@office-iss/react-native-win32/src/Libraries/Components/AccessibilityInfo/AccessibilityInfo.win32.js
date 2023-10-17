@@ -18,6 +18,7 @@ import {sendAccessibilityEvent} from '../../ReactNative/RendererProxy';
 import Platform from '../../Utilities/Platform';
 import legacySendAccessibilityEvent from './legacySendAccessibilityEvent';
 import NativeAccessibilityInfo from './NativeAccessibilityInfo';
+import NativeAccessibilityInfoWin32 from './NativeAccessibilityInfoWin32';
 import NativeAccessibilityManagerIOS from './NativeAccessibilityManager';
 
 // Events that are only supported on Android.
@@ -167,9 +168,15 @@ const AccessibilityInfo: AccessibilityInfoType = {
    */
   isReduceMotionEnabled(): Promise<boolean> {
     return new Promise((resolve, reject) => {
-      if (Platform.OS === 'android' || Platform.OS === 'win32') {
+      if (Platform.OS === 'android') {
         if (NativeAccessibilityInfo != null) {
           NativeAccessibilityInfo.isReduceMotionEnabled(resolve);
+        } else {
+          reject(null);
+        }
+      } else if (Platform.OS === 'win32') {
+        if (NativeAccessibilityInfoWin32 != null) {
+          NativeAccessibilityInfoWin32.isReduceMotionEnabled(resolve);
         } else {
           reject(null);
         }
@@ -249,9 +256,15 @@ const AccessibilityInfo: AccessibilityInfoType = {
    */
   isScreenReaderEnabled(): Promise<boolean> {
     return new Promise((resolve, reject) => {
-      if (Platform.OS === 'android' || Platform.OS === 'win32') {
+      if (Platform.OS === 'android') {
         if (NativeAccessibilityInfo != null) {
           NativeAccessibilityInfo.isTouchExplorationEnabled(resolve);
+        } else {
+          reject(null);
+        }
+      } else if (Platform.OS === 'win32') {
+        if (NativeAccessibilityInfoWin32 != null) {
+          NativeAccessibilityInfoWin32.isTouchExplorationEnabled(resolve);
         } else {
           reject(null);
         }
@@ -371,8 +384,10 @@ const AccessibilityInfo: AccessibilityInfoType = {
    * See https://reactnative.dev/docs/accessibilityinfo#announceforaccessibility
    */
   announceForAccessibility(announcement: string): void {
-    if (Platform.OS === 'android' || Platform.OS === 'win32') {
+    if (Platform.OS === 'android') {
       NativeAccessibilityInfo?.announceForAccessibility(announcement);
+    } else if (Platform.OS === 'win32') {
+      NativeAccessibilityInfoWin32?.announceForAccessibility(announcement);
     } else {
       NativeAccessibilityManagerIOS?.announceForAccessibility(announcement);
     }
@@ -383,18 +398,33 @@ const AccessibilityInfo: AccessibilityInfoType = {
    * - `announcement`: The string announced by the screen reader.
    * - `options`: An object that configures the reading options.
    *   - `queue`: The announcement will be queued behind existing announcements. iOS only.
+   *   - `nativeID`: The nativeID of the element to send the announcement from. win32 only.
    */
   announceForAccessibilityWithOptions(
     announcement: string,
-    options: {queue?: boolean},
+    options: {
+      queue?: boolean,
+      nativeID?: string, // win32
+    },
   ): void {
-    if (Platform.OS === 'android' || Platform.OS === 'win32') {
+    if (Platform.OS === 'android') {
       NativeAccessibilityInfo?.announceForAccessibility(announcement);
-    } else {
-      if (NativeAccessibilityManagerIOS?.announceForAccessibilityWithOptions) {
-        NativeAccessibilityManagerIOS?.announceForAccessibilityWithOptions(
+    } else if (Platform.OS === 'win32') {
+      if (NativeAccessibilityInfoWin32?.announceForAccessibilityWithOptions) {
+        NativeAccessibilityInfoWin32?.announceForAccessibilityWithOptions(
           announcement,
           options,
+        );
+      } else {
+        NativeAccessibilityInfoWin32?.announceForAccessibility(announcement);
+      }
+    } else {
+      if (NativeAccessibilityManagerIOS?.announceForAccessibilityWithOptions) {
+        const {nativeID: _, ...iosOptions} = options;
+        // $FlowFixMe[prop-missing]
+        NativeAccessibilityManagerIOS?.announceForAccessibilityWithOptions(
+          announcement,
+          iosOptions,
         );
       } else {
         NativeAccessibilityManagerIOS?.announceForAccessibility(announcement);
@@ -408,10 +438,21 @@ const AccessibilityInfo: AccessibilityInfoType = {
    * See https://reactnative.dev/docs/accessibilityinfo#getrecommendedtimeoutmillis
    */
   getRecommendedTimeoutMillis(originalTimeout: number): Promise<number> {
-    if (Platform.OS === 'android' || Platform.OS === 'win32') {
+    if (Platform.OS === 'android') {
       return new Promise((resolve, reject) => {
         if (NativeAccessibilityInfo?.getRecommendedTimeoutMillis) {
           NativeAccessibilityInfo.getRecommendedTimeoutMillis(
+            originalTimeout,
+            resolve,
+          );
+        } else {
+          resolve(originalTimeout);
+        }
+      });
+    } else if (Platform.OS === 'win32') {
+      return new Promise((resolve, reject) => {
+        if (NativeAccessibilityInfoWin32?.getRecommendedTimeoutMillis) {
+          NativeAccessibilityInfoWin32.getRecommendedTimeoutMillis(
             originalTimeout,
             resolve,
           );
