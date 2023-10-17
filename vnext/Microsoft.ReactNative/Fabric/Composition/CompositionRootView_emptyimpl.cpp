@@ -47,11 +47,11 @@ winrt::Windows::Foundation::Size CompositionRootView::Size() noexcept {
 
 void CompositionRootView::Size(winrt::Windows::Foundation::Size) noexcept {}
 
-double CompositionRootView::ScaleFactor() noexcept {
+float CompositionRootView::ScaleFactor() noexcept {
   return 0;
 }
 
-void CompositionRootView::ScaleFactor(double) noexcept {}
+void CompositionRootView::ScaleFactor(float) noexcept {}
 
 winrt::IInspectable CompositionRootView::GetUiaProvider() noexcept {
   return nullptr;
@@ -82,8 +82,6 @@ void CompositionRootView::SetTag(int64_t) noexcept {}
 int64_t CompositionRootView::SendMessage(uint32_t, uint64_t, int64_t) noexcept {
   return 0;
 }
-
-void CompositionRootView::OnScrollWheel(Windows::Foundation::Point, int32_t) noexcept {}
 
 void CompositionRootView::InitRootView(
     winrt::Microsoft::ReactNative::IReactContext &&,

@@ -269,6 +269,7 @@ parameters:
             platform: x64
             projectType: app
             lowResource: true
+
 jobs:
   - ${{ each config in parameters.buildMatrix }}:
     - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:

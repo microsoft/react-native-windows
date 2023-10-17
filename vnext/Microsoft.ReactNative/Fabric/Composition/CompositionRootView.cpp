@@ -21,6 +21,11 @@
 #include "ReactNativeHost.h"
 #include "RootComponentView.h"
 
+#ifdef USE_WINUI3
+#include <winrt/Microsoft.UI.Content.h>
+#include "CompositionRootAutomationProvider.h"
+#endif
+
 namespace winrt::Microsoft::ReactNative::implementation {
 
 //! This class ensures that we access ReactRootView from UI thread.
@@ -98,6 +103,11 @@ inline Mso::Future<void> CompositionReactViewInstance::PostInUIQueue(TAction &&a
 
 CompositionRootView::CompositionRootView() noexcept {}
 
+#ifdef USE_WINUI3
+CompositionRootView::CompositionRootView(winrt::Microsoft::UI::Composition::Compositor compositor) noexcept
+    : m_compositor(compositor) {}
+#endif
+
 ReactNative::IReactViewHost CompositionRootView::ReactViewHost() noexcept {
   return m_reactViewHost;
 }
@@ -138,11 +148,11 @@ void CompositionRootView::Size(winrt::Windows::Foundation::Size value) noexcept 
   m_size = value;
 }
 
-double CompositionRootView::ScaleFactor() noexcept {
+float CompositionRootView::ScaleFactor() noexcept {
   return m_scaleFactor;
 }
 
-void CompositionRootView::ScaleFactor(double value) noexcept {
+void CompositionRootView::ScaleFactor(float value) noexcept {
   m_scaleFactor = value;
 }
 
@@ -189,15 +199,6 @@ int64_t CompositionRootView::SendMessage(uint32_t msg, uint64_t wParam, int64_t 
   }
 
   return 0;
-}
-
-void CompositionRootView::OnScrollWheel(winrt::Windows::Foundation::Point point, int32_t delta) noexcept {
-  if (m_rootTag == -1)
-    return;
-
-  if (m_CompositionEventHandler) {
-    m_CompositionEventHandler->ScrollWheel({point.X, point.Y}, delta);
-  }
 }
 
 void CompositionRootView::InitRootView(
@@ -364,6 +365,38 @@ winrt::Windows::Foundation::Size CompositionRootView::Arrange(winrt::Windows::Fo
   }
   return finalSize;
 }
+
+#ifdef USE_WINUI3
+winrt::Microsoft::UI::Content::ContentIsland CompositionRootView::Island() noexcept {
+  if (!m_compositor) {
+    return nullptr;
+  }
+
+  if (!m_island) {
+    auto rootVisual = m_compositor.CreateSpriteVisual();
+    rootVisual.RelativeSizeAdjustment({1, 1});
+
+    RootVisual(winrt::Microsoft::ReactNative::Composition::MicrosoftCompositionContextHelper::CreateVisual(rootVisual));
+    m_island = winrt::Microsoft::UI::Content::ContentIsland::Create(rootVisual);
+
+    m_island.AutomationProviderRequested(
+        [this](
+            winrt::Microsoft::UI::Content::ContentIsland const &,
+            winrt::Microsoft::UI::Content::ContentIslandAutomationProviderRequestedEventArgs const &args) {
+          auto provider = GetUiaProvider();
+          auto pRootProvider =
+              static_cast<winrt::Microsoft::ReactNative::implementation::CompositionRootAutomationProvider *>(
+                  provider.as<IRawElementProviderSimple>().get());
+          if (pRootProvider != nullptr) {
+            pRootProvider->SetIsland(m_island);
+          }
+          args.AutomationProvider(std::move(provider));
+          args.Handled(true);
+        });
+  }
+  return m_island;
+}
+#endif
 
 ::Microsoft::ReactNative::RootComponentView *CompositionRootView::GetComponentView() noexcept {
   if (!m_context || m_context.Handle().LoadingState() != winrt::Microsoft::ReactNative::LoadingState::Loaded)

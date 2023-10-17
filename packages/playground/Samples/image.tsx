@@ -19,7 +19,7 @@ const largeImageUri =
   'https://cdn.freebiesupply.com/logos/large/2x/react-logo-png-transparent.png';
 
 const smallImageUri =
-  'http://facebook.github.io/react-native/img/header_logo.png';
+  'https://facebook.github.io/react-native/img/header_logo.png';
 
 const dataImageUri =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==';
@@ -50,7 +50,7 @@ export default class Bootstrap extends React.Component<
     includeBorder: false,
     tintColor: 'transparent',
     blurRadius: 0,
-    imageUri: 'http://facebook.github.io/react-native/img/header_logo.png',
+    imageUri: 'https://facebook.github.io/react-native/img/header_logo.png',
   };
 
   switchImageUri = (value: string) => {

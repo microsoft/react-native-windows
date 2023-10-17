@@ -1,8 +1,122 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 22 Sep 2023 05:13:32 GMT and should not be manually modified.
+This log was last generated on Tue, 17 Oct 2023 05:13:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.720
+
+Tue, 17 Oct 2023 05:13:04 GMT
+
+### Changes
+
+- Integrate 10/02 (yajurgrover24@gmail.com)
+
+## 0.0.0-canary.719
+
+Sat, 14 Oct 2023 05:13:11 GMT
+
+### Changes
+
+- [PR] Fixes issues with packaged asset resolution (#10621) (erozell@outlook.com)
+
+## 0.0.0-canary.718
+
+Fri, 13 Oct 2023 05:15:18 GMT
+
+### Changes
+
+- [Fabric] Support hosting in ContentIsland (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Fix offset for automation provider when running in islands (30809111+acoates-ms@users.noreply.github.com)
+- reverted package.lock changes (yajurgrover24@gmail.com)
+
+## 0.0.0-canary.717
+
+Thu, 12 Oct 2023 05:15:53 GMT
+
+### Changes
+
+- [Fabric] Add native PointerEntered+PointerExited events (30809111+acoates-ms@users.noreply.github.com)
+- Integrate 9/25 (yajurgrover24@gmail.com)
+- Add `@microsoft/eslint-plugin-sdl` to `@rnw-scripts/eslint-config` (jthysell@microsoft.com)
+- Implement WebSocketTurboModuleProxy (julio.rocha@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.192
+- Bump @react-native-windows/codegen to v0.0.0-canary.71
+- Bump @rnw-scripts/eslint-config to v1.2.3
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.6
+- Bump @rnw-scripts/just-task to v2.3.17
+- Bump react-native-platform-override to v1.9.16
+
+## 0.0.0-canary.716
+
+Wed, 11 Oct 2023 05:13:16 GMT
+
+### Changes
+
+- add fabric switch path animation (tatianakapos@microsoft.com)
+- Conditionally register WebSocket Cxx module (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.715
+
+Tue, 10 Oct 2023 05:13:38 GMT
+
+### Changes
+
+- [Fabric] Add pointer pressed, released, moved and wheelch changed events (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.714
+
+Fri, 06 Oct 2023 05:13:51 GMT
+
+### Changes
+
+- Integrate 9/20 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.191
+
+## 0.0.0-canary.713
+
+Wed, 04 Oct 2023 05:12:45 GMT
+
+### Changes
+
+- Allow usage of WinAppSDK in fabric (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Add keyboard handlers to ScrollView (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.712
+
+Tue, 03 Oct 2023 05:13:16 GMT
+
+### Changes
+
+- Have RCTNetworking.win32 fork RCTNetworking.ios (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.711
+
+Thu, 28 Sep 2023 05:13:18 GMT
+
+### Changes
+
+- Use glob to look through folders recursively (jthysell@microsoft.com)
+- Set UIA Name and HelpText properties on TextInput to match placeholder prop value (yajurgrover24@gmail.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.190
+
+## 0.0.0-canary.710
+
+Wed, 27 Sep 2023 06:10:53 GMT
+
+### Changes
+
+- fix fabric textinput's caret on focus lost (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.709
+
+Tue, 26 Sep 2023 05:13:15 GMT
+
+### Changes
+
+- Enable fabric usage against lifted comp, or system comp (30809111+acoates-ms@users.noreply.github.com)
+- Add new architecture `cpp-app` template for `init-windows` (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.189
 
 ## 0.0.0-canary.708
 

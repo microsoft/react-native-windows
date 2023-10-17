@@ -46,7 +46,7 @@ float GetConstrainedResult(float constrainTo, float measuredSize, YGMeasureMode 
 }
 
 YGSize DefaultYogaSelfMeasureFunc(
-    YGNodeRef node,
+    YGNodeConstRef node,
     float width,
     YGMeasureMode widthMode,
     float height,

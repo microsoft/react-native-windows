@@ -108,15 +108,51 @@ int64_t AbiCompositionViewComponentView::sendMessage(uint32_t msg, uint64_t wPar
 void AbiCompositionViewComponentView::onKeyDown(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
-  Builder().OnKeyDown(source, args);
+  Builder().OnKeyDown(m_handle, source, args);
   Super::onKeyDown(source, args);
 }
 
 void AbiCompositionViewComponentView::onKeyUp(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
-  Builder().OnKeyUp(source, args);
+  Builder().OnKeyUp(m_handle, source, args);
   Super::onKeyUp(source, args);
+}
+
+void AbiCompositionViewComponentView::onPointerEntered(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  Builder().OnPointerEntered(m_handle, args);
+  Super::onPointerEntered(args);
+}
+
+void AbiCompositionViewComponentView::onPointerExited(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  Builder().OnPointerExited(m_handle, args);
+  Super::onPointerExited(args);
+}
+
+void AbiCompositionViewComponentView::onPointerPressed(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  Builder().OnPointerPressed(m_handle, args);
+  Super::onPointerPressed(args);
+}
+
+void AbiCompositionViewComponentView::onPointerReleased(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  Builder().OnPointerReleased(m_handle, args);
+  Super::onPointerReleased(args);
+}
+
+void AbiCompositionViewComponentView::onPointerMoved(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  Builder().OnPointerMoved(m_handle, args);
+  Super::onPointerMoved(args);
+}
+
+void AbiCompositionViewComponentView::onPointerWheelChanged(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  Builder().OnPointerWheelChanged(m_handle, args);
+  Super::onPointerWheelChanged(args);
 }
 
 std::vector<facebook::react::ComponentDescriptorProvider>

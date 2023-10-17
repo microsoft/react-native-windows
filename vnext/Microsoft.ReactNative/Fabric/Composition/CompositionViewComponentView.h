@@ -35,6 +35,19 @@ struct CompositionBaseComponentView : public IComponentView,
   bool runOnChildren(bool forward, Mso::Functor<bool(IComponentView &)> &fn) noexcept override;
   void onFocusLost() noexcept override;
   void onFocusGained() noexcept override;
+  void onPointerEntered(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
+  void onPointerExited(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
+  void onPointerPressed(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
+  void onPointerReleased(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
+  void onPointerMoved(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
+  void onPointerWheelChanged(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
+
   void onKeyDown(
       const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
       const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
@@ -49,7 +62,6 @@ struct CompositionBaseComponentView : public IComponentView,
   facebook::react::Tag tag() const noexcept override;
   int64_t sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept override;
 
-  virtual bool ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept;
   RECT getClientRect() const noexcept override;
 
   void indexOffsetForBorder(uint32_t &index) const noexcept;
@@ -82,6 +94,7 @@ struct CompositionBaseComponentView : public IComponentView,
 
   virtual std::string DefaultControlType() const noexcept;
   virtual std::string DefaultAccessibleName() const noexcept;
+  virtual std::string DefaultHelpText() const noexcept;
 
  protected:
   std::array<winrt::Microsoft::ReactNative::Composition::ISpriteVisual, SpecialBorderLayerCount>
@@ -147,7 +160,6 @@ struct CompositionViewComponentView : public CompositionBaseComponentView {
       facebook::react::Point pt,
       facebook::react::Point &localPt,
       bool ignorePointerEvents = false) const noexcept override;
-  bool ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept override;
 
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
 

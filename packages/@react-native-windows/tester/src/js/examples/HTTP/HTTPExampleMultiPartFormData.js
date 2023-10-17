@@ -39,7 +39,7 @@ class HTTPExampleMultiPartFormData extends React.Component<any, any> {
       type: 'application/text',
     });
     formData.append('website', {
-      string: 'http://aweb.com',
+      string: 'https://aweb.com',
       type: 'application/text',
     });
     formData.append('comment', {

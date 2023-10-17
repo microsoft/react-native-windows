@@ -158,6 +158,48 @@ void CompositionBaseComponentView::onKeyUp(
   }
 }
 
+void CompositionBaseComponentView::onPointerEntered(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  if (m_parent && !args.Handled()) {
+    m_parent->onPointerEntered(args);
+  }
+}
+
+void CompositionBaseComponentView::onPointerExited(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  if (m_parent && !args.Handled()) {
+    m_parent->onPointerExited(args);
+  }
+}
+
+void CompositionBaseComponentView::onPointerPressed(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  if (m_parent && !args.Handled()) {
+    m_parent->onPointerPressed(args);
+  }
+}
+
+void CompositionBaseComponentView::onPointerReleased(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  if (m_parent && !args.Handled()) {
+    m_parent->onPointerReleased(args);
+  }
+}
+
+void CompositionBaseComponentView::onPointerMoved(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  if (m_parent && !args.Handled()) {
+    m_parent->onPointerMoved(args);
+  }
+}
+
+void CompositionBaseComponentView::onPointerWheelChanged(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  if (m_parent && !args.Handled()) {
+    m_parent->onPointerWheelChanged(args);
+  }
+}
+
 RECT CompositionBaseComponentView::getClientRect() const noexcept {
   RECT rc{0};
   if (m_parent) {
@@ -173,10 +215,6 @@ RECT CompositionBaseComponentView::getClientRect() const noexcept {
 
 const facebook::react::SharedViewEventEmitter &CompositionBaseComponentView::GetEventEmitter() const noexcept {
   return m_eventEmitter;
-}
-
-bool CompositionBaseComponentView::ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept {
-  return false;
 }
 
 std::array<
@@ -1207,14 +1245,13 @@ CompositionBaseComponentView::supplementalComponentDescriptorProviders() noexcep
 
 comp::CompositionPropertySet CompositionBaseComponentView::EnsureCenterPointPropertySet() noexcept {
   if (m_centerPropSet == nullptr) {
-    auto compositor =
-        winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::InnerCompositor(
-            m_compContext);
-
-    m_centerPropSet = compositor.CreatePropertySet();
-    UpdateCenterPropertySet();
-    m_centerPropSet.InsertMatrix4x4(L"transform", winrt::Windows::Foundation::Numerics::float4x4::identity());
-    m_centerPropSet.InsertVector3(L"translation", {0, 0, 0});
+    if (auto compositor =
+            winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerCompositor(m_compContext)) {
+      m_centerPropSet = compositor.CreatePropertySet();
+      UpdateCenterPropertySet();
+      m_centerPropSet.InsertMatrix4x4(L"transform", winrt::Windows::Foundation::Numerics::float4x4::identity());
+      m_centerPropSet.InsertVector3(L"translation", {0, 0, 0});
+    }
   }
 
   return m_centerPropSet;
@@ -1253,15 +1290,15 @@ void CompositionBaseComponentView::EnsureTransformMatrixFacade() noexcept {
   m_hasTransformMatrixFacade = true;
 
   auto centerPointPropSet = EnsureCenterPointPropertySet();
-  // TODO cache expression instead of creating new ones all the time
-  auto expression =
-      winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::InnerCompositor(
-          m_compContext)
-          .CreateExpressionAnimation(
-              L"Matrix4x4.CreateFromScale(PS.dpiScale3Inv) * Matrix4x4.CreateFromTranslation(PS.translation) * PS.transform * Matrix4x4.CreateFromScale(PS.dpiScale3)");
-  expression.SetReferenceParameter(L"PS", centerPointPropSet);
-  winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::InnerVisual(OuterVisual())
-      .StartAnimation(L"TransformMatrix", expression);
+  if (auto compositor =
+          winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerCompositor(m_compContext)) {
+    // TODO cache expression instead of creating new ones all the time
+    auto expression = compositor.CreateExpressionAnimation(
+        L"Matrix4x4.CreateFromScale(PS.dpiScale3Inv) * Matrix4x4.CreateFromTranslation(PS.translation) * PS.transform * Matrix4x4.CreateFromScale(PS.dpiScale3)");
+    expression.SetReferenceParameter(L"PS", centerPointPropSet);
+    winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerVisual(OuterVisual())
+        .StartAnimation(L"TransformMatrix", expression);
+  }
 }
 
 facebook::react::SharedViewEventEmitter CompositionBaseComponentView::eventEmitter() noexcept {
@@ -1282,6 +1319,10 @@ std::string CompositionBaseComponentView::DefaultControlType() const noexcept {
 }
 
 std::string CompositionBaseComponentView::DefaultAccessibleName() const noexcept {
+  return "";
+}
+
+std::string CompositionBaseComponentView::DefaultHelpText() const noexcept {
   return "";
 }
 
@@ -1376,19 +1417,6 @@ facebook::react::Tag CompositionViewComponentView::hitTest(
   }
 
   return -1;
-}
-
-bool CompositionViewComponentView::ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept {
-  facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
-
-  facebook::react::Tag tag;
-  if (std::any_of(m_children.rbegin(), m_children.rend(), [ptLocal, delta](auto child) {
-        return const_cast<CompositionBaseComponentView *>(static_cast<const CompositionBaseComponentView *>(child))
-            ->ScrollWheel(ptLocal, delta);
-      }))
-    return true;
-
-  return false;
 }
 
 void CompositionViewComponentView::onKeyDown(

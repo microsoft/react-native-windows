@@ -128,13 +128,6 @@ void SwitchComponentView::Draw() noexcept {
         offsetX + trackMarginX + trackWidth,
         offsetY + trackMarginY + trackHeight);
 
-    // switchProps->value = false
-    float thumbX = trackRect.left + thumbMargin + thumbRadius;
-
-    if (switchProps->value) {
-      thumbX = trackRect.right - thumbMargin - thumbRadius;
-    }
-
     winrt::com_ptr<ID2D1SolidColorBrush> defaultBrush;
 
     D2D1_COLOR_F defaultColor =
@@ -142,12 +135,11 @@ void SwitchComponentView::Draw() noexcept {
 
     winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(defaultColor, defaultBrush.put()));
 
-    winrt::com_ptr<ID2D1SolidColorBrush> thumbBrush;
+    winrt::Windows::UI::Color thumbColor;
     if (!switchProps->disabled && switchProps->thumbTintColor) {
-      winrt::check_hresult(
-          d2dDeviceContext->CreateSolidColorBrush(switchProps->thumbTintColor.AsD2DColor(), thumbBrush.put()));
+      thumbColor = switchProps->thumbTintColor.AsWindowsColor();
     } else {
-      thumbBrush = defaultBrush;
+      thumbColor = winrt::Windows::UI::Colors::Gray();
     }
 
     const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
@@ -173,10 +165,18 @@ void SwitchComponentView::Draw() noexcept {
       d2dDeviceContext->FillRoundedRectangle(track, trackBrush.get());
     }
 
-    // switch thumb
-    D2D1_POINT_2F thumbCenter = D2D1 ::Point2F(thumbX, (trackRect.top + trackRect.bottom) / 2);
-    D2D1_ELLIPSE thumb = D2D1::Ellipse(thumbCenter, thumbRadius, thumbRadius);
-    d2dDeviceContext->FillEllipse(thumb, thumbBrush.get());
+    // switch thumb - made with composition
+    float thumbX = (trackMarginX + thumbMargin) * m_layoutMetrics.pointScaleFactor;
+    float thumbY = (trackMarginY + thumbMargin) * m_layoutMetrics.pointScaleFactor;
+
+    if (switchProps->value) {
+      thumbX = (trackMarginX + trackWidth - thumbRadius - thumbRadius - thumbMargin) * m_layoutMetrics.pointScaleFactor;
+    }
+
+    m_thumbVisual.Size(
+        {thumbRadius * m_layoutMetrics.pointScaleFactor, thumbRadius * m_layoutMetrics.pointScaleFactor});
+    m_thumbVisual.Position({thumbX, thumbY});
+    m_thumbVisual.Color(thumbColor);
 
     // Restore old dpi setting
     d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
@@ -193,6 +193,11 @@ void SwitchComponentView::ensureVisual() noexcept {
   if (!m_visual) {
     m_visual = m_compContext.CreateSpriteVisual();
     OuterVisual().InsertAt(m_visual, 0);
+  }
+
+  if (!m_thumbVisual) {
+    m_thumbVisual = m_compContext.CreateSwitchThumbVisual();
+    m_visual.InsertAt(m_thumbVisual.InnerVisual(), 0);
   }
 }
 
@@ -233,23 +238,18 @@ winrt::Microsoft::ReactNative::Composition::IVisual SwitchComponentView::Visual(
   return m_visual;
 }
 
-int64_t SwitchComponentView::sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
-  switch (msg) {
-    case WM_LBUTTONDOWN:
-    case WM_POINTERDOWN: {
-      const auto switchProps = std::static_pointer_cast<const facebook::react::SwitchProps>(m_props);
+void SwitchComponentView::onPointerPressed(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  const auto switchProps = std::static_pointer_cast<const facebook::react::SwitchProps>(m_props);
 
-      if (!switchProps->disabled) {
-        if (auto root = rootComponentView()) {
-          root->TrySetFocusedComponent(*this);
-        }
-        toggle();
-      }
-      break;
+  if (!switchProps->disabled) {
+    if (auto root = rootComponentView()) {
+      root->TrySetFocusedComponent(*this);
+    }
+    if (toggle()) {
+      args.Handled(true);
     }
   }
-
-  return 0;
 }
 
 void SwitchComponentView::onKeyUp(

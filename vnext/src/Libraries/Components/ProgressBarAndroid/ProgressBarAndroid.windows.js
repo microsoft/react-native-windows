@@ -2,7 +2,13 @@
  * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
+ * @flow strict-local
  */
 'use strict';
 
-module.exports = require('../UnimplementedViews/UnimplementedView');
+import typeof UnimplementedViewType from '../UnimplementedViews/UnimplementedView';
+import typeof ProgressBarAndroidNativeComponentType from './ProgressBarAndroidNativeComponent';
+
+module.exports = (require('../UnimplementedViews/UnimplementedView'):
+  | UnimplementedViewType
+  | ProgressBarAndroidNativeComponentType);
