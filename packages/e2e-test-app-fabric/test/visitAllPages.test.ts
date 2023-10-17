@@ -41,11 +41,6 @@ describe('visitAllPages', () => {
       continue;
     }
 
-    // TEMP test
-    if (component === 'XMLHttpRequest' || component === 'ActivityIndicator') {
-      continue;
-    }
-
     test(component, async () => await goToComponentExample(component));
   }
 
