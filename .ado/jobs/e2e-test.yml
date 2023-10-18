@@ -196,7 +196,7 @@ jobs:
                 displayName: Set StartedFabricTests
 
               - script: |
-                  set E2ETestFabricBuildConfiguration=${{ matrix.BuildConfiguration }}
+                  set E2ETestFabricBuildConfiguration=Release
                   set E2ETestFabricBuildPlatform=${{ matrix.BuildPlatform }}
                   yarn e2etest
                 displayName: yarn e2etest
