@@ -2,6 +2,36 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 16 Oct 2023 23:50:47 GMT",
+      "tag": "react-native-windows_v0.72.14",
+      "version": "0.72.14",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "9cf08d5f6bc6d07b1490a6ead29994a7e14ad1ef",
+            "comment": "Integrate RN 0.72.6"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 16 Oct 2023 15:15:26 GMT",
+      "tag": "react-native-windows_v0.72.13",
+      "version": "0.72.13",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "78f5a3de444b20d8e5826348ee3d18ffba19c89d",
+            "comment": "Implement WebSocketTurboModuleProxy (#12214)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 10 Oct 2023 21:08:01 GMT",
       "tag": "react-native-windows_v0.72.12",
       "version": "0.72.12",
