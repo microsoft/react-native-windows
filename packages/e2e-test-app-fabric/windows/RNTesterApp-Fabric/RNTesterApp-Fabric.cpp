@@ -91,11 +91,9 @@ struct WindowData {
   winrt::Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
 
 #if BUNDLE
-  std::wstring m_bundleFile = L"index.windows";
   bool m_useWebDebugger{false};
   bool m_fastRefreshEnabled{false};
 #else
-  std::wstring m_bundleFile = L"index";
   bool m_useWebDebugger{false};
   bool m_fastRefreshEnabled{true};
 #endif
@@ -142,8 +140,8 @@ struct WindowData {
     // RegisterAutolinkedNativeModulePackages(host.PackageProviders()); // Includes any
     // autolinked modules
 
-    host.InstanceSettings().JavaScriptBundleFile(m_bundleFile);
-
+    host.InstanceSettings().JavaScriptBundleFile(L"index.windows");
+    host.InstanceSettings().DebugBundlePath(L"index");
     host.InstanceSettings().UseWebDebugger(m_useWebDebugger);
     host.InstanceSettings().UseDirectDebugger(m_useDirectDebugger);
     host.InstanceSettings().BundleRootPath(std::wstring(L"file:").append(workingDir).append(L"\\Bundle\\").c_str());

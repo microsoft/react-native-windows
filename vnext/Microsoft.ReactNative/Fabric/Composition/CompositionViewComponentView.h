@@ -54,13 +54,17 @@ struct CompositionBaseComponentView : public IComponentView,
   void onKeyUp(
       const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
       const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
+  void onCharacterReceived(
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+      const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept
+      override;
+
   bool focusable() const noexcept override;
   std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept
       override;
   facebook::react::SharedViewEventEmitter eventEmitter() noexcept override;
   facebook::react::SharedViewEventEmitter eventEmitterAtPoint(facebook::react::Point pt) noexcept override;
   facebook::react::Tag tag() const noexcept override;
-  int64_t sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept override;
 
   RECT getClientRect() const noexcept override;
 

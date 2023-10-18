@@ -30,11 +30,10 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
   void SetUpdateFinalizer(UpdateFinalizer impl) noexcept;
   // (Object handle) => IVisual
   void SetVisualCreator(VisualCreator impl) noexcept;
-  // (Object handle, UInt32 Msg, UInt64 WParam, Int64 LParam) => Int64
-  void SetMessageHandler(MessageHandler impl) noexcept;
 
   void SetKeyDownHandler(KeyHandler impl) noexcept;
   void SetKeyUpHandler(KeyHandler impl) noexcept;
+  void SetCharacterReceivedHandler(CharacterReceivedHandler impl) noexcept;
 
   void SetPointerEnteredHandler(PointerHandler impl) noexcept;
   void SetPointerExitedHandler(PointerHandler impl) noexcept;
@@ -55,8 +54,6 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
   void UpdateLayoutMetrics(winrt::Windows::Foundation::IInspectable handle, LayoutMetrics metrics) noexcept;
   void FinalizeUpdates(winrt::Windows::Foundation::IInspectable handle) noexcept;
   IVisual CreateVisual(winrt::Windows::Foundation::IInspectable handle) noexcept;
-  int64_t
-  SendMessage(winrt::Windows::Foundation::IInspectable handle, uint32_t Msg, uint64_t WParam, int64_t LParam) noexcept;
   void OnKeyDown(
       winrt::Windows::Foundation::IInspectable handle,
       const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
@@ -65,6 +62,10 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
       winrt::Windows::Foundation::IInspectable handle,
       const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
       const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept;
+  void OnCharacterReceived(
+      winrt::Windows::Foundation::IInspectable handle,
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+      const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept;
   void OnPointerEntered(
       winrt::Windows::Foundation::IInspectable handle,
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept;
@@ -93,9 +94,9 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
   LayoutMetricsUpdater m_layoutMetricsUpdater;
   UpdateFinalizer m_finalizer;
   VisualCreator m_visualCreator;
-  MessageHandler m_messageHandler;
   KeyHandler m_keyUp;
   KeyHandler m_keyDown;
+  CharacterReceivedHandler m_characterReceived;
   PointerHandler m_pointerEntered;
   PointerHandler m_pointerExited;
   PointerHandler m_pointerReleased;
