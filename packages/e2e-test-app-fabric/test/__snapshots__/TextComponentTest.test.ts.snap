@@ -60,8 +60,6 @@ exports[`Text Tests Text can have a customized selection color 1`] = `
 }
 `;
 
-exports[`Text Tests Text can have a font family 1`] = `{}`;
-
 exports[`Text Tests Text can have a size 1`] = `
 {
   "AutomationId": "text-size",

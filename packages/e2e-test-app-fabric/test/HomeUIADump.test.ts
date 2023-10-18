@@ -41,10 +41,14 @@ describe('Home UIA Tree Dump', () => {
     expect(dump).toMatchSnapshot();
   });
   test('APIs Tab', async () => {
+    const apisTabButton = await app.findElementByTestID('apis-tab');
+    await apisTabButton.waitForDisplayed({timeout: 20000});
     const dump = await dumpVisualTree('apis-tab');
     expect(dump).toMatchSnapshot();
   });
   test('Search Bar', async () => {
+    const component = await app.findElementByTestID('explorer_search');
+    await component.waitForDisplayed({timeout: 20000});
     const dump = await dumpVisualTree('explorer_search');
     expect(dump).toMatchSnapshot();
   });
@@ -54,6 +58,8 @@ describe('Home UIA Tree Dump', () => {
         'components-tab',
       );
       await componentsTabButton.click();
+      const componentTile = await app.findElementByTestID(component);
+      await componentTile.waitForDisplayed({timeout: 20000});
       const dump = await dumpVisualTree(component);
       expect(dump).toMatchSnapshot();
     });
@@ -62,6 +68,8 @@ describe('Home UIA Tree Dump', () => {
     test(api, async () => {
       const apisTabButton = await app.findElementByTestID('apis-tab');
       await apisTabButton.click();
+      const apiTile = await app.findElementByTestID(api);
+      await apiTile.waitForDisplayed({timeout: 20000});
       const dump = await dumpVisualTree(api);
       expect(dump).toMatchSnapshot();
     });
