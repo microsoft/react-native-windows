@@ -420,10 +420,11 @@ const AccessibilityInfo: AccessibilityInfoType = {
       }
     } else {
       if (NativeAccessibilityManagerIOS?.announceForAccessibilityWithOptions) {
+        const {nativeID: _, ...iosOptions} = options;
         // $FlowFixMe[prop-missing]
         NativeAccessibilityManagerIOS?.announceForAccessibilityWithOptions(
           announcement,
-          options,
+          iosOptions,
         );
       } else {
         NativeAccessibilityManagerIOS?.announceForAccessibility(announcement);
