@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 17 Oct 2023 05:13:04 GMT and should not be manually modified.
+This log was last generated on Wed, 18 Oct 2023 05:14:55 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.721
+
+Wed, 18 Oct 2023 05:14:55 GMT
+
+### Changes
+
+- add fabric switch path animation (tatianakapos@microsoft.com)
 
 ## 0.0.0-canary.720
 
