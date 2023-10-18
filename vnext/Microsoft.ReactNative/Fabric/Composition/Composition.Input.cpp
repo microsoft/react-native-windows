@@ -80,7 +80,13 @@ CharacterReceivedRoutedEventArgs::CharacterReceivedRoutedEventArgs(
     uint32_t msg,
     uint64_t wParam,
     int64_t lParam) {
-  assert(false); // TODO
+  m_keycode = static_cast<int32_t>(wParam);
+  m_keyStatus.RepeatCount = (lParam & 0x0000FFFF);         // bits 0-15
+  m_keyStatus.ScanCode = (lParam & 0x00FF0000) >> 16;      // bits 16-23
+  m_keyStatus.IsExtendedKey = (lParam & 0x01000000) >> 24; // bit 24
+  m_keyStatus.IsMenuKeyDown = (lParam & 0x20000000) >> 29; // bit 29
+  m_keyStatus.WasKeyDown = (lParam & 0x40000000) >> 30;    // bit 30
+  m_keyStatus.IsKeyReleased = (lParam & 0x80000000) >> 31; // bit 31
 }
 
 #ifdef USE_WINUI3
