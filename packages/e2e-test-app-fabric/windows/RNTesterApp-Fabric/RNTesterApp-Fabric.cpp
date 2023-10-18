@@ -4,11 +4,7 @@
 #include "pch.h"
 #include "RNTesterApp-Fabric.h"
 
-//#include <DispatcherQueue.h>
-//#include <UIAutomation.h>
-//#include <combaseapi.h>
-//#include <unknwn.h>
-
+#include <UIAutomation.h>
 #include <winrt/Microsoft.ReactNative.Composition.h>
 #include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Microsoft.UI.Composition.h>
