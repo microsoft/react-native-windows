@@ -16,13 +16,6 @@ const defaultTransform = [
   require('@rnw-scripts/babel-node-config'),
 ];
 
-console.log(
-  `process.env.E2ETestFabricBuildPlatform: ${process.env.E2ETestFabricBuildPlatform}`,
-);
-console.log(
-  `process.env.E2ETestFabricBuildConfiguration: ${process.env.E2ETestFabricBuildConfiguration}`,
-);
-
 const platformDir =
   (process.env.E2ETestFabricBuildPlatform === 'x86'
     ? ''
@@ -74,7 +67,7 @@ module.exports = {
 
   testEnvironmentOptions: {
     app: `windows\\${platformDir}\\RNTesterApp-Fabric\\RNTesterApp-Fabric.exe`,
-    appWorkingDir: 'windows\\${platformDir}\\RNTesterApp-Fabric',
+    appWorkingDir: `windows\\${platformDir}\\RNTesterApp-Fabric`,
     enableAutomationChannel: true,
     /* -- Enable for more detailed logging
     webdriverOptions: {
