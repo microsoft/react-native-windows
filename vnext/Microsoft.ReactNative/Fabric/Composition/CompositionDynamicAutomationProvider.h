@@ -41,6 +41,7 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
   virtual HRESULT __stdcall SetValue(LPCWSTR val) override;
   virtual HRESULT __stdcall get_Value(BSTR *pRetVal) override;
   virtual HRESULT __stdcall get_IsReadOnly(BOOL *pRetVal) override;
+
  private:
   ::Microsoft::ReactNative::ReactTaggedView m_view;
 };

@@ -373,7 +373,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::SetValue(LPCWSTR val) {
   return S_OK;
 }
 
-HRESULT __stdcall CompositionDynamicAutomationProvider::get_Value(BSTR* pRetVal) {
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_Value(BSTR *pRetVal) {
   if (pRetVal == nullptr)
     return E_POINTER;
   auto strongView = m_view.view();
@@ -387,7 +387,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_Value(BSTR* pRetVal)
   return S_OK;
 }
 
-HRESULT __stdcall CompositionDynamicAutomationProvider::get_IsReadOnly(BOOL* pRetVal) {
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_IsReadOnly(BOOL *pRetVal) {
   return S_OK;
 }
 
