@@ -39,25 +39,11 @@
       "baseHash": "f55fda723b8dc0f9836f2fa4a4a766ed45c71c00"
     },
     {
-      "type": "patch",
-      "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.win32.js",
-      "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.js",
-      "baseHash": "8ed7c87f3165558abe517218143dc6f73d91cc46",
-      "issue": 4578
-    },
-    {
       "type": "copy",
       "file": "src/Libraries/Components/AccessibilityInfo/legacySendAccessibilityEvent.win32.js",
       "baseFile": "Libraries/Components/AccessibilityInfo/legacySendAccessibilityEvent.android.js",
       "baseHash": "d37b2f72125246ababf3260e99ef790ce76fe3bb",
       "issue": 4578
-    },
-    {
-      "type": "derived",
-      "file": "src/Libraries/Components/AccessibilityInfo/NativeAccessibilityInfoWin32.js",
-      "baseFile": "packages/react-native/Libraries/Components/AccessibilityInfo/AccessibilityInfo.js",
-      "baseVersion": "0.73.0-nightly-20231002-0371014a3",
-      "baseHash": "163927cc271b53109f06eaf5fc6d30a9af8cb27e"
     },
     {
       "type": "platform",
