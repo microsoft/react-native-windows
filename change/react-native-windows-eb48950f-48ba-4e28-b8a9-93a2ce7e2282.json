@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Move winrt/Windows.Storage.h include out of USE_V8 conditional",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
