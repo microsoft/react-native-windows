@@ -10,7 +10,8 @@
     "windows": "react-native run-windows",
     "e2etest": "react-native rnx-test --platform windows",
     "e2etest:updateSnapshots": "react-native rnx-test --platform windows -u",
-    "e2etest:debug": "jest --config ./jest.debug.config.js"
+    "e2etest:debug": "react-native rnx-test --platform windows --config ./jest.debug.config.js",
+    "bundle:debug": "react-native bundle --entry-file index.js --bundle-output ./windows/x64/Debug/RNTesterApp-Fabric/Bundle/index.windows.bundle --assets-dest ./windows/x64/Debug/RNTesterApp-Fabric/Bundle --platform windows"
   },
   "dependencies": {
     "@react-native-windows/automation-channel": "^0.12.60",

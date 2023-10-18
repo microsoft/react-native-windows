@@ -87,6 +87,9 @@ struct IComponentView {
   virtual void onKeyUp(
       const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
       const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept = 0;
+  virtual void onCharacterReceived(
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+      const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept = 0;
   virtual bool focusable() const noexcept = 0;
   virtual facebook::react::SharedViewEventEmitter eventEmitterAtPoint(facebook::react::Point pt) noexcept = 0;
   virtual facebook::react::SharedViewEventEmitter eventEmitter() noexcept = 0;
@@ -97,7 +100,6 @@ struct IComponentView {
       facebook::react::Point pt,
       facebook::react::Point &localPt,
       bool ignorePointerEvents = false) const noexcept = 0;
-  virtual int64_t sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept = 0;
   virtual winrt::IInspectable EnsureUiaProvider() noexcept = 0;
   // Notify up the tree to bring the rect into view by scrolling as needed
   virtual void StartBringIntoView(BringIntoViewOptions &&args) noexcept = 0;

@@ -57,7 +57,11 @@ void AbiCompositionViewComponentView::updateProps(
   const auto &oldViewProps = *std::static_pointer_cast<const AbiViewProps>(m_props);
   const auto &newViewProps = *std::static_pointer_cast<const AbiViewProps>(props);
 
+  updateAccessibilityProps(oldViewProps, newViewProps);
+  // updateShadowProps(oldViewProps, newViewProps, m_visual);
+  // updateTransformProps(oldViewProps, newViewProps, m_visual);
   updateBorderProps(oldViewProps, newViewProps);
+
   Builder().UpdateProps(m_handle, newViewProps.UserProps());
 
   m_props = std::static_pointer_cast<AbiViewProps const>(props);
@@ -101,10 +105,6 @@ bool AbiCompositionViewComponentView::focusable() const noexcept {
   return m_props->focusable;
 }
 
-int64_t AbiCompositionViewComponentView::sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
-  return Builder().SendMessage(m_handle, msg, wParam, lParam);
-}
-
 void AbiCompositionViewComponentView::onKeyDown(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
@@ -117,6 +117,13 @@ void AbiCompositionViewComponentView::onKeyUp(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
   Builder().OnKeyUp(m_handle, source, args);
   Super::onKeyUp(source, args);
+}
+
+void AbiCompositionViewComponentView::onCharacterReceived(
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+    const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept {
+  Builder().OnCharacterReceived(m_handle, source, args);
+  Super::onCharacterReceived(source, args);
 }
 
 void AbiCompositionViewComponentView::onPointerEntered(

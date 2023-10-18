@@ -75,6 +75,52 @@ winrt::Windows::System::VirtualKey KeyRoutedEventArgs::OriginalKey() noexcept {
   return m_key;
 }
 
+CharacterReceivedRoutedEventArgs::CharacterReceivedRoutedEventArgs(
+    facebook::react::Tag tag,
+    uint32_t msg,
+    uint64_t wParam,
+    int64_t lParam) {
+  m_keycode = static_cast<int32_t>(wParam);
+  m_keyStatus.RepeatCount = (lParam & 0x0000FFFF); // bits 0-15
+  m_keyStatus.ScanCode = (lParam & 0x00FF0000) >> 16; // bits 16-23
+  m_keyStatus.IsExtendedKey = (lParam & 0x01000000) >> 24; // bit 24
+  m_keyStatus.IsMenuKeyDown = (lParam & 0x20000000) >> 29; // bit 29
+  m_keyStatus.WasKeyDown = (lParam & 0x40000000) >> 30; // bit 30
+  m_keyStatus.IsKeyReleased = (lParam & 0x80000000) >> 31; // bit 31
+}
+
+#ifdef USE_WINUI3
+CharacterReceivedRoutedEventArgs::CharacterReceivedRoutedEventArgs(
+    facebook::react::Tag tag,
+    winrt::Microsoft::UI::Input::CharacterReceivedEventArgs const &args)
+    : m_tag(tag) {
+  auto keyStatus = args.KeyStatus();
+  m_keyStatus.RepeatCount = keyStatus.RepeatCount;
+  m_keyStatus.ScanCode = keyStatus.ScanCode;
+  m_keyStatus.IsExtendedKey = keyStatus.IsExtendedKey;
+  m_keyStatus.IsMenuKeyDown = keyStatus.IsMenuKeyDown;
+  m_keyStatus.WasKeyDown = keyStatus.WasKeyDown;
+  m_keyStatus.IsKeyReleased = keyStatus.IsKeyReleased;
+  m_keycode = args.KeyCode();
+}
+#endif
+
+int32_t CharacterReceivedRoutedEventArgs::OriginalSource() noexcept {
+  return m_tag;
+}
+bool CharacterReceivedRoutedEventArgs::Handled() noexcept {
+  return m_handled;
+}
+void CharacterReceivedRoutedEventArgs::Handled(bool value) noexcept {
+  m_handled = value;
+}
+int32_t CharacterReceivedRoutedEventArgs::KeyCode() noexcept {
+  return m_keycode;
+}
+winrt::Windows::UI::Core::CorePhysicalKeyStatus CharacterReceivedRoutedEventArgs::KeyStatus() noexcept {
+  return m_keyStatus;
+}
+
 #ifdef USE_WINUI3
 PointerPointProperties::PointerPointProperties(const winrt::Microsoft::UI::Input::PointerPointProperties &ppp)
     : m_sysPointerPointProps(ppp) {}

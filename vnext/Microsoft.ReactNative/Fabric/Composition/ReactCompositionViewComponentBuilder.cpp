@@ -46,10 +46,6 @@ void ReactCompositionViewComponentBuilder::SetUpdateFinalizer(UpdateFinalizer im
 void ReactCompositionViewComponentBuilder::SetVisualCreator(Composition::VisualCreator impl) noexcept {
   m_visualCreator = impl;
 }
-// (Object handle, UInt32 Msg, UInt64 WParam, Int64 LParam) => Int64
-void ReactCompositionViewComponentBuilder::SetMessageHandler(MessageHandler impl) noexcept {
-  m_messageHandler = impl;
-}
 
 void ReactCompositionViewComponentBuilder::SetKeyDownHandler(KeyHandler impl) noexcept {
   m_keyDown = impl;
@@ -57,6 +53,10 @@ void ReactCompositionViewComponentBuilder::SetKeyDownHandler(KeyHandler impl) no
 
 void ReactCompositionViewComponentBuilder::SetKeyUpHandler(KeyHandler impl) noexcept {
   m_keyUp = impl;
+}
+
+void ReactCompositionViewComponentBuilder::SetCharacterReceivedHandler(CharacterReceivedHandler impl) noexcept {
+  m_characterReceived = impl;
 }
 
 void ReactCompositionViewComponentBuilder::SetPointerEnteredHandler(PointerHandler impl) noexcept {
@@ -125,17 +125,6 @@ IVisual ReactCompositionViewComponentBuilder::CreateVisual(winrt::Windows::Found
   return m_visualCreator(handle);
 }
 
-int64_t ReactCompositionViewComponentBuilder::SendMessage(
-    winrt::Windows::Foundation::IInspectable handle,
-    uint32_t msg,
-    uint64_t wparam,
-    int64_t lparam) noexcept {
-  if (!m_messageHandler) {
-    return 0;
-  }
-  return m_messageHandler(handle, msg, wparam, lparam);
-}
-
 void ReactCompositionViewComponentBuilder::OnKeyDown(
     winrt::Windows::Foundation::IInspectable handle,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
@@ -151,6 +140,15 @@ void ReactCompositionViewComponentBuilder::OnKeyUp(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
   if (m_keyUp) {
     m_keyUp(handle, source, args);
+  }
+}
+
+void ReactCompositionViewComponentBuilder::OnCharacterReceived(
+    winrt::Windows::Foundation::IInspectable handle,
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+    const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept {
+  if (m_characterReceived) {
+    m_characterReceived(handle, source, args);
   }
 }
 

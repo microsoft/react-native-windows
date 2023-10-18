@@ -180,6 +180,12 @@ jobs:
                 feature: UseHermes
                 value: ${{ matrix.UseHermes }}
 
+            - task: PowerShell@2
+              displayName: Start tracing
+              inputs:
+                targetType: filePath # filePath | inline
+                filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tracing\Start-Tracing.ps1
+
             - template: ../templates/run-windows-with-certificates.yml
               parameters:
                 buildEnvironment: ${{ parameters.BuildEnvironment }}
@@ -194,13 +200,6 @@ jobs:
                 echo ##vso[task.setvariable variable=StartedFabricTests]true
               displayName: Set StartedFabricTests
 
-            - task: CopyFiles@2
-              displayName: Copy Bundle
-              inputs:
-                sourceFolder: packages/e2e-test-app-fabric/windows/${{ matrix.BuildPlatform }}/Release/Bundle
-                targetFolder: packages/e2e-test-app-fabric/Bundle
-                contents: "**"
-
             - script: yarn e2etest
               displayName: yarn e2etest
               workingDirectory: packages/e2e-test-app-fabric
@@ -214,6 +213,21 @@ jobs:
               displayName: Update snapshots
               workingDirectory: packages/e2e-test-app-fabric
               condition: and(failed(), eq(variables.StartedFabricTests, 'true'))
+
+            - task: PowerShell@2
+              displayName: Stop tracing
+              inputs:
+                targetType: filePath # filePath | inline
+                filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tracing\Stop-Tracing.ps1
+                arguments: -NoAnalysis -outputFolder $(Build.StagingDirectory)/Tracing
+              condition: true
+
+            - task: PublishBuildArtifacts@1
+              displayName: Upload traces
+              inputs:
+                pathtoPublish: '$(Build.StagingDirectory)/Tracing'
+                artifactName: 'Traces - $(Agent.JobName)-$(System.JobAttempt)'
+              condition: true
 
             - task: CopyFiles@2
               displayName: Copy Fabric snapshots
