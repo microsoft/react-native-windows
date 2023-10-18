@@ -1,0 +1,139 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button Tests Buttons can be disabled 1`] = `
+{
+  "AutomationId": "disabled_button",
+  "Children": [
+    {
+      "AutomationId": "",
+      "ControlType": 50020,
+      "HelpText": "",
+      "IsEnabled": false,
+      "IsKeyboardFocusable": false,
+      "LocalizedControlType": "text",
+      "Name": "Submit Application",
+    },
+  ],
+  "ControlType": 50000,
+  "HelpText": "",
+  "IsEnabled": false,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "button",
+  "Name": "Press to submit your application!",
+}
+`;
+
+exports[`Button Tests Buttons can have accessibility labels 1`] = `
+{
+  "AutomationId": "accessibilityLabel_button",
+  "Children": [
+    {
+      "AutomationId": "",
+      "ControlType": 50020,
+      "HelpText": "",
+      "IsEnabled": true,
+      "IsKeyboardFocusable": false,
+      "LocalizedControlType": "text",
+      "Name": "Submit Application",
+    },
+  ],
+  "ControlType": 50000,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "button",
+  "Name": "Press to submit your application!",
+}
+`;
+
+exports[`Button Tests Buttons can have accessibility props 1`] = `
+{
+  "AutomationId": "accessibility_props",
+  "Children": [
+    {
+      "AutomationId": "",
+      "ControlType": 50020,
+      "HelpText": "",
+      "IsEnabled": true,
+      "IsKeyboardFocusable": false,
+      "LocalizedControlType": "text",
+      "Name": "Submit Application",
+    },
+  ],
+  "ControlType": 50000,
+  "HelpText": "Submit Button",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "button",
+  "Name": "Press to submit your application!",
+}
+`;
+
+exports[`Button Tests Buttons can have accessibility states 1`] = `
+{
+  "AutomationId": "accessibilityState_button",
+  "Children": [
+    {
+      "AutomationId": "",
+      "ControlType": 50020,
+      "HelpText": "",
+      "IsEnabled": false,
+      "IsKeyboardFocusable": false,
+      "LocalizedControlType": "text",
+      "Name": "Submit Application",
+    },
+  ],
+  "ControlType": 50000,
+  "HelpText": "",
+  "IsEnabled": false,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "button",
+  "Name": "Press to submit your application!",
+}
+`;
+
+exports[`Button Tests Buttons can have custom colors 1`] = `
+{
+  "AutomationId": "cancel_button",
+  "Children": [
+    {
+      "AutomationId": "",
+      "ControlType": 50020,
+      "HelpText": "",
+      "IsEnabled": true,
+      "IsKeyboardFocusable": false,
+      "LocalizedControlType": "text",
+      "Name": "Cancel Application",
+    },
+  ],
+  "ControlType": 50000,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "button",
+  "Name": "Press to cancel your application!",
+}
+`;
+
+exports[`Button Tests Buttons have default styling 1`] = `
+{
+  "AutomationId": "button_default_styling",
+  "Children": [
+    {
+      "AutomationId": "",
+      "ControlType": 50020,
+      "HelpText": "",
+      "IsEnabled": true,
+      "IsKeyboardFocusable": false,
+      "LocalizedControlType": "text",
+      "Name": "Submit Application",
+    },
+  ],
+  "ControlType": 50000,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "button",
+  "Name": "Press to submit your application!",
+}
+`;
