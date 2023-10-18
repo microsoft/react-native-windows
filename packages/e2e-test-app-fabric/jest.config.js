@@ -60,7 +60,7 @@ module.exports = {
   setupFilesAfterEnv: ['react-native-windows/jest/setup', './jest.setup.js'],
 
   testEnvironmentOptions: {
-    app: 'windows\\x64\\Release\\RNTesterApp-Fabric\\RNTesterApp-Fabric.exe',
+    app: `windows\\x64\\Release\\RNTesterApp-Fabric.exe`,
     appWorkingDir: 'windows\\RNTesterApp-Fabric',
     enableAutomationChannel: true,
     /* -- Enable for more detailed logging

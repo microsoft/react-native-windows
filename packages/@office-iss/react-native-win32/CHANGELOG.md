@@ -1,8 +1,24 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Thu, 12 Oct 2023 05:15:53 GMT and should not be manually modified.
+This log was last generated on Wed, 18 Oct 2023 05:14:55 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.220
+
+Wed, 18 Oct 2023 05:14:55 GMT
+
+### Changes
+
+- add support for announceForAccessibilityWithOptions (krsiler@microsoft.com)
+
+## 0.0.0-canary.219
+
+Tue, 17 Oct 2023 05:13:03 GMT
+
+### Changes
+
+- Integrate 10/02 (yajurgrover24@gmail.com)
 
 ## 0.0.0-canary.218
 

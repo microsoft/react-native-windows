@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "[PR] Fixes issues with packaged asset resolution (#10621)",
+  "comment": "Move winrt/Windows.Storage.h include out of USE_V8 conditional",
   "packageName": "react-native-windows",
   "email": "erozell@outlook.com",
   "dependentChangeType": "patch"
