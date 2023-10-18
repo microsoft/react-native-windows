@@ -16,6 +16,13 @@ const defaultTransform = [
   require('@rnw-scripts/babel-node-config'),
 ];
 
+console.log(
+  `process.env.E2ETestFabricBuildPlatform: ${process.env.E2ETestFabricBuildPlatform}`,
+);
+console.log(
+  `process.env.E2ETestFabricBuildConfiguration: ${process.env.E2ETestFabricBuildConfiguration}`,
+);
+
 const platformDir =
   (process.env.E2ETestFabricBuildPlatform === 'x86'
     ? ''
