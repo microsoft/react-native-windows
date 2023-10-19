@@ -400,6 +400,7 @@ const AccessibilityInfo: AccessibilityInfoType = {
    *   - `queue`: The announcement will be queued behind existing announcements. iOS only.
    *   - `nativeID`: The nativeID of the element to send the announcement from. win32 only.
    */
+  // $FlowIgnore[prop-missing]
   announceForAccessibilityWithOptions(
     announcement: string,
     options: {
