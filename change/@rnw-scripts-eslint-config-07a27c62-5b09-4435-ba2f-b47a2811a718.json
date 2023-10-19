@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Adds `eqeqeq` to eslint configuration and a few other lint fixes",
+  "packageName": "@rnw-scripts/eslint-config",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
