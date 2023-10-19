@@ -138,7 +138,10 @@ const View: React.AbstractComponent<
       if (otherProps.keyDownEvents && event.isPropagationStopped() !== true) {
         // $FlowFixMe - keyDownEvents was already checked to not be undefined
         for (const el of otherProps.keyDownEvents) {
-          if (event.nativeEvent.code == el.code && el.handledEventPhase == 3) {
+          if (
+            event.nativeEvent.code === el.code &&
+            el.handledEventPhase === 3
+          ) {
             event.stopPropagation();
           }
         }
@@ -150,7 +153,10 @@ const View: React.AbstractComponent<
       if (otherProps.keyUpEvents && event.isPropagationStopped() !== true) {
         // $FlowFixMe - keyDownEvents was already checked to not be undefined
         for (const el of otherProps.keyUpEvents) {
-          if (event.nativeEvent.code == el.code && el.handledEventPhase == 3) {
+          if (
+            event.nativeEvent.code === el.code &&
+            el.handledEventPhase === 3
+          ) {
             event.stopPropagation();
           }
         }
@@ -162,7 +168,10 @@ const View: React.AbstractComponent<
       if (otherProps.keyDownEvents && event.isPropagationStopped() !== true) {
         // $FlowFixMe - keyDownEvents was already checked to not be undefined
         for (const el of otherProps.keyDownEvents) {
-          if (event.nativeEvent.code == el.code && el.handledEventPhase == 1) {
+          if (
+            event.nativeEvent.code === el.code &&
+            el.handledEventPhase === 1
+          ) {
             event.stopPropagation();
           }
         }
@@ -174,7 +183,10 @@ const View: React.AbstractComponent<
       if (otherProps.keyUpEvents && event.isPropagationStopped() !== true) {
         // $FlowFixMe - keyDownEvents was already checked to not be undefined
         for (const el of otherProps.keyUpEvents) {
-          if (event.nativeEvent.code == el.code && el.handledEventPhase == 1) {
+          if (
+            event.nativeEvent.code === el.code &&
+            el.handledEventPhase === 1
+          ) {
             event.stopPropagation();
           }
         }
