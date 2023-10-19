@@ -2,6 +2,27 @@
   "name": "@react-native-windows/automation",
   "entries": [
     {
+      "date": "Thu, 19 Oct 2023 05:13:42 GMT",
+      "version": "0.3.143",
+      "tag": "@react-native-windows/automation_v0.3.143",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/automation",
+            "commit": "d9089507397e14c9767085e31c8cb99ef06c84c9",
+            "comment": "Add support for appWorkingDir option"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.61",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 18 Oct 2023 05:14:55 GMT",
       "version": "0.3.142",
       "tag": "@react-native-windows/automation_v0.3.142",
