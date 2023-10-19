@@ -2,8 +2,8 @@
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(SolutionDir)\ExperimentalFeatures.props" Condition="Exists('$(SolutionDir)\ExperimentalFeatures.props')" />
   <PropertyGroup Label="Globals">
-    <CppWinRTOptimized>true</CppWinRTOptimized>
-    <MinimalCoreWin>true</MinimalCoreWin>
+      <CppWinRTOptimized>true</CppWinRTOptimized>
+      <MinimalCoreWin>true</MinimalCoreWin>
     <ProjectGuid>{3719BE61-52D1-4F42-8A4C-E575BA16E65F}</ProjectGuid>
     <ProjectName>RNTesterApp-Fabric</ProjectName>
     <Keyword>Win32Proj</Keyword>
@@ -98,12 +98,6 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)$(PlatformTarget)\$(Configuration)\</OutDir>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)$(PlatformTarget)\$(Configuration)\</OutDir>
-  </PropertyGroup>
   <ItemGroup>
     <ClInclude Include="RNTesterApp-Fabric.h" />
     <ClInclude Include="resource.h" />
