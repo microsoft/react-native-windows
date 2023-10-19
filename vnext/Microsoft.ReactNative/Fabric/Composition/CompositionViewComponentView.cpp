@@ -1398,8 +1398,7 @@ void CompositionViewComponentView::updateProps(
     m_visual.Opacity(newViewProps.opacity);
   }
 
-  if (oldViewProps.accessibilityValue.text.has_value() &&
-      newViewProps.accessibilityValue.text.has_value() &&
+  if (oldViewProps.accessibilityValue.text.has_value() && newViewProps.accessibilityValue.text.has_value() &&
       oldViewProps.accessibilityValue.text != newViewProps.accessibilityValue.text) {
     updateAccessibilityValue(*newViewProps.accessibilityValue.text);
   }
