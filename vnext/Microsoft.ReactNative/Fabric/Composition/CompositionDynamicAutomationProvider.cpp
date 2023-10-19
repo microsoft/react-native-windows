@@ -333,13 +333,6 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::Invoke() {
   return S_OK;
 }
 
-std::string convertLPCWSTRToString(LPCWSTR val) {
-  int strLength = WideCharToMultiByte(CP_UTF8, 0, val, -1, nullptr, 0, nullptr, nullptr);
-  std::string str(strLength, 0);
-  WideCharToMultiByte(CP_UTF8, 0, val, -1, &str[0], strLength, nullptr, nullptr);
-  return str;
-}
-
 BSTR StringToBSTR(const std::string &str) {
   // Calculate the required BSTR size in bytes
   int len = MultiByteToWideChar(CP_UTF8, 0, str.c_str(), -1, nullptr, 0);
@@ -363,7 +356,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::SetValue(LPCWSTR val) {
     return UIA_E_ELEMENTNOTAVAILABLE;
 
   auto props = std::static_pointer_cast<const facebook::react::ViewProps>(strongView->props());
-  std::string value = convertLPCWSTRToString(val);
+  std::string value = winrt::to_string(val);
   auto baseView = std::static_pointer_cast<::Microsoft::ReactNative::CompositionBaseComponentView>(strongView);
   if (baseView == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
