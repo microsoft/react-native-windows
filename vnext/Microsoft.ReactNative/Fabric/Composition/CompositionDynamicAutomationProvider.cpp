@@ -360,9 +360,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::SetValue(LPCWSTR val) {
   auto baseView = std::static_pointer_cast<::Microsoft::ReactNative::CompositionBaseComponentView>(strongView);
   if (baseView == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
-  winrt::IInspectable uiaProvider = baseView->EnsureUiaProvider();
-  UpdateUiaProperty(uiaProvider, UIA_ValueValuePropertyId, *props->accessibilityValue.text, value);
-
+  baseView->updateAccessibilityValue(value);
   return S_OK;
 }
 

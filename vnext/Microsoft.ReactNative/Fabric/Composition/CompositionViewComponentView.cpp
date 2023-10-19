@@ -1305,6 +1305,17 @@ void CompositionBaseComponentView::EnsureTransformMatrixFacade() noexcept {
   }
 }
 
+void CompositionBaseComponentView::updateAccessibilityValue(std::string newValue) noexcept {
+  auto props = std::static_pointer_cast<const facebook::react::ViewProps>(this->props());
+  if (newValue != props->accessibilityValue.text) {
+    auto provider = EnsureUiaProvider();
+    if (provider != nullptr) {
+      winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+          provider, UIA_ValueValuePropertyId, *props->accessibilityValue.text, newValue);
+    }
+  }
+}
+
 facebook::react::SharedViewEventEmitter CompositionBaseComponentView::eventEmitter() noexcept {
   return m_eventEmitter;
 }
@@ -1385,6 +1396,12 @@ void CompositionViewComponentView::updateProps(
 
   if (oldViewProps.opacity != newViewProps.opacity) {
     m_visual.Opacity(newViewProps.opacity);
+  }
+
+  if (oldViewProps.accessibilityValue.text.has_value() &&
+      newViewProps.accessibilityValue.text.has_value() &&
+      oldViewProps.accessibilityValue.text != newViewProps.accessibilityValue.text) {
+    updateAccessibilityValue(*newViewProps.accessibilityValue.text);
   }
 
   // update BaseComponentView props
