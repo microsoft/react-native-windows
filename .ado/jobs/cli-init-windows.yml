@@ -12,6 +12,11 @@ parameters:
     default:
       - BuildEnvironment: PullRequest
         Matrix:
+          - Name: FabricX64Debug
+            template: cpp-app
+            configuration: Debug
+            platform: x64
+            additionalRunArguments: --no-autolink
           - Name: FabricX64Release
             template: cpp-app
             configuration: Release
@@ -20,6 +25,11 @@ parameters:
           - Name: FabricX86Debug
             template: cpp-app
             configuration: Debug
+            platform: x86
+            additionalRunArguments: --no-autolink
+          - Name: FabricX86Release
+            template: cpp-app
+            configuration: Release
             platform: x86
             additionalRunArguments: --no-autolink
       - BuildEnvironment: Continuous
