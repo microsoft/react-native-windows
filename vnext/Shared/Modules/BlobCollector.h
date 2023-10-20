@@ -10,15 +10,14 @@
 
 namespace Microsoft::React {
 
-class JSI_EXPORT BlobCollector : public facebook::jsi::HostObject
-{
+class JSI_EXPORT BlobCollector : public facebook::jsi::HostObject {
   std::string m_blobId;
   std::weak_ptr<Networking::IBlobResource> m_weakResource;
 
-public:
+ public:
   BlobCollector(std::string blobId, std::shared_ptr<Networking::IBlobResource> resource) noexcept;
 
   ~BlobCollector() noexcept;
 };
 
-}// namespace Microsoft::React
+} // namespace Microsoft::React
