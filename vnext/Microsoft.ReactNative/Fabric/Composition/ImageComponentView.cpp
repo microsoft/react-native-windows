@@ -189,10 +189,7 @@ void ImageComponentView::updateLayoutMetrics(
 }
 
 void ImageComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
-  if (m_needsBorderUpdate) {
-    m_needsBorderUpdate = false;
-    UpdateSpecialBorderLayers(*rootComponentView()->Theme(), m_layoutMetrics, *m_props);
-  }
+  finalizeBorderUpdates(m_layoutMetrics, *m_props);
 }
 
 void ImageComponentView::OnRenderingDeviceLost() noexcept {

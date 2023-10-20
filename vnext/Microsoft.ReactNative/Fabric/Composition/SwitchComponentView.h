@@ -41,6 +41,10 @@ struct SwitchComponentView : CompositionBaseComponentView {
       const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
   void onPointerPressed(
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
+  void onPointerReleased(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
+  void onPointerEntered(const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
+  void onPointerExited(const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
 
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt, bool ignorePointerEvents)
       const noexcept override;
@@ -58,6 +62,8 @@ struct SwitchComponentView : CompositionBaseComponentView {
   void ensureDrawingSurface() noexcept;
   bool toggle() noexcept;
 
+  bool m_hovered{false};
+  bool m_pressed{false};
   facebook::react::Size m_contentSize;
   winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
   facebook::react::SharedViewProps m_props;

@@ -1071,13 +1071,18 @@ bool CompositionBaseComponentView::TryUpdateSpecialBorderLayers(
   return true;
 }
 
-void CompositionBaseComponentView::UpdateSpecialBorderLayers(
-    Composition::Theme &theme,
+void CompositionBaseComponentView::finalizeBorderUpdates(
     facebook::react::LayoutMetrics const &layoutMetrics,
     const facebook::react::ViewProps &viewProps) noexcept {
+
+  if (!m_parent || !m_needsBorderUpdate) {
+    return;
+  }
+
+  m_needsBorderUpdate = false;
   auto spBorderLayers = FindSpecialBorderLayers();
 
-  if (!TryUpdateSpecialBorderLayers(theme, spBorderLayers, layoutMetrics, viewProps)) {
+  if (!TryUpdateSpecialBorderLayers(*rootComponentView()->Theme(), spBorderLayers, layoutMetrics, viewProps)) {
     for (auto &spBorderLayer : spBorderLayers) {
       if (spBorderLayer) {
         spBorderLayer.as<winrt::Microsoft::ReactNative::Composition::ISpriteVisual>().Brush(nullptr);
@@ -1550,10 +1555,7 @@ void CompositionViewComponentView::updateLayoutMetrics(
 }
 
 void CompositionViewComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
-  if (m_needsBorderUpdate) {
-    m_needsBorderUpdate = false;
-    UpdateSpecialBorderLayers(*rootComponentView()->Theme(), m_layoutMetrics, *m_props);
-  }
+  finalizeBorderUpdates(m_layoutMetrics, *m_props);
 }
 
 void CompositionViewComponentView::prepareForRecycle() noexcept {}

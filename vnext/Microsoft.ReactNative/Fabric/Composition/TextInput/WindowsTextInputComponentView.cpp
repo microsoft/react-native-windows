@@ -1140,10 +1140,7 @@ std::string WindowsTextInputComponentView::GetTextFromRichEdit() const noexcept 
 }
 
 void WindowsTextInputComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
-  if (m_needsBorderUpdate) {
-    m_needsBorderUpdate = false;
-    UpdateSpecialBorderLayers(*rootComponentView()->Theme(), m_layoutMetrics, *m_props);
-  }
+  finalizeBorderUpdates(m_layoutMetrics, *m_props);
   ensureDrawingSurface();
   if (m_needsRedraw) {
     DrawText();

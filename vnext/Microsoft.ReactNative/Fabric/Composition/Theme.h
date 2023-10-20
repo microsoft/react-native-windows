@@ -18,6 +18,9 @@ struct Theme {
   winrt::Windows::UI::Color Color(const facebook::react::Color& color) noexcept;
   winrt::Windows::UI::Color PlatformColor(const std::string& platformColor) noexcept;
 
+  D2D1::ColorF D2DColor(const facebook::react::Color& color) noexcept;
+  D2D1::ColorF D2DPlatformColor(const std::string& platformColor) noexcept;
+
   static std::shared_ptr<Theme> FromContext(const winrt::Microsoft::ReactNative::ReactContext &context) noexcept;
 
 private:

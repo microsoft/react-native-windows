@@ -95,11 +95,7 @@ void AbiCompositionViewComponentView::updateState(
 
 void AbiCompositionViewComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
   Builder().FinalizeUpdates(m_handle);
-
-  if (m_needsBorderUpdate) {
-    m_needsBorderUpdate = false;
-    UpdateSpecialBorderLayers(*rootComponentView()->Theme(), m_layoutMetrics, *m_props);
-  }
+  finalizeBorderUpdates(m_layoutMetrics, *m_props);
 }
 
 bool AbiCompositionViewComponentView::focusable() const noexcept {

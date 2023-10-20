@@ -164,8 +164,7 @@ std::pair<bool, winrt::Windows::UI::Color> Theme::TryGetPlatformColor(const std:
           {"AccentFillColorDefault", "AccentDark1"}, // SystemAccentColorDark1
           {"AccentFillColorSecondary", "AccentDark1"}, // TODO SystemAccentColorDark1 + Opacity 0.9
           {"AccentFillColorTertiary", "AccentDark1"}, // TODO SystemAccentColorDark1 + Opacity 0.8
-          {"CircleElevationBorder", "ControlStrokeColorDefault"}, // TODO is actually a linear brush
-
+          {"CircleElevationBorder", "ControlStrokeColorDefault"} // TODO is actually a linear brush
     };
 
   static std::unordered_map<std::string, winrt::Windows::UI::Color, std::hash<std::string_view>, std::equal_to<>>
@@ -182,8 +181,8 @@ std::pair<bool, winrt::Windows::UI::Color> Theme::TryGetPlatformColor(const std:
           {"TextFillColorPrimary", {0xE4, 0x00, 0x00, 0x00}},
           {"TextFillColorSecondary", {0x9E, 0x00, 0x00, 0x00}},
           {"TextFillColorDisabled", {0x5C, 0x00, 0x00, 0x00}},
-          {"ControlAltFillColorTertiary", {0x0F, 0x00 0x00, 0x00}},
-          {"ControlAltFillColorQuarternary" {0x18, 0x00, 0x00, 0x00}},
+          {"ControlAltFillColorTertiary", {0x0F, 0x00, 0x00, 0x00}},
+          {"ControlAltFillColorQuarternary", {0x18, 0x00, 0x00, 0x00}},
           {"ControlAltFillColorDisabled", {0x00, 0xFF, 0xFF, 0xFF}},
           {"ControlStrongStrokeColorDefault", {0x72, 0x00, 0x00, 0x00}},
           {"ControlStrongStrokeColorDisabled", {0x37, 0x00, 0x00, 0x00}},
@@ -194,39 +193,6 @@ std::pair<bool, winrt::Windows::UI::Color> Theme::TryGetPlatformColor(const std:
           // Arguably only the control-agnostic platform colors should be respected, and
           // Button should be updated to use those instead, assuming that still holds up
           // in high contrast and such.
-       
-          
-          {"ToggleSwitchKnobFillOffDisabled", {{}, {0x5C, 0x00, 0x00, 0x00}}}, 
-          {"ToggleSwitchKnobFillOnDisabled", {{}, {0xFF, 0xFF, 0xFF, 0xFF}}},
-
-
-
-          {"ToggleSwitchFillOff", {0x06, 0x00, 0x00, 0x00}},
-          {"ToggleSwitchFillOffPointerOver", {0x0F, 0x00, 0x00, 0x00}},
-          {"ToggleSwitchFillOffPressed", {18000000} />
-          {"ToggleSwitchFillOffDisabled", {00FFFFFF} />
-          {"ToggleSwitchStrokeOff", {72000000} />
-          {"ToggleSwitchStrokeOffPointerOver" {72000000} />
-          {"ToggleSwitchStrokeOffPressed" {72000000} />
-          {"ToggleSwitchStrokeOffDisabled" {37000000} />
-          {"ToggleSwitchFillOn" ResourceKey="AccentFillColorDefaultBrush" />
-          {"ToggleSwitchFillOnPointerOver" ResourceKey="AccentFillColorSecondaryBrush" />
-          {"ToggleSwitchFillOnPressed" ResourceKey="AccentFillColorTertiaryBrush" />
-          {"ToggleSwitchFillOnDisabled" ResourceKey="AccentFillColorDisabled" />
-          {"ToggleSwitchStrokeOn" ResourceKey="AccentFillColorDefaultBrush" />
-          {"ToggleSwitchStrokeOnPointerOver" ResourceKey="AccentFillColorSecondaryBrush" />
-          {"ToggleSwitchStrokeOnPressed" ResourceKey="AccentFillColorTertiaryBrush" />
-          {"ToggleSwitchStrokeOnDisabled" ResourceKey="AccentFillColorDisabled" />
-          {"ToggleSwitchKnobFillOff" ResourceKey="TextFillColorSecondaryBrush" />
-          {"ToggleSwitchKnobFillOffPointerOver" ResourceKey="TextFillColorSecondary" />
-          {"ToggleSwitchKnobFillOffPressed" ResourceKey="TextFillColorSecondary" />
-          {"ToggleSwitchKnobFillOffDisabled" ResourceKey="TextFillColorDisabled" />
-          {"ToggleSwitchKnobFillOn" ResourceKey="TextOnAccentFillColorPrimaryBrush" />
-          {"ToggleSwitchKnobFillOnPointerOver" ResourceKey="TextOnAccentFillColorPrimary" />
-          {"ToggleSwitchKnobFillOnPressed" ResourceKey="TextOnAccentFillColorPrimary" />
-          {"ToggleSwitchKnobFillOnDisabled" ResourceKey="TextOnAccentFillColorDisabled" />
-          {"ToggleSwitchKnobStrokeOn" ResourceKey="CircleElevationBorderBrush" />
-
       };
 
   auto result = s_xamlBrushes.find(platformColor);
@@ -260,7 +226,7 @@ winrt::Windows::UI::Color Theme::PlatformColor(const std::string &platformColor)
     return pair.second;
   }
 
-  return {0, 0, 0, 0}; // Black
+  return {0, 0, 0, 0}; // Transparent
 }
 
 winrt::Microsoft::ReactNative::Composition::IBrush Theme::PlatformBrush(const std::string &platformColor) noexcept {
@@ -293,6 +259,16 @@ winrt::Microsoft::ReactNative::Composition::IBrush Theme::Brush(const facebook::
   auto brush = m_compositionContext.CreateColorBrush(color.m_color);
   m_colorBrushCache[h] = brush;
   return brush;
+}
+
+D2D1::ColorF Theme::D2DColor(const facebook::react::Color& color) noexcept {
+  auto c = Color(color);
+  return {c.R / 255.0f, c.G / 255.0f, c.B / 255.0f, c.A / 255.0f};
+}
+
+D2D1::ColorF Theme::D2DPlatformColor(const std::string& platformColor) noexcept {
+  auto c = PlatformColor(platformColor);
+  return {c.R / 255.0f, c.G / 255.0f, c.B / 255.0f, c.A / 255.0f};
 }
 
 static const winrt::Microsoft::ReactNative::ReactPropertyId<

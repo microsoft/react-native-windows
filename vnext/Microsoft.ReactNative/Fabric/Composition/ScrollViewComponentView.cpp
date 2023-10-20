@@ -187,7 +187,6 @@ void ScrollViewComponentView::updateLayoutMetrics(
     OuterVisual().IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
   }
 
-  // m_needsBorderUpdate = true;
   updateBorderLayoutMetrics(layoutMetrics, *m_props);
   m_layoutMetrics = layoutMetrics;
 

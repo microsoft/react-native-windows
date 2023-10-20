@@ -111,10 +111,11 @@ struct CompositionBaseComponentView : public IComponentView,
       std::array<winrt::Microsoft::ReactNative::Composition::ISpriteVisual, SpecialBorderLayerCount> &spBorderVisuals,
       facebook::react::LayoutMetrics const &layoutMetrics,
       const facebook::react::ViewProps &viewProps) noexcept;
-  void UpdateSpecialBorderLayers(
-      Composition::Theme &theme,
+      // TODO add flag passed into base to opt into auto border handling
+      // base will then call updateBorderProps, updateBorderLayoutMetrics and finalizeBorderUpdates
+  void finalizeBorderUpdates(
       facebook::react::LayoutMetrics const &layoutMetrics,
-      const facebook::react::ViewProps &viewProps) noexcept;
+      const facebook::react::ViewProps &viewProps) noexcept; 
   void UpdateCenterPropertySet() noexcept;
 
   winrt::IInspectable m_uiaProvider{nullptr};
