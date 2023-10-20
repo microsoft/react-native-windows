@@ -1,0 +1,21 @@
+#
+parameters:
+  - name: uploadLogs
+    type: boolean
+    default: true
+
+steps:
+  # Reclaim memory used by Verdaccio to reduce the chance of build OOM issues
+  - script: tskill node
+    displayName: Kill Verdaccio
+    condition: succeededOrFailed()
+
+  - ${{ if eq(parameters.uploadLogs, true) }}:
+    # We are experiencing random package restore failures.
+    # We want to uploading the vedaccio logs to aid in diagnosing if it is verdaccio or npmjs.org
+    - task: PublishPipelineArtifact@1
+      displayName: Upload Verdaccio.log (on failure)
+      inputs:
+        targetPath: 'verdaccio.log'
+        artifact: '$(Agent.JobName).Verdaccio.log-$(System.JobAttempt)'
+      condition: failed()
