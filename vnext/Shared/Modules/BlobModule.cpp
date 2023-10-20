@@ -4,10 +4,13 @@
 #include "BlobModule.h"
 
 #include <CreateModules.h>
+#include <JSI/JsiApiContext.h>
 #include <Modules/CxxModuleUtilities.h>
+#include "BlobCollector.h"
 
 // React Native
 #include <cxxreact/JsArgumentHelpers.h>
+
 
 using namespace facebook::xplat;
 
@@ -38,6 +41,27 @@ void BlobTurboModule::Initialize(msrn::ReactContext const &reactContext) noexcep
   m_resource->Callbacks().OnError = [&reactContext](string &&errorText) {
     Modules::SendEvent(reactContext, L"blobFailed", {errorText});
   };
+
+  namespace jsi = facebook::jsi;
+  msrn::ExecuteJsi(reactContext, [resource = m_resource](jsi::Runtime& runtime)
+  {
+    runtime.global().setProperty(
+      runtime,
+      "__blobCollectorProvider",
+      jsi::Function::createFromHostFunction(
+        runtime,
+        jsi::PropNameID::forAscii(runtime, "__blobCollectorProvider"),
+        1,
+        [resource](jsi::Runtime& rt, const jsi::Value& thisVal, const jsi::Value* args, size_t count)
+        {
+          auto blobId = args[0].asString(rt).utf8(rt);
+          auto collector = std::make_shared<BlobCollector>(blobId, resource);
+
+          return jsi::Object::createFromHostObject(rt, collector);
+        }
+      )
+    );
+  });
 }
 
 ReactNativeSpecs::BlobModuleSpec_Constants BlobTurboModule::GetConstants() noexcept {
