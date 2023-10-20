@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/automation
 
-This log was last generated on Wed, 18 Oct 2023 05:14:55 GMT and should not be manually modified.
+This log was last generated on Thu, 19 Oct 2023 05:13:42 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.3.143
+
+Thu, 19 Oct 2023 05:13:42 GMT
+
+### Patches
+
+- Add support for appWorkingDir option (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/automation-channel to v0.12.61
 
 ## 0.3.142
 

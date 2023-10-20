@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 18 Oct 2023 05:14:55 GMT and should not be manually modified.
+This log was last generated on Thu, 19 Oct 2023 05:13:42 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.722
+
+Thu, 19 Oct 2023 05:13:42 GMT
+
+### Changes
+
+- Save State: UIA Dump Tests (34109996+chiaramooney@users.noreply.github.com)
+- [Fabric] Add CharacterRecieved event (30809111+acoates-ms@users.noreply.github.com)
+- Move winrt/Windows.Storage.h include out of USE_V8 conditional (erozell@outlook.com)
 
 ## 0.0.0-canary.721
 

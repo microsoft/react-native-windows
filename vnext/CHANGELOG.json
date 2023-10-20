@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 19 Oct 2023 05:13:42 GMT",
+      "version": "0.0.0-canary.722",
+      "tag": "react-native-windows_v0.0.0-canary.722",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "0928d3560b3ade0211beef70df7e868a2db87573",
+            "comment": "Save State: UIA Dump Tests"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d9089507397e14c9767085e31c8cb99ef06c84c9",
+            "comment": "[Fabric] Add CharacterRecieved event"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "66dc9771faaadc2ad3c1377c3d3f632c6737c1be",
+            "comment": "Move winrt/Windows.Storage.h include out of USE_V8 conditional"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 18 Oct 2023 05:14:55 GMT",
       "version": "0.0.0-canary.721",
       "tag": "react-native-windows_v0.0.0-canary.721",
