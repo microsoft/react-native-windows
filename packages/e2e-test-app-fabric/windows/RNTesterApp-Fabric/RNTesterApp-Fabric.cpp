@@ -166,7 +166,7 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   window.Changed([wkRootView = winrt::make_weak(rootView)](
                      winrt::Microsoft::UI::Windowing::AppWindow const &window,
                      winrt::Microsoft::UI::Windowing::AppWindowChangedEventArgs const &args) {
-    if (args.DidSizeChange()) {
+    if (args.DidSizeChange() || args.DidVisibilityChange()) {
       if (auto rootView = wkRootView.get()) {
         UpdateRootViewSizeToAppWindow(rootView, window);
       }
