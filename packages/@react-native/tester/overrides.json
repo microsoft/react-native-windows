@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.73.0-rc.1",
+  "baseVersion": "0.73.0-rc.2",
   "overrides": [
     {
       "type": "copy",
@@ -474,7 +474,7 @@
       "type": "copy",
       "file": "js/RNTesterAppShared.js",
       "baseFile": "packages/rn-tester/js/RNTesterAppShared.js",
-      "baseHash": "60347ef4094fcb58c89f0e2b204e1616e56d6b31",
+      "baseHash": "2b14fd09f68f828ba56342745f4d3e1d721b71f3",
       "issue": 4054
     },
     {
