@@ -18,6 +18,7 @@
 
 #include <unicode.h>
 #include "CompositionDynamicAutomationProvider.h"
+#include "RootComponentView.h"
 
 namespace Microsoft::ReactNative {
 
@@ -25,14 +26,16 @@ constexpr float c_scrollerLineDelta = 16.0f;
 
 std::shared_ptr<ScrollViewComponentView> ScrollViewComponentView::Create(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-    facebook::react::Tag tag) noexcept {
-  return std::shared_ptr<ScrollViewComponentView>(new ScrollViewComponentView(compContext, tag));
+    facebook::react::Tag tag,
+    winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
+  return std::shared_ptr<ScrollViewComponentView>(new ScrollViewComponentView(compContext, tag, reactContext));
 }
 
 ScrollViewComponentView::ScrollViewComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-    facebook::react::Tag tag)
-    : Super(compContext, tag) {
+    facebook::react::Tag tag,
+    winrt::Microsoft::ReactNative::ReactContext const &reactContext)
+    : Super(compContext, tag, reactContext) {
   static auto const defaultProps = std::make_shared<facebook::react::ScrollViewProps const>();
   m_props = defaultProps;
 
@@ -151,7 +154,7 @@ void ScrollViewComponentView::updateProps(
 
   if (!oldProps || oldViewProps.backgroundColor != newViewProps.backgroundColor) {
     if (newViewProps.backgroundColor) {
-      m_scrollVisual.Brush(m_compContext.CreateColorBrush(newViewProps.backgroundColor.AsWindowsColor()));
+      m_scrollVisual.Brush(rootComponentView()->Theme()->Brush(*newViewProps.backgroundColor));
     } else {
       m_scrollVisual.Brush(m_compContext.CreateColorBrush({0, 0, 0, 0}));
     }

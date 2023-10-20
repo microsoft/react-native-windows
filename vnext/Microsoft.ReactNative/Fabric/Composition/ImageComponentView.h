@@ -86,7 +86,6 @@ struct ImageComponentView : CompositionBaseComponentView {
   facebook::react::SharedViewProps m_props;
 
   winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
-  winrt::Microsoft::ReactNative::ReactContext m_context;
   winrt::Microsoft::ReactNative::Composition::IDrawingSurfaceBrush m_drawingSurface;
   winrt::com_ptr<IWICBitmap> m_wicbmp;
   std::shared_ptr<WindowsImageResponseObserver> m_imageResponseObserver;

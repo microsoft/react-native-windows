@@ -5,9 +5,11 @@
 #pragma once
 
 #include <Fabric/ComponentView.h>
+#include <Microsoft.ReactNative.Cxx/ReactContext.h>
 #include <react/renderer/components/view/ViewEventEmitter.h>
 #include <react/renderer/components/view/ViewProps.h>
 #include "CompositionHelpers.h"
+#include "Theme.h"
 
 namespace Microsoft::ReactNative {
 
@@ -20,7 +22,8 @@ struct CompositionBaseComponentView : public IComponentView,
 
   CompositionBaseComponentView(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-      facebook::react::Tag tag);
+      facebook::react::Tag tag,
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
   virtual winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept = 0;
   // Visual that should be parented to this ComponentView's parent
@@ -104,10 +107,12 @@ struct CompositionBaseComponentView : public IComponentView,
   std::array<winrt::Microsoft::ReactNative::Composition::ISpriteVisual, SpecialBorderLayerCount>
   FindSpecialBorderLayers() const noexcept;
   bool TryUpdateSpecialBorderLayers(
+      Composition::Theme &theme,
       std::array<winrt::Microsoft::ReactNative::Composition::ISpriteVisual, SpecialBorderLayerCount> &spBorderVisuals,
       facebook::react::LayoutMetrics const &layoutMetrics,
       const facebook::react::ViewProps &viewProps) noexcept;
   void UpdateSpecialBorderLayers(
+      Composition::Theme &theme,
       facebook::react::LayoutMetrics const &layoutMetrics,
       const facebook::react::ViewProps &viewProps) noexcept;
   void UpdateCenterPropertySet() noexcept;
@@ -119,11 +124,13 @@ struct CompositionBaseComponentView : public IComponentView,
   facebook::react::SharedViewEventEmitter m_eventEmitter;
   std::vector<IComponentView *> m_children;
   IComponentView *m_parent{nullptr};
+  RootComponentView *m_rootView{nullptr};
   facebook::react::LayoutMetrics m_layoutMetrics;
   bool m_needsBorderUpdate{false};
   bool m_hasTransformMatrixFacade{false};
   bool m_enableFocusVisual{false};
   uint8_t m_numBorderVisuals{0};
+  winrt::Microsoft::ReactNative::ReactContext m_context;
 
  private:
   void showFocusVisual(bool show) noexcept;
@@ -136,7 +143,8 @@ struct CompositionViewComponentView : public CompositionBaseComponentView {
 
   [[nodiscard]] static std::shared_ptr<CompositionViewComponentView> Create(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-      facebook::react::Tag tag) noexcept;
+      facebook::react::Tag tag,
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
   void mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
   void unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
@@ -170,7 +178,8 @@ struct CompositionViewComponentView : public CompositionBaseComponentView {
  protected:
   CompositionViewComponentView(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-      facebook::react::Tag tag);
+      facebook::react::Tag tag,
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
  private:
   facebook::react::SharedViewProps m_props;

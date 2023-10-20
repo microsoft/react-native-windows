@@ -15,7 +15,7 @@ SwitchComponentView::SwitchComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : Super(compContext, tag), m_context(reactContext) {
+    : Super(compContext, tag, reactContext) {
   m_props = std::make_shared<facebook::react::SwitchProps const>();
 }
 
@@ -92,7 +92,7 @@ void SwitchComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) 
 
   if (m_needsBorderUpdate) {
     m_needsBorderUpdate = false;
-    UpdateSpecialBorderLayers(m_layoutMetrics, *m_props);
+    UpdateSpecialBorderLayers(*rootComponentView()->Theme(), m_layoutMetrics, *m_props);
   }
 }
 
@@ -135,11 +135,19 @@ void SwitchComponentView::Draw() noexcept {
 
     winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(defaultColor, defaultBrush.put()));
 
-    winrt::Windows::UI::Color thumbColor;
+    auto &theme = *rootComponentView()->Theme();
+
+    winrt::Microsoft::ReactNative::Composition::IBrush thumbColor;
     if (!switchProps->disabled && switchProps->thumbTintColor) {
-      thumbColor = switchProps->thumbTintColor.AsWindowsColor();
-    } else {
-      thumbColor = winrt::Windows::UI::Colors::Gray();
+      thumbColor = theme.Brush(*switchProps->thumbTintColor);
+    }
+    else if (switchProps->value)
+    {
+      thumbColor = theme.PlatformBrush("ToggleSwitchKnobFillOnDisabled");
+    }
+    else
+    {
+      thumbColor = theme.PlatformBrush("ToggleSwitchKnobFillOffDisabled");
     }
 
     const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
@@ -176,7 +184,7 @@ void SwitchComponentView::Draw() noexcept {
     m_thumbVisual.Size(
         {thumbRadius * m_layoutMetrics.pointScaleFactor, thumbRadius * m_layoutMetrics.pointScaleFactor});
     m_thumbVisual.Position({thumbX, thumbY});
-    m_thumbVisual.Color(thumbColor);
+    m_thumbVisual.Brush(thumbColor);
 
     // Restore old dpi setting
     d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);

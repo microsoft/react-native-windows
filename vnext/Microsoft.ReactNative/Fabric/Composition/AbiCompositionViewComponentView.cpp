@@ -8,25 +8,26 @@
 
 #include <Fabric/DWriteHelpers.h>
 #include "CompositionDynamicAutomationProvider.h"
+#include "RootComponentView.h"
 #include "Unicode.h"
 
 namespace Microsoft::ReactNative {
 
 AbiCompositionViewComponentView::AbiCompositionViewComponentView(
-    const winrt::Microsoft::ReactNative::IReactContext &reactContext,
+    winrt::Microsoft::ReactNative::ReactContext const &reactContext,
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::IReactViewComponentBuilder builder)
-    : Super(compContext, tag), m_builder(builder) {
+    : Super(compContext, tag, reactContext), m_builder(builder) {
   static auto const defaultProps = std::make_shared<AbiViewProps const>();
   m_props = defaultProps;
-  m_handle = Builder().CreateView(reactContext, compContext);
+  m_handle = Builder().CreateView(reactContext.Handle(), compContext);
   m_visual = Builder().CreateVisual(m_handle);
   OuterVisual().InsertAt(m_visual, 0);
 }
 
 std::shared_ptr<AbiCompositionViewComponentView> AbiCompositionViewComponentView::Create(
-    const winrt::Microsoft::ReactNative::IReactContext &reactContext,
+    winrt::Microsoft::ReactNative::ReactContext const &reactContext,
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::IReactViewComponentBuilder builder) noexcept {
@@ -97,7 +98,7 @@ void AbiCompositionViewComponentView::finalizeUpdates(RNComponentViewUpdateMask 
 
   if (m_needsBorderUpdate) {
     m_needsBorderUpdate = false;
-    UpdateSpecialBorderLayers(m_layoutMetrics, *m_props);
+    UpdateSpecialBorderLayers(*rootComponentView()->Theme(), m_layoutMetrics, *m_props);
   }
 }
 

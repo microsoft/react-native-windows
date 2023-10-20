@@ -15,8 +15,9 @@ namespace Microsoft::ReactNative {
 
 UnimplementedNativeViewComponentView::UnimplementedNativeViewComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-    facebook::react::Tag tag)
-    : Super(compContext, tag) {
+    facebook::react::Tag tag,
+    winrt::Microsoft::ReactNative::ReactContext const &reactContext)
+    : Super(compContext, tag, reactContext) {
   static auto const defaultProps = std::make_shared<facebook::react::UnimplementedNativeViewProps const>();
   m_props = defaultProps;
   m_visual = compContext.CreateSpriteVisual();
@@ -24,9 +25,10 @@ UnimplementedNativeViewComponentView::UnimplementedNativeViewComponentView(
 
 std::shared_ptr<UnimplementedNativeViewComponentView> UnimplementedNativeViewComponentView::Create(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-    facebook::react::Tag tag) noexcept {
+    facebook::react::Tag tag,
+    winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
   return std::shared_ptr<UnimplementedNativeViewComponentView>(
-      new UnimplementedNativeViewComponentView(compContext, tag));
+      new UnimplementedNativeViewComponentView(compContext, tag, reactContext));
 }
 
 void UnimplementedNativeViewComponentView::mountChildComponentView(

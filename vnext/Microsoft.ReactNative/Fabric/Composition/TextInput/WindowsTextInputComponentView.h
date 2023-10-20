@@ -100,7 +100,6 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
   winrt::Windows::UI::Composition::CompositionSurfaceBrush m_brush{nullptr};
   winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
   winrt::Microsoft::ReactNative::Composition::ICaretVisual m_caretVisual{nullptr};
-  winrt::Microsoft::ReactNative::ReactContext m_context;
   winrt::Microsoft::ReactNative::Composition::IDrawingSurfaceBrush m_drawingSurface{nullptr};
 
   // Used by ITextHost impl

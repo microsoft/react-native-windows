@@ -54,7 +54,8 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
 
   [[nodiscard]] static std::shared_ptr<ScrollViewComponentView> Create(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-      facebook::react::Tag tag) noexcept;
+      facebook::react::Tag tag,
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
   void mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
   void unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
@@ -86,7 +87,8 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
  private:
   ScrollViewComponentView(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-      facebook::react::Tag tag);
+      facebook::react::Tag tag,
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
   void ensureVisual() noexcept;
   void updateContentVisualSize() noexcept;

@@ -5,7 +5,6 @@
 #pragma once
 
 #include <Fabric/ComponentView.h>
-#include <Microsoft.ReactNative.Cxx/ReactContext.h>
 
 #include "CompositionViewComponentView.h"
 
@@ -61,7 +60,6 @@ struct SwitchComponentView : CompositionBaseComponentView {
 
   facebook::react::Size m_contentSize;
   winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
-  winrt::Microsoft::ReactNative::ReactContext m_context;
   facebook::react::SharedViewProps m_props;
   winrt::Microsoft::ReactNative::Composition::IDrawingSurfaceBrush m_drawingSurface;
   winrt::Microsoft::ReactNative::Composition::ISwitchThumbVisual m_thumbVisual;

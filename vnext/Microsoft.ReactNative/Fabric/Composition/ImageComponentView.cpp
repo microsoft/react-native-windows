@@ -23,6 +23,7 @@
 #include "Composition/AutoDraw.h"
 #include "CompositionDynamicAutomationProvider.h"
 #include "CompositionHelpers.h"
+#include "RootComponentView.h"
 
 extern "C" HRESULT WINAPI WICCreateImagingFactory_Proxy(UINT SDKVersion, IWICImagingFactory **ppIWICImagingFactory);
 
@@ -52,7 +53,7 @@ ImageComponentView::ImageComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : Super(compContext, tag), m_context(reactContext) {
+    : Super(compContext, tag, reactContext) {
   static auto const defaultProps = std::make_shared<facebook::react::ImageProps const>();
   m_props = defaultProps;
 }
@@ -190,7 +191,7 @@ void ImageComponentView::updateLayoutMetrics(
 void ImageComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
   if (m_needsBorderUpdate) {
     m_needsBorderUpdate = false;
-    UpdateSpecialBorderLayers(m_layoutMetrics, *m_props);
+    UpdateSpecialBorderLayers(*rootComponentView()->Theme(), m_layoutMetrics, *m_props);
   }
 }
 

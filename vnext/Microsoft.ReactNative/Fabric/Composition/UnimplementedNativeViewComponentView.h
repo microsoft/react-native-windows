@@ -18,7 +18,8 @@ struct UnimplementedNativeViewComponentView : CompositionBaseComponentView {
 
   [[nodiscard]] static std::shared_ptr<UnimplementedNativeViewComponentView> Create(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-      facebook::react::Tag tag) noexcept;
+      facebook::react::Tag tag,
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
   void mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
   void unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
@@ -42,7 +43,8 @@ struct UnimplementedNativeViewComponentView : CompositionBaseComponentView {
  private:
   UnimplementedNativeViewComponentView(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-      facebook::react::Tag tag);
+      facebook::react::Tag tag,
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext);
   std::shared_ptr<facebook::react::UnimplementedNativeViewProps const> m_props;
   winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
 };

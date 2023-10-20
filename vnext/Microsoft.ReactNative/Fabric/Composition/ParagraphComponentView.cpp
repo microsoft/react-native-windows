@@ -19,8 +19,9 @@ namespace Microsoft::ReactNative {
 
 ParagraphComponentView::ParagraphComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-    facebook::react::Tag tag)
-    : Super(compContext, tag) {
+    facebook::react::Tag tag,
+    winrt::Microsoft::ReactNative::ReactContext const &reactContext)
+    : Super(compContext, tag, reactContext) {
   static auto const defaultProps = std::make_shared<facebook::react::ParagraphProps const>();
   m_props = defaultProps;
 }
@@ -486,8 +487,9 @@ winrt::Microsoft::ReactNative::Composition::IVisual ParagraphComponentView::Visu
 
 std::shared_ptr<ParagraphComponentView> ParagraphComponentView::Create(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-    facebook::react::Tag tag) noexcept {
-  return std::shared_ptr<ParagraphComponentView>(new ParagraphComponentView(compContext, tag));
+    facebook::react::Tag tag,
+    winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
+  return std::shared_ptr<ParagraphComponentView>(new ParagraphComponentView(compContext, tag, reactContext));
 }
 
 } // namespace Microsoft::ReactNative

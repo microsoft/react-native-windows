@@ -47,11 +47,11 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
   std::shared_ptr<CompositionBaseComponentView> view;
 
   if (componentHandle == facebook::react::ViewShadowNode::Handle()) {
-    view = CompositionViewComponentView::Create(compContext, tag);
+    view = CompositionViewComponentView::Create(compContext, tag, m_context);
   } else if (componentHandle == facebook::react::ParagraphShadowNode::Handle()) {
-    view = ParagraphComponentView::Create(compContext, tag);
+    view = ParagraphComponentView::Create(compContext, tag, m_context);
   } else if (componentHandle == facebook::react::ScrollViewShadowNode::Handle()) {
-    view = ScrollViewComponentView::Create(compContext, tag);
+    view = ScrollViewComponentView::Create(compContext, tag, m_context);
   } else if (componentHandle == facebook::react::ImageShadowNode::Handle()) {
     view = ImageComponentView::Create(compContext, tag, m_context);
   } else if (componentHandle == facebook::react::WindowsTextInputShadowNode::Handle()) {
@@ -66,9 +66,9 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
       componentHandle == facebook::react::RawTextShadowNode::Handle() ||
       componentHandle == facebook::react::TextShadowNode::Handle()) {
     // Review - Why do we get asked for ComponentViews for Text/RawText... do these get used?
-    view = CompositionViewComponentView::Create(compContext, tag);
+    view = CompositionViewComponentView::Create(compContext, tag, m_context);
   } else if (componentHandle == facebook::react::UnimplementedNativeViewShadowNode::Handle()) {
-    view = UnimplementedNativeViewComponentView::Create(compContext, tag);
+    view = UnimplementedNativeViewComponentView::Create(compContext, tag, m_context);
   } else {
     auto descriptor =
         WindowsComponentDescriptorRegistry::FromProperties(m_context.Properties())->GetDescriptor(componentHandle);

@@ -9,6 +9,7 @@
 #include <Windows.UI.Composition.h>
 #include <Windows.h>
 #include "CompositionContextHelper.h"
+#include "RootComponentView.h"
 
 namespace Microsoft::ReactNative {
 
@@ -24,7 +25,7 @@ ActivityIndicatorComponentView::ActivityIndicatorComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : Super(compContext, tag), m_context(reactContext) {
+    : Super(compContext, tag, reactContext) {
   m_props = std::make_shared<facebook::react::ActivityIndicatorViewProps const>();
 }
 
@@ -54,7 +55,7 @@ void ActivityIndicatorComponentView::updateProps(
 
   // update color if needed
   if (newViewProps->color && (!oldProps || newViewProps->color != oldViewProps->color)) {
-    m_ActivityIndicatorVisual.Color(newViewProps->color.AsWindowsColor());
+    m_ActivityIndicatorVisual.Brush(rootComponentView()->Theme()->Brush(*newViewProps->color));
   }
 
   if (newViewProps->animating != oldViewProps->animating) {

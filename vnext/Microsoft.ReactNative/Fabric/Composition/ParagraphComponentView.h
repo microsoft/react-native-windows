@@ -21,7 +21,8 @@ struct ParagraphComponentView : CompositionBaseComponentView {
 
   [[nodiscard]] static std::shared_ptr<ParagraphComponentView> Create(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-      facebook::react::Tag tag) noexcept;
+      facebook::react::Tag tag,
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
   void mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
   void unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
@@ -48,7 +49,8 @@ struct ParagraphComponentView : CompositionBaseComponentView {
  private:
   ParagraphComponentView(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-      facebook::react::Tag tag);
+      facebook::react::Tag tag,
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
   void ensureVisual() noexcept;
   void updateVisualBrush() noexcept;
