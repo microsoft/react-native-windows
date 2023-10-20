@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Adds `eqeqeq` to eslint configuration and a few other lint fixes",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}

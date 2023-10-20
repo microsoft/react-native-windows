@@ -36,7 +36,6 @@ import useAndroidRippleForView, {
 import * as React from 'react';
 import {useImperativeHandle, useMemo, useRef, useState} from 'react';
 import type {HandledKeyboardEvent} from '../../Components/View/ViewPropTypes';
-import TextInputState from '../TextInput/TextInputState';
 
 type ViewStyleProp = $ElementType<React.ElementConfig<typeof View>, 'style'>;
 
