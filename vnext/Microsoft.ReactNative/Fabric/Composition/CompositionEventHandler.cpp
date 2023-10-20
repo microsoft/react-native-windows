@@ -434,8 +434,8 @@ void CompositionEventHandler::onKeyDown(
 
   bool fShift = source.GetKeyState(winrt::Windows::System::VirtualKey::Shift) ==
       winrt::Windows::UI::Core::CoreVirtualKeyStates::Down;
-  bool fCtrl =
-      GetKeyState(winrt::Windows::System::VirtualKey::Control) == winrt::Windows::UI::Core::CoreVirtualKeyStates::Down;
+  bool fCtrl = source.GetKeyState(winrt::Windows::System::VirtualKey::Control) ==
+      winrt::Windows::UI::Core::CoreVirtualKeyStates::Down;
 
   if (fShift && fCtrl && args.Key() == static_cast<winrt::Windows::System::VirtualKey>(VkKeyScanA('d')) &&
       Mso::React::ReactOptions::UseDeveloperSupport(m_context.Properties().Handle())) {
