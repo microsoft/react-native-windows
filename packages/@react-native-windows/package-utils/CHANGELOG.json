@@ -2,6 +2,39 @@
   "name": "@react-native-windows/package-utils",
   "entries": [
     {
+      "date": "Sat, 21 Oct 2023 05:16:09 GMT",
+      "version": "0.0.0-canary.56",
+      "tag": "@react-native-windows/package-utils_v0.0.0-canary.56",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.0.0-canary.59",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.30",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.4",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.18",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 12 Oct 2023 05:15:54 GMT",
       "version": "0.0.0-canary.55",
       "tag": "@react-native-windows/package-utils_v0.0.0-canary.55",

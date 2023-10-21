@@ -2,6 +2,39 @@
   "name": "@react-native-windows/automation",
   "entries": [
     {
+      "date": "Sat, 21 Oct 2023 05:16:09 GMT",
+      "version": "0.3.144",
+      "tag": "@react-native-windows/automation_v0.3.144",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.62",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.30",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.4",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.18",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 19 Oct 2023 05:13:42 GMT",
       "version": "0.3.143",
       "tag": "@react-native-windows/automation_v0.3.143",

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update app template's metro config with latest upstream changes",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}

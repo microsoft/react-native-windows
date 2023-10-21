@@ -1,8 +1,26 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 19 Oct 2023 05:13:42 GMT and should not be manually modified.
+This log was last generated on Sat, 21 Oct 2023 05:16:08 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.723
+
+Sat, 21 Oct 2023 05:16:08 GMT
+
+### Changes
+
+- Remove ScrollView.windows.js override (erozell@outlook.com)
+- Implement BlobCollector (julio.rocha@microsoft.com)
+- Add support for loading images from local files (30809111+acoates-ms@users.noreply.github.com)
+- Adds `eqeqeq` to eslint configuration and a few other lint fixes (erozell@outlook.com)
+- Update app template's metro config with latest upstream changes (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.193
+- Bump @react-native-windows/codegen to v0.0.0-canary.72
+- Bump @rnw-scripts/eslint-config to v1.2.4
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.7
+- Bump @rnw-scripts/just-task to v2.3.18
+- Bump react-native-platform-override to v1.9.17
 
 ## 0.0.0-canary.722
 
