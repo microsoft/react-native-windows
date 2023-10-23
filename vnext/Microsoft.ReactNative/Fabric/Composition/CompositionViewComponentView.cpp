@@ -138,7 +138,7 @@ void CompositionBaseComponentView::updateLayoutMetrics(
 
 void CompositionBaseComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
   if ((m_flags & CompositionComponentViewFeatures::NativeBorder) == CompositionComponentViewFeatures::NativeBorder) {
-  finalizeBorderUpdates(m_layoutMetrics, *m_props);
+  finalizeBorderUpdates(m_layoutMetrics, *viewProps());
   }
 }
 
