@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 23 Oct 2023 15:17:02 GMT",
+      "version": "0.73.0-preview.2",
+      "tag": "react-native-windows_v0.73.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6ad09bc5154e17cb11a8d7b4411eff91ebaf8195",
+            "comment": "Implement BlobCollector (#12269)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 17 Oct 2023 22:26:53 GMT",
       "version": "0.73.0-preview.1",
       "tag": "react-native-windows_v0.73.0-preview.1",
