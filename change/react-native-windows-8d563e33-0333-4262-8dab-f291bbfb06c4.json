@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Expose DisableXamlGuard property to allow mixing of WinUI 2/3",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
