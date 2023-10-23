@@ -31,8 +31,13 @@ async function goToExample(example: string) {
   // Filter the list down to the one test, to improve the stability of selectors
   const searchBox = await app.findElementByTestID('explorer_search');
   await searchBox.addValue(['Backspace', 'Backspace', 'Backspace']);
-  // Only grab first three characters of string to reduce cases in WebDriverIO mistyping.
-  await searchBox.addValue(regexEscape(example.substring(0, 3)));
+  // We cannot just click on exampleButton, since it it is likely off screen.
+  // So we first search for the item hopfully causing the item to be one of the few remaining in the list - and therefore onscreen
+  // Ideally we'd either use UIA to invoke the specific item, or ensure that the item is within view
+  // Once we have those UIA patterns implemented we should update this logic.
+  await searchBox.addValue(
+    regexEscape(example.substring(0, Math.min(8, example.length))),
+  );
   const exampleButton = await app.findElementByTestID(example);
   await exampleButton.waitForDisplayed({timeout: 5000});
   await exampleButton.click();
