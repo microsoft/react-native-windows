@@ -478,7 +478,7 @@ WindowsTextInputComponentView::WindowsTextInputComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : Super(compContext, tag, reactContext) {
+    : Super(compContext, tag, reactContext, CompositionComponentViewFeatures::Default) {
   static auto const defaultProps = std::make_shared<facebook::react::WindowsTextInputProps const>();
   m_props = defaultProps;
 
@@ -875,6 +875,18 @@ std::string WindowsTextInputComponentView::DefaultHelpText() const noexcept {
   return m_props->placeholder;
 }
 
+void WindowsTextInputComponentView::updateCursorColor(
+    const facebook::react::SharedColor &cursorColor,
+    const facebook::react::SharedColor &foregroundColor) noexcept {
+  if (cursorColor) {
+    m_caretVisual.Brush(theme()->Brush(*cursorColor));
+  } else if (foregroundColor) {
+    m_caretVisual.Brush(theme()->Brush(*foregroundColor));
+  } else {
+    m_caretVisual.Brush(theme()->PlatformBrush("TextControlForeground"));
+  }
+}
+
 void WindowsTextInputComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
@@ -889,7 +901,7 @@ void WindowsTextInputComponentView::updateProps(
   // update BaseComponentView props
   updateShadowProps(oldTextInputProps, newTextInputProps, m_visual);
   updateTransformProps(oldTextInputProps, newTextInputProps, m_visual);
-  updateBorderProps(oldTextInputProps, newTextInputProps);
+  Super::updateProps(props, oldProps);
 
   if (!facebook::react::floatEquality(
           oldTextInputProps.textAttributes.fontSize, newTextInputProps.textAttributes.fontSize) ||
@@ -929,7 +941,7 @@ void WindowsTextInputComponentView::updateProps(
   }
 
   if (oldTextInputProps.cursorColor != newTextInputProps.cursorColor) {
-    m_caretVisual.Brush(rootComponentView()->Theme()->Brush(*newTextInputProps.cursorColor));
+    updateCursorColor(newTextInputProps.cursorColor, newTextInputProps.textAttributes.foregroundColor);
   }
 
   /*
@@ -1069,9 +1081,7 @@ void WindowsTextInputComponentView::updateLayoutMetrics(
         &res));
   }
 
-  updateBorderLayoutMetrics(layoutMetrics, *m_props);
-
-  m_layoutMetrics = layoutMetrics;
+  Super::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
 
   // TODO should ceil?
   unsigned int newWidth = static_cast<unsigned int>(layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor);
@@ -1084,7 +1094,6 @@ void WindowsTextInputComponentView::updateLayoutMetrics(
   m_imgWidth = newWidth;
   m_imgHeight = newHeight;
 
-  UpdateCenterPropertySet();
   m_visual.Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
@@ -1140,7 +1149,7 @@ std::string WindowsTextInputComponentView::GetTextFromRichEdit() const noexcept 
 }
 
 void WindowsTextInputComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
-  finalizeBorderUpdates(m_layoutMetrics, *m_props);
+  Super::finalizeUpdates(updateMask);
   ensureDrawingSurface();
   if (m_needsRedraw) {
     DrawText();
@@ -1148,7 +1157,8 @@ void WindowsTextInputComponentView::finalizeUpdates(RNComponentViewUpdateMask up
 }
 
 void WindowsTextInputComponentView::prepareForRecycle() noexcept {}
-facebook::react::Props::Shared WindowsTextInputComponentView::props() noexcept {
+
+facebook::react::SharedViewProps WindowsTextInputComponentView::viewProps() noexcept {
   return m_props;
 }
 
@@ -1326,7 +1336,7 @@ void WindowsTextInputComponentView::DrawText() noexcept {
       winrt::check_hresult(m_textServices->OnTxInPlaceActivate(&rcClient));
 
       if (facebook::react::isColorMeaningful(m_props->backgroundColor)) {
-        auto backgroundColor = m_props->backgroundColor.AsD2DColor();
+        auto backgroundColor = theme()->D2DColor(*m_props->backgroundColor);
         winrt::com_ptr<ID2D1SolidColorBrush> backgroundBrush;
         winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(backgroundColor, backgroundBrush.put()));
         const D2D1_RECT_F fillRect = {
@@ -1346,7 +1356,7 @@ void WindowsTextInputComponentView::DrawText() noexcept {
         // set brush color
         winrt::com_ptr<ID2D1SolidColorBrush> brush;
         if (m_props->placeholderTextColor) {
-          auto color = m_props->placeholderTextColor.AsD2DColor();
+          auto color = theme()->D2DColor(*m_props->placeholderTextColor);
           winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(color, brush.put()));
         } else {
           winrt::check_hresult(
@@ -1419,6 +1429,12 @@ void WindowsTextInputComponentView::ensureVisual() noexcept {
     m_visual.InsertAt(m_caretVisual.InnerVisual(), 0);
     m_caretVisual.IsVisible(false);
   }
+}
+
+void WindowsTextInputComponentView::onThemeChanged() noexcept {
+  auto props = std::static_pointer_cast<const facebook::react::WindowsTextInputProps>(m_props);
+  updateCursorColor(props->cursorColor, props->textAttributes.foregroundColor);
+  DrawText();
 }
 
 winrt::Microsoft::ReactNative::Composition::IVisual WindowsTextInputComponentView::Visual() const noexcept {

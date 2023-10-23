@@ -15,7 +15,7 @@ SwitchComponentView::SwitchComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : Super(compContext, tag, reactContext) {
+    : Super(compContext, tag, reactContext, CompositionComponentViewFeatures::Default) {
   m_props = std::make_shared<facebook::react::SwitchProps const>();
 }
 
@@ -60,7 +60,7 @@ void SwitchComponentView::updateProps(
   // update BaseComponentView props
   updateShadowProps(oldViewProps, newViewProps, m_visual);
   updateTransformProps(oldViewProps, newViewProps, m_visual);
-  updateBorderProps(oldViewProps, newViewProps);
+  Super::updateProps(props, oldProps);
   m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
 }
 
@@ -78,10 +78,7 @@ void SwitchComponentView::updateLayoutMetrics(
     OuterVisual().IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
   }
 
-  updateBorderLayoutMetrics(layoutMetrics, *m_props);
-  m_layoutMetrics = layoutMetrics;
-
-  UpdateCenterPropertySet();
+  Super::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
   m_visual.Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
@@ -89,7 +86,7 @@ void SwitchComponentView::updateLayoutMetrics(
 
 void SwitchComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
   ensureDrawingSurface();
-  finalizeBorderUpdates(m_layoutMetrics, *m_props);
+  Super::finalizeUpdates(updateMask);
 }
 
 void SwitchComponentView::Draw() noexcept {
@@ -98,7 +95,7 @@ void SwitchComponentView::Draw() noexcept {
   ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(m_drawingSurface, &offset);
   if (auto d2dDeviceContext = autoDraw.GetRenderTarget()) {
     const auto switchProps = std::static_pointer_cast<const facebook::react::SwitchProps>(m_props);
-    auto &theme = *rootComponentView()->Theme();
+    auto &theme = *this->theme();
 
     if (m_props->backgroundColor) {
       d2dDeviceContext->Clear(theme.D2DColor(*m_props->backgroundColor));
@@ -195,8 +192,7 @@ void SwitchComponentView::Draw() noexcept {
 
     // switch track - fill
     winrt::com_ptr<ID2D1SolidColorBrush> trackBrush;
-    winrt::check_hresult(
-        d2dDeviceContext->CreateSolidColorBrush(fillColor, trackBrush.put()));
+    winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(fillColor, trackBrush.put()));
     d2dDeviceContext->FillRoundedRectangle(track, trackBrush.get());
 
     // switch thumb - made with composition
@@ -219,7 +215,7 @@ void SwitchComponentView::Draw() noexcept {
 
 void SwitchComponentView::prepareForRecycle() noexcept {}
 
-facebook::react::Props::Shared SwitchComponentView::props() noexcept {
+facebook::react::SharedViewProps SwitchComponentView::viewProps() noexcept {
   return m_props;
 }
 
@@ -272,9 +268,12 @@ winrt::Microsoft::ReactNative::Composition::IVisual SwitchComponentView::Visual(
   return m_visual;
 }
 
+void SwitchComponentView::onThemeChanged() noexcept {
+  Draw();
+}
+
 void SwitchComponentView::onPointerPressed(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
-
   // Only care about primary input
   if (!args.GetCurrentPoint(-1).Properties().IsPrimary()) {
     return;
@@ -283,7 +282,7 @@ void SwitchComponentView::onPointerPressed(
   const auto switchProps = std::static_pointer_cast<const facebook::react::SwitchProps>(m_props);
 
   if (!switchProps->disabled) {
-    m_pressed = true;    
+    m_pressed = true;
 
     if (auto root = rootComponentView()) {
       root->TrySetFocusedComponent(*this);
@@ -297,26 +296,26 @@ void SwitchComponentView::onPointerPressed(
 }
 
 void SwitchComponentView::onPointerReleased(
-      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
   // Only care about primary input
   if (!args.GetCurrentPoint(-1).Properties().IsPrimary()) {
     return;
   }
 
-        m_pressed = false;
-      }
-
-
-void SwitchComponentView::onPointerEntered(const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
-m_hovered = true;
-Draw();
+  m_pressed = false;
 }
 
-void SwitchComponentView::onPointerExited(const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
-m_hovered = false;
-Draw();
+void SwitchComponentView::onPointerEntered(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  m_hovered = true;
+  Draw();
 }
 
+void SwitchComponentView::onPointerExited(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  m_hovered = false;
+  Draw();
+}
 
 void SwitchComponentView::onKeyUp(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,

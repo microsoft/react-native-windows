@@ -11,6 +11,7 @@
 #include <react/renderer/components/view/ViewProps.h>
 #include <react/renderer/core/LayoutMetrics.h>
 
+#include <Fabric/Composition/Theme.h>
 #include <winrt/Microsoft.ReactNative.Composition.Input.h>
 
 namespace Microsoft::ReactNative {
@@ -62,6 +63,9 @@ struct IComponentView {
   virtual RootComponentView *rootComponentView() noexcept = 0;
   virtual void parent(IComponentView *parent) noexcept = 0;
   virtual IComponentView *parent() const noexcept = 0;
+  virtual void theme(const std::shared_ptr<Composition::Theme> &theme) noexcept = 0;
+  virtual std::shared_ptr<Composition::Theme> &theme() const noexcept = 0;
+  virtual void onThemeChanged() noexcept = 0;
   virtual const std::vector<IComponentView *> &children() const noexcept = 0;
   // Run fn on all children of this node until fn returns true
   // returns true if the fn ever returned true

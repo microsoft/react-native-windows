@@ -61,6 +61,22 @@ std::pair<bool, winrt::Windows::UI::Color> Theme::TryGetPlatformColor(const std:
           {"Complement", winrt::Windows::UI::ViewManagement::UIColorType::Complement},
           {"Foreground", winrt::Windows::UI::ViewManagement::UIColorType::Foreground}};
 
+  if (platformColor == "AccentDark1@90") {
+    auto clr = TryGetPlatformColor("AccentDark1").second;
+    clr.A = static_cast<uint8_t>(static_cast<float>(clr.A) * 0.9f);
+    auto pair = std::make_pair(true, clr);
+    m_colorCache[platformColor] = pair;
+    return pair;
+  }
+
+  if (platformColor == "AccentDark1@80") {
+    auto clr = TryGetPlatformColor("AccentDark1").second;
+    clr.A = static_cast<uint8_t>(static_cast<float>(clr.A) * 0.8f);
+    auto pair = std::make_pair(true, clr);
+    m_colorCache[platformColor] = pair;
+    return pair;
+  }
+
   auto uiColor = s_uiColorTypes.find(platformColor);
   if (uiColor != s_uiColorTypes.end()) {
     auto uiSettings{winrt::Windows::UI::ViewManagement::UISettings()};
@@ -122,13 +138,14 @@ std::pair<bool, winrt::Windows::UI::Color> Theme::TryGetPlatformColor(const std:
   // https://github.com/microsoft/microsoft-ui-xaml/blob/9052972906c8a0a1b6cb5d5c61b27d6d27cd7f11/dev/CommonStyles/Button_themeresources.xaml
 
   static std::unordered_map<std::string, std::string, std::hash<std::string_view>, std::equal_to<>>
-    s_xamlAliasedColors = {
-       {"ButtonBackgroundPressed", "ControlFillColorTertiary"},
+      s_xamlAliasedColors = {
+          {"ButtonBackgroundPressed", "ControlFillColorTertiary"},
           {"ButtonForegroundPressed", "TextFillColorSecondary"},
           {"ButtonForegroundPointerOver", "TextFillColorPrimary"},
           {"ButtonBackground", "ControlFillColorDefault"},
           {"ButtonBorder", "ControlElevationBorder"},
-          {"ControlElevationBorder", "ControlStrokeColorSecondary"}, // TODO ControlElevationBorderBrush is actually gradient brush
+          {"ControlElevationBorder",
+           "ControlStrokeColorSecondary"}, // TODO ControlElevationBorderBrush is actually gradient brush
           {"ButtonForeground", "TextFillColorPrimary"},
           {"ButtonBackgroundDisabled", "ControlFillColorDisabled"},
           {"ButtonBorderDisabled", "ControlStrokeColorDefault"},
@@ -162,10 +179,12 @@ std::pair<bool, winrt::Windows::UI::Color> Theme::TryGetPlatformColor(const std:
           {"ToggleSwitchKnobFillOnDisabled", "TextOnAccentFillColorDisabled"},
           {"ToggleSwitchKnobStrokeOn", "CircleElevationBorder"},
           {"AccentFillColorDefault", "AccentDark1"}, // SystemAccentColorDark1
-          {"AccentFillColorSecondary", "AccentDark1"}, // TODO SystemAccentColorDark1 + Opacity 0.9
-          {"AccentFillColorTertiary", "AccentDark1"}, // TODO SystemAccentColorDark1 + Opacity 0.8
-          {"CircleElevationBorder", "ControlStrokeColorDefault"} // TODO is actually a linear brush
-    };
+          {"AccentFillColorSecondary", "AccentDark1@90"}, // SystemAccentColorDark1 + Opacity 0.9
+          {"AccentFillColorTertiary", "AccentDark1@80"}, // SystemAccentColorDark1 + Opacity 0.8
+          {"CircleElevationBorder", "ControlStrokeColorDefault"}, // TODO is actually a linear brush
+          {"ProgressRingForegroundTheme", "AccentFillColorDefault"},
+          {"TextControlForeground", "TextFillColorPrimary"},
+      };
 
   static std::unordered_map<std::string, winrt::Windows::UI::Color, std::hash<std::string_view>, std::equal_to<>>
       s_xamlBrushes = {
@@ -194,6 +213,11 @@ std::pair<bool, winrt::Windows::UI::Color> Theme::TryGetPlatformColor(const std:
           // Button should be updated to use those instead, assuming that still holds up
           // in high contrast and such.
       };
+
+  auto alias = s_xamlAliasedColors.find(platformColor);
+  if (alias != s_xamlAliasedColors.end()) {
+    return TryGetPlatformColor(alias->second);
+  }
 
   auto result = s_xamlBrushes.find(platformColor);
   if (result != s_xamlBrushes.end()) {
@@ -261,12 +285,12 @@ winrt::Microsoft::ReactNative::Composition::IBrush Theme::Brush(const facebook::
   return brush;
 }
 
-D2D1::ColorF Theme::D2DColor(const facebook::react::Color& color) noexcept {
+D2D1::ColorF Theme::D2DColor(const facebook::react::Color &color) noexcept {
   auto c = Color(color);
   return {c.R / 255.0f, c.G / 255.0f, c.B / 255.0f, c.A / 255.0f};
 }
 
-D2D1::ColorF Theme::D2DPlatformColor(const std::string& platformColor) noexcept {
+D2D1::ColorF Theme::D2DPlatformColor(const std::string &platformColor) noexcept {
   auto c = PlatformColor(platformColor);
   return {c.R / 255.0f, c.G / 255.0f, c.B / 255.0f, c.A / 255.0f};
 }

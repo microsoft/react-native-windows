@@ -38,15 +38,12 @@ struct RootComponentView : CompositionViewComponentView {
 
   winrt::IInspectable UiaProviderFromPoint(const POINT &ptPixels) noexcept;
 
-  std::shared_ptr<Composition::Theme> Theme() noexcept;
-
  private:
   RootComponentView(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext);
   ::Microsoft::ReactNative::IComponentView *m_focusedComponent = nullptr;
-  std::shared_ptr<Composition::Theme> m_theme;
 };
 
 } // namespace Microsoft::ReactNative

@@ -24,8 +24,9 @@ namespace Microsoft::ReactNative {
 CompositionBaseComponentView::CompositionBaseComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
-    winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : m_tag(tag), m_compContext(compContext), m_context(reactContext) {
+    winrt::Microsoft::ReactNative::ReactContext const &reactContext,
+    CompositionComponentViewFeatures flags)
+    : m_tag(tag), m_compContext(compContext), m_context(reactContext), m_flags(flags) {
   m_outerVisual = compContext.CreateSpriteVisual(); // TODO could be a raw ContainerVisual if we had a
                                                     // CreateContainerVisual in ICompositionContext
   m_focusVisual = compContext.CreateFocusVisual();
@@ -50,6 +51,10 @@ const std::vector<IComponentView *> &CompositionBaseComponentView::children() co
   return m_children;
 }
 
+facebook::react::Props::Shared CompositionBaseComponentView::props() noexcept {
+  return viewProps();
+}
+
 void CompositionBaseComponentView::parent(IComponentView *parent) noexcept {
   if (!parent) {
     auto root = rootComponentView();
@@ -58,12 +63,40 @@ void CompositionBaseComponentView::parent(IComponentView *parent) noexcept {
     }
   }
 
-  m_rootView = nullptr;
-  m_parent = parent;
+  if (m_parent != parent) {
+    m_rootView = nullptr;
+    m_parent = parent;
+    if (parent) {
+      theme(parent->theme());
+    }
+  }
 }
 
 IComponentView *CompositionBaseComponentView::parent() const noexcept {
   return m_parent;
+}
+
+void CompositionBaseComponentView::theme(const std::shared_ptr<Composition::Theme> &value) noexcept {
+  if (m_theme != value) {
+    for (auto it = m_children.begin(); it != m_children.end(); ++it) {
+      (*it)->theme(value);
+    }
+
+    m_theme = value;
+    onThemeChanged();
+  }
+}
+
+void CompositionBaseComponentView::onThemeChanged() noexcept {
+  // TODO redraw borders / anything using theme
+}
+
+std::shared_ptr<Composition::Theme> &CompositionBaseComponentView::theme() const noexcept {
+  if (!m_theme) {
+    m_theme = Composition::Theme::FromContext(m_context);
+  }
+
+  return m_theme;
 }
 
 bool CompositionBaseComponentView::runOnChildren(bool forward, Mso::Functor<bool(IComponentView &)> &fn) noexcept {
@@ -79,6 +112,34 @@ bool CompositionBaseComponentView::runOnChildren(bool forward, Mso::Functor<bool
     }
   }
   return false;
+}
+
+void CompositionBaseComponentView::updateProps(
+    facebook::react::Props::Shared const &props,
+    facebook::react::Props::Shared const &oldProps) noexcept {
+  const auto &oldViewProps = *viewProps();
+  const auto &newViewProps = *std::static_pointer_cast<const facebook::react::ViewProps>(props);
+
+  if ((m_flags & CompositionComponentViewFeatures::NativeBorder) == CompositionComponentViewFeatures::NativeBorder) {
+    updateBorderProps(oldViewProps, newViewProps);
+  }
+}
+
+void CompositionBaseComponentView::updateLayoutMetrics(
+    facebook::react::LayoutMetrics const &layoutMetrics,
+    facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
+  if ((m_flags & CompositionComponentViewFeatures::NativeBorder) == CompositionComponentViewFeatures::NativeBorder) {
+    updateBorderLayoutMetrics(layoutMetrics, *viewProps());
+  }
+
+  m_layoutMetrics = layoutMetrics;
+  UpdateCenterPropertySet();
+}
+
+void CompositionBaseComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
+  if ((m_flags & CompositionComponentViewFeatures::NativeBorder) == CompositionComponentViewFeatures::NativeBorder) {
+  finalizeBorderUpdates(m_layoutMetrics, *m_props);
+  }
 }
 
 void CompositionBaseComponentView::onFocusLost() noexcept {
@@ -555,7 +616,7 @@ void SetBorderLayerPropertiesCommon(
     return;
 
   winrt::com_ptr<ID2D1SolidColorBrush> spBorderBrush;
-  pRT->CreateSolidColorBrush(borderColor.AsD2DColor(), spBorderBrush.put());
+  pRT->CreateSolidColorBrush(theme.D2DColor(*borderColor), spBorderBrush.put());
   assert(spBorderBrush);
   if (spBorderBrush == nullptr)
     return;
@@ -1074,15 +1135,14 @@ bool CompositionBaseComponentView::TryUpdateSpecialBorderLayers(
 void CompositionBaseComponentView::finalizeBorderUpdates(
     facebook::react::LayoutMetrics const &layoutMetrics,
     const facebook::react::ViewProps &viewProps) noexcept {
-
-  if (!m_parent || !m_needsBorderUpdate) {
+  if (!m_needsBorderUpdate) {
     return;
   }
 
   m_needsBorderUpdate = false;
   auto spBorderLayers = FindSpecialBorderLayers();
 
-  if (!TryUpdateSpecialBorderLayers(*rootComponentView()->Theme(), spBorderLayers, layoutMetrics, viewProps)) {
+  if (!TryUpdateSpecialBorderLayers(*theme(), spBorderLayers, layoutMetrics, viewProps)) {
     for (auto &spBorderLayer : spBorderLayers) {
       if (spBorderLayer) {
         spBorderLayer.as<winrt::Microsoft::ReactNative::Composition::ISpriteVisual>().Brush(nullptr);
@@ -1132,7 +1192,7 @@ void CompositionBaseComponentView::updateShadowProps(
     shadow.Opacity(newViewProps.shadowOpacity);
     shadow.BlurRadius(newViewProps.shadowRadius);
     if (newViewProps.shadowColor)
-      shadow.Color(rootComponentView()->Theme()->Color(*newViewProps.shadowColor));
+      shadow.Color(theme()->Color(*newViewProps.shadowColor));
     m_visual.Shadow(shadow);
   }
 }
@@ -1362,7 +1422,7 @@ CompositionViewComponentView::CompositionViewComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : Super(compContext, tag, reactContext) {
+    : Super(compContext, tag, reactContext, CompositionComponentViewFeatures::Default) {
   static auto const defaultProps = std::make_shared<facebook::react::ViewProps const>();
   m_props = defaultProps;
   m_visual = m_compContext.CreateSpriteVisual();
@@ -1408,7 +1468,7 @@ void CompositionViewComponentView::updateProps(
 
   if (oldViewProps.backgroundColor != newViewProps.backgroundColor) {
     if (newViewProps.backgroundColor) {
-      m_visual.Brush(rootComponentView()->Theme()->Brush(*newViewProps.backgroundColor));
+      m_visual.Brush(theme()->Brush(*newViewProps.backgroundColor));
     } else {
       m_visual.Brush(nullptr);
     }
@@ -1422,7 +1482,7 @@ void CompositionViewComponentView::updateProps(
   updateAccessibilityProps(oldViewProps, newViewProps);
   updateShadowProps(oldViewProps, newViewProps, m_visual);
   updateTransformProps(oldViewProps, newViewProps, m_visual);
-  updateBorderProps(oldViewProps, newViewProps);
+  Super::updateProps(props, oldProps);
 
   m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
 }
@@ -1544,22 +1604,16 @@ void CompositionViewComponentView::updateLayoutMetrics(
     OuterVisual().IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
   }
 
-  updateBorderLayoutMetrics(layoutMetrics, *m_props);
+  Super::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
 
-  m_layoutMetrics = layoutMetrics;
-
-  UpdateCenterPropertySet();
   m_visual.Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
 }
 
-void CompositionViewComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
-  finalizeBorderUpdates(m_layoutMetrics, *m_props);
-}
-
 void CompositionViewComponentView::prepareForRecycle() noexcept {}
-facebook::react::Props::Shared CompositionViewComponentView::props() noexcept {
+
+facebook::react::SharedViewProps CompositionViewComponentView::viewProps() noexcept {
   return m_props;
 }
 

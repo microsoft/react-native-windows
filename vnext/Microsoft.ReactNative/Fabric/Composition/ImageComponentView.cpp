@@ -53,7 +53,7 @@ ImageComponentView::ImageComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : Super(compContext, tag, reactContext) {
+    : Super(compContext, tag, reactContext, CompositionComponentViewFeatures::Default) {
   static auto const defaultProps = std::make_shared<facebook::react::ImageProps const>();
   m_props = defaultProps;
 }
@@ -112,7 +112,7 @@ void ImageComponentView::updateProps(
   // update BaseComponentView props
   updateShadowProps(oldImageProps, newImageProps, m_visual);
   updateTransformProps(oldImageProps, newImageProps, m_visual);
-  updateBorderProps(oldImageProps, newImageProps);
+  Super::updateProps(props, oldProps);
 
   if (oldImageProps.backgroundColor != newImageProps.backgroundColor ||
       oldImageProps.blurRadius != newImageProps.blurRadius || oldImageProps.tintColor != newImageProps.tintColor ||
@@ -178,23 +178,20 @@ void ImageComponentView::updateLayoutMetrics(
     OuterVisual().IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
   }
 
-  updateBorderLayoutMetrics(layoutMetrics, *m_props);
-
-  m_layoutMetrics = layoutMetrics;
-
-  UpdateCenterPropertySet();
+  Super::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
   m_visual.Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
 }
 
-void ImageComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
-  finalizeBorderUpdates(m_layoutMetrics, *m_props);
+void ImageComponentView::OnRenderingDeviceLost() noexcept {
+  DrawImage();
 }
 
-void ImageComponentView::OnRenderingDeviceLost() noexcept {
-  // Draw the text again
-  DrawImage();
+void ImageComponentView::onThemeChanged() noexcept {
+  if (m_props->backgroundColor || isColorMeaningful(m_props->tintColor)) {
+    DrawImage();
+  }
 }
 
 void ImageComponentView::ensureDrawingSurface() noexcept {
@@ -274,7 +271,7 @@ void ImageComponentView::DrawImage() noexcept {
 
     d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
     if (m_props->backgroundColor) {
-      d2dDeviceContext->Clear(m_props->backgroundColor.AsD2DColor());
+      d2dDeviceContext->Clear(theme()->D2DColor(*m_props->backgroundColor));
     }
 
     const auto imageProps = std::static_pointer_cast<const facebook::react::ImageProps>(m_props);
@@ -303,7 +300,8 @@ void ImageComponentView::DrawImage() noexcept {
       if (isColorMeaningful(imageProps->tintColor)) {
         winrt::com_ptr<ID2D1Effect> tintColorEffect;
         winrt::check_hresult(d2dDeviceContext->CreateEffect(CLSID_D2D1Flood, tintColorEffect.put()));
-        winrt::check_hresult(tintColorEffect->SetValue(D2D1_FLOOD_PROP_COLOR, imageProps->tintColor.AsD2DColor()));
+        winrt::check_hresult(
+            tintColorEffect->SetValue(D2D1_FLOOD_PROP_COLOR, theme()->D2DColor(*imageProps->tintColor)));
 
         winrt::com_ptr<ID2D1Effect> compositeEffect;
         winrt::check_hresult(d2dDeviceContext->CreateEffect(CLSID_D2D1Composite, compositeEffect.put()));
@@ -356,7 +354,8 @@ void ImageComponentView::DrawImage() noexcept {
 }
 
 void ImageComponentView::prepareForRecycle() noexcept {}
-facebook::react::Props::Shared ImageComponentView::props() noexcept {
+
+facebook::react::SharedViewProps ImageComponentView::viewProps() noexcept {
   return m_props;
 }
 

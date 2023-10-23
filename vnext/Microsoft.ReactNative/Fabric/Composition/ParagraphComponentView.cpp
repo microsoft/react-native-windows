@@ -21,7 +21,7 @@ ParagraphComponentView::ParagraphComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : Super(compContext, tag, reactContext) {
+    : Super(compContext, tag, reactContext, CompositionComponentViewFeatures::Default) {
   static auto const defaultProps = std::make_shared<facebook::react::ParagraphProps const>();
   m_props = defaultProps;
 }
@@ -60,7 +60,7 @@ void ParagraphComponentView::updateProps(
   updateAccessibilityProps(oldViewProps, newViewProps);
   updateShadowProps(oldViewProps, newViewProps, m_visual);
   updateTransformProps(oldViewProps, newViewProps, m_visual);
-  updateBorderProps(oldViewProps, newViewProps);
+  Super::updateProps(props, oldProps);
 
   m_props = std::static_pointer_cast<facebook::react::ParagraphProps const>(props);
 }
@@ -88,10 +88,7 @@ void ParagraphComponentView::updateLayoutMetrics(
     OuterVisual().IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
   }
 
-  updateBorderLayoutMetrics(layoutMetrics, *m_props);
-  m_layoutMetrics = layoutMetrics;
-
-  UpdateCenterPropertySet();
+  Super::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
   m_visual.Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
@@ -99,9 +96,11 @@ void ParagraphComponentView::updateLayoutMetrics(
 void ParagraphComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
   ensureVisual();
   updateVisualBrush();
+  Super::finalizeUpdates(updateMask);
 }
 void ParagraphComponentView::prepareForRecycle() noexcept {}
-facebook::react::Props::Shared ParagraphComponentView::props() noexcept {
+
+facebook::react::SharedViewProps ParagraphComponentView::viewProps() noexcept {
   return m_props;
 }
 
@@ -284,6 +283,10 @@ void ParagraphComponentView::updateVisualBrush() noexcept {
   }
 }
 
+void ParagraphComponentView::onThemeChanged() noexcept {
+  DrawText();
+}
+
 // Renders the text into our composition surface
 void ParagraphComponentView::DrawText() noexcept {
   if (!m_drawingSurface)
@@ -299,7 +302,8 @@ void ParagraphComponentView::DrawText() noexcept {
     ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(m_drawingSurface, &offset);
     if (auto d2dDeviceContext = autoDraw.GetRenderTarget()) {
       d2dDeviceContext->Clear(
-          m_props->backgroundColor ? m_props->backgroundColor.AsD2DColor() : D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
+          m_props->backgroundColor ? theme()->D2DColor(*m_props->backgroundColor)
+                                   : D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
       assert(d2dDeviceContext->GetUnitMode() == D2D1_UNIT_MODE_DIPS);
       const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
       float oldDpiX, oldDpiY;
@@ -316,7 +320,7 @@ void ParagraphComponentView::DrawText() noexcept {
       // it in the event of device removed.
       winrt::com_ptr<ID2D1SolidColorBrush> brush;
       if (paragraphProps.textAttributes.foregroundColor) {
-        auto color = paragraphProps.textAttributes.foregroundColor.AsD2DColor();
+        auto color = theme()->D2DColor(*paragraphProps.textAttributes.foregroundColor);
         winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(color, brush.put()));
       } else {
         winrt::check_hresult(
@@ -362,7 +366,7 @@ void ParagraphComponentView::DrawText() noexcept {
             !isnan(fragment.textAttributes.opacity)) {
           winrt::com_ptr<ID2D1SolidColorBrush> fragmentBrush;
           if (fragment.textAttributes.foregroundColor) {
-            auto color = fragment.textAttributes.foregroundColor.AsD2DColor();
+            auto color = theme()->D2DColor(*fragment.textAttributes.foregroundColor);
             winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(color, fragmentBrush.put()));
           } else {
             winrt::check_hresult(
@@ -434,7 +438,7 @@ void ParagraphComponentView::DrawText() noexcept {
 
               winrt::com_ptr<ID2D1SolidColorBrush> textHighlightBrush;
               winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(
-                  fragment.textAttributes.backgroundColor.AsD2DColor(), textHighlightBrush.put()));
+                  theme()->D2DColor(*fragment.textAttributes.backgroundColor), textHighlightBrush.put()));
 
               for (size_t i = 0; i < actualHitTestCount; ++i) {
                 const DWRITE_HIT_TEST_METRICS &htm = hitTestMetrics[i];

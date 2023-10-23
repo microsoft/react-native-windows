@@ -17,7 +17,7 @@ RootComponentView::RootComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : Super(compContext, tag, reactContext), m_theme(Composition::Theme::FromContext(reactContext)) {}
+    : Super(compContext, tag, reactContext) {}
 
 std::shared_ptr<RootComponentView> RootComponentView::Create(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
@@ -28,10 +28,6 @@ std::shared_ptr<RootComponentView> RootComponentView::Create(
 
 RootComponentView *RootComponentView::rootComponentView() noexcept {
   return this;
-}
-
-std::shared_ptr<Composition::Theme> RootComponentView::Theme() noexcept {
-  return m_theme;
 }
 
 IComponentView *RootComponentView::GetFocusedComponent() noexcept {

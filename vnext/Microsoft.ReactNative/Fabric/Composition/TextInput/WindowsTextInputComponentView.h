@@ -40,7 +40,7 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
   void finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept override;
   void prepareForRecycle() noexcept override;
-  facebook::react::Props::Shared props() noexcept override;
+  facebook::react::SharedViewProps viewProps() noexcept override;
   void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept override;
   facebook::react::Tag hitTest(
       facebook::react::Point pt,
@@ -54,6 +54,7 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
   std::string DefaultControlType() const noexcept override;
   std::string DefaultAccessibleName() const noexcept override;
   std::string DefaultHelpText() const noexcept override;
+  void onThemeChanged() noexcept override;
   void onPointerPressed(
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
   void onPointerReleased(
@@ -96,6 +97,9 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
   void OnTextUpdated() noexcept;
   void OnSelectionChanged(LONG start, LONG end) noexcept;
   std::string GetTextFromRichEdit() const noexcept;
+  void updateCursorColor(
+      const facebook::react::SharedColor &cursorColor,
+      const facebook::react::SharedColor &foregroundColor) noexcept;
 
   winrt::Windows::UI::Composition::CompositionSurfaceBrush m_brush{nullptr};
   winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
