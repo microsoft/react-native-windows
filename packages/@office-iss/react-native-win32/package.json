@@ -91,7 +91,7 @@
   },
   "peerDependencies": {
     "react": "18.2.0",
-    "react-native": "^0.73.0-rc.1"
+    "react-native": "^0.73.0-rc.3"
   },
   "beachball": {
     "defaultNpmTag": "preview",
