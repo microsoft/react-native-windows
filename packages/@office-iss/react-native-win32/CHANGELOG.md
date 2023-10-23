@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Tue, 03 Oct 2023 02:37:00 GMT and should not be manually modified.
+This log was last generated on Mon, 23 Oct 2023 15:14:24 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.18
+
+Mon, 23 Oct 2023 15:14:24 GMT
+
+### Patches
+
+- add support for announceForAccessibilityWithOptions (krsiler@microsoft.com)
 
 ## 0.71.17
 

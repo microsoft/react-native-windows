@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 23 Oct 2023 15:14:24 GMT",
+      "tag": "react-native-windows_v0.71.43",
+      "version": "0.71.43",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ce7c2173ac7e384b20fc619e653484e621d742e5",
+            "comment": "Implement BlobCollector (#12269)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 16 Oct 2023 15:14:35 GMT",
       "tag": "react-native-windows_v0.71.42",
       "version": "0.71.42",

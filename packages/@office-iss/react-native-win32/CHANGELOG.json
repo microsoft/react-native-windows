@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 23 Oct 2023 15:14:24 GMT",
+      "tag": "@office-iss/react-native-win32_v0.71.18",
+      "version": "0.71.18",
+      "comments": {
+        "patch": [
+          {
+            "author": "krsiler@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "7f2e4a1c25ff31e216473db135cbd445406d1f5c",
+            "comment": "add support for announceForAccessibilityWithOptions"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 03 Oct 2023 02:37:00 GMT",
       "tag": "@office-iss/react-native-win32_v0.71.17",
       "version": "0.71.17",
