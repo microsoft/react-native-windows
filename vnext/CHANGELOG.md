@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 17 Oct 2023 22:26:53 GMT and should not be manually modified.
+This log was last generated on Mon, 23 Oct 2023 15:17:02 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.73.0-preview.2
+
+Mon, 23 Oct 2023 15:17:02 GMT
+
+### Changes
+
+- Implement BlobCollector (#12269) (julio.rocha@microsoft.com)
 
 ## 0.73.0-preview.1
 
