@@ -17,7 +17,11 @@ UnimplementedNativeViewComponentView::UnimplementedNativeViewComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : Super(compContext, tag, reactContext, (CompositionComponentViewFeatures::Default & ~CompositionComponentViewFeatures::NativeBorder)) {
+    : Super(
+          compContext,
+          tag,
+          reactContext,
+          (CompositionComponentViewFeatures::Default & ~CompositionComponentViewFeatures::NativeBorder)) {
   static auto const defaultProps = std::make_shared<facebook::react::UnimplementedNativeViewProps const>();
   m_props = defaultProps;
   m_visual = compContext.CreateSpriteVisual();
