@@ -1,9 +1,5 @@
-/**
- * Metro configuration for React Native
- * https://github.com/facebook/react-native
- *
- * @format
- */
+const {getDefaultConfig, mergeConfig} = require('@react-native/metro-config');
+
 const fs = require('fs');
 const path = require('path');
 const exclusionList = require('metro-config/src/defaults/exclusionList');
@@ -17,7 +13,14 @@ const rnwRootNodeModules = path.resolve(rnwPath, '..', 'node_modules');
 const rnwPackages = path.resolve(rnwPath, '..', 'packages');
 // devMode]{{/devMode}}
 
-module.exports = {
+/**
+ * Metro configuration
+ * https://facebook.github.io/metro/docs/configuration
+ *
+ * @type {import('metro-config').MetroConfig}
+ */
+
+const config = {
   //{{#devMode}} [devMode
   watchFolders: [rnwPath, rnwRootNodeModules, rnwPackages],
   // devMode]{{/devMode}}
@@ -49,3 +52,5 @@ module.exports = {
     assetRegistryPath: 'react-native/Libraries/Image/AssetRegistry',
   },
 };
+
+module.exports = mergeConfig(getDefaultConfig(__dirname), config);
