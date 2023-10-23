@@ -32,7 +32,7 @@ winrt::IAsyncOperation<winrt::IRandomAccessStream> GetImageStreamAsync(ReactImag
     bool isAppx = (uri.SchemeName() == L"ms-appx");
 
     if (isFile || isAppx) {
-      winrt::Windows::Foundation::IAsyncOperation<StorageFile> getFileSync{nullptr};
+      winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::StorageFile> getFileSync{nullptr};
 
       if (isFile) {
         auto path = winrt::to_string(uri.Path());
