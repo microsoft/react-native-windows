@@ -165,12 +165,13 @@ struct WindowData {
           viewOptions.ComponentName(appName);
           auto windowData = WindowData::GetFromWindow(hwnd);
 
-          if (!m_compRootView) {
-            if (windowData->m_useLiftedComposition) {
-              m_compRootView = winrt::Microsoft::ReactNative::CompositionRootView(g_liftedCompositor);
-            } else {
-              m_compRootView = winrt::Microsoft::ReactNative::CompositionRootView();
-            }
+          if (m_compRootView)
+            break;
+
+          if (windowData->m_useLiftedComposition) {
+            m_compRootView = winrt::Microsoft::ReactNative::CompositionRootView(g_liftedCompositor);
+          } else {
+            m_compRootView = winrt::Microsoft::ReactNative::CompositionRootView();
           }
 
           m_compRootView.ReactViewHost(
