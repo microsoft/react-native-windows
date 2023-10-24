@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "integrate 0.73-rc3",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "tatianakapos@microsoft.com",
-  "dependentChangeType": "patch"
-}
