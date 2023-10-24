@@ -1649,8 +1649,7 @@ bool walkTree(IComponentView &view, bool forward, Mso::Functor<bool(IComponentVi
     }
 
     for (auto it = view.children().begin(); it != view.children().end(); ++it) {
-      if (fn(**it))
-        return true;
+      return walkTree(**it, forward, fn);
     }
 
     auto current = &view;
