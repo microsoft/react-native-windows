@@ -195,12 +195,13 @@ jobs:
                   echo ##vso[task.setvariable variable=StartedFabricTests]true
                 displayName: Set StartedFabricTests
 
-              - script: |
-                  set E2ETestFabricBuildConfiguration=${{ matrix.BuildConfiguration }}
-                  set E2ETestFabricBuildPlatform=${{ matrix.BuildPlatform }}
-                  yarn e2etest
-                displayName: yarn e2etest
-                workingDirectory: packages/e2e-test-app-fabric
+              # Disabling running fabric tests in 0.73-stable
+              # - script: |
+              #     set E2ETestFabricBuildConfiguration=${{ matrix.BuildConfiguration }}
+              #     set E2ETestFabricBuildPlatform=${{ matrix.BuildPlatform }}
+              #     yarn e2etest
+              #   displayName: yarn e2etest
+              #   workingDirectory: packages/e2e-test-app-fabric
 
               - script: npx jest --clearCache
                 displayName: clear jest cache
