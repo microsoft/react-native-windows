@@ -376,11 +376,14 @@ winrt::Windows::Data::Json::JsonObject DumpVisualTree(winrt::Windows::Data::Json
   varAutomationId.bstrVal = SysAllocString(accessibilityId.c_str());
   pAutomation->CreatePropertyCondition(UIA_AutomationIdPropertyId, varAutomationId, &pCondition);
   pRootElement->FindFirst(TreeScope_Descendants, pCondition, &pTarget);
-  if (pTarget == nullptr) {
-    return result;
-  }
 
-  result = DumpUIATree(pTarget, pWalker);
+  winrt::Windows::Data::Json::JsonObject uiaTree;
+  if (pTarget != nullptr) {
+    uiaTree = DumpUIATree(pTarget, pWalker);
+  }
+  result.Insert(L"Automation Tree", uiaTree);
+  winrt::Windows::Data::Json::JsonObject visualTree;
+  result.Insert(L"Visual Tree", visualTree);
 
   pWalker->Release();
   pRootElement->Release();
