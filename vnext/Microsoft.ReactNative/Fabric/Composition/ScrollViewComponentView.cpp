@@ -550,20 +550,23 @@ facebook::react::Tag ScrollViewComponentView::hitTest(
       ptViewport.y + m_scrollVisual.ScrollPosition().y / m_layoutMetrics.pointScaleFactor};
 
   facebook::react::Tag targetTag;
-  if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
-       m_props->pointerEvents == facebook::react::PointerEventsMode::BoxNone) &&
-      std::any_of(m_children.rbegin(), m_children.rend(), [&targetTag, &ptContent, &localPt](auto child) {
-        targetTag = static_cast<const CompositionBaseComponentView *>(child)->hitTest(ptContent, localPt);
-        return targetTag != -1;
-      }))
-    return targetTag;
 
   if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
        m_props->pointerEvents == facebook::react::PointerEventsMode::BoxOnly) &&
       ptViewport.x >= 0 && ptViewport.x <= m_layoutMetrics.frame.size.width && ptViewport.y >= 0 &&
       ptViewport.y <= m_layoutMetrics.frame.size.height) {
-    localPt = ptViewport;
-    return this->tag();
+    if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
+         m_props->pointerEvents == facebook::react::PointerEventsMode::BoxNone) &&
+        std::any_of(m_children.rbegin(), m_children.rend(), [&targetTag, &ptContent, &localPt](auto child) {
+          targetTag = static_cast<const CompositionBaseComponentView *>(child)->hitTest(ptContent, localPt);
+          return targetTag != -1;
+        }))
+      return targetTag;
+
+    if (ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
+        m_props->pointerEvents == facebook::react::PointerEventsMode::BoxOnly) {
+      return this->tag();
+    }
   }
 
   return -1;
