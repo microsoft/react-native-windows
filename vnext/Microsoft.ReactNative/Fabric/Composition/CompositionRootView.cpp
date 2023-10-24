@@ -158,6 +158,8 @@ void CompositionRootView::ScaleFactor(float value) noexcept {
 
 winrt::IInspectable CompositionRootView::GetUiaProvider() noexcept {
   auto componentView = GetComponentView();
+  // We should probably create a rootview specific UiaProvider which has a single child of the componentView's provider
+  // This would allow us to notify the UIA client when we child is ready.
   if (componentView == nullptr)
     return nullptr;
 
@@ -399,7 +401,7 @@ winrt::Microsoft::UI::Content::ContentIsland CompositionRootView::Island() noexc
 #endif
 
 ::Microsoft::ReactNative::RootComponentView *CompositionRootView::GetComponentView() noexcept {
-  if (!m_context || m_context.Handle().LoadingState() != winrt::Microsoft::ReactNative::LoadingState::Loaded)
+  if (!m_context || m_context.Handle().LoadingState() != winrt::Microsoft::ReactNative::LoadingState::Loaded || m_rootTag == -1)
     return nullptr;
 
   if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
