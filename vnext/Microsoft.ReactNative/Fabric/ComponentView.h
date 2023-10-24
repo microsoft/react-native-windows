@@ -103,6 +103,9 @@ struct IComponentView {
   virtual winrt::IInspectable EnsureUiaProvider() noexcept = 0;
   // Notify up the tree to bring the rect into view by scrolling as needed
   virtual void StartBringIntoView(BringIntoViewOptions &&args) noexcept = 0;
+  virtual std::optional<std::string> getAcccessiblityValue() noexcept = 0;
+  virtual void setAcccessiblityValue(std::string&& value) noexcept = 0;
+  virtual bool getAcccessiblityIsReadOnly() noexcept = 0;
 };
 
 // Run fn on all nodes of the component view tree starting from this one until fn returns true

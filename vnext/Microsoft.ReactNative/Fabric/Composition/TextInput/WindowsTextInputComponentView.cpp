@@ -1150,6 +1150,18 @@ void WindowsTextInputComponentView::finalizeUpdates(RNComponentViewUpdateMask up
   }
 }
 
+std::optional<std::string> WindowsTextInputComponentView::getAcccessiblityValue() noexcept {
+  return GetTextFromRichEdit();
+}
+
+void WindowsTextInputComponentView::setAcccessiblityValue(std::string&& value) noexcept {
+  UpdateText(value);
+}
+
+bool WindowsTextInputComponentView::getAcccessiblityIsReadOnly() noexcept {
+  return !m_props->editable;
+}
+
 void WindowsTextInputComponentView::prepareForRecycle() noexcept {}
 facebook::react::Props::Shared WindowsTextInputComponentView::props() noexcept {
   return m_props;

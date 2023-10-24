@@ -95,6 +95,9 @@ struct CompositionBaseComponentView : public IComponentView,
   void EnsureTransformMatrixFacade() noexcept;
 
   winrt::IInspectable EnsureUiaProvider() noexcept override;
+  std::optional<std::string> getAcccessiblityValue() noexcept override;
+  void setAcccessiblityValue(std::string&& value) noexcept override;
+  bool getAcccessiblityIsReadOnly() noexcept override;
 
   virtual std::string DefaultControlType() const noexcept;
   virtual std::string DefaultAccessibleName() const noexcept;

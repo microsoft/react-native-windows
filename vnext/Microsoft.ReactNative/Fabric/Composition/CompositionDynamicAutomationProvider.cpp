@@ -147,6 +147,16 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
     AddRef();
   }
 
+  if (patternId == UIA_ScrollItemPatternId) {
+    *pRetVal = static_cast<IScrollItemProvider *>(this);
+    AddRef();
+  }
+
+  if (patternId == UIA_ValuePatternId) {
+    *pRetVal = static_cast<IValueProvider *>(this);
+    AddRef();
+  }
+
   return S_OK;
 }
 
@@ -324,6 +334,68 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::Invoke() {
     UiaRaiseAutomationEvent(spProviderSimple.get(), UIA_Invoke_InvokedEventId);
   }
 
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::ScrollIntoView() {
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  ::Microsoft::ReactNative::BringIntoViewOptions scrollOptions;
+  strongView->StartBringIntoView(std::move(scrollOptions));
+
+  return S_OK;
+}
+
+BSTR StringToBSTR(const std::string &str) {
+  // Calculate the required BSTR size in bytes
+  int len = MultiByteToWideChar(CP_UTF8, 0, str.c_str(), -1, nullptr, 0);
+  if (len == 0) {
+    return nullptr; // Conversion error
+  }
+
+  // Allocate memory for the BSTR
+  BSTR bstr = SysAllocStringLen(nullptr, len - 1); // len includes the null terminator
+
+  // Convert the std::string to BSTR
+  MultiByteToWideChar(CP_UTF8, 0, str.c_str(), -1, bstr, len);
+
+  return bstr;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::SetValue(LPCWSTR val) {
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  strongView->setAcccessiblityValue(winrt::to_string(val));
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_Value(BSTR *pRetVal) {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  *pRetVal = StringToBSTR(strongView->getAcccessiblityValue().value_or(""));
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_IsReadOnly(BOOL *pRetVal) {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  *pRetVal = strongView->getAcccessiblityIsReadOnly();
   return S_OK;
 }
 
