@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 21 Oct 2023 05:16:08 GMT and should not be manually modified.
+This log was last generated on Tue, 24 Oct 2023 05:15:58 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.724
+
+Tue, 24 Oct 2023 05:15:58 GMT
+
+### Changes
+
+- Fix event dispatch names for momentum scroll (ericroz@meta.com)
+- Expose DisableXamlGuard property to allow mixing of WinUI 2/3 (jthysell@microsoft.com)
 
 ## 0.0.0-canary.723
 

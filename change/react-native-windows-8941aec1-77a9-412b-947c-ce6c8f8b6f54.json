@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix event dispatch names for momentum scroll",
-  "packageName": "react-native-windows",
-  "email": "ericroz@meta.com",
-  "dependentChangeType": "patch"
-}
