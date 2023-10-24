@@ -353,8 +353,7 @@ winrt::Windows::Data::Json::JsonObject DumpUIATree(IUIAutomationElement *pTarget
   return result;
 }
 
-winrt::Windows::Data::Json::JsonObject DumpVisualTree(winrt::Windows::Data::Json::JsonValue payload) {
-  winrt::Windows::Data::Json::JsonObject payloadObj = payload.GetObject();
+winrt::Windows::Data::Json::JsonObject DumpUIATreeHelper(winrt::Windows::Data::Json::JsonObject payloadObj) {
   auto accessibilityId = payloadObj.GetNamedString(L"accessibilityId");
 
   winrt::Windows::Data::Json::JsonObject result;
@@ -381,15 +380,25 @@ winrt::Windows::Data::Json::JsonObject DumpVisualTree(winrt::Windows::Data::Json
   if (pTarget != nullptr) {
     uiaTree = DumpUIATree(pTarget, pWalker);
   }
-  result.Insert(L"Automation Tree", uiaTree);
-  winrt::Windows::Data::Json::JsonObject visualTree;
-  result.Insert(L"Visual Tree", visualTree);
 
   pWalker->Release();
   pRootElement->Release();
   pAutomation->Release();
   pCondition->Release();
 
+  return uiaTree;
+}
+
+winrt::Windows::Data::Json::JsonObject DumpVisualTreeHelper(winrt::Windows::Data::Json::JsonObject payloadObj) {
+  winrt::Windows::Data::Json::JsonObject result;
+  return result;
+}
+
+winrt::Windows::Data::Json::JsonObject DumpVisualTree(winrt::Windows::Data::Json::JsonValue payload) {
+  winrt::Windows::Data::Json::JsonObject payloadObj = payload.GetObject();
+  winrt::Windows::Data::Json::JsonObject result;
+  result.Insert(L"Automation Tree", DumpUIATreeHelper(payloadObj));
+  result.Insert(L"Visual Tree", DumpVisualTreeHelper(payloadObj));
   return result;
 }
 
