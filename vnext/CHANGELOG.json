@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 24 Oct 2023 19:43:31 GMT",
+      "version": "0.73.0-preview.3",
+      "tag": "react-native-windows_v0.73.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "cb8f4d638b7959a2dbabe6dfc3e8eb2173cfa23c",
+            "comment": "Update app template's metro config with latest upstream changes"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "dabdd032de98a0ab220ccc417146c073d439d87c",
+            "comment": "integrate 0.73-rc3"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 23 Oct 2023 15:17:02 GMT",
       "version": "0.73.0-preview.2",
       "tag": "react-native-windows_v0.73.0-preview.2",

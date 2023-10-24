@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 23 Oct 2023 15:17:02 GMT and should not be manually modified.
+This log was last generated on Tue, 24 Oct 2023 19:43:31 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.73.0-preview.3
+
+Tue, 24 Oct 2023 19:43:31 GMT
+
+### Changes
+
+- Update app template's metro config with latest upstream changes (jthysell@microsoft.com)
+- integrate 0.73-rc3 (tatianakapos@microsoft.com)
 
 ## 0.73.0-preview.2
 
