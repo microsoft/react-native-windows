@@ -399,7 +399,8 @@ winrt::Microsoft::UI::Content::ContentIsland CompositionRootView::Island() noexc
 #endif
 
 ::Microsoft::ReactNative::RootComponentView *CompositionRootView::GetComponentView() noexcept {
-  if (!m_context || m_context.Handle().LoadingState() != winrt::Microsoft::ReactNative::LoadingState::Loaded)
+  if (!m_context || m_context.Handle().LoadingState() != winrt::Microsoft::ReactNative::LoadingState::Loaded ||
+      m_rootTag == -1)
     return nullptr;
 
   if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(

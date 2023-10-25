@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/create-github-releases
 
-This log was last generated on Sat, 21 Oct 2023 05:16:09 GMT and should not be manually modified.
+This log was last generated on Tue, 24 Oct 2023 18:00:31 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.4.25
+
+Tue, 24 Oct 2023 18:00:31 GMT
+
+### Patches
+
+- Fix @rnw-scripts/create-github-releases (jthysell@microsoft.com)
 
 ## 1.4.24
 

@@ -5,7 +5,6 @@
 #pragma once
 
 #include <Fabric/ComponentView.h>
-#include <Microsoft.ReactNative.Cxx/ReactContext.h>
 
 #include "CompositionViewComponentView.h"
 
@@ -35,12 +34,19 @@ struct SwitchComponentView : CompositionBaseComponentView {
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
   void finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept override;
   void prepareForRecycle() noexcept override;
-  facebook::react::Props::Shared props() noexcept override;
+  facebook::react::SharedViewProps viewProps() noexcept override;
   bool focusable() const noexcept override;
+  void onThemeChanged() noexcept override;
   void onKeyUp(
       const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
       const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
   void onPointerPressed(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
+  void onPointerReleased(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
+  void onPointerEntered(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
+  void onPointerExited(
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
 
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt, bool ignorePointerEvents)
@@ -59,9 +65,10 @@ struct SwitchComponentView : CompositionBaseComponentView {
   void ensureDrawingSurface() noexcept;
   bool toggle() noexcept;
 
+  bool m_hovered{false};
+  bool m_pressed{false};
   facebook::react::Size m_contentSize;
   winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
-  winrt::Microsoft::ReactNative::ReactContext m_context;
   facebook::react::SharedViewProps m_props;
   winrt::Microsoft::ReactNative::Composition::IDrawingSurfaceBrush m_drawingSurface;
   winrt::Microsoft::ReactNative::Composition::ISwitchThumbVisual m_thumbVisual;

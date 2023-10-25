@@ -10,6 +10,11 @@
     <WinUI2xVersion Condition="'$(WinUI2xVersion)'==''">2.8.0</WinUI2xVersion>
   </PropertyGroup>
 
+  <PropertyGroup Label="XamlGuard">
+    <!-- Setting DisableXamlGuard to true will disable the code which prevents mixing WinUI2 and WinUI3 in the same process. -->
+    <DisableXamlGuard Condition="'$(DisableXamlGuard)'==''">false</DisableXamlGuard>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(UseWinUI3)'=='true'">
     <WinUIPackageName>Microsoft.WindowsAppSDK</WinUIPackageName>
     <WinUIPackageVersion>$(WinUI3Version)</WinUIPackageVersion>
@@ -36,6 +41,13 @@
     <Midl>
       <PreprocessorDefinitions>USE_WINUI3;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
+  </ItemDefinitionGroup>
+
+  <ItemDefinitionGroup Condition="'$(DisableXamlGuard)'=='true'">
+    <!-- Enlighten C++ code to not block WinUI2 and WinUI3 from loading in the same process. -->
+    <ClCompile>
+      <PreprocessorDefinitions>DISABLE_XAML_GUARD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
   </ItemDefinitionGroup>
 
   <Target Name="PrintWinUIConfig" BeforeTargets="Midl;Build;ResolveSDKReferences">

@@ -2,6 +2,42 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 24 Oct 2023 18:00:31 GMT",
+      "version": "0.0.0-canary.725",
+      "tag": "react-native-windows_v0.0.0-canary.725",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "8f6644185f31abca53d32e71d4697d4d070792e9",
+            "comment": "Minor codereview feedback cleanup"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 24 Oct 2023 05:15:58 GMT",
+      "version": "0.0.0-canary.724",
+      "tag": "react-native-windows_v0.0.0-canary.724",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ericroz@meta.com",
+            "package": "react-native-windows",
+            "commit": "1367b74599cc888082d280d728b1ac02917cea96",
+            "comment": "Fix event dispatch names for momentum scroll"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "720defa169818011dc6b2d0a9e5ad05c537350c7",
+            "comment": "Expose DisableXamlGuard property to allow mixing of WinUI 2/3"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 21 Oct 2023 05:16:08 GMT",
       "version": "0.0.0-canary.723",
       "tag": "react-native-windows_v0.0.0-canary.723",
