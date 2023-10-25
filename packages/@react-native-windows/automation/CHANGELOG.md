@@ -1,8 +1,151 @@
 # Change Log - @react-native-windows/automation
 
-This log was last generated on Fri, 22 Sep 2023 05:13:33 GMT and should not be manually modified.
+This log was last generated on Tue, 24 Oct 2023 18:00:31 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.3.146
+
+Tue, 24 Oct 2023 18:00:31 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.64
+
+## 0.3.145
+
+Tue, 24 Oct 2023 05:15:59 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.63
+
+## 0.3.144
+
+Sat, 21 Oct 2023 05:16:09 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.62
+- Bump @react-native-windows/fs to v0.0.0-canary.30
+- Bump @rnw-scripts/eslint-config to v1.2.4
+- Bump @rnw-scripts/just-task to v2.3.18
+
+## 0.3.143
+
+Thu, 19 Oct 2023 05:13:42 GMT
+
+### Patches
+
+- Add support for appWorkingDir option (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/automation-channel to v0.12.61
+
+## 0.3.142
+
+Wed, 18 Oct 2023 05:14:55 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.60
+
+## 0.3.141
+
+Tue, 17 Oct 2023 05:13:04 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.59
+
+## 0.3.140
+
+Sat, 14 Oct 2023 05:13:11 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.58
+
+## 0.3.139
+
+Fri, 13 Oct 2023 05:15:18 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.57
+
+## 0.3.138
+
+Thu, 12 Oct 2023 05:15:54 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.56
+- Bump @react-native-windows/fs to v0.0.0-canary.29
+- Bump @rnw-scripts/eslint-config to v1.2.3
+- Bump @rnw-scripts/just-task to v2.3.17
+
+## 0.3.137
+
+Wed, 11 Oct 2023 05:13:16 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.55
+
+## 0.3.136
+
+Tue, 10 Oct 2023 05:13:38 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.54
+
+## 0.3.135
+
+Fri, 06 Oct 2023 05:13:52 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.53
+
+## 0.3.134
+
+Wed, 04 Oct 2023 05:12:46 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.52
+
+## 0.3.133
+
+Tue, 03 Oct 2023 05:13:16 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.51
+
+## 0.3.132
+
+Thu, 28 Sep 2023 05:13:18 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.50
+
+## 0.3.131
+
+Wed, 27 Sep 2023 06:10:53 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.49
+
+## 0.3.130
+
+Tue, 26 Sep 2023 05:13:15 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.48
 
 ## 0.3.129
 

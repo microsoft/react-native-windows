@@ -852,6 +852,11 @@ export type Props = $ReadOnly<{|
   unstable_onKeyPressSync?: ?(e: KeyPressEvent) => mixed,
 
   /**
+   * Called when a single tap gesture is detected.
+   */
+  onPress?: ?(event: PressEvent) => mixed,
+
+  /**
    * Called when a touch is engaged.
    */
   onPressIn?: ?(event: PressEvent) => mixed,
@@ -1435,27 +1440,37 @@ function InternalTextInput(props: Props): React.Node {
 
   const focusable = props.focusable !== false;
 
+  const {
+    editable,
+    hitSlop,
+    onPress,
+    onPressIn,
+    onPressOut,
+    rejectResponderTermination,
+  } = props;
+
   const config = React.useMemo(
     () => ({
-      hitSlop: props.hitSlop,
+      hitSlop,
       onPress: (event: PressEvent) => {
-        if (props.editable !== false) {
+        onPress?.(event);
+        if (editable !== false) {
           if (inputRef.current != null) {
             inputRef.current.focus();
           }
         }
       },
-      onPressIn: props.onPressIn,
-      onPressOut: props.onPressOut,
-      cancelable:
-        Platform.OS === 'ios' ? !props.rejectResponderTermination : null,
+      onPressIn: onPressIn,
+      onPressOut: onPressOut,
+      cancelable: Platform.OS === 'ios' ? !rejectResponderTermination : null,
     }),
     [
-      props.editable,
-      props.hitSlop,
-      props.onPressIn,
-      props.onPressOut,
-      props.rejectResponderTermination,
+      editable,
+      hitSlop,
+      onPress,
+      onPressIn,
+      onPressOut,
+      rejectResponderTermination,
     ],
   );
 
@@ -1475,8 +1490,8 @@ function InternalTextInput(props: Props): React.Node {
       // $FlowFixMe - keyDownEvents was already checked to not be undefined
       for (const el of props.keyDownEvents) {
         if (
-          event.nativeEvent.code == el.code &&
-          el.handledEventPhase == eventPhase.Bubbling
+          event.nativeEvent.code === el.code &&
+          el.handledEventPhase === eventPhase.Bubbling
         ) {
           event.stopPropagation();
         }
@@ -1489,7 +1504,7 @@ function InternalTextInput(props: Props): React.Node {
     if (props.keyUpEvents && event.isPropagationStopped() !== true) {
       // $FlowFixMe - keyDownEvents was already checked to not be undefined
       for (const el of props.keyUpEvents) {
-        if (event.nativeEvent.code == el.code && el.handledEventPhase == 3) {
+        if (event.nativeEvent.code === el.code && el.handledEventPhase === 3) {
           event.stopPropagation();
         }
       }
@@ -1501,7 +1516,7 @@ function InternalTextInput(props: Props): React.Node {
     if (props.keyDownEvents && event.isPropagationStopped() !== true) {
       // $FlowFixMe - keyDownEvents was already checked to not be undefined
       for (const el of props.keyDownEvents) {
-        if (event.nativeEvent.code == el.code && el.handledEventPhase == 1) {
+        if (event.nativeEvent.code === el.code && el.handledEventPhase === 1) {
           event.stopPropagation();
         }
       }
@@ -1513,7 +1528,7 @@ function InternalTextInput(props: Props): React.Node {
     if (props.keyUpEvents && event.isPropagationStopped() !== true) {
       // $FlowFixMe - keyDownEvents was already checked to not be undefined
       for (const el of props.keyUpEvents) {
-        if (event.nativeEvent.code == el.code && el.handledEventPhase == 1) {
+        if (event.nativeEvent.code === el.code && el.handledEventPhase === 1) {
           event.stopPropagation();
         }
       }
@@ -1777,6 +1792,7 @@ const autoCompleteWebToTextContentTypeMap = {
 const ExportedForwardRef: React.AbstractComponent<
   React.ElementConfig<typeof InternalTextInput>,
   TextInputInstance,
+  // $FlowFixMe[incompatible-call]
 > = React.forwardRef(function TextInput(
   {
     allowFontScaling = true,
@@ -1799,8 +1815,13 @@ const ExportedForwardRef: React.AbstractComponent<
   let style = flattenStyle(restProps.style);
 
   if (style?.verticalAlign != null) {
+    // $FlowFixMe[prop-missing]
+    // $FlowFixMe[cannot-write]
     style.textAlignVertical =
+      // $FlowFixMe[invalid-computed-prop]
       verticalAlignToTextAlignVerticalMap[style.verticalAlign];
+    // $FlowFixMe[prop-missing]
+    // $FlowFixMe[cannot-write]
     delete style.verticalAlign;
   }
 

@@ -1,8 +1,152 @@
 # Change Log - @react-native-windows/automation-channel
 
-This log was last generated on Fri, 22 Sep 2023 05:13:33 GMT and should not be manually modified.
+This log was last generated on Tue, 24 Oct 2023 18:00:31 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.12.64
+
+Tue, 24 Oct 2023 18:00:31 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.725
+
+## 0.12.63
+
+Tue, 24 Oct 2023 05:15:59 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.724
+
+## 0.12.62
+
+Sat, 21 Oct 2023 05:16:09 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.4
+- Bump @rnw-scripts/just-task to v2.3.18
+- Bump react-native-windows to v0.0.0-canary.723
+
+## 0.12.61
+
+Thu, 19 Oct 2023 05:13:42 GMT
+
+### Patches
+
+- Save State: UIA Dump Tests (34109996+chiaramooney@users.noreply.github.com)
+- Bump react-native-windows to v0.0.0-canary.722
+
+## 0.12.60
+
+Wed, 18 Oct 2023 05:14:55 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.721
+
+## 0.12.59
+
+Tue, 17 Oct 2023 05:13:03 GMT
+
+### Patches
+
+- Integrate 10/02 (yajurgrover24@gmail.com)
+- Bump react-native-windows to v0.0.0-canary.720
+
+## 0.12.58
+
+Sat, 14 Oct 2023 05:13:11 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.719
+
+## 0.12.57
+
+Fri, 13 Oct 2023 05:15:18 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.718
+
+## 0.12.56
+
+Thu, 12 Oct 2023 05:15:53 GMT
+
+### Patches
+
+- Integrate 9/25 (yajurgrover24@gmail.com)
+- Bump @rnw-scripts/eslint-config to v1.2.3
+- Bump @rnw-scripts/just-task to v2.3.17
+- Bump react-native-windows to v0.0.0-canary.717
+
+## 0.12.55
+
+Wed, 11 Oct 2023 05:13:16 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.716
+
+## 0.12.54
+
+Tue, 10 Oct 2023 05:13:38 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.715
+
+## 0.12.53
+
+Fri, 06 Oct 2023 05:13:51 GMT
+
+### Patches
+
+- Integrate 9/20 (34109996+chiaramooney@users.noreply.github.com)
+- Bump react-native-windows to v0.0.0-canary.714
+
+## 0.12.52
+
+Wed, 04 Oct 2023 05:12:46 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.713
+
+## 0.12.51
+
+Tue, 03 Oct 2023 05:13:16 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.712
+
+## 0.12.50
+
+Thu, 28 Sep 2023 05:13:18 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.711
+
+## 0.12.49
+
+Wed, 27 Sep 2023 06:10:53 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.710
+
+## 0.12.48
+
+Tue, 26 Sep 2023 05:13:15 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.709
 
 ## 0.12.47
 

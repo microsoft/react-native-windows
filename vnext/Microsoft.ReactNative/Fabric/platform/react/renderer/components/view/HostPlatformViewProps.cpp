@@ -15,7 +15,7 @@ HostPlatformViewProps::HostPlatformViewProps(
     const HostPlatformViewProps &sourceProps,
     const RawProps &rawProps,
     bool shouldSetRawProps)
-    : BaseViewProps(context, sourceProps, rawProps, shouldSetRawProps),
+    : BaseViewProps(context, sourceProps, rawProps),
       windowsEvents(
           CoreFeatures::enablePropIteratorSetter ? sourceProps.windowsEvents
                                                  : convertRawProp(context, rawProps, sourceProps.windowsEvents, {})),

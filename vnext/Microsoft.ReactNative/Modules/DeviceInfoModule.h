@@ -56,7 +56,7 @@ struct DeviceInfo : public std::enable_shared_from_this<DeviceInfo> {
   void Initialize(React::ReactContext const &reactContext) noexcept;
 
   REACT_GET_CONSTANTS(GetConstants)
-  ReactNativeSpecs::DeviceInfoSpec_Constants GetConstants() noexcept;
+  ReactNativeSpecs::DeviceInfoSpec_DeviceInfoConstants GetConstants() noexcept;
 
  private:
   winrt::Microsoft::ReactNative::ReactContext m_context;

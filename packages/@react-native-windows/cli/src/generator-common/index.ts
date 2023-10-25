@@ -74,7 +74,7 @@ export function resolveContents(
 }
 
 // Binary files, don't process these (avoid decoding as utf8)
-const binaryExtensions = ['.png', '.jar', '.keystore'];
+const binaryExtensions = ['.png', '.jar', '.keystore', '.ico', '.rc'];
 
 type ContentChangedCallbackOption = 'identical' | 'changed' | 'new' | null;
 

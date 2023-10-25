@@ -13,36 +13,26 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
-struct SourceCodeSpec_Constants {
+struct SourceCodeSpec_SourceCodeConstants {
     std::string scriptURL;
 };
 
 
-inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(SourceCodeSpec_Constants*) noexcept {
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(SourceCodeSpec_SourceCodeConstants*) noexcept {
     winrt::Microsoft::ReactNative::FieldMap fieldMap {
-        {L"scriptURL", &SourceCodeSpec_Constants::scriptURL},
+        {L"scriptURL", &SourceCodeSpec_SourceCodeConstants::scriptURL},
     };
     return fieldMap;
 }
 
 struct SourceCodeSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
-  static constexpr auto constants = std::tuple{
-      TypedConstant<SourceCodeSpec_Constants>{0},
-  };
   static constexpr auto methods = std::tuple{
 
   };
 
   template <class TModule>
   static constexpr void ValidateModule() noexcept {
-    constexpr auto constantCheckResults = CheckConstants<TModule, SourceCodeSpec>();
     constexpr auto methodCheckResults = CheckMethods<TModule, SourceCodeSpec>();
-
-    REACT_SHOW_CONSTANT_SPEC_ERRORS(
-          0,
-          "SourceCodeSpec_Constants",
-          "    REACT_GET_CONSTANTS(GetConstants) SourceCodeSpec_Constants GetConstants() noexcept {/*implementation*/}\n"
-          "    REACT_GET_CONSTANTS(GetConstants) static SourceCodeSpec_Constants GetConstants() noexcept {/*implementation*/}\n");
 
 
   }

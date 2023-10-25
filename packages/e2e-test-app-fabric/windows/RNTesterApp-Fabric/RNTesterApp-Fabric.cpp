@@ -9,6 +9,8 @@
 
 #include <DispatcherQueue.h>
 #include <UIAutomation.h>
+#include <combaseapi.h>
+#include <unknwn.h>
 
 #include <winrt/Microsoft.ReactNative.Composition.h>
 #include <winrt/Windows.Data.Json.h>
@@ -33,8 +35,8 @@ struct DeviceInfo {
   }
 
   REACT_GET_CONSTANTS(GetConstants)
-  Microsoft::ReactNativeSpecs::DeviceInfoSpec_Constants GetConstants() noexcept {
-    Microsoft::ReactNativeSpecs::DeviceInfoSpec_Constants constants;
+  Microsoft::ReactNativeSpecs::DeviceInfoSpec_DeviceInfoConstants GetConstants() noexcept {
+    Microsoft::ReactNativeSpecs::DeviceInfoSpec_DeviceInfoConstants constants;
     Microsoft::ReactNativeSpecs::DeviceInfoSpec_DisplayMetrics screenDisplayMetrics;
     screenDisplayMetrics.fontScale = 1;
     screenDisplayMetrics.height = 1024;
@@ -61,6 +63,7 @@ struct CompReactPackageProvider
 // Global Variables:
 WCHAR szTitle[MAX_LOADSTRING]; // The title bar text
 WCHAR szWindowClass[MAX_LOADSTRING]; // the main window class name
+HWND global_hwnd;
 
 winrt::Windows::System::DispatcherQueueController g_dispatcherQueueController{nullptr};
 winrt::Windows::UI::Composition::Compositor g_compositor{nullptr};
@@ -88,11 +91,9 @@ struct WindowData {
   winrt::Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
 
 #if BUNDLE
-  std::wstring m_bundleFile = L"index.windows";
   bool m_useWebDebugger{false};
   bool m_fastRefreshEnabled{false};
 #else
-  std::wstring m_bundleFile = L"index";
   bool m_useWebDebugger{false};
   bool m_fastRefreshEnabled{true};
 #endif
@@ -105,7 +106,7 @@ struct WindowData {
   WindowData(const winrt::Microsoft::ReactNative::CompositionHwndHost &compHost) : m_CompositionHwndHost(compHost) {
     winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositionContext(
         InstanceSettings().Properties(),
-        winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::CreateContext(g_compositor));
+        winrt::Microsoft::ReactNative::Composition::WindowsCompositionContextHelper::CreateContext(g_compositor));
   }
 
   static WindowData *GetFromWindow(HWND hwnd) {
@@ -139,8 +140,8 @@ struct WindowData {
     // RegisterAutolinkedNativeModulePackages(host.PackageProviders()); // Includes any
     // autolinked modules
 
-    host.InstanceSettings().JavaScriptBundleFile(m_bundleFile);
-
+    host.InstanceSettings().JavaScriptBundleFile(L"index.windows");
+    host.InstanceSettings().DebugBundlePath(L"index");
     host.InstanceSettings().UseWebDebugger(m_useWebDebugger);
     host.InstanceSettings().UseDirectDebugger(m_useDirectDebugger);
     host.InstanceSettings().BundleRootPath(std::wstring(L"file:").append(workingDir).append(L"\\Bundle\\").c_str());
@@ -239,6 +240,7 @@ int RunRNTester(int showCmd) {
       windowData.get());
 
   WINRT_VERIFY(hwnd);
+  global_hwnd = hwnd;
 
   windowData.release();
 
@@ -309,9 +311,82 @@ winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::Js
   return result;
 }
 
-winrt::Windows::Data::Json::JsonObject DumpVisualTree(winrt::Windows::Data::Json::JsonValue payload) {
+winrt::Windows::Data::Json::JsonObject DumpUIATree(IUIAutomationElement *pTarget, IUIAutomationTreeWalker *pWalker) {
   winrt::Windows::Data::Json::JsonObject result;
-  // TODO: Method should return a JSON of the Composition Visual Tree
+  BSTR automationId;
+  CONTROLTYPEID controlType;
+  BSTR helpText;
+  BOOL isEnabled;
+  BOOL isKeyboardFocusable;
+  BSTR localizedControlType;
+  BSTR name;
+
+  pTarget->get_CurrentAutomationId(&automationId);
+  pTarget->get_CurrentControlType(&controlType);
+  pTarget->get_CurrentHelpText(&helpText);
+  pTarget->get_CurrentIsEnabled(&isEnabled);
+  pTarget->get_CurrentIsKeyboardFocusable(&isKeyboardFocusable);
+  pTarget->get_CurrentLocalizedControlType(&localizedControlType);
+  pTarget->get_CurrentName(&name);
+  result.Insert(L"AutomationId", winrt::Windows::Data::Json::JsonValue::CreateStringValue(automationId));
+  result.Insert(L"ControlType", winrt::Windows::Data::Json::JsonValue::CreateNumberValue(controlType));
+  result.Insert(L"HelpText", winrt::Windows::Data::Json::JsonValue::CreateStringValue(helpText));
+  result.Insert(L"IsEnabled", winrt::Windows::Data::Json::JsonValue::CreateBooleanValue(isEnabled));
+  result.Insert(L"IsKeyboardFocusable", winrt::Windows::Data::Json::JsonValue::CreateBooleanValue(isKeyboardFocusable));
+  result.Insert(
+      L"LocalizedControlType", winrt::Windows::Data::Json::JsonValue::CreateStringValue(localizedControlType));
+  result.Insert(L"Name", winrt::Windows::Data::Json::JsonValue::CreateStringValue(name));
+
+  IUIAutomationElement *pChild;
+  IUIAutomationElement *pSibling;
+  pWalker->GetFirstChildElement(pTarget, &pChild);
+  winrt::Windows::Data::Json::JsonArray children;
+  while (pChild != nullptr) {
+    children.Append(DumpUIATree(pChild, pWalker));
+    pWalker->GetNextSiblingElement(pChild, &pSibling);
+    pChild = pSibling;
+    pSibling = nullptr;
+  }
+  if (children.Size() > 0) {
+    result.Insert(L"Children", children);
+  }
+  return result;
+}
+
+winrt::Windows::Data::Json::JsonObject DumpVisualTree(winrt::Windows::Data::Json::JsonValue payload) {
+  winrt::Windows::Data::Json::JsonObject payloadObj = payload.GetObject();
+  auto accessibilityId = payloadObj.GetNamedString(L"accessibilityId");
+
+  winrt::Windows::Data::Json::JsonObject result;
+
+  IUIAutomation *pAutomation;
+  IUIAutomationElement *pRootElement;
+  IUIAutomationTreeWalker *pWalker;
+
+  CoCreateInstance(__uuidof(CUIAutomation8), nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pAutomation));
+  pAutomation->get_ContentViewWalker(&pWalker);
+  pAutomation->ElementFromHandle(global_hwnd, &pRootElement);
+
+  IUIAutomationElement *pTarget;
+  IUIAutomationCondition *pCondition;
+  VARIANT varAutomationId;
+  VariantInit(&varAutomationId);
+
+  varAutomationId.vt = VT_BSTR;
+  varAutomationId.bstrVal = SysAllocString(accessibilityId.c_str());
+  pAutomation->CreatePropertyCondition(UIA_AutomationIdPropertyId, varAutomationId, &pCondition);
+  pRootElement->FindFirst(TreeScope_Descendants, pCondition, &pTarget);
+  if (pTarget == nullptr) {
+    return result;
+  }
+
+  result = DumpUIATree(pTarget, pWalker);
+
+  pWalker->Release();
+  pRootElement->Release();
+  pAutomation->Release();
+  pCondition->Release();
+
   return result;
 }
 

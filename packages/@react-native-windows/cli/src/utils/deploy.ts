@@ -231,6 +231,44 @@ function getAppxManifestPath(
   return appxPath;
 }
 
+function getAppxRecipePath(
+  options: RunWindowsOptions,
+  projectName?: string,
+): string {
+  const appxManifestPath = path.dirname(
+    getAppxManifestPath(options, projectName),
+  );
+
+  const appxRecipeGlob = `*.build.appxrecipe`;
+
+  const globs = glob.sync(path.join(appxManifestPath, appxRecipeGlob));
+
+  let appxRecipePath: string;
+  if (globs.length === 1 || !projectName) {
+    appxRecipePath = globs[0];
+  } else {
+    const filteredGlobs = globs.filter(x => x.includes(projectName));
+    appxRecipePath = filteredGlobs[0];
+    if (filteredGlobs.length > 1) {
+      newWarn(
+        `More than one appxrecipe for ${projectName}: ${filteredGlobs.join(
+          ',',
+        )}`,
+      );
+      newWarn(`Choosing ${appxRecipePath}`);
+    }
+  }
+
+  if (!appxRecipePath) {
+    throw new CodedError(
+      'DeployRecipeFailure',
+      `Unable to find AppxRecipe from "${appxManifestPath}", using search path: "${appxRecipeGlob}" `,
+    );
+  }
+
+  return appxRecipePath;
+}
+
 function parseAppxManifest(appxManifestPath: string): parse.Document {
   return parse(fs.readFileSync(appxManifestPath, 'utf8'));
 }
@@ -384,10 +422,7 @@ export async function deployToDesktop(
   } else {
     // Deploy from layout
     // If we have DeployAppRecipe.exe, use it (start in 16.8.4, earlier 16.8 versions have bugs)
-    const appxRecipe = path.join(
-      path.dirname(appxManifestPath),
-      `${projectName}.build.appxrecipe`,
-    );
+    const appxRecipe = getAppxRecipePath(options, projectName);
     const ideFolder = `${buildTools.installationPath}\\Common7\\IDE`;
     const deployAppxRecipeExePath = `${ideFolder}\\DeployAppRecipe.exe`;
     if (

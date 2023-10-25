@@ -128,6 +128,9 @@ jobs:
         displayName: Enable No-Publish
         condition: ${{ parameters.skipGitPush }}
 
+      - script: if not exist %USERPROFILE%\AppData\Roaming\npm (mkdir %USERPROFILE%\AppData\Roaming\npm)
+        displayName: Fix missing npm config
+
       - script: npx beachball publish $(SkipNpmPublishArgs) $(SkipGitPushPublishArgs) --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes --bump-deps --verbose --access public --message "applying package updates ***NO_CI***"
         displayName: Beachball Publish
 

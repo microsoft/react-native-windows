@@ -3,8 +3,8 @@
 
 #pragma once
 
-#include <butter/map.h>
 #include <react/renderer/components/rnwcore/EventEmitters.h>
+#include <unordered_map>
 #include "WindowsTextInputEventEmitter.h"
 #include "WindowsTextInputProps.h"
 #include "WindowsTextInputState.h"
@@ -54,7 +54,7 @@ class WindowsTextInputShadowNode final : public ConcreteViewShadowNode<
 
 #pragma mark - LayoutableShadowNode
 
-  Size measureContent(LayoutContext const &layoutContext, LayoutConstraints const &layoutConstraints) const override;
+  Size measureContent(const LayoutContext &layoutContext, const LayoutConstraints &layoutConstraints) const override;
   void layout(LayoutContext layoutContext) override;
 
  private:

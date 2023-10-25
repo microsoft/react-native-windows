@@ -3,6 +3,10 @@
 #include <algorithm>
 #include "UiaHelpers.h"
 
+#ifdef USE_WINUI3
+#include <winrt/Microsoft.UI.Content.h>
+#endif
+
 namespace winrt::Microsoft::ReactNative::implementation {
 
 CompositionRootAutomationProvider::CompositionRootAutomationProvider(
@@ -56,6 +60,14 @@ HRESULT __stdcall CompositionRootAutomationProvider::get_HostRawElementProvider(
   if (pRetVal == nullptr)
     return E_POINTER;
 
+#ifdef USE_WINUI3
+  if (m_island) {
+    winrt::Windows::Foundation::IInspectable host = m_island.GetAutomationHostProvider();
+    *pRetVal = host.as<IRawElementProviderSimple>().detach();
+    return S_OK;
+  }
+#endif
+
   // TODO: assumes windowed
   if (!IsWindow(m_hwnd))
     return UIA_E_ELEMENTNOTAVAILABLE;
@@ -68,6 +80,21 @@ HRESULT __stdcall CompositionRootAutomationProvider::get_HostRawElementProvider(
 HRESULT __stdcall CompositionRootAutomationProvider::get_BoundingRectangle(UiaRect *pRetVal) {
   if (pRetVal == nullptr)
     return E_POINTER;
+
+#ifdef USE_WINUI3
+  if (m_island) {
+    auto cc = m_island.CoordinateConverter();
+    auto origin = cc.ConvertLocalToScreen(winrt::Windows::Foundation::Point{0, 0});
+    pRetVal->left = origin.X;
+    pRetVal->top = origin.Y;
+
+    auto size = m_island.ActualSize();
+    pRetVal->width = size.x;
+    pRetVal->height = size.y;
+
+    return S_OK;
+  }
+#endif
 
   // TODO: Need host site offsets
   // Assume we're hosted in some other visual-based hosting site
@@ -125,6 +152,23 @@ HRESULT __stdcall CompositionRootAutomationProvider::ElementProviderFromPoint(
 
   auto spRootView = std::static_pointer_cast<::Microsoft::ReactNative::RootComponentView>(strongView);
 
+#ifdef USE_WINUI3
+  if (m_island) {
+    auto cc = m_island.CoordinateConverter();
+    auto local =
+        cc.ConvertScreenToLocal(winrt::Windows::Graphics::PointInt32{static_cast<int32_t>(x), static_cast<int32_t>(y)});
+    auto provider = spRootView->UiaProviderFromPoint(
+        {static_cast<LONG>(local.X * m_island.RasterizationScale()),
+         static_cast<LONG>(local.Y * m_island.RasterizationScale())});
+    auto spFragment = provider.try_as<IRawElementProviderFragment>();
+    if (spFragment) {
+      *pRetVal = spFragment.detach();
+    }
+
+    return S_OK;
+  }
+#endif
+
   if (m_hwnd == nullptr || !IsWindow(m_hwnd)) {
     // TODO: Add support for non-HWND based hosting
     return E_FAIL;
@@ -171,6 +215,12 @@ HRESULT __stdcall CompositionRootAutomationProvider::GetFocus(IRawElementProvide
 void CompositionRootAutomationProvider::SetHwnd(HWND hwnd) noexcept {
   m_hwnd = hwnd;
 }
+
+#ifdef USE_WINUI3
+void CompositionRootAutomationProvider::SetIsland(winrt::Microsoft::UI::Content::ContentIsland &island) noexcept {
+  m_island = island;
+}
+#endif
 
 HRESULT __stdcall CompositionRootAutomationProvider::Navigate(
     NavigateDirection direction,

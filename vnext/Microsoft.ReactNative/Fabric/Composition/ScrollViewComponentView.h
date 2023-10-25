@@ -54,29 +54,33 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
 
   [[nodiscard]] static std::shared_ptr<ScrollViewComponentView> Create(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-      facebook::react::Tag tag) noexcept;
+      facebook::react::Tag tag,
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
   void mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
   void unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
   void updateProps(facebook::react::Props::Shared const &props, facebook::react::Props::Shared const &oldProps) noexcept
       override;
-  void updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept override;
   void updateState(facebook::react::State::Shared const &state, facebook::react::State::Shared const &oldState) noexcept
       override;
   void updateLayoutMetrics(
       facebook::react::LayoutMetrics const &layoutMetrics,
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
-  void finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept override;
   void prepareForRecycle() noexcept override;
-  facebook::react::Props::Shared props() noexcept override;
+  facebook::react::SharedViewProps viewProps() noexcept override;
+  void onKeyDown(
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
 
   void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept override;
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt, bool ignorePointerEvents)
       const noexcept override;
+  facebook::react::Point getClientOffset() const noexcept override;
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
 
-  // void OnPointerDown(const winrt::Windows::UI::Input::PointerPoint &pp) noexcept override;
-  bool ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept override;
+  void onThemeChanged() noexcept override;
+  void onPointerWheelChanged(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
 
   void StartBringIntoView(BringIntoViewOptions &&args) noexcept override;
   virtual std::string DefaultControlType() const noexcept;
@@ -84,10 +88,24 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
  private:
   ScrollViewComponentView(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-      facebook::react::Tag tag);
+      facebook::react::Tag tag,
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
   void ensureVisual() noexcept;
   void updateContentVisualSize() noexcept;
+  bool scrollToEnd(bool animate) noexcept;
+  bool scrollToStart(bool animate) noexcept;
+  bool pageUp(bool animate) noexcept;
+  bool pageDown(bool animate) noexcept;
+  bool lineUp(bool animate) noexcept;
+  bool lineDown(bool animate) noexcept;
+  bool lineLeft(bool animate) noexcept;
+  bool lineRight(bool animate) noexcept;
+  bool scrollDown(float delta, bool animate) noexcept;
+  bool scrollUp(float delta, bool animate) noexcept;
+  bool scrollLeft(float delta, bool aniamte) noexcept;
+  bool scrollRight(float delta, bool animate) noexcept;
+  void updateBackgroundColor(const facebook::react::SharedColor &color) noexcept;
 
   facebook::react::Size m_contentSize;
   winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
@@ -100,7 +118,6 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   bool m_isScrollingFromInertia = false;
   bool m_isScrolling = false;
   bool m_isHorizontal = false;
-  bool m_isScrollingEnabled = true;
   bool m_changeViewAfterLoaded = false;
   bool m_dismissKeyboardOnDrag = false;
 
