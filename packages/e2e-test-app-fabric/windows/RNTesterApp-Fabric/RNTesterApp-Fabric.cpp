@@ -4,6 +4,7 @@
 #include "pch.h"
 #include "RNTesterApp-Fabric.h"
 
+#include <UIAutomation.h>
 #include <winrt/Microsoft.ReactNative.Composition.h>
 #include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Microsoft.UI.Composition.h>
@@ -58,6 +59,7 @@ constexpr PCWSTR appName = L"RNTesterApp";
 // Keep track of errors and warnings to be able to report them to automation
 std::vector<std::string> g_Errors;
 std::vector<std::string> g_Warnings;
+HWND global_hwnd;
 
 // Forward declarations of functions included in this code module:
 winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::JsonValue payload);
@@ -146,6 +148,7 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   window.Resize({1000, 1000});
   window.Show();
   auto hwnd = winrt::Microsoft::UI::GetWindowFromWindowId(window.Id());
+  global_hwnd = hwnd;
   auto scaleFactor = ScaleFactor(hwnd);
 
   auto host = CreateReactNativeHost(hwnd, compositor);
