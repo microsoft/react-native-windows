@@ -37,7 +37,9 @@ async function goToExample(example: string) {
   await app.waitUntil(
     async () => {
       await searchBox.setValue(searchString);
-      return (await searchBox.getText()) === searchString;
+      const searchBoxText = await searchBox.getText();
+      console.log(`Current searchBoxText: ${searchBoxText}`);
+      return searchBoxText === searchString;
     },
     {
       interval: 1500,
