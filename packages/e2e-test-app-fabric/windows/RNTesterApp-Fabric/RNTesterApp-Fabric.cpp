@@ -391,6 +391,23 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeHelper(winrt::Windows::Data::J
 
 winrt::Windows::Data::Json::JsonObject DumpVisualTreeHelper(winrt::Windows::Data::Json::JsonObject payloadObj) {
   winrt::Windows::Data::Json::JsonObject result;
+  auto windowData = WindowData::GetFromWindow(global_hwnd);
+  if (windowData == nullptr || !windowData->m_windowInited)
+    return result;
+
+  auto hwndHost = windowData->m_CompositionHwndHost;
+  winrt::Windows::UI::Composition::Visual root = hwndHost.RootVisual();
+  result.Insert(L"Comment", winrt::Windows::Data::Json::JsonValue::CreateStringValue(root.Comment()));
+  winrt::Windows::Data::Json::JsonArray visualSize;
+  visualSize.Append(winrt::Windows::Data::Json::JsonValue::CreateNumberValue(root.Size().x));
+  visualSize.Append(winrt::Windows::Data::Json::JsonValue::CreateNumberValue(root.Size().y));
+  result.Insert(L"Size", visualSize);
+  winrt::Windows::Data::Json::JsonArray visualOffset;
+  visualOffset.Append(winrt::Windows::Data::Json::JsonValue::CreateNumberValue(root.Offset().x));
+  visualOffset.Append(winrt::Windows::Data::Json::JsonValue::CreateNumberValue(root.Offset().y));
+  visualOffset.Append(winrt::Windows::Data::Json::JsonValue::CreateNumberValue(root.Offset().z));
+  result.Insert(L"Offset", visualOffset);
+  result.Insert(L"IsVisible", winrt::Windows::Data::Json::JsonValue::CreateBooleanValue(root.IsVisible()));
   return result;
 }
 
