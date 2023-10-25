@@ -74,8 +74,9 @@
 #include "BaseScriptStoreImpl.h"
 #include "HermesRuntimeHolder.h"
 
-#if defined(USE_V8)
 #include <winrt/Windows.Storage.h>
+
+#if defined(USE_V8)
 #include "JSI/V8RuntimeHolder.h"
 #endif // USE_V8
 

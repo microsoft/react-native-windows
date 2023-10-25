@@ -1,8 +1,36 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Thu, 12 Oct 2023 05:15:53 GMT and should not be manually modified.
+This log was last generated on Sat, 21 Oct 2023 05:16:08 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.221
+
+Sat, 21 Oct 2023 05:16:08 GMT
+
+### Changes
+
+- Adds `eqeqeq` to eslint configuration and a few other lint fixes (erozell@outlook.com)
+- Bump @rnw-scripts/eslint-config to v1.2.4
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.7
+- Bump @rnw-scripts/just-task to v2.3.18
+- Bump react-native-platform-override to v1.9.17
+
+## 0.0.0-canary.220
+
+Wed, 18 Oct 2023 05:14:55 GMT
+
+### Changes
+
+- add support for announceForAccessibilityWithOptions (krsiler@microsoft.com)
+
+## 0.0.0-canary.219
+
+Tue, 17 Oct 2023 05:13:03 GMT
+
+### Changes
+
+- Integrate 10/02 (yajurgrover24@gmail.com)
 
 ## 0.0.0-canary.218
 

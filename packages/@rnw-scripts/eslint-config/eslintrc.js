@@ -75,6 +75,7 @@ module.exports = {
         ],
         'block-scoped-var': 'error',
         'complexity': 'warn',
+        'eqeqeq': [ 'error', 'allow-null' ],
         'guard-for-in': 'error',
         'no-constructor-return': 'error',
         'no-useless-concat': 'error',

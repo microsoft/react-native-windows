@@ -377,6 +377,7 @@ int64_t CompositionEventHandler::SendMessage(uint32_t msg, uint64_t wParam, int6
       auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
           msg, wParam, lParam, m_compRootView.ScaleFactor());
       onPointerWheelChanged(pp, GetKeyModifiers(wParam));
+      break;
     }
     case WM_CHAR:
     case WM_SYSCHAR: {
@@ -394,6 +395,7 @@ int64_t CompositionEventHandler::SendMessage(uint32_t msg, uint64_t wParam, int6
       auto keyboardSource = winrt::make<CompositionKeyboardSource>(this);
       onCharacterReceived(keyboardSource, args);
       winrt::get_self<CompositionKeyboardSource>(keyboardSource)->Disconnect();
+      break;
     }
     case WM_KEYDOWN:
     case WM_KEYUP:
@@ -416,6 +418,7 @@ int64_t CompositionEventHandler::SendMessage(uint32_t msg, uint64_t wParam, int6
         onKeyUp(keyboardSource, args);
       }
       winrt::get_self<CompositionKeyboardSource>(keyboardSource)->Disconnect();
+      break;
     }
   }
 
@@ -434,8 +437,8 @@ void CompositionEventHandler::onKeyDown(
 
   bool fShift = source.GetKeyState(winrt::Windows::System::VirtualKey::Shift) ==
       winrt::Windows::UI::Core::CoreVirtualKeyStates::Down;
-  bool fCtrl =
-      GetKeyState(winrt::Windows::System::VirtualKey::Control) == winrt::Windows::UI::Core::CoreVirtualKeyStates::Down;
+  bool fCtrl = source.GetKeyState(winrt::Windows::System::VirtualKey::Control) ==
+      winrt::Windows::UI::Core::CoreVirtualKeyStates::Down;
 
   if (fShift && fCtrl && args.Key() == static_cast<winrt::Windows::System::VirtualKey>(VkKeyScanA('d')) &&
       Mso::React::ReactOptions::UseDeveloperSupport(m_context.Properties().Handle())) {

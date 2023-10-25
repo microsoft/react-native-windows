@@ -161,7 +161,8 @@ function needsRelease(
 ) {
   if (
     !ELIGIBLE_PACKAGES.includes(release.packageName) ||
-    release.version.prerelease[0] === 'canary'
+    (release.version.prerelease.length > 0 &&
+      release.version.prerelease[0] !== 'preview') // preview is the only pre-release tag we want GH releases
   ) {
     return false;
   }

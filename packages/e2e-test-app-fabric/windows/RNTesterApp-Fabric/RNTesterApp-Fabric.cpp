@@ -229,9 +229,82 @@ winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::Js
   return result;
 }
 
-winrt::Windows::Data::Json::JsonObject DumpVisualTree(winrt::Windows::Data::Json::JsonValue payload) {
+winrt::Windows::Data::Json::JsonObject DumpUIATree(IUIAutomationElement *pTarget, IUIAutomationTreeWalker *pWalker) {
   winrt::Windows::Data::Json::JsonObject result;
-  // TODO: Method should return a JSON of the Composition Visual Tree
+  BSTR automationId;
+  CONTROLTYPEID controlType;
+  BSTR helpText;
+  BOOL isEnabled;
+  BOOL isKeyboardFocusable;
+  BSTR localizedControlType;
+  BSTR name;
+
+  pTarget->get_CurrentAutomationId(&automationId);
+  pTarget->get_CurrentControlType(&controlType);
+  pTarget->get_CurrentHelpText(&helpText);
+  pTarget->get_CurrentIsEnabled(&isEnabled);
+  pTarget->get_CurrentIsKeyboardFocusable(&isKeyboardFocusable);
+  pTarget->get_CurrentLocalizedControlType(&localizedControlType);
+  pTarget->get_CurrentName(&name);
+  result.Insert(L"AutomationId", winrt::Windows::Data::Json::JsonValue::CreateStringValue(automationId));
+  result.Insert(L"ControlType", winrt::Windows::Data::Json::JsonValue::CreateNumberValue(controlType));
+  result.Insert(L"HelpText", winrt::Windows::Data::Json::JsonValue::CreateStringValue(helpText));
+  result.Insert(L"IsEnabled", winrt::Windows::Data::Json::JsonValue::CreateBooleanValue(isEnabled));
+  result.Insert(L"IsKeyboardFocusable", winrt::Windows::Data::Json::JsonValue::CreateBooleanValue(isKeyboardFocusable));
+  result.Insert(
+      L"LocalizedControlType", winrt::Windows::Data::Json::JsonValue::CreateStringValue(localizedControlType));
+  result.Insert(L"Name", winrt::Windows::Data::Json::JsonValue::CreateStringValue(name));
+
+  IUIAutomationElement *pChild;
+  IUIAutomationElement *pSibling;
+  pWalker->GetFirstChildElement(pTarget, &pChild);
+  winrt::Windows::Data::Json::JsonArray children;
+  while (pChild != nullptr) {
+    children.Append(DumpUIATree(pChild, pWalker));
+    pWalker->GetNextSiblingElement(pChild, &pSibling);
+    pChild = pSibling;
+    pSibling = nullptr;
+  }
+  if (children.Size() > 0) {
+    result.Insert(L"Children", children);
+  }
+  return result;
+}
+
+winrt::Windows::Data::Json::JsonObject DumpVisualTree(winrt::Windows::Data::Json::JsonValue payload) {
+  winrt::Windows::Data::Json::JsonObject payloadObj = payload.GetObject();
+  auto accessibilityId = payloadObj.GetNamedString(L"accessibilityId");
+
+  winrt::Windows::Data::Json::JsonObject result;
+
+  IUIAutomation *pAutomation;
+  IUIAutomationElement *pRootElement;
+  IUIAutomationTreeWalker *pWalker;
+
+  CoCreateInstance(__uuidof(CUIAutomation8), nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pAutomation));
+  pAutomation->get_ContentViewWalker(&pWalker);
+  pAutomation->ElementFromHandle(global_hwnd, &pRootElement);
+
+  IUIAutomationElement *pTarget;
+  IUIAutomationCondition *pCondition;
+  VARIANT varAutomationId;
+  VariantInit(&varAutomationId);
+
+  varAutomationId.vt = VT_BSTR;
+  varAutomationId.bstrVal = SysAllocString(accessibilityId.c_str());
+  pAutomation->CreatePropertyCondition(UIA_AutomationIdPropertyId, varAutomationId, &pCondition);
+  pRootElement->FindFirst(TreeScope_Descendants, pCondition, &pTarget);
+  if (pTarget == nullptr) {
+    return result;
+  }
+
+  result = DumpUIATree(pTarget, pWalker);
+
+  pWalker->Release();
+  pRootElement->Release();
+  pAutomation->Release();
+  pCondition->Release();
+
   return result;
 }
 

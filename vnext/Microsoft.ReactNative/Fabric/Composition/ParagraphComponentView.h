@@ -21,7 +21,8 @@ struct ParagraphComponentView : CompositionBaseComponentView {
 
   [[nodiscard]] static std::shared_ptr<ParagraphComponentView> Create(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-      facebook::react::Tag tag) noexcept;
+      facebook::react::Tag tag,
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
   void mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
   void unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
@@ -35,10 +36,11 @@ struct ParagraphComponentView : CompositionBaseComponentView {
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
   void finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept override;
   void prepareForRecycle() noexcept override;
-  facebook::react::Props::Shared props() noexcept override;
+  facebook::react::SharedViewProps viewProps() noexcept override;
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt, bool ignorePointerEvents)
       const noexcept override;
   void OnRenderingDeviceLost() noexcept override;
+  void onThemeChanged() noexcept override;
   facebook::react::SharedViewEventEmitter eventEmitterAtPoint(facebook::react::Point pt) noexcept override;
 
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
@@ -48,7 +50,8 @@ struct ParagraphComponentView : CompositionBaseComponentView {
  private:
   ParagraphComponentView(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-      facebook::react::Tag tag);
+      facebook::react::Tag tag,
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
   void ensureVisual() noexcept;
   void updateVisualBrush() noexcept;

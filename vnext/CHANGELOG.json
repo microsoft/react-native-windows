@@ -2,6 +2,189 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 24 Oct 2023 18:00:31 GMT",
+      "version": "0.0.0-canary.725",
+      "tag": "react-native-windows_v0.0.0-canary.725",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "8f6644185f31abca53d32e71d4697d4d070792e9",
+            "comment": "Minor codereview feedback cleanup"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 24 Oct 2023 05:15:58 GMT",
+      "version": "0.0.0-canary.724",
+      "tag": "react-native-windows_v0.0.0-canary.724",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ericroz@meta.com",
+            "package": "react-native-windows",
+            "commit": "1367b74599cc888082d280d728b1ac02917cea96",
+            "comment": "Fix event dispatch names for momentum scroll"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "720defa169818011dc6b2d0a9e5ad05c537350c7",
+            "comment": "Expose DisableXamlGuard property to allow mixing of WinUI 2/3"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 21 Oct 2023 05:16:08 GMT",
+      "version": "0.0.0-canary.723",
+      "tag": "react-native-windows_v0.0.0-canary.723",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "3ee9735fc44d8b365ad9f9699fa70a4218da8076",
+            "comment": "Remove ScrollView.windows.js override"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "0b318125b0b73e6235eeecbbaed3866e8bc329d0",
+            "comment": "Implement BlobCollector"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ad1714331368a9ce3cc47445766d9d5653eae9ed",
+            "comment": "Add support for loading images from local files"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "eadf40e36b71b80e0157d8a9c6348ced00c8a5d3",
+            "comment": "Adds `eqeqeq` to eslint configuration and a few other lint fixes"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "68094c0c5ffaa5dc74600ae7064e49d2a3c430cb",
+            "comment": "Update app template's metro config with latest upstream changes"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.193",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.72",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.4",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.7",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.18",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.9.17",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 19 Oct 2023 05:13:42 GMT",
+      "version": "0.0.0-canary.722",
+      "tag": "react-native-windows_v0.0.0-canary.722",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "0928d3560b3ade0211beef70df7e868a2db87573",
+            "comment": "Save State: UIA Dump Tests"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d9089507397e14c9767085e31c8cb99ef06c84c9",
+            "comment": "[Fabric] Add CharacterRecieved event"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "66dc9771faaadc2ad3c1377c3d3f632c6737c1be",
+            "comment": "Move winrt/Windows.Storage.h include out of USE_V8 conditional"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 18 Oct 2023 05:14:55 GMT",
+      "version": "0.0.0-canary.721",
+      "tag": "react-native-windows_v0.0.0-canary.721",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a562e559216c3bc037495fe6d0412ff3d3742110",
+            "comment": "add fabric switch path animation"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 17 Oct 2023 05:13:04 GMT",
+      "version": "0.0.0-canary.720",
+      "tag": "react-native-windows_v0.0.0-canary.720",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "react-native-windows",
+            "commit": "8e36a6a7541ff63f9486d5e5d0c9fcdddaa0ae21",
+            "comment": "Integrate 10/02"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 14 Oct 2023 05:13:11 GMT",
+      "version": "0.0.0-canary.719",
+      "tag": "react-native-windows_v0.0.0-canary.719",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "e3c7f0238d493b2daa61b40d6b279c9f42924138",
+            "comment": "[PR] Fixes issues with packaged asset resolution (#10621)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 13 Oct 2023 05:15:18 GMT",
       "version": "0.0.0-canary.718",
       "tag": "react-native-windows_v0.0.0-canary.718",

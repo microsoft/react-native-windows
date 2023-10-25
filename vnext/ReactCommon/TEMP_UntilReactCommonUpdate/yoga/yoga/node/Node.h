@@ -14,6 +14,7 @@
 #include <yoga/Yoga.h>
 
 #include <yoga/config/Config.h>
+#include <yoga/enums/Dimension.h>
 #include <yoga/enums/Direction.h>
 #include <yoga/enums/Errata.h>
 #include <yoga/enums/MeasureMode.h>
@@ -175,7 +176,7 @@ class YG_EXPORT Node : public ::YGNode {
     return resolvedDimensions_;
   }
 
-  YGValue getResolvedDimension(YGDimension dimension) const {
+  YGValue getResolvedDimension(Dimension dimension) const {
     return resolvedDimensions_[static_cast<size_t>(dimension)];
   }
 
@@ -230,8 +231,7 @@ class YG_EXPORT Node : public ::YGNode {
   FloatOptional getMarginForAxis(
       const FlexDirection axis,
       const float widthSize) const;
-  FloatOptional getGapForAxis(const FlexDirection axis, const float widthSize)
-      const;
+  float getGapForAxis(const FlexDirection axis, const float widthSize) const;
   // Setters
 
   void setContext(void* context) {
@@ -293,11 +293,9 @@ class YG_EXPORT Node : public ::YGNode {
   void setLayoutComputedFlexBasis(const FloatOptional computedFlexBasis);
   void setLayoutComputedFlexBasisGeneration(
       uint32_t computedFlexBasisGeneration);
-  void setLayoutMeasuredDimension(
-      float measuredDimension,
-      YGDimension dimension);
+  void setLayoutMeasuredDimension(float measuredDimension, Dimension dimension);
   void setLayoutHadOverflow(bool hadOverflow);
-  void setLayoutDimension(float dimensionValue, YGDimension dimension);
+  void setLayoutDimension(float dimensionValue, Dimension dimension);
   void setLayoutDirection(Direction direction);
   void setLayoutMargin(float margin, YGEdge edge);
   void setLayoutBorder(float border, YGEdge edge);
