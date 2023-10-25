@@ -123,6 +123,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TextInput\WindowsTextInputState.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)">
       <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\Theme.cpp">
+      <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\UiaHelpers.cpp">
       <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
@@ -193,6 +196,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)LayoutAnimation.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Logging.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MemoryMappedBuffer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\BlobCollector.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\BlobModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\CxxModuleUtilities.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\ExceptionsManagerModule.cpp" />
@@ -327,6 +331,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\V8RuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\RuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ScriptStore.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\BlobCollector.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\BlobModule.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\CxxModuleUtilities.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\FileReaderModule.h" />

@@ -829,12 +829,11 @@ struct CompActivityVisual : winrt::implements<
     }
   }
 
-  void Color(winrt::Windows::UI::Color color) noexcept {
+  void Brush(winrt::Microsoft::ReactNative::Composition::IBrush brush) noexcept {
     // Change the color of each SpriteVisual
+    auto innerBrush = TTypeRedirects::CompositionContextHelper::InnerBrush(brush);
     for (auto &spriteVisual : m_spriteVisuals) {
-      auto colorBrush = m_visual.Compositor().CreateColorBrush(color);
-      // Set the new color brush on the SpriteVisual
-      spriteVisual.FillBrush(colorBrush);
+      spriteVisual.FillBrush(innerBrush);
     }
   }
 
@@ -1034,8 +1033,8 @@ struct CompCaretVisual
     return m_visual;
   }
 
-  void Color(winrt::Windows::UI::Color color) noexcept {
-    m_compVisual.Brush(m_compositor.CreateColorBrush(color));
+  void Brush(winrt::Microsoft::ReactNative::Composition::IBrush brush) noexcept {
+    m_compVisual.Brush(TTypeRedirects::CompositionContextHelper::InnerBrush(brush));
   }
 
   void Size(winrt::Windows::Foundation::Numerics::float2 size) noexcept {
@@ -1110,8 +1109,8 @@ struct CompSwitchThumbVisual : winrt::implements<
     return m_visual;
   }
 
-  void Color(winrt::Windows::UI::Color color) noexcept {
-    m_spiritShape.FillBrush(m_compositor.CreateColorBrush(color));
+  void Brush(winrt::Microsoft::ReactNative::Composition::IBrush brush) noexcept {
+    m_spiritShape.FillBrush(TTypeRedirects::CompositionContextHelper::InnerBrush(brush));
   }
 
   void Size(winrt::Windows::Foundation::Numerics::float2 size) noexcept {

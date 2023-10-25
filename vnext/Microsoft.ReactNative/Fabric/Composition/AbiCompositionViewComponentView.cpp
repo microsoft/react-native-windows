@@ -8,25 +8,26 @@
 
 #include <Fabric/DWriteHelpers.h>
 #include "CompositionDynamicAutomationProvider.h"
+#include "RootComponentView.h"
 #include "Unicode.h"
 
 namespace Microsoft::ReactNative {
 
 AbiCompositionViewComponentView::AbiCompositionViewComponentView(
-    const winrt::Microsoft::ReactNative::IReactContext &reactContext,
+    winrt::Microsoft::ReactNative::ReactContext const &reactContext,
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::IReactViewComponentBuilder builder)
-    : Super(compContext, tag), m_builder(builder) {
+    : Super(compContext, tag, reactContext, CompositionComponentViewFeatures::Default), m_builder(builder) {
   static auto const defaultProps = std::make_shared<AbiViewProps const>();
   m_props = defaultProps;
-  m_handle = Builder().CreateView(reactContext, compContext);
+  m_handle = Builder().CreateView(reactContext.Handle(), compContext);
   m_visual = Builder().CreateVisual(m_handle);
   OuterVisual().InsertAt(m_visual, 0);
 }
 
 std::shared_ptr<AbiCompositionViewComponentView> AbiCompositionViewComponentView::Create(
-    const winrt::Microsoft::ReactNative::IReactContext &reactContext,
+    winrt::Microsoft::ReactNative::ReactContext const &reactContext,
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::IReactViewComponentBuilder builder) noexcept {
@@ -57,7 +58,11 @@ void AbiCompositionViewComponentView::updateProps(
   const auto &oldViewProps = *std::static_pointer_cast<const AbiViewProps>(m_props);
   const auto &newViewProps = *std::static_pointer_cast<const AbiViewProps>(props);
 
-  updateBorderProps(oldViewProps, newViewProps);
+  updateAccessibilityProps(oldViewProps, newViewProps);
+  // updateShadowProps(oldViewProps, newViewProps, m_visual);
+  // updateTransformProps(oldViewProps, newViewProps, m_visual);
+  Super::updateProps(props, oldProps);
+
   Builder().UpdateProps(m_handle, newViewProps.UserProps());
 
   m_props = std::static_pointer_cast<AbiViewProps const>(props);
@@ -70,7 +75,7 @@ void AbiCompositionViewComponentView::updateLayoutMetrics(
     OuterVisual().IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
   }
 
-  updateBorderLayoutMetrics(layoutMetrics, *m_props);
+  Super::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
 
   winrt::Microsoft::ReactNative::Composition::LayoutMetrics lm;
   Builder().UpdateLayoutMetrics(
@@ -80,8 +85,6 @@ void AbiCompositionViewComponentView::updateLayoutMetrics(
         layoutMetrics.frame.size.width,
         layoutMetrics.frame.size.height},
        layoutMetrics.pointScaleFactor});
-
-  m_layoutMetrics = layoutMetrics;
 }
 
 void AbiCompositionViewComponentView::updateState(
@@ -89,20 +92,12 @@ void AbiCompositionViewComponentView::updateState(
     facebook::react::State::Shared const &oldState) noexcept {}
 
 void AbiCompositionViewComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
+  Super::finalizeUpdates(updateMask);
   Builder().FinalizeUpdates(m_handle);
-
-  if (m_needsBorderUpdate) {
-    m_needsBorderUpdate = false;
-    UpdateSpecialBorderLayers(m_layoutMetrics, *m_props);
-  }
 }
 
 bool AbiCompositionViewComponentView::focusable() const noexcept {
   return m_props->focusable;
-}
-
-int64_t AbiCompositionViewComponentView::sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
-  return Builder().SendMessage(m_handle, msg, wParam, lParam);
 }
 
 void AbiCompositionViewComponentView::onKeyDown(
@@ -117,6 +112,13 @@ void AbiCompositionViewComponentView::onKeyUp(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
   Builder().OnKeyUp(m_handle, source, args);
   Super::onKeyUp(source, args);
+}
+
+void AbiCompositionViewComponentView::onCharacterReceived(
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+    const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept {
+  Builder().OnCharacterReceived(m_handle, source, args);
+  Super::onCharacterReceived(source, args);
 }
 
 void AbiCompositionViewComponentView::onPointerEntered(
@@ -161,7 +163,8 @@ AbiCompositionViewComponentView::supplementalComponentDescriptorProviders() noex
 }
 
 void AbiCompositionViewComponentView::prepareForRecycle() noexcept {}
-facebook::react::Props::Shared AbiCompositionViewComponentView::props() noexcept {
+
+facebook::react::SharedViewProps AbiCompositionViewComponentView::viewProps() noexcept {
   return m_props;
 }
 

@@ -56,6 +56,9 @@ class CompositionEventHandler {
   void onKeyUp(
       const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
       const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept;
+  void onCharacterReceived(
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+      const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept;
 
   facebook::react::SurfaceId SurfaceId() noexcept;
   RootComponentView &RootComponentView() noexcept;
@@ -141,6 +144,7 @@ class CompositionEventHandler {
   winrt::event_token m_pointerWheelChangedToken;
   winrt::event_token m_keyDownToken;
   winrt::event_token m_keyUpToken;
+  winrt::event_token m_characterReceivedToken;
 #endif
 };
 

@@ -1490,8 +1490,8 @@ function InternalTextInput(props: Props): React.Node {
       // $FlowFixMe - keyDownEvents was already checked to not be undefined
       for (const el of props.keyDownEvents) {
         if (
-          event.nativeEvent.code == el.code &&
-          el.handledEventPhase == eventPhase.Bubbling
+          event.nativeEvent.code === el.code &&
+          el.handledEventPhase === eventPhase.Bubbling
         ) {
           event.stopPropagation();
         }
@@ -1504,7 +1504,7 @@ function InternalTextInput(props: Props): React.Node {
     if (props.keyUpEvents && event.isPropagationStopped() !== true) {
       // $FlowFixMe - keyDownEvents was already checked to not be undefined
       for (const el of props.keyUpEvents) {
-        if (event.nativeEvent.code == el.code && el.handledEventPhase == 3) {
+        if (event.nativeEvent.code === el.code && el.handledEventPhase === 3) {
           event.stopPropagation();
         }
       }
@@ -1516,7 +1516,7 @@ function InternalTextInput(props: Props): React.Node {
     if (props.keyDownEvents && event.isPropagationStopped() !== true) {
       // $FlowFixMe - keyDownEvents was already checked to not be undefined
       for (const el of props.keyDownEvents) {
-        if (event.nativeEvent.code == el.code && el.handledEventPhase == 1) {
+        if (event.nativeEvent.code === el.code && el.handledEventPhase === 1) {
           event.stopPropagation();
         }
       }
@@ -1528,7 +1528,7 @@ function InternalTextInput(props: Props): React.Node {
     if (props.keyUpEvents && event.isPropagationStopped() !== true) {
       // $FlowFixMe - keyDownEvents was already checked to not be undefined
       for (const el of props.keyUpEvents) {
-        if (event.nativeEvent.code == el.code && el.handledEventPhase == 1) {
+        if (event.nativeEvent.code === el.code && el.handledEventPhase === 1) {
           event.stopPropagation();
         }
       }

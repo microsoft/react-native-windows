@@ -152,6 +152,23 @@ HRESULT __stdcall CompositionRootAutomationProvider::ElementProviderFromPoint(
 
   auto spRootView = std::static_pointer_cast<::Microsoft::ReactNative::RootComponentView>(strongView);
 
+#ifdef USE_WINUI3
+  if (m_island) {
+    auto cc = m_island.CoordinateConverter();
+    auto local =
+        cc.ConvertScreenToLocal(winrt::Windows::Graphics::PointInt32{static_cast<int32_t>(x), static_cast<int32_t>(y)});
+    auto provider = spRootView->UiaProviderFromPoint(
+        {static_cast<LONG>(local.X * m_island.RasterizationScale()),
+         static_cast<LONG>(local.Y * m_island.RasterizationScale())});
+    auto spFragment = provider.try_as<IRawElementProviderFragment>();
+    if (spFragment) {
+      *pRetVal = spFragment.detach();
+    }
+
+    return S_OK;
+  }
+#endif
+
   if (m_hwnd == nullptr || !IsWindow(m_hwnd)) {
     // TODO: Add support for non-HWND based hosting
     return E_FAIL;

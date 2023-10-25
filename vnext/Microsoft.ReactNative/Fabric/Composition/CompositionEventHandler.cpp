@@ -232,9 +232,31 @@ CompositionEventHandler::CompositionEventHandler(
       onKeyUp(keyboardSource, keyArgs);
       winrt::get_self<CompositionInputKeyboardSource>(keyboardSource)->Disconnect();
     });
+
+    m_characterReceivedToken =
+        keyboardSource.CharacterReceived([this](
+                                             winrt::Microsoft::UI::Input::InputKeyboardSource const &source,
+                                             winrt::Microsoft::UI::Input::CharacterReceivedEventArgs const &args) {
+          if (SurfaceId() == -1)
+            return;
+
+          auto focusedComponent = RootComponentView().GetFocusedComponent();
+          auto charArgs = winrt::make<
+              winrt::Microsoft::ReactNative::Composition::Input::implementation::CharacterReceivedRoutedEventArgs>(
+              focusedComponent
+                  ? focusedComponent->tag()
+                  : static_cast<facebook::react::Tag>(
+                        winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(
+                            m_compRootView)
+                            ->GetTag()),
+              args);
+          auto keyboardSource = winrt::make<CompositionInputKeyboardSource>(source);
+          onCharacterReceived(keyboardSource, charArgs);
+          winrt::get_self<CompositionInputKeyboardSource>(keyboardSource)->Disconnect();
+        });
   }
 #endif
-};
+}
 
 CompositionEventHandler::~CompositionEventHandler() {
 #ifdef USE_WINUI3
@@ -247,6 +269,7 @@ CompositionEventHandler::~CompositionEventHandler() {
     auto keyboardSource = winrt::Microsoft::UI::Input::InputKeyboardSource::GetForIsland(island);
     keyboardSource.KeyDown(m_keyDownToken);
     keyboardSource.KeyUp(m_keyUpToken);
+    keyboardSource.CharacterReceived(m_characterReceivedToken);
   }
 #endif
 }
@@ -354,15 +377,24 @@ int64_t CompositionEventHandler::SendMessage(uint32_t msg, uint64_t wParam, int6
       auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
           msg, wParam, lParam, m_compRootView.ScaleFactor());
       onPointerWheelChanged(pp, GetKeyModifiers(wParam));
+      break;
     }
     case WM_CHAR:
     case WM_SYSCHAR: {
-      // TODO full bubbling of events
-      if (auto focusedComponent = RootComponentView().GetFocusedComponent()) {
-        auto result = focusedComponent->sendMessage(msg, wParam, lParam);
-        if (result)
-          return result;
-      }
+      auto focusedComponent = RootComponentView().GetFocusedComponent();
+      auto args = winrt::make<
+          winrt::Microsoft::ReactNative::Composition::Input::implementation::CharacterReceivedRoutedEventArgs>(
+          focusedComponent
+              ? focusedComponent->tag()
+              : static_cast<facebook::react::Tag>(
+                    winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(m_compRootView)
+                        ->GetTag()),
+          msg,
+          wParam,
+          lParam);
+      auto keyboardSource = winrt::make<CompositionKeyboardSource>(this);
+      onCharacterReceived(keyboardSource, args);
+      winrt::get_self<CompositionKeyboardSource>(keyboardSource)->Disconnect();
       break;
     }
     case WM_KEYDOWN:
@@ -386,6 +418,7 @@ int64_t CompositionEventHandler::SendMessage(uint32_t msg, uint64_t wParam, int6
         onKeyUp(keyboardSource, args);
       }
       winrt::get_self<CompositionKeyboardSource>(keyboardSource)->Disconnect();
+      break;
     }
   }
 
@@ -404,8 +437,8 @@ void CompositionEventHandler::onKeyDown(
 
   bool fShift = source.GetKeyState(winrt::Windows::System::VirtualKey::Shift) ==
       winrt::Windows::UI::Core::CoreVirtualKeyStates::Down;
-  bool fCtrl =
-      GetKeyState(winrt::Windows::System::VirtualKey::Control) == winrt::Windows::UI::Core::CoreVirtualKeyStates::Down;
+  bool fCtrl = source.GetKeyState(winrt::Windows::System::VirtualKey::Control) ==
+      winrt::Windows::UI::Core::CoreVirtualKeyStates::Down;
 
   if (fShift && fCtrl && args.Key() == static_cast<winrt::Windows::System::VirtualKey>(VkKeyScanA('d')) &&
       Mso::React::ReactOptions::UseDeveloperSupport(m_context.Properties().Handle())) {
@@ -435,6 +468,17 @@ void CompositionEventHandler::onKeyUp(
   }
 }
 
+void CompositionEventHandler::onCharacterReceived(
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+    const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept {
+  if (auto focusedComponent = RootComponentView().GetFocusedComponent()) {
+    focusedComponent->onCharacterReceived(source, args);
+
+    if (args.Handled())
+      return;
+  }
+}
+
 std::vector<IComponentView *> GetTouchableViewsInPathToRoot(IComponentView *view) {
   std::vector<IComponentView *> results;
   while (view) {
@@ -448,11 +492,11 @@ std::vector<IComponentView *> GetTouchableViewsInPathToRoot(IComponentView *view
 
 /**
  * Private method which is used for tracking the location of pointer events to manage the entering/leaving events.
- * The primary idea is that a pointer's presence & movement is dictated by a variety of underlying events such as down,
- * move, and up — and they should all be treated the same when it comes to tracking the entering & leaving of pointers
- * to views. This method accomplishes that by receiving the pointer event, the target view (can be null in cases when
- * the event indicates that the pointer has left the screen entirely), and a block/callback where the underlying event
- * should be fired.
+ * The primary idea is that a pointer's presence & movement is dictated by a variety of underlying events such as
+ * down, move, and up — and they should all be treated the same when it comes to tracking the entering & leaving of
+ * pointers to views. This method accomplishes that by receiving the pointer event, the target view (can be null in
+ * cases when the event indicates that the pointer has left the screen entirely), and a block/callback where the
+ * underlying event should be fired.
  */
 void CompositionEventHandler::HandleIncomingPointerEvent(
     facebook::react::PointerEvent &event,

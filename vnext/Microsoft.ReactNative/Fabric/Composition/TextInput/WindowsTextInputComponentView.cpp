@@ -6,6 +6,7 @@
 #include "WindowsTextInputComponentView.h"
 
 #include <Fabric/Composition/CompositionDynamicAutomationProvider.h>
+#include <Fabric/Composition/UiaHelpers.h>
 #include <Utils/ValueUtils.h>
 #include <tom.h>
 #include <unicode.h>
@@ -478,7 +479,7 @@ WindowsTextInputComponentView::WindowsTextInputComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : Super(compContext, tag), m_context(reactContext) {
+    : Super(compContext, tag, reactContext, CompositionComponentViewFeatures::Default) {
   static auto const defaultProps = std::make_shared<facebook::react::WindowsTextInputProps const>();
   m_props = defaultProps;
 
@@ -541,30 +542,6 @@ void WindowsTextInputComponentView::handleCommand(std::string const &commandName
   } else {
     Super::handleCommand(commandName, arg);
   }
-}
-
-int64_t WindowsTextInputComponentView::sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
-  // Do not forward tab keys into the TextInput, since we want that to do the tab loop instead.  This aligns with WinUI
-  // behavior We do forward Ctrl+Tab to the textinput.
-  if ((msg == WM_CHAR && wParam == '\t')) {
-    BYTE bKeys[256];
-    if (GetKeyboardState(bKeys)) {
-      bool fCtrl = false;
-      if (!(bKeys[VK_LCONTROL] & 0x80 || bKeys[VK_RCONTROL] & 0x80)) {
-        return 0;
-      }
-    }
-  }
-
-  if (m_textServices) {
-    LRESULT lresult;
-    DrawBlock db(*this);
-    auto hr = m_textServices->TxSendMessage(msg, static_cast<WPARAM>(wParam), static_cast<LPARAM>(lParam), &lresult);
-    if (hr >= 0 && lresult) {
-      return lresult;
-    }
-  }
-  return Super::sendMessage(msg, wParam, lParam);
 }
 
 WPARAM PointerPointToPointerWParam(const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pp) noexcept {
@@ -816,6 +793,40 @@ void WindowsTextInputComponentView::onKeyUp(
   Super::onKeyDown(source, args);
 }
 
+void WindowsTextInputComponentView::onCharacterReceived(
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+    const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept {
+  // Do not forward tab keys into the TextInput, since we want that to do the tab loop instead.  This aligns with WinUI
+  // behavior We do forward Ctrl+Tab to the textinput.
+  if ((args.KeyCode() == '\t') &&
+      (source.GetKeyState(winrt::Windows::System::VirtualKey::Control) !=
+       winrt::Windows::UI::Core::CoreVirtualKeyStates::Down)) {
+    return;
+  }
+
+  WPARAM wParam = static_cast<WPARAM>(args.KeyCode());
+  LPARAM lParam = 0;
+  lParam = args.KeyStatus().RepeatCount; // bits 0-15
+  lParam |= args.KeyStatus().ScanCode << 16; // bits 16-23
+  if (args.KeyStatus().IsExtendedKey)
+    lParam |= 0x01000000; // bit 24
+  // bit 25-28 reserved.
+  if (args.KeyStatus().IsMenuKeyDown)
+    lParam |= 0x20000000; // bit 29
+  // if sysKey - bit 29 = 1, otherwise 0
+  if (args.KeyStatus().WasKeyDown)
+    lParam |= 0x40000000; // bit 30
+  if (args.KeyStatus().IsKeyReleased)
+    lParam |= 0x80000000; // bit 31
+
+  LRESULT lresult;
+  DrawBlock db(*this);
+  auto hr = m_textServices->TxSendMessage(WM_CHAR, wParam, lParam, &lresult);
+  if (hr >= 0 && lresult) {
+    args.Handled(true);
+  }
+}
+
 void WindowsTextInputComponentView::mountChildComponentView(
     IComponentView &childComponentView,
     uint32_t index) noexcept {
@@ -832,13 +843,21 @@ void WindowsTextInputComponentView::unmountChildComponentView(
 
 void WindowsTextInputComponentView::onFocusLost() noexcept {
   Super::onFocusLost();
-  sendMessage(WM_KILLFOCUS, 0, 0);
+  if (m_textServices) {
+    LRESULT lresult;
+    DrawBlock db(*this);
+    m_textServices->TxSendMessage(WM_KILLFOCUS, 0, 0, &lresult);
+  }
   m_caretVisual.IsVisible(false);
 }
 
 void WindowsTextInputComponentView::onFocusGained() noexcept {
   Super::onFocusGained();
-  sendMessage(WM_SETFOCUS, 0, 0);
+  if (m_textServices) {
+    LRESULT lresult;
+    DrawBlock db(*this);
+    m_textServices->TxSendMessage(WM_SETFOCUS, 0, 0, &lresult);
+  }
 }
 
 bool WindowsTextInputComponentView::focusable() const noexcept {
@@ -857,6 +876,18 @@ std::string WindowsTextInputComponentView::DefaultHelpText() const noexcept {
   return m_props->placeholder;
 }
 
+void WindowsTextInputComponentView::updateCursorColor(
+    const facebook::react::SharedColor &cursorColor,
+    const facebook::react::SharedColor &foregroundColor) noexcept {
+  if (cursorColor) {
+    m_caretVisual.Brush(theme()->Brush(*cursorColor));
+  } else if (foregroundColor) {
+    m_caretVisual.Brush(theme()->Brush(*foregroundColor));
+  } else {
+    m_caretVisual.Brush(theme()->PlatformBrush("TextControlForeground"));
+  }
+}
+
 void WindowsTextInputComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
@@ -871,7 +902,7 @@ void WindowsTextInputComponentView::updateProps(
   // update BaseComponentView props
   updateShadowProps(oldTextInputProps, newTextInputProps, m_visual);
   updateTransformProps(oldTextInputProps, newTextInputProps, m_visual);
-  updateBorderProps(oldTextInputProps, newTextInputProps);
+  Super::updateProps(props, oldProps);
 
   if (!facebook::react::floatEquality(
           oldTextInputProps.textAttributes.fontSize, newTextInputProps.textAttributes.fontSize) ||
@@ -911,7 +942,7 @@ void WindowsTextInputComponentView::updateProps(
   }
 
   if (oldTextInputProps.cursorColor != newTextInputProps.cursorColor) {
-    m_caretVisual.Color(newTextInputProps.cursorColor.AsWindowsColor());
+    updateCursorColor(newTextInputProps.cursorColor, newTextInputProps.textAttributes.foregroundColor);
   }
 
   /*
@@ -1051,9 +1082,7 @@ void WindowsTextInputComponentView::updateLayoutMetrics(
         &res));
   }
 
-  updateBorderLayoutMetrics(layoutMetrics, *m_props);
-
-  m_layoutMetrics = layoutMetrics;
+  Super::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
 
   // TODO should ceil?
   unsigned int newWidth = static_cast<unsigned int>(layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor);
@@ -1066,7 +1095,6 @@ void WindowsTextInputComponentView::updateLayoutMetrics(
   m_imgWidth = newWidth;
   m_imgHeight = newHeight;
 
-  UpdateCenterPropertySet();
   m_visual.Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
@@ -1089,6 +1117,12 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
     onChangeArgs.text = GetTextFromRichEdit();
     onChangeArgs.eventCount = ++m_nativeEventCount;
     emitter->onChange(onChangeArgs);
+  }
+
+  if (m_uiaProvider) {
+    auto text = GetTextFromRichEdit();
+    winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+        m_uiaProvider, UIA_ValueValuePropertyId, text, text);
   }
 }
 
@@ -1122,18 +1156,28 @@ std::string WindowsTextInputComponentView::GetTextFromRichEdit() const noexcept 
 }
 
 void WindowsTextInputComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
-  if (m_needsBorderUpdate) {
-    m_needsBorderUpdate = false;
-    UpdateSpecialBorderLayers(m_layoutMetrics, *m_props);
-  }
+  Super::finalizeUpdates(updateMask);
   ensureDrawingSurface();
   if (m_needsRedraw) {
     DrawText();
   }
 }
 
+std::optional<std::string> WindowsTextInputComponentView::getAcccessiblityValue() noexcept {
+  return GetTextFromRichEdit();
+}
+
+void WindowsTextInputComponentView::setAcccessiblityValue(std::string &&value) noexcept {
+  UpdateText(value);
+}
+
+bool WindowsTextInputComponentView::getAcccessiblityIsReadOnly() noexcept {
+  return !m_props->editable;
+}
+
 void WindowsTextInputComponentView::prepareForRecycle() noexcept {}
-facebook::react::Props::Shared WindowsTextInputComponentView::props() noexcept {
+
+facebook::react::SharedViewProps WindowsTextInputComponentView::viewProps() noexcept {
   return m_props;
 }
 
@@ -1311,7 +1355,7 @@ void WindowsTextInputComponentView::DrawText() noexcept {
       winrt::check_hresult(m_textServices->OnTxInPlaceActivate(&rcClient));
 
       if (facebook::react::isColorMeaningful(m_props->backgroundColor)) {
-        auto backgroundColor = m_props->backgroundColor.AsD2DColor();
+        auto backgroundColor = theme()->D2DColor(*m_props->backgroundColor);
         winrt::com_ptr<ID2D1SolidColorBrush> backgroundBrush;
         winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(backgroundColor, backgroundBrush.put()));
         const D2D1_RECT_F fillRect = {
@@ -1331,7 +1375,7 @@ void WindowsTextInputComponentView::DrawText() noexcept {
         // set brush color
         winrt::com_ptr<ID2D1SolidColorBrush> brush;
         if (m_props->placeholderTextColor) {
-          auto color = m_props->placeholderTextColor.AsD2DColor();
+          auto color = theme()->D2DColor(*m_props->placeholderTextColor);
           winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(color, brush.put()));
         } else {
           winrt::check_hresult(
@@ -1404,6 +1448,12 @@ void WindowsTextInputComponentView::ensureVisual() noexcept {
     m_visual.InsertAt(m_caretVisual.InnerVisual(), 0);
     m_caretVisual.IsVisible(false);
   }
+}
+
+void WindowsTextInputComponentView::onThemeChanged() noexcept {
+  auto props = std::static_pointer_cast<const facebook::react::WindowsTextInputProps>(m_props);
+  updateCursorColor(props->cursorColor, props->textAttributes.foregroundColor);
+  DrawText();
 }
 
 winrt::Microsoft::ReactNative::Composition::IVisual WindowsTextInputComponentView::Visual() const noexcept {

@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/eslint-config
 
-This log was last generated on Thu, 12 Oct 2023 05:15:53 GMT and should not be manually modified.
+This log was last generated on Sat, 21 Oct 2023 05:16:08 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.2.4
+
+Sat, 21 Oct 2023 05:16:08 GMT
+
+### Patches
+
+- Adds `eqeqeq` to eslint configuration and a few other lint fixes (erozell@outlook.com)
 
 ## 1.2.3
 

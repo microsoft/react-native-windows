@@ -1,0 +1,277 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TextInput Tests Multi-line TextInputs can enable text selection (Imperative) 1`] = `
+{
+  "AutomationId": "multilineImperative-text-input",
+  "ControlType": 50004,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "edit",
+  "Name": "",
+}
+`;
+
+exports[`TextInput Tests Multi-line TextInputs can enable text selection 1`] = `
+{
+  "AutomationId": "multiline-text-input",
+  "ControlType": 50004,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "edit",
+  "Name": "",
+}
+`;
+
+exports[`TextInput Tests Single-line TextInputs can enable text selection (Imperative) 1`] = `
+{
+  "AutomationId": "singlelineImperative-text-input",
+  "ControlType": 50004,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "edit",
+  "Name": "",
+}
+`;
+
+exports[`TextInput Tests Single-line TextInputs can enable text selection 1`] = `
+{
+  "AutomationId": "singleline-text-input",
+  "ControlType": 50004,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "edit",
+  "Name": "",
+}
+`;
+
+exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Characters 1`] = `
+{
+  "AutomationId": "capitalize-characters",
+  "ControlType": 50004,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "edit",
+  "Name": "",
+}
+`;
+
+exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Sentences 1`] = `
+{
+  "AutomationId": "capitalize-sentences",
+  "ControlType": 50004,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "edit",
+  "Name": "",
+}
+`;
+
+exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Turned Off 1`] = `
+{
+  "AutomationId": "capitalize-none",
+  "ControlType": 50004,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "edit",
+  "Name": "",
+}
+`;
+
+exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Words 1`] = `
+{
+  "AutomationId": "capitalize-words",
+  "ControlType": 50004,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "edit",
+  "Name": "",
+}
+`;
+
+exports[`TextInput Tests TextInputs can have a background color 1`] = `
+{
+  "AutomationId": "style-backgroundColor",
+  "ControlType": 50004,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "edit",
+  "Name": "",
+}
+`;
+
+exports[`TextInput Tests TextInputs can have a color 1`] = `
+{
+  "AutomationId": "style-color",
+  "ControlType": 50004,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "edit",
+  "Name": "",
+}
+`;
+
+exports[`TextInput Tests TextInputs can have a font family 1`] = `
+{
+  "AutomationId": "style-fontFamily",
+  "ControlType": 50004,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "edit",
+  "Name": "",
+}
+`;
+
+exports[`TextInput Tests TextInputs can have a font size 1`] = `
+{
+  "AutomationId": "style-fontSize",
+  "ControlType": 50004,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "edit",
+  "Name": "",
+}
+`;
+
+exports[`TextInput Tests TextInputs can have a font style 1`] = `
+{
+  "AutomationId": "style-fontStyle",
+  "ControlType": 50004,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "edit",
+  "Name": "",
+}
+`;
+
+exports[`TextInput Tests TextInputs can have a font weight 1`] = `
+{
+  "AutomationId": "style-fontWeight",
+  "ControlType": 50004,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "edit",
+  "Name": "",
+}
+`;
+
+exports[`TextInput Tests TextInputs can have attributed text 1`] = `
+{
+  "AutomationId": "text-input",
+  "ControlType": 50004,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "edit",
+  "Name": "",
+}
+`;
+
+exports[`TextInput Tests TextInputs can have customized letter spacing 1`] = `
+{
+  "AutomationId": "style-letterSpacing",
+  "ControlType": 50004,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "edit",
+  "Name": "",
+}
+`;
+
+exports[`TextInput Tests TextInputs can have customized line height 1`] = `
+{
+  "AutomationId": "style-lineHeight",
+  "ControlType": 50004,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "edit",
+  "Name": "",
+}
+`;
+
+exports[`TextInput Tests TextInputs can have text decoration lines 1`] = `
+{
+  "AutomationId": "style-textDecorationLine",
+  "ControlType": 50004,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "edit",
+  "Name": "",
+}
+`;
+
+exports[`TextInput Tests TextInputs can have text shadows 1`] = `
+{
+  "AutomationId": "style-textShadow",
+  "ControlType": 50004,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "edit",
+  "Name": "",
+}
+`;
+
+exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with Clear 1`] = `
+{
+  "AutomationId": "rewrite_clear_input",
+  "ControlType": 50004,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "edit",
+  "Name": "",
+}
+`;
+
+exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with No Character 1`] = `
+{
+  "AutomationId": "rewrite_no_sp_input",
+  "ControlType": 50004,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "edit",
+  "Name": "",
+}
+`;
+
+exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with Underscore 1`] = `
+{
+  "AutomationId": "rewrite_sp_underscore_input",
+  "ControlType": 50004,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "edit",
+  "Name": "",
+}
+`;
+
+exports[`TextInput Tests Uncontrolled TextInput 1`] = `
+{
+  "AutomationId": "uncontrolled-textinput",
+  "ControlType": 50004,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "edit",
+  "Name": "",
+}
+`;

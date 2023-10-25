@@ -1,0 +1,82 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pressable Tests Pressables can change text on press/rest, state rest 1`] = `
+{
+  "AutomationId": "pressable_press_console",
+  "ControlType": 50020,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": false,
+  "LocalizedControlType": "text",
+  "Name": "",
+}
+`;
+
+exports[`Pressable Tests Pressables can have delayed event handlers 1`] = `
+{
+  "AutomationId": "pressable_delay_events_button",
+  "Children": [
+    {
+      "AutomationId": "",
+      "ControlType": 50020,
+      "HelpText": "",
+      "IsEnabled": true,
+      "IsKeyboardFocusable": false,
+      "LocalizedControlType": "text",
+      "Name": "Press Me",
+    },
+  ],
+  "ControlType": 50026,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "group",
+  "Name": "",
+}
+`;
+
+exports[`Pressable Tests Pressables can have event handlers 1`] = `
+{
+  "AutomationId": "pressable_feedback_events_button",
+  "Children": [
+    {
+      "AutomationId": "",
+      "ControlType": 50020,
+      "HelpText": "",
+      "IsEnabled": true,
+      "IsKeyboardFocusable": false,
+      "LocalizedControlType": "text",
+      "Name": "Press Me",
+    },
+  ],
+  "ControlType": 50000,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "button",
+  "Name": "pressable feedback events",
+}
+`;
+
+exports[`Pressable Tests Pressables can have hit slop functionality 1`] = `
+{
+  "AutomationId": "pressable_hit_slop_button",
+  "Children": [
+    {
+      "AutomationId": "",
+      "ControlType": 50020,
+      "HelpText": "",
+      "IsEnabled": true,
+      "IsKeyboardFocusable": false,
+      "LocalizedControlType": "text",
+      "Name": "Press Outside This View",
+    },
+  ],
+  "ControlType": 50026,
+  "HelpText": "",
+  "IsEnabled": true,
+  "IsKeyboardFocusable": true,
+  "LocalizedControlType": "group",
+  "Name": "",
+}
+`;
