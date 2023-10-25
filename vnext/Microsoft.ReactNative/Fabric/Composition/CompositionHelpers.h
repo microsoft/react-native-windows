@@ -11,6 +11,12 @@ namespace Microsoft::ReactNative {
 
 namespace Composition {
 
+// Windows composition specific interface to extract the inner compositor object
+MSO_STRUCT_GUID(IWindowsCompositionCompositor, "4FA84446-B662-440F-AE53-43A223D2068E")
+struct IWindowsCompositionCompositor : public IUnknown {
+  virtual winrt::Windows::UI::Composition::Compositor InnerCompositor() const noexcept = 0;
+};
+
 // Windows composition specific interface to extract the inner composition object
 MSO_STRUCT_GUID(IWindowsCompositionVisual, "2F7F7E82-0BEA-4Cf8-9531-E81338754187")
 struct IWindowsCompositionVisual : public IUnknown {
@@ -36,6 +42,12 @@ struct IWindowsCompositionDrawingSurfaceInner : public IUnknown {
 };
 
 #ifdef USE_WINUI3
+// Windows composition specific interface to extract the inner compositor object
+MSO_STRUCT_GUID(IMicrosoftCompositionCompositor, "B7B3E027-6A87-4946-B397-247AAB8634C6")
+struct IMicrosoftCompositionCompositor : public IUnknown {
+  virtual winrt::Microsoft::UI::Composition::Compositor InnerCompositor() const noexcept = 0;
+};
+
 // Microsoft composition specific interface to extract the inner composition object
 MSO_STRUCT_GUID(IMicrosoftCompositionVisual, "FF8731D8-8AFA-4F6F-9E76-7F538F3C1157")
 struct IMicrosoftCompositionVisual : public IUnknown {

@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "[Fabric] Add keyboard handlers to ScrollView",
+  "comment": "[Fabric] Native Theming",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
   "dependentChangeType": "patch"

@@ -88,7 +88,7 @@ void AppState::RemoveListeners(double /*count*/) noexcept {
   // noop
 }
 
-ReactNativeSpecs::AppStateSpec_Constants AppState::GetConstants() noexcept {
+ReactNativeSpecs::AppStateSpec_AppStateConstants AppState::GetConstants() noexcept {
   return {GetAppState()};
 }
 

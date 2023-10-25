@@ -322,7 +322,7 @@ exports[`snapshotAllPages Accessibility Windows 4`] = `
     onScrollEndDrag={[Function]}
     removeClippedSubviews={false}
     renderItem={[Function]}
-    scrollEventThrottle={50}
+    scrollEventThrottle={0.0001}
     stickyHeaderIndices={[]}
     viewabilityConfigCallbackPairs={[]}
   >
@@ -778,7 +778,7 @@ exports[`snapshotAllPages Accessibility Windows 5`] = `
       onScrollEndDrag={[Function]}
       removeClippedSubviews={false}
       renderItem={[Function]}
-      scrollEventThrottle={50}
+      scrollEventThrottle={0.0001}
       stickyHeaderIndices={[]}
       viewabilityConfigCallbackPairs={[]}
     >
@@ -881,7 +881,7 @@ exports[`snapshotAllPages Accessibility Windows 5`] = `
       onScrollEndDrag={[Function]}
       removeClippedSubviews={false}
       renderItem={[Function]}
-      scrollEventThrottle={50}
+      scrollEventThrottle={0.0001}
       stickyHeaderIndices={[]}
       viewabilityConfigCallbackPairs={[]}
     >
@@ -1032,6 +1032,7 @@ exports[`snapshotAllPages Accessibility Windows 5`] = `
 
 exports[`snapshotAllPages ActivityIndicator 1`] = `
 <ActivityIndicator
+  accessibilityLabel="Wait for content to load!"
   color="white"
   style={
     [
@@ -1045,6 +1046,7 @@ exports[`snapshotAllPages ActivityIndicator 1`] = `
       },
     ]
   }
+  testID="default_activity_indicator"
 />
 `;
 
@@ -3400,7 +3402,7 @@ exports[`snapshotAllPages Animated 4`] = `
     onScrollEndDrag={[Function]}
     removeClippedSubviews={false}
     renderItem={[Function]}
-    scrollEventThrottle={50}
+    scrollEventThrottle={0.0001}
     stickyHeaderIndices={[]}
     viewabilityConfigCallbackPairs={[]}
   >
@@ -4707,7 +4709,7 @@ exports[`snapshotAllPages Animated 5`] = `
     onScrollBeginDrag={[Function]}
     onScrollEndDrag={[Function]}
     renderItem={[Function]}
-    scrollEventThrottle={50}
+    scrollEventThrottle={0.0001}
     stickyHeaderIndices={[]}
   >
     <View>
@@ -9656,7 +9658,6 @@ exports[`snapshotAllPages FlatList 1`] = `
     style={
       {
         "flex": 1,
-        "paddingVertical": 10,
         "rowGap": 30,
       }
     }
@@ -9704,6 +9705,7 @@ exports[`snapshotAllPages FlatList 1`] = `
                 "paddingVertical": 0,
               }
             }
+            testID="search_bar_flat_list"
             underlineColorAndroid="transparent"
             value=""
           />
@@ -10758,7 +10760,7 @@ exports[`snapshotAllPages FlatList 1`] = `
         refreshing={false}
         removeClippedSubviews={false}
         renderItem={[Function]}
-        scrollEventThrottle={50}
+        scrollEventThrottle={0.0001}
         stickyHeaderIndices={[]}
         style={{}}
         viewabilityConfig={
@@ -11900,7 +11902,7 @@ exports[`snapshotAllPages FlatList 2`] = `
     onStartReachedThreshold={0}
     removeClippedSubviews={false}
     renderItem={[Function]}
-    scrollEventThrottle={50}
+    scrollEventThrottle={0.0001}
     stickyHeaderIndices={[]}
     style={
       {
@@ -12450,7 +12452,7 @@ exports[`snapshotAllPages FlatList 3`] = `
     onScrollEndDrag={[Function]}
     removeClippedSubviews={false}
     renderItem={[Function]}
-    scrollEventThrottle={50}
+    scrollEventThrottle={0.0001}
     stickyHeaderIndices={[]}
     style={
       {
@@ -13310,7 +13312,7 @@ exports[`snapshotAllPages FlatList 4`] = `
       onScrollEndDrag={[Function]}
       removeClippedSubviews={false}
       renderItem={[Function]}
-      scrollEventThrottle={50}
+      scrollEventThrottle={0.0001}
       stickyHeaderIndices={[]}
       style={
         {
@@ -14130,7 +14132,7 @@ exports[`snapshotAllPages FlatList 5`] = `
     onScrollEndDrag={[Function]}
     removeClippedSubviews={false}
     renderItem={[Function]}
-    scrollEventThrottle={50}
+    scrollEventThrottle={0.0001}
     stickyHeaderIndices={[]}
     style={
       {
@@ -14862,7 +14864,7 @@ exports[`snapshotAllPages FlatList 6`] = `
     onViewableItemsChanged={[Function]}
     removeClippedSubviews={false}
     renderItem={[Function]}
-    scrollEventThrottle={50}
+    scrollEventThrottle={0.0001}
     stickyHeaderIndices={[]}
     style={
       {
@@ -15590,7 +15592,7 @@ exports[`snapshotAllPages FlatList 7`] = `
     onScrollEndDrag={[Function]}
     removeClippedSubviews={false}
     renderItem={[Function]}
-    scrollEventThrottle={50}
+    scrollEventThrottle={0.0001}
     stickyHeaderIndices={[]}
     style={
       {
@@ -15683,6 +15685,7 @@ exports[`snapshotAllPages FlatList 7`] = `
                 "fontSize": 10,
               }
             }
+            testID="flat_list_separator"
           >
             Separator for leading Pizza and trailing undefined has not been pressed
           </Text>
@@ -15770,6 +15773,7 @@ exports[`snapshotAllPages FlatList 7`] = `
                 "fontSize": 10,
               }
             }
+            testID="flat_list_separator"
           >
             Separator for leading Burger and trailing undefined has not been pressed
           </Text>
@@ -15857,6 +15861,7 @@ exports[`snapshotAllPages FlatList 7`] = `
                 "fontSize": 10,
               }
             }
+            testID="flat_list_separator"
           >
             Separator for leading Risotto and trailing undefined has not been pressed
           </Text>
@@ -15944,6 +15949,7 @@ exports[`snapshotAllPages FlatList 7`] = `
                 "fontSize": 10,
               }
             }
+            testID="flat_list_separator"
           >
             Separator for leading French Fries and trailing undefined has not been pressed
           </Text>
@@ -16031,6 +16037,7 @@ exports[`snapshotAllPages FlatList 7`] = `
                 "fontSize": 10,
               }
             }
+            testID="flat_list_separator"
           >
             Separator for leading Onion Rings and trailing undefined has not been pressed
           </Text>
@@ -16118,6 +16125,7 @@ exports[`snapshotAllPages FlatList 7`] = `
                 "fontSize": 10,
               }
             }
+            testID="flat_list_separator"
           >
             Separator for leading Fried Shrimps and trailing undefined has not been pressed
           </Text>
@@ -16205,6 +16213,7 @@ exports[`snapshotAllPages FlatList 7`] = `
                 "fontSize": 10,
               }
             }
+            testID="flat_list_separator"
           >
             Separator for leading Water and trailing undefined has not been pressed
           </Text>
@@ -16292,6 +16301,7 @@ exports[`snapshotAllPages FlatList 7`] = `
                 "fontSize": 10,
               }
             }
+            testID="flat_list_separator"
           >
             Separator for leading Coke and trailing undefined has not been pressed
           </Text>
@@ -16379,6 +16389,7 @@ exports[`snapshotAllPages FlatList 7`] = `
                 "fontSize": 10,
               }
             }
+            testID="flat_list_separator"
           >
             Separator for leading Beer and trailing undefined has not been pressed
           </Text>
@@ -16466,6 +16477,7 @@ exports[`snapshotAllPages FlatList 7`] = `
                 "fontSize": 10,
               }
             }
+            testID="flat_list_separator"
           >
             Separator for leading Cheesecake and trailing undefined has not been pressed
           </Text>
@@ -16534,7 +16546,6 @@ exports[`snapshotAllPages FlatList 8`] = `
     style={
       {
         "flex": 1,
-        "paddingVertical": 10,
         "rowGap": 30,
       }
     }
@@ -22733,7 +22744,7 @@ exports[`snapshotAllPages FlatList 8`] = `
       refreshing={false}
       removeClippedSubviews={false}
       renderItem={[Function]}
-      scrollEventThrottle={50}
+      scrollEventThrottle={0.0001}
       stickyHeaderIndices={[]}
       viewabilityConfigCallbackPairs={
         [
@@ -24709,7 +24720,7 @@ exports[`snapshotAllPages FlatList 9`] = `
   onScrollEndDrag={[Function]}
   removeClippedSubviews={false}
   renderItem={[Function]}
-  scrollEventThrottle={50}
+  scrollEventThrottle={0.0001}
   stickyHeaderIndices={
     [
       0,
@@ -25003,7 +25014,6 @@ exports[`snapshotAllPages FlatList 10`] = `
     style={
       {
         "flex": 1,
-        "paddingVertical": 10,
         "rowGap": 30,
       }
     }
@@ -25110,7 +25120,7 @@ exports[`snapshotAllPages FlatList 10`] = `
       onViewableItemsChanged={[Function]}
       removeClippedSubviews={false}
       renderItem={[Function]}
-      scrollEventThrottle={50}
+      scrollEventThrottle={0.0001}
       stickyHeaderIndices={[]}
       style={
         {
@@ -28280,6 +28290,16 @@ exports[`snapshotAllPages Layout Events 1`] = `
 </View>
 `;
 
+exports[`snapshotAllPages Legacy Native Module 1`] = `
+<View
+  style={
+    {
+      "flex": 1,
+    }
+  }
+/>
+`;
+
 exports[`snapshotAllPages LegacyControlStyleTest 1`] = `
 <View>
   <View
@@ -31410,7 +31430,6 @@ exports[`snapshotAllPages PanResponder Sample 1`] = `
     style={
       {
         "flex": 1,
-        "paddingVertical": 10,
         "rowGap": 30,
       }
     }
@@ -31517,7 +31536,6 @@ exports[`snapshotAllPages Performance API Examples 1`] = `
     style={
       {
         "flex": 1,
-        "paddingVertical": 10,
         "rowGap": 30,
       }
     }
@@ -31678,7 +31696,6 @@ exports[`snapshotAllPages Performance API Examples 2`] = `
     style={
       {
         "flex": 1,
-        "paddingVertical": 10,
         "rowGap": 30,
       }
     }
@@ -31774,16 +31791,22 @@ exports[`snapshotAllPages Performance API Examples 2`] = `
       </View>
       <View>
         <Text>
-          startTime: N/A ms
+          startTime: undefined ms
         </Text>
         <Text>
-          executeJavaScriptBundleEntryPointStart: N/A ms
+          initializeRuntimeStart: undefined ms
         </Text>
         <Text>
-          executeJavaScriptBundleEntryPointEnd: N/A ms
+          executeJavaScriptBundleEntryPointStart: undefined ms
         </Text>
         <Text>
-          endTime: N/A ms
+          executeJavaScriptBundleEntryPointEnd: undefined ms
+        </Text>
+        <Text>
+          initializeRuntimeEnd: undefined ms
+        </Text>
+        <Text>
+          endTime: undefined ms
         </Text>
       </View>
     </View>
@@ -31808,7 +31831,6 @@ exports[`snapshotAllPages Performance Comparison Examples 1`] = `
     style={
       {
         "flex": 1,
-        "paddingVertical": 10,
         "rowGap": 30,
       }
     }
@@ -31969,7 +31991,6 @@ exports[`snapshotAllPages Performance Comparison Examples 2`] = `
     style={
       {
         "flex": 1,
-        "paddingVertical": 10,
         "rowGap": 30,
       }
     }
@@ -32130,7 +32151,486 @@ exports[`snapshotAllPages Performance Comparison Examples 3`] = `
     style={
       {
         "flex": 1,
-        "paddingVertical": 10,
+        "rowGap": 30,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "paddingHorizontal": 5,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "borderBottomWidth": 1,
+            "borderColor": "gray",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginBottom": 5,
+          }
+        }
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "alignItems": "center",
+                "backgroundColor": "#d3d3d3",
+                "borderColor": "#696969",
+                "borderRadius": 8,
+                "borderWidth": 1,
+                "justifyContent": "center",
+                "margin": 5,
+                "padding": 10,
+              },
+              false,
+            ]
+          }
+        >
+          <Text>
+            Show Bad
+          </Text>
+        </View>
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "alignItems": "center",
+                "backgroundColor": "#d3d3d3",
+                "borderColor": "#696969",
+                "borderRadius": 8,
+                "borderWidth": 1,
+                "justifyContent": "center",
+                "margin": 5,
+                "padding": 10,
+              },
+              false,
+            ]
+          }
+        >
+          <Text>
+            Show Good
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          {
+            "backgroundColor": "white",
+            "flex": 1,
+          }
+        }
+      />
+    </View>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages Performance Comparison Examples 4`] = `
+<View
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      {
+        "backgroundColor": "#f2f2f7ff",
+      },
+    ]
+  }
+>
+  <View
+    style={
+      {
+        "flex": 1,
+        "rowGap": 30,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "paddingHorizontal": 5,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "borderBottomWidth": 1,
+            "borderColor": "gray",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginBottom": 5,
+          }
+        }
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "alignItems": "center",
+                "backgroundColor": "#d3d3d3",
+                "borderColor": "#696969",
+                "borderRadius": 8,
+                "borderWidth": 1,
+                "justifyContent": "center",
+                "margin": 5,
+                "padding": 10,
+              },
+              false,
+            ]
+          }
+        >
+          <Text>
+            Show Bad
+          </Text>
+        </View>
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "alignItems": "center",
+                "backgroundColor": "#d3d3d3",
+                "borderColor": "#696969",
+                "borderRadius": 8,
+                "borderWidth": 1,
+                "justifyContent": "center",
+                "margin": 5,
+                "padding": 10,
+              },
+              false,
+            ]
+          }
+        >
+          <Text>
+            Show Good
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          {
+            "backgroundColor": "white",
+            "flex": 1,
+          }
+        }
+      />
+    </View>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages Performance Comparison Examples 5`] = `
+<View
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      {
+        "backgroundColor": "#f2f2f7ff",
+      },
+    ]
+  }
+>
+  <View
+    style={
+      {
+        "flex": 1,
+        "rowGap": 30,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "paddingHorizontal": 5,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "borderBottomWidth": 1,
+            "borderColor": "gray",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "marginBottom": 5,
+          }
+        }
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "alignItems": "center",
+                "backgroundColor": "#d3d3d3",
+                "borderColor": "#696969",
+                "borderRadius": 8,
+                "borderWidth": 1,
+                "justifyContent": "center",
+                "margin": 5,
+                "padding": 10,
+              },
+              false,
+            ]
+          }
+        >
+          <Text>
+            Show Bad
+          </Text>
+        </View>
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "alignItems": "center",
+                "backgroundColor": "#d3d3d3",
+                "borderColor": "#696969",
+                "borderRadius": 8,
+                "borderWidth": 1,
+                "justifyContent": "center",
+                "margin": 5,
+                "padding": 10,
+              },
+              false,
+            ]
+          }
+        >
+          <Text>
+            Show Good
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          {
+            "backgroundColor": "white",
+            "flex": 1,
+          }
+        }
+      />
+    </View>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages Performance Comparison Examples 6`] = `
+<View
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      {
+        "backgroundColor": "#f2f2f7ff",
+      },
+    ]
+  }
+>
+  <View
+    style={
+      {
+        "flex": 1,
         "rowGap": 30,
       }
     }
@@ -34025,6 +34525,7 @@ exports[`snapshotAllPages Pressable 1`] = `
             "fontSize": 16,
           }
         }
+        testID="one_press_me_button"
       >
         Press Me
       </Text>
@@ -46728,7 +47229,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        testID="scroll_view_item"
+      >
         Item 0
       </Text>
     </View>
@@ -46779,7 +47282,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        testID="scroll_view_item"
+      >
         Item 1
       </Text>
     </View>
@@ -46830,7 +47335,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        testID="scroll_view_item"
+      >
         Item 2
       </Text>
     </View>
@@ -46881,7 +47388,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        testID="scroll_view_item"
+      >
         Item 3
       </Text>
     </View>
@@ -46936,7 +47445,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 0
           </Text>
         </View>
@@ -46987,7 +47498,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 1
           </Text>
         </View>
@@ -47038,7 +47551,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 2
           </Text>
         </View>
@@ -47089,7 +47604,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 3
           </Text>
         </View>
@@ -47140,7 +47657,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 4
           </Text>
         </View>
@@ -47191,7 +47710,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 5
           </Text>
         </View>
@@ -47242,7 +47763,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 6
           </Text>
         </View>
@@ -47293,7 +47816,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 7
           </Text>
         </View>
@@ -47344,7 +47869,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 8
           </Text>
         </View>
@@ -47395,7 +47922,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 9
           </Text>
         </View>
@@ -47446,7 +47975,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 10
           </Text>
         </View>
@@ -47497,7 +48028,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 11
           </Text>
         </View>
@@ -47548,7 +48081,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 12
           </Text>
         </View>
@@ -47599,7 +48134,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 13
           </Text>
         </View>
@@ -47650,7 +48187,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 14
           </Text>
         </View>
@@ -47701,7 +48240,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 15
           </Text>
         </View>
@@ -47752,7 +48293,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 16
           </Text>
         </View>
@@ -47803,7 +48346,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 17
           </Text>
         </View>
@@ -47854,7 +48399,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 18
           </Text>
         </View>
@@ -47905,7 +48452,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 19
           </Text>
         </View>
@@ -47958,7 +48507,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        testID="scroll_view_item"
+      >
         Item 5
       </Text>
     </View>
@@ -48009,7 +48560,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        testID="scroll_view_item"
+      >
         Item 6
       </Text>
     </View>
@@ -48060,7 +48613,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        testID="scroll_view_item"
+      >
         Item 7
       </Text>
     </View>
@@ -48111,7 +48666,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        testID="scroll_view_item"
+      >
         Item 8
       </Text>
     </View>
@@ -48162,7 +48719,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        testID="scroll_view_item"
+      >
         Item 9
       </Text>
     </View>
@@ -48213,7 +48772,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        testID="scroll_view_item"
+      >
         Item 10
       </Text>
     </View>
@@ -48264,7 +48825,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        testID="scroll_view_item"
+      >
         Item 11
       </Text>
     </View>
@@ -48315,7 +48878,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        testID="scroll_view_item"
+      >
         Item 12
       </Text>
     </View>
@@ -48366,7 +48931,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        testID="scroll_view_item"
+      >
         Item 13
       </Text>
     </View>
@@ -48417,7 +48984,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        testID="scroll_view_item"
+      >
         Item 14
       </Text>
     </View>
@@ -48468,7 +49037,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        testID="scroll_view_item"
+      >
         Item 15
       </Text>
     </View>
@@ -48519,7 +49090,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        testID="scroll_view_item"
+      >
         Item 16
       </Text>
     </View>
@@ -48570,7 +49143,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        testID="scroll_view_item"
+      >
         Item 17
       </Text>
     </View>
@@ -48621,7 +49196,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        testID="scroll_view_item"
+      >
         Item 18
       </Text>
     </View>
@@ -48672,7 +49249,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        testID="scroll_view_item"
+      >
         Item 19
       </Text>
     </View>
@@ -48730,7 +49309,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 0
           </Text>
         </View>
@@ -48782,7 +49363,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 1
           </Text>
         </View>
@@ -48834,7 +49417,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 2
           </Text>
         </View>
@@ -48886,7 +49471,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 3
           </Text>
         </View>
@@ -48938,7 +49525,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 4
           </Text>
         </View>
@@ -48990,7 +49579,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 5
           </Text>
         </View>
@@ -49042,7 +49633,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 6
           </Text>
         </View>
@@ -49094,7 +49687,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 7
           </Text>
         </View>
@@ -49146,7 +49741,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 8
           </Text>
         </View>
@@ -49198,7 +49795,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 9
           </Text>
         </View>
@@ -49250,7 +49849,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 10
           </Text>
         </View>
@@ -49302,7 +49903,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 11
           </Text>
         </View>
@@ -49354,7 +49957,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 12
           </Text>
         </View>
@@ -49406,7 +50011,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 13
           </Text>
         </View>
@@ -49458,7 +50065,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 14
           </Text>
         </View>
@@ -49510,7 +50119,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 15
           </Text>
         </View>
@@ -49562,7 +50173,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 16
           </Text>
         </View>
@@ -49614,7 +50227,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 17
           </Text>
         </View>
@@ -49666,7 +50281,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 18
           </Text>
         </View>
@@ -49718,7 +50335,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 19
           </Text>
         </View>
@@ -49778,7 +50397,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 0
           </Text>
         </View>
@@ -49830,7 +50451,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 1
           </Text>
         </View>
@@ -49882,7 +50505,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 2
           </Text>
         </View>
@@ -49934,7 +50559,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 3
           </Text>
         </View>
@@ -49986,7 +50613,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 4
           </Text>
         </View>
@@ -50038,7 +50667,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 5
           </Text>
         </View>
@@ -50090,7 +50721,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 6
           </Text>
         </View>
@@ -50142,7 +50775,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 7
           </Text>
         </View>
@@ -50194,7 +50829,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 8
           </Text>
         </View>
@@ -50246,7 +50883,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 9
           </Text>
         </View>
@@ -50298,7 +50937,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 10
           </Text>
         </View>
@@ -50350,7 +50991,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 11
           </Text>
         </View>
@@ -50402,7 +51045,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 12
           </Text>
         </View>
@@ -50454,7 +51099,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 13
           </Text>
         </View>
@@ -50506,7 +51153,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 14
           </Text>
         </View>
@@ -50558,7 +51207,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 15
           </Text>
         </View>
@@ -50610,7 +51261,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 16
           </Text>
         </View>
@@ -50662,7 +51315,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 17
           </Text>
         </View>
@@ -50714,7 +51369,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 18
           </Text>
         </View>
@@ -50766,7 +51423,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 19
           </Text>
         </View>
@@ -50826,7 +51485,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 0
           </Text>
         </View>
@@ -50878,7 +51539,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 1
           </Text>
         </View>
@@ -50930,7 +51593,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 2
           </Text>
         </View>
@@ -50982,7 +51647,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 3
           </Text>
         </View>
@@ -51034,7 +51701,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 4
           </Text>
         </View>
@@ -51086,7 +51755,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 5
           </Text>
         </View>
@@ -51138,7 +51809,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 6
           </Text>
         </View>
@@ -51190,7 +51863,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 7
           </Text>
         </View>
@@ -51242,7 +51917,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 8
           </Text>
         </View>
@@ -51294,7 +51971,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 9
           </Text>
         </View>
@@ -51346,7 +52025,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 10
           </Text>
         </View>
@@ -51398,7 +52079,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 11
           </Text>
         </View>
@@ -51450,7 +52133,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 12
           </Text>
         </View>
@@ -51502,7 +52187,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 13
           </Text>
         </View>
@@ -51554,7 +52241,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 14
           </Text>
         </View>
@@ -51606,7 +52295,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 15
           </Text>
         </View>
@@ -51658,7 +52349,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 16
           </Text>
         </View>
@@ -51710,7 +52403,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 17
           </Text>
         </View>
@@ -51762,7 +52457,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 18
           </Text>
         </View>
@@ -51814,7 +52511,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 19
           </Text>
         </View>
@@ -51874,7 +52573,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 0
           </Text>
         </View>
@@ -51926,7 +52627,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 1
           </Text>
         </View>
@@ -51978,7 +52681,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 2
           </Text>
         </View>
@@ -52030,7 +52735,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 3
           </Text>
         </View>
@@ -52082,7 +52789,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 4
           </Text>
         </View>
@@ -52134,7 +52843,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 5
           </Text>
         </View>
@@ -52186,7 +52897,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 6
           </Text>
         </View>
@@ -52238,7 +52951,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 7
           </Text>
         </View>
@@ -52290,7 +53005,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 8
           </Text>
         </View>
@@ -52342,7 +53059,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 9
           </Text>
         </View>
@@ -52394,7 +53113,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 10
           </Text>
         </View>
@@ -52446,7 +53167,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 11
           </Text>
         </View>
@@ -52498,7 +53221,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 12
           </Text>
         </View>
@@ -52550,7 +53275,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 13
           </Text>
         </View>
@@ -52602,7 +53329,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 14
           </Text>
         </View>
@@ -52654,7 +53383,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 15
           </Text>
         </View>
@@ -52706,7 +53437,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 16
           </Text>
         </View>
@@ -52758,7 +53491,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 17
           </Text>
         </View>
@@ -52810,7 +53545,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 18
           </Text>
         </View>
@@ -52862,7 +53599,9 @@ exports[`snapshotAllPages ScrollViewSimpleExample 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            testID="scroll_view_item"
+          >
             Item 19
           </Text>
         </View>
@@ -53080,7 +53819,7 @@ exports[`snapshotAllPages SectionList 1`] = `
       onScrollBeginDrag={[Function]}
       onScrollEndDrag={[Function]}
       renderItem={[Function]}
-      scrollEventThrottle={50}
+      scrollEventThrottle={0.0001}
       stickyHeaderIndices={[]}
       style={
         {
@@ -53687,7 +54426,7 @@ exports[`snapshotAllPages SectionList 2`] = `
     onScrollBeginDrag={[Function]}
     onScrollEndDrag={[Function]}
     renderItem={[Function]}
-    scrollEventThrottle={50}
+    scrollEventThrottle={0.0001}
     stickyHeaderIndices={[]}
     style={
       {
@@ -54209,7 +54948,7 @@ exports[`snapshotAllPages SectionList 3`] = `
     onScrollEndDrag={[Function]}
     onViewableItemsChanged={[Function]}
     renderItem={[Function]}
-    scrollEventThrottle={50}
+    scrollEventThrottle={0.0001}
     stickyHeaderIndices={[]}
     style={
       {
@@ -54714,7 +55453,7 @@ exports[`snapshotAllPages SectionList 4`] = `
     onScrollBeginDrag={[Function]}
     onScrollEndDrag={[Function]}
     renderItem={[Function]}
-    scrollEventThrottle={50}
+    scrollEventThrottle={0.0001}
     stickyHeaderIndices={[]}
     style={
       {
@@ -55508,7 +56247,7 @@ exports[`snapshotAllPages SectionList 5`] = `
     onScrollBeginDrag={[Function]}
     onScrollEndDrag={[Function]}
     renderItem={[Function]}
-    scrollEventThrottle={50}
+    scrollEventThrottle={0.0001}
     stickyHeaderIndices={[]}
     style={
       {
@@ -56117,7 +56856,7 @@ exports[`snapshotAllPages SectionList 6`] = `
     onScrollBeginDrag={[Function]}
     onScrollEndDrag={[Function]}
     renderItem={[Function]}
-    scrollEventThrottle={50}
+    scrollEventThrottle={0.0001}
     stickyHeaderIndices={[]}
     style={
       {
@@ -56576,7 +57315,6 @@ exports[`snapshotAllPages SectionList 7`] = `
     style={
       {
         "flex": 1,
-        "paddingVertical": 10,
         "rowGap": 30,
       }
     }
@@ -63701,7 +64439,7 @@ exports[`snapshotAllPages SectionList 7`] = `
       }
       refreshing={false}
       renderItem={[Function]}
-      scrollEventThrottle={50}
+      scrollEventThrottle={0.0001}
       stickyHeaderIndices={
         [
           1,
@@ -64621,7 +65359,7 @@ exports[`snapshotAllPages SwipeableCard 1`] = `
           onScrollEndDrag={[Function]}
           removeClippedSubviews={false}
           renderItem={[Function]}
-          scrollEventThrottle={50}
+          scrollEventThrottle={0.0001}
           stickyHeaderIndices={[]}
           style={
             {
@@ -64910,7 +65648,7 @@ exports[`snapshotAllPages SwipeableCard 1`] = `
           onScrollEndDrag={[Function]}
           removeClippedSubviews={false}
           renderItem={[Function]}
-          scrollEventThrottle={50}
+          scrollEventThrottle={0.0001}
           stickyHeaderIndices={[]}
           style={
             {

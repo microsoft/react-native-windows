@@ -13,59 +13,49 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
-struct PlatformConstantsWinSpec_Constants_reactNativeVersion {
+struct PlatformConstantsWinSpec_PlatformConstantsWindows_reactNativeVersion {
     double major;
     double minor;
     double patch;
     std::optional<std::string> prerelease;
 };
 
-struct PlatformConstantsWinSpec_Constants {
+struct PlatformConstantsWinSpec_PlatformConstantsWindows {
     bool isTesting;
     std::optional<bool> isDisableAnimations;
-    PlatformConstantsWinSpec_Constants_reactNativeVersion reactNativeVersion;
+    PlatformConstantsWinSpec_PlatformConstantsWindows_reactNativeVersion reactNativeVersion;
     double osVersion;
 };
 
 
-inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PlatformConstantsWinSpec_Constants_reactNativeVersion*) noexcept {
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PlatformConstantsWinSpec_PlatformConstantsWindows_reactNativeVersion*) noexcept {
     winrt::Microsoft::ReactNative::FieldMap fieldMap {
-        {L"major", &PlatformConstantsWinSpec_Constants_reactNativeVersion::major},
-        {L"minor", &PlatformConstantsWinSpec_Constants_reactNativeVersion::minor},
-        {L"patch", &PlatformConstantsWinSpec_Constants_reactNativeVersion::patch},
-        {L"prerelease", &PlatformConstantsWinSpec_Constants_reactNativeVersion::prerelease},
+        {L"major", &PlatformConstantsWinSpec_PlatformConstantsWindows_reactNativeVersion::major},
+        {L"minor", &PlatformConstantsWinSpec_PlatformConstantsWindows_reactNativeVersion::minor},
+        {L"patch", &PlatformConstantsWinSpec_PlatformConstantsWindows_reactNativeVersion::patch},
+        {L"prerelease", &PlatformConstantsWinSpec_PlatformConstantsWindows_reactNativeVersion::prerelease},
     };
     return fieldMap;
 }
 
-inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PlatformConstantsWinSpec_Constants*) noexcept {
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PlatformConstantsWinSpec_PlatformConstantsWindows*) noexcept {
     winrt::Microsoft::ReactNative::FieldMap fieldMap {
-        {L"isTesting", &PlatformConstantsWinSpec_Constants::isTesting},
-        {L"isDisableAnimations", &PlatformConstantsWinSpec_Constants::isDisableAnimations},
-        {L"reactNativeVersion", &PlatformConstantsWinSpec_Constants::reactNativeVersion},
-        {L"osVersion", &PlatformConstantsWinSpec_Constants::osVersion},
+        {L"isTesting", &PlatformConstantsWinSpec_PlatformConstantsWindows::isTesting},
+        {L"isDisableAnimations", &PlatformConstantsWinSpec_PlatformConstantsWindows::isDisableAnimations},
+        {L"reactNativeVersion", &PlatformConstantsWinSpec_PlatformConstantsWindows::reactNativeVersion},
+        {L"osVersion", &PlatformConstantsWinSpec_PlatformConstantsWindows::osVersion},
     };
     return fieldMap;
 }
 
 struct PlatformConstantsWinSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
-  static constexpr auto constants = std::tuple{
-      TypedConstant<PlatformConstantsWinSpec_Constants>{0},
-  };
   static constexpr auto methods = std::tuple{
 
   };
 
   template <class TModule>
   static constexpr void ValidateModule() noexcept {
-    constexpr auto constantCheckResults = CheckConstants<TModule, PlatformConstantsWinSpec>();
     constexpr auto methodCheckResults = CheckMethods<TModule, PlatformConstantsWinSpec>();
-
-    REACT_SHOW_CONSTANT_SPEC_ERRORS(
-          0,
-          "PlatformConstantsWinSpec_Constants",
-          "    REACT_GET_CONSTANTS(GetConstants) PlatformConstantsWinSpec_Constants GetConstants() noexcept {/*implementation*/}\n"
-          "    REACT_GET_CONSTANTS(GetConstants) static PlatformConstantsWinSpec_Constants GetConstants() noexcept {/*implementation*/}\n");
 
 
   }

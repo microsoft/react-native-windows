@@ -1,8 +1,139 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 03 Oct 2023 05:13:16 GMT and should not be manually modified.
+This log was last generated on Tue, 24 Oct 2023 18:00:31 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.725
+
+Tue, 24 Oct 2023 18:00:31 GMT
+
+### Changes
+
+- Minor codereview feedback cleanup (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.724
+
+Tue, 24 Oct 2023 05:15:58 GMT
+
+### Changes
+
+- Fix event dispatch names for momentum scroll (ericroz@meta.com)
+- Expose DisableXamlGuard property to allow mixing of WinUI 2/3 (jthysell@microsoft.com)
+
+## 0.0.0-canary.723
+
+Sat, 21 Oct 2023 05:16:08 GMT
+
+### Changes
+
+- Remove ScrollView.windows.js override (erozell@outlook.com)
+- Implement BlobCollector (julio.rocha@microsoft.com)
+- Add support for loading images from local files (30809111+acoates-ms@users.noreply.github.com)
+- Adds `eqeqeq` to eslint configuration and a few other lint fixes (erozell@outlook.com)
+- Update app template's metro config with latest upstream changes (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.193
+- Bump @react-native-windows/codegen to v0.0.0-canary.72
+- Bump @rnw-scripts/eslint-config to v1.2.4
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.7
+- Bump @rnw-scripts/just-task to v2.3.18
+- Bump react-native-platform-override to v1.9.17
+
+## 0.0.0-canary.722
+
+Thu, 19 Oct 2023 05:13:42 GMT
+
+### Changes
+
+- Save State: UIA Dump Tests (34109996+chiaramooney@users.noreply.github.com)
+- [Fabric] Add CharacterRecieved event (30809111+acoates-ms@users.noreply.github.com)
+- Move winrt/Windows.Storage.h include out of USE_V8 conditional (erozell@outlook.com)
+
+## 0.0.0-canary.721
+
+Wed, 18 Oct 2023 05:14:55 GMT
+
+### Changes
+
+- add fabric switch path animation (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.720
+
+Tue, 17 Oct 2023 05:13:04 GMT
+
+### Changes
+
+- Integrate 10/02 (yajurgrover24@gmail.com)
+
+## 0.0.0-canary.719
+
+Sat, 14 Oct 2023 05:13:11 GMT
+
+### Changes
+
+- [PR] Fixes issues with packaged asset resolution (#10621) (erozell@outlook.com)
+
+## 0.0.0-canary.718
+
+Fri, 13 Oct 2023 05:15:18 GMT
+
+### Changes
+
+- [Fabric] Support hosting in ContentIsland (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Fix offset for automation provider when running in islands (30809111+acoates-ms@users.noreply.github.com)
+- reverted package.lock changes (yajurgrover24@gmail.com)
+
+## 0.0.0-canary.717
+
+Thu, 12 Oct 2023 05:15:53 GMT
+
+### Changes
+
+- [Fabric] Add native PointerEntered+PointerExited events (30809111+acoates-ms@users.noreply.github.com)
+- Integrate 9/25 (yajurgrover24@gmail.com)
+- Add `@microsoft/eslint-plugin-sdl` to `@rnw-scripts/eslint-config` (jthysell@microsoft.com)
+- Implement WebSocketTurboModuleProxy (julio.rocha@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.192
+- Bump @react-native-windows/codegen to v0.0.0-canary.71
+- Bump @rnw-scripts/eslint-config to v1.2.3
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.6
+- Bump @rnw-scripts/just-task to v2.3.17
+- Bump react-native-platform-override to v1.9.16
+
+## 0.0.0-canary.716
+
+Wed, 11 Oct 2023 05:13:16 GMT
+
+### Changes
+
+- add fabric switch path animation (tatianakapos@microsoft.com)
+- Conditionally register WebSocket Cxx module (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.715
+
+Tue, 10 Oct 2023 05:13:38 GMT
+
+### Changes
+
+- [Fabric] Add pointer pressed, released, moved and wheelch changed events (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.714
+
+Fri, 06 Oct 2023 05:13:51 GMT
+
+### Changes
+
+- Integrate 9/20 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.191
+
+## 0.0.0-canary.713
+
+Wed, 04 Oct 2023 05:12:45 GMT
+
+### Changes
+
+- Allow usage of WinAppSDK in fabric (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Add keyboard handlers to ScrollView (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.712
 

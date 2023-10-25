@@ -13,7 +13,7 @@ namespace Microsoft::ReactNative {
 
 struct ICompositionRootView : public facebook::react::IReactRootView {
   virtual winrt::Microsoft::ReactNative::Composition::IVisual GetVisual() const noexcept = 0;
-  virtual double ScaleFactor() noexcept = 0;
+  virtual float ScaleFactor() noexcept = 0;
 };
 
 } // namespace Microsoft::ReactNative

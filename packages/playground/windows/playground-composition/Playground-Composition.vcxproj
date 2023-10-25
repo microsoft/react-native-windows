@@ -20,7 +20,6 @@
     <WindowsTargetPlatformVersion>10.0.22000.0</WindowsTargetPlatformVersion>
     <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
     <WindowsPackageType>None</WindowsPackageType>
-    <AppContainerApplication>false</AppContainerApplication>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Label="ReactNativeWindowsProps">
@@ -116,6 +115,8 @@
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="CustomComponent.cpp" />
+    <ClCompile Include="DeviceInfoModule.cpp" />
     <ClCompile Include="Playground-Composition.cpp" />
   </ItemGroup>
   <ItemGroup>

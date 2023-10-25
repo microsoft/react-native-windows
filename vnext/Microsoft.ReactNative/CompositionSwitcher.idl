@@ -96,7 +96,7 @@ namespace Microsoft.ReactNative.Composition
   [experimental]
   interface IActivityVisual requires IVisual
   {
-    void Color(Windows.UI.Color color);
+    void Brush(IBrush brush);
   }
 
   [webhosthidden]
@@ -107,7 +107,18 @@ namespace Microsoft.ReactNative.Composition
     void Size(Windows.Foundation.Numerics.Vector2 size);
     void Position(Windows.Foundation.Numerics.Vector2 position);
     Boolean IsVisible { get; set; };
-    void Color(Windows.UI.Color color);
+    void Brush(IBrush brush);
+  }
+
+  [webhosthidden]
+  [experimental]
+  interface ISwitchThumbVisual
+  {
+    IVisual InnerVisual { get; };
+    void Size(Windows.Foundation.Numerics.Vector2 size);
+    void Position(Windows.Foundation.Numerics.Vector2 position);
+    Boolean IsVisible { get; set; };
+    void Brush(IBrush brush);
   }
 
   [webhosthidden]
@@ -127,6 +138,7 @@ namespace Microsoft.ReactNative.Composition
     IScrollVisual CreateScrollerVisual();
     IActivityVisual CreateActivityVisual();
     ICaretVisual CreateCaretVisual();
+    ISwitchThumbVisual CreateSwitchThumbVisual();
     IFocusVisual CreateFocusVisual();
     IDropShadow CreateDropShadow();
     IBrush CreateColorBrush(Windows.UI.Color color);

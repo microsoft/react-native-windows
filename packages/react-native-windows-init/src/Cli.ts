@@ -39,7 +39,7 @@ import {
 
 import requireGenerateWindows from './requireGenerateWindows';
 
-let NPM_REGISTRY_URL = 'http://registry.npmjs.org';
+let NPM_REGISTRY_URL = 'https://registry.npmjs.org';
 try {
   const npmConfReg = execSync('npm config get registry').toString().trim();
   if (validUrl.isUri(npmConfReg)) {

@@ -5,6 +5,7 @@
  */
 import React from 'react';
 import {AppRegistry, View} from 'react-native';
+import type {ViewProps} from 'react-native';
 
 import {
   setRuntimeConfigProvider,
@@ -22,7 +23,7 @@ setRuntimeConfigProvider((name: string) => {
   };
 });
 
-interface NativeProps {
+interface NativeProps extends ViewProps {
   label: string;
 }
 
@@ -36,7 +37,7 @@ const MyCustomComponent = get<NativeProps>('MyCustomComponent', () => {
       label: true,
     },
   };
-});
+}) as React.ComponentType<NativeProps>;
 
 const Bootstrap = () => {
   return (
@@ -46,8 +47,9 @@ const Bootstrap = () => {
         margin: 10,
         borderWidth: 2,
         gap: 5,
+        height: 500,
       }}>
-      <MyCustomComponent label="test" style={{width: 500, height: 500}} />
+      <MyCustomComponent label="test" style={{flex: 1}} />
     </View>
   );
 };
