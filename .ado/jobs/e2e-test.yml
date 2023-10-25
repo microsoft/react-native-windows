@@ -175,6 +175,12 @@ jobs:
                   Write-Host "##vso[task.setvariable variable=BuildLogDirectory]$(Build.BinariesDirectory)\${{ matrix.BuildPlatform }}\BuildLogs"
                 displayName: Set BuildLogDirectory
 
+              - task: PowerShell@2
+                displayName: Start tracing
+                inputs:
+                  targetType: filePath # filePath | inline
+                  filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tracing\Start-Tracing.ps1
+
               - template: ../templates/run-windows-with-certificates.yml
                 parameters:
                   buildEnvironment: ${{ parameters.BuildEnvironment }}
@@ -190,7 +196,7 @@ jobs:
                 displayName: Set StartedFabricTests
 
               - script: |
-                  set E2ETestFabricBuildConfiguration=${{ matrix.BuildConfiguration }}
+                  set E2ETestFabricBuildConfiguration=Release
                   set E2ETestFabricBuildPlatform=${{ matrix.BuildPlatform }}
                   yarn e2etest
                 displayName: yarn e2etest
@@ -205,7 +211,7 @@ jobs:
                 displayName: Update snapshots
                 workingDirectory: packages/e2e-test-app-fabric
                 condition: and(failed(), eq(variables.StartedFabricTests, 'true'))
-                
+
               - task: PowerShell@2
                 displayName: Stop tracing
                 inputs:

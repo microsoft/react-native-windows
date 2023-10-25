@@ -151,6 +151,7 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   global_hwnd = hwnd;
   auto scaleFactor = ScaleFactor(hwnd);
 
+  global_hwnd = hwnd;
   auto host = CreateReactNativeHost(hwnd, compositor);
 
   // Start the react-native instance, which will create a JavaScript runtime and load the applications bundle
@@ -166,7 +167,7 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   window.Changed([wkRootView = winrt::make_weak(rootView)](
                      winrt::Microsoft::UI::Windowing::AppWindow const &window,
                      winrt::Microsoft::UI::Windowing::AppWindowChangedEventArgs const &args) {
-    if (args.DidSizeChange()) {
+    if (args.DidSizeChange() || args.DidVisibilityChange()) {
       if (auto rootView = wkRootView.get()) {
         UpdateRootViewSizeToAppWindow(rootView, window);
       }

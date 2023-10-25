@@ -158,6 +158,8 @@ void CompositionRootView::ScaleFactor(float value) noexcept {
 
 winrt::IInspectable CompositionRootView::GetUiaProvider() noexcept {
   auto componentView = GetComponentView();
+  // We should probably create a rootview specific UiaProvider which has a single child of the componentView's provider
+  // This would allow us to notify the UIA client when we child is ready.
   if (componentView == nullptr)
     return nullptr;
 
