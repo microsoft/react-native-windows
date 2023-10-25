@@ -62,17 +62,23 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_BoundingRectangle(Ui
   // into account already.
   winrt::com_ptr<IRawElementProviderFragmentRoot> spFragmentRoot = nullptr;
   hr = get_FragmentRoot(spFragmentRoot.put());
-  if (FAILED(hr))
+  if (FAILED(hr)) {
+    assert(false);
     return hr;
+  }
 
   auto spFragment = spFragmentRoot.try_as<IRawElementProviderFragment>();
-  if (spFragment == nullptr)
+  if (spFragment == nullptr) {
+    assert(false);
     return E_FAIL;
+  }
 
   UiaRect rect;
   hr = spFragment->get_BoundingRectangle(&rect);
-  if (FAILED(hr))
+  if (FAILED(hr)) {
+    assert(false);
     return hr;
+  }
 
   pRetVal->left += rect.left;
   pRetVal->top += rect.top;
@@ -99,15 +105,18 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_FragmentRoot(IRawEle
 
   auto strongView = m_view.view();
 
-  if (!strongView)
+  if (!strongView) {
     return UIA_E_ELEMENTNOTAVAILABLE;
+  }
 
   auto rootCV = strongView->rootComponentView();
-  if (rootCV == nullptr)
+  if (rootCV == nullptr) {
+    assert(false);
     return UIA_E_ELEMENTNOTAVAILABLE;
+  }
 
   auto uiaProvider = rootCV->EnsureUiaProvider();
-  auto spFragmentRoot = uiaProvider.try_as<IRawElementProviderFragmentRoot>();
+  auto spFragmentRoot = uiaProvider.as<IRawElementProviderFragmentRoot>();
   if (spFragmentRoot) {
     *pRetVal = spFragmentRoot.detach();
   }
@@ -292,7 +301,12 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
       pRetVal->boolVal = (props->accessible && props->accessibilityRole != "none") ? VARIANT_TRUE : VARIANT_FALSE;
       break;
     }
-
+    case UIA_IsOffscreenPropertyId: {
+      pRetVal->vt = VT_BOOL;
+      pRetVal->boolVal = (strongView->getClipState() == ::Microsoft::ReactNative::ClipState::FullyClipped)
+          ? VARIANT_TRUE
+          : VARIANT_FALSE;
+    }
     case UIA_HelpTextPropertyId: {
       pRetVal->vt = VT_BSTR;
       auto helpText = props->accessibilityHint.empty()

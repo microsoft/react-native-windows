@@ -629,7 +629,7 @@ export default class Pressability {
           (event.nativeEvent.code === 'Space' ||
             event.nativeEvent.code === 'Enter' ||
             event.nativeEvent.code === 'GamepadA') &&
-          event.defaultPrevented != true &&
+          event.defaultPrevented !== true &&
           this._isKeyDown
         ) {
           const {onPressOut, onPress} = this._config;
@@ -649,7 +649,7 @@ export default class Pressability {
           (event.nativeEvent.code === 'Space' ||
             event.nativeEvent.code === 'Enter' ||
             event.nativeEvent.code === 'GamepadA') &&
-          event.defaultPrevented != true
+          event.defaultPrevented !== true
         ) {
           const {onPressIn} = this._config;
           this._isKeyDown = true;

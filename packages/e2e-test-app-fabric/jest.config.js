@@ -69,7 +69,7 @@ module.exports = {
     app: `windows\\${platformDir}\\RNTesterApp-Fabric\\RNTesterApp-Fabric.exe`,
     appWorkingDir: `windows\\${platformDir}\\RNTesterApp-Fabric`,
     enableAutomationChannel: true,
-    /* -- Enable for more detailed logging
+    /* // Enable for more detailed logging
     webdriverOptions: {
       // Level of logging verbosity: trace | debug | info | warn | error
       logLevel: 'info',
