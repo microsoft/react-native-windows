@@ -141,4 +141,8 @@ winrt::IInspectable RootComponentView::UiaProviderFromPoint(const POINT &ptPixel
   return view->EnsureUiaProvider();
 }
 
+ClipState RootComponentView::getClipState() noexcept {
+  return ClipState::NoClip;
+}
+
 } // namespace Microsoft::ReactNative

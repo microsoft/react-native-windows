@@ -572,6 +572,12 @@ facebook::react::Tag ScrollViewComponentView::hitTest(
   return -1;
 }
 
+facebook::react::Point ScrollViewComponentView::getClientOffset() const noexcept {
+  return {
+      m_layoutMetrics.frame.origin.x * m_layoutMetrics.pointScaleFactor - m_scrollVisual.ScrollPosition().x,
+      m_layoutMetrics.frame.origin.y * m_layoutMetrics.pointScaleFactor - m_scrollVisual.ScrollPosition().y};
+}
+
 winrt::Microsoft::ReactNative::Composition::IVisual ScrollViewComponentView::Visual() const noexcept {
   return m_visual;
 }

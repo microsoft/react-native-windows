@@ -75,6 +75,7 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept override;
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt, bool ignorePointerEvents)
       const noexcept override;
+  facebook::react::Point getClientOffset() const noexcept override;
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
 
   void onThemeChanged() noexcept override;

@@ -26,6 +26,12 @@ enum class RNComponentViewUpdateMask : std::uint_fast8_t {
   All = Props | EventEmitter | State | LayoutMetrics
 };
 
+enum class ClipState : std::uint_fast8_t {
+  NoClip = 0,
+  PartialClip = 1,
+  FullyClipped = 2,
+};
+
 DEFINE_ENUM_FLAG_OPERATORS(RNComponentViewUpdateMask);
 
 struct RootComponentView;
@@ -71,6 +77,8 @@ struct IComponentView {
   // returns true if the fn ever returned true
   virtual bool runOnChildren(bool forward, Mso::Functor<bool(IComponentView &)> &fn) noexcept = 0;
   virtual RECT getClientRect() const noexcept = 0;
+  // The offset from this elements parent to its children (accounts for things like scroll position)
+  virtual facebook::react::Point getClientOffset() const noexcept = 0;
   virtual void onFocusLost() noexcept = 0;
   virtual void onFocusGained() noexcept = 0;
   virtual void onPointerEntered(
@@ -105,8 +113,13 @@ struct IComponentView {
       facebook::react::Point &localPt,
       bool ignorePointerEvents = false) const noexcept = 0;
   virtual winrt::IInspectable EnsureUiaProvider() noexcept = 0;
+  virtual std::optional<std::string> getAcccessiblityValue() noexcept = 0;
+  virtual void setAcccessiblityValue(std::string &&value) noexcept = 0;
+  virtual bool getAcccessiblityIsReadOnly() noexcept = 0;
+
   // Notify up the tree to bring the rect into view by scrolling as needed
   virtual void StartBringIntoView(BringIntoViewOptions &&args) noexcept = 0;
+  virtual ClipState getClipState() noexcept = 0;
 };
 
 // Run fn on all nodes of the component view tree starting from this one until fn returns true

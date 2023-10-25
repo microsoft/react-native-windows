@@ -28,16 +28,29 @@ export async function goToApiExample(example: string) {
 }
 
 async function goToExample(example: string) {
+  const searchString = regexEscape(
+    example.substring(0, Math.min(example.length, 8)),
+  );
+
   // Filter the list down to the one test, to improve the stability of selectors
   const searchBox = await app.findElementByTestID('explorer_search');
-  await searchBox.addValue(['Backspace', 'Backspace', 'Backspace']);
+
+  await app.waitUntil(
+    async () => {
+      await searchBox.setValue(searchString);
+      return (await searchBox.getText()) === searchString;
+    },
+    {
+      interval: 1500,
+      timeout: 5000,
+      timeoutMsg: `Unable to enter correct search text into test searchbox.`,
+    },
+  );
+
   // We cannot just click on exampleButton, since it it is likely off screen.
   // So we first search for the item hopfully causing the item to be one of the few remaining in the list - and therefore onscreen
   // Ideally we'd either use UIA to invoke the specific item, or ensure that the item is within view
   // Once we have those UIA patterns implemented we should update this logic.
-  await searchBox.addValue(
-    regexEscape(example.substring(0, Math.min(8, example.length))),
-  );
   const exampleButton = await app.findElementByTestID(example);
   await exampleButton.waitForDisplayed({timeout: 5000});
   await exampleButton.click();

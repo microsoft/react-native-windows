@@ -145,9 +145,9 @@ void CompositionBaseComponentView::finalizeUpdates(RNComponentViewUpdateMask upd
 void CompositionBaseComponentView::onFocusLost() noexcept {
   m_eventEmitter->onBlur();
   showFocusVisual(false);
-  if (UiaClientsAreListening()) {
+  if (m_uiaProvider) {
     winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
-        EnsureUiaProvider(), UIA_HasKeyboardFocusPropertyId, true, false);
+        m_uiaProvider, UIA_HasKeyboardFocusPropertyId, true, false);
   }
 }
 
@@ -156,8 +156,8 @@ void CompositionBaseComponentView::onFocusGained() noexcept {
   if (m_enableFocusVisual) {
     showFocusVisual(true);
   }
-  if (UiaClientsAreListening()) {
-    auto spProviderSimple = EnsureUiaProvider().try_as<IRawElementProviderSimple>();
+  if (m_uiaProvider) {
+    auto spProviderSimple = m_uiaProvider.try_as<IRawElementProviderSimple>();
     if (spProviderSimple != nullptr) {
       winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
           m_uiaProvider, UIA_HasKeyboardFocusPropertyId, false, true);
@@ -273,15 +273,27 @@ void CompositionBaseComponentView::onPointerWheelChanged(
 
 RECT CompositionBaseComponentView::getClientRect() const noexcept {
   RECT rc{0};
+  facebook::react::Point parentOffset{0};
   if (m_parent) {
-    rc = m_parent->getClientRect();
+    parentOffset = m_parent->getClientOffset();
   }
 
-  rc.left += static_cast<LONG>(m_layoutMetrics.frame.origin.x * m_layoutMetrics.pointScaleFactor);
-  rc.top += static_cast<LONG>(m_layoutMetrics.frame.origin.y * m_layoutMetrics.pointScaleFactor);
+  rc.left = static_cast<LONG>((m_layoutMetrics.frame.origin.x * m_layoutMetrics.pointScaleFactor) + parentOffset.x);
+  rc.top += static_cast<LONG>((m_layoutMetrics.frame.origin.y * m_layoutMetrics.pointScaleFactor) + parentOffset.y);
   rc.right = rc.left + static_cast<LONG>(m_layoutMetrics.frame.size.width * m_layoutMetrics.pointScaleFactor);
   rc.bottom = rc.top + static_cast<LONG>(m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor);
   return rc;
+}
+
+facebook::react::Point CompositionBaseComponentView::getClientOffset() const noexcept {
+  facebook::react::Point parentOffset{0};
+  if (m_parent) {
+    parentOffset = m_parent->getClientOffset();
+  }
+
+  return {
+      (m_layoutMetrics.frame.origin.x * m_layoutMetrics.pointScaleFactor) + parentOffset.x,
+      (m_layoutMetrics.frame.origin.y * m_layoutMetrics.pointScaleFactor) + parentOffset.y};
 }
 
 const facebook::react::SharedViewEventEmitter &CompositionBaseComponentView::GetEventEmitter() const noexcept {
@@ -1249,43 +1261,53 @@ void CompositionBaseComponentView::updateTransformProps(
 void CompositionBaseComponentView::updateAccessibilityProps(
     const facebook::react::ViewProps &oldViewProps,
     const facebook::react::ViewProps &newViewProps) noexcept {
-  if (!UiaClientsAreListening())
+  if (!m_uiaProvider)
     return;
 
-  auto provider = EnsureUiaProvider();
+  winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+      m_uiaProvider, UIA_IsKeyboardFocusablePropertyId, oldViewProps.focusable, newViewProps.focusable);
 
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
-      provider, UIA_IsKeyboardFocusablePropertyId, oldViewProps.focusable, newViewProps.focusable);
-
-  winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
-      provider,
+      m_uiaProvider,
       UIA_NamePropertyId,
       oldViewProps.accessibilityLabel,
       newViewProps.accessibilityLabel.empty() ? DefaultAccessibleName() : newViewProps.accessibilityLabel);
 
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
-      provider,
+      m_uiaProvider,
       UIA_IsContentElementPropertyId,
       (oldViewProps.accessible && oldViewProps.accessibilityRole != "none"),
       (newViewProps.accessible && newViewProps.accessibilityRole != "none"));
 
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
-      provider,
+      m_uiaProvider,
       UIA_IsControlElementPropertyId,
       (oldViewProps.accessible && oldViewProps.accessibilityRole != "none"),
       (newViewProps.accessible && newViewProps.accessibilityRole != "none"));
 
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
-      provider,
+      m_uiaProvider,
       UIA_IsEnabledPropertyId,
       !oldViewProps.accessibilityState.disabled,
       !newViewProps.accessibilityState.disabled);
 
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
-      provider, UIA_ControlTypePropertyId, oldViewProps.accessibilityRole, newViewProps.accessibilityRole);
+      m_uiaProvider, UIA_ControlTypePropertyId, oldViewProps.accessibilityRole, newViewProps.accessibilityRole);
 
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
-      provider, UIA_HelpTextPropertyId, oldViewProps.accessibilityHint, newViewProps.accessibilityHint);
+      m_uiaProvider, UIA_HelpTextPropertyId, oldViewProps.accessibilityHint, newViewProps.accessibilityHint);
+}
+
+std::optional<std::string> CompositionBaseComponentView::getAcccessiblityValue() noexcept {
+  return std::static_pointer_cast<const facebook::react::ViewProps>(props())->accessibilityValue.text;
+}
+
+void CompositionBaseComponentView::setAcccessiblityValue(std::string &&value) noexcept {
+  // no-op
+}
+
+bool CompositionBaseComponentView::getAcccessiblityIsReadOnly() noexcept {
+  return true;
 }
 
 void CompositionBaseComponentView::updateBorderLayoutMetrics(
@@ -1698,6 +1720,49 @@ winrt::IInspectable CompositionBaseComponentView::EnsureUiaProvider() noexcept {
         shared_from_this());
   }
   return m_uiaProvider;
+}
+
+bool IntersectRect(RECT *prcDst, const RECT &prcSrc1, const RECT &prcSrc2) {
+  prcDst->left = std::max(prcSrc1.left, prcSrc2.left);
+  prcDst->right = std::min(prcSrc1.right, prcSrc2.right);
+
+  if (prcDst->left < prcDst->right) {
+    prcDst->top = std::max(prcSrc1.top, prcSrc2.top);
+    prcDst->bottom = std::min(prcSrc1.bottom, prcSrc2.bottom);
+
+    if (prcDst->top < prcDst->bottom) {
+      return true;
+    }
+  }
+
+  prcDst->left = prcDst->top = prcDst->right = prcDst->bottom = 0;
+  return false;
+}
+
+ClipState CompositionBaseComponentView::getClipState() noexcept {
+  if (!m_parent) {
+    return ClipState::FullyClipped;
+  }
+
+  RECT intersection;
+  const auto parentRect = m_parent->getClientRect();
+  const auto clientRect = getClientRect();
+
+  IntersectRect(&intersection, parentRect, clientRect);
+
+  if (intersection == clientRect) {
+    return m_parent->getClipState();
+  }
+
+  if (((intersection.right - intersection.left) == 0) && ((intersection.bottom - intersection.top) == 0)) {
+    return ClipState::FullyClipped;
+  }
+
+  if (m_parent->getClipState() == ClipState::FullyClipped) {
+    return ClipState::FullyClipped;
+  }
+
+  return ClipState::PartialClip;
 }
 
 } // namespace Microsoft::ReactNative

@@ -84,6 +84,7 @@ struct CompositionBaseComponentView : public IComponentView,
   facebook::react::Tag tag() const noexcept override;
 
   RECT getClientRect() const noexcept override;
+  facebook::react::Point getClientOffset() const noexcept override;
   void updateProps(facebook::react::Props::Shared const &props, facebook::react::Props::Shared const &oldProps) noexcept
       override;
   void updateLayoutMetrics(
@@ -112,6 +113,10 @@ struct CompositionBaseComponentView : public IComponentView,
   void EnsureTransformMatrixFacade() noexcept;
 
   winrt::IInspectable EnsureUiaProvider() noexcept override;
+  std::optional<std::string> getAcccessiblityValue() noexcept override;
+  void setAcccessiblityValue(std::string &&value) noexcept override;
+  bool getAcccessiblityIsReadOnly() noexcept override;
+  ClipState getClipState() noexcept override;
 
   virtual std::string DefaultControlType() const noexcept;
   virtual std::string DefaultAccessibleName() const noexcept;

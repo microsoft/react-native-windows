@@ -35,6 +35,7 @@ struct RootComponentView : CompositionViewComponentView {
   RootComponentView *rootComponentView() noexcept override;
 
   winrt::IInspectable EnsureUiaProvider() noexcept override;
+  ClipState getClipState() noexcept override;
 
   winrt::IInspectable UiaProviderFromPoint(const POINT &ptPixels) noexcept;
 

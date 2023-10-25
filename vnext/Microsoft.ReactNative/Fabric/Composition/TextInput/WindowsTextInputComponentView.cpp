@@ -6,6 +6,7 @@
 #include "WindowsTextInputComponentView.h"
 
 #include <Fabric/Composition/CompositionDynamicAutomationProvider.h>
+#include <Fabric/Composition/UiaHelpers.h>
 #include <Utils/ValueUtils.h>
 #include <tom.h>
 #include <unicode.h>
@@ -1117,6 +1118,12 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
     onChangeArgs.eventCount = ++m_nativeEventCount;
     emitter->onChange(onChangeArgs);
   }
+
+  if (m_uiaProvider) {
+    auto text = GetTextFromRichEdit();
+    winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+        m_uiaProvider, UIA_ValueValuePropertyId, text, text);
+  }
 }
 
 void WindowsTextInputComponentView::OnSelectionChanged(LONG start, LONG end) noexcept {
@@ -1154,6 +1161,18 @@ void WindowsTextInputComponentView::finalizeUpdates(RNComponentViewUpdateMask up
   if (m_needsRedraw) {
     DrawText();
   }
+}
+
+std::optional<std::string> WindowsTextInputComponentView::getAcccessiblityValue() noexcept {
+  return GetTextFromRichEdit();
+}
+
+void WindowsTextInputComponentView::setAcccessiblityValue(std::string &&value) noexcept {
+  UpdateText(value);
+}
+
+bool WindowsTextInputComponentView::getAcccessiblityIsReadOnly() noexcept {
+  return !m_props->editable;
 }
 
 void WindowsTextInputComponentView::prepareForRecycle() noexcept {}

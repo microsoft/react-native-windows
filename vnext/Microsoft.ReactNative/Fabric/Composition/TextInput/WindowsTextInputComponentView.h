@@ -73,6 +73,10 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
       const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept
       override;
 
+  std::optional<std::string> getAcccessiblityValue() noexcept override;
+  void setAcccessiblityValue(std::string &&value) noexcept override;
+  bool getAcccessiblityIsReadOnly() noexcept override;
+
  private:
   WindowsTextInputComponentView(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
