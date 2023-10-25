@@ -9,6 +9,7 @@
 #include <Fabric/FabricUIManagerModule.h>
 #include "CompositionRootAutomationProvider.h"
 #include "CompositionRootView.h"
+#include "Theme.h"
 
 namespace Microsoft::ReactNative {
 
@@ -16,7 +17,7 @@ RootComponentView::RootComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : Super(compContext, tag), m_context(reactContext) {}
+    : Super(compContext, tag, reactContext) {}
 
 std::shared_ptr<RootComponentView> RootComponentView::Create(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
@@ -138,6 +139,10 @@ winrt::IInspectable RootComponentView::UiaProviderFromPoint(const POINT &ptPixel
     return nullptr;
 
   return view->EnsureUiaProvider();
+}
+
+ClipState RootComponentView::getClipState() noexcept {
+  return ClipState::NoClip;
 }
 
 } // namespace Microsoft::ReactNative

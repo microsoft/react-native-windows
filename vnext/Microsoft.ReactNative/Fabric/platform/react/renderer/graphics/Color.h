@@ -85,8 +85,6 @@ class SharedColor {
     return m_color != nullptr;
   }
 
-  D2D1::ColorF AsD2DColor() const;
-
   winrt::Windows::UI::Color AsWindowsColor() const;
 
   COLORREF AsColorRefNoAlpha() const {
@@ -96,10 +94,6 @@ class SharedColor {
   COLORREF AsColorRefWithAlpha() const {
     return RGB(m_color->m_color.R, m_color->m_color.G, m_color->m_color.B) | (m_color->m_color.A << 24);
   }
-
-#ifndef CORE_ABI
-  xaml::Media::Brush AsWindowsBrush() const;
-#endif
 
  private:
   std::shared_ptr<Color> m_color;

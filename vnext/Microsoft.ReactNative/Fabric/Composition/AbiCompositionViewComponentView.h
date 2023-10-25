@@ -19,7 +19,7 @@ struct AbiCompositionViewComponentView : CompositionBaseComponentView {
   using Super = CompositionBaseComponentView;
 
   [[nodiscard]] static std::shared_ptr<AbiCompositionViewComponentView> Create(
-      const winrt::Microsoft::ReactNative::IReactContext &reactContext,
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext,
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::IReactViewComponentBuilder builder) noexcept;
@@ -64,14 +64,14 @@ struct AbiCompositionViewComponentView : CompositionBaseComponentView {
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
   std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept
       override;
-  facebook::react::Props::Shared props() noexcept override;
+  facebook::react::SharedViewProps viewProps() noexcept override;
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt, bool ignorePointerEvents)
       const noexcept override;
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
 
  private:
   AbiCompositionViewComponentView(
-      const winrt::Microsoft::ReactNative::IReactContext &reactContext,
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext,
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::IReactViewComponentBuilder builder);

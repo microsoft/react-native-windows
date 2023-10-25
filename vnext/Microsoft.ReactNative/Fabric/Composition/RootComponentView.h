@@ -8,6 +8,7 @@
 #include <Microsoft.ReactNative.Cxx/ReactContext.h>
 
 #include "CompositionViewComponentView.h"
+#include "Theme.h"
 
 #include <react/components/rnwcore/ShadowNodes.h>
 
@@ -34,6 +35,7 @@ struct RootComponentView : CompositionViewComponentView {
   RootComponentView *rootComponentView() noexcept override;
 
   winrt::IInspectable EnsureUiaProvider() noexcept override;
+  ClipState getClipState() noexcept override;
 
   winrt::IInspectable UiaProviderFromPoint(const POINT &ptPixels) noexcept;
 
@@ -43,7 +45,6 @@ struct RootComponentView : CompositionViewComponentView {
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext);
   ::Microsoft::ReactNative::IComponentView *m_focusedComponent = nullptr;
-  winrt::Microsoft::ReactNative::ReactContext m_context;
 };
 
 } // namespace Microsoft::ReactNative
