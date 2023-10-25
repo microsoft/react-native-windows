@@ -6,6 +6,7 @@
  */
 
 import {app} from '@react-native-windows/automation';
+import type {AutomationElement} from '@react-native-windows/automation';
 
 /**
  * Visit an example on the RNTester Components tab
@@ -49,8 +50,32 @@ async function goToExample(example: string) {
   // So we first search for the item hopfully causing the item to be one of the few remaining in the list - and therefore onscreen
   // Ideally we'd either use UIA to invoke the specific item, or ensure that the item is within view
   // Once we have those UIA patterns implemented we should update this logic.
-  const exampleButton = await app.findElementByTestID(example);
-  await exampleButton.click();
+
+  let exampleButton: AutomationElement;
+
+  await app.waitUntil(
+    async () => {
+      exampleButton = await app.findElementByTestID(example);
+      return true;
+    },
+    {
+      interval: 1500,
+      timeout: 5000,
+      timeoutMsg: `Unable to find example button`,
+    },
+  );
+
+  await app.waitUntil(
+    async () => {
+      await exampleButton.click();
+      return true;
+    },
+    {
+      interval: 1500,
+      timeout: 5000,
+      timeoutMsg: `Unable to click on example button`,
+    },
+  );
 
   // Make sure we've launched the example by waiting until the search box is
   // no longer present, but make sure we haven't crashed by checking that nav
