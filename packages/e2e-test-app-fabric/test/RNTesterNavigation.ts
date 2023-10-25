@@ -32,10 +32,12 @@ async function goToExample(example: string) {
   );
 
   // Filter the list down to the one test, to improve the stability of selectors
-  const searchBox = await app.findElementByTestID('explorer_search');
-
   await app.waitUntil(
     async () => {
+      console.log('Searching for explorer_search');
+      const searchBox = await app.findElementByTestID('explorer_search');
+
+      console.log(`searchBox.isDisplayed: ${await searchBox.isDisplayed()}`);
       await searchBox.setValue(searchString);
       const searchBoxText = await searchBox.getText();
       console.log(`Current searchBoxText: ${searchBoxText}`);
@@ -82,8 +84,18 @@ async function goToExample(example: string) {
   // Make sure we've launched the example by waiting until the search box is
   // no longer present, but make sure we haven't crashed by checking that nav
   // buttons are still visible
-  await app.waitUntil(async () => !(await exampleButton.isDisplayed()));
+  await app.waitUntil(async () => !(await exampleButton.isDisplayed()), {
+    timeout: 5000,
+    timeoutMsg: `example button still displayed`,
+  });
   const componentsTab = await app.findElementByTestID('components-tab');
+
+  const isExampleButtonDisplayed = await exampleButton!.isDisplayed();
+  if (isExampleButtonDisplayed) {
+    console.log('Trying to click on exampleButton a 2nd time');
+    await exampleButton!.click();
+  }
+
   expect(await componentsTab.isDisplayed()).toBe(true);
 }
 
