@@ -1,6 +1,6 @@
 [ignore]
 ; We fork some components by platform - ignore all platforms except windows
-.*/*[.]android.js
+.*/!(ProgressBarAndroid)[.]android.js
 .*/*[.]ios.js
 .*/*[.]macos.js
 
