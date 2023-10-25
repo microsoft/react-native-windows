@@ -12,6 +12,7 @@ import {app} from '@react-native-windows/automation';
  */
 export async function goToComponentExample(example: string) {
   const componentsTabButton = await app.findElementByTestID('components-tab');
+  await componentsTabButton.waitForDisplayed({timeout: 20000});
   await componentsTabButton.click();
   await goToExample(example);
 }
@@ -21,6 +22,7 @@ export async function goToComponentExample(example: string) {
  */
 export async function goToApiExample(example: string) {
   const componentsTabButton = await app.findElementByTestID('apis-tab');
+  await componentsTabButton.waitForDisplayed({timeout: 20000});
   await componentsTabButton.click();
   await goToExample(example);
 }
@@ -32,16 +34,29 @@ async function goToExample(example: string) {
 
   // Filter the list down to the one test, to improve the stability of selectors
   const searchBox = await app.findElementByTestID('explorer_search');
-  await searchBox.setValue(regexEscape(example));
 
+  await app.waitUntil(
+    async () => {
+      await searchBox.setValue(searchString);
+      return (await searchBox.getText()) === searchString;
+    },
+    {
+      interval: 1500,
+      timeout: 5000,
+      timeoutMsg: `Unable to enter correct search text into test searchbox.`,
+    },
+  );
+
+  // We cannot just click on exampleButton, since it it is likely off screen.
+  // So we first search for the item hopfully causing the item to be one of the few remaining in the list - and therefore onscreen
+  // Ideally we'd either use UIA to invoke the specific item, or ensure that the item is within view
+  // Once we have those UIA patterns implemented we should update this logic.
   const exampleButton = await app.findElementByTestID(example);
+  await exampleButton.waitForDisplayed({timeout: 5000});
   await exampleButton.click();
 
-  // Make sure we've launched the example by waiting until the search box is
-  // no longer present, but make sure we haven't crashed by checking that nav
-  // buttons are still visible
-  await app.waitUntil(async () => !(await exampleButton.isDisplayed()));
   const componentsTab = await app.findElementByTestID('components-tab');
+  await componentsTab.waitForDisplayed({timeout: 5000});
   expect(await componentsTab.isDisplayed()).toBe(true);
 }
 

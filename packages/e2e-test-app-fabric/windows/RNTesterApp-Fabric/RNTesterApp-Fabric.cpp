@@ -175,9 +175,14 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   });
 
   // Quit application when main window is closed
-  window.Destroying([](winrt::Microsoft::UI::Windowing::AppWindow const &window, winrt::IInspectable const & /*args*/) {
-    PostQuitMessage(0);
-  });
+  window.Destroying(
+      [host](winrt::Microsoft::UI::Windowing::AppWindow const &window, winrt::IInspectable const & /*args*/) {
+        auto async = host.UnloadInstance();
+        async.Completed([](auto asyncInfo, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
+          assert(asyncStatus == winrt::Windows::Foundation::AsyncStatus::Completed);
+          PostQuitMessage(0);
+        });
+      });
 
   // DesktopChildSiteBridge create a ContentSite that can host the RootView ContentIsland
   auto bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(compositor, window.Id());
@@ -208,9 +213,12 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   // know the message loop has finished.
   dispatcherQueueController.ShutdownQueue();
 
+  bridge.Close();
+  bridge = nullptr;
+
   // Destroy all Composition objects
   compositor.Close();
-  compositor = {nullptr};
+  compositor = nullptr;
 }
 
 winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::JsonValue payload) {
