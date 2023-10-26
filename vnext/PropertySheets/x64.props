@@ -10,6 +10,9 @@
   <ItemDefinitionGroup>
     <ClCompile>
     </ClCompile>
+    <Link>
+      <CETCompat>true</CETCompat>
+    </Link>
   </ItemDefinitionGroup>
 
 </Project>

@@ -21,10 +21,10 @@ WindowsTextInputState::WindowsTextInputState(
     AttributedString attributedString,
     AttributedString reactTreeAttributedString,
     ParagraphAttributes paragraphAttributes,
-    float defaultThemePaddingStart,
-    float defaultThemePaddingEnd,
-    float defaultThemePaddingTop,
-    float defaultThemePaddingBottom)
+    double defaultThemePaddingStart,
+    double defaultThemePaddingEnd,
+    double defaultThemePaddingTop,
+    double defaultThemePaddingBottom)
     : mostRecentEventCount(mostRecentEventCount),
       attributedString(std::move(attributedString)),
       reactTreeAttributedString(std::move(reactTreeAttributedString)),
