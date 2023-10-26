@@ -12,6 +12,8 @@
 
 #include <react/components/rnwcore/ShadowNodes.h>
 
+struct IRawElementProviderFragmentRoot;
+
 namespace Microsoft::ReactNative {
 
 struct RootComponentView : CompositionViewComponentView {
