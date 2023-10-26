@@ -110,12 +110,23 @@ bool RootComponentView::TryMoveFocus(bool next) noexcept {
   return walkTree(*m_focusedComponent, next, fn);
 }
 
-winrt::IInspectable RootComponentView::EnsureUiaProvider() noexcept {
-  if (m_uiaProvider == nullptr) {
-    m_uiaProvider =
-        winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionRootAutomationProvider>(getPtr());
+HRESULT RootComponentView::GetFragmentRoot(IRawElementProviderFragmentRoot **pRetVal) noexcept {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+
+  *pRetVal = nullptr;
+ 
+  auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties());
+  if (uiManager == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  auto uiaProvider = uiManager->GetUiaFragmentProvider(tag());
+  auto spFragmentRoot = uiaProvider.as<IRawElementProviderFragmentRoot>();
+  if (spFragmentRoot) {
+    *pRetVal = spFragmentRoot.detach();
   }
-  return m_uiaProvider;
+
+  return S_OK;
 }
 
 std::shared_ptr<RootComponentView> RootComponentView::getPtr() {

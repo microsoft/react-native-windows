@@ -9,21 +9,19 @@
 namespace winrt::Microsoft::ReactNative::implementation {
 
 HRESULT UiaNavigateHelper(
-    ::Microsoft::ReactNative::ReactTaggedView &view,
+    ::Microsoft::ReactNative::IComponentView* view,
     NavigateDirection direction,
     IRawElementProviderFragment *&retVal) noexcept {
   retVal = nullptr;
 
-  auto spComponentView = view.view();
-
-  if (!spComponentView)
+  if (!view)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
   winrt::IInspectable uiaProvider{nullptr};
 
   switch (direction) {
     case NavigateDirection_Parent: {
-      auto pParentCV = static_cast<::Microsoft::ReactNative::CompositionBaseComponentView *>(spComponentView->parent());
+      auto pParentCV = static_cast<::Microsoft::ReactNative::CompositionBaseComponentView *>(view->parent());
       if (pParentCV != nullptr) {
         uiaProvider = pParentCV->EnsureUiaProvider();
       }
@@ -33,7 +31,7 @@ HRESULT UiaNavigateHelper(
       __fallthrough;
 
     case NavigateDirection_FirstChild: {
-      auto children = spComponentView->children();
+      auto children = view->children();
       auto index = direction == NavigateDirection_FirstChild ? 0 : children.size() - 1;
       if (!children.empty()) {
         uiaProvider =
@@ -42,10 +40,10 @@ HRESULT UiaNavigateHelper(
     } break;
 
     case NavigateDirection_NextSibling: {
-      auto pParentCV = static_cast<::Microsoft::ReactNative::CompositionBaseComponentView *>(spComponentView->parent());
+      auto pParentCV = static_cast<::Microsoft::ReactNative::CompositionBaseComponentView *>(view->parent());
       if (pParentCV != nullptr) {
         auto children = pParentCV->children();
-        auto it = std::find(children.begin(), children.end(), spComponentView.get());
+        auto it = std::find(children.begin(), children.end(), view);
         if (++it != children.end()) {
           uiaProvider = static_cast<::Microsoft::ReactNative::CompositionBaseComponentView *>(*it)->EnsureUiaProvider();
         }
@@ -53,10 +51,10 @@ HRESULT UiaNavigateHelper(
     } break;
 
     case NavigateDirection_PreviousSibling: {
-      auto pParentCV = static_cast<::Microsoft::ReactNative::CompositionBaseComponentView *>(spComponentView->parent());
+      auto pParentCV = static_cast<::Microsoft::ReactNative::CompositionBaseComponentView *>(view->parent());
       if (pParentCV != nullptr) {
         auto children = pParentCV->children();
-        auto it = std::find(children.rbegin(), children.rend(), spComponentView.get());
+        auto it = std::find(children.rbegin(), children.rend(), view);
         if (++it != children.rend()) {
           uiaProvider = static_cast<::Microsoft::ReactNative::CompositionBaseComponentView *>(*it)->EnsureUiaProvider();
         }

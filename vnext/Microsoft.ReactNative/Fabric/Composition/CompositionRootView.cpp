@@ -157,13 +157,11 @@ void CompositionRootView::ScaleFactor(float value) noexcept {
 }
 
 winrt::IInspectable CompositionRootView::GetUiaProvider() noexcept {
-  auto componentView = GetComponentView();
-  // We should probably create a rootview specific UiaProvider which has a single child of the componentView's provider
-  // This would allow us to notify the UIA client when we child is ready.
-  if (componentView == nullptr)
-    return nullptr;
-
-  return componentView->EnsureUiaProvider();
+  if (m_uiaProvider == nullptr)
+  {
+    m_uiaProvider = winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionRootAutomationProvider>(*this);
+  }
+  return m_uiaProvider;
 }
 
 winrt::Microsoft::ReactNative::Composition::IVisual CompositionRootView::GetVisual() const noexcept {
@@ -291,7 +289,7 @@ void CompositionRootView::ShowInstanceLoaded() noexcept {
     auto rootTag = ::Microsoft::ReactNative::getNextRootViewTag();
     SetTag(rootTag);
     uiManager->startSurface(
-        this, rootTag, JSComponentName(), DynamicWriter::ToDynamic(Mso::Copy(m_reactViewOptions.InitialProps())));
+        *this, rootTag, JSComponentName(), DynamicWriter::ToDynamic(Mso::Copy(m_reactViewOptions.InitialProps())));
 
     m_isJSViewAttached = true;
   }

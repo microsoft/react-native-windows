@@ -102,6 +102,7 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
   bool m_isInitialized{false};
   bool m_isJSViewAttached{false};
   IReactDispatcher m_uiDispatcher{nullptr};
+  winrt::IInspectable m_uiaProvider{nullptr};
   int64_t m_rootTag{-1};
   float m_scaleFactor{1.0};
   winrt::Windows::Foundation::Size m_size;

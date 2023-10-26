@@ -17,7 +17,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::Navigate(
   if (pRetVal == nullptr)
     return E_POINTER;
 
-  return UiaNavigateHelper(m_view, direction, *pRetVal);
+  return UiaNavigateHelper(m_view.view().get(), direction, *pRetVal);
 }
 
 // Implementations should return NULL for a top-level element that is hosted in a window. Other elements should return
@@ -109,19 +109,11 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_FragmentRoot(IRawEle
     return UIA_E_ELEMENTNOTAVAILABLE;
   }
 
-  auto rootCV = strongView->rootComponentView();
-  if (rootCV == nullptr) {
-    assert(false);
-    return UIA_E_ELEMENTNOTAVAILABLE;
+  if (auto root = strongView->rootComponentView()) {
+    return root->GetFragmentRoot(pRetVal);
   }
 
-  auto uiaProvider = rootCV->EnsureUiaProvider();
-  auto spFragmentRoot = uiaProvider.as<IRawElementProviderFragmentRoot>();
-  if (spFragmentRoot) {
-    *pRetVal = spFragmentRoot.detach();
-  }
-
-  return S_OK;
+  return UIA_E_ELEMENTNOTAVAILABLE;
 }
 
 HRESULT __stdcall CompositionDynamicAutomationProvider::get_ProviderOptions(ProviderOptions *pRetVal) {

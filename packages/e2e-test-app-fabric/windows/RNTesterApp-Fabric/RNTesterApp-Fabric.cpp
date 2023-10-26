@@ -177,6 +177,7 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   // Quit application when main window is closed
   window.Destroying(
       [host](winrt::Microsoft::UI::Windowing::AppWindow const &window, winrt::IInspectable const & /*args*/) {
+        // Before we shutdown the application - unload the ReactNativeHost to give the javascript a chance to save any state
         auto async = host.UnloadInstance();
         async.Completed([](auto asyncInfo, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
           assert(asyncStatus == winrt::Windows::Foundation::AsyncStatus::Completed);
