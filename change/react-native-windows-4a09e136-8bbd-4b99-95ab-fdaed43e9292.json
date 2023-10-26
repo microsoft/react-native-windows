@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Simplify Flyout and Popup coordinate spaces",
-  "packageName": "react-native-windows",
-  "email": "email not defined",
-  "dependentChangeType": "patch"
-}

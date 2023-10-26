@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 26 Oct 2023 16:46:11 GMT",
+      "version": "0.0.0-canary.726",
+      "tag": "react-native-windows_v0.0.0-canary.726",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "d60370603779588201c2407dd729945da0cf7339",
+            "comment": "Simplify Flyout and Popup coordinate spaces"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "869f2c4025969e33335acd69f832417999f4664e",
+            "comment": "[Fabric] Native Theming"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 24 Oct 2023 18:00:31 GMT",
       "version": "0.0.0-canary.725",
       "tag": "react-native-windows_v0.0.0-canary.725",
