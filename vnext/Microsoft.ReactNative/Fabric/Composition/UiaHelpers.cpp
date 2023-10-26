@@ -24,6 +24,20 @@ HRESULT UiaNavigateHelper(
       auto pParentCV = static_cast<::Microsoft::ReactNative::CompositionBaseComponentView *>(view->parent());
       if (pParentCV != nullptr) {
         uiaProvider = pParentCV->EnsureUiaProvider();
+      } else {
+        if (auto root = view->rootComponentView()) {
+          winrt::com_ptr<IRawElementProviderFragmentRoot> spFragmentRoot;
+          auto hr = root->GetFragmentRoot(spFragmentRoot.put());
+          if (FAILED(hr)) {
+            return hr;
+          }
+
+          auto spFragment = spFragmentRoot.try_as<IRawElementProviderFragment>();
+          if (spFragment != nullptr) {
+            retVal = spFragment.detach();
+            return S_OK;
+          }
+        }
       }
     } break;
 

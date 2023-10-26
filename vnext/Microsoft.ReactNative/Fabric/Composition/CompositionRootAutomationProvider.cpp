@@ -73,6 +73,14 @@ HRESULT __stdcall CompositionRootAutomationProvider::GetPropertyValue(PROPERTYID
   if (pRetVal == nullptr)
     return E_POINTER;
 
+  switch (propertyId) {
+    case UIA_ControlTypePropertyId: {
+      pRetVal->vt = VT_I4;
+      pRetVal->lVal = UIA_GroupControlTypeId;
+      break;
+    }
+  }
+
   return S_OK;
 }
 
@@ -266,7 +274,12 @@ HRESULT __stdcall CompositionRootAutomationProvider::Navigate(
   // default window providers. Elements in fragments must navigate only to other elements within that fragment.
   if (direction == NavigateDirection_FirstChild || direction == NavigateDirection_LastChild) {
     if (auto rootView = rootComponentView()) {
-      return UiaNavigateHelper(rootView, direction, *pRetVal);
+      auto uiaProvider = rootView->EnsureUiaProvider();
+      auto spFragment = uiaProvider.try_as<IRawElementProviderFragment>();
+      if (spFragment) {
+        *pRetVal = spFragment.detach();
+        return S_OK;
+      }
     }
   }
   *pRetVal = nullptr;
