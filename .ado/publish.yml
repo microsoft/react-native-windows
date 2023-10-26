@@ -131,7 +131,7 @@ jobs:
       - script: if not exist %USERPROFILE%\AppData\Roaming\npm (mkdir %USERPROFILE%\AppData\Roaming\npm)
         displayName: Fix missing npm config
 
-      - powershell: |
+      - pwsh: |
           npx beachball check --verbose 2>&1 | Tee-Object -Variable beachballOutput
           $beachballOutput | Where-Object { $_ -match "ERROR: *"} | ForEach { Write-Host "##vso[task.logissue type=error]$_" }
         displayName: Beachball Check
