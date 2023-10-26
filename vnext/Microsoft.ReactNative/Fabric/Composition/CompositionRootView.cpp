@@ -18,12 +18,12 @@
 #include <winrt/Windows.UI.Core.h>
 #include "CompositionContextHelper.h"
 #include "CompositionHelpers.h"
+#include "CompositionRootAutomationProvider.h"
 #include "ReactNativeHost.h"
 #include "RootComponentView.h"
 
 #ifdef USE_WINUI3
 #include <winrt/Microsoft.UI.Content.h>
-#include "CompositionRootAutomationProvider.h"
 #endif
 
 namespace winrt::Microsoft::ReactNative::implementation {

@@ -7,10 +7,12 @@
 
 //import {dumpVisualTree} from '@react-native-windows/automation-commands';
 import {goToComponentExample} from './RNTesterNavigation';
+import {app} from '@react-native-windows/automation';
 import {verifyNoErrorLogs} from './Helpers';
-//import {app} from '@react-native-windows/automation';
 
 beforeAll(async () => {
+  // If window is partially offscreen, tests will fail to click on certain elements
+  await app.setWindowPosition(0, 0);
   await goToComponentExample('View');
 });
 
