@@ -106,7 +106,7 @@ void SwitchComponentView::Draw() noexcept {
     float offsetX = static_cast<float>(offset.x / m_layoutMetrics.pointScaleFactor);
     float offsetY = static_cast<float>(offset.y / m_layoutMetrics.pointScaleFactor);
 
-    // https://github.com/microsoft/microsoft-ui-xaml/blob/main/dev/CommonStyles/ToggleSwitch_themeresources.xaml
+    // https://github.com/microsoft/microsoft-ui-xaml/blob/winui2/main/dev/CommonStyles/ToggleSwitch_themeresources.xaml
     constexpr float thumbMargin = 3.0f;
     constexpr float thumbRadius = 7.0f;
     constexpr float trackWidth = 40.0f;
@@ -203,9 +203,25 @@ void SwitchComponentView::Draw() noexcept {
       thumbX = (trackMarginX + trackWidth - thumbRadius - thumbRadius - thumbMargin) * m_layoutMetrics.pointScaleFactor;
     }
 
-    m_thumbVisual.Size(
-        {thumbRadius * m_layoutMetrics.pointScaleFactor, thumbRadius * m_layoutMetrics.pointScaleFactor});
-    m_thumbVisual.Position({thumbX, thumbY});
+    // handles various mouse events
+    if (m_pressed && !switchProps->disabled) {
+      m_thumbVisual.AnimatePosition({thumbX - 0.8f, thumbY - 0.8f});
+    } else if (m_hovered && !switchProps->disabled) {
+      m_thumbVisual.Size(
+          {thumbRadius * m_layoutMetrics.pointScaleFactor + 0.8f,
+           thumbRadius * m_layoutMetrics.pointScaleFactor + 0.8f});
+      m_thumbVisual.Position({m_thumbVisual.Position().x - 0.8f, m_thumbVisual.Position().y - 0.8f});
+    } else if (m_pointerReleased && !switchProps->disabled) {
+      m_pointerReleased = false;
+      m_thumbVisual.Size(
+          {thumbRadius * m_layoutMetrics.pointScaleFactor, thumbRadius * m_layoutMetrics.pointScaleFactor});
+      m_thumbVisual.Position({thumbX, thumbY});
+    } else { // we still want to draw the thumb even if it's disabled
+      m_thumbVisual.Size(
+          {thumbRadius * m_layoutMetrics.pointScaleFactor, thumbRadius * m_layoutMetrics.pointScaleFactor});
+      m_thumbVisual.AnimatePosition({thumbX, thumbY});
+    }
+
     m_thumbVisual.Brush(thumbFill);
 
     // Restore old dpi setting
@@ -301,7 +317,6 @@ void SwitchComponentView::onPointerReleased(
   if (!args.GetCurrentPoint(-1).Properties().IsPrimary()) {
     return;
   }
-
   m_pressed = false;
 }
 
@@ -314,6 +329,7 @@ void SwitchComponentView::onPointerEntered(
 void SwitchComponentView::onPointerExited(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
   m_hovered = false;
+  m_pointerReleased = true;
   Draw();
 }
 
