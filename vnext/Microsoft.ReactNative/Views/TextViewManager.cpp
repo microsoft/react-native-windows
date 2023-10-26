@@ -180,17 +180,6 @@ class TextShadowNode final : public ShadowNodeBase {
     }
   }
 
-  XamlView GetRootView() {
-    if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
-      auto shadowNode = uiManager->getHost()->FindShadowNodeForTag(m_rootTag);
-      if (!shadowNode)
-        return nullptr;
-
-      return static_cast<::Microsoft::ReactNative::ShadowNodeBase *>(shadowNode)->GetView();
-    }
-    return nullptr;
-  }
-
   TextTransform textTransform{TextTransform::Undefined};
   std::shared_ptr<bool> selectionChanged = std::make_shared<bool>(false);
 };

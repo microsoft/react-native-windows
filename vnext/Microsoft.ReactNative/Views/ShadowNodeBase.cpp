@@ -143,6 +143,17 @@ void ShadowNodeBase::UpdateTransformPS() {
   }
 }
 
+XamlView ShadowNodeBase::GetRootView() {
+  if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
+    auto shadowNode = uiManager->getHost()->FindShadowNodeForTag(m_rootTag);
+    if (!shadowNode)
+      return nullptr;
+
+    return static_cast<::Microsoft::ReactNative::ShadowNodeBase *>(shadowNode)->GetView();
+  }
+  return nullptr;
+}
+
 void ShadowNodeBase::UpdateHandledKeyboardEvents(
     std::string const &propertyName,
     winrt::Microsoft::ReactNative::JSValue const &value) {
