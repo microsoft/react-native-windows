@@ -157,9 +157,9 @@ void CompositionRootView::ScaleFactor(float value) noexcept {
 }
 
 winrt::IInspectable CompositionRootView::GetUiaProvider() noexcept {
-  if (m_uiaProvider == nullptr)
-  {
-    m_uiaProvider = winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionRootAutomationProvider>(*this);
+  if (m_uiaProvider == nullptr) {
+    m_uiaProvider =
+        winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionRootAutomationProvider>(*this);
   }
   return m_uiaProvider;
 }

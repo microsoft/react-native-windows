@@ -29,7 +29,7 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
   void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
   void startSurface(
-      const winrt::Microsoft::ReactNative::CompositionRootView& rootView,
+      const winrt::Microsoft::ReactNative::CompositionRootView &rootView,
       facebook::react::SurfaceId surfaceId,
       const std::string &moduleName,
       const folly::dynamic &initialProps) noexcept;

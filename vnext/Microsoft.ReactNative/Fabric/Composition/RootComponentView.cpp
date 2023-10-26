@@ -115,7 +115,7 @@ HRESULT RootComponentView::GetFragmentRoot(IRawElementProviderFragmentRoot **pRe
     return E_POINTER;
 
   *pRetVal = nullptr;
- 
+
   auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties());
   if (uiManager == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;

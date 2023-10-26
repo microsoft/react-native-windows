@@ -13,7 +13,7 @@
 namespace winrt::Microsoft::ReactNative::implementation {
 
 CompositionRootAutomationProvider::CompositionRootAutomationProvider(
-    const winrt::Microsoft::ReactNative::CompositionRootView& rootView) noexcept
+    const winrt::Microsoft::ReactNative::CompositionRootView &rootView) noexcept
     : m_wkRootView{rootView} {}
 
 // Implementations should return NULL for a top-level element that is hosted in a window. Other elements should return
@@ -41,22 +41,18 @@ HRESULT __stdcall CompositionRootAutomationProvider::GetEmbeddedFragmentRoots(SA
 
 HRESULT __stdcall CompositionRootAutomationProvider::SetFocus(void) {
 #ifdef USE_WINUI3
-  if (m_island)
-  {
+  if (m_island) {
     auto focusController = winrt::Microsoft::UI::Input::InputFocusController::GetForIsland(m_island);
 
-    if (focusController)
-    {
-      if (focusController.TrySetFocus())
-      {
+    if (focusController) {
+      if (focusController.TrySetFocus()) {
         return S_OK;
       }
     }
   }
 #endif
 
-  if (m_hwnd)
-  {
+  if (m_hwnd) {
     ::SetFocus(m_hwnd);
     return S_OK;
   }
@@ -93,8 +89,7 @@ HRESULT __stdcall CompositionRootAutomationProvider::get_HostRawElementProvider(
 #endif
 
   // TODO: assumes windowed
-  if (!IsWindow(m_hwnd))
-  {
+  if (!IsWindow(m_hwnd)) {
     assert(false);
     return UIA_E_ELEMENTNOTAVAILABLE;
   }
@@ -164,14 +159,11 @@ HRESULT __stdcall CompositionRootAutomationProvider::get_ProviderOptions(Provide
   return S_OK;
 }
 
-::Microsoft::ReactNative::RootComponentView* CompositionRootAutomationProvider::rootComponentView() noexcept
-{
-  if (auto rootView = m_wkRootView.get())
-  {
+::Microsoft::ReactNative::RootComponentView *CompositionRootAutomationProvider::rootComponentView() noexcept {
+  if (auto rootView = m_wkRootView.get()) {
     auto innerRootView = winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(rootView);
-    if (auto view = innerRootView->GetComponentView())
-    {
-      return static_cast<::Microsoft::ReactNative::RootComponentView*>(view);
+    if (auto view = innerRootView->GetComponentView()) {
+      return static_cast<::Microsoft::ReactNative::RootComponentView *>(view);
     }
   }
 
@@ -187,20 +179,17 @@ HRESULT __stdcall CompositionRootAutomationProvider::ElementProviderFromPoint(
 
   *pRetVal = nullptr;
 
-  if (auto rootView = rootComponentView())
-  {
+  if (auto rootView = rootComponentView()) {
 #ifdef USE_WINUI3
-    if (m_island)
-    {
+    if (m_island) {
       auto cc = m_island.CoordinateConverter();
-      auto local =
-        cc.ConvertScreenToLocal(winrt::Windows::Graphics::PointInt32 { static_cast<int32_t>(x), static_cast<int32_t>(y) });
+      auto local = cc.ConvertScreenToLocal(
+          winrt::Windows::Graphics::PointInt32{static_cast<int32_t>(x), static_cast<int32_t>(y)});
       auto provider = rootView->UiaProviderFromPoint(
-        { static_cast<LONG>(local.X * m_island.RasterizationScale()),
-          static_cast<LONG>(local.Y * m_island.RasterizationScale()) });
+          {static_cast<LONG>(local.X * m_island.RasterizationScale()),
+           static_cast<LONG>(local.Y * m_island.RasterizationScale())});
       auto spFragment = provider.try_as<IRawElementProviderFragment>();
-      if (spFragment)
-      {
+      if (spFragment) {
         *pRetVal = spFragment.detach();
       }
 
@@ -208,22 +197,19 @@ HRESULT __stdcall CompositionRootAutomationProvider::ElementProviderFromPoint(
     }
 #endif
 
-    if (m_hwnd)
-    {
-      if (!IsWindow(m_hwnd))
-      {
+    if (m_hwnd) {
+      if (!IsWindow(m_hwnd)) {
         // TODO: Add support for non-HWND based hosting
         assert(false);
         return E_FAIL;
       }
 
-      POINT clientPoint { static_cast<LONG>(x), static_cast<LONG>(y) };
+      POINT clientPoint{static_cast<LONG>(x), static_cast<LONG>(y)};
       ScreenToClient(m_hwnd, &clientPoint);
 
       auto provider = rootView->UiaProviderFromPoint(clientPoint);
       auto spFragment = provider.try_as<IRawElementProviderFragment>();
-      if (spFragment)
-      {
+      if (spFragment) {
         *pRetVal = spFragment.detach();
         return S_OK;
       }

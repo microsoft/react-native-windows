@@ -9,7 +9,7 @@
 namespace winrt::Microsoft::ReactNative::implementation {
 
 HRESULT UiaNavigateHelper(
-    ::Microsoft::ReactNative::IComponentView* view,
+    ::Microsoft::ReactNative::IComponentView *view,
     NavigateDirection direction,
     IRawElementProviderFragment *&retVal) noexcept {
   retVal = nullptr;

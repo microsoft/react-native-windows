@@ -166,7 +166,7 @@ const IComponentViewRegistry &FabricUIManager::GetViewRegistry() const noexcept 
 }
 
 void FabricUIManager::startSurface(
-    const winrt::Microsoft::ReactNative::CompositionRootView& rootView,
+    const winrt::Microsoft::ReactNative::CompositionRootView &rootView,
     facebook::react::SurfaceId surfaceId,
     const std::string &moduleName,
     const folly::dynamic &initialProps) noexcept {

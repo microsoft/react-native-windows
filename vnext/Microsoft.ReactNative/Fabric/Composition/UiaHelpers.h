@@ -4,9 +4,8 @@
 #include <Fabric/ReactTaggedView.h>
 #include <UIAutomation.h>
 
-
 namespace Microsoft::ReactNative {
-  struct IComponentView;
+struct IComponentView;
 }
 
 namespace winrt::Microsoft::ReactNative::implementation {
@@ -14,7 +13,7 @@ namespace winrt::Microsoft::ReactNative::implementation {
 // Returns an AddRef'd neighbor of the provided IComponentView in the direction given
 HRESULT
 UiaNavigateHelper(
-    ::Microsoft::ReactNative::IComponentView* view,
+    ::Microsoft::ReactNative::IComponentView *view,
     NavigateDirection direction,
     IRawElementProviderFragment *&retVal) noexcept;
 

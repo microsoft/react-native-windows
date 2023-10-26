@@ -39,8 +39,7 @@ class CompositionRootAutomationProvider : public winrt::implements<
   virtual HRESULT __stdcall AdviseEventAdded(EVENTID idEvent, SAFEARRAY *psaProperties) override;
   virtual HRESULT __stdcall AdviseEventRemoved(EVENTID idEvent, SAFEARRAY *psaProperties) override;
 
-  CompositionRootAutomationProvider(
-      const winrt::Microsoft::ReactNative::CompositionRootView& rootView) noexcept;
+  CompositionRootAutomationProvider(const winrt::Microsoft::ReactNative::CompositionRootView &rootView) noexcept;
 
   void SetHwnd(HWND hwnd) noexcept;
 #ifdef USE_WINUI3
@@ -64,7 +63,7 @@ class CompositionRootAutomationProvider : public winrt::implements<
   };
 
  private:
-   ::Microsoft::ReactNative::RootComponentView* rootComponentView() noexcept;
+  ::Microsoft::ReactNative::RootComponentView *rootComponentView() noexcept;
 
   HRESULT AdvisePropertiesAdded(SAFEARRAY *psaProperties) noexcept;
   HRESULT AdvisePropertiesRemoved(SAFEARRAY *psaProperties) noexcept;
