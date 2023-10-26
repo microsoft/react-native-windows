@@ -122,6 +122,9 @@ void ImageComponentView::updateProps(
   if (oldImageProps.opacity != newImageProps.opacity) {
     m_visual.Opacity(newImageProps.opacity);
   }
+  if (oldImageProps.testId != newImageProps.testId) {
+    m_visual.Comment(winrt::to_hstring(newImageProps.testId));
+  }
 
   m_props = std::static_pointer_cast<facebook::react::ImageProps const>(props);
 }

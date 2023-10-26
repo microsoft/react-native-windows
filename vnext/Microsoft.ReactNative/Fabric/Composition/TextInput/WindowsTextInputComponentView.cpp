@@ -886,6 +886,9 @@ void WindowsTextInputComponentView::updateProps(
 
   ensureVisual();
 
+  if (oldTextInputProps.testId != newTextInputProps.testId) {
+    m_visual.Comment(winrt::to_hstring(newTextInputProps.testId));
+  }
   // update BaseComponentView props
   updateShadowProps(oldTextInputProps, newTextInputProps, m_visual);
   updateTransformProps(oldTextInputProps, newTextInputProps, m_visual);

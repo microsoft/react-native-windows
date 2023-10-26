@@ -156,6 +156,9 @@ void ScrollViewComponentView::updateProps(
       m_scrollVisual.Brush(m_compContext.CreateColorBrush({0, 0, 0, 0}));
     }
   }
+  if (oldViewProps.testId != newViewProps.testId) {
+    m_visual.Comment(winrt::to_hstring(newViewProps.testId));
+  }
 
   // update BaseComponentView props
   updateShadowProps(oldViewProps, newViewProps, m_visual);

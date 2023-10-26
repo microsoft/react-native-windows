@@ -389,14 +389,8 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeHelper(winrt::Windows::Data::J
   return uiaTree;
 }
 
-winrt::Windows::Data::Json::JsonObject DumpVisualTreeHelper(winrt::Windows::Data::Json::JsonObject payloadObj) {
+winrt::Windows::Data::Json::JsonObject DumpVisualTreeRecurse(winrt::Windows::UI::Composition::Visual root) {
   winrt::Windows::Data::Json::JsonObject result;
-  auto windowData = WindowData::GetFromWindow(global_hwnd);
-  if (windowData == nullptr || !windowData->m_windowInited)
-    return result;
-
-  auto hwndHost = windowData->m_CompositionHwndHost;
-  winrt::Windows::UI::Composition::Visual root = hwndHost.RootVisual();
   result.Insert(L"Comment", winrt::Windows::Data::Json::JsonValue::CreateStringValue(root.Comment()));
   winrt::Windows::Data::Json::JsonArray visualSize;
   visualSize.Append(winrt::Windows::Data::Json::JsonValue::CreateNumberValue(root.Size().x));
@@ -408,7 +402,33 @@ winrt::Windows::Data::Json::JsonObject DumpVisualTreeHelper(winrt::Windows::Data
   visualOffset.Append(winrt::Windows::Data::Json::JsonValue::CreateNumberValue(root.Offset().z));
   result.Insert(L"Offset", visualOffset);
   result.Insert(L"IsVisible", winrt::Windows::Data::Json::JsonValue::CreateBooleanValue(root.IsVisible()));
+
+  auto containerRoot = root.try_as<winrt::Windows::UI::Composition::ContainerVisual>();
+  if (containerRoot == nullptr){
+    return result;
+  }
+  auto rootChildren = containerRoot.Children();
+  winrt::Windows::Data::Json::JsonArray children;
+  for (auto childVisual : rootChildren)
+  {
+    children.Append(DumpVisualTreeRecurse(childVisual));
+  }
+  if (children.Size() > 0) {
+    result.Insert(L"Children", children);
+  }
   return result;
+}
+
+winrt::Windows::Data::Json::JsonObject DumpVisualTreeHelper(winrt::Windows::Data::Json::JsonObject payloadObj) {
+  winrt::Windows::Data::Json::JsonObject visualTree;
+  auto windowData = WindowData::GetFromWindow(global_hwnd);
+  if (windowData == nullptr || !windowData->m_windowInited)
+    return visualTree;
+
+  auto hwndHost = windowData->m_CompositionHwndHost;
+  winrt::Windows::UI::Composition::Visual root = hwndHost.RootVisual();
+  visualTree = DumpVisualTreeRecurse(root);
+  return visualTree;
 }
 
 winrt::Windows::Data::Json::JsonObject DumpVisualTree(winrt::Windows::Data::Json::JsonValue payload) {

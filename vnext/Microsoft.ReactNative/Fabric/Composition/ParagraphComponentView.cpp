@@ -50,6 +50,9 @@ void ParagraphComponentView::updateProps(
   if (oldViewProps.textAttributes.opacity != newViewProps.textAttributes.opacity) {
     m_requireRedraw = true;
   }
+  if (oldViewProps.testId != newViewProps.testId) {
+    m_visual.Comment(winrt::to_hstring(newViewProps.testId));
+  }
 
   if (oldViewProps.textAttributes.alignment != newViewProps.textAttributes.alignment) {
     updateTextAlignment(newViewProps.textAttributes.alignment);

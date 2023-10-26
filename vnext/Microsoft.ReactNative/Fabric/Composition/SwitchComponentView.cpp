@@ -56,6 +56,9 @@ void SwitchComponentView::updateProps(
       oldViewProps.disabled != newViewProps.disabled) {
     m_drawingSurface = nullptr;
   }
+  if (oldViewProps.testId != newViewProps.testId) {
+    m_visual.Comment(winrt::to_hstring(newViewProps.testId));
+  }
 
   // update BaseComponentView props
   updateShadowProps(oldViewProps, newViewProps, m_visual);
