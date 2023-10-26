@@ -3556,9 +3556,9 @@
   integrity sha512-c/I8ZRb51j+pYGAu5CrFMRxqZ2ke4y2grEBO5AUjgSkSk+qT2Ea+OdWElz/OiMf5MNpn2b17kuVBwZLQJXzihw==
 
 "@types/valid-url@^1.0.3":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@types/valid-url/-/valid-url-1.0.4.tgz#803bbff7f687904f5eb63b2c7194e7a1f830750a"
-  integrity sha512-msGTxAnOwsiKZ36i5h3eBfOsMfuh+vKMqwsepJAd56ov9b+F9yYbJuE3rFOznHScNMKPY/y6rXbtWkb5RhyHMg==
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@types/valid-url/-/valid-url-1.0.6.tgz#9fec8b1fdb00814602cfa45c99865d85dc7c2952"
+  integrity sha512-+mF9njchWnlEtXzX5lIPLkMVeIeoT5Iso4bAu2Gxpsy/9wZr8cNeR47ViOjZ+F6GvQeQH4KVwLa3stS+CvMVRQ==
 
 "@types/which@^1.3.2":
   version "1.3.2"
