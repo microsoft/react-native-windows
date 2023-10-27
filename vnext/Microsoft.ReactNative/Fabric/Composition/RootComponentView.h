@@ -12,6 +12,8 @@
 
 #include <react/components/rnwcore/ShadowNodes.h>
 
+struct IRawElementProviderFragmentRoot;
+
 namespace Microsoft::ReactNative {
 
 struct RootComponentView : CompositionViewComponentView {
@@ -34,7 +36,7 @@ struct RootComponentView : CompositionViewComponentView {
 
   RootComponentView *rootComponentView() noexcept override;
 
-  winrt::IInspectable EnsureUiaProvider() noexcept override;
+  HRESULT GetFragmentRoot(IRawElementProviderFragmentRoot **pRetVal) noexcept;
   ClipState getClipState() noexcept override;
 
   winrt::IInspectable UiaProviderFromPoint(const POINT &ptPixels) noexcept;

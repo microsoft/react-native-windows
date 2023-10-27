@@ -4,27 +4,22 @@
 #include "pch.h"
 #include "RNTesterApp-Fabric.h"
 
-#include "../../../../vnext/codegen/NativeDeviceInfoSpec.g.h"
-#include "winrt/AutomationChannel.h"
-
-#include <DispatcherQueue.h>
 #include <UIAutomation.h>
-#include <combaseapi.h>
-#include <unknwn.h>
-
 #include <winrt/Microsoft.ReactNative.Composition.h>
+#include <winrt/Microsoft.ReactNative.h>
+#include <winrt/Microsoft.UI.Composition.h>
+#include <winrt/Microsoft.UI.Content.h>
+#include <winrt/Microsoft.UI.Dispatching.h>
+#include <winrt/Microsoft.UI.Windowing.h>
+#include <winrt/Microsoft.UI.interop.h>
 #include <winrt/Windows.Data.Json.h>
 #include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.UI.Composition.Desktop.h>
-
-#include "NativeModules.h"
-#include "ReactPropertyBag.h"
-
-constexpr size_t MAX_LOADSTRING = 100;
+#include "winrt/AutomationChannel.h"
 
 // Work around crash in DeviceInfo when running outside of XAML environment
 // TODO rework built-in DeviceInfo to allow it to be driven without use of HWNDs or XamlApps
 // Issue Tracking #11414
+#include "../../../../vnext/codegen/NativeDeviceInfoSpec.g.h"
 REACT_MODULE(DeviceInfo)
 struct DeviceInfo {
   using ModuleSpec = Microsoft::ReactNativeSpecs::DeviceInfoSpec;
@@ -51,263 +46,200 @@ struct DeviceInfo {
   winrt::Microsoft::ReactNative::ReactContext m_context;
 };
 
-// Have to use TurboModules to override built in modules.. so the standard attributed package provider doesn't work.
-struct CompReactPackageProvider
-    : winrt::implements<CompReactPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
+struct RNTesterAppReactPackageProvider
+    : winrt::implements<RNTesterAppReactPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
  public: // IReactPackageProvider
   void CreatePackage(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept {
     AddAttributedModules(packageBuilder, true);
   }
 };
 
-// Global Variables:
-WCHAR szTitle[MAX_LOADSTRING]; // The title bar text
-WCHAR szWindowClass[MAX_LOADSTRING]; // the main window class name
-HWND global_hwnd;
-
-winrt::Windows::System::DispatcherQueueController g_dispatcherQueueController{nullptr};
-winrt::Windows::UI::Composition::Compositor g_compositor{nullptr};
-winrt::AutomationChannel::CommandHandler handler;
-winrt::AutomationChannel::Server server{nullptr};
-
-constexpr auto WindowDataProperty = L"WindowData";
-constexpr PCWSTR c_windowClassName = L"MS_REACTNATIVE_RNTESTER_COMPOSITION";
 constexpr PCWSTR appName = L"RNTesterApp";
 
+// Keep track of errors and warnings to be able to report them to automation
+std::vector<std::string> g_Errors;
+std::vector<std::string> g_Warnings;
+HWND global_hwnd;
+
 // Forward declarations of functions included in this code module:
-LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
-int RunRNTester(int showCmd);
 winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::JsonValue payload);
 winrt::Windows::Data::Json::JsonObject DumpVisualTree(winrt::Windows::Data::Json::JsonValue payload);
 winrt::Windows::Foundation::IAsyncAction LoopServer(winrt::AutomationChannel::Server &server);
 
-struct WindowData {
-  static HINSTANCE s_instance;
-  static constexpr uint16_t defaultDebuggerPort{9229};
-
-  bool m_windowInited{false};
-  winrt::Microsoft::ReactNative::CompositionHwndHost m_CompositionHwndHost{nullptr};
-  winrt::Microsoft::ReactNative::ReactNativeHost m_host{nullptr};
-  winrt::Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
-
-#if BUNDLE
-  bool m_useWebDebugger{false};
-  bool m_fastRefreshEnabled{false};
-#else
-  bool m_useWebDebugger{false};
-  bool m_fastRefreshEnabled{true};
-#endif
-
-  bool m_useDirectDebugger{false};
-  bool m_breakOnNextLine{false};
-  uint16_t m_debuggerPort{defaultDebuggerPort};
-  xaml::ElementTheme m_theme{xaml::ElementTheme::Default};
-
-  WindowData(const winrt::Microsoft::ReactNative::CompositionHwndHost &compHost) : m_CompositionHwndHost(compHost) {
-    winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositionContext(
-        InstanceSettings().Properties(),
-        winrt::Microsoft::ReactNative::Composition::WindowsCompositionContextHelper::CreateContext(g_compositor));
-  }
-
-  static WindowData *GetFromWindow(HWND hwnd) {
-    auto data = reinterpret_cast<WindowData *>(GetProp(hwnd, WindowDataProperty));
-    return data;
-  }
-
-  winrt::Microsoft::ReactNative::ReactNativeHost Host() noexcept {
-    if (!m_host) {
-      m_host = winrt::Microsoft::ReactNative::ReactNativeHost();
-      m_host.InstanceSettings(InstanceSettings());
-    }
-
-    return m_host;
-  }
-
-  winrt::Microsoft::ReactNative::ReactInstanceSettings InstanceSettings() noexcept {
-    if (!m_instanceSettings) {
-      m_instanceSettings = winrt::Microsoft::ReactNative::ReactInstanceSettings();
-    }
-
-    return m_instanceSettings;
-  }
-
-  LRESULT RenderApp(HWND hwnd) {
-    WCHAR workingDir[MAX_PATH];
-    GetCurrentDirectory(MAX_PATH, workingDir);
-
-    auto host = Host();
-    // Disable until we have a 3rd party story for custom components
-    // RegisterAutolinkedNativeModulePackages(host.PackageProviders()); // Includes any
-    // autolinked modules
-
-    host.InstanceSettings().JavaScriptBundleFile(L"index.windows");
-    host.InstanceSettings().DebugBundlePath(L"index");
-    host.InstanceSettings().UseWebDebugger(m_useWebDebugger);
-    host.InstanceSettings().UseDirectDebugger(m_useDirectDebugger);
-    host.InstanceSettings().BundleRootPath(std::wstring(L"file:").append(workingDir).append(L"\\Bundle\\").c_str());
-    host.InstanceSettings().DebuggerBreakOnNextLine(m_breakOnNextLine);
-    host.InstanceSettings().UseFastRefresh(m_fastRefreshEnabled);
-    host.InstanceSettings().DebuggerPort(m_debuggerPort);
-    host.InstanceSettings().UseDeveloperSupport(true);
-
-    host.PackageProviders().Append(winrt::make<CompReactPackageProvider>());
-    host.PackageProviders().Append(winrt::AutomationChannel::ReactPackageProvider());
-    winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
-        host.InstanceSettings().Properties(), reinterpret_cast<uint64_t>(hwnd));
-
-    // Nudge the ReactNativeHost to create the instance and wrapping context
-    host.ReloadInstance();
-
-    winrt::Microsoft::ReactNative::ReactViewOptions viewOptions;
-    viewOptions.ComponentName(appName);
-    m_CompositionHwndHost.ReactViewHost(
-        winrt::Microsoft::ReactNative::ReactCoreInjection::MakeViewHost(host, viewOptions));
-
-    auto windowData = WindowData::GetFromWindow(hwnd);
-    if (!windowData->m_windowInited) {
-      m_CompositionHwndHost.Initialize((uint64_t)(hwnd));
-      windowData->m_windowInited = true;
-    }
-    return 0;
-  }
-
-  LRESULT TranslateMessage(UINT message, WPARAM wparam, LPARAM lparam) noexcept {
-    if (m_CompositionHwndHost) {
-      return static_cast<LRESULT>(m_CompositionHwndHost.TranslateMessage(message, wparam, lparam));
-    }
-    return 0;
-  }
-};
-
-extern "C" IMAGE_DOS_HEADER __ImageBase;
-HINSTANCE WindowData::s_instance = reinterpret_cast<HINSTANCE>(&__ImageBase);
-
-LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
-  auto windowData = WindowData::GetFromWindow(hWnd);
-  if (windowData) {
-    auto result = WindowData::GetFromWindow(hWnd)->TranslateMessage(message, wParam, lParam);
-    if (result)
-      return result;
-  }
-
-  switch (message) {
-    case WM_DESTROY: {
-      delete WindowData::GetFromWindow(hWnd);
-      SetProp(hWnd, WindowDataProperty, 0);
-      PostQuitMessage(0);
-      return 0;
-    }
-    case WM_NCCREATE: {
-      auto cs = reinterpret_cast<CREATESTRUCT *>(lParam);
-      auto windowData = static_cast<WindowData *>(cs->lpCreateParams);
-      WINRT_ASSERT(windowData);
-      SetProp(hWnd, WindowDataProperty, reinterpret_cast<HANDLE>(windowData));
-      break;
-    }
-    case WM_GETOBJECT: {
-      if (lParam == UiaRootObjectId) {
-        auto windowData = WindowData::GetFromWindow(hWnd);
-        if (windowData == nullptr || !windowData->m_windowInited)
-          break;
-
-        auto hwndHost = windowData->m_CompositionHwndHost;
-        winrt::com_ptr<IRawElementProviderSimple> spReps;
-        if (!hwndHost.UiaProvider().try_as(spReps)) {
-          break;
-        }
-        LRESULT lResult = UiaReturnRawElementProvider(hWnd, wParam, lParam, spReps.get());
-        return lResult;
-      }
-    }
-  }
-
-  return DefWindowProc(hWnd, message, wParam, lParam);
+float ScaleFactor(HWND hwnd) noexcept {
+  return GetDpiForWindow(hwnd) / static_cast<float>(USER_DEFAULT_SCREEN_DPI);
 }
 
-int RunRNTester(int showCmd) {
-  auto windowData = std::make_unique<WindowData>(winrt::Microsoft::ReactNative::CompositionHwndHost());
-  HWND hwnd = CreateWindow(
-      c_windowClassName,
-      appName,
-      WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT,
-      CW_USEDEFAULT,
-      CW_USEDEFAULT,
-      CW_USEDEFAULT,
-      nullptr,
-      nullptr,
-      WindowData::s_instance,
-      windowData.get());
+void UpdateRootViewSizeToAppWindow(
+    winrt::Microsoft::ReactNative::CompositionRootView const &rootView,
+    winrt::Microsoft::UI::Windowing::AppWindow const &window) {
+  auto hwnd = winrt::Microsoft::UI::GetWindowFromWindowId(window.Id());
+  auto scaleFactor = ScaleFactor(hwnd);
+  winrt::Windows::Foundation::Size size{
+      window.ClientSize().Width / scaleFactor, window.ClientSize().Height / scaleFactor};
+  rootView.Arrange(size);
+  rootView.Size(size);
+}
 
-  WINRT_VERIFY(hwnd);
-  global_hwnd = hwnd;
+// Create and configure the ReactNativeHost
+winrt::Microsoft::ReactNative::ReactNativeHost CreateReactNativeHost(
+    HWND hwnd,
+    const winrt::Microsoft::UI::Composition::Compositor &compositor) {
+  WCHAR workingDir[MAX_PATH];
+  GetCurrentDirectory(MAX_PATH, workingDir);
 
-  windowData.release();
+  auto host = winrt::Microsoft::ReactNative::ReactNativeHost();
+  // Disable until we have a 3rd party story for custom components
+  // RegisterAutolinkedNativeModulePackages(host.PackageProviders()); // Includes any
+  // autolinked modules
+  host.PackageProviders().Append(winrt::make<RNTesterAppReactPackageProvider>());
+  host.PackageProviders().Append(winrt::AutomationChannel::ReactPackageProvider());
 
-  ShowWindow(hwnd, showCmd);
-  UpdateWindow(hwnd);
-  SetFocus(hwnd);
-  WindowData::GetFromWindow(hwnd)->RenderApp(hwnd);
+  host.InstanceSettings().JavaScriptBundleFile(L"index.windows");
+  host.InstanceSettings().DebugBundlePath(L"index");
 
-  HACCEL hAccelTable = LoadAccelerators(WindowData::s_instance, MAKEINTRESOURCE(IDC_RNTESTER_COMPOSITION));
+  host.InstanceSettings().BundleRootPath(std::wstring(L"file:").append(workingDir).append(L"\\Bundle\\").c_str());
+  host.InstanceSettings().DebuggerBreakOnNextLine(false);
+#if _DEBUG
+  host.InstanceSettings().UseDirectDebugger(true);
+  host.InstanceSettings().UseFastRefresh(true);
+#endif
+  host.InstanceSettings().UseDeveloperSupport(true);
 
-  // Set Up Servers for E2E Testing
-  handler.BindOperation(L"DumpVisualTree", DumpVisualTree);
-  handler.BindOperation(L"ListErrors", ListErrors);
-  server = winrt::AutomationChannel::Server(handler);
-  auto asyncAction = LoopServer(server);
-
-  MSG msg = {};
-  while (GetMessage(&msg, nullptr, 0, 0)) {
-    if (!TranslateAccelerator(hwnd, hAccelTable, &msg)) {
-      TranslateMessage(&msg);
-      DispatchMessage(&msg);
+  // Test App hooks into JS console.log implementation to record errors/warnings
+  host.InstanceSettings().NativeLogger([](winrt::Microsoft::ReactNative::LogLevel level, winrt::hstring message) {
+    if (level == winrt::Microsoft::ReactNative::LogLevel::Error ||
+        level == winrt::Microsoft::ReactNative::LogLevel::Fatal) {
+      g_Errors.push_back(winrt::to_string(message));
+    } else if (level == winrt::Microsoft::ReactNative::LogLevel::Warning) {
+      g_Warnings.push_back(winrt::to_string(message));
     }
-  }
-  return static_cast<int>(msg.wParam);
+  });
+
+  winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
+      host.InstanceSettings().Properties(), reinterpret_cast<uint64_t>(hwnd));
+
+  // By using the MicrosoftCompositionContextHelper here, React Native Windows will use Lifted Visuals for its
+  // tree.
+  winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositionContext(
+      host.InstanceSettings().Properties(),
+      winrt::Microsoft::ReactNative::Composition::MicrosoftCompositionContextHelper::CreateContext(compositor));
+
+  return host;
 }
 
 _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR /* commandLine */, int showCmd) {
-  WNDCLASSEXW wcex = {};
-  wcex.cbSize = sizeof(WNDCLASSEX);
-  wcex.style = CS_HREDRAW | CS_VREDRAW;
-  wcex.lpfnWndProc = &WndProc;
-  wcex.cbClsExtra = DLGWINDOWEXTRA;
-  wcex.cbWndExtra = sizeof(WindowData *);
-  wcex.hInstance = WindowData::s_instance;
-  wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
-  wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-  wcex.lpszMenuName = MAKEINTRESOURCEW(IDC_RNTESTER_COMPOSITION);
-  wcex.lpszClassName = c_windowClassName;
-  wcex.hIcon = LoadIconW(instance, MAKEINTRESOURCEW(IDI_ICON1));
-  ATOM classId = RegisterClassEx(&wcex);
-  WINRT_VERIFY(classId);
-  winrt::check_win32(!classId);
+  // Initialize WinRT.
+  winrt::init_apartment(winrt::apartment_type::single_threaded);
 
-  DispatcherQueueOptions options{
-      sizeof(DispatcherQueueOptions), /* dwSize */
-      DQTYPE_THREAD_CURRENT, /* threadType */
-      DQTAT_COM_ASTA /* apartmentType */
-  };
+  // Enable per monitor DPI scaling
+  SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
 
-  // Need to have a Dispatcher on the current thread to be able to create a Compositor
-  winrt::check_hresult(CreateDispatcherQueueController(
-      options,
-      reinterpret_cast<ABI::Windows::System::IDispatcherQueueController **>(
-          winrt::put_abi(g_dispatcherQueueController))));
+  // Create a DispatcherQueue for this thread.  This is needed for Composition, Content, and
+  // Input APIs.
+  auto dispatcherQueueController{winrt::Microsoft::UI::Dispatching::DispatcherQueueController::CreateOnCurrentThread()};
 
-  g_compositor = winrt::Windows::UI::Composition::Compositor();
+  // Create a Compositor for all Content on this thread.
+  auto compositor{winrt::Microsoft::UI::Composition::Compositor()};
 
-  return RunRNTester(showCmd);
+  // Create a top-level window.
+  auto window = winrt::Microsoft::UI::Windowing::AppWindow::Create();
+  window.Title(appName);
+  window.Resize({1000, 1000});
+  window.Show();
+  auto hwnd = winrt::Microsoft::UI::GetWindowFromWindowId(window.Id());
+  global_hwnd = hwnd;
+  auto scaleFactor = ScaleFactor(hwnd);
+
+  global_hwnd = hwnd;
+  auto host = CreateReactNativeHost(hwnd, compositor);
+
+  // Start the react-native instance, which will create a JavaScript runtime and load the applications bundle
+  host.ReloadInstance();
+
+  // Create a RootView which will present a react-native component
+  winrt::Microsoft::ReactNative::ReactViewOptions viewOptions;
+  viewOptions.ComponentName(appName);
+  auto rootView = winrt::Microsoft::ReactNative::CompositionRootView(compositor);
+  rootView.ReactViewHost(winrt::Microsoft::ReactNative::ReactCoreInjection::MakeViewHost(host, viewOptions));
+
+  // Update the size of the RootView when the AppWindow changes size
+  window.Changed([wkRootView = winrt::make_weak(rootView)](
+                     winrt::Microsoft::UI::Windowing::AppWindow const &window,
+                     winrt::Microsoft::UI::Windowing::AppWindowChangedEventArgs const &args) {
+    if (args.DidSizeChange() || args.DidVisibilityChange()) {
+      if (auto rootView = wkRootView.get()) {
+        UpdateRootViewSizeToAppWindow(rootView, window);
+      }
+    }
+  });
+
+  // Quit application when main window is closed
+  window.Destroying(
+      [host](winrt::Microsoft::UI::Windowing::AppWindow const &window, winrt::IInspectable const & /*args*/) {
+        // Before we shutdown the application - unload the ReactNativeHost to give the javascript a chance to save any
+        // state
+        auto async = host.UnloadInstance();
+        async.Completed([host](auto asyncInfo, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
+          assert(asyncStatus == winrt::Windows::Foundation::AsyncStatus::Completed);
+          host.InstanceSettings().UIDispatcher().Post([]() { PostQuitMessage(0); });
+        });
+      });
+
+  // DesktopChildSiteBridge create a ContentSite that can host the RootView ContentIsland
+  auto bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(compositor, window.Id());
+  bridge.Connect(rootView.Island());
+  bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
+
+  auto invScale = 1.0f / scaleFactor;
+  rootView.RootVisual().Scale({invScale, invScale, invScale});
+  rootView.ScaleFactor(scaleFactor);
+
+  // Set the intialSize of the root view
+  UpdateRootViewSizeToAppWindow(rootView, window);
+
+  bridge.Show();
+
+  // Set Up Servers for E2E Testing
+  winrt::AutomationChannel::CommandHandler handler;
+  handler.BindOperation(L"DumpVisualTree", DumpVisualTree);
+  handler.BindOperation(L"ListErrors", ListErrors);
+
+  auto server = winrt::AutomationChannel::Server(handler);
+  auto asyncAction = LoopServer(server);
+
+  // Run the main application event loop
+  dispatcherQueueController.DispatcherQueue().RunEventLoop();
+
+  // Rundown the DispatcherQueue. This drains the queue and raises events to let components
+  // know the message loop has finished.
+  dispatcherQueueController.ShutdownQueue();
+
+  bridge.Close();
+  bridge = nullptr;
+
+  // Destroy all Composition objects
+  compositor.Close();
+  compositor = nullptr;
 }
 
 winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::JsonValue payload) {
   winrt::Windows::Data::Json::JsonObject result;
   winrt::Windows::Data::Json::JsonArray jsonErrors;
   winrt::Windows::Data::Json::JsonArray jsonWarnings;
-  // TODO: Add Error and Warnings
+
+  for (auto &err : g_Errors) {
+    jsonErrors.InsertAt(0, winrt::Windows::Data::Json::JsonValue::CreateStringValue(winrt::to_hstring(err)));
+  }
+  g_Errors.clear();
+  for (auto &warn : g_Warnings) {
+    jsonWarnings.InsertAt(0, winrt::Windows::Data::Json::JsonValue::CreateStringValue(winrt::to_hstring(warn)));
+  }
+  g_Warnings.clear();
+
   result.Insert(L"errors", jsonErrors);
   result.Insert(L"warnings", jsonWarnings);
+
   return result;
 }
 
