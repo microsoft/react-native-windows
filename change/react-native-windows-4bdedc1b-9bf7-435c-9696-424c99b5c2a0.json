@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Move CompositionRootAutomationProvider to CompositionRootView, so it can be loaded before the instance",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

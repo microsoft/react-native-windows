@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 27 Oct 2023 05:18:26 GMT",
+      "version": "0.0.0-canary.727",
+      "tag": "react-native-windows_v0.0.0-canary.727",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e447866d115a2f5a1113c503425294029818691b",
+            "comment": "Move CompositionRootAutomationProvider to CompositionRootView, so it can be loaded before the instance"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d829541bde8939a9d3fa8d1d2b780e134982d523",
+            "comment": "[Fabric] Fix BinSkim errors in preparation for 1ES Template migration"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 26 Oct 2023 16:46:11 GMT",
       "version": "0.0.0-canary.726",
       "tag": "react-native-windows_v0.0.0-canary.726",

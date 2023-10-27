@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "[Fabric] Fix BinSkim errors in preparation for 1ES Template migration",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}

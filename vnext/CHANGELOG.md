@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 26 Oct 2023 16:46:11 GMT and should not be manually modified.
+This log was last generated on Fri, 27 Oct 2023 05:18:26 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.727
+
+Fri, 27 Oct 2023 05:18:26 GMT
+
+### Changes
+
+- Move CompositionRootAutomationProvider to CompositionRootView, so it can be loaded before the instance (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Fix BinSkim errors in preparation for 1ES Template migration (jthysell@microsoft.com)
 
 ## 0.0.0-canary.726
 
