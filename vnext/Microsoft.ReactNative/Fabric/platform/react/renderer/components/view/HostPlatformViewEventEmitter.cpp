@@ -55,5 +55,3 @@ void HostPlatformViewEventEmitter::onMouseLeave(PointerEvent const &pointerEvent
 }
 
 } // namespace facebook::react
-
-// @generated SignedSource<<a6f36c63efa0edf80beb29b0187deb77>>

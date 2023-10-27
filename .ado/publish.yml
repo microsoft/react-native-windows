@@ -196,7 +196,7 @@ extends:
             displayName: Build Desktop ${{ matrix.Name }}
             dependsOn: RnwNpmPublish
             pool: ${{ parameters.AgentPool.Large }}
-
+            timeoutInMinutes: 360 # CodeQL requires 3x usual build timeout
             steps:
             - template: .ado/templates/prepare-js-env.yml@self
 
@@ -284,6 +284,7 @@ extends:
                 BuildConfiguration: Debug
                 BuildPlatform: ARM64          
           pool: ${{ parameters.AgentPool.Large }}
+          timeoutInMinutes: 360 # CodeQL requires 3x usual build timeout
 
           steps:
           - template: .ado/templates/prepare-js-env.yml@self
