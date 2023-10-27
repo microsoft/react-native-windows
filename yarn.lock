@@ -3336,9 +3336,9 @@
   integrity sha512-Klz949h02Gz2uZCMGwDUSDS1YBlTdDDgbWHi+81l29tQALUtvz4rAYi5uoVhE5Lagoq6DeqAUlbrHvW/mXDgdQ==
 
 "@types/mustache@^4.1.1":
-  version "4.2.2"
-  resolved "https://registry.yarnpkg.com/@types/mustache/-/mustache-4.2.2.tgz#825bf5c214c3ab84d0b23fef2c8eb898f3ff8717"
-  integrity sha512-MUSpfpW0yZbTgjekDbH0shMYBUD+X/uJJJMm9LXN1d5yjl5lCY1vN/eWKD6D1tOtjA6206K0zcIPnUaFMurdNA==
+  version "4.2.4"
+  resolved "https://registry.yarnpkg.com/@types/mustache/-/mustache-4.2.4.tgz#74d37210e1467edd705a0959ba46dc5dc22c3815"
+  integrity sha512-5DK8oX+pyEJm8Arm57Ut2R4KCeDuNQhLAuU04IgaKB7nYsFYzhpWqSoFnp7kCtVG7wXKftnaEJIyUFTVvSkkzw==
 
 "@types/node-fetch@*", "@types/node-fetch@^2.5.8":
   version "2.6.6"
