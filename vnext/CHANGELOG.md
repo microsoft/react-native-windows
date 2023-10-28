@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 27 Oct 2023 05:18:26 GMT and should not be manually modified.
+This log was last generated on Sat, 28 Oct 2023 05:18:12 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.728
+
+Sat, 28 Oct 2023 05:18:12 GMT
+
+### Changes
+
+- Remove generated signature from file (ericroz@meta.com)
 
 ## 0.0.0-canary.727
 

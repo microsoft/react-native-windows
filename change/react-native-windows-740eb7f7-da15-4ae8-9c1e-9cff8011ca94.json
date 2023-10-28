@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove generated signature from file",
-  "packageName": "react-native-windows",
-  "email": "ericroz@meta.com",
-  "dependentChangeType": "patch"
-}
