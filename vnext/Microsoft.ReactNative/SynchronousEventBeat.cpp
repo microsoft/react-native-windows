@@ -35,4 +35,4 @@ void SynchronousEventBeat::lockExecutorAndBeat() const {
   }
 }
 
-} // namespace Microsoft. ReactNative
+} // namespace Microsoft::ReactNative

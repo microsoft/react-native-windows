@@ -1,6 +1,6 @@
 #include <NativeModules.h>
-#include <runtimeexecutor/ReactCommon/RuntimeExecutor.h>
 #include <react/renderer/core/EventBeat.h>
+#include <runtimeexecutor/ReactCommon/RuntimeExecutor.h>
 
 namespace Microsoft::ReactNative {
 
@@ -20,4 +20,4 @@ class AsynchronousEventBeat final : public facebook::react::EventBeat {
   facebook::react::RuntimeExecutor m_runtimeExecutor;
 };
 
-} // namespace Microsoft. ReactNative
+} // namespace Microsoft::ReactNative

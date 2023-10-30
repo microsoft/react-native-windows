@@ -43,4 +43,4 @@ void AsynchronousEventBeat::request() const {
   }
 }
 
-} // namespace Microsoft. ReactNative
+} // namespace Microsoft::ReactNative

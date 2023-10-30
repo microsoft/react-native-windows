@@ -23,10 +23,10 @@
 
 #ifdef USE_FABRIC
 #include <Fabric/FabricUIManagerModule.h>
-#include <SchedulerSettings.h>
 #endif
 #include <JSCallInvokerScheduler.h>
 #include <QuirkSettings.h>
+#include <SchedulerSettings.h>
 #include <Shared/DevServerHelper.h>
 #include <Views/ViewManager.h>
 #include <dispatchQueue/dispatchQueue.h>

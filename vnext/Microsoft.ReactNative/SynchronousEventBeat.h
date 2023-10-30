@@ -1,7 +1,7 @@
 #include <NativeModules.h>
+#include <react/renderer/core/EventBeat.h>
 #include <react/renderer/runtimescheduler/RuntimeScheduler.h>
 #include <runtimeexecutor/ReactCommon/RuntimeExecutor.h>
-#include <react/renderer/core/EventBeat.h>
 
 namespace Microsoft::ReactNative {
 
