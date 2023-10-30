@@ -115,8 +115,9 @@ namespace Microsoft.ReactNative.Composition
   interface ISwitchThumbVisual
   {
     IVisual InnerVisual { get; };
-    void Size(Windows.Foundation.Numerics.Vector2 size);
-    void Position(Windows.Foundation.Numerics.Vector2 position);
+    Windows.Foundation.Numerics.Vector2 Size{ get; set; };
+    Windows.Foundation.Numerics.Vector2 Position{ get; set; };
+    void AnimatePosition(Windows.Foundation.Numerics.Vector2 position);
     Boolean IsVisible { get; set; };
     void Brush(IBrush brush);
   }
