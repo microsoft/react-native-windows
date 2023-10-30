@@ -15,24 +15,24 @@ parameters:
         Matrix:
           - Name: X64Chakra
             BuildPlatform: x64
-            UseHermes: false
+            UseChakra: true
           - Name: X64Hermes
             BuildPlatform: x64
-            UseHermes: true
+            UseChakra: false
       - BuildEnvironment: Continuous
         Matrix:
           - Name: X64Chakra
             BuildPlatform: x64
-            UseHermes: false
+            UseChakra: true
           - Name: X64Hermes
             BuildPlatform: x64
-            UseHermes: true
+            UseChakra: false
           - Name: X86Chakra
             BuildPlatform: x86
-            UseHermes: false
+            UseChakra: true
           - Name: X86Hermes
             BuildPlatform: x86
-            UseHermes: true
+            UseChakra: false
 
 jobs:
   - ${{ each config in parameters.buildMatrix }}:
@@ -71,7 +71,7 @@ jobs:
               parameters:
                 package: packages/e2e-test-app
                 feature: UseHermes
-                value: ${{ matrix.UseHermes }}
+                value: ${{ not(coalesce(matrix.UseChakra, false)) }}
 
             - template: ../templates/run-windows-with-certificates.yml
               parameters:
@@ -151,7 +151,7 @@ jobs:
   - ${{ each config in parameters.buildMatrix }}:
     - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
       - ${{ each matrix in config.Matrix }}:
-        - ${{ if eq(matrix.UseHermes, true) }}:
+        - ${{ if eq(matrix.UseChakra, false) }}:
           - job: E2ETestFabric${{ matrix.Name }}
             displayName: E2E Test App Fabric ${{ matrix.Name }}
 
