@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 30 Oct 2023 15:15:13 GMT",
+      "tag": "@office-iss/react-native-win32_v0.72.9",
+      "version": "0.72.9",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "34a36329ece71c120a9d41583b21a818b53d4779",
+            "comment": "Fix peer dependencies for react-native"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 20 Oct 2023 23:18:35 GMT",
       "tag": "@office-iss/react-native-win32_v0.72.8",
       "version": "0.72.8",

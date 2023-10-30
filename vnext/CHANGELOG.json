@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 30 Oct 2023 15:15:14 GMT",
+      "tag": "react-native-windows_v0.72.17",
+      "version": "0.72.17",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "34a36329ece71c120a9d41583b21a818b53d4779",
+            "comment": "Fix peer dependencies for react-native"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 21 Oct 2023 01:51:24 GMT",
       "tag": "react-native-windows_v0.72.16",
       "version": "0.72.16",
