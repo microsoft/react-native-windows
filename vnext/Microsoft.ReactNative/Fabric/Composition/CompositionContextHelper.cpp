@@ -1114,6 +1114,11 @@ struct CompSwitchThumbVisual : winrt::implements<
   }
 
   void Size(winrt::Windows::Foundation::Numerics::float2 size) noexcept {
+    assert(m_size.x == m_size.y);
+    // if the size has changed, update the position to the new center
+    if (m_size.x != 0.0f && m_size.x != size.x) {
+      Position({m_pos.x + (m_size.x - size.x), m_pos.y + (m_size.x - size.x)});
+    }
     m_size = size;
     m_geometry.Radius(m_size);
     m_spiritShape.Offset(m_size);
@@ -1160,7 +1165,7 @@ struct CompSwitchThumbVisual : winrt::implements<
   bool isDrawn{false};
   typename TTypeRedirects::SpriteVisual m_compVisual;
   winrt::Microsoft::ReactNative::Composition::IVisual m_visual;
-  winrt::Windows::Foundation::Numerics::float2 m_size;
+  winrt::Windows::Foundation::Numerics::float2 m_size{0.0f, 0.0f};
   winrt::Windows::Foundation::Numerics::float2 m_pos;
   typename TTypeRedirects::Compositor m_compositor{nullptr};
   typename TTypeRedirects::CompositionSpriteShape m_spiritShape{nullptr};

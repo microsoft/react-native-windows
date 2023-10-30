@@ -67,7 +67,6 @@ struct SwitchComponentView : CompositionBaseComponentView {
 
   bool m_hovered{false};
   bool m_pressed{false};
-  bool m_pointerExited{false};
   facebook::react::Size m_contentSize;
   winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
   facebook::react::SharedViewProps m_props;

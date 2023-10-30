@@ -210,12 +210,7 @@ void SwitchComponentView::Draw() noexcept {
       m_thumbVisual.Size(
           {thumbRadius * m_layoutMetrics.pointScaleFactor + 0.8f,
            thumbRadius * m_layoutMetrics.pointScaleFactor + 0.8f});
-      m_thumbVisual.Position({m_thumbVisual.Position().x - 0.8f, m_thumbVisual.Position().y - 0.8f});
-    } else if (m_pointerExited && !switchProps->disabled) {
-      m_thumbVisual.Size(
-          {thumbRadius * m_layoutMetrics.pointScaleFactor, thumbRadius * m_layoutMetrics.pointScaleFactor});
-      m_thumbVisual.Position({thumbX, thumbY});
-    } else { // we still want to draw the thumb even if it's disabled
+    } else {
       m_thumbVisual.Size(
           {thumbRadius * m_layoutMetrics.pointScaleFactor, thumbRadius * m_layoutMetrics.pointScaleFactor});
       m_thumbVisual.AnimatePosition({thumbX, thumbY});
@@ -322,14 +317,12 @@ void SwitchComponentView::onPointerReleased(
 void SwitchComponentView::onPointerEntered(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
   m_hovered = true;
-  m_pointerExited = false;
   Draw();
 }
 
 void SwitchComponentView::onPointerExited(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
   m_hovered = false;
-  m_pointerExited = true;
   Draw();
 }
 
