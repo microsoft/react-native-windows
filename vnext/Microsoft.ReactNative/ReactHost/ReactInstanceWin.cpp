@@ -88,6 +88,8 @@
 #include <CppRuntimeOptions.h>
 #include <CreateModules.h>
 #include <Utils/Helpers.h>
+#include <react/renderer/runtimescheduler/RuntimeScheduler.h>
+#include <react/renderer/runtimescheduler/RuntimeSchedulerBinding.h>
 #include "CrashManager.h"
 #include "JsiApi.h"
 #include "ReactCoreInjection.h"
@@ -561,6 +563,7 @@ void ReactInstanceWin::Initialize() noexcept {
             auto useWebSocketTurboModulePropValue = m_options.Properties.Get(useWebSocketTurboModulePropName);
             devSettings->useWebSocketTurboModule = winrt::unbox_value_or(useWebSocketTurboModulePropValue, false);
             auto bundleRootPath = devSettings->bundleRootPath;
+            auto jsiRuntimeHolder = devSettings->jsiRuntimeHolder;
             auto instanceWrapper = facebook::react::CreateReactInstance(
                 std::shared_ptr<facebook::react::Instance>(strongThis->m_instance.Load()),
                 std::move(bundleRootPath), // bundleRootPath
@@ -577,22 +580,44 @@ void ReactInstanceWin::Initialize() noexcept {
             // The InstanceCreated event can be used to augment the JS environment for all JS code.  So it needs to be
             // triggered before any platform JS code is run. Using m_jsMessageThread instead of jsDispatchQueue avoids
             // waiting for the JSCaller which can delay the event until after certain JS code has already run
-            m_jsMessageThread.Load()->runOnQueue(
-                [onCreated = m_options.OnInstanceCreated, reactContext = m_reactContext]() noexcept {
-                  if (onCreated) {
-                    onCreated.Get()->Invoke(reactContext);
-                  }
-                });
+            m_jsMessageThread.Load()->runOnQueue([onCreated = m_options.OnInstanceCreated,
+                                                  reactContext = m_reactContext,
+                                                  jsiRuntimeHolder = std::move(jsiRuntimeHolder),
+                                                  instanceWrapper = m_instanceWrapper.Load(),
+                                                  instance = m_instance.Load(),
+                                                  turboModuleProvider = m_options.TurboModuleProvider,
+                                                  useWebDebugger = m_options.UseWebDebugger()]() noexcept {
+              if (!useWebDebugger) {
+#ifdef USE_FABRIC
+                Microsoft::ReactNative::SchedulerSettings::SetRuntimeExecutor(
+                    winrt::Microsoft::ReactNative::ReactPropertyBag(reactContext->Properties()),
+                    instanceWrapper->GetInstance()->getRuntimeExecutor());
+#endif
+
+                if (winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetUseRuntimeScheduler(
+                        winrt::Microsoft::ReactNative::ReactPropertyBag(reactContext->Properties()))) {
+                  std::shared_ptr<facebook::react::RuntimeScheduler> runtimeScheduler =
+                      std::make_shared<facebook::react::RuntimeScheduler>(
+                          instanceWrapper->GetInstance()->getRuntimeExecutor());
+
+                  facebook::react::RuntimeSchedulerBinding::createAndInstallIfNeeded(
+                      *jsiRuntimeHolder->getRuntime().get(), runtimeScheduler);
+                  Microsoft::ReactNative::SchedulerSettings::SetRuntimeScheduler(
+                      ReactPropertyBag(reactContext->Properties()), runtimeScheduler);
+                }
+              }
 
 #ifdef USE_FABRIC
-            // Eagerly init the FabricUI binding
-            if (!m_options.UseWebDebugger()) {
-              Microsoft::ReactNative::SchedulerSettings::SetRuntimeExecutor(
-                  winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()),
-                  m_instanceWrapper.Load()->GetInstance()->getRuntimeExecutor());
-              m_options.TurboModuleProvider->getModule("FabricUIManagerBinding", m_instance.Load()->getJSCallInvoker());
-            }
+              // Eagerly init the FabricUI binding
+              if (!useWebDebugger) {
+                turboModuleProvider->getModule("FabricUIManagerBinding", instance->getJSCallInvoker());
+              }
 #endif
+
+              if (onCreated) {
+                onCreated.Get()->Invoke(reactContext);
+              }
+            });
 
             LoadJSBundles();
 
