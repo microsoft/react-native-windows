@@ -243,7 +243,9 @@ winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::Js
   return result;
 }
 
-winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(IUIAutomationElement *pTarget, IUIAutomationTreeWalker *pWalker) {
+winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
+    IUIAutomationElement *pTarget,
+    IUIAutomationTreeWalker *pWalker) {
   winrt::Windows::Data::Json::JsonObject result;
   BSTR automationId;
   CONTROLTYPEID controlType;
@@ -321,64 +323,68 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeHelper(winrt::Windows::Data::J
   return uiaTree;
 }
 
-winrt::Windows::Data::Json::JsonObject PrintVisualTree(winrt::Windows::UI::Composition::Visual node){
+winrt::Windows::Data::Json::JsonObject PrintVisualTree(winrt::Windows::UI::Composition::Visual node) {
   winrt::Windows::Data::Json::JsonObject result;
-  if (!node.Comment().empty()){
-      result.Insert(L"Comment", winrt::Windows::Data::Json::JsonValue::CreateStringValue(node.Comment()));
+  if (!node.Comment().empty()) {
+    result.Insert(L"Comment", winrt::Windows::Data::Json::JsonValue::CreateStringValue(node.Comment()));
+  }
+  winrt::Windows::Data::Json::JsonArray visualSize;
+  visualSize.Append(winrt::Windows::Data::Json::JsonValue::CreateNumberValue(node.Size().x));
+  visualSize.Append(winrt::Windows::Data::Json::JsonValue::CreateNumberValue(node.Size().y));
+  result.Insert(L"Size", visualSize);
+  winrt::Windows::Data::Json::JsonArray visualOffset;
+  visualOffset.Append(winrt::Windows::Data::Json::JsonValue::CreateNumberValue(node.Offset().x));
+  visualOffset.Append(winrt::Windows::Data::Json::JsonValue::CreateNumberValue(node.Offset().y));
+  visualOffset.Append(winrt::Windows::Data::Json::JsonValue::CreateNumberValue(node.Offset().z));
+  result.Insert(L"Opacity", winrt::Windows::Data::Json::JsonValue::CreateNumberValue(node.Opacity()));
+  auto spriteVisual = node.try_as<winrt::Windows::UI::Composition::SpriteVisual>();
+  if (spriteVisual) {
+    result.Insert(L"Visual Type", winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"SpriteVisual"));
+    auto spriteBrush = spriteVisual.Brush();
+    if (spriteBrush) {
+      winrt::Windows::Data::Json::JsonObject brush;
+      auto colorBrush = spriteBrush.try_as<winrt::Windows::UI::Composition::CompositionColorBrush>();
+      if (colorBrush) {
+        brush.Insert(L"Brush Type", winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"ColorBrush"));
+        auto colorString = L"rgba(" + winrt::to_hstring(colorBrush.Color().R) + L", " +
+            winrt::to_hstring(colorBrush.Color().G) + L", " + winrt::to_hstring(colorBrush.Color().B) + L", " +
+            winrt::to_hstring(colorBrush.Color().A) + L")";
+        brush.Insert(L"Color", winrt::Windows::Data::Json::JsonValue::CreateStringValue(colorString));
+        result.Insert(L"Brush", brush);
+      }
     }
-    winrt::Windows::Data::Json::JsonArray visualSize;
-    visualSize.Append(winrt::Windows::Data::Json::JsonValue::CreateNumberValue(node.Size().x));
-    visualSize.Append(winrt::Windows::Data::Json::JsonValue::CreateNumberValue(node.Size().y));
-    result.Insert(L"Size", visualSize);
-    winrt::Windows::Data::Json::JsonArray visualOffset;
-    visualOffset.Append(winrt::Windows::Data::Json::JsonValue::CreateNumberValue(node.Offset().x));
-    visualOffset.Append(winrt::Windows::Data::Json::JsonValue::CreateNumberValue(node.Offset().y));
-    visualOffset.Append(winrt::Windows::Data::Json::JsonValue::CreateNumberValue(node.Offset().z));
-    result.Insert(L"Opacity", winrt::Windows::Data::Json::JsonValue::CreateNumberValue(node.Opacity()));
-    auto spriteVisual = node.try_as<winrt::Windows::UI::Composition::SpriteVisual>();
-    if (spriteVisual){
-      result.Insert(L"Visual Type", winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"SpriteVisual"));
-      auto spriteBrush = spriteVisual.Brush();
-      if (spriteBrush){
-        winrt::Windows::Data::Json::JsonObject brush;
-        auto colorBrush = spriteBrush.try_as<winrt::Windows::UI::Composition::CompositionColorBrush>();
-        if (colorBrush){
-          brush.Insert(L"Brush Type", winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"ColorBrush"));
-          auto colorString = L"rgba(" + winrt::to_hstring(colorBrush.Color().R) + L", " + winrt::to_hstring(colorBrush.Color().G) + L", " + winrt::to_hstring(colorBrush.Color().B) + L", " + winrt::to_hstring(colorBrush.Color().A) + L")";
-          brush.Insert(L"Color", winrt::Windows::Data::Json::JsonValue::CreateStringValue(colorString));
-          result.Insert(L"Brush", brush);
-        }
-      } 
-    }else{
-      result.Insert(L"Visual Type", winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"Visual"));
-    }
-    return result;
+  } else {
+    result.Insert(L"Visual Type", winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"Visual"));
+  }
+  return result;
 }
 
-winrt::Windows::Data::Json::JsonObject DumpVisualTreeRecurse(winrt::Windows::UI::Composition::Visual node, winrt::hstring accessibilityId, boolean targetNodeHit) {
+winrt::Windows::Data::Json::JsonObject DumpVisualTreeRecurse(
+    winrt::Windows::UI::Composition::Visual node,
+    winrt::hstring accessibilityId,
+    boolean targetNodeHit) {
   winrt::Windows::Data::Json::JsonObject result;
   boolean targetNodeFound = false;
-  if (targetNodeHit){
+  if (targetNodeHit) {
     result = PrintVisualTree(node);
   }
 
   auto containerNode = node.try_as<winrt::Windows::UI::Composition::ContainerVisual>();
-  if (containerNode == nullptr){
+  if (containerNode == nullptr) {
     return result;
   }
   auto nodeChildren = containerNode.Children();
   winrt::Windows::Data::Json::JsonArray children;
-  for (auto childVisual : nodeChildren)
-  {
-    if (!targetNodeHit && childVisual.Comment() == accessibilityId){
+  for (auto childVisual : nodeChildren) {
+    if (!targetNodeHit && childVisual.Comment() == accessibilityId) {
       targetNodeFound = true;
       result = DumpVisualTreeRecurse(childVisual, accessibilityId, true);
       break;
-    }else if (targetNodeHit){
+    } else if (targetNodeHit) {
       children.Append(DumpVisualTreeRecurse(childVisual, accessibilityId, targetNodeHit));
-    }else if (!targetNodeHit){
+    } else if (!targetNodeHit) {
       auto subtree = DumpVisualTreeRecurse(childVisual, accessibilityId, targetNodeHit);
-      if (subtree.Size() > 0){
+      if (subtree.Size() > 0) {
         result = subtree;
         break;
       }

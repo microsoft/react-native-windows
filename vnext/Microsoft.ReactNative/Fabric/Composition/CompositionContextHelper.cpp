@@ -392,7 +392,7 @@ struct CompVisual : public winrt::implements<
     return m_visual.Comment();
   }
 
-  void Comment (winrt::hstring value) {
+  void Comment(winrt::hstring value) {
     m_visual.Comment(value);
   }
 
@@ -502,7 +502,7 @@ struct CompSpriteVisual : winrt::implements<
     return m_visual.Comment();
   }
 
-  void Comment (winrt::hstring value) {
+  void Comment(winrt::hstring value) {
     m_visual.Comment(value);
   }
 
@@ -713,7 +713,7 @@ struct CompScrollerVisual : winrt::implements<
     return m_visual.Comment();
   }
 
-  void Comment (winrt::hstring value) {
+  void Comment(winrt::hstring value) {
     m_visual.Comment(value);
   }
 
@@ -997,7 +997,7 @@ struct CompActivityVisual : winrt::implements<
     return m_visual.Comment();
   }
 
-  void Comment (winrt::hstring value) {
+  void Comment(winrt::hstring value) {
     m_visual.Comment(value);
   }
 
