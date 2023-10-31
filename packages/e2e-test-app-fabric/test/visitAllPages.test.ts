@@ -43,11 +43,7 @@ describe('visitAllPages', () => {
   });
 
   for (const component of componentExamples) {
-    if (
-      component === 'Flyout' ||
-      component === 'XAML' ||
-      component === 'SwipeableCard'
-    ) {
+    if (component === 'Flyout' || component === 'XAML') {
       continue;
     }
 
