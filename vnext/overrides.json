@@ -96,6 +96,20 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/RawPropsParser.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/core/RawPropsParser.cpp",
+      "baseHash": "caa209ccd7c1eceb4bb34558720ebcbe43f3db5a",
+      "issue": 12300
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/ShadowNode.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/core/ShadowNode.cpp",
+      "baseHash": "e4feb272298f6625461f5bdca2fca4d64e1a5894",
+      "issue": 12300
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mounting/ShadowTree.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/mounting/ShadowTree.cpp",
       "baseHash": "6a1ef351833bd02ce27544dd3db205c1bf2c4139",
@@ -252,12 +266,6 @@
       "baseHash": "31731fd48736bfcd3c36eb60a242b187236e124b"
     },
     {
-      "type": "derived",
-      "file": "src/Libraries/Components/DrawerAndroid/DrawerLayoutAndroid.windows.js",
-      "baseFile": "packages/react-native/Libraries/Components/DrawerAndroid/DrawerLayoutAndroid.js",
-      "baseHash": "09f143fc3f2ee80463764e1c2b3f23107d501a4c"
-    },
-    {
       "type": "platform",
       "file": "src/Libraries/Components/Flyout/Flyout.d.ts"
     },
@@ -308,22 +316,10 @@
       "baseHash": "6fb2aede8cff4c47e8e965fed9ed1a9d55d33cfc"
     },
     {
-      "type": "derived",
-      "file": "src/Libraries/Components/ProgressBarAndroid/ProgressBarAndroid.windows.js",
-      "baseFile": "packages/react-native/Libraries/Components/ProgressBarAndroid/ProgressBarAndroid.js",
-      "baseHash": "e69c4f61d26361e6aeb62b6d3f31d1c1bb78e4ae"
-    },
-    {
       "type": "patch",
       "file": "src/Libraries/Components/RefreshControl/RefreshControl.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/RefreshControl/RefreshControl.js",
       "baseHash": "7e6b0a8088ba49a28360a88fd59c08e8c0965130"
-    },
-    {
-      "type": "copy",
-      "file": "src/Libraries/Components/SafeAreaView/SafeAreaView.windows.js",
-      "baseFile": "packages/react-native/Libraries/Components/SafeAreaView/SafeAreaView.js",
-      "baseHash": "ae5845b576484b3600e395d3b1ee03223530b8f7"
     },
     {
       "type": "derived",
@@ -352,12 +348,6 @@
     {
       "type": "platform",
       "file": "src/Libraries/Components/TextInput/WindowsTextInputNativeComponent.js"
-    },
-    {
-      "type": "copy",
-      "file": "src/Libraries/Components/ToastAndroid/ToastAndroid.windows.js",
-      "baseFile": "packages/react-native/Libraries/Components/ToastAndroid/ToastAndroid.js",
-      "baseHash": "37f29678da7a4de7bc92cf52796a7e0388e1540a"
     },
     {
       "type": "patch",
@@ -512,12 +502,6 @@
       "file": "src/Libraries/ReactNative/PaperUIManager.windows.js",
       "baseFile": "packages/react-native/Libraries/ReactNative/PaperUIManager.js",
       "baseHash": "64504c716b2c64116d1ec74702ce7754fa651c6f"
-    },
-    {
-      "type": "derived",
-      "file": "src/Libraries/Settings/Settings.windows.js",
-      "baseFile": "packages/react-native/Libraries/Settings/Settings.js",
-      "baseHash": "1aa8e2b8b3c8e1577f617383c3a47fe8499eb031"
     },
     {
       "type": "platform",

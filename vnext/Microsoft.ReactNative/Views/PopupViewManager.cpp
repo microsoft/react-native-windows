@@ -44,10 +44,6 @@ class PopupShadowNode : public ShadowNodeBase {
   void UpdateTabStops();
   void UpdateLayout();
 
-  bool IsWindowed() override {
-    return true;
-  }
-
  private:
   bool m_autoFocus{true};
   double m_verticalOffset{0};
@@ -132,7 +128,7 @@ void PopupShadowNode::AddView(ShadowNode &child, int64_t index) {
 
   control.Content(childView);
 
-  m_touchEventHandler->AddTouchHandlers(childView);
+  m_touchEventHandler->AddTouchHandlers(childView, GetRootView());
   m_previewKeyboardEventHandlerOnRoot->hook(childView);
 }
 

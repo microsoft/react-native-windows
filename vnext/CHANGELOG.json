@@ -2,6 +2,93 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 31 Oct 2023 05:16:23 GMT",
+      "version": "0.0.0-canary.729",
+      "tag": "react-native-windows_v0.0.0-canary.729",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "81ebf89edc311e537cc8d5ddd2127c37d7d831c8",
+            "comment": "Adds fabric switch thumb animation"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 28 Oct 2023 05:18:12 GMT",
+      "version": "0.0.0-canary.728",
+      "tag": "react-native-windows_v0.0.0-canary.728",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ericroz@meta.com",
+            "package": "react-native-windows",
+            "commit": "1f4a5d3d560f45e1aa5051c9a9eb03b289391d3c",
+            "comment": "Remove generated signature from file"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 27 Oct 2023 05:18:26 GMT",
+      "version": "0.0.0-canary.727",
+      "tag": "react-native-windows_v0.0.0-canary.727",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e447866d115a2f5a1113c503425294029818691b",
+            "comment": "Move CompositionRootAutomationProvider to CompositionRootView, so it can be loaded before the instance"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d829541bde8939a9d3fa8d1d2b780e134982d523",
+            "comment": "[Fabric] Fix BinSkim errors in preparation for 1ES Template migration"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 26 Oct 2023 16:46:11 GMT",
+      "version": "0.0.0-canary.726",
+      "tag": "react-native-windows_v0.0.0-canary.726",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "d60370603779588201c2407dd729945da0cf7339",
+            "comment": "Simplify Flyout and Popup coordinate spaces"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "869f2c4025969e33335acd69f832417999f4664e",
+            "comment": "[Fabric] Native Theming"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 24 Oct 2023 18:00:31 GMT",
+      "version": "0.0.0-canary.725",
+      "tag": "react-native-windows_v0.0.0-canary.725",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "8f6644185f31abca53d32e71d4697d4d070792e9",
+            "comment": "Minor codereview feedback cleanup"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 24 Oct 2023 05:15:58 GMT",
       "version": "0.0.0-canary.724",
       "tag": "react-native-windows_v0.0.0-canary.724",

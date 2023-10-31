@@ -1058,16 +1058,7 @@ void ReactInstanceWin::AttachMeasuredRootView(
   if (State() == ReactInstanceState::HasError)
     return;
 
-#ifdef USE_FABRIC
-  if (useFabric && !m_useWebDebugger) {
-    auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
-        winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()));
-
-    auto rootTag = Microsoft::ReactNative::getNextRootViewTag();
-    rootView->SetTag(rootTag);
-    uiManager->startSurface(rootView, rootTag, rootView->JSComponentName(), DynamicWriter::ToDynamic(initialProps));
-  }
-#endif
+  assert(!useFabric);
 #ifndef CORE_ABI
   if (!useFabric || m_useWebDebugger) {
     int64_t rootTag = -1;

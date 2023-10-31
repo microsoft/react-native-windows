@@ -114,10 +114,6 @@ class FlyoutShadowNode : public ShadowNodeBase {
   winrt::Flyout GetFlyout();
   void AdjustDefaultFlyoutStyle(float maxWidth, float maxHeight);
 
-  bool IsWindowed() override {
-    return true;
-  }
-
  private:
   void SetTargetFrameworkElement();
   winrt::Popup GetFlyoutParentPopup() const;
@@ -152,7 +148,7 @@ FlyoutShadowNode::~FlyoutShadowNode() {
 
 void FlyoutShadowNode::AddView(ShadowNode &child, int64_t /*index*/) {
   auto childView = static_cast<ShadowNodeBase &>(child).GetView();
-  m_touchEventHandler->AddTouchHandlers(childView);
+  m_touchEventHandler->AddTouchHandlers(childView, GetRootView());
   m_previewKeyboardEventHandlerOnRoot->hook(childView);
 
   if (m_flyout != nullptr) {

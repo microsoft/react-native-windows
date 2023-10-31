@@ -853,12 +853,11 @@ struct CompActivityVisual : winrt::implements<
     }
   }
 
-  void Color(winrt::Windows::UI::Color color) noexcept {
+  void Brush(winrt::Microsoft::ReactNative::Composition::IBrush brush) noexcept {
     // Change the color of each SpriteVisual
+    auto innerBrush = TTypeRedirects::CompositionContextHelper::InnerBrush(brush);
     for (auto &spriteVisual : m_spriteVisuals) {
-      auto colorBrush = m_visual.Compositor().CreateColorBrush(color);
-      // Set the new color brush on the SpriteVisual
-      spriteVisual.FillBrush(colorBrush);
+      spriteVisual.FillBrush(innerBrush);
     }
   }
 
@@ -1066,8 +1065,8 @@ struct CompCaretVisual
     return m_visual;
   }
 
-  void Color(winrt::Windows::UI::Color color) noexcept {
-    m_compVisual.Brush(m_compositor.CreateColorBrush(color));
+  void Brush(winrt::Microsoft::ReactNative::Composition::IBrush brush) noexcept {
+    m_compVisual.Brush(TTypeRedirects::CompositionContextHelper::InnerBrush(brush));
   }
 
   void Size(winrt::Windows::Foundation::Numerics::float2 size) noexcept {
@@ -1142,17 +1141,36 @@ struct CompSwitchThumbVisual : winrt::implements<
     return m_visual;
   }
 
-  void Color(winrt::Windows::UI::Color color) noexcept {
-    m_spiritShape.FillBrush(m_compositor.CreateColorBrush(color));
+  void Brush(winrt::Microsoft::ReactNative::Composition::IBrush brush) noexcept {
+    m_spiritShape.FillBrush(TTypeRedirects::CompositionContextHelper::InnerBrush(brush));
   }
 
   void Size(winrt::Windows::Foundation::Numerics::float2 size) noexcept {
-    m_geometry.Radius(size);
-    m_spiritShape.Offset(size);
-    m_compVisual.Size(size);
+    assert(m_size.x == m_size.y);
+    // if the size has changed, update the position to the new center
+    if (m_size.x != 0.0f && m_size.x != size.x) {
+      Position({m_pos.x + (m_size.x - size.x), m_pos.y + (m_size.x - size.x)});
+    }
+    m_size = size;
+    m_geometry.Radius(m_size);
+    m_spiritShape.Offset(m_size);
+    m_compVisual.Size(m_size);
+  }
+
+  winrt::Windows::Foundation::Numerics::float2 Size() noexcept {
+    return m_size;
   }
 
   void Position(winrt::Windows::Foundation::Numerics::float2 position) noexcept {
+    m_pos = position;
+    m_compVisual.Offset({position.x, position.y, 0.0f});
+  }
+
+  winrt::Windows::Foundation::Numerics::float2 Position() noexcept {
+    return m_pos;
+  }
+
+  void AnimatePosition(winrt::Windows::Foundation::Numerics::float2 position) noexcept {
     if (!isDrawn) {
       // we don't want to animate if this is the first time the switch is drawn on screen
       isDrawn = true;
@@ -1165,6 +1183,7 @@ struct CompSwitchThumbVisual : winrt::implements<
 
       m_compVisual.StartAnimation(L"Offset", animation);
     }
+    m_pos = position;
   }
 
   bool IsVisible() const noexcept {
@@ -1178,6 +1197,8 @@ struct CompSwitchThumbVisual : winrt::implements<
   bool isDrawn{false};
   typename TTypeRedirects::SpriteVisual m_compVisual;
   winrt::Microsoft::ReactNative::Composition::IVisual m_visual;
+  winrt::Windows::Foundation::Numerics::float2 m_size{0.0f, 0.0f};
+  winrt::Windows::Foundation::Numerics::float2 m_pos;
   typename TTypeRedirects::Compositor m_compositor{nullptr};
   typename TTypeRedirects::CompositionSpriteShape m_spiritShape{nullptr};
   typename TTypeRedirects::CompositionEllipseGeometry m_geometry{nullptr};

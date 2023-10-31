@@ -18,12 +18,12 @@
 #include <winrt/Windows.UI.Core.h>
 #include "CompositionContextHelper.h"
 #include "CompositionHelpers.h"
+#include "CompositionRootAutomationProvider.h"
 #include "ReactNativeHost.h"
 #include "RootComponentView.h"
 
 #ifdef USE_WINUI3
 #include <winrt/Microsoft.UI.Content.h>
-#include "CompositionRootAutomationProvider.h"
 #endif
 
 namespace winrt::Microsoft::ReactNative::implementation {
@@ -157,11 +157,11 @@ void CompositionRootView::ScaleFactor(float value) noexcept {
 }
 
 winrt::IInspectable CompositionRootView::GetUiaProvider() noexcept {
-  auto componentView = GetComponentView();
-  if (componentView == nullptr)
-    return nullptr;
-
-  return componentView->EnsureUiaProvider();
+  if (m_uiaProvider == nullptr) {
+    m_uiaProvider =
+        winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionRootAutomationProvider>(*this);
+  }
+  return m_uiaProvider;
 }
 
 winrt::Microsoft::ReactNative::Composition::IVisual CompositionRootView::GetVisual() const noexcept {
@@ -289,7 +289,7 @@ void CompositionRootView::ShowInstanceLoaded() noexcept {
     auto rootTag = ::Microsoft::ReactNative::getNextRootViewTag();
     SetTag(rootTag);
     uiManager->startSurface(
-        this, rootTag, JSComponentName(), DynamicWriter::ToDynamic(Mso::Copy(m_reactViewOptions.InitialProps())));
+        *this, rootTag, JSComponentName(), DynamicWriter::ToDynamic(Mso::Copy(m_reactViewOptions.InitialProps())));
 
     m_isJSViewAttached = true;
   }
@@ -399,7 +399,8 @@ winrt::Microsoft::UI::Content::ContentIsland CompositionRootView::Island() noexc
 #endif
 
 ::Microsoft::ReactNative::RootComponentView *CompositionRootView::GetComponentView() noexcept {
-  if (!m_context || m_context.Handle().LoadingState() != winrt::Microsoft::ReactNative::LoadingState::Loaded)
+  if (!m_context || m_context.Handle().LoadingState() != winrt::Microsoft::ReactNative::LoadingState::Loaded ||
+      m_rootTag == -1)
     return nullptr;
 
   if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(

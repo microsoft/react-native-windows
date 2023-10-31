@@ -18,6 +18,7 @@
 
 #include <unicode.h>
 #include "CompositionDynamicAutomationProvider.h"
+#include "RootComponentView.h"
 
 namespace Microsoft::ReactNative {
 
@@ -25,14 +26,16 @@ constexpr float c_scrollerLineDelta = 16.0f;
 
 std::shared_ptr<ScrollViewComponentView> ScrollViewComponentView::Create(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-    facebook::react::Tag tag) noexcept {
-  return std::shared_ptr<ScrollViewComponentView>(new ScrollViewComponentView(compContext, tag));
+    facebook::react::Tag tag,
+    winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
+  return std::shared_ptr<ScrollViewComponentView>(new ScrollViewComponentView(compContext, tag, reactContext));
 }
 
 ScrollViewComponentView::ScrollViewComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-    facebook::react::Tag tag)
-    : Super(compContext, tag) {
+    facebook::react::Tag tag,
+    winrt::Microsoft::ReactNative::ReactContext const &reactContext)
+    : Super(compContext, tag, reactContext, CompositionComponentViewFeatures::Default) {
   static auto const defaultProps = std::make_shared<facebook::react::ScrollViewProps const>();
   m_props = defaultProps;
 
@@ -141,6 +144,14 @@ void ScrollViewComponentView::unmountChildComponentView(IComponentView &childCom
   childComponentView.parent(nullptr);
 }
 
+void ScrollViewComponentView::updateBackgroundColor(const facebook::react::SharedColor &color) noexcept {
+  if (color) {
+    m_scrollVisual.Brush(theme()->Brush(*color));
+  } else {
+    m_scrollVisual.Brush(m_compContext.CreateColorBrush({0, 0, 0, 0}));
+  }
+}
+
 void ScrollViewComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
@@ -150,11 +161,7 @@ void ScrollViewComponentView::updateProps(
   ensureVisual();
 
   if (!oldProps || oldViewProps.backgroundColor != newViewProps.backgroundColor) {
-    if (newViewProps.backgroundColor) {
-      m_scrollVisual.Brush(m_compContext.CreateColorBrush(newViewProps.backgroundColor.AsWindowsColor()));
-    } else {
-      m_scrollVisual.Brush(m_compContext.CreateColorBrush({0, 0, 0, 0}));
-    }
+    updateBackgroundColor(newViewProps.backgroundColor);
   }
   if (oldViewProps.testId != newViewProps.testId) {
     m_visual.Comment(newViewProps.testId == "" ? L"ScrollView" : winrt::to_hstring(newViewProps.testId));
@@ -163,7 +170,7 @@ void ScrollViewComponentView::updateProps(
   // update BaseComponentView props
   updateShadowProps(oldViewProps, newViewProps, m_visual);
   updateTransformProps(oldViewProps, newViewProps, m_visual);
-  updateBorderProps(oldViewProps, newViewProps);
+  Super::updateProps(props, oldProps);
 
   m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
 }
@@ -187,11 +194,7 @@ void ScrollViewComponentView::updateLayoutMetrics(
     OuterVisual().IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
   }
 
-  // m_needsBorderUpdate = true;
-  updateBorderLayoutMetrics(layoutMetrics, *m_props);
-  m_layoutMetrics = layoutMetrics;
-
-  UpdateCenterPropertySet();
+  Super::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
   m_visual.Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
@@ -207,12 +210,10 @@ void ScrollViewComponentView::updateContentVisualSize() noexcept {
        std::max(m_contentSize.height, m_layoutMetrics.frame.size.height) * m_layoutMetrics.pointScaleFactor});
 }
 
-void ScrollViewComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
-  // m_element.FinalizeProperties();
-}
 void ScrollViewComponentView::prepareForRecycle() noexcept {}
-facebook::react::Props::Shared ScrollViewComponentView::props() noexcept {
-  return static_cast<facebook::react::Props::Shared>(m_props);
+
+facebook::react::SharedViewProps ScrollViewComponentView::viewProps() noexcept {
+  return m_props;
 }
 
 /*
@@ -259,6 +260,10 @@ void ScrollViewComponentView::OnPointerDown(const winrt::Windows::UI::Input::Poi
   m_visualInteractionSource.TryRedirectForManipulation(pp);
 }
 */
+
+void ScrollViewComponentView::onThemeChanged() noexcept {
+  updateBackgroundColor(std::static_pointer_cast<const facebook::react::ScrollViewProps>(m_props)->backgroundColor);
+}
 
 void ScrollViewComponentView::onPointerWheelChanged(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
@@ -548,23 +553,32 @@ facebook::react::Tag ScrollViewComponentView::hitTest(
       ptViewport.y + m_scrollVisual.ScrollPosition().y / m_layoutMetrics.pointScaleFactor};
 
   facebook::react::Tag targetTag;
-  if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
-       m_props->pointerEvents == facebook::react::PointerEventsMode::BoxNone) &&
-      std::any_of(m_children.rbegin(), m_children.rend(), [&targetTag, &ptContent, &localPt](auto child) {
-        targetTag = static_cast<const CompositionBaseComponentView *>(child)->hitTest(ptContent, localPt);
-        return targetTag != -1;
-      }))
-    return targetTag;
 
   if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
        m_props->pointerEvents == facebook::react::PointerEventsMode::BoxOnly) &&
       ptViewport.x >= 0 && ptViewport.x <= m_layoutMetrics.frame.size.width && ptViewport.y >= 0 &&
       ptViewport.y <= m_layoutMetrics.frame.size.height) {
-    localPt = ptViewport;
-    return this->tag();
+    if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
+         m_props->pointerEvents == facebook::react::PointerEventsMode::BoxNone) &&
+        std::any_of(m_children.rbegin(), m_children.rend(), [&targetTag, &ptContent, &localPt](auto child) {
+          targetTag = static_cast<const CompositionBaseComponentView *>(child)->hitTest(ptContent, localPt);
+          return targetTag != -1;
+        }))
+      return targetTag;
+
+    if (ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
+        m_props->pointerEvents == facebook::react::PointerEventsMode::BoxOnly) {
+      return this->tag();
+    }
   }
 
   return -1;
+}
+
+facebook::react::Point ScrollViewComponentView::getClientOffset() const noexcept {
+  return {
+      m_layoutMetrics.frame.origin.x * m_layoutMetrics.pointScaleFactor - m_scrollVisual.ScrollPosition().x,
+      m_layoutMetrics.frame.origin.y * m_layoutMetrics.pointScaleFactor - m_scrollVisual.ScrollPosition().y};
 }
 
 winrt::Microsoft::ReactNative::Composition::IVisual ScrollViewComponentView::Visual() const noexcept {

@@ -1,8 +1,50 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 24 Oct 2023 05:15:58 GMT and should not be manually modified.
+This log was last generated on Tue, 31 Oct 2023 05:16:23 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.729
+
+Tue, 31 Oct 2023 05:16:23 GMT
+
+### Changes
+
+- Adds fabric switch thumb animation (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.728
+
+Sat, 28 Oct 2023 05:18:12 GMT
+
+### Changes
+
+- Remove generated signature from file (ericroz@meta.com)
+
+## 0.0.0-canary.727
+
+Fri, 27 Oct 2023 05:18:26 GMT
+
+### Changes
+
+- Move CompositionRootAutomationProvider to CompositionRootView, so it can be loaded before the instance (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Fix BinSkim errors in preparation for 1ES Template migration (jthysell@microsoft.com)
+
+## 0.0.0-canary.726
+
+Thu, 26 Oct 2023 16:46:11 GMT
+
+### Changes
+
+- Simplify Flyout and Popup coordinate spaces (email not defined)
+- [Fabric] Native Theming (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.725
+
+Tue, 24 Oct 2023 18:00:31 GMT
+
+### Changes
+
+- Minor codereview feedback cleanup (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.724
 

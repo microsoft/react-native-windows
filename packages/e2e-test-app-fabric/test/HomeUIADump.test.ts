@@ -33,6 +33,11 @@ afterEach(async () => {
   await verifyNoErrorLogs();
 });
 
+beforeAll(async () => {
+  // If window is partially offscreen, tests will fail to click on certain elements
+  await app.setWindowPosition(0, 0);
+});
+
 describe('Home UIA Tree Dump', () => {
   test('Components Tab', async () => {
     const componentsTabButton = await app.findElementByTestID('components-tab');
