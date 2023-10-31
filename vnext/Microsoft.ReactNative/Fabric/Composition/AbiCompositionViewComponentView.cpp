@@ -58,7 +58,7 @@ void AbiCompositionViewComponentView::updateProps(
   const auto &newViewProps = *std::static_pointer_cast<const AbiViewProps>(props);
 
  if (oldViewProps.testId != newViewProps.testId) {
-    m_visual.Comment(winrt::to_hstring(newViewProps.testId));
+    m_visual.Comment(newViewProps.testId == ""? L"Abi View" : winrt::to_hstring(newViewProps.testId));
   }
 
   updateAccessibilityProps(oldViewProps, newViewProps);

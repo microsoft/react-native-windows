@@ -1,0 +1,129 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`View Tests Views can have background color 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "background-color",
+    "Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Blue background",
+      },
+    ],
+    "ControlType": 50026,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "group",
+    "Name": "",
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(0, 128, 0, 255)",
+    },
+    "Children": [
+      {
+        "Children": [
+          {
+            "Opacity": 1,
+            "Size": [
+              1020,
+              16,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Opacity": 1,
+        "Size": [
+          1020,
+          16,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "background-color",
+    "Opacity": 1,
+    "Size": [
+      1030,
+      24,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`View Tests Views can have opacity 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "opacity-1",
+    "Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Opacity 0.1",
+      },
+    ],
+    "ControlType": 50026,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "group",
+    "Name": "",
+  },
+  "Visual Tree": {
+    "Children": [
+      {
+        "Children": [
+          {
+            "Opacity": 1,
+            "Size": [
+              1030,
+              19,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Opacity": 1,
+        "Size": [
+          1030,
+          19,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "opacity-1",
+    "Opacity": 0.10000000149011612,
+    "Size": [
+      1030,
+      19,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;

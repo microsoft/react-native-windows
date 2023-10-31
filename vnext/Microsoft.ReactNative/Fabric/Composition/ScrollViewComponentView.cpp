@@ -157,7 +157,7 @@ void ScrollViewComponentView::updateProps(
     }
   }
   if (oldViewProps.testId != newViewProps.testId) {
-    m_visual.Comment(winrt::to_hstring(newViewProps.testId));
+    m_visual.Comment(newViewProps.testId == "" ? L"ScrollView" : winrt::to_hstring(newViewProps.testId));
   }
 
   // update BaseComponentView props

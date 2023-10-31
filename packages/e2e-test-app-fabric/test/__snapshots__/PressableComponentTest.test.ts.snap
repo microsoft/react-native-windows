@@ -11,7 +11,15 @@ exports[`Pressable Tests Pressables can change text on press/rest, state rest 1`
     "LocalizedControlType": "text",
     "Name": "",
   },
-  "Visual Tree": {},
+  "Visual Tree": {
+    "Comment": "pressable_press_console",
+    "Opacity": 1,
+    "Size": [
+      968,
+      20,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
 
@@ -37,7 +45,43 @@ exports[`Pressable Tests Pressables can have delayed event handlers 1`] = `
     "LocalizedControlType": "group",
     "Name": "",
   },
-  "Visual Tree": {},
+  "Visual Tree": {
+    "Children": [
+      {
+        "Children": [
+          {
+            "Opacity": 1,
+            "Size": [
+              56,
+              19,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Opacity": 1,
+        "Size": [
+          56,
+          19,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "pressable_delay_events_button",
+    "Opacity": 1,
+    "Size": [
+      56,
+      19,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
 
@@ -63,7 +107,43 @@ exports[`Pressable Tests Pressables can have event handlers 1`] = `
     "LocalizedControlType": "button",
     "Name": "pressable feedback events",
   },
-  "Visual Tree": {},
+  "Visual Tree": {
+    "Children": [
+      {
+        "Children": [
+          {
+            "Opacity": 1,
+            "Size": [
+              56,
+              20,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Opacity": 1,
+        "Size": [
+          56,
+          20,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "pressable_feedback_events_button",
+    "Opacity": 1,
+    "Size": [
+      56,
+      18,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
 
@@ -89,6 +169,46 @@ exports[`Pressable Tests Pressables can have hit slop functionality 1`] = `
     "LocalizedControlType": "group",
     "Name": "",
   },
-  "Visual Tree": {},
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 0, 0, 255)",
+    },
+    "Children": [
+      {
+        "Children": [
+          {
+            "Opacity": 1,
+            "Size": [
+              146,
+              20,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Opacity": 1,
+        "Size": [
+          146,
+          20,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "pressable_hit_slop_button",
+    "Opacity": 1,
+    "Size": [
+      146,
+      18,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;

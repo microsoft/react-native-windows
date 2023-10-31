@@ -51,7 +51,7 @@ void ParagraphComponentView::updateProps(
     m_requireRedraw = true;
   }
   if (oldViewProps.testId != newViewProps.testId) {
-    m_visual.Comment(winrt::to_hstring(newViewProps.testId));
+    m_visual.Comment(newViewProps.testId == ""? L"Paragraph View" : winrt::to_hstring(newViewProps.testId));
   }
 
   if (oldViewProps.textAttributes.alignment != newViewProps.textAttributes.alignment) {

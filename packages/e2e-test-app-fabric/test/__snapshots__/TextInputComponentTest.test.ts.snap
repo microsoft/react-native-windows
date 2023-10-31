@@ -11,7 +11,93 @@ exports[`TextInput Tests Multi-line TextInputs can enable text selection (Impera
     "LocalizedControlType": "edit",
     "Name": "",
   },
-  "Visual Tree": {},
+  "Visual Tree": {
+    "Children": [
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "multilineImperative-text-input",
+    "Opacity": 1,
+    "Size": [
+      1030,
+      50,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
 
@@ -26,7 +112,93 @@ exports[`TextInput Tests Multi-line TextInputs can enable text selection 1`] = `
     "LocalizedControlType": "edit",
     "Name": "",
   },
-  "Visual Tree": {},
+  "Visual Tree": {
+    "Children": [
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "multiline-text-input",
+    "Opacity": 1,
+    "Size": [
+      1030,
+      50,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
 
@@ -41,7 +213,93 @@ exports[`TextInput Tests Single-line TextInputs can enable text selection (Imper
     "LocalizedControlType": "edit",
     "Name": "",
   },
-  "Visual Tree": {},
+  "Visual Tree": {
+    "Children": [
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "singlelineImperative-text-input",
+    "Opacity": 1,
+    "Size": [
+      1030,
+      28,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
 
@@ -56,7 +314,93 @@ exports[`TextInput Tests Single-line TextInputs can enable text selection 1`] = 
     "LocalizedControlType": "edit",
     "Name": "",
   },
-  "Visual Tree": {},
+  "Visual Tree": {
+    "Children": [
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "singleline-text-input",
+    "Opacity": 1,
+    "Size": [
+      1030,
+      28,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
 
@@ -71,7 +415,93 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Character
     "LocalizedControlType": "edit",
     "Name": "",
   },
-  "Visual Tree": {},
+  "Visual Tree": {
+    "Children": [
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "capitalize-characters",
+    "Opacity": 1,
+    "Size": [
+      905,
+      28,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
 
@@ -86,7 +516,93 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Sentences
     "LocalizedControlType": "edit",
     "Name": "",
   },
-  "Visual Tree": {},
+  "Visual Tree": {
+    "Children": [
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "capitalize-sentences",
+    "Opacity": 1,
+    "Size": [
+      905,
+      28,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
 
@@ -101,7 +617,93 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Turned Of
     "LocalizedControlType": "edit",
     "Name": "",
   },
-  "Visual Tree": {},
+  "Visual Tree": {
+    "Children": [
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "capitalize-none",
+    "Opacity": 1,
+    "Size": [
+      905,
+      28,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
 
@@ -116,7 +718,93 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Words 1`]
     "LocalizedControlType": "edit",
     "Name": "",
   },
-  "Visual Tree": {},
+  "Visual Tree": {
+    "Children": [
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "capitalize-words",
+    "Opacity": 1,
+    "Size": [
+      905,
+      29,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
 
@@ -131,7 +819,93 @@ exports[`TextInput Tests TextInputs can have a background color 1`] = `
     "LocalizedControlType": "edit",
     "Name": "",
   },
-  "Visual Tree": {},
+  "Visual Tree": {
+    "Children": [
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "style-backgroundColor",
+    "Opacity": 1,
+    "Size": [
+      905,
+      29,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
 
@@ -146,7 +920,93 @@ exports[`TextInput Tests TextInputs can have a color 1`] = `
     "LocalizedControlType": "edit",
     "Name": "",
   },
-  "Visual Tree": {},
+  "Visual Tree": {
+    "Children": [
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "style-color",
+    "Opacity": 1,
+    "Size": [
+      905,
+      28,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
 
@@ -161,7 +1021,93 @@ exports[`TextInput Tests TextInputs can have a font family 1`] = `
     "LocalizedControlType": "edit",
     "Name": "",
   },
-  "Visual Tree": {},
+  "Visual Tree": {
+    "Children": [
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "style-fontFamily",
+    "Opacity": 1,
+    "Size": [
+      905,
+      28,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
 
@@ -176,7 +1122,93 @@ exports[`TextInput Tests TextInputs can have a font size 1`] = `
     "LocalizedControlType": "edit",
     "Name": "",
   },
-  "Visual Tree": {},
+  "Visual Tree": {
+    "Children": [
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "style-fontSize",
+    "Opacity": 1,
+    "Size": [
+      905,
+      35,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
 
@@ -191,7 +1223,93 @@ exports[`TextInput Tests TextInputs can have a font style 1`] = `
     "LocalizedControlType": "edit",
     "Name": "",
   },
-  "Visual Tree": {},
+  "Visual Tree": {
+    "Children": [
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "style-fontStyle",
+    "Opacity": 1,
+    "Size": [
+      905,
+      28,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
 
@@ -206,7 +1324,93 @@ exports[`TextInput Tests TextInputs can have a font weight 1`] = `
     "LocalizedControlType": "edit",
     "Name": "",
   },
-  "Visual Tree": {},
+  "Visual Tree": {
+    "Children": [
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "style-fontWeight",
+    "Opacity": 1,
+    "Size": [
+      905,
+      29,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
 
@@ -221,7 +1425,93 @@ exports[`TextInput Tests TextInputs can have attributed text 1`] = `
     "LocalizedControlType": "edit",
     "Name": "",
   },
-  "Visual Tree": {},
+  "Visual Tree": {
+    "Children": [
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "text-input",
+    "Opacity": 1,
+    "Size": [
+      1030,
+      50,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
 
@@ -236,7 +1526,93 @@ exports[`TextInput Tests TextInputs can have customized letter spacing 1`] = `
     "LocalizedControlType": "edit",
     "Name": "",
   },
-  "Visual Tree": {},
+  "Visual Tree": {
+    "Children": [
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "style-letterSpacing",
+    "Opacity": 1,
+    "Size": [
+      905,
+      28,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
 
@@ -251,7 +1627,93 @@ exports[`TextInput Tests TextInputs can have customized line height 1`] = `
     "LocalizedControlType": "edit",
     "Name": "",
   },
-  "Visual Tree": {},
+  "Visual Tree": {
+    "Children": [
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "style-lineHeight",
+    "Opacity": 1,
+    "Size": [
+      905,
+      26,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
 
@@ -266,7 +1728,93 @@ exports[`TextInput Tests TextInputs can have text decoration lines 1`] = `
     "LocalizedControlType": "edit",
     "Name": "",
   },
-  "Visual Tree": {},
+  "Visual Tree": {
+    "Children": [
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "style-textDecorationLine",
+    "Opacity": 1,
+    "Size": [
+      905,
+      29,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
 
@@ -281,7 +1829,93 @@ exports[`TextInput Tests TextInputs can have text shadows 1`] = `
     "LocalizedControlType": "edit",
     "Name": "",
   },
-  "Visual Tree": {},
+  "Visual Tree": {
+    "Children": [
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "style-textShadow",
+    "Opacity": 1,
+    "Size": [
+      905,
+      28,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
 
@@ -296,7 +1930,93 @@ exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with C
     "LocalizedControlType": "edit",
     "Name": "",
   },
-  "Visual Tree": {},
+  "Visual Tree": {
+    "Children": [
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "rewrite_clear_input",
+    "Opacity": 1,
+    "Size": [
+      981,
+      28,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
 
@@ -311,7 +2031,93 @@ exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with N
     "LocalizedControlType": "edit",
     "Name": "",
   },
-  "Visual Tree": {},
+  "Visual Tree": {
+    "Children": [
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "rewrite_no_sp_input",
+    "Opacity": 1,
+    "Size": [
+      1030,
+      28,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
 
@@ -326,7 +2132,93 @@ exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with U
     "LocalizedControlType": "edit",
     "Name": "",
   },
-  "Visual Tree": {},
+  "Visual Tree": {
+    "Children": [
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "rewrite_sp_underscore_input",
+    "Opacity": 1,
+    "Size": [
+      1006,
+      29,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
 
@@ -341,6 +2233,92 @@ exports[`TextInput Tests Uncontrolled TextInput 1`] = `
     "LocalizedControlType": "edit",
     "Name": "",
   },
-  "Visual Tree": {},
+  "Visual Tree": {
+    "Children": [
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "uncontrolled-textinput",
+    "Opacity": 1,
+    "Size": [
+      1030,
+      28,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;

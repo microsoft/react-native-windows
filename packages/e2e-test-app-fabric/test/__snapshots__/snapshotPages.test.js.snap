@@ -77972,9 +77972,10 @@ exports[`snapshotAllPages TransparentHitTestExample 1`] = `
 
 exports[`snapshotAllPages View 1`] = `
 <View
+  accessible={true}
   style={
     {
-      "backgroundColor": "#527FE4",
+      "backgroundColor": "green",
       "padding": 5,
     }
   }
@@ -78400,9 +78401,7 @@ exports[`snapshotAllPages View 7`] = `
 `;
 
 exports[`snapshotAllPages View 8`] = `
-<View
-  testID="opacity"
->
+<View>
   <View
     style={
       {
@@ -78415,11 +78414,13 @@ exports[`snapshotAllPages View 8`] = `
     </Text>
   </View>
   <View
+    accessible={true}
     style={
       {
         "opacity": 0.1,
       }
     }
+    testID="opacity-1"
   >
     <Text>
       Opacity 0.1
@@ -78991,7 +78992,10 @@ exports[`snapshotAllPages View 14`] = `
 `;
 
 exports[`snapshotAllPages View 15`] = `
-<View>
+<View
+  accessible={true}
+  testID="view-opacity"
+>
   <View
     style={
       {

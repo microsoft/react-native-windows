@@ -1387,7 +1387,7 @@ void CompositionViewComponentView::updateProps(
     m_visual.Opacity(newViewProps.opacity);
   }
   if (oldViewProps.testId != newViewProps.testId) {
-    m_visual.Comment(winrt::to_hstring(newViewProps.testId));
+    m_visual.Comment(newViewProps.testId == ""? L"View" : winrt::to_hstring(newViewProps.testId));
   }
 
   // update BaseComponentView props

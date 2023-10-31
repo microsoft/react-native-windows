@@ -57,7 +57,7 @@ void SwitchComponentView::updateProps(
     m_drawingSurface = nullptr;
   }
   if (oldViewProps.testId != newViewProps.testId) {
-    m_visual.Comment(winrt::to_hstring(newViewProps.testId));
+    m_visual.Comment(newViewProps.testId == "" ? L"Switch" : winrt::to_hstring(newViewProps.testId));
   }
 
   // update BaseComponentView props

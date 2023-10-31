@@ -5,10 +5,10 @@
  * @format
  */
 
-//import {dumpVisualTree} from '@react-native-windows/automation-commands';
+import {dumpVisualTree} from '@react-native-windows/automation-commands';
 import {goToComponentExample} from './RNTesterNavigation';
 import {verifyNoErrorLogs} from './Helpers';
-//import {app} from '@react-native-windows/automation';
+import {app} from '@react-native-windows/automation';
 
 beforeAll(async () => {
   await goToComponentExample('View');
@@ -21,6 +21,24 @@ afterEach(async () => {
 describe('View Tests', () => {
   test('Control', () => {
     expect(true).toBe(true);
+  });
+  test('Views can have background color', async () => {
+    const searchBox = await app.findElementByTestID('example_search');
+    await searchBox.addValue(['Backspace', 'Backspace', 'Backspace']);
+    await searchBox.addValue('bac');
+    const componentsTab = await app.findElementByTestID('background-color');
+    await componentsTab.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('background-color');
+    expect(dump).toMatchSnapshot();
+  });
+  test('Views can have opacity', async () => {
+    const searchBox = await app.findElementByTestID('example_search');
+    await searchBox.addValue(['Backspace', 'Backspace', 'Backspace']);
+    await searchBox.addValue('opa');
+    const componentsTab = await app.findElementByTestID('opacity-1');
+    await componentsTab.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('opacity-1');
+    expect(dump).toMatchSnapshot();
   });
   // Disable until tests pass in CI.
   /*test('Views can have border styles', async () => {
