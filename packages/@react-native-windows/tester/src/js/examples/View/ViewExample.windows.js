@@ -677,7 +677,7 @@ export default ({
       title: 'Opacity',
       render(): React.Node {
         return (
-          <View>
+          <View testID='opacity'>
             <View style={{opacity: 0}}>
               <Text>Opacity 0</Text>
             </View>
@@ -922,7 +922,7 @@ export default ({
       name: 'opacity',
       render({testID}): React.Node {
         return (
-          <View testID="view-opacity">
+          <View testID={testID}>
             <View style={{opacity: 0}}>
               <Text>Opacity 0</Text>
             </View>
