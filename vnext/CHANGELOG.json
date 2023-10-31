@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 31 Oct 2023 05:16:23 GMT",
+      "version": "0.0.0-canary.729",
+      "tag": "react-native-windows_v0.0.0-canary.729",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "81ebf89edc311e537cc8d5ddd2127c37d7d831c8",
+            "comment": "Adds fabric switch thumb animation"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 28 Oct 2023 05:18:12 GMT",
       "version": "0.0.0-canary.728",
       "tag": "react-native-windows_v0.0.0-canary.728",
