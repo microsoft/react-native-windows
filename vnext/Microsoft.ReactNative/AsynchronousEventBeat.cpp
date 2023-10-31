@@ -33,13 +33,17 @@ void AsynchronousEventBeat::request() const {
   bool alreadyRequested = isRequested_;
   EventBeat::request();
   if (!alreadyRequested) {
-    m_context.UIDispatcher().Post([this, ownerBox = ownerBox_]() {
-      auto owner = ownerBox->owner.lock();
-      if (!owner) {
-        return;
-      }
+    if (m_context.UIDispatcher().HasThreadAccess()) {
       induce();
-    });
+    } else {
+      m_context.UIDispatcher().Post([this, ownerBox = ownerBox_]() {
+        auto owner = ownerBox->owner.lock();
+        if (!owner) {
+          return;
+        }
+        induce();
+      });
+    }
   }
 }
 
