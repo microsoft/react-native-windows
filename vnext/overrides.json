@@ -117,6 +117,12 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/uimanager/PointerEventsProcessor.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/uimanager/PointerEventsProcessor.cpp",
+      "baseHash": "0f4fd0ec7e678d48632d372d7990d928ae10bbf1"
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/uimanager/UIManagerBinding.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/uimanager/UIManagerBinding.cpp",
       "baseHash": "307bdef4d1e494461a8e19a4ac77763b68dd2f0c",
