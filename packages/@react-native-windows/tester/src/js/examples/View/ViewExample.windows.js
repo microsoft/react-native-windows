@@ -478,9 +478,8 @@ export default ({
       render(): React.Node {
         return (
           <View
-            style={{backgroundColor: 'green', padding: 5}}
-            testID="background-color"
-            accessible>
+            style={{backgroundColor: '#527FE4', padding: 5}}
+            testID="background-color">
             <Text style={{fontSize: 11}}>Blue background</Text>
           </View>
         );
@@ -682,7 +681,7 @@ export default ({
             <View style={{opacity: 0}}>
               <Text>Opacity 0</Text>
             </View>
-            <View style={{opacity: 0.1}} testID="opacity-1" accessible>
+            <View style={{opacity: 0.1}}>
               <Text>Opacity 0.1</Text>
             </View>
             <View style={{opacity: 0.3}}>
@@ -923,7 +922,7 @@ export default ({
       name: 'opacity',
       render({testID}): React.Node {
         return (
-          <View testID="view-opacity" accessible>
+          <View testID="view-opacity">
             <View style={{opacity: 0}}>
               <Text>Opacity 0</Text>
             </View>
