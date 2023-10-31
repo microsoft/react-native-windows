@@ -28,6 +28,7 @@ struct PlatformConstantsIOSSpec_PlatformConstantsIOS {
     std::string osVersion;
     std::string systemName;
     std::string interfaceIdiom;
+    std::optional<bool> isMacCatalyst;
 };
 
 
@@ -50,6 +51,7 @@ inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PlatformConstantsIO
         {L"osVersion", &PlatformConstantsIOSSpec_PlatformConstantsIOS::osVersion},
         {L"systemName", &PlatformConstantsIOSSpec_PlatformConstantsIOS::systemName},
         {L"interfaceIdiom", &PlatformConstantsIOSSpec_PlatformConstantsIOS::interfaceIdiom},
+        {L"isMacCatalyst", &PlatformConstantsIOSSpec_PlatformConstantsIOS::isMacCatalyst},
     };
     return fieldMap;
 }

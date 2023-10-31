@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.73.0-nightly-20231002-0371014a3",
+  "baseVersion": "0.74.0-nightly-20231016-44660019e",
   "overrides": [
     {
       "type": "copy",
@@ -320,7 +320,7 @@
       "type": "copy",
       "directory": "js/examples/ScrollView",
       "baseDirectory": "packages/rn-tester/js/examples/ScrollView",
-      "baseHash": "b08c72fcc2839032d0395598c5c47940c5ec304f",
+      "baseHash": "a753b85c3b4218aff1f47e51d6b297e1edead3fa",
       "issue": 4054
     },
     {
@@ -425,7 +425,7 @@
       "type": "copy",
       "directory": "js/examples/TurboModule",
       "baseDirectory": "packages/rn-tester/js/examples/TurboModule",
-      "baseHash": "4840f6e3a1fc223ca176bc1e57499756f0fb1b5b",
+      "baseHash": "f3a3463e3d5d78ae8624571504713bb46135f469",
       "issue": 4054
     },
     {
@@ -495,7 +495,7 @@
       "type": "copy",
       "file": "NativeComponentExample/js/MyNativeView.js",
       "baseFile": "packages/rn-tester/NativeComponentExample/js/MyNativeView.js",
-      "baseHash": "8efce6893b6a054f0ce069c5ac6bd86d33945cde",
+      "baseHash": "4c27c3b77e4260bfad8b920217ee6398806353a9",
       "issue": 4054
     },
     {

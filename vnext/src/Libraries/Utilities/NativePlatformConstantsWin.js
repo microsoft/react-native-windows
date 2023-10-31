@@ -19,7 +19,11 @@ export type PlatformConstantsWindows = {|
     patch: number,
     prerelease: ?string,
   |},
-  osVersion: number,
+  forceTouchAvailable: boolean,
+  osVersion: string,
+  systemName: string,
+  interfaceIdiom: string,
+  isMacCatalyst?: boolean,
 |};
 
 export interface Spec extends TurboModule {

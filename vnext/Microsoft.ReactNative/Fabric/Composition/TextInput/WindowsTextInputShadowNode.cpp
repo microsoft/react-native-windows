@@ -10,6 +10,7 @@
 #include <react/renderer/core/LayoutConstraints.h>
 #include <react/renderer/core/LayoutContext.h>
 #include <react/renderer/core/conversions.h>
+#include <react/renderer/textlayoutmanager/TextLayoutContext.h>
 
 #include <utility>
 
@@ -151,8 +152,8 @@ void WindowsTextInputShadowNode::updateStateIfNeeded() {
 #pragma mark - LayoutableShadowNode
 
 Size WindowsTextInputShadowNode::measureContent(
-    const LayoutContext & /*layoutContext*/,
-    const LayoutConstraints &layoutConstraints) const {
+    const LayoutContext& layoutContext,
+    const LayoutConstraints& layoutConstraints) const {
   if (getStateData().cachedAttributedStringId != 0) {
     return m_textLayoutManager
         ->measureCachedSpannableById(
@@ -177,10 +178,13 @@ Size WindowsTextInputShadowNode::measureContent(
     return {0, 0};
   }
 
+  TextLayoutContext textLayoutContext;
+  textLayoutContext.pointScaleFactor = layoutContext.pointScaleFactor;
   return m_textLayoutManager
       ->measure(
           AttributedStringBox{attributedString},
           {}, // TODO getConcreteProps().paragraphAttributes,
+          textLayoutContext,
           layoutConstraints,
           nullptr)
       .size;

@@ -11,6 +11,7 @@
 #include <dwrite_1.h>
 #include <react/renderer/telemetry/TransactionTelemetry.h>
 #include "TextLayoutManager.h"
+#include <react/renderer/textlayoutmanager/TextLayoutContext.h>
 
 #include <unicode.h>
 
@@ -132,6 +133,7 @@ void TextLayoutManager::GetTextLayout(
 TextMeasurement TextLayoutManager::measure(
     AttributedStringBox attributedStringBox,
     ParagraphAttributes paragraphAttributes,
+    TextLayoutContext layoutContext,
     LayoutConstraints layoutConstraints,
     std::shared_ptr<void> /* hostTextStorage */) const {
   TextMeasurement measurement{};
