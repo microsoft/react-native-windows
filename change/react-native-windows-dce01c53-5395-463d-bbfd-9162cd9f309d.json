@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "C++ 20: Move vnext to C++ 20 and C++ 20 coroutines",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@fb.com",
+  "dependentChangeType": "patch"
+}
