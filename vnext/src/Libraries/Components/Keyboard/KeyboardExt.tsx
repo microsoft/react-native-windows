@@ -8,6 +8,9 @@
 import React from 'react';
 import {IKeyboardProps} from './KeyboardExtProps';
 
+/**
+ * @deprecated - Exported types should already have the keyboarding properties on them
+ */
 export const supportKeyboard = <P extends Record<string, any>>(
   WrappedComponent: React.ComponentType<P>,
 ) => {
@@ -17,7 +20,7 @@ export const supportKeyboard = <P extends Record<string, any>>(
 
   // children is used to avoid error: Property 'children' does not exist on type 'IntrinsicAttributes & ViewProps &
   // IKeyboardProps & RefAttributes<any>
-  type PropsWithoutForwardedRef = P & IKeyboardProps & {children?: any};
+  type PropsWithoutForwardedRef = P & React.PropsWithChildren<IKeyboardProps>;
   type PropsWithForwardedRef = PropsWithoutForwardedRef & IForwardRefProps;
 
   class SupportKeyboard extends React.Component<PropsWithForwardedRef> {

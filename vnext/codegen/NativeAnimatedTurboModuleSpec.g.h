@@ -8,24 +8,37 @@
  */
 #pragma once
 
-#include "NativeModules.h"
+#include <NativeModules.h>
 #include <tuple>
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(AnimatedTurboModuleSpec_EndResult)
 struct AnimatedTurboModuleSpec_EndResult {
-    REACT_FIELD(finished)
     bool finished;
+    std::optional<double> value;
 };
 
-REACT_STRUCT(AnimatedTurboModuleSpec_EventMapping)
 struct AnimatedTurboModuleSpec_EventMapping {
-    REACT_FIELD(nativeEventPath)
     std::vector<std::string> nativeEventPath;
-    REACT_FIELD(animatedValueTag)
     std::optional<double> animatedValueTag;
 };
+
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(AnimatedTurboModuleSpec_EndResult*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"finished", &AnimatedTurboModuleSpec_EndResult::finished},
+        {L"value", &AnimatedTurboModuleSpec_EndResult::value},
+    };
+    return fieldMap;
+}
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(AnimatedTurboModuleSpec_EventMapping*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"nativeEventPath", &AnimatedTurboModuleSpec_EventMapping::nativeEventPath},
+        {L"animatedValueTag", &AnimatedTurboModuleSpec_EventMapping::animatedValueTag},
+    };
+    return fieldMap;
+}
 
 struct AnimatedTurboModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{

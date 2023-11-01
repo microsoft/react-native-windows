@@ -10,6 +10,7 @@
 ; initRNLibraries build step
 <PROJECT_ROOT>/index.js
 <PROJECT_ROOT>/Libraries/Alert/Alert.js
+<PROJECT_ROOT>/Libraries/Components/AccessibilityInfo/AccessibilityInfo.js
 <PROJECT_ROOT>/Libraries/Components/Button.js
 <PROJECT_ROOT>/Libraries/Components/Pressable/Pressable.js
 <PROJECT_ROOT>/Libraries/Components/SafeAreaView/SafeAreaView.js
@@ -29,9 +30,11 @@
 <PROJECT_ROOT>/Libraries/Pressability/Pressability.js
 <PROJECT_ROOT>/Libraries/Pressability/HoverState.js
 <PROJECT_ROOT>/Libraries/StyleSheet/StyleSheet.js
+<PROJECT_ROOT>/Libraries/Text/TextProps.js
 <PROJECT_ROOT>/Libraries/Types/CoreEventTypes.js
 <PROJECT_ROOT>/Libraries/Utilities/DeviceInfo.js
 <PROJECT_ROOT>/Libraries/Utilities/Dimensions.js
+<PROJECT_ROOT>/Libraries/Utilities/Platform.flow.js
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorCodeFrame.js
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorHeader.js
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorStackFrame.js
@@ -61,8 +64,6 @@
 ; Ignore "BUCK" generated dirs
 <PROJECT_ROOT>/\.buckd/
 
-; Flow doesn't support platforms
-.*/packages/react-native/Libraries/Utilities/LoadingView.js
 ; Ignore the src folder - flow files are combined with ones from react-native into the root Libraries folder
 .*/react-native-win32/src/.*
 
@@ -70,6 +71,9 @@
 .*/react-native-win32/Libraries/Core/ReactNativeVersionCheck.js
 
 .*/node_modules/resolve/test/resolver/malformed_package_json/package\.json$
+
+; Checked-in build output
+<PROJECT_ROOT>/packages/debugger-frontend/dist/
 
 [untyped]
 .*/node_modules/@react-native-community/cli/.*/.*
@@ -83,9 +87,10 @@
 [libs]
 interface.js
 flow/
-flow-typed/
+../../../node_modules/.flow/flow-typed/
 
 [options]
+experimental.global_find_ref=true
 enums=true
 
 emoji=true
@@ -98,12 +103,18 @@ module.file_ext=.js
 module.file_ext=.json
 module.file_ext=.win32.js
 
+; [Win32]
+;experimental.multi_platform=true
+;experimental.multi_platform.extensions=.ios
+;experimental.multi_platform.extensions=.android
+
 munge_underscores=true
 
 module.name_mapper='^react-native$' -> '<PROJECT_ROOT>/index.win32.js'
 module.name_mapper='^@office-iss/react-native-win32$' -> '<PROJECT_ROOT>/index.win32.js'
 module.name_mapper='^react-native/\(.*\)$' -> '<PROJECT_ROOT>/\1'
 module.name_mapper='^@office-iss/react-native-win32/\(.*\)$' -> '<PROJECT_ROOT>\/1'
+module.name_mapper='^@react-native/dev-middleware$' -> '<PROJECT_ROOT>/\1'
 module.name_mapper='^@?[./a-zA-Z0-9$_-]+\.\(bmp\|gif\|jpg\|jpeg\|png\|psd\|svg\|webp\|m4v\|mov\|mp4\|mpeg\|mpg\|webm\|aac\|aiff\|caf\|m4a\|mp3\|wav\|html\|pdf\)$' -> '<PROJECT_ROOT>/Libraries/Image/RelativeImageStub'
 
 suppress_type=$FlowIssue
@@ -136,4 +147,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.204.1
+^0.217.2

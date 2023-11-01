@@ -46,7 +46,7 @@ struct JsiHostObjectWrapper : implements<JsiHostObjectWrapper, IJsiHostObject> {
 
   JsiValueRef GetProperty(JsiRuntime const &runtime, JsiPropertyIdRef const &name);
   void SetProperty(JsiRuntime const &runtime, JsiPropertyIdRef const &name, JsiValueRef const &value);
-  Windows::Foundation::Collections::IVector<JsiPropertyIdRef> GetPropertyIds(JsiRuntime const &runtime);
+  winrt::Windows::Foundation::Collections::IVector<JsiPropertyIdRef> GetPropertyIds(JsiRuntime const &runtime);
 
   std::shared_ptr<facebook::jsi::HostObject> const &HostObjectSharedPtr() noexcept;
 

@@ -8,29 +8,18 @@
  */
 #pragma once
 
-#include "NativeModules.h"
+#include <NativeModules.h>
 #include <tuple>
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(PerformanceSpec_ReactNativeStartupTiming)
-struct PerformanceSpec_ReactNativeStartupTiming {
-    REACT_FIELD(startTime)
-    double startTime;
-    REACT_FIELD(endTime)
-    double endTime;
-    REACT_FIELD(executeJavaScriptBundleEntryPointStart)
-    double executeJavaScriptBundleEntryPointStart;
-    REACT_FIELD(executeJavaScriptBundleEntryPointEnd)
-    double executeJavaScriptBundleEntryPointEnd;
-};
 
 struct PerformanceSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
       Method<void(std::string, double) noexcept>{0, L"mark"},
       Method<void(std::string, double, double, double, std::string, std::string) noexcept>{1, L"measure"},
       SyncMethod<::React::JSValue() noexcept>{2, L"getSimpleMemoryInfo"},
-      SyncMethod<PerformanceSpec_ReactNativeStartupTiming() noexcept>{3, L"getReactNativeStartupTiming"},
+      SyncMethod<::React::JSValue() noexcept>{3, L"getReactNativeStartupTiming"},
   };
 
   template <class TModule>
@@ -55,8 +44,8 @@ struct PerformanceSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "getReactNativeStartupTiming",
-          "    REACT_SYNC_METHOD(getReactNativeStartupTiming) PerformanceSpec_ReactNativeStartupTiming getReactNativeStartupTiming() noexcept { /* implementation */ }\n"
-          "    REACT_SYNC_METHOD(getReactNativeStartupTiming) static PerformanceSpec_ReactNativeStartupTiming getReactNativeStartupTiming() noexcept { /* implementation */ }\n");
+          "    REACT_SYNC_METHOD(getReactNativeStartupTiming) ::React::JSValue getReactNativeStartupTiming() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(getReactNativeStartupTiming) static ::React::JSValue getReactNativeStartupTiming() noexcept { /* implementation */ }\n");
   }
 };
 

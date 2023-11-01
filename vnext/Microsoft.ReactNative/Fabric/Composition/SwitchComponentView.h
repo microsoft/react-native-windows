@@ -5,7 +5,6 @@
 #pragma once
 
 #include <Fabric/ComponentView.h>
-#include <Microsoft.ReactNative.Cxx/ReactContext.h>
 
 #include "CompositionViewComponentView.h"
 
@@ -35,13 +34,25 @@ struct SwitchComponentView : CompositionBaseComponentView {
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
   void finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept override;
   void prepareForRecycle() noexcept override;
-  facebook::react::Props::Shared props() noexcept override;
+  facebook::react::SharedViewProps viewProps() noexcept override;
   bool focusable() const noexcept override;
+  void onThemeChanged() noexcept override;
+  void onKeyUp(
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
+  void onPointerPressed(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
+  void onPointerReleased(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
+  void onPointerEntered(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
+  void onPointerExited(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
 
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt, bool ignorePointerEvents)
       const noexcept override;
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
-  int64_t sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept override;
+  std::string DefaultControlType() const noexcept override;
 
  private:
   SwitchComponentView(
@@ -52,12 +63,15 @@ struct SwitchComponentView : CompositionBaseComponentView {
   void ensureVisual() noexcept;
   void Draw() noexcept;
   void ensureDrawingSurface() noexcept;
+  bool toggle() noexcept;
 
+  bool m_hovered{false};
+  bool m_pressed{false};
   facebook::react::Size m_contentSize;
-  winrt::Microsoft::ReactNative::Composition::SpriteVisual m_visual{nullptr};
-  winrt::Microsoft::ReactNative::ReactContext m_context;
+  winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
   facebook::react::SharedViewProps m_props;
-  winrt::Microsoft::ReactNative::Composition::ICompositionDrawingSurface m_drawingSurface;
+  winrt::Microsoft::ReactNative::Composition::IDrawingSurfaceBrush m_drawingSurface;
+  winrt::Microsoft::ReactNative::Composition::ISwitchThumbVisual m_thumbVisual;
 };
 
 } // namespace Microsoft::ReactNative

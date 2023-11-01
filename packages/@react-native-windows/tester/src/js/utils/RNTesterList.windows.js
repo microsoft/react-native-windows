@@ -148,7 +148,7 @@ const Components: Array<RNTesterModuleInfo> = [
   {
     key: 'ViewExample',
     category: 'Basic',
-    module: require('../examples/View/ViewExample'),
+    module: require('../examples/View/ViewExample').default,
   },
   //{
   //  key: 'NewArchitectureExample',
@@ -184,9 +184,14 @@ const Components: Array<RNTesterModuleInfo> = [
     key: 'LegacyTextHitTestTest',
     module: require('../examples-win/LegacyTests/TextHitTestPage'),
   },
+  {
+    key: 'PerformanceComparisonExample',
+    category: 'Basic',
+    module: require('../examples/Performance/PerformanceComparisonExample'),
+  },
 ];
 
-const APIs: Array<RNTesterModuleInfo> = [
+const APIs: Array<RNTesterModuleInfo> = ([
   {
     key: 'KeyboardFocusExample',
     category: 'Basic',
@@ -235,7 +240,7 @@ const APIs: Array<RNTesterModuleInfo> = [
   {
     key: 'BorderExample',
     category: 'UI',
-    module: require('../examples/Border/BorderExample'),
+    module: require('../examples/Border/BorderExample').default,
   },
   {
     key: 'CrashExample',
@@ -252,10 +257,20 @@ const APIs: Array<RNTesterModuleInfo> = [
     category: 'UI',
     module: require('../examples/Dimensions/DimensionsExample'),
   },
-  {
-    key: 'InvalidPropsExample',
-    module: require('../examples/InvalidProps/InvalidPropsExample'),
-  },
+  // Only show the link for the example if the API is available.
+  typeof IntersectionObserver === 'function'
+    ? {
+        key: 'IntersectionObserver',
+        category: 'UI',
+        module: require('../examples/IntersectionObserver/IntersectionObserverIndex'),
+      }
+    : null,
+
+  // E2E Tests failing when this test is enabled
+  // {
+  //   key: 'InvalidPropsExample',
+  //   module: require('../examples/InvalidProps/InvalidPropsExample'),
+  // },
   {
     key: 'Keyboard',
     category: 'Basic',
@@ -285,6 +300,13 @@ const APIs: Array<RNTesterModuleInfo> = [
     category: 'UI',
     module: require('../examples/Layout/LayoutExample'),
   },
+  typeof MutationObserver === 'function'
+    ? {
+        key: 'MutationObserver',
+        category: 'UI',
+        module: require('../examples/MutationObserver/MutationObserverIndex'),
+      }
+    : null,
   {
     key: 'MouseExample',
     category: 'Basic',
@@ -357,6 +379,10 @@ const APIs: Array<RNTesterModuleInfo> = [
     module: require('../examples/TurboModule/TurboModuleExample'),
   },
   {
+    key: 'LegacyModuleExample',
+    module: require('../examples/TurboModule/LegacyModuleExample'),
+  },
+  {
     key: 'TurboCxxModuleExample',
     category: 'Basic',
     module: require('../examples/TurboModule/TurboCxxModuleExample'),
@@ -366,7 +392,7 @@ const APIs: Array<RNTesterModuleInfo> = [
     category: 'Basic',
     module: require('../examples/Performance/PerformanceApiExample'),
   },
-];
+]: Array<?RNTesterModuleInfo>).filter(Boolean);
 
 if (ReactNativeFeatureFlags.shouldEmitW3CPointerEvents()) {
   APIs.push({

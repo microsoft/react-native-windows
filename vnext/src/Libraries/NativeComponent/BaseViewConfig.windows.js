@@ -83,16 +83,13 @@ const bubblingEventTypes = {
       captured: 'onTouchEndCapture',
     },
   },
-
   // Experimental/Work in Progress Pointer Events (not yet ready for use)
-  /*[Windows
   topClick: {
     phasedRegistrationNames: {
       captured: 'onClickCapture',
       bubbled: 'onClick',
     },
   },
-  Windows] */
   topPointerCancel: {
     phasedRegistrationNames: {
       captured: 'onPointerCancelCapture',
@@ -143,6 +140,18 @@ const bubblingEventTypes = {
       bubbled: 'onPointerOut',
     },
   },
+  topGotPointerCapture: {
+    phasedRegistrationNames: {
+      captured: 'onGotPointerCaptureCapture',
+      bubbled: 'onGotPointerCapture',
+    },
+  },
+  topLostPointerCapture: {
+    phasedRegistrationNames: {
+      captured: 'onLostPointerCaptureCapture',
+      bubbled: 'onLostPointerCapture',
+    },
+  },
 
   topKeyDown: {
     // [Windows]
@@ -190,9 +199,6 @@ const directEventTypes = {
   topMouseLeave: {
     registrationName: 'onMouseLeave',
   },
-  topClick: {
-    registrationName: 'onClick',
-  },
   // Windows]
 };
 
@@ -219,11 +225,13 @@ const validAttributesForNonEventProps = {
   overflow: true,
   shouldRasterizeIOS: true,
   transform: {diff: require('../Utilities/differ/matricesDiffer')},
+  transformOrigin: true,
   accessibilityRole: true,
   accessibilityState: true,
   nativeID: true,
   pointerEvents: true,
   removeClippedSubviews: true,
+  role: true,
   borderRadius: true,
   borderColor: {process: require('../StyleSheet/processColor').default},
   borderCurve: true,
@@ -347,6 +355,7 @@ const validAttributesForNonEventProps = {
 
   direction: true,
 
+  accessibilityLevel: true, // [Windows]
   accessibilityLiveRegion: true, // [Windows]
   accessibilityPosInSet: true, // [Windows]
   accessibilitySetSize: true, // [Windows]
@@ -360,6 +369,8 @@ const validAttributesForNonEventProps = {
   enableFocusRing: true, // [Windows]
 
   style: ReactNativeStyleAttributes,
+
+  experimental_layoutConformance: true,
 };
 
 // Props for bubbling and direct events
@@ -405,6 +416,8 @@ const validAttributesForEventProps = {
   onPointerLeave: true,
   onPointerOver: true,
   onPointerOut: true,
+  onGotPointerCapture: true,
+  onLostPointerCapture: true,
 
   // [Windows
   // Mouse enter/leave events

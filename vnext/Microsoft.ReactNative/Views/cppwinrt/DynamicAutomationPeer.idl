@@ -49,11 +49,16 @@ namespace Microsoft.ReactNative
     Selected = 0,
     Disabled,
     Checked,
-    Unchecked,
     Busy,
     Expanded,
-    Collapsed,
     CountStates
+  };
+
+  enum AccessibilityStateCheckedValue
+  {
+    Unchecked = 0, // Maps to ToggleState::Off
+    Checked,       // Maps to ToggleState::On
+    Mixed          // Maps to ToggleState::Indeterminate
   };
 
   // When adding a new numeric value, make sure to increment 'numericValuesCount' in FrameworkElementViewManager
@@ -87,12 +92,8 @@ namespace Microsoft.ReactNative
     static Boolean GetAccessibilityStateDisabled(XAML_NAMESPACE.UIElement element);
 
     static XAML_NAMESPACE.DependencyProperty AccessibilityStateCheckedProperty { get; };
-    static void SetAccessibilityStateChecked(XAML_NAMESPACE.UIElement element, Boolean value);
-    static Boolean GetAccessibilityStateChecked(XAML_NAMESPACE.UIElement element);
-
-    static XAML_NAMESPACE.DependencyProperty AccessibilityStateUncheckedProperty { get; };
-    static void SetAccessibilityStateUnchecked(XAML_NAMESPACE.UIElement element, Boolean value);
-    static Boolean GetAccessibilityStateUnchecked(XAML_NAMESPACE.UIElement element);
+    static void SetAccessibilityStateChecked(XAML_NAMESPACE.UIElement element, AccessibilityStateCheckedValue value);
+    static AccessibilityStateCheckedValue GetAccessibilityStateChecked(XAML_NAMESPACE.UIElement element);
 
     static XAML_NAMESPACE.DependencyProperty AccessibilityStateBusyProperty { get; };
     static void SetAccessibilityStateBusy(XAML_NAMESPACE.UIElement element, Boolean value);
@@ -101,10 +102,6 @@ namespace Microsoft.ReactNative
     static XAML_NAMESPACE.DependencyProperty AccessibilityStateExpandedProperty { get; };
     static void SetAccessibilityStateExpanded(XAML_NAMESPACE.UIElement element, Boolean value);
     static Boolean GetAccessibilityStateExpanded(XAML_NAMESPACE.UIElement element);
-
-    static XAML_NAMESPACE.DependencyProperty AccessibilityStateCollapsedProperty { get; };
-    static void SetAccessibilityStateCollapsed(XAML_NAMESPACE.UIElement element, Boolean value);
-    static Boolean GetAccessibilityStateCollapsed(XAML_NAMESPACE.UIElement element);
 
     static XAML_NAMESPACE.DependencyProperty AccessibilityValueMinProperty { get; };
     static void SetAccessibilityValueMin(XAML_NAMESPACE.UIElement element, Double value);

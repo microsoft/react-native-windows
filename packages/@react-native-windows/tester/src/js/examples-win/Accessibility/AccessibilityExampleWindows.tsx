@@ -31,6 +31,20 @@ class AccessibilityBaseExample extends React.Component {
           accessible={true}
           accessibilityLabel="A hint for the red box."
         />
+        <Text>
+          The following has accessibilitySetSize, accessibilityPosInSet and
+          accessibilityLabel:
+        </Text>
+        <View
+          style={{width: 50, height: 50, backgroundColor: 'red'}}
+          accessible={true}
+          accessibilityRole="listitem"
+          accessibilityLabel="This label should not be used"
+          aria-label="Aria label takes precedence"
+          accessibilitySetSize={5}
+          accessibilityPosInSet={2}
+          accessibilityLevel={4}
+        />
       </View>
     );
   }
@@ -344,9 +358,7 @@ class AccessibilityStateExamples extends React.Component {
                 ? 'gray'
                 : 'lightskyblue',
           }}
-          //@ts-ignore
           accessibilityRole="checkbox"
-          //@ts-ignore
           accessibilityState={{
             checked:
               this.state.viewChecked === 0
@@ -380,7 +392,6 @@ class AccessibilityStateExamples extends React.Component {
             backgroundColor: this.state.viewBusy ? 'gray' : 'lightskyblue',
           }}
           accessibilityRole="none"
-          //@ts-ignore
           accessibilityState={{busy: this.state.viewBusy}}>
           <Text>
             This View should be {this.state.viewBusy ? 'Busy' : 'Not Busy'}{' '}
@@ -403,7 +414,6 @@ class AccessibilityStateExamples extends React.Component {
             height: this.state.viewCollapsed ? 25 : 50,
           }}
           accessibilityRole="none"
-          //@ts-ignore
           accessibilityState={{
             expanded: !this.state.viewCollapsed,
           }}>
@@ -505,9 +515,7 @@ class AccessibilityListExamples extends React.Component {
           The following uses accessibilityRole: 'list', 'listitem',
           accessibilitySetSize, and accessibilityPosInSet.
         </Text>
-        <View
-          //@ts-ignore
-          accessibilityRole="list">
+        <View accessibilityRole="list">
           <FlatList
             data={items}
             renderItem={item => (
@@ -517,7 +525,6 @@ class AccessibilityListExamples extends React.Component {
                   height: 50,
                   backgroundColor: 'lightskyblue',
                 }}
-                //@ts-ignore
                 accessibilityRole="listitem"
                 accessibilitySetSize={items.length}
                 accessibilityPosInSet={item.index + 1}>
@@ -527,9 +534,7 @@ class AccessibilityListExamples extends React.Component {
             keyExtractor={(item, index) => index.toString()}
           />
         </View>
-        <View
-          //@ts-ignore
-          accessibilityRole="list">
+        <View accessibilityRole="list">
           <Text>The following does the same, but with Touchables.</Text>
           <FlatList
             data={items}
@@ -540,7 +545,6 @@ class AccessibilityListExamples extends React.Component {
                   height: 50,
                   backgroundColor: 'lightskyblue',
                 }}
-                //@ts-ignore
                 accessibilityRole="listitem"
                 accessibilitySetSize={items.length}
                 accessibilityPosInSet={item.index + 1}>

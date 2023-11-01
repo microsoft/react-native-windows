@@ -30,6 +30,11 @@
 #define REACT_MODULE(/* moduleStruct, [opt] moduleName, [opt] eventEmitterName */...) \
   INTERNAL_REACT_MODULE(__VA_ARGS__)(__VA_ARGS__)
 
+// REACT_MODULE_NOREG is REACT_MODULE without auto registration
+// they have the same arguments
+#define REACT_MODULE_NOREG(/* moduleStruct, [opt] moduleName, [opt] eventEmitterName */...) \
+  INTERNAL_REACT_MODULE_NOREG(__VA_ARGS__)(__VA_ARGS__)
+
 // REACT_INIT(method)
 // Arguments:
 // - method (required) - the method name the macro is attached to.
@@ -351,6 +356,21 @@ struct MethodSignatureMatchResult {
   bool IsSucceeded;
 };
 
+template <class TInputArg, class TOtherInputArg>
+constexpr bool MatchInputArg() noexcept {
+  return std::is_same_v<TInputArg, TOtherInputArg>;
+}
+
+template <>
+constexpr bool MatchInputArg<std::wstring, std::string>() noexcept {
+  return true;
+}
+
+template <>
+constexpr bool MatchInputArg<std::string, std::wstring>() noexcept {
+  return true;
+}
+
 template <class TResult, class TInputArgs, class TOutputCallbacks, class TOutputPromises>
 struct MethodSignature {
   using Result = TResult;
@@ -368,21 +388,6 @@ struct MethodSignature {
     } else {
       return 0;
     }
-  }
-
-  template <class TInputArg, class TOtherInputArg>
-  static constexpr bool MatchInputArg() noexcept {
-    return std::is_same_v<TInputArg, TOtherInputArg>;
-  }
-
-  template <>
-  static constexpr bool MatchInputArg<std::wstring, std::string>() noexcept {
-    return true;
-  }
-
-  template <>
-  static constexpr bool MatchInputArg<std::string, std::wstring>() noexcept {
-    return true;
   }
 
   template <class TOtherInputArgs, size_t... I>

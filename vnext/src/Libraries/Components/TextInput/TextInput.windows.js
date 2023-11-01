@@ -10,11 +10,13 @@
 
 import type {HostComponent} from '../../Renderer/shims/ReactNativeTypes';
 import type {
+  KeyEvent, // Windows
+  MouseEvent, // Windows
   PressEvent,
   ScrollEvent,
   SyntheticEvent,
 } from '../../Types/CoreEventTypes';
-import type {ViewProps} from '../View/ViewPropTypes';
+import type {HandledKeyboardEvent, ViewProps} from '../View/ViewPropTypes';
 import type {TextInputType} from './TextInput.flow';
 
 import usePressability from '../../Pressability/usePressability';
@@ -50,7 +52,6 @@ let RCTMultilineTextInputView;
 let RCTMultilineTextInputNativeCommands;
 let WindowsTextInput; // [Windows]
 let WindowsTextInputCommands; // [Windows]
-import type {KeyEvent} from '../../Types/CoreEventTypes'; // [Windows]
 
 // [Windows
 if (Platform.OS === 'android') {
@@ -211,6 +212,15 @@ export type TextContentType =
   | 'addressState'
   | 'countryName'
   | 'creditCardNumber'
+  | 'creditCardExpiration'
+  | 'creditCardExpirationMonth'
+  | 'creditCardExpirationYear'
+  | 'creditCardSecurityCode'
+  | 'creditCardType'
+  | 'creditCardName'
+  | 'creditCardGivenName'
+  | 'creditCardMiddleName'
+  | 'creditCardFamilyName'
   | 'emailAddress'
   | 'familyName'
   | 'fullStreetAddress'
@@ -231,16 +241,23 @@ export type TextContentType =
   | 'username'
   | 'password'
   | 'newPassword'
-  | 'oneTimeCode';
+  | 'oneTimeCode'
+  | 'birthdate'
+  | 'birthdateDay'
+  | 'birthdateMonth'
+  | 'birthdateYear';
 
 export type enterKeyHintType =
-  | 'enter'
+  // Cross Platform
   | 'done'
   | 'go'
   | 'next'
-  | 'previous'
   | 'search'
-  | 'send';
+  | 'send'
+  // Android-only
+  | 'previous'
+  // iOS-only
+  | 'enter';
 
 type PasswordRules = string;
 
@@ -344,6 +361,16 @@ type IOSProps = $ReadOnly<{|
    * @platform ios
    */
   lineBreakStrategyIOS?: ?('none' | 'standard' | 'hangul-word' | 'push-out'),
+
+  /**
+   * If `false`, the iOS system will not insert an extra space after a paste operation
+   * neither delete one or two spaces after a cut or delete operation.
+   *
+   * The default value is `true`.
+   *
+   * @platform ios
+   */
+  smartInsertDelete?: ?boolean,
 |}>;
 
 type AndroidProps = $ReadOnly<{|
@@ -454,6 +481,39 @@ type WindowsProps = $ReadOnly<{|
    * @platform windows
    */
   submitKeyEvents?: ?$ReadOnlyArray<SubmitKeyEvent>,
+
+  /**
+   * Specifies the Tooltip for the view
+   */
+  tooltip?: string,
+
+  /**
+   * Indicates the TabIndex to use for this view
+   */
+  tabIndex?: number,
+
+  /**
+   * Specifies if the control should show System focus visuals
+   */
+  enableFocusRing?: boolean,
+
+  /**
+   * Event fired when the mouse leaves the view
+   */
+  onMouseLeave?: (args: MouseEvent) => void,
+
+  /**
+   * Event fired when the mouse enters the view
+   */
+  onMouseEnter?: (args: MouseEvent) => void,
+
+  onKeyDown?: (args: KeyEvent) => void,
+  onKeyDownCapture?: (args: KeyEvent) => void,
+  onKeyUp?: (args: KeyEvent) => void,
+  onKeyUpCapture?: (args: KeyEvent) => void,
+
+  keyDownEvents?: ?$ReadOnlyArray<HandledKeyboardEvent>,
+  keyUpEvents?: ?$ReadOnlyArray<HandledKeyboardEvent>,
 |}>;
 
 // Windows]
@@ -492,7 +552,16 @@ export type Props = $ReadOnly<{|
    * - `additional-name`
    * - `address-line1`
    * - `address-line2`
+   * - `birthdate-day` (iOS 17+)
+   * - `birthdate-full` (iOS 17+)
+   * - `birthdate-month` (iOS 17+)
+   * - `birthdate-year` (iOS 17+)
    * - `cc-number`
+   * - `cc-csc` (iOS 17+)
+   * - `cc-exp` (iOS 17+)
+   * - `cc-exp-day` (iOS 17+)
+   * - `cc-exp-month` (iOS 17+)
+   * - `cc-exp-year` (iOS 17+)
    * - `country`
    * - `current-password`
    * - `email`
@@ -511,6 +580,11 @@ export type Props = $ReadOnly<{|
    *
    * The following values work on iOS only:
    *
+   * - `cc-name` (iOS 17+)
+   * - `cc-given-name` (iOS 17+)
+   * - `cc-middle-name` (iOS 17+)
+   * - `cc-family-name` (iOS 17+)
+   * - `cc-type` (iOS 17+)
    * - `nickname`
    * - `organization`
    * - `organization-title`
@@ -518,15 +592,6 @@ export type Props = $ReadOnly<{|
    *
    * The following values work on Android only:
    *
-   * - `birthdate-day`
-   * - `birthdate-full`
-   * - `birthdate-month`
-   * - `birthdate-year`
-   * - `cc-csc`
-   * - `cc-exp`
-   * - `cc-exp-day`
-   * - `cc-exp-month`
-   * - `cc-exp-year`
    * - `gender`
    * - `name-family`
    * - `name-given`
@@ -562,6 +627,11 @@ export type Props = $ReadOnly<{|
     | 'cc-exp-month'
     | 'cc-exp-year'
     | 'cc-number'
+    | 'cc-name'
+    | 'cc-given-name'
+    | 'cc-middle-name'
+    | 'cc-family-name'
+    | 'cc-type'
     | 'country'
     | 'current-password'
     | 'email'
@@ -814,6 +884,11 @@ export type Props = $ReadOnly<{|
    * @platform ios
    */
   unstable_onKeyPressSync?: ?(e: KeyPressEvent) => mixed,
+
+  /**
+   * Called when a single tap gesture is detected.
+   */
+  onPress?: ?(event: PressEvent) => mixed,
 
   /**
    * Called when a touch is engaged.
@@ -1109,27 +1184,19 @@ function InternalTextInput(props: Props): React.Node {
     accessibilityState,
     id,
     tabIndex,
+    selection: propsSelection,
     ...otherProps
   } = props;
 
   const inputRef = useRef<null | React.ElementRef<HostComponent<mixed>>>(null);
 
-  // Android sends a "onTextChanged" event followed by a "onSelectionChanged" event, for
-  // the same "most recent event count".
-  // For controlled selection, that means that immediately after text is updated,
-  // a controlled component will pass in the *previous* selection, even if the controlled
-  // component didn't mean to modify the selection at all.
-  // Therefore, we ignore selections and pass them through until the selection event has
-  // been sent.
-  // Note that this mitigation is NOT needed for Fabric.
-  // discovered when upgrading react-hooks
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  let selection: ?Selection =
-    props.selection == null
+  const selection: ?Selection =
+    propsSelection == null
       ? null
       : {
-          start: props.selection.start,
-          end: props.selection.end ?? props.selection.start,
+          start: propsSelection.start,
+          end: propsSelection.end ?? propsSelection.start,
         };
 
   const [mostRecentEventCount, setMostRecentEventCount] = useState<number>(0);
@@ -1141,12 +1208,6 @@ function InternalTextInput(props: Props): React.Node {
   |}>({selection, mostRecentEventCount});
 
   const lastNativeSelection = lastNativeSelectionState.selection;
-  const lastNativeSelectionEventCount =
-    lastNativeSelectionState.mostRecentEventCount;
-
-  if (lastNativeSelectionEventCount < mostRecentEventCount) {
-    selection = null;
-  }
 
   let viewCommands;
   if (AndroidTextInputCommands) {
@@ -1411,25 +1472,37 @@ function InternalTextInput(props: Props): React.Node {
 
   const focusable = props.focusable !== false;
 
+  const {
+    editable,
+    hitSlop,
+    onPress,
+    onPressIn,
+    onPressOut,
+    rejectResponderTermination,
+  } = props;
+
   const config = React.useMemo(
     () => ({
+      hitSlop,
       onPress: (event: PressEvent) => {
-        if (props.editable !== false) {
+        onPress?.(event);
+        if (editable !== false) {
           if (inputRef.current != null) {
             inputRef.current.focus();
           }
         }
       },
-      onPressIn: props.onPressIn,
-      onPressOut: props.onPressOut,
-      cancelable:
-        Platform.OS === 'ios' ? !props.rejectResponderTermination : null,
+      onPressIn: onPressIn,
+      onPressOut: onPressOut,
+      cancelable: Platform.OS === 'ios' ? !rejectResponderTermination : null,
     }),
     [
-      props.editable,
-      props.onPressIn,
-      props.onPressOut,
-      props.rejectResponderTermination,
+      editable,
+      hitSlop,
+      onPress,
+      onPressIn,
+      onPressOut,
+      rejectResponderTermination,
     ],
   );
 
@@ -1449,8 +1522,8 @@ function InternalTextInput(props: Props): React.Node {
       // $FlowFixMe - keyDownEvents was already checked to not be undefined
       for (const el of props.keyDownEvents) {
         if (
-          event.nativeEvent.code == el.code &&
-          el.handledEventPhase == eventPhase.Bubbling
+          event.nativeEvent.code === el.code &&
+          el.handledEventPhase === eventPhase.Bubbling
         ) {
           event.stopPropagation();
         }
@@ -1463,7 +1536,7 @@ function InternalTextInput(props: Props): React.Node {
     if (props.keyUpEvents && event.isPropagationStopped() !== true) {
       // $FlowFixMe - keyDownEvents was already checked to not be undefined
       for (const el of props.keyUpEvents) {
-        if (event.nativeEvent.code == el.code && el.handledEventPhase == 3) {
+        if (event.nativeEvent.code === el.code && el.handledEventPhase === 3) {
           event.stopPropagation();
         }
       }
@@ -1475,7 +1548,7 @@ function InternalTextInput(props: Props): React.Node {
     if (props.keyDownEvents && event.isPropagationStopped() !== true) {
       // $FlowFixMe - keyDownEvents was already checked to not be undefined
       for (const el of props.keyDownEvents) {
-        if (event.nativeEvent.code == el.code && el.handledEventPhase == 1) {
+        if (event.nativeEvent.code === el.code && el.handledEventPhase === 1) {
           event.stopPropagation();
         }
       }
@@ -1487,7 +1560,7 @@ function InternalTextInput(props: Props): React.Node {
     if (props.keyUpEvents && event.isPropagationStopped() !== true) {
       // $FlowFixMe - keyDownEvents was already checked to not be undefined
       for (const el of props.keyUpEvents) {
-        if (event.nativeEvent.code == el.code && el.handledEventPhase == 1) {
+        if (event.nativeEvent.code === el.code && el.handledEventPhase === 1) {
           event.stopPropagation();
         }
       }
@@ -1511,6 +1584,12 @@ function InternalTextInput(props: Props): React.Node {
       expanded: ariaExpanded ?? accessibilityState?.expanded,
       selected: ariaSelected ?? accessibilityState?.selected,
     };
+  }
+
+  if (focusable && !accessible) {
+    console.warn(
+      'All focusable views should report proper accessibility information. TextInputs marked as focusable should always be accessible.',
+    );
   }
 
   // $FlowFixMe[underconstrained-implicit-instantiation]
@@ -1611,7 +1690,6 @@ function InternalTextInput(props: Props): React.Node {
         onScroll={_onScroll}
         onSelectionChange={_onSelectionChange}
         placeholder={placeholder}
-        selection={selection}
         style={style}
         text={text}
         textBreakStrategy={props.textBreakStrategy}
@@ -1708,7 +1786,20 @@ const autoCompleteWebToAutoCompleteAndroidMap = {
 const autoCompleteWebToTextContentTypeMap = {
   'address-line1': 'streetAddressLine1',
   'address-line2': 'streetAddressLine2',
+  bday: 'birthdate',
+  'bday-day': 'birthdateDay',
+  'bday-month': 'birthdateMonth',
+  'bday-year': 'birthdateYear',
+  'cc-csc': 'creditCardSecurityCode',
+  'cc-exp-month': 'creditCardExpirationMonth',
+  'cc-exp-year': 'creditCardExpirationYear',
+  'cc-exp': 'creditCardExpiration',
+  'cc-given-name': 'creditCardGivenName',
+  'cc-additional-name': 'creditCardMiddleName',
+  'cc-family-name': 'creditCardFamilyName',
+  'cc-name': 'creditCardName',
   'cc-number': 'creditCardNumber',
+  'cc-type': 'creditCardType',
   'current-password': 'password',
   country: 'countryName',
   email: 'emailAddress',
@@ -1734,6 +1825,7 @@ const autoCompleteWebToTextContentTypeMap = {
 const ExportedForwardRef: React.AbstractComponent<
   React.ElementConfig<typeof InternalTextInput>,
   TextInputInstance,
+  // $FlowFixMe[incompatible-call]
 > = React.forwardRef(function TextInput(
   {
     allowFontScaling = true,
@@ -1756,8 +1848,13 @@ const ExportedForwardRef: React.AbstractComponent<
   let style = flattenStyle(restProps.style);
 
   if (style?.verticalAlign != null) {
+    // $FlowFixMe[prop-missing]
+    // $FlowFixMe[cannot-write]
     style.textAlignVertical =
+      // $FlowFixMe[invalid-computed-prop]
       verticalAlignToTextAlignVerticalMap[style.verticalAlign];
+    // $FlowFixMe[prop-missing]
+    // $FlowFixMe[cannot-write]
     delete style.verticalAlign;
   }
 

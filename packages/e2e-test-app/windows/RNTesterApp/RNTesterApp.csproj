@@ -95,7 +95,6 @@
   </PropertyGroup>
   <PropertyGroup>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
-    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -142,7 +141,7 @@
   </ImportGroup>
   <ItemGroup>
     <PackageReference Include="XamlTreeDump">
-      <Version>1.0.9</Version>
+      <Version>1.0.10</Version>
     </PackageReference>
   </ItemGroup>
   <ImportGroup Label="ReactNativeWindowsTargets">

@@ -23,7 +23,7 @@
           C4324 - structure was padded due to __declspec(align())
           C5205 - delete of an abstract class that has a non-virtual destructor results in undefined behavior
       -->
-    <ExtraWarningsToDisable>4068;4100;4101;4127;4189;4290;4309;4324;5205;$(DisableSpecificWarnings)</ExtraWarningsToDisable>
+    <ExtraWarningsToDisable>4068;4100;4101;4127;4189;4290;4309;4324;5205;4251;$(DisableSpecificWarnings)</ExtraWarningsToDisable>
   </PropertyGroup>
 
   <ItemDefinitionGroup>
@@ -34,6 +34,12 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <WarningLevel>Level4</WarningLevel>
     </ClCompile>
+    <Link>
+      <!--
+        LNK4199: /DELAYLOAD:v8jsi.dll ignored; no imports found from v8jsi.dll
+      -->
+      <AdditionalOptions>/ignore:4199 %(AdditionalOptions)</AdditionalOptions>
+    </Link>
   </ItemDefinitionGroup>
 
 </Project>

@@ -7,7 +7,8 @@
 
 #pragma once
 
-#include <butter/map.h>
+#include <unordered_map>
+
 #include <glog/logging.h>
 #include <react/debug/react_native_expect.h>
 #include <react/renderer/core/PropsParserContext.h>
@@ -46,18 +47,16 @@ inline void fromRawValue(const PropsParserContext &context, const RawValue &valu
     colorComponents.blue = items.at(2);
     colorComponents.alpha = length == 4 ? items.at(3) : 1.0f;
     // [Windows - Embed WindowBrush into SharedColor instead of trying to parse PlatformColor into RGB
-  } else if (value.hasType<butter::map<std::string, std::string>>()) {
-    auto map = (butter::map<std::string, std::string>)value;
-    for (const auto &pair : map) {
-      if (pair.first == "windowsbrush") {
-        result = SharedColor(std::string(pair.second));
-        return;
-      }
+  } else if (value.hasType<std::unordered_map<std::string, std::vector<std::string>>>()) {
+    auto map = (std::unordered_map<std::string, std::vector<std::string>>)value;
+    if (map.find("windowsbrush") != map.end()) {
+      result = SharedColor(std::move(map["windowsbrush"]));
+      return;
     }
   }
   // Windows]
-
   result = colorFromComponents(colorComponents);
+  return;
 }
 
 #ifdef ANDROID
@@ -78,8 +77,8 @@ inline std::string toString(const SharedColor &value) {
 #pragma mark - Geometry
 
 inline void fromRawValue(const PropsParserContext &context, const RawValue &value, Point &result) {
-  if (value.hasType<butter::map<std::string, Float>>()) {
-    auto map = (butter::map<std::string, Float>)value;
+  if (value.hasType<std::unordered_map<std::string, Float>>()) {
+    auto map = (std::unordered_map<std::string, Float>)value;
     for (const auto &pair : map) {
       if (pair.first == "x") {
         result.x = pair.second;
@@ -106,8 +105,8 @@ inline void fromRawValue(const PropsParserContext &context, const RawValue &valu
 }
 
 inline void fromRawValue(const PropsParserContext &context, const RawValue &value, Size &result) {
-  if (value.hasType<butter::map<std::string, Float>>()) {
-    auto map = (butter::map<std::string, Float>)value;
+  if (value.hasType<std::unordered_map<std::string, Float>>()) {
+    auto map = (std::unordered_map<std::string, Float>)value;
     for (const auto &pair : map) {
       if (pair.first == "width") {
         result.width = pair.second;
@@ -143,8 +142,8 @@ inline void fromRawValue(const PropsParserContext &context, const RawValue &valu
     return;
   }
 
-  if (value.hasType<butter::map<std::string, Float>>()) {
-    auto map = (butter::map<std::string, Float>)value;
+  if (value.hasType<std::unordered_map<std::string, Float>>()) {
+    auto map = (std::unordered_map<std::string, Float>)value;
     for (const auto &pair : map) {
       if (pair.first == "top") {
         result.top = pair.second;
@@ -184,8 +183,8 @@ inline void fromRawValue(const PropsParserContext &context, const RawValue &valu
     return;
   }
 
-  if (value.hasType<butter::map<std::string, Float>>()) {
-    auto map = (butter::map<std::string, Float>)value;
+  if (value.hasType<std::unordered_map<std::string, Float>>()) {
+    auto map = (std::unordered_map<std::string, Float>)value;
     for (const auto &pair : map) {
       if (pair.first == "topLeft") {
         result.topLeft = pair.second;

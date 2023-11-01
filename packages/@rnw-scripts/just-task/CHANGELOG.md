@@ -1,8 +1,84 @@
 # Change Log - @rnw-scripts/just-task
 
-This log was last generated on Tue, 16 May 2023 05:16:30 GMT and should not be manually modified.
+This log was last generated on Sat, 21 Oct 2023 05:16:09 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.3.18
+
+Sat, 21 Oct 2023 05:16:09 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.4
+
+## 2.3.17
+
+Thu, 12 Oct 2023 05:15:54 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.3
+
+## 2.3.16
+
+Wed, 20 Sep 2023 05:17:49 GMT
+
+### Patches
+
+- Integrate 8/11 (34109996+chiaramooney@users.noreply.github.com)
+
+## 2.3.15
+
+Fri, 28 Jul 2023 05:14:52 GMT
+
+### Patches
+
+- Integrate 7/21 (34109996+chiaramooney@users.noreply.github.com)
+
+## 2.3.14
+
+Wed, 26 Jul 2023 05:15:46 GMT
+
+### Patches
+
+- Remove upstream react-native flow typings from repo (jthysell@microsoft.com)
+
+## 2.3.13
+
+Fri, 14 Jul 2023 05:17:08 GMT
+
+### Patches
+
+- integration 6/28 (tatianakapos@microsoft.com)
+- Bump @rnw-scripts/jest-e2e-config to v1.4.6
+- Bump @rnw-scripts/jest-unittest-config to v1.5.6
+
+## 2.3.12
+
+Sat, 01 Jul 2023 05:14:41 GMT
+
+### Patches
+
+- integrate 6/16 (tatianakapos@microsoft.com)
+
+## 2.3.11
+
+Wed, 07 Jun 2023 05:16:11 GMT
+
+### Patches
+
+- Bump @rnw-scripts/jest-e2e-config to v1.4.5
+- Bump @rnw-scripts/jest-unittest-config to v1.5.5
+
+## 2.3.10
+
+Tue, 06 Jun 2023 19:06:47 GMT
+
+### Patches
+
+- Bump @rnw-scripts/jest-e2e-config to v1.4.4
+- Bump @rnw-scripts/jest-unittest-config to v1.5.4
 
 ## 2.3.9
 

@@ -42,7 +42,7 @@ facebook::react::ShadowNode::Shared AbiViewComponentDescriptor::createShadowNode
     facebook::react::ShadowNodeFamily::Shared const &family) const {
   auto shadowNode = std::make_shared<ShadowNodeT>(fragment, family, getTraits());
 
-  adopt(shadowNode);
+  adopt(*shadowNode);
 
   return shadowNode;
 }
@@ -52,7 +52,7 @@ facebook::react::ShadowNode::Unshared AbiViewComponentDescriptor::cloneShadowNod
     const facebook::react::ShadowNodeFragment &fragment) const {
   auto shadowNode = std::make_shared<ShadowNodeT>(sourceShadowNode, fragment);
 
-  adopt(shadowNode);
+  adopt(*shadowNode);
   return shadowNode;
 }
 
@@ -101,20 +101,6 @@ facebook::react::Props::Shared AbiViewComponentDescriptor::cloneProps(
   return shadowNodeProps;
 };
 
-facebook::react::Props::Shared AbiViewComponentDescriptor::interpolateProps(
-    const facebook::react::PropsParserContext &context,
-    facebook::react::Float animationProgress,
-    const facebook::react::Props::Shared &props,
-    const facebook::react::Props::Shared &newProps) const {
-  facebook::react::Props::Shared interpolatedPropsShared = cloneProps(context, newProps, {});
-
-  if (ConcreteShadowNode::BaseTraits().check(facebook::react::ShadowNodeTraits::Trait::ViewKind)) {
-    facebook::react::interpolateViewProps(animationProgress, props, newProps, interpolatedPropsShared);
-  }
-
-  return interpolatedPropsShared;
-};
-
 facebook::react::State::Shared AbiViewComponentDescriptor::createInitialState(
     facebook::react::Props::Shared const &props,
     facebook::react::ShadowNodeFamily::Shared const &family) const {
@@ -124,9 +110,7 @@ facebook::react::State::Shared AbiViewComponentDescriptor::createInitialState(
   }
 
   return std::make_shared<ConcreteState>(
-      std::make_shared<ConcreteStateData const>(ConcreteShadowNode::initialStateData(
-          props, facebook::react::ShadowNodeFamilyFragment::build(*family), *this)),
-      family);
+      std::make_shared<ConcreteStateData const>(ConcreteShadowNode::initialStateData(props, family, *this)), family);
 }
 
 facebook::react::State::Shared AbiViewComponentDescriptor::createState(
@@ -144,14 +128,17 @@ facebook::react::State::Shared AbiViewComponentDescriptor::createState(
 }
 
 facebook::react::ShadowNodeFamily::Shared AbiViewComponentDescriptor::createFamily(
-    facebook::react::ShadowNodeFamilyFragment const &fragment,
-    facebook::react::SharedEventTarget eventTarget) const {
-  auto eventEmitter =
-      std::make_shared<ConcreteEventEmitter const>(std::move(eventTarget), fragment.tag, eventDispatcher_);
+    facebook::react::ShadowNodeFamilyFragment const &fragment) const {
   return std::make_shared<facebook::react::ShadowNodeFamily>(
-      facebook::react::ShadowNodeFamilyFragment{fragment.tag, fragment.surfaceId, eventEmitter},
+      facebook::react::ShadowNodeFamilyFragment{fragment.tag, fragment.surfaceId, fragment.instanceHandle},
       eventDispatcher_,
       *this);
+}
+
+facebook::react::SharedEventEmitter AbiViewComponentDescriptor::createEventEmitter(
+    facebook::react::InstanceHandle::Shared const &instanceHandle) const {
+  return std::make_shared<ConcreteEventEmitter const>(
+      std::make_shared<facebook::react::EventTarget>(instanceHandle), eventDispatcher_);
 }
 
 /*
@@ -166,9 +153,9 @@ facebook::react::ShadowNodeFamily::Shared AbiViewComponentDescriptor::createFami
  *   - Set `ShadowNode`'s size from state in
  * `ModalHostViewComponentDescriptor`.
  */
-void AbiViewComponentDescriptor::adopt(facebook::react::ShadowNode::Unshared const &shadowNode) const {
+void AbiViewComponentDescriptor::adopt(facebook::react::ShadowNode &shadowNode) const {
   // Default implementation does nothing.
-  react_native_assert(shadowNode->getComponentHandle() == getComponentHandle());
+  react_native_assert(shadowNode.getComponentHandle() == getComponentHandle());
 }
 
 } // namespace Microsoft::ReactNative

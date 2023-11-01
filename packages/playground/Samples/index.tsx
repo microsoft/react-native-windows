@@ -611,7 +611,7 @@ export default class Bootstrap extends React.Component<
             <Image
               style={{width: 50, height: 50}}
               source={{
-                uri: 'http://facebook.github.io/react-native/img/header_logo.png',
+                uri: 'https://facebook.github.io/react-native/img/header_logo.png',
               }}
               onLoadStart={() => {
                 console.log('image onLoadStart!');

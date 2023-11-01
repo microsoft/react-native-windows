@@ -16,14 +16,15 @@
     "regex": "cpp",
     "utility": "cpp",
     "ratio": "cpp",
-    "memory": "cpp"
+    "memory": "cpp",
+    "array": "cpp"
   },
   "search.exclude": {
     "**/dist/**/*.js": true,
     "**/lib/**/*.js": true,
     "**/node_modules": false
   },
-  "editor.formatOnSave": true,
+  "editor.formatOnSave": false,
   "eslint.format.enable": true,
   "eslint.packageManager": "yarn",
   "eslint.enable": true,
@@ -58,9 +59,10 @@
   "clang-format.language.javascript.enable": false,
   "clang-format.language.typescript.enable": false,
   "clang-format.assumeFilename": "${workspaceFolder}/.clang-format",
-  "clang-format.executable": "${workspaceRoot}/vnext/node_modules/.bin/clang-format",
+  "clang-format.executable": "${workspaceRoot}/node_modules/.bin/clang-format",
   "typescript.tsdk": "node_modules\\typescript\\lib",
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
-  }
+  },
+  "dotnet.defaultSolution": "disable"
 }

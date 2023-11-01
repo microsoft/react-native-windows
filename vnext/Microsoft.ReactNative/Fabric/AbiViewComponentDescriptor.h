@@ -53,11 +53,6 @@ class AbiViewComponentDescriptor : public facebook::react::ComponentDescriptor {
       const facebook::react::PropsParserContext &context,
       const facebook::react::Props::Shared &props,
       const facebook::react::RawProps &rawProps) const override;
-  facebook::react::Props::Shared interpolateProps(
-      const facebook::react::PropsParserContext &context,
-      facebook::react::Float animationProgress,
-      const facebook::react::Props::Shared &props,
-      const facebook::react::Props::Shared &newProps) const override;
   virtual facebook::react::State::Shared createInitialState(
       facebook::react::Props::Shared const &props,
       facebook::react::ShadowNodeFamily::Shared const &family) const override;
@@ -66,8 +61,10 @@ class AbiViewComponentDescriptor : public facebook::react::ComponentDescriptor {
       facebook::react::StateData::Shared const &data) const override;
 
   facebook::react::ShadowNodeFamily::Shared createFamily(
-      facebook::react::ShadowNodeFamilyFragment const &fragment,
-      facebook::react::SharedEventTarget eventTarget) const override;
+      facebook::react::ShadowNodeFamilyFragment const &fragment) const override;
+
+  facebook::react::SharedEventEmitter createEventEmitter(
+      facebook::react::InstanceHandle::Shared const &instanceHandle) const override;
 
  protected:
   /*
@@ -82,7 +79,7 @@ class AbiViewComponentDescriptor : public facebook::react::ComponentDescriptor {
    *   - Set `ShadowNode`'s size from state in
    * `ModalHostViewComponentDescriptor`.
    */
-  virtual void adopt(facebook::react::ShadowNode::Unshared const &shadowNode) const;
+  virtual void adopt(facebook::react::ShadowNode &shadowNode) const;
 
  private:
   winrt::Microsoft::ReactNative::IReactViewComponentBuilder m_builder;

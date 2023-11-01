@@ -8,16 +8,22 @@
  */
 #pragma once
 
-#include "NativeModules.h"
+#include <NativeModules.h>
 #include <tuple>
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(WebSocketModuleSpec_connect_options)
 struct WebSocketModuleSpec_connect_options {
-    REACT_FIELD(headers)
     std::optional<::React::JSValue> headers;
 };
+
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(WebSocketModuleSpec_connect_options*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"headers", &WebSocketModuleSpec_connect_options::headers},
+    };
+    return fieldMap;
+}
 
 struct WebSocketModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{

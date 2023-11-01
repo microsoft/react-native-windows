@@ -15,7 +15,6 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace http = boost::beast::http;
 
-using folly::dynamic;
 using Microsoft::React::Networking::IHttpResource;
 using Microsoft::React::Networking::OriginPolicy;
 using std::make_shared;
@@ -146,10 +145,10 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
       string{server1Args.Url},
       0,                          /*requestId*/
       std::move(clientArgs.RequestHeaders),
-      dynamic::object("string", ""),  /*data*/
+      { { "string", "" } },       /*data*/
       "text",
       false,                      /*useIncrementalUpdates*/
-      0,                       /*timeout*/
+      0,                          /*timeout*/
       clientArgs.WithCredentials, /*withCredentials*/
       [](int64_t){}               /*reactCallback*/
     );
@@ -200,10 +199,10 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
       string{serverArgs.Url},
       0,                          /*requestId*/
       std::move(clientArgs.RequestHeaders),
-      dynamic::object("string", ""),  /*data*/
+      { { "string", "" } },       /*data*/
       "text",
       false,                      /*useIncrementalUpdates*/
-      0,                       /*timeout*/
+      0,                          /*timeout*/
       clientArgs.WithCredentials, /*withCredentials*/
       [](int64_t) {}              /*reactCallback*/
     );
@@ -298,12 +297,12 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
       {
         {"ValidHeader", "AnyValue"}
       },
-      dynamic::object("string", ""),  /*data*/
+      { { "string", "" } },       /*data*/
       "text",
-      false /*useIncrementalUpdates*/,
-      0 /*timeout*/,
-      false /*withCredentials*/,
-      [](int64_t) {} /*callback*/
+      false                       /*useIncrementalUpdates*/,
+      0                           /*timeout*/,
+      false                       /*withCredentials*/,
+      [](int64_t) {}              /*callback*/
     );
 
     getDataPromise.get_future().wait();

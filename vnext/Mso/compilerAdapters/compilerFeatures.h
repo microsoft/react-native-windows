@@ -20,7 +20,7 @@
 
 // Check if compiler supports UUID
 #ifndef COMPILER_SUPPORTS_UUID
-#if defined(__clang__) || defined(__GNUC__)
+#if (defined(__APPLE__) && defined(__clang__)) || defined(__GNUC__)
 #define COMPILER_SUPPORTS_UUID 0
 #elif defined(_MSC_VER)
 #define COMPILER_SUPPORTS_UUID 1

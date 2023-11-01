@@ -19,7 +19,7 @@ xaml::Media::Brush XamlHelper::BrushFrom(JSValueArgWriter const &valueProvider) 
   return ::Microsoft::ReactNative::IsValidColorValue(value) ? ::Microsoft::ReactNative::BrushFrom(value) : nullptr;
 }
 
-Windows::UI::Color XamlHelper::ColorFrom(JSValueArgWriter const &valueProvider) noexcept {
+winrt::Windows::UI::Color XamlHelper::ColorFrom(JSValueArgWriter const &valueProvider) noexcept {
   auto value = GetFollyDynamicFromValueProvider(valueProvider);
   return ::Microsoft::ReactNative::ColorFrom(value);
 }

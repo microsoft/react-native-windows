@@ -18,12 +18,12 @@
 #include <UI.Xaml.Controls.h>
 #include <react/components/rnwcore/ComponentDescriptors.h>
 #include <react/renderer/componentregistry/ComponentDescriptorProviderRegistry.h>
-#include <react/renderer/core/CoreFeatures.h>
 #include <react/renderer/core/DynamicPropsUtilities.h>
 #include <react/renderer/core/EventBeat.h>
 #include <react/renderer/scheduler/Scheduler.h>
 #include <react/renderer/scheduler/SchedulerToolbox.h>
 #include <react/utils/ContextContainer.h>
+#include <react/utils/CoreFeatures.h>
 #include <runtimeexecutor/ReactCommon/RuntimeExecutor.h>
 #include <winrt/Windows.Graphics.Display.h>
 #include <winrt/Windows.UI.Composition.Desktop.h>
@@ -166,12 +166,11 @@ const IComponentViewRegistry &FabricUIManager::GetViewRegistry() const noexcept 
 }
 
 void FabricUIManager::startSurface(
-    facebook::react::IReactRootView *rootview,
+    const winrt::Microsoft::ReactNative::CompositionRootView &rootView,
     facebook::react::SurfaceId surfaceId,
     const std::string &moduleName,
     const folly::dynamic &initialProps) noexcept {
-  auto CompositionRootView = static_cast<ICompositionRootView *>(rootview);
-  m_surfaceRegistry.insert({surfaceId, {CompositionRootView->GetVisual()}});
+  m_surfaceRegistry.insert({surfaceId, {rootView.RootVisual(), rootView}});
 
   m_context.UIDispatcher().Post([self = shared_from_this(), surfaceId]() {
     auto &rootComponentViewDescriptor = self->m_registry.dequeueComponentViewWithComponentHandle(
@@ -183,12 +182,12 @@ void FabricUIManager::startSurface(
 
   facebook::react::LayoutContext context;
   facebook::react::LayoutConstraints constraints;
-  context.pointScaleFactor = static_cast<float>(CompositionRootView->ScaleFactor());
-  context.fontSizeMultiplier = static_cast<float>(CompositionRootView->ScaleFactor());
-  constraints.minimumSize.height = static_cast<float>(CompositionRootView->GetActualHeight());
-  constraints.minimumSize.width = static_cast<float>(CompositionRootView->GetActualWidth());
-  constraints.maximumSize.height = static_cast<float>(CompositionRootView->GetActualHeight());
-  constraints.maximumSize.width = static_cast<float>(CompositionRootView->GetActualWidth());
+  context.pointScaleFactor = rootView.ScaleFactor();
+  context.fontSizeMultiplier = rootView.ScaleFactor();
+  constraints.minimumSize.height = rootView.Size().Height;
+  constraints.minimumSize.width = rootView.Size().Width;
+  constraints.maximumSize.height = rootView.Size().Height;
+  constraints.maximumSize.width = rootView.Size().Width;
   constraints.layoutDirection = facebook::react::LayoutDirection::LeftToRight;
 
   m_surfaceManager->startSurface(
@@ -202,6 +201,13 @@ void FabricUIManager::startSurface(
 
 void FabricUIManager::stopSurface(facebook::react::SurfaceId surfaceId) noexcept {
   m_surfaceManager->stopSurface(surfaceId);
+}
+
+winrt::IInspectable FabricUIManager::GetUiaFragmentProvider(facebook::react::SurfaceId surfaceId) const noexcept {
+  if (auto strong = m_surfaceRegistry.at(surfaceId).wkRootView.get()) {
+    return strong.GetUiaProvider();
+  }
+  return nullptr;
 }
 
 facebook::react::Size FabricUIManager::measureSurface(

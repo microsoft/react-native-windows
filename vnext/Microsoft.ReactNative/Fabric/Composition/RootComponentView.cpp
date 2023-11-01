@@ -9,6 +9,7 @@
 #include <Fabric/FabricUIManagerModule.h>
 #include "CompositionRootAutomationProvider.h"
 #include "CompositionRootView.h"
+#include "Theme.h"
 
 namespace Microsoft::ReactNative {
 
@@ -16,7 +17,7 @@ RootComponentView::RootComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : Super(compContext, tag), m_context(reactContext) {}
+    : Super(compContext, tag, reactContext) {}
 
 std::shared_ptr<RootComponentView> RootComponentView::Create(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
@@ -84,6 +85,14 @@ bool RootComponentView::NavigateFocus(const winrt::Microsoft::ReactNative::Focus
   return view != nullptr;
 }
 
+bool RootComponentView::TrySetFocusedComponent(IComponentView &view) noexcept {
+  if (view.focusable()) {
+    view.rootComponentView()->SetFocusedComponent(&view);
+    return true;
+  }
+  return false;
+}
+
 bool RootComponentView::TryMoveFocus(bool next) noexcept {
   if (!m_focusedComponent) {
     return NavigateFocus(winrt::Microsoft::ReactNative::FocusNavigationRequest(
@@ -94,22 +103,30 @@ bool RootComponentView::TryMoveFocus(bool next) noexcept {
   Mso::Functor<bool(IComponentView &)> fn = [currentlyFocused = m_focusedComponent](IComponentView &view) noexcept {
     if (&view == currentlyFocused)
       return false;
-    if (view.focusable()) {
-      view.rootComponentView()->SetFocusedComponent(&view);
-      return true;
-    }
-    return false;
+
+    return view.rootComponentView()->TrySetFocusedComponent(view);
   };
 
   return walkTree(*m_focusedComponent, next, fn);
 }
 
-winrt::IInspectable RootComponentView::EnsureUiaProvider() noexcept {
-  if (m_uiaProvider == nullptr) {
-    m_uiaProvider =
-        winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionRootAutomationProvider>(getPtr());
+HRESULT RootComponentView::GetFragmentRoot(IRawElementProviderFragmentRoot **pRetVal) noexcept {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+
+  *pRetVal = nullptr;
+
+  auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties());
+  if (uiManager == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  auto uiaProvider = uiManager->GetUiaFragmentProvider(tag());
+  auto spFragmentRoot = uiaProvider.as<IRawElementProviderFragmentRoot>();
+  if (spFragmentRoot) {
+    *pRetVal = spFragmentRoot.detach();
   }
-  return m_uiaProvider;
+
+  return S_OK;
 }
 
 std::shared_ptr<RootComponentView> RootComponentView::getPtr() {
@@ -133,6 +150,10 @@ winrt::IInspectable RootComponentView::UiaProviderFromPoint(const POINT &ptPixel
     return nullptr;
 
   return view->EnsureUiaProvider();
+}
+
+ClipState RootComponentView::getClipState() noexcept {
+  return ClipState::NoClip;
 }
 
 } // namespace Microsoft::ReactNative

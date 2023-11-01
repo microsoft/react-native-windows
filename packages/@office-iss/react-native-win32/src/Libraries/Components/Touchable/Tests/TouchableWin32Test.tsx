@@ -5,7 +5,7 @@ import {NativeSyntheticEvent, StyleSheet, Text, ViewStyle } from 'react-native';
 import {Insets} from 'react-native/types/public/Insets';
 import { TextWin32 } from '../../Text/TextWin32';
 import { ViewWin32 } from '../../View/ViewWin32';
-import { IViewWin32Props, IKeyboardEvent } from '../../View/ViewPropTypes.win32';
+import { IViewWin32Props, IKeyboardEvent } from '../../View/ViewPropTypes';
 import { TouchableWin32 } from '../TouchableWin32';
 import { IPressEvent, IRenderChild } from '../TouchableWin32.Types';
 import { ITouchableWin32State } from '../TouchableWin32.Props';

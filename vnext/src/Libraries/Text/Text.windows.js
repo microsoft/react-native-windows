@@ -16,7 +16,6 @@ import * as PressabilityDebug from '../Pressability/PressabilityDebug';
 import usePressability from '../Pressability/usePressability';
 import flattenStyle from '../StyleSheet/flattenStyle';
 import processColor from '../StyleSheet/processColor';
-import {getAccessibilityRoleFromRole} from '../Utilities/AcessibilityMapping';
 import Platform from '../Utilities/Platform';
 import TextAncestor from './TextAncestor';
 import {NativeText, NativeVirtualText} from './TextNativeComponent';
@@ -38,7 +37,9 @@ const Text: React.AbstractComponent<
   const {
     accessible,
     accessibilityLabel,
-    accessibilityRole,
+    accessibilityLevel, // Windows
+    accessibilityPosInSet, // Windows
+    accessibilitySetSize, // Windows
     accessibilityState,
     allowFontScaling,
     'aria-busy': ariaBusy,
@@ -46,6 +47,9 @@ const Text: React.AbstractComponent<
     'aria-disabled': ariaDisabled,
     'aria-expanded': ariaExpanded,
     'aria-label': ariaLabel,
+    'aria-level': ariaLevel, // Windows
+    'aria-posinset': ariaPosinset, // Windows
+    'aria-setsize': ariaSetsize, // Windows
     'aria-selected': ariaSelected,
     ellipsizeMode,
     id,
@@ -61,7 +65,6 @@ const Text: React.AbstractComponent<
     onResponderTerminationRequest,
     onStartShouldSetResponder,
     pressRetentionOffset,
-    role,
     suppressHighlighting,
     ...restProps
   } = props;
@@ -112,7 +115,13 @@ const Text: React.AbstractComponent<
             onLongPress,
             onPress,
             onPressIn(event: PressEvent) {
-              setHighlighted(!suppressHighlighting);
+              // Updating isHighlighted causes unnecessary re-renders for platforms that don't use it
+              // in the best case, and cause issues with text selection in the worst case. Forcing
+              // the isHighlighted prop to false on all platforms except iOS.
+              setHighlighted(
+                (suppressHighlighting == null || !suppressHighlighting) &&
+                  Platform.OS === 'ios',
+              );
               onPressIn?.(event);
             },
             onPressOut(event: PressEvent) {
@@ -208,6 +217,7 @@ const Text: React.AbstractComponent<
 
   const _accessible = Platform.select({
     ios: accessible !== false,
+    windows: accessible !== false,
     default: accessible,
   });
 
@@ -215,18 +225,28 @@ const Text: React.AbstractComponent<
   style = flattenStyle(style);
 
   if (typeof style?.fontWeight === 'number') {
+    // $FlowFixMe[prop-missing]
+    // $FlowFixMe[cannot-write]
     style.fontWeight = style?.fontWeight.toString();
   }
 
   let _selectable = restProps.selectable;
   if (style?.userSelect != null) {
+    // $FlowFixMe[invalid-computed-prop]
     _selectable = userSelectToSelectableMap[style.userSelect];
+    // $FlowFixMe[prop-missing]
+    // $FlowFixMe[cannot-write]
     delete style.userSelect;
   }
 
   if (style?.verticalAlign != null) {
+    // $FlowFixMe[prop-missing]
+    // $FlowFixMe[cannot-write]
     style.textAlignVertical =
+      // $FlowFixMe[invalid-computed-prop]
       verticalAlignToTextAlignVerticalMap[style.verticalAlign];
+    // $FlowFixMe[prop-missing]
+    // $FlowFixMe[cannot-write]
     delete style.verticalAlign;
   }
 
@@ -239,21 +259,16 @@ const Text: React.AbstractComponent<
         {...restProps}
         {...eventHandlersForText}
         accessibilityLabel={ariaLabel ?? accessibilityLabel}
-        accessibilityRole={
-          role ? getAccessibilityRoleFromRole(role) : accessibilityRole
-        }
-        accessibilityState={nativeTextAccessibilityState}
-        accessible={
-          accessible == null && Platform.OS === 'android'
-            ? _hasOnPressOrOnLongPress
-            : _accessible
-        }
+        accessibilityLevel={ariaLevel ?? accessibilityLevel} // Windows
+        accessibilityPosInSet={ariaPosinset ?? accessibilityPosInSet} // Windows
+        accessibilitySetSize={ariaSetsize ?? accessibilitySetSize} // Windows
+        accessibilityState={_accessibilityState}
         allowFontScaling={allowFontScaling !== false}
         disabled={_disabled}
         ellipsizeMode={ellipsizeMode ?? 'tail'}
         isHighlighted={isHighlighted}
-        nativeID={id ?? nativeID}
         isPressable={isPressable}
+        nativeID={id ?? nativeID}
         numberOfLines={numberOfLines}
         ref={forwardedRef}
         selectable={_selectable}
@@ -279,24 +294,43 @@ const Text: React.AbstractComponent<
           flattenStyle(styleProps)
         : styleProps;
       let {
+        // $FlowFixMe[prop-missing]
         margin,
+        // $FlowFixMe[prop-missing]
         marginBottom,
+        // $FlowFixMe[prop-missing]
         marginEnd,
+        // $FlowFixMe[prop-missing]
         marginHorizontal,
+        // $FlowFixMe[prop-missing]
         marginLeft,
+        // $FlowFixMe[prop-missing]
         marginRight,
+        // $FlowFixMe[prop-missing]
         marginStart,
+        // $FlowFixMe[prop-missing]
         marginTop,
+        // $FlowFixMe[prop-missing]
         marginVertical,
+        // $FlowFixMe[prop-missing]
         padding,
+        // $FlowFixMe[prop-missing]
         paddingBottom,
+        // $FlowFixMe[prop-missing]
         paddingEnd,
+        // $FlowFixMe[prop-missing]
         paddingHorizontal,
+        // $FlowFixMe[prop-missing]
         paddingLeft,
+        // $FlowFixMe[prop-missing]
         paddingRight,
+        // $FlowFixMe[prop-missing]
         paddingStart,
+        // $FlowFixMe[prop-missing]
         paddingTop,
+        // $FlowFixMe[prop-missing]
         paddingVertical,
+        // $FlowFixMe[not-an-object]
         ...rest
       } = textStyleProps != null ? textStyleProps : {};
 
@@ -307,13 +341,26 @@ const Text: React.AbstractComponent<
             <NativeText
               {...textPropsLessStyle}
               {...eventHandlersForText}
-              accessible={accessible !== false}
+              accessibilityLabel={ariaLabel ?? accessibilityLabel}
+              accessibilityLevel={ariaLevel ?? accessibilityLevel} // Windows
+              accessibilityPosInSet={ariaPosinset ?? accessibilityPosInSet} // Windows
+              accessibilitySetSize={ariaSetsize ?? accessibilitySetSize} // Windows
+              accessibilityState={nativeTextAccessibilityState}
+              accessible={
+                accessible == null && Platform.OS === 'android'
+                  ? _hasOnPressOrOnLongPress
+                  : _accessible
+              }
               allowFontScaling={allowFontScaling !== false}
+              disabled={_disabled}
               ellipsizeMode={ellipsizeMode ?? 'tail'}
               isHighlighted={isHighlighted}
+              nativeID={id ?? nativeID}
+              numberOfLines={numberOfLines}
+              ref={forwardedRef}
+              selectable={_selectable}
               selectionColor={selectionColor}
               style={((rest: any): TextStyleProp)}
-              ref={forwardedRef}
             />
           </TextAncestor.Provider>
         </View>
@@ -324,13 +371,26 @@ const Text: React.AbstractComponent<
           <NativeText
             {...restProps}
             {...eventHandlersForText}
-            accessible={accessible !== false}
+            accessibilityLabel={ariaLabel ?? accessibilityLabel}
+            accessibilityLevel={ariaLevel ?? accessibilityLevel} // Windows
+            accessibilityPosInSet={ariaPosinset ?? accessibilityPosInSet} // Windows
+            accessibilitySetSize={ariaSetsize ?? accessibilitySetSize} // Windows
+            accessibilityState={nativeTextAccessibilityState}
+            accessible={
+              accessible == null && Platform.OS === 'android'
+                ? _hasOnPressOrOnLongPress
+                : _accessible
+            }
             allowFontScaling={allowFontScaling !== false}
+            disabled={_disabled}
             ellipsizeMode={ellipsizeMode ?? 'tail'}
             isHighlighted={isHighlighted}
+            nativeID={id ?? nativeID}
+            numberOfLines={numberOfLines}
+            ref={forwardedRef}
+            selectable={_selectable}
             selectionColor={selectionColor}
             style={style}
-            ref={forwardedRef}
           />
         </TextAncestor.Provider>
       );

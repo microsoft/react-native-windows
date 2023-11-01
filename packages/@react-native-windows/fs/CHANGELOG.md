@@ -1,8 +1,95 @@
 # Change Log - @react-native-windows/fs
 
-This log was last generated on Tue, 16 May 2023 05:16:30 GMT and should not be manually modified.
+This log was last generated on Sat, 21 Oct 2023 05:16:09 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.30
+
+Sat, 21 Oct 2023 05:16:09 GMT
+
+### Changes
+
+- Bump @rnw-scripts/eslint-config to v1.2.4
+- Bump @rnw-scripts/just-task to v2.3.18
+
+## 0.0.0-canary.29
+
+Thu, 12 Oct 2023 05:15:54 GMT
+
+### Changes
+
+- Bump @rnw-scripts/eslint-config to v1.2.3
+- Bump @rnw-scripts/just-task to v2.3.17
+
+## 0.0.0-canary.28
+
+Wed, 20 Sep 2023 05:17:49 GMT
+
+### Changes
+
+- Bump @rnw-scripts/just-task to v2.3.16
+
+## 0.0.0-canary.27
+
+Fri, 28 Jul 2023 05:14:53 GMT
+
+### Changes
+
+- Bump @rnw-scripts/just-task to v2.3.15
+
+## 0.0.0-canary.26
+
+Wed, 26 Jul 2023 05:15:47 GMT
+
+### Changes
+
+- Bump @rnw-scripts/just-task to v2.3.14
+
+## 0.0.0-canary.25
+
+Fri, 14 Jul 2023 05:17:05 GMT
+
+### Changes
+
+- integration 6/28 (tatianakapos@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.2.2
+- Bump @rnw-scripts/just-task to v2.3.13
+- Bump @rnw-scripts/ts-config to v2.0.5
+
+## 0.0.0-canary.24
+
+Sat, 01 Jul 2023 05:14:42 GMT
+
+### Changes
+
+- Bump @rnw-scripts/eslint-config to v1.2.1
+- Bump @rnw-scripts/just-task to v2.3.12
+
+## 0.0.0-canary.23
+
+Tue, 13 Jun 2023 05:15:41 GMT
+
+### Changes
+
+- Bump @rnw-scripts/eslint-config to v1.2.0
+
+## 0.0.0-canary.22
+
+Wed, 07 Jun 2023 05:16:11 GMT
+
+### Changes
+
+- Bump @rnw-scripts/just-task to v2.3.11
+
+## 0.0.0-canary.21
+
+Tue, 06 Jun 2023 19:06:44 GMT
+
+### Changes
+
+- integrate RN nightly 5/19/23 (tatianakapos@microsoft.com)
+- Bump @rnw-scripts/just-task to v2.3.10
 
 ## 0.0.0-canary.20
 
