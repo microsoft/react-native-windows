@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "C++ 20: Preprocessor definitions",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@fb.com",
+  "dependentChangeType": "patch"
+}

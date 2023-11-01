@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "C++ 20: Treat `char8_t` as `char` for unicode literals in source",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@fb.com",
+  "dependentChangeType": "patch"
+}

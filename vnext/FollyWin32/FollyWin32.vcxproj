@@ -62,6 +62,7 @@
       </PrecompiledHeader>
       <PreprocessorDefinitions>
         _HAS_AUTO_PTR_ETC=1;
+        FOLLY_CFG_NO_COROUTINES;
         FOLLY_NO_CONFIG;
         NOMINMAX;
         WIN32;
