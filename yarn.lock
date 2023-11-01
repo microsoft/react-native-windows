@@ -3554,9 +3554,9 @@
     "@types/node" "*"
 
 "@types/xmldom@^0.1.30":
-  version "0.1.32"
-  resolved "https://registry.yarnpkg.com/@types/xmldom/-/xmldom-0.1.32.tgz#3d0c24e3f4d07927a7ddabea5b5d40aa4253772f"
-  integrity sha512-zPO1iqnODar0cIXhuCc0QyGP+t2IG9dr//VkxDtYKZJSikgN7bdLyMdnUNWRtCKeHkgc9KkbgsdccVbrCHCn2g==
+  version "0.1.33"
+  resolved "https://registry.yarnpkg.com/@types/xmldom/-/xmldom-0.1.33.tgz#7cc004acd3ab5d0fec811be5e2811c4ea4df9558"
+  integrity sha512-4PH3jqYT1EK0t+bDCZl7wW2A2yM25RapZqJ8/IaFcgr0y+aOiL4QKSrEIBItBzAKlF7nG8b6FPBMi/vTzIURjw==
 
 "@types/yargs-parser@*":
   version "21.0.0"
