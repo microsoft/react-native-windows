@@ -500,7 +500,8 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
       auto bundleString = FileMappingBigString::fromPath(bundlePath);
 #else
       std::wstring bundlePath;
-      if (m_devSettings->bundleRootPath.starts_with("resource://")) {
+      // TODO: Replace call to private string function with C++ 20 `starts_with`
+      if (m_devSettings->bundleRootPath._Starts_with("resource://")) {
         auto uri = winrt::Windows::Foundation::Uri(
             winrt::to_hstring(m_devSettings->bundleRootPath), winrt::to_hstring(jsBundleRelativePath));
         bundlePath = uri.ToString();

@@ -59,10 +59,11 @@ std::future<std::string> LocalBundleReader::LoadBundleAsync(const std::wstring b
   winrt::Windows::Storage::StorageFile file{nullptr};
 
   // Supports "ms-appx://" or "ms-appdata://"
-  if (bundleUri.starts_with(L"ms-app")) {
+  // TODO: Replace call to private string function with C++ 20 `starts_with`
+  if (bundleUri._Starts_with(L"ms-app")) {
     winrt::Windows::Foundation::Uri uri(bundleUri);
     file = co_await winrt::Windows::Storage::StorageFile::GetFileFromApplicationUriAsync(uri);
-  } else if (bundleUri.starts_with(L"resource://")) {
+  } else if (bundleUri._Starts_with(L"resource://")) {
     winrt::Windows::Foundation::Uri uri(bundleUri);
     co_return GetBundleFromEmbeddedResource(uri);
   } else {

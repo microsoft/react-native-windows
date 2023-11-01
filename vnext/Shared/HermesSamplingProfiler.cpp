@@ -15,6 +15,7 @@
 
 using namespace winrt::Microsoft::ReactNative;
 using namespace facebook::react;
+using namespace winrt::Windows::Foundation:
 
 namespace Microsoft::ReactNative {
 
