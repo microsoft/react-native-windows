@@ -22,6 +22,7 @@
 #define SHARED_UTILS_CPPWINRTLESSEXCEPTIONS_H_
 
 #include <winrt/base.h>
+#include <coroutine>
 
 // #define DEFAULT_CPPWINRT_EXCEPTIONS
 #ifndef DEFAULT_CPPWINRT_EXCEPTIONS
@@ -35,7 +36,7 @@ struct lessthrow_await_adapter {
     return async.Status() == winrt::Windows::Foundation::AsyncStatus::Completed;
   }
 
-  void await_suspend(std::experimental::coroutine_handle<> handle) const {
+  void await_suspend(std::coroutine_handle<> handle) const {
     auto context = winrt::capture<winrt::impl::IContextCallback>(WINRT_IMPL_CoGetObjectContext);
 
     async.Completed([handle, context = std::move(context)](auto const &, winrt::Windows::Foundation::AsyncStatus) {
@@ -43,7 +44,7 @@ struct lessthrow_await_adapter {
       args.data = handle.address();
 
       auto callback = [](winrt::impl::com_callback_args *args) noexcept -> int32_t {
-        std::experimental::coroutine_handle<>::from_address(args->data)();
+        std::coroutine_handle<>::from_address(args->data)();
         return S_OK;
       };
 
