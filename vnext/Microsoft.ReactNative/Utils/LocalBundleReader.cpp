@@ -15,8 +15,7 @@
 
 namespace Microsoft::ReactNative {
 
-std::string GetBundleFromEmbeddedResource(winrt::hstring str) {
-  winrt::Windows::Foundation::Uri uri(str);
+std::string GetBundleFromEmbeddedResource(const winrt::Windows::Foundation::Uri &uri) {
   auto moduleName = uri.Host();
   auto path = uri.Path();
   // skip past the leading / slash
@@ -54,21 +53,20 @@ std::string GetBundleFromEmbeddedResource(winrt::hstring str) {
   return std::string(start, start + size);
 }
 
-std::future<std::string> LocalBundleReader::LoadBundleAsync(const std::string &bundleUri) {
-  winrt::hstring str(Microsoft::Common::Unicode::Utf8ToUtf16(bundleUri));
-
+std::future<std::string> LocalBundleReader::LoadBundleAsync(const std::wstring bundleUri) {
   co_await winrt::resume_background();
 
   winrt::Windows::Storage::StorageFile file{nullptr};
 
   // Supports "ms-appx://" or "ms-appdata://"
-  if (bundleUri._Starts_with("ms-app")) {
-    winrt::Windows::Foundation::Uri uri(str);
+  if (bundleUri.starts_with(L"ms-app")) {
+    winrt::Windows::Foundation::Uri uri(bundleUri);
     file = co_await winrt::Windows::Storage::StorageFile::GetFileFromApplicationUriAsync(uri);
-  } else if (bundleUri._Starts_with("resource://")) {
-    co_return GetBundleFromEmbeddedResource(str);
+  } else if (bundleUri.starts_with(L"resource://")) {
+    winrt::Windows::Foundation::Uri uri(bundleUri);
+    co_return GetBundleFromEmbeddedResource(uri);
   } else {
-    file = co_await winrt::Windows::Storage::StorageFile::GetFileFromPathAsync(str);
+    file = co_await winrt::Windows::Storage::StorageFile::GetFileFromPathAsync(bundleUri);
   }
 
   // Read the buffer manually to avoid a Utf8 -> Utf16 -> Utf8 encoding
@@ -90,11 +88,11 @@ std::future<std::string> LocalBundleReader::LoadBundleAsync(const std::string &b
   co_return script;
 }
 
-std::string LocalBundleReader::LoadBundle(const std::string &bundlePath) {
+std::string LocalBundleReader::LoadBundle(const std::wstring &bundlePath) {
   return LoadBundleAsync(bundlePath).get();
 }
 
-StorageFileBigString::StorageFileBigString(const std::string &path) {
+StorageFileBigString::StorageFileBigString(const std::wstring &path) {
   m_futureBuffer = LocalBundleReader::LoadBundleAsync(path);
 }
 

@@ -29,7 +29,7 @@ JsValueRefUniquePtr jsArrayBufferFromBigString(const std::shared_ptr<const JSBig
 // page-file backed,  null-terminated buffer
 class FileMappingBigString : public JSBigString {
  public:
-  FileMappingBigString(const std::string &filenameUtf8, uint32_t offset = 0);
+  FileMappingBigString(const std::wstring &filename, uint32_t offset = 0);
 
   bool isAscii() const override {
     return false;
@@ -53,7 +53,7 @@ class FileMappingBigString : public JSBigString {
     return m_fileSize;
   }
 
-  static std::unique_ptr<const FileMappingBigString> fromPath(const std::string &filenameUtf8);
+  static std::unique_ptr<const FileMappingBigString> fromPath(const std::wstring &filename);
 
  private:
   static void fileDataDeleter(void *p) {
