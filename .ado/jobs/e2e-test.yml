@@ -190,7 +190,7 @@ jobs:
                   buildLogDirectory: $(BuildLogDirectory)
                   deployOption: '--no-deploy'
                   workingDirectory: packages/e2e-test-app-fabric
-              
+
               - script: |
                   echo ##vso[task.setvariable variable=StartedFabricTests]true
                 displayName: Set StartedFabricTests
@@ -238,9 +238,9 @@ jobs:
               - task: CopyFiles@2
                 displayName: Copy RNTesterApp artifacts
                 inputs:
-                  sourceFolder: $(Build.SourcesDirectory)/packages/e2e-test-app-fabric/windows/RNTesterApp-Fabric
+                  sourceFolder: $(Build.SourcesDirectory)/packages/e2e-test-app-fabric/windows/${{ matrix.BuildPlatform }}/Release
                   targetFolder: $(Build.StagingDirectory)/RNTesterApp-Fabric
-                  contents: AppPackages\**
+                  contents: "**"
                 condition: failed()
 
               - task: PublishPipelineArtifact@1
