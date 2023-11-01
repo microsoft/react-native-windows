@@ -13,9 +13,9 @@
 #include "ReactPropertyBag.h"
 #include "Utils.h"
 
-using namespace winrt::Microsoft::ReactNative;
 using namespace facebook::react;
-using namespace winrt::Windows::Foundation:
+using namespace winrt::Microsoft::ReactNative;
+using namespace winrt::Windows::Foundation;
 
 namespace Microsoft::ReactNative {
 
