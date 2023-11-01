@@ -46,22 +46,22 @@ auto resume_in_dispatcher(const IReactDispatcher &dispatcher) noexcept {
   return awaitable{dispatcher};
 }
 
-std::future<std::string> getTraceFilePath() noexcept {
-  std::string hermesDataPath = co_await Microsoft::React::getApplicationDataPath(L"Hermes");
-  std::ostringstream os;
+IAsyncOperation<winrt::hstring> getTraceFilePath() noexcept {
+  winrt::hstring hermesDataPath = co_await Microsoft::React::getApplicationDataPath(L"Hermes");
+  std::wostringstream os;
   auto now = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch())
                  .count();
 
-  os << hermesDataPath << "\\cpu_" << now << ".cpuprofile";
-  co_return os.str();
+  os << hermesDataPath.c_str() << L"\\cpu_" << now << L".cpuprofile";
+  co_return winrt::hstring(os.view());
 }
 
 } // namespace
 
 std::atomic_bool HermesSamplingProfiler::s_isStarted{false};
-std::string HermesSamplingProfiler::s_lastTraceFilePath;
+winrt::hstring HermesSamplingProfiler::s_lastTraceFilePath;
 
-std::string HermesSamplingProfiler::GetLastTraceFilePath() noexcept {
+winrt::hstring HermesSamplingProfiler::GetLastTraceFilePath() noexcept {
   return s_lastTraceFilePath;
 }
 
@@ -83,7 +83,7 @@ winrt::fire_and_forget HermesSamplingProfiler::Start(
   co_return;
 }
 
-std::future<std::string> HermesSamplingProfiler::Stop(
+IAsyncOperation<winrt::hstring> HermesSamplingProfiler::Stop(
     Mso::CntPtr<Mso::React::IReactContext> const &reactContext) noexcept {
   bool expectedIsStarted = true;
   if (s_isStarted.compare_exchange_strong(expectedIsStarted, false)) {
@@ -94,7 +94,7 @@ std::future<std::string> HermesSamplingProfiler::Stop(
     HermesRuntimeHolder::disableSamplingProfiler();
 
     s_lastTraceFilePath = co_await getTraceFilePath();
-    HermesRuntimeHolder::dumpSampledTraceToFile(s_lastTraceFilePath);
+    HermesRuntimeHolder::dumpSampledTraceToFile(winrt::to_string(s_lastTraceFilePath));
 
     co_await resume_in_dispatcher(jsDispatcher);
     std::shared_ptr<HermesRuntimeHolder> hermesRuntimeHolder = HermesRuntimeHolder::loadFrom(propertyBag);

@@ -4,8 +4,8 @@
 #pragma once
 
 #include <ReactHost/React.h>
+#include <winrt/Windows.Foundation.h>
 #include <atomic>
-#include <future>
 #include <string>
 
 namespace Microsoft::ReactNative {
@@ -13,13 +13,14 @@ namespace Microsoft::ReactNative {
 class HermesSamplingProfiler final {
  public:
   static winrt::fire_and_forget Start(Mso::CntPtr<Mso::React::IReactContext> const &reactContext) noexcept;
-  static std::future<std::string> Stop(Mso::CntPtr<Mso::React::IReactContext> const &reactContext) noexcept;
-  static std::string GetLastTraceFilePath() noexcept;
+  static winrt::Windows::Foundation::IAsyncOperation<winrt::hstring> Stop(
+      Mso::CntPtr<Mso::React::IReactContext> const &reactContext) noexcept;
+  static winrt::hstring GetLastTraceFilePath() noexcept;
   static bool IsStarted() noexcept;
 
  private:
   static std::atomic_bool s_isStarted;
-  static std::string s_lastTraceFilePath;
+  static winrt::hstring s_lastTraceFilePath;
 };
 
 } // namespace Microsoft::ReactNative
