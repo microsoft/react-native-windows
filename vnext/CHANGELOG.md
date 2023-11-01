@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 30 Oct 2023 15:15:14 GMT and should not be manually modified.
+This log was last generated on Wed, 01 Nov 2023 22:19:02 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.72.18
+
+Wed, 01 Nov 2023 22:19:02 GMT
+
+### Patches
+
+- ReactContext should have a weak ref on the PropertyBag (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.72.17
 

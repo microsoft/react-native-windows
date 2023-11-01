@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "ReactContext should have a weak ref on the PropertyBag",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 01 Nov 2023 22:19:02 GMT",
+      "tag": "react-native-windows_v0.72.18",
+      "version": "0.72.18",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a4b80b743e8f0fcbf7166ecf55dcfe0b66c2d828",
+            "comment": "ReactContext should have a weak ref on the PropertyBag"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 30 Oct 2023 15:15:14 GMT",
       "tag": "react-native-windows_v0.72.17",
       "version": "0.72.17",
