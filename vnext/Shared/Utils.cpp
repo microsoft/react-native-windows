@@ -13,9 +13,8 @@
 
 #include <sstream>
 
-using namespace winrt::Windows::Foundation;
-
 using std::string;
+using winrt::Windows::Foundation::IAsyncOperation;
 
 namespace Microsoft::React {
 
