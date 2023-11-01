@@ -3488,9 +3488,9 @@
   integrity sha512-L/TMpyURfBkf+o/526Zb6kd/tchUP3iBDEPjqjb+U2MAJhVRxxrmr2fwpe08E7QsV7YLcpq0tUaQ9O9x97ZIxQ==
 
 "@types/shelljs@^0.8.8":
-  version "0.8.12"
-  resolved "https://registry.yarnpkg.com/@types/shelljs/-/shelljs-0.8.12.tgz#79dc9632af7d5ca1b5afb65a6bfc1422d79b5fa0"
-  integrity sha512-ZA8U81/gldY+rR5zl/7HSHrG2KDfEb3lzG6uCUDhW1DTQE9yC/VBQ45fXnXq8f3CgInfhZmjtdu/WOUlrXRQUg==
+  version "0.8.14"
+  resolved "https://registry.yarnpkg.com/@types/shelljs/-/shelljs-0.8.14.tgz#87b8817b2397ffe97b86a4d844036ee0d2a1f0ca"
+  integrity sha512-eqKaGPi60riuxI9pUVeCT02EGo94Y6HT119h7w5bXSELsis6+JqzdEy6H/w2xXl881wcN3VDnb/D0WlgSety5w==
   dependencies:
     "@types/glob" "~7.2.0"
     "@types/node" "*"
