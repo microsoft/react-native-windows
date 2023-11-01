@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 31 Oct 2023 05:16:23 GMT and should not be manually modified.
+This log was last generated on Wed, 01 Nov 2023 05:15:56 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.730
+
+Wed, 01 Nov 2023 05:15:56 GMT
+
+### Changes
+
+- Remove unnecessary JS overrides (erozell@outlook.com)
 
 ## 0.0.0-canary.729
 

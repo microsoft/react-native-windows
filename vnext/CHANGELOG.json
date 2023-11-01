@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 01 Nov 2023 05:15:56 GMT",
+      "version": "0.0.0-canary.730",
+      "tag": "react-native-windows_v0.0.0-canary.730",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "844d6bccdfbbe43ea8ef90730ec3a5127444e10b",
+            "comment": "Remove unnecessary JS overrides"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 31 Oct 2023 05:16:23 GMT",
       "version": "0.0.0-canary.729",
       "tag": "react-native-windows_v0.0.0-canary.729",
