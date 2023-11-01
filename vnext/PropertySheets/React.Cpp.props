@@ -79,7 +79,7 @@
   </ImportGroup>
 
   <PropertyGroup>
-    <CppStandard Condition="'$(CppStandard)'==''">stdcpp17</CppStandard>
+    <CppStandard Condition="'$(CppStandard)'==''">stdcpp20</CppStandard>
   </PropertyGroup>
 
   <ItemDefinitionGroup>
