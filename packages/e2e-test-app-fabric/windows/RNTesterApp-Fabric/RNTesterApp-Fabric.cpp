@@ -60,6 +60,7 @@ constexpr PCWSTR appName = L"RNTesterApp";
 std::vector<std::string> g_Errors;
 std::vector<std::string> g_Warnings;
 HWND global_hwnd;
+winrt::Microsoft::ReactNative::CompositionRootView *global_rootView{nullptr};
 
 // Forward declarations of functions included in this code module:
 winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::JsonValue payload);
@@ -151,7 +152,6 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   global_hwnd = hwnd;
   auto scaleFactor = ScaleFactor(hwnd);
 
-  global_hwnd = hwnd;
   auto host = CreateReactNativeHost(hwnd, compositor);
 
   // Start the react-native instance, which will create a JavaScript runtime and load the applications bundle
@@ -204,6 +204,7 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   winrt::AutomationChannel::CommandHandler handler;
   handler.BindOperation(L"DumpVisualTree", DumpVisualTree);
   handler.BindOperation(L"ListErrors", ListErrors);
+  global_rootView = &rootView;
 
   auto server = winrt::AutomationChannel::Server(handler);
   auto asyncAction = LoopServer(server);
@@ -323,7 +324,7 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeHelper(winrt::Windows::Data::J
   return uiaTree;
 }
 
-winrt::Windows::Data::Json::JsonObject PrintVisualTree(winrt::Windows::UI::Composition::Visual node) {
+winrt::Windows::Data::Json::JsonObject PrintVisualTree(winrt::Microsoft::UI::Composition::Visual node) {
   winrt::Windows::Data::Json::JsonObject result;
   if (!node.Comment().empty()) {
     result.Insert(L"Comment", winrt::Windows::Data::Json::JsonValue::CreateStringValue(node.Comment()));
@@ -337,13 +338,13 @@ winrt::Windows::Data::Json::JsonObject PrintVisualTree(winrt::Windows::UI::Compo
   visualOffset.Append(winrt::Windows::Data::Json::JsonValue::CreateNumberValue(node.Offset().y));
   visualOffset.Append(winrt::Windows::Data::Json::JsonValue::CreateNumberValue(node.Offset().z));
   result.Insert(L"Opacity", winrt::Windows::Data::Json::JsonValue::CreateNumberValue(node.Opacity()));
-  auto spriteVisual = node.try_as<winrt::Windows::UI::Composition::SpriteVisual>();
+  auto spriteVisual = node.try_as<winrt::Microsoft::UI::Composition::SpriteVisual>();
   if (spriteVisual) {
     result.Insert(L"Visual Type", winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"SpriteVisual"));
     auto spriteBrush = spriteVisual.Brush();
     if (spriteBrush) {
       winrt::Windows::Data::Json::JsonObject brush;
-      auto colorBrush = spriteBrush.try_as<winrt::Windows::UI::Composition::CompositionColorBrush>();
+      auto colorBrush = spriteBrush.try_as<winrt::Microsoft::UI::Composition::CompositionColorBrush>();
       if (colorBrush) {
         brush.Insert(L"Brush Type", winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"ColorBrush"));
         auto colorString = L"rgba(" + winrt::to_hstring(colorBrush.Color().R) + L", " +
@@ -360,7 +361,7 @@ winrt::Windows::Data::Json::JsonObject PrintVisualTree(winrt::Windows::UI::Compo
 }
 
 winrt::Windows::Data::Json::JsonObject DumpVisualTreeRecurse(
-    winrt::Windows::UI::Composition::Visual node,
+    winrt::Microsoft::UI::Composition::Visual node,
     winrt::hstring accessibilityId,
     boolean targetNodeHit) {
   winrt::Windows::Data::Json::JsonObject result;
@@ -369,7 +370,7 @@ winrt::Windows::Data::Json::JsonObject DumpVisualTreeRecurse(
     result = PrintVisualTree(node);
   }
 
-  auto containerNode = node.try_as<winrt::Windows::UI::Composition::ContainerVisual>();
+  auto containerNode = node.try_as<winrt::Microsoft::UI::Composition::ContainerVisual>();
   if (containerNode == nullptr) {
     return result;
   }
@@ -399,13 +400,11 @@ winrt::Windows::Data::Json::JsonObject DumpVisualTreeRecurse(
 winrt::Windows::Data::Json::JsonObject DumpVisualTreeHelper(winrt::Windows::Data::Json::JsonObject payloadObj) {
   auto accessibilityId = payloadObj.GetNamedString(L"accessibilityId");
   winrt::Windows::Data::Json::JsonObject visualTree;
-  auto windowData = WindowData::GetFromWindow(global_hwnd);
-  if (windowData == nullptr || !windowData->m_windowInited)
-    return visualTree;
-
-  auto hwndHost = windowData->m_CompositionHwndHost;
-  winrt::Windows::UI::Composition::Visual root = hwndHost.RootVisual();
+  auto root = global_rootView->RootVisual().try_as<winrt::Microsoft::UI::Composition::Visual>();
   visualTree = DumpVisualTreeRecurse(root, accessibilityId, false);
+  visualTree.Insert(
+      L"Root", winrt::Windows::Data::Json::JsonValue::CreateStringValue(global_rootView->RootVisual().Comment()));
+  //auto test = global_rootView.RootVisual().GetAt(0);
   return visualTree;
 }
 
