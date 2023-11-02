@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "[DRAFT] Fix RuntimeScheduler setup for concurrent mode",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
