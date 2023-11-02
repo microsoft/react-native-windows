@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "C++ 20: Replace Usage of std::allocator::construct()",
-  "packageName": "react-native-windows",
-  "email": "ngerlem@fb.com",
-  "dependentChangeType": "patch"
-}

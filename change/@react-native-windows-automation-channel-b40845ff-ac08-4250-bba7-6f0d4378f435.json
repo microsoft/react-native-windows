@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "C++ 20",
-  "packageName": "@react-native-windows/automation-channel",
-  "email": "ngerlem@fb.com",
-  "dependentChangeType": "patch"
-}

@@ -2,6 +2,63 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 02 Nov 2023 05:16:14 GMT",
+      "version": "0.0.0-canary.731",
+      "tag": "react-native-windows_v0.0.0-canary.731",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@fb.com",
+            "package": "react-native-windows",
+            "commit": "72260ff2c7792dd137587f6eb7ba0d38388bddca",
+            "comment": "C++ 20: Treat `char8_t` as `char` for unicode literals in source"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "2d2f3c45eb838228e85468f8e66d7d118ed83e27",
+            "comment": "Add RuntimeScheduler"
+          },
+          {
+            "author": "ngerlem@fb.com",
+            "package": "react-native-windows",
+            "commit": "b6b8b77288b7ce59bf465c3f5c8791f4581da2c3",
+            "comment": "C++ 20: Fix \"Explicit template specialization cannot have a storage class\""
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "325195cccea732f0d7389544193f3312328552f5",
+            "comment": "ReactContext should have a weak ref on the PropertyBag"
+          },
+          {
+            "author": "ngerlem@fb.com",
+            "package": "react-native-windows",
+            "commit": "ddbb53fecfecb97b3ebee8f0dd86e08bedec97ff",
+            "comment": "C++ 20: Bump Folly from 2023.03.06 to 2023.10.16.00"
+          },
+          {
+            "author": "ngerlem@fb.com",
+            "package": "react-native-windows",
+            "commit": "f6947a0b5bf7ac6d023766309b24ac293e96f28a",
+            "comment": "C++ 20: Replace Usage of std::allocator::construct()"
+          },
+          {
+            "author": "ngerlem@fb.com",
+            "package": "react-native-windows",
+            "commit": "1c34a86dd0703cdbe21af27b302cdcf56b76eb83",
+            "comment": "C++ 20: Preprocessor definitions"
+          },
+          {
+            "author": "ngerlem@fb.com",
+            "package": "react-native-windows",
+            "commit": "1f5c70b0fb1b99865347af97f9aedc900a3f692a",
+            "comment": "Build using C++ 20"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 01 Nov 2023 05:15:56 GMT",
       "version": "0.0.0-canary.730",
       "tag": "react-native-windows_v0.0.0-canary.730",
