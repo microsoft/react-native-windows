@@ -3003,9 +3003,9 @@
     semver "^7.0.0"
 
 "@rnx-kit/metro-serializer@^1.0.11", "@rnx-kit/metro-serializer@^1.0.13":
-  version "1.0.13"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-serializer/-/metro-serializer-1.0.13.tgz#bfc0a225b86d1a1e690f4e74949b95b24f0aeacd"
-  integrity sha512-jzHuvUCvra6P6CT6QjsKQby7/F/tMmnxAtJUrnN94yjs4uTEgDUFkcwA0gh4xI2QyMhmX9n241gGEtN2cyH/jQ==
+  version "1.0.14"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-serializer/-/metro-serializer-1.0.14.tgz#8542e13441cadd749026e398127fe29e143e99ed"
+  integrity sha512-xBVtpCE3w8GKK0nS95PnxJeQmsGq9K98LMEN/BD1wRuXNpASiSRPNI2vA3ol0ID76xwsl+afg9SptccrydMpbA==
   dependencies:
     "@rnx-kit/tools-react-native" "^1.3.4"
     semver "^7.0.0"
