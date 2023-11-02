@@ -153,6 +153,8 @@ struct WindowData {
               std::wstring(L"file:").append(workingDir).append(L"\\Bundle\\").c_str());
           host.InstanceSettings().UseDeveloperSupport(true);
 
+          winrt::Microsoft::ReactNative::QuirkSettings::SetUseRuntimeScheduler(host.InstanceSettings(), true);
+
           host.PackageProviders().Append(CreateStubDeviceInfoPackageProvider());
           host.PackageProviders().Append(winrt::make<CompReactPackageProvider>());
           winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(

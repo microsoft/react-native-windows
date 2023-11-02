@@ -89,7 +89,7 @@
 #include <CreateModules.h>
 #include <Utils/Helpers.h>
 #include <react/renderer/runtimescheduler/RuntimeScheduler.h>
-#include <react/renderer/runtimescheduler/RuntimeSchedulerBinding.h>
+#include <react/renderer/runtimescheduler/RuntimeSchedulerCallInvoker.h>
 #include "CrashManager.h"
 #include "JsiApi.h"
 #include "ReactCoreInjection.h"
@@ -596,12 +596,10 @@ void ReactInstanceWin::Initialize() noexcept {
 
                 if (winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetUseRuntimeScheduler(
                         winrt::Microsoft::ReactNative::ReactPropertyBag(reactContext->Properties()))) {
-                  std::shared_ptr<facebook::react::RuntimeScheduler> runtimeScheduler =
-                      std::make_shared<facebook::react::RuntimeScheduler>(
-                          instanceWrapper->GetInstance()->getRuntimeExecutor());
-
-                  facebook::react::RuntimeSchedulerBinding::createAndInstallIfNeeded(
-                      *jsiRuntimeHolder->getRuntime().get(), runtimeScheduler);
+                  // TODO: If we want to only use RuntimeScheduler anywhere when the QuirkSetting is set, we'll have to
+                  // pass down the QuirkSetting value to InstanceWrapper to switch logic in OInstance to use
+                  // RuntimeScheduler or not
+                  const auto runtimeScheduler = instanceWrapper->GetRuntimeScheduler();
                   Microsoft::ReactNative::SchedulerSettings::SetRuntimeScheduler(
                       ReactPropertyBag(reactContext->Properties()), runtimeScheduler);
                 }
@@ -610,7 +608,12 @@ void ReactInstanceWin::Initialize() noexcept {
 #ifdef USE_FABRIC
               // Eagerly init the FabricUI binding
               if (!useWebDebugger) {
-                turboModuleProvider->getModule("FabricUIManagerBinding", instance->getJSCallInvoker());
+                turboModuleProvider->getModule(
+                    "FabricUIManagerBinding",
+                    // TODO: I'm not sure whether the RuntimeSchedulerCallInvoker needs to be a single instance or not
+                    // We could also pass the RuntimeSchedulerCallInvoker out from OInstance.h if necessary
+                    std::make_shared<facebook::react::RuntimeSchedulerCallInvoker>(
+                        instanceWrapper->GetRuntimeScheduler()));
               }
 #endif
 
