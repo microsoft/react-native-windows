@@ -5897,9 +5897,9 @@ end-of-stream@^1.1.0, end-of-stream@^1.4.1:
     once "^1.4.0"
 
 envinfo@^7.5.0, envinfo@^7.7.2, envinfo@^7.8.1:
-  version "7.10.0"
-  resolved "https://registry.yarnpkg.com/envinfo/-/envinfo-7.10.0.tgz#55146e3909cc5fe63c22da63fb15b05aeac35b13"
-  integrity sha512-ZtUjZO6l5mwTHvc1L9+1q5p/R3wTopcfqMW8r5t8SJSKqeVI/LtajORwRFEKpEFuekjD0VBjwu1HMxL4UalIRw==
+  version "7.11.0"
+  resolved "https://registry.yarnpkg.com/envinfo/-/envinfo-7.11.0.tgz#c3793f44284a55ff8c82faf1ffd91bc6478ea01f"
+  integrity sha512-G9/6xF1FPbIw0TtalAMaVPpiq2aDEuKLXM314jPVAO9r2fo2a4BLqMNkmRS7O/xPPZ+COAhGIz3ETvHEV3eUcg==
 
 err-code@^2.0.2:
   version "2.0.3"
