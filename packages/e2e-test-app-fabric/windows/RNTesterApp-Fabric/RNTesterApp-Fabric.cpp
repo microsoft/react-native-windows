@@ -400,7 +400,8 @@ winrt::Windows::Data::Json::JsonObject DumpVisualTreeRecurse(
 winrt::Windows::Data::Json::JsonObject DumpVisualTreeHelper(winrt::Windows::Data::Json::JsonObject payloadObj) {
   auto accessibilityId = payloadObj.GetNamedString(L"accessibilityId");
   winrt::Windows::Data::Json::JsonObject visualTree;
-  auto root = winrt::Microsoft::ReactNative::Composition::MicrosoftCompositionContextHelper::InnerVisual(global_rootView->RootVisual());
+  auto root = winrt::Microsoft::ReactNative::Composition::MicrosoftCompositionContextHelper::InnerVisual(
+      global_rootView->RootVisual());
   visualTree = DumpVisualTreeRecurse(root, accessibilityId, false);
   return visualTree;
 }
