@@ -22,7 +22,171 @@ exports[`Button Tests Buttons can be disabled 1`] = `
     "LocalizedControlType": "button",
     "Name": "Press to submit your application!",
   },
-  "Visual Tree": {},
+  "Visual Tree": {
+    "Children": [
+      {
+        "Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(249, 249, 249, 77)",
+            },
+            "Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 0)",
+                },
+                "Opacity": 1,
+                "Size": [
+                  6,
+                  6,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 0)",
+                },
+                "Opacity": 1,
+                "Size": [
+                  843,
+                  2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 0)",
+                },
+                "Opacity": 1,
+                "Size": [
+                  6,
+                  6,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 0)",
+                },
+                "Opacity": 1,
+                "Size": [
+                  2,
+                  43.999969482421875,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 0)",
+                },
+                "Opacity": 1,
+                "Size": [
+                  6,
+                  6,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 0)",
+                },
+                "Opacity": 1,
+                "Size": [
+                  843,
+                  2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 0)",
+                },
+                "Opacity": 1,
+                "Size": [
+                  6,
+                  6,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 0)",
+                },
+                "Opacity": 1,
+                "Size": [
+                  2,
+                  43.999969482421875,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Opacity": 1,
+            "Size": [
+              855,
+              55.999969482421875,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Opacity": 1,
+        "Size": [
+          855,
+          55.999969482421875,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Opacity": 1,
+            "Size": [
+              828,
+              29.00006103515625,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Opacity": 1,
+        "Size": [
+          828,
+          29.00006103515625,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "disabled_button",
+    "Opacity": 1,
+    "Size": [
+      855,
+      55.999969482421875,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
 
@@ -48,7 +212,171 @@ exports[`Button Tests Buttons can have accessibility labels 1`] = `
     "LocalizedControlType": "button",
     "Name": "Press to submit your application!",
   },
-  "Visual Tree": {},
+  "Visual Tree": {
+    "Children": [
+      {
+        "Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 122, 255, 255)",
+            },
+            "Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 0)",
+                },
+                "Opacity": 1,
+                "Size": [
+                  6,
+                  6,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 0)",
+                },
+                "Opacity": 1,
+                "Size": [
+                  843,
+                  2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 0)",
+                },
+                "Opacity": 1,
+                "Size": [
+                  6,
+                  6,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 0)",
+                },
+                "Opacity": 1,
+                "Size": [
+                  2,
+                  44.00006103515625,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 0)",
+                },
+                "Opacity": 1,
+                "Size": [
+                  6,
+                  6,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 0)",
+                },
+                "Opacity": 1,
+                "Size": [
+                  843,
+                  2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 0)",
+                },
+                "Opacity": 1,
+                "Size": [
+                  6,
+                  6,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 0)",
+                },
+                "Opacity": 1,
+                "Size": [
+                  2,
+                  44.00006103515625,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Opacity": 1,
+            "Size": [
+              855,
+              56.00006103515625,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Opacity": 1,
+        "Size": [
+          855,
+          56.00006103515625,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Opacity": 1,
+            "Size": [
+              828,
+              28.999969482421875,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Opacity": 1,
+        "Size": [
+          828,
+          28.999969482421875,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "accessibilityLabel_button",
+    "Opacity": 1,
+    "Size": [
+      855,
+      56.00006103515625,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
 
@@ -74,7 +402,143 @@ exports[`Button Tests Buttons can have accessibility props 1`] = `
     "LocalizedControlType": "button",
     "Name": "Press to submit your application!",
   },
-  "Visual Tree": {},
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 255, 255, 179)",
+    },
+    "Children": [
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 0)",
+        },
+        "Opacity": 1,
+        "Size": [
+          6,
+          6,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 0)",
+        },
+        "Opacity": 1,
+        "Size": [
+          843,
+          2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 0)",
+        },
+        "Opacity": 1,
+        "Size": [
+          6,
+          6,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 0)",
+        },
+        "Opacity": 1,
+        "Size": [
+          2,
+          42.99993896484375,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 0)",
+        },
+        "Opacity": 1,
+        "Size": [
+          6,
+          6,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 0)",
+        },
+        "Opacity": 1,
+        "Size": [
+          843,
+          2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 0)",
+        },
+        "Opacity": 1,
+        "Size": [
+          6,
+          6,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 0)",
+        },
+        "Opacity": 1,
+        "Size": [
+          2,
+          42.99993896484375,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Opacity": 1,
+            "Size": [
+              828,
+              28.0001220703125,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Opacity": 1,
+        "Size": [
+          828,
+          28.0001220703125,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "accessibility_props",
+    "Opacity": 1,
+    "Size": [
+      855,
+      54.99993896484375,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
 
@@ -100,7 +564,171 @@ exports[`Button Tests Buttons can have accessibility states 1`] = `
     "LocalizedControlType": "button",
     "Name": "Press to submit your application!",
   },
-  "Visual Tree": {},
+  "Visual Tree": {
+    "Children": [
+      {
+        "Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(249, 249, 249, 77)",
+            },
+            "Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 0)",
+                },
+                "Opacity": 1,
+                "Size": [
+                  6,
+                  6,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 0)",
+                },
+                "Opacity": 1,
+                "Size": [
+                  843,
+                  2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 0)",
+                },
+                "Opacity": 1,
+                "Size": [
+                  6,
+                  6,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 0)",
+                },
+                "Opacity": 1,
+                "Size": [
+                  2,
+                  44.00006103515625,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 0)",
+                },
+                "Opacity": 1,
+                "Size": [
+                  6,
+                  6,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 0)",
+                },
+                "Opacity": 1,
+                "Size": [
+                  843,
+                  2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 0)",
+                },
+                "Opacity": 1,
+                "Size": [
+                  6,
+                  6,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 0)",
+                },
+                "Opacity": 1,
+                "Size": [
+                  2,
+                  44.00006103515625,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Opacity": 1,
+            "Size": [
+              855,
+              56.00006103515625,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Opacity": 1,
+        "Size": [
+          855,
+          56.00006103515625,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Opacity": 1,
+            "Size": [
+              828,
+              28.9998779296875,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Opacity": 1,
+        "Size": [
+          828,
+          28.9998779296875,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "accessibilityState_button",
+    "Opacity": 1,
+    "Size": [
+      855,
+      56.00006103515625,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
 
@@ -126,7 +754,171 @@ exports[`Button Tests Buttons can have custom colors 1`] = `
     "LocalizedControlType": "button",
     "Name": "Press to cancel your application!",
   },
-  "Visual Tree": {},
+  "Visual Tree": {
+    "Children": [
+      {
+        "Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(255, 59, 48, 255)",
+            },
+            "Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 0)",
+                },
+                "Opacity": 1,
+                "Size": [
+                  6,
+                  6,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 0)",
+                },
+                "Opacity": 1,
+                "Size": [
+                  843,
+                  2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 0)",
+                },
+                "Opacity": 1,
+                "Size": [
+                  6,
+                  6,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 0)",
+                },
+                "Opacity": 1,
+                "Size": [
+                  2,
+                  43.999969482421875,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 0)",
+                },
+                "Opacity": 1,
+                "Size": [
+                  6,
+                  6,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 0)",
+                },
+                "Opacity": 1,
+                "Size": [
+                  843,
+                  2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 0)",
+                },
+                "Opacity": 1,
+                "Size": [
+                  6,
+                  6,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 0)",
+                },
+                "Opacity": 1,
+                "Size": [
+                  2,
+                  43.999969482421875,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Opacity": 1,
+            "Size": [
+              855,
+              55.999969482421875,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Opacity": 1,
+        "Size": [
+          855,
+          55.999969482421875,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Opacity": 1,
+            "Size": [
+              828,
+              29.000015258789062,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Opacity": 1,
+        "Size": [
+          828,
+          29.000015258789062,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "cancel_button",
+    "Opacity": 1,
+    "Size": [
+      855,
+      55.999969482421875,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
 
@@ -152,6 +944,142 @@ exports[`Button Tests Buttons have default styling 1`] = `
     "LocalizedControlType": "button",
     "Name": "Press to submit your application!",
   },
-  "Visual Tree": {},
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 255, 255, 179)",
+    },
+    "Children": [
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 0)",
+        },
+        "Opacity": 1,
+        "Size": [
+          6,
+          6,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 0)",
+        },
+        "Opacity": 1,
+        "Size": [
+          843,
+          2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 0)",
+        },
+        "Opacity": 1,
+        "Size": [
+          6,
+          6,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 0)",
+        },
+        "Opacity": 1,
+        "Size": [
+          2,
+          43.99999237060547,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 0)",
+        },
+        "Opacity": 1,
+        "Size": [
+          6,
+          6,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 0)",
+        },
+        "Opacity": 1,
+        "Size": [
+          843,
+          2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 0)",
+        },
+        "Opacity": 1,
+        "Size": [
+          6,
+          6,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 0)",
+        },
+        "Opacity": 1,
+        "Size": [
+          2,
+          43.99999237060547,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Opacity": 1,
+            "Size": [
+              828,
+              29.000015258789062,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Opacity": 1,
+        "Size": [
+          828,
+          29.000015258789062,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "button_default_styling",
+    "Opacity": 1,
+    "Size": [
+      855,
+      55.99999237060547,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
 }
 `;
