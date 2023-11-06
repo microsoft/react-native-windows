@@ -158,6 +158,13 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
     AddRef();
   }
 
+  if (patternId == UIA_RangeValuePatternId) {
+    *pRetVal = static_cast<IRangeValueProvider *>(this);
+    AddRef();
+  }
+
+
+
   return S_OK;
 }
 
@@ -402,6 +409,72 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_IsReadOnly(BOOL *pRe
     return UIA_E_ELEMENTNOTAVAILABLE;
 
   *pRetVal = strongView->getAcccessiblityIsReadOnly();
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::SetValue([in] double val) {
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  strongView->setAcccessiblityRangeValue(val);
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_LargeChange(double* pRetVal) {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+
+
+
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_Maximum(double *pRetVal) {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  *pRetVal = static_cast<double>(*strongView->getAcccessiblityValueMax());
+
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_Minimum(double *pRetVal) {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  *pRetVal = static_cast<double>(*strongView->getAcccessiblityValueMin());
+
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_SmallChange(double *pRetVal) {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_Value(double *pRetVal) {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  *pRetVal = static_cast<double>(*strongView->getAcccessiblityValueNow());
+
   return S_OK;
 }
 

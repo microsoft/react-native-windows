@@ -15,7 +15,8 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
                                                  IRawElementProviderSimple,
                                                  IInvokeProvider,
                                                  IScrollItemProvider,
-                                                 IValueProvider> {
+                                                 IValueProvider,
+                                                 IRangeValueProvider> {
  public:
   CompositionDynamicAutomationProvider(
       const std::shared_ptr<::Microsoft::ReactNative::CompositionBaseComponentView> &componentView) noexcept;
@@ -45,6 +46,20 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
   virtual HRESULT __stdcall SetValue(LPCWSTR val) override;
   virtual HRESULT __stdcall get_Value(BSTR *pRetVal) override;
   virtual HRESULT __stdcall get_IsReadOnly(BOOL *pRetVal) override;
+
+  // inherited via IRangeValueProvider
+  virtual HRESULT __stdcall SetValue([in] double val) override;
+  virtual HRESULT __stdcall get_IsReadOnly(BOOL *pRetVal) override;
+  virtual HRESULT __stdcall get_LargeChange(double *pRetVal) override;
+  virtual HRESULT __stdcall get_Maximum(double *pRetVal) override;
+  virtual HRESULT __stdcall get_Minimum(double *pRetVal) override;
+  virtual HRESULT __stdcall get_SmallChange(double *pRetVal) override;
+  virtual HRESULT __stdcall get_Value(double *pRetVal) override;
+
+
+
+
+
 
  private:
   ::Microsoft::ReactNative::ReactTaggedView m_view;

@@ -114,7 +114,11 @@ struct IComponentView {
       bool ignorePointerEvents = false) const noexcept = 0;
   virtual winrt::IInspectable EnsureUiaProvider() noexcept = 0;
   virtual std::optional<std::string> getAcccessiblityValue() noexcept = 0;
+  virtual std::optional<int> getAcccessiblityValueNow() noexcept = 0;
+  virtual std::optional<int> getAcccessiblityValueMax() noexcept = 0;
+  virtual std::optional<int> getAcccessiblityValueMin() noexcept = 0;
   virtual void setAcccessiblityValue(std::string &&value) noexcept = 0;
+  virtual void setAcccessiblityRangeValue(double value) noexcept = 0;
   virtual bool getAcccessiblityIsReadOnly() noexcept = 0;
 
   // Notify up the tree to bring the rect into view by scrolling as needed

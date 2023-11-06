@@ -1302,9 +1302,27 @@ std::optional<std::string> CompositionBaseComponentView::getAcccessiblityValue()
   return std::static_pointer_cast<const facebook::react::ViewProps>(props())->accessibilityValue.text;
 }
 
+std::optional<int> CompositionBaseComponentView::getAcccessiblityValueNow() noexcept {
+  return std::static_pointer_cast<const facebook::react::ViewProps>(props())->accessibilityValue.now;
+}
+
+std::optional<int> CompositionBaseComponentView::getAcccessiblityValueMax() noexcept {
+  return std::static_pointer_cast<const facebook::react::ViewProps>(props())->accessibilityValue.max;
+}
+
+std::optional<int> CompositionBaseComponentView::getAcccessiblityValueMin() noexcept {
+  return std::static_pointer_cast<const facebook::react::ViewProps>(props())->accessibilityValue.min;
+}
+
+
+
 void CompositionBaseComponentView::setAcccessiblityValue(std::string &&value) noexcept {
   // no-op
 }
+
+void CompositionBaseComponentView::setAcccessiblityRangeValue(double value) noexcept {
+  // no-op
+} 
 
 bool CompositionBaseComponentView::getAcccessiblityIsReadOnly() noexcept {
   return true;
