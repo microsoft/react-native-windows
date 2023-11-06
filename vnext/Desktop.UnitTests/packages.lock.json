@@ -46,8 +46,8 @@
       },
       "ReactNative.V8Jsi.Windows": {
         "type": "Transitive",
-        "resolved": "0.71.5",
-        "contentHash": "Vw7I+m3fsJiNq6pVlM65uqV2Rld1zwXeP8pZ8bprdMdAThuAmMzo2NFzMyaeEH6Gw1FcsMKnGItH8gRH0JS6Rg=="
+        "resolved": "0.71.8",
+        "contentHash": "ksHjshj05AMAQ/v7Wet5Dwcwn9Up2BTOIrTv1yEW7+D23FQX0yILW5Zw0bmlWtV8MEtdY611z+06U3Xvu2ygSA=="
       },
       "common": {
         "type": "Project"
@@ -58,8 +58,8 @@
       "folly": {
         "type": "Project",
         "dependencies": {
-          "boost": "[1.76.0, )",
-          "fmt": "[1.0.0, )"
+          "Fmt": "[1.0.0, )",
+          "boost": "[1.76.0, )"
         }
       },
       "follywin32": {
@@ -77,7 +77,7 @@
           "Microsoft.JavaScript.Hermes": "[0.1.15, )",
           "Microsoft.SourceLink.GitHub": "[1.1.1, )",
           "ReactCommon": "[1.0.0, )",
-          "ReactNative.V8Jsi.Windows": "[0.71.5, )",
+          "ReactNative.V8Jsi.Windows": "[0.71.8, )",
           "ReactWindows.OpenSSL.StdCall.Static": "[1.0.2-p.5, )",
           "boost": "[1.76.0, )"
         }

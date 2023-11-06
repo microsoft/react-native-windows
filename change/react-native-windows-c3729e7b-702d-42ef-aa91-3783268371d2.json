@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Cherry pick PR #12211 #12143",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}

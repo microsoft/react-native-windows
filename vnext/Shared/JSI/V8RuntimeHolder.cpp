@@ -16,7 +16,7 @@ namespace {
 
 class V8FuncResolver : public IFuncResolver {
  public:
-  V8FuncResolver() : libHandle_(SafeLoadLibrary(L"v8jsi.dll")) {}
+  V8FuncResolver() : libHandle_(LoadLibraryAsPeerFirst(L"v8jsi.dll")) {}
 
   FuncPtr getFuncPtr(const char *funcName) override {
     return reinterpret_cast<FuncPtr>(GetProcAddress(libHandle_, funcName));
