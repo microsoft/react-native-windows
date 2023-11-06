@@ -13,11 +13,12 @@ exports[`Pressable Tests Pressables can change text on press/rest, state rest 1`
   },
   "Visual Tree": {
     "Comment": "pressable_press_console",
-    "Opacity": 1,
-    "Size": [
-      762,
-      28.99999237060547,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -50,36 +51,40 @@ exports[`Pressable Tests Pressables can have delayed event handlers 1`] = `
       {
         "Children": [
           {
-            "Opacity": 1,
-            "Size": [
-              84,
-              28.999969482421875,
+            "Offset": [
+              0,
+              0,
+              0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
           {
-            "Opacity": 1,
-            "Size": [
+            "Offset": [
+              0,
               0,
               0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
         ],
-        "Opacity": 1,
-        "Size": [
-          84,
-          28.999969482421875,
+        "Offset": [
+          0,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "pressable_delay_events_button",
-    "Opacity": 1,
-    "Size": [
-      84,
-      28.000030517578125,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -112,36 +117,40 @@ exports[`Pressable Tests Pressables can have event handlers 1`] = `
       {
         "Children": [
           {
-            "Opacity": 1,
-            "Size": [
-              84,
-              29.00006103515625,
+            "Offset": [
+              0,
+              0,
+              0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
           {
-            "Opacity": 1,
-            "Size": [
+            "Offset": [
+              0,
               0,
               0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
         ],
-        "Opacity": 1,
-        "Size": [
-          84,
-          29.00006103515625,
+        "Offset": [
+          0,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "pressable_feedback_events_button",
-    "Opacity": 1,
-    "Size": [
-      84,
-      28.000030517578125,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -178,36 +187,40 @@ exports[`Pressable Tests Pressables can have hit slop functionality 1`] = `
       {
         "Children": [
           {
-            "Opacity": 1,
-            "Size": [
-              220,
-              28.9998779296875,
+            "Offset": [
+              0,
+              0,
+              0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
           {
-            "Opacity": 1,
-            "Size": [
+            "Offset": [
+              0,
               0,
               0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
         ],
-        "Opacity": 1,
-        "Size": [
-          220,
-          28.9998779296875,
+        "Offset": [
+          0,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "pressable_hit_slop_button",
-    "Opacity": 1,
-    "Size": [
-      218,
-      27.99993896484375,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }

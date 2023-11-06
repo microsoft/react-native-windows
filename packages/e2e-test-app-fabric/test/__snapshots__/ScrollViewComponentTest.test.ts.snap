@@ -31,36 +31,40 @@ exports[`ScrollView Tests ScrollView has scrollTo method, scroll to bottom butto
       {
         "Children": [
           {
-            "Opacity": 1,
-            "Size": [
-              151.99996948242188,
-              28.999969482421875,
+            "Offset": [
+              0,
+              0,
+              0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
           {
-            "Opacity": 1,
-            "Size": [
+            "Offset": [
+              0,
               0,
               0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
         ],
-        "Opacity": 1,
-        "Size": [
-          151.99996948242188,
-          28.999969482421875,
+        "Offset": [
+          344,
+          7,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "scroll_to_bottom_button",
-    "Opacity": 1,
-    "Size": [
-      840,
-      43.000030517578125,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -97,36 +101,40 @@ exports[`ScrollView Tests ScrollView has scrollTo method, scroll to end button 1
       {
         "Children": [
           {
-            "Opacity": 1,
-            "Size": [
-              118.00003051757812,
-              28.999969482421875,
+            "Offset": [
+              0,
+              0,
+              0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
           {
-            "Opacity": 1,
-            "Size": [
+            "Offset": [
+              0,
               0,
               0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
         ],
-        "Opacity": 1,
-        "Size": [
-          118.00003051757812,
-          28.999969482421875,
+        "Offset": [
+          361,
+          7,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "scroll_to_end_button",
-    "Opacity": 1,
-    "Size": [
-      840,
-      43.000030517578125,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -163,36 +171,40 @@ exports[`ScrollView Tests ScrollView has scrollTo method, scroll to start button
       {
         "Children": [
           {
-            "Opacity": 1,
-            "Size": [
-              124.00003051757812,
-              29.00006103515625,
+            "Offset": [
+              0,
+              0,
+              0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
           {
-            "Opacity": 1,
-            "Size": [
+            "Offset": [
+              0,
               0,
               0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
         ],
-        "Opacity": 1,
-        "Size": [
-          124.00003051757812,
-          29.00006103515625,
+        "Offset": [
+          358,
+          7,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "scroll_to_start_button",
-    "Opacity": 1,
-    "Size": [
-      840,
-      42.99993896484375,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -229,36 +241,40 @@ exports[`ScrollView Tests ScrollView has scrollTo method, scroll to top button 1
       {
         "Children": [
           {
-            "Opacity": 1,
-            "Size": [
-              114,
-              28.999969482421875,
+            "Offset": [
+              0,
+              0,
+              0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
           {
-            "Opacity": 1,
-            "Size": [
+            "Offset": [
+              0,
               0,
               0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
         ],
-        "Opacity": 1,
-        "Size": [
-          114,
-          28.999969482421875,
+        "Offset": [
+          363,
+          7,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "scroll_to_top_button",
-    "Opacity": 1,
-    "Size": [
-      840,
-      43.000030517578125,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -295,36 +311,40 @@ exports[`ScrollView Tests ScrollViews has flash scroll indicators 1`] = `
       {
         "Children": [
           {
-            "Opacity": 1,
-            "Size": [
-              198,
-              29.00006103515625,
+            "Offset": [
+              0,
+              0,
+              0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
           {
-            "Opacity": 1,
-            "Size": [
+            "Offset": [
+              0,
               0,
               0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
         ],
-        "Opacity": 1,
-        "Size": [
-          198,
-          29.00006103515625,
+        "Offset": [
+          321,
+          7,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "flash_scroll_indicators_button",
-    "Opacity": 1,
-    "Size": [
-      840,
-      42.99993896484375,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }

@@ -13,11 +13,12 @@ exports[`Touchable Tests Text components can be tappable 1`] = `
   },
   "Visual Tree": {
     "Comment": "tappable_text",
-    "Opacity": 1,
-    "Size": [
-      855,
-      29.00006103515625,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -50,36 +51,40 @@ exports[`Touchable Tests TouchableWithoutFeedback components should not give vis
       {
         "Children": [
           {
-            "Opacity": 1,
-            "Size": [
-              837,
-              33,
+            "Offset": [
+              0,
+              0,
+              0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
           {
-            "Opacity": 1,
-            "Size": [
+            "Offset": [
+              0,
               0,
               0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
         ],
-        "Opacity": 1,
-        "Size": [
-          837,
-          33,
+        "Offset": [
+          9,
+          9,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "touchable_without_feedback_button",
-    "Opacity": 1,
-    "Size": [
-      855,
-      48.99998474121094,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -112,36 +117,40 @@ exports[`Touchable Tests Touchables can contain a Text component 1`] = `
       {
         "Children": [
           {
-            "Opacity": 1,
-            "Size": [
-              335,
-              33,
+            "Offset": [
+              0,
+              0,
+              0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
           {
-            "Opacity": 1,
-            "Size": [
+            "Offset": [
+              0,
               0,
               0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
         ],
-        "Opacity": 1,
-        "Size": [
-          335,
-          33,
+        "Offset": [
+          9,
+          9,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "touchable_highlight_text_button",
-    "Opacity": 1,
-    "Size": [
-      351,
-      75,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -163,36 +172,40 @@ exports[`Touchable Tests Touchables can contain an Image component 1`] = `
       {
         "Children": [
           {
-            "Opacity": 1,
-            "Size": [
-              75,
-              75,
+            "Offset": [
+              0,
+              0,
+              0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
           {
-            "Opacity": 1,
-            "Size": [
+            "Offset": [
+              0,
               0,
               0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
         ],
-        "Opacity": 1,
-        "Size": [
-          75,
-          75,
+        "Offset": [
+          0,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "touchable_highlight_image_button",
-    "Opacity": 1,
-    "Size": [
-      75,
-      75,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -225,36 +238,40 @@ exports[`Touchable Tests Touchables can delay events 1`] = `
       {
         "Children": [
           {
-            "Opacity": 1,
-            "Size": [
-              84,
-              29.00006103515625,
+            "Offset": [
+              0,
+              0,
+              0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
           {
-            "Opacity": 1,
-            "Size": [
+            "Offset": [
+              0,
               0,
               0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
         ],
-        "Opacity": 1,
-        "Size": [
-          84,
-          29.00006103515625,
+        "Offset": [
+          0,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "touchable_delay_events_button",
-    "Opacity": 1,
-    "Size": [
-      84,
-      27.99993896484375,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -291,36 +308,40 @@ exports[`Touchable Tests Touchables can enable a hit slop region 1`] = `
       {
         "Children": [
           {
-            "Opacity": 1,
-            "Size": [
-              220,
-              29.00006103515625,
+            "Offset": [
+              0,
+              0,
+              0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
           {
-            "Opacity": 1,
-            "Size": [
+            "Offset": [
+              0,
               0,
               0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
         ],
-        "Opacity": 1,
-        "Size": [
-          220,
-          29.00006103515625,
+        "Offset": [
+          0,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "touchable_hit_slop_button",
-    "Opacity": 1,
-    "Size": [
-      218,
-      28.0001220703125,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -353,36 +374,40 @@ exports[`Touchable Tests Touchables can register feedback events 1`] = `
       {
         "Children": [
           {
-            "Opacity": 1,
-            "Size": [
-              84,
-              28.9998779296875,
+            "Offset": [
+              0,
+              0,
+              0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
           {
-            "Opacity": 1,
-            "Size": [
+            "Offset": [
+              0,
               0,
               0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
         ],
-        "Opacity": 1,
-        "Size": [
-          84,
-          28.9998779296875,
+        "Offset": [
+          0,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "touchable_feedback_events_button",
-    "Opacity": 1,
-    "Size": [
-      84,
-      27,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }

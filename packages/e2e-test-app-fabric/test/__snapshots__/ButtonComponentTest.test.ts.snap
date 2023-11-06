@@ -37,11 +37,12 @@ exports[`Button Tests Buttons can be disabled 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 0, 0)",
                 },
-                "Opacity": 1,
-                "Size": [
-                  6,
-                  6,
+                "Offset": [
+                  0,
+                  0,
+                  0,
                 ],
+                "Opacity": 1,
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -49,11 +50,12 @@ exports[`Button Tests Buttons can be disabled 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 0, 0)",
                 },
-                "Opacity": 1,
-                "Size": [
-                  843,
-                  2,
+                "Offset": [
+                  6,
+                  0,
+                  0,
                 ],
+                "Opacity": 1,
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -61,11 +63,12 @@ exports[`Button Tests Buttons can be disabled 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 0, 0)",
                 },
-                "Opacity": 1,
-                "Size": [
-                  6,
-                  6,
+                "Offset": [
+                  -6,
+                  0,
+                  0,
                 ],
+                "Opacity": 1,
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -73,11 +76,12 @@ exports[`Button Tests Buttons can be disabled 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 0, 0)",
                 },
-                "Opacity": 1,
-                "Size": [
-                  2,
-                  43.999969482421875,
+                "Offset": [
+                  -2,
+                  6,
+                  0,
                 ],
+                "Opacity": 1,
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -85,11 +89,12 @@ exports[`Button Tests Buttons can be disabled 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 0, 0)",
                 },
-                "Opacity": 1,
-                "Size": [
-                  6,
-                  6,
+                "Offset": [
+                  -6,
+                  -6,
+                  0,
                 ],
+                "Opacity": 1,
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -97,11 +102,12 @@ exports[`Button Tests Buttons can be disabled 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 0, 0)",
                 },
-                "Opacity": 1,
-                "Size": [
-                  843,
-                  2,
+                "Offset": [
+                  6,
+                  -2,
+                  0,
                 ],
+                "Opacity": 1,
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -109,11 +115,12 @@ exports[`Button Tests Buttons can be disabled 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 0, 0)",
                 },
-                "Opacity": 1,
-                "Size": [
-                  6,
-                  6,
+                "Offset": [
+                  0,
+                  -6,
+                  0,
                 ],
+                "Opacity": 1,
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -121,70 +128,78 @@ exports[`Button Tests Buttons can be disabled 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 0, 0)",
                 },
-                "Opacity": 1,
-                "Size": [
-                  2,
-                  43.999969482421875,
+                "Offset": [
+                  0,
+                  6,
+                  0,
                 ],
+                "Opacity": 1,
                 "Visual Type": "SpriteVisual",
               },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
             ],
             "Opacity": 1,
-            "Size": [
-              855,
-              55.999969482421875,
-            ],
             "Visual Type": "SpriteVisual",
           },
           {
-            "Opacity": 1,
-            "Size": [
+            "Offset": [
+              0,
               0,
               0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
         ],
-        "Opacity": 1,
-        "Size": [
-          855,
-          55.999969482421875,
+        "Offset": [
+          0,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
         "Children": [
           {
-            "Opacity": 1,
-            "Size": [
-              828,
-              29.00006103515625,
+            "Offset": [
+              0,
+              0,
+              0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
           {
-            "Opacity": 1,
-            "Size": [
+            "Offset": [
+              0,
               0,
               0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
         ],
-        "Opacity": 1,
-        "Size": [
-          828,
-          29.00006103515625,
+        "Offset": [
+          14,
+          14,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "disabled_button",
-    "Opacity": 1,
-    "Size": [
-      855,
-      55.999969482421875,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -227,11 +242,12 @@ exports[`Button Tests Buttons can have accessibility labels 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 0, 0)",
                 },
-                "Opacity": 1,
-                "Size": [
-                  6,
-                  6,
+                "Offset": [
+                  0,
+                  0,
+                  0,
                 ],
+                "Opacity": 1,
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -239,11 +255,12 @@ exports[`Button Tests Buttons can have accessibility labels 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 0, 0)",
                 },
-                "Opacity": 1,
-                "Size": [
-                  843,
-                  2,
+                "Offset": [
+                  6,
+                  0,
+                  0,
                 ],
+                "Opacity": 1,
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -251,11 +268,12 @@ exports[`Button Tests Buttons can have accessibility labels 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 0, 0)",
                 },
-                "Opacity": 1,
-                "Size": [
-                  6,
-                  6,
+                "Offset": [
+                  -6,
+                  0,
+                  0,
                 ],
+                "Opacity": 1,
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -263,11 +281,12 @@ exports[`Button Tests Buttons can have accessibility labels 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 0, 0)",
                 },
-                "Opacity": 1,
-                "Size": [
-                  2,
-                  44.00006103515625,
+                "Offset": [
+                  -2,
+                  6,
+                  0,
                 ],
+                "Opacity": 1,
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -275,11 +294,12 @@ exports[`Button Tests Buttons can have accessibility labels 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 0, 0)",
                 },
-                "Opacity": 1,
-                "Size": [
-                  6,
-                  6,
+                "Offset": [
+                  -6,
+                  -6,
+                  0,
                 ],
+                "Opacity": 1,
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -287,11 +307,12 @@ exports[`Button Tests Buttons can have accessibility labels 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 0, 0)",
                 },
-                "Opacity": 1,
-                "Size": [
-                  843,
-                  2,
+                "Offset": [
+                  6,
+                  -2,
+                  0,
                 ],
+                "Opacity": 1,
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -299,11 +320,12 @@ exports[`Button Tests Buttons can have accessibility labels 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 0, 0)",
                 },
-                "Opacity": 1,
-                "Size": [
-                  6,
-                  6,
+                "Offset": [
+                  0,
+                  -6,
+                  0,
                 ],
+                "Opacity": 1,
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -311,70 +333,78 @@ exports[`Button Tests Buttons can have accessibility labels 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 0, 0)",
                 },
-                "Opacity": 1,
-                "Size": [
-                  2,
-                  44.00006103515625,
+                "Offset": [
+                  0,
+                  6,
+                  0,
                 ],
+                "Opacity": 1,
                 "Visual Type": "SpriteVisual",
               },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
             ],
             "Opacity": 1,
-            "Size": [
-              855,
-              56.00006103515625,
-            ],
             "Visual Type": "SpriteVisual",
           },
           {
-            "Opacity": 1,
-            "Size": [
+            "Offset": [
+              0,
               0,
               0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
         ],
-        "Opacity": 1,
-        "Size": [
-          855,
-          56.00006103515625,
+        "Offset": [
+          0,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
         "Children": [
           {
-            "Opacity": 1,
-            "Size": [
-              828,
-              28.999969482421875,
+            "Offset": [
+              0,
+              0,
+              0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
           {
-            "Opacity": 1,
-            "Size": [
+            "Offset": [
+              0,
               0,
               0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
         ],
-        "Opacity": 1,
-        "Size": [
-          828,
-          28.999969482421875,
+        "Offset": [
+          14,
+          14,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "accessibilityLabel_button",
-    "Opacity": 1,
-    "Size": [
-      855,
-      56.00006103515625,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -413,11 +443,12 @@ exports[`Button Tests Buttons can have accessibility props 1`] = `
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 0)",
         },
-        "Opacity": 1,
-        "Size": [
-          6,
-          6,
+        "Offset": [
+          0,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
@@ -425,11 +456,12 @@ exports[`Button Tests Buttons can have accessibility props 1`] = `
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 0)",
         },
-        "Opacity": 1,
-        "Size": [
-          843,
-          2,
+        "Offset": [
+          6,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
@@ -437,11 +469,12 @@ exports[`Button Tests Buttons can have accessibility props 1`] = `
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 0)",
         },
-        "Opacity": 1,
-        "Size": [
-          6,
-          6,
+        "Offset": [
+          -6,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
@@ -449,11 +482,12 @@ exports[`Button Tests Buttons can have accessibility props 1`] = `
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 0)",
         },
-        "Opacity": 1,
-        "Size": [
-          2,
-          42.99993896484375,
+        "Offset": [
+          -2,
+          6,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
@@ -461,11 +495,12 @@ exports[`Button Tests Buttons can have accessibility props 1`] = `
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 0)",
         },
-        "Opacity": 1,
-        "Size": [
-          6,
-          6,
+        "Offset": [
+          -6,
+          -6,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
@@ -473,11 +508,12 @@ exports[`Button Tests Buttons can have accessibility props 1`] = `
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 0)",
         },
-        "Opacity": 1,
-        "Size": [
-          843,
-          2,
+        "Offset": [
+          6,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
@@ -485,11 +521,12 @@ exports[`Button Tests Buttons can have accessibility props 1`] = `
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 0)",
         },
-        "Opacity": 1,
-        "Size": [
-          6,
-          6,
+        "Offset": [
+          0,
+          -6,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
@@ -497,46 +534,51 @@ exports[`Button Tests Buttons can have accessibility props 1`] = `
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 0)",
         },
-        "Opacity": 1,
-        "Size": [
-          2,
-          42.99993896484375,
+        "Offset": [
+          0,
+          6,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
         "Children": [
           {
-            "Opacity": 1,
-            "Size": [
-              828,
-              28.0001220703125,
+            "Offset": [
+              0,
+              0,
+              0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
           {
-            "Opacity": 1,
-            "Size": [
+            "Offset": [
+              0,
               0,
               0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
         ],
-        "Opacity": 1,
-        "Size": [
-          828,
-          28.0001220703125,
+        "Offset": [
+          14,
+          14,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "accessibility_props",
-    "Opacity": 1,
-    "Size": [
-      855,
-      54.99993896484375,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -579,11 +621,12 @@ exports[`Button Tests Buttons can have accessibility states 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 0, 0)",
                 },
-                "Opacity": 1,
-                "Size": [
-                  6,
-                  6,
+                "Offset": [
+                  0,
+                  0,
+                  0,
                 ],
+                "Opacity": 1,
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -591,11 +634,12 @@ exports[`Button Tests Buttons can have accessibility states 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 0, 0)",
                 },
-                "Opacity": 1,
-                "Size": [
-                  843,
-                  2,
+                "Offset": [
+                  6,
+                  0,
+                  0,
                 ],
+                "Opacity": 1,
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -603,11 +647,12 @@ exports[`Button Tests Buttons can have accessibility states 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 0, 0)",
                 },
-                "Opacity": 1,
-                "Size": [
-                  6,
-                  6,
+                "Offset": [
+                  -6,
+                  0,
+                  0,
                 ],
+                "Opacity": 1,
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -615,11 +660,12 @@ exports[`Button Tests Buttons can have accessibility states 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 0, 0)",
                 },
-                "Opacity": 1,
-                "Size": [
-                  2,
-                  44.00006103515625,
+                "Offset": [
+                  -2,
+                  6,
+                  0,
                 ],
+                "Opacity": 1,
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -627,11 +673,12 @@ exports[`Button Tests Buttons can have accessibility states 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 0, 0)",
                 },
-                "Opacity": 1,
-                "Size": [
-                  6,
-                  6,
+                "Offset": [
+                  -6,
+                  -6,
+                  0,
                 ],
+                "Opacity": 1,
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -639,11 +686,12 @@ exports[`Button Tests Buttons can have accessibility states 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 0, 0)",
                 },
-                "Opacity": 1,
-                "Size": [
-                  843,
-                  2,
+                "Offset": [
+                  6,
+                  -2,
+                  0,
                 ],
+                "Opacity": 1,
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -651,11 +699,12 @@ exports[`Button Tests Buttons can have accessibility states 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 0, 0)",
                 },
-                "Opacity": 1,
-                "Size": [
-                  6,
-                  6,
+                "Offset": [
+                  0,
+                  -6,
+                  0,
                 ],
+                "Opacity": 1,
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -663,70 +712,78 @@ exports[`Button Tests Buttons can have accessibility states 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 0, 0)",
                 },
-                "Opacity": 1,
-                "Size": [
-                  2,
-                  44.00006103515625,
+                "Offset": [
+                  0,
+                  6,
+                  0,
                 ],
+                "Opacity": 1,
                 "Visual Type": "SpriteVisual",
               },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
             ],
             "Opacity": 1,
-            "Size": [
-              855,
-              56.00006103515625,
-            ],
             "Visual Type": "SpriteVisual",
           },
           {
-            "Opacity": 1,
-            "Size": [
+            "Offset": [
+              0,
               0,
               0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
         ],
-        "Opacity": 1,
-        "Size": [
-          855,
-          56.00006103515625,
+        "Offset": [
+          0,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
         "Children": [
           {
-            "Opacity": 1,
-            "Size": [
-              828,
-              28.9998779296875,
+            "Offset": [
+              0,
+              0,
+              0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
           {
-            "Opacity": 1,
-            "Size": [
+            "Offset": [
+              0,
               0,
               0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
         ],
-        "Opacity": 1,
-        "Size": [
-          828,
-          28.9998779296875,
+        "Offset": [
+          14,
+          14,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "accessibilityState_button",
-    "Opacity": 1,
-    "Size": [
-      855,
-      56.00006103515625,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -769,11 +826,12 @@ exports[`Button Tests Buttons can have custom colors 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 0, 0)",
                 },
-                "Opacity": 1,
-                "Size": [
-                  6,
-                  6,
+                "Offset": [
+                  0,
+                  0,
+                  0,
                 ],
+                "Opacity": 1,
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -781,11 +839,12 @@ exports[`Button Tests Buttons can have custom colors 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 0, 0)",
                 },
-                "Opacity": 1,
-                "Size": [
-                  843,
-                  2,
+                "Offset": [
+                  6,
+                  0,
+                  0,
                 ],
+                "Opacity": 1,
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -793,11 +852,12 @@ exports[`Button Tests Buttons can have custom colors 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 0, 0)",
                 },
-                "Opacity": 1,
-                "Size": [
-                  6,
-                  6,
+                "Offset": [
+                  -6,
+                  0,
+                  0,
                 ],
+                "Opacity": 1,
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -805,11 +865,12 @@ exports[`Button Tests Buttons can have custom colors 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 0, 0)",
                 },
-                "Opacity": 1,
-                "Size": [
-                  2,
-                  43.999969482421875,
+                "Offset": [
+                  -2,
+                  6,
+                  0,
                 ],
+                "Opacity": 1,
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -817,11 +878,12 @@ exports[`Button Tests Buttons can have custom colors 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 0, 0)",
                 },
-                "Opacity": 1,
-                "Size": [
-                  6,
-                  6,
+                "Offset": [
+                  -6,
+                  -6,
+                  0,
                 ],
+                "Opacity": 1,
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -829,11 +891,12 @@ exports[`Button Tests Buttons can have custom colors 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 0, 0)",
                 },
-                "Opacity": 1,
-                "Size": [
-                  843,
-                  2,
+                "Offset": [
+                  6,
+                  -2,
+                  0,
                 ],
+                "Opacity": 1,
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -841,11 +904,12 @@ exports[`Button Tests Buttons can have custom colors 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 0, 0)",
                 },
-                "Opacity": 1,
-                "Size": [
-                  6,
-                  6,
+                "Offset": [
+                  0,
+                  -6,
+                  0,
                 ],
+                "Opacity": 1,
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -853,70 +917,78 @@ exports[`Button Tests Buttons can have custom colors 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 0, 0)",
                 },
-                "Opacity": 1,
-                "Size": [
-                  2,
-                  43.999969482421875,
+                "Offset": [
+                  0,
+                  6,
+                  0,
                 ],
+                "Opacity": 1,
                 "Visual Type": "SpriteVisual",
               },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
             ],
             "Opacity": 1,
-            "Size": [
-              855,
-              55.999969482421875,
-            ],
             "Visual Type": "SpriteVisual",
           },
           {
-            "Opacity": 1,
-            "Size": [
+            "Offset": [
+              0,
               0,
               0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
         ],
-        "Opacity": 1,
-        "Size": [
-          855,
-          55.999969482421875,
+        "Offset": [
+          0,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
         "Children": [
           {
-            "Opacity": 1,
-            "Size": [
-              828,
-              29.000015258789062,
+            "Offset": [
+              0,
+              0,
+              0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
           {
-            "Opacity": 1,
-            "Size": [
+            "Offset": [
+              0,
               0,
               0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
         ],
-        "Opacity": 1,
-        "Size": [
-          828,
-          29.000015258789062,
+        "Offset": [
+          14,
+          14,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "cancel_button",
-    "Opacity": 1,
-    "Size": [
-      855,
-      55.999969482421875,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -955,11 +1027,12 @@ exports[`Button Tests Buttons have default styling 1`] = `
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 0)",
         },
-        "Opacity": 1,
-        "Size": [
-          6,
-          6,
+        "Offset": [
+          0,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
@@ -967,11 +1040,12 @@ exports[`Button Tests Buttons have default styling 1`] = `
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 0)",
         },
-        "Opacity": 1,
-        "Size": [
-          843,
-          2,
+        "Offset": [
+          6,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
@@ -979,11 +1053,12 @@ exports[`Button Tests Buttons have default styling 1`] = `
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 0)",
         },
-        "Opacity": 1,
-        "Size": [
-          6,
-          6,
+        "Offset": [
+          -6,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
@@ -991,11 +1066,12 @@ exports[`Button Tests Buttons have default styling 1`] = `
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 0)",
         },
-        "Opacity": 1,
-        "Size": [
-          2,
-          43.99999237060547,
+        "Offset": [
+          -2,
+          6,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
@@ -1003,11 +1079,12 @@ exports[`Button Tests Buttons have default styling 1`] = `
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 0)",
         },
-        "Opacity": 1,
-        "Size": [
-          6,
-          6,
+        "Offset": [
+          -6,
+          -6,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
@@ -1015,11 +1092,12 @@ exports[`Button Tests Buttons have default styling 1`] = `
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 0)",
         },
-        "Opacity": 1,
-        "Size": [
-          843,
-          2,
+        "Offset": [
+          6,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
@@ -1027,11 +1105,12 @@ exports[`Button Tests Buttons have default styling 1`] = `
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 0)",
         },
-        "Opacity": 1,
-        "Size": [
-          6,
-          6,
+        "Offset": [
+          0,
+          -6,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
@@ -1039,46 +1118,51 @@ exports[`Button Tests Buttons have default styling 1`] = `
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 0)",
         },
-        "Opacity": 1,
-        "Size": [
-          2,
-          43.99999237060547,
+        "Offset": [
+          0,
+          6,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
         "Children": [
           {
-            "Opacity": 1,
-            "Size": [
-              828,
-              29.000015258789062,
+            "Offset": [
+              0,
+              0,
+              0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
           {
-            "Opacity": 1,
-            "Size": [
+            "Offset": [
+              0,
               0,
               0,
             ],
+            "Opacity": 1,
             "Visual Type": "SpriteVisual",
           },
         ],
-        "Opacity": 1,
-        "Size": [
-          828,
-          29.000015258789062,
+        "Offset": [
+          14,
+          14,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "button_default_styling",
-    "Opacity": 1,
-    "Size": [
-      855,
-      55.99999237060547,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }

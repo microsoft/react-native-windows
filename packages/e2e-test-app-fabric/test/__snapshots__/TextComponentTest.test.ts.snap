@@ -13,11 +13,12 @@ exports[`Text Tests Padding can be added to Text 1`] = `
   },
   "Visual Tree": {
     "Comment": "text-padding",
-    "Opacity": 1,
-    "Size": [
-      855,
-      59.00006103515625,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -36,11 +37,12 @@ exports[`Text Tests Text can be restricted to one line 1`] = `
   },
   "Visual Tree": {
     "Comment": "text-one-line",
-    "Opacity": 1,
-    "Size": [
-      855,
-      29.000244140625,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -59,11 +61,12 @@ exports[`Text Tests Text can be selectable 1`] = `
   },
   "Visual Tree": {
     "Comment": "text-selectable",
-    "Opacity": 1,
-    "Size": [
-      855,
-      55.99951171875,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -82,11 +85,12 @@ exports[`Text Tests Text can have a color 1`] = `
   },
   "Visual Tree": {
     "Comment": "text-color",
-    "Opacity": 1,
-    "Size": [
-      855,
-      28.9998779296875,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -105,11 +109,12 @@ exports[`Text Tests Text can have a customized selection color 1`] = `
   },
   "Visual Tree": {
     "Comment": "text-selection-color",
-    "Opacity": 1,
-    "Size": [
-      855,
-      29.000244140625,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -128,11 +133,12 @@ exports[`Text Tests Text can have a size 1`] = `
   },
   "Visual Tree": {
     "Comment": "text-size",
-    "Opacity": 1,
-    "Size": [
-      855,
-      47.00006103515625,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -151,11 +157,12 @@ exports[`Text Tests Text can have an outer color 1`] = `
   },
   "Visual Tree": {
     "Comment": "text-outer-color",
-    "Opacity": 1,
-    "Size": [
-      855,
-      55.9998779296875,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -174,11 +181,12 @@ exports[`Text Tests Text can have decoration lines: Solid Line Through 1`] = `
   },
   "Visual Tree": {
     "Comment": "text-decoration-solid-linethru",
-    "Opacity": 1,
-    "Size": [
-      855,
-      28.9998779296875,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -197,11 +205,12 @@ exports[`Text Tests Text can have decoration lines: Underline 1`] = `
   },
   "Visual Tree": {
     "Comment": "text-decoration-underline",
-    "Opacity": 1,
-    "Size": [
-      855,
-      29.000244140625,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -220,11 +229,12 @@ exports[`Text Tests Text can have shadows 1`] = `
   },
   "Visual Tree": {
     "Comment": "text-shadow",
-    "Opacity": 1,
-    "Size": [
-      855,
-      40.99951171875,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -243,11 +253,12 @@ exports[`Text Tests Text can wrap 1`] = `
   },
   "Visual Tree": {
     "Comment": "text-wrap",
-    "Opacity": 1,
-    "Size": [
-      855,
-      336,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }

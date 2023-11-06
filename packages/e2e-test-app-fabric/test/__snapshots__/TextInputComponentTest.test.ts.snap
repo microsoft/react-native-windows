@@ -14,67 +14,75 @@ exports[`TextInput Tests Multi-line TextInputs can enable text selection (Impera
   "Visual Tree": {
     "Children": [
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          -2,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          0,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
@@ -82,20 +90,22 @@ exports[`TextInput Tests Multi-line TextInputs can enable text selection (Impera
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 255)",
         },
-        "Opacity": 0,
-        "Size": [
+        "Offset": [
+          0,
           0,
           0,
         ],
+        "Opacity": 0,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "multilineImperative-text-input",
-    "Opacity": 1,
-    "Size": [
-      855,
-      75,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -115,67 +125,75 @@ exports[`TextInput Tests Multi-line TextInputs can enable text selection 1`] = `
   "Visual Tree": {
     "Children": [
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          -2,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          0,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
@@ -183,20 +201,22 @@ exports[`TextInput Tests Multi-line TextInputs can enable text selection 1`] = `
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 255)",
         },
-        "Opacity": 0,
-        "Size": [
+        "Offset": [
+          0,
           0,
           0,
         ],
+        "Opacity": 0,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "multiline-text-input",
-    "Opacity": 1,
-    "Size": [
-      855,
-      75,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -216,67 +236,75 @@ exports[`TextInput Tests Single-line TextInputs can enable text selection (Imper
   "Visual Tree": {
     "Children": [
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          -2,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          0,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
@@ -284,20 +312,22 @@ exports[`TextInput Tests Single-line TextInputs can enable text selection (Imper
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 255)",
         },
-        "Opacity": 0,
-        "Size": [
+        "Offset": [
+          0,
           0,
           0,
         ],
+        "Opacity": 0,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "singlelineImperative-text-input",
-    "Opacity": 1,
-    "Size": [
-      855,
-      41.000244140625,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -317,67 +347,75 @@ exports[`TextInput Tests Single-line TextInputs can enable text selection 1`] = 
   "Visual Tree": {
     "Children": [
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          -2,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          0,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
@@ -385,20 +423,22 @@ exports[`TextInput Tests Single-line TextInputs can enable text selection 1`] = 
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 255)",
         },
-        "Opacity": 0,
-        "Size": [
+        "Offset": [
+          0,
           0,
           0,
         ],
+        "Opacity": 0,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "singleline-text-input",
-    "Opacity": 1,
-    "Size": [
-      855,
-      42,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -418,67 +458,75 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Character
   "Visual Tree": {
     "Children": [
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          -2,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          0,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
@@ -486,20 +534,22 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Character
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 255)",
         },
-        "Opacity": 0,
-        "Size": [
+        "Offset": [
+          0,
           0,
           0,
         ],
+        "Opacity": 0,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "capitalize-characters",
-    "Opacity": 1,
-    "Size": [
-      668,
-      42,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -519,67 +569,75 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Sentences
   "Visual Tree": {
     "Children": [
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          -2,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          0,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
@@ -587,20 +645,22 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Sentences
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 255)",
         },
-        "Opacity": 0,
-        "Size": [
+        "Offset": [
+          0,
           0,
           0,
         ],
+        "Opacity": 0,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "capitalize-sentences",
-    "Opacity": 1,
-    "Size": [
-      668,
-      42,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -620,67 +680,75 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Turned Of
   "Visual Tree": {
     "Children": [
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          -2,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          0,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
@@ -688,20 +756,22 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Turned Of
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 255)",
         },
-        "Opacity": 0,
-        "Size": [
+        "Offset": [
+          0,
           0,
           0,
         ],
+        "Opacity": 0,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "capitalize-none",
-    "Opacity": 1,
-    "Size": [
-      668,
-      42,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -721,67 +791,75 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Words 1`]
   "Visual Tree": {
     "Children": [
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          -2,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          0,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
@@ -789,20 +867,22 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Words 1`]
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 255)",
         },
-        "Opacity": 0,
-        "Size": [
+        "Offset": [
+          0,
           0,
           0,
         ],
+        "Opacity": 0,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "capitalize-words",
-    "Opacity": 1,
-    "Size": [
-      668,
-      42,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -822,67 +902,75 @@ exports[`TextInput Tests TextInputs can have a background color 1`] = `
   "Visual Tree": {
     "Children": [
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          -2,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          0,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
@@ -890,20 +978,22 @@ exports[`TextInput Tests TextInputs can have a background color 1`] = `
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 255)",
         },
-        "Opacity": 0,
-        "Size": [
+        "Offset": [
+          0,
           0,
           0,
         ],
+        "Opacity": 0,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "style-backgroundColor",
-    "Opacity": 1,
-    "Size": [
-      668,
-      42,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -923,67 +1013,75 @@ exports[`TextInput Tests TextInputs can have a color 1`] = `
   "Visual Tree": {
     "Children": [
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          -2,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          0,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
@@ -991,20 +1089,22 @@ exports[`TextInput Tests TextInputs can have a color 1`] = `
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 255)",
         },
-        "Opacity": 0,
-        "Size": [
+        "Offset": [
+          0,
           0,
           0,
         ],
+        "Opacity": 0,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "style-color",
-    "Opacity": 1,
-    "Size": [
-      668,
-      42,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -1024,67 +1124,75 @@ exports[`TextInput Tests TextInputs can have a font family 1`] = `
   "Visual Tree": {
     "Children": [
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          -2,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          0,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
@@ -1092,20 +1200,22 @@ exports[`TextInput Tests TextInputs can have a font family 1`] = `
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 255)",
         },
-        "Opacity": 0,
-        "Size": [
+        "Offset": [
+          0,
           0,
           0,
         ],
+        "Opacity": 0,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "style-fontFamily",
-    "Opacity": 1,
-    "Size": [
-      668,
-      42,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -1125,67 +1235,75 @@ exports[`TextInput Tests TextInputs can have a font size 1`] = `
   "Visual Tree": {
     "Children": [
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          -2,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          0,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
@@ -1193,20 +1311,22 @@ exports[`TextInput Tests TextInputs can have a font size 1`] = `
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 255)",
         },
-        "Opacity": 0,
-        "Size": [
+        "Offset": [
+          0,
           0,
           0,
         ],
+        "Opacity": 0,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "style-fontSize",
-    "Opacity": 1,
-    "Size": [
-      668,
-      51.999755859375,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -1226,67 +1346,75 @@ exports[`TextInput Tests TextInputs can have a font style 1`] = `
   "Visual Tree": {
     "Children": [
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          -2,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          0,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
@@ -1294,20 +1422,22 @@ exports[`TextInput Tests TextInputs can have a font style 1`] = `
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 255)",
         },
-        "Opacity": 0,
-        "Size": [
+        "Offset": [
+          0,
           0,
           0,
         ],
+        "Opacity": 0,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "style-fontStyle",
-    "Opacity": 1,
-    "Size": [
-      668,
-      42,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -1327,67 +1457,75 @@ exports[`TextInput Tests TextInputs can have a font weight 1`] = `
   "Visual Tree": {
     "Children": [
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          -2,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          0,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
@@ -1395,20 +1533,22 @@ exports[`TextInput Tests TextInputs can have a font weight 1`] = `
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 255)",
         },
-        "Opacity": 0,
-        "Size": [
+        "Offset": [
+          0,
           0,
           0,
         ],
+        "Opacity": 0,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "style-fontWeight",
-    "Opacity": 1,
-    "Size": [
-      668,
-      42,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -1428,67 +1568,75 @@ exports[`TextInput Tests TextInputs can have attributed text 1`] = `
   "Visual Tree": {
     "Children": [
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          -2,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          0,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
@@ -1496,20 +1644,22 @@ exports[`TextInput Tests TextInputs can have attributed text 1`] = `
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 255)",
         },
-        "Opacity": 0,
-        "Size": [
+        "Offset": [
+          0,
           0,
           0,
         ],
+        "Opacity": 0,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "text-input",
-    "Opacity": 1,
-    "Size": [
-      855,
-      75,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -1529,67 +1679,75 @@ exports[`TextInput Tests TextInputs can have customized letter spacing 1`] = `
   "Visual Tree": {
     "Children": [
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          -2,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          0,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
@@ -1597,20 +1755,22 @@ exports[`TextInput Tests TextInputs can have customized letter spacing 1`] = `
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 255)",
         },
-        "Opacity": 0,
-        "Size": [
+        "Offset": [
+          0,
           0,
           0,
         ],
+        "Opacity": 0,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "style-letterSpacing",
-    "Opacity": 1,
-    "Size": [
-      668,
-      42,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -1630,67 +1790,75 @@ exports[`TextInput Tests TextInputs can have customized line height 1`] = `
   "Visual Tree": {
     "Children": [
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          -2,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          0,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
@@ -1698,20 +1866,22 @@ exports[`TextInput Tests TextInputs can have customized line height 1`] = `
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 255)",
         },
-        "Opacity": 0,
-        "Size": [
+        "Offset": [
+          0,
           0,
           0,
         ],
+        "Opacity": 0,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "style-lineHeight",
-    "Opacity": 1,
-    "Size": [
-      668,
-      39,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -1731,67 +1901,75 @@ exports[`TextInput Tests TextInputs can have text decoration lines 1`] = `
   "Visual Tree": {
     "Children": [
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          -2,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          0,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
@@ -1799,20 +1977,22 @@ exports[`TextInput Tests TextInputs can have text decoration lines 1`] = `
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 255)",
         },
-        "Opacity": 0,
-        "Size": [
+        "Offset": [
+          0,
           0,
           0,
         ],
+        "Opacity": 0,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "style-textDecorationLine",
-    "Opacity": 1,
-    "Size": [
-      668,
-      42,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -1832,67 +2012,75 @@ exports[`TextInput Tests TextInputs can have text shadows 1`] = `
   "Visual Tree": {
     "Children": [
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          -2,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          0,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
@@ -1900,20 +2088,22 @@ exports[`TextInput Tests TextInputs can have text shadows 1`] = `
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 255)",
         },
-        "Opacity": 0,
-        "Size": [
+        "Offset": [
+          0,
           0,
           0,
         ],
+        "Opacity": 0,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "style-textShadow",
-    "Opacity": 1,
-    "Size": [
-      668,
-      42,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -1933,67 +2123,75 @@ exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with C
   "Visual Tree": {
     "Children": [
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          -2,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          0,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
@@ -2001,20 +2199,22 @@ exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with C
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 255)",
         },
-        "Opacity": 0,
-        "Size": [
+        "Offset": [
+          0,
           0,
           0,
         ],
+        "Opacity": 0,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "rewrite_clear_input",
-    "Opacity": 1,
-    "Size": [
-      782,
-      42,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -2034,67 +2234,75 @@ exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with N
   "Visual Tree": {
     "Children": [
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          -2,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          0,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
@@ -2102,20 +2310,22 @@ exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with N
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 255)",
         },
-        "Opacity": 0,
-        "Size": [
+        "Offset": [
+          0,
           0,
           0,
         ],
+        "Opacity": 0,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "rewrite_no_sp_input",
-    "Opacity": 1,
-    "Size": [
-      855,
-      42,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -2135,67 +2345,75 @@ exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with U
   "Visual Tree": {
     "Children": [
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          -2,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          0,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
@@ -2203,20 +2421,22 @@ exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with U
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 255)",
         },
-        "Opacity": 0,
-        "Size": [
+        "Offset": [
+          0,
           0,
           0,
         ],
+        "Opacity": 0,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "rewrite_sp_underscore_input",
-    "Opacity": 1,
-    "Size": [
-      819,
-      42,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }
@@ -2236,67 +2456,75 @@ exports[`TextInput Tests Uncontrolled TextInput 1`] = `
   "Visual Tree": {
     "Children": [
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          0,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          -2,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          -2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          -4,
+        "Offset": [
           2,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
-          2,
-          2,
+        "Offset": [
+          0,
+          -2,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
-        "Opacity": 1,
-        "Size": [
+        "Offset": [
+          0,
           2,
-          -4,
+          0,
         ],
+        "Opacity": 1,
         "Visual Type": "SpriteVisual",
       },
       {
@@ -2304,20 +2532,22 @@ exports[`TextInput Tests Uncontrolled TextInput 1`] = `
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 255)",
         },
-        "Opacity": 0,
-        "Size": [
+        "Offset": [
+          0,
           0,
           0,
         ],
+        "Opacity": 0,
         "Visual Type": "SpriteVisual",
       },
     ],
     "Comment": "uncontrolled-textinput",
-    "Opacity": 1,
-    "Size": [
-      855,
-      40.9998779296875,
+    "Offset": [
+      0,
+      0,
+      0,
     ],
+    "Opacity": 1,
     "Visual Type": "SpriteVisual",
   },
 }

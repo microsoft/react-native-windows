@@ -329,14 +329,11 @@ winrt::Windows::Data::Json::JsonObject PrintVisualTree(winrt::Microsoft::UI::Com
   if (!node.Comment().empty()) {
     result.Insert(L"Comment", winrt::Windows::Data::Json::JsonValue::CreateStringValue(node.Comment()));
   }
-  winrt::Windows::Data::Json::JsonArray visualSize;
-  visualSize.Append(winrt::Windows::Data::Json::JsonValue::CreateNumberValue(node.Size().x));
-  visualSize.Append(winrt::Windows::Data::Json::JsonValue::CreateNumberValue(node.Size().y));
-  result.Insert(L"Size", visualSize);
   winrt::Windows::Data::Json::JsonArray visualOffset;
   visualOffset.Append(winrt::Windows::Data::Json::JsonValue::CreateNumberValue(node.Offset().x));
   visualOffset.Append(winrt::Windows::Data::Json::JsonValue::CreateNumberValue(node.Offset().y));
   visualOffset.Append(winrt::Windows::Data::Json::JsonValue::CreateNumberValue(node.Offset().z));
+  result.Insert(L"Offset", visualOffset);
   result.Insert(L"Opacity", winrt::Windows::Data::Json::JsonValue::CreateNumberValue(node.Opacity()));
   auto spriteVisual = node.try_as<winrt::Microsoft::UI::Composition::SpriteVisual>();
   if (spriteVisual) {
