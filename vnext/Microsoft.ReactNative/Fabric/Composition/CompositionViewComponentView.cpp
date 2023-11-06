@@ -1314,15 +1314,13 @@ std::optional<int> CompositionBaseComponentView::getAcccessiblityValueMin() noex
   return std::static_pointer_cast<const facebook::react::ViewProps>(props())->accessibilityValue.min;
 }
 
-
-
 void CompositionBaseComponentView::setAcccessiblityValue(std::string &&value) noexcept {
   // no-op
 }
 
 void CompositionBaseComponentView::setAcccessiblityRangeValue(double value) noexcept {
   // no-op
-} 
+}
 
 bool CompositionBaseComponentView::getAcccessiblityIsReadOnly() noexcept {
   return true;

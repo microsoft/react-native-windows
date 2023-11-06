@@ -163,8 +163,6 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
     AddRef();
   }
 
-
-
   return S_OK;
 }
 
@@ -412,7 +410,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_IsReadOnly(BOOL *pRe
   return S_OK;
 }
 
-HRESULT __stdcall CompositionDynamicAutomationProvider::SetValue([in] double val) {
+HRESULT __stdcall CompositionDynamicAutomationProvider::SetValue(double val) {
   auto strongView = m_view.view();
 
   if (!strongView)
@@ -422,11 +420,9 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::SetValue([in] double val
   return S_OK;
 }
 
-HRESULT __stdcall CompositionDynamicAutomationProvider::get_LargeChange(double* pRetVal) {
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_LargeChange(double *pRetVal) {
   if (pRetVal == nullptr)
     return E_POINTER;
-
-
 
   return S_OK;
 }
