@@ -227,9 +227,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionUIService.cpp">
       <Filter>Source Files\Fabric</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\graphics\Color.cpp">
-      <Filter>Source Files\Fabric\platform\react\renderer\graphics</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\textlayoutmanager\TextLayoutManager.cpp">
       <Filter>Source Files\Fabric\platform\react\renderer\textlayoutmanager</Filter>
     </ClCompile>

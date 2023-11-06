@@ -159,7 +159,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\components\view\HostPlatformViewEventEmitter.cpp">
       <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\graphics\Color.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\graphics\PlatformColorUtils.cpp">
       <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\textlayoutmanager\TextLayoutManager.cpp">
@@ -501,6 +501,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\InstanceHandle.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\DebugStringConvertible.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\DebugStringConvertibleItem.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\graphics\Color.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\graphics\Transform.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\imagemanager\ImageResponse.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\imagemanager\ImageResponseObserverCoordinator.cpp" />
