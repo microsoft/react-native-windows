@@ -8,18 +8,24 @@
  */
 #pragma once
 
-#include "NativeModules.h"
+#include <NativeModules.h>
 #include <tuple>
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(StatusBarManagerAndroidSpec_Constants)
 struct StatusBarManagerAndroidSpec_Constants {
-    REACT_FIELD(HEIGHT)
     double HEIGHT;
-    REACT_FIELD(DEFAULT_BACKGROUND_COLOR)
     double DEFAULT_BACKGROUND_COLOR;
 };
+
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(StatusBarManagerAndroidSpec_Constants*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"HEIGHT", &StatusBarManagerAndroidSpec_Constants::HEIGHT},
+        {L"DEFAULT_BACKGROUND_COLOR", &StatusBarManagerAndroidSpec_Constants::DEFAULT_BACKGROUND_COLOR},
+    };
+    return fieldMap;
+}
 
 struct StatusBarManagerAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto constants = std::tuple{

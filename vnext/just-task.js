@@ -18,6 +18,7 @@ const {
 // Use the shared base configuration
 require('@rnw-scripts/just-task');
 require('@rnw-scripts/just-task/react-native-tasks');
+require('@rnw-scripts/just-task/flow-tasks');
 
 const {execSync} = require('child_process');
 const fs = require('fs');

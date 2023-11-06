@@ -18,6 +18,7 @@
     <CppWinRTNamespaceMergeDepth>
     </CppWinRTNamespaceMergeDepth>
     <CppWinRTLibs>true</CppWinRTLibs>
+    <BuildMSRNCxxModule>false</BuildMSRNCxxModule>
     <BuildMSRNCxxReactCommon>false</BuildMSRNCxxReactCommon>
     <DesktopCompatible Condition="'$(UseWinUI3)'=='true'">true</DesktopCompatible>
   </PropertyGroup>
@@ -184,7 +185,6 @@
   <ItemGroup>
     <ClInclude Include="ABICxxModule.h" />
     <ClInclude Include="ABIViewManager.h" />
-    <ClInclude Include="Base\CoreNativeModules.h" />
     <ClInclude Include="Base\CxxReactIncludes.h" />
     <ClInclude Include="Base\FollyIncludes.h" />
     <ClInclude Include="CoreAppPage.h">
@@ -219,9 +219,6 @@
     <ClInclude Include="IReactNotificationService.h">
       <DependentUpon>IReactNotificationService.idl</DependentUpon>
       <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="JsiApi.h">
-      <DependentUpon>JsiApi.idl</DependentUpon>
     </ClInclude>
     <ClInclude Include="JsiReader.h">
       <DependentUpon>IJSValueReader.idl</DependentUpon>
@@ -423,7 +420,6 @@
   <ItemGroup>
     <ClCompile Include="ABICxxModule.cpp" />
     <ClCompile Include="ABIViewManager.cpp" />
-    <ClCompile Include="Base\CoreNativeModules.cpp" />
     <ClCompile Include="Base\CoreUIManagers.cpp" />
     <ClCompile Include="CoreAppPage.cpp">
       <DependentUpon>CoreAppPage.xaml</DependentUpon>
@@ -639,17 +635,14 @@
   <ItemGroup>
     <PackageReference Include="boost" Version="1.76.0.0" />
     <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" PrivateAssets="all" />
-    <PackageReference Include="ReactNative.Hermes.Windows" Version="$(HermesVersion)" />
+    <PackageReference Include="Microsoft.JavaScript.Hermes" Version="$(HermesVersion)" />
     <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" Condition="'$(OverrideWinUIPackage)'!='true'" />
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22000.194" />
     <PackageReference Include="$(V8PackageName)" Version="$(V8Version)" Condition="'$(UseV8)' == 'true'" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(EnableSourceLink)' == 'true'">
       <ItemGroup>
-        <PackageReference Include="Microsoft.Build.Tasks.Git" Version="1.0.0" />
-        <PackageReference Include="Microsoft.SourceLink.Common" Version="1.0.0" />
-        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" />
       </ItemGroup>
     </When>
   </Choose>

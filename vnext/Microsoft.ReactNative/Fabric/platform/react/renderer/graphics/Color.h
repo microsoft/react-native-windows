@@ -7,7 +7,6 @@
 
 #pragma once
 
-#include <cmath>
 #include <functional>
 #include <limits>
 
@@ -28,14 +27,16 @@ struct Color {
   }
 
   winrt::Windows::UI::Color m_color;
-  std::string m_platformColor;
+  std::vector<std::string> m_platformColor;
 };
 
 /*
  * On Android, a color can be represented as 32 bits integer, so there is no
  * need to instantiate complex color objects and then pass them as shared
  * pointers. Hence instead of using shared_ptr, we use a simple wrapper class
- * which provides a pointer-like interface.
+ * which provides a pointer-like interface. On other platforms, colors may be
+ * represented by more complex objects that cannot be represented as 32-bits
+ * integers, so we hide the implementation detail in HostPlatformColor.h.
  */
 class SharedColor {
   friend std::hash<SharedColor>;
@@ -50,7 +51,7 @@ class SharedColor {
     m_color->m_color = color;
   }
 
-  SharedColor(std::string &&windowsBrush) {
+  SharedColor(std::vector<std::string> &&windowsBrush) {
     m_color = std::make_shared<Color>();
     m_color->m_platformColor = std::move(windowsBrush);
   }
@@ -84,8 +85,6 @@ class SharedColor {
     return m_color != nullptr;
   }
 
-  D2D1::ColorF AsD2DColor() const;
-
   winrt::Windows::UI::Color AsWindowsColor() const;
 
   COLORREF AsColorRefNoAlpha() const {
@@ -96,15 +95,11 @@ class SharedColor {
     return RGB(m_color->m_color.R, m_color->m_color.G, m_color->m_color.B) | (m_color->m_color.A << 24);
   }
 
-#ifndef CORE_ABI
-  xaml::Media::Brush AsWindowsBrush() const;
-#endif
-
  private:
   std::shared_ptr<Color> m_color;
 };
 
-bool isColorMeaningful(SharedColor const &color) noexcept;
+bool isColorMeaningful(const SharedColor &color) noexcept;
 SharedColor colorFromComponents(ColorComponents components);
 ColorComponents colorComponentsFromColor(SharedColor const &color);
 
@@ -122,7 +117,12 @@ struct hash<facebook::react::SharedColor> {
   size_t operator()(const facebook::react::SharedColor &sharedColor) const {
     size_t h = sharedColor.m_color->m_color.A + (sharedColor.m_color->m_color.B << 8) +
         (sharedColor.m_color->m_color.G << 16) + (sharedColor.m_color->m_color.R << 24);
-    return h ^ hash<decltype(sharedColor.m_color->m_platformColor)>{}(sharedColor.m_color->m_platformColor);
+
+    for (auto s : sharedColor.m_color->m_platformColor) {
+      h ^= hash<decltype(s)>{}(s);
+    }
+
+    return h;
   }
 };
 } // namespace std

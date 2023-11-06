@@ -143,8 +143,16 @@ export type PressabilityConfig = $ReadOnly<{|
   onPressOut?: ?(event: PressEvent) => mixed,
 
   /**
+   * Whether to prevent any other native components from becoming responder
+   * while this pressable is responder.
+   */
+  blockNativeResponder?: ?boolean,
+
+  /**
    * Returns whether a long press gesture should cancel the press gesture.
    * Defaults to true.
+   *
+   * @deprecated
    */
   onLongPressShouldCancelPress_DEPRECATED?: ?() => boolean,
 
@@ -153,6 +161,8 @@ export type PressabilityConfig = $ReadOnly<{|
    *
    * Returns whether to yield to a lock termination request (e.g. if a native
    * scroll gesture attempts to steal the responder lock).
+   *
+   * @deprecated
    */
   onResponderTerminationRequest_DEPRECATED?: ?() => boolean,
 
@@ -190,7 +200,7 @@ export type EventHandlers = $ReadOnly<{|
   onMouseLeave?: (event: MouseEvent) => void,
   onPointerEnter?: (event: PointerEvent) => void,
   onPointerLeave?: (event: PointerEvent) => void,
-  onResponderGrant: (event: PressEvent) => void,
+  onResponderGrant: (event: PressEvent) => void | boolean,
   onResponderMove: (event: PressEvent) => void,
   onResponderRelease: (event: PressEvent) => void,
   onResponderTerminate: (event: PressEvent) => void,
@@ -497,7 +507,7 @@ export default class Pressability {
         return !disabled;
       },
 
-      onResponderGrant: (event: PressEvent): void => {
+      onResponderGrant: (event: PressEvent): void | boolean => {
         event.persist();
 
         this._cancelPressOutDelayTimeout();
@@ -523,6 +533,8 @@ export default class Pressability {
         this._longPressDelayTimeout = setTimeout(() => {
           this._handleLongPress(event);
         }, delayLongPress + delayPressIn);
+
+        return this._config.blockNativeResponder === true;
       },
 
       onResponderMove: (event: PressEvent): void => {
@@ -586,6 +598,13 @@ export default class Pressability {
           return;
         }
 
+        // for non-pointer click events (e.g. accessibility clicks), we should only dispatch when we're the "real" target
+        // in particular, we shouldn't respond to clicks from nested pressables
+        if (event?.currentTarget !== event?.target) {
+          event?.stopPropagation();
+          return;
+        }
+
         const {onPress, disabled} = this._config;
         if (onPress != null && disabled !== true) {
           onPress(event);
@@ -610,7 +629,7 @@ export default class Pressability {
           (event.nativeEvent.code === 'Space' ||
             event.nativeEvent.code === 'Enter' ||
             event.nativeEvent.code === 'GamepadA') &&
-          event.defaultPrevented != true &&
+          event.defaultPrevented !== true &&
           this._isKeyDown
         ) {
           const {onPressOut, onPress} = this._config;
@@ -630,7 +649,7 @@ export default class Pressability {
           (event.nativeEvent.code === 'Space' ||
             event.nativeEvent.code === 'Enter' ||
             event.nativeEvent.code === 'GamepadA') &&
-          event.defaultPrevented != true
+          event.defaultPrevented !== true
         ) {
           const {onPressIn} = this._config;
           this._isKeyDown = true;

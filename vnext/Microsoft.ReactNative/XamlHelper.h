@@ -15,7 +15,7 @@ struct XamlHelper : XamlHelperT<XamlHelper> {
   XamlHelper() = default;
 
   static xaml::Media::Brush BrushFrom(JSValueArgWriter const &valueProvider) noexcept;
-  static Windows::UI::Color ColorFrom(JSValueArgWriter const &valueProvider) noexcept;
+  static winrt::Windows::UI::Color ColorFrom(JSValueArgWriter const &valueProvider) noexcept;
 
   static xaml::DependencyProperty ReactTagProperty() noexcept;
   static int64_t GetReactTag(xaml::DependencyObject const &dependencyObject) noexcept;

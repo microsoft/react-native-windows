@@ -8,18 +8,24 @@
  */
 #pragma once
 
-#include "NativeModules.h"
+#include <NativeModules.h>
 #include <tuple>
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(ImageLoaderIOSSpec_getSizeWithHeaders_returnType)
 struct ImageLoaderIOSSpec_getSizeWithHeaders_returnType {
-    REACT_FIELD(width)
     double width;
-    REACT_FIELD(height)
     double height;
 };
+
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(ImageLoaderIOSSpec_getSizeWithHeaders_returnType*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"width", &ImageLoaderIOSSpec_getSizeWithHeaders_returnType::width},
+        {L"height", &ImageLoaderIOSSpec_getSizeWithHeaders_returnType::height},
+    };
+    return fieldMap;
+}
 
 struct ImageLoaderIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{

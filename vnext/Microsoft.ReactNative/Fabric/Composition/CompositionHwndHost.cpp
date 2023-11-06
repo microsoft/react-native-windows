@@ -61,13 +61,14 @@ void CompositionHwndHost::Initialize(uint64_t hwnd) noexcept {
 
   m_compRootView.ScaleFactor(ScaleFactor());
   m_compRootView.RootVisual(
-      winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::CreateVisual(RootVisual()));
+      winrt::Microsoft::ReactNative::Composition::implementation::WindowsCompositionContextHelper::CreateVisual(
+          RootVisual()));
 
   UpdateSize();
 }
 
-double CompositionHwndHost::ScaleFactor() noexcept {
-  return GetDpiForWindow(m_hwnd) / 96.0;
+float CompositionHwndHost::ScaleFactor() noexcept {
+  return GetDpiForWindow(m_hwnd) / 96.0f;
 }
 
 void CompositionHwndHost::UpdateSize() noexcept {
@@ -90,23 +91,6 @@ LRESULT CompositionHwndHost::TranslateMessage(int msg, uint64_t wParam, int64_t 
     return 0;
 
   switch (msg) {
-    case WM_MOUSEWHEEL: {
-      POINT pt = {GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam)};
-      ::ScreenToClient(m_hwnd, &pt);
-      int32_t delta = GET_WHEEL_DELTA_WPARAM(wParam);
-      m_compRootView.OnScrollWheel({static_cast<float>(pt.x), static_cast<float>(pt.y)}, delta);
-      return 0;
-    }
-    /*
-    case WM_POINTERDOWN: {
-      m_compRootView.OnPointerPressed({GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam)});
-      return 0;
-    }
-    case WM_LBUTTONUP: {
-      m_compRootView.OnMouseUp({static_cast<float>(GET_X_LPARAM(lParam)), static_cast<float>(GET_Y_LPARAM(lParam))});
-      return 0;
-    }
-    */
     case WM_WINDOWPOSCHANGED: {
       UpdateSize();
       /*
@@ -149,7 +133,7 @@ winrt::Windows::UI::Composition::Compositor CompositionHwndHost::Compositor() co
       winrt::Microsoft::ReactNative::Composition::implementation::CompositionUIService::GetCompositionContext(
           m_reactViewHost.ReactNativeHost().InstanceSettings().Properties());
 
-  return winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::InnerCompositor(
+  return winrt::Microsoft::ReactNative::Composition::implementation::WindowsCompositionContextHelper::InnerCompositor(
       compositionContext);
 }
 

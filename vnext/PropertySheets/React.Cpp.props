@@ -22,7 +22,6 @@
   <PropertyGroup Label="Desktop">
     <!-- See https://learn.microsoft.com/en-us/cpp/porting/modifying-winver-and-win32-winnt -->
     <WinVer Condition="'$(WinVer)' == ''">_WIN32_WINNT_WIN10</WinVer>
-    <EnableBeast Condition="'$(EnableBeast)' == ''">0</EnableBeast>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -117,6 +116,8 @@
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <ShowIncludes Condition="'$(ShowIncludes)'=='true'">true</ShowIncludes>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <ControlFlowGuard>Guard</ControlFlowGuard>
+      <SpectreMitigation>Spectre</SpectreMitigation>
 
       <!-- Add include directories expected by React Native C++ code and headers -->
       <AdditionalIncludeDirectories>

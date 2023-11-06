@@ -49,6 +49,7 @@ const AnnotationExample: React.FunctionComponent = () => {
       accessibilityAnnotation={{ typeID: 'Comment', author: 'Krystal Siler', dateTime: '7/19/2019 1:03 PM' }}
       accessibilityLabel="Test accessibility label"
       accessibilityHint="Test accessibility hint"
+      accessibilityPositionInSet={1}
       focusable
       style={styles.box}
     >
@@ -180,7 +181,7 @@ class MultiSelectionExample extends React.Component<{}, IMultiSelectionExampleSt
 
   public render() {
     return (
-      <ViewWin32 accessible accessibilityRole="tablist" accessibilityState={{multiselectable: true}}>
+      <ViewWin32 accessible accessibilityRole="tablist" aria-required aria-multiselectable>
         <SelectionItemComponent
           value={1}
           color="#aee8fcff"
@@ -473,10 +474,27 @@ const AccessibilityInfoExample: React.FunctionComponent<{}> =() => {
   const onClick = React.useCallback(() => {
     AccessibilityInfo.announceForAccessibility('AccessibilityInfo announcement succeeded!');
   }, []);
+
+  const onClickDelayed = React.useCallback(() => {
+    setTimeout(() => {
+      AccessibilityInfo.announceForAccessibilityWithOptions(
+        'AccessibilityInfo announcement succeeded!',
+        { nativeID: 'AnnouncementTarget' });
+      }, 3000);
+  }, []);
+
   return (
-    <View style={styles.box}>
-      <TouchableHighlight onPress={onClick}>
-        <Text>AccessibilityInfo.announceForAccessibility</Text>
+    <View>
+      <TouchableHighlight onPress={onClick} underlayColor={'transparent'}>
+        <ViewWin32 style={styles.box} accessible focusable>
+            <Text>AccessibilityInfo.announceForAccessibility</Text>
+        </ViewWin32>
+      </TouchableHighlight>
+
+      <TouchableHighlight onPress={onClickDelayed} underlayColor={'transparent'}>
+        <ViewWin32 style={styles.box} accessible focusable nativeID={'AnnouncementTarget'}>
+            <Text>AccessibilityInfo.announceForAccessibilityWithOptions</Text>
+        </ViewWin32>
       </TouchableHighlight>
     </View>
   );

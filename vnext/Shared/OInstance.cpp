@@ -26,7 +26,6 @@
 #include <cxxreact/ModuleRegistry.h>
 
 #include <Modules/ExceptionsManagerModule.h>
-#include <Modules/HttpModule.h>
 #include <Modules/PlatformConstantsModule.h>
 #include <Modules/SourceCodeModule.h>
 #include <Modules/StatusBarManagerModule.h>
@@ -52,13 +51,11 @@
 #include "HermesRuntimeHolder.h"
 
 #if defined(USE_V8)
-#include <JSI/NapiJsiV8RuntimeHolder.h>
-
-#include "BaseScriptStoreImpl.h"
-#include "V8JSIRuntimeHolder.h"
+#include <JSI/V8RuntimeHolder.h>
 #endif
 #include <ReactCommon/CallInvoker.h>
 #include <ReactCommon/TurboModuleBinding.h>
+#include "BaseScriptStoreImpl.h"
 #include "ChakraRuntimeHolder.h"
 
 #include <tracing/tracing.h>
@@ -69,15 +66,6 @@ using namespace Microsoft::JSI;
 
 using std::make_shared;
 using winrt::Microsoft::ReactNative::ReactPropertyBagHelper;
-
-namespace Microsoft::React {
-
-/*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateHttpModule(
-    winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept {
-  return std::make_unique<HttpModule>(inspectableProperties);
-}
-
-} // namespace Microsoft::React
 
 namespace facebook {
 namespace react {
@@ -318,50 +306,32 @@ InstanceImpl::InstanceImpl(
     } else {
       assert(m_devSettings->jsiEngineOverride != JSIEngineOverride::Default);
       switch (m_devSettings->jsiEngineOverride) {
-        case JSIEngineOverride::Hermes:
-          m_devSettings->jsiRuntimeHolder = std::make_shared<HermesRuntimeHolder>(m_devSettings, m_jsThread);
-          break;
-        case JSIEngineOverride::V8: {
-#if defined(USE_V8)
-          std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
-          std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
-
-          char tempPath[MAX_PATH];
-          if (GetTempPathA(MAX_PATH, tempPath)) {
-            preparedScriptStore = std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(tempPath);
-          }
-
-          m_devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
-              m_devSettings,
-              m_jsThread,
-              std::move(scriptStore),
-              std::move(preparedScriptStore),
-              false /* enableMultiThreadSupport */);
-          break;
-#else
-          assert(false); // V8 is not available in this build, fallthrough
-          [[fallthrough]];
-#endif
-        }
-        case JSIEngineOverride::V8NodeApi: {
-#if defined(USE_V8)
-          std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore;
+        case JSIEngineOverride::Hermes: {
+          std::shared_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore;
 
           wchar_t tempPath[MAX_PATH];
-          if (GetTempPathW(static_cast<DWORD>(std::size(tempPath)), tempPath)) {
+          if (GetTempPathW(MAX_PATH, tempPath)) {
             preparedScriptStore =
-                std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(winrt::to_string(tempPath));
+                std::make_shared<facebook::react::BasePreparedScriptStoreImpl>(winrt::to_string(tempPath));
           }
 
-          if (!preparedScriptStore) {
-            if (m_devSettings->errorCallback)
-              m_devSettings->errorCallback("Could not initialize prepared script store");
+          m_devSettings->jsiRuntimeHolder = std::make_shared<Microsoft::ReactNative::HermesRuntimeHolder>(
+              m_devSettings, m_jsThread, std::move(preparedScriptStore));
+          break;
+        }
+        case JSIEngineOverride::V8:
+        case JSIEngineOverride::V8NodeApi: {
+#if defined(USE_V8)
+          std::shared_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore;
 
-            break;
+          wchar_t tempPath[MAX_PATH];
+          if (GetTempPathW(MAX_PATH, tempPath)) {
+            preparedScriptStore =
+                std::make_shared<facebook::react::BasePreparedScriptStoreImpl>(winrt::to_string(tempPath));
           }
 
-          m_devSettings->jsiRuntimeHolder = make_shared<NapiJsiV8RuntimeHolder>(
-              m_devSettings, m_jsThread, nullptr /*scriptStore*/, std::move(preparedScriptStore));
+          m_devSettings->jsiRuntimeHolder = make_shared<Microsoft::ReactNative::V8RuntimeHolder>(
+              m_devSettings, m_jsThread, std::move(preparedScriptStore), false);
           break;
 #else
           if (m_devSettings->errorCallback)
@@ -563,29 +533,45 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
   std::vector<std::unique_ptr<NativeModule>> modules;
   auto transitionalProps{ReactPropertyBagHelper::CreatePropertyBag()};
 
+  // These modules are instantiated separately in MSRN (Universal Windows).
+  // When there are module name collisions, the last one registered is used.
+  // If this code is enabled, we will have unused module instances.
+  // Also, MSRN has a different property bag mechanism incompatible with this method's transitionalProps variable.
 #if (defined(_MSC_VER) && !defined(WINRT))
-  modules.push_back(std::make_unique<CxxNativeModule>(
-      m_innerInstance,
-      Microsoft::React::GetHttpModuleName(),
-      [nativeQueue, transitionalProps]() -> std::unique_ptr<xplat::module::CxxModule> {
-        return Microsoft::React::CreateHttpModule(transitionalProps);
-      },
-      nativeQueue));
-#endif
 
-  modules.push_back(std::make_unique<CxxNativeModule>(
-      m_innerInstance,
-      Microsoft::React::GetWebSocketModuleName(),
-      [nativeQueue, transitionalProps]() -> std::unique_ptr<xplat::module::CxxModule> {
-        return Microsoft::React::CreateWebSocketModule(transitionalProps);
-      },
-      nativeQueue));
+  // OC:8368383 - Memory leak under investigation.
+  if (!m_devSettings->useWebSocketTurboModule) {
+    modules.push_back(std::make_unique<CxxNativeModule>(
+        m_innerInstance,
+        Microsoft::React::GetWebSocketModuleName(),
+        [transitionalProps]() { return Microsoft::React::CreateWebSocketModule(transitionalProps); },
+        nativeQueue));
+  }
 
-  // TODO: This is not included for UWP because we have a different module which
-  // is added later. However, this one is designed
-  //  so that we can base a UWP version on it. We need to do that but is not high
-  //  priority.
-#if (defined(_MSC_VER) && !defined(WINRT))
+  // Applications using the Windows ABI feature should loade the networking TurboModule variants instead.
+  if (!m_devSettings->omitNetworkingCxxModules) {
+    // Use in case the host app provides its a non-Blob-compatilbe HTTP module.
+    if (!Microsoft::React::GetRuntimeOptionBool("Blob.DisableModule")) {
+      modules.push_back(std::make_unique<CxxNativeModule>(
+          m_innerInstance,
+          Microsoft::React::GetHttpModuleName(),
+          [transitionalProps]() { return Microsoft::React::CreateHttpModule(transitionalProps); },
+          nativeQueue));
+
+      modules.push_back(std::make_unique<CxxNativeModule>(
+          m_innerInstance,
+          Microsoft::React::GetBlobModuleName(),
+          [transitionalProps]() { return Microsoft::React::CreateBlobModule(transitionalProps); },
+          nativeQueue));
+
+      modules.push_back(std::make_unique<CxxNativeModule>(
+          m_innerInstance,
+          Microsoft::React::GetFileReaderModuleName(),
+          [transitionalProps]() { return Microsoft::React::CreateFileReaderModule(transitionalProps); },
+          nativeQueue));
+    }
+  }
+
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
       "Timing",
@@ -611,7 +597,7 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
             m_devSettings->useFastRefresh,
             m_devSettings->inlineSourceMap,
             hermesBytecodeVersion)
-      : std::string();
+      : m_devSettings->bundleRootPath;
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
       facebook::react::SourceCodeModule::Name,
@@ -639,26 +625,6 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
       StatusBarManagerModule::Name,
       []() { return std::make_unique<StatusBarManagerModule>(); },
       nativeQueue));
-
-  // These modules are instantiated separately in MSRN (Universal Windows).
-  // When there are module name collisions, the last one registered is used.
-  // If this code is enabled, we will have unused module instances.
-  // Also, MSRN has a different property bag mechanism incompatible with this method's transitionalProps variable.
-#if (defined(_MSC_VER) && !defined(WINRT))
-  if (Microsoft::React::GetRuntimeOptionBool("Blob.EnableModule")) {
-    modules.push_back(std::make_unique<CxxNativeModule>(
-        m_innerInstance,
-        Microsoft::React::GetBlobModuleName(),
-        [transitionalProps]() { return Microsoft::React::CreateBlobModule(transitionalProps); },
-        nativeQueue));
-
-    modules.push_back(std::make_unique<CxxNativeModule>(
-        m_innerInstance,
-        Microsoft::React::GetFileReaderModuleName(),
-        [transitionalProps]() { return Microsoft::React::CreateFileReaderModule(transitionalProps); },
-        nativeQueue));
-  }
-#endif
 
   return modules;
 }

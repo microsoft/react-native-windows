@@ -44,11 +44,6 @@
         "resolved": "13.0.1",
         "contentHash": "ppPFpBcvxdsfUonNcvITKqLl3bqxWbDCZIzDWHzjpdAHRFfZe0Dw9HmA0+za13IdyrgJwpkDTDA9fHaxOrt20A=="
       },
-      "boost": {
-        "type": "Transitive",
-        "resolved": "1.76.0",
-        "contentHash": "p+w3YvNdXL8Cu9Fzrmexssu0tZbWxuf6ywsQqHjDlKFE5ojXHof1HIyMC3zDLfLnh80dIeFcEUAuR2Asg/XHRA=="
-      },
       "Microsoft.Net.Native.Compiler": {
         "type": "Transitive",
         "resolved": "2.2.7-rel-27913-00",
@@ -80,24 +75,6 @@
         "resolved": "1.0.1",
         "contentHash": "rkn+fKobF/cbWfnnfBOQHKVKIOpxMZBvlSHkqDWgBpwGDcLRduvs3D9OLGeV6GWGvVwNlVi2CBbTjuPmtHvyNw=="
       },
-      "Microsoft.UI.Xaml": {
-        "type": "Transitive",
-        "resolved": "2.8.0",
-        "contentHash": "vxdHxTr63s5KVtNddMFpgvjBjUH50z7seq/5jLWmmSuf8poxg+sXrywkofUdE8ZstbpO9y3FL/IXXUcPYbeesA==",
-        "dependencies": {
-          "Microsoft.Web.WebView2": "1.0.1264.42"
-        }
-      },
-      "Microsoft.Web.WebView2": {
-        "type": "Transitive",
-        "resolved": "1.0.1264.42",
-        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
-      },
-      "Microsoft.Windows.SDK.BuildTools": {
-        "type": "Transitive",
-        "resolved": "10.0.22000.194",
-        "contentHash": "4L0P3zqut466SIqT3VBeLTNUQTxCBDOrTRymRuROCRJKazcK7ibLz9yAO1nKWRt50ttCj39oAa2Iuz9ZTDmLlg=="
-      },
       "NETStandard.Library": {
         "type": "Transitive",
         "resolved": "2.0.3",
@@ -105,11 +82,6 @@
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0"
         }
-      },
-      "ReactNative.Hermes.Windows": {
-        "type": "Transitive",
-        "resolved": "0.0.0-2302.1002-2d4bf1df",
-        "contentHash": "4skpllUPEBkww7FN7iacP7NWrZlEGDNg83qIuFjKn4Sl8JpJQZqfUTrXcvh6tb4mHXkmwFoKhLw4Rc5Op7f+8w=="
       },
       "runtime.win10-arm.Microsoft.Net.Native.Compiler": {
         "type": "Transitive",
@@ -306,7 +278,6 @@
       "folly": {
         "type": "Project",
         "dependencies": {
-          "boost": "[1.76.0, )",
           "fmt": "[1.0.0, )"
         }
       },
@@ -315,11 +286,7 @@
         "dependencies": {
           "Common": "[1.0.0, )",
           "Folly": "[1.0.0, )",
-          "Microsoft.UI.Xaml": "[2.8.0, )",
-          "Microsoft.Windows.SDK.BuildTools": "[10.0.22000.194, )",
-          "ReactCommon": "[1.0.0, )",
-          "ReactNative.Hermes.Windows": "[0.0.0-2302.1002-2d4bf1df, )",
-          "boost": "[1.76.0, )"
+          "ReactCommon": "[1.0.0, )"
         }
       },
       "microsoft.reactnative.managed": {
@@ -332,8 +299,7 @@
       "reactcommon": {
         "type": "Project",
         "dependencies": {
-          "Folly": "[1.0.0, )",
-          "boost": "[1.76.0, )"
+          "Folly": "[1.0.0, )"
         }
       }
     },
@@ -350,11 +316,6 @@
           "NETStandard.Library": "2.0.3",
           "runtime.win10-arm.Microsoft.NETCore.UniversalWindowsPlatform": "6.2.9"
         }
-      },
-      "Microsoft.Web.WebView2": {
-        "type": "Transitive",
-        "resolved": "1.0.1264.42",
-        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
       },
       "runtime.any.System.Globalization": {
         "type": "Transitive",
@@ -547,11 +508,6 @@
           "NETStandard.Library": "2.0.3",
           "runtime.win10-arm-aot.Microsoft.NETCore.UniversalWindowsPlatform": "6.2.9"
         }
-      },
-      "Microsoft.Web.WebView2": {
-        "type": "Transitive",
-        "resolved": "1.0.1264.42",
-        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
       },
       "runtime.aot.System.Globalization": {
         "type": "Transitive",
@@ -779,11 +735,6 @@
           "runtime.win10-arm64-aot.Microsoft.NETCore.UniversalWindowsPlatform": "6.2.9"
         }
       },
-      "Microsoft.Web.WebView2": {
-        "type": "Transitive",
-        "resolved": "1.0.1264.42",
-        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
-      },
       "runtime.aot.System.Globalization": {
         "type": "Transitive",
         "resolved": "4.0.11",
@@ -1010,11 +961,6 @@
           "runtime.win10-x64.Microsoft.NETCore.UniversalWindowsPlatform": "6.2.9"
         }
       },
-      "Microsoft.Web.WebView2": {
-        "type": "Transitive",
-        "resolved": "1.0.1264.42",
-        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
-      },
       "runtime.any.System.Globalization": {
         "type": "Transitive",
         "resolved": "4.0.11",
@@ -1206,11 +1152,6 @@
           "NETStandard.Library": "2.0.3",
           "runtime.win10-x64-aot.Microsoft.NETCore.UniversalWindowsPlatform": "6.2.9"
         }
-      },
-      "Microsoft.Web.WebView2": {
-        "type": "Transitive",
-        "resolved": "1.0.1264.42",
-        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
       },
       "runtime.aot.System.Globalization": {
         "type": "Transitive",
@@ -1438,11 +1379,6 @@
           "runtime.win10-x86.Microsoft.NETCore.UniversalWindowsPlatform": "6.2.9"
         }
       },
-      "Microsoft.Web.WebView2": {
-        "type": "Transitive",
-        "resolved": "1.0.1264.42",
-        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
-      },
       "runtime.any.System.Globalization": {
         "type": "Transitive",
         "resolved": "4.0.11",
@@ -1634,11 +1570,6 @@
           "NETStandard.Library": "2.0.3",
           "runtime.win10-x86-aot.Microsoft.NETCore.UniversalWindowsPlatform": "6.2.9"
         }
-      },
-      "Microsoft.Web.WebView2": {
-        "type": "Transitive",
-        "resolved": "1.0.1264.42",
-        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
       },
       "runtime.aot.System.Globalization": {
         "type": "Transitive",

@@ -13,7 +13,10 @@ import fs from '@react-native-windows/fs';
 import semver from 'semver';
 import _ from 'lodash';
 import findUp from 'find-up';
-import {readProjectFile, findPropertyValue} from '../config/configUtils';
+import {
+  readProjectFile,
+  findPropertyValue,
+} from '../commands/config/configUtils';
 
 import {
   createDir,
@@ -127,33 +130,15 @@ export async function copyProjectTemplateAndReplace(
     console.log('Using experimental NuGet dependency.');
   }
 
-  let realProjectType = projectType;
-
   if (options.useWinUI3) {
-    console.log('Using experimental WinUI3 dependency.');
-    if (projectType === 'lib') {
-      throw new CodedError(
-        'IncompatibleOptions',
-        'WinUI 3 project template only supports apps at the moment',
-        {
-          detail: 'useWinUI3 and lib',
-        },
-      );
-    } else if (language !== 'cs') {
-      throw new CodedError(
-        'IncompatibleOptions',
-        'WinUI 3 project template only support C# at the moment',
-        {
-          detail: 'useWinUI3 and cpp',
-        },
-      );
-    }
-
-    realProjectType += '-WinAppSDK';
+    throw new CodedError(
+      'IncompatibleOptions',
+      'Experimental WinUI 3 project has been deprecated.',
+    );
   }
 
   const projDir = 'proj';
-  const srcPath = path.join(srcRootPath, `${language}-${realProjectType}`);
+  const srcPath = path.join(srcRootPath, `${language}-${projectType}`);
   const sharedPath = path.join(srcRootPath, `shared-${projectType}`);
   const projectGuid = existingProjectGuid || uuid.v4();
   const rnwVersion = require(resolveRnwPath('package.json')).version;
@@ -413,27 +398,15 @@ export async function copyProjectTemplateAndReplace(
     );
   }
 
-  if (!options.useWinUI3) {
-    // shared src
-    if (fs.existsSync(path.join(sharedPath, 'src'))) {
-      await copyAndReplaceAll(
-        path.join(sharedPath, 'src'),
-        destPath,
-        path.join(windowsDir, newProjectName),
-        templateVars,
-        options.overwrite,
-      );
-    }
-  } else {
-    if (fs.existsSync(path.join(srcPath, 'MyApp'))) {
-      await copyAndReplaceAll(
-        path.join(srcPath, 'MyApp'),
-        destPath,
-        path.join(windowsDir, newProjectName),
-        templateVars,
-        options.overwrite,
-      );
-    }
+  // shared src
+  if (fs.existsSync(path.join(sharedPath, 'src'))) {
+    await copyAndReplaceAll(
+      path.join(sharedPath, 'src'),
+      destPath,
+      path.join(windowsDir, newProjectName),
+      templateVars,
+      options.overwrite,
+    );
   }
 
   // src

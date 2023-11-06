@@ -22,3 +22,8 @@ Add any relevant screen captures here from before or after your changes.
 If you added tests that prove your changes are effective or that your feature works, add a few sentences here detailing the added test scenarios.
 
 _Optional_: Describe the tests that you ran locally to verify your changes.
+
+## Changelog
+Should this change be included in the release notes: _indicate yes or no_
+
+Add a brief summary of the change to use in the release notes for the next release.

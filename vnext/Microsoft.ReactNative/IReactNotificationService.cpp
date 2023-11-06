@@ -16,8 +16,8 @@ MSO_GUID(IReactNotificationSubscriptionPrivate, "09437980-3508-4690-930c-7c310e2
 struct IReactNotificationSubscriptionPrivate : ::IUnknown {
   virtual void SetParent(IReactNotificationSubscription const &parentSubscription) noexcept = 0;
   virtual void CallHandler(
-      Windows::Foundation::IInspectable const &sender,
-      Windows::Foundation::IInspectable const &data) noexcept = 0;
+      winrt::Windows::Foundation::IInspectable const &sender,
+      winrt::Windows::Foundation::IInspectable const &data) noexcept = 0;
 };
 
 // The Notification subscription class.
@@ -123,7 +123,8 @@ struct ReactNotificationSubscriptionView : implements<
   ReactNotificationSubscriptionView(
       weak_ref<ReactNotificationService> &&notificationService,
       IReactNotificationSubscription const &childSubscription) noexcept
-      : m_notificationService{std::move(notificationService)}, m_childSubscription{weak_ref(childSubscription)} {
+      : m_notificationService{std::move(notificationService)},
+        m_childSubscription{weak_ref<IReactNotificationSubscription>(childSubscription)} {
     childSubscription.as<IReactNotificationSubscriptionPrivate>()->SetParent(*this);
   }
 

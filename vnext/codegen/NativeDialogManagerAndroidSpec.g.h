@@ -8,42 +8,53 @@
  */
 #pragma once
 
-#include "NativeModules.h"
+#include <NativeModules.h>
 #include <tuple>
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(DialogManagerAndroidSpec_DialogOptions)
 struct DialogManagerAndroidSpec_DialogOptions {
-    REACT_FIELD(title)
     std::optional<std::string> title;
-    REACT_FIELD(message)
     std::optional<std::string> message;
-    REACT_FIELD(buttonPositive)
     std::optional<std::string> buttonPositive;
-    REACT_FIELD(buttonNegative)
     std::optional<std::string> buttonNegative;
-    REACT_FIELD(buttonNeutral)
     std::optional<std::string> buttonNeutral;
-    REACT_FIELD(items)
     std::optional<std::vector<std::string>> items;
-    REACT_FIELD(cancelable)
     std::optional<bool> cancelable;
 };
 
-REACT_STRUCT(DialogManagerAndroidSpec_Constants)
 struct DialogManagerAndroidSpec_Constants {
-    REACT_FIELD(buttonClicked)
     std::string buttonClicked;
-    REACT_FIELD(dismissed)
     std::string dismissed;
-    REACT_FIELD(buttonPositive)
     double buttonPositive;
-    REACT_FIELD(buttonNegative)
     double buttonNegative;
-    REACT_FIELD(buttonNeutral)
     double buttonNeutral;
 };
+
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(DialogManagerAndroidSpec_DialogOptions*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"title", &DialogManagerAndroidSpec_DialogOptions::title},
+        {L"message", &DialogManagerAndroidSpec_DialogOptions::message},
+        {L"buttonPositive", &DialogManagerAndroidSpec_DialogOptions::buttonPositive},
+        {L"buttonNegative", &DialogManagerAndroidSpec_DialogOptions::buttonNegative},
+        {L"buttonNeutral", &DialogManagerAndroidSpec_DialogOptions::buttonNeutral},
+        {L"items", &DialogManagerAndroidSpec_DialogOptions::items},
+        {L"cancelable", &DialogManagerAndroidSpec_DialogOptions::cancelable},
+    };
+    return fieldMap;
+}
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(DialogManagerAndroidSpec_Constants*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"buttonClicked", &DialogManagerAndroidSpec_Constants::buttonClicked},
+        {L"dismissed", &DialogManagerAndroidSpec_Constants::dismissed},
+        {L"buttonPositive", &DialogManagerAndroidSpec_Constants::buttonPositive},
+        {L"buttonNegative", &DialogManagerAndroidSpec_Constants::buttonNegative},
+        {L"buttonNeutral", &DialogManagerAndroidSpec_Constants::buttonNeutral},
+    };
+    return fieldMap;
+}
 
 struct DialogManagerAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto constants = std::tuple{

@@ -108,6 +108,7 @@ const ViewWin32: React.AbstractComponent<
         {...(labeledByTarget !== null
           ? {accessibilityLabeledBy: labeledByTarget}
           : {})}
+        // $FlowFixMe[exponential-spread]
         {...(describedByTarget !== null
           ? // $FlowFixMe[exponential-spread]
             {accessibilityDescribedBy: describedByTarget}

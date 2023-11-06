@@ -45,6 +45,7 @@ export default async function dumpVisualTree(
   opts?: {
     pruneCollapsed?: boolean;
     deterministicOnly?: boolean;
+    removeDefaultProps?: boolean;
     additionalProperties?: string[];
   },
 ): Promise<UIElement> {
@@ -69,6 +70,10 @@ export default async function dumpVisualTree(
 
   if (opts?.deterministicOnly !== false) {
     removeNonDeterministicProps(element);
+  }
+
+  if (opts?.removeDefaultProps !== false) {
+    removeDefaultProps(element);
   }
 
   return element;
@@ -101,5 +106,22 @@ function removeNonDeterministicProps(element: UIElement) {
 
   if (element.children) {
     element.children.forEach(removeNonDeterministicProps);
+  }
+}
+
+/**
+ * Removes noise from snapshot by removing properties with the default value
+ */
+function removeDefaultProps(element: UIElement) {
+  const defaultValues: [string, unknown][] = [['Tooltip', null]];
+
+  defaultValues.forEach(([propname, defaultValue]) => {
+    if (element[propname] === defaultValue) {
+      delete element[propname];
+    }
+  });
+
+  if (element.children) {
+    element.children.forEach(removeDefaultProps);
   }
 }

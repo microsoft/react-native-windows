@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "dependencies": {
+    "native,Version=v0.0": {
+      "Microsoft.Windows.CppWinRT": {
+        "type": "Direct",
+        "requested": "[2.0.210312.4, 2.0.210312.4]",
+        "resolved": "2.0.210312.4",
+        "contentHash": "uRxz7Z8Scm7A2JjaaxCzQWTMrQC9RvXYhb7RU8pSqGo/0i0aPJszUeA3N6EhcJU5+FsDr2xzk2iln0x2Lwa6AA=="
+      },
+      "Microsoft.UI.Xaml": {
+        "type": "Direct",
+        "requested": "[2.8.0, 2.8.0]",
+        "resolved": "2.8.0",
+        "contentHash": "vxdHxTr63s5KVtNddMFpgvjBjUH50z7seq/5jLWmmSuf8poxg+sXrywkofUdE8ZstbpO9y3FL/IXXUcPYbeesA=="
+      },
+      "Microsoft.WinUI": {
+        "type": "Direct",
+        "requested": "[3.0.0-preview4.210210.4, 3.0.0-preview4.210210.4]",
+        "resolved": "3.0.0-preview4.210210.4",
+        "contentHash": "fMo1Llbprv3+7nVyUvBxc/lQtMmwBFCGHdeH7sTPIeFKPneNOs0qW2XqnYBorGRRitbPUxxmLKgxOM8zR5dAgA=="
+      },
+      "Microsoft.JavaScript.Hermes": {
+        "type": "Direct",
+        "requested": "[0.1.15, 0.1.15]",
+        "resolved": "0.1.15",
+        "contentHash": "My/u5RvxoymtwWokoweU6iVpuP79w271UjadcmSNqnQ9ESIv00tlVP4sHnIiN3t2lJNDeciyE1EVF4swGPECKQ=="
+      }
+    }
+  }
+}

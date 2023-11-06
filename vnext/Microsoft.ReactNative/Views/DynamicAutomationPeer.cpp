@@ -122,13 +122,11 @@ winrt::IInspectable DynamicAutomationPeer::GetPatternCore(winrt::PatternInterfac
        accessibilityRole == winrt::Microsoft::ReactNative::AccessibilityRoles::Switch ||
        accessibilityRole == winrt::Microsoft::ReactNative::AccessibilityRoles::Radio ||
        accessibilityRole == winrt::Microsoft::ReactNative::AccessibilityRoles::ToggleButton) &&
-      (HasAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates::Checked) ||
-       HasAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates::Unchecked))) {
+      HasAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates::Checked)) {
     return *this;
   } else if (
       patternInterface == winrt::PatternInterface::ExpandCollapse &&
-      (HasAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates::Expanded) ||
-       HasAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates::Collapsed))) {
+      HasAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates::Expanded)) {
     return *this;
   } else if (
       patternInterface == winrt::PatternInterface::Value &&
@@ -154,8 +152,11 @@ winrt::IInspectable DynamicAutomationPeer::GetPatternCore(winrt::PatternInterfac
 }
 
 bool DynamicAutomationPeer::IsEnabledCore() const {
-  bool disabled = HasAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates::Disabled) &&
-      GetAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates::Disabled);
+  bool disabled = false;
+  try {
+    disabled = DynamicAutomationProperties::GetAccessibilityStateDisabled(Owner());
+  } catch (...) {
+  }
   return !disabled && Super::IsEnabledCore();
 }
 
@@ -163,9 +164,11 @@ winrt::hstring DynamicAutomationPeer::GetItemStatusCore() const {
   winrt::hstring itemStatus = Super::GetItemStatusCore();
 
   if (itemStatus.empty()) {
-    if (HasAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates::Busy) &&
-        GetAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates::Busy)) {
-      itemStatus = L"Busy";
+    try {
+      if (DynamicAutomationProperties::GetAccessibilityStateBusy(Owner())) {
+        itemStatus = L"Busy";
+      }
+    } catch (...) {
     }
   }
 
@@ -195,7 +198,12 @@ winrt::com_array<winrt::IRawElementProviderSimple> DynamicAutomationPeer::GetSel
 // ISelectionItemProvider
 
 bool DynamicAutomationPeer::IsSelected() const {
-  return GetAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates::Selected);
+  bool selected = false;
+  try {
+    selected = DynamicAutomationProperties::GetAccessibilityStateSelected(Owner());
+  } catch (...) {
+  }
+  return selected;
 }
 
 winrt::IRawElementProviderSimple DynamicAutomationPeer::SelectionContainer() const {
@@ -222,16 +230,14 @@ void DynamicAutomationPeer::Select() const {
 // IToggleProvider
 
 winrt::ToggleState DynamicAutomationPeer::ToggleState() const {
-  bool checkedState = GetAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates::Checked);
-  bool uncheckedState = GetAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates::Unchecked);
+  auto checkedState = winrt::ToggleState::Off;
 
-  if (!checkedState && uncheckedState) {
-    return winrt::ToggleState::Off;
-  } else if (checkedState && !uncheckedState) {
-    return winrt::ToggleState::On;
+  try {
+    checkedState = static_cast<winrt::ToggleState>(DynamicAutomationProperties::GetAccessibilityStateChecked(Owner()));
+  } catch (...) {
   }
 
-  return winrt::ToggleState::Indeterminate;
+  return checkedState;
 }
 
 void DynamicAutomationPeer::Toggle() const {
@@ -245,18 +251,15 @@ void DynamicAutomationPeer::Toggle() const {
 // IExpandCollapseProvider
 
 winrt::ExpandCollapseState DynamicAutomationPeer::ExpandCollapseState() const {
-  bool expandedState = GetAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates::Expanded);
-  bool collapsedState = GetAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates::Collapsed);
+  auto expandedState = winrt::ExpandCollapseState::Collapsed;
 
-  if (!expandedState && collapsedState) {
-    return winrt::ExpandCollapseState::Collapsed;
-  } else if (expandedState && !collapsedState) {
-    return winrt::ExpandCollapseState::Expanded;
-  } else if (expandedState && collapsedState) {
-    return winrt::ExpandCollapseState::PartiallyExpanded;
+  try {
+    expandedState = DynamicAutomationProperties::GetAccessibilityStateExpanded(Owner())
+        ? winrt::ExpandCollapseState::Expanded
+        : winrt::ExpandCollapseState::Collapsed;
+  } catch (...) {
   }
-
-  return winrt::ExpandCollapseState::LeafNode;
+  return expandedState;
 }
 
 void DynamicAutomationPeer::Expand() const {
@@ -353,45 +356,14 @@ bool DynamicAutomationPeer::HasAccessibilityState(winrt::Microsoft::ReactNative:
       case winrt::Microsoft::ReactNative::AccessibilityStates::Checked:
         value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityStateCheckedProperty());
         break;
-      case winrt::Microsoft::ReactNative::AccessibilityStates::Unchecked:
-        value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityStateUncheckedProperty());
-        break;
       case winrt::Microsoft::ReactNative::AccessibilityStates::Busy:
         value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityStateBusyProperty());
         break;
       case winrt::Microsoft::ReactNative::AccessibilityStates::Expanded:
         value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityStateExpandedProperty());
         break;
-      case winrt::Microsoft::ReactNative::AccessibilityStates::Collapsed:
-        value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityStateCollapsedProperty());
-        break;
     }
     return (value != xaml::DependencyProperty::UnsetValue());
-  } catch (...) {
-  }
-
-  return false;
-}
-
-bool DynamicAutomationPeer::GetAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates state) const {
-  try {
-    auto const &owner = Owner();
-    switch (state) {
-      case winrt::Microsoft::ReactNative::AccessibilityStates::Selected:
-        return DynamicAutomationProperties::GetAccessibilityStateSelected(owner);
-      case winrt::Microsoft::ReactNative::AccessibilityStates::Disabled:
-        return DynamicAutomationProperties::GetAccessibilityStateDisabled(owner);
-      case winrt::Microsoft::ReactNative::AccessibilityStates::Checked:
-        return DynamicAutomationProperties::GetAccessibilityStateChecked(owner);
-      case winrt::Microsoft::ReactNative::AccessibilityStates::Unchecked:
-        return DynamicAutomationProperties::GetAccessibilityStateUnchecked(owner);
-      case winrt::Microsoft::ReactNative::AccessibilityStates::Busy:
-        return DynamicAutomationProperties::GetAccessibilityStateBusy(owner);
-      case winrt::Microsoft::ReactNative::AccessibilityStates::Expanded:
-        return DynamicAutomationProperties::GetAccessibilityStateExpanded(owner);
-      case winrt::Microsoft::ReactNative::AccessibilityStates::Collapsed:
-        return DynamicAutomationProperties::GetAccessibilityStateCollapsed(owner);
-    }
   } catch (...) {
   }
 

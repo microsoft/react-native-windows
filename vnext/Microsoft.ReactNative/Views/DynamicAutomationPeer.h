@@ -73,7 +73,6 @@ struct DynamicAutomationPeer : DynamicAutomationPeerT<DynamicAutomationPeer> {
   winrt::hstring GetContentName() const;
   winrt::Microsoft::ReactNative::AccessibilityRoles GetAccessibilityRole() const;
   bool HasAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates state) const;
-  bool GetAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates state) const;
   bool HasAccessibilityValue(winrt::Microsoft::ReactNative::AccessibilityValue value) const;
   double GetAccessibilityValueRange(winrt::Microsoft::ReactNative::AccessibilityValue value) const;
 
@@ -82,9 +81,9 @@ struct DynamicAutomationPeer : DynamicAutomationPeerT<DynamicAutomationPeer> {
   static xaml::DependencyProperty AccessibilityActionsProperty();
   static void SetAccessibilityActions(
       xaml::UIElement const &element,
-      Windows::Foundation::Collections::IVector<Microsoft::ReactNative::AccessibilityAction> const &value);
-  static Windows::Foundation::Collections::IVector<Microsoft::ReactNative::AccessibilityAction> GetAccessibilityActions(
-      xaml::UIElement const &element);
+      winrt::Windows::Foundation::Collections::IVector<Microsoft::ReactNative::AccessibilityAction> const &value);
+  static winrt::Windows::Foundation::Collections::IVector<Microsoft::ReactNative::AccessibilityAction>
+  GetAccessibilityActions(xaml::UIElement const &element);
   static void DispatchAccessibilityAction(xaml::UIElement const &element, std::wstring_view const &actionName);
   static xaml::DependencyProperty AccessibilityActionEventHandlerProperty();
   static void SetAccessibilityActionEventHandler(

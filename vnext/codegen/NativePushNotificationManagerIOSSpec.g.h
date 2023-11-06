@@ -8,54 +8,70 @@
  */
 #pragma once
 
-#include "NativeModules.h"
+#include <NativeModules.h>
 #include <tuple>
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(PushNotificationManagerIOSSpec_Permissions)
 struct PushNotificationManagerIOSSpec_Permissions {
-    REACT_FIELD(alert)
     bool alert;
-    REACT_FIELD(badge)
     bool badge;
-    REACT_FIELD(sound)
     bool sound;
 };
 
-REACT_STRUCT(PushNotificationManagerIOSSpec_Notification)
 struct PushNotificationManagerIOSSpec_Notification {
-    REACT_FIELD(alertTitle)
     std::optional<std::string> alertTitle;
-    REACT_FIELD(fireDate)
     std::optional<double> fireDate;
-    REACT_FIELD(alertBody)
     std::optional<std::string> alertBody;
-    REACT_FIELD(alertAction)
     std::optional<std::string> alertAction;
-    REACT_FIELD(userInfo)
     std::optional<::React::JSValue> userInfo;
-    REACT_FIELD(category)
     std::optional<std::string> category;
-    REACT_FIELD(repeatInterval)
     std::optional<std::string> repeatInterval;
-    REACT_FIELD(applicationIconBadgeNumber)
     std::optional<double> applicationIconBadgeNumber;
-    REACT_FIELD(isSilent)
     std::optional<bool> isSilent;
-    REACT_FIELD(soundName)
     std::optional<std::string> soundName;
 };
 
-REACT_STRUCT(PushNotificationManagerIOSSpec_requestPermissions_permission)
 struct PushNotificationManagerIOSSpec_requestPermissions_permission {
-    REACT_FIELD(alert)
     bool alert;
-    REACT_FIELD(badge)
     bool badge;
-    REACT_FIELD(sound)
     bool sound;
 };
+
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PushNotificationManagerIOSSpec_Permissions*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"alert", &PushNotificationManagerIOSSpec_Permissions::alert},
+        {L"badge", &PushNotificationManagerIOSSpec_Permissions::badge},
+        {L"sound", &PushNotificationManagerIOSSpec_Permissions::sound},
+    };
+    return fieldMap;
+}
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PushNotificationManagerIOSSpec_Notification*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"alertTitle", &PushNotificationManagerIOSSpec_Notification::alertTitle},
+        {L"fireDate", &PushNotificationManagerIOSSpec_Notification::fireDate},
+        {L"alertBody", &PushNotificationManagerIOSSpec_Notification::alertBody},
+        {L"alertAction", &PushNotificationManagerIOSSpec_Notification::alertAction},
+        {L"userInfo", &PushNotificationManagerIOSSpec_Notification::userInfo},
+        {L"category", &PushNotificationManagerIOSSpec_Notification::category},
+        {L"repeatInterval", &PushNotificationManagerIOSSpec_Notification::repeatInterval},
+        {L"applicationIconBadgeNumber", &PushNotificationManagerIOSSpec_Notification::applicationIconBadgeNumber},
+        {L"isSilent", &PushNotificationManagerIOSSpec_Notification::isSilent},
+        {L"soundName", &PushNotificationManagerIOSSpec_Notification::soundName},
+    };
+    return fieldMap;
+}
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PushNotificationManagerIOSSpec_requestPermissions_permission*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"alert", &PushNotificationManagerIOSSpec_requestPermissions_permission::alert},
+        {L"badge", &PushNotificationManagerIOSSpec_requestPermissions_permission::badge},
+        {L"sound", &PushNotificationManagerIOSSpec_requestPermissions_permission::sound},
+    };
+    return fieldMap;
+}
 
 struct PushNotificationManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{

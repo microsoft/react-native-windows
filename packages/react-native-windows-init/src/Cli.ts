@@ -27,6 +27,8 @@ import {
   getProjectFileFromConfig,
   OptionSanitizer,
   YargsOptionsType,
+  deviceArchitecture,
+  nodeArchitecture,
 } from '@react-native-windows/telemetry';
 
 /**
@@ -37,10 +39,19 @@ import {
 
 import requireGenerateWindows from './requireGenerateWindows';
 
-const npmConfReg = execSync('npm config get registry').toString().trim();
-const NPM_REGISTRY_URL = validUrl.isUri(npmConfReg)
-  ? npmConfReg
-  : 'http://registry.npmjs.org';
+let NPM_REGISTRY_URL = 'https://registry.npmjs.org';
+try {
+  const npmConfReg = execSync('npm config get registry').toString().trim();
+  if (validUrl.isUri(npmConfReg)) {
+    NPM_REGISTRY_URL = npmConfReg;
+  }
+} catch (error: any) {
+  // Ignore workspace errors as `npm config` does not support it
+  const stderr = error?.stderr?.toString() || '';
+  if (!stderr.includes('ENOWORKSPACES')) {
+    throw error;
+  }
+}
 
 // Causes the type-checker to ensure the options object is a valid yargs options object
 function initOptions<T extends Record<string, yargs.Options>>(options: T): T {
@@ -373,11 +384,25 @@ async function startTelemetrySession(
   args: string[],
   options: YargsOptionsType,
 ) {
+  const verbose = options.verbose === true;
+
   if (!options.telemetry) {
-    if (options.verbose) {
+    if (verbose) {
       console.log('Telemetry is disabled');
     }
     return;
+  }
+
+  if (verbose) {
+    console.log(
+      `Running ${nodeArchitecture()} node on a ${deviceArchitecture()} machine`,
+    );
+  }
+
+  if (deviceArchitecture() !== nodeArchitecture()) {
+    console.warn(
+      'This version of node was built for a different architecture than this machine and may cause unintended behavior',
+    );
   }
 
   // Setup telemetry, but don't get NPM package version info right away as

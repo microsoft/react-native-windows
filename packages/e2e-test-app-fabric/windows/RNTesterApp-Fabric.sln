@@ -25,6 +25,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microsoft.ReactNative.Share
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ReactCommon", "..\..\..\vnext\ReactCommon\ReactCommon.vcxproj", "{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AutomationChannel", "..\..\..\node_modules\@react-native-windows\automation-channel\windows\AutomationChannel\AutomationChannel.vcxproj", "{C0A69310-6119-46DC-A6D6-0BAB7826DC92}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM64 = Debug|ARM64
@@ -117,6 +119,20 @@ Global
 		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.Release|x86.ActiveCfg = Release|Win32
 		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.Release|x86.Build.0 = Release|Win32
 		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.Release|x86.Deploy.0 = Release|Win32
+		{C0A69310-6119-46DC-A6D6-0BAB7826DC92}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{C0A69310-6119-46DC-A6D6-0BAB7826DC92}.Debug|ARM64.Build.0 = Debug|ARM64
+		{C0A69310-6119-46DC-A6D6-0BAB7826DC92}.Debug|x64.ActiveCfg = Debug|x64
+		{C0A69310-6119-46DC-A6D6-0BAB7826DC92}.Debug|x64.Build.0 = Debug|x64
+		{C0A69310-6119-46DC-A6D6-0BAB7826DC92}.Debug|x86.ActiveCfg = Debug|Win32
+		{C0A69310-6119-46DC-A6D6-0BAB7826DC92}.Debug|x86.Build.0 = Debug|Win32
+		{C0A69310-6119-46DC-A6D6-0BAB7826DC92}.Debug|x86.Deploy.0 = Debug|Win32
+		{C0A69310-6119-46DC-A6D6-0BAB7826DC92}.Release|ARM64.ActiveCfg = Release|ARM64
+		{C0A69310-6119-46DC-A6D6-0BAB7826DC92}.Release|ARM64.Build.0 = Release|ARM64
+		{C0A69310-6119-46DC-A6D6-0BAB7826DC92}.Release|x64.ActiveCfg = Release|x64
+		{C0A69310-6119-46DC-A6D6-0BAB7826DC92}.Release|x64.Build.0 = Release|x64
+		{C0A69310-6119-46DC-A6D6-0BAB7826DC92}.Release|x86.ActiveCfg = Release|Win32
+		{C0A69310-6119-46DC-A6D6-0BAB7826DC92}.Release|x86.Build.0 = Release|Win32
+		{C0A69310-6119-46DC-A6D6-0BAB7826DC92}.Release|x86.Deploy.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

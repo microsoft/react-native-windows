@@ -10,7 +10,6 @@
 #pragma once
 
 #include <cinttypes>
-#include <jsi/jsi.h>
 #include <react/renderer/components/view/ViewProps.h>
 #include <react/renderer/core/PropsParserContext.h>
 #include <react/renderer/graphics/Color.h>
@@ -135,7 +134,7 @@ static inline std::string toString(const ModalHostViewSupportedOrientationsMask 
     return result;
 }
 
-class JSI_EXPORT ModalHostViewProps final : public ViewProps {
+class ModalHostViewProps final : public ViewProps {
  public:
   ModalHostViewProps() = default;
   ModalHostViewProps(const PropsParserContext& context, const ModalHostViewProps &sourceProps, const RawProps &rawProps);
@@ -169,7 +168,7 @@ static inline std::string toString(const ActivityIndicatorViewSize &value) {
   }
 }
 
-class JSI_EXPORT ActivityIndicatorViewProps final : public ViewProps {
+class ActivityIndicatorViewProps final : public ViewProps {
  public:
   ActivityIndicatorViewProps() = default;
   ActivityIndicatorViewProps(const PropsParserContext& context, const ActivityIndicatorViewProps &sourceProps, const RawProps &rawProps);
@@ -230,7 +229,7 @@ static inline std::string toString(const AndroidDrawerLayoutDrawerLockMode &valu
   }
 }
 
-class JSI_EXPORT AndroidDrawerLayoutProps final : public ViewProps {
+class AndroidDrawerLayoutProps final : public ViewProps {
  public:
   AndroidDrawerLayoutProps() = default;
   AndroidDrawerLayoutProps(const PropsParserContext& context, const AndroidDrawerLayoutProps &sourceProps, const RawProps &rawProps);
@@ -245,7 +244,7 @@ class JSI_EXPORT AndroidDrawerLayoutProps final : public ViewProps {
   SharedColor statusBarBackgroundColor{};
 };
 
-class JSI_EXPORT RCTFlyoutProps final : public ViewProps {
+class RCTFlyoutProps final : public ViewProps {
  public:
   RCTFlyoutProps() = default;
   RCTFlyoutProps(const PropsParserContext& context, const RCTFlyoutProps &sourceProps, const RawProps &rawProps);
@@ -264,7 +263,7 @@ class JSI_EXPORT RCTFlyoutProps final : public ViewProps {
   double verticalOffset{0.0};
 };
 
-class JSI_EXPORT PLYIconProps final : public ViewProps {
+class PLYIconProps final : public ViewProps {
  public:
   PLYIconProps() = default;
   PLYIconProps(const PropsParserContext& context, const PLYIconProps &sourceProps, const RawProps &rawProps);
@@ -278,7 +277,7 @@ class JSI_EXPORT PLYIconProps final : public ViewProps {
   bool colorEnabled{false};
 };
 
-class JSI_EXPORT RCTPopupProps final : public ViewProps {
+class RCTPopupProps final : public ViewProps {
  public:
   RCTPopupProps() = default;
   RCTPopupProps(const PropsParserContext& context, const RCTPopupProps &sourceProps, const RawProps &rawProps);
@@ -294,7 +293,7 @@ class JSI_EXPORT RCTPopupProps final : public ViewProps {
   std::string testID{};
 };
 
-class JSI_EXPORT AndroidProgressBarProps final : public ViewProps {
+class AndroidProgressBarProps final : public ViewProps {
  public:
   AndroidProgressBarProps() = default;
   AndroidProgressBarProps(const PropsParserContext& context, const AndroidProgressBarProps &sourceProps, const RawProps &rawProps);
@@ -326,7 +325,7 @@ static inline std::string toString(const AndroidSwipeRefreshLayoutSize &value) {
   }
 }
 
-class JSI_EXPORT AndroidSwipeRefreshLayoutProps final : public ViewProps {
+class AndroidSwipeRefreshLayoutProps final : public ViewProps {
  public:
   AndroidSwipeRefreshLayoutProps() = default;
   AndroidSwipeRefreshLayoutProps(const PropsParserContext& context, const AndroidSwipeRefreshLayoutProps &sourceProps, const RawProps &rawProps);
@@ -341,7 +340,7 @@ class JSI_EXPORT AndroidSwipeRefreshLayoutProps final : public ViewProps {
   bool refreshing{false};
 };
 
-class JSI_EXPORT PullToRefreshViewProps final : public ViewProps {
+class PullToRefreshViewProps final : public ViewProps {
  public:
   PullToRefreshViewProps() = default;
   PullToRefreshViewProps(const PropsParserContext& context, const PullToRefreshViewProps &sourceProps, const RawProps &rawProps);
@@ -355,7 +354,7 @@ class JSI_EXPORT PullToRefreshViewProps final : public ViewProps {
   bool refreshing{false};
 };
 
-class JSI_EXPORT SafeAreaViewProps final : public ViewProps {
+class SafeAreaViewProps final : public ViewProps {
  public:
   SafeAreaViewProps() = default;
   SafeAreaViewProps(const PropsParserContext& context, const SafeAreaViewProps &sourceProps, const RawProps &rawProps);
@@ -365,7 +364,7 @@ class JSI_EXPORT SafeAreaViewProps final : public ViewProps {
   
 };
 
-class JSI_EXPORT AndroidHorizontalScrollContentViewProps final : public ViewProps {
+class AndroidHorizontalScrollContentViewProps final : public ViewProps {
  public:
   AndroidHorizontalScrollContentViewProps() = default;
   AndroidHorizontalScrollContentViewProps(const PropsParserContext& context, const AndroidHorizontalScrollContentViewProps &sourceProps, const RawProps &rawProps);
@@ -375,7 +374,7 @@ class JSI_EXPORT AndroidHorizontalScrollContentViewProps final : public ViewProp
   bool removeClippedSubviews{false};
 };
 
-class JSI_EXPORT AndroidSwitchProps final : public ViewProps {
+class AndroidSwitchProps final : public ViewProps {
  public:
   AndroidSwitchProps() = default;
   AndroidSwitchProps(const PropsParserContext& context, const AndroidSwitchProps &sourceProps, const RawProps &rawProps);
@@ -393,7 +392,7 @@ class JSI_EXPORT AndroidSwitchProps final : public ViewProps {
   SharedColor trackTintColor{};
 };
 
-class JSI_EXPORT SwitchProps final : public ViewProps {
+class SwitchProps final : public ViewProps {
  public:
   SwitchProps() = default;
   SwitchProps(const PropsParserContext& context, const SwitchProps &sourceProps, const RawProps &rawProps);
@@ -410,7 +409,7 @@ class JSI_EXPORT SwitchProps final : public ViewProps {
   SharedColor trackColorForTrue{};
 };
 
-class JSI_EXPORT InputAccessoryProps final : public ViewProps {
+class InputAccessoryProps final : public ViewProps {
  public:
   InputAccessoryProps() = default;
   InputAccessoryProps(const PropsParserContext& context, const InputAccessoryProps &sourceProps, const RawProps &rawProps);
@@ -420,7 +419,7 @@ class JSI_EXPORT InputAccessoryProps final : public ViewProps {
   SharedColor backgroundColor{};
 };
 
-class JSI_EXPORT TraceUpdateOverlayProps final : public ViewProps {
+class TraceUpdateOverlayProps final : public ViewProps {
  public:
   TraceUpdateOverlayProps() = default;
   TraceUpdateOverlayProps(const PropsParserContext& context, const TraceUpdateOverlayProps &sourceProps, const RawProps &rawProps);
@@ -430,7 +429,7 @@ class JSI_EXPORT TraceUpdateOverlayProps final : public ViewProps {
   
 };
 
-class JSI_EXPORT UnimplementedNativeViewProps final : public ViewProps {
+class UnimplementedNativeViewProps final : public ViewProps {
  public:
   UnimplementedNativeViewProps() = default;
   UnimplementedNativeViewProps(const PropsParserContext& context, const UnimplementedNativeViewProps &sourceProps, const RawProps &rawProps);

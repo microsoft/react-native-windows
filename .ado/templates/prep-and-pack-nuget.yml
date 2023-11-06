@@ -31,9 +31,6 @@ parameters:
   - name: packMicrosoftReactNativeManagedCodeGen
     type: boolean
     default: false
-  - name: packMicrosoftReactNativeWindowsAppSDK
-    type: boolean
-    default: false
 
   - name: signMicrosoft
     type: boolean
@@ -80,7 +77,7 @@ steps:
         filePath: vnext/Scripts/Tfs/Layout-Desktop-Headers.ps1
         arguments: -TargetRoot ${{parameters.nugetroot}}
 
-  - ${{ if or(eq(parameters.packMicrosoftReactNative, true), eq(parameters.packMicrosoftReactNativeCxx, true), eq(parameters.packMicrosoftReactNativeManaged, true), eq(parameters.packMicrosoftReactNativeManagedCodeGen, true), eq(parameters.packMicrosoftReactNativeWindowsAppsDK, false)) }}:
+  - ${{ if or(eq(parameters.packMicrosoftReactNative, true), eq(parameters.packMicrosoftReactNativeCxx, true), eq(parameters.packMicrosoftReactNativeManaged, true), eq(parameters.packMicrosoftReactNativeManagedCodeGen, true)) }}:
     - powershell: |
         (Get-Content -Path ${{parameters.nugetroot}}\Microsoft.ReactNative.VersionCheck.targets) -replace '\$\$nuGetPackageVersion\$\$', '${{parameters.npmVersion}}' | Set-Content -Path  ${{parameters.nugetroot}}\Microsoft.ReactNative.VersionCheck.targets
       displayName: Patch version check file with version ${{parameters.npmVersion}}
@@ -152,19 +149,3 @@ steps:
         buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=$(baseConfiguration);baseplatform=$(basePlatform)
         codesignBinaries: ${{ parameters.signMicrosoft }}
         codesignNuget: ${{ parameters.signMicrosoft }}
-
-  - ${{ if eq(parameters.packMicrosoftReactNativeWindowsAppsDK, true) }}:
-    - ${{ if containsValue(parameters.slices.*.configuration, 'Release') }}:
-      - template: prep-and-pack-single.yml
-        parameters:
-          outputPackage: Microsoft.ReactNative.WindowsAppSDK
-          slices: $(releaseSlices)
-          packageVersion: ${{parameters.npmVersion}}
-          codesignBinaries: ${{ parameters.signMicrosoft }}
-          codesignNuget: ${{ parameters.signMicrosoft }}
-          buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Release;baseplatform=$(releaseBasePlatform)
-          binariesToSign: |
-            **/Microsoft.ReactNative.dll
-            **/Microsoft.ReactNative.winmd
-            **/Microsoft.ReactNative.WindowsAppSDK.dll
-

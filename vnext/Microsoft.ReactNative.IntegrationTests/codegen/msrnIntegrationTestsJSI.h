@@ -42,9 +42,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "MySimpleTurboModuleCxx";
+
 protected:
   NativeMySimpleTurboModuleCxxCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("MySimpleTurboModuleCxx", jsInvoker),
+    : TurboModule(std::string{NativeMySimpleTurboModuleCxxCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -166,9 +168,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "MyTrivialTurboModule";
+
 protected:
   NativeMyTrivialTurboModuleCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("MyTrivialTurboModule", jsInvoker),
+    : TurboModule(std::string{NativeMyTrivialTurboModuleCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:

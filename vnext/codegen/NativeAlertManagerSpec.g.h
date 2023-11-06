@@ -8,34 +8,40 @@
  */
 #pragma once
 
-#include "NativeModules.h"
+#include <NativeModules.h>
 #include <tuple>
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(AlertManagerSpec_Args)
 struct AlertManagerSpec_Args {
-    REACT_FIELD(title)
     std::optional<std::string> title;
-    REACT_FIELD(message)
     std::optional<std::string> message;
-    REACT_FIELD(buttons)
     std::optional<std::vector<::React::JSValue>> buttons;
-    REACT_FIELD(type)
     std::optional<std::string> type;
-    REACT_FIELD(defaultValue)
     std::optional<std::string> defaultValue;
-    REACT_FIELD(cancelButtonKey)
     std::optional<std::string> cancelButtonKey;
-    REACT_FIELD(destructiveButtonKey)
     std::optional<std::string> destructiveButtonKey;
-    REACT_FIELD(preferredButtonKey)
     std::optional<std::string> preferredButtonKey;
-    REACT_FIELD(keyboardType)
     std::optional<std::string> keyboardType;
-    REACT_FIELD(userInterfaceStyle)
     std::optional<std::string> userInterfaceStyle;
 };
+
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(AlertManagerSpec_Args*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"title", &AlertManagerSpec_Args::title},
+        {L"message", &AlertManagerSpec_Args::message},
+        {L"buttons", &AlertManagerSpec_Args::buttons},
+        {L"type", &AlertManagerSpec_Args::type},
+        {L"defaultValue", &AlertManagerSpec_Args::defaultValue},
+        {L"cancelButtonKey", &AlertManagerSpec_Args::cancelButtonKey},
+        {L"destructiveButtonKey", &AlertManagerSpec_Args::destructiveButtonKey},
+        {L"preferredButtonKey", &AlertManagerSpec_Args::preferredButtonKey},
+        {L"keyboardType", &AlertManagerSpec_Args::keyboardType},
+        {L"userInterfaceStyle", &AlertManagerSpec_Args::userInterfaceStyle},
+    };
+    return fieldMap;
+}
 
 struct AlertManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{

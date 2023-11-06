@@ -1,12 +1,7 @@
 #include "pch.h"
 #include "CompositionDynamicAutomationProvider.h"
 #include <Fabric/ComponentView.h>
-#pragma warning(push)
-#pragma warning(disable : 4229)
-#define IN
-#define OUT
-#include <atlsafe.h>
-#pragma warning(pop)
+#include <Unicode.h>
 #include "RootComponentView.h"
 #include "UiaHelpers.h"
 
@@ -22,7 +17,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::Navigate(
   if (pRetVal == nullptr)
     return E_POINTER;
 
-  return UiaNavigateHelper(m_view, direction, *pRetVal);
+  return UiaNavigateHelper(m_view.view().get(), direction, *pRetVal);
 }
 
 // Implementations should return NULL for a top-level element that is hosted in a window. Other elements should return
@@ -41,16 +36,15 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetRuntimeId(SAFEARRAY *
   if (!strongView)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  CComSafeArray<int32_t> runtimeId;
-  auto hr = runtimeId.Create(2);
+  *pRetVal = SafeArrayCreateVector(VT_I4, 0, 2);
 
-  if (FAILED(hr))
-    return hr;
+  if (*pRetVal == nullptr)
+    return E_OUTOFMEMORY;
 
-  runtimeId[0] = UiaAppendRuntimeId;
-  runtimeId[1] = strongView->tag();
-
-  *pRetVal = runtimeId.Detach();
+  int runtimeId[] = {UiaAppendRuntimeId, strongView->tag()};
+  for (long i = 0; i < 2; i++) {
+    SafeArrayPutElement(*pRetVal, &i, static_cast<void *>(&runtimeId[i]));
+  }
 
   return S_OK;
 }
@@ -68,17 +62,23 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_BoundingRectangle(Ui
   // into account already.
   winrt::com_ptr<IRawElementProviderFragmentRoot> spFragmentRoot = nullptr;
   hr = get_FragmentRoot(spFragmentRoot.put());
-  if (FAILED(hr))
+  if (FAILED(hr)) {
+    assert(false);
     return hr;
+  }
 
   auto spFragment = spFragmentRoot.try_as<IRawElementProviderFragment>();
-  if (spFragment == nullptr)
+  if (spFragment == nullptr) {
+    assert(false);
     return E_FAIL;
+  }
 
   UiaRect rect;
   hr = spFragment->get_BoundingRectangle(&rect);
-  if (FAILED(hr))
+  if (FAILED(hr)) {
+    assert(false);
     return hr;
+  }
 
   pRetVal->left += rect.left;
   pRetVal->top += rect.top;
@@ -96,7 +96,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetEmbeddedFragmentRoots
 }
 
 HRESULT __stdcall CompositionDynamicAutomationProvider::SetFocus(void) {
-  return S_OK;
+  return UiaSetFocusHelper(m_view);
 }
 
 HRESULT __stdcall CompositionDynamicAutomationProvider::get_FragmentRoot(IRawElementProviderFragmentRoot **pRetVal) {
@@ -105,20 +105,15 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_FragmentRoot(IRawEle
 
   auto strongView = m_view.view();
 
-  if (!strongView)
+  if (!strongView) {
     return UIA_E_ELEMENTNOTAVAILABLE;
-
-  auto rootCV = strongView->rootComponentView();
-  if (rootCV == nullptr)
-    return UIA_E_ELEMENTNOTAVAILABLE;
-
-  auto uiaProvider = rootCV->EnsureUiaProvider();
-  auto spFragmentRoot = uiaProvider.try_as<IRawElementProviderFragmentRoot>();
-  if (spFragmentRoot) {
-    *pRetVal = spFragmentRoot.detach();
   }
 
-  return S_OK;
+  if (auto root = strongView->rootComponentView()) {
+    return root->GetFragmentRoot(pRetVal);
+  }
+
+  return UIA_E_ELEMENTNOTAVAILABLE;
 }
 
 HRESULT __stdcall CompositionDynamicAutomationProvider::get_ProviderOptions(ProviderOptions *pRetVal) {
@@ -134,6 +129,34 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
     return E_POINTER;
 
   *pRetVal = nullptr;
+
+  auto strongView = m_view.view();
+  if (strongView == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  auto props = std::static_pointer_cast<const facebook::react::ViewProps>(strongView->props());
+  if (props == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+  auto accessibilityRole = props->accessibilityRole;
+  // Invoke control pattern is used to support controls that do not maintain state
+  // when activated but rather initiate or perform a single, unambiguous action.
+  if (patternId == UIA_InvokePatternId &&
+      (accessibilityRole == "button" || accessibilityRole == "imagebutton" || accessibilityRole == "link" ||
+       accessibilityRole == "splitbutton" || (accessibilityRole == "menuitem" && props->onAccessibilityTap) ||
+       (accessibilityRole == "treeitem" && props->onAccessibilityTap))) {
+    *pRetVal = static_cast<IInvokeProvider *>(this);
+    AddRef();
+  }
+
+  if (patternId == UIA_ScrollItemPatternId) {
+    *pRetVal = static_cast<IScrollItemProvider *>(this);
+    AddRef();
+  }
+
+  if (patternId == UIA_ValuePatternId) {
+    *pRetVal = static_cast<IValueProvider *>(this);
+    AddRef();
+  }
 
   return S_OK;
 }
@@ -188,6 +211,8 @@ long GetControlType(const std::string &role) noexcept {
     return UIA_TabItemControlTypeId;
   } else if (role == "tablist") {
     return UIA_TabControlTypeId;
+  } else if (role == "textinput" || role == "searchbox") {
+    return UIA_EditControlTypeId;
   } else if (role == "toolbar") {
     return UIA_ToolBarControlTypeId;
   } else if (role == "tree") {
@@ -211,30 +236,81 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
   if (props == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
+  auto baseView = std::static_pointer_cast<::Microsoft::ReactNative::CompositionBaseComponentView>(strongView);
+  if (baseView == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  auto hr = S_OK;
+
   switch (propertyId) {
     case UIA_ControlTypePropertyId: {
       pRetVal->vt = VT_I4;
-      auto role = props->accessibilityRole;
+      auto role = props->accessibilityRole.empty() ? baseView->DefaultControlType() : props->accessibilityRole;
       pRetVal->lVal = GetControlType(role);
       break;
     }
     case UIA_AutomationIdPropertyId: {
       pRetVal->vt = VT_BSTR;
-      auto testId = props->testId;
-      CComBSTR temp(testId.c_str());
-      pRetVal->bstrVal = temp.Detach();
+      auto wideTestId = ::Microsoft::Common::Unicode::Utf8ToUtf16(props->testId);
+      pRetVal->bstrVal = SysAllocString(wideTestId.c_str());
+      hr = pRetVal->bstrVal != nullptr ? S_OK : E_OUTOFMEMORY;
       break;
     }
     case UIA_NamePropertyId: {
       pRetVal->vt = VT_BSTR;
-      auto name = props->accessibilityLabel;
-      CComBSTR temp(name.c_str());
-      pRetVal->bstrVal = temp.Detach();
+      auto wideName = ::Microsoft::Common::Unicode::Utf8ToUtf16(
+          props->accessibilityLabel.empty() ? baseView->DefaultAccessibleName() : props->accessibilityLabel);
+      pRetVal->bstrVal = SysAllocString(wideName.c_str());
+      hr = pRetVal->bstrVal != nullptr ? S_OK : E_OUTOFMEMORY;
+      break;
+    }
+    case UIA_IsKeyboardFocusablePropertyId: {
+      pRetVal->vt = VT_BOOL;
+      pRetVal->boolVal = props->focusable ? VARIANT_TRUE : VARIANT_FALSE;
+      break;
+    }
+    case UIA_HasKeyboardFocusPropertyId: {
+      auto rootCV = strongView->rootComponentView();
+      if (rootCV == nullptr)
+        return UIA_E_ELEMENTNOTAVAILABLE;
+
+      pRetVal->vt = VT_BOOL;
+      pRetVal->boolVal = rootCV->GetFocusedComponent() == strongView.get() ? VARIANT_TRUE : VARIANT_FALSE;
+      break;
+    }
+    case UIA_IsEnabledPropertyId: {
+      pRetVal->vt = VT_BOOL;
+      pRetVal->boolVal = !props->accessibilityState.disabled ? VARIANT_TRUE : VARIANT_FALSE;
+      break;
+    }
+    case UIA_IsContentElementPropertyId: {
+      pRetVal->vt = VT_BOOL;
+      pRetVal->boolVal = (props->accessible && props->accessibilityRole != "none") ? VARIANT_TRUE : VARIANT_FALSE;
+      break;
+    }
+    case UIA_IsControlElementPropertyId: {
+      pRetVal->vt = VT_BOOL;
+      pRetVal->boolVal = (props->accessible && props->accessibilityRole != "none") ? VARIANT_TRUE : VARIANT_FALSE;
+      break;
+    }
+    case UIA_IsOffscreenPropertyId: {
+      pRetVal->vt = VT_BOOL;
+      pRetVal->boolVal = (strongView->getClipState() == ::Microsoft::ReactNative::ClipState::FullyClipped)
+          ? VARIANT_TRUE
+          : VARIANT_FALSE;
+    }
+    case UIA_HelpTextPropertyId: {
+      pRetVal->vt = VT_BSTR;
+      auto helpText = props->accessibilityHint.empty()
+          ? ::Microsoft::Common::Unicode::Utf8ToUtf16(baseView->DefaultHelpText())
+          : ::Microsoft::Common::Unicode::Utf8ToUtf16(props->accessibilityHint);
+      pRetVal->bstrVal = SysAllocString(helpText.c_str());
+      hr = pRetVal->bstrVal != nullptr ? S_OK : E_OUTOFMEMORY;
       break;
     }
   }
 
-  return S_OK;
+  return hr;
 }
 
 HRESULT __stdcall CompositionDynamicAutomationProvider::get_HostRawElementProvider(
@@ -244,6 +320,88 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_HostRawElementProvid
 
   *pRetVal = nullptr;
 
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::Invoke() {
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  auto baseView = std::static_pointer_cast<::Microsoft::ReactNative::CompositionBaseComponentView>(strongView);
+  if (baseView == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  baseView.get()->GetEventEmitter().get()->onAccessibilityTap();
+  auto uiaProvider = baseView->EnsureUiaProvider();
+  auto spProviderSimple = uiaProvider.try_as<IRawElementProviderSimple>();
+  if (spProviderSimple != nullptr) {
+    UiaRaiseAutomationEvent(spProviderSimple.get(), UIA_Invoke_InvokedEventId);
+  }
+
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::ScrollIntoView() {
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  ::Microsoft::ReactNative::BringIntoViewOptions scrollOptions;
+  strongView->StartBringIntoView(std::move(scrollOptions));
+
+  return S_OK;
+}
+
+BSTR StringToBSTR(const std::string &str) {
+  // Calculate the required BSTR size in bytes
+  int len = MultiByteToWideChar(CP_UTF8, 0, str.c_str(), -1, nullptr, 0);
+  if (len == 0) {
+    return nullptr; // Conversion error
+  }
+
+  // Allocate memory for the BSTR
+  BSTR bstr = SysAllocStringLen(nullptr, len - 1); // len includes the null terminator
+
+  // Convert the std::string to BSTR
+  MultiByteToWideChar(CP_UTF8, 0, str.c_str(), -1, bstr, len);
+
+  return bstr;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::SetValue(LPCWSTR val) {
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  strongView->setAcccessiblityValue(winrt::to_string(val));
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_Value(BSTR *pRetVal) {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  *pRetVal = StringToBSTR(strongView->getAcccessiblityValue().value_or(""));
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_IsReadOnly(BOOL *pRetVal) {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  *pRetVal = strongView->getAcccessiblityIsReadOnly();
   return S_OK;
 }
 

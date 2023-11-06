@@ -17,7 +17,7 @@ export const CodedErrors = {
   Success: 0,
   Unknown: -1,
 
-  // init
+  // react-native-windows-init
   UnsupportedReactNativeVersion: 1000,
   UserCancel: 1001,
   NoReactNativeFound: 1002,
@@ -71,6 +71,13 @@ export const CodedErrors = {
   // codegen-windows
   NeedCodegen: 4000,
   InvalidCodegenConfig: 4001,
+
+  // init-windows
+  NoTemplatesFound: 5000,
+  NoDefaultTemplate: 5001,
+  InvalidTemplateName: 5002,
+  NoProjectName: 5003,
+  InvalidProjectName: 5004,
 };
 
 export type CodedErrorType = keyof typeof CodedErrors;

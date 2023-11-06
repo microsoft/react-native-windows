@@ -7,6 +7,7 @@
 EXPORTS
 ??0dynamic@folly@@QAE@$$QAU01@@Z
 ??8folly@@YG_NABUdynamic@0@0@Z
+??Mfolly@@YG_NABUdynamic@0@0@Z
 ??4dynamic@folly@@QAEAAU01@$$QAU01@@Z
 ?hash@dynamic@folly@@QBEIXZ
 ?destroy@dynamic@folly@@AAEXXZ
@@ -70,14 +71,9 @@ MicrosoftReactGetRuntimeOptionInt
 MicrosoftReactGetRuntimeOptionString
 
 _YGAlignToString@4
-_YGAssert@8
-_YGAssertWithConfig@12
-_YGAssertWithNode@12
-_YGConfigCopy@8
 _YGConfigFree@4
 _YGConfigGetContext@4
 _YGConfigGetDefault@0
-_YGConfigGetInstanceCount@0
 _YGConfigGetUseWebDefaults@4
 _YGConfigIsExperimentalFeatureEnabled@8
 _YGConfigNew@0
@@ -85,7 +81,6 @@ _YGConfigSetContext@8
 _YGConfigSetExperimentalFeatureEnabled@12
 _YGConfigSetLogger@8
 _YGConfigSetPointScaleFactor@8
-_YGConfigSetUseLegacyStretchBehaviour@8
 _YGConfigSetUseWebDefaults@8
 _YGDimensionToString@4
 _YGDirectionToString@4
@@ -171,6 +166,7 @@ _YGNodeStyleSetFlexDirection@8
 _YGNodeStyleSetFlexGrow@8
 _YGNodeStyleSetFlexShrink@8
 _YGNodeStyleSetFlexWrap@8
+_YGNodeStyleSetGap@12
 _YGNodeStyleSetHeight@8
 _YGNodeStyleSetHeightAuto@4
 _YGNodeStyleSetHeightPercent@8

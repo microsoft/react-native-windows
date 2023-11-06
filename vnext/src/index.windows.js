@@ -464,15 +464,15 @@ module.exports = {
     );
   },
   get EventPhase(): any {
-    return require('./Libraries/Components/Keyboard/KeyboardExtProps')
+    return require('./Libraries/Components/View/ViewPropTypes')
       .HandledEventPhase;
   },
   get HandledEventPhase(): any {
-    return require('./Libraries/Components/Keyboard/KeyboardExtProps')
+    return require('./Libraries/Components/View/ViewPropTypes')
       .HandledEventPhase;
   },
   get ViewWindows(): any {
-    return require('./Libraries/Components/View/ViewWindows').ViewWindows;
+    return require('./Libraries/Components/View/View');
   },
   get AppTheme(): AppTheme {
     return require('./Libraries/AppTheme/AppTheme');

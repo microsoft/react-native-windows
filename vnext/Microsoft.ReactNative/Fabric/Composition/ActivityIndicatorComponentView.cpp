@@ -9,6 +9,7 @@
 #include <Windows.UI.Composition.h>
 #include <Windows.h>
 #include "CompositionContextHelper.h"
+#include "RootComponentView.h"
 
 namespace Microsoft::ReactNative {
 
@@ -24,7 +25,7 @@ ActivityIndicatorComponentView::ActivityIndicatorComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : Super(compContext, tag), m_context(reactContext) {
+    : Super(compContext, tag, reactContext, CompositionComponentViewFeatures::Default) {
   m_props = std::make_shared<facebook::react::ActivityIndicatorViewProps const>();
 }
 
@@ -44,6 +45,14 @@ void ActivityIndicatorComponentView::handleCommand(std::string const &commandNam
   Super::handleCommand(commandName, arg);
 }
 
+void ActivityIndicatorComponentView::updateProgressColor(const facebook::react::SharedColor &color) noexcept {
+  if (color) {
+    m_ActivityIndicatorVisual.Brush(theme()->Brush(*color));
+  } else {
+    m_ActivityIndicatorVisual.Brush(theme()->PlatformBrush("ProgressRingForegroundTheme"));
+  }
+}
+
 void ActivityIndicatorComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
@@ -53,11 +62,16 @@ void ActivityIndicatorComponentView::updateProps(
   ensureVisual();
 
   // update color if needed
-  if (newViewProps->color && (!oldProps || newViewProps->color != oldViewProps->color)) {
-    m_ActivityIndicatorVisual.updateColor(newViewProps->color.AsWindowsColor());
+  if (!oldProps || newViewProps->color != oldViewProps->color) {
+    updateProgressColor(newViewProps->color);
   }
 
-  updateBorderProps(*oldViewProps, *newViewProps);
+  if (newViewProps->animating != oldViewProps->animating) {
+    m_ActivityIndicatorVisual.IsVisible(newViewProps->animating);
+  }
+
+  Super::updateProps(props, oldProps);
+
   m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
 }
 
@@ -75,20 +89,15 @@ void ActivityIndicatorComponentView::updateLayoutMetrics(
     OuterVisual().IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
   }
 
-  updateBorderLayoutMetrics(layoutMetrics, *m_props);
-  m_layoutMetrics = layoutMetrics;
-
-  UpdateCenterPropertySet();
+  Super::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
   m_visual.Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
 }
 
-void ActivityIndicatorComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {}
-
 void ActivityIndicatorComponentView::prepareForRecycle() noexcept {}
 
-facebook::react::Props::Shared ActivityIndicatorComponentView::props() noexcept {
+facebook::react::SharedViewProps ActivityIndicatorComponentView::viewProps() noexcept {
   return m_props;
 }
 
@@ -122,8 +131,16 @@ winrt::Microsoft::ReactNative::Composition::IVisual ActivityIndicatorComponentVi
   return m_visual;
 }
 
+void ActivityIndicatorComponentView::onThemeChanged() noexcept {
+  updateProgressColor(std::static_pointer_cast<const facebook::react::ActivityIndicatorViewProps>(m_props)->color);
+}
+
 bool ActivityIndicatorComponentView::focusable() const noexcept {
   return false;
+}
+
+std::string ActivityIndicatorComponentView::DefaultControlType() const noexcept {
+  return "progressbar";
 }
 
 } // namespace Microsoft::ReactNative

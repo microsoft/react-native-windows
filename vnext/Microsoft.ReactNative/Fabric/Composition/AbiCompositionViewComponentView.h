@@ -19,6 +19,7 @@ struct AbiCompositionViewComponentView : CompositionBaseComponentView {
   using Super = CompositionBaseComponentView;
 
   [[nodiscard]] static std::shared_ptr<AbiCompositionViewComponentView> Create(
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext,
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::IReactViewComponentBuilder builder) noexcept;
@@ -39,16 +40,38 @@ struct AbiCompositionViewComponentView : CompositionBaseComponentView {
   void finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept override;
   void prepareForRecycle() noexcept override;
   bool focusable() const noexcept override;
-  int64_t sendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept override;
+  void onKeyDown(
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
+  void onKeyUp(
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
+  void onCharacterReceived(
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+      const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept
+      override;
+  void onPointerEntered(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
+  void onPointerExited(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
+  void onPointerPressed(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
+  void onPointerReleased(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
+  void onPointerMoved(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
+  void onPointerWheelChanged(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
   std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept
       override;
-  facebook::react::Props::Shared props() noexcept override;
+  facebook::react::SharedViewProps viewProps() noexcept override;
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt, bool ignorePointerEvents)
       const noexcept override;
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
 
  private:
   AbiCompositionViewComponentView(
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext,
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::IReactViewComponentBuilder builder);

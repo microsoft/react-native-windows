@@ -7,3 +7,4 @@
 /dist
 /windows/RNTesterApp-Fabric/Bundle/
 msbuild.binlog
+/Bundle

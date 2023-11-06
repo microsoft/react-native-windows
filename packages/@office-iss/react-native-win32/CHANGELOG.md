@@ -1,8 +1,238 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Tue, 16 May 2023 05:16:29 GMT and should not be manually modified.
+This log was last generated on Sat, 21 Oct 2023 05:16:08 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.221
+
+Sat, 21 Oct 2023 05:16:08 GMT
+
+### Changes
+
+- Adds `eqeqeq` to eslint configuration and a few other lint fixes (erozell@outlook.com)
+- Bump @rnw-scripts/eslint-config to v1.2.4
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.7
+- Bump @rnw-scripts/just-task to v2.3.18
+- Bump react-native-platform-override to v1.9.17
+
+## 0.0.0-canary.220
+
+Wed, 18 Oct 2023 05:14:55 GMT
+
+### Changes
+
+- add support for announceForAccessibilityWithOptions (krsiler@microsoft.com)
+
+## 0.0.0-canary.219
+
+Tue, 17 Oct 2023 05:13:03 GMT
+
+### Changes
+
+- Integrate 10/02 (yajurgrover24@gmail.com)
+
+## 0.0.0-canary.218
+
+Thu, 12 Oct 2023 05:15:53 GMT
+
+### Changes
+
+- Integrate 9/25 (yajurgrover24@gmail.com)
+- Bump @rnw-scripts/eslint-config to v1.2.3
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.6
+- Bump @rnw-scripts/just-task to v2.3.17
+- Bump react-native-platform-override to v1.9.16
+
+## 0.0.0-canary.217
+
+Fri, 06 Oct 2023 05:13:51 GMT
+
+### Changes
+
+- Integrate 9/20 (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.216
+
+Tue, 03 Oct 2023 05:13:16 GMT
+
+### Changes
+
+- Have RCTNetworking.win32 fork RCTNetworking.ios (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.215
+
+Wed, 20 Sep 2023 05:17:49 GMT
+
+### Changes
+
+- Integrate 8/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/just-task to v2.3.16
+- Bump react-native-platform-override to v1.9.15
+
+## 0.0.0-canary.214
+
+Sat, 09 Sep 2023 05:12:55 GMT
+
+### Changes
+
+- Webpack assets do not prefix paths with /, which causes a lost char in asset path (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.213
+
+Tue, 29 Aug 2023 05:13:35 GMT
+
+### Changes
+
+- Integrate RN Nightly Build 7/28 (yajurgrover@microsoft.com)
+
+## 0.0.0-canary.212
+
+Sat, 26 Aug 2023 05:15:06 GMT
+
+### Changes
+
+- Remove flow usage from saveAssetPlugin codeflow (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.211
+
+Thu, 24 Aug 2023 05:14:48 GMT
+
+### Changes
+
+- fix a11yState and add support for aria-required and -multiselectable (krsiler@microsoft.com)
+
+## 0.0.0-canary.210
+
+Fri, 11 Aug 2023 05:13:37 GMT
+
+### Changes
+
+- Add saveAssetPlugin to fix long path assets (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.209
+
+Fri, 28 Jul 2023 05:14:51 GMT
+
+### Changes
+
+- Integrate 7/21 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/just-task to v2.3.15
+- Bump react-native-platform-override to v1.9.14
+
+## 0.0.0-canary.208
+
+Thu, 27 Jul 2023 05:14:48 GMT
+
+### Changes
+
+- integrate RN Nightly 7/5/23 (email not defined)
+
+## 0.0.0-canary.207
+
+Wed, 26 Jul 2023 05:15:46 GMT
+
+### Changes
+
+- Remove upstream react-native flow typings from repo (jthysell@microsoft.com)
+- Bump @rnw-scripts/just-task to v2.3.14
+- Bump react-native-platform-override to v1.9.13
+
+## 0.0.0-canary.206
+
+Tue, 18 Jul 2023 05:13:38 GMT
+
+### Changes
+
+- add isDefaultButton check to win32 (email not defined)
+
+## 0.0.0-canary.205
+
+Fri, 14 Jul 2023 05:17:04 GMT
+
+### Changes
+
+- integration 6/28 (tatianakapos@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.2.2
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.5
+- Bump @rnw-scripts/just-task to v2.3.13
+- Bump react-native-platform-override to v1.9.12
+
+## 0.0.0-canary.204
+
+Sat, 01 Jul 2023 05:14:41 GMT
+
+### Changes
+
+- integrate 6/16 (tatianakapos@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.2.1
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.4
+- Bump @rnw-scripts/just-task to v2.3.12
+- Bump react-native-platform-override to v1.9.11
+
+## 0.0.0-canary.203
+
+Fri, 16 Jun 2023 05:14:19 GMT
+
+### Changes
+
+- Add support for more aria props (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.202
+
+Tue, 13 Jun 2023 05:15:41 GMT
+
+### Changes
+
+- Bump @rnw-scripts/eslint-config to v1.2.0
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.3
+- Bump react-native-platform-override to v1.9.10
+
+## 0.0.0-canary.201
+
+Fri, 09 Jun 2023 05:15:17 GMT
+
+### Changes
+
+- Type definition files shouldnt use win32 extension (30809111+acoates-ms@users.noreply.github.com)
+- Fix various text properties not being forwarded to native (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.200
+
+Thu, 08 Jun 2023 05:15:28 GMT
+
+### Changes
+
+- Add missing eventPhase on IHandledKeyboardEvent (30809111+acoates-ms@users.noreply.github.com)
+- Export ITouchableWin32State (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.199
+
+Wed, 07 Jun 2023 05:16:10 GMT
+
+### Changes
+
+- integrate RN Nightly 6/1/23 (tatianakapos@microsoft.com)
+- Bump @rnw-scripts/just-task to v2.3.11
+- Bump react-native-platform-override to v1.9.9
+
+## 0.0.0-canary.198
+
+Tue, 06 Jun 2023 19:06:43 GMT
+
+### Changes
+
+- integrate RN nightly 5/19/23 (tatianakapos@microsoft.com)
+- Bump @rnw-scripts/just-task to v2.3.10
+- Bump react-native-platform-override to v1.9.8
+
+## 0.0.0-canary.197
+
+Tue, 23 May 2023 05:13:44 GMT
+
+### Changes
+
+- RN integration 5/5/23 (tatianakapos@microsoft.com)
 
 ## 0.0.0-canary.196
 

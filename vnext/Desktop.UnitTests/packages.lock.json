@@ -1,0 +1,94 @@
+{
+  "version": 1,
+  "dependencies": {
+    "native,Version=v0.0": {
+      "boost": {
+        "type": "Direct",
+        "requested": "[1.76.0, )",
+        "resolved": "1.76.0",
+        "contentHash": "p+w3YvNdXL8Cu9Fzrmexssu0tZbWxuf6ywsQqHjDlKFE5ojXHof1HIyMC3zDLfLnh80dIeFcEUAuR2Asg/XHRA=="
+      },
+      "Microsoft.Windows.CppWinRT": {
+        "type": "Direct",
+        "requested": "[2.0.211028.7, )",
+        "resolved": "2.0.211028.7",
+        "contentHash": "JBGI0c3WLoU6aYJRy9Qo0MLDQfObEp+d4nrhR95iyzf7+HOgjRunHDp/6eGFREd7xq3OI1mll9ecJrMfzBvlyg=="
+      },
+      "ReactWindows.OpenSSL.StdCall.Static": {
+        "type": "Direct",
+        "requested": "[1.0.2-p.5, )",
+        "resolved": "1.0.2-p.5",
+        "contentHash": "1tAtFgtbVpI/JgRIxy9j30R/W6B1zi9dYt0o5QwAk5V3X2mo9xrrHcbXlbczKQIftYoNHe0Mfq9ExIu9A1Cs0g=="
+      },
+      "Microsoft.Build.Tasks.Git": {
+        "type": "Transitive",
+        "resolved": "1.1.1",
+        "contentHash": "AT3HlgTjsqHnWpBHSNeR0KxbLZD7bztlZVj7I8vgeYG9SYqbeFGh0TM/KVtC6fg53nrWHl3VfZFvb5BiQFcY6Q=="
+      },
+      "Microsoft.JavaScript.Hermes": {
+        "type": "Transitive",
+        "resolved": "0.1.15",
+        "contentHash": "My/u5RvxoymtwWokoweU6iVpuP79w271UjadcmSNqnQ9ESIv00tlVP4sHnIiN3t2lJNDeciyE1EVF4swGPECKQ=="
+      },
+      "Microsoft.SourceLink.Common": {
+        "type": "Transitive",
+        "resolved": "1.1.1",
+        "contentHash": "WMcGpWKrmJmzrNeuaEb23bEMnbtR/vLmvZtkAP5qWu7vQsY59GqfRJd65sFpBszbd2k/bQ8cs8eWawQKAabkVg=="
+      },
+      "Microsoft.SourceLink.GitHub": {
+        "type": "Transitive",
+        "resolved": "1.1.1",
+        "contentHash": "IaJGnOv/M7UQjRJks7B6p7pbPnOwisYGOIzqCz5ilGFTApZ3ktOR+6zJ12ZRPInulBmdAf1SrGdDG2MU8g6XTw==",
+        "dependencies": {
+          "Microsoft.Build.Tasks.Git": "1.1.1",
+          "Microsoft.SourceLink.Common": "1.1.1"
+        }
+      },
+      "ReactNative.V8Jsi.Windows": {
+        "type": "Transitive",
+        "resolved": "0.71.5",
+        "contentHash": "Vw7I+m3fsJiNq6pVlM65uqV2Rld1zwXeP8pZ8bprdMdAThuAmMzo2NFzMyaeEH6Gw1FcsMKnGItH8gRH0JS6Rg=="
+      },
+      "common": {
+        "type": "Project"
+      },
+      "fmt": {
+        "type": "Project"
+      },
+      "folly": {
+        "type": "Project",
+        "dependencies": {
+          "boost": "[1.76.0, )",
+          "fmt": "[1.0.0, )"
+        }
+      },
+      "follywin32": {
+        "type": "Project",
+        "dependencies": {
+          "Folly": "[1.0.0, )"
+        }
+      },
+      "react.windows.desktop": {
+        "type": "Project",
+        "dependencies": {
+          "Common": "[1.0.0, )",
+          "Folly": "[1.0.0, )",
+          "FollyWin32": "[1.0.0, )",
+          "Microsoft.JavaScript.Hermes": "[0.1.15, )",
+          "Microsoft.SourceLink.GitHub": "[1.1.1, )",
+          "ReactCommon": "[1.0.0, )",
+          "ReactNative.V8Jsi.Windows": "[0.71.5, )",
+          "ReactWindows.OpenSSL.StdCall.Static": "[1.0.2-p.5, )",
+          "boost": "[1.76.0, )"
+        }
+      },
+      "reactcommon": {
+        "type": "Project",
+        "dependencies": {
+          "Folly": "[1.0.0, )",
+          "boost": "[1.76.0, )"
+        }
+      }
+    }
+  }
+}

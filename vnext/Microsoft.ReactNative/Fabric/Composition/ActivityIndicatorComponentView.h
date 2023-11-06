@@ -32,14 +32,15 @@ struct ActivityIndicatorComponentView : CompositionBaseComponentView {
   void updateLayoutMetrics(
       facebook::react::LayoutMetrics const &layoutMetrics,
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
-  void finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept override;
   void prepareForRecycle() noexcept override;
-  facebook::react::Props::Shared props() noexcept override;
+  facebook::react::SharedViewProps viewProps() noexcept override;
   bool focusable() const noexcept override;
+  void onThemeChanged() noexcept override;
 
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt, bool ignorePointerEvents)
       const noexcept override;
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
+  virtual std::string DefaultControlType() const noexcept;
 
  private:
   ActivityIndicatorComponentView(
@@ -48,10 +49,10 @@ struct ActivityIndicatorComponentView : CompositionBaseComponentView {
       winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
   void ensureVisual() noexcept;
+  void updateProgressColor(const facebook::react::SharedColor &color) noexcept;
 
-  winrt::Microsoft::ReactNative::Composition::SpriteVisual m_visual{nullptr};
-  winrt::Microsoft::ReactNative::Composition::ActivityVisual m_ActivityIndicatorVisual{nullptr};
-  winrt::Microsoft::ReactNative::ReactContext m_context;
+  winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::IActivityVisual m_ActivityIndicatorVisual{nullptr};
   facebook::react::SharedViewProps m_props;
 };
 

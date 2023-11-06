@@ -44,15 +44,16 @@ struct ImageComponentView : CompositionBaseComponentView {
   void updateLayoutMetrics(
       facebook::react::LayoutMetrics const &layoutMetrics,
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
-  void finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept override;
   void prepareForRecycle() noexcept override;
-  facebook::react::Props::Shared props() noexcept override;
+  facebook::react::SharedViewProps viewProps() noexcept override;
   void OnRenderingDeviceLost() noexcept override;
+  void onThemeChanged() noexcept override;
 
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt, bool ignorePointerEvents)
       const noexcept override;
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
   bool focusable() const noexcept override;
+  virtual std::string DefaultControlType() const noexcept;
 
  private:
   ImageComponentView(
@@ -82,11 +83,10 @@ struct ImageComponentView : CompositionBaseComponentView {
   void setStateAndResubscribeImageResponseObserver(
       facebook::react::ImageShadowNode::ConcreteState::Shared const &state) noexcept;
 
-  facebook::react::SharedViewProps m_props;
+  std::shared_ptr<const facebook::react::ImageProps> m_props;
 
-  winrt::Microsoft::ReactNative::Composition::SpriteVisual m_visual{nullptr};
-  winrt::Microsoft::ReactNative::ReactContext m_context;
-  winrt::Microsoft::ReactNative::Composition::ICompositionDrawingSurface m_drawingSurface;
+  winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::IDrawingSurfaceBrush m_drawingSurface;
   winrt::com_ptr<IWICBitmap> m_wicbmp;
   std::shared_ptr<WindowsImageResponseObserver> m_imageResponseObserver;
   facebook::react::ImageShadowNode::ConcreteState::Shared m_state;

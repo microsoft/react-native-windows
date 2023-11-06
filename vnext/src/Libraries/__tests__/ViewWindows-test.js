@@ -4,12 +4,12 @@
 const React = require('react');
 const ReactTestRenderer = require('react-test-renderer');
 
-const {ViewWindows} = require('../Components/View/ViewWindows');
+const View = require('../Components/View/View');
 
-describe('ViewWindows', () => {
+describe('View', () => {
   it('renders basic view', () => {
     const component = ReactTestRenderer.create(
-      <ViewWindows/>
+      <View/>
     );
     expect(component).toMatchSnapshot();
   });
