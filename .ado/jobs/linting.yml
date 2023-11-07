@@ -12,7 +12,7 @@ parameters:
 jobs:
   - job: Linting
     displayName: Linting
-    timeoutInMinutes: 20
+    timeoutInMinutes: 30
     variables: [template: ../variables/windows.yml]
     pool: ${{ parameters.AgentPool.Medium }}
     steps:
