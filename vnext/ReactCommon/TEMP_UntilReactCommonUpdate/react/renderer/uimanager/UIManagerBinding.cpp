@@ -650,10 +650,10 @@ jsi::Value UIManagerBinding::get(
 
           onSuccessFunction.call(
               runtime,
-              {jsi::Value{runtime, (double)frame.origin.x},
-               jsi::Value{runtime, (double)frame.origin.y},
-               jsi::Value{runtime, (double)frame.size.width},
-               jsi::Value{runtime, (double)frame.size.height}});
+              {jsi::Value{frame.origin.x},
+               jsi::Value{frame.origin.y},
+               jsi::Value{frame.size.width},
+               jsi::Value{frame.size.height}});
           return jsi::Value::undefined();
         });
   }
@@ -695,12 +695,12 @@ jsi::Value UIManagerBinding::get(
           auto frame = layoutMetrics.frame;
           onSuccessFunction.call(
               runtime,
-              {jsi::Value{runtime, (double)originRelativeToParent.x},
-               jsi::Value{runtime, (double)originRelativeToParent.y},
-               jsi::Value{runtime, (double)frame.size.width},
-               jsi::Value{runtime, (double)frame.size.height},
-               jsi::Value{runtime, (double)frame.origin.x},
-               jsi::Value{runtime, (double)frame.origin.y}});
+              {jsi::Value{originRelativeToParent.x},
+               jsi::Value{originRelativeToParent.y},
+               jsi::Value{frame.size.width},
+               jsi::Value{frame.size.height},
+               jsi::Value{frame.origin.x},
+               jsi::Value{frame.origin.y}});
           return jsi::Value::undefined();
         });
   }
@@ -736,10 +736,10 @@ jsi::Value UIManagerBinding::get(
           auto frame = layoutMetrics.frame;
           onSuccessFunction.call(
               runtime,
-              {jsi::Value{runtime, (double)frame.origin.x},
-               jsi::Value{runtime, (double)frame.origin.y},
-               jsi::Value{runtime, (double)frame.size.width},
-               jsi::Value{runtime, (double)frame.size.height}});
+              {jsi::Value{frame.origin.x},
+               jsi::Value{frame.origin.y},
+               jsi::Value{frame.size.width},
+               jsi::Value{frame.size.height}});
           return jsi::Value::undefined();
         });
   }
@@ -886,10 +886,10 @@ jsi::Value UIManagerBinding::get(
           auto frame = layoutMetrics.frame;
           return jsi::Array::createWithElements(
               runtime,
-              jsi::Value{runtime, (double)frame.origin.x},
-              jsi::Value{runtime, (double)frame.origin.y},
-              jsi::Value{runtime, (double)frame.size.width},
-              jsi::Value{runtime, (double)frame.size.height});
+              jsi::Value{frame.origin.x},
+              jsi::Value{frame.origin.y},
+              jsi::Value{frame.size.width},
+              jsi::Value{frame.size.height});
         });
   }
 
@@ -1150,8 +1150,8 @@ jsi::Value UIManagerBinding::get(
           return jsi::Array::createWithElements(
               runtime,
               (*newestParentOfShadowNode).getInstanceHandle(runtime),
-              jsi::Value{runtime, (double)offsetTop},
-              jsi::Value{runtime, (double)offsetLeft});
+              jsi::Value{offsetTop},
+              jsi::Value{offsetLeft});
         });
   }
 
@@ -1217,12 +1217,8 @@ jsi::Value UIManagerBinding::get(
 
           return jsi::Array::createWithElements(
               runtime,
-              jsi::Value{
-                  runtime,
-                  scrollPosition.x == 0 ? 0 : (double)-scrollPosition.x},
-              jsi::Value{
-                  runtime,
-                  scrollPosition.y == 0 ? 0 : (double)-scrollPosition.y});
+              jsi::Value{scrollPosition.x == 0 ? 0 : -scrollPosition.x},
+              jsi::Value{scrollPosition.y == 0 ? 0 : -scrollPosition.y});
         });
   }
 
@@ -1291,8 +1287,8 @@ jsi::Value UIManagerBinding::get(
 
           return jsi::Array::createWithElements(
               runtime,
-              jsi::Value{runtime, std::round(scrollSize.width)},
-              jsi::Value{runtime, std::round(scrollSize.height)});
+              jsi::Value{std::round(scrollSize.width)},
+              jsi::Value{std::round(scrollSize.height)});
         });
   }
 
@@ -1343,8 +1339,8 @@ jsi::Value UIManagerBinding::get(
 
           return jsi::Array::createWithElements(
               runtime,
-              jsi::Value{runtime, std::round(paddingFrame.size.width)},
-              jsi::Value{runtime, std::round(paddingFrame.size.height)});
+              jsi::Value{std::round(paddingFrame.size.width)},
+              jsi::Value{std::round(paddingFrame.size.height)});
         });
   }
 
@@ -1395,10 +1391,10 @@ jsi::Value UIManagerBinding::get(
 
           return jsi::Array::createWithElements(
               runtime,
-              jsi::Value{runtime, std::round(layoutMetrics.borderWidth.top)},
-              jsi::Value{runtime, std::round(layoutMetrics.borderWidth.right)},
-              jsi::Value{runtime, std::round(layoutMetrics.borderWidth.bottom)},
-              jsi::Value{runtime, std::round(layoutMetrics.borderWidth.left)});
+              jsi::Value{std::round(layoutMetrics.borderWidth.top)},
+              jsi::Value{std::round(layoutMetrics.borderWidth.right)},
+              jsi::Value{std::round(layoutMetrics.borderWidth.bottom)},
+              jsi::Value{std::round(layoutMetrics.borderWidth.left)});
         });
   }
 
