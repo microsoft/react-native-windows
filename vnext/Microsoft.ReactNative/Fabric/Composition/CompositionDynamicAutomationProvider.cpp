@@ -159,7 +159,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
   }
 
   if (patternId == UIA_RangeValuePatternId &&
-      (accessibilityRole == "progressbar" || accessibilityRole == "adjustable")){
+      (accessibilityRole == "progressbar" || accessibilityRole == "adjustable")) {
     *pRetVal = static_cast<IRangeValueProvider *>(this);
     AddRef();
   }
