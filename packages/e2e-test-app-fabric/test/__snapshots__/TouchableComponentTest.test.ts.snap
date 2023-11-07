@@ -70,8 +70,8 @@ exports[`Touchable Tests TouchableWithoutFeedback components should not give vis
           },
         ],
         "Offset": [
-          9,
-          9,
+          6,
+          6,
           0,
         ],
         "Opacity": 1,
@@ -136,8 +136,8 @@ exports[`Touchable Tests Touchables can contain a Text component 1`] = `
           },
         ],
         "Offset": [
-          9,
-          9,
+          6,
+          6,
           0,
         ],
         "Opacity": 1,
