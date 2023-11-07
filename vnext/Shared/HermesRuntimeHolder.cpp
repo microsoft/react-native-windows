@@ -38,7 +38,7 @@ void NAPI_CDECL removeInspectorPage(int32_t pageId) noexcept;
 
 class HermesFuncResolver : public IFuncResolver {
  public:
-  HermesFuncResolver() : libHandle_(SafeLoadLibrary(L"hermes.dll")) {}
+  HermesFuncResolver() : libHandle_(LoadLibraryAsPeerFirst(L"hermes.dll")) {}
 
   FuncPtr getFuncPtr(const char *funcName) override {
     return reinterpret_cast<FuncPtr>(GetProcAddress(libHandle_, funcName));
