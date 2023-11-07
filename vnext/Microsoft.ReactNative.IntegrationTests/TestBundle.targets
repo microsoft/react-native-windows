@@ -1,12 +1,26 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup>
+		<BundleOutputPath>$(OutputPath)</BundleOutputPath>
+		<BundleSourceMapDir>$(OutputPath)\sourcemaps\react</BundleSourceMapDir>
+	</PropertyGroup>
 	<Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.props" />
 	<Target
 		Name="MakeTestBundles"
 		Condition="'$(DesignTimeBuild)' != 'true'"
 		BeforeTargets="PrepareForBuild"
 		Inputs="@(JsBundleEntry)"
-		Outputs="@(JsBundleEntry->'$(OutputPath)%(Filename).bundle')">
-		<MakeDir Directories="$(OutputPath)" Condition="!Exists('$(OutputPath)')" />
-		<Exec Command="$(BundleCliCommand) --platform windows --entry-file %(JsBundleEntry.FullPath) --bundle-output $(OutputPath)%(JsBundleEntry.Filename).bundle" ConsoleToMSBuild="true" />
+		Outputs="
+			@(JsBundleEntry->'$(BundleOutputPath)%(Filename).bundle');
+			@(JsBundleEntry->'$(BundleSourceMapDir)\%(Filename).bundle.packager.map')">
+		<MakeDir Directories="$(BundleOutputPath)" Condition="!Exists('$(BundleOutputPath)')" />
+		<MakeDir Directories="$(BundleSourceMapDir)" Condition="!Exists('$(BundleSourceMapDir)')" />
+		<Message Importance="High" Text="Running [$(BundleCliCommand) --platform windows --entry-file %(JsBundleEntry.FullPath) --bundle-output $(BundleOutputPath)%(JsBundleEntry.Filename).bundle --dev $(UseDevBundle) --reset-cache --sourcemap-output $(BundleSourceMapDir)\%(JsBundleEntry.Filename).bundle.packager.map $(BundlerExtraArgs)] to build bundle file." />
+		<Exec Command='$(BundleCliCommand) --platform windows --entry-file "%(JsBundleEntry.FullPath)" --bundle-output "$(BundleOutputPath)%(JsBundleEntry.Filename).bundle" --dev $(UseDevBundle) --reset-cache --sourcemap-output "$(BundleSourceMapDir)\%(JsBundleEntry.Filename).bundle.packager.map" $(BundlerExtraArgs)' ConsoleToMSBuild="true" WorkingDirectory="$(BundleCommandWorkingDir)" ContinueOnError="WarnAndContinue" />
+		<Message Importance="High" Text="Running [$(HermesCompilerCommand) -emit-binary -out $(BundleOutputPath)%(JsBundleEntry.Filename).bundle.hbc $(BundleOutputPath)%(JsBundleEntry.Filename).bundle $(HermesCompilerFlags) -output-source-map] to precompile bundle file." />
+		<Exec Command='$(HermesCompilerCommand) -emit-binary -out "$(BundleOutputPath)%(JsBundleEntry.Filename).bundle.hbc" "$(BundleOutputPath)%(JsBundleEntry.Filename).bundle" $(HermesCompilerFlags) -output-source-map' ConsoleToMSBuild="true" WorkingDirectory="$(BundleCommandWorkingDir)" ContinueOnError="WarnAndContinue" />
+		<Move SourceFiles="$(BundleOutputPath)%(JsBundleEntry.Filename).bundle.hbc" DestinationFiles="$(BundleOutputPath)%(JsBundleEntry.Filename).bundle" />
+		<Move SourceFiles="$(BundleOutputPath)%(JsBundleEntry.Filename).bundle.hbc.map" DestinationFiles="$(BundleOutputPath)%(JsBundleEntry.Filename).compiler.map" />
+		<Message Importance="High" Text="Running [node $(ReactNativeDir)\scripts\compose-source-maps.js $(BundleSourceMapDir)\%(JsBundleEntry.Filename).bundle.packager.map $(BundleOutputPath)%(JsBundleEntry.Filename).bundle.compiler.map -o $(BundleOutputPath)%(JsBundleEntry.Filename).bundle.map] to merge compose maps." />
+		<Exec Command='node "$(ReactNativeDir)\scripts\compose-source-maps.js" "$(BundleSourceMapDir)\%(JsBundleEntry.Filename).bundle.packager.map" "$(BundleOutputPath)%(JsBundleEntry.Filename).bundle.compiler.map" -o "$(BundleOutputPath)%(JsBundleEntry.Filename).bundle.map"' ConsoleToMSBuild="true" WorkingDirectory="$(BundleCommandWorkingDir)" ContinueOnError="WarnAndContinue" />
 	</Target>
 </Project>
