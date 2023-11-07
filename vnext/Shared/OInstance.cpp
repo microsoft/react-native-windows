@@ -52,6 +52,7 @@
 
 #if defined(USE_V8)
 #include <JSI/V8RuntimeHolder.h>
+#include "V8JSIRuntimeHolder.h"
 #endif
 #include <ReactCommon/CallInvoker.h>
 #include <ReactCommon/TurboModuleBinding.h>
@@ -319,7 +320,24 @@ InstanceImpl::InstanceImpl(
               m_devSettings, m_jsThread, std::move(preparedScriptStore));
           break;
         }
-        case JSIEngineOverride::V8:
+        case JSIEngineOverride::V8: {
+#if defined(USE_V8)
+          std::shared_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore;
+
+          wchar_t tempPath[MAX_PATH];
+          if (GetTempPathW(MAX_PATH, tempPath)) {
+            preparedScriptStore =
+                std::make_shared<facebook::react::BasePreparedScriptStoreImpl>(winrt::to_string(tempPath));
+          }
+
+          m_devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
+              m_devSettings, m_jsThread, nullptr, std::move(preparedScriptStore), /*multithreading*/ false);
+          break;
+#else
+          assert(false); // V8 is not available in this build, fallthrough
+          [[fallthrough]];
+#endif
+        }
         case JSIEngineOverride::V8NodeApi: {
 #if defined(USE_V8)
           std::shared_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore;
