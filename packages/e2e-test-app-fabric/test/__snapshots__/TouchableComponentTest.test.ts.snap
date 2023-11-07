@@ -19,6 +19,10 @@ exports[`Touchable Tests Text components can be tappable 1`] = `
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      873,
+      29.00006103515625,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
@@ -57,6 +61,10 @@ exports[`Touchable Tests TouchableWithoutFeedback components should not give vis
               0,
             ],
             "Opacity": 1,
+            "Size": [
+              855,
+              33,
+            ],
             "Visual Type": "SpriteVisual",
           },
           {
@@ -66,15 +74,23 @@ exports[`Touchable Tests TouchableWithoutFeedback components should not give vis
               0,
             ],
             "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
             "Visual Type": "SpriteVisual",
           },
         ],
         "Offset": [
-          6,
-          6,
+          9,
+          9,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          855,
+          33,
+        ],
         "Visual Type": "SpriteVisual",
       },
     ],
@@ -85,6 +101,10 @@ exports[`Touchable Tests TouchableWithoutFeedback components should not give vis
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      873,
+      48.99998474121094,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
@@ -123,6 +143,10 @@ exports[`Touchable Tests Touchables can contain a Text component 1`] = `
               0,
             ],
             "Opacity": 1,
+            "Size": [
+              335,
+              33,
+            ],
             "Visual Type": "SpriteVisual",
           },
           {
@@ -132,15 +156,23 @@ exports[`Touchable Tests Touchables can contain a Text component 1`] = `
               0,
             ],
             "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
             "Visual Type": "SpriteVisual",
           },
         ],
         "Offset": [
-          6,
-          6,
+          9,
+          9,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          335,
+          33,
+        ],
         "Visual Type": "SpriteVisual",
       },
     ],
@@ -151,6 +183,10 @@ exports[`Touchable Tests Touchables can contain a Text component 1`] = `
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      351,
+      75,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
@@ -178,6 +214,10 @@ exports[`Touchable Tests Touchables can contain an Image component 1`] = `
               0,
             ],
             "Opacity": 1,
+            "Size": [
+              75,
+              75,
+            ],
             "Visual Type": "SpriteVisual",
           },
           {
@@ -187,6 +227,10 @@ exports[`Touchable Tests Touchables can contain an Image component 1`] = `
               0,
             ],
             "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -196,6 +240,10 @@ exports[`Touchable Tests Touchables can contain an Image component 1`] = `
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          75,
+          75,
+        ],
         "Visual Type": "SpriteVisual",
       },
     ],
@@ -206,6 +254,10 @@ exports[`Touchable Tests Touchables can contain an Image component 1`] = `
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      75,
+      75,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
@@ -244,6 +296,10 @@ exports[`Touchable Tests Touchables can delay events 1`] = `
               0,
             ],
             "Opacity": 1,
+            "Size": [
+              84,
+              29.00006103515625,
+            ],
             "Visual Type": "SpriteVisual",
           },
           {
@@ -253,6 +309,10 @@ exports[`Touchable Tests Touchables can delay events 1`] = `
               0,
             ],
             "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -262,6 +322,10 @@ exports[`Touchable Tests Touchables can delay events 1`] = `
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          84,
+          29.00006103515625,
+        ],
         "Visual Type": "SpriteVisual",
       },
     ],
@@ -272,6 +336,10 @@ exports[`Touchable Tests Touchables can delay events 1`] = `
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      84,
+      27.99993896484375,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
@@ -314,6 +382,10 @@ exports[`Touchable Tests Touchables can enable a hit slop region 1`] = `
               0,
             ],
             "Opacity": 1,
+            "Size": [
+              220.00003051757812,
+              28.0001220703125,
+            ],
             "Visual Type": "SpriteVisual",
           },
           {
@@ -323,6 +395,10 @@ exports[`Touchable Tests Touchables can enable a hit slop region 1`] = `
               0,
             ],
             "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -332,6 +408,10 @@ exports[`Touchable Tests Touchables can enable a hit slop region 1`] = `
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          220.00003051757812,
+          28.0001220703125,
+        ],
         "Visual Type": "SpriteVisual",
       },
     ],
@@ -342,6 +422,10 @@ exports[`Touchable Tests Touchables can enable a hit slop region 1`] = `
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      217.99996948242188,
+      28.0001220703125,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
@@ -380,6 +464,10 @@ exports[`Touchable Tests Touchables can register feedback events 1`] = `
               0,
             ],
             "Opacity": 1,
+            "Size": [
+              84,
+              28.9998779296875,
+            ],
             "Visual Type": "SpriteVisual",
           },
           {
@@ -389,6 +477,10 @@ exports[`Touchable Tests Touchables can register feedback events 1`] = `
               0,
             ],
             "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -398,6 +490,10 @@ exports[`Touchable Tests Touchables can register feedback events 1`] = `
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          84,
+          28.9998779296875,
+        ],
         "Visual Type": "SpriteVisual",
       },
     ],
@@ -408,6 +504,10 @@ exports[`Touchable Tests Touchables can register feedback events 1`] = `
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      84,
+      27,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }

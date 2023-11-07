@@ -19,6 +19,10 @@ exports[`Text Tests Padding can be added to Text 1`] = `
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      873,
+      59.00006103515625,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
@@ -43,6 +47,10 @@ exports[`Text Tests Text can be restricted to one line 1`] = `
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      873,
+      29.000244140625,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
@@ -67,6 +75,10 @@ exports[`Text Tests Text can be selectable 1`] = `
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      873,
+      29.000244140625,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
@@ -91,6 +103,10 @@ exports[`Text Tests Text can have a color 1`] = `
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      873,
+      28.9998779296875,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
@@ -115,6 +131,10 @@ exports[`Text Tests Text can have a customized selection color 1`] = `
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      873,
+      29.000244140625,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
@@ -139,6 +159,10 @@ exports[`Text Tests Text can have a size 1`] = `
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      873,
+      47.00006103515625,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
@@ -163,6 +187,10 @@ exports[`Text Tests Text can have an outer color 1`] = `
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      873,
+      55.9998779296875,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
@@ -187,6 +215,10 @@ exports[`Text Tests Text can have decoration lines: Solid Line Through 1`] = `
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      873,
+      28.9998779296875,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
@@ -211,6 +243,10 @@ exports[`Text Tests Text can have decoration lines: Underline 1`] = `
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      873,
+      29.000244140625,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
@@ -235,6 +271,10 @@ exports[`Text Tests Text can have shadows 1`] = `
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      873,
+      41.000244140625,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
@@ -259,6 +299,10 @@ exports[`Text Tests Text can wrap 1`] = `
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      873,
+      336,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }

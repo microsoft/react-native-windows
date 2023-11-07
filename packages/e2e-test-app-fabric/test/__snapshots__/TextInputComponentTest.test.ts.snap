@@ -20,69 +20,101 @@ exports[`TextInput Tests Multi-line TextInputs can enable text selection (Impera
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
+          2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
+          -2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          1,
+          -2,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          -1,
+          -2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
-          -1,
+          2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          -1,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          1,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
@@ -96,6 +128,10 @@ exports[`TextInput Tests Multi-line TextInputs can enable text selection (Impera
           0,
         ],
         "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
         "Visual Type": "SpriteVisual",
       },
     ],
@@ -106,6 +142,10 @@ exports[`TextInput Tests Multi-line TextInputs can enable text selection (Impera
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      873,
+      75,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
@@ -131,69 +171,101 @@ exports[`TextInput Tests Multi-line TextInputs can enable text selection 1`] = `
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
+          2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
+          -2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          1,
+          -2,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          -1,
+          -2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
-          -1,
+          2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          -1,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          1,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
@@ -207,6 +279,10 @@ exports[`TextInput Tests Multi-line TextInputs can enable text selection 1`] = `
           0,
         ],
         "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
         "Visual Type": "SpriteVisual",
       },
     ],
@@ -217,6 +293,10 @@ exports[`TextInput Tests Multi-line TextInputs can enable text selection 1`] = `
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      873,
+      75,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
@@ -242,69 +322,101 @@ exports[`TextInput Tests Single-line TextInputs can enable text selection (Imper
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
+          2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
+          -2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          1,
+          -2,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          -1,
+          -2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
-          -1,
+          2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          -1,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          1,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
@@ -318,6 +430,10 @@ exports[`TextInput Tests Single-line TextInputs can enable text selection (Imper
           0,
         ],
         "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
         "Visual Type": "SpriteVisual",
       },
     ],
@@ -328,6 +444,10 @@ exports[`TextInput Tests Single-line TextInputs can enable text selection (Imper
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      873,
+      41.000244140625,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
@@ -353,69 +473,101 @@ exports[`TextInput Tests Single-line TextInputs can enable text selection 1`] = 
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
+          2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
+          -2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          1,
+          -2,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          -1,
+          -2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
-          -1,
+          2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          -1,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          1,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
@@ -429,6 +581,10 @@ exports[`TextInput Tests Single-line TextInputs can enable text selection 1`] = 
           0,
         ],
         "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
         "Visual Type": "SpriteVisual",
       },
     ],
@@ -439,6 +595,10 @@ exports[`TextInput Tests Single-line TextInputs can enable text selection 1`] = 
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      873,
+      42,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
@@ -464,69 +624,101 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Character
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
+          2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
+          -2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          1,
+          -2,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          -1,
+          -2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
-          -1,
+          2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          -1,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          1,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
@@ -540,6 +732,10 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Character
           0,
         ],
         "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
         "Visual Type": "SpriteVisual",
       },
     ],
@@ -550,6 +746,10 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Character
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      686,
+      42,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
@@ -575,69 +775,101 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Sentences
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
+          2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
+          -2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          1,
+          -2,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          -1,
+          -2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
-          -1,
+          2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          -1,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          1,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
@@ -651,6 +883,10 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Sentences
           0,
         ],
         "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
         "Visual Type": "SpriteVisual",
       },
     ],
@@ -661,6 +897,10 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Sentences
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      686,
+      42,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
@@ -686,69 +926,101 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Turned Of
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
+          2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
+          -2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          1,
+          -2,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          -1,
+          -2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
-          -1,
+          2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          -1,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          1,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
@@ -762,6 +1034,10 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Turned Of
           0,
         ],
         "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
         "Visual Type": "SpriteVisual",
       },
     ],
@@ -772,6 +1048,10 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Turned Of
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      686,
+      42,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
@@ -797,69 +1077,101 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Words 1`]
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
+          2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
+          -2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          1,
+          -2,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          -1,
+          -2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
-          -1,
+          2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          -1,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          1,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
@@ -873,6 +1185,10 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Words 1`]
           0,
         ],
         "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
         "Visual Type": "SpriteVisual",
       },
     ],
@@ -883,6 +1199,10 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Words 1`]
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      686,
+      42,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
@@ -908,69 +1228,101 @@ exports[`TextInput Tests TextInputs can have a background color 1`] = `
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
+          2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
+          -2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          1,
+          -2,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          -1,
+          -2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
-          -1,
+          2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          -1,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          1,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
@@ -984,6 +1336,10 @@ exports[`TextInput Tests TextInputs can have a background color 1`] = `
           0,
         ],
         "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
         "Visual Type": "SpriteVisual",
       },
     ],
@@ -994,6 +1350,10 @@ exports[`TextInput Tests TextInputs can have a background color 1`] = `
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      686,
+      42,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
@@ -1019,69 +1379,101 @@ exports[`TextInput Tests TextInputs can have a color 1`] = `
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
+          2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
+          -2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          1,
+          -2,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          -1,
+          -2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
-          -1,
+          2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          -1,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          1,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
@@ -1095,6 +1487,10 @@ exports[`TextInput Tests TextInputs can have a color 1`] = `
           0,
         ],
         "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
         "Visual Type": "SpriteVisual",
       },
     ],
@@ -1105,6 +1501,10 @@ exports[`TextInput Tests TextInputs can have a color 1`] = `
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      686,
+      42,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
@@ -1130,69 +1530,101 @@ exports[`TextInput Tests TextInputs can have a font family 1`] = `
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
+          2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
+          -2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          1,
+          -2,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          -1,
+          -2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
-          -1,
+          2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          -1,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          1,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
@@ -1206,6 +1638,10 @@ exports[`TextInput Tests TextInputs can have a font family 1`] = `
           0,
         ],
         "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
         "Visual Type": "SpriteVisual",
       },
     ],
@@ -1216,6 +1652,10 @@ exports[`TextInput Tests TextInputs can have a font family 1`] = `
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      686,
+      42,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
@@ -1241,69 +1681,101 @@ exports[`TextInput Tests TextInputs can have a font size 1`] = `
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
+          2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
+          -2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          1,
+          -2,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          -1,
+          -2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
-          -1,
+          2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          -1,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          1,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
@@ -1317,6 +1789,10 @@ exports[`TextInput Tests TextInputs can have a font size 1`] = `
           0,
         ],
         "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
         "Visual Type": "SpriteVisual",
       },
     ],
@@ -1327,6 +1803,10 @@ exports[`TextInput Tests TextInputs can have a font size 1`] = `
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      686,
+      51.999755859375,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
@@ -1352,69 +1832,101 @@ exports[`TextInput Tests TextInputs can have a font style 1`] = `
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
+          2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
+          -2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          1,
+          -2,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          -1,
+          -2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
-          -1,
+          2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          -1,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          1,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
@@ -1428,6 +1940,10 @@ exports[`TextInput Tests TextInputs can have a font style 1`] = `
           0,
         ],
         "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
         "Visual Type": "SpriteVisual",
       },
     ],
@@ -1438,6 +1954,10 @@ exports[`TextInput Tests TextInputs can have a font style 1`] = `
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      686,
+      42,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
@@ -1463,69 +1983,101 @@ exports[`TextInput Tests TextInputs can have a font weight 1`] = `
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
+          2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
+          -2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          1,
+          -2,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          -1,
+          -2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
-          -1,
+          2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          -1,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          1,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
@@ -1539,6 +2091,10 @@ exports[`TextInput Tests TextInputs can have a font weight 1`] = `
           0,
         ],
         "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
         "Visual Type": "SpriteVisual",
       },
     ],
@@ -1549,6 +2105,10 @@ exports[`TextInput Tests TextInputs can have a font weight 1`] = `
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      686,
+      42,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
@@ -1574,69 +2134,101 @@ exports[`TextInput Tests TextInputs can have attributed text 1`] = `
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
+          2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
+          -2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          1,
+          -2,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          -1,
+          -2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
-          -1,
+          2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          -1,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          1,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
@@ -1650,6 +2242,10 @@ exports[`TextInput Tests TextInputs can have attributed text 1`] = `
           0,
         ],
         "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
         "Visual Type": "SpriteVisual",
       },
     ],
@@ -1660,6 +2256,10 @@ exports[`TextInput Tests TextInputs can have attributed text 1`] = `
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      873,
+      75,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
@@ -1685,69 +2285,101 @@ exports[`TextInput Tests TextInputs can have customized letter spacing 1`] = `
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
+          2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
+          -2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          1,
+          -2,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          -1,
+          -2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
-          -1,
+          2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          -1,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          1,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
@@ -1761,6 +2393,10 @@ exports[`TextInput Tests TextInputs can have customized letter spacing 1`] = `
           0,
         ],
         "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
         "Visual Type": "SpriteVisual",
       },
     ],
@@ -1771,6 +2407,10 @@ exports[`TextInput Tests TextInputs can have customized letter spacing 1`] = `
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      686,
+      42,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
@@ -1796,69 +2436,101 @@ exports[`TextInput Tests TextInputs can have customized line height 1`] = `
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
+          2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
+          -2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          1,
+          -2,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          -1,
+          -2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
-          -1,
+          2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          -1,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          1,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
@@ -1872,6 +2544,10 @@ exports[`TextInput Tests TextInputs can have customized line height 1`] = `
           0,
         ],
         "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
         "Visual Type": "SpriteVisual",
       },
     ],
@@ -1882,6 +2558,10 @@ exports[`TextInput Tests TextInputs can have customized line height 1`] = `
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      686,
+      39,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
@@ -1907,69 +2587,101 @@ exports[`TextInput Tests TextInputs can have text decoration lines 1`] = `
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
+          2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
+          -2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          1,
+          -2,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          -1,
+          -2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
-          -1,
+          2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          -1,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          1,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
@@ -1983,6 +2695,10 @@ exports[`TextInput Tests TextInputs can have text decoration lines 1`] = `
           0,
         ],
         "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
         "Visual Type": "SpriteVisual",
       },
     ],
@@ -1993,6 +2709,10 @@ exports[`TextInput Tests TextInputs can have text decoration lines 1`] = `
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      686,
+      42,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
@@ -2018,69 +2738,101 @@ exports[`TextInput Tests TextInputs can have text shadows 1`] = `
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
+          2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
+          -2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          1,
+          -2,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          -1,
+          -2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
-          -1,
+          2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          -1,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          1,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
@@ -2094,6 +2846,10 @@ exports[`TextInput Tests TextInputs can have text shadows 1`] = `
           0,
         ],
         "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
         "Visual Type": "SpriteVisual",
       },
     ],
@@ -2104,6 +2860,10 @@ exports[`TextInput Tests TextInputs can have text shadows 1`] = `
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      686,
+      42,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
@@ -2129,69 +2889,101 @@ exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with C
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
+          2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
+          -2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          1,
+          -2,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          -1,
+          -2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
-          -1,
+          2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          -1,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          1,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
@@ -2205,6 +2997,10 @@ exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with C
           0,
         ],
         "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
         "Visual Type": "SpriteVisual",
       },
     ],
@@ -2215,6 +3011,10 @@ exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with C
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      800,
+      42,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
@@ -2240,69 +3040,101 @@ exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with N
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
+          2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
+          -2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          1,
+          -2,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          -1,
+          -2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
-          -1,
+          2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          -1,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          1,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
@@ -2316,6 +3148,10 @@ exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with N
           0,
         ],
         "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
         "Visual Type": "SpriteVisual",
       },
     ],
@@ -2326,6 +3162,10 @@ exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with N
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      873,
+      42,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
@@ -2351,69 +3191,101 @@ exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with U
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
+          2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
+          -2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          1,
+          -2,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          -1,
+          -2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
-          -1,
+          2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          -1,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          1,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
@@ -2427,6 +3299,10 @@ exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with U
           0,
         ],
         "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
         "Visual Type": "SpriteVisual",
       },
     ],
@@ -2437,6 +3313,10 @@ exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with U
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      837,
+      42,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
@@ -2462,69 +3342,101 @@ exports[`TextInput Tests Uncontrolled TextInput 1`] = `
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
+          2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
+          -2,
           0,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          1,
+          -2,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          -1,
-          -1,
+          -2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
-          1,
-          -1,
+          2,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          -4,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          -1,
+          -2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          2,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
         "Offset": [
           0,
-          1,
+          2,
           0,
         ],
         "Opacity": 1,
+        "Size": [
+          2,
+          -4,
+        ],
         "Visual Type": "SpriteVisual",
       },
       {
@@ -2538,6 +3450,10 @@ exports[`TextInput Tests Uncontrolled TextInput 1`] = `
           0,
         ],
         "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
         "Visual Type": "SpriteVisual",
       },
     ],
@@ -2548,6 +3464,10 @@ exports[`TextInput Tests Uncontrolled TextInput 1`] = `
       0,
     ],
     "Opacity": 1,
+    "Size": [
+      873,
+      40.9998779296875,
+    ],
     "Visual Type": "SpriteVisual",
   },
 }
