@@ -138,6 +138,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
   if (props == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
   auto accessibilityRole = props->accessibilityRole;
+  auto accessibilityValue = props->accessibilityValue;
   // Invoke control pattern is used to support controls that do not maintain state
   // when activated but rather initiate or perform a single, unambiguous action.
   if (patternId == UIA_InvokePatternId &&
@@ -153,13 +154,12 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
     AddRef();
   }
 
-  if (patternId == UIA_ValuePatternId) {
+  if (patternId == UIA_ValuePatternId && accessibilityValue.text.has_value()) {
     *pRetVal = static_cast<IValueProvider *>(this);
     AddRef();
   }
 
-  if (patternId == UIA_RangeValuePatternId &&
-      (accessibilityRole == "progressbar" || accessibilityRole == "adjustable")) {
+  if (patternId == UIA_RangeValuePatternId && accessibilityValue.now.has_value()) {
     *pRetVal = static_cast<IRangeValueProvider *>(this);
     AddRef();
   }
