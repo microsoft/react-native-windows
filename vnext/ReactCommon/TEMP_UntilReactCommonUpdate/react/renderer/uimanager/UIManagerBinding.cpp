@@ -1287,8 +1287,8 @@ jsi::Value UIManagerBinding::get(
 
           return jsi::Array::createWithElements(
               runtime,
-              jsi::Value{std::round(scrollSize.width)},
-              jsi::Value{std::round(scrollSize.height)});
+              jsi::Value{(double)std::round(scrollSize.width)},
+              jsi::Value{(double)std::round(scrollSize.height)});
         });
   }
 
@@ -1339,8 +1339,8 @@ jsi::Value UIManagerBinding::get(
 
           return jsi::Array::createWithElements(
               runtime,
-              jsi::Value{std::round(paddingFrame.size.width)},
-              jsi::Value{std::round(paddingFrame.size.height)});
+              jsi::Value{(double)std::round(paddingFrame.size.width)},
+              jsi::Value{(double)std::round(paddingFrame.size.height)});
         });
   }
 
@@ -1391,10 +1391,10 @@ jsi::Value UIManagerBinding::get(
 
           return jsi::Array::createWithElements(
               runtime,
-              jsi::Value{std::round(layoutMetrics.borderWidth.top)},
-              jsi::Value{std::round(layoutMetrics.borderWidth.right)},
-              jsi::Value{std::round(layoutMetrics.borderWidth.bottom)},
-              jsi::Value{std::round(layoutMetrics.borderWidth.left)});
+              jsi::Value{(double)std::round(layoutMetrics.borderWidth.top)},
+              jsi::Value{(double)std::round(layoutMetrics.borderWidth.right)},
+              jsi::Value{(double)std::round(layoutMetrics.borderWidth.bottom)},
+              jsi::Value{(double)std::round(layoutMetrics.borderWidth.left)});
         });
   }
 
