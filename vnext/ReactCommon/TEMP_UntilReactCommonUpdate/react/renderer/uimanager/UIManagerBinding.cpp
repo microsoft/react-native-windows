@@ -650,10 +650,10 @@ jsi::Value UIManagerBinding::get(
 
           onSuccessFunction.call(
               runtime,
-              {jsi::Value{frame.origin.x},
-               jsi::Value{frame.origin.y},
-               jsi::Value{frame.size.width},
-               jsi::Value{frame.size.height}});
+              {jsi::Value{(double)frame.origin.x},
+               jsi::Value{(double)frame.origin.y},
+               jsi::Value{(double)frame.size.width},
+               jsi::Value{(double)frame.size.height}});
           return jsi::Value::undefined();
         });
   }
@@ -695,12 +695,12 @@ jsi::Value UIManagerBinding::get(
           auto frame = layoutMetrics.frame;
           onSuccessFunction.call(
               runtime,
-              {jsi::Value{originRelativeToParent.x},
-               jsi::Value{originRelativeToParent.y},
-               jsi::Value{frame.size.width},
-               jsi::Value{frame.size.height},
-               jsi::Value{frame.origin.x},
-               jsi::Value{frame.origin.y}});
+              {jsi::Value{(double)originRelativeToParent.x},
+               jsi::Value{(double)originRelativeToParent.y},
+               jsi::Value{(double)frame.size.width},
+               jsi::Value{(double)frame.size.height},
+               jsi::Value{(double)frame.origin.x},
+               jsi::Value{(double)frame.origin.y}});
           return jsi::Value::undefined();
         });
   }
@@ -736,10 +736,10 @@ jsi::Value UIManagerBinding::get(
           auto frame = layoutMetrics.frame;
           onSuccessFunction.call(
               runtime,
-              {jsi::Value{frame.origin.x},
-               jsi::Value{frame.origin.y},
-               jsi::Value{frame.size.width},
-               jsi::Value{frame.size.height}});
+              {jsi::Value{(double)frame.origin.x},
+               jsi::Value{(double)frame.origin.y},
+               jsi::Value{(double)frame.size.width},
+               jsi::Value{(double)frame.size.height}});
           return jsi::Value::undefined();
         });
   }
@@ -886,10 +886,10 @@ jsi::Value UIManagerBinding::get(
           auto frame = layoutMetrics.frame;
           return jsi::Array::createWithElements(
               runtime,
-              jsi::Value{frame.origin.x},
-              jsi::Value{frame.origin.y},
-              jsi::Value{frame.size.width},
-              jsi::Value{frame.size.height});
+              jsi::Value{(double)frame.origin.x},
+              jsi::Value{(double)frame.origin.y},
+              jsi::Value{(double)frame.size.width},
+              jsi::Value{(double)frame.size.height});
         });
   }
 
@@ -1150,8 +1150,8 @@ jsi::Value UIManagerBinding::get(
           return jsi::Array::createWithElements(
               runtime,
               (*newestParentOfShadowNode).getInstanceHandle(runtime),
-              jsi::Value{offsetTop},
-              jsi::Value{offsetLeft});
+              jsi::Value{(double)offsetTop},
+              jsi::Value{(double)offsetLeft});
         });
   }
 
@@ -1217,8 +1217,8 @@ jsi::Value UIManagerBinding::get(
 
           return jsi::Array::createWithElements(
               runtime,
-              jsi::Value{scrollPosition.x == 0 ? 0 : -scrollPosition.x},
-              jsi::Value{scrollPosition.y == 0 ? 0 : -scrollPosition.y});
+              jsi::Value{scrollPosition.x == 0 ? 0 : (double)-scrollPosition.x},
+              jsi::Value{scrollPosition.y == 0 ? 0 : (double)-scrollPosition.y});
         });
   }
 
