@@ -424,6 +424,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_LargeChange(double *
   if (pRetVal == nullptr)
     return E_POINTER;
 
+  *pRetVal = std::numeric_limits<double>::quiet_NaN();
   return S_OK;
 }
 
@@ -458,6 +459,8 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_Minimum(double *pRet
 HRESULT __stdcall CompositionDynamicAutomationProvider::get_SmallChange(double *pRetVal) {
   if (pRetVal == nullptr)
     return E_POINTER;
+    
+  *pRetVal = std::numeric_limits<double>::quiet_NaN();
   return S_OK;
 }
 
