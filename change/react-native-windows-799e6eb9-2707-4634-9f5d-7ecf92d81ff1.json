@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Refactor react/renderer/graphics/Color handling",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}

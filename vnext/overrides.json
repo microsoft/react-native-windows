@@ -96,6 +96,13 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/graphics/Color.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/graphics/Color.h",
+      "baseHash": "dfdf5eea363605ee93f0675e30689df2cd8dc004",
+      "issue": 7821
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mounting/ShadowTree.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/mounting/ShadowTree.cpp",
       "baseHash": "6a1ef351833bd02ce27544dd3db205c1bf2c4139",
