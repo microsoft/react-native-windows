@@ -49,7 +49,6 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
 
   // inherited via IRangeValueProvider
   virtual HRESULT __stdcall SetValue(double val) override;
-  virtual HRESULT __stdcall get_IsReadOnly(BOOL *pRetVal) override;
   virtual HRESULT __stdcall get_LargeChange(double *pRetVal) override;
   virtual HRESULT __stdcall get_Maximum(double *pRetVal) override;
   virtual HRESULT __stdcall get_Minimum(double *pRetVal) override;

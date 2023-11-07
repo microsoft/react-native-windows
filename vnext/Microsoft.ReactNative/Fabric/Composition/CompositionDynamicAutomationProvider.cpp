@@ -158,7 +158,8 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
     AddRef();
   }
 
-  if (patternId == UIA_RangeValuePatternId) {
+  if (patternId == UIA_RangeValuePatternId &&
+      (accessibilityRole == "progressbar" || accessibilityRole == "adjustable")){
     *pRetVal = static_cast<IRangeValueProvider *>(this);
     AddRef();
   }
@@ -459,7 +460,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_Minimum(double *pRet
 HRESULT __stdcall CompositionDynamicAutomationProvider::get_SmallChange(double *pRetVal) {
   if (pRetVal == nullptr)
     return E_POINTER;
-    
+
   *pRetVal = std::numeric_limits<double>::quiet_NaN();
   return S_OK;
 }
