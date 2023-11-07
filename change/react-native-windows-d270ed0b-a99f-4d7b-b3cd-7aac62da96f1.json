@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "C++ 20: Use UTF-16 Paths and URLs",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@fb.com",
+  "dependentChangeType": "patch"
+}

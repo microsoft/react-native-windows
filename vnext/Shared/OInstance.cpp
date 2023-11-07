@@ -514,16 +514,17 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
       }
     } else {
 #if (defined(_MSC_VER) && !defined(WINRT))
-      std::string bundlePath = (fs::u8path(m_devSettings->bundleRootPath) / jsBundleRelativePath).u8string();
+      std::wstring bundlePath = (fs::u8path(m_devSettings->bundleRootPath) / jsBundleRelativePath).wstring();
       auto bundleString = FileMappingBigString::fromPath(bundlePath);
 #else
-      std::string bundlePath;
+      std::wstring bundlePath;
+      // TODO: Replace call to private string function with C++ 20 `starts_with`
       if (m_devSettings->bundleRootPath._Starts_with("resource://")) {
         auto uri = winrt::Windows::Foundation::Uri(
             winrt::to_hstring(m_devSettings->bundleRootPath), winrt::to_hstring(jsBundleRelativePath));
-        bundlePath = winrt::to_string(uri.ToString());
+        bundlePath = uri.ToString();
       } else {
-        bundlePath = (fs::u8path(m_devSettings->bundleRootPath) / (jsBundleRelativePath + ".bundle")).u8string();
+        bundlePath = (fs::u8path(m_devSettings->bundleRootPath) / (jsBundleRelativePath + ".bundle")).wstring();
       }
 
       auto bundleString = std::make_unique<::Microsoft::ReactNative::StorageFileBigString>(bundlePath);
