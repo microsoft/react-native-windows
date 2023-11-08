@@ -6,6 +6,8 @@
  * @format
  */
 
+require('promise/setimmediate/es6-extensions');
+
 import {default as mySimpleTurboModule} from './NativeMySimpleTurboModuleCxx';
 
 // The logging of the TurboModule functions is verified against the test action sequence.
