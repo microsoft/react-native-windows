@@ -68,6 +68,7 @@
         _WIN32_WINNT=$(WinVer);
         WIN32;
         _WINDOWS;
+        FOLLY_CFG_NO_COROUTINES;
         FOLLY_NO_CONFIG;
         NOMINMAX;
         _HAS_AUTO_PTR_ETC;
@@ -78,7 +79,7 @@
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalOptions>/bigobj /await %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <AdditionalIncludeDirectories>
         $(FmtDir)include;
         $(ProjectDir)pch;

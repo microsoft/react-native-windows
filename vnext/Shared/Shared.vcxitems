@@ -159,7 +159,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\components\view\HostPlatformViewEventEmitter.cpp">
       <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\graphics\Color.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\graphics\PlatformColorUtils.cpp">
       <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\textlayoutmanager\TextLayoutManager.cpp">
@@ -171,7 +171,11 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\WindowsImageManager.cpp">
       <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\SchedulerSettings.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\SchedulerSettings.cpp"/>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\AsynchronousEventBeat.cpp">
+      <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\SynchronousEventBeat.cpp">
       <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)BaseFileReaderResource.cpp" />
@@ -226,6 +230,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)TurboModuleManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Utils.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Utils\WinRTConversions.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)V8JSIRuntimeHolder.cpp">
+      <ExcludedFromBuild Condition="'$(UseV8)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\codegen\react\components\rnwcore\EventEmitters.h" />
@@ -399,6 +406,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Utils.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Utils\CppWinrtLessExceptions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Utils\WinRTConversions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)V8JSIRuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)WebSocketJSExecutorFactory.h" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\DevSettingsModule.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\ReactRootViewTagGenerator.cpp" />
@@ -420,6 +428,10 @@
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Utils\Helpers.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Utils\ImageUtils.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Views\DevMenu.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeScheduler.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeSchedulerBinding.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\Task.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\utils\CoreFeatures.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)tracing\rnw.wprp" />
@@ -465,7 +477,6 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\BatchedEventQueue.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\ComponentDescriptor.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\ValueFactoryEventPayload.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\utils\CoreFeatures.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\DynamicPropsUtilities.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventBeat.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventDispatcher.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)" />
@@ -494,6 +505,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\InstanceHandle.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\DebugStringConvertible.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\DebugStringConvertibleItem.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\graphics\Color.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\graphics\Transform.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\imagemanager\ImageResponse.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\imagemanager\ImageResponseObserverCoordinator.cpp" />
@@ -510,9 +522,6 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\StubView.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\StubViewTree.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\TelemetryController.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeScheduler.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeSchedulerBinding.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\Task.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\scheduler\Scheduler.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\scheduler\SurfaceHandler.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\scheduler\SurfaceManager.cpp" />

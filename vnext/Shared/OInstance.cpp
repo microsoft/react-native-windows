@@ -52,6 +52,7 @@
 
 #if defined(USE_V8)
 #include <JSI/V8RuntimeHolder.h>
+#include "V8JSIRuntimeHolder.h"
 #endif
 #include <ReactCommon/CallInvoker.h>
 #include <ReactCommon/TurboModuleBinding.h>
@@ -319,7 +320,24 @@ InstanceImpl::InstanceImpl(
               m_devSettings, m_jsThread, std::move(preparedScriptStore));
           break;
         }
-        case JSIEngineOverride::V8:
+        case JSIEngineOverride::V8: {
+#if defined(USE_V8)
+          std::shared_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore;
+
+          wchar_t tempPath[MAX_PATH];
+          if (GetTempPathW(MAX_PATH, tempPath)) {
+            preparedScriptStore =
+                std::make_shared<facebook::react::BasePreparedScriptStoreImpl>(winrt::to_string(tempPath));
+          }
+
+          m_devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
+              m_devSettings, m_jsThread, nullptr, std::move(preparedScriptStore), /*multithreading*/ false);
+          break;
+#else
+          assert(false); // V8 is not available in this build, fallthrough
+          [[fallthrough]];
+#endif
+        }
         case JSIEngineOverride::V8NodeApi: {
 #if defined(USE_V8)
           std::shared_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore;
@@ -496,16 +514,17 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
       }
     } else {
 #if (defined(_MSC_VER) && !defined(WINRT))
-      std::string bundlePath = (fs::u8path(m_devSettings->bundleRootPath) / jsBundleRelativePath).u8string();
+      std::wstring bundlePath = (fs::u8path(m_devSettings->bundleRootPath) / jsBundleRelativePath).wstring();
       auto bundleString = FileMappingBigString::fromPath(bundlePath);
 #else
-      std::string bundlePath;
+      std::wstring bundlePath;
+      // TODO: Replace call to private string function with C++ 20 `starts_with`
       if (m_devSettings->bundleRootPath._Starts_with("resource://")) {
         auto uri = winrt::Windows::Foundation::Uri(
             winrt::to_hstring(m_devSettings->bundleRootPath), winrt::to_hstring(jsBundleRelativePath));
-        bundlePath = winrt::to_string(uri.ToString());
+        bundlePath = uri.ToString();
       } else {
-        bundlePath = (fs::u8path(m_devSettings->bundleRootPath) / (jsBundleRelativePath + ".bundle")).u8string();
+        bundlePath = (fs::u8path(m_devSettings->bundleRootPath) / (jsBundleRelativePath + ".bundle")).wstring();
       }
 
       auto bundleString = std::make_unique<::Microsoft::ReactNative::StorageFileBigString>(bundlePath);
