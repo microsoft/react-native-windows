@@ -6,9 +6,8 @@
  * @format
  */
 
-require('promise/setimmediate/es6-extensions');
-
-import {default as mySimpleTurboModule} from './NativeMySimpleTurboModuleCxx';
+// Make sure that we import something from react-native so that we build a complete bundle
+import {View} from 'react-native';
 
 // The logging of the TurboModule functions is verified against the test action sequence.
 
