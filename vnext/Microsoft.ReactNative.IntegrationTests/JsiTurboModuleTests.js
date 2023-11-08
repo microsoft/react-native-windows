@@ -10,6 +10,8 @@
 // eslint-disable-next-line no-unused-vars
 import {View} from 'react-native';
 
+import {default as mySimpleTurboModule} from './NativeMySimpleTurboModuleCxx';
+
 // The logging of the TurboModule functions is verified against the test action sequence.
 
 mySimpleTurboModule.voidFunc();
