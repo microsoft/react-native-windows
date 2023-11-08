@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 08 Nov 2023 06:17:34 GMT",
+      "version": "0.0.0-canary.732",
+      "tag": "react-native-windows_v0.0.0-canary.732",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ac1f93b96173ca93430a070dce3f63a891693896",
+            "comment": "Cherry pick PRs #12143 #12211"
+          },
+          {
+            "author": "ngerlem@fb.com",
+            "package": "react-native-windows",
+            "commit": "9b93d7b5bc5204644373be3e3a05c4be61b1685f",
+            "comment": "C++ 20: Use UTF-16 Paths and URLs"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 02 Nov 2023 05:16:14 GMT",
       "version": "0.0.0-canary.731",
       "tag": "react-native-windows_v0.0.0-canary.731",
