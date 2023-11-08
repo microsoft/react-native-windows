@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 02 Nov 2023 05:16:14 GMT and should not be manually modified.
+This log was last generated on Wed, 08 Nov 2023 06:17:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.732
+
+Wed, 08 Nov 2023 06:17:34 GMT
+
+### Changes
+
+- Cherry pick PRs #12143 #12211 (vmorozov@microsoft.com)
+- C++ 20: Use UTF-16 Paths and URLs (ngerlem@fb.com)
 
 ## 0.0.0-canary.731
 
