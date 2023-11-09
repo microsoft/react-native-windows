@@ -15,6 +15,8 @@ const util = require('util');
 
 const glob = util.promisify(require('glob'));
 
+const templateUtils = require('../templateUtils');
+
 async function preInstall(config = {}, options = {}) {}
 
 async function getFileMappings(config = {}, options = {}) {
@@ -104,7 +106,12 @@ async function getFileMappings(config = {}, options = {}) {
   return fileMappings;
 }
 
-function postInstall(config = {}, options = {}) {
+async function postInstall(config = {}, options = {}) {
+  // Update package.json with new scripts
+  await templateUtils.updateProjectPackageJson(config, options, {
+    scripts: {windows: 'react-native run-windows'},
+  });
+
   console.log(chalk.white.bold('To run your new windows app:'));
   console.log(chalk.white('   npx react-native run-windows'));
 }
