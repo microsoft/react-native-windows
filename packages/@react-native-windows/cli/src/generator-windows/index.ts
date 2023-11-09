@@ -16,6 +16,7 @@ import findUp from 'find-up';
 import {
   readProjectFile,
   findPropertyValue,
+  tryFindPropertyValueAsBoolean,
 } from '../commands/config/configUtils';
 
 import {
@@ -129,6 +130,27 @@ export async function copyProjectTemplateAndReplace(
   if (options.experimentalNuGetDependency) {
     console.log('Using experimental NuGet dependency.');
   }
+
+  const experimentalPropsPath = path.join(
+    destPath,
+    windowsDir,
+    'ExperimentalFeatures.props',
+  );
+
+  let existingUseHermes: boolean | null = null;
+  if (fs.existsSync(experimentalPropsPath)) {
+    existingUseHermes = tryFindPropertyValueAsBoolean(
+      readProjectFile(experimentalPropsPath),
+      'UseHermes',
+    );
+  }
+
+  if (existingUseHermes === false) {
+    console.warn(
+      'Hermes is now the default JS engine and will be enabled for this project. Support for Chakra will be deprecated in the future. To disable Hermes and keep using Chakra for now, see https://microsoft.github.io/react-native-windows/docs/hermes#disabling-hermes.',
+    );
+  }
+  options.useHermes = true;
 
   if (options.useWinUI3) {
     throw new CodedError(
