@@ -1,0 +1,18 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+import "ViewPanel.idl";
+import "IReactContext.idl";
+#include "DocString.h"
+
+namespace Microsoft.ReactNative
+{
+  [default_interface]
+  [webhosthidden]
+  DOC_STRING("A XAML component that manages keyboard/touch inputs.")
+  runtimeclass RootViewPanel : ViewPanel
+  {
+    DOC_STRING("Creates a new instance of @RootViewPanel")
+    RootViewPanel(IReactContext reactContext);
+  }
+} // namespace Microsoft. ReactNative

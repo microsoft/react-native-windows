@@ -8,7 +8,7 @@ namespace Microsoft.ReactNative
 {
   [default_interface]
   [webhosthidden]
-  runtimeclass ViewPanel : XAML_NAMESPACE.Controls.Grid
+  unsealed runtimeclass ViewPanel : XAML_NAMESPACE.Controls.Grid
   {
     // Constructors
     ViewPanel();

@@ -194,6 +194,10 @@
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="ReactHost\JSCallInvokerScheduler.h" />
+    <ClInclude Include="RootViewPanel.h">
+      <DependentUpon>RootViewPanel.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="Utils\ShadowNodeTypeUtils.h" />
     <ClInclude Include="Utils\BatchingEventEmitter.h" />
     <ClInclude Include="DevMenuControl.h">
@@ -428,6 +432,10 @@
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="CoreApp.cpp" />
+    <ClCompile Include="RootViewPanel.cpp">
+      <DependentUpon>RootViewPanel.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="Utils\BatchingEventEmitter.cpp" />
     <ClCompile Include="CxxReactUWP\JSBigString.cpp" />
     <ClCompile Include="DevMenuControl.cpp">
@@ -584,6 +592,9 @@
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="ReactRootView.idl">
+      <SubType>Designer</SubType>
+    </Midl>
+    <Midl Include="RootViewPanel.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="XamlHelper.idl" />
