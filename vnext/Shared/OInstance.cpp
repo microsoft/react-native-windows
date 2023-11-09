@@ -357,6 +357,8 @@ InstanceImpl::InstanceImpl(
 #endif
     if (m_devSettings->useRuntimeScheduler) {
       m_runtimeScheduler = std::make_shared<RuntimeScheduler>(runtimeExecutor);
+      Microsoft::ReactNative::SchedulerSettings::SetRuntimeScheduler(
+          winrt::Microsoft::ReactNative::ReactPropertyBag(propertyBag), runtimeScheduler);
     }
 
     // Using runOnQueueSync because initializeBridge calls createJSExecutor with runOnQueueSync,
@@ -370,8 +372,6 @@ InstanceImpl::InstanceImpl(
                                 longLivedObjectCollection = m_longLivedObjectCollection]() {
       if (runtimeScheduler) {
         RuntimeSchedulerBinding::createAndInstallIfNeeded(*runtimeHolder->getRuntime(), runtimeScheduler);
-        Microsoft::ReactNative::SchedulerSettings::SetRuntimeScheduler(
-            winrt::Microsoft::ReactNative::ReactPropertyBag(propertyBag), runtimeScheduler);
       }
       auto turboModuleManager = std::make_shared<TurboModuleManager>(
           turboModuleRegistry,

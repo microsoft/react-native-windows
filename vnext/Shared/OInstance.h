@@ -63,10 +63,6 @@ class InstanceImpl final : public InstanceWrapper, private ::std::enable_shared_
     return m_innerInstance;
   }
 
-  virtual const std::shared_ptr<RuntimeScheduler> &GetRuntimeScheduler() const noexcept override {
-    return m_runtimeScheduler;
-  }
-
   void DispatchEvent(int64_t viewTag, std::string eventName, folly::dynamic &&eventData) override;
   void invokeCallback(const int64_t callbackId, folly::dynamic &&params) override;
 
