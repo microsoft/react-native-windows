@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Switch from using choco to winget in rnw-dep script",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

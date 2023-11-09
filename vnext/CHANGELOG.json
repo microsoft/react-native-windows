@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 09 Nov 2023 06:16:38 GMT",
+      "version": "0.0.0-canary.733",
+      "tag": "react-native-windows_v0.0.0-canary.733",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "0f6bdf3ab5085bccfabf3a8d65733287cb565855",
+            "comment": "applying package updates ***NO_CI***"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "46d5f9d008e013257989f0c60a2919d7ed903ebd",
+            "comment": "Switch from using choco to winget in rnw-dep script"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b87abc8e295048e6a0fb649d77ef5ae8f2a0c63e",
+            "comment": "Keep propertyBag alive for duration of InstanceDestroyed event"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "1ca54b74e0c219f5eea8ec86f6309d5f7826af14",
+            "comment": "Refactor react/renderer/graphics/Color handling"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 08 Nov 2023 06:17:34 GMT",
       "version": "0.0.0-canary.732",
       "tag": "react-native-windows_v0.0.0-canary.732",
