@@ -288,8 +288,12 @@ void CompositionRootView::ShowInstanceLoaded() noexcept {
 
     auto rootTag = ::Microsoft::ReactNative::getNextRootViewTag();
     SetTag(rootTag);
-    uiManager->startSurface(
-        *this, rootTag, JSComponentName(), DynamicWriter::ToDynamic(Mso::Copy(m_reactViewOptions.InitialProps())));
+    auto initProps = DynamicWriter::ToDynamic(Mso::Copy(m_reactViewOptions.InitialProps()));
+    if (initProps.isNull()) {
+      initProps = folly::dynamic::object();
+    }
+    initProps["concurrentRoot"] = true;
+    uiManager->startSurface(*this, rootTag, JSComponentName(), initProps);
 
     m_isJSViewAttached = true;
   }

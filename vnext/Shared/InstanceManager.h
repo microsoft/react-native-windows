@@ -14,6 +14,8 @@
 #include "DevSettings.h"
 #include "IReactRootView.h"
 
+#include <winrt/Microsoft.ReactNative.h>
+
 namespace folly {
 struct dynamic;
 }
@@ -28,9 +30,11 @@ class MessageQueueThread;
 class ModuleRegistry;
 class IUIManager;
 class TurboModuleRegistry;
+class RuntimeScheduler;
 
 struct InstanceWrapper {
   virtual const std::shared_ptr<Instance> &GetInstance() const noexcept = 0;
+  virtual const std::shared_ptr<RuntimeScheduler> &GetRuntimeScheduler() const noexcept = 0;
 
   virtual void DispatchEvent(int64_t viewTag, std::string eventName, folly::dynamic &&eventData) = 0;
   virtual void invokeCallback(const int64_t callbackId, folly::dynamic &&params) = 0;
@@ -60,6 +64,7 @@ std::shared_ptr<InstanceWrapper> CreateReactInstance(
         &&cxxModules,
     std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
     std::shared_ptr<facebook::react::LongLivedObjectCollection> longLivedObjectCollection,
+    const winrt::Microsoft::ReactNative::IReactPropertyBag &propertyBag,
     std::unique_ptr<InstanceCallback> &&callback,
     std::shared_ptr<MessageQueueThread> jsQueue,
     std::shared_ptr<MessageQueueThread> nativeQueue,

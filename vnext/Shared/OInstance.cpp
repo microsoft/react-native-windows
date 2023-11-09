@@ -40,6 +40,8 @@
 #include <DevSettings.h>
 #include <DevSupportManager.h>
 #include <IReactRootView.h>
+#include <ReactPropertyBag.h>
+#include <SchedulerSettings.h>
 #include <Shlwapi.h>
 #include <WebSocketJSExecutorFactory.h>
 #include <safeint.h>
@@ -55,6 +57,9 @@
 #endif
 #include <ReactCommon/CallInvoker.h>
 #include <ReactCommon/TurboModuleBinding.h>
+#include <react/renderer/runtimescheduler/RuntimeScheduler.h>
+#include <react/renderer/runtimescheduler/RuntimeSchedulerBinding.h>
+#include <react/renderer/runtimescheduler/RuntimeSchedulerCallInvoker.h>
 #include "BaseScriptStoreImpl.h"
 #include "ChakraRuntimeHolder.h"
 
@@ -88,26 +93,6 @@ class OJSIExecutorFactory : public JSExecutorFactory {
     }
     bindNativeLogger(*runtimeHolder_->getRuntime(), logger);
 
-    auto turboModuleManager = std::make_shared<TurboModuleManager>(turboModuleRegistry_, jsCallInvoker_);
-
-    // TODO: The binding here should also add the proxys that convert cxxmodules into turbomodules
-    // [@vmoroz] Note, that we must not use the RN TurboCxxModule.h code because it uses global
-    // LongLivedObjectCollection instance that prevents us from using multiple RN instance in the same process.
-    auto binding = [turboModuleManager](const std::string &name) -> std::shared_ptr<TurboModule> {
-      return turboModuleManager->getModule(name);
-    };
-
-    TurboModuleBinding::install(
-        *runtimeHolder_->getRuntime(),
-        std::function(binding),
-        TurboModuleBindingMode::HostObject,
-        longLivedObjectCollection_);
-
-    // init TurboModule
-    for (const auto &moduleName : turboModuleManager->getEagerInitModuleNames()) {
-      turboModuleManager->getModule(moduleName);
-    }
-
     return std::make_unique<JSIExecutor>(
         runtimeHolder_->getRuntime(),
         std::move(delegate),
@@ -122,22 +107,13 @@ class OJSIExecutorFactory : public JSExecutorFactory {
   OJSIExecutorFactory(
       std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> runtimeHolder,
       NativeLoggingHook loggingHook,
-      std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
-      std::shared_ptr<LongLivedObjectCollection> longLivedObjectCollection,
-      bool isProfilingEnabled,
-      std::shared_ptr<CallInvoker> jsCallInvoker) noexcept
+      bool isProfilingEnabled) noexcept
       : runtimeHolder_{std::move(runtimeHolder)},
         loggingHook_{std::move(loggingHook)},
-        turboModuleRegistry_{std::move(turboModuleRegistry)},
-        longLivedObjectCollection_{std::move(longLivedObjectCollection)},
-        jsCallInvoker_{std::move(jsCallInvoker)},
         isProfilingEnabled_{isProfilingEnabled} {}
 
  private:
   std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> runtimeHolder_;
-  std::shared_ptr<TurboModuleRegistry> turboModuleRegistry_;
-  std::shared_ptr<LongLivedObjectCollection> longLivedObjectCollection_;
-  std::shared_ptr<CallInvoker> jsCallInvoker_;
   NativeLoggingHook loggingHook_;
   bool isProfilingEnabled_;
 };
@@ -154,6 +130,7 @@ void logMarker(const facebook::react::ReactMarker::ReactMarkerId /*id*/, const c
         &&cxxModules,
     std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
     std::shared_ptr<facebook::react::LongLivedObjectCollection> longLivedObjectCollection,
+    const winrt::Microsoft::ReactNative::IReactPropertyBag &propertyBag,
     std::unique_ptr<InstanceCallback> &&callback,
     std::shared_ptr<MessageQueueThread> jsQueue,
     std::shared_ptr<MessageQueueThread> nativeQueue,
@@ -165,6 +142,7 @@ void logMarker(const facebook::react::ReactMarker::ReactMarkerId /*id*/, const c
       std::move(cxxModules),
       std::move(turboModuleRegistry),
       std::move(longLivedObjectCollection),
+      propertyBag,
       std::move(callback),
       std::move(jsQueue),
       std::move(nativeQueue),
@@ -194,7 +172,8 @@ void logMarker(const facebook::react::ReactMarker::ReactMarkerId /*id*/, const c
       std::move(jsBundleBasePath),
       std::move(cxxModules),
       std::move(turboModuleRegistry),
-      nullptr,
+      nullptr, // longLivedObjectCollection
+      nullptr, // PropertyBag
       std::move(callback),
       std::move(jsQueue),
       std::move(nativeQueue),
@@ -233,6 +212,7 @@ InstanceImpl::InstanceImpl(
         &&cxxModules,
     std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
     std::shared_ptr<facebook::react::LongLivedObjectCollection> longLivedObjectCollection,
+    const winrt::Microsoft::ReactNative::IReactPropertyBag &propertyBag,
     std::unique_ptr<InstanceCallback> &&callback,
     std::shared_ptr<MessageQueueThread> jsQueue,
     std::shared_ptr<MessageQueueThread> nativeQueue,
@@ -297,12 +277,7 @@ InstanceImpl::InstanceImpl(
     if (m_devSettings->jsiRuntimeHolder) {
       assert(m_devSettings->jsiEngineOverride == JSIEngineOverride::Default);
       jsef = std::make_shared<OJSIExecutorFactory>(
-          m_devSettings->jsiRuntimeHolder,
-          m_devSettings->loggingCallback,
-          m_turboModuleRegistry,
-          m_longLivedObjectCollection,
-          !m_devSettings->useFastRefresh,
-          m_innerInstance->getJSCallInvoker());
+          m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback, !m_devSettings->useFastRefresh);
     } else {
       assert(m_devSettings->jsiEngineOverride != JSIEngineOverride::Default);
       switch (m_devSettings->jsiEngineOverride) {
@@ -347,16 +322,63 @@ InstanceImpl::InstanceImpl(
           break;
       }
       jsef = std::make_shared<OJSIExecutorFactory>(
-          m_devSettings->jsiRuntimeHolder,
-          m_devSettings->loggingCallback,
-          m_turboModuleRegistry,
-          m_longLivedObjectCollection,
-          !m_devSettings->useFastRefresh,
-          m_innerInstance->getJSCallInvoker());
+          m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback, !m_devSettings->useFastRefresh);
     }
   }
 
   m_innerInstance->initializeBridge(std::move(callback), jsef, m_jsThread, m_moduleRegistry);
+
+  // For RuntimeScheduler to work properly, we need to install TurboModuleManager with RuntimeSchedulerCallbackInvoker.
+  // To be able to do that, we need to be able to call m_innerInstance->getRuntimeExecutor(), which we can only do after
+  // m_innerInstance->initializeBridge(...) is called.
+  if (!m_devSettings->useWebDebugger) {
+    const auto runtimeExecutor = m_innerInstance->getRuntimeExecutor();
+#ifdef USE_FABRIC
+    Microsoft::ReactNative::SchedulerSettings::SetRuntimeExecutor(
+        winrt::Microsoft::ReactNative::ReactPropertyBag(propertyBag), runtimeExecutor);
+#endif
+    if (m_devSettings->useRuntimeScheduler) {
+      m_runtimeScheduler = std::make_shared<RuntimeScheduler>(runtimeExecutor);
+    }
+
+    // Using runOnQueueSync because initializeBridge calls createJSExecutor with runOnQueueSync,
+    // so this is an attempt to keep the same semantics for exiting this method with TurboModuleManager
+    // initialized.
+    m_jsThread->runOnQueueSync([propertyBag,
+                                innerInstance = m_innerInstance,
+                                runtimeHolder = m_devSettings->jsiRuntimeHolder,
+                                runtimeScheduler = m_runtimeScheduler,
+                                turboModuleRegistry = m_turboModuleRegistry,
+                                longLivedObjectCollection = m_longLivedObjectCollection]() {
+      if (runtimeScheduler) {
+        RuntimeSchedulerBinding::createAndInstallIfNeeded(*runtimeHolder->getRuntime(), runtimeScheduler);
+        Microsoft::ReactNative::SchedulerSettings::SetRuntimeScheduler(
+            winrt::Microsoft::ReactNative::ReactPropertyBag(propertyBag), runtimeScheduler);
+      }
+      auto turboModuleManager = std::make_shared<TurboModuleManager>(
+          turboModuleRegistry,
+          runtimeScheduler ? std::make_shared<RuntimeSchedulerCallInvoker>(runtimeScheduler)
+                           : innerInstance->getJSCallInvoker());
+
+      // TODO: The binding here should also add the proxys that convert cxxmodules into turbomodules
+      // [@vmoroz] Note, that we must not use the RN TurboCxxModule.h code because it uses global
+      // LongLivedObjectCollection instance that prevents us from using multiple RN instance in the same process.
+      auto binding = [turboModuleManager](const std::string &name) -> std::shared_ptr<TurboModule> {
+        return turboModuleManager->getModule(name);
+      };
+
+      TurboModuleBinding::install(
+          *runtimeHolder->getRuntime(),
+          std::function(binding),
+          TurboModuleBindingMode::HostObject,
+          longLivedObjectCollection);
+
+      // init TurboModule
+      for (const auto &moduleName : turboModuleManager->getEagerInitModuleNames()) {
+        turboModuleManager->getModule(moduleName);
+      }
+    });
+  }
 
   // All JSI runtimes do support host objects and hence the native modules
   // proxy.

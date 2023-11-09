@@ -26,7 +26,6 @@
 #endif
 #include <JSCallInvokerScheduler.h>
 #include <QuirkSettings.h>
-#include <SchedulerSettings.h>
 #include <Shared/DevServerHelper.h>
 #include <Views/ViewManager.h>
 #include <dispatchQueue/dispatchQueue.h>
@@ -89,7 +88,7 @@
 #include <CreateModules.h>
 #include <Utils/Helpers.h>
 #include <react/renderer/runtimescheduler/RuntimeScheduler.h>
-#include <react/renderer/runtimescheduler/RuntimeSchedulerBinding.h>
+#include <react/renderer/runtimescheduler/RuntimeSchedulerCallInvoker.h>
 #include "CrashManager.h"
 #include "JsiApi.h"
 #include "ReactCoreInjection.h"
@@ -552,6 +551,12 @@ void ReactInstanceWin::Initialize() noexcept {
 
           m_jsiRuntimeHolder = devSettings->jsiRuntimeHolder;
 
+          bool useRuntimeScheduler =
+              winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetUseRuntimeScheduler(
+                  winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()));
+
+          devSettings->useRuntimeScheduler = useRuntimeScheduler;
+
           try {
             // We need to keep the instance wrapper alive as its destruction shuts down the native queue.
             m_options.TurboModuleProvider->SetReactContext(
@@ -570,6 +575,7 @@ void ReactInstanceWin::Initialize() noexcept {
                 std::move(cxxModules),
                 m_options.TurboModuleProvider,
                 m_options.TurboModuleProvider->LongLivedObjectCollection(),
+                m_reactContext->Properties(),
                 std::make_unique<BridgeUIBatchInstanceCallback>(weakThis),
                 m_jsMessageThread.Load(),
                 m_nativeMessageThread.Load(),
@@ -587,33 +593,6 @@ void ReactInstanceWin::Initialize() noexcept {
                                                   instance = m_instance.Load(),
                                                   turboModuleProvider = m_options.TurboModuleProvider,
                                                   useWebDebugger = m_options.UseWebDebugger()]() noexcept {
-              if (!useWebDebugger) {
-#ifdef USE_FABRIC
-                Microsoft::ReactNative::SchedulerSettings::SetRuntimeExecutor(
-                    winrt::Microsoft::ReactNative::ReactPropertyBag(reactContext->Properties()),
-                    instanceWrapper->GetInstance()->getRuntimeExecutor());
-#endif
-
-                if (winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetUseRuntimeScheduler(
-                        winrt::Microsoft::ReactNative::ReactPropertyBag(reactContext->Properties()))) {
-                  std::shared_ptr<facebook::react::RuntimeScheduler> runtimeScheduler =
-                      std::make_shared<facebook::react::RuntimeScheduler>(
-                          instanceWrapper->GetInstance()->getRuntimeExecutor());
-
-                  facebook::react::RuntimeSchedulerBinding::createAndInstallIfNeeded(
-                      *jsiRuntimeHolder->getRuntime().get(), runtimeScheduler);
-                  Microsoft::ReactNative::SchedulerSettings::SetRuntimeScheduler(
-                      ReactPropertyBag(reactContext->Properties()), runtimeScheduler);
-                }
-              }
-
-#ifdef USE_FABRIC
-              // Eagerly init the FabricUI binding
-              if (!useWebDebugger) {
-                turboModuleProvider->getModule("FabricUIManagerBinding", instance->getJSCallInvoker());
-              }
-#endif
-
               if (onCreated) {
                 onCreated.Get()->Invoke(reactContext);
               }

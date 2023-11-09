@@ -12,6 +12,7 @@
 // React Native
 #include <ReactCommon/LongLivedObject.h>
 #include <cxxreact/Instance.h>
+#include <react/renderer/runtimescheduler/RuntimeScheduler.h>
 
 // Standard Library
 #include <memory>
@@ -34,6 +35,7 @@ class InstanceImpl final : public InstanceWrapper, private ::std::enable_shared_
           &&cxxModules,
       std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
       std::shared_ptr<facebook::react::LongLivedObjectCollection> longLivedObjectCollection,
+      const winrt::Microsoft::ReactNative::IReactPropertyBag &propertyBag,
       std::unique_ptr<InstanceCallback> &&callback,
       std::shared_ptr<MessageQueueThread> jsQueue,
       std::shared_ptr<MessageQueueThread> nativeQueue,
@@ -61,6 +63,10 @@ class InstanceImpl final : public InstanceWrapper, private ::std::enable_shared_
     return m_innerInstance;
   }
 
+  virtual const std::shared_ptr<RuntimeScheduler> &GetRuntimeScheduler() const noexcept override {
+    return m_runtimeScheduler;
+  }
+
   void DispatchEvent(int64_t viewTag, std::string eventName, folly::dynamic &&eventData) override;
   void invokeCallback(const int64_t callbackId, folly::dynamic &&params) override;
 
@@ -75,6 +81,7 @@ class InstanceImpl final : public InstanceWrapper, private ::std::enable_shared_
           &&cxxModules,
       std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
       std::shared_ptr<facebook::react::LongLivedObjectCollection> longLivedObjectCollection,
+      const winrt::Microsoft::ReactNative::IReactPropertyBag &propertyBag,
       std::unique_ptr<InstanceCallback> &&callback,
       std::shared_ptr<MessageQueueThread> jsQueue,
       std::shared_ptr<MessageQueueThread> nativeQueue,
@@ -88,6 +95,7 @@ class InstanceImpl final : public InstanceWrapper, private ::std::enable_shared_
 
  private:
   std::shared_ptr<Instance> m_innerInstance;
+  std::shared_ptr<RuntimeScheduler> m_runtimeScheduler;
 
   std::string m_jsBundleBasePath;
   std::shared_ptr<facebook::react::ModuleRegistry> m_moduleRegistry;

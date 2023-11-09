@@ -384,6 +384,10 @@ std::vector<std::string> TurboModulesProvider::getEagerInitModuleNames() noexcep
   if (it != m_moduleProviders.end()) {
     eagerModules.push_back("UIManager");
   }
+  it = m_moduleProviders.find("FabricUIManagerBinding");
+  if (it != m_moduleProviders.end()) {
+    eagerModules.push_back("FabricUIManagerBinding");
+  }
   return eagerModules;
 }
 
