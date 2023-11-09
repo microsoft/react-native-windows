@@ -241,8 +241,8 @@
   <!-- Reenable this task if we need to temporarily replace any folly files for fixes, while we wait for PRs to land in folly -->
   <Target Name="ApplyReactCommonTemporaryPatch" BeforeTargets="PrepareForBuild" DependsOnTargets="UnzipNodeApiJsi">
     <ItemGroup>
-      <NodeApiJsiFiles Include="$([MSBuild]::NormalizePath($(NodeApiJsiDir)..))\jsi\**\*.*" />
-   </ItemGroup>
+      <NodeApiJsiFiles Include="$([MSBuild]::NormalizePath($(NodeApiJsiDir)))\jsi\**\*.*" />
+    </ItemGroup>
     <Copy DestinationFiles="@(NodeApiJsiFiles->'$(ReactNativeDir)\ReactCommon\jsi\%(RecursiveDir)%(Filename)%(Extension)')" SourceFiles="@(NodeApiJsiFiles)" />
     <Copy DestinationFiles="@(TemporaryReactCommonPatchFiles->'$(ReactNativeDir)\ReactCommon\%(RecursiveDir)%(Filename)%(Extension)')" SourceFiles="@(TemporaryReactCommonPatchFiles)" />
   </Target>

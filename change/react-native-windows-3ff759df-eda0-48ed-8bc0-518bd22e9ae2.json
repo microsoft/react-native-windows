@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Add RuntimeScheduler",
+  "comment": "Keep propertyBag alive for duration of InstanceDestroyed event",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
   "dependentChangeType": "patch"

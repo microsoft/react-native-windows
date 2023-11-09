@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Build using C++ 20",
-  "packageName": "react-native-windows",
-  "email": "ngerlem@fb.com",
-  "dependentChangeType": "patch"
-}

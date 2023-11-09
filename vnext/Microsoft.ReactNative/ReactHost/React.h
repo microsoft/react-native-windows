@@ -275,6 +275,9 @@ struct ReactOptions {
       winrt::Microsoft::ReactNative::IReactPropertyBag const &properties,
       JSIEngine value) noexcept;
 
+  bool JsiEngineV8NodeApi() const noexcept;
+  static bool JsiEngineV8NodeApi(winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept;
+
   //! Enable live reload to load the source bundle from the React Native packager.
   //! When the file is saved, the packager will trigger reloading.
   void SetUseLiveReload(bool enable) noexcept;

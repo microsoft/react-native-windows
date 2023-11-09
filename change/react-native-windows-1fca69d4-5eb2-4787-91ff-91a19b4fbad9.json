@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "C++ 20: Bump Folly from 2023.03.06 to 2023.10.16.00",
+  "comment": "applying package updates ***NO_CI***",
   "packageName": "react-native-windows",
-  "email": "ngerlem@fb.com",
+  "email": "erozell@outlook.com",
   "dependentChangeType": "patch"
 }

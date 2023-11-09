@@ -74,9 +74,11 @@
 #include "HermesRuntimeHolder.h"
 
 #include <winrt/Windows.Storage.h>
+#include "BaseScriptStoreImpl.h"
 
 #if defined(USE_V8)
 #include "JSI/V8RuntimeHolder.h"
+#include "V8JSIRuntimeHolder.h"
 #endif // USE_V8
 
 #include "RedBox.h"
@@ -255,6 +257,12 @@ ReactInstanceWin::ReactInstanceWin(
   m_whenDestroyedResult =
       m_whenDestroyed.AsFuture().Then<Mso::Executors::Inline>([whenLoaded = m_whenLoaded,
                                                                onDestroyed = m_options.OnInstanceDestroyed,
+                                                               // If the ReactHost has been released, this
+                                                               // instance might be the only thing keeping
+                                                               // the propertyBag alive.
+                                                               // We want it to remain alive for the
+                                                               // InstanceDestroyed callbacks
+                                                               propBag = m_options.Properties,
                                                                reactContext = m_reactContext]() noexcept {
         whenLoaded.TryCancel(); // It only has an effect if whenLoaded was not set before
         Microsoft::ReactNative::HermesRuntimeHolder::storeTo(ReactPropertyBag(reactContext->Properties()), nullptr);
@@ -493,7 +501,6 @@ void ReactInstanceWin::Initialize() noexcept {
 
           switch (m_options.JsiEngine()) {
             case JSIEngine::Hermes: {
-              // TODO: Should we use UwpPreparedScriptStore?
               if (Microsoft::ReactNative::HasPackageIdentity()) {
                 preparedScriptStore =
                     std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(getApplicationTempFolder());
@@ -531,8 +538,18 @@ void ReactInstanceWin::Initialize() noexcept {
               enableMultiThreadSupport = Microsoft::ReactNative::IsFabricEnabled(m_reactContext->Properties());
 #endif // USE_FABRIC
 
-              devSettings->jsiRuntimeHolder = std::make_shared<Microsoft::ReactNative::V8RuntimeHolder>(
-                  devSettings, m_jsMessageThread.Load(), std::move(preparedScriptStore), enableMultiThreadSupport);
+              if (m_options.JsiEngineV8NodeApi()) {
+                devSettings->jsiRuntimeHolder = std::make_shared<Microsoft::ReactNative::V8RuntimeHolder>(
+                    devSettings, m_jsMessageThread.Load(), std::move(preparedScriptStore), enableMultiThreadSupport);
+              } else {
+                devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
+                    devSettings,
+                    m_jsMessageThread.Load(),
+                    std::move(scriptStore),
+                    std::move(preparedScriptStore),
+                    enableMultiThreadSupport);
+              }
+
               break;
             }
 #endif // USE_V8
