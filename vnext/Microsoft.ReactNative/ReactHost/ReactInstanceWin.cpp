@@ -255,6 +255,11 @@ ReactInstanceWin::ReactInstanceWin(
   m_whenDestroyedResult =
       m_whenDestroyed.AsFuture().Then<Mso::Executors::Inline>([whenLoaded = m_whenLoaded,
                                                                onDestroyed = m_options.OnInstanceDestroyed,
+                                                               // instance might be the only thing keeping
+                                                               // the propertyBag alive.
+                                                               // We want it to remain alive for the
+                                                               // InstanceDestroyed callbacks
+                                                               propBag = m_options.Properties,
                                                                reactContext = m_reactContext]() noexcept {
         whenLoaded.TryCancel(); // It only has an effect if whenLoaded was not set before
         Microsoft::ReactNative::HermesRuntimeHolder::storeTo(ReactPropertyBag(reactContext->Properties()), nullptr);
