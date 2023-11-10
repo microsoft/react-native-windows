@@ -51,32 +51,32 @@ parameters:
             platform: x86
             projectType: lib
             additionalRunArguments: --no-autolink --no-deploy
-          - Name: X86DebugCppHermes
+          - Name: X86DebugCppChakra
             language: cpp
             configuration: Debug
             platform: x86
             projectType: app
-            additionalInitArguments: --useHermes
-          - Name: X64ReleaseCsHermes
+            useChakra: true
+          - Name: X64ReleaseCsChakra
             language: cs
             configuration: Release
             platform: x64
             projectType: app
-            additionalInitArguments: --useHermes
+            useChakra: true
             runWack: true
-          - Name: Arm64ReleaseCsHermes
+          - Name: Arm64ReleaseCsChakra
             language: cs
             configuration: Release
             platform: ARM64
             projectType: app
-            additionalInitArguments: --useHermes
+            useChakra: true
             additionalRunArguments: --no-deploy
-          - Name: X64ReleaseCppHermes
+          - Name: X64ReleaseCppChakra
             language: cpp
             configuration: Release
             platform: x64
             projectType: app
-            additionalInitArguments: --useHermes
+            useChakra: true
             runWack: true
           - Name: X86DebugCppNuget
             language: cpp
@@ -224,32 +224,32 @@ parameters:
             platform: x86
             projectType: lib
             additionalRunArguments: --no-autolink --no-deploy
-          - Name: X86DebugCppHermes
+          - Name: X86DebugCppChakra
             language: cpp
             configuration: Debug
             platform: x86
             projectType: app
-            additionalInitArguments: --useHermes
-          - Name: X64ReleaseCsHermes
+            useChakra: true
+          - Name: X64ReleaseCsChakra
             language: cs
             configuration: Release
             platform: x64
             projectType: app
-            additionalInitArguments: --useHermes
+            useChakra: true
             runWack: true
-          - Name: Arm64ReleaseCsHermes
+          - Name: Arm64ReleaseCsChakra
             language: cs
             configuration: Release
             platform: ARM64
             projectType: app
-            additionalInitArguments: --useHermes
+            useChakra: true
             additionalRunArguments: --no-deploy
-          - Name: X64ReleaseCppHermes
+          - Name: X64ReleaseCppChakra
             language: cpp
             configuration: Release
             platform: x64
             projectType: app
-            additionalInitArguments: --useHermes
+            useChakra: true
             runWack: true
           - Name: X86DebugCppNuget
             language: cpp
@@ -410,4 +410,5 @@ jobs:
                   additionalRunArguments: ${{ matrix.additionalRunArguments }}
                   runWack: ${{ coalesce(matrix.runWack, false) }}
                   buildEnvironment: ${{ parameters.buildEnvironment }}
+                  useChakra: ${{ coalesce(matrix.useChakra, false) }} 
                   useNuGet: ${{ coalesce(matrix.useNuGet, false) }}

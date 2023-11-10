@@ -16,54 +16,64 @@ parameters:
             BuildPlatform: ARM64
             BuildConfiguration: Debug
             DeployOptions: --no-deploy # We don't have Arm agents
-            UseHermes: false
           - Name: X64WebDebug
             BuildPlatform: x64
             BuildConfiguration: Debug
             DeployOptions:
-            UseHermes: false
-          - Name: X64ReleaseHermes
-            BuildPlatform: x64
-            BuildConfiguration: Release
-            DeployOptions:
-            UseHermes: true
           - Name: X86WebDebug
             BuildPlatform: x86
             BuildConfiguration: Debug
             DeployOptions:
-            UseHermes: false
-          - Name: X86ReleaseHermes
+          - Name: X64Release
+            BuildPlatform: x64
+            BuildConfiguration: Release
+            DeployOptions:
+          - Name: X86Release
             BuildPlatform: x86
             BuildConfiguration: Release
             DeployOptions:
-            UseHermes: true
+          - Name: X64ReleaseChakra
+            BuildPlatform: x64
+            BuildConfiguration: Release
+            DeployOptions:
+            UseChakra: true
+          - Name: X86ReleaseChakra
+            BuildPlatform: x86
+            BuildConfiguration: Release
+            DeployOptions:
+            UseChakra: true
       - BuildEnvironment: Continuous
         Matrix:
           - Name: Arm64Debug
             BuildPlatform: ARM64
             BuildConfiguration: Debug
             DeployOptions: --no-deploy # We don't have Arm agents
-            UseHermes: false
           - Name: X64WebDebug
             BuildPlatform: x64
             BuildConfiguration: Debug
             DeployOptions:
-            UseHermes: false
-          - Name: X64ReleaseHermes
-            BuildPlatform: x64
-            BuildConfiguration: Release
-            DeployOptions:
-            UseHermes: true
           - Name: X86WebDebug
             BuildPlatform: x86
             BuildConfiguration: Debug
             DeployOptions:
-            UseHermes: false
-          - Name: X86ReleaseHermes
+          - Name: X64Release
+            BuildPlatform: x64
+            BuildConfiguration: Release
+            DeployOptions:
+          - Name: X86Release
             BuildPlatform: x86
             BuildConfiguration: Release
             DeployOptions:
-            UseHermes: true
+          - Name: X64ReleaseChakra
+            BuildPlatform: x64
+            BuildConfiguration: Release
+            DeployOptions:
+            UseChakra: true
+          - Name: X86ReleaseChakra
+            BuildPlatform: x86
+            BuildConfiguration: Release
+            DeployOptions:
+            UseChakra: true
 
 jobs:
   - ${{ each config in parameters.buildMatrix }}:
@@ -101,7 +111,7 @@ jobs:
               parameters:
                 package: packages/integration-test-app
                 feature: UseHermes
-                value: ${{ matrix.UseHermes }}
+                value: ${{ not(coalesce(matrix.UseChakra, false))}}
 
             - ${{ if eq(matrix.BuildConfiguration, 'Debug') }}:
               # The build is more likely to crash after we've started other bits that
