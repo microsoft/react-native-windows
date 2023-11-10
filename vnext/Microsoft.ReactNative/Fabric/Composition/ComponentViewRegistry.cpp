@@ -10,7 +10,21 @@
 #include <react/renderer/components/scrollview/ScrollViewShadowNode.h>
 #pragma warning(pop)
 
+#include <Fabric/Composition/AbiCompositionViewComponentView.h>
+#include <Fabric/Composition/ActivityIndicatorComponentView.h>
+#include <Fabric/Composition/CompositionHelpers.h>
+#include <Fabric/Composition/CompositionViewComponentView.h>
+#include <Fabric/Composition/ImageComponentView.h>
+#include <Fabric/Composition/Modal/ModalHostComponentView.h>
+#include <Fabric/Composition/Modal/ModalHostViewShadowNode.h>
+#include <Fabric/Composition/ParagraphComponentView.h>
+#include <Fabric/Composition/RootComponentView.h>
+#include <Fabric/Composition/ScrollViewComponentView.h>
+#include <Fabric/Composition/SwitchComponentView.h>
+#include <Fabric/Composition/TextInput/WindowsTextInputComponentView.h>
 #include <Fabric/Composition/TextInput/WindowsTextInputShadowNode.h>
+#include <Fabric/Composition/UnimplementedNativeViewComponentView.h>
+#include <Fabric/WindowsComponentDescriptorRegistry.h>
 #include <react/components/rnwcore/ShadowNodes.h>
 #include <react/renderer/components/image/ImageShadowNode.h>
 #include <react/renderer/components/root/RootShadowNode.h>
@@ -18,19 +32,6 @@
 #include <react/renderer/components/text/RawTextShadowNode.h>
 #include <react/renderer/components/text/TextShadowNode.h>
 #include <react/renderer/components/view/ViewShadowNode.h>
-
-#include <Fabric/Composition/AbiCompositionViewComponentView.h>
-#include <Fabric/Composition/ActivityIndicatorComponentView.h>
-#include <Fabric/Composition/CompositionHelpers.h>
-#include <Fabric/Composition/CompositionViewComponentView.h>
-#include <Fabric/Composition/ImageComponentView.h>
-#include <Fabric/Composition/ParagraphComponentView.h>
-#include <Fabric/Composition/RootComponentView.h>
-#include <Fabric/Composition/ScrollViewComponentView.h>
-#include <Fabric/Composition/SwitchComponentView.h>
-#include <Fabric/Composition/TextInput/WindowsTextInputComponentView.h>
-#include <Fabric/Composition/UnimplementedNativeViewComponentView.h>
-#include <Fabric/WindowsComponentDescriptorRegistry.h>
 
 namespace Microsoft::ReactNative {
 
@@ -54,6 +55,8 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
     view = ScrollViewComponentView::Create(compContext, tag, m_context);
   } else if (componentHandle == facebook::react::ImageShadowNode::Handle()) {
     view = ImageComponentView::Create(compContext, tag, m_context);
+  } else if (componentHandle == facebook::react::ModalHostViewShadowNode::Handle()) {
+    view = ModalHostComponentView::Create(compContext, tag, m_context);
   } else if (componentHandle == facebook::react::WindowsTextInputShadowNode::Handle()) {
     view = WindowsTextInputComponentView::Create(compContext, tag, m_context);
   } else if (componentHandle == facebook::react::SwitchShadowNode::Handle()) {

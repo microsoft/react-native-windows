@@ -171,6 +171,9 @@
     <ClCompile Include="Views\KeyboardEventHandler.cpp">
       <Filter>Views</Filter>
     </ClCompile>
+    <ClCompile Include="Views\ModalViewManager.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
     <ClCompile Include="Views\PopupViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
@@ -523,6 +526,9 @@
       <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="Views\KeyboardEventHandler.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\ModalViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="Views\PopupViewManager.h">

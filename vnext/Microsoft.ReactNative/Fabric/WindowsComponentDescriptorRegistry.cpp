@@ -8,6 +8,7 @@
 #include <Fabric/Composition/TextInput/WindowsTextInputComponentDescriptor.h>
 #include <react/components/rnwcore/ComponentDescriptors.h>
 #include <react/renderer/components/image/ImageComponentDescriptor.h>
+#include <react/renderer/components/modal/ModalHostViewComponentDescriptor.h>
 #include <react/renderer/components/text/ParagraphComponentDescriptor.h>
 #include <react/renderer/components/text/RawTextComponentDescriptor.h>
 #include <react/renderer/components/text/TextComponentDescriptor.h>
@@ -33,9 +34,10 @@ WindowsComponentDescriptorRegistry::WindowsComponentDescriptorRegistry()
     : m_componentDescriptorRegistry(std::make_shared<facebook::react::ComponentDescriptorProviderRegistry>()) {
   m_componentDescriptorRegistry->add(facebook::react::concreteComponentDescriptorProvider<
                                      facebook::react::ActivityIndicatorViewComponentDescriptor>());
-
   m_componentDescriptorRegistry->add(
       facebook::react::concreteComponentDescriptorProvider<facebook::react::ImageComponentDescriptor>());
+  m_componentDescriptorRegistry->add(
+      facebook::react::concreteComponentDescriptorProvider<facebook::react::ModalHostViewComponentDescriptor>());
   m_componentDescriptorRegistry->add(
       facebook::react::concreteComponentDescriptorProvider<facebook::react::ParagraphComponentDescriptor>());
   m_componentDescriptorRegistry->add(

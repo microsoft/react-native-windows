@@ -12,6 +12,7 @@
 #include <Views/ActivityIndicatorViewManager.h>
 #include <Views/FlyoutViewManager.h>
 #include <Views/Image/ImageViewManager.h>
+#include <Views/ModalViewManager.h>
 #include <Views/PopupViewManager.h>
 #include <Views/RawTextViewManager.h>
 #include <Views/RefreshControlManager.h>
@@ -33,6 +34,7 @@ void AddStandardViewManagers(
   viewManagers.push_back(std::make_unique<ActivityIndicatorViewManager>(context));
   viewManagers.push_back(std::make_unique<FlyoutViewManager>(context));
   viewManagers.push_back(std::make_unique<ImageViewManager>(context));
+  viewManagers.push_back(std::make_unique<ModalViewManager>(context));
   viewManagers.push_back(std::make_unique<PopupViewManager>(context));
   viewManagers.push_back(std::make_unique<RawTextViewManager>(context));
   viewManagers.push_back(std::make_unique<RootViewManager>(context));
