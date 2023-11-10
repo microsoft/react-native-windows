@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Fri, 10 Nov 2023 06:16:22 GMT",
+      "version": "0.0.0-canary.194",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.194",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "fd68f0511908712389aee56b1942a43746806337",
+            "comment": "Make Hermes the default JS engine"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 21 Oct 2023 05:16:09 GMT",
       "version": "0.0.0-canary.193",
       "tag": "@react-native-windows/cli_v0.0.0-canary.193",
