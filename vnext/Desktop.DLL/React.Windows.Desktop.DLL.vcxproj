@@ -71,6 +71,7 @@
         WIN32;
         _WINDOWS;
         _USRDLL;
+        FOLLY_CFG_NO_COROUTINES;
         FOLLY_NO_CONFIG;
         NOMINMAX;
         _HAS_AUTO_PTR_ETC;

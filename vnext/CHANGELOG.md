@@ -1,8 +1,60 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 01 Nov 2023 05:15:56 GMT and should not be manually modified.
+This log was last generated on Sat, 11 Nov 2023 06:17:20 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.735
+
+Sat, 11 Nov 2023 06:17:20 GMT
+
+### Changes
+
+- Fix native view config to include Fabric events (erozell@outlook.com)
+
+## 0.0.0-canary.734
+
+Fri, 10 Nov 2023 06:16:22 GMT
+
+### Changes
+
+- Make Hermes the default JS engine (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.194
+
+## 0.0.0-canary.733
+
+Thu, 09 Nov 2023 06:16:38 GMT
+
+### Changes
+
+- applying package updates ***NO_CI*** (erozell@outlook.com)
+- Switch from using choco to winget in rnw-dep script (30809111+acoates-ms@users.noreply.github.com)
+- Keep propertyBag alive for duration of InstanceDestroyed event (30809111+acoates-ms@users.noreply.github.com)
+- Refactor react/renderer/graphics/Color handling (erozell@outlook.com)
+
+## 0.0.0-canary.732
+
+Wed, 08 Nov 2023 06:17:34 GMT
+
+### Changes
+
+- Cherry pick PRs #12143 #12211 (vmorozov@microsoft.com)
+- C++ 20: Use UTF-16 Paths and URLs (ngerlem@fb.com)
+
+## 0.0.0-canary.731
+
+Thu, 02 Nov 2023 05:16:14 GMT
+
+### Changes
+
+- C++ 20: Treat `char8_t` as `char` for unicode literals in source (ngerlem@fb.com)
+- Add RuntimeScheduler (30809111+acoates-ms@users.noreply.github.com)
+- C++ 20: Fix "Explicit template specialization cannot have a storage class" (ngerlem@fb.com)
+- ReactContext should have a weak ref on the PropertyBag (30809111+acoates-ms@users.noreply.github.com)
+- C++ 20: Bump Folly from 2023.03.06 to 2023.10.16.00 (ngerlem@fb.com)
+- C++ 20: Replace Usage of std::allocator::construct() (ngerlem@fb.com)
+- C++ 20: Preprocessor definitions (ngerlem@fb.com)
+- Build using C++ 20 (ngerlem@fb.com)
 
 ## 0.0.0-canary.730
 

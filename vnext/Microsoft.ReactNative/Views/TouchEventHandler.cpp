@@ -119,7 +119,7 @@ void TouchEventHandler::OnPointerPressed(
     return;
   }
 
-  if (m_xamlView.as<xaml::FrameworkElement>().CapturePointer(args.Pointer())) {
+  if (reactArgs.AllowUncaptured() || m_xamlView.as<xaml::FrameworkElement>().CapturePointer(args.Pointer())) {
     assert(!tagsForBranch.empty());
     const auto tag = tagsForBranch.front();
 

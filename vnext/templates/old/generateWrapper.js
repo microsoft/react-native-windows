@@ -20,7 +20,7 @@ function makeGenerateWindowsWrapper(
         })`
       : `React Native Windows Application (Old Arch, UWP, ${
           language === 'cs' ? 'C#' : 'C++'
-        }, Chakra)`;
+        }, Hermes)`;
   const description =
     projectType === 'lib'
       ? `A RNW module written in ${
@@ -28,7 +28,7 @@ function makeGenerateWindowsWrapper(
         }, targeting UWP and RN's old architecture.`
       : `A RNW app written in ${
           language === 'cs' ? 'C#' : 'C++'
-        }, targeting UWP and RN's old architecture, with the Chakra JS engine.`;
+        }, targeting UWP and RN's old architecture, with the Hermes JS engine.`;
 
   const postInstall = async (config = {}, options = {}) => {
     const experimentalFeatures = config?.project?.windows?.experimentalFeatures;
@@ -40,7 +40,7 @@ function makeGenerateWindowsWrapper(
       experimentalNuGetDependency:
         experimentalFeatures?.UseExperimentalNuget ?? false,
       useWinUI3: experimentalFeatures?.UseWinUI3 ?? false,
-      useHermes: experimentalFeatures?.UseHermes ?? false,
+      useHermes: experimentalFeatures?.UseHermes ?? true,
       useDevMode: false,
       verbose: !!options.logging,
       telemetry: !!options.telemetry,

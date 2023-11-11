@@ -140,10 +140,13 @@ struct safe_assert_msg_types<safe_assert_msg_type_s<A...>> {
   using value_type = c_array<safe_assert_msg_type, sizeof...(A) + 1>;
   static constexpr value_type value = {{A..., safe_assert_msg_type::term}};
 };
+
+#if FOLLY_CPLUSPLUS < 201703L
 template <safe_assert_msg_type... A>
 constexpr
     typename safe_assert_msg_types<safe_assert_msg_type_s<A...>>::value_type
         safe_assert_msg_types<safe_assert_msg_type_s<A...>>::value;
+#endif
 
 struct safe_assert_arg {
   char const* expr;
@@ -164,7 +167,7 @@ template <bool P>
 [[noreturn]] FOLLY_COLD FOLLY_NOINLINE void safe_assert_terminate(
     safe_assert_arg const* arg, ...) noexcept; // the true backing function
 
-// [Win - Fixes Error C2908 explicit specialization; 'void folly::detail::safe_assert_terminate<false>(const folly::detail::safe_assert_arg *,...) noexcept' has already been instantiated 
+// [Win - Fixes Error C2908 explicit specialization; 'void folly::detail::safe_assert_terminate<false>(const folly::detail::safe_assert_arg *,...) noexcept' has already been instantiated
 template <>
 [[noreturn]] FOLLY_COLD FOLLY_NOINLINE void safe_assert_terminate<0>(
     safe_assert_arg const* arg, ...) noexcept;

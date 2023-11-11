@@ -58,6 +58,7 @@
         _WINDOWS;
         WIN32;
         BOOST_ASIO_HAS_IOCP;
+        FOLLY_CFG_NO_COROUTINES;
         FOLLY_NO_CONFIG;
         NOMINMAX;
         RN_EXPORT=;
