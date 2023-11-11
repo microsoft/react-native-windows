@@ -138,6 +138,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
   if (props == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
   auto accessibilityRole = props->accessibilityRole;
+  auto accessibilityValue = props->accessibilityValue;
   // Invoke control pattern is used to support controls that do not maintain state
   // when activated but rather initiate or perform a single, unambiguous action.
   if (patternId == UIA_InvokePatternId &&
@@ -153,8 +154,13 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
     AddRef();
   }
 
-  if (patternId == UIA_ValuePatternId) {
+  if (patternId == UIA_ValuePatternId && accessibilityValue.text.has_value()) {
     *pRetVal = static_cast<IValueProvider *>(this);
+    AddRef();
+  }
+
+  if (patternId == UIA_RangeValuePatternId && accessibilityValue.now.has_value()) {
+    *pRetVal = static_cast<IRangeValueProvider *>(this);
     AddRef();
   }
 
@@ -402,6 +408,73 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_IsReadOnly(BOOL *pRe
     return UIA_E_ELEMENTNOTAVAILABLE;
 
   *pRetVal = strongView->getAcccessiblityIsReadOnly();
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::SetValue(double val) {
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  strongView->setAcccessiblityRangeValue(val);
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_LargeChange(double *pRetVal) {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+
+  *pRetVal = std::numeric_limits<double>::quiet_NaN();
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_Maximum(double *pRetVal) {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  *pRetVal = static_cast<double>(*strongView->getAcccessiblityValueMax());
+
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_Minimum(double *pRetVal) {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  *pRetVal = static_cast<double>(*strongView->getAcccessiblityValueMin());
+
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_SmallChange(double *pRetVal) {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+
+  *pRetVal = std::numeric_limits<double>::quiet_NaN();
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_Value(double *pRetVal) {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  *pRetVal = static_cast<double>(*strongView->getAcccessiblityValueNow());
+
   return S_OK;
 }
 

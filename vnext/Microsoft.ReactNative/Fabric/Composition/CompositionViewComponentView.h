@@ -114,7 +114,11 @@ struct CompositionBaseComponentView : public IComponentView,
 
   winrt::IInspectable EnsureUiaProvider() noexcept override;
   std::optional<std::string> getAcccessiblityValue() noexcept override;
+  std::optional<int> getAcccessiblityValueNow() noexcept;
+  std::optional<int> getAcccessiblityValueMax() noexcept;
+  std::optional<int> getAcccessiblityValueMin() noexcept;
   void setAcccessiblityValue(std::string &&value) noexcept override;
+  void setAcccessiblityRangeValue(double value) noexcept override;
   bool getAcccessiblityIsReadOnly() noexcept override;
   ClipState getClipState() noexcept override;
 

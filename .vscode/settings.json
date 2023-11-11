@@ -17,7 +17,9 @@
     "utility": "cpp",
     "ratio": "cpp",
     "memory": "cpp",
-    "array": "cpp"
+    "array": "cpp",
+    "optional": "cpp",
+    "limits": "cpp"
   },
   "search.exclude": {
     "**/dist/**/*.js": true,
