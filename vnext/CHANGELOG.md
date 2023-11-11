@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 10 Nov 2023 06:16:22 GMT and should not be manually modified.
+This log was last generated on Sat, 11 Nov 2023 06:17:20 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.735
+
+Sat, 11 Nov 2023 06:17:20 GMT
+
+### Changes
+
+- Fix native view config to include Fabric events (erozell@outlook.com)
 
 ## 0.0.0-canary.734
 

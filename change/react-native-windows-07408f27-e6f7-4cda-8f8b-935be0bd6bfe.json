@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix native view config to include Fabric events",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}
