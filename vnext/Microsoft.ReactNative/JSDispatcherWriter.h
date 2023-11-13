@@ -14,6 +14,7 @@ namespace winrt::Microsoft::ReactNative {
 // In case if writing is done outside of JSDispatcher, it uses DynamicWriter to create
 // folly::dynamic which then is written to JsiWriter in JSDispatcher.
 struct JSDispatcherWriter : winrt::implements<JSDispatcherWriter, IJSValueWriter> {
+  ~JSDispatcherWriter();
   JSDispatcherWriter(
       IReactDispatcher const &jsDispatcher,
       std::weak_ptr<LongLivedJsiRuntime> jsiRuntimeHolder) noexcept;
