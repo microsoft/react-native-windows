@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 24 Oct 2023 19:43:31 GMT and should not be manually modified.
+This log was last generated on Mon, 13 Nov 2023 16:15:50 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.73.0-preview.4
+
+Mon, 13 Nov 2023 16:15:50 GMT
+
+### Changes
+
+- Make Hermes the default JS engine (jthysell@microsoft.com)
+- Keep propertyBag alive for duration of InstanceDestroyed event (30809111+acoates-ms@users.noreply.github.com)
+- Cherry pick PRs #12143 #12211 (vmorozov@microsoft.com)
+- ReactContext should have a weak ref on the PropertyBag (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.73.0-preview.2
 
 ## 0.73.0-preview.3
 

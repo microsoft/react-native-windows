@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Tue, 17 Oct 2023 22:26:52 GMT and should not be manually modified.
+This log was last generated on Mon, 13 Nov 2023 16:15:49 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.73.0-preview.2
+
+Mon, 13 Nov 2023 16:15:49 GMT
+
+### Changes
+
+- Make Hermes the default JS engine (jthysell@microsoft.com)
 
 ## 0.73.0-preview.1
 
