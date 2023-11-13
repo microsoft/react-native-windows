@@ -358,7 +358,7 @@ InstanceImpl::InstanceImpl(
     if (m_devSettings->useRuntimeScheduler) {
       m_runtimeScheduler = std::make_shared<RuntimeScheduler>(runtimeExecutor);
       Microsoft::ReactNative::SchedulerSettings::SetRuntimeScheduler(
-          winrt::Microsoft::ReactNative::ReactPropertyBag(propertyBag), runtimeScheduler);
+          winrt::Microsoft::ReactNative::ReactPropertyBag(propertyBag), m_runtimeScheduler);
     }
 
     // Using runOnQueueSync because initializeBridge calls createJSExecutor with runOnQueueSync,

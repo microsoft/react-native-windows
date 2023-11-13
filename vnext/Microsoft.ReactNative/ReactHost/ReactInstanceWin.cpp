@@ -87,6 +87,7 @@
 #include "ChakraRuntimeHolder.h"
 
 #include <CppRuntimeOptions.h>
+#include <CreateInstance.h>
 #include <CreateModules.h>
 #include <Utils/Helpers.h>
 #include <react/renderer/runtimescheduler/RuntimeScheduler.h>
