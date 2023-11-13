@@ -33,6 +33,7 @@
 #include "IReactContext.h"
 #include "IReactDispatcher.h"
 #include "IReactNotificationService.h"
+#include "JSI/JSExecutorFactorySettings.h"
 #include "JsiApi.h"
 #include "Modules/DevSettingsModule.h"
 #include "Modules/ExceptionsManager.h"
@@ -707,62 +708,71 @@ void ReactInstanceWin::InitializeWithBridge() noexcept {
           std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
           std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
 
-          switch (m_options.JsiEngine()) {
-            case JSIEngine::Hermes: {
-              preparedScriptStore = CreateHermesPreparedScriptStore();
-
-              auto hermesRuntimeHolder = std::make_shared<Microsoft::ReactNative::HermesRuntimeHolder>(
-                  devSettings, m_jsMessageThread.Load(), std::move(preparedScriptStore));
-              Microsoft::ReactNative::HermesRuntimeHolder::storeTo(
-                  ReactPropertyBag(m_reactContext->Properties()), hermesRuntimeHolder);
-              devSettings->jsiRuntimeHolder = hermesRuntimeHolder;
-              break;
+          if (const auto jsExecutorFactoryDelegate =
+                  Microsoft::JSI::JSExecutorFactorySettings::GetJSExecutorFactoryDelegate(
+                      winrt::Microsoft::ReactNative::ReactPropertyBag(strongThis->Options().Properties))) {
+            devSettings->jsExecutorFactoryDelegate = jsExecutorFactoryDelegate;
+            if (m_options.JsiEngine() == JSIEngine::Hermes) {
+              devSettings->jsiEngineOverride = facebook::react::JSIEngineOverride::Hermes;
             }
-            case JSIEngine::V8:
-#if defined(USE_V8)
-            {
-              if (Microsoft::ReactNative::HasPackageIdentity()) {
-                preparedScriptStore =
-                    std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(getApplicationTempFolder());
-              } else {
-                wchar_t tempPath[MAX_PATH];
-                if (GetTempPathW(static_cast<DWORD>(std::size(tempPath)), tempPath)) {
-                  preparedScriptStore =
-                      std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(winrt::to_string(tempPath));
-                }
-              }
+          } else {
+            switch (m_options.JsiEngine()) {
+              case JSIEngine::Hermes: {
+                preparedScriptStore = CreateHermesPreparedScriptStore();
 
-              bool enableMultiThreadSupport{false};
+                auto hermesRuntimeHolder = std::make_shared<Microsoft::ReactNative::HermesRuntimeHolder>(
+                    devSettings, m_jsMessageThread.Load(), std::move(preparedScriptStore));
+                Microsoft::ReactNative::HermesRuntimeHolder::storeTo(
+                    ReactPropertyBag(m_reactContext->Properties()), hermesRuntimeHolder);
+                devSettings->jsiRuntimeHolder = hermesRuntimeHolder;
+                break;
+              }
+              case JSIEngine::V8:
+#if defined(USE_V8)
+              {
+                if (Microsoft::ReactNative::HasPackageIdentity()) {
+                  preparedScriptStore =
+                      std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(getApplicationTempFolder());
+                } else {
+                  wchar_t tempPath[MAX_PATH];
+                  if (GetTempPathW(static_cast<DWORD>(std::size(tempPath)), tempPath)) {
+                    preparedScriptStore =
+                        std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(winrt::to_string(tempPath));
+                  }
+                }
+
+                bool enableMultiThreadSupport{false};
 #ifdef USE_FABRIC
-              enableMultiThreadSupport = Microsoft::ReactNative::IsFabricEnabled(m_reactContext->Properties());
+                enableMultiThreadSupport = Microsoft::ReactNative::IsFabricEnabled(m_reactContext->Properties());
 #endif // USE_FABRIC
 
-              if (m_options.JsiEngineV8NodeApi()) {
-                devSettings->jsiRuntimeHolder = std::make_shared<Microsoft::ReactNative::V8RuntimeHolder>(
-                    devSettings, m_jsMessageThread.Load(), std::move(preparedScriptStore), enableMultiThreadSupport);
-              } else {
-                devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
-                    devSettings,
-                    m_jsMessageThread.Load(),
-                    std::move(scriptStore),
-                    std::move(preparedScriptStore),
-                    enableMultiThreadSupport);
-              }
+                if (m_options.JsiEngineV8NodeApi()) {
+                  devSettings->jsiRuntimeHolder = std::make_shared<Microsoft::ReactNative::V8RuntimeHolder>(
+                      devSettings, m_jsMessageThread.Load(), std::move(preparedScriptStore), enableMultiThreadSupport);
+                } else {
+                  devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
+                      devSettings,
+                      m_jsMessageThread.Load(),
+                      std::move(scriptStore),
+                      std::move(preparedScriptStore),
+                      enableMultiThreadSupport);
+                }
 
-              break;
-            }
-#endif // USE_V8
-            case JSIEngine::Chakra:
-#ifndef CORE_ABI
-              if (m_options.EnableByteCodeCaching || !m_options.ByteCodeFileUri.empty()) {
-                scriptStore = std::make_unique<Microsoft::ReactNative::UwpScriptStore>();
-                preparedScriptStore = std::make_unique<Microsoft::ReactNative::UwpPreparedScriptStore>(
-                    winrt::to_hstring(m_options.ByteCodeFileUri));
+                break;
               }
+#endif // USE_V8
+              case JSIEngine::Chakra:
+#ifndef CORE_ABI
+                if (m_options.EnableByteCodeCaching || !m_options.ByteCodeFileUri.empty()) {
+                  scriptStore = std::make_unique<Microsoft::ReactNative::UwpScriptStore>();
+                  preparedScriptStore = std::make_unique<Microsoft::ReactNative::UwpPreparedScriptStore>(
+                      winrt::to_hstring(m_options.ByteCodeFileUri));
+                }
 #endif
-              devSettings->jsiRuntimeHolder = std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(
-                  devSettings, m_jsMessageThread.Load(), std::move(scriptStore), std::move(preparedScriptStore));
-              break;
+                devSettings->jsiRuntimeHolder = std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(
+                    devSettings, m_jsMessageThread.Load(), std::move(scriptStore), std::move(preparedScriptStore));
+                break;
+            }
           }
 
           m_jsiRuntimeHolder = devSettings->jsiRuntimeHolder;
