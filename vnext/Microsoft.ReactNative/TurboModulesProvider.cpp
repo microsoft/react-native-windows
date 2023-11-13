@@ -221,11 +221,46 @@ class TurboModuleImpl : public facebook::react::TurboModule {
                   VerifyElseCrash(argCount > 1);
                   if (auto strongLongLivedObjectCollection = longLivedObjectCollection.lock()) {
                     auto jsiRuntimeHolder = LongLivedJsiRuntime::CreateWeak(strongLongLivedObjectCollection, rt);
+                    auto weakCallback1 = LongLivedJsiFunction::CreateWeak(
+                        strongLongLivedObjectCollection, rt, args[argCount - 2].getObject(rt).getFunction(rt));
+                    auto weakCallback2 = LongLivedJsiFunction::CreateWeak(
+                        strongLongLivedObjectCollection, rt, args[argCount - 1].getObject(rt).getFunction(rt));
+
                     method(
                         winrt::make<JsiReader>(rt, args, argCount - 2),
                         winrt::make<JSDispatcherWriter>(jsDispatcher, jsiRuntimeHolder),
-                        MakeCallback(rt, strongLongLivedObjectCollection, args[argCount - 2]),
-                        MakeCallback(rt, strongLongLivedObjectCollection, args[argCount - 1]));
+                        [weakCallback1, weakCallback2, jsiRuntimeHolder](const IJSValueWriter &writer) noexcept {
+                          writer.as<JSDispatcherWriter>()->WithResultArgs(
+                              [weakCallback1, weakCallback2, jsiRuntimeHolder](
+                                  facebook::jsi::Runtime &rt, facebook::jsi::Value const *args, size_t count) {
+                                if (auto callback1 = weakCallback1.lock()) {
+                                  callback1->Value().call(rt, args, count);
+                                  callback1->allowRelease();
+                                }
+                                if (auto callback2 = weakCallback2.lock()) {
+                                  callback2->allowRelease();
+                                }
+                                if (auto runtimeHolder = jsiRuntimeHolder.lock()) {
+                                  runtimeHolder->allowRelease();
+                                }
+                              });
+                        },
+                        [weakCallback1, weakCallback2, jsiRuntimeHolder](const IJSValueWriter &writer) noexcept {
+                          writer.as<JSDispatcherWriter>()->WithResultArgs(
+                              [weakCallback1, weakCallback2, jsiRuntimeHolder](
+                                  facebook::jsi::Runtime &rt, facebook::jsi::Value const *args, size_t count) {
+                                if (auto callback2 = weakCallback2.lock()) {
+                                  callback2->Value().call(rt, args, count);
+                                  callback2->allowRelease();
+                                }
+                                if (auto callback1 = weakCallback1.lock()) {
+                                  callback1->allowRelease();
+                                }
+                                if (auto runtimeHolder = jsiRuntimeHolder.lock()) {
+                                  runtimeHolder->allowRelease();
+                                }
+                              });
+                        });
                   }
                   return facebook::jsi::Value::undefined();
                 });
@@ -247,49 +282,65 @@ class TurboModuleImpl : public facebook::react::TurboModule {
                     auto argWriter = winrt::make<JSDispatcherWriter>(jsDispatcher, jsiRuntimeHolder);
                     return facebook::react::createPromiseAsJSIValue(
                         rt,
-                        [method, argReader, argWriter, strongLongLivedObjectCollection](
+                        [method, argReader, argWriter, strongLongLivedObjectCollection, jsiRuntimeHolder](
                             facebook::jsi::Runtime &runtime, std::shared_ptr<facebook::react::Promise> promise) {
+                          auto weakResolve = LongLivedJsiFunction::CreateWeak(
+                              strongLongLivedObjectCollection, runtime, std::move(promise->resolve_));
+                          auto weakReject = LongLivedJsiFunction::CreateWeak(
+                              strongLongLivedObjectCollection, runtime, std::move(promise->reject_));
                           method(
                               argReader,
                               argWriter,
-                              [weakResolve = LongLivedJsiFunction::CreateWeak(
-                                   strongLongLivedObjectCollection, runtime, std::move(promise->resolve_))](
-                                  const IJSValueWriter &writer) {
-                                writer.as<JSDispatcherWriter>()->WithResultArgs([weakResolve](
-                                                                                    facebook::jsi::Runtime &runtime,
-                                                                                    facebook::jsi::Value const *args,
-                                                                                    size_t argCount) {
-                                  VerifyElseCrash(argCount == 1);
-                                  if (auto resolveHolder = weakResolve.lock()) {
-                                    resolveHolder->Value().call(runtime, args[0]);
-                                  }
-                                });
+                              [weakResolve, weakReject, jsiRuntimeHolder](const IJSValueWriter &writer) {
+                                writer.as<JSDispatcherWriter>()->WithResultArgs(
+                                    [weakResolve, weakReject, jsiRuntimeHolder](
+                                        facebook::jsi::Runtime &runtime,
+                                        facebook::jsi::Value const *args,
+                                        size_t argCount) {
+                                      VerifyElseCrash(argCount == 1);
+                                      if (auto resolveHolder = weakResolve.lock()) {
+                                        resolveHolder->Value().call(runtime, args[0]);
+                                        resolveHolder->allowRelease();
+                                      }
+                                      if (auto rejectHolder = weakReject.lock()) {
+                                        rejectHolder->allowRelease();
+                                      }
+                                      if (auto runtimeHolder = jsiRuntimeHolder.lock()) {
+                                        runtimeHolder->allowRelease();
+                                      }
+                                    });
                               },
-                              [weakReject = LongLivedJsiFunction::CreateWeak(
-                                   strongLongLivedObjectCollection, runtime, std::move(promise->reject_))](
-                                  const IJSValueWriter &writer) {
-                                writer.as<JSDispatcherWriter>()->WithResultArgs([weakReject](
-                                                                                    facebook::jsi::Runtime &runtime,
-                                                                                    facebook::jsi::Value const *args,
-                                                                                    size_t argCount) {
-                                  VerifyElseCrash(argCount == 1);
-                                  if (auto rejectHolder = weakReject.lock()) {
-                                    // To match the Android and iOS TurboModule behavior we create the Error object for
-                                    // the Promise rejection the same way as in updateErrorWithErrorData method.
-                                    // See react-native/Libraries/BatchedBridge/NativeModules.js for details.
-                                    auto error = runtime.global()
-                                                     .getPropertyAsFunction(runtime, "Error")
-                                                     .callAsConstructor(runtime, {});
-                                    auto &errorData = args[0];
-                                    if (errorData.isObject()) {
-                                      runtime.global()
-                                          .getPropertyAsObject(runtime, "Object")
-                                          .getPropertyAsFunction(runtime, "assign")
-                                          .call(runtime, error, errorData.getObject(runtime));
-                                    }
-                                    rejectHolder->Value().call(runtime, args[0]);
-                                  }
-                                });
+                              [weakResolve, weakReject, jsiRuntimeHolder](const IJSValueWriter &writer) {
+                                writer.as<JSDispatcherWriter>()->WithResultArgs(
+                                    [weakResolve, weakReject, jsiRuntimeHolder](
+                                        facebook::jsi::Runtime &runtime,
+                                        facebook::jsi::Value const *args,
+                                        size_t argCount) {
+                                      VerifyElseCrash(argCount == 1);
+                                      if (auto rejectHolder = weakReject.lock()) {
+                                        // To match the Android and iOS TurboModule behavior we create the Error object
+                                        // for the Promise rejection the same way as in updateErrorWithErrorData method.
+                                        // See react-native/Libraries/BatchedBridge/NativeModules.js for details.
+                                        auto error = runtime.global()
+                                                         .getPropertyAsFunction(runtime, "Error")
+                                                         .callAsConstructor(runtime, {});
+                                        auto &errorData = args[0];
+                                        if (errorData.isObject()) {
+                                          runtime.global()
+                                              .getPropertyAsObject(runtime, "Object")
+                                              .getPropertyAsFunction(runtime, "assign")
+                                              .call(runtime, error, errorData.getObject(runtime));
+                                        }
+                                        rejectHolder->Value().call(runtime, args[0]);
+                                        rejectHolder->allowRelease();
+                                      }
+                                      if (auto resolveHolder = weakResolve.lock()) {
+                                        resolveHolder->allowRelease();
+                                      }
+                                      if (auto runtimeHolder = jsiRuntimeHolder.lock()) {
+                                        runtimeHolder->allowRelease();
+                                      }
+                                    });
                               });
                         });
                   }
@@ -347,6 +398,7 @@ class TurboModuleImpl : public facebook::react::TurboModule {
           [weakCallback](facebook::jsi::Runtime &rt, facebook::jsi::Value const *args, size_t count) {
             if (auto callback = weakCallback.lock()) {
               callback->Value().call(rt, args, count);
+              callback->allowRelease();
             }
           });
     };
@@ -383,10 +435,6 @@ std::vector<std::string> TurboModulesProvider::getEagerInitModuleNames() noexcep
   auto it = m_moduleProviders.find("UIManager");
   if (it != m_moduleProviders.end()) {
     eagerModules.push_back("UIManager");
-  }
-  it = m_moduleProviders.find("FabricUIManagerBinding");
-  if (it != m_moduleProviders.end()) {
-    eagerModules.push_back("FabricUIManagerBinding");
   }
   return eagerModules;
 }
