@@ -1,8 +1,36 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 08 Nov 2023 06:17:34 GMT and should not be manually modified.
+This log was last generated on Sat, 11 Nov 2023 06:17:20 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.735
+
+Sat, 11 Nov 2023 06:17:20 GMT
+
+### Changes
+
+- Fix native view config to include Fabric events (erozell@outlook.com)
+
+## 0.0.0-canary.734
+
+Fri, 10 Nov 2023 06:16:22 GMT
+
+### Changes
+
+- Make Hermes the default JS engine (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.194
+
+## 0.0.0-canary.733
+
+Thu, 09 Nov 2023 06:16:38 GMT
+
+### Changes
+
+- applying package updates ***NO_CI*** (erozell@outlook.com)
+- Switch from using choco to winget in rnw-dep script (30809111+acoates-ms@users.noreply.github.com)
+- Keep propertyBag alive for duration of InstanceDestroyed event (30809111+acoates-ms@users.noreply.github.com)
+- Refactor react/renderer/graphics/Color handling (erozell@outlook.com)
 
 ## 0.0.0-canary.732
 

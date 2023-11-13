@@ -24,6 +24,9 @@ parameters:
   - name: additionalRunArguments
     type: string
     default: ''
+  - name: useChakra
+    type: boolean
+    default: false
   - name: useNuGet
     type: boolean
     default: false
@@ -102,6 +105,12 @@ steps:
       workingDirectory: $(Agent.BuildDirectory)\testcli
       env:
         npm_config_registry: http://localhost:4873
+  
+  - template:  set-experimental-feature.yml
+    parameters:
+      package: ..\testcli
+      feature: UseHermes
+      value: ${{ not(parameters.UseChakra) }}
 
   - ${{ if eq(parameters.projectType, 'app') }}:
     - powershell: |

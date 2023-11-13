@@ -300,6 +300,28 @@ export function tryFindPropertyValue(
   return null;
 }
 
+/**
+ * Search for the given property in the project contents and return its value.
+ * @param projectContents The XML project contents.
+ * @param propertyName The property to look for.
+ * @return The value of the tag if it exists.
+ */
+export function tryFindPropertyValueAsBoolean(
+  projectContents: Node,
+  propertyName: string,
+): boolean | null {
+  const rawValue = tryFindPropertyValue(projectContents, propertyName);
+
+  switch (rawValue) {
+    case 'true':
+      return true;
+    case 'false':
+      return false;
+    default:
+      return null;
+  }
+}
+
 export function findPropertyValue(
   projectContents: Node,
   propertyName: string,
