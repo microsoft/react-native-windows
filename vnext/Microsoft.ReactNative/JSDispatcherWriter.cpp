@@ -33,6 +33,12 @@ JSDispatcherWriter::JSDispatcherWriter(
     std::weak_ptr<LongLivedJsiRuntime> jsiRuntimeHolder) noexcept
     : m_jsDispatcher(jsDispatcher), m_jsiRuntimeHolder(std::move(jsiRuntimeHolder)) {}
 
+JSDispatcherWriter::~JSDispatcherWriter() {
+  if (auto jsiRuntimeHolder = m_jsiRuntimeHolder.lock()) {
+    jsiRuntimeHolder->allowRelease();
+  }
+}
+
 void JSDispatcherWriter::WithResultArgs(
     Mso::Functor<void(facebook::jsi::Runtime &rt, facebook::jsi::Value const *args, size_t argCount)>
         handler) noexcept {
