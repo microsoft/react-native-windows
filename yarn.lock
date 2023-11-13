@@ -3490,9 +3490,9 @@
     "@types/node" "*"
 
 "@types/xml-parser@^1.2.29":
-  version "1.2.31"
-  resolved "https://registry.yarnpkg.com/@types/xml-parser/-/xml-parser-1.2.31.tgz#f106da62ad0b8ff87f135665ffebce0703e99017"
-  integrity sha512-i32QIaFQt67V3ckSDN5lByufDH9i29vMAKzHIeB7+si8qTIQk+XOTbM8QGK0MBd8juEAdY2NGjccBg6GwZvwTQ==
+  version "1.2.33"
+  resolved "https://registry.yarnpkg.com/@types/xml-parser/-/xml-parser-1.2.33.tgz#666f38e98683eb7c0985748dc7b58743a894ee56"
+  integrity sha512-ICBLYmorgU+X9Q0hKUQe7OBlr9INYO8bEcl2ynqRf528Ct2b9EEoECPZtBB/cqHFaP6T/lDM0ckWcLvN0K/okw==
 
 "@types/xml2js@^0.4.8":
   version "0.4.14"
