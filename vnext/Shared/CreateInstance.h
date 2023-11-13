@@ -22,4 +22,4 @@ std::shared_ptr<InstanceWrapper> CreateReactInstance(
     std::shared_ptr<MessageQueueThread> nativeQueue,
     std::shared_ptr<DevSettings> devSettings) noexcept;
 
-} // namespace facebook
+} // namespace facebook::react
