@@ -1,0 +1,18 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+#include "DocString.h"
+
+namespace Microsoft.ReactNative
+{
+  [webhosthidden]
+  DOC_STRING(
+    "The `IJsiNonAbiHostObject` helps with passing non-ABI C++ TurboModules "
+    "via @ReactModuleProvider. Since React Native Windows already uses @IReactNonAbiValue "
+    "internally to represent attributed native modules, this wrapper is needed to have an "
+    "alternate interface to type check against.")
+  interface IJsiNonAbiHostObject {
+    DOC_STRING("Gets a value indicating whether the object has a value. This is just a dummy method to avoid issues with empty interfaces in C++/WinRT.")
+    Boolean HasValue { get; };
+  }
+} // namespace Microsoft.ReactNative

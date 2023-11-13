@@ -8,10 +8,12 @@
 #include "pch.h"
 #include "TurboModulesProvider.h"
 #include <ReactCommon/TurboModuleUtils.h>
+#include "IJsiNonAbiHostObject.h"
 #include "JSDispatcherWriter.h"
 #include "JsiApi.h"
 #include "JsiReader.h"
 #include "JsiWriter.h"
+#include "ReactNonAbiValue.h"
 #ifdef __APPLE__
 #include "Crash.h"
 #else
@@ -106,12 +108,18 @@ class TurboModuleImpl : public facebook::react::TurboModule {
         m_providedModule(reactModuleProvider(m_moduleBuilder.as<IReactModuleBuilder>())) {
     if (auto hostObject = m_providedModule.try_as<IJsiHostObject>()) {
       m_hostObjectWrapper = std::make_shared<implementation::HostObjectWrapper>(hostObject);
+    } else if (auto nonAbiHostObject = m_providedModule.try_as<IJsiNonAbiHostObject>()) {
+      const auto nonAbiHostObjectImpl =
+          winrt::get_self<winrt::Microsoft::ReactNative::implementation::JsiNonAbiHostObject>(nonAbiHostObject);
+      m_nonAbiHostObject = nonAbiHostObjectImpl->HostObject();
     }
   }
 
   std::vector<facebook::jsi::PropNameID> getPropertyNames(facebook::jsi::Runtime &rt) override {
     if (m_hostObjectWrapper) {
       return m_hostObjectWrapper->getPropertyNames(rt);
+    } else if (m_nonAbiHostObject) {
+      return m_nonAbiHostObject->getPropertyNames(rt);
     }
 
     std::vector<facebook::jsi::PropNameID> propertyNames;
@@ -137,6 +145,8 @@ class TurboModuleImpl : public facebook::react::TurboModule {
   facebook::jsi::Value get(facebook::jsi::Runtime &runtime, const facebook::jsi::PropNameID &propName) override {
     if (m_hostObjectWrapper) {
       return m_hostObjectWrapper->get(runtime, propName);
+    } else if (m_nonAbiHostObject) {
+      return m_nonAbiHostObject->get(runtime, propName);
     }
 
     // it is not safe to assume that "runtime" never changes, so members are not cached here
@@ -380,7 +390,11 @@ class TurboModuleImpl : public facebook::react::TurboModule {
   void set(facebook::jsi::Runtime &rt, const facebook::jsi::PropNameID &name, const facebook::jsi::Value &value)
       override {
     if (m_hostObjectWrapper) {
-      return m_hostObjectWrapper->set(rt, name, value);
+      m_hostObjectWrapper->set(rt, name, value);
+      return;
+    } else if (m_nonAbiHostObject) {
+      m_nonAbiHostObject->set(rt, name, value);
+      return;
     }
 
     facebook::react::TurboModule::set(rt, name, value);
@@ -409,6 +423,7 @@ class TurboModuleImpl : public facebook::react::TurboModule {
   winrt::com_ptr<TurboModuleBuilder> m_moduleBuilder;
   IInspectable m_providedModule;
   std::shared_ptr<implementation::HostObjectWrapper> m_hostObjectWrapper;
+  std::shared_ptr<facebook::jsi::HostObject> m_nonAbiHostObject;
   std::weak_ptr<facebook::react::LongLivedObjectCollection> m_longLivedObjectCollection;
 };
 
