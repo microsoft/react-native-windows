@@ -197,7 +197,7 @@ void CompositionRootView::SetTag(int64_t tag) noexcept {
 }
 
 void CompositionRootView::SetWindow(uint64_t hwnd) noexcept {
-  m_hwnd = hwnd;
+  m_hwnd = reinterpret_cast<HWND>(hwnd);
 }
 
 int64_t CompositionRootView::SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
