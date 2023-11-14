@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Untrack HTTP responses when processed by IResponseHandler",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}

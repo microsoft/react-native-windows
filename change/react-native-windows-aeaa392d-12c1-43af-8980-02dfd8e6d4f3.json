@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fabric: Add `windows` script to new cpp-app template",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
