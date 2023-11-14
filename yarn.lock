@@ -2899,9 +2899,9 @@
     find-up "^5.0.0"
 
 "@rnx-kit/metro-config@^1.3.5":
-  version "1.3.13"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-config/-/metro-config-1.3.13.tgz#b19ef0df1ef970783cfec71558565da1e51c238a"
-  integrity sha512-/q+KPjFuYz5V1vGpWpkQycpQmn8l6gbj+ryAtwXXCe6dcFSZzqOYrlXDcv7jfRfrDlfA46SE8iy6H9N+2xnAnw==
+  version "1.3.14"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-config/-/metro-config-1.3.14.tgz#b2d034e23196b6a5ca84718e08b15c0c5018708e"
+  integrity sha512-RjBM2gsDx9Ba7b39ussuRbqJsez8W37puM4oZGSLbneuhQ9kpJcC0omf2QYMKhQisTy0/4jv7L9WdpzvzXR/ow==
   dependencies:
     "@rnx-kit/console" "^1.0.0"
     "@rnx-kit/tools-node" "^2.0.0"
