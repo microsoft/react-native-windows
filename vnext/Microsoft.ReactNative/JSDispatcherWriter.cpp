@@ -55,17 +55,18 @@ void JSDispatcherWriter::WithResultArgs(
     VerifyElseCrash(!m_jsiWriter);
     folly::dynamic dynValue = m_dynamicWriter->TakeValue();
     VerifyElseCrash(dynValue.isArray());
-    m_jsDispatcher.Post([handler, dynValue = std::move(dynValue), weakJsiRuntimeHolder = m_jsiRuntimeHolder]() {
-      if (auto jsiRuntimeHolder = weakJsiRuntimeHolder.lock()) {
-        std::vector<facebook::jsi::Value> args;
-        args.reserve(dynValue.size());
-        auto &runtime = jsiRuntimeHolder->Runtime();
-        for (auto const &item : dynValue) {
-          args.emplace_back(facebook::jsi::valueFromDynamic(runtime, item));
-        }
-        handler(runtime, args.data(), args.size());
-      }
-    });
+    m_jsDispatcher.Post(
+        [handler, dynValue = std::move(dynValue), weakJsiRuntimeHolder = m_jsiRuntimeHolder, self = get_strong()]() {
+          if (auto jsiRuntimeHolder = weakJsiRuntimeHolder.lock()) {
+            std::vector<facebook::jsi::Value> args;
+            args.reserve(dynValue.size());
+            auto &runtime = jsiRuntimeHolder->Runtime();
+            for (auto const &item : dynValue) {
+              args.emplace_back(facebook::jsi::valueFromDynamic(runtime, item));
+            }
+            handler(runtime, args.data(), args.size());
+          }
+        });
   }
 }
 
