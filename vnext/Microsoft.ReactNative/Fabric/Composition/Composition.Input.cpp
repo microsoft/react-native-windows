@@ -362,7 +362,8 @@ float PointerPointProperties::YTilt() noexcept {
 PointerPoint::PointerPoint(const winrt::Microsoft::UI::Input::PointerPoint &pp) : m_sysPointerPoint(pp) {}
 #endif
 
-PointerPoint::PointerPoint(uint32_t msg, uint64_t wParam, int64_t lParam, float scaleFactor) {
+PointerPoint::PointerPoint(HWND hwnd, uint32_t msg, uint64_t wParam, int64_t lParam, float scaleFactor) {
+  m_hwnd = hwnd;
   m_msg = msg;
   m_wParam = wParam;
   m_lParam = lParam;
@@ -433,12 +434,14 @@ winrt::Windows::Foundation::Point PointerPoint::Position() noexcept {
     return m_sysPointerPoint.Position();
   }
 #endif
-  return m_pi.pointerId
-      ? winrt::Windows::Foundation::
-            Point{static_cast<float>(m_pi.ptPixelLocation.x / m_scaleFactor), static_cast<float>(m_pi.ptPixelLocation.y / m_scaleFactor)}
-      : winrt::Windows::Foundation::Point{
-            static_cast<float>(GET_X_LPARAM(m_lParam) / m_scaleFactor),
-            static_cast<float>(GET_Y_LPARAM(m_lParam) / m_scaleFactor)};
+
+  assert(m_hwnd);
+  POINT clientPoint {
+  m_pi.pointerId ? m_pi.ptPixelLocation.x : GET_X_LPARAM(m_lParam),
+  m_pi.pointerId ? m_pi.ptPixelLocation.y : GET_Y_LPARAM(m_lParam)
+  };
+  ScreenToClient(m_hwnd, &clientPoint);
+  return winrt::Windows::Foundation::Point { static_cast<float>(clientPoint.x / m_scaleFactor), static_cast<float>(clientPoint.y / m_scaleFactor) };
 }
 
 winrt::Microsoft::ReactNative::Composition::Input::PointerPointProperties PointerPoint::Properties() noexcept {
@@ -579,7 +582,7 @@ winrt::Microsoft::ReactNative::Composition::Input::PointerPoint PointerPoint::Ge
     return winrt::make<PointerPoint>(m_sysPointerPoint);
   }
 #endif
-  return winrt::make<PointerPoint>(m_msg, m_wParam, m_lParam, m_scaleFactor);
+  return winrt::make<PointerPoint>(m_hwnd, m_msg, m_wParam, m_lParam, m_scaleFactor);
 }
 
 bool PointerPoint::IsPointerMessage(uint32_t message) noexcept {
