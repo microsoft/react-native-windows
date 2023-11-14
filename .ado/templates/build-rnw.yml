@@ -46,7 +46,7 @@ steps:
       command: restore
       restoreSolution: ${{parameters.project }}
       feedsToUse: config
-      nugetConfigPath: $(Build.SourcesDirectory)/vnext/NuGet.config
+      nugetConfigPath: $(Build.SourcesDirectory)/NuGet.Config
       verbosityRestore: Detailed # Options: quiet, normal, detailed
 
   - task: VSBuild@1
