@@ -436,12 +436,12 @@ winrt::Windows::Foundation::Point PointerPoint::Position() noexcept {
 #endif
 
   assert(m_hwnd);
-  POINT clientPoint {
-  m_pi.pointerId ? m_pi.ptPixelLocation.x : GET_X_LPARAM(m_lParam),
-  m_pi.pointerId ? m_pi.ptPixelLocation.y : GET_Y_LPARAM(m_lParam)
-  };
+  POINT clientPoint{
+      m_pi.pointerId ? m_pi.ptPixelLocation.x : GET_X_LPARAM(m_lParam),
+      m_pi.pointerId ? m_pi.ptPixelLocation.y : GET_Y_LPARAM(m_lParam)};
   ScreenToClient(m_hwnd, &clientPoint);
-  return winrt::Windows::Foundation::Point { static_cast<float>(clientPoint.x / m_scaleFactor), static_cast<float>(clientPoint.y / m_scaleFactor) };
+  return winrt::Windows::Foundation::Point{
+      static_cast<float>(clientPoint.x / m_scaleFactor), static_cast<float>(clientPoint.y / m_scaleFactor)};
 }
 
 winrt::Microsoft::ReactNative::Composition::Input::PointerPointProperties PointerPoint::Properties() noexcept {
