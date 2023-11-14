@@ -3324,9 +3324,9 @@
   integrity sha512-452/1Kp9IdM/oR10AyqAgZOxUt7eLbm+EMJ194L6oarMYdZNiFIFAOJ7IIr0OrZXTySgfHjJezh2oiyk2kc3ag==
 
 "@types/npm-registry-fetch@^8.0.0":
-  version "8.0.4"
-  resolved "https://registry.yarnpkg.com/@types/npm-registry-fetch/-/npm-registry-fetch-8.0.4.tgz#77b2737cde22314ccda1dfdb9568fd7769e95b90"
-  integrity sha512-R9yEj6+NDmXLpKNS19cIaMyaHfV0aHjy/1qbo8K9jiHyjyaYg0CEmuOV/L0Q91DZDi3SuxlYY+2XYwh9TbB+eQ==
+  version "8.0.7"
+  resolved "https://registry.yarnpkg.com/@types/npm-registry-fetch/-/npm-registry-fetch-8.0.7.tgz#83734d6c5ae834b08f383bed2b8f8b7d1031889d"
+  integrity sha512-db9iBh7kDDg4lRT4k4XZ6IiecTEgFCID4qk+VDVPbtzU855q3KZLCn08ATr4H27ntRJVhulQ7GWjl24H42x96w==
   dependencies:
     "@types/node" "*"
     "@types/node-fetch" "*"
