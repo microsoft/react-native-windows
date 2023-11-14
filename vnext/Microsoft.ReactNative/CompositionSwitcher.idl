@@ -63,6 +63,7 @@ namespace Microsoft.ReactNative.Composition
     void Offset(Windows.Foundation.Numerics.Vector3 offset, Windows.Foundation.Numerics.Vector3 relativeAdjustment);
     void RelativeSizeWithOffset(Windows.Foundation.Numerics.Vector2 size, Windows.Foundation.Numerics.Vector2 relativeSizeAdjustment);
     BackfaceVisibility BackfaceVisibility{ get; set; };
+    String Comment { get; set; };
   }
 
   [webhosthidden]

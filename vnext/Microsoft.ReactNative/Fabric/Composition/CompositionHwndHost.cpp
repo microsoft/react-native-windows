@@ -44,6 +44,7 @@ void CompositionHwndHost::CreateCompositionRoot() {
   auto root = Compositor().CreateContainerVisual();
   root.RelativeSizeAdjustment({1.0f, 1.0f});
   root.Offset({0, 0, 0});
+  root.Comment(L"Root Visual");
   m_target.Root(root);
 }
 

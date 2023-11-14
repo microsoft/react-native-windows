@@ -1499,6 +1499,9 @@ void CompositionViewComponentView::updateProps(
   if (oldViewProps.opacity != newViewProps.opacity) {
     m_visual.Opacity(newViewProps.opacity);
   }
+  if (oldViewProps.testId != newViewProps.testId) {
+    m_visual.Comment(winrt::to_hstring(newViewProps.testId));
+  }
 
   // update BaseComponentView props
   updateAccessibilityProps(oldViewProps, newViewProps);
