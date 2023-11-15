@@ -1,8 +1,26 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 11 Nov 2023 06:17:20 GMT and should not be manually modified.
+This log was last generated on Wed, 15 Nov 2023 06:14:14 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.737
+
+Wed, 15 Nov 2023 06:14:14 GMT
+
+### Changes
+
+- Save State: Working Visual Tree Dump Tests (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.736
+
+Tue, 14 Nov 2023 06:16:22 GMT
+
+### Changes
+
+- Untrack HTTP responses when processed by IResponseHandler (julio.rocha@microsoft.com)
+- [Fabric] Enable concurrentRoot (erozell@outlook.com)
+- Fabric: Add `windows` script to new cpp-app template (jthysell@microsoft.com)
 
 ## 0.0.0-canary.735
 

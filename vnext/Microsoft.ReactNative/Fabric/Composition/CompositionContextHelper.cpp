@@ -388,6 +388,14 @@ struct CompVisual : public winrt::implements<
     m_visual.BackfaceVisibility(static_cast<typename TTypeRedirects::CompositionBackfaceVisibility>(value));
   }
 
+  winrt::hstring Comment() noexcept {
+    return m_visual.Comment();
+  }
+
+  void Comment(winrt::hstring value) {
+    m_visual.Comment(value);
+  }
+
  private:
   typename TTypeRedirects::Visual m_visual;
 };
@@ -488,6 +496,14 @@ struct CompSpriteVisual : winrt::implements<
 
   void BackfaceVisibility(winrt::Microsoft::ReactNative::Composition::BackfaceVisibility value) {
     m_visual.BackfaceVisibility(static_cast<typename TTypeRedirects::CompositionBackfaceVisibility>(value));
+  }
+
+  winrt::hstring Comment() noexcept {
+    return m_visual.Comment();
+  }
+
+  void Comment(winrt::hstring value) {
+    m_visual.Comment(value);
   }
 
   void SetClippingPath(ID2D1Geometry *clippingPath) noexcept {
@@ -691,6 +707,14 @@ struct CompScrollerVisual : winrt::implements<
 
   void BackfaceVisibility(winrt::Microsoft::ReactNative::Composition::BackfaceVisibility value) {
     m_visual.BackfaceVisibility(static_cast<typename TTypeRedirects::CompositionBackfaceVisibility>(value));
+  }
+
+  winrt::hstring Comment() noexcept {
+    return m_visual.Comment();
+  }
+
+  void Comment(winrt::hstring value) {
+    m_visual.Comment(value);
   }
 
   void SetClippingPath(ID2D1Geometry *clippingPath) noexcept {
@@ -967,6 +991,14 @@ struct CompActivityVisual : winrt::implements<
 
   void BackfaceVisibility(winrt::Microsoft::ReactNative::Composition::BackfaceVisibility value) {
     m_visual.BackfaceVisibility(static_cast<typename TTypeRedirects::CompositionBackfaceVisibility>(value));
+  }
+
+  winrt::hstring Comment() noexcept {
+    return m_visual.Comment();
+  }
+
+  void Comment(winrt::hstring value) {
+    m_visual.Comment(value);
   }
 
   void SetClippingPath(ID2D1Geometry *clippingPath) noexcept {

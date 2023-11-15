@@ -2,6 +2,48 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 15 Nov 2023 06:14:14 GMT",
+      "version": "0.0.0-canary.737",
+      "tag": "react-native-windows_v0.0.0-canary.737",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "22077c37bbba30b8d16d93a18c981412d735c49f",
+            "comment": "Save State: Working Visual Tree Dump Tests"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 14 Nov 2023 06:16:22 GMT",
+      "version": "0.0.0-canary.736",
+      "tag": "react-native-windows_v0.0.0-canary.736",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ea58fe084c5d8a9116c69807ca9473aaa9e54221",
+            "comment": "Untrack HTTP responses when processed by IResponseHandler"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "17b7d16f97e2bc5ff5172d92cc47bea53380fbab",
+            "comment": "[Fabric] Enable concurrentRoot"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "60b7883c0cb429c66d64aa78c316c177548124c9",
+            "comment": "Fabric: Add `windows` script to new cpp-app template"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 11 Nov 2023 06:17:20 GMT",
       "version": "0.0.0-canary.735",
       "tag": "react-native-windows_v0.0.0-canary.735",
