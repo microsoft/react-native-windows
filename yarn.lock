@@ -5045,9 +5045,9 @@ cli-cursor@^4.0.0:
     restore-cursor "^4.0.0"
 
 cli-spinners@^2.0.0, cli-spinners@^2.2.0, cli-spinners@^2.5.0, cli-spinners@^2.6.1:
-  version "2.9.0"
-  resolved "https://registry.yarnpkg.com/cli-spinners/-/cli-spinners-2.9.0.tgz#5881d0ad96381e117bbe07ad91f2008fe6ffd8db"
-  integrity sha512-4/aL9X3Wh0yiMQlE+eeRhWP6vclO3QRtw1JHKIT0FFUs5FjpFmESqtMvYZ0+lbzBw900b95mS0hohy+qn2VK/g==
+  version "2.9.1"
+  resolved "https://registry.yarnpkg.com/cli-spinners/-/cli-spinners-2.9.1.tgz#9c0b9dad69a6d47cbb4333c14319b060ed395a35"
+  integrity sha512-jHgecW0pxkonBJdrKsqxgRX9AcG+u/5k0Q7WPDfi8AogLAdwxEkyYYNWwZ5GvVFoFx2uiY1eNcSK00fh+1+FyQ==
 
 cli-table3@^0.6.0:
   version "0.6.2"
