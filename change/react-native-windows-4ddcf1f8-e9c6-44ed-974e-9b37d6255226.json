@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Temporarily silence warning 4996 to unblock CI",
+  "packageName": "react-native-windows",
+  "email": "email not defined",
+  "dependentChangeType": "patch"
+}
