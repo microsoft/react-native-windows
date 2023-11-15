@@ -18,6 +18,36 @@
     },
     {
       "type": "derived",
+      "file": "Microsoft.ReactNative/Fabric/Composition/Modal/ModalHostViewShadowNode.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/modal/ModalHostViewShadowNode.h",
+      "baseHash": "29d8881a9ebce7a85d1f6b80a6a3c6e6768a7bfc"
+    },
+    {
+      "type": "derived",
+      "file": "Microsoft.ReactNative/Fabric/Composition/Modal/ModalHostViewShadowNode.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/modal/ModalHostViewShadowNode.cpp",
+      "baseHash": "29d8881a9ebce7a85d1f6b80a6a3c6e6768a7bfc"
+    },
+    {
+      "type": "derived",
+      "file": "Microsoft.ReactNative/Fabric/Composition/Modal/ModalHostViewComponentDescriptor.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/modal/ModalHostViewComponentDescriptor.h",
+      "baseHash": "29d8881a9ebce7a85d1f6b80a6a3c6e6768a7bfc"
+    },
+    {
+      "type": "derived",
+      "file": "Microsoft.ReactNative/Fabric/Composition/Modal/ModalHostViewInputState.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/modal/ModalHostViewInputState.cpp",
+      "baseHash": "29d8881a9ebce7a85d1f6b80a6a3c6e6768a7bfc"
+    },
+    {
+      "type": "derived",
+      "file": "Microsoft.ReactNative/Fabric/Composition/Modal/ModalHostViewInputState.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/modal/ModalHostViewInputState.h",
+      "baseHash": "29d8881a9ebce7a85d1f6b80a6a3c6e6768a7bfc"
+    },
+    {
+      "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputComponentDescriptor.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputComponentDescriptor.h",
       "baseHash": "476e6698abe05a235ebe82ad913c699acb23d85f"

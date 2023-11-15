@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "ModalHostComponentView.h"
+#include "WindowsModalHostViewComponentView.h"
 
 #include <Fabric/DWriteHelpers.h>
 #include "Composition/AutoDraw.h"
@@ -13,7 +13,7 @@
 
 namespace Microsoft::ReactNative {
 
-ModalHostComponentView::ModalHostComponentView(
+WindowsModalHostComponentView::WindowsModalHostComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
@@ -27,29 +27,29 @@ ModalHostComponentView::ModalHostComponentView(
   m_visual = compContext.CreateSpriteVisual();
 }
 
-std::shared_ptr<ModalHostComponentView> ModalHostComponentView::Create(
+std::shared_ptr<WindowsModalHostComponentView> WindowsModalHostComponentView::Create(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
-  return std::shared_ptr<ModalHostComponentView>(
-      new ModalHostComponentView(compContext, tag, reactContext));
+  return std::shared_ptr<WindowsModalHostComponentView>(
+      new WindowsModalHostComponentView(compContext, tag, reactContext));
 }
 
-void ModalHostComponentView::mountChildComponentView(
+void WindowsModalHostComponentView::mountChildComponentView(
     IComponentView &childComponentView,
     uint32_t index) noexcept {}
 
-void ModalHostComponentView::unmountChildComponentView(
+void WindowsModalHostComponentView::unmountChildComponentView(
     IComponentView &childComponentView,
     uint32_t index) noexcept {}
 
-void ModalHostComponentView::updateProps(
+void WindowsModalHostComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
   m_props = std::static_pointer_cast<facebook::react::ModalHostViewProps const>(props);
 }
 
-void ModalHostComponentView::updateLayoutMetrics(
+void WindowsModalHostComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
     facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
   if ((layoutMetrics.displayType != m_layoutMetrics.displayType)) {
@@ -120,25 +120,25 @@ void ModalHostComponentView::updateLayoutMetrics(
   Super::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
 }
 
-void ModalHostComponentView::updateState(
+void WindowsModalHostComponentView::updateState(
     facebook::react::State::Shared const &state,
     facebook::react::State::Shared const &oldState) noexcept {}
 
-void ModalHostComponentView::prepareForRecycle() noexcept {}
+void WindowsModalHostComponentView::prepareForRecycle() noexcept {}
 
-facebook::react::SharedViewProps ModalHostComponentView::viewProps() noexcept {
+facebook::react::SharedViewProps WindowsModalHostComponentView::viewProps() noexcept {
   return m_props;
 }
 
-winrt::Microsoft::ReactNative::Composition::IVisual ModalHostComponentView::Visual() const noexcept {
+winrt::Microsoft::ReactNative::Composition::IVisual WindowsModalHostComponentView::Visual() const noexcept {
   return m_visual;
 }
 
-winrt::Microsoft::ReactNative::Composition::IVisual ModalHostComponentView::OuterVisual() const noexcept {
+winrt::Microsoft::ReactNative::Composition::IVisual WindowsModalHostComponentView::OuterVisual() const noexcept {
   return m_visual;
 }
 
-facebook::react::Tag ModalHostComponentView::hitTest(
+facebook::react::Tag WindowsModalHostComponentView::hitTest(
     facebook::react::Point pt,
     facebook::react::Point &localPt,
     bool ignorePointerEvents) const noexcept {

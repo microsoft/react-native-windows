@@ -7,8 +7,8 @@
 
 #pragma once
 
-#include <react/renderer/components/modal/ModalHostViewState.h>
-// [Windows 
+// [Windows
+#include "WindowsModalHostViewState.h"
 #include <react/renderer/components/rnwcore/EventEmitters.h>
 #include <react/renderer/components/rnwcore/Props.h>
 // ]
@@ -16,16 +16,16 @@
 
 namespace facebook::react {
 
-extern const char ModalHostViewComponentName[];
+extern const char WindowsModalHostViewComponentName[];
 
 /*
- * `ShadowNode` for <ModalHostView> component.
+ * `ShadowNode` for <WindowsModalHostView> component.
  */
-class ModalHostViewShadowNode final : public ConcreteViewShadowNode<
-                                          ModalHostViewComponentName,
+class WindowsModalHostViewShadowNode final : public ConcreteViewShadowNode<
+                                          WindowsModalHostViewComponentName,
                                           ModalHostViewProps,
                                           ModalHostViewEventEmitter,
-                                          ModalHostViewState> {
+                                          WindowsModalHostViewState> {
  public:
   using ConcreteViewShadowNode::ConcreteViewShadowNode;
 

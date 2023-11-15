@@ -13,10 +13,10 @@
 
 namespace Microsoft::ReactNative {
 
-struct ModalHostComponentView : CompositionBaseComponentView {
+struct WindowsModalHostComponentView : CompositionBaseComponentView {
   using Super = CompositionBaseComponentView;
 
-  [[nodiscard]] static std::shared_ptr<ModalHostComponentView> Create(
+  [[nodiscard]] static std::shared_ptr<WindowsModalHostComponentView> Create(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
@@ -40,7 +40,7 @@ struct ModalHostComponentView : CompositionBaseComponentView {
   winrt::Microsoft::ReactNative::Composition::IVisual OuterVisual() const noexcept override;
 
  private:
-  ModalHostComponentView(
+  WindowsModalHostComponentView(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext);

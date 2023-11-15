@@ -15,8 +15,8 @@
 #include <Fabric/Composition/CompositionHelpers.h>
 #include <Fabric/Composition/CompositionViewComponentView.h>
 #include <Fabric/Composition/ImageComponentView.h>
-#include <Fabric/Composition/Modal/ModalHostComponentView.h>
-#include <Fabric/Composition/Modal/ModalHostViewShadowNode.h>
+#include <Fabric/Composition/Modal/WindowsModalHostViewComponentView.h>
+#include <Fabric/Composition/Modal/WindowsModalHostViewShadowNode.h>
 #include <Fabric/Composition/ParagraphComponentView.h>
 #include <Fabric/Composition/RootComponentView.h>
 #include <Fabric/Composition/ScrollViewComponentView.h>
@@ -55,8 +55,8 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
     view = ScrollViewComponentView::Create(compContext, tag, m_context);
   } else if (componentHandle == facebook::react::ImageShadowNode::Handle()) {
     view = ImageComponentView::Create(compContext, tag, m_context);
-  } else if (componentHandle == facebook::react::ModalHostViewShadowNode::Handle()) {
-    view = ModalHostComponentView::Create(compContext, tag, m_context);
+  } else if (componentHandle == facebook::react::WindowsModalHostViewShadowNode::Handle()) {
+    view = WindowsModalHostComponentView::Create(compContext, tag, m_context);
   } else if (componentHandle == facebook::react::WindowsTextInputShadowNode::Handle()) {
     view = WindowsTextInputComponentView::Create(compContext, tag, m_context);
   } else if (componentHandle == facebook::react::SwitchShadowNode::Handle()) {
