@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.73.0-rc.3",
+  "baseVersion": "0.73.0-rc.4",
   "overrides": [
     {
       "type": "copy",
@@ -47,7 +47,7 @@
       "type": "copy",
       "directory": "js/examples/Animated",
       "baseDirectory": "packages/rn-tester/js/examples/Animated",
-      "baseHash": "52f394100c41ee0c9e96f096386e67873d7a2254",
+      "baseHash": "cdb61587eebd1663d1412965770403f216296ba1",
       "issue": 4054
     },
     {
