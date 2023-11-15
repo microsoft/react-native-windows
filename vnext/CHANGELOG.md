@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 14 Nov 2023 06:16:22 GMT and should not be manually modified.
+This log was last generated on Wed, 15 Nov 2023 06:14:14 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.737
+
+Wed, 15 Nov 2023 06:14:14 GMT
+
+### Changes
+
+- Save State: Working Visual Tree Dump Tests (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.0.0-canary.736
 

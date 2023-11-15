@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 15 Nov 2023 06:14:14 GMT",
+      "version": "0.0.0-canary.737",
+      "tag": "react-native-windows_v0.0.0-canary.737",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "22077c37bbba30b8d16d93a18c981412d735c49f",
+            "comment": "Save State: Working Visual Tree Dump Tests"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 14 Nov 2023 06:16:22 GMT",
       "version": "0.0.0-canary.736",
       "tag": "react-native-windows_v0.0.0-canary.736",
