@@ -604,17 +604,12 @@ void ReactInstanceWin::Initialize() noexcept {
             // The InstanceCreated event can be used to augment the JS environment for all JS code.  So it needs to be
             // triggered before any platform JS code is run. Using m_jsMessageThread instead of jsDispatchQueue avoids
             // waiting for the JSCaller which can delay the event until after certain JS code has already run
-            m_jsMessageThread.Load()->runOnQueue([onCreated = m_options.OnInstanceCreated,
-                                                  reactContext = m_reactContext,
-                                                  jsiRuntimeHolder = std::move(jsiRuntimeHolder),
-                                                  instanceWrapper = m_instanceWrapper.Load(),
-                                                  instance = m_instance.Load(),
-                                                  turboModuleProvider = m_options.TurboModuleProvider,
-                                                  useWebDebugger = m_options.UseWebDebugger()]() noexcept {
-              if (onCreated) {
-                onCreated.Get()->Invoke(reactContext);
-              }
-            });
+            m_jsMessageThread.Load()->runOnQueue(
+                [onCreated = m_options.OnInstanceCreated, reactContext = m_reactContext]() noexcept {
+                  if (onCreated) {
+                    onCreated.Get()->Invoke(reactContext);
+                  }
+                });
 
             LoadJSBundles();
 
