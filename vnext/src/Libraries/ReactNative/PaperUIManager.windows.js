@@ -8,6 +8,11 @@
  * @format
  */
 
+import type {RootTag} from '../Types/RootTagTypes';
+import type {UIManagerJSInterface} from '../Types/UIManagerJSInterface';
+
+import NativeUIManager from './NativeUIManager';
+
 const NativeModules = require('../BatchedBridge/NativeModules');
 const defineLazyObjectProperty = require('../Utilities/defineLazyObjectProperty');
 const Platform = require('../Utilities/Platform');
@@ -76,8 +81,20 @@ function getViewManagerConfig(viewManagerName: string): any {
   return viewManagerConfigs[viewManagerName];
 }
 
-// $FlowFixMe
-const UIManagerJS = {};
+// $FlowFixMe[cannot-spread-interface]
+const UIManagerJS: UIManagerJSInterface = {
+  ...NativeUIManager,
+  createView(
+    reactTag: ?number,
+    viewName: string,
+    rootTag: RootTag,
+    props: Object,
+  ): void {
+    if (Platform.OS === 'ios' && viewManagerConfigs[viewName] === undefined) {
+      // This is necessary to force the initialization of native viewManager
+      // classes in iOS when using static ViewConfigs
+      getViewManagerConfig(viewName);
+    }
 
 // [Windows The spread operator doesn't work on JSI turbomodules, so use this instead
 for (const propName of Object.getOwnPropertyNames(NativeUIManager)) {
