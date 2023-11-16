@@ -152,7 +152,7 @@ void WindowsTextInputShadowNode::updateStateIfNeeded() {
 #pragma mark - LayoutableShadowNode
 
 Size WindowsTextInputShadowNode::measureContent(
-    const LayoutContext & layoutContext,
+    const LayoutContext &layoutContext,
     const LayoutConstraints &layoutConstraints) const {
   if (getStateData().cachedAttributedStringId != 0) {
     return m_textLayoutManager
