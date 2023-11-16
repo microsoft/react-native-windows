@@ -17,8 +17,6 @@ const NativeModules = require('../BatchedBridge/NativeModules');
 const defineLazyObjectProperty = require('../Utilities/defineLazyObjectProperty');
 const Platform = require('../Utilities/Platform');
 const UIManagerProperties = require('./UIManagerProperties');
-
-import NativeUIManager from './NativeUIManager';
 // import type {RootTag} from 'react-native/Libraries/Types/RootTagTypes'; [Windows]
 
 const viewManagerConfigs: {[string]: any | null} = {};
