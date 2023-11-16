@@ -5,8 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-// windows
+// [Windows
 #include "WindowsModalHostViewShadowNode.h"
+// ]
 
 #include <react/renderer/core/LayoutContext.h>
 

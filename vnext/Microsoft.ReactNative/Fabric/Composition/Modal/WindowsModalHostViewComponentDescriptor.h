@@ -5,12 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-// windows
 #pragma once
 
 #include <glog/logging.h>
 #include <react/renderer/core/ConcreteComponentDescriptor.h>
+// [Windows
 #include "WindowsModalHostViewShadowNode.h"
+// ]
 
 namespace facebook::react {
 
