@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Sat, 21 Oct 2023 05:16:09 GMT and should not be manually modified.
+This log was last generated on Fri, 10 Nov 2023 06:16:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.194
+
+Fri, 10 Nov 2023 06:16:22 GMT
+
+### Changes
+
+- Make Hermes the default JS engine (jthysell@microsoft.com)
 
 ## 0.0.0-canary.193
 

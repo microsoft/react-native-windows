@@ -168,7 +168,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\components\view\HostPlatformViewEventEmitter.cpp">
       <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\graphics\Color.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\graphics\PlatformColorUtils.cpp">
       <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\textlayoutmanager\TextLayoutManager.cpp">
@@ -239,6 +239,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)TurboModuleManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Utils.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Utils\WinRTConversions.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)V8JSIRuntimeHolder.cpp">
+      <ExcludedFromBuild Condition="'$(UseV8)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\codegen\react\components\rnwcore\EventEmitters.h" />
@@ -415,6 +418,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Utils.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Utils\CppWinrtLessExceptions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Utils\WinRTConversions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)V8JSIRuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)WebSocketJSExecutorFactory.h" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\DevSettingsModule.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\ReactRootViewTagGenerator.cpp" />
@@ -438,6 +442,7 @@
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Views\DevMenu.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeScheduler.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeSchedulerBinding.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeSchedulerCallInvoker.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\Task.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\utils\CoreFeatures.cpp" />
   </ItemGroup>
@@ -513,6 +518,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\InstanceHandle.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\DebugStringConvertible.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\DebugStringConvertibleItem.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\graphics\Color.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\graphics\Transform.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\imagemanager\ImageResponse.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\imagemanager\ImageResponseObserverCoordinator.cpp" />

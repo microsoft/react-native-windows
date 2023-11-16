@@ -60,6 +60,7 @@ constexpr PCWSTR appName = L"RNTesterApp";
 std::vector<std::string> g_Errors;
 std::vector<std::string> g_Warnings;
 HWND global_hwnd;
+winrt::Microsoft::ReactNative::CompositionRootView *global_rootView{nullptr};
 
 // Forward declarations of functions included in this code module:
 winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::JsonValue payload);
@@ -151,7 +152,6 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   global_hwnd = hwnd;
   auto scaleFactor = ScaleFactor(hwnd);
 
-  global_hwnd = hwnd;
   auto host = CreateReactNativeHost(hwnd, compositor);
 
   // Start the react-native instance, which will create a JavaScript runtime and load the applications bundle
@@ -204,6 +204,7 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   winrt::AutomationChannel::CommandHandler handler;
   handler.BindOperation(L"DumpVisualTree", DumpVisualTree);
   handler.BindOperation(L"ListErrors", ListErrors);
+  global_rootView = &rootView;
 
   auto server = winrt::AutomationChannel::Server(handler);
   auto asyncAction = LoopServer(server);
@@ -243,7 +244,9 @@ winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::Js
   return result;
 }
 
-winrt::Windows::Data::Json::JsonObject DumpUIATree(IUIAutomationElement *pTarget, IUIAutomationTreeWalker *pWalker) {
+winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
+    IUIAutomationElement *pTarget,
+    IUIAutomationTreeWalker *pWalker) {
   winrt::Windows::Data::Json::JsonObject result;
   BSTR automationId;
   CONTROLTYPEID controlType;
@@ -274,7 +277,7 @@ winrt::Windows::Data::Json::JsonObject DumpUIATree(IUIAutomationElement *pTarget
   pWalker->GetFirstChildElement(pTarget, &pChild);
   winrt::Windows::Data::Json::JsonArray children;
   while (pChild != nullptr) {
-    children.Append(DumpUIATree(pChild, pWalker));
+    children.Append(DumpUIATreeRecurse(pChild, pWalker));
     pWalker->GetNextSiblingElement(pChild, &pSibling);
     pChild = pSibling;
     pSibling = nullptr;
@@ -285,8 +288,7 @@ winrt::Windows::Data::Json::JsonObject DumpUIATree(IUIAutomationElement *pTarget
   return result;
 }
 
-winrt::Windows::Data::Json::JsonObject DumpVisualTree(winrt::Windows::Data::Json::JsonValue payload) {
-  winrt::Windows::Data::Json::JsonObject payloadObj = payload.GetObject();
+winrt::Windows::Data::Json::JsonObject DumpUIATreeHelper(winrt::Windows::Data::Json::JsonObject payloadObj) {
   auto accessibilityId = payloadObj.GetNamedString(L"accessibilityId");
 
   winrt::Windows::Data::Json::JsonObject result;
@@ -308,17 +310,108 @@ winrt::Windows::Data::Json::JsonObject DumpVisualTree(winrt::Windows::Data::Json
   varAutomationId.bstrVal = SysAllocString(accessibilityId.c_str());
   pAutomation->CreatePropertyCondition(UIA_AutomationIdPropertyId, varAutomationId, &pCondition);
   pRootElement->FindFirst(TreeScope_Descendants, pCondition, &pTarget);
-  if (pTarget == nullptr) {
-    return result;
-  }
 
-  result = DumpUIATree(pTarget, pWalker);
+  winrt::Windows::Data::Json::JsonObject uiaTree;
+  if (pTarget != nullptr) {
+    uiaTree = DumpUIATreeRecurse(pTarget, pWalker);
+  }
 
   pWalker->Release();
   pRootElement->Release();
   pAutomation->Release();
   pCondition->Release();
 
+  return uiaTree;
+}
+
+winrt::Windows::Data::Json::JsonObject PrintVisualTree(winrt::Microsoft::UI::Composition::Visual node) {
+  winrt::Windows::Data::Json::JsonObject result;
+  if (!node.Comment().empty()) {
+    result.Insert(L"Comment", winrt::Windows::Data::Json::JsonValue::CreateStringValue(node.Comment()));
+  }
+  winrt::Windows::Data::Json::JsonArray visualSize;
+  visualSize.Append(winrt::Windows::Data::Json::JsonValue::CreateNumberValue(node.Size().x));
+  visualSize.Append(winrt::Windows::Data::Json::JsonValue::CreateNumberValue(node.Size().y));
+  result.Insert(L"Size", visualSize);
+  winrt::Windows::Data::Json::JsonArray visualOffset;
+  visualOffset.Append(winrt::Windows::Data::Json::JsonValue::CreateNumberValue(node.Offset().x));
+  visualOffset.Append(winrt::Windows::Data::Json::JsonValue::CreateNumberValue(node.Offset().y));
+  visualOffset.Append(winrt::Windows::Data::Json::JsonValue::CreateNumberValue(node.Offset().z));
+  result.Insert(L"Offset", visualOffset);
+  result.Insert(L"Opacity", winrt::Windows::Data::Json::JsonValue::CreateNumberValue(node.Opacity()));
+  auto spriteVisual = node.try_as<winrt::Microsoft::UI::Composition::SpriteVisual>();
+  if (spriteVisual) {
+    result.Insert(L"Visual Type", winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"SpriteVisual"));
+    auto spriteBrush = spriteVisual.Brush();
+    if (spriteBrush) {
+      winrt::Windows::Data::Json::JsonObject brush;
+      auto colorBrush = spriteBrush.try_as<winrt::Microsoft::UI::Composition::CompositionColorBrush>();
+      if (colorBrush) {
+        brush.Insert(L"Brush Type", winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"ColorBrush"));
+        auto colorString = L"rgba(" + winrt::to_hstring(colorBrush.Color().R) + L", " +
+            winrt::to_hstring(colorBrush.Color().G) + L", " + winrt::to_hstring(colorBrush.Color().B) + L", " +
+            winrt::to_hstring(colorBrush.Color().A) + L")";
+        brush.Insert(L"Color", winrt::Windows::Data::Json::JsonValue::CreateStringValue(colorString));
+        result.Insert(L"Brush", brush);
+      }
+    }
+  } else {
+    result.Insert(L"Visual Type", winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"Visual"));
+  }
+  return result;
+}
+
+winrt::Windows::Data::Json::JsonObject DumpVisualTreeRecurse(
+    winrt::Microsoft::UI::Composition::Visual node,
+    winrt::hstring accessibilityId,
+    boolean targetNodeHit) {
+  winrt::Windows::Data::Json::JsonObject result;
+  boolean targetNodeFound = false;
+  if (targetNodeHit) {
+    result = PrintVisualTree(node);
+  }
+
+  auto containerNode = node.try_as<winrt::Microsoft::UI::Composition::ContainerVisual>();
+  if (containerNode == nullptr) {
+    return result;
+  }
+  auto nodeChildren = containerNode.Children();
+  winrt::Windows::Data::Json::JsonArray children;
+  for (auto childVisual : nodeChildren) {
+    if (!targetNodeHit && childVisual.Comment() == accessibilityId) {
+      targetNodeFound = true;
+      result = DumpVisualTreeRecurse(childVisual, accessibilityId, true);
+      break;
+    } else if (targetNodeHit) {
+      children.Append(DumpVisualTreeRecurse(childVisual, accessibilityId, targetNodeHit));
+    } else if (!targetNodeHit) {
+      auto subtree = DumpVisualTreeRecurse(childVisual, accessibilityId, targetNodeHit);
+      if (subtree.Size() > 0) {
+        result = subtree;
+        break;
+      }
+    }
+  }
+  if (targetNodeHit && children.Size() > 0) {
+    result.Insert(L"Children", children);
+  }
+  return result;
+}
+
+winrt::Windows::Data::Json::JsonObject DumpVisualTreeHelper(winrt::Windows::Data::Json::JsonObject payloadObj) {
+  auto accessibilityId = payloadObj.GetNamedString(L"accessibilityId");
+  winrt::Windows::Data::Json::JsonObject visualTree;
+  auto root = winrt::Microsoft::ReactNative::Composition::MicrosoftCompositionContextHelper::InnerVisual(
+      global_rootView->RootVisual());
+  visualTree = DumpVisualTreeRecurse(root, accessibilityId, false);
+  return visualTree;
+}
+
+winrt::Windows::Data::Json::JsonObject DumpVisualTree(winrt::Windows::Data::Json::JsonValue payload) {
+  winrt::Windows::Data::Json::JsonObject payloadObj = payload.GetObject();
+  winrt::Windows::Data::Json::JsonObject result;
+  result.Insert(L"Automation Tree", DumpUIATreeHelper(payloadObj));
+  result.Insert(L"Visual Tree", DumpVisualTreeHelper(payloadObj));
   return result;
 }
 

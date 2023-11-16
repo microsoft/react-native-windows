@@ -76,6 +76,9 @@ void FabricUIManager::installFabricUIManager() noexcept {
           return std::make_unique<SynchronousEventBeat>(ownerBox, context, runtimeExecutor, runtimeScheduler);
         };
     toolbox.synchronousEventBeatFactory = synchronousBeatFactory;
+    runtimeExecutor = [runtimeScheduler](std::function<void(facebook::jsi::Runtime & runtime)> &&callback) {
+      runtimeScheduler->scheduleWork(std::move(callback));
+    };
   } else {
     facebook::react::EventBeat::Factory synchronousBeatFactory =
         [runtimeExecutor, context = m_context](facebook::react::EventBeat::SharedOwnerBox const &ownerBox) {

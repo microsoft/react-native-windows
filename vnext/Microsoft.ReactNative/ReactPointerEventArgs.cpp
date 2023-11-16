@@ -39,6 +39,14 @@ void ReactPointerEventArgs::Target(winrt::IInspectable const &target) noexcept {
   m_target = target;
 }
 
+bool ReactPointerEventArgs::AllowUncaptured() const noexcept {
+  return m_allowUncaptured;
+}
+
+void ReactPointerEventArgs::AllowUncaptured(bool allowUncaptured) noexcept {
+  m_allowUncaptured = allowUncaptured;
+}
+
 ReactPointerEventArgs::ReactPointerEventArgs(
     PointerEventKind kind,
     xaml::Input::PointerRoutedEventArgs const &args) noexcept

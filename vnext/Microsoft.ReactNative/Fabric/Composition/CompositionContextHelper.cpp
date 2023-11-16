@@ -388,6 +388,14 @@ struct CompVisual : public winrt::implements<
     m_visual.BackfaceVisibility(static_cast<typename TTypeRedirects::CompositionBackfaceVisibility>(value));
   }
 
+  winrt::hstring Comment() noexcept {
+    return m_visual.Comment();
+  }
+
+  void Comment(winrt::hstring value) {
+    m_visual.Comment(value);
+  }
+
  private:
   typename TTypeRedirects::Visual m_visual;
 };
@@ -488,6 +496,14 @@ struct CompSpriteVisual : winrt::implements<
 
   void BackfaceVisibility(winrt::Microsoft::ReactNative::Composition::BackfaceVisibility value) {
     m_visual.BackfaceVisibility(static_cast<typename TTypeRedirects::CompositionBackfaceVisibility>(value));
+  }
+
+  winrt::hstring Comment() noexcept {
+    return m_visual.Comment();
+  }
+
+  void Comment(winrt::hstring value) {
+    m_visual.Comment(value);
   }
 
   void SetClippingPath(ID2D1Geometry *clippingPath) noexcept {
@@ -693,6 +709,14 @@ struct CompScrollerVisual : winrt::implements<
     m_visual.BackfaceVisibility(static_cast<typename TTypeRedirects::CompositionBackfaceVisibility>(value));
   }
 
+  winrt::hstring Comment() noexcept {
+    return m_visual.Comment();
+  }
+
+  void Comment(winrt::hstring value) {
+    m_visual.Comment(value);
+  }
+
   void SetClippingPath(ID2D1Geometry *clippingPath) noexcept {
     if (!clippingPath) {
       m_visual.Clip(nullptr);
@@ -844,7 +868,7 @@ struct CompActivityVisual : winrt::implements<
     auto spriteShape = compositor.CreateSpriteShape();
     spriteShape.Geometry(ellipse);
     spriteShape.Offset(winrt::Windows::Foundation::Numerics::float2(m_centerX, m_centerY + m_radiusSmall));
-    auto spriteVisualBrush = compositor.CreateColorBrush(winrt::Windows::UI::Colors::LightGray());
+    auto spriteVisualBrush = compositor.CreateColorBrush({255, 211, 211, 211} /* Light Gray */);
     spriteShape.FillBrush(spriteVisualBrush);
     auto circleShape = compositor.CreateShapeVisual();
     circleShape.Shapes().Append(spriteShape);
@@ -969,6 +993,14 @@ struct CompActivityVisual : winrt::implements<
     m_visual.BackfaceVisibility(static_cast<typename TTypeRedirects::CompositionBackfaceVisibility>(value));
   }
 
+  winrt::hstring Comment() noexcept {
+    return m_visual.Comment();
+  }
+
+  void Comment(winrt::hstring value) {
+    m_visual.Comment(value);
+  }
+
   void SetClippingPath(ID2D1Geometry *clippingPath) noexcept {
     if (!clippingPath) {
       m_visual.Clip(nullptr);
@@ -1009,7 +1041,7 @@ struct CompCaretVisual
     m_visual = CreateVisual();
 
     // TODO should make the caret use an invert brush by default
-    m_compVisual.Brush(m_compositor.CreateColorBrush(winrt::Windows::UI::Colors::Black()));
+    m_compVisual.Brush(m_compositor.CreateColorBrush({255, 0, 0, 0} /* Black */));
     m_compVisual.Opacity(1.0f);
 
     // Blinking animation
@@ -1196,7 +1228,7 @@ struct CompFocusVisual
     m_compVisual.Opacity(1.0f);
     m_compVisual.RelativeSizeAdjustment({1, 1});
 
-    m_brush.Source(compositor.CreateColorBrush(winrt::Windows::UI::Colors::Black()));
+    m_brush.Source(compositor.CreateColorBrush({255, 0, 0, 0} /* Black */));
     m_brush.IsCenterHollow(true);
   }
 

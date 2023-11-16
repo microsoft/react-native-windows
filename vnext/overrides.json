@@ -83,24 +83,10 @@
       "baseHash": "a72d01a2516c09f453090181cb22beeef2a4b29c"
     },
     {
-      "type": "patch",
-      "file": "Microsoft.ReactNative/Fabric/platform/react/renderer/core/graphicsConversions.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/core/graphicsConversions.h",
-      "baseHash": "4f490c6ed90da445e86fea8841be66d2af6a11ab",
-      "issue": 7821
-    },
-    {
-      "type": "patch",
-      "file": "Microsoft.ReactNative/Fabric/platform/react/renderer/graphics/Color.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/graphics/Color.cpp",
-      "baseHash": "e54cf7a6e24221f0e67c9941ab83e3111cba6208",
-      "issue": 7821
-    },
-    {
-      "type": "patch",
-      "file": "Microsoft.ReactNative/Fabric/platform/react/renderer/graphics/Color.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/graphics/Color.cpp",
-      "baseHash": "e54cf7a6e24221f0e67c9941ab83e3111cba6208",
+      "type": "copy",
+      "file": "Microsoft.ReactNative/Fabric/platform/react/renderer/graphics/Float.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/graphics/platform/cxx/react/renderer/graphics/Float.h",
+      "baseHash": "4a707c9cab0c6534094cd303e000265b664f05b4",
       "issue": 7821
     },
     {
@@ -137,6 +123,13 @@
       "baseFile": "packages/react-native/ReactCommon/react/renderer/core/ShadowNode.cpp",
       "baseHash": "e4feb272298f6625461f5bdca2fca4d64e1a5894",
       "issue": 12300
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/graphics/Color.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/graphics/Color.h",
+      "baseHash": "dfdf5eea363605ee93f0675e30689df2cd8dc004",
+      "issue": 7821
     },
     {
       "type": "patch",

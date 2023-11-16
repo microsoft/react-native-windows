@@ -16,6 +16,9 @@ struct ReactPointerEventArgs : ReactPointerEventArgsT<ReactPointerEventArgs> {
   winrt::IInspectable Target() const noexcept;
   void Target(winrt::IInspectable const &target) noexcept;
 
+  bool AllowUncaptured() const noexcept;
+  void AllowUncaptured(bool allowUncaptured) noexcept;
+
   // Internal use
   ReactPointerEventArgs(PointerEventKind kind, xaml::Input::PointerRoutedEventArgs const &args) noexcept;
 
@@ -23,6 +26,7 @@ struct ReactPointerEventArgs : ReactPointerEventArgsT<ReactPointerEventArgs> {
   PointerEventKind m_kind;
   xaml::Input::PointerRoutedEventArgs const &m_args;
   winrt::IInspectable m_target{nullptr};
+  bool m_allowUncaptured{false};
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation
