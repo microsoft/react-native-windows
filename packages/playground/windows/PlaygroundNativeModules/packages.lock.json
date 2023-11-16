@@ -4,12 +4,9 @@
     "native,Version=v0.0": {
       "Microsoft.UI.Xaml": {
         "type": "Direct",
-        "requested": "[2.8.0, )",
-        "resolved": "2.8.0",
-        "contentHash": "vxdHxTr63s5KVtNddMFpgvjBjUH50z7seq/5jLWmmSuf8poxg+sXrywkofUdE8ZstbpO9y3FL/IXXUcPYbeesA==",
-        "dependencies": {
-          "Microsoft.Web.WebView2": "1.0.1264.42"
-        }
+        "requested": "[2.7.0-prerelease.210913003, )",
+        "resolved": "2.7.0-prerelease.210913003",
+        "contentHash": "eLUEu31PenwzXowSTm/HPRaaEClPd0FKPLirfHLM84wH3nPDHX18l/ngHm1Ny2rnwVyc1cYngPjYEv6DOQmw1A=="
       },
       "Microsoft.Windows.CppWinRT": {
         "type": "Direct",
@@ -29,8 +26,8 @@
       },
       "Microsoft.JavaScript.Hermes": {
         "type": "Transitive",
-        "resolved": "0.1.15",
-        "contentHash": "My/u5RvxoymtwWokoweU6iVpuP79w271UjadcmSNqnQ9ESIv00tlVP4sHnIiN3t2lJNDeciyE1EVF4swGPECKQ=="
+        "resolved": "0.1.18",
+        "contentHash": "5K8rRihGwIs2XNOTP2Jsw3T6cegxCBQXcpPS4optONU/AmFElGAfnA6XBQJ4UqlCFCl9Nf9zQrgvCUPBWYHiag=="
       },
       "Microsoft.SourceLink.Common": {
         "type": "Transitive",
@@ -46,11 +43,6 @@
           "Microsoft.SourceLink.Common": "1.1.1"
         }
       },
-      "Microsoft.Web.WebView2": {
-        "type": "Transitive",
-        "resolved": "1.0.1264.42",
-        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
-      },
       "common": {
         "type": "Project"
       },
@@ -60,8 +52,8 @@
       "folly": {
         "type": "Project",
         "dependencies": {
-          "boost": "[1.76.0, )",
-          "fmt": "[1.0.0, )"
+          "Fmt": "[1.0.0, )",
+          "boost": "[1.76.0, )"
         }
       },
       "microsoft.reactnative": {
@@ -69,9 +61,9 @@
         "dependencies": {
           "Common": "[1.0.0, )",
           "Folly": "[1.0.0, )",
-          "Microsoft.JavaScript.Hermes": "[0.1.15, )",
+          "Microsoft.JavaScript.Hermes": "[0.1.18, )",
           "Microsoft.SourceLink.GitHub": "[1.1.1, )",
-          "Microsoft.UI.Xaml": "[2.8.0, )",
+          "Microsoft.UI.Xaml": "[2.7.0-prerelease.210913003, )",
           "ReactCommon": "[1.0.0, )",
           "boost": "[1.76.0, )"
         }
@@ -85,52 +77,59 @@
       }
     },
     "native,Version=v0.0/win10-arm": {
-      "Microsoft.Web.WebView2": {
-        "type": "Transitive",
-        "resolved": "1.0.1264.42",
-        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
+      "Microsoft.UI.Xaml": {
+        "type": "Direct",
+        "requested": "[2.7.0-prerelease.210913003, )",
+        "resolved": "2.7.0-prerelease.210913003",
+        "contentHash": "eLUEu31PenwzXowSTm/HPRaaEClPd0FKPLirfHLM84wH3nPDHX18l/ngHm1Ny2rnwVyc1cYngPjYEv6DOQmw1A=="
       }
     },
     "native,Version=v0.0/win10-arm-aot": {
-      "Microsoft.Web.WebView2": {
-        "type": "Transitive",
-        "resolved": "1.0.1264.42",
-        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
+      "Microsoft.UI.Xaml": {
+        "type": "Direct",
+        "requested": "[2.7.0-prerelease.210913003, )",
+        "resolved": "2.7.0-prerelease.210913003",
+        "contentHash": "eLUEu31PenwzXowSTm/HPRaaEClPd0FKPLirfHLM84wH3nPDHX18l/ngHm1Ny2rnwVyc1cYngPjYEv6DOQmw1A=="
       }
     },
     "native,Version=v0.0/win10-arm64-aot": {
-      "Microsoft.Web.WebView2": {
-        "type": "Transitive",
-        "resolved": "1.0.1264.42",
-        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
+      "Microsoft.UI.Xaml": {
+        "type": "Direct",
+        "requested": "[2.7.0-prerelease.210913003, )",
+        "resolved": "2.7.0-prerelease.210913003",
+        "contentHash": "eLUEu31PenwzXowSTm/HPRaaEClPd0FKPLirfHLM84wH3nPDHX18l/ngHm1Ny2rnwVyc1cYngPjYEv6DOQmw1A=="
       }
     },
     "native,Version=v0.0/win10-x64": {
-      "Microsoft.Web.WebView2": {
-        "type": "Transitive",
-        "resolved": "1.0.1264.42",
-        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
+      "Microsoft.UI.Xaml": {
+        "type": "Direct",
+        "requested": "[2.7.0-prerelease.210913003, )",
+        "resolved": "2.7.0-prerelease.210913003",
+        "contentHash": "eLUEu31PenwzXowSTm/HPRaaEClPd0FKPLirfHLM84wH3nPDHX18l/ngHm1Ny2rnwVyc1cYngPjYEv6DOQmw1A=="
       }
     },
     "native,Version=v0.0/win10-x64-aot": {
-      "Microsoft.Web.WebView2": {
-        "type": "Transitive",
-        "resolved": "1.0.1264.42",
-        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
+      "Microsoft.UI.Xaml": {
+        "type": "Direct",
+        "requested": "[2.7.0-prerelease.210913003, )",
+        "resolved": "2.7.0-prerelease.210913003",
+        "contentHash": "eLUEu31PenwzXowSTm/HPRaaEClPd0FKPLirfHLM84wH3nPDHX18l/ngHm1Ny2rnwVyc1cYngPjYEv6DOQmw1A=="
       }
     },
     "native,Version=v0.0/win10-x86": {
-      "Microsoft.Web.WebView2": {
-        "type": "Transitive",
-        "resolved": "1.0.1264.42",
-        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
+      "Microsoft.UI.Xaml": {
+        "type": "Direct",
+        "requested": "[2.7.0-prerelease.210913003, )",
+        "resolved": "2.7.0-prerelease.210913003",
+        "contentHash": "eLUEu31PenwzXowSTm/HPRaaEClPd0FKPLirfHLM84wH3nPDHX18l/ngHm1Ny2rnwVyc1cYngPjYEv6DOQmw1A=="
       }
     },
     "native,Version=v0.0/win10-x86-aot": {
-      "Microsoft.Web.WebView2": {
-        "type": "Transitive",
-        "resolved": "1.0.1264.42",
-        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
+      "Microsoft.UI.Xaml": {
+        "type": "Direct",
+        "requested": "[2.7.0-prerelease.210913003, )",
+        "resolved": "2.7.0-prerelease.210913003",
+        "contentHash": "eLUEu31PenwzXowSTm/HPRaaEClPd0FKPLirfHLM84wH3nPDHX18l/ngHm1Ny2rnwVyc1cYngPjYEv6DOQmw1A=="
       }
     }
   }
