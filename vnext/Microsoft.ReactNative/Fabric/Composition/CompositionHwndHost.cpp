@@ -54,6 +54,7 @@ void CompositionHwndHost::Initialize(uint64_t hwnd) noexcept {
   m_hwnd = (HWND)hwnd;
 
   m_compRootView = winrt::Microsoft::ReactNative::CompositionRootView();
+  m_compRootView.SetWindow(reinterpret_cast<uint64_t>(m_hwnd));
 
   CreateDesktopWindowTarget(m_hwnd);
   CreateCompositionRoot();
