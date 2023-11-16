@@ -4,7 +4,6 @@
 #include "pch.h"
 
 #include <cxxreact/MessageQueueThread.h>
-#include <react/renderer/runtimescheduler/RuntimeScheduler.h>
 #include "ReactPropertyBag.h"
 #include "SchedulerSettings.h"
 
