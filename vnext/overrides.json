@@ -36,18 +36,6 @@
     },
     {
       "type": "derived",
-      "file": "Microsoft.ReactNative/Fabric/Composition/Modal/WindowsModalHostViewState.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/modal/ModalHostViewState.cpp",
-      "baseHash": "9c068d27010736462effca402ecdec00bcbf12c5"
-    },
-    {
-      "type": "derived",
-      "file": "Microsoft.ReactNative/Fabric/Composition/Modal/WindowsModalHostViewState.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/modal/ModalHostViewState.h",
-      "baseHash": "8aea5e5e787cbe056f1c13f2cfae8947ca6f4f00"
-    },
-    {
-      "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputComponentDescriptor.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputComponentDescriptor.h",
       "baseHash": "476e6698abe05a235ebe82ad913c699acb23d85f"

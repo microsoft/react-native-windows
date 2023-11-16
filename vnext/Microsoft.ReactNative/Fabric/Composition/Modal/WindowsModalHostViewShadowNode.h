@@ -7,10 +7,10 @@
 
 #pragma once
 
+#include <react/renderer/components/modal/ModalHostViewState.h>
 // [Windows
 #include <react/renderer/components/rnwcore/EventEmitters.h>
 #include <react/renderer/components/rnwcore/Props.h>
-#include "WindowsModalHostViewState.h"
 // ]
 #include <react/renderer/components/view/ConcreteViewShadowNode.h>
 
@@ -25,7 +25,7 @@ class WindowsModalHostViewShadowNode final : public ConcreteViewShadowNode<
                                                  WindowsModalHostViewComponentName,
                                                  ModalHostViewProps,
                                                  ModalHostViewEventEmitter,
-                                                 WindowsModalHostViewState> {
+                                                 ModalHostViewState> {
  public:
   using ConcreteViewShadowNode::ConcreteViewShadowNode;
 
