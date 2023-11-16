@@ -18,33 +18,33 @@
     },
     {
       "type": "derived",
-      "file": "Microsoft.ReactNative/Fabric/Composition/Modal/ModalHostViewShadowNode.h",
+      "file": "Microsoft.ReactNative/Fabric/Composition/Modal/WindowsModalHostViewComponentDescriptor.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/modal/ModalHostViewComponentDescriptor.h",
+      "baseHash": "e565039785bb3cf479021322074870c82be58b82"
+    },
+    {
+      "type": "derived",
+      "file": "Microsoft.ReactNative/Fabric/Composition/Modal/WindowsModalHostViewShadowNode.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/modal/ModalHostViewShadowNode.cpp",
+      "baseHash": "18699cf9b127e7c09be0ae406ca57051691b52e2"
+    },
+    {
+      "type": "derived",
+      "file": "Microsoft.ReactNative/Fabric/Composition/Modal/WindowsModalHostViewShadowNode.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/modal/ModalHostViewShadowNode.h",
       "baseHash": "29d8881a9ebce7a85d1f6b80a6a3c6e6768a7bfc"
     },
     {
       "type": "derived",
-      "file": "Microsoft.ReactNative/Fabric/Composition/Modal/ModalHostViewShadowNode.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/modal/ModalHostViewShadowNode.cpp",
-      "baseHash": "29d8881a9ebce7a85d1f6b80a6a3c6e6768a7bfc"
+      "file": "Microsoft.ReactNative/Fabric/Composition/Modal/WindowsModalHostViewState.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/modal/ModalHostViewState.cpp",
+      "baseHash": "9c068d27010736462effca402ecdec00bcbf12c5"
     },
     {
       "type": "derived",
-      "file": "Microsoft.ReactNative/Fabric/Composition/Modal/ModalHostViewComponentDescriptor.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/modal/ModalHostViewComponentDescriptor.h",
-      "baseHash": "29d8881a9ebce7a85d1f6b80a6a3c6e6768a7bfc"
-    },
-    {
-      "type": "derived",
-      "file": "Microsoft.ReactNative/Fabric/Composition/Modal/ModalHostViewInputState.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/modal/ModalHostViewInputState.cpp",
-      "baseHash": "29d8881a9ebce7a85d1f6b80a6a3c6e6768a7bfc"
-    },
-    {
-      "type": "derived",
-      "file": "Microsoft.ReactNative/Fabric/Composition/Modal/ModalHostViewInputState.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/modal/ModalHostViewInputState.h",
-      "baseHash": "29d8881a9ebce7a85d1f6b80a6a3c6e6768a7bfc"
+      "file": "Microsoft.ReactNative/Fabric/Composition/Modal/WindowsModalHostViewState.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/modal/ModalHostViewState.h",
+      "baseHash": "8aea5e5e787cbe056f1c13f2cfae8947ca6f4f00"
     },
     {
       "type": "derived",
