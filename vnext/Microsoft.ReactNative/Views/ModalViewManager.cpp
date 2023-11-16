@@ -34,9 +34,7 @@ ShadowNode *Microsoft::ReactNative::ModalViewManager::createShadow() const {
   return shadowNode;
 }
 
-XamlView ModalViewManager::CreateViewCore(
-    int64_t /*tag*/,
-    const winrt::Microsoft::ReactNative::JSValueObject &) {
+XamlView ModalViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft::ReactNative::JSValueObject &) {
   auto contentControl = winrt::make<winrt::Microsoft::ReactNative::implementation::ViewControl>();
   return contentControl;
 }

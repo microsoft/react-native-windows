@@ -7,8 +7,8 @@
 #include "WindowsModalHostViewComponentView.h"
 
 #include <Fabric/DWriteHelpers.h>
-#include "Composition/AutoDraw.h"
 #include "../CompositionDynamicAutomationProvider.h"
+#include "Composition/AutoDraw.h"
 #include "Unicode.h"
 
 namespace Microsoft::ReactNative {
@@ -156,4 +156,3 @@ facebook::react::Tag WindowsModalHostComponentView::hitTest(
 }
 
 } // namespace Microsoft::ReactNative
-

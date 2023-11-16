@@ -9,8 +9,8 @@
 #pragma once
 
 #include <glog/logging.h>
-#include "WindowsModalHostViewShadowNode.h"
 #include <react/renderer/core/ConcreteComponentDescriptor.h>
+#include "WindowsModalHostViewShadowNode.h"
 
 namespace facebook::react {
 
@@ -23,16 +23,12 @@ class WindowsModalHostViewComponentDescriptor final
  public:
   using ConcreteComponentDescriptor::ConcreteComponentDescriptor;
 
-  void adopt(ShadowNode& shadowNode) const override {
-    auto& layoutableShadowNode =
-        static_cast<YogaLayoutableShadowNode&>(shadowNode);
-    auto& stateData =
-        static_cast<const WindowsModalHostViewShadowNode::ConcreteState&>(
-            *shadowNode.getState())
-            .getData();
+  void adopt(ShadowNode &shadowNode) const override {
+    auto &layoutableShadowNode = static_cast<YogaLayoutableShadowNode &>(shadowNode);
+    auto &stateData =
+        static_cast<const WindowsModalHostViewShadowNode::ConcreteState &>(*shadowNode.getState()).getData();
 
-    layoutableShadowNode.setSize(
-        Size{stateData.screenSize.width, stateData.screenSize.height});
+    layoutableShadowNode.setSize(Size{stateData.screenSize.width, stateData.screenSize.height});
     layoutableShadowNode.setPositionType(YGPositionTypeAbsolute);
 
     ConcreteComponentDescriptor::adopt(shadowNode);

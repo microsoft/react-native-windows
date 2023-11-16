@@ -29,12 +29,8 @@ class WindowsModalHostViewState final {
   WindowsModalHostViewState(Size screenSize_) : screenSize(screenSize_){};
 
 #ifdef ANDROID
-  WindowsModalHostViewState(
-      const WindowsModalHostViewState& previousState,
-      folly::dynamic data)
-      : screenSize(Size{
-            (Float)data["screenWidth"].getDouble(),
-            (Float)data["screenHeight"].getDouble()}){};
+  WindowsModalHostViewState(const WindowsModalHostViewState &previousState, folly::dynamic data)
+      : screenSize(Size{(Float)data["screenWidth"].getDouble(), (Float)data["screenHeight"].getDouble()}){};
 #endif
 
   const Size screenSize{};

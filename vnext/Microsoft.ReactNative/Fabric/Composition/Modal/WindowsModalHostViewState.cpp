@@ -11,8 +11,7 @@ namespace facebook::react {
 
 #ifdef ANDROID
 folly::dynamic WindowsModalHostViewState::getDynamic() const {
-  return folly::dynamic::object("screenWidth", screenSize.width)(
-      "screenHeight", screenSize.height);
+  return folly::dynamic::object("screenWidth", screenSize.width)("screenHeight", screenSize.height);
 }
 #endif
 
