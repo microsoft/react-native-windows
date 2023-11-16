@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 01 Nov 2023 22:19:02 GMT and should not be manually modified.
+This log was last generated on Thu, 09 Nov 2023 01:02:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.72.19
+
+Thu, 09 Nov 2023 01:02:05 GMT
+
+### Patches
+
+- Keep propertyBag alive for duration of InstanceDestroyed event (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.72.18
 

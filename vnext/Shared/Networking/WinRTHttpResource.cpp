@@ -545,7 +545,7 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
           if (self->m_onComplete) {
             self->m_onComplete(reqArgs->RequestId);
           }
-          co_return;
+          co_return self->UntrackResponse(reqArgs->RequestId);
         }
       }
 

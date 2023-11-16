@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 09 Nov 2023 01:02:05 GMT",
+      "tag": "react-native-windows_v0.72.19",
+      "version": "0.72.19",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "318d6227643ae6c9d080a1e3000c903104afa59b",
+            "comment": "Keep propertyBag alive for duration of InstanceDestroyed event"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 01 Nov 2023 22:19:02 GMT",
       "tag": "react-native-windows_v0.72.18",
       "version": "0.72.18",
