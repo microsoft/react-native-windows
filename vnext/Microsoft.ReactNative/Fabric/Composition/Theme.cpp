@@ -33,11 +33,20 @@ std::pair<bool, winrt::Windows::UI::Color> Theme::TryGetPlatformColor(const std:
 #ifndef CORE_ABI
   // If XAML is loaded, look in application resources
   if (xaml::TryGetCurrentApplication()) {
-    xaml::Media::Brush brush{Microsoft::ReactNative::BrushFromColorObject(platformColor)};
-    if (auto scb{brush.try_as<xaml::Media::SolidColorBrush>()}) {
-      auto pair = std::make_pair(true, scb.Color());
-      m_colorCache[platformColor] = pair;
-      return pair;
+    const auto appResources{xaml::Application::Current().Resources()};
+    const auto boxedResourceName{winrt::box_value(winrt::to_hstring(platformColor))};
+    if (appResources.HasKey(boxedResourceName)) {
+      winrt::IInspectable resource{appResources.Lookup(boxedResourceName)};
+
+      if (auto brush = resource.try_as<xaml::Media::SolidColorBrush>()) {
+        auto pair = std::make_pair(true, brush.Color());
+        m_colorCache[platformColor] = pair;
+        return pair;
+      } else if (auto color = resource.try_as<winrt::Windows::UI::Color>()) {
+        auto pair = std::make_pair(true, color.value());
+        m_colorCache[platformColor] = pair;
+        return pair;
+      }
     }
   }
 #endif // CORE_ABI
