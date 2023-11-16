@@ -124,13 +124,6 @@ const View: React.AbstractComponent<
     // $FlowFixMe[sketchy-null-mixed]
     const newPointerEvents = style?.pointerEvents || pointerEvents;
 
-<<<<<<< Upstream
-    const actualView = (
-      <ViewNativeComponent
-        {...otherProps}
-        accessibilityLiveRegion={
-          ariaLive === 'off' ? 'none' : ariaLive ?? accessibilityLiveRegion
-=======
     const _keyDown = (event: KeyEvent) => {
       if (otherProps.keyDownEvents && event.isPropagationStopped() !== true) {
         // $FlowFixMe - keyDownEvents was already checked to not be undefined
@@ -141,7 +134,6 @@ const View: React.AbstractComponent<
           ) {
             event.stopPropagation();
           }
->>>>>>> Override
         }
       }
       otherProps.onKeyDown && otherProps.onKeyDown(event);

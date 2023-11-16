@@ -12,14 +12,11 @@ import type {ImageStyle, ImageStyleProp} from '../StyleSheet/StyleSheet';
 import type {RootTag} from '../Types/RootTagTypes';
 import type {AbstractImageIOS, ImageIOS} from './ImageTypes.flow';
 
-<<<<<<< Upstream
-=======
 import TextAncestor from '../Text/TextAncestor'; // [Windows]
 import invariant from 'invariant'; // [Windows]
 
 import NativeImageLoaderWin32 from './NativeImageLoaderWin32'; // [Win32] Replace iOS
 
->>>>>>> Override
 import {createRootTag} from '../ReactNative/RootTag';
 import flattenStyle from '../StyleSheet/flattenStyle';
 import StyleSheet from '../StyleSheet/StyleSheet';
@@ -36,11 +33,8 @@ function getSize(
   success: (width: number, height: number) => void,
   failure?: (error: mixed) => void,
 ): void {
-<<<<<<< Upstream
-=======
   //[Win32
   /*
->>>>>>> Override
   NativeImageLoaderIOS.getSize(uri)
     .then(([width, height]) => success(width, height))
     .catch(
@@ -74,11 +68,7 @@ function getSizeWithHeaders(
   success: (width: number, height: number) => void,
   failure?: (error: mixed) => void,
 ): void {
-<<<<<<< Upstream
-  NativeImageLoaderIOS.getSizeWithHeaders(uri, headers)
-=======
   NativeImageLoaderWin32.getSizeWithHeaders(uri, headers)
->>>>>>> Override
     .then(function (sizes) {
       success(sizes.width, sizes.height);
     })
@@ -95,20 +85,13 @@ function prefetchWithMetadata(
   queryRootName: string,
   rootTag?: ?RootTag,
 ): Promise<boolean> {
-<<<<<<< Upstream
-  if (NativeImageLoaderIOS.prefetchImageWithMetadata) {
+  if (NativeImageLoaderWin32.prefetchImageWithMetadata) {
     // number params like rootTag cannot be nullable before TurboModules is available
-    return NativeImageLoaderIOS.prefetchImageWithMetadata(
+    return NativeImageLoaderWin32.prefetchImageWithMetadata(
       url,
       queryRootName,
       // NOTE: RootTag type
       rootTag != null ? rootTag : createRootTag(0),
-=======
-  if (NativeImageLoaderWin32.prefetchImageWithMetadata) {
-      queryRootName,
-      // NOTE: RootTag type
-      rootTag ? rootTag : 0,
->>>>>>> Override
     );
   } else {
     return NativeImageLoaderWin32.prefetchImage(url);
@@ -116,22 +99,12 @@ function prefetchWithMetadata(
 }
 
 function prefetch(url: string): Promise<boolean> {
-<<<<<<< Upstream
-  return NativeImageLoaderIOS.prefetchImage(url);
-}
-
-async function queryCache(
-  urls: Array<string>,
-): Promise<{[string]: 'memory' | 'disk' | 'disk/memory', ...}> {
-  return NativeImageLoaderIOS.queryCache(urls);
-=======
   return NativeImageLoaderWin32.prefetchImage(url);
 }
 
 async function queryCache(
   urls: Array<string>): Promise<{[string]: 'memory' | 'disk' | 'disk/memory', ...}> {
   return NativeImageLoaderWin32.queryCache(urls);
->>>>>>> Override
 }
 
 /**
