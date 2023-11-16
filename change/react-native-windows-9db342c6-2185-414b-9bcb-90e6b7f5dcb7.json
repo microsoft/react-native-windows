@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Minor cleanup of recent RuntimeScheduler integration",
+  "packageName": "react-native-windows",
+  "email": "ericroz@meta.com",
+  "dependentChangeType": "patch"
+}
