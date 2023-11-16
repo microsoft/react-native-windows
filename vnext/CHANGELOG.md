@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 15 Nov 2023 06:14:14 GMT and should not be manually modified.
+This log was last generated on Thu, 16 Nov 2023 06:13:44 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.738
+
+Thu, 16 Nov 2023 06:13:44 GMT
+
+### Changes
+
+- Temporarily silence warning 4996 to unblock CI (email not defined)
 
 ## 0.0.0-canary.737
 
