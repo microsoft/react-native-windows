@@ -18,7 +18,6 @@ const defineLazyObjectProperty = require('../Utilities/defineLazyObjectProperty'
 const Platform = require('../Utilities/Platform');
 const UIManagerProperties = require('./UIManagerProperties');
 
-import NativeUIManager from './NativeUIManager';
 // import type {RootTag} from 'react-native/Libraries/Types/RootTagTypes'; [Windows]
 
 const viewManagerConfigs: {[string]: any | null} = {};
@@ -96,111 +95,116 @@ const UIManagerJS: UIManagerJSInterface = {
       getViewManagerConfig(viewName);
     }
 
-// [Windows The spread operator doesn't work on JSI turbomodules, so use this instead
-for (const propName of Object.getOwnPropertyNames(NativeUIManager)) {
-  // $FlowFixMe
-  UIManagerJS[propName] = NativeUIManager[propName];
-}
-// Windows]
+    // [Windows The spread operator doesn't work on JSI turbomodules, so use this instead
+    for (const propName of Object.getOwnPropertyNames(NativeUIManager)) {
+      // $FlowFixMe
+      UIManagerJS[propName] = NativeUIManager[propName];
+    }
+    // Windows]
 
-/* $FlowFixMe(>=0.123.0 site=react_native_fb) This comment suppresses an error
- * found when Flow v0.123.0 was deployed. To see the error, delete this comment
- * and run Flow. */
-//const UIManagerJS = {
-//  ...NativeUIManager,
-// $FlowFixMe
-UIManagerJS.getConstants = getConstants;
-//  },
-// $FlowFixMe
-UIManagerJS.getViewManagerConfig = getViewManagerConfig;
-// $FlowFixMe
-UIManagerJS.hasViewManagerConfig = (viewManagerName: string) =>
-  getViewManagerConfig(viewManagerName) != null;
+    /* $FlowFixMe(>=0.123.0 site=react_native_fb) This comment suppresses an error
+     * found when Flow v0.123.0 was deployed. To see the error, delete this comment
+     * and run Flow. */
+    //const UIManagerJS = {
+    //  ...NativeUIManager,
+    // $FlowFixMe
+    UIManagerJS.getConstants = getConstants;
+    //  },
+    // $FlowFixMe
+    UIManagerJS.getViewManagerConfig = getViewManagerConfig;
+    // $FlowFixMe
+    UIManagerJS.hasViewManagerConfig = (viewManagerName: string) =>
+      getViewManagerConfig(viewManagerName) != null;
 
-//};
+    //};
 
-// TODO (T45220498): Remove this.
-// 3rd party libs may be calling `NativeModules.UIManager.getViewManagerConfig()`
-// instead of `UIManager.getViewManagerConfig()` off UIManager.js.
-// This is a workaround for now.
-// [Windows - This is incompatible with running UIManager as a JSI object.
-//            getViewManagerConfig is implemented on the JSI object, so we don't
-//            need to hook this unless we are running in webdebugger
-if (!global.nativeCallSyncHook)
-  // $FlowFixMe
-  NativeUIManager.getViewManagerConfig = UIManagerJS.getViewManagerConfig;
+    // TODO (T45220498): Remove this.
+    // 3rd party libs may be calling `NativeModules.UIManager.getViewManagerConfig()`
+    // instead of `UIManager.getViewManagerConfig()` off UIManager.js.
+    // This is a workaround for now.
+    // [Windows - This is incompatible with running UIManager as a JSI object.
+    //            getViewManagerConfig is implemented on the JSI object, so we don't
+    //            need to hook this unless we are running in webdebugger
+    if (!global.nativeCallSyncHook)
+      // $FlowFixMe
+      NativeUIManager.getViewManagerConfig = UIManagerJS.getViewManagerConfig;
 
-function lazifyViewManagerConfig(viewName: string) {
-  const viewConfig = getConstants()[viewName];
-  viewManagerConfigs[viewName] = viewConfig;
-  if (viewConfig.Manager) {
-    defineLazyObjectProperty(viewConfig, 'Constants', {
-      get: () => {
-        const viewManager = NativeModules[viewConfig.Manager];
-        const constants: {[string]: mixed} = {};
-        viewManager &&
-          Object.keys(viewManager).forEach(key => {
-            const value = viewManager[key];
-            if (typeof value !== 'function') {
-              constants[key] = value;
-            }
-          });
-        return constants;
-      },
-    });
-    defineLazyObjectProperty(viewConfig, 'Commands', {
-      get: () => {
-        const viewManager = NativeModules[viewConfig.Manager];
-        const commands: {[string]: number} = {};
-        let index = 0;
-        viewManager &&
-          Object.keys(viewManager).forEach(key => {
-            const value = viewManager[key];
-            if (typeof value === 'function') {
-              commands[key] = index++;
-            }
-          });
-        return commands;
-      },
-    });
-  }
-}
-
-/**
- * Copies the ViewManager constants and commands into UIManager. This is
- * only needed for iOS, which puts the constants in the ViewManager
- * namespace instead of UIManager, unlike Android.
- */
-if (Platform.OS === 'ios') {
-  Object.keys(getConstants()).forEach(viewName => {
-    lazifyViewManagerConfig(viewName);
-  });
-} else if (getConstants().ViewManagerNames) {
-  NativeUIManager.getConstants().ViewManagerNames.forEach(viewManagerName => {
-    defineLazyObjectProperty(NativeUIManager, viewManagerName, {
-      get: () => NativeUIManager.getConstantsForViewManager(viewManagerName),
-    });
-  });
-}
-
-if (!global.nativeCallSyncHook) {
-  Object.keys(getConstants()).forEach(viewManagerName => {
-    if (!UIManagerProperties.includes(viewManagerName)) {
-      if (!viewManagerConfigs[viewManagerName]) {
-        viewManagerConfigs[viewManagerName] = getConstants()[viewManagerName];
+    function lazifyViewManagerConfig(viewName: string) {
+      const viewConfig = getConstants()[viewName];
+      viewManagerConfigs[viewName] = viewConfig;
+      if (viewConfig.Manager) {
+        defineLazyObjectProperty(viewConfig, 'Constants', {
+          get: () => {
+            const viewManager = NativeModules[viewConfig.Manager];
+            const constants: {[string]: mixed} = {};
+            viewManager &&
+              Object.keys(viewManager).forEach(key => {
+                const value = viewManager[key];
+                if (typeof value !== 'function') {
+                  constants[key] = value;
+                }
+              });
+            return constants;
+          },
+        });
+        defineLazyObjectProperty(viewConfig, 'Commands', {
+          get: () => {
+            const viewManager = NativeModules[viewConfig.Manager];
+            const commands: {[string]: number} = {};
+            let index = 0;
+            viewManager &&
+              Object.keys(viewManager).forEach(key => {
+                const value = viewManager[key];
+                if (typeof value === 'function') {
+                  commands[key] = index++;
+                }
+              });
+            return commands;
+          },
+        });
       }
-      defineLazyObjectProperty(NativeUIManager, viewManagerName, {
-        get: () => {
-          console.warn(
-            `Accessing view manager configs directly off UIManager via UIManager['${viewManagerName}'] ` +
-              `is no longer supported. Use UIManager.getViewManagerConfig('${viewManagerName}') instead.`,
-          );
-          // $FlowFixMe
-          return UIManagerJS.getViewManagerConfig(viewManagerName);
+    }
+
+    /**
+     * Copies the ViewManager constants and commands into UIManager. This is
+     * only needed for iOS, which puts the constants in the ViewManager
+     * namespace instead of UIManager, unlike Android.
+     */
+    if (Platform.OS === 'ios') {
+      Object.keys(getConstants()).forEach(viewName => {
+        lazifyViewManagerConfig(viewName);
+      });
+    } else if (getConstants().ViewManagerNames) {
+      NativeUIManager.getConstants().ViewManagerNames.forEach(
+        viewManagerName => {
+          defineLazyObjectProperty(NativeUIManager, viewManagerName, {
+            get: () =>
+              NativeUIManager.getConstantsForViewManager(viewManagerName),
+          });
         },
+      );
+    }
+
+    if (!global.nativeCallSyncHook) {
+      Object.keys(getConstants()).forEach(viewManagerName => {
+        if (!UIManagerProperties.includes(viewManagerName)) {
+          if (!viewManagerConfigs[viewManagerName]) {
+            viewManagerConfigs[viewManagerName] =
+              getConstants()[viewManagerName];
+          }
+          defineLazyObjectProperty(NativeUIManager, viewManagerName, {
+            get: () => {
+              console.warn(
+                `Accessing view manager configs directly off UIManager via UIManager['${viewManagerName}'] ` +
+                  `is no longer supported. Use UIManager.getViewManagerConfig('${viewManagerName}') instead.`,
+              );
+              // $FlowFixMe
+              return UIManagerJS.getViewManagerConfig(viewManagerName);
+            },
+          });
+        }
       });
     }
-  });
-}
-
+  },
+};
 module.exports = UIManagerJS;

@@ -103,7 +103,8 @@ function prefetch(url: string): Promise<boolean> {
 }
 
 async function queryCache(
-  urls: Array<string>): Promise<{[string]: 'memory' | 'disk' | 'disk/memory', ...}> {
+  urls: Array<string>,
+): Promise<{[string]: 'memory' | 'disk' | 'disk/memory', ...}> {
   return NativeImageLoaderWin32.queryCache(urls);
 }
 
