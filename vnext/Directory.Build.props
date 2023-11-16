@@ -19,8 +19,8 @@
     <FollyVersion>2022.11.28.00</FollyVersion>
     <FollyCommitHash>6ed36117cdc4831f3a3951e013ae76b405e88e15</FollyCommitHash>
     <!-- When bumping the fmt version, be sure to bump the git hash of that version's commit and build fmt.vcxproj (to update its cgmanifest.json) too. -->
-    <FmtVersion>8.0.0</FmtVersion>
-    <FmtCommitHash>9e8b86fd2d9806672cc73133d21780dd182bfd24</FmtCommitHash>
+    <FmtVersion>10.1.0</FmtVersion>
+    <FmtCommitHash>ca2e3685b160617d3d95fcd9e789c4e06ca88</FmtCommitHash>
     <!-- Commit hash for https://github.com/microsoft/node-api-jsi code. -->
     <NodeApiJsiCommitHash>53b897b03c1c7e57c3372acc6234447a44e150d6</NodeApiJsiCommitHash>
   </PropertyGroup>
