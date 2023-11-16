@@ -196,9 +196,9 @@ static inline T const getFieldValue(
       field, setter, yoga::Dimension::Height, heightStr);
 
 #define REBUILD_FIELD_YG_GUTTER(field, setter, rowGapStr, columnGapStr, gapStr)      \
-  REBUILD_YG_FIELD_SWITCH_CASE_INDEXED(field, setter, yoga::Gutter::Row, rowGapStr);       \
-  REBUILD_YG_FIELD_SWITCH_CASE_INDEXED(field, setter, yoga::Gutter::Column, columnGapStr); \
-  REBUILD_YG_FIELD_SWITCH_CASE_INDEXED(field, setter, yoga::Gutter::All, gapStr);
+  REBUILD_YG_FIELD_SWITCH_CASE_INDEXED_SETTER(field, setter, yoga::Gutter::Row, rowGapStr);       \
+  REBUILD_YG_FIELD_SWITCH_CASE_INDEXED_SETTER(field, setter, yoga::Gutter::Column, columnGapStr); \
+  REBUILD_YG_FIELD_SWITCH_CASE_INDEXED_SETTER(field, setter, yoga::Gutter::All, gapStr);
 
 #define REBUILD_FIELD_YG_EDGES(field, prefix, suffix)                          \
   REBUILD_YG_FIELD_SWITCH_CASE_INDEXED(                                        \
