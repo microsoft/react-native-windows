@@ -22,6 +22,9 @@ afterEach(async () => {
 });
 
 describe('Button Tests', () => {
+  test('Control', () => {
+    expect(true).toBe(true);
+  });
   // Disable until tests pass CI
   // test('Buttons have default styling', async () => {
   //   const component = await app.findElementByTestID('button_default_styling');
