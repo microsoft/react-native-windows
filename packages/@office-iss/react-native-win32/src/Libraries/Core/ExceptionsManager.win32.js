@@ -109,7 +109,8 @@ function reportException(
       isComponentError: !!e.isComponentError,
     });
   }
-  if (isFatal || e.type !== 'warn') { // [Win32] Always call into NativeExceptionsManager - even on debug
+  // [Win32] Always call into NativeExceptionsManager - even on debug
+  if (isFatal || e.type !== 'warn') {
     const NativeExceptionsManager =
       require('./NativeExceptionsManager').default;
     if (NativeExceptionsManager) {
