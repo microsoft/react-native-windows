@@ -74,6 +74,8 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
 
   IInspectable GetUiaProvider() noexcept;
 
+  // When driving the rootview without an island
+  void SetWindow(uint64_t hwnd) noexcept;
   int64_t SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept;
 
  public: // ICompositionRootView
@@ -99,6 +101,7 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
   winrt::Microsoft::UI::Content::ContentIsland m_island{nullptr};
 #endif
 
+  HWND m_hwnd{0};
   bool m_isInitialized{false};
   bool m_isJSViewAttached{false};
   IReactDispatcher m_uiDispatcher{nullptr};
