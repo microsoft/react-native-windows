@@ -1208,6 +1208,355 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Words 1`]
 }
 `;
 
+exports[`TextInput Tests TextInputs can be editable 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "textinput-editable",
+    "ControlType": 50004,
+    "HelpText": "editable text input using editable prop",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "editable text input using editable prop",
+  },
+  "Visual Tree": {
+    "Children": [
+      {
+        "Offset": [
+          0,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          1,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          -1,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          -1,
+          1,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          -1,
+          -1,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          1,
+          -1,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          0,
+          -1,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          0,
+          1,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          0,
+          0,
+          0,
+        ],
+        "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "textinput-editable",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      916,
+      29,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`TextInput Tests TextInputs can be set to not editable 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "textinput-not-editable",
+    "ControlType": 50004,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "",
+  },
+  "Visual Tree": {
+    "Children": [
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          0,
+          0,
+          0,
+        ],
+        "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "textinput-not-editable",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      916,
+      22,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`TextInput Tests TextInputs can be set to not editable 2 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "textinput-not-editable2",
+    "ControlType": 50004,
+    "HelpText": "uneditable text input using editable prop",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "uneditable text input using editable prop",
+  },
+  "Visual Tree": {
+    "Children": [
+      {
+        "Offset": [
+          0,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          1,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          -1,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          -1,
+          1,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          -1,
+          -1,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          1,
+          -1,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          0,
+          -1,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          0,
+          1,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          0,
+          0,
+          0,
+        ],
+        "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "textinput-not-editable2",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      916,
+      28,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
 exports[`TextInput Tests TextInputs can have a background color 1`] = `
 {
   "Automation Tree": {
@@ -3316,6 +3665,308 @@ exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with U
     "Size": [
       892,
       29,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`TextInput Tests TextInputs can set their readOnly prop to false 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "textinput-readonly-false",
+    "ControlType": 50004,
+    "HelpText": "editable text input using readOnly prop",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "editable text input using readOnly prop",
+  },
+  "Visual Tree": {
+    "Children": [
+      {
+        "Offset": [
+          0,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          1,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          -1,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          -1,
+          1,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          -1,
+          -1,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          1,
+          -1,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          0,
+          -1,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          0,
+          1,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          0,
+          0,
+          0,
+        ],
+        "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "textinput-readonly-false",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      916,
+      28,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`TextInput Tests TextInputs can set their readOnly prop to true 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "textinput-readyonly",
+    "ControlType": 50004,
+    "HelpText": "uneditable text input using readOnly prop",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "uneditable text input using readOnly prop",
+  },
+  "Visual Tree": {
+    "Children": [
+      {
+        "Offset": [
+          0,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          1,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          -1,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          -1,
+          1,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          -1,
+          -1,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          1,
+          -1,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          0,
+          -1,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          0,
+          1,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          0,
+          0,
+          0,
+        ],
+        "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "textinput-readyonly",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      916,
+      28,
     ],
     "Visual Type": "SpriteVisual",
   },

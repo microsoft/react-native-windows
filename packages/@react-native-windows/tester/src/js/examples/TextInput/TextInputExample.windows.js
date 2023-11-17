@@ -398,6 +398,7 @@ const examples: Array<RNTesterModuleExample> = [
           defaultValue="Can't touch this! (>'-')> ^(' - ')^ <('-'<) (>'-')> ^(' - ')^"
           editable={false}
           style={styles.singleLine}
+          testID="textinput-not-editable"
         />
       );
     },
@@ -452,21 +453,25 @@ const examples: Array<RNTesterModuleExample> = [
             placeholder="editable text input using editable prop"
             style={styles.default}
             editable
+            testID="textinput-editable"
           />
           <TextInput
             placeholder="uneditable text input using editable prop"
             style={styles.default}
             editable={false}
+            testID="textinput-not-editable2"
           />
           <TextInput
             placeholder="editable text input using readOnly prop"
             style={styles.default}
             readOnly={false}
+            testID="textinput-readonly-false"
           />
           <TextInput
             placeholder="uneditable text input using readOnly prop"
             style={styles.default}
             readOnly
+            testID="textinput-readyonly"
           />
         </View>
       );
