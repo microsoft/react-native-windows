@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Include RuntimeExecutor.h consistently",
-  "packageName": "react-native-windows",
-  "email": "ericroz@meta.com",
-  "dependentChangeType": "patch"
-}
