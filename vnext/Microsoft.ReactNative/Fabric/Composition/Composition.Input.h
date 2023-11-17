@@ -145,7 +145,7 @@ struct PointerPoint : PointerPointT<PointerPoint> {
 #ifdef USE_WINUI3
   PointerPoint(const winrt::Microsoft::UI::Input::PointerPoint &pp);
 #endif
-  PointerPoint(uint32_t msg, uint64_t wParam, int64_t lParam, float scaleFactor);
+  PointerPoint(HWND hwnd, uint32_t msg, uint64_t wParam, int64_t lParam, float scaleFactor);
 
   uint32_t FrameId() noexcept;
   bool IsInContact() noexcept;
@@ -164,6 +164,8 @@ struct PointerPoint : PointerPointT<PointerPoint> {
 #ifdef USE_WINUI3
   winrt::Microsoft::UI::Input::PointerPoint m_sysPointerPoint{nullptr};
 #endif
+  // Non Windows::Input
+  HWND m_hwnd;
   // WM_POINTER*
   POINTER_INFO m_pi = {0};
   // WM_*MOUSE

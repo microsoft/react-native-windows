@@ -1,8 +1,41 @@
 # Change Log - @react-native-windows/automation-channel
 
-This log was last generated on Sat, 11 Nov 2023 06:17:20 GMT and should not be manually modified.
+This log was last generated on Fri, 17 Nov 2023 06:15:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.12.78
+
+Fri, 17 Nov 2023 06:15:10 GMT
+
+### Patches
+
+- Change Hermes package version to 0.1.18 (vmorozov@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.739
+
+## 0.12.77
+
+Thu, 16 Nov 2023 06:13:44 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.738
+
+## 0.12.76
+
+Wed, 15 Nov 2023 06:14:14 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.737
+
+## 0.12.75
+
+Tue, 14 Nov 2023 06:16:22 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.736
 
 ## 0.12.74
 
