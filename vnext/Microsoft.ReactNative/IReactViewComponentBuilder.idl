@@ -7,9 +7,60 @@ import "ViewProps.idl";
 
 namespace Microsoft.ReactNative
 {
+  [webhosthidden]
+  [experimental]
+  enum LayoutDirection
+  {
+    Undefined = 0,
+    LeftToRight = 1,
+    RightToLeft = 2,
+  };
+
+  [webhosthidden]
+  [experimental]
+  runtimeclass LayoutContext {
+    Single PointScaleFactor { get; set; };
+    Boolean SwapLeftAndRightInRTL { get; set; };
+    Single FontSizeMultiplier{ get; set; };
+    Windows.Foundation.Point ViewportOffset { get; set; };
+  };
+
+  [webhosthidden]
+  [experimental]
+  struct LayoutConstraints {
+    Windows.Foundation.Size MinimumSize;
+    Windows.Foundation.Size MaximumSize;
+    LayoutDirection LayoutDirection;
+  };
+
   [experimental]
   DOC_STRING("A delegate that creates a @IComponentProps object for an instance of @ViewProps. See @IReactViewComponentBuilder.SetCreateProps")
   delegate IComponentProps ViewPropsFactory(ViewProps props);
+
+  [experimental]
+  DOC_STRING("A delegate that updates the state for an instance of a ViewComponent. See @IReactViewComponentBuilder.SetStateUpdater")
+  delegate void StateUpdater(Object componentHandle, IComponentState state);
+
+  [experimental]
+  delegate Windows.Foundation.Size MeasureContentHandler(ShadowNode shadowNode, LayoutContext layoutContext, LayoutConstraints layoutConstraints);
+
+  [experimental]
+  delegate void LayoutHandler(ShadowNode shadowNode, LayoutContext layoutContext);
+
+  [experimental]
+  delegate void ViewShadowNodeFactory(ShadowNode shadowNode);
+
+  [experimental]
+  delegate void ViewShadowNodeCloner(ShadowNode shadowNode, ShadowNode sourceShadowNode);
+
+  [webhosthidden]
+  [experimental]
+  DOC_STRING(".")
+  interface IComponentState 
+  {
+    Object Data { get; };
+    void UpdateState(Object data);
+  };
 
   [webhosthidden]
   [experimental]
@@ -18,6 +69,27 @@ namespace Microsoft.ReactNative
   {
     DOC_STRING("Create an implementation of your custom Props type that will be passed to your components @Composition.ICompositionViewComponent.UpdateProps method.")
     void SetCreateProps(ViewPropsFactory impl);
+
+    void SetCreateShadowNode(ViewShadowNodeFactory impl);
+    void SetShadowNodeCloner(ViewShadowNodeCloner impl);
+    void SetMeasureContentHandler(MeasureContentHandler impl);
+    void SetLayoutHandler(LayoutHandler impl);
+
+    DOC_STRING("Called whenever the state changes.")
+    // (Object handle, IComponentState state) => void
+    void SetStateUpdater(StateUpdater impl);
+  };
+
+  unsealed runtimeclass ShadowNode
+  {
+    void EnsureUnsealed();
+    Object Tag { get; set; };
+    Object StateData{ get; set; };
+  };
+
+  runtimeclass YogaLayoutableShadowNode : ShadowNode
+  {
+    void Layout(LayoutContext layoutContext);
   };
 
 } // namespace Microsoft.ReactNative

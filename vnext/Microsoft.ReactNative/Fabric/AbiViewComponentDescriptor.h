@@ -6,20 +6,10 @@
 #include <react/renderer/components/view/ConcreteViewShadowNode.h>
 #include <react/renderer/core/ComponentDescriptor.h>
 #include "AbiViewProps.h"
+#include "AbiViewShadowNode.h"
 #include "winrt/Microsoft.ReactNative.h"
 
 namespace Microsoft::ReactNative {
-
-extern const char AbiViewComponentName[];
-
-class AbiViewState {
- public:
-  AbiViewState() = default;
-};
-
-// Need to replace ConcreteShadowNode template usage with a specific impl that can have a different name per type
-using AbiViewShadowNode = facebook::react::
-    ConcreteViewShadowNode<AbiViewComponentName, AbiViewProps, facebook::react::ViewEventEmitter, AbiViewState>;
 
 class AbiViewComponentDescriptor : public facebook::react::ComponentDescriptor {
   using ShadowNodeT = AbiViewShadowNode;

@@ -17,6 +17,14 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
  public: // IReactViewComponentBuilder
   void SetCreateProps(ViewPropsFactory impl) noexcept;
 
+  // (Object handle, Microsoft.ReactNative.IComponentState state) => void
+  void SetStateUpdater(StateUpdater impl) noexcept;
+
+  void SetCreateShadowNode(ViewShadowNodeFactory impl) noexcept;
+  void SetShadowNodeCloner(ViewShadowNodeCloner impl) noexcept;
+  void SetMeasureContentHandler(MeasureContentHandler impl) noexcept;
+  void SetLayoutHandler(LayoutHandler impl) noexcept;
+
  public: // Composition::IReactCompositionViewComponentBuilder
   // (ICompositionContext) => Handle
   void SetCreateView(CompositionComponentFactory impl) noexcept;
@@ -44,6 +52,10 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
 
  public:
   IComponentProps CreateProps(ViewProps props) noexcept;
+  void CreateShadowNode(ShadowNode shadowNode) noexcept;
+  void CloneShadowNode(ShadowNode shadowNode, ShadowNode sourceShadowNode) noexcept;
+  MeasureContentHandler MeasureContentHandler() const noexcept;
+  LayoutHandler LayoutHandler() const noexcept;
 
   winrt::Windows::Foundation::IInspectable CreateView(IReactContext reactContext, ICompositionContext context) noexcept;
   bool HandleCommand(
@@ -51,6 +63,7 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
       winrt::hstring commandName,
       IJSValueReader args) noexcept;
   void UpdateProps(winrt::Windows::Foundation::IInspectable handle, IComponentProps props) noexcept;
+  void UpdateState(winrt::Windows::Foundation::IInspectable handle, IComponentState state) noexcept;
   void UpdateLayoutMetrics(winrt::Windows::Foundation::IInspectable handle, LayoutMetrics metrics) noexcept;
   void FinalizeUpdates(winrt::Windows::Foundation::IInspectable handle) noexcept;
   IVisual CreateVisual(winrt::Windows::Foundation::IInspectable handle) noexcept;
@@ -87,6 +100,11 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
 
  private:
   ViewPropsFactory m_propsFactory;
+  StateUpdater m_stateUpdater;
+  ViewShadowNodeFactory m_shadowNodeFactory;
+  ViewShadowNodeCloner m_shadowNodeCloner;
+  winrt::Microsoft::ReactNative::MeasureContentHandler m_measureContent;
+  winrt::Microsoft::ReactNative::LayoutHandler m_layoutHandler;
 
   CompositionComponentFactory m_createView;
   CommandHandler m_commandHandler;

@@ -80,6 +80,7 @@ struct AbiCompositionViewComponentView : CompositionBaseComponentView {
 
   winrt::IInspectable m_handle;
   winrt::Microsoft::ReactNative::IReactViewComponentBuilder m_builder;
+  winrt::Microsoft::ReactNative::IComponentState m_state;
   std::shared_ptr<AbiViewProps const> m_props;
   winrt::Microsoft::ReactNative::Composition::IVisual m_visual{nullptr};
 };
