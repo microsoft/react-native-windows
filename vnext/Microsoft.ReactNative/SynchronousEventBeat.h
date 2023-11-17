@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 #include <NativeModules.h>
+#include <ReactCommon/RuntimeExecutor.h>
 #include <react/renderer/core/EventBeat.h>
 #include <react/renderer/runtimescheduler/RuntimeScheduler.h>
-#include <runtimeexecutor/ReactCommon/RuntimeExecutor.h>
 
 namespace Microsoft::ReactNative {
 

@@ -2,6 +2,27 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Fri, 17 Nov 2023 06:15:10 GMT",
+      "version": "0.12.78",
+      "tag": "@react-native-windows/automation-channel_v0.12.78",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "922e3bfb3442f030bf64eb90f36fc17abc42d373",
+            "comment": "Change Hermes package version to 0.1.18"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.739",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 16 Nov 2023 06:13:44 GMT",
       "version": "0.12.77",
       "tag": "@react-native-windows/automation-channel_v0.12.77",
