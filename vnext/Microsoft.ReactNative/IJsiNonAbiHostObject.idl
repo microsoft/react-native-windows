@@ -10,9 +10,9 @@ namespace Microsoft.ReactNative
   [version(0)]
   [experimental]
   DOC_STRING(
-    "The `IJsiNonAbiHostObject` helps with passing non-ABI C++ TurboModules "
-    "via @ReactModuleProvider. Since React Native Windows already uses @IReactNonAbiValue "
-    "internally to represent attributed native modules, this wrapper is needed to have an "
-    "alternate interface to type check against.")
+    "The @IJsiNonAbiHostObject helps register C++ TurboModules to JSI runtime instances "
+    "that bypass ABI via @ReactModuleProvider. Since React Native Windows already uses "
+    "@IReactNonAbiValue internally to represent attributed native modules, this wrapper "
+    "is needed to have an alternate interface to type check against.")
   interface IJsiNonAbiHostObject {}
 } // namespace Microsoft.ReactNative
