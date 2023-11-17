@@ -188,7 +188,7 @@
                     command: restore
                     restoreSolution: vnext/Microsoft.ReactNative.sln
                     feedsToUse: config
-                    nugetConfigPath: $(Build.SourcesDirectory)/vnext/NuGet.config
+                    nugetConfigPath: $(Build.SourcesDirectory)/NuGet.Config
                     verbosityRestore: Detailed # Options: quiet, normal, detailed
 
                 - task: DownloadPipelineArtifact@1
