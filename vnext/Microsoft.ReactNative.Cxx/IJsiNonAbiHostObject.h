@@ -3,8 +3,8 @@
 
 #pragma once
 
-#include "winrt/Microsoft.ReactNative.h"
 #include "jsi/jsi.h"
+#include "winrt/Microsoft.ReactNative.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
@@ -15,11 +15,6 @@ struct JsiNonAbiHostObject : winrt::implements<JsiNonAbiHostObject, IJsiNonAbiHo
 
   std::shared_ptr<facebook::jsi::HostObject> HostObject() const noexcept {
     return m_hostObject;
-  }
-
- public: // IJsiNonAbiHostObject
-  bool HasValue() const noexcept {
-    return !!m_hostObject;
   }
 
  private:

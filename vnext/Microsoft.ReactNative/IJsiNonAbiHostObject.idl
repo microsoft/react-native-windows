@@ -6,13 +6,13 @@
 namespace Microsoft.ReactNative
 {
   [webhosthidden]
+  [uuid("62bb563d-865a-4131-b576-f91c90c7b6f7")] // uuid needed for empty interfaces
+  [version(0)]
+  [experimental]
   DOC_STRING(
     "The `IJsiNonAbiHostObject` helps with passing non-ABI C++ TurboModules "
     "via @ReactModuleProvider. Since React Native Windows already uses @IReactNonAbiValue "
     "internally to represent attributed native modules, this wrapper is needed to have an "
     "alternate interface to type check against.")
-  interface IJsiNonAbiHostObject {
-    DOC_STRING("Gets a value indicating whether the object has a value. This is just a dummy method to avoid issues with empty interfaces in C++/WinRT.")
-    Boolean HasValue { get; };
-  }
+  interface IJsiNonAbiHostObject {}
 } // namespace Microsoft.ReactNative
