@@ -2813,7 +2813,7 @@
     hermes-parser "0.16.0"
     nullthrows "^1.1.1"
 
-"@react-native/metro-config@0.74.0", "@react-native/metro-config@^0.74.0":
+"@react-native/metro-config@0.74.0", "@react-native/metro-config@0.74.0-nightly-20231016-44660019e", "@react-native/metro-config@^0.74.0":
   version "0.74.0"
   resolved "https://registry.yarnpkg.com/@react-native/metro-config/-/metro-config-0.74.0.tgz#80451318ce05fe72e22d5111d88fbc5c55426a0a"
   integrity sha512-ZdCr9mGncDXAAS8sEoUoen7oGQPIubRwwQUsM8eT+0nWj1felbLd+o5W9u3ChnM9DMVOVTBFEimq8Dbtkm04Mg==
