@@ -11,7 +11,8 @@
     <!-- We are a tool, so on all platforms force win-x64 -->
     <PlatformTarget>x64</PlatformTarget>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-
+    <SelfContained>true</SelfContained>
+    
     <Nullable>enable</Nullable>
     <LangVersion>8.0</LangVersion>
   </PropertyGroup>
