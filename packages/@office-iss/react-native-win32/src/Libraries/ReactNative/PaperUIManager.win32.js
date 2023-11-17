@@ -72,6 +72,7 @@ function getViewManagerConfig(viewManagerName: string): any {
     triedLoadingConfig.add(viewManagerName);
     if (result != null && result.viewConfig != null) {
       getConstants()[viewManagerName] = result.viewConfig;
+      // $FlowFixMe[cannot-resolve-name]
       lazifyViewManagerConfig(viewManagerName);
     }
   }

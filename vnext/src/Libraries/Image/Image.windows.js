@@ -171,19 +171,25 @@ let BaseImage: AbstractImageIOS = React.forwardRef((props, forwardedRef) => {
         // windows]
 
         return (
-          <ImageViewNativeComponent
-            accessibilityState={_accessibilityState}
-            {...restProps}
-            accessible={props.alt !== undefined ? true : props.accessible}
-            accessibilityLabel={accessibilityLabel ?? props.alt}
-            ref={forwardedRef}
-            style={style}
-            // $FlowFixMe[incompatible-type]
-            resizeMode={resizeMode}
-            tintColor={tintColor}
-            source={sources}
-            internal_analyticTag={analyticTag}
-          />
+          <ImageAnalyticsTagContext.Consumer>
+            {analyticTag => {
+              return (
+                <ImageViewNativeComponent
+                  accessibilityState={_accessibilityState}
+                  {...restProps}
+                  accessible={props.alt !== undefined ? true : props.accessible}
+                  accessibilityLabel={accessibilityLabel ?? props.alt}
+                  ref={forwardedRef}
+                  style={style}
+                  // $FlowFixMe[incompatible-type]
+                  resizeMode={resizeMode}
+                  tintColor={tintColor}
+                  source={sources}
+                  internal_analyticTag={analyticTag}
+                />
+              );
+            }}
+          </ImageAnalyticsTagContext.Consumer>
         );
       }}
     </TextAncestor.Consumer>

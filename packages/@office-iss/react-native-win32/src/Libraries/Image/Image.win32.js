@@ -48,7 +48,7 @@ function getSize(
   NativeImageLoaderWin32.getSize(
     uri,
     (width: number, height: number, err?: string) => {
-      if (!err) {
+      if (err === null || err === '') {
         success(width, height);
       } else {
         if (failure) {
@@ -197,18 +197,25 @@ let BaseImage: AbstractImageIOS = React.forwardRef((props, forwardedRef) => {
         // Win32]
 
         return (
-          <ImageViewNativeComponent
-            accessibilityState={_accessibilityState}
-            {...restProps}
-            accessible={props.alt !== undefined ? true : props.accessible}
-            accessibilityLabel={accessibilityLabel ?? props.alt}
-            ref={forwardedRef}
-            style={style}
-            resizeMode={resizeMode}
-            tintColor={tintColor}
-            source={sources}
-            internal_analyticTag={analyticTag}
-          />
+          <ImageAnalyticsTagContext.Consumer>
+            {analyticTag => {
+              return (
+                <ImageViewNativeComponent
+                  accessibilityState={_accessibilityState}
+                  {...restProps}
+                  accessible={props.alt !== undefined ? true : props.accessible}
+                  accessibilityLabel={accessibilityLabel ?? props.alt}
+                  ref={forwardedRef}
+                  style={style}
+                  // $FlowFixMe[incompatible-type]
+                  resizeMode={resizeMode}
+                  tintColor={tintColor}
+                  source={sources}
+                  internal_analyticTag={analyticTag}
+                />
+              );
+            }}
+          </ImageAnalyticsTagContext.Consumer>
         );
       }}
     </TextAncestor.Consumer>

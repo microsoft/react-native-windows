@@ -20,7 +20,7 @@ export type PlatformConstantsWin32 = {|
     prerelease: ?string | number,
   |},
   forceTouchAvailable: boolean,
-  osVersion: string,
+  osVersion: number,
   systemName: string,
   interfaceIdiom: string,
   isMacCatalyst?: boolean,
