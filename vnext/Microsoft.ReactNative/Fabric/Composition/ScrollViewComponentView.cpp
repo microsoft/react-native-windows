@@ -163,6 +163,9 @@ void ScrollViewComponentView::updateProps(
   if (!oldProps || oldViewProps.backgroundColor != newViewProps.backgroundColor) {
     updateBackgroundColor(newViewProps.backgroundColor);
   }
+  if (oldViewProps.testId != newViewProps.testId) {
+    m_visual.Comment(winrt::to_hstring(newViewProps.testId));
+  }
 
   // update BaseComponentView props
   updateShadowProps(oldViewProps, newViewProps, m_visual);
