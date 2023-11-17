@@ -14,7 +14,7 @@ namespace Microsoft::ReactNative {
 class AbiStateData final {
  public:
   AbiStateData() = default;
-  AbiStateData(winrt::IInspectable data) : userdata(data) {}
+  AbiStateData(winrt::Windows::Foundation::IInspectable data) : userdata(data) {}
   winrt::IInspectable userdata;
 };
 
