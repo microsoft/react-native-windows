@@ -101,7 +101,4 @@ namespace Microsoft.ReactNative.Composition
 
   };
 
-
-
-
 } // namespace Microsoft.ReactNative

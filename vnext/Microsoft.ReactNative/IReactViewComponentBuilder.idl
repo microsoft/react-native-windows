@@ -80,6 +80,9 @@ namespace Microsoft.ReactNative
     void SetStateUpdater(StateUpdater impl);
   };
 
+
+  [webhosthidden]
+  [experimental]
   unsealed runtimeclass ShadowNode
   {
     void EnsureUnsealed();
@@ -87,6 +90,8 @@ namespace Microsoft.ReactNative
     Object StateData{ get; set; };
   };
 
+  [webhosthidden]
+  [experimental]
   runtimeclass YogaLayoutableShadowNode : ShadowNode
   {
     void Layout(LayoutContext layoutContext);
