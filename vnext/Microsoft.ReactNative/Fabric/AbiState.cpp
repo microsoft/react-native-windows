@@ -5,9 +5,8 @@
 
 namespace Microsoft::ReactNative {
 
-AbiComponentState::AbiComponentState(facebook::react::State::Shared const & state)
-{
-m_state = std::static_pointer_cast<facebook::react::ConcreteState<AbiStateData> const>(state);
+AbiComponentState::AbiComponentState(facebook::react::State::Shared const &state) {
+  m_state = std::static_pointer_cast<facebook::react::ConcreteState<AbiStateData> const>(state);
 }
 
 winrt::IInspectable AbiComponentState::Data() noexcept {
@@ -15,9 +14,9 @@ winrt::IInspectable AbiComponentState::Data() noexcept {
 }
 
 void AbiComponentState::UpdateState(winrt::IInspectable data) noexcept {
-AbiStateData state;
-state.userdata = data;
-m_state->updateState(std::move(state));
+  AbiStateData state;
+  state.userdata = data;
+  m_state->updateState(std::move(state));
 }
 
-} // namespce Microsoft::ReactNative
+} // namespace Microsoft::ReactNative
