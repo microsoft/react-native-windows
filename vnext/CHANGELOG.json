@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 18 Nov 2023 06:14:50 GMT",
+      "version": "0.0.0-canary.740",
+      "tag": "react-native-windows_v0.0.0-canary.740",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "f58718e589b02d79c42f4810d4971410755644be",
+            "comment": "Fabric: Enable react-test-renderer tests in the new cpp-app template"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "c7cc92b86285a915097b34ad13b7403b42ef20c8",
+            "comment": "Release long lived JSI objects ASAP"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b84ca2d75a1983c68e8896969edbf806d91bd454",
+            "comment": "Check HTTP handler property and value exist"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 17 Nov 2023 06:15:10 GMT",
       "version": "0.0.0-canary.739",
       "tag": "react-native-windows_v0.0.0-canary.739",
