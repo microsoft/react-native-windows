@@ -83,7 +83,6 @@ export default class IntegrationTestRunner {
             )
             .join();
         throw err;
-        break;
 
       case 'failed':
         failWithoutContext('TestModule.markTestPassed(false) was called');
