@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Check HTTP handler property and value exist",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
