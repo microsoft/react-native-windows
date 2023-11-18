@@ -140,15 +140,19 @@ void DefaultBlobResource::Release(string &&blobId) noexcept /*override*/ {
 void DefaultBlobResource::AddNetworkingHandler() noexcept /*override*/ {
   auto propId = msrn::ReactPropertyId<msrn::ReactNonAbiValue<weak_ptr<IHttpModuleProxy>>>{L"HttpModule.Proxy"};
 
+  bool handlerAdded = false;
   if (auto prop = m_propertyBag.Get(propId)) {
     if (auto httpHandler = prop.Value().lock()) {
       httpHandler->AddRequestBodyHandler(m_requestBodyHandler);
       httpHandler->AddResponseHandler(m_responseHandler);
+      handlerAdded = true;
     }
-  } else {
-    // #11439 - The absence of HttpModule.Proxy may be caused by a module initialization race condition.
-    // Best-effort approach to set up the request/response handlers by exposing this interface to dependents
-    // (i.e. IHttpResource).
+  }
+
+  // #11439 - The absence of HttpModule.Proxy may be caused by a module initialization race condition.
+  // Best-effort approach to set up the request/response handlers by exposing this interface to dependents
+  // (i.e. IHttpResource).
+  if (!handlerAdded) {
     auto propId = msrn::ReactPropertyId<msrn::ReactNonAbiValue<weak_ptr<IBlobResource>>>{L"Blob.Resource"};
     m_propertyBag.Set(propId, weak_ptr<IBlobResource>(shared_from_this()));
   }
