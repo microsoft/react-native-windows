@@ -18,12 +18,9 @@ class ModalViewManager : public ControlViewManager {
   ShadowNode *createShadow() const override;
 
  protected:
-  bool UpdateProperty(
-      ShadowNodeBase *nodeToUpdate,
-      const std::string &propertyName,
-      const winrt::Microsoft::ReactNative::JSValue &propertyValue) override;
-
   XamlView CreateViewCore(int64_t tag, const winrt::Microsoft::ReactNative::JSValueObject &) override;
+
+  friend class ModalShadowNode;
 };
 
 } // namespace Microsoft::ReactNative

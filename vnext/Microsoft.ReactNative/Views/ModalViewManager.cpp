@@ -13,6 +13,19 @@
 
 namespace Microsoft::ReactNative {
 
+class ModalShadowNode : public ShadowNodeBase {
+  using Super = ShadowNodeBase;
+
+ public:
+  ModalShadowNode() = default;
+  void createView(const winrt::Microsoft::ReactNative::JSValueObject &) override;
+};
+
+void ModalShadowNode::createView(const winrt::Microsoft::ReactNative::JSValueObject &props) {
+  Super::createView(props);
+  RedBox("Modal is not implemented on Paper");
+}
+
 ModalViewManager::ModalViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
 const wchar_t *ModalViewManager::GetName() const {
@@ -27,23 +40,12 @@ void ModalViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSVa
   winrt::Microsoft::ReactNative::WriteProperty(props, L"visible", L"boolean");
 }
 
-ShadowNode *Microsoft::ReactNative::ModalViewManager::createShadow() const {
-  ShadowNode *shadowNode = Super::createShadow();
-  ShadowNodeBase *shadowNodeBase = static_cast<ShadowNodeBase *>(shadowNode);
-  shadowNodeBase->IsFocusable(false);
-  return shadowNode;
+ShadowNode *ModalViewManager::createShadow() const {
+  return new ModalShadowNode();
 }
 
 XamlView ModalViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft::ReactNative::JSValueObject &) {
-  auto contentControl = winrt::make<winrt::Microsoft::ReactNative::implementation::ViewControl>();
-  return contentControl;
-}
-
-bool ModalViewManager::UpdateProperty(
-    ShadowNodeBase *nodeToUpdate,
-    const std::string &propertyName,
-    const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
-  return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
+  return winrt::make<winrt::Microsoft::ReactNative::implementation::ViewControl>();
 }
 
 } // namespace Microsoft::ReactNative
