@@ -82,7 +82,7 @@ export default class IntegrationTestRunner {
                 }:${frame.column})`,
             )
             .join();
-        fail(err);
+        throw err;
         break;
 
       case 'failed':
@@ -136,7 +136,7 @@ export default class IntegrationTestRunner {
 function failWithoutContext(message: string) {
   const err = new Error(message);
   err.stack = '\n';
-  fail(err);
+  throw err;
 }
 
 // "Borrowed" from LogBoxInspectorStackFrame
