@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 20 Nov 2023 16:09:18 GMT",
+      "tag": "@react-native-windows/cli_v0.67.5",
+      "version": "0.67.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "996cdab2f610d48f32a71dcc4b3f300640112008",
+            "comment": "[0.67] Compliance: Rename template Nuget.config files to stop triggering multi-feed warnings"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 28 Nov 2022 16:10:31 GMT",
       "tag": "@react-native-windows/cli_v0.67.4",
       "version": "0.67.4",
