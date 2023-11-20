@@ -2788,11 +2788,6 @@
   resolved "https://registry.yarnpkg.com/@react-native/js-polyfills/-/js-polyfills-0.74.0-nightly-20231016-44660019e.tgz#63a4048cfe578e090e72d8fc05f43dc2a9fad8e8"
   integrity sha512-sdnunPD2qD5nslfV8jdOJ0vIzRO9a+Uc/tDQo4js6NR58CyiQ0PCzGqbsr95DcSJe0y8YL9pJpZzTAvHNdbXYw==
 
-"@react-native/js-polyfills@^0.74.0":
-  version "0.74.0"
-  resolved "https://registry.yarnpkg.com/@react-native/js-polyfills/-/js-polyfills-0.74.0.tgz#54f7d728b6c8ea52d29993d86d2a9d4be08072d2"
-  integrity sha512-DMpn5l1TVkIBFe9kE54pwOI2fQYbQNZ6cto0IuCUxQVUFJBcFMJ6Gbk8jhz8tvcWuDW3xVK9AWq9DJTkuchWsQ==
-
 "@react-native/metro-babel-transformer@0.74.0", "@react-native/metro-babel-transformer@^0.74.0":
   version "0.74.0"
   resolved "https://registry.yarnpkg.com/@react-native/metro-babel-transformer/-/metro-babel-transformer-0.74.0.tgz#ed84c03621ae0d9f985def55153fc35e8a062618"
@@ -2813,13 +2808,13 @@
     hermes-parser "0.16.0"
     nullthrows "^1.1.1"
 
-"@react-native/metro-config@0.74.0", "@react-native/metro-config@0.74.0-nightly-20231016-44660019e", "@react-native/metro-config@^0.74.0":
-  version "0.74.0"
-  resolved "https://registry.yarnpkg.com/@react-native/metro-config/-/metro-config-0.74.0.tgz#80451318ce05fe72e22d5111d88fbc5c55426a0a"
-  integrity sha512-ZdCr9mGncDXAAS8sEoUoen7oGQPIubRwwQUsM8eT+0nWj1felbLd+o5W9u3ChnM9DMVOVTBFEimq8Dbtkm04Mg==
+"@react-native/metro-config@0.74.0-nightly-20231016-44660019e":
+  version "0.74.0-nightly-20231016-44660019e"
+  resolved "https://registry.yarnpkg.com/@react-native/metro-config/-/metro-config-0.74.0-nightly-20231016-44660019e.tgz#bafd5bd03d1da69c0f3a9ac701b9a7e24132ea44"
+  integrity sha512-pr+a8zf2T0JAmVZ9vZ4IIS1gCc49dr9dSt03idfsCK7txxWy7XBulRSpWEzQF/+6CSXfstHeXu2ep8vUhC54WA==
   dependencies:
-    "@react-native/js-polyfills" "^0.74.0"
-    "@react-native/metro-babel-transformer" "^0.74.0"
+    "@react-native/js-polyfills" "0.74.0-nightly-20231016-44660019e"
+    "@react-native/metro-babel-transformer" "0.74.0-nightly-20231016-44660019e"
     metro-config "0.79.1"
     metro-runtime "0.79.1"
 
