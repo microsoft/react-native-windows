@@ -56,6 +56,7 @@ void WindowsModalHostComponentView::updateLayoutMetrics(
     OuterVisual().IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
   }
 
+  // TODO: RedBox placeholder for Modal (taken from unimplementedNativeViewComponent)
   if (m_layoutMetrics.frame.size != layoutMetrics.frame.size ||
       m_layoutMetrics.pointScaleFactor != layoutMetrics.pointScaleFactor) {
     // Always make visual a min size, so that even if its laid out at zero size, its clear an unimplemented view was

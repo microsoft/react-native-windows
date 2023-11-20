@@ -19,11 +19,26 @@ class ModalShadowNode : public ShadowNodeBase {
  public:
   ModalShadowNode() = default;
   void createView(const winrt::Microsoft::ReactNative::JSValueObject &) override;
+
+  void AddView(ShadowNode &child, int64_t /*index*/) override {
+    // Not implemented
+    RedBox("Modal is not implemented on RNW Paper");
+  }
+
+  void RemoveChildAt(int64_t /*indexToRemove*/) override {
+    // Not implemented
+    RedBox("Modal is not implemented on RNW Paper");
+  }
+
+  void ReplaceChild(const XamlView & /*oldChildView*/, const XamlView & /*newChildView*/) override {
+    // Not implemented
+    RedBox("Modal is not implemented on RNW Paper");
+  }
 };
 
 void ModalShadowNode::createView(const winrt::Microsoft::ReactNative::JSValueObject &props) {
   Super::createView(props);
-  RedBox("Modal is not implemented on Paper");
+  RedBox("Modal is not implemented on RNW Paper");
 }
 
 ModalViewManager::ModalViewManager(const Mso::React::IReactContext &context) : Super(context) {}
