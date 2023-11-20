@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 04 May 2023 05:12:48 GMT and should not be manually modified.
+This log was last generated on Mon, 20 Nov 2023 16:09:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.68.35
+
+Mon, 20 Nov 2023 16:09:16 GMT
+
+### Patches
+
+- [0.68] Fix Secure Supply Chain compliance issues (jthysell@microsoft.com)
+- [0.68] Compliance: Rename template Nuget.config files to stop triggering multi-feed warnings (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.68.9
 
 ## 0.68.34
 
