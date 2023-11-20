@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 30 Oct 2023 15:15:13 GMT and should not be manually modified.
+This log was last generated on Mon, 20 Nov 2023 21:39:20 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.72.10
+
+Mon, 20 Nov 2023 21:39:20 GMT
+
+### Patches
+
+- Call exceptions manager even in DEV bundles (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.72.9
 
