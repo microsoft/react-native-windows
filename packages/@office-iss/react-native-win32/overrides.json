@@ -232,6 +232,12 @@
       "file": "src/Libraries/Components/View/ViewWin32.js"
     },
     {
+      "type": "derived",
+      "file": "src/Libraries/Core/ExceptionsManager.win32.js",
+      "baseFile": "packages/react-native/Libraries/Core/ExceptionsManager.js",
+      "baseHash": "5a7a7f5bd7a70853c96422f05b59b5c2c5328ac5"
+    },
+    {
       "type": "patch",
       "file": "src/Libraries/Core/ReactNativeVersionCheck.win32.js",
       "baseFile": "packages/react-native/Libraries/Core/ReactNativeVersionCheck.js",
