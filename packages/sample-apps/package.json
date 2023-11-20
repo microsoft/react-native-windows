@@ -24,7 +24,7 @@
     "@babel/runtime": "^7.8.4",
     "@react-native-windows/cli": "0.0.0-canary.194",
     "@react-native-windows/codegen": "0.0.0-canary.72",
-    "@react-native/metro-config": "^0.74.0",
+    "@react-native/metro-config": "0.74.0-nightly-20231016-44660019e",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.4",
     "@rnw-scripts/just-task": "2.3.18",

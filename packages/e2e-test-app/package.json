@@ -33,7 +33,7 @@
     "@react-native-windows/automation-commands": "^0.1.180",
     "@react-native/babel-plugin-codegen": "0.73.0",
     "@react-native/metro-babel-transformer": "0.74.0",
-    "@react-native/metro-config": "^0.74.0",
+    "@react-native/metro-config": "0.74.0-nightly-20231016-44660019e",
     "@rnw-scripts/babel-node-config": "2.3.1",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.4",

@@ -2813,7 +2813,17 @@
     hermes-parser "0.16.0"
     nullthrows "^1.1.1"
 
-"@react-native/metro-config@0.74.0", "@react-native/metro-config@0.74.0-nightly-20231016-44660019e", "@react-native/metro-config@^0.74.0":
+"@react-native/metro-config@0.74.0-nightly-20231016-44660019e":
+  version "0.74.0-nightly-20231016-44660019e"
+  resolved "https://registry.yarnpkg.com/@react-native/metro-config/-/metro-config-0.74.0-nightly-20231016-44660019e.tgz#bafd5bd03d1da69c0f3a9ac701b9a7e24132ea44"
+  integrity sha512-pr+a8zf2T0JAmVZ9vZ4IIS1gCc49dr9dSt03idfsCK7txxWy7XBulRSpWEzQF/+6CSXfstHeXu2ep8vUhC54WA==
+  dependencies:
+    "@react-native/js-polyfills" "0.74.0-nightly-20231016-44660019e"
+    "@react-native/metro-babel-transformer" "0.74.0-nightly-20231016-44660019e"
+    metro-config "0.79.1"
+    metro-runtime "0.79.1"
+
+"@react-native/metro-config@^0.74.0":
   version "0.74.0"
   resolved "https://registry.yarnpkg.com/@react-native/metro-config/-/metro-config-0.74.0.tgz#80451318ce05fe72e22d5111d88fbc5c55426a0a"
   integrity sha512-ZdCr9mGncDXAAS8sEoUoen7oGQPIubRwwQUsM8eT+0nWj1felbLd+o5W9u3ChnM9DMVOVTBFEimq8Dbtkm04Mg==
