@@ -1,8 +1,21 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 13 Nov 2023 16:15:50 GMT and should not be manually modified.
+This log was last generated on Mon, 20 Nov 2023 16:15:28 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.73.0-preview.5
+
+Mon, 20 Nov 2023 16:15:28 GMT
+
+### Changes
+
+- Update fmt to 10.1.0 (email not defined)
+- Untrack HTTP responses when processed by IResponseHandler (#12378) (julio.rocha@microsoft.com)
+- Ensure both property and value exist for Blob's HTTP proxy (#12417) (julio.rocha@microsoft.com)
+- Release long lived JSI objects ASAP (vmorozov@microsoft.com)
+- integrate rc4 (tatianakapos@microsoft.com)
+- Change Hermes package version to 0.1.18 (vmorozov@microsoft.com)
 
 ## 0.73.0-preview.4
 

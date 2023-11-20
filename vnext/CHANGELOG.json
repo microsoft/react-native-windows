@@ -2,6 +2,51 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 20 Nov 2023 16:15:28 GMT",
+      "version": "0.73.0-preview.5",
+      "tag": "react-native-windows_v0.73.0-preview.5",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "3b2d2a56cbed144883e6ce9e943f50b4312dae76",
+            "comment": "Update fmt to 10.1.0"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "70ca7ac74a3cfd3f40ee053eb36701cb81528ead",
+            "comment": "Untrack HTTP responses when processed by IResponseHandler (#12378)"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "2013fee73c86ae6d8a21ab8231da30335371d018",
+            "comment": "Ensure both property and value exist for Blob's HTTP proxy (#12417)"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "49001fa7f780c37e5860e8cd1a14da79c0b7a0c2",
+            "comment": "Release long lived JSI objects ASAP"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d0ab2676e3a21dca55b46bbb1d4fdb349fae8a55",
+            "comment": "integrate rc4"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "bc842f753262deecded5b0ef9d13975e49b04e46",
+            "comment": "Change Hermes package version to 0.1.18"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 13 Nov 2023 16:15:50 GMT",
       "version": "0.73.0-preview.4",
       "tag": "react-native-windows_v0.73.0-preview.4",

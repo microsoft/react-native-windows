@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Ensure both property and value exist for Blob's HTTP proxy (#12417)",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}
