@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "update fmt to 10.1.0",
-  "packageName": "react-native-windows",
-  "email": "email not defined",
-  "dependentChangeType": "patch"
-}

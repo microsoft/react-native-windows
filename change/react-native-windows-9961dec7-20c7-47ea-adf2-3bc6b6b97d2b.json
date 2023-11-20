@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Untrack HTTP responses when processed by IResponseHandler (#12378)",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}
