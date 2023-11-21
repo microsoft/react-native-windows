@@ -28,11 +28,11 @@
       },
       "Microsoft.WindowsAppSDK": {
         "type": "Direct",
-        "requested": "[1.4.230913002, )",
-        "resolved": "1.4.230913002",
-        "contentHash": "l+9RshN4TsTuxL0ijFp5smbs3Y07RO7CxKBHNM/RsrsGtWvuk6edITMp4oqL9C3ufEAmpYk3dqOZRSf+sFH4Zg==",
+        "requested": "[1.5.231113000-experimental, )",
+        "resolved": "1.5.231113000-experimental",
+        "contentHash": "3DaINXYnmxHAcF0lhZq8GN/8EACowXQKCEEF3KK2FT8GRWDWHyR+lrbqiW2NxyxSoMvhVA3IfBgGEiM4IvC9Mg==",
         "dependencies": {
-          "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
+          "Microsoft.Windows.SDK.BuildTools": "10.0.22621.756"
         }
       },
       "Microsoft.Build.Tasks.Git": {
@@ -56,8 +56,8 @@
       },
       "Microsoft.Windows.SDK.BuildTools": {
         "type": "Transitive",
-        "resolved": "10.0.22621.1",
-        "contentHash": "Sp1DkYvg7yxuhamwxv+qFC66KC3paKQpwK8Q1J6XuAh6nzXIInmsDcpJ3szr0XGud4ysXojqwTfGdW01gvZ/0g=="
+        "resolved": "10.0.22621.756",
+        "contentHash": "7ZL2sFSioYm1Ry067Kw1hg0SCcW5kuVezC2SwjGbcPE61Nn+gTbH86T73G3LcEOVj0S3IZzNuE/29gZvOLS7VA=="
       },
       "common": {
         "type": "Project"
@@ -79,7 +79,7 @@
           "Folly": "[1.0.0, )",
           "Microsoft.JavaScript.Hermes": "[0.1.18, )",
           "Microsoft.SourceLink.GitHub": "[1.1.1, )",
-          "Microsoft.WindowsAppSDK": "[1.4.230913002, )",
+          "Microsoft.WindowsAppSDK": "[1.5.231113000-experimental, )",
           "ReactCommon": "[1.0.0, )",
           "boost": "[1.76.0, )"
         }

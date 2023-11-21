@@ -6,7 +6,7 @@
 
 #include <windows.h>
 
-#pragma push_macro("GetCurrentTime")
+// #pragma push_macro("GetCurrentTime")
 #undef GetCurrentTime
 
 #include <unknwn.h>
@@ -17,4 +17,4 @@
 // #include <winrt/ReactNativePicker.h>
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Foundation.h>
-#pragma pop_macro("GetCurrentTime")
+// #pragma pop_macro("GetCurrentTime")

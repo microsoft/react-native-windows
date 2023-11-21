@@ -22,6 +22,7 @@
 #include <winrt/Windows.UI.Composition.Desktop.h>
 #include <winrt/Windows.UI.Composition.h>
 
+#include "App.xaml.h"
 #include "NativeModules.h"
 #include "ReactPropertyBag.h"
 
@@ -65,7 +66,7 @@ struct WindowData {
   winrt::Microsoft::ReactNative::CompositionRootView m_compRootView{nullptr};
   winrt::Microsoft::ReactNative::ReactNativeHost m_host{nullptr};
   winrt::Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
-  bool m_useLiftedComposition{true};
+  bool m_useLiftedComposition{false};
   winrt::Windows::UI::Composition::Desktop::DesktopWindowTarget m_target{nullptr};
   LONG m_height{0};
   LONG m_width{0};
@@ -165,80 +166,79 @@ struct WindowData {
           viewOptions.ComponentName(appName);
           auto windowData = WindowData::GetFromWindow(hwnd);
 
-          if (m_compRootView)
-            break;
+          if (!m_compRootView) {
+            if (windowData->m_useLiftedComposition) {
+              m_compRootView = winrt::Microsoft::ReactNative::CompositionRootView(g_liftedCompositor);
+            } else {
+              m_compRootView = winrt::Microsoft::ReactNative::CompositionRootView();
+            }
 
-          if (windowData->m_useLiftedComposition) {
-            m_compRootView = winrt::Microsoft::ReactNative::CompositionRootView(g_liftedCompositor);
-          } else {
-            m_compRootView = winrt::Microsoft::ReactNative::CompositionRootView();
+            if (windowData->m_useLiftedComposition) {
+              // By using the MicrosoftCompositionContextHelper here, React Native Windows will use Lifted Visuals for
+              // its tree.
+              winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositionContext(
+                  InstanceSettings().Properties(),
+                  winrt::Microsoft::ReactNative::Composition::MicrosoftCompositionContextHelper::CreateContext(
+                      g_liftedCompositor));
+
+              auto bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(
+                  g_liftedCompositor, winrt::Microsoft::UI::GetWindowIdFromWindow(hwnd));
+
+              auto appContent = m_compRootView.Island();
+
+              auto invScale = 1.0f / ScaleFactor(hwnd);
+              m_compRootView.RootVisual().Scale({invScale, invScale, invScale});
+
+              /*
+                // Future versions of WinAppSDK will have more capabilities around scale and size
+                auto site = bridge.Site();
+                auto siteWindow = site.Environment();
+                auto displayScale = siteWindow.DisplayScale();
+
+                site.ParentScale(displayScale);
+                site.ActualSize({m_width / displayScale, m_height / displayScale});
+                site.ClientSize({m_width / displayScale, m_height / displayScale});
+              */
+
+              bridge.Connect(appContent);
+              bridge.Show();
+
+              m_compRootView.ScaleFactor(ScaleFactor(hwnd));
+              m_compRootView.Size({m_width / ScaleFactor(hwnd), m_height / ScaleFactor(hwnd)});
+
+              bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
+
+            } else if (!m_target) {
+              // By using the WindowsCompositionContextHelper here, React Native Windows will use System Visuals for its
+              // tree.
+              winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositionContext(
+                  InstanceSettings().Properties(),
+                  winrt::Microsoft::ReactNative::Composition::WindowsCompositionContextHelper::CreateContext(
+                      g_compositor));
+
+              auto interop = g_compositor.as<ABI::Windows::UI::Composition::Desktop::ICompositorDesktopInterop>();
+              winrt::Windows::UI::Composition::Desktop::DesktopWindowTarget target{nullptr};
+              winrt::check_hresult(interop->CreateDesktopWindowTarget(
+                  hwnd,
+                  false,
+                  reinterpret_cast<ABI::Windows::UI::Composition::Desktop::IDesktopWindowTarget **>(
+                      winrt::put_abi(target))));
+              m_target = target;
+
+              auto root = g_compositor.CreateContainerVisual();
+              root.RelativeSizeAdjustment({1.0f, 1.0f});
+              root.Offset({0, 0, 0});
+              m_target.Root(root);
+              m_compRootView.SetWindow(reinterpret_cast<uint64_t>(hwnd));
+              m_compRootView.RootVisual(
+                  winrt::Microsoft::ReactNative::Composition::WindowsCompositionContextHelper::CreateVisual(root));
+              m_compRootView.ScaleFactor(ScaleFactor(hwnd));
+              m_compRootView.Size({m_width / ScaleFactor(hwnd), m_height / ScaleFactor(hwnd)});
+            }
           }
 
           m_compRootView.ReactViewHost(
               winrt::Microsoft::ReactNative::ReactCoreInjection::MakeViewHost(host, viewOptions));
-
-          if (windowData->m_useLiftedComposition) {
-            // By using the MicrosoftCompositionContextHelper here, React Native Windows will use Lifted Visuals for its
-            // tree.
-            winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositionContext(
-                InstanceSettings().Properties(),
-                winrt::Microsoft::ReactNative::Composition::MicrosoftCompositionContextHelper::CreateContext(
-                    g_liftedCompositor));
-
-            auto bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(
-                g_liftedCompositor, winrt::Microsoft::UI::GetWindowIdFromWindow(hwnd));
-
-            auto appContent = m_compRootView.Island();
-
-            auto invScale = 1.0f / ScaleFactor(hwnd);
-            m_compRootView.RootVisual().Scale({invScale, invScale, invScale});
-
-            /*
-              // Future versions of WinAppSDK will have more capabilities around scale and size
-              auto site = bridge.Site();
-              auto siteWindow = site.Environment();
-              auto displayScale = siteWindow.DisplayScale();
-
-              site.ParentScale(displayScale);
-              site.ActualSize({m_width / displayScale, m_height / displayScale});
-              site.ClientSize({m_width / displayScale, m_height / displayScale});
-            */
-
-            bridge.Connect(appContent);
-            bridge.Show();
-
-            m_compRootView.ScaleFactor(ScaleFactor(hwnd));
-            m_compRootView.Size({m_width / ScaleFactor(hwnd), m_height / ScaleFactor(hwnd)});
-
-            bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
-
-          } else if (!m_target) {
-            // By using the WindowsCompositionContextHelper here, React Native Windows will use System Visuals for its
-            // tree.
-            winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositionContext(
-                InstanceSettings().Properties(),
-                winrt::Microsoft::ReactNative::Composition::WindowsCompositionContextHelper::CreateContext(
-                    g_compositor));
-
-            auto interop = g_compositor.as<ABI::Windows::UI::Composition::Desktop::ICompositorDesktopInterop>();
-            winrt::Windows::UI::Composition::Desktop::DesktopWindowTarget target{nullptr};
-            winrt::check_hresult(interop->CreateDesktopWindowTarget(
-                hwnd,
-                false,
-                reinterpret_cast<ABI::Windows::UI::Composition::Desktop::IDesktopWindowTarget **>(
-                    winrt::put_abi(target))));
-            m_target = target;
-
-            auto root = g_compositor.CreateContainerVisual();
-            root.RelativeSizeAdjustment({1.0f, 1.0f});
-            root.Offset({0, 0, 0});
-            m_target.Root(root);
-            m_compRootView.SetWindow(reinterpret_cast<uint64_t>(hwnd));
-            m_compRootView.RootVisual(
-                winrt::Microsoft::ReactNative::Composition::WindowsCompositionContextHelper::CreateVisual(root));
-            m_compRootView.ScaleFactor(ScaleFactor(hwnd));
-            m_compRootView.Size({m_width / ScaleFactor(hwnd), m_height / ScaleFactor(hwnd)});
-          }
         }
 
         break;
@@ -522,6 +522,9 @@ int RunPlayground(int showCmd, bool useWebDebugger) {
 }
 
 _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR /* commandLine */, int showCmd) {
+  // Island-support: Call init_apartment to initialize COM and WinRT for the thread.
+  winrt::init_apartment(winrt::apartment_type::single_threaded);
+
   WNDCLASSEXW wcex = {};
   wcex.cbSize = sizeof(WNDCLASSEX);
   wcex.style = CS_HREDRAW | CS_VREDRAW;
@@ -557,6 +560,10 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   g_liftedDispatcherQueueController =
       winrt::Microsoft::UI::Dispatching::DispatcherQueueController::CreateOnCurrentThread();
   g_liftedCompositor = winrt::Microsoft::UI::Composition::Compositor();
+
+  // Island-support: Create our custom Xaml App object. This is needed to properly use the controls and metadata
+  // in Microsoft.ui.xaml.controls.dll.
+  auto playgroundApp{winrt::make<winrt::Playground::implementation::App>()};
 #endif
 
   return RunPlayground(showCmd, false);

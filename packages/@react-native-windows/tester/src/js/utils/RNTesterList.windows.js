@@ -69,6 +69,10 @@ const Components: Array<RNTesterModuleInfo> = [
   //   module: require('../examples/Modal/ModalExample'),
   // },
   {
+    key: 'Native Component',
+    module: require('../examples-win/NativeComponents/NativeComponent'),
+  },
+  {
     key: 'NewAppScreenExample',
     module: require('../examples/NewAppScreen/NewAppScreenExample'),
   },
