@@ -55,7 +55,8 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
   IComponentProps CreateProps(ViewProps props) noexcept;
   void CreateShadowNode(ShadowNode shadowNode) noexcept;
   void CloneShadowNode(ShadowNode shadowNode, ShadowNode sourceShadowNode) noexcept;
-  winrt::Windows::Foundation::IInspectable InitialStateData(winrt::Microsoft::ReactNative::IComponentProps props) noexcept;
+  winrt::Windows::Foundation::IInspectable InitialStateData(
+      winrt::Microsoft::ReactNative::IComponentProps props) noexcept;
   MeasureContentHandler MeasureContentHandler() const noexcept;
   LayoutHandler LayoutHandler() const noexcept;
 
