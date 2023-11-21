@@ -18,6 +18,21 @@ namespace Microsoft.ReactNative
 
   [webhosthidden]
   [experimental]
+  enum EventPriority
+  {
+    SynchronousUnbatched,
+    SynchronousBatched,
+    AsynchronousUnbatched,
+    AsynchronousBatched,
+
+    Sync = SynchronousUnbatched,
+    Work = SynchronousBatched,
+    Interactive = AsynchronousUnbatched,
+    Deferred = AsynchronousBatched
+  };
+
+  [webhosthidden]
+  [experimental]
   runtimeclass LayoutContext {
     Single PointScaleFactor { get; set; };
     Boolean SwapLeftAndRightInRTL { get; set; };
@@ -53,6 +68,13 @@ namespace Microsoft.ReactNative
   [experimental]
   delegate void ViewShadowNodeCloner(ShadowNode shadowNode, ShadowNode sourceShadowNode);
 
+  [experimental]
+  delegate IInspectable InitialStateDataFactory(Microsoft.ReactNative.IComponentProps props);
+
+  [experimental]
+  delegate IInspectable StateUpdateMutation(IInspectable props);
+
+
   [webhosthidden]
   [experimental]
   DOC_STRING(".")
@@ -60,6 +82,9 @@ namespace Microsoft.ReactNative
   {
     Object Data { get; };
     void UpdateState(Object data);
+    void UpdateState(Object data, EventPriority priority);
+    void UpdateStateWithMutation(StateUpdateMutation mutation);
+    void UpdateStateWithMutation(StateUpdateMutation mutation, EventPriority priority);
   };
 
   [webhosthidden]
@@ -72,6 +97,7 @@ namespace Microsoft.ReactNative
 
     void SetCreateShadowNode(ViewShadowNodeFactory impl);
     void SetShadowNodeCloner(ViewShadowNodeCloner impl);
+    void SetInitialStateDataFactory(InitialStateDataFactory impl);
     void SetMeasureContentHandler(MeasureContentHandler impl);
     void SetLayoutHandler(LayoutHandler impl);
 

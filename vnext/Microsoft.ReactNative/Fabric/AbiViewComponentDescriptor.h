@@ -72,6 +72,11 @@ class AbiViewComponentDescriptor : public facebook::react::ComponentDescriptor {
   virtual void adopt(facebook::react::ShadowNode &shadowNode) const;
 
  private:
+  static ConcreteStateData initialStateData(
+      const facebook::react::Props::Shared & /*props*/,
+      const facebook::react::ShadowNodeFamily::Shared & /*family*/,
+      const facebook::react::ComponentDescriptor & /*componentDescriptor*/) noexcept;
+
   winrt::Microsoft::ReactNative::IReactViewComponentBuilder m_builder;
 };
 

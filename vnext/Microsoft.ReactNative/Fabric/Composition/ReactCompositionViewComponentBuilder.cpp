@@ -73,6 +73,19 @@ void ReactCompositionViewComponentBuilder::SetMeasureContentHandler(
     winrt::Microsoft::ReactNative::MeasureContentHandler impl) noexcept {
   m_measureContent = impl;
 }
+
+void ReactCompositionViewComponentBuilder::SetInitialStateDataFactory(InitialStateDataFactory impl) noexcept {
+  m_initialStateDataFactory = impl;
+}
+
+winrt::Windows::Foundation::IInspectable ReactCompositionViewComponentBuilder::InitialStateData(winrt::Microsoft::ReactNative::IComponentProps props) noexcept {
+  if (m_initialStateDataFactory) {
+    return m_initialStateDataFactory(props);
+  }
+
+  return nullptr;
+}
+
 // (ShadowNode shadowNode, LayoutContext layoutContext) => void
 void ReactCompositionViewComponentBuilder::SetLayoutHandler(
     winrt::Microsoft::ReactNative::LayoutHandler impl) noexcept {
