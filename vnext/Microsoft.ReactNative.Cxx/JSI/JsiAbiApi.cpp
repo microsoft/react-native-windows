@@ -361,24 +361,23 @@ String JsiAbiRuntime::bigintToString(const BigInt &bigint, int radix) try {
   throw;
 }
 bool JsiAbiRuntime::hasNativeState(const Object &obj) try {
-  // TODO: implement
-  UNREFERENCED_PARAMETER(obj);
-  VerifyElseCrash(false);
+  JsiObjectRef ref = AsJsiObjectRef(obj);
+  return m_runtime.HasNativeState(ref);
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
 }
 std::shared_ptr<NativeState> JsiAbiRuntime::getNativeState(const Object &obj) try {
-  // TODO: implement
-  UNREFERENCED_PARAMETER(obj);
-  VerifyElseCrash(false);
+  JsiObjectRef ref = AsJsiObjectRef(obj);
+  JsiObjectRef nativeStateRef = m_runtime.GetNativeState(ref);
+  return std::make_shared<NativeState>(nativeStateRef);
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
 }
 
 void JsiAbiRuntime::setNativeState(const Object &obj, std::shared_ptr<NativeState> state) try {
-  // TODO: implement
+  // TODO: #12425 implement
   UNREFERENCED_PARAMETER(obj);
   UNREFERENCED_PARAMETER(state);
   VerifyElseCrash(false);

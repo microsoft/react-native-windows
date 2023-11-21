@@ -912,14 +912,14 @@ bool JsiRuntime::HasNativeState(JsiObjectRef obj) try {
 }
 
 JsiObjectRef JsiRuntime::GetNativeState(JsiObjectRef obj) try {
-  // TODO: implement
+  // TODO: #12425 implement
   VerifyElseCrash(false);
 } catch (JSI_SET_ERROR) {
   throw;
 }
 
 void JsiRuntime::SetNativeState(JsiObjectRef obj, JsiObjectRef state) try {
-  // TODO: implement
+  // TODO: #12425 implement
   VerifyElseCrash(false);
 } catch (JSI_SET_ERROR) {
   throw;
