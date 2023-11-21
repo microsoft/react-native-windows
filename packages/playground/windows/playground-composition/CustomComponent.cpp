@@ -111,7 +111,7 @@ struct CustomComponent : winrt::implements<CustomComponent, winrt::IInspectable>
           */
         });
 
-    yogaXamlPanel.Background(winrt::Microsoft::UI::Xaml::Media::SolidColorBrush({255, 124, 124, 155}));
+    //yogaXamlPanel.Background(winrt::Microsoft::UI::Xaml::Media::SolidColorBrush({255, 124, 124, 155}));
     yogaXamlPanel.VerticalAlignment(winrt::Microsoft::UI::Xaml::VerticalAlignment::Stretch);
     yogaXamlPanel.HorizontalAlignment(winrt::Microsoft::UI::Xaml::HorizontalAlignment::Stretch);
 
@@ -215,7 +215,7 @@ struct CustomComponent : winrt::implements<CustomComponent, winrt::IInspectable>
         winrt::Microsoft::ReactNative::ReactCoreInjection::GetTopLevelWindowId(m_reactContext.Properties()));
 
     m_visual = m_compContext.CreateSpriteVisual();
-    m_visual.Brush(m_compContext.CreateColorBrush({255, 255, 0, 255}));
+    //m_visual.Brush(m_compContext.CreateColorBrush({255, 255, 0, 255}));
     auto parentSystemVisual =
         winrt::Microsoft::ReactNative::Composition::WindowsCompositionContextHelper::InnerVisual(m_visual)
             .as<winrt::Windows::UI::Composition::ContainerVisual>();
@@ -314,7 +314,7 @@ struct CustomComponent : winrt::implements<CustomComponent, winrt::IInspectable>
             shadowNode.as<winrt::Microsoft::ReactNative::YogaLayoutableShadowNode>().Layout(layoutContext);
           });
 
-          builder.SetInitialStateDataFactory([](const winrt::Microsoft::ReactNative::ViewProps & /*props*/) {
+          builder.SetInitialStateDataFactory([](const winrt::Microsoft::ReactNative::IComponentProps & /*props*/) {
             return winrt::make<MyStateData>(maxContraints, winrt::Windows::Foundation::Size{0, 0});
           });
         });
