@@ -368,9 +368,9 @@ bool JsiAbiRuntime::hasNativeState(const Object &obj) try {
   throw;
 }
 std::shared_ptr<NativeState> JsiAbiRuntime::getNativeState(const Object &obj) try {
-  JsiObjectRef ref = AsJsiObjectRef(obj);
-  JsiObjectRef nativeStateRef = m_runtime.GetNativeState(ref);
-  return std::make_shared<NativeState>(nativeStateRef);
+  // TODO: #12425 implement
+  UNREFERENCED_PARAMETER(obj);
+  VerifyElseCrash(false);
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
