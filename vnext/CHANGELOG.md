@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 18 Nov 2023 06:14:50 GMT and should not be manually modified.
+This log was last generated on Wed, 22 Nov 2023 06:16:28 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.741
+
+Wed, 22 Nov 2023 06:16:28 GMT
+
+### Changes
+
+- fix depcheck errors (email not defined)
 
 ## 0.0.0-canary.740
 
