@@ -16,6 +16,10 @@
 #include <winrt/Windows.UI.Core.h>
 #include <winrt/Windows.UI.ViewManagement.h>
 
+#ifdef USE_FABRIC
+#include <ReactCoreInjection.h>
+#endif
+
 using namespace winrt::Microsoft::ReactNative;
 
 namespace Microsoft::ReactNative {
@@ -32,13 +36,40 @@ DeviceInfoHolder::DeviceInfoHolder(const Mso::React::IReactContext &context) : m
 }
 
 void DeviceInfoHolder::InitDeviceInfoHolder(const Mso::React::IReactContext &context) noexcept {
+  auto deviceInfoHolder = std::make_shared<DeviceInfoHolder>(context);
+
+  deviceInfoHolder->updateDeviceInfo();
+  winrt::Microsoft::ReactNative::ReactPropertyBag pb{context.Properties()};
+  pb.Set(DeviceInfoHolderPropertyId(), std::move(deviceInfoHolder));
+
+  #ifdef USE_FABRIC
+  if (IsFabricEnabled(context.Properties())) {
+    auto hwnd = winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::GetTopLevelWindowId(
+        pb.Handle());
+
+    if (hwnd) {
+      deviceInfoHolder->m_wmSubscription = SubscribeToWindowMessage(
+          ReactNotificationService(context.Notifications()),
+          WM_WINDOWPOSCHANGED,
+          [weakHolder = std::weak_ptr(deviceInfoHolder)](HWND hwnd, const DesktopWindowMessage &dwm) {
+            if (auto strongHolder = weakHolder.lock()) {
+              const auto pos = reinterpret_cast<WINDOWPOS *>(dwm.LParam);
+              const auto newWidth = static_cast<float>(pos->cx);
+              const auto newHeight = static_cast<float>(pos->cy);
+              const auto changed =
+                  (strongHolder->m_windowWidth != newWidth) || (strongHolder->m_windowHeight != newHeight);
+              strongHolder->m_windowWidth = newWidth;
+              strongHolder->m_windowHeight = newHeight;
+              if (changed) {
+                strongHolder->notifyChanged();
+              }
+            }
+          });
+    }
+  }
+  #endif
+
   if (xaml::TryGetCurrentApplication()) {
-    auto deviceInfoHolder = std::make_shared<DeviceInfoHolder>(context);
-
-    deviceInfoHolder->updateDeviceInfo();
-    winrt::Microsoft::ReactNative::ReactPropertyBag pb{context.Properties()};
-    pb.Set(DeviceInfoHolderPropertyId(), std::move(deviceInfoHolder));
-
     if (auto window = xaml::Window::Current()) {
       auto const &coreWindow = window.CoreWindow();
 
@@ -146,11 +177,22 @@ void DeviceInfoHolder::updateDeviceInfo() noexcept {
 
     m_windowWidth = window.Bounds().Width;
     m_windowHeight = window.Bounds().Height;
-  } else if (auto hwnd = reinterpret_cast<HWND>(XamlUIService::GetIslandWindowHandle(m_context->Properties()))) {
-    RECT rect{};
-    if (CALL_INDIRECT(L"user32.dll", GetWindowRect, hwnd, &rect)) {
-      m_windowWidth = (float)(rect.right - rect.left);
-      m_windowHeight = (float)(rect.bottom - rect.top);
+  } else {
+    auto hwnd = XamlUIService::GetIslandWindowHandle(m_context->Properties());
+
+    #ifdef USE_FABRIC
+    if (IsFabricEnabled(m_context->Properties())) {
+      winrt::Microsoft::ReactNative::ReactPropertyBag pb{m_context->Properties()};
+      hwnd = winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::GetTopLevelWindowId(pb.Handle());
+    }
+    #endif
+
+    if (hwnd) {
+      RECT rect{};
+      if (CALL_INDIRECT(L"user32.dll", GetWindowRect, reinterpret_cast<HWND>(hwnd), &rect)) {
+        m_windowWidth = (float)(rect.right - rect.left);
+        m_windowHeight = (float)(rect.bottom - rect.top);
+      }
     }
   }
 
@@ -165,14 +207,23 @@ void DeviceInfoHolder::updateDeviceInfo() noexcept {
     notifyChanged();
   } else {
     RECT desktopRect{};
-    if (CALL_INDIRECT(L"user32.dll", GetWindowRect, nullptr, &desktopRect)) {
+
+    auto hwnd = XamlUIService::GetIslandWindowHandle(m_context->Properties());
+
+#ifdef USE_FABRIC
+    if (IsFabricEnabled(m_context->Properties())) {
+      winrt::Microsoft::ReactNative::ReactPropertyBag pb{m_context->Properties()};
+      hwnd = winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::GetTopLevelWindowId(pb.Handle());
+    }
+#endif
+
+    if (hwnd && CALL_INDIRECT(L"user32.dll", GetWindowRect, reinterpret_cast<HWND>(hwnd), &desktopRect)) {
       m_screenWidth = static_cast<uint32_t>(desktopRect.right - desktopRect.left);
       m_screenHeight = static_cast<uint32_t>(desktopRect.bottom - desktopRect.top);
       m_dpi = static_cast<float>(CALL_INDIRECT(
           L"user32.dll",
           GetDpiForWindow,
-          reinterpret_cast<HWND>(
-              winrt::Microsoft::ReactNative::XamlUIService::GetIslandWindowHandle(m_context->Properties()))));
+          reinterpret_cast<HWND>(hwnd)));
     }
   }
 }
