@@ -1043,7 +1043,6 @@ struct CompCaretVisual
     // TODO should make the caret use an invert brush by default
     m_compVisual.Brush(m_compositor.CreateColorBrush({255, 0, 0, 0} /* Black */));
     m_compVisual.Opacity(1.0f);
-    m_isVisible = true;
 
     // Blinking animation
     constexpr float ftCaretFadePct = 0.2385714285714f;
@@ -1095,7 +1094,7 @@ struct CompCaretVisual
   }
 
  private:
-  bool m_isVisible{false};
+  bool m_isVisible{true};
   typename TTypeRedirects::SpriteVisual m_compVisual;
   winrt::Microsoft::ReactNative::Composition::IVisual m_visual;
   typename TTypeRedirects::ScalarKeyFrameAnimation m_opacityAnimation;
