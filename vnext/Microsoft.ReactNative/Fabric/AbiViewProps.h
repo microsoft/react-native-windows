@@ -12,7 +12,7 @@ namespace Microsoft::ReactNative {
 
 class AbiViewProps final : public facebook::react::ViewProps {
  public:
-  AbiViewProps() = delete;
+  AbiViewProps() = default;
   AbiViewProps(
       const facebook::react::PropsParserContext &context,
       const AbiViewProps &sourceProps,
