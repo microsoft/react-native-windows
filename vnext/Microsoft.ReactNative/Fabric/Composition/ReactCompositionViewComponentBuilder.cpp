@@ -78,7 +78,8 @@ void ReactCompositionViewComponentBuilder::SetInitialStateDataFactory(InitialSta
   m_initialStateDataFactory = impl;
 }
 
-winrt::Windows::Foundation::IInspectable ReactCompositionViewComponentBuilder::InitialStateData(winrt::Microsoft::ReactNative::IComponentProps props) noexcept {
+winrt::Windows::Foundation::IInspectable ReactCompositionViewComponentBuilder::InitialStateData(
+    winrt::Microsoft::ReactNative::IComponentProps props) noexcept {
   if (m_initialStateDataFactory) {
     return m_initialStateDataFactory(props);
   }

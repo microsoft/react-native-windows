@@ -13,7 +13,7 @@ winrt::Windows::Foundation::IInspectable AbiComponentState::Data() noexcept {
   return m_state->getData().userdata;
 }
 
-void AbiComponentState::UpdateState(winrt::Windows::Foundation::IInspectable data) noexcept {
+void AbiComponentState::UpdateState(const winrt::Windows::Foundation::IInspectable &data) noexcept {
   AbiStateData state;
   state.userdata = data;
   m_state->updateState(std::move(state));
@@ -45,20 +45,21 @@ static_assert(
     winrt::Microsoft::ReactNative::EventPriority::Deferred ==
     static_cast<winrt::Microsoft::ReactNative::EventPriority>(facebook::react::EventPriority::Deferred));
 
-void AbiComponentState::UpdateState(
-    winrt::Windows::Foundation::IInspectable data,
+void AbiComponentState::UpdateStateWithPriority(
+    const winrt::Windows::Foundation::IInspectable &data,
     winrt::Microsoft::ReactNative::EventPriority priority) noexcept {
   AbiStateData state;
   state.userdata = data;
   m_state->updateState(std::move(state), static_cast<facebook::react::EventPriority>(priority));
 }
 
-void AbiComponentState::UpdateStateWithMutation(winrt::Microsoft::ReactNative::StateUpdateMutation mutation) noexcept {
-  UpdateStateWithMutation(mutation, winrt::Microsoft::ReactNative::EventPriority::AsynchronousUnbatched);
+void AbiComponentState::UpdateStateWithMutation(
+    const winrt::Microsoft::ReactNative::StateUpdateMutation &mutation) noexcept {
+  UpdateStateWithMutationAndPriority(mutation, winrt::Microsoft::ReactNative::EventPriority::AsynchronousUnbatched);
 }
 
-void AbiComponentState::UpdateStateWithMutation(
-    winrt::Microsoft::ReactNative::StateUpdateMutation mutation,
+void AbiComponentState::UpdateStateWithMutationAndPriority(
+    const winrt::Microsoft::ReactNative::StateUpdateMutation &mutation,
     winrt::Microsoft::ReactNative::EventPriority priority) noexcept {
   m_state->updateState(
       [mutation](const AbiStateData &oldData) {
