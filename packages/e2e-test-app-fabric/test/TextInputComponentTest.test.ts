@@ -226,8 +226,6 @@ describe('TextInput Tests', () => {
     expect(dump).toMatchSnapshot();
   });
   test('TextInputs can be set to not editable', async () => {
-    const searchBox = await app.findElementByTestID('example_search');
-    await searchBox.setValue('Editable');
     const component = await app.findElementByTestID('textinput-not-editable');
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('textinput-not-editable');
@@ -259,6 +257,388 @@ describe('TextInput Tests', () => {
     const component = await app.findElementByTestID('textinput-readyonly');
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('textinput-readyonly');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can clear on submit', async () => {
+    const component = await app.findElementByTestID(
+      'textinput-clear-on-submit',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-clear-on-submit');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can clear on submit with custom submit key event (Shift + Enter), single-line', async () => {
+    const component = await app.findElementByTestID(
+      'textinput-clear-on-submit-2',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-clear-on-submit-2');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can clear on submit with custom submit key event (Shift + Enter), multi-line', async () => {
+    const component = await app.findElementByTestID(
+      'textinput-clear-on-submit-3',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-clear-on-submit-3');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can submit with custom key', async () => {
+    const component = await app.findElementByTestID(
+      'textinput-clear-on-submit-4',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-clear-on-submit-4');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can have inline images', async () => {
+    const component = await app.findElementByTestID('textinput-inline-images');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-inline-images');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can have inline images, drawableLeft and drawablePadding set', async () => {
+    const component = await app.findElementByTestID(
+      'textinput-inline-images-2',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-inline-images-2');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can have inline images, drawable props not set', async () => {
+    const component = await app.findElementByTestID(
+      'textinput-inline-images-3',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-inline-images-3');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can have custom return key type, none', async () => {
+    const component = await app.findElementByTestID('textinput-return-none');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-return-none');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can have custom return key type, go', async () => {
+    const component = await app.findElementByTestID('textinput-return-go');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-return-go');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can have custom return key type, search', async () => {
+    const component = await app.findElementByTestID('textinput-return-search');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-return-search');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can have custom return key type, send', async () => {
+    const component = await app.findElementByTestID('textinput-return-send');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-return-send');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can have custom return key type, done', async () => {
+    const component = await app.findElementByTestID('textinput-return-done');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-return-done');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can have custom return key type, previous', async () => {
+    const component = await app.findElementByTestID(
+      'textinput-return-previous',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-return-previous');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can have custom return key type, next', async () => {
+    const component = await app.findElementByTestID('textinput-return-next');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-return-next');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can have custom return key label, Compile', async () => {
+    const component = await app.findElementByTestID('textinput-return-Compile');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-return-Compile');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can have custom return key label, React Native', async () => {
+    const component = await app.findElementByTestID(
+      'textinput-return-React Native',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-return-React Native');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can autocomplete, country', async () => {
+    const component = await app.findElementByTestID(
+      'textinput-autocomplete-country',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-autocomplete-country');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can autocomplete, address country', async () => {
+    const component = await app.findElementByTestID(
+      'textinput-autocomplete-address-country',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-autocomplete-address-country');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can autocomplete, one-time-code', async () => {
+    const component = await app.findElementByTestID(
+      'textinput-autocomplete-one-time-code',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-autocomplete-one-time-code');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can autocomplete, sms-otp', async () => {
+    const component = await app.findElementByTestID(
+      'textinput-autocomplete-sms-otp',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-autocomplete-sms-otp');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can be multiline, topleft alignment', async () => {
+    const component = await app.findElementByTestID(
+      'textinput-multiline-topleft',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-multiline-topleft');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can be multiline, center alignment', async () => {
+    const component = await app.findElementByTestID(
+      'textinput-multiline-center',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-multiline-center');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can be multiline, bottomright alignment', async () => {
+    const component = await app.findElementByTestID(
+      'textinput-multiline-bottomright',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-multiline-bottomright');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs support secure entry', async () => {
+    const component = await app.findElementByTestID('textinput-password');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-password');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs support secure entry, with placeholder text', async () => {
+    const component = await app.findElementByTestID(
+      'textinput-password-placeholder',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-password-placeholder');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can have customer letter spacing, spacing=0', async () => {
+    const component = await app.findElementByTestID(
+      'textinput-letterspacing-0',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-letterspacing-0');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can have customer letter spacing, spacing=2', async () => {
+    const component = await app.findElementByTestID(
+      'textinput-letterspacing-2',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-letterspacing-2');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can have customer letter spacing, spacing=9', async () => {
+    const component = await app.findElementByTestID(
+      'textinput-letterspacing-9',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-letterspacing-9');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can have customer letter spacing, spacing=-1', async () => {
+    const component = await app.findElementByTestID(
+      'textinput-letterspacing--1',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-letterspacing--1');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs with set height and padding from theme', async () => {
+    const component = await app.findElementByTestID('textinput-theme-padding');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-theme-padding');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can have customized font weight, default', async () => {
+    const component = await app.findElementByTestID('textinput-weight-default');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-default-weight');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can have customized font weight, normal', async () => {
+    const component = await app.findElementByTestID('textinput-weight-normal');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-default-normal');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can have customized font weight, bold', async () => {
+    const component = await app.findElementByTestID('textinput-weight-bold');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-default-bold');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can have customized font weight, 900', async () => {
+    const component = await app.findElementByTestID('textinput-weight-900');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-default-900');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can have customized font weight, 800', async () => {
+    const component = await app.findElementByTestID('textinput-weight-800');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-default-800');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can have customized font weight, 700', async () => {
+    const component = await app.findElementByTestID('textinput-weight-700');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-default-700');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can have customized font weight, 600', async () => {
+    const component = await app.findElementByTestID('textinput-weight-600');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-default-600');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can have customized font weight, 500', async () => {
+    const component = await app.findElementByTestID('textinput-weight-500');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-default-500');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can have customized font weight, 400', async () => {
+    const component = await app.findElementByTestID('textinput-weight-400');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-default-400');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can have customized font weight, 300', async () => {
+    const component = await app.findElementByTestID('textinput-weight-300');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-default-300');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can have customized font weight, 200', async () => {
+    const component = await app.findElementByTestID('textinput-weight-200');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-default-200');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can have customized font weight, 100', async () => {
+    const component = await app.findElementByTestID('textinput-weight-100');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-default-100');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs have a default text color', async () => {
+    const component = await app.findElementByTestID('textinput-default-color');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-default-color');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs have a custom text color', async () => {
+    const component = await app.findElementByTestID('textinput-custom-color');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-custom-color');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs have a default placeholder text color', async () => {
+    const component = await app.findElementByTestID(
+      'textinput-default-placeholder-color',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-default-placeholder-color');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs have a custom placeholder text color', async () => {
+    const component = await app.findElementByTestID(
+      'textinput-custom-placeholder-color',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-custom-placeholder-color');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs have a default underline color', async () => {
+    const component = await app.findElementByTestID(
+      'textinput-default-underline-color',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-default-underline-color');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs have a custom underline color', async () => {
+    const component = await app.findElementByTestID(
+      'textinput-custom-underline-color',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-custom-underline-color');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs have a custom background color', async () => {
+    const component = await app.findElementByTestID(
+      'textinput-custom-background-color',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-custom-background-color');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs have a custom highlight color', async () => {
+    const component = await app.findElementByTestID(
+      'textinput-custom-highlight-color',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-custom-highlight-color');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can enable spellcheck', async () => {
+    const component = await app.findElementByTestID('textinput-spellcheck');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-spellcheck');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can propagate events', async () => {
+    const component = await app.findElementByTestID('textinput-propagation');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-propagation');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can register press events', async () => {
+    const component = await app.findElementByTestID('textinput-press');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-press');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can autogrow', async () => {
+    const component = await app.findElementByTestID('textinput-autogrow');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-autogrow');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can customize its padding', async () => {
+    const component = await app.findElementByTestID('textinput-padding');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-padding');
     expect(dump).toMatchSnapshot();
   });
 });
