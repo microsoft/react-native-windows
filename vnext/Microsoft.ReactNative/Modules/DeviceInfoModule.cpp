@@ -42,32 +42,13 @@ void DeviceInfoHolder::InitDeviceInfoHolder(const Mso::React::IReactContext &con
   winrt::Microsoft::ReactNative::ReactPropertyBag pb{context.Properties()};
   pb.Set(DeviceInfoHolderPropertyId(), std::move(deviceInfoHolder));
 
-  #ifdef USE_FABRIC
-  if (IsFabricEnabled(context.Properties())) {
-    auto hwnd = winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::GetTopLevelWindowId(
-        pb.Handle());
+  uint64_t hwnd = 0;
 
-    if (hwnd) {
-      deviceInfoHolder->m_wmSubscription = SubscribeToWindowMessage(
-          ReactNotificationService(context.Notifications()),
-          WM_WINDOWPOSCHANGED,
-          [weakHolder = std::weak_ptr(deviceInfoHolder)](HWND hwnd, const DesktopWindowMessage &dwm) {
-            if (auto strongHolder = weakHolder.lock()) {
-              const auto pos = reinterpret_cast<WINDOWPOS *>(dwm.LParam);
-              const auto newWidth = static_cast<float>(pos->cx);
-              const auto newHeight = static_cast<float>(pos->cy);
-              const auto changed =
-                  (strongHolder->m_windowWidth != newWidth) || (strongHolder->m_windowHeight != newHeight);
-              strongHolder->m_windowWidth = newWidth;
-              strongHolder->m_windowHeight = newHeight;
-              if (changed) {
-                strongHolder->notifyChanged();
-              }
-            }
-          });
-    }
+#ifdef USE_FABRIC
+  if (IsFabricEnabled(context.Properties())) {
+    hwnd = winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::GetTopLevelWindowId(pb.Handle());
   }
-  #endif
+#endif
 
   if (xaml::TryGetCurrentApplication()) {
     if (auto window = xaml::Window::Current()) {
@@ -96,27 +77,29 @@ void DeviceInfoHolder::InitDeviceInfoHolder(const Mso::React::IReactContext &con
               strongHolder->updateDeviceInfo();
             }
           });
-    } else if (
-        auto hwnd =
-            reinterpret_cast<HWND>(XamlUIService::GetIslandWindowHandle(deviceInfoHolder->m_context->Properties()))) {
-      deviceInfoHolder->m_wmSubscription = SubscribeToWindowMessage(
-          ReactNotificationService(context.Notifications()),
-          WM_WINDOWPOSCHANGED,
-          [weakHolder = std::weak_ptr(deviceInfoHolder)](HWND hwnd, const DesktopWindowMessage &dwm) {
-            if (auto strongHolder = weakHolder.lock()) {
-              const auto pos = reinterpret_cast<WINDOWPOS *>(dwm.LParam);
-              const auto newWidth = static_cast<float>(pos->cx);
-              const auto newHeight = static_cast<float>(pos->cy);
-              const auto changed =
-                  (strongHolder->m_windowWidth != newWidth) || (strongHolder->m_windowHeight != newHeight);
-              strongHolder->m_windowWidth = newWidth;
-              strongHolder->m_windowHeight = newHeight;
-              if (changed) {
-                strongHolder->notifyChanged();
-              }
-            }
-          });
+    } else {
+        hwnd = XamlUIService::GetIslandWindowHandle(deviceInfoHolder->m_context->Properties());
     }
+  }
+
+  if (hwnd) {
+    deviceInfoHolder->m_wmSubscription = SubscribeToWindowMessage(
+        ReactNotificationService(context.Notifications()),
+        WM_WINDOWPOSCHANGED,
+        [weakHolder = std::weak_ptr(deviceInfoHolder)](HWND hwnd, const DesktopWindowMessage &dwm) {
+          if (auto strongHolder = weakHolder.lock()) {
+            const auto pos = reinterpret_cast<WINDOWPOS *>(dwm.LParam);
+            const auto newWidth = static_cast<float>(pos->cx);
+            const auto newHeight = static_cast<float>(pos->cy);
+            const auto changed =
+                (strongHolder->m_windowWidth != newWidth) || (strongHolder->m_windowHeight != newHeight);
+            strongHolder->m_windowWidth = newWidth;
+            strongHolder->m_windowHeight = newHeight;
+            if (changed) {
+              strongHolder->notifyChanged();
+            }
+          }
+        });
   }
 }
 
@@ -180,12 +163,12 @@ void DeviceInfoHolder::updateDeviceInfo() noexcept {
   } else {
     auto hwnd = XamlUIService::GetIslandWindowHandle(m_context->Properties());
 
-    #ifdef USE_FABRIC
+#ifdef USE_FABRIC
     if (IsFabricEnabled(m_context->Properties())) {
       winrt::Microsoft::ReactNative::ReactPropertyBag pb{m_context->Properties()};
       hwnd = winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::GetTopLevelWindowId(pb.Handle());
     }
-    #endif
+#endif
 
     if (hwnd) {
       RECT rect{};
