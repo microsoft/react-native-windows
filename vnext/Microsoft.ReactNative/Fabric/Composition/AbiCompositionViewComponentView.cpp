@@ -6,6 +6,8 @@
 
 #include "AbiCompositionViewComponentView.h"
 
+#include <Fabric/AbiState.h>
+#include <Fabric/AbiViewShadowNode.h>
 #include <Fabric/DWriteHelpers.h>
 #include "CompositionDynamicAutomationProvider.h"
 #include "RootComponentView.h"
@@ -93,7 +95,10 @@ void AbiCompositionViewComponentView::updateLayoutMetrics(
 
 void AbiCompositionViewComponentView::updateState(
     facebook::react::State::Shared const &state,
-    facebook::react::State::Shared const &oldState) noexcept {}
+    facebook::react::State::Shared const &oldState) noexcept {
+  m_state = winrt::make<AbiComponentState>(state);
+  Builder().UpdateState(m_handle, m_state);
+}
 
 void AbiCompositionViewComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
   Super::finalizeUpdates(updateMask);
