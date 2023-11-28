@@ -78,7 +78,7 @@ void DeviceInfoHolder::InitDeviceInfoHolder(const Mso::React::IReactContext &con
             }
           });
     } else {
-        hwnd = XamlUIService::GetIslandWindowHandle(deviceInfoHolder->m_context->Properties());
+      hwnd = XamlUIService::GetIslandWindowHandle(deviceInfoHolder->m_context->Properties());
     }
   }
 
@@ -203,10 +203,7 @@ void DeviceInfoHolder::updateDeviceInfo() noexcept {
     if (hwnd && CALL_INDIRECT(L"user32.dll", GetWindowRect, reinterpret_cast<HWND>(hwnd), &desktopRect)) {
       m_screenWidth = static_cast<uint32_t>(desktopRect.right - desktopRect.left);
       m_screenHeight = static_cast<uint32_t>(desktopRect.bottom - desktopRect.top);
-      m_dpi = static_cast<float>(CALL_INDIRECT(
-          L"user32.dll",
-          GetDpiForWindow,
-          reinterpret_cast<HWND>(hwnd)));
+      m_dpi = static_cast<float>(CALL_INDIRECT(L"user32.dll", GetDpiForWindow, reinterpret_cast<HWND>(hwnd)));
     }
   }
 }
