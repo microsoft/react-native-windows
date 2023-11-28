@@ -35,7 +35,10 @@ class ToggleDefaultPaddingExample extends React.Component<
   render(): React.Node {
     return (
       <View>
-        <TextInput style={this.state.hasPadding ? {padding: 0} : null} testID='textinput-padding'/>
+        <TextInput
+          style={this.state.hasPadding ? {padding: 0} : null}
+          testID="textinput-padding"
+        />
         <Text
           onPress={() => this.setState({hasPadding: !this.state.hasPadding})}>
           Toggle padding
@@ -299,8 +302,7 @@ const examples: Array<RNTesterModuleExample> = [
               styles.singleLine,
               {backgroundColor: 'rgba(100, 100, 100, 0.3)'},
             ]}
-            testID='textinput-custom-background-color'
-            >
+            testID="textinput-custom-background-color">
             <Text style={{backgroundColor: 'rgba(100, 100, 100, 0.3)'}}>
               Darker backgroundColor
             </Text>
@@ -342,7 +344,7 @@ const examples: Array<RNTesterModuleExample> = [
               defaultValue={`Font Weight (${fontWeight})`}
               key={fontWeight}
               style={[styles.singleLine, {fontWeight}]}
-              testID={"textinput-weight-" + fontWeight}
+              testID={'textinput-weight-' + fontWeight}
             />
           ))}
         </View>
@@ -609,7 +611,7 @@ const examples: Array<RNTesterModuleExample> = [
             returnKeyType={type}
             placeholder={'returnKeyType: ' + type}
             style={styles.singleLine}
-            testID={"textinput-return-" + type}
+            testID={'textinput-return-' + type}
           />
         );
       });
@@ -620,7 +622,7 @@ const examples: Array<RNTesterModuleExample> = [
             returnKeyLabel={type}
             placeholder={'returnKeyLabel: ' + type}
             style={styles.singleLine}
-            testID={"textinput-return-" + type}
+            testID={'textinput-return-' + type}
           />
         );
       });
@@ -678,7 +680,11 @@ const examples: Array<RNTesterModuleExample> = [
       return (
         <View>
           <Text>Default submit key (Enter):</Text>
-          <TextInput clearTextOnSubmit style={styles.singleLine} testID="textinput-clear-on-submit"/>
+          <TextInput
+            clearTextOnSubmit
+            style={styles.singleLine}
+            testID="textinput-clear-on-submit"
+          />
           <Text>Custom submit key event (Shift + Enter), single-line:</Text>
           <TextInput
             clearTextOnSubmit
