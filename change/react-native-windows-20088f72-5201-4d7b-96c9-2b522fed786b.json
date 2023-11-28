@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fabric: Enable react-test-renderer tests in the new cpp-app template",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}

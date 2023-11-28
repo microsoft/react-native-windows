@@ -69,27 +69,25 @@ namespace Microsoft.ReactNative
   delegate void ViewShadowNodeCloner(ShadowNode shadowNode, ShadowNode sourceShadowNode);
 
   [experimental]
-  delegate IInspectable InitialStateDataFactory(Microsoft.ReactNative.IComponentProps props);
+  delegate Object InitialStateDataFactory(Microsoft.ReactNative.IComponentProps props);
 
   [experimental]
-  delegate IInspectable StateUpdateMutation(IInspectable props);
+  delegate Object StateUpdateMutation(Object props);
 
 
   [webhosthidden]
   [experimental]
-  DOC_STRING(".")
   interface IComponentState 
   {
     Object Data { get; };
     void UpdateState(Object data);
-    void UpdateState(Object data, EventPriority priority);
+    void UpdateStateWithPriority(Object data, EventPriority priority);
     void UpdateStateWithMutation(StateUpdateMutation mutation);
-    void UpdateStateWithMutation(StateUpdateMutation mutation, EventPriority priority);
+    void UpdateStateWithMutationAndPriority(StateUpdateMutation mutation, EventPriority priority);
   };
 
   [webhosthidden]
   [experimental]
-  DOC_STRING(".")
   interface IReactViewComponentBuilder
   {
     DOC_STRING("Create an implementation of your custom Props type that will be passed to your components @Composition.ICompositionViewComponent.UpdateProps method.")

@@ -113,7 +113,7 @@ facebook::react::Props::Shared AbiViewComponentDescriptor::cloneProps(
 };
 
 AbiViewComponentDescriptor::ConcreteStateData AbiViewComponentDescriptor::initialStateData(
-    const facebook::react::Props::Shared & props,
+    const facebook::react::Props::Shared &props,
     const facebook::react::ShadowNodeFamily::Shared & /*family*/,
     const facebook::react::ComponentDescriptor &componentDescriptor) noexcept {
   return {winrt::get_self<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder>(
