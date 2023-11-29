@@ -22,9 +22,9 @@
 #include <winrt/Windows.UI.Composition.Desktop.h>
 #include <winrt/Windows.UI.Composition.h>
 
+#include <DesktopWindowBridge.h>
 #include "NativeModules.h"
 #include "ReactPropertyBag.h"
-#include <DesktopWindowBridge.h>
 
 #if USE_WINUI3
 #include <winrt/Microsoft.UI.Composition.h>
