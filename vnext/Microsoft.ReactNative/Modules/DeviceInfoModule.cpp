@@ -36,70 +36,72 @@ DeviceInfoHolder::DeviceInfoHolder(const Mso::React::IReactContext &context) : m
 }
 
 void DeviceInfoHolder::InitDeviceInfoHolder(const Mso::React::IReactContext &context) noexcept {
-  auto deviceInfoHolder = std::make_shared<DeviceInfoHolder>(context);
+  if (xaml::TryGetCurrentApplication() || IsFabricEnabled(context.Properties())) {
+    auto deviceInfoHolder = std::make_shared<DeviceInfoHolder>(context);
 
-  deviceInfoHolder->updateDeviceInfo();
-  winrt::Microsoft::ReactNative::ReactPropertyBag pb{context.Properties()};
-  pb.Set(DeviceInfoHolderPropertyId(), std::move(deviceInfoHolder));
+    deviceInfoHolder->updateDeviceInfo();
+    winrt::Microsoft::ReactNative::ReactPropertyBag pb{context.Properties()};
+    pb.Set(DeviceInfoHolderPropertyId(), std::move(deviceInfoHolder));
 
-  uint64_t hwnd = 0;
+    uint64_t hwnd = 0;
 
 #ifdef USE_FABRIC
-  if (IsFabricEnabled(context.Properties())) {
-    hwnd = winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::GetTopLevelWindowId(pb.Handle());
-  }
+    if (IsFabricEnabled(context.Properties())) {
+      hwnd = winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::GetTopLevelWindowId(pb.Handle());
+    }
 #endif
 
-  if (xaml::TryGetCurrentApplication()) {
-    if (auto window = xaml::Window::Current()) {
-      auto const &coreWindow = window.CoreWindow();
+    if (xaml::TryGetCurrentApplication()) {
+      if (auto window = xaml::Window::Current()) {
+        auto const &coreWindow = window.CoreWindow();
 
-      deviceInfoHolder->m_sizeChangedRevoker =
-          coreWindow.SizeChanged(winrt::auto_revoke, [weakHolder = std::weak_ptr(deviceInfoHolder)](auto &&, auto &&) {
-            if (auto strongHolder = weakHolder.lock()) {
-              strongHolder->updateDeviceInfo();
-            }
-          });
-    } else {
-      assert(IsXamlIsland());
-      // This is either a WinUI 3 island or a system XAML island
-      // system XAML islands have a CoreWindow so we want to use the GetForCurrentView APIs
-      // For WinUI 3 islands we require the app to forward window messages as ReactNotifications
+        deviceInfoHolder->m_sizeChangedRevoker = coreWindow.SizeChanged(
+            winrt::auto_revoke, [weakHolder = std::weak_ptr(deviceInfoHolder)](auto &&, auto &&) {
+              if (auto strongHolder = weakHolder.lock()) {
+                strongHolder->updateDeviceInfo();
+              }
+            });
+      } else {
+        assert(IsXamlIsland());
+        // This is either a WinUI 3 island or a system XAML island
+        // system XAML islands have a CoreWindow so we want to use the GetForCurrentView APIs
+        // For WinUI 3 islands we require the app to forward window messages as ReactNotifications
+      }
+
+      if (!IsWinUI3Island()) {
+        // UWP or system XAML island
+        auto const &displayInfo = winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView();
+
+        deviceInfoHolder->m_dpiChangedRevoker = displayInfo.DpiChanged(
+            winrt::auto_revoke, [weakHolder = std::weak_ptr(deviceInfoHolder)](const auto &, const auto &) {
+              if (auto strongHolder = weakHolder.lock()) {
+                strongHolder->updateDeviceInfo();
+              }
+            });
+      } else {
+        hwnd = XamlUIService::GetIslandWindowHandle(deviceInfoHolder->m_context->Properties());
+      }
     }
 
-    if (!IsWinUI3Island()) {
-      // UWP or system XAML island
-      auto const &displayInfo = winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView();
-
-      deviceInfoHolder->m_dpiChangedRevoker = displayInfo.DpiChanged(
-          winrt::auto_revoke, [weakHolder = std::weak_ptr(deviceInfoHolder)](const auto &, const auto &) {
+    if (hwnd) {
+      deviceInfoHolder->m_wmSubscription = SubscribeToWindowMessage(
+          ReactNotificationService(context.Notifications()),
+          WM_WINDOWPOSCHANGED,
+          [weakHolder = std::weak_ptr(deviceInfoHolder)](HWND hwnd, const DesktopWindowMessage &dwm) {
             if (auto strongHolder = weakHolder.lock()) {
-              strongHolder->updateDeviceInfo();
+              const auto pos = reinterpret_cast<WINDOWPOS *>(dwm.LParam);
+              const auto newWidth = static_cast<float>(pos->cx);
+              const auto newHeight = static_cast<float>(pos->cy);
+              const auto changed =
+                  (strongHolder->m_windowWidth != newWidth) || (strongHolder->m_windowHeight != newHeight);
+              strongHolder->m_windowWidth = newWidth;
+              strongHolder->m_windowHeight = newHeight;
+              if (changed) {
+                strongHolder->notifyChanged();
+              }
             }
           });
-    } else {
-      hwnd = XamlUIService::GetIslandWindowHandle(deviceInfoHolder->m_context->Properties());
     }
-  }
-
-  if (hwnd) {
-    deviceInfoHolder->m_wmSubscription = SubscribeToWindowMessage(
-        ReactNotificationService(context.Notifications()),
-        WM_WINDOWPOSCHANGED,
-        [weakHolder = std::weak_ptr(deviceInfoHolder)](HWND hwnd, const DesktopWindowMessage &dwm) {
-          if (auto strongHolder = weakHolder.lock()) {
-            const auto pos = reinterpret_cast<WINDOWPOS *>(dwm.LParam);
-            const auto newWidth = static_cast<float>(pos->cx);
-            const auto newHeight = static_cast<float>(pos->cy);
-            const auto changed =
-                (strongHolder->m_windowWidth != newWidth) || (strongHolder->m_windowHeight != newHeight);
-            strongHolder->m_windowWidth = newWidth;
-            strongHolder->m_windowHeight = newHeight;
-            if (changed) {
-              strongHolder->notifyChanged();
-            }
-          }
-        });
   }
 }
 
