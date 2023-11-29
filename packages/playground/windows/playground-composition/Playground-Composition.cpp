@@ -439,9 +439,6 @@ HINSTANCE WindowData::s_instance = reinterpret_cast<HINSTANCE>(&__ImageBase);
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) noexcept {
   auto windowData = WindowData::GetFromWindow(hwnd);
   if (windowData) {
-    winrt::Microsoft::ReactNative::ReactNotificationService rns(windowData->InstanceSettings().Notifications());
-    winrt::Microsoft::ReactNative::ForwardWindowMessage(rns, hwnd, message, wparam, lparam);
-
     auto result = WindowData::GetFromWindow(hwnd)->TranslateMessage(hwnd, message, wparam, lparam);
     if (result)
       return result;
@@ -483,6 +480,9 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
     case WM_WINDOWPOSCHANGED: {
       auto windowData = WindowData::GetFromWindow(hwnd);
       windowData->UpdateSize(hwnd);
+
+      winrt::Microsoft::ReactNative::ReactNotificationService rns(windowData->InstanceSettings().Notifications());
+      winrt::Microsoft::ReactNative::ForwardWindowMessage(rns, hwnd, message, wparam, lparam);
       break;
     }
   }
