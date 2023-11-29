@@ -23,6 +23,28 @@ IComponentProps ReactCompositionViewComponentBuilder::CreateProps(ViewProps prop
   return m_propsFactory(props);
 }
 
+void ReactCompositionViewComponentBuilder::CreateShadowNode(ShadowNode shadowNode) noexcept {
+  if (m_shadowNodeFactory) {
+    return m_shadowNodeFactory(shadowNode);
+  }
+}
+
+void ReactCompositionViewComponentBuilder::CloneShadowNode(
+    ShadowNode shadowNode,
+    ShadowNode sourceShadowNode) noexcept {
+  if (m_shadowNodeCloner) {
+    m_shadowNodeCloner(shadowNode, sourceShadowNode);
+  }
+}
+
+MeasureContentHandler ReactCompositionViewComponentBuilder::MeasureContentHandler() const noexcept {
+  return m_measureContent;
+}
+
+LayoutHandler ReactCompositionViewComponentBuilder::LayoutHandler() const noexcept {
+  return m_layoutHandler;
+}
+
 void ReactCompositionViewComponentBuilder::SetCreateView(CompositionComponentFactory impl) noexcept {
   m_createView = impl;
 }
@@ -34,6 +56,43 @@ void ReactCompositionViewComponentBuilder::SetCommandHandler(Composition::Comman
 void ReactCompositionViewComponentBuilder::SetPropsUpdater(PropsUpdater impl) noexcept {
   m_propsUpdater = impl;
 }
+// (Object handle, Microsoft.ReactNative.IComponentState state) => void
+void ReactCompositionViewComponentBuilder::SetStateUpdater(StateUpdater impl) noexcept {
+  m_stateUpdater = impl;
+}
+// () => Object
+void ReactCompositionViewComponentBuilder::SetCreateShadowNode(ViewShadowNodeFactory impl) noexcept {
+  m_shadowNodeFactory = impl;
+}
+// (Object handle) => Object
+void ReactCompositionViewComponentBuilder::SetShadowNodeCloner(ViewShadowNodeCloner impl) noexcept {
+  m_shadowNodeCloner = impl;
+}
+// (ShadowNode shadowNode, LayoutContext layoutContext, LayoutConstraints layoutConstraints) -> Size
+void ReactCompositionViewComponentBuilder::SetMeasureContentHandler(
+    winrt::Microsoft::ReactNative::MeasureContentHandler impl) noexcept {
+  m_measureContent = impl;
+}
+
+void ReactCompositionViewComponentBuilder::SetInitialStateDataFactory(InitialStateDataFactory impl) noexcept {
+  m_initialStateDataFactory = impl;
+}
+
+winrt::Windows::Foundation::IInspectable ReactCompositionViewComponentBuilder::InitialStateData(
+    winrt::Microsoft::ReactNative::IComponentProps props) noexcept {
+  if (m_initialStateDataFactory) {
+    return m_initialStateDataFactory(props);
+  }
+
+  return nullptr;
+}
+
+// (ShadowNode shadowNode, LayoutContext layoutContext) => void
+void ReactCompositionViewComponentBuilder::SetLayoutHandler(
+    winrt::Microsoft::ReactNative::LayoutHandler impl) noexcept {
+  m_layoutHandler = impl;
+}
+
 // (Object handle, LayoutMetrics metrics) => void
 void ReactCompositionViewComponentBuilder::SetLayoutMetricsUpdater(LayoutMetricsUpdater impl) noexcept {
   m_layoutMetricsUpdater = impl;
@@ -104,6 +163,14 @@ void ReactCompositionViewComponentBuilder::UpdateProps(
     IComponentProps props) noexcept {
   if (m_propsUpdater) {
     m_propsUpdater(handle, props);
+  }
+}
+
+void ReactCompositionViewComponentBuilder::UpdateState(
+    winrt::Windows::Foundation::IInspectable handle,
+    IComponentState state) noexcept {
+  if (m_stateUpdater) {
+    m_stateUpdater(handle, state);
   }
 }
 

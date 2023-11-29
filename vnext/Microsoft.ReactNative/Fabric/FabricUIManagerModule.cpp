@@ -15,6 +15,7 @@
 #include <IReactContext.h>
 #include <IReactRootView.h>
 #include <JSI/jsi.h>
+#include <ReactCommon/RuntimeExecutor.h>
 #include <SchedulerSettings.h>
 #include <SynchronousEventBeat.h>
 #include <UI.Xaml.Controls.h>
@@ -27,7 +28,6 @@
 #include <react/renderer/scheduler/SchedulerToolbox.h>
 #include <react/utils/ContextContainer.h>
 #include <react/utils/CoreFeatures.h>
-#include <runtimeexecutor/ReactCommon/RuntimeExecutor.h>
 #include <winrt/Windows.Graphics.Display.h>
 #include <winrt/Windows.UI.Composition.Desktop.h>
 #include "Unicode.h"
@@ -76,6 +76,9 @@ void FabricUIManager::installFabricUIManager() noexcept {
           return std::make_unique<SynchronousEventBeat>(ownerBox, context, runtimeExecutor, runtimeScheduler);
         };
     toolbox.synchronousEventBeatFactory = synchronousBeatFactory;
+    runtimeExecutor = [runtimeScheduler](std::function<void(facebook::jsi::Runtime & runtime)> &&callback) {
+      runtimeScheduler->scheduleWork(std::move(callback));
+    };
   } else {
     facebook::react::EventBeat::Factory synchronousBeatFactory =
         [runtimeExecutor, context = m_context](facebook::react::EventBeat::SharedOwnerBox const &ownerBox) {

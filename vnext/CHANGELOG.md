@@ -1,8 +1,64 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 11 Nov 2023 06:17:20 GMT and should not be manually modified.
+This log was last generated on Wed, 22 Nov 2023 06:16:28 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.741
+
+Wed, 22 Nov 2023 06:16:28 GMT
+
+### Changes
+
+- fix depcheck errors (email not defined)
+
+## 0.0.0-canary.740
+
+Sat, 18 Nov 2023 06:14:50 GMT
+
+### Changes
+
+- Fabric: Enable react-test-renderer tests in the new cpp-app template (jthysell@microsoft.com)
+- Release long lived JSI objects ASAP (vmorozov@microsoft.com)
+- Check HTTP handler property and value exist (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.739
+
+Fri, 17 Nov 2023 06:15:10 GMT
+
+### Changes
+
+- Include RuntimeExecutor.h consistently (ericroz@meta.com)
+- Change Hermes package version to 0.1.18 (vmorozov@microsoft.com)
+- Minor cleanup of recent RuntimeScheduler integration (ericroz@meta.com)
+- Fixes for running without lifted composition (30809111+acoates-ms@users.noreply.github.com)
+- update fmt to 10.1.0 (email not defined)
+
+## 0.0.0-canary.738
+
+Thu, 16 Nov 2023 06:13:44 GMT
+
+### Changes
+
+- Temporarily silence warning 4996 to unblock CI (email not defined)
+
+## 0.0.0-canary.737
+
+Wed, 15 Nov 2023 06:14:14 GMT
+
+### Changes
+
+- Save State: Working Visual Tree Dump Tests (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.736
+
+Tue, 14 Nov 2023 06:16:22 GMT
+
+### Changes
+
+- Untrack HTTP responses when processed by IResponseHandler (julio.rocha@microsoft.com)
+- [Fabric] Enable concurrentRoot (erozell@outlook.com)
+- Fabric: Add `windows` script to new cpp-app template (jthysell@microsoft.com)
 
 ## 0.0.0-canary.735
 
