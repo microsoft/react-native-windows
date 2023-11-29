@@ -2,6 +2,66 @@
   "name": "@react-native-windows/automation",
   "entries": [
     {
+      "date": "Wed, 29 Nov 2023 06:16:35 GMT",
+      "version": "0.3.163",
+      "tag": "@react-native-windows/automation_v0.3.163",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.81",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 22 Nov 2023 06:16:29 GMT",
+      "version": "0.3.162",
+      "tag": "@react-native-windows/automation_v0.3.162",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.80",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 18 Nov 2023 06:14:50 GMT",
+      "version": "0.3.161",
+      "tag": "@react-native-windows/automation_v0.3.161",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.79",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 17 Nov 2023 06:15:10 GMT",
+      "version": "0.3.160",
+      "tag": "@react-native-windows/automation_v0.3.160",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.78",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 16 Nov 2023 06:13:44 GMT",
       "version": "0.3.159",
       "tag": "@react-native-windows/automation_v0.3.159",

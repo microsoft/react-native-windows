@@ -6,7 +6,25 @@
  * @format
  */
 
+const existsSync = require('fs').existsSync;
+const path = require('path');
+const util = require('util');
+const exec = util.promisify(require('child_process').exec);
+
 const pkgUtils = require('@react-native-windows/package-utils');
+
+async function runNpmInstall(config = {}, options = {}) {
+  const projectPath = config?.root ?? process.cwd();
+
+  if (options?.logging) {
+    console.log('Installing dependencies...');
+  }
+  const isYarn = existsSync(path.join(projectPath, 'yarn.lock'));
+  await exec(
+    isYarn ? 'yarn' : 'npm i',
+    options?.logging ? {stdio: 'inherit'} : {},
+  );
+}
 
 async function updateProjectPackageJson(config = {}, options = {}, props = {}) {
   const projectPath = config?.root ?? process.cwd();
@@ -26,4 +44,4 @@ async function updateProjectPackageJson(config = {}, options = {}, props = {}) {
   await projectPackage.mergeProps(props);
 }
 
-module.exports = {updateProjectPackageJson};
+module.exports = {runNpmInstall, updateProjectPackageJson};

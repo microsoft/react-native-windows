@@ -107,10 +107,19 @@ async function getFileMappings(config = {}, options = {}) {
 }
 
 async function postInstall(config = {}, options = {}) {
-  // Update package.json with new scripts
+  // Update package.json with new scripts and dependencies
   await templateUtils.updateProjectPackageJson(config, options, {
-    scripts: {windows: 'react-native run-windows'},
+    scripts: {
+      windows: 'react-native run-windows',
+      'test:windows': 'jest --config jest.config.windows.js',
+    },
+    devDependencies: {
+      '@rnx-kit/jest-preset': '^0.1.16',
+    },
   });
+
+  // Install recently added dependencies
+  await templateUtils.runNpmInstall(config, options);
 
   console.log(chalk.white.bold('To run your new windows app:'));
   console.log(chalk.white('   npx react-native run-windows'));
