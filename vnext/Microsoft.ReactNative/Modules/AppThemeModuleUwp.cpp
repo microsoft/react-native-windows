@@ -13,6 +13,7 @@
 #include <XamlUIService.h>
 #include <XamlUtils.h>
 #include <cxxreact/CxxModule.h>
+#include <winuser.h>
 #include <functional>
 #include <memory>
 #if _MSC_VER <= 1913
@@ -41,9 +42,9 @@ static const React::ReactPropertyId<React::ReactNonAbiValue<std::shared_ptr<AppT
 //
 
 AppThemeHolder::AppThemeHolder(const Mso::React::IReactContext &context) : m_context(&context) {
-  if (auto currentApp = xaml::TryGetCurrentApplication()) {
-    NotifyHighContrastChanged();
+  NotifyHighContrastChanged();
 
+  if (auto currentApp = xaml::TryGetCurrentApplication()) {
     if (IsWinUI3Island()) {
       m_wmSubscription = SubscribeToWindowMessage(
           ReactNotificationService(m_context->Notifications()), WM_THEMECHANGED, [this](const auto &, const auto &) {
@@ -75,7 +76,8 @@ void AppThemeHolder::SetCallback(
 }
 
 void AppThemeHolder::NotifyHighContrastChanged() noexcept {
-  m_appThemeData.isHighContrast = m_accessibilitySettings.HighContrast();
+  m_appThemeData.isHighContrast =
+      xaml::TryGetCurrentApplication() ? m_accessibilitySettings.HighContrast() : IsInHighContrastWin32();
   m_appThemeData.highContrastColors.ButtonFaceColor =
       FormatRGB(m_uiSettings.UIElementColor(winrt::UIElementType::ButtonFace));
   m_appThemeData.highContrastColors.ButtonTextColor =
@@ -119,6 +121,24 @@ void AppTheme::Initialize(React::ReactContext const &reactContext) noexcept {
 ReactNativeSpecs::AppThemeSpec_AppThemeData AppTheme::GetConstants() noexcept {
   winrt::Microsoft::ReactNative::ReactPropertyBag pb{m_context.Properties()};
   return (*pb.Get(AppThemeHolderPropertyId()))->GetConstants();
+}
+
+bool IsInHighContrastWin32() noexcept {
+  BOOL fResult;
+  HIGHCONTRAST info;
+
+  fResult = SystemParametersInfo(
+      SPI_GETHIGHCONTRAST, // Get contrast information
+      0, // Not used
+      &info, // Holds contrast information
+      0); // Not used
+
+  // Double it.
+  if (fResult) {
+    return !!(info.dwFlags & HCF_HIGHCONTRASTON);
+  }
+
+  return false;
 }
 
 } // namespace Microsoft::ReactNative

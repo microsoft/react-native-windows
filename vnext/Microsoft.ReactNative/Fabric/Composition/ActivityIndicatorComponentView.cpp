@@ -133,6 +133,7 @@ winrt::Microsoft::ReactNative::Composition::IVisual ActivityIndicatorComponentVi
 
 void ActivityIndicatorComponentView::onThemeChanged() noexcept {
   updateProgressColor(std::static_pointer_cast<const facebook::react::ActivityIndicatorViewProps>(m_props)->color);
+  Super::onThemeChanged();
 }
 
 bool ActivityIndicatorComponentView::focusable() const noexcept {
