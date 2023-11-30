@@ -73,6 +73,10 @@ const Components: Array<RNTesterModuleInfo> = [
     module: require('../examples-win/NativeComponents/NativeComponent'),
   },
   {
+    key: 'Native Component Yoga',
+    module: require('../examples-win/NativeComponents/NativeComponentYoga'),
+  },
+  {
     key: 'NewAppScreenExample',
     module: require('../examples/NewAppScreen/NewAppScreenExample'),
   },

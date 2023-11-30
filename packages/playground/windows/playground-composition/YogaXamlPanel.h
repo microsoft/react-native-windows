@@ -16,14 +16,17 @@ struct YogaXamlPanel : YogaXamlPanelT<YogaXamlPanel> {
 
  public:
   // Constructors
-  YogaXamlPanel(std::function<void(winrt::Windows::Foundation::Size size)>&& onMeasured, std::function<const winrt::Microsoft::ReactNative::LayoutConstraints&()>&& getConstraints);
+  YogaXamlPanel(
+      std::function<void(winrt::Windows::Foundation::Size size)> &&onMeasured,
+      std::function<const winrt::Microsoft::ReactNative::LayoutConstraints &()> &&getConstraints);
 
   // Overrides
   winrt::Windows::Foundation::Size MeasureOverride(winrt::Windows::Foundation::Size availableSize);
   winrt::Windows::Foundation::Size ArrangeOverride(winrt::Windows::Foundation::Size finalSize);
-private:
+
+ private:
   std::function<void(winrt::Windows::Foundation::Size size)> m_onMeasured;
-  std::function<const winrt::Microsoft::ReactNative::LayoutConstraints&()> m_getConstraints;
+  std::function<const winrt::Microsoft::ReactNative::LayoutConstraints &()> m_getConstraints;
 };
 
 } // namespace winrt::PlaygroundApp::implementation

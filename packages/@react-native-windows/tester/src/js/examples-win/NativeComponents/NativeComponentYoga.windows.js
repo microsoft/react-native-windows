@@ -12,14 +12,14 @@
 
 import React from 'react';
 import {Text, View} from 'react-native';
-import {MyCustomComponent} from './MyCustomComponentNativeComponent';
+import {MyCustomComponentYoga} from './MyCustomComponentYogaNativeComponent';
 
-exports.displayName = 'NativeFabricComponent';
+exports.displayName = 'NativeFabricComponentYoga';
 exports.framework = 'React';
 exports.category = 'UI';
-exports.title = 'Fabric Native Component';
+exports.title = 'Fabric Native Component Yoga';
 //exports.documentationURL = 'https://reactnative.dev/docs/button';
-exports.description = 'Sample Fabric Native Component that sizes based on max desired size of native XAML contained within';
+exports.description = 'Sample Fabric Native Component that places native XAML inside a container sized by yoga';
 
 exports.examples = [
   {
@@ -41,7 +41,7 @@ exports.examples = [
             <View style={{width: 100, height: 100, backgroundColor: 'pink'}}/>
             <View style={{width: 100, height: 100, backgroundColor: 'gray'}}/>
             <Text style={{color:'gray'}}>This is RN Text</Text>
-            <MyCustomComponent label="test" style={{flexShrink: 1}} />
+            <MyCustomComponentYoga label="test" style={{flex: 1, minWidth: 100}} />
             <View style={{width: 100, height: 100, backgroundColor: 'green'}}/>
             <View style={{width: 100, height: 100, backgroundColor: 'red'}}/>
             <View style={{width: 100, height: 100, backgroundColor: 'blue'}}/>

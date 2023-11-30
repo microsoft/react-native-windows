@@ -41,9 +41,10 @@ struct CustomProps : winrt::implements<CustomProps, winrt::Microsoft::ReactNativ
 
 struct CustomComponent : winrt::implements<CustomComponent, winrt::IInspectable> {
   CustomComponent(
+      bool nativeLayout,
       winrt::Microsoft::ReactNative::IReactContext reactContext,
       winrt::Microsoft::ReactNative::Composition::ICompositionContext compContext)
-      : m_compContext(compContext), m_reactContext(reactContext) {}
+      : m_nativeLayout(nativeLayout), m_compContext(compContext), m_reactContext(reactContext) {}
 
   ~CustomComponent() {
     m_xamlIsland.Close();
@@ -111,14 +112,11 @@ struct CustomComponent : winrt::implements<CustomComponent, winrt::IInspectable>
           */
         });
 
-    //yogaXamlPanel.Background(winrt::Microsoft::UI::Xaml::Media::SolidColorBrush({255, 124, 124, 155}));
+    // yogaXamlPanel.Background(winrt::Microsoft::UI::Xaml::Media::SolidColorBrush({255, 124, 124, 155}));
     yogaXamlPanel.VerticalAlignment(winrt::Microsoft::UI::Xaml::VerticalAlignment::Stretch);
     yogaXamlPanel.HorizontalAlignment(winrt::Microsoft::UI::Xaml::HorizontalAlignment::Stretch);
 
     auto expander = winrt::Microsoft::UI::Xaml::Controls::Expander();
-
-    // expander.VerticalAlignment(winrt::Microsoft::UI::Xaml::VerticalAlignment::Top);
-    // expander.HorizontalAlignment(winrt::Microsoft::UI::Xaml::HorizontalAlignment::Left);
 
     auto button1 = winrt::Microsoft::UI::Xaml::Controls::Button();
     button1.Content(winrt::box_value(L"This is a Xaml Button in Xaml Expander Header"));
@@ -134,23 +132,6 @@ struct CustomComponent : winrt::implements<CustomComponent, winrt::IInspectable>
             auto desiredSize = expander.DesiredSize();
           }
         });
-    /*
-    m_loadedRevoker = expander.Loaded(
-        winrt::auto_revoke,
-        [this, wkExpander = winrt::weak_ref(expander)](
-            winrt::Windows::Foundation::IInspectable const &sender,
-            winrt::Microsoft::UI::Xaml::RoutedEventArgs const &e) noexcept {
-          if (auto expander = wkExpander.get()) {
-            auto state = winrt::get_self<MyStateData>(m_state.Data());
-
-            expander.Measure(state->constraints.MaximumSize);
-            auto desiredSize = expander.DesiredSize();
-            if (desiredSize != state->desiredSize) {
-              m_state.UpdateState(winrt::make<MyStateData>(state->constraints, desiredSize));
-            }
-          }
-        });
-        */
     expander.Header(button1);
 
     auto button2 = winrt::Microsoft::UI::Xaml::Controls::Button();
@@ -215,7 +196,7 @@ struct CustomComponent : winrt::implements<CustomComponent, winrt::IInspectable>
         winrt::Microsoft::ReactNative::ReactCoreInjection::GetTopLevelWindowId(m_reactContext.Properties()));
 
     m_visual = m_compContext.CreateSpriteVisual();
-    //m_visual.Brush(m_compContext.CreateColorBrush({255, 255, 0, 255}));
+    // m_visual.Brush(m_compContext.CreateColorBrush({255, 255, 0, 255}));
     auto parentSystemVisual =
         winrt::Microsoft::ReactNative::Composition::WindowsCompositionContextHelper::InnerVisual(m_visual)
             .as<winrt::Windows::UI::Composition::ContainerVisual>();
@@ -262,7 +243,7 @@ struct CustomComponent : winrt::implements<CustomComponent, winrt::IInspectable>
           compBuilder.SetCreateView(
               [](winrt::Microsoft::ReactNative::IReactContext reactContext,
                  winrt::Microsoft::ReactNative::Composition::ICompositionContext context) noexcept {
-                return winrt::make<CustomComponent>(reactContext, context);
+                return winrt::make<CustomComponent>(true, reactContext, context);
               });
           compBuilder.SetPropsUpdater([](winrt::Windows::Foundation::IInspectable componentHandle,
                                          winrt::Microsoft::ReactNative::IComponentProps props) noexcept {
@@ -318,6 +299,32 @@ struct CustomComponent : winrt::implements<CustomComponent, winrt::IInspectable>
             return winrt::make<MyStateData>(maxContraints, winrt::Windows::Foundation::Size{0, 0});
           });
         });
+
+    packageBuilder.as<winrt::Microsoft::ReactNative::IReactPackageBuilderFabric>().AddViewComponent(
+        L"MyCustomComponentYoga",
+        [](winrt::Microsoft::ReactNative::IReactViewComponentBuilder const &builder) noexcept {
+          builder.SetCreateProps(
+              [](winrt::Microsoft::ReactNative::ViewProps props) noexcept { return winrt::make<CustomProps>(props); });
+          auto compBuilder =
+              builder.as<winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder>();
+          compBuilder.SetCreateView(
+              [](winrt::Microsoft::ReactNative::IReactContext reactContext,
+                 winrt::Microsoft::ReactNative::Composition::ICompositionContext context) noexcept {
+                return winrt::make<CustomComponent>(false, reactContext, context);
+              });
+          compBuilder.SetPropsUpdater([](winrt::Windows::Foundation::IInspectable componentHandle,
+                                         winrt::Microsoft::ReactNative::IComponentProps props) noexcept {
+            componentHandle.as<CustomComponent>()->UpdateProps(props);
+          });
+          compBuilder.SetLayoutMetricsUpdater(
+              [](winrt::Windows::Foundation::IInspectable componentHandle,
+                 winrt::Microsoft::ReactNative::Composition::LayoutMetrics metrics) noexcept {
+                componentHandle.as<CustomComponent>()->UpdateLayoutMetrics(metrics);
+              });
+          compBuilder.SetVisualCreator([](winrt::Windows::Foundation::IInspectable componentHandle) noexcept {
+            return componentHandle.as<CustomComponent>()->CreateVisual();
+          });
+        });
   }
 
  private:
@@ -325,6 +332,7 @@ struct CustomComponent : winrt::implements<CustomComponent, winrt::IInspectable>
   winrt::Microsoft::UI::Composition::SpotLight m_spotlight{nullptr};
 #endif
 
+  bool m_nativeLayout;
   winrt::Microsoft::ReactNative::LayoutConstraints m_layoutConstraints;
   winrt::Microsoft::UI::Xaml::Controls::Button::Click_revoker m_clickRevoker;
   winrt::Microsoft::UI::Xaml::Controls::Expander::Loaded_revoker m_loadedRevoker;
