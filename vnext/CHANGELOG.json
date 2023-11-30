@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 29 Nov 2023 06:16:34 GMT",
+      "version": "0.0.0-canary.742",
+      "tag": "react-native-windows_v0.0.0-canary.742",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "46c26bbb890b3a9344ba70d528606f2775b16a1b",
+            "comment": "Update @react-native/react-native-picker"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "5fe8721f0c9898904319f9a27b9b7cf924d3cdc9",
+            "comment": "[Fabric] Add support for custom native component to have c++ state and custom measure"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 22 Nov 2023 06:16:28 GMT",
       "version": "0.0.0-canary.741",
       "tag": "react-native-windows_v0.0.0-canary.741",
