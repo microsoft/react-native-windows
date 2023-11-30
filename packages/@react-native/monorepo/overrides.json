@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.73.0-rc.5",
+  "baseVersion": "0.73.0-rc.6",
   "overrides": [
     {
       "type": "patch",
