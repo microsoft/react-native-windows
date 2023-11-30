@@ -185,17 +185,14 @@ jobs:
 
               - template: ../templates/stop-packagers.yml
 
-            - task: BinSkim@3
+            - task: BinSkim@4
               displayName: Run Binskim Analysis
               condition: eq('${{ matrix.BuildConfiguration }}', 'Release')
               inputs:
                   InputType: 'Basic'
                   Function: 'analyze'
-                  # Scanning v8jsi.dll in x64/x86 only, because PDBs are stripped in ARM64
-                  ${{ if ne(matrix.BuildPlatform, 'ARM64') }}:
-                    AnalyzeTarget: '$(Build.SourcesDirectory)\vnext\target\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}\\React.Windows.Desktop.DLL\*.dll'
-                  ${{ else }}:
-                    AnalyzeTarget: '$(Build.SourcesDirectory)\vnext\target\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}\\React.Windows.Desktop.DLL\react-native-win32.dll'
+                  TargetPattern: 'guardianGlob'
+                  AnalyzeTargetGlob: '$(Build.SourcesDirectory)\vnext\target\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}\React.Windows.Desktop.DLL\react-native-win32.dll'
                   AnalyzeVerbose: true
                   toolVersion: 'Latest'
               continueOnError: true
@@ -204,7 +201,7 @@ jobs:
               parameters:
                 ${{ if eq(matrix.UseFabric, true) }}:
                   artifactName: DesktopFabric
-                ${{ if eq(matrix.UseFabric, false) }}:
+                ${{ else }}:
                   artifactName: Desktop
                 buildPlatform: ${{ matrix.BuildPlatform }}
                 buildConfiguration: ${{ matrix.BuildConfiguration }}

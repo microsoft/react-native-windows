@@ -14,7 +14,6 @@
 
 #include <ReactCommon/CallInvoker.h>
 #include <CallbackWrapper.h>
-#include <LongLivedObject.h>
 
 namespace facebook {
 namespace react {
@@ -37,7 +36,7 @@ using PromiseSetupFunctionType =
     std::function<void(jsi::Runtime &rt, std::shared_ptr<Promise>)>;
 jsi::Value createPromiseAsJSIValue(
     jsi::Runtime &rt,
-    const PromiseSetupFunctionType func);
+    PromiseSetupFunctionType &&func);
 
 class RAIICallbackWrapperDestroyer {
  public:
@@ -59,3 +58,4 @@ class RAIICallbackWrapperDestroyer {
 
 } // namespace react
 } // namespace facebook
+

@@ -24,9 +24,11 @@ import type {
 } from './StyleSheetTypes';
 
 const ReactNativeStyleAttributes = require('../Components/View/ReactNativeStyleAttributes');
-const PixelRatio = require('../Utilities/PixelRatio');
+const PixelRatio = require('../Utilities/PixelRatio').default;
 const Platform = require('../Utilities/Platform'); // [Win32]
 const flatten = require('./flattenStyle');
+
+export type {NativeColorValue} from './StyleSheetTypes';
 
 /**
  * This type should be used as the type for anything that is a color. It is
@@ -363,6 +365,7 @@ module.exports = {
   /**
    * Creates a StyleSheet style reference from the given object.
    */
+  // $FlowFixMe[unsupported-variance-annotation]
   create<+S: ____Styles_Internal>(obj: S): $ReadOnly<S> {
     // TODO: This should return S as the return type. But first,
     // we need to codemod all the callsites that are typing this

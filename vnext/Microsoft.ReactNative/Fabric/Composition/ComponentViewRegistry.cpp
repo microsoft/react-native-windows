@@ -19,12 +19,18 @@
 #include <react/renderer/components/text/TextShadowNode.h>
 #include <react/renderer/components/view/ViewShadowNode.h>
 
+#include <Fabric/Composition/AbiCompositionViewComponentView.h>
+#include <Fabric/Composition/ActivityIndicatorComponentView.h>
 #include <Fabric/Composition/CompositionHelpers.h>
 #include <Fabric/Composition/CompositionViewComponentView.h>
 #include <Fabric/Composition/ImageComponentView.h>
 #include <Fabric/Composition/ParagraphComponentView.h>
+#include <Fabric/Composition/RootComponentView.h>
 #include <Fabric/Composition/ScrollViewComponentView.h>
+#include <Fabric/Composition/SwitchComponentView.h>
 #include <Fabric/Composition/TextInput/WindowsTextInputComponentView.h>
+#include <Fabric/Composition/UnimplementedNativeViewComponentView.h>
+#include <Fabric/WindowsComponentDescriptorRegistry.h>
 
 namespace Microsoft::ReactNative {
 
@@ -40,16 +46,37 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
 
   std::shared_ptr<CompositionBaseComponentView> view;
 
-  if (componentHandle == facebook::react::ParagraphShadowNode::Handle()) {
-    view = std::make_shared<ParagraphComponentView>(compContext, tag);
+  if (componentHandle == facebook::react::ViewShadowNode::Handle()) {
+    view = CompositionViewComponentView::Create(compContext, tag, m_context);
+  } else if (componentHandle == facebook::react::ParagraphShadowNode::Handle()) {
+    view = ParagraphComponentView::Create(compContext, tag, m_context);
   } else if (componentHandle == facebook::react::ScrollViewShadowNode::Handle()) {
-    view = std::make_shared<ScrollViewComponentView>(compContext, tag);
+    view = ScrollViewComponentView::Create(compContext, tag, m_context);
   } else if (componentHandle == facebook::react::ImageShadowNode::Handle()) {
-    view = std::make_shared<ImageComponentView>(compContext, tag, m_context);
+    view = ImageComponentView::Create(compContext, tag, m_context);
   } else if (componentHandle == facebook::react::WindowsTextInputShadowNode::Handle()) {
-    view = std::make_shared<WindowsTextInputComponentView>(compContext, tag, m_context);
+    view = WindowsTextInputComponentView::Create(compContext, tag, m_context);
+  } else if (componentHandle == facebook::react::SwitchShadowNode::Handle()) {
+    view = SwitchComponentView::Create(compContext, tag, m_context);
+  } else if (componentHandle == facebook::react::ActivityIndicatorViewShadowNode::Handle()) {
+    view = ActivityIndicatorComponentView::Create(compContext, tag, m_context);
+  } else if (componentHandle == facebook::react::RootShadowNode::Handle()) {
+    view = RootComponentView::Create(compContext, tag, m_context);
+  } else if (
+      componentHandle == facebook::react::RawTextShadowNode::Handle() ||
+      componentHandle == facebook::react::TextShadowNode::Handle()) {
+    // Review - Why do we get asked for ComponentViews for Text/RawText... do these get used?
+    view = CompositionViewComponentView::Create(compContext, tag, m_context);
+  } else if (componentHandle == facebook::react::UnimplementedNativeViewShadowNode::Handle()) {
+    view = UnimplementedNativeViewComponentView::Create(compContext, tag, m_context);
   } else {
-    view = std::make_shared<CompositionViewComponentView>(compContext, tag);
+    auto descriptor =
+        WindowsComponentDescriptorRegistry::FromProperties(m_context.Properties())->GetDescriptor(componentHandle);
+    view = AbiCompositionViewComponentView::Create(
+        m_context.Handle(),
+        compContext,
+        tag,
+        descriptor.as<winrt::Microsoft::ReactNative::IReactViewComponentBuilder>());
   }
 
   auto it = m_registry.insert({tag, ComponentViewDescriptor{view}});

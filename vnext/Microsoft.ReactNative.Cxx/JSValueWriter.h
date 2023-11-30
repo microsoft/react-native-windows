@@ -234,7 +234,7 @@ inline void WriteCustomDirectEventTypeConstant(IJSValueWriter const &writer, std
 template <class T, std::enable_if_t<!std::is_void_v<decltype(GetStructInfo(static_cast<T *>(nullptr)))>, int>>
 inline void WriteValue(IJSValueWriter const &writer, T const &value) noexcept {
   writer.WriteObjectBegin();
-  for (const auto &fieldEntry : StructInfo<T>::FieldMap) {
+  for (const auto &fieldEntry : StructInfo<T>::GetFieldMap()) {
     writer.WritePropertyName(fieldEntry.first);
     fieldEntry.second.WriteField(writer, &value);
   }

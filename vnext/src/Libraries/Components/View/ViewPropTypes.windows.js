@@ -88,6 +88,8 @@ type MouseEventProps = $ReadOnly<{|
 
 // Experimental/Work in Progress Pointer Event Callbacks (not yet ready for use)
 type PointerEventProps = $ReadOnly<{|
+  onClick?: ?(event: PointerEvent) => void,
+  onClickCapture?: ?(event: PointerEvent) => void,
   onPointerEnter?: ?(event: PointerEvent) => void,
   onPointerEnterCapture?: ?(event: PointerEvent) => void,
   onPointerLeave?: ?(event: PointerEvent) => void,
@@ -104,6 +106,10 @@ type PointerEventProps = $ReadOnly<{|
   onPointerOverCapture?: ?(e: PointerEvent) => void,
   onPointerOut?: ?(e: PointerEvent) => void,
   onPointerOutCapture?: ?(e: PointerEvent) => void,
+  onGotPointerCapture?: ?(e: PointerEvent) => void,
+  onGotPointerCaptureCapture?: ?(e: PointerEvent) => void,
+  onLostPointerCapture?: ?(e: PointerEvent) => void,
+  onLostPointerCaptureCapture?: ?(e: PointerEvent) => void,
 |}>;
 
 type FocusEventProps = $ReadOnly<{|
@@ -159,8 +165,8 @@ type GestureResponderEventProps = $ReadOnly<{|
    * `View.props.onResponderGrant: (event) => {}`, where `event` is a synthetic
    * touch event as described above.
    *
-   * PanResponder includes a note `// TODO: t7467124 investigate if this can be removed` that
-   * should help fixing this return type.
+   * Return true from this callback to prevent any other native components from
+   * becoming responder until this responder terminates (Android-only).
    *
    * See https://reactnative.dev/docs/view#onrespondergrant
    */
@@ -434,6 +440,17 @@ type IOSViewProps = $ReadOnly<{|
 |}>;
 
 // [Windows
+export const EventPhase = {
+  None: 0,
+  Capturing: 1,
+  AtTarget: 2,
+  Bubbling: 3,
+};
+
+export const HandledEventPhase = {
+  Capturing: EventPhase.Capturing,
+  Bubbling: EventPhase.Bubbling,
+};
 
 export type HandledKeyboardEvent = $ReadOnly<{|
   altKey?: ?boolean,
@@ -465,8 +482,14 @@ type WindowsViewProps = $ReadOnly<{|
 
   tabIndex?: ?number,
 
+  disabled?: ?boolean,
+
+  accessibilityLevel?: ?number,
+  'aria-level'?: ?number,
   accessibilityPosInSet?: ?number,
+  'aria-posinset'?: ?number,
   accessibilitySetSize?: ?number,
+  'aria-setsize'?: ?number,
 
   /**
    * Specifies if the control should show System focus visuals
@@ -612,7 +635,16 @@ export type ViewProps = $ReadOnly<{|
   collapsable?: ?boolean,
 
   /**
-   * Used to locate this view from native classes.
+   * Contols whether this view, and its transitive children, are laid in a way
+   * consistent with web browsers ('strict'), or consistent with existing
+   * React Native code which may rely on incorrect behavior ('classic').
+   *
+   * This prop only works when using Fabric.
+   */
+  experimental_layoutConformance?: ?('strict' | 'classic'),
+
+  /**
+   * Used to locate this view from native classes. Has precedence over `nativeID` prop.
    *
    * > This disables the 'layout-only view removal' optimization for this view!
    *

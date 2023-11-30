@@ -81,7 +81,7 @@ struct ReactApplication : NoDefaultCtorReactApplication_base<ReactApplication, x
   ReactNative::ReactInstanceSettings InstanceSettings() noexcept;
   void InstanceSettings(ReactNative::ReactInstanceSettings const &value) noexcept;
 
-  Windows::Foundation::Collections::IVector<IReactPackageProvider> PackageProviders() noexcept;
+  winrt::Windows::Foundation::Collections::IVector<IReactPackageProvider> PackageProviders() noexcept;
 
   ReactNative::ReactNativeHost Host() noexcept;
 
@@ -91,9 +91,12 @@ struct ReactApplication : NoDefaultCtorReactApplication_base<ReactApplication, x
   hstring JavaScriptBundleFile() noexcept;
   void JavaScriptBundleFile(hstring const &value) noexcept;
 
-  void OnActivated(Windows::ApplicationModel::Activation::IActivatedEventArgs const &e);
+  hstring BundleAppId() noexcept;
+  void BundleAppId(hstring const &value) noexcept;
+
+  void OnActivated(winrt::Windows::ApplicationModel::Activation::IActivatedEventArgs const &e);
   void OnLaunched(activation::LaunchActivatedEventArgs const &e);
-  void OnSuspending(IInspectable const &, Windows::ApplicationModel::SuspendingEventArgs const &);
+  void OnSuspending(IInspectable const &, winrt::Windows::ApplicationModel::SuspendingEventArgs const &);
   void OnNavigationFailed(IInspectable const &, xaml::Navigation::NavigationFailedEventArgs const &);
 
   using AppLaunchedDelegate = winrt::delegate<void(
@@ -126,7 +129,7 @@ struct ReactApplication : NoDefaultCtorReactApplication_base<ReactApplication, x
   winrt::Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
   winrt::Microsoft::ReactNative::ReactNativeHost m_host{nullptr};
 
-  void OnCreate(Windows::ApplicationModel::Activation::IActivatedEventArgs const &e);
+  void OnCreate(winrt::Windows::ApplicationModel::Activation::IActivatedEventArgs const &e);
 
   AppLaunchedDelegate m_launched;
   AppViewCreatedDelegate m_viewCreated;

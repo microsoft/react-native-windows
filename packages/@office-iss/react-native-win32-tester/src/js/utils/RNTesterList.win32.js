@@ -19,9 +19,11 @@ const Components: Array<RNTesterModuleInfo> = [
     key: 'DrawerLayoutAndroid',
     category: 'UI',
     module: require('../examples/DrawerLayoutAndroid/DrawerLayoutAndroidExample'),
+  },*/
+  {
     key: 'AccessibilityExampleWin32',
     module: require('../examples-win32/Accessibility/AccessibilityExampleWin32'),
-  },*/
+  },
   {
     key: 'ActivityIndicatorExample',
     category: 'UI',
@@ -121,7 +123,7 @@ const Components: Array<RNTesterModuleInfo> = [
   },
   {
     key: 'TextWin32Test',
-    module: require('@office-iss/react-native-win32/Libraries/Components/Text/Tests/TextWin32Test'),
+    module: require('../components/TextWin32Test'),
   },
   {
     key: 'TouchableExample',
@@ -135,15 +137,20 @@ const Components: Array<RNTesterModuleInfo> = [
   {
     key: 'ViewExample',
     category: 'Basic',
-    module: require('../examples/View/ViewExample'),
+    module: require('../examples/View/ViewExample').default,
   },
   {
     key: 'ViewWin32Test',
-    module: require('@office-iss/react-native-win32/Libraries/Components/View/Tests/ViewWin32Test'),
+    module: require('../components/ViewWin32Test'),
+  },
+  {
+    key: 'PerformanceComparisonExample',
+    category: 'Basic',
+    module: require('../examples/Performance/PerformanceComparisonExample'),
   },
 ];
 
-const APIs: Array<RNTesterModuleInfo> = [
+const APIs: Array<RNTesterModuleInfo> = ([
   {
     key: 'AccessibilityExample',
     category: 'Basic',
@@ -181,7 +188,7 @@ const APIs: Array<RNTesterModuleInfo> = [
   {
     key: 'BorderExample',
     category: 'UI',
-    module: require('../examples/Border/BorderExample'),
+    module: require('../examples/Border/BorderExample').default,
   },
   {
     key: 'CrashExample',
@@ -197,6 +204,18 @@ const APIs: Array<RNTesterModuleInfo> = [
     key: 'Dimensions',
     category: 'UI',
     module: require('../examples/Dimensions/DimensionsExample'),
+  },
+  // Only show the link for the example if the API is available.
+  typeof IntersectionObserver === 'function'
+    ? {
+        key: 'IntersectionObserver',
+        category: 'UI',
+        module: require('../examples/IntersectionObserver/IntersectionObserverIndex'),
+      }
+    : null,
+  {
+    key: 'InvalidPropsExample',
+    module: require('../examples/InvalidProps/InvalidPropsExample'),
   },
   {
     key: 'Keyboard',
@@ -217,12 +236,19 @@ const APIs: Array<RNTesterModuleInfo> = [
     key: 'LayoutExample',
     category: 'UI',
     module: require('../examples/Layout/LayoutExample'),
-  } /*
+  },
+  typeof MutationObserver === 'function'
+    ? {
+        key: 'MutationObserver',
+        category: 'UI',
+        module: require('../examples/MutationObserver/MutationObserverIndex'),
+      }
+    : null,
   {
     key: 'NativeAnimationsExample',
     category: 'UI',
     module: require('../examples/NativeAnimation/NativeAnimationsExample'),
-  }*/,
+  },
   {
     key: 'PanResponderExample',
     category: 'Basic',
@@ -281,11 +307,20 @@ const APIs: Array<RNTesterModuleInfo> = [
     module: require('../examples/TurboModule/TurboModuleExample'),
   },
   {
+    key: 'LegacyModuleExample',
+    module: require('../examples/TurboModule/LegacyModuleExample'),
+  },
+  {
     key: 'TurboCxxModuleExample',
     category: 'Basic',
     module: require('../examples/TurboModule/TurboCxxModuleExample'),
   },
-];
+  {
+    key: 'PerformanceApiExample',
+    category: 'Basic',
+    module: require('../examples/Performance/PerformanceApiExample'),
+  },
+]: Array<?RNTesterModuleInfo>).filter(Boolean);
 
 if (ReactNativeFeatureFlags.shouldEmitW3CPointerEvents()) {
   APIs.push({

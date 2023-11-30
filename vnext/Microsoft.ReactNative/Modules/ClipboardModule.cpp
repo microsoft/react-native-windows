@@ -48,10 +48,10 @@ void Clipboard::getString(React::ReactPromise<std::string> result) noexcept {
   );
 }
 
-void Clipboard::setString(std::string content) noexcept {
+void Clipboard::setString(std::wstring content) noexcept {
   m_reactContext.UIDispatcher().Post([=] {
     DataTransfer::DataPackage data;
-    data.SetText(Microsoft::Common::Unicode::Utf8ToUtf16(content));
+    data.SetText(content);
     DataTransfer::Clipboard::SetContent(data);
   });
 }

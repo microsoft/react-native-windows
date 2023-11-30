@@ -61,6 +61,14 @@ hstring ReactSettingsSnapshot::JavaScriptBundleFile() const noexcept {
   return winrt::to_hstring(m_settings->JavaScriptBundleFile());
 }
 
+hstring ReactSettingsSnapshot::BundleAppId() const noexcept {
+  return winrt::to_hstring(m_settings->BundleAppId());
+}
+
+bool ReactSettingsSnapshot::RequestDevBundle() const noexcept {
+  return m_settings->RequestDevBundle();
+}
+
 Mso::React::IReactSettingsSnapshot const &ReactSettingsSnapshot::GetInner() const noexcept {
   return *m_settings;
 }
@@ -92,7 +100,7 @@ IReactDispatcher ReactContext::JSDispatcher() noexcept {
   return Properties().Get(ReactDispatcherHelper::JSDispatcherProperty()).try_as<IReactDispatcher>();
 }
 
-Windows::Foundation::IInspectable ReactContext::JSRuntime() noexcept {
+winrt::Windows::Foundation::IInspectable ReactContext::JSRuntime() noexcept {
   return m_context->JsiRuntime();
 }
 

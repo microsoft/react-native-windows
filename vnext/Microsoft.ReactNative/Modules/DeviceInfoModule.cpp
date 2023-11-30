@@ -6,7 +6,9 @@
 #include <DesktopWindowBridge.h>
 #include <IReactDispatcher.h>
 #include <IReactPropertyBag.h>
+#ifndef USE_WINUI3
 #include <UI.Xaml.Hosting.DesktopWindowXamlSource.h>
+#endif
 #include <Utils/Helpers.h>
 #include <XamlUIService.h>
 #include <XamlUtils.h>
@@ -175,8 +177,8 @@ void DeviceInfoHolder::updateDeviceInfo() noexcept {
   }
 }
 
-ReactNativeSpecs::DeviceInfoSpec_Constants DeviceInfo::GetConstants() noexcept {
-  ReactNativeSpecs::DeviceInfoSpec_Constants constants;
+ReactNativeSpecs::DeviceInfoSpec_DeviceInfoConstants DeviceInfo::GetConstants() noexcept {
+  ReactNativeSpecs::DeviceInfoSpec_DeviceInfoConstants constants;
   constants.Dimensions = DeviceInfoHolder::GetDimensions(m_context.Properties());
   return constants;
 }

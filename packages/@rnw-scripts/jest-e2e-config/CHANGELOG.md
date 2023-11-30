@@ -1,8 +1,58 @@
 # Change Log - @rnw-scripts/jest-e2e-config
 
-This log was last generated on Wed, 11 Jan 2023 06:15:30 GMT and should not be manually modified.
+This log was last generated on Fri, 14 Jul 2023 05:17:07 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.4.6
+
+Fri, 14 Jul 2023 05:17:07 GMT
+
+### Patches
+
+- integration 6/28 (tatianakapos@microsoft.com)
+- Bump @rnw-scripts/babel-node-config to v2.3.1
+
+## 1.4.5
+
+Wed, 07 Jun 2023 05:16:11 GMT
+
+### Patches
+
+- Bump @rnw-scripts/babel-node-config to v2.3.0
+
+## 1.4.4
+
+Tue, 06 Jun 2023 19:06:47 GMT
+
+### Patches
+
+- Bump @rnw-scripts/babel-node-config to v2.2.4
+
+## 1.4.3
+
+Tue, 16 May 2023 05:16:30 GMT
+
+### Patches
+
+- Bump @rnw-scripts/babel-node-config to v2.2.3
+
+## 1.4.2
+
+Tue, 25 Apr 2023 05:17:00 GMT
+
+### Patches
+
+- Update Node to 16 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/babel-node-config to v2.2.2
+
+## 1.4.1
+
+Tue, 21 Mar 2023 21:21:55 GMT
+
+### Patches
+
+- Bump @rnw-scripts/babel-node-config to v2.2.1
 
 ## 1.4.0
 

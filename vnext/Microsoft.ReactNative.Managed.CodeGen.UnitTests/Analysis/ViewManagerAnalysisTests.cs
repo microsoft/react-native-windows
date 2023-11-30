@@ -29,7 +29,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests.Analysis
     }
 
     [TestMethod]
-    public void InsideNiestedClass()
+    public void InsideNestedClass()
     {
       var (codeAnalyzer, type) = AnalyzeFile(@"
         using Microsoft.ReactNative;
@@ -92,7 +92,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests.Analysis
     }
 
     [TestMethod]
-    public void InherittedAbstractIs()
+    public void InheritedAbstractIs()
     {
       var (codeAnalyzer, type) = AnalyzeFile(@"
         using Microsoft.ReactNative;

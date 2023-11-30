@@ -28,6 +28,8 @@ struct QuirkSettings : QuirkSettingsT<QuirkSettings> {
   static bool GetAcceptSelfSigned(winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept;
   static winrt::Microsoft::ReactNative::BackNavigationHandlerKind GetBackHandlerKind(
       winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept;
+  static bool GetSuppressWindowFocusOnViewFocus(winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept;
+  static bool GetUseRuntimeScheduler(winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept;
 
   static bool GetEnableFabric(winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept;
 
@@ -54,6 +56,15 @@ struct QuirkSettings : QuirkSettingsT<QuirkSettings> {
   static void SetMapWindowDeactivatedToAppStateInactive(
       winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
       bool value) noexcept;
+
+  static void SetSuppressWindowFocusOnViewFocus(
+      winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
+      bool value) noexcept;
+
+  static void SetUseRuntimeScheduler(
+      winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
+      bool value) noexcept;
+
 #pragma endregion Public API - part of IDL interface
 };
 

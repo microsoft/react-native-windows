@@ -19,7 +19,6 @@ const {
   TextInput,
   View,
   StyleSheet,
-  Slider,
   Switch,
   Alert,
 } = require('react-native');
@@ -27,7 +26,10 @@ import type {KeyboardType} from 'react-native/Libraries/Components/TextInput/Tex
 
 const TextInputSharedExamples = require('./TextInputSharedExamples.js');
 
-import type {RNTesterModuleExample} from '../../types/RNTesterTypes';
+import type {
+  RNTesterModule,
+  RNTesterModuleExample,
+} from '../../types/RNTesterTypes';
 
 class WithLabel extends React.Component<$FlowFixMeProps> {
   render(): React.Node {
@@ -214,8 +216,8 @@ class AutogrowingTextInputExample extends React.Component<
     super(props);
 
     this.state = {
-      width: 100,
       multiline: true,
+      fullWidth: true,
       text: '',
       contentSize: {
         width: 0,
@@ -234,24 +236,23 @@ class AutogrowingTextInputExample extends React.Component<
     const {style, multiline, ...props} = this.props;
     return (
       <View>
-        <Text>Width:</Text>
-        <Slider
-          value={100}
-          minimumValue={0}
-          maximumValue={100}
-          step={10}
-          onValueChange={value => this.setState({width: value})}
+        <Text>Full width:</Text>
+        <Switch
+          value={this.state.fullWidth}
+          onValueChange={value => this.setState({fullWidth: value})}
         />
+
         <Text>Multiline:</Text>
         <Switch
           value={this.state.multiline}
           onValueChange={value => this.setState({multiline: value})}
         />
+
         <Text>TextInput:</Text>
         <TextInput
           value="prop"
           multiline={this.state.multiline}
-          style={[style, {width: this.state.width + '%'}]}
+          style={[style, {width: this.state.fullWidth ? '100%' : '50%'}]}
           onChangeText={value => this.setState({text: value})}
           onContentSizeChange={event =>
             this.setState({contentSize: event.nativeEvent.contentSize})
@@ -324,12 +325,7 @@ const styles = StyleSheet.create({
   },
 });
 
-exports.displayName = (undefined: ?string);
-exports.title = 'TextInput';
-exports.documentationURL = 'https://reactnative.dev/docs/textinput';
-exports.category = 'Basic';
-exports.description = 'Single and multi-line text inputs.';
-exports.examples = ([
+const examples: Array<RNTesterModuleExample> = [
   ...TextInputSharedExamples,
   {
     title: 'Live Re-Write (ひ -> 日)',
@@ -809,6 +805,12 @@ exports.examples = ([
           <WithLabel label="one-time-code">
             <TextInput autoComplete="one-time-code" style={styles.default} />
           </WithLabel>
+          <WithLabel label="birthdate-full">
+            <TextInput autoComplete="birthdate-full" style={styles.default} />
+          </WithLabel>
+          <WithLabel label="cc-name">
+            <TextInput autoComplete="cc-name" style={styles.default} />
+          </WithLabel>
         </View>
       );
     },
@@ -823,6 +825,22 @@ exports.examples = ([
           </WithLabel>
           <WithLabel label="name">
             <TextInput textContentType="name" style={styles.default} />
+          </WithLabel>
+          <WithLabel label="postalCode, when autoComplete set">
+            <TextInput
+              textContentType="postalCode"
+              autoComplete="email"
+              style={styles.default}
+            />
+          </WithLabel>
+          <WithLabel label="creditCardExpiration">
+            <TextInput
+              textContentType="creditCardExpiration"
+              style={styles.default}
+            />
+          </WithLabel>
+          <WithLabel label="birthdate">
+            <TextInput textContentType="birthdate" style={styles.default} />
           </WithLabel>
         </View>
       );
@@ -901,4 +919,32 @@ exports.examples = ([
       );
     },
   },
-]: Array<RNTesterModuleExample>);
+  {
+    title: 'iOS autoformatting behaviors',
+    render: function (): React.Node {
+      return (
+        <View>
+          <WithLabel label="smartInsertDelete: true | undefined">
+            <TextInput style={styles.default} defaultValue="CopyAndPaste" />
+          </WithLabel>
+          <WithLabel label="smartInsertDelete: false">
+            <TextInput
+              smartInsertDelete={false}
+              style={styles.default}
+              defaultValue="CopyAndPaste"
+            />
+          </WithLabel>
+        </View>
+      );
+    },
+  },
+];
+
+module.exports = ({
+  displayName: (undefined: ?string),
+  title: 'TextInput',
+  documentationURL: 'https://reactnative.dev/docs/textinput',
+  category: 'Basic',
+  description: 'Single and multi-line text inputs.',
+  examples,
+}: RNTesterModule);

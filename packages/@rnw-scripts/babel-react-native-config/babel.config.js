@@ -8,6 +8,11 @@
 
 module.exports = {
   presets: [
-    'module:metro-react-native-babel-preset',
+    'module:@react-native/babel-preset',
   ],
+  plugins: [
+    "@babel/plugin-transform-logical-assignment-operators", // Note, remove by 8/4 RN integrate or https://github.com/facebook/react-native/issues/31704 is fixed.
+    "@babel/plugin-transform-nullish-coalescing-operator", // Note, remove by 8/4 RN integrate or https://github.com/facebook/react-native/issues/31704 is fixed.
+    "babel-plugin-transform-flow-enums",
+  ]
 };

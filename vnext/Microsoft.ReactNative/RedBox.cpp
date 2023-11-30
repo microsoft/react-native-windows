@@ -17,6 +17,7 @@
 #ifndef CORE_ABI
 
 #ifdef USE_FABRIC
+#include <ReactCoreInjection.h>
 #include <Shobjidl.h>
 #include <Utils/Helpers.h>
 #include <winrt/Windows.UI.Popups.h>
@@ -56,11 +57,9 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
         m_errorInfo(std::move(errorInfo)) {}
 
   void Dismiss() noexcept {
-#ifdef USE_FABRIC
     if (m_popup) {
       m_popup.IsOpen(false);
     }
-#endif // USE_FABRIC
   }
 
   void Reload() noexcept {
@@ -92,7 +91,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
 
     auto msg = winrt::Windows::UI::Popups::MessageDialog(winrt::to_hstring(ss.str()), L"React Native Error");
     auto hwnd = reinterpret_cast<HWND>(
-        *m_propBag.Get(winrt::Microsoft::ReactNative::ReactPropertyId<uint64_t>(L"RootHwndForDevUI")));
+        winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::GetTopLevelWindowId(m_propBag.Handle()));
     auto initializeWithWindow{msg.as<::IInitializeWithWindow>()};
     initializeWithWindow->Initialize(hwnd);
     msg.Commands().Append(
@@ -488,7 +487,7 @@ struct DefaultRedBoxHandler final : public std::enable_shared_from_this<DefaultR
   }
 
   virtual void showNewError(ErrorInfo &&info, ErrorType /*exceptionType*/) override {
-    // Check if the rebox has been suppressed
+    // Check if the redbox has been suppressed
     if (!info.ExtraData.isNull()) {
       auto iterator = info.ExtraData.find("suppressRedBox");
       if (iterator != info.ExtraData.items().end()) {

@@ -38,7 +38,7 @@ void AccessibilityInfo::setAccessibilityFocus(double /*reactTag*/) noexcept {
   // no-op - This appears to be unused in RN
 }
 
-void AccessibilityInfo::announceForAccessibility(std::string announcement) noexcept {
+void AccessibilityInfo::announceForAccessibility(std::wstring announcement) noexcept {
   m_context.UIDispatcher().Post([context = m_context, announcement = std::move(announcement)] {
     // Windows requires a specific element to announce from. Unfortunately the react-native API does not provide a tag
     // So we need to find something to raise the notification event from.
@@ -61,7 +61,7 @@ void AccessibilityInfo::announceForAccessibility(std::string announcement) noexc
       return;
     }
 
-    winrt::hstring hstr{Microsoft::Common::Unicode::Utf8ToUtf16(announcement)};
+    winrt::hstring hstr{announcement};
     peer.RaiseNotificationEvent(
         xaml::Automation::Peers::AutomationNotificationKind::Other,
         xaml::Automation::Peers::AutomationNotificationProcessing::ImportantMostRecent,

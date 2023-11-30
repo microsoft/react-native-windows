@@ -15,7 +15,8 @@
 namespace facebook {
 namespace react {
 
-class JSI_EXPORT NativeMySimpleTurboModuleCxxCxxSpecJSI : public TurboModule {
+
+  class JSI_EXPORT NativeMySimpleTurboModuleCxxCxxSpecJSI : public TurboModule {
 protected:
   NativeMySimpleTurboModuleCxxCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
 
@@ -41,9 +42,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "MySimpleTurboModuleCxx";
+
 protected:
   NativeMySimpleTurboModuleCxxCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("MySimpleTurboModuleCxx", jsInvoker),
+    : TurboModule(std::string{NativeMySimpleTurboModuleCxxCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:
@@ -148,7 +151,8 @@ private:
   Delegate delegate_;
 };
 
-class JSI_EXPORT NativeMyTrivialTurboModuleCxxSpecJSI : public TurboModule {
+
+  class JSI_EXPORT NativeMyTrivialTurboModuleCxxSpecJSI : public TurboModule {
 protected:
   NativeMyTrivialTurboModuleCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
 
@@ -164,9 +168,11 @@ public:
     return delegate_.get(rt, propName);
   }
 
+  static constexpr std::string_view kModuleName = "MyTrivialTurboModule";
+
 protected:
   NativeMyTrivialTurboModuleCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule("MyTrivialTurboModule", jsInvoker),
+    : TurboModule(std::string{NativeMyTrivialTurboModuleCxxSpec::kModuleName}, jsInvoker),
       delegate_(static_cast<T*>(this), jsInvoker) {}
 
 private:

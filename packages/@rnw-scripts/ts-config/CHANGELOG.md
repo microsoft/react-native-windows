@@ -1,8 +1,24 @@
 # Change Log - @rnw-scripts/ts-config
 
-This log was last generated on Tue, 13 Dec 2022 06:15:26 GMT and should not be manually modified.
+This log was last generated on Fri, 14 Jul 2023 05:17:08 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.0.5
+
+Fri, 14 Jul 2023 05:17:08 GMT
+
+### Patches
+
+- integration 6/28 (tatianakapos@microsoft.com)
+
+## 2.0.4
+
+Tue, 25 Apr 2023 05:17:02 GMT
+
+### Patches
+
+- Update Node to 16 (34109996+chiaramooney@users.noreply.github.com)
 
 ## 2.0.3
 

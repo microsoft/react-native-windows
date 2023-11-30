@@ -5,21 +5,22 @@
 
 #include "WindowsTextInputShadowNode.h"
 
-#include <yoga/CompactValue.h>
 #include <yoga/YGEnums.h>
 #include <yoga/YGValue.h>
+#include <yoga/style/CompactValue.h>
+
+#include <unordered_map>
 
 #include <react/renderer/core/ConcreteComponentDescriptor.h>
 
-namespace facebook {
-namespace react {
+namespace facebook::react {
 
 /*
  * Descriptor for <WindowsTextInput> component.
  */
 class WindowsTextInputComponentDescriptor final : public ConcreteComponentDescriptor<WindowsTextInputShadowNode> {
  public:
-  WindowsTextInputComponentDescriptor(ComponentDescriptorParameters const &parameters)
+  WindowsTextInputComponentDescriptor(const ComponentDescriptorParameters &parameters)
       : ConcreteComponentDescriptor<WindowsTextInputShadowNode>(parameters) {
     // Every single `WindowsTextInputShadowNode` will have a reference to
     // a shared `TextLayoutManager`.
@@ -28,7 +29,7 @@ class WindowsTextInputComponentDescriptor final : public ConcreteComponentDescri
 
   /*
     virtual State::Shared createInitialState(
-        ShadowNodeFragment const &fragment,
+        facebook::react::Props::Shared const &props,
         ShadowNodeFamily::Shared const &family) const override {
       int surfaceId = family->getSurfaceId();
 
@@ -63,44 +64,42 @@ class WindowsTextInputComponentDescriptor final : public ConcreteComponentDescri
         env->DeleteLocalRef(defaultTextInputPaddingArray);
       }
 
-      return std::make_shared<AndroidTextInputShadowNode::ConcreteState>(
-          std::make_shared<AndroidTextInputState const>(AndroidTextInputState(
-              0,
-              {},
-              {},
-              {},
-              {},
-              {},
-              ((YGValue)theme[YGEdgeStart]).value,
-              ((YGValue)theme[YGEdgeEnd]).value,
-              ((YGValue)theme[YGEdgeTop]).value,
-              ((YGValue)theme[YGEdgeBottom]).value)),
-          family);
-    }
+    return std::make_shared<AndroidTextInputShadowNode::ConcreteState>(
+        std::make_shared<const AndroidTextInputState>(AndroidTextInputState(
+            0,
+            {},
+            {},
+            {},
+            ((YGValue)theme[YGEdgeStart]).value,
+            ((YGValue)theme[YGEdgeEnd]).value,
+            ((YGValue)theme[YGEdgeTop]).value,
+            ((YGValue)theme[YGEdgeBottom]).value)),
+        family);
+  }
   */
 
  protected:
-  void adopt(ShadowNode::Unshared const &shadowNode) const override {
-    auto textInputShadowNode = std::static_pointer_cast<WindowsTextInputShadowNode>(shadowNode);
+  void adopt(ShadowNode &shadowNode) const override {
+    auto &textInputShadowNode = static_cast<WindowsTextInputShadowNode &>(shadowNode);
 
     // `ParagraphShadowNode` uses `TextLayoutManager` to measure text content
     // and communicate text rendering metrics to mounting layer.
-    textInputShadowNode->setTextLayoutManager(m_textLayoutManager);
+    textInputShadowNode.setTextLayoutManager(m_textLayoutManager);
 
-    textInputShadowNode->setContextContainer(const_cast<ContextContainer *>(getContextContainer().get()));
+    textInputShadowNode.setContextContainer(const_cast<ContextContainer *>(getContextContainer().get()));
 
     /*
         int surfaceId = textInputShadowNode->getSurfaceId();
         if (surfaceIdToThemePaddingMap_.find(surfaceId) !=
             surfaceIdToThemePaddingMap_.end()) {
-          YGStyle::Edges theme = surfaceIdToThemePaddingMap_[surfaceId];
+          yoga::Style::Edges theme = surfaceIdToThemePaddingMap_[surfaceId];
 
           // Override padding
           // Node is still unsealed during adoption, before layout is complete
           // TODO: T62959168 account for RTL and paddingLeft when setting default
           // paddingStart, and vice-versa with paddingRight/paddingEnd.
           // For now this assumes no RTL.
-          YGStyle::Edges result =
+          yoga::Style::Edges result =
               textInputShadowNode->getConcreteProps().yogaStyle.padding();
           bool changedPadding = false;
           if (!textInputShadowNode->getConcreteProps().hasPadding &&
@@ -164,7 +163,7 @@ class WindowsTextInputComponentDescriptor final : public ConcreteComponentDescri
         textInputShadowNode->dirtyLayout();
 
         */
-    textInputShadowNode->enableMeasurement();
+    textInputShadowNode.enableMeasurement();
 
     ConcreteComponentDescriptor::adopt(shadowNode);
   }
@@ -173,5 +172,4 @@ class WindowsTextInputComponentDescriptor final : public ConcreteComponentDescri
   SharedTextLayoutManager m_textLayoutManager;
 };
 
-} // namespace react
-} // namespace facebook
+} // namespace facebook::react

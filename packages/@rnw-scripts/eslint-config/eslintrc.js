@@ -7,7 +7,7 @@
  */
 
 module.exports = {
-  extends: ['@react-native-community', 'prettier'],
+  extends: ['plugin:@microsoft/sdl/required', '@react-native', 'prettier'],
   rules: {
     'jest/no-disabled-tests': 'off',
     'react-native/no-inline-styles': 'off',
@@ -75,6 +75,7 @@ module.exports = {
         ],
         'block-scoped-var': 'error',
         'complexity': 'warn',
+        'eqeqeq': [ 'error', 'allow-null' ],
         'guard-for-in': 'error',
         'no-constructor-return': 'error',
         'no-useless-concat': 'error',

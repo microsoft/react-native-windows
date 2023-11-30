@@ -52,6 +52,7 @@
     <UseV8>true</UseV8>
     <V8AppPlatform>win32</V8AppPlatform>
     <HermesCompileRtti>false</HermesCompileRtti>
+    <IncludeFabricInterface Condition="'$(IncludeFabricInterface)' == ''">true</IncludeFabricInterface>
   </PropertyGroup>
   <PropertyGroup Label="Permissive">
     <ENABLEPermissive>true</ENABLEPermissive>
@@ -76,6 +77,7 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\PropertySheets\WinUI.props" Condition="'$(UseWinUI3)'=='true'" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -88,19 +90,21 @@
         CORE_ABI - marks ABI elements that are shared between UWP and Win32 DLLs.
       -->
       <PreprocessorDefinitions>
-        ENABLE_BEAST=$(EnableBeast);
         BOOST_ASIO_HAS_IOCP;
         _WINSOCK_DEPRECATED_NO_WARNINGS;
         _WIN32_WINNT=$(WinVer);
         WIN32;
         CORE_ABI;
         _WINDOWS;
+        FOLLY_CFG_NO_COROUTINES;
         FOLLY_NO_CONFIG;
         NOMINMAX;
         _HAS_AUTO_PTR_ETC;
         RN_PLATFORM=win32;
         RN_EXPORT=;
         JSI_EXPORT=;
+        <!-- See https://cplusplus.github.io/LWG/issue3840 -->
+        _SILENCE_CXX20_U8PATH_DEPRECATION_WARNING;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
       <AdditionalIncludeDirectories>
@@ -109,12 +113,13 @@
         "$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactHost";
         "$(ReactNativeWindowsDir)Microsoft.ReactNative\Views";
         "$(ReactNativeWindowsDir)codegen";
+        $(ReactNativeDir)\ReactCommon\react\renderer\graphics\platform\cxx;
         %(AdditionalIncludeDirectories);
       </AdditionalIncludeDirectories>
       <AdditionalOptions>%(AdditionalOptions) /Zc:strictStrings /bigobj</AdditionalOptions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <RuntimeTypeInfo Condition="'$(UseFabric)' == 'true' AND '$(Configuration)'=='Debug'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)'=='Debug'">true</RuntimeTypeInfo>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
@@ -137,36 +142,9 @@
     <Midl Include="ABI\NativeLogging.idl" />
     <Midl Include="ABI\NativeTracing.idl" />
     <Midl Include="ABI\TestController.idl" />
-    <Midl Include="..\Microsoft.ReactNative\ReactCoreInjection.idl" />
-    <Midl Include="..\Microsoft.ReactNative\ReactNativeHost.idl" />
-    <Midl Include="..\Microsoft.ReactNative\IReactPackageProvider.idl" />
-    <Midl Include="..\Microsoft.ReactNative\ReactInstanceSettings.idl" />
-    <Midl Include="..\Microsoft.ReactNative\IReactPackageBuilder.idl" />
-    <Midl Include="..\Microsoft.ReactNative\IReactModuleBuilder.idl" />
-    <Midl Include="..\Microsoft.ReactNative\IJSValueWriter.idl" />
-    <Midl Include="..\Microsoft.ReactNative\IReactContext.idl" />
-    <Midl Include="..\Microsoft.ReactNative\IJSValueReader.idl" />
     <Midl Include="..\Microsoft.ReactNative\IViewManagerCore.idl" />
-    <Midl Include="..\Microsoft.ReactNative\IReactDispatcher.idl" />
-    <Midl Include="..\Microsoft.ReactNative\IReactNotificationService.idl" />
-    <Midl Include="..\Microsoft.ReactNative\IReactNonAbiValue.idl" />
-    <Midl Include="..\Microsoft.ReactNative\IReactPropertyBag.idl" />
-    <Midl Include="..\Microsoft.ReactNative\JsiApi.idl" />
-    <Midl Include="..\Microsoft.ReactNative\RedBoxHandler.idl" />
-    <Midl Include="..\Microsoft.ReactNative\QuirkSettings.idl" />
-    <Midl Condition="'$(UseFabric)' == 'true'" Include="..\Microsoft.ReactNative\CompositionHwndHost.idl" />
-    <Midl Condition="'$(UseFabric)' == 'true'" Include="..\Microsoft.ReactNative\CompositionContext.idl" />
-    <Midl Condition="'$(UseFabric)' == 'true'" Include="..\Microsoft.ReactNative\CompositionSwitcher.idl" />
-    <Midl Condition="'$(UseFabric)' == 'true'" Include="..\Microsoft.ReactNative\CompositionUIService.idl" />
-    <Midl Condition="'$(UseFabric)' == 'true'" Include="..\Microsoft.ReactNative\CompositionRootView.idl" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Microsoft.ReactNative\IReactDispatcher.cpp">
-      <DependentUpon>..\Microsoft.ReactNative\IReactDispatcher.idl</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="..\Microsoft.ReactNative\ReactInstanceSettings.cpp">
-      <DependentUpon>..\Microsoft.ReactNative\ReactInstanceSettings.idl</DependentUpon>
-    </ClCompile>
     <ClCompile Include="ABI\MessageQueueShim.cpp">
       <DependentUpon>ABI\MessageQueue.idl</DependentUpon>
       <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
@@ -183,74 +161,12 @@
       <DependentUpon>ABI\TestController.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="..\Microsoft.ReactNative\ABICxxModule.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\DynamicReader.cpp">
-      <DependentUpon>..\Microsoft.ReactNative\IJSValueReader.idl</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="..\Microsoft.ReactNative\DynamicWriter.cpp">
-      <DependentUpon>..\Microsoft.ReactNative\IJSValueWriter.idl</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="..\Microsoft.ReactNative\IReactContext.cpp">
-      <DependentUpon>..\Microsoft.ReactNative\IReactContext.idl</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="..\Microsoft.ReactNative\IReactModuleBuilder.cpp">
-      <DependentUpon>..\Microsoft.ReactNative\IReactModuleBuilder.idl</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="..\Microsoft.ReactNative\IReactNotificationService.cpp">
-      <DependentUpon>..\Microsoft.ReactNative\IReactNotificationService.idl</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="..\Microsoft.ReactNative\IReactPropertyBag.cpp">
-      <DependentUpon>..\Microsoft.ReactNative\IReactPropertyBag.idl</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="..\Microsoft.ReactNative\JsiApi.cpp">
-      <DependentUpon>..\Microsoft.ReactNative\JsiApi.idl</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="..\Microsoft.ReactNative\JsiReader.cpp">
-      <DependentUpon>..\Microsoft.ReactNative\IJSValueReader.idl</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="..\Microsoft.ReactNative\JsiWriter.cpp">
-      <DependentUpon>..\Microsoft.ReactNative\IJSValueWriter.idl</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="..\Microsoft.ReactNative\JSDispatcherWriter.cpp">
-      <DependentUpon>..\Microsoft.ReactNative\IJSValueWriter.idl</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="..\Microsoft.ReactNative\Modules\DevSettingsModule.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\NativeModulesProvider.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\AsyncActionQueue.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\CrashManager.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSBundle.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSBundle_Win32.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSCallInvokerScheduler.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\MsoUtils.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\MsoReactContext.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactErrorProvider.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactInstanceWin.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactHost.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\ReactNativeHost.cpp">
-      <DependentUpon>..\Microsoft.ReactNative\ReactNativeHost.idl</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="..\Microsoft.ReactNative\ReactPackageBuilder.cpp">
-      <DependentUpon>..\Microsoft.ReactNative\IReactPackageBuilder.idl</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="..\Microsoft.ReactNative\ReactCoreInjection.cpp">
-      <DependentUpon>..\Microsoft.ReactNative\ReactCoreInjection.idl</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="..\Microsoft.ReactNative\RedBox.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\RedBoxHandler.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\RedBoxErrorFrameInfo.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\RedBoxErrorInfo.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\TurboModulesProvider.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\QuirkSettings.cpp">
-      <DependentUpon>..\Microsoft.ReactNative\QuirkSettings.idl</DependentUpon>
-    </ClCompile>
     <ClCompile Include="CxxReactWin32\JSBigString.cpp" />
     <ClCompile Include="JSBigStringResourceDll.cpp" />
     <ClCompile Include="module.g.cpp" />
     <ClCompile Include="Modules\TimingModule.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="BeastWebSocketResource.cpp">
-      <ExcludedFromBuild Condition="'$(EnableBeast)' == 0">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="WebSocketResourceFactory.cpp" />
   </ItemGroup>
@@ -278,6 +194,7 @@
     <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\TransformAnimatedNode.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\ValueAnimatedNode.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\Modules\ImageViewManagerModule.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\Utils\KeyboardUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABI\MessageQueueShim.h">
@@ -332,15 +249,11 @@
       <DependentUpon>..\Microsoft.ReactNative\IReactPropertyBag.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="..\Microsoft.ReactNative\JsiApi.h">
-      <DependentUpon>..\Microsoft.ReactNative\JsiApi.idl</DependentUpon>
-    </ClInclude>
     <ClInclude Include="..\Microsoft.ReactNative\RedBoxErrorFrameInfo.h" />
     <ClInclude Include="..\Microsoft.ReactNative\RedBoxErrorInfo.h" />
     <ClInclude Include="JSBigStringResourceDll.h" />
     <ClInclude Include="Modules\TimingModule.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="BeastWebSocketResource.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.vcxproj">
@@ -359,16 +272,15 @@
   <ItemGroup>
     <PackageReference Include="boost" Version="1.76.0.0" />
     <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" PrivateAssets="all" />
-    <PackageReference Include="ReactNative.Hermes.Windows" Version="$(HermesVersion)" />
+    <PackageReference Include="Microsoft.JavaScript.Hermes" Version="$(HermesVersion)" />
     <PackageReference Include="ReactWindows.OpenSSL.StdCall.Static" Version="1.0.2-p.5" />
     <PackageReference Include="$(V8PackageName)" Version="$(V8Version)" Condition="'$(UseV8)' == 'true'" />
+    <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" Condition="'$(UseWinUI3)'=='true'" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(EnableSourceLink)' == 'true'">
       <ItemGroup>
-        <PackageReference Include="Microsoft.Build.Tasks.Git" Version="1.0.0" />
-        <PackageReference Include="Microsoft.SourceLink.Common" Version="1.0.0" />
-        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" />
       </ItemGroup>
     </When>
   </Choose>

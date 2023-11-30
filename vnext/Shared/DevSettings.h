@@ -43,6 +43,7 @@ struct DevSettings {
   std::string sourceBundleHost;
   std::string debugBundlePath;
   std::string platformName{STRING(RN_PLATFORM)};
+  std::string bundleAppId;
   std::function<void()> liveReloadCallback;
   std::function<void(std::string)> errorCallback;
   std::function<void()> waitingForDebuggerCallback;
@@ -94,7 +95,19 @@ struct DevSettings {
 
   bool inlineSourceMap{true};
 
+  // When querying the bundle server for a bundle, should it request the dev bundle or release bundle
+  bool devBundle{true};
+
   bool enableDefaultCrashHandler{false};
+
+  // Transitory. Used to indicate whether or not to load networking types in the default Cxx module registry.
+  bool omitNetworkingCxxModules{false};
+
+  // OC:8368383 - Memory leak under investigation.
+  bool useWebSocketTurboModule{false};
+
+  // Enable concurrent mode by installing runtimeScheduler
+  bool useRuntimeScheduler{false};
 };
 
 } // namespace react

@@ -52,7 +52,7 @@ void TextTransformVisitor::VisitVirtualText(ShadowNodeBase *node) {
 }
 
 bool TextTransformVisitor::ShouldApplyTransform(TextTransform transform) {
-  // If the visitor is applied in the context of a textTransfrom prop value
+  // If the visitor is applied in the context of a textTransform prop value
   // change, the m_forceUpdate flag is set to true.
   if (m_forceUpdate) {
     // When the textTransform prop changes, only recurse if at the root node

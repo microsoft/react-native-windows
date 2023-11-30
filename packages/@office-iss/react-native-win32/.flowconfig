@@ -10,6 +10,7 @@
 ; initRNLibraries build step
 <PROJECT_ROOT>/index.js
 <PROJECT_ROOT>/Libraries/Alert/Alert.js
+<PROJECT_ROOT>/Libraries/Components/AccessibilityInfo/AccessibilityInfo.js
 <PROJECT_ROOT>/Libraries/Components/Button.js
 <PROJECT_ROOT>/Libraries/Components/Pressable/Pressable.js
 <PROJECT_ROOT>/Libraries/Components/SafeAreaView/SafeAreaView.js
@@ -18,6 +19,7 @@
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInputState.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/Touchable.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableNativeFeedback.js
+<PROJECT_ROOT>/Libraries/Components/View/ViewAccessibility.js
 <PROJECT_ROOT>/Libraries/Components/View/ReactNativeViewAttributes.js
 <PROJECT_ROOT>/Libraries/Components/View/View.js
 <PROJECT_ROOT>/Libraries/Components/View/ViewPropTypes.js
@@ -28,9 +30,11 @@
 <PROJECT_ROOT>/Libraries/Pressability/Pressability.js
 <PROJECT_ROOT>/Libraries/Pressability/HoverState.js
 <PROJECT_ROOT>/Libraries/StyleSheet/StyleSheet.js
+<PROJECT_ROOT>/Libraries/Text/TextProps.js
 <PROJECT_ROOT>/Libraries/Types/CoreEventTypes.js
 <PROJECT_ROOT>/Libraries/Utilities/DeviceInfo.js
 <PROJECT_ROOT>/Libraries/Utilities/Dimensions.js
+<PROJECT_ROOT>/Libraries/Utilities/Platform.flow.js
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorCodeFrame.js
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorHeader.js
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorStackFrame.js
@@ -68,6 +72,9 @@
 
 .*/node_modules/resolve/test/resolver/malformed_package_json/package\.json$
 
+; Checked-in build output
+<PROJECT_ROOT>/packages/debugger-frontend/dist/
+
 [untyped]
 .*/node_modules/@react-native-community/cli/.*/.*
 ; Should work out how to do this properly
@@ -80,8 +87,12 @@
 [libs]
 interface.js
 flow/
+../../../node_modules/.flow/flow-typed/
 
 [options]
+experimental.global_find_ref=true
+enums=true
+
 emoji=true
 
 exact_by_default=true
@@ -92,12 +103,18 @@ module.file_ext=.js
 module.file_ext=.json
 module.file_ext=.win32.js
 
+; [Win32]
+;experimental.multi_platform=true
+;experimental.multi_platform.extensions=.ios
+;experimental.multi_platform.extensions=.android
+
 munge_underscores=true
 
 module.name_mapper='^react-native$' -> '<PROJECT_ROOT>/index.win32.js'
 module.name_mapper='^@office-iss/react-native-win32$' -> '<PROJECT_ROOT>/index.win32.js'
 module.name_mapper='^react-native/\(.*\)$' -> '<PROJECT_ROOT>/\1'
-module.name_mapper='^@office-iss/react-native-win32/\(.*\)$' -> '<PROJECT_ROOT>/\1'
+module.name_mapper='^@office-iss/react-native-win32/\(.*\)$' -> '<PROJECT_ROOT>\/1'
+module.name_mapper='^@react-native/dev-middleware$' -> '<PROJECT_ROOT>/\1'
 module.name_mapper='^@?[./a-zA-Z0-9$_-]+\.\(bmp\|gif\|jpg\|jpeg\|png\|psd\|svg\|webp\|m4v\|mov\|mp4\|mpeg\|mpg\|webm\|aac\|aiff\|caf\|m4a\|mp3\|wav\|html\|pdf\)$' -> '<PROJECT_ROOT>/Libraries/Image/RelativeImageStub'
 
 suppress_type=$FlowIssue
@@ -106,8 +123,6 @@ suppress_type=$FlowFixMeProps
 suppress_type=$FlowFixMeState
 suppress_type=$FlowFixMeEmpty
 
-experimental.array_literal_providers=true
-inference_mode=experimental.lti
 
 sharedmemory.hash_table_pow=21
 
@@ -120,6 +135,7 @@ nonstrict-import=warn
 deprecated-type=error
 unsafe-getters-setters=warn
 unnecessary-invariant=warn
+unused-promise=error
 
 [strict]
 deprecated-type
@@ -131,4 +147,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.196.3
+^0.217.2

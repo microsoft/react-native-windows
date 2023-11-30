@@ -58,7 +58,7 @@ std::vector<std::string> TurboModuleManager::getEagerInitModuleNames() noexcept 
 }
 
 void TurboModuleManager::onInstanceDestroy() noexcept {
-  // TODO - Provide a story to notify TurboModules of instance destory
+  // TODO - Provide a story to notify TurboModules of instance destroy
   /*
   for (const auto &it : m_modules) {
     it.second->onInstanceDestroy();

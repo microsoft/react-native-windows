@@ -10,8 +10,9 @@ import type {
   NativeModuleFunctionTypeAnnotation,
   NativeModulePropertyShape,
   NativeModuleSchema,
-} from 'react-native-tscodegen';
+} from '@react-native/codegen/lib/CodegenSchema';
 import {AliasMap} from './AliasManaging';
+import type {CppCodegenOptions} from './ObjectTypes';
 import {translateArgs, translateSpecArgs} from './ParamTypes';
 import {translateImplReturnType, translateSpecReturnType} from './ReturnTypes';
 
@@ -27,8 +28,9 @@ function getPossibleMethodSignatures(
   funcType: NativeModuleFunctionTypeAnnotation,
   aliases: AliasMap,
   baseAliasName: string,
+  options: CppCodegenOptions,
 ): string[] {
-  const args = translateArgs(funcType.params, aliases, baseAliasName);
+  const args = translateArgs(funcType.params, aliases, baseAliasName, options);
   if (funcType.returnTypeAnnotation.type === 'PromiseTypeAnnotation') {
     if (funcType.returnTypeAnnotation.elementType) {
       args.push(
@@ -36,6 +38,7 @@ function getPossibleMethodSignatures(
           funcType.returnTypeAnnotation.elementType,
           aliases,
           baseAliasName,
+          options,
         )}> &&result`,
       );
     } else {
@@ -43,13 +46,14 @@ function getPossibleMethodSignatures(
     }
   }
 
-  // TODO: be much more exhastive on the possible method signatures that can be used..
+  // TODO: be much more exhaustive on the possible method signatures that can be used..
   const sig = `REACT_${isMethodSync(funcType) ? 'SYNC_' : ''}METHOD(${
     prop.name
   }) ${translateImplReturnType(
     funcType.returnTypeAnnotation,
     aliases,
     baseAliasName,
+    options,
   )} ${prop.name}(${args.join(', ')}) noexcept { /* implementation */ }`;
 
   const staticsig = `REACT_${isMethodSync(funcType) ? 'SYNC_' : ''}METHOD(${
@@ -58,6 +62,7 @@ function getPossibleMethodSignatures(
     funcType.returnTypeAnnotation,
     aliases,
     baseAliasName,
+    options,
   )} ${prop.name}(${args.join(', ')}) noexcept { /* implementation */ }`;
 
   return [sig, staticsig];
@@ -68,8 +73,15 @@ function translatePossibleMethodSignatures(
   funcType: NativeModuleFunctionTypeAnnotation,
   aliases: AliasMap,
   baseAliasName: string,
+  options: CppCodegenOptions,
 ): string {
-  return getPossibleMethodSignatures(prop, funcType, aliases, baseAliasName)
+  return getPossibleMethodSignatures(
+    prop,
+    funcType,
+    aliases,
+    baseAliasName,
+    options,
+  )
     .map(sig => `"    ${sig}\\n"`)
     .join('\n          ');
 }
@@ -78,6 +90,7 @@ function renderProperties(
   properties: ReadonlyArray<NativeModulePropertyShape>,
   aliases: AliasMap,
   tuple: boolean,
+  options: CppCodegenOptions,
 ): string {
   // TODO: generate code for constants
   return properties
@@ -95,12 +108,14 @@ function renderProperties(
         funcType.params,
         aliases,
         propAliasName,
+        options,
       );
 
       const translatedReturnParam = translateSpecReturnType(
         funcType.returnTypeAnnotation,
         aliases,
         propAliasName,
+        options,
       );
 
       if (funcType.returnTypeAnnotation.type === 'PromiseTypeAnnotation') {
@@ -110,6 +125,7 @@ function renderProperties(
               funcType.returnTypeAnnotation.elementType,
               aliases,
               propAliasName,
+              options,
             )}>`,
           );
         } else {
@@ -132,6 +148,7 @@ function renderProperties(
             funcType,
             aliases,
             propAliasName,
+            options,
           )});`;
       }
     })
@@ -141,9 +158,20 @@ function renderProperties(
 export function generateValidateMethods(
   nativeModule: NativeModuleSchema,
   aliases: AliasMap,
+  options: CppCodegenOptions,
 ): [string, string] {
   const properties = nativeModule.spec.properties;
-  const traversedProperties = renderProperties(properties, aliases, false);
-  const traversedPropertyTuples = renderProperties(properties, aliases, true);
+  const traversedProperties = renderProperties(
+    properties,
+    aliases,
+    false,
+    options,
+  );
+  const traversedPropertyTuples = renderProperties(
+    properties,
+    aliases,
+    true,
+    options,
+  );
   return [traversedPropertyTuples, traversedProperties];
 }

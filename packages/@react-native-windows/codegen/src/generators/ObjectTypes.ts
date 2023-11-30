@@ -10,21 +10,30 @@ import type {
   NativeModuleEnumDeclaration,
   NativeModuleBaseTypeAnnotation,
   NativeModuleUnionTypeAnnotation,
+  NativeModuleStringTypeAnnotation,
+  NativeModuleFunctionTypeAnnotation,
   Nullable,
-} from 'react-native-tscodegen';
+} from '@react-native/codegen/lib/CodegenSchema';
 import {
   AliasMap,
   getAliasCppName,
   getAnonymousAliasCppName,
 } from './AliasManaging';
 
+export type CppStringTypes = 'std::string' | 'std::wstring';
+
+export interface CppCodegenOptions {
+  cppStringType: CppStringTypes;
+}
+
 function translateUnionReturnType(
   type: NativeModuleEnumDeclaration | NativeModuleUnionTypeAnnotation,
+  options: CppCodegenOptions,
 ): string {
   const memberType = type.memberType;
   switch (type.memberType) {
     case 'StringTypeAnnotation':
-      return 'std::string';
+      return options.cppStringType;
     case 'NumberTypeAnnotation':
       return 'double';
     case 'ObjectTypeAnnotation':
@@ -37,16 +46,21 @@ function translateUnionReturnType(
 }
 
 export function translateFieldOrReturnType(
-  type: Nullable<NativeModuleBaseTypeAnnotation>,
+  type: Nullable<
+    | NativeModuleBaseTypeAnnotation
+    | NativeModuleStringTypeAnnotation
+    | NativeModuleFunctionTypeAnnotation
+  >,
   aliases: AliasMap,
   baseAliasName: string,
   callerName: 'translateField' | 'translateReturnType',
+  options: CppCodegenOptions,
 ): string {
   // avoid: Property 'type' does not exist on type 'never'
   const returnType = type.type;
   switch (type.type) {
     case 'StringTypeAnnotation':
-      return 'std::string';
+      return options.cppStringType;
     case 'NumberTypeAnnotation':
     case 'FloatTypeAnnotation':
     case 'DoubleTypeAnnotation':
@@ -62,6 +76,7 @@ export function translateFieldOrReturnType(
           aliases,
           `${baseAliasName}_element`,
           callerName,
+          options,
         )}>`;
       } else {
         return `::React::JSValueArray`;
@@ -87,10 +102,13 @@ export function translateFieldOrReturnType(
         aliases,
         baseAliasName,
         callerName,
+        options,
       )}>`;
+    case 'MixedTypeAnnotation':
+      return '';
     case 'EnumDeclaration':
     case 'UnionTypeAnnotation':
-      return translateUnionReturnType(type);
+      return translateUnionReturnType(type, options);
     default:
       throw new Error(`Unhandled type in ${callerName}: ${returnType}`);
   }
@@ -100,11 +118,13 @@ export function translateField(
   type: Nullable<NativeModuleBaseTypeAnnotation>,
   aliases: AliasMap,
   baseAliasName: string,
+  options: CppCodegenOptions,
 ): string {
   return translateFieldOrReturnType(
     type,
     aliases,
     baseAliasName,
     'translateField',
+    options,
   );
 }

@@ -1,8 +1,236 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Wed, 11 Jan 2023 06:15:29 GMT and should not be manually modified.
+This log was last generated on Sat, 21 Oct 2023 05:16:09 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.72
+
+Sat, 21 Oct 2023 05:16:09 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.30
+- Bump @rnw-scripts/eslint-config to v1.2.4
+- Bump @rnw-scripts/just-task to v2.3.18
+
+## 0.0.0-canary.71
+
+Thu, 12 Oct 2023 05:15:54 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.29
+- Bump @rnw-scripts/eslint-config to v1.2.3
+- Bump @rnw-scripts/just-task to v2.3.17
+
+## 0.0.0-canary.70
+
+Fri, 22 Sep 2023 05:13:32 GMT
+
+### Changes
+
+- Fix some incorrectly cased requires (ngerlem@fb.com)
+
+## 0.0.0-canary.69
+
+Wed, 20 Sep 2023 05:17:49 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.28
+- Bump @rnw-scripts/just-task to v2.3.16
+
+## 0.0.0-canary.68
+
+Tue, 15 Aug 2023 05:14:09 GMT
+
+### Changes
+
+- Add `separateDataFiles` to @rnw/cli and @rnw/codegen (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.67
+
+Tue, 08 Aug 2023 05:13:00 GMT
+
+### Changes
+
+- @rnw/codegen generates GetStructInfo instead of REACT_STRUCT (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.66
+
+Fri, 28 Jul 2023 05:14:53 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.27
+- Bump @rnw-scripts/just-task to v2.3.15
+
+## 0.0.0-canary.65
+
+Wed, 26 Jul 2023 05:15:47 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.26
+- Bump @rnw-scripts/just-task to v2.3.14
+
+## 0.0.0-canary.64
+
+Fri, 14 Jul 2023 05:17:05 GMT
+
+### Changes
+
+- integration 6/28 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.25
+- Bump @rnw-scripts/eslint-config to v1.2.2
+- Bump @rnw-scripts/jest-unittest-config to v1.5.6
+- Bump @rnw-scripts/just-task to v2.3.13
+- Bump @rnw-scripts/ts-config to v2.0.5
+
+## 0.0.0-canary.63
+
+Sat, 08 Jul 2023 05:13:21 GMT
+
+### Changes
+
+- Add configConfig.windows.cppStringType in package.json for @rnw/codegen (53799235+ZihanChen-MSFT@users.noreply.github.com)
+- Add cppStringType option to @rnw/codegen (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.62
+
+Sat, 01 Jul 2023 05:14:41 GMT
+
+### Changes
+
+- integrate 6/16 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.24
+- Bump @rnw-scripts/eslint-config to v1.2.1
+- Bump @rnw-scripts/just-task to v2.3.12
+
+## 0.0.0-canary.61
+
+Tue, 13 Jun 2023 05:15:41 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.23
+- Bump @rnw-scripts/eslint-config to v1.2.0
+
+## 0.0.0-canary.60
+
+Wed, 07 Jun 2023 05:16:11 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.22
+- Bump @rnw-scripts/jest-unittest-config to v1.5.5
+- Bump @rnw-scripts/just-task to v2.3.11
+
+## 0.0.0-canary.59
+
+Tue, 06 Jun 2023 19:06:44 GMT
+
+### Changes
+
+- integrate RN nightly 5/19/23 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.21
+- Bump @rnw-scripts/jest-unittest-config to v1.5.4
+- Bump @rnw-scripts/just-task to v2.3.10
+
+## 0.0.0-canary.58
+
+Tue, 16 May 2023 05:16:30 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.20
+- Bump @rnw-scripts/jest-unittest-config to v1.5.3
+- Bump @rnw-scripts/just-task to v2.3.9
+
+## 0.0.0-canary.57
+
+Mon, 08 May 2023 17:41:04 GMT
+
+### Changes
+
+- Fix typos and add `cspell` configuration (jthysell@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.19
+- Bump @rnw-scripts/just-task to v2.3.8
+
+## 0.0.0-canary.56
+
+Tue, 25 Apr 2023 05:16:58 GMT
+
+### Changes
+
+- Update Node to 16 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.18
+- Bump @rnw-scripts/eslint-config to v1.1.16
+- Bump @rnw-scripts/jest-unittest-config to v1.5.2
+- Bump @rnw-scripts/just-task to v2.3.7
+- Bump @rnw-scripts/ts-config to v2.0.4
+
+## 0.0.0-canary.55
+
+Thu, 13 Apr 2023 05:14:28 GMT
+
+### Changes
+
+- Fix RNW not being detected on case-sensitive file systems (4123478+tido64@users.noreply.github.com)
+
+## 0.0.0-canary.54
+
+Tue, 21 Mar 2023 21:21:55 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.17
+- Bump @rnw-scripts/jest-unittest-config to v1.5.1
+- Bump @rnw-scripts/just-task to v2.3.6
+
+## 0.0.0-canary.53
+
+Thu, 02 Mar 2023 06:14:21 GMT
+
+### Changes
+
+- Merge branch 'YajurG-8875' of https://github.com/YajurG/react-native-windows into YajurG-8875 (email not defined)
+- Bump @react-native-windows/fs to v0.0.0-canary.16
+
+## 0.0.0-canary.52
+
+Sat, 25 Feb 2023 06:13:35 GMT
+
+### Changes
+
+- Move `@typescript-eslint/eslint-plugin` to `devDependencies` so they don't get installed by consumers (4123478+tido64@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.15
+
+## 0.0.0-canary.51
+
+Wed, 22 Feb 2023 06:14:08 GMT
+
+### Changes
+
+- Fix code to handle newer version of @react-native/codegen (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.50
+
+Fri, 10 Feb 2023 06:15:30 GMT
+
+### Changes
+
+- codegen-windows --check always fails (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.49
+
+Thu, 09 Feb 2023 06:16:42 GMT
+
+### Changes
+
+- Bump typescript version (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.14
 
 ## 0.0.0-canary.48
 

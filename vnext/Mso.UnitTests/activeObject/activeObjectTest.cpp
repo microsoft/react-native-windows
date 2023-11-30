@@ -389,7 +389,7 @@ TEST_CLASS_EX (ActiveObjectTest, LibletAwareMemLeakDetection) {
     context.WaitSync();
   }
 
-  TEST_METHOD(ActiveObject_CreateOutsidQueueeDestroyOutsideQueue) {
+  TEST_METHOD(ActiveObject_CreateOutsideQueueDestroyOutsideQueue) {
     TestContext context{Ctor::NotInQueue | Initialize::NotCalled | Finalize::NotCalled | Dtor::NotInQueue};
 
     auto obj = Mso::Make<TestObject>(context);
@@ -398,7 +398,7 @@ TEST_CLASS_EX (ActiveObjectTest, LibletAwareMemLeakDetection) {
     context.WaitSync();
   }
 
-  TEST_METHOD(ActiveObject_CreateOutsidQueueeDestroyOutsideQueue_WithInitialize) {
+  TEST_METHOD(ActiveObject_CreateOutsideQueueDestroyOutsideQueue_WithInitialize) {
     TestContext context{Ctor::NotInQueue | Initialize::InQueue | Finalize::NotCalled | Dtor::NotInQueue};
 
     auto obj = Mso::Make<TestObjectWithInitialize>(context);
@@ -408,7 +408,7 @@ TEST_CLASS_EX (ActiveObjectTest, LibletAwareMemLeakDetection) {
     context.WaitSync();
   }
 
-  TEST_METHOD(ActiveObject_CreateOutsidQueueeDestroyOutsideQueue_WithFinalize) {
+  TEST_METHOD(ActiveObject_CreateOutsideQueueDestroyOutsideQueue_WithFinalize) {
     TestContext context{Ctor::NotInQueue | Initialize::NotCalled | Finalize::InQueue | Dtor::InQueue};
 
     auto obj = Mso::Make<TestObjectWithFinalize>(context);
@@ -417,7 +417,7 @@ TEST_CLASS_EX (ActiveObjectTest, LibletAwareMemLeakDetection) {
     context.WaitSync();
   }
 
-  TEST_METHOD(ActiveObject_CreateOutsidQueueeDestroyOutsideQueue_WithInitializeAndFinalize) {
+  TEST_METHOD(ActiveObject_CreateOutsideQueueDestroyOutsideQueue_WithInitializeAndFinalize) {
     TestContext context{Ctor::NotInQueue | Initialize::InQueue | Finalize::InQueue | Dtor::InQueue};
 
     auto obj = Mso::Make<TestObjectWithInitializeAndFinalize>(context);

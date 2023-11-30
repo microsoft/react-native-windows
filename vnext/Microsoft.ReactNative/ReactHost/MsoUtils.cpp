@@ -35,7 +35,7 @@ struct WhenAllCompletedState : Mso::RefCountedObjectNoVTable<WhenAllCompletedSta
     resultSlot = std::move(result);
     if (--m_waitCount == 0) {
       // All tasks are completed.
-      // If we have an error, then propage only the first error in the list.
+      // If we have an error, then propagate only the first error in the list.
       for (auto &taskResult : m_taskResults) {
         if (taskResult.IsError()) {
           m_result.SetMaybe(std::move(taskResult));

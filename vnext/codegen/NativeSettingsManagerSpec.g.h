@@ -8,16 +8,22 @@
  */
 #pragma once
 
-#include "NativeModules.h"
+#include <NativeModules.h>
 #include <tuple>
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(SettingsManagerSpec_Constants)
 struct SettingsManagerSpec_Constants {
-    REACT_FIELD(settings)
     ::React::JSValue settings;
 };
+
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(SettingsManagerSpec_Constants*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"settings", &SettingsManagerSpec_Constants::settings},
+    };
+    return fieldMap;
+}
 
 struct SettingsManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto constants = std::tuple{

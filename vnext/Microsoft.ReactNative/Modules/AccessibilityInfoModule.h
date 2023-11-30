@@ -24,7 +24,7 @@ struct AccessibilityInfo : public std::enable_shared_from_this<AccessibilityInfo
   void setAccessibilityFocus(double reactTag) noexcept;
 
   REACT_METHOD(announceForAccessibility)
-  void announceForAccessibility(std::string announcement) noexcept;
+  void announceForAccessibility(std::wstring announcement) noexcept;
 
   REACT_METHOD(getRecommendedTimeoutMillis)
   void getRecommendedTimeoutMillis(double mSec, std::function<void(double)> const &onSuccess) noexcept;

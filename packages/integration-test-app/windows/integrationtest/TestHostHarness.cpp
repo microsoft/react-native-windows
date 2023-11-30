@@ -90,7 +90,7 @@ IAsyncAction TestHostHarness::StartListening() noexcept {
   while (!cancellationToken()) {
     auto processReqsTask = m_rpcServer.ProcessAllClientRequests(8305 /*port*/, 50ms /*pollInterval*/);
 
-    // Foward cancellation to also cancel processing reqs (setting callback replaces the last)
+    // Forward cancellation to also cancel processing reqs (setting callback replaces the last)
     cancellationToken.callback([processReqsTask]() noexcept { processReqsTask.Cancel(); });
     co_await processReqsTask;
   }
@@ -138,7 +138,7 @@ IAsyncOperation<IJsonValue> TestHostHarness::OnTestCommand(TestCommandId command
       m_rootView.ComponentName(componentName);
 
       m_currentTransaction = winrt::make_self<TestTransaction>();
-      TimeoutOnInactivty(m_currentTransaction->get_weak());
+      TimeoutOnInactivity(m_currentTransaction->get_weak());
       co_return co_await *m_pendingResponse;
       break;
     }
@@ -161,7 +161,7 @@ IAsyncOperation<IJsonValue> TestHostHarness::OnTestCommand(TestCommandId command
   }
 }
 
-winrt::fire_and_forget TestHostHarness::TimeoutOnInactivty(winrt::weak_ref<TestTransaction> transaction) noexcept {
+winrt::fire_and_forget TestHostHarness::TimeoutOnInactivity(winrt::weak_ref<TestTransaction> transaction) noexcept {
   VerifyElseCrash(m_dispatcher.HasThreadAccess());
 
   winrt::apartment_context harnessContext;

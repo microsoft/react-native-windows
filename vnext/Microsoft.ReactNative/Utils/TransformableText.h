@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <JSValue.h>
 #include <Utils/TextTransform.h>
 
 namespace Microsoft::ReactNative {

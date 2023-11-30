@@ -29,7 +29,7 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
   void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
   void startSurface(
-      facebook::react::IReactRootView *rootview,
+      const winrt::Microsoft::ReactNative::CompositionRootView &rootView,
       facebook::react::SurfaceId surfaceId,
       const std::string &moduleName,
       const folly::dynamic &initialProps) noexcept;
@@ -48,9 +48,11 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
 
   const IComponentViewRegistry &GetViewRegistry() const noexcept;
 
+  winrt::IInspectable GetUiaFragmentProvider(facebook::react::SurfaceId surfaceId) const noexcept;
+
  private:
   void installFabricUIManager() noexcept;
-  void initiateTransaction(facebook::react::MountingCoordinator::Shared const &mountingCoordinator);
+  void initiateTransaction(facebook::react::MountingCoordinator::Shared mountingCoordinator);
   void performTransaction(facebook::react::MountingCoordinator::Shared const &mountingCoordinator);
   void RCTPerformMountInstructions(
       facebook::react::ShadowViewMutationList const &mutations,
@@ -70,13 +72,14 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
   ComponentViewRegistry m_registry;
   struct SurfaceInfo {
     winrt::Microsoft::ReactNative::Composition::IVisual rootVisual{nullptr};
+    winrt::weak_ref<winrt::Microsoft::ReactNative::CompositionRootView> wkRootView{nullptr};
   };
 
   std::unordered_map<facebook::react::SurfaceId, SurfaceInfo> m_surfaceRegistry;
 
   // Inherited via SchedulerDelegate
   virtual void schedulerDidFinishTransaction(
-      facebook::react::MountingCoordinator::Shared const &mountingCoordinator) override;
+      const facebook::react::MountingCoordinator::Shared &mountingCoordinator) override;
   virtual void schedulerDidRequestPreliminaryViewAllocation(
       facebook::react::SurfaceId surfaceId,
       const facebook::react::ShadowNode &shadowView) override;

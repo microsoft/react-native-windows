@@ -3,8 +3,8 @@
 
 #pragma once
 
-// Folly
-#include <folly/dynamic.h>
+// React Native Windows
+#include <JSValue.h>
 
 // Windows API
 #include <winrt/Windows.Foundation.h>
@@ -20,7 +20,6 @@ namespace Microsoft::React::Networking {
 struct IHttpResource {
   typedef std::unordered_map<std::string, std::string> Headers;
 
-  // TODO: Implement Form data
   struct BodyData {
     enum class Type : size_t { Empty, String, Base64, Uri, Form } Type = Type::Empty;
     std::string Data;
@@ -81,7 +80,7 @@ struct IHttpResource {
       std::string &&url,
       int64_t requestId,
       Headers &&headers,
-      folly::dynamic &&data,
+      winrt::Microsoft::ReactNative::JSValueObject &&data,
       std::string &&responseType,
       bool useIncrementalUpdates,
       int64_t timeout,
@@ -146,7 +145,9 @@ struct IHttpResource {
   ///   Structured response content payload (i.e. Blob data)
   ///   </param>
   /// </param>
-  virtual void SetOnData(std::function<void(int64_t requestId, folly::dynamic &&responseData)> &&handler) noexcept = 0;
+  virtual void SetOnData(
+      std::function<void(int64_t requestId, winrt::Microsoft::ReactNative::JSValueObject &&responseData)>
+          &&handler) noexcept = 0;
 
   /// <summary>
   /// Sets a function to be invoked when a response content increment has been received.

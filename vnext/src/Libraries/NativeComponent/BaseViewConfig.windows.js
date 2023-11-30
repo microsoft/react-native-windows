@@ -83,8 +83,13 @@ const bubblingEventTypes = {
       captured: 'onTouchEndCapture',
     },
   },
-
   // Experimental/Work in Progress Pointer Events (not yet ready for use)
+  topClick: {
+    phasedRegistrationNames: {
+      captured: 'onClickCapture',
+      bubbled: 'onClick',
+    },
+  },
   topPointerCancel: {
     phasedRegistrationNames: {
       captured: 'onPointerCancelCapture',
@@ -135,6 +140,33 @@ const bubblingEventTypes = {
       bubbled: 'onPointerOut',
     },
   },
+  topGotPointerCapture: {
+    phasedRegistrationNames: {
+      captured: 'onGotPointerCaptureCapture',
+      bubbled: 'onGotPointerCapture',
+    },
+  },
+  topLostPointerCapture: {
+    phasedRegistrationNames: {
+      captured: 'onLostPointerCaptureCapture',
+      bubbled: 'onLostPointerCapture',
+    },
+  },
+
+  topKeyDown: {
+    // [Windows]
+    phasedRegistrationNames: {
+      captured: 'onKeyDownCapture',
+      bubbled: 'onKeyDown',
+    },
+  },
+  topKeyUp: {
+    // [Windows]
+    phasedRegistrationNames: {
+      captured: 'onKeyUpCapture',
+      bubbled: 'onKeyUp',
+    },
+  },
 };
 
 const directEventTypes = {
@@ -182,10 +214,10 @@ const validAttributesForNonEventProps = {
   accessibilityElementsHidden: true,
   accessibilityIgnoresInvertColors: true,
   testID: true,
-  backgroundColor: {process: require('../StyleSheet/processColor')},
+  backgroundColor: {process: require('../StyleSheet/processColor').default},
   backfaceVisibility: true,
   opacity: true,
-  shadowColor: {process: require('../StyleSheet/processColor')},
+  shadowColor: {process: require('../StyleSheet/processColor').default},
   shadowOffset: {diff: require('../Utilities/differ/sizesDiffer')},
   shadowOpacity: true,
   shadowRadius: true,
@@ -193,13 +225,15 @@ const validAttributesForNonEventProps = {
   overflow: true,
   shouldRasterizeIOS: true,
   transform: {diff: require('../Utilities/differ/matricesDiffer')},
+  transformOrigin: true,
   accessibilityRole: true,
   accessibilityState: true,
   nativeID: true,
   pointerEvents: true,
   removeClippedSubviews: true,
+  role: true,
   borderRadius: true,
-  borderColor: {process: require('../StyleSheet/processColor')},
+  borderColor: {process: require('../StyleSheet/processColor').default},
   borderCurve: true,
   borderWidth: true,
   borderStyle: true,
@@ -207,17 +241,17 @@ const validAttributesForNonEventProps = {
   collapsable: true,
 
   borderTopWidth: true,
-  borderTopColor: {process: require('../StyleSheet/processColor')},
+  borderTopColor: {process: require('../StyleSheet/processColor').default},
   borderRightWidth: true,
-  borderRightColor: {process: require('../StyleSheet/processColor')},
+  borderRightColor: {process: require('../StyleSheet/processColor').default},
   borderBottomWidth: true,
-  borderBottomColor: {process: require('../StyleSheet/processColor')},
+  borderBottomColor: {process: require('../StyleSheet/processColor').default},
   borderLeftWidth: true,
-  borderLeftColor: {process: require('../StyleSheet/processColor')},
+  borderLeftColor: {process: require('../StyleSheet/processColor').default},
   borderStartWidth: true,
-  borderStartColor: {process: require('../StyleSheet/processColor')},
+  borderStartColor: {process: require('../StyleSheet/processColor').default},
   borderEndWidth: true,
-  borderEndColor: {process: require('../StyleSheet/processColor')},
+  borderEndColor: {process: require('../StyleSheet/processColor').default},
 
   borderTopLeftRadius: true,
   borderTopRightRadius: true,
@@ -227,6 +261,10 @@ const validAttributesForNonEventProps = {
   borderBottomRightRadius: true,
   borderBottomStartRadius: true,
   borderBottomEndRadius: true,
+  borderEndEndRadius: true,
+  borderEndStartRadius: true,
+  borderStartEndRadius: true,
+  borderStartStartRadius: true,
   display: true,
   zIndex: true,
 
@@ -317,7 +355,22 @@ const validAttributesForNonEventProps = {
 
   direction: true,
 
+  accessibilityLevel: true, // [Windows]
+  accessibilityLiveRegion: true, // [Windows]
+  accessibilityPosInSet: true, // [Windows]
+  accessibilitySetSize: true, // [Windows]
+  disabled: true, // [Windows]
+  focusable: true, // [Windows]
+  keyDownEvents: true, // [Windows]
+  keyUpEvents: true, // [Windows]
+  tabIndex: true, // [Windows]
+  tooltip: true, // [Windows]
+  onClick: true, // [Windows]
+  enableFocusRing: true, // [Windows]
+
   style: ReactNativeStyleAttributes,
+
+  experimental_layoutConformance: true,
 };
 
 // Props for bubbling and direct events
@@ -354,6 +407,7 @@ const validAttributesForEventProps = {
   onTouchCancel: true,
 
   // Pointer events
+  onClick: true,
   onPointerUp: true,
   onPointerDown: true,
   onPointerCancel: true,
@@ -362,11 +416,17 @@ const validAttributesForEventProps = {
   onPointerLeave: true,
   onPointerOver: true,
   onPointerOut: true,
+  onGotPointerCapture: true,
+  onLostPointerCapture: true,
 
   // [Windows
   // Mouse enter/leave events
   onMouseEnter: true,
   onMouseLeave: true,
+
+  onKeyDown: true,
+  onKeyUp: true,
+  onPointerCancelCapture: true,
   // Windows]
   // [Windows
 };

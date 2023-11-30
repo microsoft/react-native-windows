@@ -31,7 +31,7 @@ const RNW_REPO = {
 const ELIGIBLE_PACKAGES = ['react-native-windows'];
 
 /**
- * Representation the JSON chanelog comment obejct
+ * Representation the JSON changelog comment object
  */
 interface Comment {
   comment: string;
@@ -161,7 +161,8 @@ function needsRelease(
 ) {
   if (
     !ELIGIBLE_PACKAGES.includes(release.packageName) ||
-    release.version.prerelease[0] === 'canary'
+    (release.version.prerelease.length > 0 &&
+      release.version.prerelease[0] !== 'preview') // preview is the only pre-release tag we want GH releases
   ) {
     return false;
   }

@@ -20,9 +20,8 @@
   <Import Project="$(MSBuildThisFileDirectory)NuGet.Cpp.props" />
 
   <PropertyGroup Label="Desktop">
-    <!-- See https://docs.microsoft.com/en-us/cpp/porting/modifying-winver-and-win32-winnt -->
-    <WinVer>_WIN32_WINNT_WINBLUE</WinVer>
-    <EnableBeast Condition="'$(EnableBeast)' == ''">0</EnableBeast>
+    <!-- See https://learn.microsoft.com/en-us/cpp/porting/modifying-winver-and-win32-winnt -->
+    <WinVer Condition="'$(WinVer)' == ''">_WIN32_WINNT_WIN10</WinVer>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -57,6 +56,7 @@
       <PreprocessorDefinitions Condition="'$(EnableDevServerHBCBundles)'=='true'">ENABLE_DEVSERVER_HBCBUNDLES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(UseV8)'=='true'">USE_V8;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(UseFabric)'=='true'">USE_FABRIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>JSI_VERSION=10;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
 
@@ -117,6 +117,8 @@
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <ShowIncludes Condition="'$(ShowIncludes)'=='true'">true</ShowIncludes>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <ControlFlowGuard>Guard</ControlFlowGuard>
+      <SpectreMitigation>Spectre</SpectreMitigation>
 
       <!-- Add include directories expected by React Native C++ code and headers -->
       <AdditionalIncludeDirectories>

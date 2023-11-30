@@ -71,13 +71,13 @@
         WIN32;
         _WINDOWS;
         _USRDLL;
+        FOLLY_CFG_NO_COROUTINES;
         FOLLY_NO_CONFIG;
         NOMINMAX;
         _HAS_AUTO_PTR_ETC;
         RN_EXPORT=;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
-      <ControlFlowGuard>Guard</ControlFlowGuard>
       <AdditionalOptions>%(AdditionalOptions) /Zc:strictStrings /ZH:SHA_256</AdditionalOptions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -144,6 +144,7 @@
         RNW_MAJOR=$(ReactNativeWindowsMajor);
         RNW_MINOR=$(ReactNativeWindowsMinor);
         RNW_PATCH=$(ReactNativeWindowsPatch);
+        RNW_COMMITID=$(ReactNativeWindowsCommitId);
         _UNICODE;
         UNICODE;
         %(PreprocessorDefinitions)
@@ -152,16 +153,14 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="boost" Version="1.76.0.0" />
-    <PackageReference Include="ReactNative.Hermes.Windows" Version="$(HermesVersion)" />
+    <PackageReference Include="Microsoft.JavaScript.Hermes" Version="$(HermesVersion)" />
     <PackageReference Include="ReactWindows.OpenSSL.StdCall.Static" Version="1.0.2-p.5" />
     <PackageReference Include="$(V8PackageName)" Version="$(V8Version)" Condition="'$(UseV8)' == 'true'" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(EnableSourceLink)' == 'true'">
       <ItemGroup>
-        <PackageReference Include="Microsoft.Build.Tasks.Git" Version="1.0.0" />
-        <PackageReference Include="Microsoft.SourceLink.Common" Version="1.0.0" />
-        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" />
       </ItemGroup>
     </When>
   </Choose>

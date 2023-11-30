@@ -1,8 +1,56 @@
 # Change Log - @rnw-scripts/babel-node-config
 
-This log was last generated on Wed, 11 Jan 2023 06:15:29 GMT and should not be manually modified.
+This log was last generated on Fri, 14 Jul 2023 05:17:06 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.3.1
+
+Fri, 14 Jul 2023 05:17:06 GMT
+
+### Patches
+
+- integration 6/28 (tatianakapos@microsoft.com)
+
+## 2.3.0
+
+Wed, 07 Jun 2023 05:16:10 GMT
+
+### Minor changes
+
+- integrate RN Nightly 6/1/23 (tatianakapos@microsoft.com)
+
+## 2.2.4
+
+Tue, 06 Jun 2023 19:06:45 GMT
+
+### Patches
+
+- 📦 Bump @babel/preset-env from 7.21.5 to 7.22.4 (jthysell@microsoft.com)
+
+## 2.2.3
+
+Tue, 16 May 2023 05:16:30 GMT
+
+### Patches
+
+- Integrate 4/28 (34109996+chiaramooney@users.noreply.github.com)
+
+## 2.2.2
+
+Tue, 25 Apr 2023 05:16:59 GMT
+
+### Patches
+
+- Update Node to 16 (34109996+chiaramooney@users.noreply.github.com)
+
+## 2.2.1
+
+Tue, 21 Mar 2023 21:21:54 GMT
+
+### Patches
+
+- Stop E2E tests from having huge amounts of babel warnings (30809111+acoates-ms@users.noreply.github.com)
 
 ## 2.2.0
 

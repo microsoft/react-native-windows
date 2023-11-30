@@ -6,29 +6,27 @@
 
 'use strict';
 
-import type {SchemaType} from 'react-native-tscodegen';
+import type {SchemaType} from '@react-native/codegen/lib/CodegenSchema';
 import {AliasMap, setPreferredModuleName} from './AliasManaging';
 import {createAliasMap, generateAliases} from './AliasGen';
 import {generateValidateConstants} from './ValidateConstants';
 import {generateValidateMethods} from './ValidateMethods';
+import type {CppStringTypes} from './ObjectTypes';
+
+export type {CppStringTypes} from './ObjectTypes';
 
 type FilesOutput = Map<string, string>;
 
-const moduleTemplate = `
-/*
+const headerTemplate = `/*
  * This file is auto-generated from a NativeModule spec file in js.
  *
  * This is a C++ Spec class that should be used with MakeTurboModuleProvider to register native modules
  * in a way that also verifies at compile time that the native module matches the interface required
  * by the TurboModule JS spec.
  */
-#pragma once
+#pragma once`;
 
-#include "NativeModules.h"
-#include <tuple>
-
-namespace ::_NAMESPACE_:: {
-::_MODULE_ALIASED_STRUCTS_::
+const specTemplate = `::_MODULE_CUSTPM_TYPES_REFLECTION_::
 struct ::_MODULE_NAME_::Spec : winrt::Microsoft::ReactNative::TurboModuleSpec {
 ::_MODULE_MEMBERS_TUPLES_::
 
@@ -37,7 +35,44 @@ struct ::_MODULE_NAME_::Spec : winrt::Microsoft::ReactNative::TurboModuleSpec {
 ::_MODULE_MEMBERS_CHECKS_::
 
 ::_MODULE_MEMBERS_ERRORS_::
-  }
+  }`;
+
+const typeOnlyTemplate = `
+${headerTemplate}
+
+#include <string>
+#include <optional>
+#include <functional>
+#include <vector>
+
+namespace ::_NAMESPACE_:: {
+::_MODULE_CUSTPM_TYPES_::
+} // namespace ::_NAMESPACE_::
+`;
+
+const moduleOnlyTemplate = `
+${headerTemplate}
+
+::_TYPE_DEFINITION_INCLUDE_::
+#include <NativeModules.h>
+#include <tuple>
+
+namespace ::_NAMESPACE_:: {
+${specTemplate}
+};
+
+} // namespace ::_NAMESPACE_::
+`;
+
+const allInOneTemplate = `
+${headerTemplate}
+
+#include <NativeModules.h>
+#include <tuple>
+
+namespace ::_NAMESPACE_:: {
+::_MODULE_CUSTPM_TYPES_::
+${specTemplate}
 };
 
 } // namespace ::_NAMESPACE_::
@@ -46,9 +81,13 @@ struct ::_MODULE_NAME_::Spec : winrt::Microsoft::ReactNative::TurboModuleSpec {
 export function createNM2Generator({
   methodOnly,
   namespace,
+  cppStringType,
+  separateDataTypes,
 }: {
   methodOnly: boolean;
   namespace: string;
+  cppStringType: CppStringTypes;
+  separateDataTypes: boolean;
 }) {
   return (
     _libraryName: string,
@@ -71,10 +110,12 @@ export function createNM2Generator({
         console.log(`Generating Native${preferredModuleName}Spec.g.h`);
 
         // copy all explicit to a map
-        const aliases: AliasMap = createAliasMap(nativeModule.aliases);
+        const aliases: AliasMap = createAliasMap(nativeModule.aliasMap);
 
         // prepare methods
-        const methods = generateValidateMethods(nativeModule, aliases);
+        const methods = generateValidateMethods(nativeModule, aliases, {
+          cppStringType,
+        });
         let tuples = `
   static constexpr auto methods = std::tuple{
 ${methods[0]}
@@ -98,18 +139,46 @@ ${errors}`;
         }
 
         // generate code for structs
-        const traversedAliasedStructs = generateAliases(aliases);
+        const [customTypes, customReflection] = generateAliases(aliases, {
+          cppStringType,
+        });
 
-        files.set(
-          `Native${preferredModuleName}Spec.g.h`,
-          moduleTemplate
-            .replace(/::_MODULE_ALIASED_STRUCTS_::/g, traversedAliasedStructs)
+        const customTypesExist = customTypes !== '';
+
+        const replaceContent = function (template: string): string {
+          return template
+            .replace(/::_MODULE_CUSTPM_TYPES_::/g, customTypes)
+            .replace(/::_MODULE_CUSTPM_TYPES_REFLECTION_::/g, customReflection)
             .replace(/::_MODULE_MEMBERS_TUPLES_::/g, tuples.substring(1))
             .replace(/::_MODULE_MEMBERS_CHECKS_::/g, checks.substring(1))
             .replace(/::_MODULE_MEMBERS_ERRORS_::/g, errors)
             .replace(/::_MODULE_NAME_::/g, preferredModuleName)
-            .replace(/::_NAMESPACE_::/g, namespace),
-        );
+            .replace(
+              /::_TYPE_DEFINITION_INCLUDE_::/g,
+              customTypesExist
+                ? `// #include "Native${preferredModuleName}DataTypes.g.h" before this file to use the generated type definition`
+                : '',
+            )
+            .replace(/::_NAMESPACE_::/g, namespace);
+        };
+
+        if (separateDataTypes) {
+          if (customTypesExist) {
+            files.set(
+              `Native${preferredModuleName}DataTypes.g.h`,
+              replaceContent(typeOnlyTemplate),
+            );
+          }
+          files.set(
+            `Native${preferredModuleName}Spec.g.h`,
+            replaceContent(moduleOnlyTemplate),
+          );
+        } else {
+          files.set(
+            `Native${preferredModuleName}Spec.g.h`,
+            replaceContent(allInOneTemplate),
+          );
+        }
       }
     }
 

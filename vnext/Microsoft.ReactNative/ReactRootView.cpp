@@ -160,7 +160,7 @@ void ReactRootView::InitRootView(
 
   m_touchEventHandler->AddTouchHandlers(*this);
   m_previewKeyboardEventHandlerOnRoot->hook(*this);
-  m_SIPEventHandler->AttachView(*this, /*fireKeyboradEvents:*/ true);
+  m_SIPEventHandler->AttachView(*this, /*fireKeyboardEvents:*/ true);
 
   UpdateRootViewInternal();
   AttachBackHandlers();
@@ -430,8 +430,9 @@ void ReactRootView::ReactViewHost(Mso::React::IReactViewHost *viewHost) noexcept
   }
 }
 
-Windows::Foundation::Size ReactRootView::MeasureOverride(Windows::Foundation::Size const &availableSize) const {
-  Windows::Foundation::Size size{0.0f, 0.0f};
+winrt::Windows::Foundation::Size ReactRootView::MeasureOverride(
+    winrt::Windows::Foundation::Size const &availableSize) const {
+  winrt::Windows::Foundation::Size size{0.0f, 0.0f};
 
   for (xaml::UIElement child : Children()) {
     child.Measure(availableSize);
@@ -445,7 +446,7 @@ Windows::Foundation::Size ReactRootView::MeasureOverride(Windows::Foundation::Si
   return size;
 }
 
-Windows::Foundation::Size ReactRootView::ArrangeOverride(Windows::Foundation::Size finalSize) const {
+winrt::Windows::Foundation::Size ReactRootView::ArrangeOverride(winrt::Windows::Foundation::Size finalSize) const {
   for (xaml::UIElement child : Children()) {
     child.Arrange(winrt::Rect(0, 0, finalSize.Width, finalSize.Height));
   }

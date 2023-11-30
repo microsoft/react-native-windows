@@ -6,7 +6,6 @@
 #include "MsoUtils.h"
 
 #include <AppModelHelpers.h>
-#include <Base/CoreNativeModules.h>
 #include <Threading/MessageDispatchQueue.h>
 #include <Threading/MessageQueueThreadFactory.h>
 #include <appModel.h>
@@ -24,19 +23,17 @@
 
 #ifdef USE_FABRIC
 #include <Fabric/FabricUIManagerModule.h>
-#include <SchedulerSettings.h>
 #endif
 #include <JSCallInvokerScheduler.h>
 #include <QuirkSettings.h>
 #include <Shared/DevServerHelper.h>
 #include <Views/ViewManager.h>
-#include <base/CoreNativeModules.h>
 #include <dispatchQueue/dispatchQueue.h>
 #include "DynamicWriter.h"
 #ifndef CORE_ABI
 #include "ConfigureBundlerDlg.h"
-#include "DevMenu.h"
 #endif
+#include "DevMenu.h"
 #include "IReactContext.h"
 #include "IReactDispatcher.h"
 #ifndef CORE_ABI
@@ -73,11 +70,14 @@
 #include <Utils/UwpScriptStore.h>
 #endif
 
+#include "BaseScriptStoreImpl.h"
 #include "HermesRuntimeHolder.h"
 
-#if defined(USE_V8)
 #include <winrt/Windows.Storage.h>
 #include "BaseScriptStoreImpl.h"
+
+#if defined(USE_V8)
+#include "JSI/V8RuntimeHolder.h"
 #include "V8JSIRuntimeHolder.h"
 #endif // USE_V8
 
@@ -86,7 +86,12 @@
 #include <tuple>
 #include "ChakraRuntimeHolder.h"
 
+#include <CppRuntimeOptions.h>
+#include <CreateInstance.h>
+#include <CreateModules.h>
 #include <Utils/Helpers.h>
+#include <react/renderer/runtimescheduler/RuntimeScheduler.h>
+#include <react/renderer/runtimescheduler/RuntimeSchedulerCallInvoker.h>
 #include "CrashManager.h"
 #include "JsiApi.h"
 #include "ReactCoreInjection.h"
@@ -253,8 +258,15 @@ ReactInstanceWin::ReactInstanceWin(
   m_whenDestroyedResult =
       m_whenDestroyed.AsFuture().Then<Mso::Executors::Inline>([whenLoaded = m_whenLoaded,
                                                                onDestroyed = m_options.OnInstanceDestroyed,
+                                                               // If the ReactHost has been released, this
+                                                               // instance might be the only thing keeping
+                                                               // the propertyBag alive.
+                                                               // We want it to remain alive for the
+                                                               // InstanceDestroyed callbacks
+                                                               propBag = m_options.Properties,
                                                                reactContext = m_reactContext]() noexcept {
         whenLoaded.TryCancel(); // It only has an effect if whenLoaded was not set before
+        Microsoft::ReactNative::HermesRuntimeHolder::storeTo(ReactPropertyBag(reactContext->Properties()), nullptr);
         if (onDestroyed) {
           onDestroyed.Get()->Invoke(reactContext);
         }
@@ -391,6 +403,18 @@ void ReactInstanceWin::LoadModules(
   registerTurboModule(
       L"Timing", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::Timing>());
 #endif
+
+  registerTurboModule(
+      ::Microsoft::React::GetWebSocketTurboModuleName(), ::Microsoft::React::GetWebSocketModuleProvider());
+
+  if (!Microsoft::React::GetRuntimeOptionBool("Blob.DisableModule")) {
+    registerTurboModule(::Microsoft::React::GetHttpTurboModuleName(), ::Microsoft::React::GetHttpModuleProvider());
+
+    registerTurboModule(::Microsoft::React::GetBlobTurboModuleName(), ::Microsoft::React::GetBlobModuleProvider());
+
+    registerTurboModule(
+        ::Microsoft::React::GetFileReaderTurboModuleName(), ::Microsoft::React::GetFileReaderModuleProvider());
+  }
 }
 
 //! Initialize() is called from the native queue.
@@ -402,11 +426,13 @@ void ReactInstanceWin::Initialize() noexcept {
 #ifndef CORE_ABI
   // InitUIManager uses m_legacyReactInstance
   InitUIManager();
+#endif
 
   Microsoft::ReactNative::DevMenuManager::InitDevMenu(m_reactContext, [weakReactHost = m_weakReactHost]() noexcept {
+#ifndef CORE_ABI
     Microsoft::ReactNative::ShowConfigureBundlerDialog(weakReactHost);
+#endif // CORE_ABI
   });
-#endif
 
   m_uiQueue->Post([this, weakThis = Mso::WeakPtr{this}]() noexcept {
     // Objects that must be created on the UI thread
@@ -446,26 +472,17 @@ void ReactInstanceWin::Initialize() noexcept {
                   strongThis->m_reactContext->Properties());
           devSettings->waitingForDebuggerCallback = GetWaitingForDebuggerCallback();
           devSettings->debuggerAttachCallback = GetDebuggerAttachCallback();
-
-#ifndef CORE_ABI
+          devSettings->enableDefaultCrashHandler = m_options.EnableDefaultCrashHandler();
+          devSettings->bundleAppId = BundleAppId();
+          devSettings->devBundle = RequestDevBundle();
           devSettings->showDevMenuCallback = [weakThis]() noexcept {
             if (auto strongThis = weakThis.GetStrongPtr()) {
-              strongThis->m_uiQueue->Post([context = strongThis->m_reactContext]() {
-                Microsoft::ReactNative::DevMenuManager::Show(context->Properties());
-              });
+              strongThis->m_uiQueue->Post(
+                  [context = strongThis->m_reactContext]() { Microsoft::ReactNative::DevMenuManager::Show(context); });
             }
           };
-#endif
 
-#ifdef CORE_ABI
           std::vector<facebook::react::NativeModuleDescription> cxxModules;
-#else
-          // Acquire default modules and then populate with custom modules.
-          // Note that some of these have custom thread affinity.
-          std::vector<facebook::react::NativeModuleDescription> cxxModules =
-              Microsoft::ReactNative::GetCoreModules(m_batchingUIThread, m_jsMessageThread.Load(), m_reactContext);
-#endif
-
           auto nmp = std::make_shared<winrt::Microsoft::ReactNative::NativeModulesProvider>();
 
           LoadModules(nmp, m_options.TurboModuleProvider);
@@ -484,10 +501,25 @@ void ReactInstanceWin::Initialize() noexcept {
           std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
 
           switch (m_options.JsiEngine()) {
-            case JSIEngine::Hermes:
-              devSettings->jsiRuntimeHolder =
-                  std::make_shared<facebook::react::HermesRuntimeHolder>(devSettings, m_jsMessageThread.Load());
+            case JSIEngine::Hermes: {
+              if (Microsoft::ReactNative::HasPackageIdentity()) {
+                preparedScriptStore =
+                    std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(getApplicationTempFolder());
+              } else {
+                wchar_t tempPath[MAX_PATH];
+                if (GetTempPathW(static_cast<DWORD>(std::size(tempPath)), tempPath)) {
+                  preparedScriptStore =
+                      std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(winrt::to_string(tempPath));
+                }
+              }
+
+              auto hermesRuntimeHolder = std::make_shared<Microsoft::ReactNative::HermesRuntimeHolder>(
+                  devSettings, m_jsMessageThread.Load(), std::move(preparedScriptStore));
+              Microsoft::ReactNative::HermesRuntimeHolder::storeTo(
+                  ReactPropertyBag(m_reactContext->Properties()), hermesRuntimeHolder);
+              devSettings->jsiRuntimeHolder = hermesRuntimeHolder;
               break;
+            }
             case JSIEngine::V8:
 #if defined(USE_V8)
             {
@@ -507,14 +539,20 @@ void ReactInstanceWin::Initialize() noexcept {
               enableMultiThreadSupport = Microsoft::ReactNative::IsFabricEnabled(m_reactContext->Properties());
 #endif // USE_FABRIC
 
-              devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
-                  devSettings,
-                  m_jsMessageThread.Load(),
-                  std::move(scriptStore),
-                  std::move(preparedScriptStore),
-                  enableMultiThreadSupport);
+              if (m_options.JsiEngineV8NodeApi()) {
+                devSettings->jsiRuntimeHolder = std::make_shared<Microsoft::ReactNative::V8RuntimeHolder>(
+                    devSettings, m_jsMessageThread.Load(), std::move(preparedScriptStore), enableMultiThreadSupport);
+              } else {
+                devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
+                    devSettings,
+                    m_jsMessageThread.Load(),
+                    std::move(scriptStore),
+                    std::move(preparedScriptStore),
+                    enableMultiThreadSupport);
+              }
 
-            } break;
+              break;
+            }
 #endif // USE_V8
             case JSIEngine::Chakra:
 #ifndef CORE_ABI
@@ -531,17 +569,31 @@ void ReactInstanceWin::Initialize() noexcept {
 
           m_jsiRuntimeHolder = devSettings->jsiRuntimeHolder;
 
+          bool useRuntimeScheduler =
+              winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetUseRuntimeScheduler(
+                  winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()));
+
+          devSettings->useRuntimeScheduler = useRuntimeScheduler;
+
           try {
             // We need to keep the instance wrapper alive as its destruction shuts down the native queue.
             m_options.TurboModuleProvider->SetReactContext(
                 winrt::make<implementation::ReactContext>(Mso::Copy(m_reactContext)));
+            auto omitNetCxxPropName = ReactPropertyBagHelper::GetName(nullptr, L"OmitNetworkingCxxModules");
+            auto omitNetCxxPropValue = m_options.Properties.Get(omitNetCxxPropName);
+            devSettings->omitNetworkingCxxModules = winrt::unbox_value_or(omitNetCxxPropValue, false);
+            auto useWebSocketTurboModulePropName = ReactPropertyBagHelper::GetName(nullptr, L"UseWebSocketTurboModule");
+            auto useWebSocketTurboModulePropValue = m_options.Properties.Get(useWebSocketTurboModulePropName);
+            devSettings->useWebSocketTurboModule = winrt::unbox_value_or(useWebSocketTurboModulePropValue, false);
             auto bundleRootPath = devSettings->bundleRootPath;
+            auto jsiRuntimeHolder = devSettings->jsiRuntimeHolder;
             auto instanceWrapper = facebook::react::CreateReactInstance(
                 std::shared_ptr<facebook::react::Instance>(strongThis->m_instance.Load()),
                 std::move(bundleRootPath), // bundleRootPath
                 std::move(cxxModules),
                 m_options.TurboModuleProvider,
                 m_options.TurboModuleProvider->LongLivedObjectCollection(),
+                m_reactContext->Properties(),
                 std::make_unique<BridgeUIBatchInstanceCallback>(weakThis),
                 m_jsMessageThread.Load(),
                 m_nativeMessageThread.Load(),
@@ -558,16 +610,6 @@ void ReactInstanceWin::Initialize() noexcept {
                     onCreated.Get()->Invoke(reactContext);
                   }
                 });
-
-#ifdef USE_FABRIC
-            // Eagerly init the FabricUI binding
-            if (!m_options.UseWebDebugger()) {
-              Microsoft::ReactNative::SchedulerSettings::SetRuntimeExecutor(
-                  winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()),
-                  m_instanceWrapper.Load()->GetInstance()->getRuntimeExecutor());
-              m_options.TurboModuleProvider->getModule("FabricUIManagerBinding", m_instance.Load()->getJSCallInvoker());
-            }
-#endif
 
             LoadJSBundles();
 
@@ -789,8 +831,8 @@ void ReactInstanceWin::InitUIManager() noexcept {
 
   Microsoft::ReactNative::AddStandardViewManagers(viewManagers, *m_reactContext);
 
-  auto uiManagerSettings =
-      std::make_unique<Microsoft::ReactNative::UIManagerSettings>(m_batchingUIThread, std::move(viewManagers));
+  auto uiManagerSettings = std::make_unique<Microsoft::ReactNative::UIManagerSettings>(
+      m_batchingUIThread, m_uiMessageThread.Load(), std::move(viewManagers));
   Microsoft::ReactNative::UIManager::SetSettings(m_reactContext->Properties(), std::move(uiManagerSettings));
 
   m_reactContext->Properties().Set(
@@ -1033,16 +1075,7 @@ void ReactInstanceWin::AttachMeasuredRootView(
   if (State() == ReactInstanceState::HasError)
     return;
 
-#ifdef USE_FABRIC
-  if (useFabric && !m_useWebDebugger) {
-    auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
-        winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()));
-
-    auto rootTag = Microsoft::ReactNative::getNextRootViewTag();
-    rootView->SetTag(rootTag);
-    uiManager->startSurface(rootView, rootTag, rootView->JSComponentName(), DynamicWriter::ToDynamic(initialProps));
-  }
-#endif
+  assert(!useFabric);
 #ifndef CORE_ABI
   if (!useFabric || m_useWebDebugger) {
     int64_t rootTag = -1;
@@ -1098,13 +1131,10 @@ Mso::CntPtr<IReactInstanceInternal> MakeReactInstance(
       reactHost, std::move(options), std::move(whenCreated), std::move(whenLoaded), std::move(updateUI));
 }
 
-#if defined(USE_V8)
 std::string ReactInstanceWin::getApplicationTempFolder() {
   auto local = winrt::Windows::Storage::ApplicationData::Current().TemporaryFolder().Path();
-
   return Microsoft::Common::Unicode::Utf16ToUtf8(local.c_str(), local.size()) + "\\";
 }
-#endif
 
 bool ReactInstanceWin::UseWebDebugger() const noexcept {
   return m_useWebDebugger;
@@ -1155,6 +1185,14 @@ JSIEngine ReactInstanceWin::JsiEngine() const noexcept {
 
 std::string ReactInstanceWin::JavaScriptBundleFile() const noexcept {
   return m_options.Identity;
+}
+
+std::string ReactInstanceWin::BundleAppId() const noexcept {
+  return m_options.DeveloperSettings.BundleAppId;
+}
+
+bool ReactInstanceWin::RequestDevBundle() const noexcept {
+  return m_options.DeveloperSettings.DevBundle;
 }
 
 bool ReactInstanceWin::UseDeveloperSupport() const noexcept {

@@ -21,10 +21,8 @@
 #include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/Windows.Web.Http.h>
 
-#ifdef HERMES_ENABLE_DEBUGGER
 #include <winrt/Windows.ApplicationModel.Activation.h>
 #include <winrt/Windows.Networking.Connectivity.h>
-#endif
 
 #pragma warning(push)
 #pragma warning(disable : 4068 4251 4101 4804 4309)
@@ -243,9 +241,9 @@ void DevSupportManager::StopPollingLiveReload() {
 void DevSupportManager::EnsureHermesInspector(
     [[maybe_unused]] const std::string &packagerHost,
     [[maybe_unused]] const uint16_t packagerPort) noexcept {
-#ifdef HERMES_ENABLE_DEBUGGER
   static std::once_flag once;
   std::call_once(once, [this, &packagerHost, packagerPort]() {
+    // TODO: should we use the bundleAppId as the app param if available?
     std::string packageName("RNW");
     wchar_t fullName[PACKAGE_FULL_NAME_MAX_LENGTH]{};
     UINT32 size = ARRAYSIZE(fullName);
@@ -265,14 +263,10 @@ void DevSupportManager::EnsureHermesInspector(
         m_BundleStatusProvider);
     m_inspectorPackagerConnection->connectAsync();
   });
-
-#endif
 }
 
-void DevSupportManager::UpdateBundleStatus(bool isLastDownloadSucess, int64_t updateTimestamp) noexcept {
-#ifdef HERMES_ENABLE_DEBUGGER
-  m_BundleStatusProvider->updateBundleStatus(isLastDownloadSucess, updateTimestamp);
-#endif
+void DevSupportManager::UpdateBundleStatus(bool isLastDownloadSuccess, int64_t updateTimestamp) noexcept {
+  m_BundleStatusProvider->updateBundleStatus(isLastDownloadSuccess, updateTimestamp);
 }
 
 std::pair<std::string, bool> GetJavaScriptFromServer(
@@ -280,12 +274,21 @@ std::pair<std::string, bool> GetJavaScriptFromServer(
     const uint16_t sourceBundlePort,
     const std::string &jsBundleName,
     const std::string &platform,
+    const std::string &bundleAppId,
     bool dev,
     bool hot,
     bool inlineSourceMap,
     const uint32_t hermesBytecodeVersion) {
   auto bundleUrl = facebook::react::DevServerHelper::get_BundleUrl(
-      sourceBundleHost, sourceBundlePort, jsBundleName, platform, dev, hot, inlineSourceMap, hermesBytecodeVersion);
+      sourceBundleHost,
+      sourceBundlePort,
+      jsBundleName,
+      platform,
+      bundleAppId,
+      dev,
+      hot,
+      inlineSourceMap,
+      hermesBytecodeVersion);
   try {
     return GetJavaScriptFromServerAsync(bundleUrl).get();
   } catch (winrt::hresult_error const &e) {

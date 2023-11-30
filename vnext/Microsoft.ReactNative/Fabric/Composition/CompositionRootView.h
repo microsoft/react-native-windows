@@ -3,6 +3,8 @@
 #pragma once
 
 #include "CompositionRootView.g.h"
+#include <FocusNavigationRequest.g.h>
+#include <FocusNavigationResult.g.h>
 
 #include <ReactContext.h>
 #include <winrt/Microsoft.ReactNative.h>
@@ -12,8 +14,39 @@
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
+struct FocusNavigationRequest : FocusNavigationRequestT<FocusNavigationRequest> {
+  FocusNavigationRequest(winrt::Microsoft::ReactNative::FocusNavigationReason reason) : m_reason(reason) {}
+
+  winrt::Microsoft::ReactNative::FocusNavigationReason Reason() noexcept {
+    return m_reason;
+  }
+
+  void Reason(winrt::Microsoft::ReactNative::FocusNavigationReason reason) noexcept {
+    m_reason = reason;
+  }
+
+ private:
+  winrt::Microsoft::ReactNative::FocusNavigationReason m_reason;
+};
+
+struct FocusNavigationResult : FocusNavigationResultT<FocusNavigationResult> {
+  FocusNavigationResult(bool wasFocusMoved) : m_wasFocusMoved(wasFocusMoved) {}
+
+  bool WasFocusMoved() noexcept {
+    return m_wasFocusMoved;
+  }
+
+ private:
+  const bool m_wasFocusMoved;
+};
+
 struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Microsoft::ReactNative::ICompositionRootView {
   CompositionRootView() noexcept;
+
+#ifdef USE_WINUI3
+  CompositionRootView(winrt::Microsoft::UI::Composition::Compositor compositor) noexcept;
+  winrt::Microsoft::UI::Content::ContentIsland Island() noexcept;
+#endif
 
   // property ReactViewHost
   ReactNative::IReactViewHost ReactViewHost() noexcept;
@@ -28,14 +61,22 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
   void Size(winrt::Windows::Foundation::Size value) noexcept;
 
   // ScaleFactor (DPI)
-  double ScaleFactor() noexcept;
-  void ScaleFactor(double value) noexcept;
+  float ScaleFactor() noexcept;
+  void ScaleFactor(float value) noexcept;
 
-  Windows::Foundation::Size Measure(Windows::Foundation::Size const &availableSize) const;
-  Windows::Foundation::Size Arrange(Windows::Foundation::Size finalSize) const;
+  winrt::Windows::Foundation::Size Measure(winrt::Windows::Foundation::Size const &availableSize) const;
+  winrt::Windows::Foundation::Size Arrange(winrt::Windows::Foundation::Size finalSize) const;
 
+  winrt::Microsoft::ReactNative::FocusNavigationResult NavigateFocus(
+      const winrt::Microsoft::ReactNative::FocusNavigationRequest &request) noexcept;
+
+  ::Microsoft::ReactNative::RootComponentView *GetComponentView() noexcept;
+
+  IInspectable GetUiaProvider() noexcept;
+
+  // When driving the rootview without an island
+  void SetWindow(uint64_t hwnd) noexcept;
   int64_t SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept;
-  void OnScrollWheel(Windows::Foundation::Point point, int32_t delta) noexcept;
 
  public: // ICompositionRootView
   winrt::Microsoft::ReactNative::Composition::IVisual GetVisual() const noexcept override;
@@ -55,11 +96,18 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
   void UninitRootView() noexcept;
 
  private:
+#ifdef USE_WINUI3
+  winrt::Microsoft::UI::Composition::Compositor m_compositor{nullptr};
+  winrt::Microsoft::UI::Content::ContentIsland m_island{nullptr};
+#endif
+
+  HWND m_hwnd{0};
   bool m_isInitialized{false};
   bool m_isJSViewAttached{false};
   IReactDispatcher m_uiDispatcher{nullptr};
+  winrt::IInspectable m_uiaProvider{nullptr};
   int64_t m_rootTag{-1};
-  double m_scaleFactor{1.0};
+  float m_scaleFactor{1.0};
   winrt::Windows::Foundation::Size m_size;
   winrt::Microsoft::ReactNative::ReactContext m_context;
   winrt::Microsoft::ReactNative::IReactViewHost m_reactViewHost;
@@ -78,4 +126,6 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
 
 namespace winrt::Microsoft::ReactNative::factory_implementation {
 struct CompositionRootView : CompositionRootViewT<CompositionRootView, implementation::CompositionRootView> {};
+struct FocusNavigationRequest
+    : FocusNavigationRequestT<FocusNavigationRequest, implementation::FocusNavigationRequest> {};
 } // namespace winrt::Microsoft::ReactNative::factory_implementation

@@ -128,4 +128,4 @@ if (!initialDims) {
 
 Dimensions.set(initialDims);
 
-module.exports = Dimensions;
+export default Dimensions;

@@ -3,8 +3,8 @@
 
 #pragma once
 
-#include <butter/map.h>
 #include <react/renderer/components/rnwcore/EventEmitters.h>
+#include <unordered_map>
 #include "WindowsTextInputEventEmitter.h"
 #include "WindowsTextInputProps.h"
 #include "WindowsTextInputState.h"
@@ -15,8 +15,7 @@
 #include <react/renderer/attributedstring/AttributedString.h>
 #include <react/renderer/textlayoutmanager/TextLayoutManager.h>
 
-namespace facebook {
-namespace react {
+namespace facebook::react {
 
 extern const char WindowsTextInputComponentName[];
 
@@ -55,7 +54,7 @@ class WindowsTextInputShadowNode final : public ConcreteViewShadowNode<
 
 #pragma mark - LayoutableShadowNode
 
-  Size measureContent(LayoutContext const &layoutContext, LayoutConstraints const &layoutConstraints) const override;
+  Size measureContent(const LayoutContext &layoutContext, const LayoutConstraints &layoutConstraints) const override;
   void layout(LayoutContext layoutContext) override;
 
  private:
@@ -81,5 +80,4 @@ class WindowsTextInputShadowNode final : public ConcreteViewShadowNode<
   mutable std::optional<AttributedString> m_cachedAttributedString{};
 };
 
-} // namespace react
-} // namespace facebook
+} // namespace facebook::react

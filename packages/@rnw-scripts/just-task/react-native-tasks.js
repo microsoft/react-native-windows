@@ -8,11 +8,7 @@
 
 const {task} = require('just-scripts');
 
-const copyRNLibaries = require('./copyRNLibraries');
+const copyRNLibraries = require('./copyRNLibraries');
 
-task('copyRNLibraries', copyRNLibaries.copyTask(process.cwd()));
-task('cleanRNLibraries', copyRNLibaries.cleanTask(process.cwd()));
-
-task('flow-check', () => {
-  require('child_process').execSync('npx flow check', {stdio: 'inherit'});
-});
+task('copyRNLibraries', copyRNLibraries.copyTask(process.cwd()));
+task('cleanRNLibraries', copyRNLibraries.cleanTask(process.cwd()));

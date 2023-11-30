@@ -10,6 +10,36 @@ import "ReactNativeHost.idl";
 
 namespace Microsoft.ReactNative
 {
+  [experimental]
+  DOC_STRING("sdf")
+  enum FocusNavigationReason
+  {
+    Restore,
+    First,
+    Last,
+  };
+
+  [default_interface]
+  [webhosthidden]
+  [experimental]
+  DOC_STRING("Argument type for @CompositionRootView.NavigateFocus.")
+  runtimeclass FocusNavigationRequest {
+    DOC_STRING("Creates new instance of @FocusNavigationRequest")
+        FocusNavigationRequest(FocusNavigationReason reason);
+
+    DOC_STRING("The reason the @CompositionRootView is getting focus.")
+    FocusNavigationReason Reason {get;set;};
+  };
+
+  [default_interface]
+  [webhosthidden]
+  [experimental]
+  DOC_STRING("Provides result from a @CompositionRootView.NavigateFocus method call.")
+  runtimeclass FocusNavigationResult {
+    DOC_STRING("Gets a value that indicates whether the focus successfully moved.")
+    Boolean WasFocusMoved {get;};
+  };
+
   [default_interface]
   [webhosthidden]
   [experimental]
@@ -18,6 +48,10 @@ namespace Microsoft.ReactNative
   {
     DOC_STRING("Creates a new instance of @CompositionRootView.")
     CompositionRootView();
+
+#ifdef USE_WINUI3
+    CompositionRootView(Microsoft.UI.Composition.Compositor compositor);
+#endif
 
     DOC_STRING(
       "A ReactViewHost specifies the root UI component and initial properties to render in this RootView"
@@ -30,16 +64,25 @@ namespace Microsoft.ReactNative
     Windows.Foundation.Size Size {get; set; };
 
     DOC_STRING("ScaleFactor for this windows (DPI/96)")
-    Double ScaleFactor {get; set;};
+    Single ScaleFactor {get; set;};
+
+    DOC_STRING("Move focus to this @CompositionRootView")
+    FocusNavigationResult NavigateFocus(FocusNavigationRequest request);
 
     Windows.Foundation.Size Measure(Windows.Foundation.Size availableSize);
     Windows.Foundation.Size Arrange(Windows.Foundation.Size availableSize);
 
+    DOC_STRING("Hosting Window that input is coming from. Only required when not using ContentIslands")
+    void SetWindow(UInt64 hwnd);
+
+    DOC_STRING("Forward input to the RootView. Only required when not using ContentIslands")
     Int64 SendMessage(UInt32 Msg, UInt64 WParam, Int64 LParam);
 
-    //void OnPointerPressed(PointerPressedArgs args);
-    //void OnMouseUp(Windows.Foundation.Point point);
-    void OnScrollWheel(Windows.Foundation.Point point, Int32 delta);
+    Object GetUiaProvider();
+
+#ifdef USE_WINUI3
+    Microsoft.UI.Content.ContentIsland Island { get; };
+#endif
   }
 
 } // namespace Microsoft.ReactNative

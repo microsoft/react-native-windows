@@ -3,8 +3,8 @@
 
 #pragma once
 
-// Folly
-#include <folly/dynamic.h>
+// React Native Windows
+#include <JSValue.h>
 
 // Standard Library
 #include <string>
@@ -25,13 +25,13 @@ struct IUriHandler {
   /// Fetch the URI and return the JS body payload.
   /// </summary>
   /// <returns>
-  /// Blob representation in a dynamic object with the folliwing structure:
+  /// Blob representation in a dynamic object with the following structure:
   /// "blobId"      - Blob unique identifier
   /// "offset"      - Blob segment starting offset
   /// "size"        - Number of bytes fetched from blob
   /// "name"        - File name obtained from the URI
   /// "lastModified - Last write to local file in milliseconds
-  virtual folly::dynamic Fetch(std::string &uri) = 0;
+  virtual winrt::Microsoft::ReactNative::JSValueObject Fetch(std::string &uri) = 0;
 };
 
 } // namespace Microsoft::React

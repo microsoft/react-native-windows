@@ -119,7 +119,7 @@ void TouchEventHandler::OnPointerPressed(
     return;
   }
 
-  if (m_xamlView.as<xaml::FrameworkElement>().CapturePointer(args.Pointer())) {
+  if (reactArgs.AllowUncaptured() || m_xamlView.as<xaml::FrameworkElement>().CapturePointer(args.Pointer())) {
     assert(!tagsForBranch.empty());
     const auto tag = tagsForBranch.front();
 
@@ -585,7 +585,7 @@ bool TouchEventHandler::PropagatePointerEventAndFindReactSourceBranch(
 }
 
 //
-// Retreives the path of nodes from an element to the root.
+// Retrieves the path of nodes from an element to the root.
 // The order of the returned list is from child to parent.
 //
 std::vector<int64_t> GetTagsForBranch(INativeUIManagerHost *host, int64_t tag, int64_t rootTag) {

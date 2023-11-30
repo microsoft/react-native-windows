@@ -13,15 +13,15 @@
     "e2etest:debug": "jest --config ./jest.debug.config.js"
   },
   "dependencies": {
-    "@react-native-picker/picker": "2.2.0",
-    "@react-native-windows/automation-channel": "^0.6.7",
+    "@react-native-picker/picker": "^2.5.1",
+    "@react-native-windows/automation-channel": "^0.12.81",
     "@react-native-windows/tester": "0.0.1",
     "@typescript-eslint/eslint-plugin": "^5.21.0",
     "@typescript-eslint/parser": "^5.21.0",
     "react": "18.2.0",
-    "react-native": "0.0.0-20221228-2020-ad953f6f4",
-    "react-native-windows": "^0.0.0-canary.608",
-    "react-native-xaml": "^0.0.70"
+    "react-native": "0.73.0-nightly-20231002-0371014a3",
+    "react-native-windows": "^0.0.0-canary.742",
+    "react-native-xaml": "^0.0.76"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
@@ -29,28 +29,30 @@
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-typescript": "^7.8.3",
     "@babel/runtime": "^7.8.4",
-    "@react-native-windows/automation": "^0.3.29",
-    "@react-native-windows/automation-commands": "^0.1.49",
-    "@rnw-scripts/babel-node-config": "2.2.0",
+    "@react-native-windows/automation": "^0.3.163",
+    "@react-native-windows/automation-commands": "^0.1.183",
+    "@react-native/babel-plugin-codegen": "0.73.0",
+    "@react-native/metro-babel-transformer": "0.73.12",
+    "@react-native/metro-config": "^0.73.0",
+    "@rnw-scripts/babel-node-config": "2.3.1",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
-    "@rnw-scripts/eslint-config": "1.1.15",
-    "@rnw-scripts/just-task": "2.3.5",
+    "@rnw-scripts/eslint-config": "1.2.4",
+    "@rnw-scripts/just-task": "2.3.18",
     "@rnw-scripts/metro-dev-config": "0.0.0",
-    "@rnw-scripts/ts-config": "2.0.3",
+    "@rnw-scripts/ts-config": "2.0.5",
     "@rnx-kit/jest-preset": "^0.1.0",
     "@types/jest": "^29.2.2",
-    "@types/node": "^14.14.22",
+    "@types/node": "^18.0.0",
     "@types/react": "^18.0.18",
     "babel-jest": "^29.3.0",
     "eslint": "^8.19.0",
     "jest": "^29.2.1",
-    "metro-react-native-babel-transformer": "0.73.7",
     "prettier": "^2.4.1",
     "react-test-renderer": "18.2.0",
     "sanitize-filename": "^1.6.3",
-    "typescript": "^4.4.4"
+    "typescript": "^4.9.5"
   },
   "engines": {
-    "node": ">= 14"
+    "node": ">= 18"
   }
 }

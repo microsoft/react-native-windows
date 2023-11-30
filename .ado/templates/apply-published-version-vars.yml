@@ -11,3 +11,14 @@ steps:
     displayName: Apply version variables
     inputs:
       script: node $(Build.StagingDirectory)/versionEnvVars/versionEnvVars.js
+
+  # During the official publish (in publish.yml) The stamp-version script that updates the value
+  # runs during beachball. But this stayed on the machine that ran the Setup phase and doesn't make
+  # it to the machines that run the actual buld. This script does run on those machines
+  # and the previous step sets the environment/pipeline variables to the right version
+  # So we'll rerun the stamp-version script on each machine that  builds native code so that the 
+  # binaries are stamped with the right version.
+  - task: CmdLine@2
+    displayName: Update PackageVersion.g.props
+    inputs:
+      script: yarn stamp-version $(RNW_PKG_VERSION_STR)

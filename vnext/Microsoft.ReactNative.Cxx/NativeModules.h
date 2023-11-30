@@ -30,6 +30,11 @@
 #define REACT_MODULE(/* moduleStruct, [opt] moduleName, [opt] eventEmitterName */...) \
   INTERNAL_REACT_MODULE(__VA_ARGS__)(__VA_ARGS__)
 
+// REACT_MODULE_NOREG is REACT_MODULE without auto registration
+// they have the same arguments
+#define REACT_MODULE_NOREG(/* moduleStruct, [opt] moduleName, [opt] eventEmitterName */...) \
+  INTERNAL_REACT_MODULE_NOREG(__VA_ARGS__)(__VA_ARGS__)
+
 // REACT_INIT(method)
 // Arguments:
 // - method (required) - the method name the macro is attached to.
@@ -347,9 +352,24 @@ struct MethodSignatureMatchResult {
   bool IsResultMatching;
   bool AreArgsMatching;
   bool AreCallbacksMatching;
-  bool IsPromiseMathcing;
+  bool IsPromiseMatching;
   bool IsSucceeded;
 };
+
+template <class TInputArg, class TOtherInputArg>
+constexpr bool MatchInputArg() noexcept {
+  return std::is_same_v<TInputArg, TOtherInputArg>;
+}
+
+template <>
+constexpr bool MatchInputArg<std::wstring, std::string>() noexcept {
+  return true;
+}
+
+template <>
+constexpr bool MatchInputArg<std::string, std::wstring>() noexcept {
+  return true;
+}
 
 template <class TResult, class TInputArgs, class TOutputCallbacks, class TOutputPromises>
 struct MethodSignature {
@@ -372,7 +392,7 @@ struct MethodSignature {
 
   template <class TOtherInputArgs, size_t... I>
   static constexpr bool MatchInputArgs(std::index_sequence<I...>) noexcept {
-    return (std::is_same_v<std::tuple_element_t<I, InputArgs>, std::tuple_element_t<I, TOtherInputArgs>> && ...);
+    return (MatchInputArg<std::tuple_element_t<I, InputArgs>, std::tuple_element_t<I, TOtherInputArgs>>() && ...);
   }
 
   template <class TOtherOutputCallbacks, size_t... I>
@@ -400,10 +420,10 @@ struct MethodSignature {
           std::make_index_sequence<CallbackCount>{});
     }
 
-    result.IsPromiseMathcing = std::is_same_v<OutputPromises, typename TOtherMethodSignature::OutputPromises>;
+    result.IsPromiseMatching = std::is_same_v<OutputPromises, typename TOtherMethodSignature::OutputPromises>;
 
     result.IsSucceeded = result.IsResultMatching && result.ArgCountCompare == 0 && result.AreArgsMatching &&
-        result.CallbackCountCompare == 0 && result.AreCallbacksMatching && result.IsPromiseMathcing;
+        result.CallbackCountCompare == 0 && result.AreCallbacksMatching && result.IsPromiseMatching;
 
     return result;
   }
@@ -466,7 +486,7 @@ constexpr static bool MatchMethodSignature() noexcept {
     static_assert(matchResult.AreCallbacksMatching, "Method callback types are different from the method spec.");
   }
 
-  static_assert(matchResult.IsPromiseMathcing, "Method Promise type is different from the method spec.");
+  static_assert(matchResult.IsPromiseMatching, "Method Promise type is different from the method spec.");
 
   return matchResult.IsSucceeded;
 }

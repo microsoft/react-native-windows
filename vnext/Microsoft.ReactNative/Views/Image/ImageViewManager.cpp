@@ -24,7 +24,7 @@ using namespace xaml::Controls;
 using namespace xaml::Automation::Peers;
 } // namespace winrt
 
-// Such code is better to move to a seperate parser layer
+// Such code is better to move to a separate parser layer
 template <>
 struct json_type_traits<Microsoft::ReactNative::ReactImageSource> {
   static Microsoft::ReactNative::ReactImageSource parseJson(const winrt::Microsoft::ReactNative::JSValue &json) {
@@ -185,11 +185,6 @@ void ImageViewManager::EmitImageEvent(
 
 void ImageViewManager::setSource(winrt::Grid grid, const winrt::Microsoft::ReactNative::JSValue &data) {
   auto sources{json_type_traits<std::vector<ReactImageSource>>::parseJson(data)};
-  sources[0].bundleRootPath = GetReactContext().SettingsSnapshot().BundleRootPath();
-
-  if (sources[0].packagerAsset && sources[0].uri.find("file://") == 0) {
-    sources[0].uri.replace(0, 7, sources[0].bundleRootPath);
-  }
 
   auto reactImage{grid.as<ReactImage>()};
 

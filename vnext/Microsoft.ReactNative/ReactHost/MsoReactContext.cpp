@@ -93,6 +93,20 @@ std::string ReactSettingsSnapshot::JavaScriptBundleFile() const noexcept {
   return {};
 }
 
+std::string ReactSettingsSnapshot::BundleAppId() const noexcept {
+  if (auto instance = m_reactInstance.GetStrongPtr()) {
+    return instance->BundleAppId();
+  }
+  return {};
+}
+
+bool ReactSettingsSnapshot::RequestDevBundle() const noexcept {
+  if (auto instance = m_reactInstance.GetStrongPtr()) {
+    return instance->RequestDevBundle();
+  }
+  return {};
+}
+
 JSIEngine ReactSettingsSnapshot::JsiEngine() const noexcept {
   if (auto instance = m_reactInstance.GetStrongPtr()) {
     return instance->JsiEngine();
@@ -107,6 +121,42 @@ bool ReactSettingsSnapshot::UseDeveloperSupport() const noexcept {
   return false;
 }
 
+struct WeakRefPropertyBag : winrt::implements<WeakRefPropertyBag, winrt::Microsoft::ReactNative::IReactPropertyBag> {
+  WeakRefPropertyBag(winrt::Microsoft::ReactNative::IReactPropertyBag propertyBag) : m_wkPropBag(propertyBag) {}
+
+  IInspectable Get(winrt::Microsoft::ReactNative::IReactPropertyName const &name) noexcept {
+    if (auto propBag = m_wkPropBag.get()) {
+      return propBag.Get(name);
+    }
+    return nullptr;
+  }
+
+  IInspectable GetOrCreate(
+      winrt::Microsoft::ReactNative::IReactPropertyName const &name,
+      winrt::Microsoft::ReactNative::ReactCreatePropertyValue const &createValue) noexcept {
+    if (auto propBag = m_wkPropBag.get()) {
+      return propBag.GetOrCreate(name, createValue);
+    }
+    return nullptr;
+  }
+
+  IInspectable Set(winrt::Microsoft::ReactNative::IReactPropertyName const &name, IInspectable const &value) noexcept {
+    if (auto propBag = m_wkPropBag.get()) {
+      return propBag.Set(name, value);
+    }
+    return nullptr;
+  }
+
+  void CopyFrom(winrt::Microsoft::ReactNative::IReactPropertyBag const &value) noexcept {
+    if (auto propBag = m_wkPropBag.get()) {
+      return propBag.CopyFrom(value);
+    }
+  }
+
+ private:
+  winrt::weak_ref<winrt::Microsoft::ReactNative::IReactPropertyBag> m_wkPropBag;
+};
+
 //=============================================================================================
 // ReactContext implementation
 //=============================================================================================
@@ -117,7 +167,7 @@ ReactContext::ReactContext(
     winrt::Microsoft::ReactNative::IReactNotificationService const &notifications) noexcept
     : m_reactInstance{std::move(reactInstance)},
       m_settings{Mso::Make<ReactSettingsSnapshot>(Mso::Copy(m_reactInstance))},
-      m_properties{properties},
+      m_properties{winrt::make<WeakRefPropertyBag>(properties)},
       m_notifications{notifications} {}
 
 void ReactContext::Destroy() noexcept {

@@ -155,12 +155,12 @@ async function upgradeReactNative(
 }
 
 /**
- * Uses override tooling to pull in a new version of the repo-config package
+ * Uses override tooling to pull in a new version of the monorepo package
  */
 async function upgradeRepoConfig(
   newReactNativeVersion: string,
 ): Promise<PackageDiff> {
-  const origPackage = (await findRepoPackage('@react-native/repo-config'))!;
+  const origPackage = (await findRepoPackage('@react-native/monorepo'))!;
 
   const upgradeResults = await upgradeOverrides(
     path.join(origPackage.path, 'overrides.json'),
@@ -172,11 +172,11 @@ async function upgradeRepoConfig(
 
   if (!upgradeResults.every(result => result.filesWritten)) {
     throw new Error(
-      'Could not sync repo-config package due to conflicts. Please resolve manually',
+      'Could not sync monorepo package due to conflicts. Please resolve manually',
     );
   }
 
-  const newPackage = (await findRepoPackage('@react-native/repo-config'))!;
+  const newPackage = (await findRepoPackage('@react-native/monorepo'))!;
   return extractPackageDiff(origPackage.json, newPackage.json);
 }
 
@@ -360,7 +360,7 @@ function ensureValidReactNativePeerDep(
   }
 
   // If we have a range, such as in our stable branches, only bump if needed,
-  // as changing the peer depenedncy is a breaking change. Any prerelease may
+  // as changing the peer dependency is a breaking change. Any prerelease may
   // be breaking.
   const peerDep = pkg.peerDependencies['react-native'];
 
@@ -392,7 +392,7 @@ function ensureValidReactNativePeerDep(
 }
 
 /**
- * Ensure that a package fulfills peer depenedncies for react-native if relying on it
+ * Ensure that a package fulfills peer dependencies for react-native if relying on it
  */
 function ensureReactNativePeerDepsSatisfied(
   pkg: LocalPackageDeps,
@@ -429,7 +429,7 @@ function bumpSemver(origVersion: string, newVersion: string): string {
     throw new Error(`Unable to bump invalid semver '${origVersion}'`);
   }
 
-  // Semver allows multiple ranges, hypen ranges, star ranges, etc. Don't try
+  // Semver allows multiple ranges, hyphen ranges, star ranges, etc. Don't try
   // to reason about how to bump all of those and just bail if we see them.
   const simpleSemver = /([\^~]?)(\d+\.\d+(\.\d+)?(-\w+\.\d+)?)/;
   if (!simpleSemver.test(origVersion)) {

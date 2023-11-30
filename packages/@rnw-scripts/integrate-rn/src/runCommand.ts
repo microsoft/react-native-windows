@@ -9,7 +9,7 @@ import {exec, ExecOptions} from 'child_process';
 import findRepoRoot from '@react-native-windows/find-repo-root';
 
 /**
- * Run a command asyncronously, setting cwd to repo root if none is specified
+ * Run a command asynchronously, setting cwd to repo root if none is specified
  */
 export default async function runCommand(
   command: string,

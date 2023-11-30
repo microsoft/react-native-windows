@@ -23,7 +23,7 @@ afterAll(async () => {
 test('assumeSame', async () => {
   const overrideFile = '0.62.2/flowconfig.pristine';
   const diff = await evaluateStrategy(
-    DiffStrategies.asssumeSame(),
+    DiffStrategies.assumeSame(),
     overrideFile,
   );
   expect(diff).toBe('');

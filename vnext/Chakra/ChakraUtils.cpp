@@ -88,7 +88,7 @@ JsValueRefUniquePtr jsArrayBufferFromBigString(const std::shared_ptr<const JSBig
   return MakeJsValueRefUniquePtr(arrayBuffer);
 }
 
-FileMappingBigString::FileMappingBigString(const std::string &filenameUtf8, uint32_t offset)
+FileMappingBigString::FileMappingBigString(const std::wstring &filename, uint32_t offset)
     : JSBigString{},
       m_fileMapping{nullptr, &CloseHandle},
       m_fileData{nullptr, &fileDataDeleter},
@@ -97,17 +97,12 @@ FileMappingBigString::FileMappingBigString(const std::string &filenameUtf8, uint
       m_fileSize{0} {
 #if (defined(WINRT))
   std::unique_ptr<void, decltype(&CloseHandle)> fileHandle{
-      CreateFile2(
-          Microsoft::Common::Unicode::Utf8ToUtf16(filenameUtf8).c_str(),
-          GENERIC_READ,
-          FILE_SHARE_READ,
-          OPEN_EXISTING,
-          nullptr /* pCreateExParams */),
+      CreateFile2(filename.c_str(), GENERIC_READ, FILE_SHARE_READ, OPEN_EXISTING, nullptr /* pCreateExParams */),
       &CloseHandle};
 #else
   std::unique_ptr<void, decltype(&CloseHandle)> fileHandle{
       CreateFileW(
-          Microsoft::Common::Unicode::Utf8ToUtf16(filenameUtf8).c_str(),
+          filename.c_str(),
           GENERIC_READ,
           FILE_SHARE_READ,
           nullptr /* lpSecurityAttributes */,
@@ -181,7 +176,7 @@ FileMappingBigString::FileMappingBigString(const std::string &filenameUtf8, uint
     // Ensure m_data is null-terminated
     m_data = decltype(m_data){
         new char[m_size + 1],
-        [](void *pv) // Can't just say &opreator delete[] because of calling
+        [](void *pv) // Can't just say &operator delete[] because of calling
                      // convention mismatches
         { delete[] static_cast<char *>(pv); }};
     memcpy(m_data.get(), static_cast<char *>(m_fileData.get()) + offset, m_size);
@@ -189,8 +184,8 @@ FileMappingBigString::FileMappingBigString(const std::string &filenameUtf8, uint
   }
 }
 
-std::unique_ptr<const FileMappingBigString> FileMappingBigString::fromPath(const std::string &filenameUtf8) {
-  return std::make_unique<FileMappingBigString>(filenameUtf8);
+std::unique_ptr<const FileMappingBigString> FileMappingBigString::fromPath(const std::wstring &filename) {
+  return std::make_unique<FileMappingBigString>(filename);
 }
 
 } // namespace react

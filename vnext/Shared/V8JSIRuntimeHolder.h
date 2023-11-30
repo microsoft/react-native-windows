@@ -10,8 +10,6 @@
 
 #include <Logging.h>
 
-#include <cxxreact/MessageQueueThread.h>
-
 namespace facebook {
 namespace react {
 
@@ -24,8 +22,8 @@ class V8JSIRuntimeHolder : public Microsoft::JSI::RuntimeHolderLazyInit {
       std::shared_ptr<facebook::react::DevSettings> devSettings,
       std::shared_ptr<facebook::react::MessageQueueThread> jsQueue,
       std::unique_ptr<facebook::jsi::ScriptStore> &&scriptStore,
-      std::unique_ptr<facebook::jsi::PreparedScriptStore> &&preparedScriptStore,
-      bool enableMultiThreadSupport) noexcept
+      std::shared_ptr<facebook::jsi::PreparedScriptStore> &&preparedScriptStore,
+      bool enableMultiThreadingSupport) noexcept
       : useDirectDebugger_(devSettings->useDirectDebugger),
         debuggerBreakOnNextLine_(devSettings->debuggerBreakOnNextLine),
         debuggerPort_(devSettings->debuggerPort),
@@ -33,7 +31,7 @@ class V8JSIRuntimeHolder : public Microsoft::JSI::RuntimeHolderLazyInit {
         jsQueue_(std::move(jsQueue)),
         scriptStore_(std::move(scriptStore)),
         preparedScriptStore_(std::move(preparedScriptStore)),
-        enableMultiThreadSupport_(enableMultiThreadSupport) {}
+        enableMultiThreadingSupport_(enableMultiThreadingSupport) {}
 
  private:
   void initRuntime() noexcept;
@@ -42,7 +40,7 @@ class V8JSIRuntimeHolder : public Microsoft::JSI::RuntimeHolderLazyInit {
   std::shared_ptr<facebook::react::MessageQueueThread> jsQueue_;
 
   std::unique_ptr<facebook::jsi::ScriptStore> scriptStore_;
-  std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore_;
+  std::shared_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore_;
 
   std::once_flag once_flag_;
   std::thread::id own_thread_id_;
@@ -50,8 +48,8 @@ class V8JSIRuntimeHolder : public Microsoft::JSI::RuntimeHolderLazyInit {
   uint16_t debuggerPort_;
   bool useDirectDebugger_;
   bool debuggerBreakOnNextLine_;
-  bool enableMultiThreadSupport_;
   std::string debuggerRuntimeName_;
+  bool enableMultiThreadingSupport_;
 };
 
 } // namespace react

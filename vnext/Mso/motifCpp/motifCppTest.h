@@ -203,7 +203,7 @@ inline uint32_t FilterCrashExceptions(uint32_t exceptionCode) noexcept {
 }
 
 #pragma warning(push)
-#pragma warning(disable : 4702) // unreachable code might be hit if the linker determines the lambda is quaranteed to
+#pragma warning(disable : 4702) // unreachable code might be hit if the linker determines the lambda is guaranteed to
                                 // throw an exception
 template <class TLambda>
 inline bool ExpectCrashCore(TLambda const &lambda) {

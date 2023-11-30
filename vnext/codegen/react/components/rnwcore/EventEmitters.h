@@ -10,12 +10,11 @@
 #pragma once
 
 #include <react/renderer/components/view/ViewEventEmitter.h>
-#include <jsi/jsi.h>
+
 
 namespace facebook {
 namespace react {
-
-class JSI_EXPORT ModalHostViewEventEmitter : public ViewEventEmitter {
+class ModalHostViewEventEmitter : public ViewEventEmitter {
  public:
   using ViewEventEmitter::ViewEventEmitter;
 
@@ -46,7 +45,6 @@ class JSI_EXPORT ModalHostViewEventEmitter : public ViewEventEmitter {
   struct OnOrientationChange {
       OnOrientationChangeOrientation orientation;
     };
-
   void onRequestClose(OnRequestClose value) const;
 
   void onShow(OnShow value) const;
@@ -55,25 +53,14 @@ class JSI_EXPORT ModalHostViewEventEmitter : public ViewEventEmitter {
 
   void onOrientationChange(OnOrientationChange value) const;
 };
-class JSI_EXPORT ActivityIndicatorViewEventEmitter : public ViewEventEmitter {
+class ActivityIndicatorViewEventEmitter : public ViewEventEmitter {
  public:
   using ViewEventEmitter::ViewEventEmitter;
 
   
-
   
 };
-class JSI_EXPORT DatePickerEventEmitter : public ViewEventEmitter {
- public:
-  using ViewEventEmitter::ViewEventEmitter;
-
-  struct OnChange {
-      Float timestamp;
-    };
-
-  void onChange(OnChange value) const;
-};
-class JSI_EXPORT AndroidDrawerLayoutEventEmitter : public ViewEventEmitter {
+class AndroidDrawerLayoutEventEmitter : public ViewEventEmitter {
  public:
   using ViewEventEmitter::ViewEventEmitter;
 
@@ -92,7 +79,6 @@ class JSI_EXPORT AndroidDrawerLayoutEventEmitter : public ViewEventEmitter {
   struct OnDrawerClose {
       
     };
-
   void onDrawerSlide(OnDrawerSlide value) const;
 
   void onDrawerStateChanged(OnDrawerStateChanged value) const;
@@ -101,77 +87,71 @@ class JSI_EXPORT AndroidDrawerLayoutEventEmitter : public ViewEventEmitter {
 
   void onDrawerClose(OnDrawerClose value) const;
 };
-class JSI_EXPORT PLYIconEventEmitter : public ViewEventEmitter {
+class RCTFlyoutEventEmitter : public ViewEventEmitter {
+ public:
+  using ViewEventEmitter::ViewEventEmitter;
+
+  struct OnDismiss {
+      bool isOpen;
+    };
+  void onDismiss(OnDismiss value) const;
+};
+class PLYIconEventEmitter : public ViewEventEmitter {
  public:
   using ViewEventEmitter::ViewEventEmitter;
 
   
-
   
 };
-class JSI_EXPORT AndroidProgressBarEventEmitter : public ViewEventEmitter {
+class RCTPopupEventEmitter : public ViewEventEmitter {
+ public:
+  using ViewEventEmitter::ViewEventEmitter;
+
+  struct OnDismiss {
+      bool isOpen;
+    };
+  void onDismiss(OnDismiss value) const;
+};
+class AndroidProgressBarEventEmitter : public ViewEventEmitter {
  public:
   using ViewEventEmitter::ViewEventEmitter;
 
   
-
   
 };
-class JSI_EXPORT AndroidSwipeRefreshLayoutEventEmitter : public ViewEventEmitter {
+class AndroidSwipeRefreshLayoutEventEmitter : public ViewEventEmitter {
  public:
   using ViewEventEmitter::ViewEventEmitter;
 
   struct OnRefresh {
       
     };
-
   void onRefresh(OnRefresh value) const;
 };
-class JSI_EXPORT PullToRefreshViewEventEmitter : public ViewEventEmitter {
+class PullToRefreshViewEventEmitter : public ViewEventEmitter {
  public:
   using ViewEventEmitter::ViewEventEmitter;
 
   struct OnRefresh {
       
     };
-
   void onRefresh(OnRefresh value) const;
 };
-class JSI_EXPORT SafeAreaViewEventEmitter : public ViewEventEmitter {
+class SafeAreaViewEventEmitter : public ViewEventEmitter {
  public:
   using ViewEventEmitter::ViewEventEmitter;
 
   
-
   
 };
-class JSI_EXPORT AndroidHorizontalScrollContentViewEventEmitter : public ViewEventEmitter {
+class AndroidHorizontalScrollContentViewEventEmitter : public ViewEventEmitter {
  public:
   using ViewEventEmitter::ViewEventEmitter;
 
   
-
   
 };
-class JSI_EXPORT SliderEventEmitter : public ViewEventEmitter {
- public:
-  using ViewEventEmitter::ViewEventEmitter;
-
-  struct OnValueChange {
-      double value;
-    bool fromUser;
-    };
-
-  struct OnSlidingComplete {
-      double value;
-    bool fromUser;
-    };
-
-  void onValueChange(OnValueChange value) const;
-
-  void onSlidingComplete(OnSlidingComplete value) const;
-};
-class JSI_EXPORT AndroidSwitchEventEmitter : public ViewEventEmitter {
+class AndroidSwitchEventEmitter : public ViewEventEmitter {
  public:
   using ViewEventEmitter::ViewEventEmitter;
 
@@ -179,10 +159,9 @@ class JSI_EXPORT AndroidSwitchEventEmitter : public ViewEventEmitter {
       bool value;
     int target;
     };
-
   void onChange(OnChange value) const;
 };
-class JSI_EXPORT SwitchEventEmitter : public ViewEventEmitter {
+class SwitchEventEmitter : public ViewEventEmitter {
  public:
   using ViewEventEmitter::ViewEventEmitter;
 
@@ -190,25 +169,28 @@ class JSI_EXPORT SwitchEventEmitter : public ViewEventEmitter {
       bool value;
     int target;
     };
-
   void onChange(OnChange value) const;
 };
-class JSI_EXPORT InputAccessoryEventEmitter : public ViewEventEmitter {
+class InputAccessoryEventEmitter : public ViewEventEmitter {
  public:
   using ViewEventEmitter::ViewEventEmitter;
 
   
-
   
 };
-class JSI_EXPORT UnimplementedNativeViewEventEmitter : public ViewEventEmitter {
+class TraceUpdateOverlayEventEmitter : public ViewEventEmitter {
  public:
   using ViewEventEmitter::ViewEventEmitter;
 
   
-
   
 };
+class UnimplementedNativeViewEventEmitter : public ViewEventEmitter {
+ public:
+  using ViewEventEmitter::ViewEventEmitter;
 
+  
+  
+};
 } // namespace react
 } // namespace facebook

@@ -80,25 +80,34 @@ jsi::Value TurboModuleBinding::getModule(
     if (bindingMode_ == TurboModuleBindingMode::HostObject) {
       return jsi::Object::createFromHostObject(runtime, std::move(module));
     }
-    auto &jsRepresentation = module->jsRepresentation_;
-    if (!jsRepresentation) {
-      jsRepresentation = std::make_unique<jsi::Object>(runtime);
-      if (bindingMode_ == TurboModuleBindingMode::Prototype) {
-        // Option 1: create plain object, with it's prototype mapped back to the
-        // hostobject. Any properties accessed are stored on the plain object
-        auto hostObject =
-            jsi::Object::createFromHostObject(runtime, std::move(module));
-        jsRepresentation->setProperty(
-            runtime, "__proto__", std::move(hostObject));
-      } else {
-        // Option 2: eagerly install all hostfunctions at this point, avoids
-        // prototype
-        for (auto &propName : module->getPropertyNames(runtime)) {
-          module->get(runtime, propName);
-        }
+
+    auto &weakJsRepresentation = module->jsRepresentation_;
+    if (weakJsRepresentation) {
+      auto jsRepresentation = weakJsRepresentation->lock(runtime);
+      if (!jsRepresentation.isUndefined()) {
+        return jsRepresentation;
       }
     }
-    return jsi::Value(runtime, *jsRepresentation);
+
+    // No JS representation found, or object has been collected
+    jsi::Object jsRepresentation(runtime);
+    weakJsRepresentation =
+        std::make_unique<jsi::WeakObject>(runtime, jsRepresentation);
+
+    if (bindingMode_ == TurboModuleBindingMode::Prototype) {
+      // Option 1: create plain object, with it's prototype mapped back to the
+      // hostobject. Any properties accessed are stored on the plain object
+      auto hostObject =
+          jsi::Object::createFromHostObject(runtime, std::move(module));
+      jsRepresentation.setProperty(runtime, "__proto__", std::move(hostObject));
+    } else {
+      // Option 2: eagerly install all hostfunctions at this point, avoids
+      // prototype
+      for (auto &propName : module->getPropertyNames(runtime)) {
+        module->get(runtime, propName);
+      }
+    }
+    return jsRepresentation;
   } else {
     return jsi::Value::null();
   }

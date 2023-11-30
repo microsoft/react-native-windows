@@ -4,7 +4,7 @@
  * @format
  */
 
-import {EmitterSubscription} from 'react-native';
+import {EmitterSubscription} from '../vendor/emitter/EventEmitter';
 
 /**
  * Color information for high contrast

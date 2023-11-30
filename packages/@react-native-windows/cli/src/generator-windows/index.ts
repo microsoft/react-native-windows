@@ -13,7 +13,11 @@ import fs from '@react-native-windows/fs';
 import semver from 'semver';
 import _ from 'lodash';
 import findUp from 'find-up';
-import {readProjectFile, findPropertyValue} from '../config/configUtils';
+import {
+  readProjectFile,
+  findPropertyValue,
+  tryFindPropertyValueAsBoolean,
+} from '../commands/config/configUtils';
 
 import {
   createDir,
@@ -127,33 +131,36 @@ export async function copyProjectTemplateAndReplace(
     console.log('Using experimental NuGet dependency.');
   }
 
-  let realProjectType = projectType;
+  const experimentalPropsPath = path.join(
+    destPath,
+    windowsDir,
+    'ExperimentalFeatures.props',
+  );
+
+  let existingUseHermes: boolean | null = null;
+  if (fs.existsSync(experimentalPropsPath)) {
+    existingUseHermes = tryFindPropertyValueAsBoolean(
+      readProjectFile(experimentalPropsPath),
+      'UseHermes',
+    );
+  }
+
+  if (existingUseHermes === false) {
+    console.warn(
+      'Hermes is now the default JS engine and will be enabled for this project. Support for Chakra will be deprecated in the future. To disable Hermes and keep using Chakra for now, see https://microsoft.github.io/react-native-windows/docs/hermes#disabling-hermes.',
+    );
+  }
+  options.useHermes = true;
 
   if (options.useWinUI3) {
-    console.log('Using experimental WinUI3 dependency.');
-    if (projectType === 'lib') {
-      throw new CodedError(
-        'IncompatibleOptions',
-        'WinUI 3 project template only supports apps at the moment',
-        {
-          detail: 'useWinUI3 and lib',
-        },
-      );
-    } else if (language !== 'cs') {
-      throw new CodedError(
-        'IncompatibleOptions',
-        'WinUI 3 project template only support C# at the moment',
-        {
-          detail: 'useWinUI3 and cpp',
-        },
-      );
-    }
-
-    realProjectType += '-WinAppSDK';
+    throw new CodedError(
+      'IncompatibleOptions',
+      'Experimental WinUI 3 project has been deprecated.',
+    );
   }
 
   const projDir = 'proj';
-  const srcPath = path.join(srcRootPath, `${language}-${realProjectType}`);
+  const srcPath = path.join(srcRootPath, `${language}-${projectType}`);
   const sharedPath = path.join(srcRootPath, `shared-${projectType}`);
   const projectGuid = existingProjectGuid || uuid.v4();
   const rnwVersion = require(resolveRnwPath('package.json')).version;
@@ -413,27 +420,15 @@ export async function copyProjectTemplateAndReplace(
     );
   }
 
-  if (!options.useWinUI3) {
-    // shared src
-    if (fs.existsSync(path.join(sharedPath, 'src'))) {
-      await copyAndReplaceAll(
-        path.join(sharedPath, 'src'),
-        destPath,
-        path.join(windowsDir, newProjectName),
-        templateVars,
-        options.overwrite,
-      );
-    }
-  } else {
-    if (fs.existsSync(path.join(srcPath, 'MyApp'))) {
-      await copyAndReplaceAll(
-        path.join(srcPath, 'MyApp'),
-        destPath,
-        path.join(windowsDir, newProjectName),
-        templateVars,
-        options.overwrite,
-      );
-    }
+  // shared src
+  if (fs.existsSync(path.join(sharedPath, 'src'))) {
+    await copyAndReplaceAll(
+      path.join(sharedPath, 'src'),
+      destPath,
+      path.join(windowsDir, newProjectName),
+      templateVars,
+      options.overwrite,
+    );
   }
 
   // src
@@ -482,7 +477,7 @@ export async function installScriptsAndDependencies(options: {
   }
 
   // We add an exclusionList from metro config. This will be hoisted, but add
-  // an explict dep because we require it directly.
+  // an explicit dep because we require it directly.
   const cliPackage = await findPackage('@react-native-community/cli', {
     searchPath: rnPackage.path,
   });

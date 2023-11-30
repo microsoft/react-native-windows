@@ -143,6 +143,17 @@ void ShadowNodeBase::UpdateTransformPS() {
   }
 }
 
+XamlView ShadowNodeBase::GetRootView() {
+  if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
+    auto shadowNode = uiManager->getHost()->FindShadowNodeForTag(m_rootTag);
+    if (!shadowNode)
+      return nullptr;
+
+    return static_cast<::Microsoft::ReactNative::ShadowNodeBase *>(shadowNode)->GetView();
+  }
+  return nullptr;
+}
+
 void ShadowNodeBase::UpdateHandledKeyboardEvents(
     std::string const &propertyName,
     winrt::Microsoft::ReactNative::JSValue const &value) {
@@ -164,6 +175,26 @@ void ShadowNodeBase::YellowBox(const std::string &message) const noexcept {
 
 void ShadowNodeBase::RedBox(const std::string &message) const noexcept {
   GetViewManager()->GetReactContext().CallJSFunction("RCTLog", "logToConsole", folly::dynamic::array("error", message));
+}
+
+void ShadowNodeBase::IsAccessible(bool accessible) {
+  m_isAccessible = accessible;
+}
+bool ShadowNodeBase::IsAccessible() {
+  return m_isAccessible;
+}
+void ShadowNodeBase::IsFocusable(bool focusable) {
+  m_isFocusable = focusable;
+}
+bool ShadowNodeBase::IsFocusable() {
+  return m_isFocusable;
+}
+
+void ShadowNodeBase::IsDisable(bool disable) {
+  m_isDisabled = disable;
+}
+bool ShadowNodeBase::IsDisable() {
+  return m_isDisabled;
 }
 
 } // namespace Microsoft::ReactNative

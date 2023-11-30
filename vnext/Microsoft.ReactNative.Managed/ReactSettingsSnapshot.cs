@@ -18,6 +18,8 @@ namespace Microsoft.ReactNative.Managed
 
     public string JavaScriptBundleFile => IsValid ? Handle.JavaScriptBundleFile : null;
 
+    public string BundleAppId => IsValid ? Handle.BundleAppId : null;
+
     public bool RequestInlineSourceMap => IsValid ? Handle.RequestInlineSourceMap : false;
 
     public string SourceBundleHost => IsValid ? Handle.SourceBundleHost : null;
@@ -29,6 +31,8 @@ namespace Microsoft.ReactNative.Managed
     public bool UseFastRefresh => IsValid ? Handle.UseFastRefresh : false;
 
     public bool UseWebDebugger => IsValid ? Handle.UseWebDebugger : false;
+
+    public bool RequestDevBundle => IsValid ? Handle.RequestDevBundle : true;
 
     public IReactSettingsSnapshot Handle { get; }
 

@@ -9,14 +9,15 @@
 import type {
   NativeModuleReturnTypeAnnotation,
   Nullable,
-} from 'react-native-tscodegen';
+} from '@react-native/codegen/lib/CodegenSchema';
 import {AliasMap} from './AliasManaging';
-import {translateFieldOrReturnType} from './ObjectTypes';
+import {CppCodegenOptions, translateFieldOrReturnType} from './ObjectTypes';
 
 function translateReturnType(
   type: Nullable<NativeModuleReturnTypeAnnotation>,
   aliases: AliasMap,
   baseAliasName: string,
+  options: CppCodegenOptions,
 ): string {
   switch (type.type) {
     case 'VoidTypeAnnotation':
@@ -27,6 +28,7 @@ function translateReturnType(
         type.typeAnnotation,
         aliases,
         baseAliasName,
+        options,
       )}>`;
     default:
       return translateFieldOrReturnType(
@@ -34,6 +36,7 @@ function translateReturnType(
         aliases,
         baseAliasName,
         'translateReturnType',
+        options,
       );
   }
 }
@@ -42,14 +45,26 @@ export function translateSpecReturnType(
   type: Nullable<NativeModuleReturnTypeAnnotation>,
   aliases: AliasMap,
   baseAliasName: string,
+  options: CppCodegenOptions,
 ) {
-  return translateReturnType(type, aliases, `${baseAliasName}_returnType`);
+  return translateReturnType(
+    type,
+    aliases,
+    `${baseAliasName}_returnType`,
+    options,
+  );
 }
 
 export function translateImplReturnType(
   type: Nullable<NativeModuleReturnTypeAnnotation>,
   aliases: AliasMap,
   baseAliasName: string,
+  options: CppCodegenOptions,
 ) {
-  return translateReturnType(type, aliases, `${baseAliasName}_returnType`);
+  return translateReturnType(
+    type,
+    aliases,
+    `${baseAliasName}_returnType`,
+    options,
+  );
 }

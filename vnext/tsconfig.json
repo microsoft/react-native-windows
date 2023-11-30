@@ -4,6 +4,10 @@
     "baseUrl": ".",
     "outDir": ".",
     "rootDir": "src",
+    "moduleSuffixes": [".windows", ".native", ""],
+    "paths": {
+      "react-native": ["."] // this mapping is relative to "baseUrl"
+    }
   },
   "include": ["src"],
   "exclude": ["node_modules"]

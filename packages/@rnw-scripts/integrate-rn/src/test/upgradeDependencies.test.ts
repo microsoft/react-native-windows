@@ -96,7 +96,7 @@ const olderRepoConfig: PackageDeps = {
 };
 
 const newerRepoConfig: PackageDeps = {
-  packageName: '@react-native/repo-config',
+  packageName: '@react-native/monorepo',
   dependencies: {
     'flow-bin': '^0.136.0',
     jest: '^26.5.2',

@@ -56,11 +56,11 @@ void V8JSIRuntimeHolder::initRuntime() noexcept {
 
   args.flags.enableInspector = useDirectDebugger_;
   args.flags.waitForDebugger = debuggerBreakOnNextLine_;
-  args.flags.enableMultiThread = enableMultiThreadSupport_;
   args.debuggerRuntimeName = debuggerRuntimeName_;
 
   args.foreground_task_runner = std::make_shared<TaskRunnerAdapter>(jsQueue_);
   args.preparedScriptStore = std::move(preparedScriptStore_);
+  args.flags.enableMultiThread = enableMultiThreadingSupport_;
 
   runtime_ = v8runtime::makeV8Runtime(std::move(args));
 

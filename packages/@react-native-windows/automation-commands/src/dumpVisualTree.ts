@@ -24,7 +24,7 @@ export type UIElement = {
   Height?: number | null;
   BorderBrush?: string | null;
   VerticalAlignment?: string | null;
-  HorizontalAlignmen?: string | null;
+  HorizontalAlignment?: string | null;
   Clip?: string | null;
   FlowDirection?: string | null;
   Name?: string | null;
@@ -45,6 +45,7 @@ export default async function dumpVisualTree(
   opts?: {
     pruneCollapsed?: boolean;
     deterministicOnly?: boolean;
+    removeDefaultProps?: boolean;
     additionalProperties?: string[];
   },
 ): Promise<UIElement> {
@@ -71,6 +72,10 @@ export default async function dumpVisualTree(
     removeNonDeterministicProps(element);
   }
 
+  if (opts?.removeDefaultProps !== false) {
+    removeDefaultProps(element);
+  }
+
   return element;
 }
 
@@ -90,7 +95,7 @@ function pruneCollapsedElements(element: UIElement) {
 }
 
 /**
- * Removes trees of properties that are not determinisitc
+ * Removes trees of properties that are not deterministic
  */
 function removeNonDeterministicProps(element: UIElement) {
   if (element.RenderSize) {
@@ -101,5 +106,22 @@ function removeNonDeterministicProps(element: UIElement) {
 
   if (element.children) {
     element.children.forEach(removeNonDeterministicProps);
+  }
+}
+
+/**
+ * Removes noise from snapshot by removing properties with the default value
+ */
+function removeDefaultProps(element: UIElement) {
+  const defaultValues: [string, unknown][] = [['Tooltip', null]];
+
+  defaultValues.forEach(([propname, defaultValue]) => {
+    if (element[propname] === defaultValue) {
+      delete element[propname];
+    }
+  });
+
+  if (element.children) {
+    element.children.forEach(removeDefaultProps);
   }
 }

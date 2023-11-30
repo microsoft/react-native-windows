@@ -39,7 +39,6 @@ node_modules
 /bots/node_modules/
 
 /flow
-/flow-typed
 /dist
 /IntegrationTests/*.command
 /IntegrationTests/*.js
@@ -92,9 +91,6 @@ temp
 /coverage
 /third-party
 /packages/
-
-# Build output for babel-plugin-codegen - will be removed once the babel-plugin-codegen package is published
-/babel-plugin-codegen
 
 # Copied from root as part of build
 /README.md

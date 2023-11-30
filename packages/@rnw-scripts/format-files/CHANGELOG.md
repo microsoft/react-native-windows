@@ -1,8 +1,138 @@
 # Change Log - @rnw-scripts/format-files
 
-This log was last generated on Wed, 11 Jan 2023 06:15:31 GMT and should not be manually modified.
+This log was last generated on Sat, 21 Oct 2023 05:16:09 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.21
+
+Sat, 21 Oct 2023 05:16:09 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.4
+- Bump @rnw-scripts/just-task to v2.3.18
+
+## 1.1.20
+
+Thu, 12 Oct 2023 05:15:54 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.3
+- Bump @rnw-scripts/just-task to v2.3.17
+
+## 1.1.19
+
+Wed, 20 Sep 2023 05:17:49 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.3.16
+
+## 1.1.18
+
+Fri, 28 Jul 2023 05:14:53 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.3.15
+
+## 1.1.17
+
+Wed, 26 Jul 2023 05:15:47 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.3.14
+
+## 1.1.16
+
+Fri, 14 Jul 2023 05:17:06 GMT
+
+### Patches
+
+- integration 6/28 (tatianakapos@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.2.2
+- Bump @rnw-scripts/just-task to v2.3.13
+- Bump @rnw-scripts/ts-config to v2.0.5
+
+## 1.1.15
+
+Sat, 01 Jul 2023 05:14:42 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.1
+- Bump @rnw-scripts/just-task to v2.3.12
+
+## 1.1.14
+
+Tue, 13 Jun 2023 05:15:41 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.0
+
+## 1.1.13
+
+Wed, 07 Jun 2023 05:16:11 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.3.11
+
+## 1.1.12
+
+Tue, 06 Jun 2023 19:06:45 GMT
+
+### Patches
+
+- integrate RN nightly 5/19/23 (tatianakapos@microsoft.com)
+- Bump @rnw-scripts/just-task to v2.3.10
+
+## 1.1.11
+
+Tue, 16 May 2023 05:16:30 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.3.9
+
+## 1.1.10
+
+Mon, 08 May 2023 17:41:06 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.3.8
+
+## 1.1.9
+
+Tue, 25 Apr 2023 05:17:00 GMT
+
+### Patches
+
+- Update Node to 16 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.1.16
+- Bump @rnw-scripts/just-task to v2.3.7
+- Bump @rnw-scripts/ts-config to v2.0.4
+
+## 1.1.8
+
+Tue, 21 Mar 2023 21:21:55 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.3.6
+
+## 1.1.7
+
+Thu, 09 Feb 2023 06:16:43 GMT
+
+### Patches
+
+- Bump typescript version (30809111+acoates-ms@users.noreply.github.com)
 
 ## 1.1.6
 

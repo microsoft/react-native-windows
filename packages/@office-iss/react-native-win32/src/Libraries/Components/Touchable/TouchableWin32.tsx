@@ -11,7 +11,7 @@
 'use strict';
 
 import React from 'react'
-import { NativeSyntheticEvent, StyleProp, UIManager, ViewStyle } from 'react-native';
+import { NativeSyntheticEvent, StyleProp, UIManager, ViewStyle, ViewWin32 } from 'react-native';
 
 import { ITouchableWin32Props, ITouchableWin32State } from './TouchableWin32.Props';
 import {
@@ -25,8 +25,7 @@ import {
   IStateConditions,
   ITransitions,
 } from './TouchableWin32.Types';
-import { ViewWin32 } from '../View/ViewWin32';
-import { IKeyboardEvent } from '../View/ViewWin32.Props';
+import { IKeyboardEvent } from '../View/ViewPropTypes';
 
 const BoundingDimensions = require('./BoundingDimensions');
 const Position = require('./Position');
@@ -158,7 +157,7 @@ const transitions: ITransitions = {
 // (function children) or styles. A keypressed state is equivalent to a normal
 // press state. If either a pointer, mouse, or special key (space/enter) is pressed
 // the touchable considers itself to be in a pressed state. Do note that key presses
-// will not invoke gesture responder hooksand are not subject to the passed in delays.
+// will not invoke gesture responder hooks and are not subject to the passed in delays.
 interface IInternalTouchableWin32State extends ITouchableWin32State {
   isKeyPressed: boolean;
 }
@@ -181,9 +180,9 @@ const LONG_PRESS_ALLOWED_MOVEMENT = 10;
  * (that use internal state to conditionally calculate styles)
  */
 export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInternalTouchableWin32State> {
-  private _longPressDelayTimeout: number;
-  private _touchableDelayTimeout: number;
-  private _pressOutDelayTimeout: number;
+  private _longPressDelayTimeout: NodeJS.Timeout;
+  private _touchableDelayTimeout: NodeJS.Timeout;
+  private _pressOutDelayTimeout: NodeJS.Timeout;
   private _pressInLocation: IPressInLocation;
   private _touchState: IState;
   private _responderID: number;
@@ -568,14 +567,14 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
     }
   };
 
-  private readonly _onMouseEnter = () => {
+  private readonly _onMouseEnter = (mouseEvent) => {
     this.setState({ isHovered: true });
-    this.props.onMouseEnter && this.props.onMouseEnter();
+    this.props.onMouseEnter && this.props.onMouseEnter(mouseEvent);
   };
 
-  private readonly _onMouseLeave = () => {
+  private readonly _onMouseLeave = (mouseEvent) => {
     this.setState({ isHovered: false });
-    this.props.onMouseLeave && this.props.onMouseLeave();
+    this.props.onMouseLeave && this.props.onMouseLeave(mouseEvent);
   };
 
   private readonly _onFocus = (ev: NativeSyntheticEvent<{}>) => {

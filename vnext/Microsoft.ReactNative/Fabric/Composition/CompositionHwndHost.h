@@ -20,7 +20,13 @@ struct CompositionHwndHost : CompositionHwndHostT<CompositionHwndHost> {
   winrt::Microsoft::ReactNative::IReactViewHost ReactViewHost() const noexcept;
   void ReactViewHost(winrt::Microsoft::ReactNative::IReactViewHost const &value) noexcept;
 
+  // property UiaProvider
+  IInspectable UiaProvider() noexcept;
+
   winrt::Windows::UI::Composition::Visual RootVisual() const noexcept;
+
+  winrt::Microsoft::ReactNative::FocusNavigationResult NavigateFocus(
+      const winrt::Microsoft::ReactNative::FocusNavigationRequest &request) noexcept;
 
   LRESULT TranslateMessage(int msg, uint64_t wParam, int64_t lParam) noexcept;
 
@@ -32,11 +38,13 @@ struct CompositionHwndHost : CompositionHwndHostT<CompositionHwndHost> {
   void CreateDesktopWindowTarget(HWND window);
   void CreateCompositionRoot();
   void UpdateSize() noexcept;
-  double ScaleFactor() noexcept;
+  float ScaleFactor() noexcept;
 
   HWND m_hwnd;
   winrt::Microsoft::ReactNative::CompositionRootView m_compRootView{nullptr};
   winrt::Windows::UI::Composition::Desktop::DesktopWindowTarget m_target{nullptr};
+  LONG m_height{0};
+  LONG m_width{0};
 
   // Store locally if set before we have a rootview
   ReactNative::IReactViewHost m_reactViewHost{nullptr};

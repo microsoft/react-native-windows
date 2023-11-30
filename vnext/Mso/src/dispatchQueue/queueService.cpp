@@ -13,7 +13,7 @@ namespace Mso {
 
 QueueService::QueueService(Mso::CntPtr<IDispatchQueueScheduler> &&scheduler) noexcept
     : m_scheduler{std::move(scheduler)} {
-  m_scheduler->IntializeScheduler(this);
+  m_scheduler->InitializeScheduler(this);
 }
 
 QueueService::~QueueService() noexcept {

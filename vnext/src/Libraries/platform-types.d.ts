@@ -5,13 +5,15 @@
 *        need to also be added to index.windows.js
 */
 
-export * from './Components/Flyout/FlyoutProps';
-export * from './Components/Flyout/Flyout';
-export * from './Components/Glyph/Glyph';
-export * from './Components/Popup/PopupProps';
-export * from './Components/Popup/Popup';
+export {Flyout, IFlyoutProps, Placement, ShowMode} from './Components/Flyout/Flyout';
+export {Glyph, GlyphProps, GlyphStyle} from './Components/Glyph/Glyph';
+export {IPopupProps, Popup} from './Components/Popup/Popup';
 export * from './Components/Keyboard/KeyboardExt';
 export * from './Components/Keyboard/KeyboardExtProps';
-export * from './Components/View/ViewWindowsProps';
-export * from './Components/View/ViewWindows';
+import type {ViewProps} from './Components/View/ViewPropTypes';
+export type IViewWindowsProps = ViewProps;
+import {View} from './Components/View/View';
+export const ViewWindows = View;
+import type {View} from './Components/View/View';
+export type ViewWindows = View;
 export * from './AppTheme/AppThemeTypes';

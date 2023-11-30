@@ -88,7 +88,7 @@ class CallbackWrapper : public LongLivedObject {
     return jsInvoker_;
   }
 
-  void allowRelease() override {
+  void allowRelease() {
     if (auto longLivedObjectCollection = longLivedObjectCollection_.lock()) {
       if (longLivedObjectCollection != nullptr) {
         longLivedObjectCollection->remove(this);

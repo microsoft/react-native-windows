@@ -21,31 +21,25 @@ WindowsTextInputState::WindowsTextInputState(
     AttributedString attributedString,
     AttributedString reactTreeAttributedString,
     ParagraphAttributes paragraphAttributes,
-    TextAttributes defaultTextAttributes,
-    ShadowView defaultParentShadowView,
-    float defaultThemePaddingStart,
-    float defaultThemePaddingEnd,
-    float defaultThemePaddingTop,
-    float defaultThemePaddingBottom)
+    double defaultThemePaddingStart,
+    double defaultThemePaddingEnd,
+    double defaultThemePaddingTop,
+    double defaultThemePaddingBottom)
     : mostRecentEventCount(mostRecentEventCount),
       attributedString(std::move(attributedString)),
       reactTreeAttributedString(std::move(reactTreeAttributedString)),
       paragraphAttributes(std::move(paragraphAttributes)),
-      defaultTextAttributes(std::move(defaultTextAttributes)),
-      defaultParentShadowView(std::move(defaultParentShadowView)),
       defaultThemePaddingStart(defaultThemePaddingStart),
       defaultThemePaddingEnd(defaultThemePaddingEnd),
       defaultThemePaddingTop(defaultThemePaddingTop),
       defaultThemePaddingBottom(defaultThemePaddingBottom) {}
 
-WindowsTextInputState::WindowsTextInputState(WindowsTextInputState const &previousState, folly::dynamic const &data)
+WindowsTextInputState::WindowsTextInputState(const WindowsTextInputState &previousState, const folly::dynamic &data)
     : mostRecentEventCount(data.getDefault("mostRecentEventCount", previousState.mostRecentEventCount).getInt()),
       cachedAttributedStringId(data.getDefault("opaqueCacheId", previousState.cachedAttributedStringId).getInt()),
       attributedString(previousState.attributedString),
       reactTreeAttributedString(previousState.reactTreeAttributedString),
       paragraphAttributes(previousState.paragraphAttributes),
-      defaultTextAttributes(previousState.defaultTextAttributes),
-      defaultParentShadowView(previousState.defaultParentShadowView),
       defaultThemePaddingStart(
           data.getDefault("themePaddingStart", previousState.defaultThemePaddingStart).getDouble()),
       defaultThemePaddingEnd(data.getDefault("themePaddingEnd", previousState.defaultThemePaddingEnd).getDouble()),

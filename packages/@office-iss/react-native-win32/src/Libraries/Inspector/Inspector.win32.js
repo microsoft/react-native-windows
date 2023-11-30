@@ -12,12 +12,14 @@
 
 import type {TouchedViewDataAtPoint} from '../Renderer/shims/ReactNativeTypes';
 import type {HostRef} from './getInspectorDataForViewAtPoint';
+
+// import Dimensions from '../Utilities/Dimensions'; [win32]
+
 const ReactNativeStyleAttributes = require('../Components/View/ReactNativeStyleAttributes');
 const PressabilityDebug = require('../Pressability/PressabilityDebug');
 const ReactNative = require('../Renderer/shims/ReactNative');
 const {findNodeHandle} = require('../ReactNative/RendererProxy');
 const StyleSheet = require('../StyleSheet/StyleSheet');
-//const Dimensions = require('../Utilities/Dimensions');
 const Platform = require('../Utilities/Platform');
 const View = require('../Components/View/View');
 const getInspectorDataForViewAtPoint = require('./getInspectorDataForViewAtPoint');

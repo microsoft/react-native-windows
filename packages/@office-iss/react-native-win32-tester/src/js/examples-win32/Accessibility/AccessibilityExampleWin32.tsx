@@ -49,6 +49,7 @@ const AnnotationExample: React.FunctionComponent = () => {
       accessibilityAnnotation={{ typeID: 'Comment', author: 'Krystal Siler', dateTime: '7/19/2019 1:03 PM' }}
       accessibilityLabel="Test accessibility label"
       accessibilityHint="Test accessibility hint"
+      accessibilityPositionInSet={1}
       focusable
       style={styles.box}
     >
@@ -180,7 +181,7 @@ class MultiSelectionExample extends React.Component<{}, IMultiSelectionExampleSt
 
   public render() {
     return (
-      <ViewWin32 accessible accessibilityRole="tablist" accessibilityState={{multiselectable: true}}>
+      <ViewWin32 accessible accessibilityRole="tablist" aria-required aria-multiselectable>
         <SelectionItemComponent
           value={1}
           color="#aee8fcff"
@@ -323,14 +324,14 @@ const renderItem = (item: ListRenderItemInfo<IListProps>) => (
   <ListItem label={item.item.label} level={item.item.level} setSize={item.item.setSize} positionInSet={item.item.positionInSet} />
 );
 
-const getItemLayout = (data: Array<IListProps>, index: number) => ({ length: 30, offset: 30 * index, index });
+const getItemLayout = (data: ArrayLike<IListProps>, index: number) => ({ length: 30, offset: 30 * index, index });
 
 const keyExtractor = (item: IListProps) => item.label.toString();
 
 interface IFlatListProps {
   renderItem: (item: ListRenderItemInfo<IListProps>) => JSX.Element;
   getItemLayout?: (
-    data: IListProps[],
+    data: ArrayLike<IListProps>,
     index: number
   ) => {
     length: number;
@@ -379,12 +380,12 @@ const SingleSelectionItemComponent: React.FunctionComponent<ISelectionItemCompon
 
 const AccessibilityControlsExample: React.FunctionComponent = _props => {
   const listLength = 3;
-  const controlsRef = React.useRef<ViewWin32>(null);
+  const listNativeId = React.useId();
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [keyTargetHasFocus, setKeyTargetHasFocus] = React.useState(false);
   return (
     <View>      
-      <ViewWin32 accessible accessibilityRole="list" ref={controlsRef}>
+      <ViewWin32 accessible accessibilityRole="list" nativeID={listNativeId}>
       <SingleSelectionItemComponent
             value={"Label A"}
             color="#aee8fcff"
@@ -416,7 +417,7 @@ const AccessibilityControlsExample: React.FunctionComponent = _props => {
         accessible
         focusable
         accessibilityActions={[{ name: 'Select' }]}
-        accessibilityControls={controlsRef}
+        accessibilityControls={listNativeId}
         style={[styles.box, {width:'50%'}, keyTargetHasFocus ? styles.border : {}]}
         keyDownEvents={handledNativeKeyboardEvents}
         onFocus={() => {setKeyTargetHasFocus(true)}}
@@ -473,10 +474,27 @@ const AccessibilityInfoExample: React.FunctionComponent<{}> =() => {
   const onClick = React.useCallback(() => {
     AccessibilityInfo.announceForAccessibility('AccessibilityInfo announcement succeeded!');
   }, []);
+
+  const onClickDelayed = React.useCallback(() => {
+    setTimeout(() => {
+      AccessibilityInfo.announceForAccessibilityWithOptions(
+        'AccessibilityInfo announcement succeeded!',
+        { nativeID: 'AnnouncementTarget' });
+      }, 3000);
+  }, []);
+
   return (
-    <View style={styles.box}>
-      <TouchableHighlight onPress={onClick}>
-        <Text>AccessibilityInfo.announceForAccessibility</Text>
+    <View>
+      <TouchableHighlight onPress={onClick} underlayColor={'transparent'}>
+        <ViewWin32 style={styles.box} accessible focusable>
+            <Text>AccessibilityInfo.announceForAccessibility</Text>
+        </ViewWin32>
+      </TouchableHighlight>
+
+      <TouchableHighlight onPress={onClickDelayed} underlayColor={'transparent'}>
+        <ViewWin32 style={styles.box} accessible focusable nativeID={'AnnouncementTarget'}>
+            <Text>AccessibilityInfo.announceForAccessibilityWithOptions</Text>
+        </ViewWin32>
       </TouchableHighlight>
     </View>
   );

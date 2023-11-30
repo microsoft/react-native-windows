@@ -33,7 +33,7 @@ void InitializeLogging(NativeLoggingHook &&hook) {
   JSNativeHooks::loggingHook = LogHook;
   JSNativeHooks::nowHook = nativePerformanceNow;
 
-  ReactMarker::logTaggedMarker = logMarker;
+  ReactMarker::logTaggedMarkerImpl = logMarker;
 }
 
 } // namespace react

@@ -18,6 +18,7 @@ exports[`0.0.0-canary.100 1`] = `
     <ReactNativeWindowsMinor>0</ReactNativeWindowsMinor>
     <ReactNativeWindowsPatch>0</ReactNativeWindowsPatch>
     <ReactNativeWindowsCanary>true</ReactNativeWindowsCanary>
+    <ReactNativeWindowsCommitId>abc123</ReactNativeWindowsCommitId>
   </PropertyGroup>
 </Project>"
 `;
@@ -40,6 +41,7 @@ exports[`0.66.5 1`] = `
     <ReactNativeWindowsMinor>66</ReactNativeWindowsMinor>
     <ReactNativeWindowsPatch>5</ReactNativeWindowsPatch>
     <ReactNativeWindowsCanary>false</ReactNativeWindowsCanary>
+    <ReactNativeWindowsCommitId>123abc</ReactNativeWindowsCommitId>
   </PropertyGroup>
 </Project>"
 `;
@@ -62,6 +64,7 @@ exports[`0.67.0-preview.1 1`] = `
     <ReactNativeWindowsMinor>67</ReactNativeWindowsMinor>
     <ReactNativeWindowsPatch>0</ReactNativeWindowsPatch>
     <ReactNativeWindowsCanary>false</ReactNativeWindowsCanary>
+    <ReactNativeWindowsCommitId>def456</ReactNativeWindowsCommitId>
   </PropertyGroup>
 </Project>"
 `;

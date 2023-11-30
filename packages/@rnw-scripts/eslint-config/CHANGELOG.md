@@ -1,8 +1,56 @@
 # Change Log - @rnw-scripts/eslint-config
 
-This log was last generated on Tue, 13 Dec 2022 06:15:24 GMT and should not be manually modified.
+This log was last generated on Sat, 21 Oct 2023 05:16:08 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.2.4
+
+Sat, 21 Oct 2023 05:16:08 GMT
+
+### Patches
+
+- Adds `eqeqeq` to eslint configuration and a few other lint fixes (erozell@outlook.com)
+
+## 1.2.3
+
+Thu, 12 Oct 2023 05:15:53 GMT
+
+### Patches
+
+- Add `@microsoft/eslint-plugin-sdl` to `@rnw-scripts/eslint-config` (jthysell@microsoft.com)
+
+## 1.2.2
+
+Fri, 14 Jul 2023 05:17:06 GMT
+
+### Patches
+
+- integration 6/28 (tatianakapos@microsoft.com)
+
+## 1.2.1
+
+Sat, 01 Jul 2023 05:14:41 GMT
+
+### Patches
+
+- integrate 6/16 (tatianakapos@microsoft.com)
+
+## 1.2.0
+
+Tue, 13 Jun 2023 05:15:41 GMT
+
+### Minor changes
+
+- Migrate eslint-config from `@react-native-community` to `@react-native` (jthysell@microsoft.com)
+
+## 1.1.16
+
+Tue, 25 Apr 2023 05:16:59 GMT
+
+### Patches
+
+- Update Node to 16 (34109996+chiaramooney@users.noreply.github.com)
 
 ## 1.1.15
 

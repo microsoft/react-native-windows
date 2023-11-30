@@ -9,13 +9,10 @@
  */
 
 import type {ViewProps} from '../View/ViewPropTypes';
-import type {SafeAreaViewType} from './SafeAreaView.flow';
 
 import Platform from '../../Utilities/Platform';
 import View from '../View/View';
 import * as React from 'react';
-
-let exported: React.AbstractComponent<ViewProps, React.ElementRef<typeof View>>;
 
 /**
  * Renders nested content and automatically applies paddings reflect the portion
@@ -26,11 +23,12 @@ let exported: React.AbstractComponent<ViewProps, React.ElementRef<typeof View>>;
  * limitation of the screen, such as rounded corners or camera notches (aka
  * sensor housing area on iPhone X).
  */
+const exported: React.AbstractComponent<
+  ViewProps,
+  React.ElementRef<typeof View>,
+> = Platform.select({
+  ios: require('./RCTSafeAreaViewNativeComponent').default,
+  default: View,
+});
 
-if (Platform.OS === 'android' || Platform.OS === 'win32') {
-  exported = View;
-} else {
-  exported = require('./RCTSafeAreaViewNativeComponent').default;
-}
-
-export default (exported: SafeAreaViewType);
+export default exported;

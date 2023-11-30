@@ -3,6 +3,7 @@
 
 #include "pch.h"
 
+#include <QuirkSettings.h>
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Input.h>
 #include <UI.Xaml.Media.h>
@@ -41,8 +42,8 @@ static inline bool YogaFloatEquals(float x, float y) {
 
 #if defined(_DEBUG)
 static int YogaLog(
-    const YGConfigRef /*config*/,
-    const YGNodeRef /*node*/,
+    const YGConfigConstRef /*config*/,
+    const YGNodeConstRef /*node*/,
     YGLogLevel /*level*/,
     const char *format,
     va_list args) {
@@ -152,9 +153,10 @@ NativeUIManager::NativeUIManager(winrt::Microsoft::ReactNative::ReactContext con
   m_yogaConfig = YGConfigNew();
   if (React::implementation::QuirkSettings::GetUseWebFlexBasisBehavior(m_context.Properties()))
     YGConfigSetExperimentalFeatureEnabled(m_yogaConfig, YGExperimentalFeatureWebFlexBasis, true);
-  if (React::implementation::QuirkSettings::GetMatchAndroidAndIOSStretchBehavior(m_context.Properties()))
-    YGConfigSetUseLegacyStretchBehaviour(m_yogaConfig, true);
-
+  auto errata = YGErrataAll;
+  if (!React::implementation::QuirkSettings::GetMatchAndroidAndIOSStretchBehavior(m_context.Properties()))
+    errata &= ~YGErrataStretchFlexBasis;
+  YGConfigSetErrata(m_yogaConfig, errata);
 #if defined(_DEBUG)
   YGConfigSetLogger(m_yogaConfig, &YogaLog);
 
@@ -216,8 +218,9 @@ void NativeUIManager::AddRootView(ShadowNode &shadowNode, facebook::react::IReac
   SystraceSection s("NativeUIManager::AddRootView");
   auto xamlRootView = static_cast<IXamlRootView *>(pReactRootView);
   XamlView view = xamlRootView->GetXamlView();
+  const auto rootTag = shadowNode.m_tag;
   m_tagsToXamlReactControl.emplace(
-      shadowNode.m_tag,
+      rootTag,
       winrt::weak_ref<winrt::Microsoft::ReactNative::ReactRootView>(
           view.as<winrt::Microsoft::ReactNative::ReactRootView>()));
 
@@ -225,14 +228,16 @@ void NativeUIManager::AddRootView(ShadowNode &shadowNode, facebook::react::IReac
   view.as<xaml::FrameworkElement>().FlowDirection(
       I18nManager::IsRTL(m_context.Properties()) ? xaml::FlowDirection::RightToLeft : xaml::FlowDirection::LeftToRight);
 
-  m_tagsToYogaNodes.emplace(shadowNode.m_tag, make_yoga_node(m_yogaConfig));
+  m_tagsToYogaNodes.emplace(rootTag, make_yoga_node(m_yogaConfig));
 
   auto element = view.as<xaml::FrameworkElement>();
-  Microsoft::ReactNative::SetTag(element, shadowNode.m_tag);
+  Microsoft::ReactNative::SetTag(element, rootTag);
 
   // Add listener to size change so we can redo the layout when that happens
-  m_sizeChangedVector.push_back(
-      view.as<xaml::FrameworkElement>().SizeChanged(winrt::auto_revoke, [this](auto &&, auto &&) { DoLayout(); }));
+  m_sizeChangedVector.push_back(view.as<xaml::FrameworkElement>().SizeChanged(
+      winrt::auto_revoke, [this, rootTag](auto &&, xaml::SizeChangedEventArgs const &args) {
+        ApplyLayout(rootTag, args.NewSize().Width, args.NewSize().Height);
+      }));
 }
 
 void NativeUIManager::removeRootView(Microsoft::ReactNative::ShadowNode &shadow) {
@@ -830,8 +835,8 @@ void NativeUIManager::RemoveView(ShadowNode &shadowNode, bool removeChildren /*=
 
     YGNodeRef yogaNode = pViewManager->RequiresYogaNode() ? GetYogaNode(node.m_tag) : nullptr;
     if (yogaNode != nullptr && !pViewManager->IsNativeControlWithSelfLayout()) {
-      uint32_t childCount = YGNodeGetChildCount(yogaNode);
-      for (uint32_t i = childCount; i > 0; --i) {
+      auto childCount = YGNodeGetChildCount(yogaNode);
+      for (auto i = childCount; i > 0; --i) {
         YGNodeRef yogaNodeToRemove = YGNodeGetChild(yogaNode, i - 1);
         YGNodeRemoveChild(yogaNode, yogaNodeToRemove);
       }
@@ -996,34 +1001,11 @@ void NativeUIManager::measure(
     return;
   }
 
-  // Traverse up the react node tree to find any windowed popups.
-  // If there are none, then we use the top-level root provided by our caller.
-  xaml::FrameworkElement feRootView = nullptr;
-  int64_t rootTag = shadowNode.m_tag;
-  int64_t childTag = rootTag;
-  while (true) {
-    auto &currNode = m_host->GetShadowNodeForTag(rootTag);
-    if (currNode.m_parent == InvalidTag)
-      break;
-    ShadowNodeBase &rootNode = static_cast<ShadowNodeBase &>(currNode);
-    if (rootNode.IsWindowed()) {
-      ShadowNodeBase &childNode = static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(childTag));
-      feRootView = childNode.GetView().try_as<xaml::FrameworkElement>();
-      break;
-    }
-    childTag = currNode.m_tag;
-    rootTag = currNode.m_parent;
-  }
-
+  // Retrieve the XAML element for the root view containing this view
+  auto feRootView = static_cast<ShadowNodeBase &>(shadowRoot).GetView().try_as<xaml::FrameworkElement>();
   if (feRootView == nullptr) {
-    // Retrieve the XAML element for the root view containing this view
-    if (auto xamlRootView = static_cast<ShadowNodeBase &>(shadowRoot).GetView()) {
-      feRootView = xamlRootView.as<xaml::FrameworkElement>();
-    }
-    if (feRootView == nullptr) {
-      m_context.JSDispatcher().Post([callback = std::move(callback)]() { callback(0, 0, 0, 0, 0, 0); });
-      return;
-    }
+    m_context.JSDispatcher().Post([callback = std::move(callback)]() { callback(0, 0, 0, 0, 0, 0); });
+    return;
   }
 
   winrt::Rect rectInParentCoords = GetRectOfElementInParentCoords(feView, feRootView);
@@ -1070,9 +1052,9 @@ void NativeUIManager::measureLayout(
     const auto &target = static_cast<ShadowNodeBase &>(shadowNode);
     const auto &ancestor = static_cast<ShadowNodeBase &>(ancestorNode);
     const auto targetElement = target.GetView().as<xaml::FrameworkElement>();
-    const auto ancenstorElement = ancestor.GetView().as<xaml::FrameworkElement>();
+    const auto ancestorElement = ancestor.GetView().as<xaml::FrameworkElement>();
 
-    const auto ancestorTransform = targetElement.TransformToVisual(ancenstorElement);
+    const auto ancestorTransform = targetElement.TransformToVisual(ancestorElement);
     const auto width = static_cast<float>(targetElement.ActualWidth());
     const auto height = static_cast<float>(targetElement.ActualHeight());
     const auto transformedBounds = ancestorTransform.TransformBounds(winrt::Rect(0, 0, width, height));
@@ -1140,7 +1122,26 @@ void NativeUIManager::findSubviewIn(
 
 void NativeUIManager::focus(int64_t reactTag) {
   if (auto shadowNode = static_cast<ShadowNodeBase *>(m_host->FindShadowNodeForTag(reactTag))) {
-    xaml::Input::FocusManager::TryFocusAsync(shadowNode->GetView(), winrt::FocusState::Programmatic);
+    const auto view = shadowNode->GetView();
+
+    // Only allow focus on an element with a XamlRoot that matches the current XamlRoot or that
+    // has a different CoreDispatcher for the XamlRoot, otherwise focusing the element will steal
+    // window focus, which is generally not desired behavior.
+    const auto properties = React::ReactPropertyBag(m_context.Properties());
+    if (winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetSuppressWindowFocusOnViewFocus(properties)) {
+      if (const auto uiElement = view.try_as<xaml::UIElement>()) {
+        if (const auto activeXamlRoot = React::XamlUIService::GetXamlRoot(properties.Handle())) {
+          const auto activeDispatcher = activeXamlRoot.Content() ? activeXamlRoot.Content().Dispatcher() : nullptr;
+          if (uiElement.XamlRoot() != activeXamlRoot && uiElement.Dispatcher() == activeDispatcher) {
+            const auto suppressedFocusMessage = L"Suppressed focus on view in XamlRoot not currently in focus.";
+            m_context.CallJSFunction(L"RCTLog", L"logToConsole", L"warn", suppressedFocusMessage);
+            return;
+          }
+        }
+      }
+    }
+
+    xaml::Input::FocusManager::TryFocusAsync(view, winrt::FocusState::Programmatic);
   }
 }
 
@@ -1149,7 +1150,9 @@ void NativeUIManager::blur(int64_t reactTag) {
   if (auto shadowNode = static_cast<ShadowNodeBase *>(m_host->FindShadowNodeForTag(reactTag))) {
     // Only blur if current UI is focused to avoid problem described in PR #2687
     const auto xamlRoot = tryGetXamlRoot(shadowNode->m_rootTag);
-    if (shadowNode->GetView() == xaml::Input::FocusManager::GetFocusedElement(xamlRoot)) {
+    const auto focusedElement = xamlRoot ? xaml::Input::FocusManager::GetFocusedElement(xamlRoot)
+                                         : xaml::Input::FocusManager::GetFocusedElement();
+    if (shadowNode->GetView() == focusedElement) {
       if (auto reactControl = GetParentXamlReactControl(reactTag).get()) {
         reactControl.as<winrt::Microsoft::ReactNative::implementation::ReactRootView>()->blur(shadowNode->GetView());
       } else {

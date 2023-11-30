@@ -13,7 +13,10 @@ export function getAbbreviatedRef(reactNativeVersion: string): string {
     throw new Error(`${reactNativeVersion} is not a valid semver version`);
   }
 
-  if (semver.lt(reactNativeVersion, '0.0.0', {includePrerelease: true})) {
+  if (
+    semver.lt(reactNativeVersion, '0.0.0', {includePrerelease: true}) ||
+    reactNativeVersion.includes('nightly')
+  ) {
     return extractHashFromNightlyVersion(reactNativeVersion);
   } else {
     return `v${reactNativeVersion}`;
@@ -28,7 +31,10 @@ export async function fetchFullRef(
     throw new Error(`${reactNativeVersion} is not a valid semver version`);
   }
 
-  if (semver.lt(reactNativeVersion, '0.0.0', {includePrerelease: true})) {
+  if (
+    semver.lt(reactNativeVersion, '0.0.0', {includePrerelease: true}) ||
+    reactNativeVersion.includes('nightly')
+  ) {
     const abbrevHash = extractHashFromNightlyVersion(reactNativeVersion);
     return fetchFullCommitHash(abbrevHash, opts);
   } else {
@@ -40,6 +46,7 @@ export async function fetchFullRef(
 // 1. 0.0.0-<commitHash>
 // 2. 0.0.0-<commitHash>-<date>-<time> (transitional)
 // 3. 0.0.0-<date>-<time>-<commitHash>
+// 4. <version>-nightly-<date>-<commitHash>
 function extractHashFromNightlyVersion(reactNativeVersion: string): string {
   // Several versions do not fall into the normal rule for positioning. Special
   // case them.
@@ -75,7 +82,12 @@ function extractHashFromNightlyVersion(reactNativeVersion: string): string {
   }
 
   // Handle #3
-  return splitPre[2];
+  if (splitPre.length === 3) {
+    return splitPre[2];
+  }
+
+  // Handle #4
+  return splitPre[3];
 }
 
 async function fetchFullCommitHash(

@@ -60,7 +60,7 @@ const Item = ({item, separators}: RenderItemProps<string>) => {
 };
 
 type Props = {
-  exampleProps: $Shape<React.ElementConfig<typeof FlatList>>,
+  exampleProps: Partial<React.ElementConfig<typeof FlatList>>,
   onTest?: ?() => void,
   testLabel?: ?string,
   testOutput?: ?string,
@@ -68,6 +68,7 @@ type Props = {
 };
 
 const BaseFlatListExample = React.forwardRef(
+  // $FlowFixMe[incompatible-call]
   (
     props: Props,
     ref:
@@ -93,11 +94,14 @@ const BaseFlatListExample = React.forwardRef(
         {props.children}
         <FlatList
           {...props.exampleProps}
+          // $FlowFixMe[incompatible-type]
           ref={ref}
           testID="flat_list"
+          // $FlowFixMe[incompatible-type]
           data={DATA}
           keyExtractor={(item, index) => item + index}
           style={styles.list}
+          // $FlowFixMe[incompatible-type-arg]
           renderItem={Item}
         />
       </View>
@@ -110,11 +114,17 @@ export default (BaseFlatListExample: React.AbstractComponent<
   FlatList<string>,
 >);
 
+const ITEM_INNER_HEIGHT = 70;
+const ITEM_MARGIN = 8;
+export const ITEM_HEIGHT: number = ITEM_INNER_HEIGHT + ITEM_MARGIN * 2;
+
 const styles = StyleSheet.create({
   item: {
     backgroundColor: 'pink',
-    padding: 20,
-    marginVertical: 8,
+    paddingHorizontal: 20,
+    height: ITEM_INNER_HEIGHT,
+    marginVertical: ITEM_MARGIN,
+    justifyContent: 'center',
   },
   header: {
     fontSize: 32,

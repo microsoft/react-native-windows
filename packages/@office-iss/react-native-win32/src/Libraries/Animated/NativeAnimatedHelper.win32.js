@@ -28,9 +28,7 @@ import invariant from 'invariant';
 
 // TODO T69437152 @petetheheat - Delete this fork when Fabric ships to 100%.
 const NativeAnimatedModule =
-  Platform.OS === 'ios' && global.RN$Bridgeless === true
-    ? NativeAnimatedTurboModule
-    : NativeAnimatedNonTurboModule;
+  NativeAnimatedNonTurboModule ?? NativeAnimatedTurboModule;
 
 let __nativeAnimatedNodeTagCount = 1; /* used for animated nodes */
 let __nativeAnimationIdCount = 1; /* used for started animations */
@@ -393,11 +391,15 @@ const SUPPORTED_STYLES = {
   borderBottomLeftRadius: true,
   borderBottomRightRadius: true,
   borderBottomStartRadius: true,
+  borderEndEndRadius: true,
+  borderEndStartRadius: true,
   borderRadius: true,
   borderTopEndRadius: true,
   borderTopLeftRadius: true,
   borderTopRightRadius: true,
   borderTopStartRadius: true,
+  borderStartEndRadius: true,
+  borderStartStartRadius: true,
   elevation: true,
   opacity: true,
   transform: true,
@@ -423,6 +425,9 @@ const SUPPORTED_TRANSFORMS = {
   rotateY: true,
   rotateZ: true,
   perspective: true,
+  skewX: true,
+  skewY: true,
+  matrix: ReactNativeFeatureFlags.shouldUseAnimatedObjectForTransform(),
 };
 
 const SUPPORTED_INTERPOLATION_PARAMS = {
@@ -449,19 +454,19 @@ function addWhitelistedInterpolationParam(param: string): void {
 }
 
 function isSupportedColorStyleProp(prop: string): boolean {
-  return SUPPORTED_COLOR_STYLES.hasOwnProperty(prop);
+  return SUPPORTED_COLOR_STYLES[prop] === true;
 }
 
 function isSupportedStyleProp(prop: string): boolean {
-  return SUPPORTED_STYLES.hasOwnProperty(prop);
+  return SUPPORTED_STYLES[prop] === true;
 }
 
 function isSupportedTransformProp(prop: string): boolean {
-  return SUPPORTED_TRANSFORMS.hasOwnProperty(prop);
+  return SUPPORTED_TRANSFORMS[prop] === true;
 }
 
 function isSupportedInterpolationParam(param: string): boolean {
-  return SUPPORTED_INTERPOLATION_PARAMS.hasOwnProperty(param);
+  return SUPPORTED_INTERPOLATION_PARAMS[param] === true;
 }
 
 function validateTransform(
@@ -560,10 +565,13 @@ function transformDataType(value: number | string): number | string {
   if (typeof value !== 'string') {
     return value;
   }
-  if (/deg$/.test(value)) {
+
+  // Normalize degrees and radians to a number expressed in radians
+  if (value.endsWith('deg')) {
     const degrees = parseFloat(value) || 0;
-    const radians = (degrees * Math.PI) / 180.0;
-    return radians;
+    return (degrees * Math.PI) / 180.0;
+  } else if (value.endsWith('rad')) {
+    return parseFloat(value) || 0;
   } else {
     return value;
   }
@@ -586,10 +594,11 @@ export default {
   assertNativeAnimatedModule,
   shouldUseNativeDriver,
   transformDataType,
-  // $FlowExpectedError[unsafe-getters-setters] - unsafe getter lint suppresion
-  // $FlowExpectedError[missing-type-arg] - unsafe getter lint suppresion
+  // $FlowExpectedError[unsafe-getters-setters] - unsafe getter lint suppression
+  // $FlowExpectedError[missing-type-arg] - unsafe getter lint suppression
   get nativeEventEmitter(): NativeEventEmitter {
     if (!nativeEventEmitter) {
+      // $FlowFixMe[underconstrained-implicit-instantiation]
       nativeEventEmitter = new NativeEventEmitter(
         // T88715063: NativeEventEmitter only used this parameter on iOS. Now it uses it on all platforms, so this code was modified automatically to preserve its behavior
         // If you want to use the native module on other platforms, please remove this condition and test its behavior

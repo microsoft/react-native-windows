@@ -13,9 +13,10 @@
 import type {ViewStyleProp} from '../StyleSheet/StyleSheet';
 import type {PressEvent} from '../Types/CoreEventTypes';
 
+// import Dimensions from '../Utilities/Dimensions'; [Win32]
+
 const View = require('../Components/View/View');
 const StyleSheet = require('../StyleSheet/StyleSheet');
-// const Dimensions = require('../Utilities/Dimensions'); [Win32]
 const ElementBox = require('./ElementBox');
 const React = require('react');
 

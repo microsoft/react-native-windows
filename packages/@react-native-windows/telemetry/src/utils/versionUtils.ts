@@ -93,7 +93,7 @@ async function readXmlFile(filePath: string): Promise<Document> {
 
 /**
  * Gets the versions of the specified NuGet packages referenced in a packages.config file.
- * @param projectDoc The XML document of the packages.connfig file.
+ * @param projectDoc The XML document of the packages.config file.
  * @param nugetPackages The NuGet package names to look for.
  * @returns The mapping of NuGet package names and their versions.
  */

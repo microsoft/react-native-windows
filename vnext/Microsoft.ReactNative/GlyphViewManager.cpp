@@ -101,7 +101,7 @@ void GlyphShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValueObj
     // Default emSize to match height, unless its been explicitly set
 
     // FUTURE: enable some default scaling of 0.75 to convert height px to em?
-    // The SegouUI Emoji font renders the full area of the emSize
+    // The SegoeUI Emoji font renders the full area of the emSize
     // where emSize should be height * 0.75, but office icon fonts
     // do not and applying a scale would be wrong
 

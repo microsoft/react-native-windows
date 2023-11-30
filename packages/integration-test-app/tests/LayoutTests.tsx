@@ -14,7 +14,7 @@ import {componentTest} from './lib/TestDefinition';
 function onNativeRender(callback: () => void) {
   // We need to wait until native has rendered a frame before measuring will
   // return non-zero results. Use RAF to schedule work on the next render, to
-  // then shceduled work on the render after (at which point we should be all
+  // then scheduled work on the render after (at which point we should be all
   // good).
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {

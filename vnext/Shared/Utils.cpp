@@ -8,27 +8,29 @@
 #include <DesktopWindowBridge.h>
 #include <ShlObj.h>
 #include <Shlwapi.h>
+#include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Storage.h>
 
 #include <sstream>
 
 using std::string;
+using winrt::Windows::Foundation::IAsyncOperation;
 
 namespace Microsoft::React {
 
 namespace {
-std::future<std::string> getPackagedApplicationDataPath(const wchar_t *childFolder) {
+IAsyncOperation<winrt::hstring> getPackagedApplicationDataPath(const wchar_t *childFolder) {
   auto localFolder = winrt::Windows::Storage::ApplicationData::Current().LocalFolder();
   if (!childFolder) {
-    co_return winrt::to_string(localFolder.Path());
+    co_return localFolder.Path();
   } else {
     auto subfolder = co_await localFolder.CreateFolderAsync(
         childFolder, winrt::Windows::Storage::CreationCollisionOption::OpenIfExists);
-    co_return winrt::to_string(subfolder.Path());
+    co_return subfolder.Path();
   }
 }
 
-std::future<std::string> getUnPackagedApplicationDataPath(const wchar_t *childFolder) {
+IAsyncOperation<winrt::hstring> getUnPackagedApplicationDataPath(const wchar_t *childFolder) {
   wchar_t *pwzAppDataPath = NULL;
   if (CALL_INDIRECT(
           L"shell32.dll",
@@ -39,23 +41,23 @@ std::future<std::string> getUnPackagedApplicationDataPath(const wchar_t *childFo
           &pwzAppDataPath) != S_OK)
     std::abort();
 
-  auto appDataPath = winrt::to_string(pwzAppDataPath);
+  winrt::hstring appDataPath(pwzAppDataPath);
   CoTaskMemFree(pwzAppDataPath);
 
   if (!childFolder) {
     co_return appDataPath;
   } else {
-    std::ostringstream os;
-    os << appDataPath << "\\" << winrt::to_string(childFolder);
+    std::wostringstream os;
+    os << appDataPath.c_str() << "\\" << childFolder;
     auto childFolderPath = os.str();
-    if (!CreateDirectoryA(childFolderPath.c_str(), NULL) && GetLastError() != ERROR_ALREADY_EXISTS)
+    if (!CreateDirectoryW(childFolderPath.c_str(), NULL) && GetLastError() != ERROR_ALREADY_EXISTS)
       std::abort();
-    co_return childFolderPath;
+    co_return winrt::hstring(childFolderPath);
   }
 }
 } // namespace
 
-std::future<std::string> getApplicationDataPath(const wchar_t *childFolder) {
+IAsyncOperation<winrt::hstring> getApplicationDataPath(const wchar_t *childFolder) {
   if (Microsoft::ReactNative::HasPackageIdentity()) {
     co_return co_await getPackagedApplicationDataPath(childFolder);
   } else {
@@ -99,7 +101,7 @@ string Url::Target() {
 } // namespace Microsoft::React
 
 // Folly/folly/SafeAssert.cpp brings in a bunch of file APIs that we otherwise
-// dont need And we probably want to look at some other functionality for
+// don't need And we probably want to look at some other functionality for
 // reporting errors at some point anyway.  For now, just stub them out.
 namespace folly::detail {
 

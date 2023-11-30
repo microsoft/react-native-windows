@@ -54,8 +54,11 @@ UIManagerSettingsProperty() noexcept {
 
 UIManagerSettings::UIManagerSettings(
     const std::shared_ptr<facebook::react::MessageQueueThread> batchingUIMessageQueue,
+    const std::shared_ptr<facebook::react::MessageQueueThread> uiMessageQueue,
     std::vector<std::unique_ptr<IViewManager>> &&viewManagers)
-    : batchingUIMessageQueue(std::move(batchingUIMessageQueue)), viewManagers(std::move(viewManagers)) {}
+    : batchingUIMessageQueue(std::move(batchingUIMessageQueue)),
+      uiMessageQueue(std::move(uiMessageQueue)),
+      viewManagers(std::move(viewManagers)) {}
 
 void UIManager::SetSettings(
     winrt::Microsoft::ReactNative::IReactPropertyBag const &properties,
@@ -534,6 +537,7 @@ void UIManager::Initialize(winrt::Microsoft::ReactNative::ReactContext const &re
 
   auto settings = m_context.Properties().Get(UIManagerSettingsProperty());
   m_batchingUIMessageQueue = std::move((*settings)->batchingUIMessageQueue);
+  m_uiMessageQueue = std::move((*settings)->uiMessageQueue);
 
   m_module->Initialize(reactContext);
 }
@@ -568,11 +572,11 @@ void UIManager::createView(
     std::string viewName,
     double rootTag,
     React::JSValueObject &&props) noexcept {
-  m_batchingUIMessageQueue->runOnQueue(Mso::VoidFunctor([m = std::weak_ptr<UIManagerModule>(m_module),
-                                                         reactTag,
-                                                         viewName = std::move(viewName),
-                                                         rootTag,
-                                                         props = std::move(props)]() mutable {
+  m_uiMessageQueue->runOnQueue(Mso::VoidFunctor([m = std::weak_ptr<UIManagerModule>(m_module),
+                                                 reactTag,
+                                                 viewName = std::move(viewName),
+                                                 rootTag,
+                                                 props = std::move(props)]() mutable {
     SystraceSection s("UIManager::createView");
     if (auto module = m.lock()) {
       module->createView(static_cast<int64_t>(reactTag), viewName, static_cast<int64_t>(rootTag), std::move(props));

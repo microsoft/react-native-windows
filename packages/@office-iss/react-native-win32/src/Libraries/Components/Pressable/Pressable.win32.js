@@ -28,6 +28,7 @@ import type {
 import {PressabilityDebugView} from '../../Pressability/PressabilityDebug';
 import usePressability from '../../Pressability/usePressability';
 import {type RectOrSize} from '../../StyleSheet/Rect';
+import useMergeRefs from '../../Utilities/useMergeRefs';
 import useAndroidRippleForView, {
   type RippleConfig,
 } from './useAndroidRippleForView';
@@ -35,7 +36,6 @@ import * as React from 'react';
 import {useImperativeHandle, useMemo, useRef, useState} from 'react';
 import type {HandledKeyboardEvent} from '../../Components/View/ViewPropTypes';
 import View from '../View/View';
-import TextInputState from '../TextInput/TextInputState';
 
 type ViewStyleProp = $ElementType<React.ElementConfig<typeof View>, 'style'>;
 
@@ -75,6 +75,8 @@ type Props = $ReadOnly<{|
   'aria-disabled'?: ?boolean,
   'aria-expanded'?: ?boolean,
   'aria-selected'?: ?boolean,
+  'aria-multiselectable'?: ?boolean, // Win32
+  'aria-required'?: ?boolean, // Win32
   /**
    * A value indicating whether the accessibility elements contained within
    * this accessibility element are hidden.
@@ -234,7 +236,7 @@ type Props = $ReadOnly<{|
    */
   unstable_pressDelay?: ?number,
   /**
-   * Web to Native Accessibilty props
+   * Web to Native Accessibility props
    * https://github.com/facebook/react-native/issues/34424
    */
   'aria-label'?: ?string,
@@ -258,6 +260,8 @@ function Pressable(props: Props, forwardedRef): React.Node {
     'aria-disabled': ariaDisabled,
     'aria-expanded': ariaExpanded,
     'aria-label': ariaLabel,
+    'aria-multiselectable': ariaMultiselectable, // Win32
+    'aria-required': ariaRequired, // Win32
     'aria-selected': ariaSelected,
     cancelable,
     children,
@@ -287,7 +291,7 @@ function Pressable(props: Props, forwardedRef): React.Node {
   } = props;
 
   const viewRef = useRef<React.ElementRef<typeof View> | null>(null);
-  useImperativeHandle(forwardedRef, () => viewRef.current);
+  const mergedRef = useMergeRefs(forwardedRef, viewRef);
 
   const android_rippleConfig = useAndroidRippleForView(android_ripple, viewRef);
 
@@ -298,6 +302,8 @@ function Pressable(props: Props, forwardedRef): React.Node {
     checked: ariaChecked ?? accessibilityState?.checked,
     disabled: ariaDisabled ?? accessibilityState?.disabled,
     expanded: ariaExpanded ?? accessibilityState?.expanded,
+    multiselectable: ariaMultiselectable ?? accessibilityState?.multiselectable, // Win32
+    required: ariaRequired ?? accessibilityState?.required, // Win32
     selected: ariaSelected ?? accessibilityState?.selected,
   };
 
@@ -402,7 +408,7 @@ function Pressable(props: Props, forwardedRef): React.Node {
     <View
       {...restPropsWithDefaults}
       {...eventHandlers}
-      ref={viewRef}
+      ref={mergedRef}
       style={typeof style === 'function' ? style({pressed}) : style}>
       {typeof children === 'function' ? children({pressed}) : children}
       {__DEV__ ? <PressabilityDebugView color="red" hitSlop={hitSlop} /> : null}

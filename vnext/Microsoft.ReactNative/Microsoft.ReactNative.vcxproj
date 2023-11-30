@@ -14,10 +14,11 @@
     <ApplicationType>Windows Store</ApplicationType>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
     <!-- Overriding for WinUI3 compatibility. See property UseWinUI3. -->
-    <WindowsTargetPlatformMinVersion>10.0.17134.0</WindowsTargetPlatformMinVersion>
+    <WindowsTargetPlatformMinVersion>10.0.17763.0</WindowsTargetPlatformMinVersion>
     <CppWinRTNamespaceMergeDepth>
     </CppWinRTNamespaceMergeDepth>
     <CppWinRTLibs>true</CppWinRTLibs>
+    <BuildMSRNCxxModule>false</BuildMSRNCxxModule>
     <BuildMSRNCxxReactCommon>false</BuildMSRNCxxReactCommon>
     <DesktopCompatible Condition="'$(UseWinUI3)'=='true'">true</DesktopCompatible>
   </PropertyGroup>
@@ -91,7 +92,7 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <RuntimeTypeInfo Condition="'$(UseFabric)' == 'true' AND '$(Configuration)'=='Debug'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)'=='Debug'">true</RuntimeTypeInfo>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
@@ -115,7 +116,7 @@
         $(GeneratedFilesDir);
         %(AdditionalIncludeDirectories)
       </AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>DISABLE_XAML_GENERATED_MAIN;FOLLY_NO_CONFIG;NOMINMAX;_HAS_AUTO_PTR_ETC;_USE_MATH_DEFINES;RN_EXPORT=;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DISABLE_XAML_GENERATED_MAIN;FOLLY_CFG_NO_COROUTINES;FOLLY_NO_CONFIG;NOMINMAX;_HAS_AUTO_PTR_ETC;_USE_MATH_DEFINES;RN_EXPORT=;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <!--
         REACTWINDOWS_BUILD - building with REACTWINDOWS_API as dll exports
         OLD_CPPWINRT is a workaround to make target version to 19H1
@@ -124,12 +125,15 @@
         REACTWINDOWS_BUILD;
         RN_PLATFORM=windows;
         NOMINMAX;
+        FOLLY_CFG_NO_COROUTINES;
         FOLLY_NO_CONFIG;
         RN_EXPORT=;
         JSI_EXPORT=;
         WIN32=0;
         WINRT=1;
         _HAS_AUTO_PTR_ETC;
+        <!-- See https://cplusplus.github.io/LWG/issue3840 -->
+        _SILENCE_CXX20_U8PATH_DEPRECATION_WARNING;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
@@ -183,7 +187,6 @@
   <ItemGroup>
     <ClInclude Include="ABICxxModule.h" />
     <ClInclude Include="ABIViewManager.h" />
-    <ClInclude Include="Base\CoreNativeModules.h" />
     <ClInclude Include="Base\CxxReactIncludes.h" />
     <ClInclude Include="Base\FollyIncludes.h" />
     <ClInclude Include="CoreAppPage.h">
@@ -218,9 +221,6 @@
     <ClInclude Include="IReactNotificationService.h">
       <DependentUpon>IReactNotificationService.idl</DependentUpon>
       <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="JsiApi.h">
-      <DependentUpon>JsiApi.idl</DependentUpon>
     </ClInclude>
     <ClInclude Include="JsiReader.h">
       <DependentUpon>IJSValueReader.idl</DependentUpon>
@@ -317,6 +317,7 @@
     </ClInclude>
     <ClInclude Include="Utils\AccessibilityUtils.h" />
     <ClInclude Include="Utils\Helpers.h" />
+    <ClInclude Include="Utils\KeyboardUtils.h" />
     <ClInclude Include="Utils\LocalBundleReader.h" />
     <ClInclude Include="Utils\PropertyHandlerUtils.h" />
     <ClInclude Include="Utils\PropertyUtils.h" />
@@ -421,7 +422,6 @@
   <ItemGroup>
     <ClCompile Include="ABICxxModule.cpp" />
     <ClCompile Include="ABIViewManager.cpp" />
-    <ClCompile Include="Base\CoreNativeModules.cpp" />
     <ClCompile Include="Base\CoreUIManagers.cpp" />
     <ClCompile Include="CoreAppPage.cpp">
       <DependentUpon>CoreAppPage.xaml</DependentUpon>
@@ -434,35 +434,7 @@
       <DependentUpon>DevMenuControl.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="DynamicReader.cpp">
-      <DependentUpon>IJSValueReader.idl</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="DynamicWriter.cpp">
-      <DependentUpon>IJSValueWriter.idl</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="JSDispatcherWriter.cpp">
-      <DependentUpon>IJSValueWriter.idl</DependentUpon>
-    </ClCompile>
     <ClCompile Include="GlyphViewManager.cpp" />
-    <ClCompile Include="IReactDispatcher.cpp">
-      <DependentUpon>IReactDispatcher.idl</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="IReactModuleBuilder.cpp">
-      <DependentUpon>IReactModuleBuilder.idl</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="IReactNotificationService.cpp">
-      <DependentUpon>IReactNotificationService.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="JsiApi.cpp">
-      <DependentUpon>JsiApi.idl</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="JsiReader.cpp">
-      <DependentUpon>IJSValueReader.idl</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="JsiWriter.cpp">
-      <DependentUpon>IJSValueWriter.idl</DependentUpon>
-    </ClCompile>
     <ClCompile Include="Modules\AccessibilityInfoModule.cpp" />
     <ClCompile Include="Modules\AlertModule.cpp" />
     <ClCompile Include="Modules\Animated\AdditionAnimatedNode.cpp" />
@@ -493,7 +465,6 @@
     <ClCompile Include="Modules\ClipboardModule.cpp" />
     <ClCompile Include="Modules\CreateModules.cpp" />
     <ClCompile Include="Modules\DeviceInfoModule.cpp" />
-    <ClCompile Include="Modules\DevSettingsModule.cpp" />
     <ClCompile Include="Modules\I18nManagerModule.cpp" />
     <ClCompile Include="Modules\ImageViewManagerModule.cpp" />
     <ClCompile Include="Modules\LinkingManagerModule.cpp" />
@@ -501,14 +472,10 @@
     <ClCompile Include="Modules\NativeUIManager.cpp" />
     <ClCompile Include="Modules\TimingModule.cpp" />
     <ClCompile Include="Modules\PaperUIManagerModule.cpp" />
-    <ClCompile Include="NativeModulesProvider.cpp" />
     <ClCompile Include="ReactPointerEventArgs.cpp">
       <DependentUpon>ReactPointerEventArgs.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="RedBoxErrorInfo.cpp" />
-    <ClCompile Include="RedBoxErrorFrameInfo.cpp" />
-    <ClCompile Include="TurboModulesProvider.cpp" />
     <ClCompile Include="Pch\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -516,37 +483,8 @@
       <DependentUpon>ReactApplication.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
-    <ClCompile Include="IReactContext.cpp">
-      <DependentUpon>IReactContext.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="ReactHost\AsyncActionQueue.cpp" />
-    <ClCompile Include="ReactHost\JSBundle.cpp" />
-    <ClCompile Include="ReactHost\JSBundle_Win32.cpp" />
-    <ClCompile Include="ReactHost\JSCallInvokerScheduler.cpp" />
-    <ClCompile Include="ReactHost\MsoUtils.cpp" />
-    <ClCompile Include="ReactHost\MsoReactContext.cpp" />
-    <ClCompile Include="ReactHost\ReactErrorProvider.cpp" />
-    <ClCompile Include="ReactHost\ReactHost.cpp" />
-    <ClCompile Include="ReactHost\ReactInstanceWin.cpp" />
-    <ClCompile Include="ReactHost\CrashManager.cpp" />
-    <ClCompile Include="ReactCoreInjection.cpp">
-      <DependentUpon>ReactCoreInjection.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="ReactInstanceSettings.cpp">
-      <DependentUpon>ReactInstanceSettings.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="RedBoxHandler.cpp">
-      <DependentUpon>RedBoxHandler.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="ReactNativeHost.cpp">
-      <DependentUpon>ReactNativeHost.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
     <ClCompile Include="Utils\AccessibilityUtils.cpp" />
+    <ClCompile Include="Utils\KeyboardUtils.cpp" />
     <ClCompile Include="Utils\LocalBundleReader.cpp" />
     <ClCompile Include="Utils\ResourceBrushUtils.cpp" />
     <ClCompile Include="Utils\UwpPreparedScriptStore.cpp" />
@@ -556,7 +494,6 @@
     <ClCompile Include="Views\ActivityIndicatorViewManager.cpp" />
     <ClCompile Include="Views\ConfigureBundlerDlg.cpp" />
     <ClCompile Include="Views\ControlViewManager.cpp" />
-    <ClCompile Include="Views\DevMenu.cpp" />
     <ClCompile Include="Views\DynamicAutomationPeer.cpp" />
     <ClCompile Include="Views\DynamicAutomationProperties.cpp" />
     <ClCompile Include="Views\DynamicValueProvider.cpp" />
@@ -610,24 +547,12 @@
       <DependentUpon>XamlUIService.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="ReactPackageBuilder.cpp">
-      <DependentUpon>IReactPackageBuilder.idl</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="IReactPropertyBag.cpp">
-      <DependentUpon>IReactPropertyBag.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
     <ClCompile Include="ReactRootView.cpp">
       <DependentUpon>ReactRootView.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="RedBox.cpp" />
     <ClCompile Include="ReactSupport.cpp" />
     <ClCompile Include="TestHook.cpp" />
-    <ClCompile Include="QuirkSettings.cpp">
-      <DependentUpon>QuirkSettings.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
     <ClCompile Include="ViewManagersProvider.cpp" />
     <ClCompile Include="XamlHelper.cpp">
       <DependentUpon>XamlHelper.idl</DependentUpon>
@@ -635,11 +560,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Midl Condition="'$(UseFabric)' == 'true'" Include="CompositionHwndHost.idl" />
-    <Midl Condition="'$(UseFabric)' == 'true'" Include="CompositionContext.idl" />
-    <Midl Condition="'$(UseFabric)' == 'true'" Include="CompositionSwitcher.idl" />
-    <Midl Condition="'$(UseFabric)' == 'true'" Include="CompositionUIService.idl" />
-    <Midl Condition="'$(UseFabric)' == 'true'" Include="CompositionRootView.idl" />
     <Midl Include="CoreAppPage.idl">
       <DependentUpon>CoreAppPage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -650,34 +570,9 @@
       <SubType>Code</SubType>
     </Midl>
     <Midl Include="DocString.idl" />
-    <Midl Include="IReactNonAbiValue.idl" />
-    <Midl Include="IJSValueReader.idl" />
-    <Midl Include="IJSValueWriter.idl" />
-    <Midl Include="IReactDispatcher.idl" />
-    <Midl Include="IReactNotificationService.idl" />
-    <Midl Include="IReactPropertyBag.idl" />
-    <Midl Include="IReactModuleBuilder.idl" />
-    <Midl Include="IReactPackageBuilder.idl" />
-    <Midl Include="IReactPackageProvider.idl" />
     <Midl Include="IViewManager.idl" />
     <Midl Include="IViewManagerCore.idl" />
-    <Midl Include="JsiApi.idl" />
     <Midl Include="ReactApplication.idl" />
-    <Midl Include="IReactContext.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="ReactCoreInjection.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="ReactInstanceSettings.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="RedBoxHandler.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="ReactNativeHost.idl">
-      <SubType>Designer</SubType>
-    </Midl>
     <Midl Include="Views\cppwinrt\AccessibilityAction.idl" />
     <Midl Include="Views\cppwinrt\Effects.idl" />
     <Midl Include="Views\cppwinrt\DynamicAutomationPeer.idl" />
@@ -689,9 +584,6 @@
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="ReactRootView.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="QuirkSettings.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="XamlHelper.idl" />
@@ -713,6 +605,7 @@
         RNW_MAJOR=$(ReactNativeWindowsMajor);
         RNW_MINOR=$(ReactNativeWindowsMinor);
         RNW_PATCH=$(ReactNativeWindowsPatch);
+        RNW_COMMITID=$(ReactNativeWindowsCommitId);
         _UNICODE;
         UNICODE;
         %(PreprocessorDefinitions)
@@ -744,17 +637,14 @@
   <ItemGroup>
     <PackageReference Include="boost" Version="1.76.0.0" />
     <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" PrivateAssets="all" />
-    <PackageReference Include="ReactNative.Hermes.Windows" Version="$(HermesVersion)" />
+    <PackageReference Include="Microsoft.JavaScript.Hermes" Version="$(HermesVersion)" />
     <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" Condition="'$(OverrideWinUIPackage)'!='true'" />
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22000.194" />
     <PackageReference Include="$(V8PackageName)" Version="$(V8Version)" Condition="'$(UseV8)' == 'true'" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(EnableSourceLink)' == 'true'">
       <ItemGroup>
-        <PackageReference Include="Microsoft.Build.Tasks.Git" Version="1.0.0" />
-        <PackageReference Include="Microsoft.SourceLink.Common" Version="1.0.0" />
-        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" />
       </ItemGroup>
     </When>
   </Choose>

@@ -26,7 +26,6 @@
 #include <cxxreact/ModuleRegistry.h>
 
 #include <Modules/ExceptionsManagerModule.h>
-#include <Modules/HttpModule.h>
 #include <Modules/PlatformConstantsModule.h>
 #include <Modules/SourceCodeModule.h>
 #include <Modules/StatusBarManagerModule.h>
@@ -41,6 +40,8 @@
 #include <DevSettings.h>
 #include <DevSupportManager.h>
 #include <IReactRootView.h>
+#include <ReactPropertyBag.h>
+#include <SchedulerSettings.h>
 #include <Shlwapi.h>
 #include <WebSocketJSExecutorFactory.h>
 #include <safeint.h>
@@ -52,13 +53,15 @@
 #include "HermesRuntimeHolder.h"
 
 #if defined(USE_V8)
-#include <JSI/NapiJsiV8RuntimeHolder.h>
-
-#include "BaseScriptStoreImpl.h"
+#include <JSI/V8RuntimeHolder.h>
 #include "V8JSIRuntimeHolder.h"
 #endif
 #include <ReactCommon/CallInvoker.h>
 #include <ReactCommon/TurboModuleBinding.h>
+#include <react/renderer/runtimescheduler/RuntimeScheduler.h>
+#include <react/renderer/runtimescheduler/RuntimeSchedulerBinding.h>
+#include <react/renderer/runtimescheduler/RuntimeSchedulerCallInvoker.h>
+#include "BaseScriptStoreImpl.h"
 #include "ChakraRuntimeHolder.h"
 
 #include <tracing/tracing.h>
@@ -69,15 +72,6 @@ using namespace Microsoft::JSI;
 
 using std::make_shared;
 using winrt::Microsoft::ReactNative::ReactPropertyBagHelper;
-
-namespace Microsoft::React {
-
-/*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateHttpModule(
-    winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept {
-  return std::make_unique<HttpModule>(inspectableProperties);
-}
-
-} // namespace Microsoft::React
 
 namespace facebook {
 namespace react {
@@ -100,26 +94,6 @@ class OJSIExecutorFactory : public JSExecutorFactory {
     }
     bindNativeLogger(*runtimeHolder_->getRuntime(), logger);
 
-    auto turboModuleManager = std::make_shared<TurboModuleManager>(turboModuleRegistry_, jsCallInvoker_);
-
-    // TODO: The binding here should also add the proxys that convert cxxmodules into turbomodules
-    // [vmoroz] Note, that we must not use the RN TurboCxxModule.h code because it uses global LongLivedObjectCollection
-    // instance that prevents us from using multiple RN instance in the same process.
-    auto binding = [turboModuleManager](const std::string &name) -> std::shared_ptr<TurboModule> {
-      return turboModuleManager->getModule(name);
-    };
-
-    TurboModuleBinding::install(
-        *runtimeHolder_->getRuntime(),
-        std::function(binding),
-        TurboModuleBindingMode::HostObject,
-        longLivedObjectCollection_);
-
-    // init TurboModule
-    for (const auto &moduleName : turboModuleManager->getEagerInitModuleNames()) {
-      turboModuleManager->getModule(moduleName);
-    }
-
     return std::make_unique<JSIExecutor>(
         runtimeHolder_->getRuntime(),
         std::move(delegate),
@@ -134,22 +108,13 @@ class OJSIExecutorFactory : public JSExecutorFactory {
   OJSIExecutorFactory(
       std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> runtimeHolder,
       NativeLoggingHook loggingHook,
-      std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
-      std::shared_ptr<LongLivedObjectCollection> longLivedObjectCollection,
-      bool isProfilingEnabled,
-      std::shared_ptr<CallInvoker> jsCallInvoker) noexcept
+      bool isProfilingEnabled) noexcept
       : runtimeHolder_{std::move(runtimeHolder)},
         loggingHook_{std::move(loggingHook)},
-        turboModuleRegistry_{std::move(turboModuleRegistry)},
-        longLivedObjectCollection_{std::move(longLivedObjectCollection)},
-        jsCallInvoker_{std::move(jsCallInvoker)},
         isProfilingEnabled_{isProfilingEnabled} {}
 
  private:
   std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> runtimeHolder_;
-  std::shared_ptr<TurboModuleRegistry> turboModuleRegistry_;
-  std::shared_ptr<LongLivedObjectCollection> longLivedObjectCollection_;
-  std::shared_ptr<CallInvoker> jsCallInvoker_;
   NativeLoggingHook loggingHook_;
   bool isProfilingEnabled_;
 };
@@ -166,6 +131,7 @@ void logMarker(const facebook::react::ReactMarker::ReactMarkerId /*id*/, const c
         &&cxxModules,
     std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
     std::shared_ptr<facebook::react::LongLivedObjectCollection> longLivedObjectCollection,
+    const winrt::Microsoft::ReactNative::IReactPropertyBag &propertyBag,
     std::unique_ptr<InstanceCallback> &&callback,
     std::shared_ptr<MessageQueueThread> jsQueue,
     std::shared_ptr<MessageQueueThread> nativeQueue,
@@ -177,6 +143,7 @@ void logMarker(const facebook::react::ReactMarker::ReactMarkerId /*id*/, const c
       std::move(cxxModules),
       std::move(turboModuleRegistry),
       std::move(longLivedObjectCollection),
+      propertyBag,
       std::move(callback),
       std::move(jsQueue),
       std::move(nativeQueue),
@@ -206,7 +173,8 @@ void logMarker(const facebook::react::ReactMarker::ReactMarkerId /*id*/, const c
       std::move(jsBundleBasePath),
       std::move(cxxModules),
       std::move(turboModuleRegistry),
-      nullptr,
+      nullptr, // longLivedObjectCollection
+      nullptr, // PropertyBag
       std::move(callback),
       std::move(jsQueue),
       std::move(nativeQueue),
@@ -245,6 +213,7 @@ InstanceImpl::InstanceImpl(
         &&cxxModules,
     std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
     std::shared_ptr<facebook::react::LongLivedObjectCollection> longLivedObjectCollection,
+    const winrt::Microsoft::ReactNative::IReactPropertyBag &propertyBag,
     std::unique_ptr<InstanceCallback> &&callback,
     std::shared_ptr<MessageQueueThread> jsQueue,
     std::shared_ptr<MessageQueueThread> nativeQueue,
@@ -259,7 +228,7 @@ InstanceImpl::InstanceImpl(
       m_devManager(std::move(devManager)),
       m_innerInstance(std::move(instance)) {
   // Temp set the logmarker here
-  facebook::react::ReactMarker::logTaggedMarker = logMarker;
+  facebook::react::ReactMarker::logTaggedMarkerImpl = logMarker;
 
 #ifdef ENABLE_ETW_TRACING
   // TODO :: Find a better place to initialize ETW once per process.
@@ -309,34 +278,35 @@ InstanceImpl::InstanceImpl(
     if (m_devSettings->jsiRuntimeHolder) {
       assert(m_devSettings->jsiEngineOverride == JSIEngineOverride::Default);
       jsef = std::make_shared<OJSIExecutorFactory>(
-          m_devSettings->jsiRuntimeHolder,
-          m_devSettings->loggingCallback,
-          m_turboModuleRegistry,
-          m_longLivedObjectCollection,
-          !m_devSettings->useFastRefresh,
-          m_innerInstance->getJSCallInvoker());
+          m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback, !m_devSettings->useFastRefresh);
     } else {
       assert(m_devSettings->jsiEngineOverride != JSIEngineOverride::Default);
       switch (m_devSettings->jsiEngineOverride) {
-        case JSIEngineOverride::Hermes:
-          m_devSettings->jsiRuntimeHolder = std::make_shared<HermesRuntimeHolder>(m_devSettings, m_jsThread);
+        case JSIEngineOverride::Hermes: {
+          std::shared_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore;
+
+          wchar_t tempPath[MAX_PATH];
+          if (GetTempPathW(MAX_PATH, tempPath)) {
+            preparedScriptStore =
+                std::make_shared<facebook::react::BasePreparedScriptStoreImpl>(winrt::to_string(tempPath));
+          }
+
+          m_devSettings->jsiRuntimeHolder = std::make_shared<Microsoft::ReactNative::HermesRuntimeHolder>(
+              m_devSettings, m_jsThread, std::move(preparedScriptStore));
           break;
+        }
         case JSIEngineOverride::V8: {
 #if defined(USE_V8)
-          std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
-          std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
+          std::shared_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore;
 
-          char tempPath[MAX_PATH];
-          if (GetTempPathA(MAX_PATH, tempPath)) {
-            preparedScriptStore = std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(tempPath);
+          wchar_t tempPath[MAX_PATH];
+          if (GetTempPathW(MAX_PATH, tempPath)) {
+            preparedScriptStore =
+                std::make_shared<facebook::react::BasePreparedScriptStoreImpl>(winrt::to_string(tempPath));
           }
 
           m_devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
-              m_devSettings,
-              m_jsThread,
-              std::move(scriptStore),
-              std::move(preparedScriptStore),
-              false /* enableMultiThreadSupport */);
+              m_devSettings, m_jsThread, nullptr, std::move(preparedScriptStore), /*multithreading*/ false);
           break;
 #else
           assert(false); // V8 is not available in this build, fallthrough
@@ -345,23 +315,16 @@ InstanceImpl::InstanceImpl(
         }
         case JSIEngineOverride::V8NodeApi: {
 #if defined(USE_V8)
-          std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore;
+          std::shared_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore;
 
           wchar_t tempPath[MAX_PATH];
-          if (GetTempPathW(static_cast<DWORD>(std::size(tempPath)), tempPath)) {
+          if (GetTempPathW(MAX_PATH, tempPath)) {
             preparedScriptStore =
-                std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(winrt::to_string(tempPath));
+                std::make_shared<facebook::react::BasePreparedScriptStoreImpl>(winrt::to_string(tempPath));
           }
 
-          if (!preparedScriptStore) {
-            if (m_devSettings->errorCallback)
-              m_devSettings->errorCallback("Could not initialize prepared script store");
-
-            break;
-          }
-
-          m_devSettings->jsiRuntimeHolder = make_shared<NapiJsiV8RuntimeHolder>(
-              m_devSettings, m_jsThread, nullptr /*scriptStore*/, std::move(preparedScriptStore));
+          m_devSettings->jsiRuntimeHolder = make_shared<Microsoft::ReactNative::V8RuntimeHolder>(
+              m_devSettings, m_jsThread, std::move(preparedScriptStore), false);
           break;
 #else
           if (m_devSettings->errorCallback)
@@ -377,16 +340,63 @@ InstanceImpl::InstanceImpl(
           break;
       }
       jsef = std::make_shared<OJSIExecutorFactory>(
-          m_devSettings->jsiRuntimeHolder,
-          m_devSettings->loggingCallback,
-          m_turboModuleRegistry,
-          m_longLivedObjectCollection,
-          !m_devSettings->useFastRefresh,
-          m_innerInstance->getJSCallInvoker());
+          m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback, !m_devSettings->useFastRefresh);
     }
   }
 
   m_innerInstance->initializeBridge(std::move(callback), jsef, m_jsThread, m_moduleRegistry);
+
+  // For RuntimeScheduler to work properly, we need to install TurboModuleManager with RuntimeSchedulerCallbackInvoker.
+  // To be able to do that, we need to be able to call m_innerInstance->getRuntimeExecutor(), which we can only do after
+  // m_innerInstance->initializeBridge(...) is called.
+  if (!m_devSettings->useWebDebugger) {
+    const auto runtimeExecutor = m_innerInstance->getRuntimeExecutor();
+#ifdef USE_FABRIC
+    Microsoft::ReactNative::SchedulerSettings::SetRuntimeExecutor(
+        winrt::Microsoft::ReactNative::ReactPropertyBag(propertyBag), runtimeExecutor);
+#endif
+    if (m_devSettings->useRuntimeScheduler) {
+      m_runtimeScheduler = std::make_shared<RuntimeScheduler>(runtimeExecutor);
+      Microsoft::ReactNative::SchedulerSettings::SetRuntimeScheduler(
+          winrt::Microsoft::ReactNative::ReactPropertyBag(propertyBag), m_runtimeScheduler);
+    }
+
+    // Using runOnQueueSync because initializeBridge calls createJSExecutor with runOnQueueSync,
+    // so this is an attempt to keep the same semantics for exiting this method with TurboModuleManager
+    // initialized.
+    m_jsThread->runOnQueueSync([propertyBag,
+                                innerInstance = m_innerInstance,
+                                runtimeHolder = m_devSettings->jsiRuntimeHolder,
+                                runtimeScheduler = m_runtimeScheduler,
+                                turboModuleRegistry = m_turboModuleRegistry,
+                                longLivedObjectCollection = m_longLivedObjectCollection]() {
+      if (runtimeScheduler) {
+        RuntimeSchedulerBinding::createAndInstallIfNeeded(*runtimeHolder->getRuntime(), runtimeScheduler);
+      }
+      auto turboModuleManager = std::make_shared<TurboModuleManager>(
+          turboModuleRegistry,
+          runtimeScheduler ? std::make_shared<RuntimeSchedulerCallInvoker>(runtimeScheduler)
+                           : innerInstance->getJSCallInvoker());
+
+      // TODO: The binding here should also add the proxys that convert cxxmodules into turbomodules
+      // [@vmoroz] Note, that we must not use the RN TurboCxxModule.h code because it uses global
+      // LongLivedObjectCollection instance that prevents us from using multiple RN instance in the same process.
+      auto binding = [turboModuleManager](const std::string &name) -> std::shared_ptr<TurboModule> {
+        return turboModuleManager->getModule(name);
+      };
+
+      TurboModuleBinding::install(
+          *runtimeHolder->getRuntime(),
+          std::function(binding),
+          TurboModuleBindingMode::HostObject,
+          longLivedObjectCollection);
+
+      // init TurboModule
+      for (const auto &moduleName : turboModuleManager->getEagerInitModuleNames()) {
+        turboModuleManager->getModule(moduleName);
+      }
+    });
+  }
 
   // All JSI runtimes do support host objects and hence the native modules
   // proxy.
@@ -447,7 +457,8 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
           m_devSettings->sourceBundlePort,
           m_devSettings->debugBundlePath.empty() ? jsBundleRelativePath : m_devSettings->debugBundlePath,
           m_devSettings->platformName,
-          true /* dev */,
+          m_devSettings->bundleAppId,
+          m_devSettings->devBundle,
           m_devSettings->useFastRefresh,
           m_devSettings->inlineSourceMap,
           hermesBytecodeVersion);
@@ -468,8 +479,9 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
           m_devSettings->sourceBundlePort,
           m_devSettings->debugBundlePath.empty() ? jsBundleRelativePath : m_devSettings->debugBundlePath,
           m_devSettings->platformName,
-          /*dev*/ true,
-          /*hot*/ false,
+          m_devSettings->bundleAppId,
+          m_devSettings->devBundle,
+          m_devSettings->useFastRefresh,
           m_devSettings->inlineSourceMap,
           hermesBytecodeVersion);
 
@@ -524,16 +536,17 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
       }
     } else {
 #if (defined(_MSC_VER) && !defined(WINRT))
-      std::string bundlePath = (fs::u8path(m_devSettings->bundleRootPath) / jsBundleRelativePath).u8string();
+      std::wstring bundlePath = (fs::u8path(m_devSettings->bundleRootPath) / jsBundleRelativePath).wstring();
       auto bundleString = FileMappingBigString::fromPath(bundlePath);
 #else
-      std::string bundlePath;
+      std::wstring bundlePath;
+      // TODO: Replace call to private string function with C++ 20 `starts_with`
       if (m_devSettings->bundleRootPath._Starts_with("resource://")) {
         auto uri = winrt::Windows::Foundation::Uri(
             winrt::to_hstring(m_devSettings->bundleRootPath), winrt::to_hstring(jsBundleRelativePath));
-        bundlePath = winrt::to_string(uri.ToString());
+        bundlePath = uri.ToString();
       } else {
-        bundlePath = (fs::u8path(m_devSettings->bundleRootPath) / (jsBundleRelativePath + ".bundle")).u8string();
+        bundlePath = (fs::u8path(m_devSettings->bundleRootPath) / (jsBundleRelativePath + ".bundle")).wstring();
       }
 
       auto bundleString = std::make_unique<::Microsoft::ReactNative::StorageFileBigString>(bundlePath);
@@ -561,29 +574,45 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
   std::vector<std::unique_ptr<NativeModule>> modules;
   auto transitionalProps{ReactPropertyBagHelper::CreatePropertyBag()};
 
+  // These modules are instantiated separately in MSRN (Universal Windows).
+  // When there are module name collisions, the last one registered is used.
+  // If this code is enabled, we will have unused module instances.
+  // Also, MSRN has a different property bag mechanism incompatible with this method's transitionalProps variable.
 #if (defined(_MSC_VER) && !defined(WINRT))
-  modules.push_back(std::make_unique<CxxNativeModule>(
-      m_innerInstance,
-      Microsoft::React::GetHttpModuleName(),
-      [nativeQueue, transitionalProps]() -> std::unique_ptr<xplat::module::CxxModule> {
-        return Microsoft::React::CreateHttpModule(transitionalProps);
-      },
-      nativeQueue));
-#endif
 
-  modules.push_back(std::make_unique<CxxNativeModule>(
-      m_innerInstance,
-      Microsoft::React::GetWebSocketModuleName(),
-      [nativeQueue, transitionalProps]() -> std::unique_ptr<xplat::module::CxxModule> {
-        return Microsoft::React::CreateWebSocketModule(transitionalProps);
-      },
-      nativeQueue));
+  // OC:8368383 - Memory leak under investigation.
+  if (!m_devSettings->useWebSocketTurboModule) {
+    modules.push_back(std::make_unique<CxxNativeModule>(
+        m_innerInstance,
+        Microsoft::React::GetWebSocketModuleName(),
+        [transitionalProps]() { return Microsoft::React::CreateWebSocketModule(transitionalProps); },
+        nativeQueue));
+  }
 
-  // TODO: This is not included for UWP because we have a different module which
-  // is added later. However, this one is designed
-  //  so that we can base a UWP version on it. We need to do that but is not high
-  //  priority.
-#if (defined(_MSC_VER) && !defined(WINRT))
+  // Applications using the Windows ABI feature should loade the networking TurboModule variants instead.
+  if (!m_devSettings->omitNetworkingCxxModules) {
+    // Use in case the host app provides its a non-Blob-compatilbe HTTP module.
+    if (!Microsoft::React::GetRuntimeOptionBool("Blob.DisableModule")) {
+      modules.push_back(std::make_unique<CxxNativeModule>(
+          m_innerInstance,
+          Microsoft::React::GetHttpModuleName(),
+          [transitionalProps]() { return Microsoft::React::CreateHttpModule(transitionalProps); },
+          nativeQueue));
+
+      modules.push_back(std::make_unique<CxxNativeModule>(
+          m_innerInstance,
+          Microsoft::React::GetBlobModuleName(),
+          [transitionalProps]() { return Microsoft::React::CreateBlobModule(transitionalProps); },
+          nativeQueue));
+
+      modules.push_back(std::make_unique<CxxNativeModule>(
+          m_innerInstance,
+          Microsoft::React::GetFileReaderModuleName(),
+          [transitionalProps]() { return Microsoft::React::CreateFileReaderModule(transitionalProps); },
+          nativeQueue));
+    }
+  }
+
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
       "Timing",
@@ -604,11 +633,12 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
             m_devSettings->sourceBundlePort,
             m_devSettings->debugBundlePath,
             m_devSettings->platformName,
-            true /*dev*/,
+            m_devSettings->bundleAppId,
+            m_devSettings->devBundle,
             m_devSettings->useFastRefresh,
             m_devSettings->inlineSourceMap,
             hermesBytecodeVersion)
-      : std::string();
+      : m_devSettings->bundleRootPath;
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
       facebook::react::SourceCodeModule::Name,
@@ -636,26 +666,6 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
       StatusBarManagerModule::Name,
       []() { return std::make_unique<StatusBarManagerModule>(); },
       nativeQueue));
-
-  // These modules are instantiated separately in MSRN (Universal Windows).
-  // When there are module name colisions, the last one registered is used.
-  // If this code is enabled, we will have unused module instances.
-  // Also, MSRN has a different property bag mechanism incompatible with this method's transitionalProps variable.
-#if (defined(_MSC_VER) && !defined(WINRT))
-  if (Microsoft::React::GetRuntimeOptionBool("Blob.EnableModule")) {
-    modules.push_back(std::make_unique<CxxNativeModule>(
-        m_innerInstance,
-        Microsoft::React::GetBlobModuleName(),
-        [transitionalProps]() { return Microsoft::React::CreateBlobModule(transitionalProps); },
-        nativeQueue));
-
-    modules.push_back(std::make_unique<CxxNativeModule>(
-        m_innerInstance,
-        Microsoft::React::GetFileReaderModuleName(),
-        [transitionalProps]() { return Microsoft::React::CreateFileReaderModule(transitionalProps); },
-        nativeQueue));
-  }
-#endif
 
   return modules;
 }

@@ -1,6 +1,6 @@
 [ignore]
 ; We fork some components by platform - ignore all platforms except windows
-.*/*[.]android.js
+.*/!(ProgressBarAndroid)[.]android.js
 .*/*[.]ios.js
 .*/*[.]macos.js
 
@@ -12,8 +12,6 @@
 <PROJECT_ROOT>/Libraries/Components/Button.js
 <PROJECT_ROOT>/Libraries/Components/Picker/RCTPickerNativeComponent.js
 <PROJECT_ROOT>/Libraries/Components/RefreshControl/RefreshControl.js
-<PROJECT_ROOT>/Libraries/Components/SafeAreaView/SafeAreaView.js
-<PROJECT_ROOT>/Libraries/Components/ScrollView/ScrollView.js
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInput.js
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInputState.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/Touchable.js
@@ -27,15 +25,18 @@
 <PROJECT_ROOT>/Libraries/Components/View/View.js
 <PROJECT_ROOT>/Libraries/DeprecatedPropTypes/DeprecatedViewAccessibility.js
 <PROJECT_ROOT>/Libraries/Image/Image.js
+<PROJECT_ROOT>/Libraries/Image/resolveAssetSource.js
 <PROJECT_ROOT>/Libraries/Network/RCTNetworking.js
 <PROJECT_ROOT>/Libraries/NewAppScreen/components/DebugInstructions.js
 <PROJECT_ROOT>/Libraries/NewAppScreen/components/ReloadInstructions.js
 <PROJECT_ROOT>/Libraries/Pressability/Pressability.js
+<PROJECT_ROOT>/Libraries/Text/TextProps.js
 <PROJECT_ROOT>/Libraries/Types/CoreEventTypes.js
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorCodeFrame.js
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorHeader.js
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorStackFrame.js
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorReactFrames.js
+<PROJECT_ROOT>/Libraries/Utilities/Platform.flow.js
 
 ; Ignore react-native files in node_modules since they are copied into project root
 .*/node_modules/react-native/.*
@@ -53,7 +54,7 @@
 .*/node_modules/playground/.*
 
 ; Ignore templates for 'react-native init'
-<PROJECT_ROOT>/template/.*
+<PROJECT_ROOT>/packages/react-native/template/.*
 
 ; Ignore the Dangerfile
 <PROJECT_ROOT>/packages/react-native-bots/dangerfile.js
@@ -66,6 +67,9 @@
 
 .*/node_modules/resolve/test/resolver/malformed_package_json/package\.json$
 
+; Checked-in build output
+<PROJECT_ROOT>/packages/debugger-frontend/dist/
+
 [untyped]
 .*/node_modules/@react-native-community/cli/.*/.*
 
@@ -76,8 +80,12 @@
 [libs]
 interface.js
 flow/
+../node_modules/.flow/flow-typed/
 
 [options]
+experimental.global_find_ref=true
+enums=true
+
 emoji=true
 
 exact_by_default=true
@@ -88,12 +96,18 @@ module.file_ext=.js
 module.file_ext=.json
 module.file_ext=.windows.js
 
+;[Windows]
+;experimental.multi_platform=true
+;experimental.multi_platform.extensions=.ios
+;experimental.multi_platform.extensions=.android
+
 munge_underscores=true
 
 module.name_mapper='^react-native$' -> '<PROJECT_ROOT>/index.windows.js'
 module.name_mapper='^react-native-windows$' -> '<PROJECT_ROOT>/index.windows.js'
 module.name_mapper='^react-native/\(.*\)$' -> '<PROJECT_ROOT>/\1'
 module.name_mapper='^react-native-windows/\(.*\)$' -> '<PROJECT_ROOT>/\1'
+module.name_mapper='^@react-native/dev-middleware$' -> '<PROJECT_ROOT>/\1'
 module.name_mapper='^@?[./a-zA-Z0-9$_-]+\.\(bmp\|gif\|jpg\|jpeg\|png\|psd\|svg\|webp\|m4v\|mov\|mp4\|mpeg\|mpg\|webm\|aac\|aiff\|caf\|m4a\|mp3\|wav\|html\|pdf\)$' -> '<PROJECT_ROOT>/Libraries/Image/RelativeImageStub'
 
 suppress_type=$FlowIssue
@@ -101,9 +115,6 @@ suppress_type=$FlowFixMe
 suppress_type=$FlowFixMeProps
 suppress_type=$FlowFixMeState
 suppress_type=$FlowFixMeEmpty
-
-experimental.array_literal_providers=true
-inference_mode=experimental.lti
 
 sharedmemory.hash_table_pow=21
 
@@ -116,6 +127,7 @@ nonstrict-import=warn
 deprecated-type=error
 unsafe-getters-setters=warn
 unnecessary-invariant=warn
+unused-promise=error
 
 [strict]
 deprecated-type
@@ -127,4 +139,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.196.3
+^0.217.2

@@ -10,6 +10,7 @@
 
 const resolveAssetSource = require('./resolveAssetSource.js'); // Get base impl
 const Platform = require('../Utilities/Platform');
+const ensureShortPath = require('./assetPaths.js');
 
 type IPackagerAsset = {
   __packager_asset: boolean,
@@ -56,7 +57,7 @@ class AssetResolverLateScaleResolution {
    */
   _scaledAssetURLInBundle() {
     const path = this._resolver.bundleUrl || 'file://';
-    return this._fromSource(path + this._getAssetPath());
+    return this._fromSource(path + this._getAssetPath(true));
   }
 
   /**
@@ -66,7 +67,7 @@ class AssetResolverLateScaleResolution {
   _assetServerURL() {
     return this._fromSource(
       this._resolver.serverUrl +
-        this._getAssetPath() +
+        this._getAssetPath(false) +
         '?platform=' +
         Platform.OS +
         '&hash=' +
@@ -77,8 +78,8 @@ class AssetResolverLateScaleResolution {
   /**
    * Returns a path like 'assets/AwesomeModule/icon.png'
    */
-  _getAssetPath(): string {
-    const assetDir = this._getBasePath();
+  _getAssetPath(local: boolean): string {
+    const assetDir = this._getBasePath(local);
     return (
       assetDir +
       '/' +
@@ -88,11 +89,22 @@ class AssetResolverLateScaleResolution {
     );
   }
 
-  _getBasePath() {
+  _getBasePath(local: boolean) {
     let basePath = this._resolver.asset.httpServerLocation;
     if (basePath[0] === '/') {
       basePath = basePath.substr(1);
     }
+
+    if (local) {
+      const safePath = basePath.replace(/\.\.\//g, '_');
+      // If this asset was created with the newer saveAssetPlugin, then we should shorten the path
+      // This conditional is added to allow back compat of older bundles which might have been created without the saveAssetPlugin
+      if (this._resolver.asset.__useShortPath) {
+        return ensureShortPath(safePath);
+      }
+      return safePath;
+    }
+
     return basePath;
   }
 
@@ -103,7 +115,7 @@ class AssetResolverLateScaleResolution {
       height: this._resolver.asset.height,
       uri: source,
       // Include scales info in returned object
-      // This may make it easier to do scale lookups on native side if we dont have that infomation from any kind of manifest
+      // This may make it easier to do scale lookups on native side if we don't have that information from any kind of manifest
       scales: this._resolver.asset.scales,
     };
   }

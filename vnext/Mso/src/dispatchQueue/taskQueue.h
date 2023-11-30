@@ -52,7 +52,7 @@ struct TaskQueue {
   std::vector<DispatchTask> m_writeBuffer; // To enqueue items.
   TaskReadBuffer m_readBuffer; // To dequeue items.
   Mso::WeakPtr<IUnknown> m_weakOwnerPtr;
-  Mso::CntPtr<IUnknown> m_strongOwnerPtr; // Keep strong reference to the owner when queu is not empty;
+  Mso::CntPtr<IUnknown> m_strongOwnerPtr; // Keep strong reference to the owner when queue is not empty;
 };
 
 } // namespace Mso

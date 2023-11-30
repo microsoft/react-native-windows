@@ -201,6 +201,7 @@ SecureWebSocketSession::SecureWebSocketSession(ip::tcp::socket socket, WebSocket
   : BaseWebSocketSession(callbacks)
   , m_context{ssl::context::tlsv12}
 {
+  // cspell:disable
   // Initialize SSL context.
   string const cert =
       "-----BEGIN CERTIFICATE-----\n"
@@ -263,6 +264,8 @@ SecureWebSocketSession::SecureWebSocketSession(ip::tcp::socket socket, WebSocket
       "LLG0h495hZhL5OqqDrLM7IWxHNmzgwhQ04PdGa6zPP4fnt7L4Ia5/lYOolvdmNkx\n"
       "XgdewtScX7P5ltOMhhcWS4Og+qZn18a3kwIBAg==\n"
       "-----END DH PARAMETERS-----\n";
+
+      // cspell:enable
 
   // TODO: Remove if not used.
   m_context.set_password_callback([](size_t, ssl::context_base::password_purpose) { return "test"; });

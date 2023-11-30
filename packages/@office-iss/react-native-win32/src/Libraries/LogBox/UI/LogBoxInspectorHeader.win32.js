@@ -149,13 +149,12 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: 'row',
-    // $FlowFixMe[underconstrained-implicit-instantiation]
     height: Platform.select({
       android: 48,
       ios: 44,
-      // [Windows
-      windows: 48,
-      // Windows]
+      // [Win32
+      win32: 48,
+      // Win32]
     }),
   },
   title: {

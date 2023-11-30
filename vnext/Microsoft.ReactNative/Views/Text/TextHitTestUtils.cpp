@@ -239,8 +239,13 @@ bool TextHitTestUtils::HitTest(const xaml::Documents::Run &run, const winrt::Poi
   // d. Skip step 5 if the last character is LTR
 
   // Get the parent bounds
+  const auto parent = start.VisualParent();
+  if (!parent) {
+    return false;
+  }
+
   const auto maxLeft = 0;
-  const auto maxRight = static_cast<float>(start.VisualParent().Width());
+  const auto maxRight = static_cast<float>(parent.ActualWidth());
 
   // Check if run is either the start or end of a line
   const auto characterBeforeStart = GetBoundaryCharacter(start, startRect, -1);

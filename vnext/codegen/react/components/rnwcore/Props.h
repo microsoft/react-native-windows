@@ -10,11 +10,9 @@
 #pragma once
 
 #include <cinttypes>
-#include <jsi/jsi.h>
 #include <react/renderer/components/view/ViewProps.h>
 #include <react/renderer/core/PropsParserContext.h>
 #include <react/renderer/graphics/Color.h>
-#include <react/renderer/imagemanager/primitives.h>
 #include <vector>
 
 namespace facebook {
@@ -136,7 +134,7 @@ static inline std::string toString(const ModalHostViewSupportedOrientationsMask 
     return result;
 }
 
-class JSI_EXPORT ModalHostViewProps final : public ViewProps {
+class ModalHostViewProps final : public ViewProps {
  public:
   ModalHostViewProps() = default;
   ModalHostViewProps(const PropsParserContext& context, const ModalHostViewProps &sourceProps, const RawProps &rawProps);
@@ -170,7 +168,7 @@ static inline std::string toString(const ActivityIndicatorViewSize &value) {
   }
 }
 
-class JSI_EXPORT ActivityIndicatorViewProps final : public ViewProps {
+class ActivityIndicatorViewProps final : public ViewProps {
  public:
   ActivityIndicatorViewProps() = default;
   ActivityIndicatorViewProps(const PropsParserContext& context, const ActivityIndicatorViewProps &sourceProps, const RawProps &rawProps);
@@ -181,117 +179,6 @@ class JSI_EXPORT ActivityIndicatorViewProps final : public ViewProps {
   bool animating{false};
   SharedColor color{};
   ActivityIndicatorViewSize size{ActivityIndicatorViewSize::Small};
-};
-
-enum class DatePickerMinuteInterval { MinuteInterval1 = 1, MinuteInterval2 = 2, MinuteInterval3 = 3, MinuteInterval4 = 4, MinuteInterval5 = 5, MinuteInterval6 = 6, MinuteInterval10 = 10, MinuteInterval12 = 12, MinuteInterval15 = 15, MinuteInterval20 = 20, MinuteInterval30 = 30 };
-
-static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, DatePickerMinuteInterval &result) {
-  assert(value.hasType<int>());
-  auto integerValue = (int)value;
-  switch (integerValue) {
-    case 1:
-      result = DatePickerMinuteInterval::MinuteInterval1;
-      return;
-    case 2:
-      result = DatePickerMinuteInterval::MinuteInterval2;
-      return;
-    case 3:
-      result = DatePickerMinuteInterval::MinuteInterval3;
-      return;
-    case 4:
-      result = DatePickerMinuteInterval::MinuteInterval4;
-      return;
-    case 5:
-      result = DatePickerMinuteInterval::MinuteInterval5;
-      return;
-    case 6:
-      result = DatePickerMinuteInterval::MinuteInterval6;
-      return;
-    case 10:
-      result = DatePickerMinuteInterval::MinuteInterval10;
-      return;
-    case 12:
-      result = DatePickerMinuteInterval::MinuteInterval12;
-      return;
-    case 15:
-      result = DatePickerMinuteInterval::MinuteInterval15;
-      return;
-    case 20:
-      result = DatePickerMinuteInterval::MinuteInterval20;
-      return;
-    case 30:
-      result = DatePickerMinuteInterval::MinuteInterval30;
-      return;
-  }
-  abort();
-}
-
-static inline std::string toString(const DatePickerMinuteInterval &value) {
-  switch (value) {
-    case DatePickerMinuteInterval::MinuteInterval1: return "1";
-    case DatePickerMinuteInterval::MinuteInterval2: return "2";
-    case DatePickerMinuteInterval::MinuteInterval3: return "3";
-    case DatePickerMinuteInterval::MinuteInterval4: return "4";
-    case DatePickerMinuteInterval::MinuteInterval5: return "5";
-    case DatePickerMinuteInterval::MinuteInterval6: return "6";
-    case DatePickerMinuteInterval::MinuteInterval10: return "10";
-    case DatePickerMinuteInterval::MinuteInterval12: return "12";
-    case DatePickerMinuteInterval::MinuteInterval15: return "15";
-    case DatePickerMinuteInterval::MinuteInterval20: return "20";
-    case DatePickerMinuteInterval::MinuteInterval30: return "30";
-  }
-}
-enum class DatePickerMode { Date, Time, Datetime };
-
-static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, DatePickerMode &result) {
-  auto string = (std::string)value;
-  if (string == "date") { result = DatePickerMode::Date; return; }
-  if (string == "time") { result = DatePickerMode::Time; return; }
-  if (string == "datetime") { result = DatePickerMode::Datetime; return; }
-  abort();
-}
-
-static inline std::string toString(const DatePickerMode &value) {
-  switch (value) {
-    case DatePickerMode::Date: return "date";
-    case DatePickerMode::Time: return "time";
-    case DatePickerMode::Datetime: return "datetime";
-  }
-}
-enum class DatePickerPickerStyle { Compact, Spinner, Inline };
-
-static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, DatePickerPickerStyle &result) {
-  auto string = (std::string)value;
-  if (string == "compact") { result = DatePickerPickerStyle::Compact; return; }
-  if (string == "spinner") { result = DatePickerPickerStyle::Spinner; return; }
-  if (string == "inline") { result = DatePickerPickerStyle::Inline; return; }
-  abort();
-}
-
-static inline std::string toString(const DatePickerPickerStyle &value) {
-  switch (value) {
-    case DatePickerPickerStyle::Compact: return "compact";
-    case DatePickerPickerStyle::Spinner: return "spinner";
-    case DatePickerPickerStyle::Inline: return "inline";
-  }
-}
-
-class JSI_EXPORT DatePickerProps final : public ViewProps {
- public:
-  DatePickerProps() = default;
-  DatePickerProps(const PropsParserContext& context, const DatePickerProps &sourceProps, const RawProps &rawProps);
-
-#pragma mark - Props
-
-  Float date{0.0};
-  Float initialDate{0.0};
-  std::string locale{};
-  Float maximumDate{0.0};
-  Float minimumDate{0.0};
-  DatePickerMinuteInterval minuteInterval{DatePickerMinuteInterval::MinuteInterval1};
-  DatePickerMode mode{DatePickerMode::Date};
-  Float timeZoneOffsetInMinutes{0.0};
-  DatePickerPickerStyle pickerStyle{DatePickerPickerStyle::Spinner};
 };
 
 enum class AndroidDrawerLayoutKeyboardDismissMode { None, OnDrag };
@@ -342,7 +229,7 @@ static inline std::string toString(const AndroidDrawerLayoutDrawerLockMode &valu
   }
 }
 
-class JSI_EXPORT AndroidDrawerLayoutProps final : public ViewProps {
+class AndroidDrawerLayoutProps final : public ViewProps {
  public:
   AndroidDrawerLayoutProps() = default;
   AndroidDrawerLayoutProps(const PropsParserContext& context, const AndroidDrawerLayoutProps &sourceProps, const RawProps &rawProps);
@@ -357,7 +244,26 @@ class JSI_EXPORT AndroidDrawerLayoutProps final : public ViewProps {
   SharedColor statusBarBackgroundColor{};
 };
 
-class JSI_EXPORT PLYIconProps final : public ViewProps {
+class RCTFlyoutProps final : public ViewProps {
+ public:
+  RCTFlyoutProps() = default;
+  RCTFlyoutProps(const PropsParserContext& context, const RCTFlyoutProps &sourceProps, const RawProps &rawProps);
+
+#pragma mark - Props
+
+  double horizontalOffset{0.0};
+  bool isLightDismissEnabled{false};
+  bool autoFocus{false};
+  bool shouldConstrainToRootBounds{false};
+  bool isOverlayEnabled{false};
+  bool isOpen{false};
+  std::string placement{};
+  std::string showMode{};
+  int target{0};
+  double verticalOffset{0.0};
+};
+
+class PLYIconProps final : public ViewProps {
  public:
   PLYIconProps() = default;
   PLYIconProps(const PropsParserContext& context, const PLYIconProps &sourceProps, const RawProps &rawProps);
@@ -371,7 +277,23 @@ class JSI_EXPORT PLYIconProps final : public ViewProps {
   bool colorEnabled{false};
 };
 
-class JSI_EXPORT AndroidProgressBarProps final : public ViewProps {
+class RCTPopupProps final : public ViewProps {
+ public:
+  RCTPopupProps() = default;
+  RCTPopupProps(const PropsParserContext& context, const RCTPopupProps &sourceProps, const RawProps &rawProps);
+
+#pragma mark - Props
+
+  bool isOpen{false};
+  bool isLightDismissEnabled{false};
+  bool autoFocus{false};
+  double horizontalOffset{0.0};
+  double verticalOffset{0.0};
+  int target{0};
+  std::string testID{};
+};
+
+class AndroidProgressBarProps final : public ViewProps {
  public:
   AndroidProgressBarProps() = default;
   AndroidProgressBarProps(const PropsParserContext& context, const AndroidProgressBarProps &sourceProps, const RawProps &rawProps);
@@ -403,7 +325,7 @@ static inline std::string toString(const AndroidSwipeRefreshLayoutSize &value) {
   }
 }
 
-class JSI_EXPORT AndroidSwipeRefreshLayoutProps final : public ViewProps {
+class AndroidSwipeRefreshLayoutProps final : public ViewProps {
  public:
   AndroidSwipeRefreshLayoutProps() = default;
   AndroidSwipeRefreshLayoutProps(const PropsParserContext& context, const AndroidSwipeRefreshLayoutProps &sourceProps, const RawProps &rawProps);
@@ -418,7 +340,7 @@ class JSI_EXPORT AndroidSwipeRefreshLayoutProps final : public ViewProps {
   bool refreshing{false};
 };
 
-class JSI_EXPORT PullToRefreshViewProps final : public ViewProps {
+class PullToRefreshViewProps final : public ViewProps {
  public:
   PullToRefreshViewProps() = default;
   PullToRefreshViewProps(const PropsParserContext& context, const PullToRefreshViewProps &sourceProps, const RawProps &rawProps);
@@ -432,7 +354,7 @@ class JSI_EXPORT PullToRefreshViewProps final : public ViewProps {
   bool refreshing{false};
 };
 
-class JSI_EXPORT SafeAreaViewProps final : public ViewProps {
+class SafeAreaViewProps final : public ViewProps {
  public:
   SafeAreaViewProps() = default;
   SafeAreaViewProps(const PropsParserContext& context, const SafeAreaViewProps &sourceProps, const RawProps &rawProps);
@@ -442,7 +364,7 @@ class JSI_EXPORT SafeAreaViewProps final : public ViewProps {
   
 };
 
-class JSI_EXPORT AndroidHorizontalScrollContentViewProps final : public ViewProps {
+class AndroidHorizontalScrollContentViewProps final : public ViewProps {
  public:
   AndroidHorizontalScrollContentViewProps() = default;
   AndroidHorizontalScrollContentViewProps(const PropsParserContext& context, const AndroidHorizontalScrollContentViewProps &sourceProps, const RawProps &rawProps);
@@ -452,30 +374,7 @@ class JSI_EXPORT AndroidHorizontalScrollContentViewProps final : public ViewProp
   bool removeClippedSubviews{false};
 };
 
-class JSI_EXPORT SliderProps final : public ViewProps {
- public:
-  SliderProps() = default;
-  SliderProps(const PropsParserContext& context, const SliderProps &sourceProps, const RawProps &rawProps);
-
-#pragma mark - Props
-
-  bool disabled{false};
-  bool enabled{true};
-  ImageSource maximumTrackImage{};
-  SharedColor maximumTrackTintColor{};
-  double maximumValue{1.0};
-  ImageSource minimumTrackImage{};
-  SharedColor minimumTrackTintColor{};
-  double minimumValue{0.0};
-  double step{0.0};
-  std::string testID{""};
-  ImageSource thumbImage{};
-  SharedColor thumbTintColor{};
-  ImageSource trackImage{};
-  double value{0.0};
-};
-
-class JSI_EXPORT AndroidSwitchProps final : public ViewProps {
+class AndroidSwitchProps final : public ViewProps {
  public:
   AndroidSwitchProps() = default;
   AndroidSwitchProps(const PropsParserContext& context, const AndroidSwitchProps &sourceProps, const RawProps &rawProps);
@@ -493,7 +392,7 @@ class JSI_EXPORT AndroidSwitchProps final : public ViewProps {
   SharedColor trackTintColor{};
 };
 
-class JSI_EXPORT SwitchProps final : public ViewProps {
+class SwitchProps final : public ViewProps {
  public:
   SwitchProps() = default;
   SwitchProps(const PropsParserContext& context, const SwitchProps &sourceProps, const RawProps &rawProps);
@@ -510,7 +409,7 @@ class JSI_EXPORT SwitchProps final : public ViewProps {
   SharedColor trackColorForTrue{};
 };
 
-class JSI_EXPORT InputAccessoryProps final : public ViewProps {
+class InputAccessoryProps final : public ViewProps {
  public:
   InputAccessoryProps() = default;
   InputAccessoryProps(const PropsParserContext& context, const InputAccessoryProps &sourceProps, const RawProps &rawProps);
@@ -520,7 +419,17 @@ class JSI_EXPORT InputAccessoryProps final : public ViewProps {
   SharedColor backgroundColor{};
 };
 
-class JSI_EXPORT UnimplementedNativeViewProps final : public ViewProps {
+class TraceUpdateOverlayProps final : public ViewProps {
+ public:
+  TraceUpdateOverlayProps() = default;
+  TraceUpdateOverlayProps(const PropsParserContext& context, const TraceUpdateOverlayProps &sourceProps, const RawProps &rawProps);
+
+#pragma mark - Props
+
+  
+};
+
+class UnimplementedNativeViewProps final : public ViewProps {
  public:
   UnimplementedNativeViewProps() = default;
   UnimplementedNativeViewProps(const PropsParserContext& context, const UnimplementedNativeViewProps &sourceProps, const RawProps &rawProps);

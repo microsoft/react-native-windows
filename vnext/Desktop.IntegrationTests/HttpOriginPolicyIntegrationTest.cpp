@@ -15,7 +15,6 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace http = boost::beast::http;
 
-using folly::dynamic;
 using Microsoft::React::Networking::IHttpResource;
 using Microsoft::React::Networking::OriginPolicy;
 using std::make_shared;
@@ -146,10 +145,10 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
       string{server1Args.Url},
       0,                          /*requestId*/
       std::move(clientArgs.RequestHeaders),
-      dynamic::object("string", ""),  /*data*/
+      { { "string", "" } },       /*data*/
       "text",
       false,                      /*useIncrementalUpdates*/
-      0,                       /*timeout*/
+      0,                          /*timeout*/
       clientArgs.WithCredentials, /*withCredentials*/
       [](int64_t){}               /*reactCallback*/
     );
@@ -200,10 +199,10 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
       string{serverArgs.Url},
       0,                          /*requestId*/
       std::move(clientArgs.RequestHeaders),
-      dynamic::object("string", ""),  /*data*/
+      { { "string", "" } },       /*data*/
       "text",
       false,                      /*useIncrementalUpdates*/
-      0,                       /*timeout*/
+      0,                          /*timeout*/
       clientArgs.WithCredentials, /*withCredentials*/
       [](int64_t) {}              /*reactCallback*/
     );
@@ -298,12 +297,12 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
       {
         {"ValidHeader", "AnyValue"}
       },
-      dynamic::object("string", ""),  /*data*/
+      { { "string", "" } },       /*data*/
       "text",
-      false /*useIncrementalUpdates*/,
-      0 /*timeout*/,
-      false /*withCredentials*/,
-      [](int64_t) {} /*callback*/
+      false                       /*useIncrementalUpdates*/,
+      0                           /*timeout*/,
+      false                       /*withCredentials*/,
+      [](int64_t) {}              /*callback*/
     );
 
     getDataPromise.get_future().wait();
@@ -346,9 +345,9 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     TestOriginPolicy(serverArgs, clientArgs, true /*shouldSucceed*/);
   }// NoCorsCrossOriginFetchRequestSucceeds
 
-  BEGIN_TEST_METHOD_ATTRIBUTE(NoCorsCrossOriginPatchSucceededs)
+  BEGIN_TEST_METHOD_ATTRIBUTE(NoCorsCrossOriginPatchSucceeds)
   END_TEST_METHOD_ATTRIBUTE()
-  TEST_METHOD(NoCorsCrossOriginPatchSucceededs)
+  TEST_METHOD(NoCorsCrossOriginPatchSucceeds)
   {
     SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
     SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::None));
@@ -359,16 +358,16 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     ClientParams clientArgs(http::verb::patch, {{ "Content-Type", "text/plain" }});
 
     TestOriginPolicy(serverArgs, clientArgs, true /*shouldSucceed*/);
-  }// NoCorsCrossOriginPatchSucceededs
+  }// NoCorsCrossOriginPatchSucceeds
 
   // Simple-Cors — Prevents the method from being anything other than HEAD, GET or POST,
   // and the headers from being anything other than simple headers (CORS safe listed headers).
   // If any ServiceWorkers intercept these requests, they may not add or override any headers except for those that are simple headers.
   // In addition, JavaScript may not access any properties of the resulting Response.
   // This ensures that ServiceWorkers do not affect the semantics of the Web and prevents security and privacy issues arising from leaking data across domains.
-  BEGIN_TEST_METHOD_ATTRIBUTE(SimpleCorsSameOriginSucceededs)
+  BEGIN_TEST_METHOD_ATTRIBUTE(SimpleCorsSameOriginSucceeds)
   END_TEST_METHOD_ATTRIBUTE()
-  TEST_METHOD(SimpleCorsSameOriginSucceededs)
+  TEST_METHOD(SimpleCorsSameOriginSucceeds)
   {
     ServerParams serverArgs(s_port);
     serverArgs.Response.result(http::status::ok);
@@ -379,7 +378,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::SimpleCrossOriginResourceSharing));
 
     TestOriginPolicy(serverArgs, clientArgs, true /*shouldSucceed*/);
-  }// SimpleCorsSameOriginSucceededs
+  }// SimpleCorsSameOriginSucceeds
 
   BEGIN_TEST_METHOD_ATTRIBUTE(SimpleCorsCrossOriginFetchFails)
   END_TEST_METHOD_ATTRIBUTE()
@@ -802,7 +801,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     TestOriginPolicy(serverArgs, clientArgs, s_shouldFail);
 
-    Assert::Fail(L"FIX!!! Passes for the worng reason. Error: 0x80070057 : 'Invalid HTTP headers.'");
+    Assert::Fail(L"FIX!!! Passes for the wrong reason. Error: 0x80070057 : 'Invalid HTTP headers.'");
   }// FullCorsRequestWithHostHeaderFails
 
   BEGIN_TEST_METHOD_ATTRIBUTE(RequestWithProxyAuthorizationHeaderFails)

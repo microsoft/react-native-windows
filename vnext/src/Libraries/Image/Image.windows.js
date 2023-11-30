@@ -93,6 +93,7 @@ export type ImageComponentStatics = $ReadOnly<{|
   getSizeWithHeaders: typeof getSizeWithHeaders,
   prefetch: typeof prefetch,
   prefetchWithMetadata: typeof prefetchWithMetadata,
+  abortPrefetch?: number => void,
   queryCache: typeof queryCache,
   resolveAssetSource: typeof resolveAssetSource,
 |}>;
@@ -134,7 +135,8 @@ const BaseImage = (props: ImagePropsType, forwardedRef) => {
   const objectFit =
     // $FlowFixMe[prop-missing]
     style && style.objectFit
-      ? convertObjectFitToResizeMode(style.objectFit)
+      ? // $FlowFixMe[incompatible-call]
+        convertObjectFitToResizeMode(style.objectFit)
       : null;
   const resizeMode =
     // $FlowFixMe[prop-missing]
@@ -184,11 +186,12 @@ const BaseImage = (props: ImagePropsType, forwardedRef) => {
               return (
                 <ImageViewNativeComponent
                   accessibilityState={_accessibilityState}
-                  accessibilityLabel={accessibilityLabel}
-                  accessible={props.alt !== undefined ? true : props.accessible}
                   {...restProps}
+                  accessible={props.alt !== undefined ? true : props.accessible}
+                  accessibilityLabel={accessibilityLabel ?? props.alt}
                   ref={forwardedRef}
                   style={style}
+                  // $FlowFixMe[incompatible-type]
                   resizeMode={resizeMode}
                   tintColor={tintColor}
                   source={sources}

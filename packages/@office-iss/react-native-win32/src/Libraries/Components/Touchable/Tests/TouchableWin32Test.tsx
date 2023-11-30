@@ -5,7 +5,7 @@ import {NativeSyntheticEvent, StyleSheet, Text, ViewStyle } from 'react-native';
 import {Insets} from 'react-native/types/public/Insets';
 import { TextWin32 } from '../../Text/TextWin32';
 import { ViewWin32 } from '../../View/ViewWin32';
-import { IViewWin32Props, IKeyboardEvent } from '../../View/ViewWin32.Props';
+import { IViewWin32Props, IKeyboardEvent } from '../../View/ViewPropTypes';
 import { TouchableWin32 } from '../TouchableWin32';
 import { IPressEvent, IRenderChild } from '../TouchableWin32.Types';
 import { ITouchableWin32State } from '../TouchableWin32.Props';
@@ -193,7 +193,7 @@ interface ITouchableWin32HighlightComponentProps extends ITouchableWin32Highligh
 
 /**
  * Example implementation of TouchableHighlight - not meant for use outside these examples
- * The main difference between a ful TouchableHiglight implementation and this example is that
+ * The main difference between a full TouchableHighlight implementation and this example is that
  * TouchableHighlight should manipulate the opacity of the wrapped view to display the underlay color.
  * This example merely uses hard coded color values to distinguish between different control states
  */
@@ -263,12 +263,12 @@ class TouchableWin32HighlightComponent extends React.Component<ITouchableWin32Hi
   private readonly _touchableHandleKeyPressDown = (ev: IKeyboardEvent) => {
     this.props.onKeyPressDown && this.props.onKeyPressDown(ev);
   }
-  private readonly _mouseEnter = (): void => {
-    this.props.onMouseEnter && this.props.onMouseEnter();
+  private readonly _mouseEnter = (mouseEvent): void => {
+    this.props.onMouseEnter && this.props.onMouseEnter(mouseEvent);
     this.setState({ isMouseIn: true });
   };
-  private readonly _mouseLeave = (): void => {
-    this.props.onMouseLeave && this.props.onMouseLeave();
+  private readonly _mouseLeave = (mouseEvent): void => {
+    this.props.onMouseLeave && this.props.onMouseLeave(mouseEvent);
     this.setState({ isMouseIn: false });
   };
   private readonly _onFocus = (ev: NativeSyntheticEvent<{}>): void => {
@@ -284,7 +284,7 @@ class TouchableWin32HighlightComponent extends React.Component<ITouchableWin32Hi
    * The generated style uses hard-coded color values,
    * though it is trivial to pass these values as props.
    * This is an example of a render style (one that is a
-   * funtion passed on to TouchableWin32 and resolved according
+   * function passed on to TouchableWin32 and resolved according
    * to the internal state of TouchableWin32).
    */
   private readonly _generateStyle = (state: ITouchableWin32State): ViewStyle => {

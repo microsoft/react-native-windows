@@ -1,8 +1,221 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Fri, 20 Jan 2023 06:17:54 GMT and should not be manually modified.
+This log was last generated on Sat, 21 Oct 2023 05:16:09 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.80
+
+Sat, 21 Oct 2023 05:16:09 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.30
+- Bump @rnw-scripts/eslint-config to v1.2.4
+- Bump @rnw-scripts/just-task to v2.3.18
+
+## 0.0.0-canary.79
+
+Thu, 12 Oct 2023 05:15:54 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.29
+- Bump @rnw-scripts/eslint-config to v1.2.3
+- Bump @rnw-scripts/just-task to v2.3.17
+
+## 0.0.0-canary.78
+
+Fri, 22 Sep 2023 05:13:32 GMT
+
+### Changes
+
+- Create new CLI init-windows command (jthysell@microsoft.com)
+
+## 0.0.0-canary.77
+
+Wed, 20 Sep 2023 05:17:49 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.28
+- Bump @rnw-scripts/just-task to v2.3.16
+
+## 0.0.0-canary.76
+
+Tue, 08 Aug 2023 05:13:00 GMT
+
+### Changes
+
+- Properly detect the correct machine architecture (jthysell@microsoft.com)
+
+## 0.0.0-canary.75
+
+Fri, 28 Jul 2023 05:14:53 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.27
+- Bump @rnw-scripts/just-task to v2.3.15
+
+## 0.0.0-canary.74
+
+Wed, 26 Jul 2023 05:15:47 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.26
+- Bump @rnw-scripts/just-task to v2.3.14
+
+## 0.0.0-canary.73
+
+Fri, 14 Jul 2023 05:17:06 GMT
+
+### Changes
+
+- integration 6/28 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.25
+- Bump @rnw-scripts/eslint-config to v1.2.2
+- Bump @rnw-scripts/jest-unittest-config to v1.5.6
+- Bump @rnw-scripts/just-task to v2.3.13
+- Bump @rnw-scripts/ts-config to v2.0.5
+
+## 0.0.0-canary.72
+
+Sat, 01 Jul 2023 05:14:42 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.24
+- Bump @rnw-scripts/eslint-config to v1.2.1
+- Bump @rnw-scripts/just-task to v2.3.12
+
+## 0.0.0-canary.71
+
+Tue, 13 Jun 2023 05:15:41 GMT
+
+### Changes
+
+- ABI-safe Hermes API and new JSI for Node-API (vmorozov@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.23
+- Bump @rnw-scripts/eslint-config to v1.2.0
+
+## 0.0.0-canary.70
+
+Wed, 07 Jun 2023 05:16:11 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.22
+- Bump @rnw-scripts/jest-unittest-config to v1.5.5
+- Bump @rnw-scripts/just-task to v2.3.11
+
+## 0.0.0-canary.69
+
+Tue, 06 Jun 2023 19:06:45 GMT
+
+### Changes
+
+- integrate RN nightly 5/19/23 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.21
+- Bump @rnw-scripts/jest-unittest-config to v1.5.4
+- Bump @rnw-scripts/just-task to v2.3.10
+
+## 0.0.0-canary.68
+
+Tue, 16 May 2023 05:16:30 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.20
+- Bump @rnw-scripts/jest-unittest-config to v1.5.3
+- Bump @rnw-scripts/just-task to v2.3.9
+
+## 0.0.0-canary.67
+
+Mon, 08 May 2023 17:41:04 GMT
+
+### Changes
+
+- Fix typos and add `cspell` configuration (jthysell@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.19
+- Bump @rnw-scripts/just-task to v2.3.8
+
+## 0.0.0-canary.66
+
+Tue, 25 Apr 2023 05:16:58 GMT
+
+### Changes
+
+- Update Node to 16 (34109996+chiaramooney@users.noreply.github.com)
+- Upgrade to WinUI 2.8 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.18
+- Bump @rnw-scripts/eslint-config to v1.1.16
+- Bump @rnw-scripts/jest-unittest-config to v1.5.2
+- Bump @rnw-scripts/just-task to v2.3.7
+- Bump @rnw-scripts/ts-config to v2.0.4
+
+## 0.0.0-canary.65
+
+Tue, 21 Mar 2023 21:21:55 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.17
+- Bump @rnw-scripts/jest-unittest-config to v1.5.1
+- Bump @rnw-scripts/just-task to v2.3.6
+
+## 0.0.0-canary.64
+
+Thu, 02 Mar 2023 06:14:22 GMT
+
+### Changes
+
+- Merge branch 'YajurG-8875' of https://github.com/YajurG/react-native-windows into YajurG-8875 (email not defined)
+- Bump @react-native-windows/fs to v0.0.0-canary.16
+
+## 0.0.0-canary.63
+
+Sat, 25 Feb 2023 06:13:36 GMT
+
+### Changes
+
+- Move `@typescript-eslint/eslint-plugin` to `devDependencies` so they don't get installed by consumers (4123478+tido64@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.15
+
+## 0.0.0-canary.62
+
+Fri, 10 Feb 2023 06:15:30 GMT
+
+### Changes
+
+- Use latest Hermes ABI-safe API (vmoroz@users.noreply.github.com)
+
+## 0.0.0-canary.61
+
+Thu, 09 Feb 2023 06:16:43 GMT
+
+### Changes
+
+- integrate 2/1/23 (tatianakapos@microsoft.com)
+- Bump typescript version (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.14
+
+## 0.0.0-canary.60
+
+Thu, 02 Feb 2023 06:13:29 GMT
+
+### Changes
+
+- bump hermes version (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.59
+
+Sat, 28 Jan 2023 06:12:49 GMT
+
+### Changes
+
+- integrate 01/11/23 (tatianakapos@microsoft.com)
 
 ## 0.0.0-canary.58
 

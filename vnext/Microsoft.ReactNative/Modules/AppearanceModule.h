@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "../../codegen/NativeAppearanceSpec.g.h"
+#include "codegen/NativeAppearanceSpec.g.h"
 #include <React.h>
 #include <winrt/Windows.UI.ViewManagement.h>
 
@@ -17,6 +17,9 @@ struct Appearance : std::enable_shared_from_this<Appearance> {
 
   REACT_INIT(Initialize)
   void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
+
+  REACT_METHOD(setColorScheme)
+  void setColorScheme(std::string style) noexcept;
 
   REACT_SYNC_METHOD(getColorScheme)
   std::optional<std::string> getColorScheme() noexcept;

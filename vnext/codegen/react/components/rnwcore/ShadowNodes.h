@@ -30,17 +30,6 @@ using ActivityIndicatorViewShadowNode = ConcreteViewShadowNode<
     ActivityIndicatorViewEventEmitter,
     ActivityIndicatorViewState>;
 
-JSI_EXPORT extern const char DatePickerComponentName[];
-
-/*
- * `ShadowNode` for <DatePicker> component.
- */
-using DatePickerShadowNode = ConcreteViewShadowNode<
-    DatePickerComponentName,
-    DatePickerProps,
-    DatePickerEventEmitter,
-    DatePickerState>;
-
 JSI_EXPORT extern const char AndroidDrawerLayoutComponentName[];
 
 /*
@@ -95,6 +84,17 @@ using SwitchShadowNode = ConcreteViewShadowNode<
     SwitchProps,
     SwitchEventEmitter,
     SwitchState>;
+
+JSI_EXPORT extern const char TraceUpdateOverlayComponentName[];
+
+/*
+ * `ShadowNode` for <TraceUpdateOverlay> component.
+ */
+using TraceUpdateOverlayShadowNode = ConcreteViewShadowNode<
+    TraceUpdateOverlayComponentName,
+    TraceUpdateOverlayProps,
+    TraceUpdateOverlayEventEmitter,
+    TraceUpdateOverlayState>;
 
 JSI_EXPORT extern const char UnimplementedNativeViewComponentName[];
 

@@ -16,7 +16,7 @@ namespace SampleLibraryCpp {
 
 // Point struct can be automatically serialized/deserialized thanks to the custom attributes.
 // Alternatively, we can provide WriteValue and ReadValue functions.
-// See Microsoft.ReactNaitve.Cxx.UnitTests for examples.
+// See Microsoft.ReactNative.Cxx.UnitTests for examples.
 REACT_STRUCT(Point)
 struct Point {
   REACT_FIELD(X, L"x")

@@ -1,6 +1,5 @@
 /dist
 /flow
-/flow-typed
 /index.*
 /interface.*
 /IntegrationTests

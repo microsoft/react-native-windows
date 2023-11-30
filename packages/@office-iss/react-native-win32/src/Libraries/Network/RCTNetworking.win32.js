@@ -1,6 +1,8 @@
 /**
- * Copyright (c) Microsoft Corporation.
- * Licensed under the MIT License.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @flow strict-local
  * @format
@@ -9,23 +11,10 @@
 'use strict';
 
 import RCTDeviceEventEmitter from '../EventEmitter/RCTDeviceEventEmitter';
-const RCTNetworkingNative =
-  require('../BatchedBridge/NativeModules').Networking; // [Windows]
-import {type NativeResponseType} from './XMLHttpRequest';
-import convertRequestBody, {type RequestBody} from './convertRequestBody';
 import {type EventSubscription} from '../vendor/emitter/EventEmitter';
-
-type Header = [string, string];
-// Convert FormData headers to arrays, which are easier to consume in
-// native on Android.
-// $FlowFixMe[unclear-type] Unclear type. Using `any` type is not safe.
-function convertHeadersMapToArray(headers: Object): Array<Header> {
-  const headerArray: Array<Header> = [];
-  for (const name in headers) {
-    headerArray.push([name, headers[name]]);
-  }
-  return headerArray;
-}
+import convertRequestBody, {type RequestBody} from './convertRequestBody';
+import NativeNetworkingIOS from './NativeNetworkingIOS';
+import {type NativeResponseType} from './XMLHttpRequest';
 
 type RCTNetworkingEventDefinitions = $ReadOnly<{
   didSendNetworkData: [
@@ -73,11 +62,6 @@ type RCTNetworkingEventDefinitions = $ReadOnly<{
   ],
 }>;
 
-let _requestId = 1;
-function generateRequestId(): number {
-  return _requestId++;
-}
-
 const RCTNetworking = {
   addListener<K: $Keys<RCTNetworkingEventDefinitions>>(
     eventType: K,
@@ -100,13 +84,11 @@ const RCTNetworking = {
     callback: (requestId: number) => void,
     withCredentials: boolean,
   ) {
-    const requestId = generateRequestId();
     const body = convertRequestBody(data);
-    RCTNetworkingNative.sendRequest(
+    NativeNetworkingIOS.sendRequest(
       {
         method,
         url,
-        requestId,
         data: {...body, trackingName},
         headers,
         responseType,
@@ -119,12 +101,12 @@ const RCTNetworking = {
   },
 
   abortRequest(requestId: number) {
-    RCTNetworkingNative.abortRequest(requestId);
+    NativeNetworkingIOS.abortRequest(requestId);
   },
 
   clearCookies(callback: (result: boolean) => void) {
-    RCTNetworkingNative.clearCookies(callback);
+    NativeNetworkingIOS.clearCookies(callback);
   },
 };
 
-module.exports = RCTNetworking;
+export default RCTNetworking;

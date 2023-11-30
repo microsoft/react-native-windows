@@ -12,7 +12,7 @@ export async function tryMkdir(dir: string): Promise<void> {
   } catch (err) {}
 }
 
-export async function ensureCppAppProject(folder: string, name: string, useWinUI3?: boolean, useHermes?: boolean, useExperimentaNuget?: boolean) {
+export async function ensureCppAppProject(folder: string, name: string, useWinUI3?: boolean, useHermes?: boolean, useExperimentalNuget?: boolean) {
   const windowsDir = path.join(folder, 'windows');
   if (fs.existsSync(windowsDir)) {
     await fs.rmdir(windowsDir, {recursive: true});
@@ -27,7 +27,7 @@ export async function ensureCppAppProject(folder: string, name: string, useWinUI
     projectGuidLower: testProjectGuid.toLowerCase(),
     useWinUI3: !!useWinUI3,
     useHermes: !!useHermes,
-    useExperimentalNuget: !!useExperimentaNuget,
+    useExperimentalNuget: !!useExperimentalNuget,
   };
 
   await copyAndReplace(
@@ -55,7 +55,7 @@ export async function ensureCppAppProject(folder: string, name: string, useWinUI
   );
 }
 
-export async function ensureCSharpAppProject(folder: string, name: string, useWinUI3?: boolean, useHermes?: boolean, useExperimentaNuget?: boolean) {
+export async function ensureCSharpAppProject(folder: string, name: string, useWinUI3?: boolean, useHermes?: boolean, useExperimentalNuget?: boolean) {
   const windowsDir = path.join(folder, 'windows');
   if (fs.existsSync(windowsDir)) {
     await fs.rmdir(windowsDir, {recursive: true});
@@ -70,7 +70,7 @@ export async function ensureCSharpAppProject(folder: string, name: string, useWi
     projectGuidLower: testProjectGuid.toLowerCase(),
     useWinUI3: !!useWinUI3,
     useHermes: !!useHermes,
-    useExperimentalNuget: !!useExperimentaNuget,
+    useExperimentalNuget: !!useExperimentalNuget,
   };
 
   await copyAndReplace(

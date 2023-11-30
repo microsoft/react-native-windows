@@ -17,7 +17,7 @@
 
 // Assuming maximum 8 arguments.
 // TODO :: We assume this magic number "8" at a couple of other places without
-// proper static verfications.
+// proper static verifications.
 #define SYSTRACE_SECTION_MAX_ARGS 8
 
 namespace facebook {

@@ -31,7 +31,7 @@ addResolvePath(__dirname);
 
 const depcheck = require('depcheck');
 
-option('updateSnapshot', {alias: 'u', boolean: true})
+option('updateSnapshot', {alias: 'u', boolean: true});
 
 task('clean', cleanTask(['lib-commonjs']));
 
@@ -46,22 +46,21 @@ task('rebuild', series('clean', 'build'));
 
 task('depcheck', async () => {
   const depcheckConfig = path.join(process.cwd(), 'depcheck.config.js');
-  const userDepcheckOptions = fs.existsSync(depcheckConfig) ? require(depcheckConfig) : {};
+  const userDepcheckOptions = fs.existsSync(depcheckConfig)
+    ? require(depcheckConfig)
+    : {};
   const depcheckOptions = {
     ...userDepcheckOptions,
-    specials: [
-      depcheck.special.eslint,
-      depcheck.special.jest,
-    ],
-  }
+    specials: [depcheck.special.eslint, depcheck.special.jest],
+  };
 
   const result = await depcheck(process.cwd(), depcheckOptions);
   if (Object.keys(result.missing).length !== 0) {
     logger.error(
       `The following dependencies are used, but not declared in "package.json": ` +
-      `${JSON.stringify(result.missing, null, 2)}`
+        `${JSON.stringify(result.missing, null, 2)}`,
     );
-    
+
     process.exit(1);
   }
 });
@@ -78,7 +77,7 @@ task(
   'unitTest',
   jestTask({
     config: require.resolve('@rnw-scripts/jest-unittest-config'),
-    updateSnapshot: argv().updateSnapshot
+    updateSnapshot: argv().updateSnapshot,
   }),
 );
 task(
@@ -86,13 +85,17 @@ task(
   jestTask({
     config: require.resolve('@rnw-scripts/jest-e2e-config'),
     runInBand: true,
-    updateSnapshot: argv().updateSnapshot
+    updateSnapshot: argv().updateSnapshot,
   }),
 );
 
-const windowsOnly = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'package.json'))).windowsOnly;
+const windowsOnly = JSON.parse(
+  fs.readFileSync(path.join(process.cwd(), 'package.json')),
+).windowsOnly;
 if (os.platform() !== 'win32' && windowsOnly === true) {
-  task('test', () => logger.warn('Skipping tests since "package.json" has set "windowsOnly"'));
+  task('test', () =>
+    logger.warn('Skipping tests since "package.json" has set "windowsOnly"'),
+  );
 } else {
   const hasE2eTests = fs.existsSync(path.join(process.cwd(), 'src', 'e2etest'));
   const hasUnitTests = fs.existsSync(path.join(process.cwd(), 'src', 'test'));

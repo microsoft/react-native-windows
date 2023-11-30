@@ -12,7 +12,7 @@
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
-    <WindowsTargetPlatformMinVersion>10.0.17134.0</WindowsTargetPlatformMinVersion>
+    <WindowsTargetPlatformMinVersion>10.0.17763.0</WindowsTargetPlatformMinVersion>
     <ReactNativeWindowsAllowNugetNpmMismatch>true</ReactNativeWindowsAllowNugetNpmMismatch>
     <ProjectPriIndexName>.</ProjectPriIndexName>
     <RunAutolinkCheck>false</RunAutolinkCheck>

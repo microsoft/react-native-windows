@@ -15,7 +15,7 @@ namespace facebook::react {
  */
 class WindowsTextInputState final {
  public:
-  int mostRecentEventCount{0};
+  int64_t mostRecentEventCount{0};
 
   /**
    * Stores an opaque cache ID used on the Java side to refer to a specific
@@ -45,42 +45,26 @@ class WindowsTextInputState final {
   ParagraphAttributes paragraphAttributes{};
 
   /**
-   * Default TextAttributes used if we need to construct a new Fragment.
-   * Only used if text is inserted into an AttributedString with no existing
-   * Fragments.
-   */
-  TextAttributes defaultTextAttributes;
-
-  /**
-   * Default parent ShadowView used if we need to construct a new Fragment.
-   * Only used if text is inserted into an AttributedString with no existing
-   * Fragments.
-   */
-  ShadowView defaultParentShadowView;
-
-  /**
    * Communicates Android theme padding back to the ShadowNode / Component
    * Descriptor for layout.
    */
-  float defaultThemePaddingStart{NAN};
-  float defaultThemePaddingEnd{NAN};
-  float defaultThemePaddingTop{NAN};
-  float defaultThemePaddingBottom{NAN};
+  double defaultThemePaddingStart{NAN};
+  double defaultThemePaddingEnd{NAN};
+  double defaultThemePaddingTop{NAN};
+  double defaultThemePaddingBottom{NAN};
 
   WindowsTextInputState(
       int64_t mostRecentEventCount,
       AttributedString attributedString,
       AttributedString reactTreeAttributedString,
       ParagraphAttributes paragraphAttributes,
-      TextAttributes defaultTextAttributes,
-      ShadowView defaultParentShadowView,
-      float defaultThemePaddingStart,
-      float defaultThemePaddingEnd,
-      float defaultThemePaddingTop,
-      float defaultThemePaddingBottom);
+      double defaultThemePaddingStart,
+      double defaultThemePaddingEnd,
+      double defaultThemePaddingTop,
+      double defaultThemePaddingBottom);
 
   WindowsTextInputState() = default;
-  WindowsTextInputState(WindowsTextInputState const &previousState, folly::dynamic const &data);
+  WindowsTextInputState(const WindowsTextInputState &previousState, const folly::dynamic &data);
   folly::dynamic getDynamic() const;
   MapBuffer getMapBuffer() const;
 };

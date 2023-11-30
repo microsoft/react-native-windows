@@ -10,9 +10,9 @@
 
 import type {ViewProps} from './ViewPropTypes';
 
+import ReactNativeFeatureFlags from '../../ReactNative/ReactNativeFeatureFlags';
 import flattenStyle from '../../StyleSheet/flattenStyle';
 import TextAncestor from '../../Text/TextAncestor';
-import {getAccessibilityRoleFromRole} from '../../Utilities/AcessibilityMapping';
 import ViewNativeComponent from './ViewNativeComponent';
 import * as React from 'react';
 import invariant from 'invariant'; // [Windows]
@@ -38,8 +38,10 @@ const View: React.AbstractComponent<
       accessibilityElementsHidden,
       accessibilityLabel,
       accessibilityLabelledBy,
+      accessibilityLevel, // Windows
       accessibilityLiveRegion,
-      accessibilityRole,
+      accessibilityPosInSet, // Windows
+      accessibilitySetSize, // Windows
       accessibilityState,
       accessibilityValue,
       'aria-busy': ariaBusy,
@@ -49,18 +51,21 @@ const View: React.AbstractComponent<
       'aria-hidden': ariaHidden,
       'aria-label': ariaLabel,
       'aria-labelledby': ariaLabelledBy,
+      'aria-level': ariaLevel,
       'aria-live': ariaLive,
+      'aria-posinset': ariaPosinset, // Windows
       'aria-selected': ariaSelected,
+      'aria-setsize': ariaSetsize, // Windows
       'aria-valuemax': ariaValueMax,
       'aria-valuemin': ariaValueMin,
       'aria-valuenow': ariaValueNow,
       'aria-valuetext': ariaValueText,
       focusable,
+      disabled,
       id,
       importantForAccessibility,
       nativeID,
       pointerEvents,
-      role,
       tabIndex,
       ...otherProps
     }: ViewProps,
@@ -105,13 +110,26 @@ const View: React.AbstractComponent<
     // $FlowFixMe[underconstrained-implicit-instantiation]
     let style = flattenStyle(otherProps.style);
 
+    // $FlowFixMe[sketchy-null-mixed]
     const newPointerEvents = style?.pointerEvents || pointerEvents;
+    const collapsableOverride =
+      ReactNativeFeatureFlags.shouldForceUnflattenForElevation()
+        ? {
+            collapsable:
+              style != null && style.elevation != null && style.elevation !== 0
+                ? false
+                : otherProps.collapsable,
+          }
+        : {};
 
     const _keyDown = (event: KeyEvent) => {
       if (otherProps.keyDownEvents && event.isPropagationStopped() !== true) {
         // $FlowFixMe - keyDownEvents was already checked to not be undefined
         for (const el of otherProps.keyDownEvents) {
-          if (event.nativeEvent.code == el.code && el.handledEventPhase == 3) {
+          if (
+            event.nativeEvent.code === el.code &&
+            el.handledEventPhase === 3
+          ) {
             event.stopPropagation();
           }
         }
@@ -123,7 +141,10 @@ const View: React.AbstractComponent<
       if (otherProps.keyUpEvents && event.isPropagationStopped() !== true) {
         // $FlowFixMe - keyDownEvents was already checked to not be undefined
         for (const el of otherProps.keyUpEvents) {
-          if (event.nativeEvent.code == el.code && el.handledEventPhase == 3) {
+          if (
+            event.nativeEvent.code === el.code &&
+            el.handledEventPhase === 3
+          ) {
             event.stopPropagation();
           }
         }
@@ -135,7 +156,10 @@ const View: React.AbstractComponent<
       if (otherProps.keyDownEvents && event.isPropagationStopped() !== true) {
         // $FlowFixMe - keyDownEvents was already checked to not be undefined
         for (const el of otherProps.keyDownEvents) {
-          if (event.nativeEvent.code == el.code && el.handledEventPhase == 1) {
+          if (
+            event.nativeEvent.code === el.code &&
+            el.handledEventPhase === 1
+          ) {
             event.stopPropagation();
           }
         }
@@ -147,7 +171,10 @@ const View: React.AbstractComponent<
       if (otherProps.keyUpEvents && event.isPropagationStopped() !== true) {
         // $FlowFixMe - keyDownEvents was already checked to not be undefined
         for (const el of otherProps.keyUpEvents) {
-          if (event.nativeEvent.code == el.code && el.handledEventPhase == 1) {
+          if (
+            event.nativeEvent.code === el.code &&
+            el.handledEventPhase === 1
+          ) {
             event.stopPropagation();
           }
         }
@@ -176,12 +203,25 @@ const View: React.AbstractComponent<
         }
         return child;
       });
-      if (updatedChildren.length == 1) {
+      if (updatedChildren.length === 1) {
         return updatedChildren[0];
       } else {
         return updatedChildren;
       }
     };
+
+    const _focusable = tabIndex !== undefined ? !tabIndex : focusable;
+    const _accessible =
+      importantForAccessibility === 'no-hide-descendants'
+        ? false
+        : otherProps.accessible;
+
+    if (_focusable === true && _accessible === false) {
+      console.warn(
+        'All focusable views should report proper accessibility information. Views marked as focusable should always be accessible.',
+      );
+    }
+
     // Windows]
 
     return (
@@ -198,17 +238,19 @@ const View: React.AbstractComponent<
           return (
             <ViewNativeComponent
               {...otherProps}
+              {...collapsableOverride}
               accessibilityLiveRegion={
                 ariaLive === 'off'
                   ? 'none'
                   : ariaLive ?? accessibilityLiveRegion
               }
               accessibilityLabel={ariaLabel ?? accessibilityLabel}
-              focusable={tabIndex !== undefined ? !tabIndex : focusable}
+              accessibilityLevel={ariaLevel ?? accessibilityLevel}
+              accessibilityPosInSet={ariaPosinset ?? accessibilityPosInSet}
+              accessibilitySetSize={ariaSetsize ?? accessibilitySetSize}
+              focusable={_focusable}
+              disabled={disabled}
               accessibilityState={_accessibilityState}
-              accessibilityRole={
-                role ? getAccessibilityRoleFromRole(role) : accessibilityRole
-              }
               accessibilityElementsHidden={
                 ariaHidden ?? accessibilityElementsHidden
               }
@@ -221,6 +263,7 @@ const View: React.AbstractComponent<
               }
               nativeID={id ?? nativeID}
               style={style}
+              // $FlowFixMe[incompatible-type]
               pointerEvents={newPointerEvents}
               ref={forwardedRef}
               onKeyDown={_keyDown}
@@ -228,11 +271,7 @@ const View: React.AbstractComponent<
               onKeyUp={_keyUp}
               onKeyUpCapture={_keyUpCapture}
               // [Windows
-              accessible={
-                importantForAccessibility === 'no-hide-descendants'
-                  ? false
-                  : otherProps.accessible
-              }
+              accessible={_accessible}
               children={
                 importantForAccessibility === 'no-hide-descendants'
                   ? childrenWithImportantForAccessibility(otherProps.children)

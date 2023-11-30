@@ -98,7 +98,7 @@
 #endif // _Intl_deprecated_
 
 #if !defined(_Oleo_deprecated_)
-// Office specifix annotation used by the OLEO effort
+// Office specific annotation used by the OLEO effort
 #define _Oleo_deprecated_(NewFunctionName) __oacr_oleo_deprecated(NewFunctionName)
 #endif // _Oleo_deprecated_
 

@@ -15,6 +15,14 @@
     <TurboModule_SourcePath Condition="'$(TurboModule_SourcePath)' == '' AND Exists('$(MSBuildThisFileDirectory)ReactCommon\TurboModule.h')">$(MSBuildThisFileDirectory)</TurboModule_SourcePath>
     <Bridging_SourcePath Condition="'$(Bridging_SourcePath)' == '' AND '$(ReactNativeDir)' != ''">$(ReactNativeDir)\ReactCommon\react\bridging</Bridging_SourcePath>
     <Bridging_SourcePath Condition="'$(Bridging_SourcePath)' == '' AND Exists('$(MSBuildThisFileDirectory)ReactCommon\CallbackWrapper.h')">$(MSBuildThisFileDirectory)ReactCommon</Bridging_SourcePath>
+
+    <NodeApiJsiCommitHash>53b897b03c1c7e57c3372acc6234447a44e150d6</NodeApiJsiCommitHash>
+    <NodeApiJsiLocal Condition="Exists('$(MSBuildThisFileDirectory)NodeApiJsiRuntime.cpp')">true</NodeApiJsiLocal>
+    <NodeApiJsiDir Condition="'$(NodeApiJsiDir)' == '' AND '$(NodeApiJsiLocal)' == 'true'">$(MSBuildThisFileDirectory)</NodeApiJsiDir>
+    <NodeApiJsiDir Condition="'$(NodeApiJsiDir)' == '' AND '$(ReactNativeDir)' != ''">$(ReactNativeDir)\..\..\node_modules\.node-api-jsi\node-api-jsi-$(NodeApiJsiCommitHash)\</NodeApiJsiDir>
+    <NodeApiJsiSrcDir Condition="'$(NodeApiJsiSrcDir)' == '' AND '$(NodeApiJsiLocal)' != 'true'">$(NodeApiJsiDir)src\</NodeApiJsiSrcDir>
+    <NodeApiJsiSrcDir Condition="'$(NodeApiJsiSrcDir)' == ''">$(MSBuildThisFileDirectory)</NodeApiJsiSrcDir>
+    <NodeApiDir Condition="'$(NodeApiDir)' == ''">$(NodeApiJsiDir)node-api\</NodeApiDir>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -24,8 +32,11 @@
         $(CallInvoker_SourcePath);
         $(TurboModule_SourcePath);
         $(Bridging_SourcePath);
+        $(NodeApiDir);
+        $(NodeApiJsiSrcDir);
         %(AdditionalIncludeDirectories)
       </AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>JSI_VERSION=10;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Midl>
       <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -41,7 +52,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)CoreApp.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DesktopWindowBridge.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\LongLivedJsiValue.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\NodeApiJsiRuntime.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TurboModuleProvider.h" />
     <ClInclude Include="$(CallInvoker_SourcePath)\ReactCommon\CallInvoker.h" />
     <ClInclude Include="$(CallInvoker_SourcePath)\ReactCommon\SchedulerPriority.h" />
@@ -92,6 +102,14 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Media.Media3D.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Navigation.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Shapes.h" />
+    <ClInclude Include="$(NodeApiDir)js_native_api.h" />
+    <ClInclude Include="$(NodeApiDir)js_native_api_types.h" />
+    <ClInclude Include="$(NodeApiDir)js_runtime_api.h" />
+    <ClInclude Include="$(NodeApiJsiSrcDir)ApiLoaders\NodeApi.h" />
+    <ClInclude Include="$(NodeApiJsiSrcDir)ApiLoaders\NodeApi.inc" />
+    <ClInclude Include="$(NodeApiJsiSrcDir)ApiLoaders\JSRuntimeApi.h" />
+    <ClInclude Include="$(NodeApiJsiSrcDir)ApiLoaders\JSRuntimeApi.inc" />
+    <ClInclude Include="$(NodeApiJsiSrcDir)NodeApiJsiRuntime.h" />
   </ItemGroup>
   <ItemGroup Condition="'$(BuildMSRNCxx)' != 'false'">
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\JsiAbiApi.cpp" />
@@ -104,16 +122,18 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)ReactPromise.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TurboModuleProvider.cpp" />
   </ItemGroup>
-  <ItemGroup Condition="'$(BuildMSRNCxx)' != 'false' and '$(BuildMSRNCxxReactCommon)' != 'false'">
-    <!--
-      Make sure all FB code uses the same flags to improve build parallelism.
-      This is because msbuild has to invoke different cl.exe invocations for each
-      set of flags and msbuild inside a project is single threaded.
-    -->
+  <ItemGroup Condition="'$(BuildMSRNCxxJsi)' != 'false'">
     <ClCompile Include="$(JSI_SourcePath)\jsi\jsi.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <DisableSpecificWarnings>%(DisableSpecificWarnings);4100</DisableSpecificWarnings>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup Condition="'$(BuildMSRNCxxReactCommon)' != 'false'">
+    <!--
+      Make sure all Meta code uses the same flags to improve build parallelism.
+      This is because msbuild has to invoke different cl.exe invocations for each
+      set of flags and msbuild inside a project is single threaded.
+    -->
     <ClCompile Include="$(Bridging_SourcePath)\LongLivedObject.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <DisableSpecificWarnings>%(DisableSpecificWarnings);4100</DisableSpecificWarnings>
@@ -127,13 +147,23 @@
       <DisableSpecificWarnings>%(DisableSpecificWarnings);4100</DisableSpecificWarnings>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup Condition="'$(BuildMSRNCxxNodeApiJsi)' != 'false'">
+    <ClCompile Include="$(NodeApiJsiSrcDir)ApiLoaders\NodeApi.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(NodeApiJsiSrcDir)ApiLoaders\JSRuntimeApi.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(NodeApiJsiSrcDir)NodeApiJsiRuntime.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup Condition="'$(BuildMSRNCxxNodeApiJsiLoader)' != 'false'">
+    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\NodeApiJsiLoader.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)README.md" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(BuildMSRNCxx)' != 'false' and '$(RNExternalReferences)' != 'true'">
-    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\NodeApiJsiRuntime.cpp">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <ExcludedFromBuild Condition="'$(UseV8)' != 'true'">true</ExcludedFromBuild>
-    </ClCompile>
   </ItemGroup>
 </Project>

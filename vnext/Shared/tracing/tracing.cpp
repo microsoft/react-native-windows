@@ -377,11 +377,8 @@ void initializeJSHooks(jsi::Runtime &runtime, bool isProfiling) {
 
 void initializeETW() {
   // Register the provider
-  static bool etwInitialized = false;
-  if (!etwInitialized) {
-    TraceLoggingRegister(g_hTraceLoggingProvider);
-    etwInitialized = true;
-  }
+  static std::once_flag etwInitialized;
+  std::call_once(etwInitialized, [] { TraceLoggingRegister(g_hTraceLoggingProvider); });
 }
 
 void log(const char *msg) {

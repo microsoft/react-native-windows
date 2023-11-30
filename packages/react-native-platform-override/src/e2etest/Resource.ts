@@ -20,7 +20,7 @@ import {getNpmPackage} from '../PackageUtils';
  * Helper to acquire a scratch directory which must be deleted using the
  * returned callback.
  */
-export async function acquireSratchDirectory(): Promise<
+export async function acquireScratchDirectory(): Promise<
   [string, () => Promise<void>]
 > {
   const dir = path.join(
@@ -40,17 +40,17 @@ export async function acquireSratchDirectory(): Promise<
 export async function usingScratchDirectory<T>(
   fn: (dir: string) => Promise<T>,
 ) {
-  return usingAcquired(fn, await acquireSratchDirectory());
+  return usingAcquired(fn, await acquireScratchDirectory());
 }
 
 /**
- * Helper to acquire an isolated GitReactFileRepository whuch ust be deleted
+ * Helper to acquire an isolated GitReactFileRepository which must be deleted
  * using the returned callback.
  */
 export async function acquireGitRepo(): Promise<
   [GitReactFileRepository, () => Promise<void>]
 > {
-  const [dir, dispose] = await acquireSratchDirectory();
+  const [dir, dispose] = await acquireScratchDirectory();
   const gitReactRepo = await GitReactFileRepository.createAndInit(dir);
   return [gitReactRepo, dispose];
 }

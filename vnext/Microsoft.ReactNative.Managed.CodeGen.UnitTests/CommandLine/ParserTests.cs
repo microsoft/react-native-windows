@@ -25,7 +25,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests.CommandLine
     [TestMethod]
     public void SingleArg()
     {
-      var result = Parser.TryParseArgs(new[] {"/a"}, out var parsedArgs);
+      var result = Parser.TryParseArgs(new[] { "/a" }, out var parsedArgs);
       Assert.IsTrue(result);
       Assert.AreEqual(1, parsedArgs.Count);
       Assert.AreEqual("/a", parsedArgs[0].OriginalArg);
@@ -34,7 +34,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests.CommandLine
     [TestMethod]
     public void MultiArg()
     {
-      var result = Parser.TryParseArgs(new[] {"/a", "/b", "/c"}, out var parsedArgs);
+      var result = Parser.TryParseArgs(new[] { "/a", "/b", "/c" }, out var parsedArgs);
       Assert.IsTrue(result);
       Assert.AreEqual(3, parsedArgs.Count);
       Assert.AreEqual("/a", parsedArgs[0].OriginalArg);
@@ -113,7 +113,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests.CommandLine
     }
 
     [TestMethod]
-    public void RspFileWithWithespaceAndComments()
+    public void RspFileWithWhitespaceAndComments()
     {
       var rspPath = Path.Combine(TestContext.TestRunResultsDirectory, "test.rsp");
       Environment.CurrentDirectory = TestContext.TestRunResultsDirectory;

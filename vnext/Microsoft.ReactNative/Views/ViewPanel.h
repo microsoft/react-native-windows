@@ -28,41 +28,17 @@ struct ViewPanel : ViewPanelT<ViewPanel> {
   void RemoveAt(uint32_t const index) const;
   void Clear() const;
 
-  void FinalizeProperties();
-  xaml::Controls::Border GetOuterBorder();
-
   // Public Properties
   xaml::Media::Brush ViewBackground() {
     return GetValue(ViewBackgroundProperty()).as<xaml::Media::Brush>();
   }
   void ViewBackground(xaml::Media::Brush const &value);
 
-  xaml::Thickness BorderThickness() {
-    return winrt::unbox_value<xaml::Thickness>(GetValue(BorderThicknessProperty()));
-  }
-  void BorderThickness(xaml::Thickness const &value);
-
-  xaml::Media::Brush BorderBrush() {
-    return GetValue(BorderBrushProperty()).as<xaml::Media::Brush>();
-  }
-  void BorderBrush(xaml::Media::Brush const &value);
-
-  xaml::CornerRadius CornerRadius() {
-    return winrt::unbox_value<xaml::CornerRadius>(GetValue(CornerRadiusProperty()));
-  }
-  void CornerRadius(xaml::CornerRadius const &value);
-
-  bool ClipChildren() {
-    return winrt::unbox_value<bool>(GetValue(ClipChildrenProperty()));
-  }
-  void ClipChildren(bool value);
-
   // ViewPanel Properties
   static xaml::DependencyProperty ViewBackgroundProperty();
   static xaml::DependencyProperty BorderThicknessProperty();
   static xaml::DependencyProperty BorderBrushProperty();
   static xaml::DependencyProperty CornerRadiusProperty();
-  static xaml::DependencyProperty ClipChildrenProperty();
 
   // Attached Properties
   static xaml::DependencyProperty TopProperty();
@@ -82,14 +58,8 @@ struct ViewPanel : ViewPanelT<ViewPanel> {
  private:
   void Remove(xaml::UIElement element) const;
 
-  void UpdateClip(winrt::Windows::Foundation::Size &finalSize);
-
  private:
   bool m_propertiesChanged{false};
-
-  // Child Elements
-  xaml::Controls::Border m_border{nullptr};
-  bool m_hasOuterBorder{false};
 
  private:
   static void VisualPropertyChanged(xaml::DependencyObject sender, xaml::DependencyPropertyChangedEventArgs e);

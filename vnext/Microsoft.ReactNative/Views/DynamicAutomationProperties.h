@@ -35,12 +35,8 @@ struct DynamicAutomationProperties : DynamicAutomationPropertiesT<DynamicAutomat
   static bool GetAccessibilityStateDisabled(xaml::UIElement const &element);
 
   static xaml::DependencyProperty AccessibilityStateCheckedProperty();
-  static void SetAccessibilityStateChecked(xaml::UIElement const &element, bool value);
-  static bool GetAccessibilityStateChecked(xaml::UIElement const &element);
-
-  static xaml::DependencyProperty AccessibilityStateUncheckedProperty();
-  static void SetAccessibilityStateUnchecked(xaml::UIElement const &element, bool value);
-  static bool GetAccessibilityStateUnchecked(xaml::UIElement const &element);
+  static void SetAccessibilityStateChecked(xaml::UIElement const &element, AccessibilityStateCheckedValue value);
+  static AccessibilityStateCheckedValue GetAccessibilityStateChecked(xaml::UIElement const &element);
 
   static xaml::DependencyProperty AccessibilityStateBusyProperty();
   static void SetAccessibilityStateBusy(xaml::UIElement const &element, bool value);
@@ -49,10 +45,6 @@ struct DynamicAutomationProperties : DynamicAutomationPropertiesT<DynamicAutomat
   static xaml::DependencyProperty AccessibilityStateExpandedProperty();
   static void SetAccessibilityStateExpanded(xaml::UIElement const &element, bool value);
   static bool GetAccessibilityStateExpanded(xaml::UIElement const &element);
-
-  static xaml::DependencyProperty AccessibilityStateCollapsedProperty();
-  static void SetAccessibilityStateCollapsed(xaml::UIElement const &element, bool value);
-  static bool GetAccessibilityStateCollapsed(xaml::UIElement const &element);
 
   static xaml::DependencyProperty AccessibilityValueMinProperty();
   static void SetAccessibilityValueMin(xaml::UIElement const &element, double value);
@@ -81,10 +73,10 @@ struct DynamicAutomationProperties : DynamicAutomationPropertiesT<DynamicAutomat
 
   static void SetAccessibilityActions(
       xaml::UIElement const &element,
-      Windows::Foundation::Collections::IVector<Microsoft::ReactNative::AccessibilityAction> const &value);
+      winrt::Windows::Foundation::Collections::IVector<Microsoft::ReactNative::AccessibilityAction> const &value);
 
-  static Windows::Foundation::Collections::IVector<Microsoft::ReactNative::AccessibilityAction> GetAccessibilityActions(
-      xaml::UIElement const &element);
+  static winrt::Windows::Foundation::Collections::IVector<Microsoft::ReactNative::AccessibilityAction>
+  GetAccessibilityActions(xaml::UIElement const &element);
 
   static void DispatchAccessibilityAction(xaml::UIElement const &element, std::wstring_view const &actionName);
 

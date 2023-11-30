@@ -14,6 +14,9 @@
 #include "CompositionContextHelper.h"
 #include "ReactNativeHost.h"
 
+#include "CompositionRootAutomationProvider.h"
+#include "CompositionRootView.h"
+
 WINUSERAPI UINT WINAPI GetDpiForWindow(_In_ HWND hwnd);
 
 namespace winrt::Microsoft::ReactNative::implementation {
@@ -41,6 +44,7 @@ void CompositionHwndHost::CreateCompositionRoot() {
   auto root = Compositor().CreateContainerVisual();
   root.RelativeSizeAdjustment({1.0f, 1.0f});
   root.Offset({0, 0, 0});
+  root.Comment(L"Root Visual");
   m_target.Root(root);
 }
 
@@ -50,6 +54,7 @@ void CompositionHwndHost::Initialize(uint64_t hwnd) noexcept {
   m_hwnd = (HWND)hwnd;
 
   m_compRootView = winrt::Microsoft::ReactNative::CompositionRootView();
+  m_compRootView.SetWindow(reinterpret_cast<uint64_t>(m_hwnd));
 
   CreateDesktopWindowTarget(m_hwnd);
   CreateCompositionRoot();
@@ -58,24 +63,28 @@ void CompositionHwndHost::Initialize(uint64_t hwnd) noexcept {
 
   m_compRootView.ScaleFactor(ScaleFactor());
   m_compRootView.RootVisual(
-      winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::CreateVisual(RootVisual()));
+      winrt::Microsoft::ReactNative::Composition::implementation::WindowsCompositionContextHelper::CreateVisual(
+          RootVisual()));
 
   UpdateSize();
 }
 
-double CompositionHwndHost::ScaleFactor() noexcept {
-  return GetDpiForWindow(m_hwnd) / 96.0;
+float CompositionHwndHost::ScaleFactor() noexcept {
+  return GetDpiForWindow(m_hwnd) / 96.0f;
 }
 
 void CompositionHwndHost::UpdateSize() noexcept {
   RECT rc;
   if (GetClientRect(m_hwnd, &rc)) {
-    winrt::Windows::Foundation::Size size{
-        static_cast<float>((rc.right - rc.left) / ScaleFactor()),
-        static_cast<float>((rc.bottom - rc.top) / ScaleFactor())};
-    m_compRootView.Size(size);
-    m_compRootView.Measure(size);
-    m_compRootView.Arrange(size);
+    if (m_height != (rc.bottom - rc.top) || m_width != (rc.right - rc.left)) {
+      m_height = rc.bottom - rc.top;
+      m_width = rc.right - rc.left;
+      winrt::Windows::Foundation::Size size{
+          static_cast<float>(m_width / ScaleFactor()), static_cast<float>(m_height / ScaleFactor())};
+      m_compRootView.Size(size);
+      m_compRootView.Measure(size);
+      m_compRootView.Arrange(size);
+    }
   }
 }
 
@@ -84,23 +93,6 @@ LRESULT CompositionHwndHost::TranslateMessage(int msg, uint64_t wParam, int64_t 
     return 0;
 
   switch (msg) {
-    case WM_MOUSEWHEEL: {
-      POINT pt = {GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam)};
-      ::ScreenToClient(m_hwnd, &pt);
-      int32_t delta = GET_WHEEL_DELTA_WPARAM(wParam);
-      m_compRootView.OnScrollWheel({static_cast<float>(pt.x), static_cast<float>(pt.y)}, delta);
-      return 0;
-    }
-    /*
-    case WM_POINTERDOWN: {
-      m_compRootView.OnPointerPressed({GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam)});
-      return 0;
-    }
-    case WM_LBUTTONUP: {
-      m_compRootView.OnMouseUp({static_cast<float>(GET_X_LPARAM(lParam)), static_cast<float>(GET_Y_LPARAM(lParam))});
-      return 0;
-    }
-    */
     case WM_WINDOWPOSCHANGED: {
       UpdateSize();
       /*
@@ -121,6 +113,11 @@ LRESULT CompositionHwndHost::TranslateMessage(int msg, uint64_t wParam, int64_t 
   return 0;
 }
 
+winrt::Microsoft::ReactNative::FocusNavigationResult CompositionHwndHost::NavigateFocus(
+    const winrt::Microsoft::ReactNative::FocusNavigationRequest &request) noexcept {
+  return m_compRootView.NavigateFocus(request);
+}
+
 ReactNative::IReactViewHost CompositionHwndHost::ReactViewHost() const noexcept {
   return m_reactViewHost ? m_reactViewHost : m_compRootView.ReactViewHost();
 }
@@ -138,8 +135,18 @@ winrt::Windows::UI::Composition::Compositor CompositionHwndHost::Compositor() co
       winrt::Microsoft::ReactNative::Composition::implementation::CompositionUIService::GetCompositionContext(
           m_reactViewHost.ReactNativeHost().InstanceSettings().Properties());
 
-  return winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::InnerCompositor(
+  return winrt::Microsoft::ReactNative::Composition::implementation::WindowsCompositionContextHelper::InnerCompositor(
       compositionContext);
+}
+
+IInspectable CompositionHwndHost::UiaProvider() noexcept {
+  auto compRootView = winrt::get_self<implementation::CompositionRootView>(m_compRootView);
+  auto provider = compRootView->GetUiaProvider();
+  auto pRootProvider = static_cast<CompositionRootAutomationProvider *>(provider.as<IRawElementProviderSimple>().get());
+  if (pRootProvider != nullptr) {
+    pRootProvider->SetHwnd(m_hwnd);
+  }
+  return provider;
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

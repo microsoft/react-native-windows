@@ -1,10 +1,8 @@
 import React from 'react'
 import RN = require('react-native');
-import { ViewWin32 } from '../View/ViewWin32';
-import { IViewWin32Props } from '../View/ViewWin32.Props';
-import { TextWin32 } from '../Text/TextWin32';
-import { ITextWin32Props } from '../Text/TextWin32.Props';
-import { IButtonWin32Props } from './ButtonWin32.Props';
+import type { IViewWin32Props } from '../View/ViewPropTypes';
+import type { ITextWin32Props } from '../Text/TextWin32.Props';
+import type { IButtonWin32Props } from './ButtonWin32.Props';
 
 const enum SelectState {
   NotSelected,
@@ -49,9 +47,9 @@ export class ButtonWin32 extends React.Component<IButtonWin32Props, IButtonWin32
     }
 
     return (
-      <ViewWin32 {...viewProps}>
-        <TextWin32 {...textProps}>{this.props.title}</TextWin32>
-      </ViewWin32>
+      <RN.ViewWin32 {...viewProps}>
+        <RN.TextWin32 {...textProps}>{this.props.title}</RN.TextWin32>
+      </RN.ViewWin32>
     );
   }
 

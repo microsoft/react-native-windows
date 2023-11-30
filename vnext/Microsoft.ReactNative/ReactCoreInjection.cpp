@@ -41,6 +41,11 @@ Mso::React::ReactViewOptions ReactViewOptions::CreateViewOptions() noexcept {
 
 ReactCoreInjection::ReactCoreInjection() noexcept {}
 
+static const ReactPropertyId<uint64_t> &TopLevelWindowIdPropertyId() noexcept {
+  static const ReactPropertyId<uint64_t> prop{L"ReactNative.Injection", L"TopLevelWindowId"};
+  return prop;
+}
+
 /*static*/ ReactPropertyId<UIBatchCompleteCallback> ReactCoreInjection::UIBatchCompleteCallbackProperty() noexcept {
   static ReactPropertyId<UIBatchCompleteCallback> prop{L"ReactNative.Injection", L"UIBatchCompleteCallback"};
   return prop;
@@ -94,6 +99,14 @@ ReactPropertyId<winrt::hstring> PlatformNameOverrideProperty() noexcept {
   return winrt::to_string(ReactNative::ReactPropertyBag(properties)
                               .Get(PlatformNameOverrideProperty())
                               .value_or(winrt::to_hstring(STRING(RN_PLATFORM))));
+}
+
+uint64_t ReactCoreInjection::GetTopLevelWindowId(const IReactPropertyBag &properties) noexcept {
+  return ReactPropertyBag(properties).Get(TopLevelWindowIdPropertyId()).value_or(0);
+}
+
+void ReactCoreInjection::SetTopLevelWindowId(const IReactPropertyBag &properties, uint64_t windowId) noexcept {
+  ReactPropertyBag(properties).Set(TopLevelWindowIdPropertyId(), windowId);
 }
 
 ReactViewHost::ReactViewHost(

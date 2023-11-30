@@ -12,13 +12,16 @@ param(
     [switch]$Enterprise = $false
 )
 
-$Verbose = $PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent;
+$ShellInvocation = ($PSCmdlet.MyInvocation.BoundParameters -ne $null);
+
+$Verbose = $false
+if ($ShellInvocation) {
+    $Verbose = $PSCmdlet.MyInvocation.BoundParameters["Verbose"].IsPresent;
+}
 
 enum CheckId {
     All
     AzureFunctions
-    Choco
-    Chrome
     DeveloperMode
     DotNetCore
     FreeSpace
@@ -76,10 +79,13 @@ $vsWorkloads = @('Microsoft.VisualStudio.Workload.ManagedDesktop',
 $vsAll = ($vsComponents + $vsWorkloads);
 
 # The minimum VS version to check for
+# Note: For install to work, whatever min version you specify here must be met by the current package available on winget.
 $vsver = "17.3";
 
 # The exact .NET SDK version to check for
 $dotnetver = "6.0";
+# Version name of the winget package
+$wingetDotNetVer = "6";
 
 $v = [System.Environment]::OSVersion.Version;
 if ($env:Agent_BuildDirectory) {
@@ -172,30 +178,50 @@ function CheckVS {
     return $result;
 }
 
+function GetVSChannelAndProduct {
+    param(
+        [string]$VsWhere
+    )
+    
+    if ($VsWhere) {
+        $channelId = & $VsWhere -version $vsver -property channelId;
+        $productId = & $VsWhere -version $vsver -property productId;
+        
+        # Channel/product not found, check one more time for pre-release
+        if (($channelId -eq $null) -or ($productId -eq $null)) {
+            $channelId = & $VsWhere -version $vsver -property channelId -prerelease;
+            $productId = & $VsWhere -version $vsver -property productId -prerelease;
+        }
+        
+        return $channelId, $productId;
+    }
+    
+    return $null, $null;
+}
+
 function InstallVS {
     $vsWhere = Get-VSWhere;
-
-    if ($vsWhere -ne $null) {
-        $channelId = & $vsWhere -version $vsver -property channelId;
-        $productId = & $vsWhere -version $vsver -property productId;
-    }
+    
+    $channelId, $productId = GetVSChannelAndProduct -VsWhere $vsWhere
 
     if (($vsWhere -eq $null) -or ($channelId -eq $null) -or ($productId -eq $null)) {
-        # No VSWhere / VS_Installer
+        # No VSWhere / VS_Installer, try to install
 
-        EnsureChocoForInstall;
-        
         if ($Enterprise) {
             # The CI machines need the enterprise version of VS as that is what is hardcoded in all the scripts
-            & choco install -y visualstudio2022enterprise;
+            WinGetInstall Microsoft.VisualStudio.2022.Enterprise
         } else {
-            & choco install -y visualstudio2022community;
+            WinGetInstall Microsoft.VisualStudio.2022.Community
         }
 
         $vsWhere = Get-VSWhere;
 
-        $channelId = & $vsWhere -version $vsver -property channelId;
-        $productId = & $vsWhere -version $vsver -property productId;
+        $channelId, $productId = GetVSChannelAndProduct -VsWhere $vsWhere
+    }
+    
+    # Final check before attempting install
+    if (($vsWhere -eq $null) -or ($channelId -eq $null) -or ($productId -eq $null)) {
+        throw "Unable to find or install a compatible version of Visual Studio >= ($vsver).";
     }
 
     $vsInstaller = Join-Path -Path (Split-Path -Parent $vsWhere) -ChildPath "vs_installer.exe";
@@ -210,7 +236,7 @@ function CheckNode {
         $nodeVersion = (Get-Command node -ErrorAction Stop).Version;
         Write-Verbose "Node version found: $nodeVersion";
         $v = $nodeVersion.Major;
-        return ($v -ge 14) -and (($v % 2) -eq 0);
+        return ($v -ge 18) -and (($v % 2) -eq 0);
     } catch { Write-Debug $_ }
 
     Write-Verbose "Node not found.";
@@ -355,7 +381,7 @@ $requiredFreeSpaceGB = 15;
 $requirements = @(
     @{
         Id=[CheckId]::FreeSpace;
-        Name = "Free space on $drive`: > $requiredFreeSpaceGB GB";
+        Name = "Free space on current drive > $requiredFreeSpaceGB GB";
         Tags = @('appDev');
         Valid = { $drive.Free/1GB -gt $requiredFreeSpaceGB; }
         HasVerboseOutput = $true;
@@ -371,7 +397,7 @@ $requirements = @(
     },
     @{
         Id=[CheckId]::WindowsVersion;
-        Name = 'Windows version >= 10.0.16299.0';
+        Name = 'Windows version >= 10.0.17763.0';
         Tags = @('appDev');
         Valid = { ($v.Major -eq 10 -and $v.Minor -eq 0 -and $v.Build -ge 16299); }
     },
@@ -394,8 +420,7 @@ $requirements = @(
         Name = 'Git';
         Tags = @('rnwDev');
         Valid = { try { (Get-Command git.exe -ErrorAction Stop) -ne $null } catch { $false }; }
-        Install = { choco install -y git };
-        InstallsWithChoco = $true;
+        Install = { WinGetInstall Microsoft.Git };
     },
     @{
         Id=[CheckId]::VSUWP;
@@ -407,11 +432,10 @@ $requirements = @(
     },
     @{
         Id=[CheckId]::Node;
-        Name = 'Node.js (LTS, >= 14.0)';
+        Name = 'Node.js (LTS, >= 18.0)';
         Tags = @('appDev');
         Valid = { CheckNode; }
-        Install = { choco install -y nodejs-lts };
-        InstallsWithChoco = $true;
+        Install = { WinGetInstall OpenJS.NodeJS.LTS };
         HasVerboseOutput = $true;
     },
     @{
@@ -419,8 +443,7 @@ $requirements = @(
         Name = 'Yarn';
         Tags = @('appDev');
         Valid = { CheckYarn }
-        Install = { choco install -y yarn };
-        InstallsWithChoco = $true;
+        Install = { WinGetInstall Yarn.Yarn };
         HasVerboseOutput = $true;
     },
     @{
@@ -444,12 +467,11 @@ $requirements = @(
         Tags = @('rnwDev');
         Valid = { ( cmd "/c assoc .binlog 2>nul" ) -ne $null; }
         Install = {
-            choco install -y msbuild-structured-log-viewer;
+            WinGetInstall KirillOsenkov.MSBuildStructuredLogViewer;
             $slv = gci ${env:LocalAppData}\MSBuildStructuredLogViewer\StructuredLogViewer.exe -Recurse | select FullName | Sort-Object -Property FullName -Descending | Select-Object -First 1
             cmd /c "assoc .binlog=MSBuildLog >nul";
             cmd /c "ftype MSBuildLog=$($slv.FullName) %1 >nul";
          };
-         InstallsWithChoco = $true;
          Optional = $true;
     },
     @{
@@ -458,8 +480,7 @@ $requirements = @(
         Name = 'Windows ADK';
         Tags = @('buildLab');
         Valid = { (Test-Path "${env:ProgramFiles(x86)}\Windows Kits\10\Windows Performance Toolkit\wpr.exe"); };
-        Install = { choco install -y windows-adk };
-        InstallsWithChoco = $true;
+        Install = { WinGetInstall Microsoft.WindowsADK };
         Optional = $true;
     },
     @{
@@ -486,41 +507,43 @@ $requirements = @(
         Name = ".NET SDK (LTS, = $dotnetver)";
         Tags = @('appDev');
         Valid = { CheckDotNetCore; };
-        Install = { & choco install -y dotnet-$dotnetver-sdk };
-        InstallsWithChoco = $true;
+        Install = { WinGetInstall Microsoft.DotNet.SDK.$wingetDotNetVer };
         HasVerboseOutput = $true;
     }
 );
 
-function EnsureChocoForInstall {
-    Write-Verbose "Checking for Choco...";
+function EnsureWinGetForInstall {
+    Write-Verbose "Checking for WinGet...";
     try {
-        $chocoCmd = (Get-Command choco -ErrorAction Stop);
-        if (chocoCmd -ne $null) {
-            Write-Verbose "Choco found.";
+        # Check if winget.exe is in PATH
+        if (Get-Command "winget.exe" -CommandType Application -ErrorAction Ignore) {
+            Write-Verbose "WinGet found in PATH.";
             return;
         }
     } catch { Write-Debug $_ }
 
-    Write-Verbose "Choco not found.";
-
-    if (!$NoPrompt -and (Read-Host "Choco is necessary to install this component. Do you want to install Choco? [y/N]").ToUpperInvariant() -eq 'Y') {
-        Write-Host "Installing Choco...";
-        [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072;
-        iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'));
-        return;
-    }
-
-    throw "Choco needed to install.";
+    Write-Host "WinGet is required to install dependencies. See https://learn.microsoft.com/en-us/windows/package-manager/winget/ for more information.";
+    throw "WinGet needed to install.";
 }
 
+function WinGetInstall {
+    param(
+        [string]$wingetPackage
+    )
+
+    EnsureWinGetForInstall;
+    Write-Verbose "Executing `winget install `"$wingetPackage`"";
+    & winget install "$wingetPackage" --accept-source-agreements --accept-package-agreements
+ }
+ 
 function IsElevated {
     return [bool](([System.Security.Principal.WindowsIdentity]::GetCurrent()).groups -match "S-1-5-32-544");
 }
 
 if (!($NoPrompt) -and !(IsElevated)) {
-    Write-Host "rnw-dependencies - this script must run elevated. Exiting.";
-    exit 1;
+    Write-Host "rnw-dependencies - this script must run elevated.";
+    if (!$ShellInvocation) { Read-Host 'Press Enter to exit' }
+    exit 1
 }
 
 $NeedsRerun = 0;
@@ -593,10 +616,6 @@ foreach ($req in $filteredRequirements)
         if ($req.Install) {
             if ($Install -or (!$NoPrompt -and (Read-Host "Do you want to install? [y/N]").ToUpperInvariant() -eq 'Y')) {
                 try {
-                    if ($req.InstallsWithChoco) {
-                        EnsureChocoForInstall;
-                    }
-
                     $LASTEXITCODE = 0;
                     $outputFromInstall = Invoke-Command $req.Install -ErrorAction Stop;
 
@@ -631,9 +650,11 @@ if ($NeedsRerun -ne 0) {
     } else {
         Write-Warning "Some dependencies are not met. Re-run with -Verbose for details, or use -Install to install them.";
     }
+    if (!$ShellInvocation) { Read-Host 'Press Enter to exit' }
     exit 1;
 } else {
     Write-Host "All mandatory requirements met.";
     $Tags | Out-File $MarkerFile;
+    if (!$ShellInvocation) { Read-Host 'Press Enter to exit' }
     exit 0;
 }

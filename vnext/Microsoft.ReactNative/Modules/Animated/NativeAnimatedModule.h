@@ -58,6 +58,8 @@ REACT_MODULE(NativeAnimatedModule)
 struct NativeAnimatedModule : std::enable_shared_from_this<NativeAnimatedModule> {
   // Commented out due to missing implementation of updateAnimatedNodeConfig
   // using ModuleSpec = ReactNativeSpecs::AnimatedModuleSpec;
+  NativeAnimatedModule();
+  ~NativeAnimatedModule();
 
   REACT_INIT(Initialize)
   void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;

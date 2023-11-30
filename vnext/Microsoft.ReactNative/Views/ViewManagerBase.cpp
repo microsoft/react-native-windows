@@ -46,7 +46,7 @@ float GetConstrainedResult(float constrainTo, float measuredSize, YGMeasureMode 
 }
 
 YGSize DefaultYogaSelfMeasureFunc(
-    YGNodeRef node,
+    YGNodeConstRef node,
     float width,
     YGMeasureMode widthMode,
     float height,
@@ -103,6 +103,44 @@ void ViewManagerBase::GetNativeProps(const winrt::Microsoft::ReactNative::IJSVal
   React::WriteProperty(writer, L"keyUpEvents", L"array");
   React::WriteProperty(writer, L"onMouseEnter", L"function");
   React::WriteProperty(writer, L"onMouseLeave", L"function");
+
+  // The events below define the properties that are not used by native directly,
+  // but required in the view config for new renderer to function.
+  // They can be deleted after Static View Configs are rolled out.
+
+  // PanResponder callbacks
+  React::WriteProperty(writer, L"onMoveShouldSetResponder", "function");
+  React::WriteProperty(writer, L"onMoveShouldSetResponderCapture", "function");
+  React::WriteProperty(writer, L"onStartShouldSetResponder", "function");
+  React::WriteProperty(writer, L"onStartShouldSetResponderCapture", "function");
+  React::WriteProperty(writer, L"onResponderGrant", "function");
+  React::WriteProperty(writer, L"onResponderReject", "function");
+  React::WriteProperty(writer, L"onResponderStart", "function");
+  React::WriteProperty(writer, L"onResponderEnd", "function");
+  React::WriteProperty(writer, L"onResponderRelease", "function");
+  React::WriteProperty(writer, L"onResponderMove", "function");
+  React::WriteProperty(writer, L"onResponderTerminate", "function");
+  React::WriteProperty(writer, L"onResponderTerminationRequest", "function");
+  React::WriteProperty(writer, "onShouldBlockNativeResponder", "function");
+
+  // Touch events
+  React::WriteProperty(writer, L"onTouchCancel", "function");
+  React::WriteProperty(writer, L"onTouchEnd", "function");
+  React::WriteProperty(writer, L"onTouchMove", "function");
+  React::WriteProperty(writer, L"onTouchStart", "function");
+
+  // W3C Pointer Events
+  React::WriteProperty(writer, L"onPointerDown", L"function");
+  React::WriteProperty(writer, L"onPointerMove", L"function");
+  React::WriteProperty(writer, L"onPointerUp", L"function");
+  React::WriteProperty(writer, L"onPointerCancel", L"function");
+  React::WriteProperty(writer, L"onPointerEnter", L"function");
+  React::WriteProperty(writer, L"onPointerLeave", L"function");
+  React::WriteProperty(writer, L"onPointerOver", L"function");
+  React::WriteProperty(writer, L"onPointerOut", L"function");
+  React::WriteProperty(writer, L"onGotPointerCapture", L"function");
+  React::WriteProperty(writer, L"onLostPointerCapture", L"function");
+  React::WriteProperty(writer, L"onClick", L"function");
 }
 
 void ViewManagerBase::GetConstants(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
@@ -168,21 +206,13 @@ void ViewManagerBase::GetExportedCustomBubblingEventTypeConstants(
 
       // Pointer events
       L"PointerCancel",
-      L"PointerCancelCapture",
       L"PointerDown",
-      L"PointerDownCapture",
       L"PointerEnter",
-      L"PointerEnterCapture",
       L"PointerLeave",
-      L"PointerLeaveCapture",
       L"PointerMove",
-      L"PointerMoveCapture",
       L"PointerUp",
-      L"PointerUpCapture",
       L"PointerOut",
-      L"PointerOutCapture",
       L"PointerOver",
-      L"PointerOverCapture",
   };
 
   folly::dynamic bubblingEvents = folly::dynamic::object();
@@ -229,7 +259,7 @@ XamlView ViewManagerBase::CreateView(int64_t tag, const winrt::Microsoft::ReactN
   // Set the tag if the element type supports it
   SetTag(view, tag);
 
-  // In Debug, set the element name to the tag for convienent
+  // In Debug, set the element name to the tag for convenient
   // searching within VisualStudio's Live Visual Tree pane
 #ifdef DEBUG
   auto element = view.try_as<xaml::FrameworkElement>();
@@ -303,6 +333,8 @@ bool ViewManagerBase::UpdateProperty(
       }
     }
   } else if (TryUpdateMouseEvents(nodeToUpdate, propertyName, propertyValue)) {
+  } else if (propertyName == "overflow") {
+    nodeToUpdate->m_overflowHidden = propertyValue.AsString() == "hidden";
   } else {
     return false;
   }
@@ -382,6 +414,16 @@ void ViewManagerBase::SetLayoutProps(
 
   fe.Width(width);
   fe.Height(height);
+
+  // Modifying the `overflow` prop will always result in the Yoga node setting
+  // `YGNodeHasNewLayout`, so we can reliably update the Clip from this method.
+  if (nodeToUpdate.m_overflowHidden) {
+    winrt::RectangleGeometry clipGeometry;
+    clipGeometry.Rect(winrt::Rect(0, 0, width, height));
+    fe.Clip(clipGeometry);
+  } else {
+    fe.ClearValue(xaml::UIElement::ClipProperty());
+  }
 }
 
 YGMeasureFunc ViewManagerBase::GetYogaCustomMeasureFunc() const {

@@ -30,6 +30,7 @@ void ControlViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJS
   Super::GetNativeProps(writer);
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"tabIndex", L"number");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"focusable", L"boolean");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"disabled", L"boolean");
 }
 void ControlViewManager::TransferProperties(const XamlView &oldView, const XamlView &newView) {
   TransferProperty(oldView, newView, xaml::Controls::Control::FontSizeProperty());
@@ -82,22 +83,23 @@ bool ControlViewManager::UpdateProperty(
       }
     } else if (propertyName == "focusable") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
-        IsFocusable(propertyValue.AsBoolean());
-        control.IsTabStop(propertyValue.AsBoolean());
+        nodeToUpdate->IsFocusable(propertyValue.AsBoolean());
       } else if (propertyValue.IsNull()) {
-        control.ClearValue(TAB_STOP_PROPERTY());
-        IsFocusable(false);
+        nodeToUpdate->IsFocusable(false);
+      }
+    } else if (propertyName == "disabled") {
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
+        nodeToUpdate->IsDisable(propertyValue.AsBoolean());
       }
     } else {
       if (propertyName == "accessible") {
         if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
-          IsAccessible(propertyValue.AsBoolean());
+          nodeToUpdate->IsAccessible(propertyValue.AsBoolean());
         }
       }
       ret = Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
     }
   }
-
   if (finalizeBorderRadius && control.try_as<xaml::Controls::IControl7>()) {
     // Control.CornerRadius is only supported on >= RS5, setting borderRadius on Controls have no effect < RS5
     UpdateCornerRadiusOnElement(nodeToUpdate, control);
@@ -123,15 +125,11 @@ void ControlViewManager::SetLayoutProps(
 
 void ControlViewManager::OnPropertiesUpdated(ShadowNodeBase *node) {
   auto control(node->GetView().as<xaml::Controls::Control>());
-
-  // If developer specifies either the accessible and focusable prop to be false
-  // remove accessibility and keyboard focus for component.
-  if (IsAccessible() != IsFocusable()) {
-    control.IsTabStop(false);
-    xaml::Automation::AutomationProperties::SetAccessibilityView(
-        control, xaml::Automation::Peers::AccessibilityView::Raw);
-    control.IsEnabled(false);
-  }
+  const auto isTabStop = !node->IsDisable() && node->IsFocusable();
+  const auto accessibilityView = node->IsAccessible() ? xaml::Automation::Peers::AccessibilityView::Content
+                                                      : xaml::Automation::Peers::AccessibilityView::Raw;
+  control.IsTabStop(isTabStop);
+  xaml::Automation::AutomationProperties::SetAccessibilityView(control, accessibilityView);
 }
 
 void ControlViewManager::OnViewCreated(XamlView view) {
@@ -140,19 +138,6 @@ void ControlViewManager::OnViewCreated(XamlView view) {
   if (auto control = view.try_as<xaml::Controls::IControl7>()) {
     control.CornerRadius({0, 0, 0, 0});
   }
-}
-
-void ControlViewManager::IsAccessible(bool accessible) {
-  m_isAccessible = accessible;
-}
-bool ControlViewManager::IsAccessible() {
-  return m_isAccessible;
-}
-void ControlViewManager::IsFocusable(bool focusable) {
-  m_isFocusable = focusable;
-}
-bool ControlViewManager::IsFocusable() {
-  return m_isFocusable;
 }
 
 } // namespace Microsoft::ReactNative

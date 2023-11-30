@@ -4,6 +4,7 @@
 import "IJSValueWriter.idl";
 import "ReactCoreInjection.idl";
 import "ReactNativeHost.idl";
+import "CompositionRootView.idl";
 #include "NamespaceRedirect.h"
 #include "DocString.h"
 
@@ -27,7 +28,14 @@ namespace Microsoft.ReactNative
       "It must be set to show any React UI elements.")
     IReactViewHost ReactViewHost { get; set; };
 
+    DOC_STRING("Move focus to this @CompositionHwndHost")
+    FocusNavigationResult NavigateFocus(FocusNavigationRequest request);
+
     Int64 TranslateMessage(UInt32 msg, UInt64 wParam, Int64 lParam);
+
+    Object UiaProvider { get; };
+
+    Windows.UI.Composition.Visual RootVisual();
   }
 
 } // namespace Microsoft.ReactNative

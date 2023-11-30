@@ -14,12 +14,12 @@ namespace facebook {
 namespace react {
 
 extern const char ActivityIndicatorViewComponentName[] = "ActivityIndicatorView";
-extern const char DatePickerComponentName[] = "DatePicker";
 extern const char AndroidDrawerLayoutComponentName[] = "AndroidDrawerLayout";
 extern const char AndroidSwipeRefreshLayoutComponentName[] = "AndroidSwipeRefreshLayout";
 extern const char PullToRefreshViewComponentName[] = "PullToRefreshView";
 extern const char AndroidHorizontalScrollContentViewComponentName[] = "AndroidHorizontalScrollContentView";
 extern const char SwitchComponentName[] = "Switch";
+extern const char TraceUpdateOverlayComponentName[] = "TraceUpdateOverlay";
 extern const char UnimplementedNativeViewComponentName[] = "UnimplementedNativeView";
 
 } // namespace react

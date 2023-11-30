@@ -1,7 +1,13 @@
 {
   "version": 1,
   "dependencies": {
-    "UAP,Version=v10.0.16299": {
+    "UAP,Version=v10.0.17763": {
+      "Microsoft.JavaScript.Hermes": {
+        "type": "Direct",
+        "requested": "[0.1.18, )",
+        "resolved": "0.1.18",
+        "contentHash": "5K8rRihGwIs2XNOTP2Jsw3T6cegxCBQXcpPS4optONU/AmFElGAfnA6XBQJ4UqlCFCl9Nf9zQrgvCUPBWYHiag=="
+      },
       "Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Direct",
         "requested": "[6.2.9, )",
@@ -16,20 +22,28 @@
       },
       "Microsoft.UI.Xaml": {
         "type": "Direct",
-        "requested": "[2.7.0, )",
-        "resolved": "2.7.0",
-        "contentHash": "dB4im13tfmMgL/V3Ei+3kD2rUF+/lTxAmR4gjJ45l577eljHfdo/KUrxpq/3I1Vp6e5GCDG1evDaEGuDxypLMg=="
+        "requested": "[2.8.0, )",
+        "resolved": "2.8.0",
+        "contentHash": "vxdHxTr63s5KVtNddMFpgvjBjUH50z7seq/5jLWmmSuf8poxg+sXrywkofUdE8ZstbpO9y3FL/IXXUcPYbeesA==",
+        "dependencies": {
+          "Microsoft.Web.WebView2": "1.0.1264.42"
+        }
       },
       "XamlTreeDump": {
         "type": "Direct",
-        "requested": "[1.0.9, )",
-        "resolved": "1.0.9",
-        "contentHash": "rvh/RZghhSG28PDL1dw56nTZRN0/ViV2TIja/ykU9FHn0gtM8pwtgD8Ebo1nobu0QnSjn8Cg6Ncu39VV19rkrw=="
+        "requested": "[1.0.10, )",
+        "resolved": "1.0.10",
+        "contentHash": "2+6dKEFYpSP7w2QA4hkOtzPphpGlYHvW92/MTkloNNXH5ejy8qt64LhpIGzGX6FC42p4SwGSrZCXJjdvxr7bRw=="
       },
       "boost": {
         "type": "Transitive",
         "resolved": "1.76.0",
         "contentHash": "p+w3YvNdXL8Cu9Fzrmexssu0tZbWxuf6ywsQqHjDlKFE5ojXHof1HIyMC3zDLfLnh80dIeFcEUAuR2Asg/XHRA=="
+      },
+      "Microsoft.Build.Tasks.Git": {
+        "type": "Transitive",
+        "resolved": "1.1.1",
+        "contentHash": "AT3HlgTjsqHnWpBHSNeR0KxbLZD7bztlZVj7I8vgeYG9SYqbeFGh0TM/KVtC6fg53nrWHl3VfZFvb5BiQFcY6Q=="
       },
       "Microsoft.Net.Native.Compiler": {
         "type": "Transitive",
@@ -55,25 +69,34 @@
       "Microsoft.NETCore.Platforms": {
         "type": "Transitive",
         "resolved": "2.1.0",
-        "contentHash": "ok+RPAtESz/9MUXeIEz6Lv5XAGQsaNmEYXMsgVALj4D7kqC8gveKWXWXbufLySR2fWrwZf8smyN5RmHu0e4BHA=="
+        "contentHash": "GmkKfoyerqmsHMn7OZj0AKpcBabD+GaafqphvX2Mw406IwiJRy1pKcKqdCfKJfYmkRyJ6+e+RaUylgdJoDa1jQ=="
       },
-      "Microsoft.Windows.SDK.BuildTools": {
+      "Microsoft.SourceLink.Common": {
         "type": "Transitive",
-        "resolved": "10.0.22000.194",
-        "contentHash": "4L0P3zqut466SIqT3VBeLTNUQTxCBDOrTRymRuROCRJKazcK7ibLz9yAO1nKWRt50ttCj39oAa2Iuz9ZTDmLlg=="
+        "resolved": "1.1.1",
+        "contentHash": "WMcGpWKrmJmzrNeuaEb23bEMnbtR/vLmvZtkAP5qWu7vQsY59GqfRJd65sFpBszbd2k/bQ8cs8eWawQKAabkVg=="
+      },
+      "Microsoft.SourceLink.GitHub": {
+        "type": "Transitive",
+        "resolved": "1.1.1",
+        "contentHash": "IaJGnOv/M7UQjRJks7B6p7pbPnOwisYGOIzqCz5ilGFTApZ3ktOR+6zJ12ZRPInulBmdAf1SrGdDG2MU8g6XTw==",
+        "dependencies": {
+          "Microsoft.Build.Tasks.Git": "1.1.1",
+          "Microsoft.SourceLink.Common": "1.1.1"
+        }
+      },
+      "Microsoft.Web.WebView2": {
+        "type": "Transitive",
+        "resolved": "1.0.1264.42",
+        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
       },
       "NETStandard.Library": {
         "type": "Transitive",
         "resolved": "2.0.3",
-        "contentHash": "st47PosZSHrjECdjeIzZQbzivYBJFv6P2nv4cj2ypdI204DO+vZ7l5raGMiX4eXMJ53RfOIg+/s4DHVZ54Nu2A==",
+        "contentHash": "548M6mnBSJWxsIlkQHfbzoYxpiYFXZZSL00p4GHYv8PkiqFBnnT68mW5mGEsA/ch9fDO9GkPgkFQpWiXZN7mAQ==",
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0"
         }
-      },
-      "ReactNative.Hermes.Windows": {
-        "type": "Transitive",
-        "resolved": "0.0.0-2212.14001-38bb8586",
-        "contentHash": "b6GLQSLaffgxAXwoTrxfj73W5cxlPxmNlQoVmyAnucXPCwV7HiL0rZsqGpBf+r2rdubUS35patY/c+8RiBR4+Q=="
       },
       "runtime.win10-arm.Microsoft.Net.Native.Compiler": {
         "type": "Transitive",
@@ -146,7 +169,7 @@
         "type": "Project",
         "dependencies": {
           "Microsoft.ReactNative": "[1.0.0, )",
-          "Microsoft.UI.Xaml": "[2.7.0, )"
+          "Microsoft.UI.Xaml": "[2.8.0, )"
         }
       },
       "common": {
@@ -167,10 +190,10 @@
         "dependencies": {
           "Common": "[1.0.0, )",
           "Folly": "[1.0.0, )",
-          "Microsoft.UI.Xaml": "[2.7.0, )",
-          "Microsoft.Windows.SDK.BuildTools": "[10.0.22000.194, )",
+          "Microsoft.JavaScript.Hermes": "[0.1.18, )",
+          "Microsoft.SourceLink.GitHub": "[1.1.1, )",
+          "Microsoft.UI.Xaml": "[2.8.0, )",
           "ReactCommon": "[1.0.0, )",
-          "ReactNative.Hermes.Windows": "[0.0.0-2212.14001-38bb8586, )",
           "boost": "[1.76.0, )"
         }
       },
@@ -192,18 +215,18 @@
         "type": "Project",
         "dependencies": {
           "Microsoft.ReactNative": "[1.0.0, )",
-          "Microsoft.UI.Xaml": "[2.7.0, )"
+          "Microsoft.UI.Xaml": "[2.8.0, )"
         }
       },
       "reactnativexaml": {
         "type": "Project",
         "dependencies": {
           "Microsoft.ReactNative": "[1.0.0, )",
-          "Microsoft.UI.Xaml": "[2.7.0, )"
+          "Microsoft.UI.Xaml": "[2.8.0, )"
         }
       }
     },
-    "UAP,Version=v10.0.16299/win10-arm": {
+    "UAP,Version=v10.0.17763/win10-arm": {
       "Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Direct",
         "requested": "[6.2.9, )",
@@ -217,13 +240,18 @@
           "runtime.win10-arm.Microsoft.NETCore.UniversalWindowsPlatform": "6.2.9"
         }
       },
+      "Microsoft.Web.WebView2": {
+        "type": "Transitive",
+        "resolved": "1.0.1264.42",
+        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
+      },
       "runtime.win10-arm.Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Transitive",
         "resolved": "6.2.9",
         "contentHash": "/q9U+SqJTVrocU7CHFd1D4ac2jqPc4U8kPy8F147Li3XGf0Ce9v6UKJqf7nskR+XgVi3IVfUJUcjWLVskG5ZKw=="
       }
     },
-    "UAP,Version=v10.0.16299/win10-arm-aot": {
+    "UAP,Version=v10.0.17763/win10-arm-aot": {
       "Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Direct",
         "requested": "[6.2.9, )",
@@ -237,13 +265,18 @@
           "runtime.win10-arm-aot.Microsoft.NETCore.UniversalWindowsPlatform": "6.2.9"
         }
       },
+      "Microsoft.Web.WebView2": {
+        "type": "Transitive",
+        "resolved": "1.0.1264.42",
+        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
+      },
       "runtime.win10-arm-aot.Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Transitive",
         "resolved": "6.2.9",
         "contentHash": "tN7AmnRPUuu29nh9ulL/UGMdzayAe/AQNhM7+fQNKuT4jUlxc61Ilf2djKNJ5MvK8wY69KH0Iz9Yy5+95rB+DQ=="
       }
     },
-    "UAP,Version=v10.0.16299/win10-arm64-aot": {
+    "UAP,Version=v10.0.17763/win10-arm64-aot": {
       "Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Direct",
         "requested": "[6.2.9, )",
@@ -257,13 +290,18 @@
           "runtime.win10-arm64-aot.Microsoft.NETCore.UniversalWindowsPlatform": "6.2.9"
         }
       },
+      "Microsoft.Web.WebView2": {
+        "type": "Transitive",
+        "resolved": "1.0.1264.42",
+        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
+      },
       "runtime.win10-arm64-aot.Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Transitive",
         "resolved": "6.2.9",
         "contentHash": "gupfeyxXmaOyqLps1gGLh4Lzh5Wee6iuKpgZ70l2nmoHtzqCdk9aK4i+03259M6X2r7BXoIjJJml0paXBQY1kw=="
       }
     },
-    "UAP,Version=v10.0.16299/win10-x64": {
+    "UAP,Version=v10.0.17763/win10-x64": {
       "Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Direct",
         "requested": "[6.2.9, )",
@@ -277,13 +315,18 @@
           "runtime.win10-x64.Microsoft.NETCore.UniversalWindowsPlatform": "6.2.9"
         }
       },
+      "Microsoft.Web.WebView2": {
+        "type": "Transitive",
+        "resolved": "1.0.1264.42",
+        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
+      },
       "runtime.win10-x64.Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Transitive",
         "resolved": "6.2.9",
         "contentHash": "JjnUToWq2LQfNKtiqld4YYkgUcC3tCQ0RvRKiut0B7AgS+Eo/HnI/viFiH4FoNG7pFvcWoKimLctj06IgJoiyA=="
       }
     },
-    "UAP,Version=v10.0.16299/win10-x64-aot": {
+    "UAP,Version=v10.0.17763/win10-x64-aot": {
       "Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Direct",
         "requested": "[6.2.9, )",
@@ -297,13 +340,18 @@
           "runtime.win10-x64-aot.Microsoft.NETCore.UniversalWindowsPlatform": "6.2.9"
         }
       },
+      "Microsoft.Web.WebView2": {
+        "type": "Transitive",
+        "resolved": "1.0.1264.42",
+        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
+      },
       "runtime.win10-x64-aot.Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Transitive",
         "resolved": "6.2.9",
         "contentHash": "XTmgQZIB3JbzwVE0h+GN//VniFM4MmSWjxjtK7g5zypTwtpuj68oulxWqN5R3F19GaUzT+EFdfKXKEWI73/qwQ=="
       }
     },
-    "UAP,Version=v10.0.16299/win10-x86": {
+    "UAP,Version=v10.0.17763/win10-x86": {
       "Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Direct",
         "requested": "[6.2.9, )",
@@ -317,13 +365,18 @@
           "runtime.win10-x86.Microsoft.NETCore.UniversalWindowsPlatform": "6.2.9"
         }
       },
+      "Microsoft.Web.WebView2": {
+        "type": "Transitive",
+        "resolved": "1.0.1264.42",
+        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
+      },
       "runtime.win10-x86.Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Transitive",
         "resolved": "6.2.9",
         "contentHash": "BckZHjaqBTSEtvzj0aliq3DQvLOT7C4ei4L8pCgcD3k/MZpECBg8kUsixDanwYtRot+jNXxc6LF5J87cyigGfA=="
       }
     },
-    "UAP,Version=v10.0.16299/win10-x86-aot": {
+    "UAP,Version=v10.0.17763/win10-x86-aot": {
       "Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Direct",
         "requested": "[6.2.9, )",
@@ -336,6 +389,11 @@
           "NETStandard.Library": "2.0.3",
           "runtime.win10-x86-aot.Microsoft.NETCore.UniversalWindowsPlatform": "6.2.9"
         }
+      },
+      "Microsoft.Web.WebView2": {
+        "type": "Transitive",
+        "resolved": "1.0.1264.42",
+        "contentHash": "7OBUTkzQ5VI/3gb0ufi5U4zjuCowAJwQg2li0zXXzqkM+S1kmOlivTy1R4jAW+gY5Vyg510M+qMAESCQUjrfgA=="
       },
       "runtime.win10-x86-aot.Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Transitive",

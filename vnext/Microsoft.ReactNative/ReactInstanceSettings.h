@@ -53,7 +53,7 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
 
   IReactNotificationService Notifications() noexcept;
 
-  Windows::Foundation::Collections::IVector<IReactPackageProvider> PackageProviders() noexcept;
+  winrt::Windows::Foundation::Collections::IVector<IReactPackageProvider> PackageProviders() noexcept;
 
   //! This controls the availability of various developer support functionality including
   //! RedBox, and the Developer Menu
@@ -62,6 +62,13 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
 
   hstring JavaScriptBundleFile() noexcept;
   void JavaScriptBundleFile(hstring const &value) noexcept;
+
+  hstring BundleAppId() noexcept;
+  void BundleAppId(hstring const &value) noexcept;
+
+  //! When querying the bundle server for a bundle, should it request the dev bundle or release bundle
+  bool RequestDevBundle() noexcept;
+  void RequestDevBundle(bool value) noexcept;
 
   //! Should the instance run in a remote environment such as within a browser
   //! By default, this is using a browser navigated to  http://localhost:8081/debugger-ui served
@@ -76,7 +83,7 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   void UseFastRefresh(bool value) noexcept;
 
   //! Should the instance monitor for changes to the JS and reload the instance when a change is
-  //! detected.  Generally its prefered to use FastFreshed instead of this.  But if there is some
+  //! detected.  Generally its preferred to use FastFreshed instead of this.  But if there is some
   //! issue with hot reloading in your app, then this can be used instead
   bool UseLiveReload() noexcept;
   void UseLiveReload(bool value) noexcept;
@@ -140,17 +147,17 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   void JSIEngineOverride(JSIEngine value) noexcept;
 
   winrt::event_token InstanceCreated(
-      Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::InstanceCreatedEventArgs> const
+      winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::InstanceCreatedEventArgs> const
           &handler) noexcept;
   void InstanceCreated(winrt::event_token const &token) noexcept;
 
   winrt::event_token InstanceLoaded(
-      Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::InstanceLoadedEventArgs> const
+      winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::InstanceLoadedEventArgs> const
           &handler) noexcept;
   void InstanceLoaded(winrt::event_token const &token) noexcept;
 
   winrt::event_token InstanceDestroyed(
-      Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::InstanceDestroyedEventArgs> const
+      winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::InstanceDestroyedEventArgs> const
           &handler) noexcept;
   void InstanceDestroyed(winrt::event_token const &token) noexcept;
 
@@ -167,9 +174,11 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
  private:
   IReactPropertyBag m_properties{ReactPropertyBagHelper::CreatePropertyBag()};
   IReactNotificationService m_notifications{ReactNotificationServiceHelper::CreateNotificationService()};
-  Windows::Foundation::Collections::IVector<IReactPackageProvider> m_packageProviders{
+  ::winrt::Windows::Foundation::Collections::IVector<IReactPackageProvider> m_packageProviders{
       single_threaded_vector<IReactPackageProvider>()};
   hstring m_javaScriptBundleFile{};
+  hstring m_bundleAppId{};
+  bool m_devBundle{true};
   bool m_enableJITCompilation{true};
   bool m_enableByteCodeCaching{false};
   hstring m_byteCodeFileUri{};
@@ -214,7 +223,7 @@ inline IReactNotificationService ReactInstanceSettings::Notifications() noexcept
   return m_notifications;
 }
 
-inline Windows::Foundation::Collections::IVector<IReactPackageProvider>
+inline winrt::Windows::Foundation::Collections::IVector<IReactPackageProvider>
 ReactInstanceSettings::PackageProviders() noexcept {
   return m_packageProviders;
 }
@@ -225,6 +234,22 @@ inline hstring ReactInstanceSettings::JavaScriptBundleFile() noexcept {
 
 inline void ReactInstanceSettings::JavaScriptBundleFile(hstring const &value) noexcept {
   m_javaScriptBundleFile = value;
+}
+
+inline hstring ReactInstanceSettings::BundleAppId() noexcept {
+  return m_bundleAppId;
+}
+
+inline void ReactInstanceSettings::BundleAppId(hstring const &value) noexcept {
+  m_bundleAppId = value;
+}
+
+inline bool ReactInstanceSettings::RequestDevBundle() noexcept {
+  return m_devBundle;
+}
+
+inline void ReactInstanceSettings::RequestDevBundle(bool value) noexcept {
+  m_devBundle = value;
 }
 
 inline bool ReactInstanceSettings::EnableJITCompilation() noexcept {

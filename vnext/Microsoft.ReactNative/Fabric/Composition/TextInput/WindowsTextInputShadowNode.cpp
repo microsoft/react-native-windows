@@ -86,7 +86,7 @@ void WindowsTextInputShadowNode::setTextLayoutManager(SharedTextLayoutManager te
 }
 
 AttributedString WindowsTextInputShadowNode::getMostRecentAttributedString() const {
-  auto const &state = getStateData();
+  const auto &state = getStateData();
 
   auto reactTreeAttributedString = getAttributedString();
 
@@ -104,7 +104,7 @@ void WindowsTextInputShadowNode::updateStateIfNeeded() {
   ensureUnsealed();
 
   auto reactTreeAttributedString = getAttributedString();
-  auto const &state = getStateData();
+  const auto &state = getStateData();
 
   // Tree is often out of sync with the value of the TextInput.
   // This is by design - don't change the value of the TextInput in the State,
@@ -141,9 +141,7 @@ void WindowsTextInputShadowNode::updateStateIfNeeded() {
       newEventCount,
       newAttributedString,
       reactTreeAttributedString,
-      {}, // TODO getConcreteProps().paragraphAttributes,
-      defaultTextAttributes,
-      ShadowView(*this),
+      {},
       state.defaultThemePaddingStart,
       state.defaultThemePaddingEnd,
       state.defaultThemePaddingTop,
@@ -153,8 +151,8 @@ void WindowsTextInputShadowNode::updateStateIfNeeded() {
 #pragma mark - LayoutableShadowNode
 
 Size WindowsTextInputShadowNode::measureContent(
-    LayoutContext const & /*layoutContext*/,
-    LayoutConstraints const &layoutConstraints) const {
+    const LayoutContext & /*layoutContext*/,
+    const LayoutConstraints &layoutConstraints) const {
   if (getStateData().cachedAttributedStringId != 0) {
     return m_textLayoutManager
         ->measureCachedSpannableById(
@@ -183,7 +181,8 @@ Size WindowsTextInputShadowNode::measureContent(
       ->measure(
           AttributedStringBox{attributedString},
           {}, // TODO getConcreteProps().paragraphAttributes,
-          layoutConstraints)
+          layoutConstraints,
+          nullptr)
       .size;
 }
 
