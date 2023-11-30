@@ -125,6 +125,7 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\Theme.cpp">
       <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
+      <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\Theme.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\UiaHelpers.cpp">
       <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
@@ -570,6 +571,7 @@
     <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactCompositionViewComponentBuilder.idl" />
     <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactPackageBuilderFabric.idl" />
     <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactViewComponentBuilder.idl" />
+    <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Theme.idl" />
     <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ViewProps.idl" />
   </ItemGroup>
   <ItemGroup>

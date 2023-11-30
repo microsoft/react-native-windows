@@ -46,4 +46,6 @@ struct Appearance : std::enable_shared_from_this<Appearance> {
   UISettings::ColorValuesChanged_revoker m_revoker;
 };
 
+bool IsColorLight(const winrt::Windows::UI::Color &clr) noexcept;
+
 } // namespace Microsoft::ReactNative

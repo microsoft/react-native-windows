@@ -110,7 +110,6 @@ void ImageComponentView::updateProps(
   ensureVisual();
 
   // update BaseComponentView props
-  updateShadowProps(oldImageProps, newImageProps, m_visual);
   updateTransformProps(oldImageProps, newImageProps, m_visual);
   Super::updateProps(props, oldProps);
 
@@ -191,10 +190,15 @@ void ImageComponentView::OnRenderingDeviceLost() noexcept {
   DrawImage();
 }
 
+bool ImageComponentView::themeEffectsImage() const noexcept {
+  return m_props->backgroundColor || isColorMeaningful(m_props->tintColor);
+}
+
 void ImageComponentView::onThemeChanged() noexcept {
-  if (m_props->backgroundColor || isColorMeaningful(m_props->tintColor)) {
+  if (themeEffectsImage()) {
     DrawImage();
   }
+  Super::onThemeChanged();
 }
 
 void ImageComponentView::ensureDrawingSurface() noexcept {
@@ -264,6 +268,14 @@ void ImageComponentView::DrawImage() noexcept {
   // to specify the entire surface, which nullptr is shorthand for (but, as it works out,
   // any time we make an update we touch the entire surface, so we always pass nullptr).
   POINT offset;
+
+  if (themeEffectsImage() && theme()->IsEmpty()) {
+    return;
+  }
+
+  if (!m_wicbmp) {
+    return;
+  }
 
   assert(m_context.UIDispatcher().HasThreadAccess());
 

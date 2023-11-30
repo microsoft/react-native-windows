@@ -69,8 +69,8 @@ struct IComponentView {
   virtual RootComponentView *rootComponentView() noexcept = 0;
   virtual void parent(IComponentView *parent) noexcept = 0;
   virtual IComponentView *parent() const noexcept = 0;
-  virtual void theme(const std::shared_ptr<Composition::Theme> &theme) noexcept = 0;
-  virtual std::shared_ptr<Composition::Theme> &theme() const noexcept = 0;
+  virtual void theme(winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme) noexcept = 0;
+  virtual winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme() const noexcept = 0;
   virtual void onThemeChanged() noexcept = 0;
   virtual const std::vector<IComponentView *> &children() const noexcept = 0;
   // Run fn on all children of this node until fn returns true

@@ -11,10 +11,13 @@
 #include <Modules/ReactRootViewTagGenerator.h>
 #include <QuirkSettings.h>
 #include <ReactHost/MsoUtils.h>
+#include <ReactPropertyBag.h>
 #include <Utils/Helpers.h>
 #include <dispatchQueue/dispatchQueue.h>
 #include <react/renderer/core/LayoutConstraints.h>
 #include <react/renderer/core/LayoutContext.h>
+#include <winrt/Microsoft.ReactNative.Composition.h>
+#include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Windows.UI.Core.h>
 #include "CompositionContextHelper.h"
 #include "CompositionHelpers.h"
@@ -154,6 +157,54 @@ float CompositionRootView::ScaleFactor() noexcept {
 
 void CompositionRootView::ScaleFactor(float value) noexcept {
   m_scaleFactor = value;
+}
+
+winrt::Microsoft::ReactNative::Composition::Theme CompositionRootView::Theme() noexcept {
+  if (!m_theme) {
+    Theme(winrt::Microsoft::ReactNative::Composition::Theme::GetDefaultTheme(m_context.Handle()));
+    m_themeChangedSubscription = m_context.Notifications().Subscribe(
+        winrt::Microsoft::ReactNative::ReactNotificationId<void>(
+            winrt::Microsoft::ReactNative::Composition::Theme::ThemeChangedEventName()),
+        m_context.UIDispatcher(),
+        [wkThis = get_weak()](
+            IInspectable const & /*sender*/,
+            winrt::Microsoft::ReactNative::ReactNotificationArgs<void> const & /*args*/) {
+          auto pThis = wkThis.get();
+          pThis->Theme(winrt::Microsoft::ReactNative::Composition::Theme::GetDefaultTheme(pThis->m_context.Handle()));
+        });
+  }
+  return m_theme;
+}
+
+void CompositionRootView::Theme(const winrt::Microsoft::ReactNative::Composition::Theme &value) noexcept {
+  if (m_themeChangedSubscription) {
+    m_themeChangedSubscription.Unsubscribe();
+    m_themeChangedSubscription = nullptr;
+  }
+
+  if (value == m_theme)
+    return;
+
+  m_theme = value;
+
+  m_themeChangedRevoker = m_theme.ThemeChanged(
+      winrt::auto_revoke,
+      [this](
+          const winrt::Windows::Foundation::IInspectable & /*sender*/,
+          const winrt::Windows::Foundation::IInspectable & /*args*/) {
+        if (auto rootView = GetComponentView()) {
+          Mso::Functor<bool(::Microsoft::ReactNative::IComponentView &)> fn =
+              [](::Microsoft::ReactNative::IComponentView &view) noexcept {
+                view.onThemeChanged();
+                return false;
+              };
+          walkTree(*rootView, true, fn);
+        }
+      });
+
+  if (auto rootView = GetComponentView()) {
+    rootView->theme(winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::Theme>(value));
+  }
 }
 
 winrt::IInspectable CompositionRootView::GetUiaProvider() noexcept {

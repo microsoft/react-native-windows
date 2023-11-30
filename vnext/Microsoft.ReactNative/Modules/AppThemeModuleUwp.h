@@ -52,4 +52,6 @@ struct AppTheme : public std::enable_shared_from_this<AppTheme> {
   winrt::Microsoft::ReactNative::ReactContext m_context;
 };
 
+bool IsInHighContrastWin32() noexcept;
+
 } // namespace Microsoft::ReactNative

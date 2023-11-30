@@ -8,6 +8,7 @@
 #include <Fabric/ComponentView.h>
 #include <Fabric/Composition/CompositionUIService.h>
 #include <Fabric/Composition/CompositionViewComponentView.h>
+#include <Fabric/Composition/RootComponentView.h>
 #include <Fabric/FabricUIManagerModule.h>
 #include <Fabric/ReactNativeConfigProperties.h>
 #include <Fabric/WindowsComponentDescriptorRegistry.h>
@@ -139,9 +140,12 @@ void FabricUIManager::startSurface(
     const folly::dynamic &initialProps) noexcept {
   m_surfaceRegistry.insert({surfaceId, {rootView.RootVisual(), rootView}});
 
-  m_context.UIDispatcher().Post([self = shared_from_this(), surfaceId]() {
+  m_context.UIDispatcher().Post([self = shared_from_this(), surfaceId, rootView]() {
     auto &rootComponentViewDescriptor = self->m_registry.dequeueComponentViewWithComponentHandle(
         facebook::react::RootShadowNode::Handle(), surfaceId, self->m_compContext);
+
+    static_cast<RootComponentView &>(*rootComponentViewDescriptor.view)
+        .theme(winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::Theme>(rootView.Theme()));
 
     self->m_surfaceRegistry.at(surfaceId).rootVisual.InsertAt(
         static_cast<const CompositionBaseComponentView &>(*rootComponentViewDescriptor.view).OuterVisual(), 0);

@@ -6,8 +6,13 @@
 
 #include "Theme.h"
 
+#include "Composition.CustomResourceResult.g.h"
 #include <Fabric/Composition/CompositionUIService.h>
+#include <Modules/AppThemeModuleUwp.h>
+#include <Modules/AppearanceModule.h>
 #include <winrt/Windows.UI.ViewManagement.h>
+#include "ReactPropertyBag.h"
+#include "winrt/Microsoft.ReactNative.Composition.h"
 
 #ifndef CORE_ABI
 #include <UI.Xaml.Media.h>
@@ -16,19 +21,107 @@
 
 #endif // CORE_ABI
 
-namespace Microsoft::ReactNative::Composition {
+#include "Composition.Theme.g.cpp"
 
-Theme::Theme(const winrt::Microsoft::ReactNative::ReactContext &reactContext) noexcept {
+namespace winrt::Microsoft::ReactNative::Composition::implementation {
+
+struct CustomResourceResult : CustomResourceResultT<CustomResourceResult> {
+  winrt::Windows::Foundation::IInspectable Resource() const noexcept {
+    return m_resource;
+  }
+  void Resource(const winrt::Windows::Foundation::IInspectable &value) noexcept {
+    m_resource = value;
+  }
+
+  winrt::hstring AlternateResourceId() const noexcept {
+    return m_alternateResourceId;
+  }
+  void AlternateResourceId(winrt::hstring value) noexcept {
+    m_alternateResourceId = value;
+  }
+
+  winrt::Windows::Foundation::IInspectable m_resource{nullptr};
+  winrt::hstring m_alternateResourceId;
+};
+
+Theme::Theme(
+    const winrt::Microsoft::ReactNative::ReactContext &reactContext,
+    const winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader &customResourceLoader) noexcept
+    : m_customResourceLoader(customResourceLoader) {
   m_compositionContext =
       winrt::Microsoft::ReactNative::Composition::implementation::CompositionUIService::GetCompositionContext(
           reactContext.Properties().Handle());
+
+  if (customResourceLoader) {
+    m_resourceChangedRevoker = customResourceLoader.ResourcesChanged(
+        winrt::auto_revoke,
+        [this](
+            winrt::Windows::Foundation::IInspectable const & /* sender */,
+            winrt::Windows::Foundation::IInspectable const & /* args */) { ClearCacheAndRaiseChangedEvent(); });
+  }
+
+  // UISettings will notify us on a background thread regardless of where we construct it or register for events.
+  // Redirect callbacks to the UI thread
+  m_colorValuesChangedRevoker = m_uisettings.ColorValuesChanged(
+      winrt::auto_revoke, [wkThis = get_weak(), reactContext](const auto & /*sender*/, const auto & /*args*/) noexcept {
+        if (auto pThis = wkThis.get()) {
+          reactContext.UIDispatcher().Post([wkThis]() noexcept {
+            if (auto pThis = wkThis.get()) {
+              pThis->ClearCacheAndRaiseChangedEvent();
+            }
+          });
+        }
+      });
+
+  m_highContrast = ::Microsoft::ReactNative::IsInHighContrastWin32();
+  m_darkTheme = ::Microsoft::ReactNative::IsColorLight(
+      m_uisettings.GetColorValue(winrt::Windows::UI::ViewManagement::UIColorType::Foreground));
 }
 
-std::pair<bool, winrt::Windows::UI::Color> Theme::TryGetPlatformColor(const std::string &platformColor) noexcept {
+void Theme::ClearCacheAndRaiseChangedEvent() noexcept {
+  m_colorCache.clear();
+  m_platformColorBrushCache.clear();
+  m_colorBrushCache.clear();
+  m_darkTheme = ::Microsoft::ReactNative::IsColorLight(
+      m_uisettings.GetColorValue(winrt::Windows::UI::ViewManagement::UIColorType::Foreground));
+  m_highContrast = ::Microsoft::ReactNative::IsInHighContrastWin32();
+  m_themeChangedEvent(*this, nullptr);
+}
+
+Theme::Theme() noexcept : m_emptyTheme(true) {}
+
+bool Theme::TryGetPlatformColor(winrt::hstring platformColor, winrt::Windows::UI::Color &color) noexcept {
+  return TryGetPlatformColor(winrt::to_string(platformColor), color);
+}
+
+bool Theme::TryGetPlatformColor(const std::string &platformColor, winrt::Windows::UI::Color &color) noexcept {
   // Future: This could take into account the system theme
 
-  if (auto cachedEntry = m_colorCache.find(platformColor); cachedEntry != m_colorCache.end())
-    return cachedEntry->second;
+  if (m_emptyTheme)
+    return false;
+
+  if (auto cachedEntry = m_colorCache.find(platformColor); cachedEntry != m_colorCache.end()) {
+    if (!cachedEntry->second.first) {
+      return false;
+    }
+
+    color = cachedEntry->second.second;
+    return true;
+  }
+
+  if (m_customResourceLoader) {
+    auto result = winrt::make<CustomResourceResult>();
+    m_customResourceLoader.GetResource(
+        winrt::to_hstring(platformColor), winrt::Microsoft::ReactNative::Composition::ResourceType::Color, result);
+    if (!result.AlternateResourceId().empty()) {
+      return TryGetPlatformColor(winrt::to_string(result.AlternateResourceId()), color);
+    }
+    if (auto resource = result.Resource()) {
+      color = winrt::unbox_value<winrt::Windows::UI::Color>(resource);
+      m_colorCache[platformColor] = std::make_pair(true, color);
+      return true;
+    }
+  }
 
 #ifndef CORE_ABI
   // If XAML is loaded, look in application resources
@@ -39,13 +132,13 @@ std::pair<bool, winrt::Windows::UI::Color> Theme::TryGetPlatformColor(const std:
       winrt::IInspectable resource{appResources.Lookup(boxedResourceName)};
 
       if (auto brush = resource.try_as<xaml::Media::SolidColorBrush>()) {
-        auto pair = std::make_pair(true, brush.Color());
-        m_colorCache[platformColor] = pair;
-        return pair;
-      } else if (auto color = resource.try_as<winrt::Windows::UI::Color>()) {
-        auto pair = std::make_pair(true, color.value());
-        m_colorCache[platformColor] = pair;
-        return pair;
+        color = brush.Color();
+        m_colorCache[platformColor] = std::make_pair(true, brush.Color());
+        return true;
+      } else if (auto maybeColor = resource.try_as<winrt::Windows::UI::Color>()) {
+        color = maybeColor.value();
+        m_colorCache[platformColor] = std::make_pair(true, color);
+        return true;
       }
     }
   }
@@ -70,28 +163,25 @@ std::pair<bool, winrt::Windows::UI::Color> Theme::TryGetPlatformColor(const std:
           {"Complement", winrt::Windows::UI::ViewManagement::UIColorType::Complement},
           {"Foreground", winrt::Windows::UI::ViewManagement::UIColorType::Foreground}};
 
-  if (platformColor == "AccentDark1@90") {
-    auto clr = TryGetPlatformColor("AccentDark1").second;
-    clr.A = static_cast<uint8_t>(static_cast<float>(clr.A) * 0.9f);
-    auto pair = std::make_pair(true, clr);
-    m_colorCache[platformColor] = pair;
-    return pair;
+  if (platformColor == "AccentDark1@90" && TryGetPlatformColor("AccentDark1", color)) {
+    color.A = static_cast<uint8_t>(static_cast<float>(color.A) * 0.9f);
+    m_colorCache[platformColor] = std::make_pair(true, color);
+    return true;
   }
 
-  if (platformColor == "AccentDark1@80") {
-    auto clr = TryGetPlatformColor("AccentDark1").second;
-    clr.A = static_cast<uint8_t>(static_cast<float>(clr.A) * 0.8f);
-    auto pair = std::make_pair(true, clr);
-    m_colorCache[platformColor] = pair;
-    return pair;
+  if (platformColor == "AccentDark1@80" && TryGetPlatformColor("AccentDark1", color)) {
+    color.A = static_cast<uint8_t>(static_cast<float>(color.A) * 0.8f);
+    m_colorCache[platformColor] = std::make_pair(true, color);
+    return true;
   }
 
   auto uiColor = s_uiColorTypes.find(platformColor);
   if (uiColor != s_uiColorTypes.end()) {
     auto uiSettings{winrt::Windows::UI::ViewManagement::UISettings()};
-    auto pair = std::make_pair(true, uiSettings.GetColorValue(uiColor->second));
+    color = uiSettings.GetColorValue(uiColor->second);
+    auto pair = std::make_pair(true, color);
     m_colorCache[platformColor] = pair;
-    return pair;
+    return true;
   }
 
   // UI element colors
@@ -132,9 +222,9 @@ std::pair<bool, winrt::Windows::UI::Color> Theme::TryGetPlatformColor(const std:
   auto uiElement = s_uiElementTypes.find(platformColor);
   if (uiElement != s_uiElementTypes.end()) {
     auto uiSettings{winrt::Windows::UI::ViewManagement::UISettings()};
-    auto pair = std::make_pair<bool, winrt::Windows::UI::Color>(true, uiSettings.UIElementColor(uiElement->second));
-    m_colorCache[platformColor] = pair;
-    return pair;
+    color = uiSettings.UIElementColor(uiElement->second);
+    m_colorCache[platformColor] = std::make_pair(true, color);
+    return true;
   }
 
   // Fallback light-theme XAML brushes
@@ -196,7 +286,7 @@ std::pair<bool, winrt::Windows::UI::Color> Theme::TryGetPlatformColor(const std:
       };
 
   static std::unordered_map<std::string, winrt::Windows::UI::Color, std::hash<std::string_view>, std::equal_to<>>
-      s_xamlBrushes = {
+      s_lightColors = {
           {"SolidBackgroundFillColorBase", {0xFF, 0xF3, 0xF3, 0xF3}},
           {"ControlFillColorDefault", {0xB3, 0xFF, 0xFF, 0xFF}},
           {"ControlFillColorSecondary", {0x80, 0xF9, 0xF9, 0xF9}},
@@ -218,34 +308,99 @@ std::pair<bool, winrt::Windows::UI::Color> Theme::TryGetPlatformColor(const std:
           {"TextOnAccentFillColorPrimary", {0xFF, 0xFF, 0xFF, 0xFF}},
           {"TextOnAccentFillColorDisabled", {0xFF, 0xFF, 0xFF, 0xFF}},
           {"ControlAltFillColorSecondary", {0x06, 0x00, 0x00, 0x00}},
-          // Arguably only the control-agnostic platform colors should be respected, and
-          // Button should be updated to use those instead, assuming that still holds up
-          // in high contrast and such.
+      };
+
+  static std::unordered_map<std::string, winrt::Windows::UI::Color, std::hash<std::string_view>, std::equal_to<>>
+      s_darkColors = {
+          {"SolidBackgroundFillColorBase", {0xFF, 0x20, 0x20, 0x20}},
+          {"ControlFillColorDefault", {0x0F, 0xFF, 0xFF, 0xFF}},
+          {"ControlFillColorSecondary", {0x15, 0xFF, 0xFF, 0xFF}},
+          {"ControlFillColorTertiary", {0x08, 0xFF, 0xFF, 0xFF}},
+          {"ControlFillColorDisabled", {0x0B, 0xFF, 0xFF, 0xFF}},
+          {"ControlFillColorTransparent", {0x00, 0xFF, 0xFF, 0xFF}},
+          {"ControlStrokeColorDefault", {0x12, 0xFF, 0xFF, 0xFF}},
+          {"ControlStrokeColorSecondary", {0x18, 0xFF, 0xFF, 0xFF}},
+          {"ControlStrokeColorOnAccentSecondary", {0x23, 0x00, 0x00, 0x00}},
+          {"TextFillColorPrimary", {0xFF, 0xFF, 0xFF, 0xFF}},
+          {"TextFillColorSecondary", {0xC5, 0xFF, 0xFF, 0xFF}},
+          {"TextFillColorDisabled", {0x5D, 0xFF, 0xFF, 0xFF}},
+          {"ControlAltFillColorTertiary", {0x0B, 0xFF, 0xFF, 0xFF}},
+          {"ControlAltFillColorQuarternary", {0x12, 0xFF, 0xFF, 0xFF}},
+          {"ControlAltFillColorDisabled", {0x00, 0xFF, 0xFF, 0xFF}},
+          {"ControlStrongStrokeColorDefault", {0x8B, 0xFF, 0xFF, 0xFF}},
+          {"ControlStrongStrokeColorDisabled", {0x28, 0xFF, 0xFF, 0xFF}},
+          {"AccentFillColorDisabled", {0x28, 0xFF, 0xFF, 0xFF}},
+          {"TextOnAccentFillColorPrimary", {0xFF, 0x00, 0x00, 0x00}},
+          {"TextOnAccentFillColorDisabled", {0x87, 0xFF, 0xFF, 0xFF}},
+          {"ControlAltFillColorSecondary", {0x19, 0x00, 0x00, 0x00}},
+      };
+
+  static std::unordered_map<
+      std::string,
+      std::pair<winrt::Windows::UI::ViewManagement::UIElementType, winrt::Windows::UI::Color>,
+      std::hash<std::string_view>,
+      std::equal_to<>>
+      s_contrastColors = {
+          {"SolidBackgroundFillColorBase", {winrt::Windows::UI::ViewManagement::UIElementType::Window, {}}},
+          {"ControlFillColorDefault", {winrt::Windows::UI::ViewManagement::UIElementType::ButtonFace, {}}},
+          {"ControlFillColorSecondary", {winrt::Windows::UI::ViewManagement::UIElementType::ButtonFace, {}}},
+          {"ControlFillColorTertiary", {winrt::Windows::UI::ViewManagement::UIElementType::ButtonFace, {}}},
+          {"ControlFillColorDisabled", {winrt::Windows::UI::ViewManagement::UIElementType::ButtonFace, {}}},
+          {"ControlFillColorTransparent",
+           {(winrt::Windows::UI::ViewManagement::UIElementType)-1, {0x00, 0xFF, 0xFF, 0xFF}}},
+          {"ControlStrokeColorDefault", {winrt::Windows::UI::ViewManagement::UIElementType::ButtonText, {}}},
+          {"ControlStrokeColorSecondary", {winrt::Windows::UI::ViewManagement::UIElementType::ButtonText, {}}},
+          {"ControlStrokeColorOnAccentSecondary", {winrt::Windows::UI::ViewManagement::UIElementType::ButtonText, {}}},
+          {"TextFillColorPrimary", {winrt::Windows::UI::ViewManagement::UIElementType::WindowText, {}}},
+          {"TextFillColorSecondary", {winrt::Windows::UI::ViewManagement::UIElementType::WindowText, {}}},
+          {"TextFillColorDisabled", {winrt::Windows::UI::ViewManagement::UIElementType::GrayText, {}}},
+          {"ControlAltFillColorTertiary", {winrt::Windows::UI::ViewManagement::UIElementType::ButtonFace, {}}},
+          {"ControlAltFillColorQuarternary", {winrt::Windows::UI::ViewManagement::UIElementType::ButtonFace, {}}},
+          {"ControlAltFillColorDisabled", {winrt::Windows::UI::ViewManagement::UIElementType::ButtonFace, {}}},
+          {"ControlStrongStrokeColorDefault", {winrt::Windows::UI::ViewManagement::UIElementType::ButtonText, {}}},
+          {"ControlStrongStrokeColorDisabled", {winrt::Windows::UI::ViewManagement::UIElementType::ButtonText, {}}},
+          {"AccentFillColorDisabled", {winrt::Windows::UI::ViewManagement::UIElementType::Window, {}}},
+          {"TextOnAccentFillColorPrimary", {winrt::Windows::UI::ViewManagement::UIElementType::WindowText, {}}},
+          {"TextOnAccentFillColorDisabled", {winrt::Windows::UI::ViewManagement::UIElementType::GrayText, {}}},
+          {"ControlAltFillColorSecondary", {winrt::Windows::UI::ViewManagement::UIElementType::ButtonFace, {}}},
       };
 
   auto alias = s_xamlAliasedColors.find(platformColor);
   if (alias != s_xamlAliasedColors.end()) {
-    return TryGetPlatformColor(alias->second);
+    return TryGetPlatformColor(alias->second, color);
   }
 
-  auto result = s_xamlBrushes.find(platformColor);
-  if (result != s_xamlBrushes.end()) {
-    auto pair = std::make_pair<bool, winrt::Windows::UI::Color>(true, winrt::Windows::UI::Color(result->second));
-    m_colorCache[platformColor] = pair;
-    return pair;
+  if (m_highContrast) {
+    auto result = s_contrastColors.find(platformColor);
+    if (result != s_contrastColors.end()) {
+      if (result->second.first == (winrt::Windows::UI::ViewManagement::UIElementType)-1) {
+        color = result->second.second;
+      } else {
+        color = m_uisettings.UIElementColor(result->second.first);
+      }
+      m_colorCache[platformColor] = std::make_pair(true, color);
+      return true;
+    }
+  } else {
+    auto &builtInColors = m_darkTheme ? s_darkColors : s_lightColors;
+    auto result = builtInColors.find(platformColor);
+    if (result != builtInColors.end()) {
+      color = result->second;
+      m_colorCache[platformColor] = std::make_pair(true, color);
+      return true;
+    }
   }
 
-  auto pair = std::make_pair<bool, winrt::Windows::UI::Color>(false, {});
-  m_colorCache[platformColor] = pair;
-  return pair;
+  m_colorCache[platformColor] = std::make_pair(false, winrt::Windows::UI::Color{});
+  return false;
 }
 
 winrt::Windows::UI::Color Theme::Color(const facebook::react::Color &color) noexcept {
+  winrt::Windows::UI::Color clr;
   if (!color.m_platformColor.empty()) {
     for (auto platformColor : color.m_platformColor) {
-      auto pair = TryGetPlatformColor(platformColor);
-      if (pair.first) {
-        return pair.second;
+      if (TryGetPlatformColor(platformColor, clr)) {
+        return clr;
       }
     }
   }
@@ -253,22 +408,29 @@ winrt::Windows::UI::Color Theme::Color(const facebook::react::Color &color) noex
 }
 
 winrt::Windows::UI::Color Theme::PlatformColor(const std::string &platformColor) noexcept {
-  auto pair = TryGetPlatformColor(platformColor);
-  assert(pair.first);
-  if (pair.first) {
-    return pair.second;
+  winrt::Windows::UI::Color color;
+  if (TryGetPlatformColor(platformColor, color)) {
+    return color;
   }
 
+  assert(m_emptyTheme);
   return {0, 0, 0, 0}; // Transparent
 }
 
+winrt::Microsoft::ReactNative::Composition::IBrush Theme::PlatformBrush(winrt::hstring platformColor) noexcept {
+  return PlatformBrush(winrt::to_string(platformColor));
+}
+
 winrt::Microsoft::ReactNative::Composition::IBrush Theme::PlatformBrush(const std::string &platformColor) noexcept {
+  if (m_emptyTheme)
+    return nullptr;
+
   if (auto cachedEntry = m_platformColorBrushCache.find(platformColor); cachedEntry != m_platformColorBrushCache.end())
     return cachedEntry->second;
 
-  auto pair = TryGetPlatformColor(platformColor);
-  if (pair.first) {
-    auto brush = m_compositionContext.CreateColorBrush(pair.second);
+  winrt::Windows::UI::Color color;
+  if (TryGetPlatformColor(platformColor, color)) {
+    auto brush = m_compositionContext.CreateColorBrush(color);
     m_platformColorBrushCache[platformColor] = brush;
     return brush;
   }
@@ -276,6 +438,9 @@ winrt::Microsoft::ReactNative::Composition::IBrush Theme::PlatformBrush(const st
 }
 
 winrt::Microsoft::ReactNative::Composition::IBrush Theme::Brush(const facebook::react::Color &color) noexcept {
+  if (m_emptyTheme)
+    return nullptr;
+
   if (!color.m_platformColor.empty()) {
     for (auto platformColor : color.m_platformColor) {
       auto brush = PlatformBrush(platformColor);
@@ -304,17 +469,54 @@ D2D1::ColorF Theme::D2DPlatformColor(const std::string &platformColor) noexcept 
   return {c.R / 255.0f, c.G / 255.0f, c.B / 255.0f, c.A / 255.0f};
 }
 
-static const winrt::Microsoft::ReactNative::ReactPropertyId<
-    winrt::Microsoft::ReactNative::ReactNonAbiValue<std::shared_ptr<Theme>>>
+bool Theme::IsEmpty() const noexcept {
+  return m_emptyTheme;
+}
+
+winrt::event_token Theme::ThemeChanged(
+    winrt::Windows::Foundation::EventHandler<winrt::Windows::Foundation::IInspectable> const &handler) noexcept {
+  return m_themeChangedEvent.add(handler);
+}
+void Theme::ThemeChanged(winrt::event_token const &token) noexcept {
+  m_themeChangedEvent.remove(token);
+}
+
+static const winrt::Microsoft::ReactNative::ReactPropertyId<winrt::Microsoft::ReactNative::Composition::Theme>
     &ThemePropertyId() noexcept {
-  static const winrt::Microsoft::ReactNative::ReactPropertyId<
-      winrt::Microsoft::ReactNative::ReactNonAbiValue<std::shared_ptr<Theme>>>
-      prop{L"ReactNative.Composition", L"Theme"};
+  static const winrt::Microsoft::ReactNative::ReactPropertyId<winrt::Microsoft::ReactNative::Composition::Theme> prop{
+      L"ReactNative.Composition", L"Theme"};
   return prop;
 }
 
-std::shared_ptr<Theme> Theme::FromContext(const winrt::Microsoft::ReactNative::ReactContext &context) noexcept {
-  return *context.Properties().GetOrCreate(ThemePropertyId(), [context]() { return std::make_shared<Theme>(context); });
+winrt::Microsoft::ReactNative::Composition::Theme Theme::EmptyTheme() noexcept {
+  static winrt::Microsoft::ReactNative::Composition::Theme s_emptyTheme{nullptr};
+  if (!s_emptyTheme) {
+    s_emptyTheme = winrt::make<Theme>();
+  }
+  return s_emptyTheme;
 }
 
-} // namespace Microsoft::ReactNative::Composition
+/*static*/ winrt::Microsoft::ReactNative::Composition::Theme Theme::GetDefaultTheme(
+    const winrt::Microsoft::ReactNative::IReactContext &context) noexcept {
+  return winrt::Microsoft::ReactNative::ReactPropertyBag(context.Properties())
+      .GetOrCreate(ThemePropertyId(), [context]() { return winrt::make<Theme>(context, nullptr); });
+}
+
+/*static*/ void Theme::SetDefaultTheme(
+    const winrt::Microsoft::ReactNative::ReactInstanceSettings &settings,
+    const winrt::Microsoft::ReactNative::Composition::Theme &theme) noexcept {
+  winrt::Microsoft::ReactNative::ReactPropertyBag(settings.Properties()).Set(ThemePropertyId(), theme);
+  settings.Notifications().SendNotification(ThemeChangedEventName(), nullptr, nullptr);
+}
+
+IReactPropertyNamespace ThemeNamespace() noexcept {
+  static IReactPropertyNamespace value = ReactPropertyBagHelper::GetNamespace(L"ReactNative.Theme");
+  return value;
+}
+
+/*static*/ IReactPropertyName Theme::ThemeChangedEventName() noexcept {
+  static IReactPropertyName propName = ReactPropertyBagHelper::GetName(ThemeNamespace(), L"Changed");
+  return propName;
+}
+
+} // namespace winrt::Microsoft::ReactNative::Composition::implementation

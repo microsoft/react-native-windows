@@ -41,13 +41,23 @@ void Appearance::Initialize(winrt::Microsoft::ReactNative::ReactContext const &r
       });
 }
 
+bool IsColorLight(const winrt::Windows::UI::Color &clr) noexcept {
+  return (((5 * clr.G) + (2 * clr.R) + clr.B) > (8 * 128));
+}
+
+ApplicationTheme CurrentThemeFromUISettings(const winrt::Windows::UI::ViewManagement::UISettings &uiSettings) {
+  return IsColorLight(uiSettings.GetColorValue(winrt::Windows::UI::ViewManagement::UIColorType::Foreground))
+      ? ApplicationTheme::Dark
+      : ApplicationTheme::Light;
+}
+
 ApplicationTheme Appearance::GetCurrentTheme() noexcept {
   assert(m_context.UIDispatcher().HasThreadAccess()); // xaml::Application is only accessible on the UI thread
   if (auto currentApp = xaml::TryGetCurrentApplication()) {
     return currentApp.RequestedTheme();
   }
 
-  return ApplicationTheme::Light;
+  return CurrentThemeFromUISettings(m_uiSettings);
 }
 
 const char *Appearance::ToString(ApplicationTheme theme) noexcept {
@@ -69,6 +79,8 @@ void Appearance::InitOnUIThread(const Mso::React::IReactContext &context) noexce
   xaml::ApplicationTheme theme = ApplicationTheme::Light;
   if (auto currentApp = xaml::TryGetCurrentApplication()) {
     theme = currentApp.RequestedTheme();
+  } else {
+    theme = CurrentThemeFromUISettings(winrt::Windows::UI::ViewManagement::UISettings());
   }
 
   winrt::Microsoft::ReactNative::ReactPropertyBag pb{context.Properties()};
