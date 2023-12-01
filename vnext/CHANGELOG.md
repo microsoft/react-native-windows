@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 22 Nov 2023 06:16:28 GMT and should not be manually modified.
+This log was last generated on Wed, 29 Nov 2023 06:16:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.742
+
+Wed, 29 Nov 2023 06:16:34 GMT
+
+### Changes
+
+- Update @react-native/react-native-picker (jthysell@microsoft.com)
+- [Fabric] Add support for custom native component to have c++ state and custom measure (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.741
 
