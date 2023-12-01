@@ -39,6 +39,12 @@ struct JsiBufferWrapper : facebook::jsi::Buffer {
   array_view<const uint8_t> m_bytes;
 };
 
+struct NonAbiValueNativeState : facebook::jsi::NativeState {
+  NonAbiValueNativeState(IReactNonAbiValue const &value) : Value(value) {}
+
+  IReactNonAbiValue Value;
+};
+
 //===========================================================================
 // Helper methods
 //===========================================================================
@@ -743,8 +749,7 @@ JsiObjectRef JsiRuntime::CreateObjectWithHostObject(IJsiHostObject const &hostOb
 IJsiHostObject JsiRuntime::GetHostObject(JsiObjectRef obj) try {
   auto objPtr = RuntimeAccessor::AsPointerValue(obj);
   auto hostObject = m_runtimeAccessor->getHostObject(RuntimeAccessor::AsObject(&objPtr));
-  // TODO: using static_pointer_cast is unsafe here. How to use shared_ptr without RTTI?
-  auto wrapper = std::static_pointer_cast<HostObjectWrapper>(hostObject);
+  auto wrapper = std::dynamic_pointer_cast<HostObjectWrapper>(hostObject);
   return wrapper ? wrapper->Get() : nullptr;
 } catch (JSI_SET_ERROR) {
   throw;
@@ -911,16 +916,21 @@ bool JsiRuntime::HasNativeState(JsiObjectRef obj) try {
   throw;
 }
 
-JsiObjectRef JsiRuntime::GetNativeState(JsiObjectRef obj) try {
-  // TODO: implement
-  VerifyElseCrash(false);
+IReactNonAbiValue JsiRuntime::GetNativeState(JsiObjectRef obj) try {
+  auto objPtr = RuntimeAccessor::AsPointerValue(obj);
+  std::shared_ptr<facebook::jsi::NativeState> nativeState =
+      m_runtimeAccessor->getNativeState(RuntimeAccessor::AsObject(&objPtr));
+  std::shared_ptr<NonAbiValueNativeState> valueState = std::dynamic_pointer_cast<NonAbiValueNativeState>(nativeState);
+  return valueState ? valueState->Value : nullptr;
 } catch (JSI_SET_ERROR) {
   throw;
 }
 
-void JsiRuntime::SetNativeState(JsiObjectRef obj, JsiObjectRef state) try {
-  // TODO: implement
-  VerifyElseCrash(false);
+void JsiRuntime::SetNativeState(JsiObjectRef obj, IReactNonAbiValue const &state) try {
+  auto objPtr = RuntimeAccessor::AsPointerValue(obj);
+  std::shared_ptr<facebook::jsi::NativeState> nativeState =
+      std::make_shared<facebook::jsi::NativeState>(NonAbiValueNativeState(state));
+  m_runtimeAccessor->setNativeState(RuntimeAccessor::AsObject(&objPtr), std::move(nativeState));
 } catch (JSI_SET_ERROR) {
   throw;
 }
