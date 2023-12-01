@@ -3214,9 +3214,9 @@
     csstype "^3.0.2"
 
 "@types/readline-sync@^1.4.4":
-  version "1.4.7"
-  resolved "https://registry.yarnpkg.com/@types/readline-sync/-/readline-sync-1.4.7.tgz#2a1c3ba6b45724bda68d0dfbac6ed32afccb8e46"
-  integrity sha512-tPPerBmYwWX66KcZFYPjCuJfF8ykGD0GtPx6r33KYm0v4g4x68VK33/v4kLEoDwnnkYwcY2s9oYgMfTKMr3krg==
+  version "1.4.8"
+  resolved "https://registry.yarnpkg.com/@types/readline-sync/-/readline-sync-1.4.8.tgz#dc9767a93fc83825d90331f2549a2e90fc3255f0"
+  integrity sha512-BL7xOf0yKLA6baAX6MMOnYkoflUyj/c7y3pqMRfU0va7XlwHAOTOIo4x55P/qLfMsuaYdJJKubToLqRVmRtRZA==
 
 "@types/responselike@*", "@types/responselike@^1.0.0":
   version "1.0.0"
