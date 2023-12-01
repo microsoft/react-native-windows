@@ -749,7 +749,7 @@ JsiObjectRef JsiRuntime::CreateObjectWithHostObject(IJsiHostObject const &hostOb
 IJsiHostObject JsiRuntime::GetHostObject(JsiObjectRef obj) try {
   auto objPtr = RuntimeAccessor::AsPointerValue(obj);
   auto hostObject = m_runtimeAccessor->getHostObject(RuntimeAccessor::AsObject(&objPtr));
-  auto wrapper = std::dynamic_pointer_cast<HostObjectWrapper>(hostObject);
+  auto wrapper = std::static_pointer_cast<HostObjectWrapper>(hostObject);
   return wrapper ? wrapper->Get() : nullptr;
 } catch (JSI_SET_ERROR) {
   throw;
@@ -920,7 +920,7 @@ IReactNonAbiValue JsiRuntime::GetNativeState(JsiObjectRef obj) try {
   auto objPtr = RuntimeAccessor::AsPointerValue(obj);
   std::shared_ptr<facebook::jsi::NativeState> nativeState =
       m_runtimeAccessor->getNativeState(RuntimeAccessor::AsObject(&objPtr));
-  std::shared_ptr<NonAbiValueNativeState> valueState = std::dynamic_pointer_cast<NonAbiValueNativeState>(nativeState);
+  std::shared_ptr<NonAbiValueNativeState> valueState = std::static_pointer_cast<NonAbiValueNativeState>(nativeState);
   return valueState ? valueState->Value : nullptr;
 } catch (JSI_SET_ERROR) {
   throw;
