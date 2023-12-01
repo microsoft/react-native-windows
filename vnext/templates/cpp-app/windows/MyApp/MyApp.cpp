@@ -4,6 +4,8 @@
 #include "pch.h"
 #include "{{ name }}.h"
 
+#include "AutolinkedNativeModules.g.h"
+
 #include "../../node_modules/react-native-windows/codegen/NativeDeviceInfoSpec.g.h"
 
 #include <DispatcherQueue.h>
@@ -127,9 +129,9 @@ struct WindowData {
     GetCurrentDirectory(MAX_PATH, workingDir);
 
     auto host = Host();
-    // Disable until we have a 3rd party story for custom components
-    // RegisterAutolinkedNativeModulePackages(host.PackageProviders()); // Includes any
-    // autolinked modules
+    
+    // Include any autolinked modules
+    RegisterAutolinkedNativeModulePackages(host.PackageProviders());
 
     host.InstanceSettings().JavaScriptBundleFile(m_bundleFile);
 

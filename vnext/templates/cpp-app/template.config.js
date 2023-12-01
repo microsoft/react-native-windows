@@ -20,12 +20,7 @@ const templateUtils = require('../templateUtils');
 async function preInstall(config = {}, options = {}) {}
 
 async function getFileMappings(config = {}, options = {}) {
-  const rnwPath = path.dirname(
-    require.resolve('react-native-windows', [config.root]),
-  );
-  const rnwVersion = require(path.join(rnwPath, 'package.json')).version;
-
-  const devMode = existsSync(path.join(rnwPath, 'src'));
+  const {rnwVersion, devMode} = templateUtils.getRnwInfo(config, options);
 
   const projectName =
     config?.project?.windows?.project?.projectName ?? options?.name ?? 'MyApp';
