@@ -5,24 +5,21 @@
 #pragma once
 
 #include "Theme.h"
-#include "winrt/Microsoft.ReactNative.Composition.h"
+
 #include "Composition.Theme.g.cpp"
+#include "winrt/Microsoft.ReactNative.Composition.h"
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 Theme::Theme(
     const winrt::Microsoft::ReactNative::ReactContext &,
-    const winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader &) noexcept
-  {
-  }
+    const winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader &) noexcept {}
 
-
-void Theme::ClearCacheAndRaiseChangedEvent() noexcept {
-}
+void Theme::ClearCacheAndRaiseChangedEvent() noexcept {}
 
 Theme::Theme() noexcept {}
 
-bool Theme::TryGetPlatformColor(winrt::hstring , winrt::Windows::UI::Color &) noexcept {
+bool Theme::TryGetPlatformColor(winrt::hstring, winrt::Windows::UI::Color &) noexcept {
   return false;
 }
 
@@ -66,8 +63,7 @@ winrt::event_token Theme::ThemeChanged(
     winrt::Windows::Foundation::EventHandler<winrt::Windows::Foundation::IInspectable> const &) noexcept {
   return {};
 }
-void Theme::ThemeChanged(winrt::event_token const &) noexcept {
-}
+void Theme::ThemeChanged(winrt::event_token const &) noexcept {}
 
 winrt::Microsoft::ReactNative::Composition::Theme Theme::EmptyTheme() noexcept {
   return nullptr;
@@ -80,8 +76,7 @@ winrt::Microsoft::ReactNative::Composition::Theme Theme::EmptyTheme() noexcept {
 
 /*static*/ void Theme::SetDefaultTheme(
     const winrt::Microsoft::ReactNative::ReactInstanceSettings &,
-    const winrt::Microsoft::ReactNative::Composition::Theme &) noexcept {
-}
+    const winrt::Microsoft::ReactNative::Composition::Theme &) noexcept {}
 
 /*static*/ IReactPropertyName Theme::ThemeChangedEventName() noexcept {
   return nullptr;
