@@ -928,9 +928,9 @@ IReactNonAbiValue JsiRuntime::GetNativeState(JsiObjectRef obj) try {
 
 void JsiRuntime::SetNativeState(JsiObjectRef obj, IReactNonAbiValue const &state) try {
   auto objPtr = RuntimeAccessor::AsPointerValue(obj);
-  std::shared_ptr<facebook::jsi::NativeState> nativeState =
-      std::make_shared<facebook::jsi::NativeState>(NonAbiValueNativeState(state));
-  m_runtimeAccessor->setNativeState(RuntimeAccessor::AsObject(&objPtr), std::move(nativeState));
+  std::shared_ptr<NonAbiValueNativeState> nativeState = std::make_shared<NonAbiValueNativeState>(state);
+  m_runtimeAccessor->setNativeState(
+      RuntimeAccessor::AsObject(&objPtr), std::static_pointer_cast<facebook::jsi::NativeState>(nativeState));
 } catch (JSI_SET_ERROR) {
   throw;
 }
