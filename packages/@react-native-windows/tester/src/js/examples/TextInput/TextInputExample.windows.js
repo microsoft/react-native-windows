@@ -730,10 +730,12 @@ const examples: Array<RNTesterModuleExample> = [
       return (
         <View>
           <Text>CaretHidden</Text>
-          <TextInput style={styles.singleLine}
-           caretHidden={true} 
-           placeholder='caretHidden={true}'
-           testID='textinput-carethidden' />
+          <TextInput
+            style={styles.singleLine}
+            caretHidden={true}
+            placeholder="caretHidden={true}"
+            testID="textinput-carethidden"
+          />
         </View>
       );
     },
