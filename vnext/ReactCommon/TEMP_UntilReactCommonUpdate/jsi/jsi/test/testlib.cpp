@@ -1452,7 +1452,6 @@ TEST_P(JSITest, MultilevelDecoratedHostObject) {
   EXPECT_EQ(ab.size(rt), 10);
 }*/
 
-/* TODO: #12425 uncomment tests to re-enable
 namespace {
 
 struct IntState : public NativeState {
@@ -1520,7 +1519,6 @@ TEST_P(JSITest, NativeStateSymbolOverrides) {
       std::dynamic_pointer_cast<IntState>(holder.getNativeState(rt))->value,
       42);
 }
-*/
 
 INSTANTIATE_TEST_CASE_P(
     Runtimes,

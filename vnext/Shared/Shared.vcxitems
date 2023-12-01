@@ -277,7 +277,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\textlayoutmanager\TextLayoutManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\ReactNativeConfigProperties.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\WindowsImageManager.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\JsiApi.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\JsiApi.h">
+      <DependentUpon>$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\JsiApi.idl</DependentUpon>
+    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\SchedulerSettings.h" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\DynamicReader.cpp">
       <DependentUpon>$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IJSValueReader.idl</DependentUpon>
@@ -542,22 +544,22 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\UIManagerBinding.cpp" DisableSpecificWarnings="4389;4715;%(DisableSpecificWarnings)" />
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueReader.idl" />
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueWriter.idl" />
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactContext.idl" />
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactDispatcher.idl" />
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactModuleBuilder.idl" />
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactNonAbiValue.idl" />
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactNotificationService.idl" />
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactPackageBuilder.idl" />
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactPackageProvider.idl" />
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactPropertyBag.idl" />
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\JsiApi.idl" />
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\QuirkSettings.idl" />
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactCoreInjection.idl" />
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactInstanceSettings.idl" />
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactNativeHost.idl" />
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\RedBoxHandler.idl" />
+    <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IJSValueReader.idl" />
+    <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IJSValueWriter.idl" />
+    <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IReactContext.idl" />
+    <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IReactDispatcher.idl" />
+    <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IReactModuleBuilder.idl" />
+    <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IReactNonAbiValue.idl" />
+    <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IReactNotificationService.idl" />
+    <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IReactPackageBuilder.idl" />
+    <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IReactPackageProvider.idl" />
+    <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IReactPropertyBag.idl" />
+    <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\JsiApi.idl" />
+    <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\QuirkSettings.idl" />
+    <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\ReactCoreInjection.idl" />
+    <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\ReactInstanceSettings.idl" />
+    <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\ReactNativeHost.idl" />
+    <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\RedBoxHandler.idl" />
   </ItemGroup>
   <ItemGroup Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'">
     <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Composition.Input.idl" />
