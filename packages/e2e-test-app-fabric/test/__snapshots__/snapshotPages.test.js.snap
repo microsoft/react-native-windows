@@ -74800,23 +74800,21 @@ exports[`snapshotAllPages TextInput 36`] = `
 `;
 
 exports[`snapshotAllPages TextInput 37`] = `
-[
-  <View>
-      <Text>
-        CaretHidden
-      </Text>
-      <TextInput
-        caretHidden={true}
-        placeholder="caretHidden={true}"
-        style={
-          {
-            "fontSize": 16,
-          }
-        }
-        testID="textinput-carethidden"
-      />
-    </View>,
-]
+<View>
+  <Text>
+    CaretHidden
+  </Text>
+  <TextInput
+    caretHidden={true}
+    placeholder="caretHidden={true}"
+    style={
+      {
+        "fontSize": 16,
+      }
+    }
+    testID="textinput-carethidden"
+  />
+</View>
 `;
 
 exports[`snapshotAllPages TextInputs with key prop 1`] = `
