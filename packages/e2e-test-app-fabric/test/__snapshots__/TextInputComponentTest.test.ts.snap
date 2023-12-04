@@ -446,7 +446,7 @@ exports[`TextInput Tests Single-line TextInputs can enable text selection (Imper
     "Opacity": 1,
     "Size": [
       916,
-      29,
+      28,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -1050,7 +1050,7 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Turned Of
     "Opacity": 1,
     "Size": [
       791,
-      29,
+      28,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -1201,7 +1201,7 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Words 1`]
     "Opacity": 1,
     "Size": [
       791,
-      28,
+      29,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -2728,7 +2728,7 @@ exports[`TextInput Tests TextInputs can have a background color 1`] = `
     "Opacity": 1,
     "Size": [
       791,
-      28,
+      29,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -3030,7 +3030,7 @@ exports[`TextInput Tests TextInputs can have a font family 1`] = `
     "Opacity": 1,
     "Size": [
       791,
-      29,
+      28,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -4923,7 +4923,7 @@ exports[`TextInput Tests TextInputs can have text decoration lines 1`] = `
     "Opacity": 1,
     "Size": [
       791,
-      28,
+      29,
     ],
     "Visual Type": "SpriteVisual",
   },
