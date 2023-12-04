@@ -7,8 +7,8 @@
 
 #include <DevServerHelper.h>
 
-#include <winrt/Windows.Networking.Sockets.h>
 #include <winrt/Windows.Foundation.Collections.h>
+#include <winrt/Windows.Networking.Sockets.h>
 #include <atomic>
 #include <functional>
 #include <future>
@@ -24,24 +24,27 @@ struct DevSettings;
 } // namespace facebook
 
 namespace winrt {
-  
+
 template <typename K, typename V>
-struct pair_impl : implements<pair_impl<K,V>, Windows::Foundation::Collections::IKeyValuePair<K,V>>
-{
-	pair_impl(K k, V v) : m_k(k), m_v(v) {}
-	K Key() { return m_k; }
-	V Value() { return m_v; }
-private:
-	K m_k;
-	V m_v;
+struct pair_impl : implements<pair_impl<K, V>, Windows::Foundation::Collections::IKeyValuePair<K, V>> {
+  pair_impl(K k, V v) : m_k(k), m_v(v) {}
+  K Key() {
+    return m_k;
+  }
+  V Value() {
+    return m_v;
+  }
+
+ private:
+  K m_k;
+  V m_v;
 };
 
 template <typename K, typename V>
-Windows::Foundation::Collections::IKeyValuePair<K, V> pair(K key, V value)
-{
-	return make<pair_impl<K, V>>(key, value);
+Windows::Foundation::Collections::IKeyValuePair<K, V> pair(K key, V value) {
+  return make<pair_impl<K, V>>(key, value);
 }
-}
+} // namespace winrt
 
 namespace Microsoft::ReactNative {
 

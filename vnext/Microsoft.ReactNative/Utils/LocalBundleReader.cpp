@@ -53,7 +53,8 @@ std::string GetBundleFromEmbeddedResource(const winrt::Windows::Foundation::Uri 
   return std::string(start, start + size);
 }
 
-winrt::Windows::Foundation::IAsyncOperation<winrt::hstring> LocalBundleReader::LoadBundleAsync(const std::wstring bundleUri) {
+winrt::Windows::Foundation::IAsyncOperation<winrt::hstring> LocalBundleReader::LoadBundleAsync(
+    const std::wstring bundleUri) {
   co_await winrt::resume_background();
 
   winrt::Windows::Storage::StorageFile file{nullptr};

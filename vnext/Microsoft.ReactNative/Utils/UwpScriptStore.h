@@ -16,7 +16,8 @@ class UwpScriptStore : public facebook::jsi::ScriptStore {
   static facebook::jsi::ScriptVersion_t GetFileVersion(const std::wstring &filePath);
 
  private:
-  winrt::Windows::Foundation::IAsyncOperation<facebook::jsi::ScriptVersion_t> getScriptVersionAsync(const std::string &bundleUri);
+  winrt::Windows::Foundation::IAsyncOperation<facebook::jsi::ScriptVersion_t> getScriptVersionAsync(
+      const std::string &bundleUri);
 };
 
 } // namespace Microsoft::ReactNative

@@ -15,13 +15,12 @@
 #include "Utilities.h"
 
 #include <Utils/CppWinrtLessExceptions.h>
+#include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Storage.Streams.h>
 #include <winrt/Windows.Web.Http.Filters.h>
 #include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/Windows.Web.Http.h>
-#include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.Foundation.Collections.h>
 
 #include <winrt/Windows.ApplicationModel.Activation.h>
 #include <winrt/Windows.Networking.Connectivity.h>
@@ -45,8 +44,9 @@ using namespace facebook::react;
 
 namespace Microsoft::ReactNative {
 
-winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Foundation::Collections::IKeyValuePair<winrt::hstring, bool>> GetJavaScriptFromServerAsync(
-    const std::string &url) {
+winrt::Windows::Foundation::IAsyncOperation<
+    winrt::Windows::Foundation::Collections::IKeyValuePair<winrt::hstring, bool>>
+GetJavaScriptFromServerAsync(const std::string &url) {
   winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter filter;
   filter.CacheControl().ReadBehavior(winrt::Windows::Web::Http::Filters::HttpCacheReadBehavior::NoCache);
   winrt::Windows::Web::Http::HttpClient httpClient(filter);
@@ -61,7 +61,8 @@ winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Foundation::Collecti
     winrt::Windows::Web::Http::HttpResponseMessage response = co_await asyncRequest;
   } catch (winrt::hresult_error const &e) {
     co_return winrt::pair<winrt::hstring, bool>(
-        winrt::to_hstring(Microsoft::Common::Unicode::Utf16ToUtf8(e.message().c_str(), e.message().size()).c_str()), false);
+        winrt::to_hstring(Microsoft::Common::Unicode::Utf16ToUtf8(e.message().c_str(), e.message().size()).c_str()),
+        false);
   }
 #else
   co_await lessthrow_await_adapter<winrt::Windows::Foundation::IAsyncOperationWithProgress<
@@ -76,7 +77,7 @@ winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Foundation::Collecti
     } else {
       error = fmt::format("Error 0x{:x} downloading {}.", static_cast<int>(asyncRequest.ErrorCode()), url);
     }
-     co_return winrt::pair<winrt::hstring, bool>(winrt::to_hstring(error), false);
+    co_return winrt::pair<winrt::hstring, bool>(winrt::to_hstring(error), false);
   }
 
   winrt::Windows::Web::Http::HttpResponseMessage response = asyncRequest.GetResults();
@@ -173,7 +174,8 @@ bool IsIgnorablePollHResult(HRESULT hr) {
   return hr == WININET_E_INVALID_SERVER_RESPONSE;
 }
 
-winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Web::Http::HttpStatusCode> PollForLiveReload(const std::string url) {
+winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Web::Http::HttpStatusCode> PollForLiveReload(
+    const std::string url) {
   winrt::Windows::Web::Http::HttpClient httpClient;
   winrt::Windows::Foundation::Uri uri(Microsoft::Common::Unicode::Utf8ToUtf16(url));
   httpClient.DefaultRequestHeaders().Connection().TryParseAdd(L"keep-alive");
@@ -293,8 +295,7 @@ std::pair<std::string, bool> GetJavaScriptFromServer(
       hermesBytecodeVersion);
   try {
     auto result = GetJavaScriptFromServerAsync(bundleUrl).get();
-    return std::make_pair(winrt::to_string(result.Key()),
-        result.Value());
+    return std::make_pair(winrt::to_string(result.Key()), result.Value());
   } catch (winrt::hresult_error const &e) {
     return std::make_pair(
         "Error: " + Microsoft::Common::Unicode::Utf16ToUtf8(e.message().c_str(), e.message().size()), false);
