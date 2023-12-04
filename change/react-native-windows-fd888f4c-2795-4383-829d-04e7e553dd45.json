@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "integrate RN-rc6",
-  "packageName": "react-native-windows",
-  "email": "email not defined",
-  "dependentChangeType": "patch"
-}
