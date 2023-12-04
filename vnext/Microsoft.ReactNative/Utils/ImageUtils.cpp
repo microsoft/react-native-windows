@@ -60,7 +60,7 @@ winrt::IAsyncOperation<winrt::IRandomAccessStream> GetImageStreamAsync(ReactImag
       }
 
       winrt::Windows::Storage::Streams::IRandomAccessStreamWithContentType stream{openReadAsync.GetResults()};
-      return stream;
+      co_return stream;
     }
 
     auto httpMethod{
