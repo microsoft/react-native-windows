@@ -603,7 +603,7 @@ void SetBorderLayerPropertiesCommon(
     FLOAT strokeWidth,
     const facebook::react::SharedColor &borderColor,
     facebook::react::BorderStyle borderStyle) {
-  if ((textureRect.right - textureRect.left) <= 0 && (textureRect.bottom - textureRect.top) <= 0)
+  if ((textureRect.right - textureRect.left) <= 0 || (textureRect.bottom - textureRect.top) <= 0)
     return;
 
   auto surface = compContext.CreateDrawingSurfaceBrush(

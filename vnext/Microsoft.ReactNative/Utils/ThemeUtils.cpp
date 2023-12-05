@@ -30,5 +30,4 @@ bool IsInHighContrastWin32() noexcept {
   return false;
 }
 
-
 } // namespace Microsoft::ReactNative

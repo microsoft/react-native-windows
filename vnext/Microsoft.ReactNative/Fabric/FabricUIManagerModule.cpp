@@ -53,7 +53,12 @@ FabricUIManager::FabricUIManager() {
   facebook::react::CoreFeatures::enablePropIteratorSetter = true;
 }
 
-FabricUIManager::~FabricUIManager() {}
+FabricUIManager::~FabricUIManager() {
+  // Make sure that we destroy UI components on UI thread.
+  if (!m_context.UIDispatcher().HasThreadAccess()) {
+    m_context.UIDispatcher().Post([registry = std::move(m_registry)]() {});
+  }
+}
 
 void FabricUIManager::installFabricUIManager() noexcept {
   std::shared_ptr<const facebook::react::ReactNativeConfig> config =

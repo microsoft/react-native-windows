@@ -233,6 +233,11 @@ struct CompDrawingSurfaceBrush : public winrt::implements<
   }
 
   HRESULT BeginDraw(ID2D1DeviceContext **deviceContextOut, POINT *offset) noexcept {
+#ifdef DEBUG
+    // Drawing to a zero sized surface is a waste of time
+    auto size = m_drawingSurfaceInterop.as<typename TTypeRedirects::CompositionDrawingSurface>().Size();
+    assert(size.Width != 0 && size.Height != 0);
+#endif
     return m_drawingSurfaceInterop->BeginDraw(nullptr, __uuidof(ID2D1DeviceContext), (void **)deviceContextOut, offset);
   }
 
