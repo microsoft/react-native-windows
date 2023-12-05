@@ -141,7 +141,6 @@
   <ItemDefinitionGroup Condition="'$(ConfigurationType)' == 'Application' OR '$(ConfigurationType)' == 'DynamicLibrary'">
     <Link>
       <SubSystem>Console</SubSystem>
-      <Profile>true</Profile>
     </Link>
   </ItemDefinitionGroup>
 
