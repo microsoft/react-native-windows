@@ -1,29 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "Color.h"
+#include "PlatformColorUtils.h"
+#include <UI.Xaml.Media.h>
 #include <Utils/ValueUtils.h>
-
 #ifndef CORE_ABI
 #include <XamlUtils.h>
 #endif // CORE_ABI
-
-#include <UI.Xaml.Media.h>
 #include <winrt/Windows.UI.ViewManagement.h>
 
 namespace facebook::react {
 
-bool isColorMeaningful(const SharedColor &color) noexcept {
-  if (!color) {
-    return false;
-  }
-
-  return colorComponentsFromColor(color).alpha > 0;
-}
-
-winrt::Windows::UI::Color ResolvePlatformColor(Color const *const color) {
-  if (!color->m_platformColor.empty()) {
-    for (auto platformColor : color->m_platformColor) {
+winrt::Windows::UI::Color ResolvePlatformColor(const std::vector<std::string> &semanticItems) {
+  if (!semanticItems.empty()) {
+    for (auto platformColor : semanticItems) {
 #ifndef CORE_ABI
       // If XAML is loaded, look in application resources
       if (xaml::TryGetCurrentApplication()) {
@@ -147,50 +137,9 @@ winrt::Windows::UI::Color ResolvePlatformColor(Color const *const color) {
       }
     }
   }
-  return color->m_color;
-}
 
-winrt::Windows::UI::Color SharedColor::AsWindowsColor() const {
-  if (!m_color) {
-    return winrt::Windows::UI::Color{0, 0, 0, 0};
-  }
-  return ResolvePlatformColor(m_color.get());
-}
-
-SharedColor colorFromComponents(ColorComponents components) {
-  float ratio = 255;
-  return winrt::Windows::UI::Color{
-      static_cast<uint8_t>((int)round(components.alpha * ratio) & 0xff),
-      static_cast<uint8_t>((int)round(components.red * ratio) & 0xff),
-      static_cast<uint8_t>((int)round(components.green * ratio) & 0xff),
-      static_cast<uint8_t>((int)round(components.blue * ratio) & 0xff)};
-}
-
-ColorComponents colorComponentsFromColor(SharedColor const &sharedColor) {
-  float ratio = 255;
-  auto color = sharedColor.AsWindowsColor();
-  return ColorComponents{
-      (float)color.R / ratio, (float)color.G / ratio, (float)color.B / ratio, (float)color.A / ratio};
-}
-
-SharedColor clearColor() {
-  static SharedColor color = colorFromComponents(ColorComponents{0, 0, 0, 0});
-  return color;
-}
-
-SharedColor blackColor() {
-  static SharedColor color = colorFromComponents(ColorComponents{0, 0, 0, 1});
-  return color;
-}
-
-SharedColor whiteColor() {
-  static SharedColor color = colorFromComponents(ColorComponents{1, 1, 1, 1});
-  return color;
-}
-
-SharedColor greyColor() {
-  static SharedColor color = colorFromComponents(ColorComponents{133, 133, 133, 1});
-  return color;
+  // Default to transparent color
+  return {};
 }
 
 } // namespace facebook::react

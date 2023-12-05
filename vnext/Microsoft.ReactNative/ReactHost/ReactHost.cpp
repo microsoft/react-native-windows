@@ -3,6 +3,7 @@
 
 #include "ReactHost.h"
 #include <Future/FutureWait.h>
+#include <ReactPropertyBag.h>
 #include <winrt/Windows.Foundation.h>
 
 namespace Mso::React {
@@ -33,6 +34,12 @@ winrt::Microsoft::ReactNative::IReactPropertyName JSIEngineProperty() noexcept {
           winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetNamespace(L"ReactNative.ReactOptions"),
           L"JSIEngine");
   return propName;
+}
+
+winrt::Microsoft::ReactNative::ReactPropertyId<bool> JSIEngineV8NodeApiProperty() noexcept {
+  static winrt::Microsoft::ReactNative::ReactPropertyId<bool> propId{
+      L"ReactNative.ReactOptions", L"JSIEngineV8NodeApi"};
+  return propId;
 }
 
 winrt::Microsoft::ReactNative::IReactPropertyName LiveReloadEnabledProperty() noexcept {
@@ -135,6 +142,15 @@ void ReactOptions::SetJsiEngine(JSIEngine value) noexcept {
     winrt::Microsoft::ReactNative::IReactPropertyBag const &properties,
     JSIEngine value) noexcept {
   properties.Set(JSIEngineProperty(), winrt::box_value(static_cast<uint32_t>(value)));
+}
+
+/*static*/ bool ReactOptions::JsiEngineV8NodeApi(
+    winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept {
+  return winrt::Microsoft::ReactNative::ReactPropertyBag(properties).Get(JSIEngineV8NodeApiProperty()).value_or(false);
+}
+
+bool ReactOptions::JsiEngineV8NodeApi() const noexcept {
+  return JsiEngineV8NodeApi(Properties);
 }
 
 /*static*/ void ReactOptions::SetUseFastRefresh(

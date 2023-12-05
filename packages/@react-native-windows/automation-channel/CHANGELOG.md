@@ -1,8 +1,122 @@
 # Change Log - @react-native-windows/automation-channel
 
-This log was last generated on Sat, 28 Oct 2023 05:18:12 GMT and should not be manually modified.
+This log was last generated on Wed, 29 Nov 2023 06:16:35 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.12.81
+
+Wed, 29 Nov 2023 06:16:35 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.742
+
+## 0.12.80
+
+Wed, 22 Nov 2023 06:16:29 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.741
+
+## 0.12.79
+
+Sat, 18 Nov 2023 06:14:50 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.740
+
+## 0.12.78
+
+Fri, 17 Nov 2023 06:15:10 GMT
+
+### Patches
+
+- Change Hermes package version to 0.1.18 (vmorozov@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.739
+
+## 0.12.77
+
+Thu, 16 Nov 2023 06:13:44 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.738
+
+## 0.12.76
+
+Wed, 15 Nov 2023 06:14:14 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.737
+
+## 0.12.75
+
+Tue, 14 Nov 2023 06:16:22 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.736
+
+## 0.12.74
+
+Sat, 11 Nov 2023 06:17:20 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.735
+
+## 0.12.73
+
+Fri, 10 Nov 2023 06:16:23 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.734
+
+## 0.12.72
+
+Thu, 09 Nov 2023 06:16:38 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.733
+
+## 0.12.71
+
+Wed, 08 Nov 2023 06:17:35 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.732
+
+## 0.12.70
+
+Thu, 02 Nov 2023 05:16:14 GMT
+
+### Patches
+
+- C++ 20 (ngerlem@fb.com)
+- Bump react-native-windows to v0.0.0-canary.731
+
+## 0.12.69
+
+Wed, 01 Nov 2023 05:15:56 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.730
+
+## 0.12.68
+
+Tue, 31 Oct 2023 05:16:24 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.729
 
 ## 0.12.67
 

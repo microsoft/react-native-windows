@@ -23,7 +23,6 @@
 
 #ifdef USE_FABRIC
 #include <Fabric/FabricUIManagerModule.h>
-#include <SchedulerSettings.h>
 #endif
 #include <JSCallInvokerScheduler.h>
 #include <QuirkSettings.h>
@@ -75,9 +74,11 @@
 #include "HermesRuntimeHolder.h"
 
 #include <winrt/Windows.Storage.h>
+#include "BaseScriptStoreImpl.h"
 
 #if defined(USE_V8)
 #include "JSI/V8RuntimeHolder.h"
+#include "V8JSIRuntimeHolder.h"
 #endif // USE_V8
 
 #include "RedBox.h"
@@ -86,8 +87,11 @@
 #include "ChakraRuntimeHolder.h"
 
 #include <CppRuntimeOptions.h>
+#include <CreateInstance.h>
 #include <CreateModules.h>
 #include <Utils/Helpers.h>
+#include <react/renderer/runtimescheduler/RuntimeScheduler.h>
+#include <react/renderer/runtimescheduler/RuntimeSchedulerCallInvoker.h>
 #include "CrashManager.h"
 #include "JsiApi.h"
 #include "ReactCoreInjection.h"
@@ -254,6 +258,12 @@ ReactInstanceWin::ReactInstanceWin(
   m_whenDestroyedResult =
       m_whenDestroyed.AsFuture().Then<Mso::Executors::Inline>([whenLoaded = m_whenLoaded,
                                                                onDestroyed = m_options.OnInstanceDestroyed,
+                                                               // If the ReactHost has been released, this
+                                                               // instance might be the only thing keeping
+                                                               // the propertyBag alive.
+                                                               // We want it to remain alive for the
+                                                               // InstanceDestroyed callbacks
+                                                               propBag = m_options.Properties,
                                                                reactContext = m_reactContext]() noexcept {
         whenLoaded.TryCancel(); // It only has an effect if whenLoaded was not set before
         Microsoft::ReactNative::HermesRuntimeHolder::storeTo(ReactPropertyBag(reactContext->Properties()), nullptr);
@@ -492,7 +502,6 @@ void ReactInstanceWin::Initialize() noexcept {
 
           switch (m_options.JsiEngine()) {
             case JSIEngine::Hermes: {
-              // TODO: Should we use UwpPreparedScriptStore?
               if (Microsoft::ReactNative::HasPackageIdentity()) {
                 preparedScriptStore =
                     std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(getApplicationTempFolder());
@@ -530,8 +539,18 @@ void ReactInstanceWin::Initialize() noexcept {
               enableMultiThreadSupport = Microsoft::ReactNative::IsFabricEnabled(m_reactContext->Properties());
 #endif // USE_FABRIC
 
-              devSettings->jsiRuntimeHolder = std::make_shared<Microsoft::ReactNative::V8RuntimeHolder>(
-                  devSettings, m_jsMessageThread.Load(), std::move(preparedScriptStore), enableMultiThreadSupport);
+              if (m_options.JsiEngineV8NodeApi()) {
+                devSettings->jsiRuntimeHolder = std::make_shared<Microsoft::ReactNative::V8RuntimeHolder>(
+                    devSettings, m_jsMessageThread.Load(), std::move(preparedScriptStore), enableMultiThreadSupport);
+              } else {
+                devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
+                    devSettings,
+                    m_jsMessageThread.Load(),
+                    std::move(scriptStore),
+                    std::move(preparedScriptStore),
+                    enableMultiThreadSupport);
+              }
+
               break;
             }
 #endif // USE_V8
@@ -550,6 +569,12 @@ void ReactInstanceWin::Initialize() noexcept {
 
           m_jsiRuntimeHolder = devSettings->jsiRuntimeHolder;
 
+          bool useRuntimeScheduler =
+              winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetUseRuntimeScheduler(
+                  winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()));
+
+          devSettings->useRuntimeScheduler = useRuntimeScheduler;
+
           try {
             // We need to keep the instance wrapper alive as its destruction shuts down the native queue.
             m_options.TurboModuleProvider->SetReactContext(
@@ -561,12 +586,14 @@ void ReactInstanceWin::Initialize() noexcept {
             auto useWebSocketTurboModulePropValue = m_options.Properties.Get(useWebSocketTurboModulePropName);
             devSettings->useWebSocketTurboModule = winrt::unbox_value_or(useWebSocketTurboModulePropValue, false);
             auto bundleRootPath = devSettings->bundleRootPath;
+            auto jsiRuntimeHolder = devSettings->jsiRuntimeHolder;
             auto instanceWrapper = facebook::react::CreateReactInstance(
                 std::shared_ptr<facebook::react::Instance>(strongThis->m_instance.Load()),
                 std::move(bundleRootPath), // bundleRootPath
                 std::move(cxxModules),
                 m_options.TurboModuleProvider,
                 m_options.TurboModuleProvider->LongLivedObjectCollection(),
+                m_reactContext->Properties(),
                 std::make_unique<BridgeUIBatchInstanceCallback>(weakThis),
                 m_jsMessageThread.Load(),
                 m_nativeMessageThread.Load(),
@@ -583,16 +610,6 @@ void ReactInstanceWin::Initialize() noexcept {
                     onCreated.Get()->Invoke(reactContext);
                   }
                 });
-
-#ifdef USE_FABRIC
-            // Eagerly init the FabricUI binding
-            if (!m_options.UseWebDebugger()) {
-              Microsoft::ReactNative::SchedulerSettings::SetRuntimeExecutor(
-                  winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()),
-                  m_instanceWrapper.Load()->GetInstance()->getRuntimeExecutor());
-              m_options.TurboModuleProvider->getModule("FabricUIManagerBinding", m_instance.Load()->getJSCallInvoker());
-            }
-#endif
 
             LoadJSBundles();
 

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
+#include <AsynchronousEventBeat.h>
 #include <DynamicReader.h>
 #include <DynamicWriter.h>
 #include <Fabric/ComponentView.h>
@@ -14,17 +15,19 @@
 #include <IReactContext.h>
 #include <IReactRootView.h>
 #include <JSI/jsi.h>
+#include <ReactCommon/RuntimeExecutor.h>
 #include <SchedulerSettings.h>
+#include <SynchronousEventBeat.h>
 #include <UI.Xaml.Controls.h>
 #include <react/components/rnwcore/ComponentDescriptors.h>
 #include <react/renderer/componentregistry/ComponentDescriptorProviderRegistry.h>
 #include <react/renderer/core/DynamicPropsUtilities.h>
 #include <react/renderer/core/EventBeat.h>
+#include <react/renderer/runtimescheduler/RuntimeScheduler.h>
 #include <react/renderer/scheduler/Scheduler.h>
 #include <react/renderer/scheduler/SchedulerToolbox.h>
 #include <react/utils/ContextContainer.h>
 #include <react/utils/CoreFeatures.h>
-#include <runtimeexecutor/ReactCommon/RuntimeExecutor.h>
 #include <winrt/Windows.Graphics.Display.h>
 #include <winrt/Windows.UI.Composition.Desktop.h>
 #include "Unicode.h"
@@ -51,55 +54,6 @@ FabricUIManager::FabricUIManager() {
 
 FabricUIManager::~FabricUIManager() {}
 
-class AsyncEventBeat final : public facebook::react::EventBeat {
- public:
-  AsyncEventBeat(
-      facebook::react::EventBeat::SharedOwnerBox const &ownerBox,
-      const winrt::Microsoft::ReactNative::ReactContext &context,
-      facebook::react::RuntimeExecutor runtimeExecutor)
-      : EventBeat(ownerBox), m_context(context), m_runtimeExecutor(runtimeExecutor) {}
-
-  void induce() const override {
-    if (!isRequested_ || m_isBeatCallbackScheduled) {
-      isRequested_ = false;
-      return;
-    }
-    isRequested_ = false;
-    m_isBeatCallbackScheduled = true;
-
-    m_runtimeExecutor([this, ownerBox = ownerBox_](facebook::jsi::Runtime &runtime) {
-      auto owner = ownerBox->owner.lock();
-      if (!owner) {
-        return;
-      }
-
-      m_isBeatCallbackScheduled = false;
-      if (beatCallback_) {
-        beatCallback_(runtime);
-      }
-    });
-  }
-
-  void request() const override {
-    bool alreadyRequested = isRequested_;
-    EventBeat::request();
-    if (!alreadyRequested) {
-      m_context.UIDispatcher().Post([this, ownerBox = ownerBox_]() {
-        auto owner = ownerBox->owner.lock();
-        if (!owner) {
-          return;
-        }
-        induce();
-      });
-    }
-  }
-
- private:
-  mutable std::atomic<bool> m_isBeatCallbackScheduled{false};
-  winrt::Microsoft::ReactNative::ReactContext m_context;
-  facebook::react::RuntimeExecutor m_runtimeExecutor;
-};
-
 void FabricUIManager::installFabricUIManager() noexcept {
   std::shared_ptr<const facebook::react::ReactNativeConfig> config =
       std::make_shared<const ReactNativeConfigProperties>(m_context);
@@ -112,20 +66,34 @@ void FabricUIManager::installFabricUIManager() noexcept {
   contextContainer->insert("MSRN.ReactContext", m_context);
 
   auto runtimeExecutor = SchedulerSettings::GetRuntimeExecutor(m_context.Properties());
+  auto toolbox = facebook::react::SchedulerToolbox{};
 
-  facebook::react::EventBeat::Factory synchronousBeatFactory =
-      [runtimeExecutor, context = m_context](facebook::react::EventBeat::SharedOwnerBox const &ownerBox) {
-        return std::make_unique<AsyncEventBeat>(ownerBox, context, runtimeExecutor);
-      };
+  if (auto runtimeScheduler = SchedulerSettings::RuntimeSchedulerFromProperties(m_context.Properties())) {
+    contextContainer->insert("RuntimeScheduler", runtimeScheduler);
+    facebook::react::EventBeat::Factory synchronousBeatFactory =
+        [runtimeExecutor, context = m_context, runtimeScheduler](
+            facebook::react::EventBeat::SharedOwnerBox const &ownerBox) {
+          return std::make_unique<SynchronousEventBeat>(ownerBox, context, runtimeExecutor, runtimeScheduler);
+        };
+    toolbox.synchronousEventBeatFactory = synchronousBeatFactory;
+    runtimeExecutor = [runtimeScheduler](std::function<void(facebook::jsi::Runtime & runtime)> &&callback) {
+      runtimeScheduler->scheduleWork(std::move(callback));
+    };
+  } else {
+    facebook::react::EventBeat::Factory synchronousBeatFactory =
+        [runtimeExecutor, context = m_context](facebook::react::EventBeat::SharedOwnerBox const &ownerBox) {
+          return std::make_unique<AsynchronousEventBeat>(ownerBox, context, runtimeExecutor);
+        };
+    toolbox.synchronousEventBeatFactory = synchronousBeatFactory;
+  }
 
   facebook::react::EventBeat::Factory asynchronousBeatFactory =
       [runtimeExecutor, context = m_context](facebook::react::EventBeat::SharedOwnerBox const &ownerBox) {
-        return std::make_unique<AsyncEventBeat>(ownerBox, context, runtimeExecutor);
+        return std::make_unique<AsynchronousEventBeat>(ownerBox, context, runtimeExecutor);
       };
 
   contextContainer->insert("ReactNativeConfig", config);
 
-  auto toolbox = facebook::react::SchedulerToolbox{};
   toolbox.contextContainer = contextContainer;
   toolbox.componentRegistryFactory = [](facebook::react::EventDispatcher::Weak const &eventDispatcher,
                                         facebook::react::ContextContainer::Shared const &contextContainer)
@@ -144,7 +112,6 @@ void FabricUIManager::installFabricUIManager() noexcept {
     return registry;
   };
   toolbox.runtimeExecutor = runtimeExecutor;
-  toolbox.synchronousEventBeatFactory = synchronousBeatFactory;
   toolbox.asynchronousEventBeatFactory = asynchronousBeatFactory;
   toolbox.backgroundExecutor = [context = m_context,
                                 dispatcher = Mso::DispatchQueue::MakeLooperQueue()](std::function<void()> &&callback) {

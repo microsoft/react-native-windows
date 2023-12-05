@@ -1,8 +1,141 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 28 Oct 2023 05:18:12 GMT and should not be manually modified.
+This log was last generated on Wed, 29 Nov 2023 06:16:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.742
+
+Wed, 29 Nov 2023 06:16:34 GMT
+
+### Changes
+
+- Update @react-native/react-native-picker (jthysell@microsoft.com)
+- [Fabric] Add support for custom native component to have c++ state and custom measure (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.741
+
+Wed, 22 Nov 2023 06:16:28 GMT
+
+### Changes
+
+- fix depcheck errors (email not defined)
+
+## 0.0.0-canary.740
+
+Sat, 18 Nov 2023 06:14:50 GMT
+
+### Changes
+
+- Fabric: Enable react-test-renderer tests in the new cpp-app template (jthysell@microsoft.com)
+- Release long lived JSI objects ASAP (vmorozov@microsoft.com)
+- Check HTTP handler property and value exist (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.739
+
+Fri, 17 Nov 2023 06:15:10 GMT
+
+### Changes
+
+- Include RuntimeExecutor.h consistently (ericroz@meta.com)
+- Change Hermes package version to 0.1.18 (vmorozov@microsoft.com)
+- Minor cleanup of recent RuntimeScheduler integration (ericroz@meta.com)
+- Fixes for running without lifted composition (30809111+acoates-ms@users.noreply.github.com)
+- update fmt to 10.1.0 (email not defined)
+
+## 0.0.0-canary.738
+
+Thu, 16 Nov 2023 06:13:44 GMT
+
+### Changes
+
+- Temporarily silence warning 4996 to unblock CI (email not defined)
+
+## 0.0.0-canary.737
+
+Wed, 15 Nov 2023 06:14:14 GMT
+
+### Changes
+
+- Save State: Working Visual Tree Dump Tests (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.736
+
+Tue, 14 Nov 2023 06:16:22 GMT
+
+### Changes
+
+- Untrack HTTP responses when processed by IResponseHandler (julio.rocha@microsoft.com)
+- [Fabric] Enable concurrentRoot (erozell@outlook.com)
+- Fabric: Add `windows` script to new cpp-app template (jthysell@microsoft.com)
+
+## 0.0.0-canary.735
+
+Sat, 11 Nov 2023 06:17:20 GMT
+
+### Changes
+
+- Fix native view config to include Fabric events (erozell@outlook.com)
+
+## 0.0.0-canary.734
+
+Fri, 10 Nov 2023 06:16:22 GMT
+
+### Changes
+
+- Make Hermes the default JS engine (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.194
+
+## 0.0.0-canary.733
+
+Thu, 09 Nov 2023 06:16:38 GMT
+
+### Changes
+
+- applying package updates ***NO_CI*** (erozell@outlook.com)
+- Switch from using choco to winget in rnw-dep script (30809111+acoates-ms@users.noreply.github.com)
+- Keep propertyBag alive for duration of InstanceDestroyed event (30809111+acoates-ms@users.noreply.github.com)
+- Refactor react/renderer/graphics/Color handling (erozell@outlook.com)
+
+## 0.0.0-canary.732
+
+Wed, 08 Nov 2023 06:17:34 GMT
+
+### Changes
+
+- Cherry pick PRs #12143 #12211 (vmorozov@microsoft.com)
+- C++ 20: Use UTF-16 Paths and URLs (ngerlem@fb.com)
+
+## 0.0.0-canary.731
+
+Thu, 02 Nov 2023 05:16:14 GMT
+
+### Changes
+
+- C++ 20: Treat `char8_t` as `char` for unicode literals in source (ngerlem@fb.com)
+- Add RuntimeScheduler (30809111+acoates-ms@users.noreply.github.com)
+- C++ 20: Fix "Explicit template specialization cannot have a storage class" (ngerlem@fb.com)
+- ReactContext should have a weak ref on the PropertyBag (30809111+acoates-ms@users.noreply.github.com)
+- C++ 20: Bump Folly from 2023.03.06 to 2023.10.16.00 (ngerlem@fb.com)
+- C++ 20: Replace Usage of std::allocator::construct() (ngerlem@fb.com)
+- C++ 20: Preprocessor definitions (ngerlem@fb.com)
+- Build using C++ 20 (ngerlem@fb.com)
+
+## 0.0.0-canary.730
+
+Wed, 01 Nov 2023 05:15:56 GMT
+
+### Changes
+
+- Remove unnecessary JS overrides (erozell@outlook.com)
+
+## 0.0.0-canary.729
+
+Tue, 31 Oct 2023 05:16:23 GMT
+
+### Changes
+
+- Adds fabric switch thumb animation (tatianakapos@microsoft.com)
 
 ## 0.0.0-canary.728
 

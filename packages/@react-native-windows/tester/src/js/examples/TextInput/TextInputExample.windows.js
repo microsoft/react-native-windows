@@ -35,7 +35,10 @@ class ToggleDefaultPaddingExample extends React.Component<
   render(): React.Node {
     return (
       <View>
-        <TextInput style={this.state.hasPadding ? {padding: 0} : null} />
+        <TextInput
+          style={this.state.hasPadding ? {padding: 0} : null}
+          testID="textinput-padding"
+        />
         <Text
           onPress={() => this.setState({hasPadding: !this.state.hasPadding})}>
           Toggle padding
@@ -122,6 +125,7 @@ class AutogrowingTextInputExample extends React.Component<{...}> {
             this.setState({contentSize: event.nativeEvent.contentSize})
           }
           {...props}
+          testID="textinput-autogrow"
         />
         <Text>Plain text value representation:</Text>
         {/* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was
@@ -154,6 +158,7 @@ class PressInOutEvents extends React.Component<
             this.setState({text: 'Holding down the click/touch'})
           }
           onPressOut={() => this.setState({text: 'Released click/touch'})}
+          testID="textinput-press"
         />
       </View>
     );
@@ -197,6 +202,7 @@ function PropagationSample() {
             {code: 'KeyW', handledEventPhase: 3},
             {code: 'KeyE', handledEventPhase: 1},
           ]}
+          testID="textinput-propagation"
         />
       </View>
       <View style={styles.eventLogBox}>
@@ -225,6 +231,7 @@ function SpellCheckSample() {
         placeholder="Type text to test spell check functionality."
         style={[styles.singleLineWithHeightTextInput]}
         spellCheck={spellCheckEnabled}
+        testID="textinput-spellcheck"
       />
     </>
   );
@@ -260,35 +267,42 @@ const examples: Array<RNTesterModuleExample> = [
           <TextInput
             style={[styles.singleLine]}
             defaultValue="Default color text"
+            testID="textinput-default-color"
           />
           <TextInput
             style={[styles.singleLine, {color: 'green'}]}
             defaultValue="Green Text"
+            testID="textinput-custom-color"
           />
           <TextInput
             placeholder="Default placeholder text color"
             style={styles.singleLine}
+            testID="textinput-default-placeholder-color"
           />
           <TextInput
             placeholder="Red placeholder text color"
             placeholderTextColor="red"
             style={styles.singleLine}
+            testID="textinput-custom-placeholder-color"
           />
           <TextInput
             placeholder="Default underline color"
             style={styles.singleLine}
+            testID="textinput-default-underline-color"
           />
           <TextInput
             placeholder="Blue underline color"
             style={styles.singleLine}
             underlineColorAndroid="blue"
+            testID="textinput-custom-underline-color"
           />
           <TextInput
             defaultValue="Same BackgroundColor as View "
             style={[
               styles.singleLine,
               {backgroundColor: 'rgba(100, 100, 100, 0.3)'},
-            ]}>
+            ]}
+            testID="textinput-custom-background-color">
             <Text style={{backgroundColor: 'rgba(100, 100, 100, 0.3)'}}>
               Darker backgroundColor
             </Text>
@@ -297,6 +311,7 @@ const examples: Array<RNTesterModuleExample> = [
             defaultValue="Highlight Color is red"
             selectionColor={'red'}
             style={styles.singleLine}
+            testID="textinput-custom-highlight-color"
           />
         </View>
       );
@@ -310,6 +325,7 @@ const examples: Array<RNTesterModuleExample> = [
           <TextInput
             defaultValue="Font Weight (default)"
             style={[styles.singleLine]}
+            testID="textinput-weight-default"
           />
           {[
             'normal',
@@ -328,6 +344,7 @@ const examples: Array<RNTesterModuleExample> = [
               defaultValue={`Font Weight (${fontWeight})`}
               key={fontWeight}
               style={[styles.singleLine, {fontWeight}]}
+              testID={'textinput-weight-' + fontWeight}
             />
           ))}
         </View>
@@ -341,6 +358,7 @@ const examples: Array<RNTesterModuleExample> = [
         <TextInput
           placeholder="If you set height, beware of padding set from themes"
           style={[styles.singleLineWithHeightTextInput]}
+          testID="textinput-theme-padding"
         />
       );
     },
@@ -353,18 +371,22 @@ const examples: Array<RNTesterModuleExample> = [
           <TextInput
             style={[styles.singleLine, {letterSpacing: 0}]}
             placeholder="letterSpacing = 0"
+            testID="textinput-letterspacing-0"
           />
           <TextInput
             style={[styles.singleLine, {letterSpacing: 2}]}
             placeholder="letterSpacing = 2"
+            testID="textinput-letterspacing-2"
           />
           <TextInput
             style={[styles.singleLine, {letterSpacing: 9}]}
             placeholder="letterSpacing = 9"
+            testID="textinput-letterspacing-9"
           />
           <TextInput
             style={[styles.singleLine, {letterSpacing: -1}]}
             placeholder="letterSpacing = -1"
+            testID="textinput-letterspacing--1"
           />
         </View>
       );
@@ -379,12 +401,14 @@ const examples: Array<RNTesterModuleExample> = [
             defaultValue="iloveturtles"
             secureTextEntry={true}
             style={styles.singleLine}
+            testID="textinput-password"
           />
           <TextInput
             secureTextEntry={true}
             style={[styles.singleLine, {color: 'red'}]}
             placeholder="color is supported too"
             placeholderTextColor="red"
+            testID="textinput-password-placeholder"
           />
         </View>
       );
@@ -398,6 +422,7 @@ const examples: Array<RNTesterModuleExample> = [
           defaultValue="Can't touch this! (>'-')> ^(' - ')^ <('-'<) (>'-')> ^(' - ')^"
           editable={false}
           style={styles.singleLine}
+          testID="textinput-not-editable"
         />
       );
     },
@@ -416,6 +441,7 @@ const examples: Array<RNTesterModuleExample> = [
               styles.multiline,
               {textAlign: 'left', textAlignVertical: 'top'},
             ]}
+            testID="textinput-multiline-topleft"
           />
           <TextInput
             autoCorrect={true}
@@ -426,6 +452,7 @@ const examples: Array<RNTesterModuleExample> = [
               styles.multiline,
               {textAlign: 'center', textAlignVertical: 'center'},
             ]}
+            testID="textinput-multiline-center"
           />
           <TextInput
             autoCorrect={true}
@@ -434,7 +461,8 @@ const examples: Array<RNTesterModuleExample> = [
               styles.multiline,
               {color: 'blue'},
               {textAlign: 'right', textAlignVertical: 'bottom'},
-            ]}>
+            ]}
+            testID="textinput-multiline-bottomright">
             <Text style={styles.multiline}>
               multiline with children, aligned bottom-right
             </Text>
@@ -452,21 +480,25 @@ const examples: Array<RNTesterModuleExample> = [
             placeholder="editable text input using editable prop"
             style={styles.default}
             editable
+            testID="textinput-editable"
           />
           <TextInput
             placeholder="uneditable text input using editable prop"
             style={styles.default}
             editable={false}
+            testID="textinput-not-editable2"
           />
           <TextInput
             placeholder="editable text input using readOnly prop"
             style={styles.default}
             readOnly={false}
+            testID="textinput-readonly-false"
           />
           <TextInput
             placeholder="uneditable text input using readOnly prop"
             style={styles.default}
             readOnly
+            testID="textinput-readyonly"
           />
         </View>
       );
@@ -535,21 +567,25 @@ const examples: Array<RNTesterModuleExample> = [
             autoComplete="country"
             placeholder="country"
             style={styles.default}
+            testID="textinput-autocomplete-country"
           />
           <TextInput
             autoComplete="postal-address-country"
             placeholder="postal-address-country"
             style={styles.default}
+            testID="textinput-autocomplete-address-country"
           />
           <TextInput
             autoComplete="one-time-code"
             placeholder="one-time-code"
             style={styles.default}
+            testID="textinput-autocomplete-one-time-code"
           />
           <TextInput
             autoComplete="sms-otp"
             placeholder="sms-otp"
             style={styles.default}
+            testID="textinput-autocomplete-sms-otp"
           />
         </View>
       );
@@ -575,6 +611,7 @@ const examples: Array<RNTesterModuleExample> = [
             returnKeyType={type}
             placeholder={'returnKeyType: ' + type}
             style={styles.singleLine}
+            testID={'textinput-return-' + type}
           />
         );
       });
@@ -585,6 +622,7 @@ const examples: Array<RNTesterModuleExample> = [
             returnKeyLabel={type}
             placeholder={'returnKeyLabel: ' + type}
             style={styles.singleLine}
+            testID={'textinput-return-' + type}
           />
         );
       });
@@ -605,16 +643,19 @@ const examples: Array<RNTesterModuleExample> = [
             inlineImageLeft="ic_menu_black_24dp"
             placeholder="This has drawableLeft set"
             style={styles.singleLine}
+            testID="textinput-inline-images"
           />
           <TextInput
             inlineImageLeft="ic_menu_black_24dp"
             inlineImagePadding={30}
             placeholder="This has drawableLeft and drawablePadding set"
             style={styles.singleLine}
+            testID="textinput-inline-images-2"
           />
           <TextInput
             placeholder="This does not have drawable props set"
             style={styles.singleLine}
+            testID="textinput-inline-images-3"
           />
         </View>
       );
@@ -639,12 +680,17 @@ const examples: Array<RNTesterModuleExample> = [
       return (
         <View>
           <Text>Default submit key (Enter):</Text>
-          <TextInput clearTextOnSubmit style={styles.singleLine} />
+          <TextInput
+            clearTextOnSubmit
+            style={styles.singleLine}
+            testID="textinput-clear-on-submit"
+          />
           <Text>Custom submit key event (Shift + Enter), single-line:</Text>
           <TextInput
             clearTextOnSubmit
             style={styles.singleLine}
             submitKeyEvents={[{code: 'Enter', shiftKey: true}]}
+            testID="textinput-clear-on-submit-2"
           />
           <Text>Custom submit key event (Shift + Enter), multi-line:</Text>
           <TextInput
@@ -652,6 +698,7 @@ const examples: Array<RNTesterModuleExample> = [
             clearTextOnSubmit
             style={styles.multiline}
             submitKeyEvents={[{code: 'Enter', shiftKey: true}]}
+            testID="textinput-clear-on-submit-3"
           />
           <Text>Submit with Enter key, return key with Shift + Enter</Text>
           <TextInput
@@ -659,6 +706,7 @@ const examples: Array<RNTesterModuleExample> = [
             clearTextOnSubmit
             style={styles.multiline}
             submitKeyEvents={[{code: 'Enter'}]}
+            testID="textinput-clear-on-submit-4"
           />
         </View>
       );

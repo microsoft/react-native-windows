@@ -299,13 +299,13 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
     switch (nIndex) {
       case COLOR_WINDOWTEXT:
         if (m_outer->m_props->textAttributes.foregroundColor)
-          return m_outer->m_props->textAttributes.foregroundColor.AsColorRefNoAlpha();
+          return (*m_outer->m_props->textAttributes.foregroundColor).AsColorRefNoAlpha();
         // cr = 0x000000FF;
         break;
 
       case COLOR_WINDOW:
         if (m_outer->m_props->backgroundColor)
-          return m_outer->m_props->backgroundColor.AsColorRefNoAlpha();
+          return (*m_outer->m_props->backgroundColor).AsColorRefNoAlpha();
         break;
         // case COLOR_HIGHLIGHT:
         // cr = RGB(0, 0, 255);
@@ -899,6 +899,9 @@ void WindowsTextInputComponentView::updateProps(
 
   ensureVisual();
 
+  if (oldTextInputProps.testId != newTextInputProps.testId) {
+    m_visual.Comment(winrt::to_hstring(newTextInputProps.testId));
+  }
   // update BaseComponentView props
   updateShadowProps(oldTextInputProps, newTextInputProps, m_visual);
   updateTransformProps(oldTextInputProps, newTextInputProps, m_visual);

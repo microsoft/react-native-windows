@@ -233,6 +233,7 @@ struct WindowData {
             root.RelativeSizeAdjustment({1.0f, 1.0f});
             root.Offset({0, 0, 0});
             m_target.Root(root);
+            m_compRootView.SetWindow(reinterpret_cast<uint64_t>(hwnd));
             m_compRootView.RootVisual(
                 winrt::Microsoft::ReactNative::Composition::WindowsCompositionContextHelper::CreateVisual(root));
             m_compRootView.ScaleFactor(ScaleFactor(hwnd));
@@ -289,7 +290,7 @@ struct WindowData {
   }
 
   LRESULT TranslateMessage(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) noexcept {
-    if (m_compRootView) {
+    if (!m_useLiftedComposition && m_compRootView) {
       return static_cast<LRESULT>(m_compRootView.SendMessage(message, wparam, lparam));
     }
     return 0;

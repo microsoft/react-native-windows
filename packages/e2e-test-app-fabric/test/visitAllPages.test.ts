@@ -11,6 +11,7 @@ import {app} from '@react-native-windows/automation';
 beforeAll(async () => {
   // If window is partially offscreen, tests will fail to click on certain elements
   await app.setWindowPosition(0, 0);
+  await app.setWindowSize(1000, 1250);
 });
 
 afterEach(async () => {

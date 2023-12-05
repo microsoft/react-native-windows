@@ -44,6 +44,7 @@ void CompositionHwndHost::CreateCompositionRoot() {
   auto root = Compositor().CreateContainerVisual();
   root.RelativeSizeAdjustment({1.0f, 1.0f});
   root.Offset({0, 0, 0});
+  root.Comment(L"Root Visual");
   m_target.Root(root);
 }
 
@@ -53,6 +54,7 @@ void CompositionHwndHost::Initialize(uint64_t hwnd) noexcept {
   m_hwnd = (HWND)hwnd;
 
   m_compRootView = winrt::Microsoft::ReactNative::CompositionRootView();
+  m_compRootView.SetWindow(reinterpret_cast<uint64_t>(m_hwnd));
 
   CreateDesktopWindowTarget(m_hwnd);
   CreateCompositionRoot();

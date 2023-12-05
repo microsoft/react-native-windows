@@ -388,6 +388,14 @@ struct CompVisual : public winrt::implements<
     m_visual.BackfaceVisibility(static_cast<typename TTypeRedirects::CompositionBackfaceVisibility>(value));
   }
 
+  winrt::hstring Comment() noexcept {
+    return m_visual.Comment();
+  }
+
+  void Comment(winrt::hstring value) {
+    m_visual.Comment(value);
+  }
+
  private:
   typename TTypeRedirects::Visual m_visual;
 };
@@ -488,6 +496,14 @@ struct CompSpriteVisual : winrt::implements<
 
   void BackfaceVisibility(winrt::Microsoft::ReactNative::Composition::BackfaceVisibility value) {
     m_visual.BackfaceVisibility(static_cast<typename TTypeRedirects::CompositionBackfaceVisibility>(value));
+  }
+
+  winrt::hstring Comment() noexcept {
+    return m_visual.Comment();
+  }
+
+  void Comment(winrt::hstring value) {
+    m_visual.Comment(value);
   }
 
   void SetClippingPath(ID2D1Geometry *clippingPath) noexcept {
@@ -693,6 +709,14 @@ struct CompScrollerVisual : winrt::implements<
     m_visual.BackfaceVisibility(static_cast<typename TTypeRedirects::CompositionBackfaceVisibility>(value));
   }
 
+  winrt::hstring Comment() noexcept {
+    return m_visual.Comment();
+  }
+
+  void Comment(winrt::hstring value) {
+    m_visual.Comment(value);
+  }
+
   void SetClippingPath(ID2D1Geometry *clippingPath) noexcept {
     if (!clippingPath) {
       m_visual.Clip(nullptr);
@@ -844,7 +868,7 @@ struct CompActivityVisual : winrt::implements<
     auto spriteShape = compositor.CreateSpriteShape();
     spriteShape.Geometry(ellipse);
     spriteShape.Offset(winrt::Windows::Foundation::Numerics::float2(m_centerX, m_centerY + m_radiusSmall));
-    auto spriteVisualBrush = compositor.CreateColorBrush(winrt::Windows::UI::Colors::LightGray());
+    auto spriteVisualBrush = compositor.CreateColorBrush({255, 211, 211, 211} /* Light Gray */);
     spriteShape.FillBrush(spriteVisualBrush);
     auto circleShape = compositor.CreateShapeVisual();
     circleShape.Shapes().Append(spriteShape);
@@ -969,6 +993,14 @@ struct CompActivityVisual : winrt::implements<
     m_visual.BackfaceVisibility(static_cast<typename TTypeRedirects::CompositionBackfaceVisibility>(value));
   }
 
+  winrt::hstring Comment() noexcept {
+    return m_visual.Comment();
+  }
+
+  void Comment(winrt::hstring value) {
+    m_visual.Comment(value);
+  }
+
   void SetClippingPath(ID2D1Geometry *clippingPath) noexcept {
     if (!clippingPath) {
       m_visual.Clip(nullptr);
@@ -1009,7 +1041,7 @@ struct CompCaretVisual
     m_visual = CreateVisual();
 
     // TODO should make the caret use an invert brush by default
-    m_compVisual.Brush(m_compositor.CreateColorBrush(winrt::Windows::UI::Colors::Black()));
+    m_compVisual.Brush(m_compositor.CreateColorBrush({255, 0, 0, 0} /* Black */));
     m_compVisual.Opacity(1.0f);
 
     // Blinking animation
@@ -1114,12 +1146,31 @@ struct CompSwitchThumbVisual : winrt::implements<
   }
 
   void Size(winrt::Windows::Foundation::Numerics::float2 size) noexcept {
-    m_geometry.Radius(size);
-    m_spiritShape.Offset(size);
-    m_compVisual.Size(size);
+    assert(m_size.x == m_size.y);
+    // if the size has changed, update the position to the new center
+    if (m_size.x != 0.0f && m_size.x != size.x) {
+      Position({m_pos.x + (m_size.x - size.x), m_pos.y + (m_size.x - size.x)});
+    }
+    m_size = size;
+    m_geometry.Radius(m_size);
+    m_spiritShape.Offset(m_size);
+    m_compVisual.Size(m_size);
+  }
+
+  winrt::Windows::Foundation::Numerics::float2 Size() noexcept {
+    return m_size;
   }
 
   void Position(winrt::Windows::Foundation::Numerics::float2 position) noexcept {
+    m_pos = position;
+    m_compVisual.Offset({position.x, position.y, 0.0f});
+  }
+
+  winrt::Windows::Foundation::Numerics::float2 Position() noexcept {
+    return m_pos;
+  }
+
+  void AnimatePosition(winrt::Windows::Foundation::Numerics::float2 position) noexcept {
     if (!isDrawn) {
       // we don't want to animate if this is the first time the switch is drawn on screen
       isDrawn = true;
@@ -1132,6 +1183,7 @@ struct CompSwitchThumbVisual : winrt::implements<
 
       m_compVisual.StartAnimation(L"Offset", animation);
     }
+    m_pos = position;
   }
 
   bool IsVisible() const noexcept {
@@ -1145,6 +1197,8 @@ struct CompSwitchThumbVisual : winrt::implements<
   bool isDrawn{false};
   typename TTypeRedirects::SpriteVisual m_compVisual;
   winrt::Microsoft::ReactNative::Composition::IVisual m_visual;
+  winrt::Windows::Foundation::Numerics::float2 m_size{0.0f, 0.0f};
+  winrt::Windows::Foundation::Numerics::float2 m_pos;
   typename TTypeRedirects::Compositor m_compositor{nullptr};
   typename TTypeRedirects::CompositionSpriteShape m_spiritShape{nullptr};
   typename TTypeRedirects::CompositionEllipseGeometry m_geometry{nullptr};
@@ -1174,7 +1228,7 @@ struct CompFocusVisual
     m_compVisual.Opacity(1.0f);
     m_compVisual.RelativeSizeAdjustment({1, 1});
 
-    m_brush.Source(compositor.CreateColorBrush(winrt::Windows::UI::Colors::Black()));
+    m_brush.Source(compositor.CreateColorBrush({255, 0, 0, 0} /* Black */));
     m_brush.IsCenterHollow(true);
   }
 

@@ -1,6 +1,6 @@
 [ignore]
 ; We fork some components by platform - ignore all platforms except windows
-.*/*[.]android.js
+.*/!(ProgressBarAndroid)[.]android.js
 .*/*[.]ios.js
 .*/*[.]macos.js
 
@@ -11,9 +11,7 @@
 <PROJECT_ROOT>/Libraries/Alert/Alert.js
 <PROJECT_ROOT>/Libraries/Components/Button.js
 <PROJECT_ROOT>/Libraries/Components/Picker/RCTPickerNativeComponent.js
-<PROJECT_ROOT>/Libraries/Components/ProgressBarAndroid/ProgressBarAndroid.js
 <PROJECT_ROOT>/Libraries/Components/RefreshControl/RefreshControl.js
-<PROJECT_ROOT>/Libraries/Components/SafeAreaView/SafeAreaView.js
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInput.js
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInputState.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/Touchable.js

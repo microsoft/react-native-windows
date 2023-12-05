@@ -1,8 +1,120 @@
 # Change Log - @react-native-windows/automation
 
-This log was last generated on Sat, 28 Oct 2023 05:18:12 GMT and should not be manually modified.
+This log was last generated on Wed, 29 Nov 2023 06:16:35 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.3.163
+
+Wed, 29 Nov 2023 06:16:35 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.81
+
+## 0.3.162
+
+Wed, 22 Nov 2023 06:16:29 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.80
+
+## 0.3.161
+
+Sat, 18 Nov 2023 06:14:50 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.79
+
+## 0.3.160
+
+Fri, 17 Nov 2023 06:15:10 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.78
+
+## 0.3.159
+
+Thu, 16 Nov 2023 06:13:44 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.77
+
+## 0.3.158
+
+Wed, 15 Nov 2023 06:14:14 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.76
+
+## 0.3.157
+
+Tue, 14 Nov 2023 06:16:22 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.75
+
+## 0.3.156
+
+Sat, 11 Nov 2023 06:17:20 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.74
+
+## 0.3.155
+
+Fri, 10 Nov 2023 06:16:23 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.73
+
+## 0.3.154
+
+Thu, 09 Nov 2023 06:16:38 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.72
+
+## 0.3.153
+
+Wed, 08 Nov 2023 06:17:35 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.71
+
+## 0.3.152
+
+Thu, 02 Nov 2023 05:16:16 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.70
+
+## 0.3.151
+
+Wed, 01 Nov 2023 05:15:56 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.69
+
+## 0.3.150
+
+Tue, 31 Oct 2023 05:16:24 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.68
 
 ## 0.3.149
 

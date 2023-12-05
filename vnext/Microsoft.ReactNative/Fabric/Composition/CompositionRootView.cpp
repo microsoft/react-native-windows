@@ -160,6 +160,14 @@ winrt::IInspectable CompositionRootView::GetUiaProvider() noexcept {
   if (m_uiaProvider == nullptr) {
     m_uiaProvider =
         winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionRootAutomationProvider>(*this);
+    if (m_hwnd) {
+      auto pRootProvider =
+          static_cast<winrt::Microsoft::ReactNative::implementation::CompositionRootAutomationProvider *>(
+              m_uiaProvider.as<IRawElementProviderSimple>().get());
+      if (pRootProvider != nullptr) {
+        pRootProvider->SetHwnd(m_hwnd);
+      }
+    }
   }
   return m_uiaProvider;
 }
@@ -188,12 +196,19 @@ void CompositionRootView::SetTag(int64_t tag) noexcept {
   m_rootTag = tag;
 }
 
+void CompositionRootView::SetWindow(uint64_t hwnd) noexcept {
+  m_hwnd = reinterpret_cast<HWND>(hwnd);
+}
+
 int64_t CompositionRootView::SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
   if (m_rootTag == -1)
     return 0;
 
+  // SetWindow must be called when not using ContentIsland hosting
+  assert(m_hwnd);
+
   if (m_CompositionEventHandler) {
-    auto result = m_CompositionEventHandler->SendMessage(msg, wParam, lParam);
+    auto result = m_CompositionEventHandler->SendMessage(m_hwnd, msg, wParam, lParam);
     if (result)
       return result;
   }
@@ -288,8 +303,12 @@ void CompositionRootView::ShowInstanceLoaded() noexcept {
 
     auto rootTag = ::Microsoft::ReactNative::getNextRootViewTag();
     SetTag(rootTag);
-    uiManager->startSurface(
-        *this, rootTag, JSComponentName(), DynamicWriter::ToDynamic(Mso::Copy(m_reactViewOptions.InitialProps())));
+    auto initProps = DynamicWriter::ToDynamic(Mso::Copy(m_reactViewOptions.InitialProps()));
+    if (initProps.isNull()) {
+      initProps = folly::dynamic::object();
+    }
+    initProps["concurrentRoot"] = true;
+    uiManager->startSurface(*this, rootTag, JSComponentName(), initProps);
 
     m_isJSViewAttached = true;
   }

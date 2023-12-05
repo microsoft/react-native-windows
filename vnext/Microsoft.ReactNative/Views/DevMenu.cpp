@@ -146,7 +146,7 @@ struct InAppXamlDevMenu : public IDevMenu, public std::enable_shared_from_this<I
       auto lastTraceFilePath = Microsoft::ReactNative::HermesSamplingProfiler::GetLastTraceFilePath();
       if (!lastTraceFilePath.empty()) {
         os << std::endl
-           << "Samples from last invocation are stored at " << lastTraceFilePath.c_str()
+           << "Samples from last invocation are stored at " << winrt::to_string(lastTraceFilePath)
            << "  (path copied to clipboard).";
         os << std::endl << "Navigate to \"edge:\\tracing\" and load the trace file.";
       }

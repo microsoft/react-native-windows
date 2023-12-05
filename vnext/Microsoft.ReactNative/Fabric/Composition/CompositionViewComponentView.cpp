@@ -1252,7 +1252,9 @@ void CompositionBaseComponentView::updateTransformProps(
     transformMatrix.m44 = newViewProps.transform.matrix[15];
 
     auto centerPointPropSet = EnsureCenterPointPropertySet();
-    centerPointPropSet.InsertMatrix4x4(L"transform", transformMatrix);
+    if (centerPointPropSet) {
+      centerPointPropSet.InsertMatrix4x4(L"transform", transformMatrix);
+    }
 
     EnsureTransformMatrixFacade();
   }
@@ -1498,6 +1500,9 @@ void CompositionViewComponentView::updateProps(
 
   if (oldViewProps.opacity != newViewProps.opacity) {
     m_visual.Opacity(newViewProps.opacity);
+  }
+  if (oldViewProps.testId != newViewProps.testId) {
+    m_visual.Comment(winrt::to_hstring(newViewProps.testId));
   }
 
   // update BaseComponentView props
