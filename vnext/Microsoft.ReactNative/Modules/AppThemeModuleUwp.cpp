@@ -9,11 +9,11 @@
 #include <IReactContext.h>
 #include <ReactPropertyBag.h>
 #include <Utils/Helpers.h>
+#include <Utils/ThemeUtils.h>
 #include <Utils/ValueUtils.h>
 #include <XamlUIService.h>
 #include <XamlUtils.h>
 #include <cxxreact/CxxModule.h>
-#include <winuser.h>
 #include <functional>
 #include <memory>
 #if _MSC_VER <= 1913
@@ -121,24 +121,6 @@ void AppTheme::Initialize(React::ReactContext const &reactContext) noexcept {
 ReactNativeSpecs::AppThemeSpec_AppThemeData AppTheme::GetConstants() noexcept {
   winrt::Microsoft::ReactNative::ReactPropertyBag pb{m_context.Properties()};
   return (*pb.Get(AppThemeHolderPropertyId()))->GetConstants();
-}
-
-bool IsInHighContrastWin32() noexcept {
-  BOOL fResult;
-  HIGHCONTRAST info;
-
-  fResult = SystemParametersInfo(
-      SPI_GETHIGHCONTRAST, // Get contrast information
-      0, // Not used
-      &info, // Holds contrast information
-      0); // Not used
-
-  // Double it.
-  if (fResult) {
-    return !!(info.dwFlags & HCF_HIGHCONTRASTON);
-  }
-
-  return false;
 }
 
 } // namespace Microsoft::ReactNative

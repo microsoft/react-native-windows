@@ -120,7 +120,7 @@ exports[`TextInput Tests Multi-line TextInputs can enable text selection (Impera
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -271,7 +271,7 @@ exports[`TextInput Tests Multi-line TextInputs can enable text selection 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -422,7 +422,7 @@ exports[`TextInput Tests Single-line TextInputs can enable text selection (Imper
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -573,7 +573,7 @@ exports[`TextInput Tests Single-line TextInputs can enable text selection 1`] = 
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -724,7 +724,7 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Character
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -875,7 +875,7 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Sentences
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -1026,7 +1026,7 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Turned Of
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -1177,7 +1177,7 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Words 1`]
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -1328,7 +1328,7 @@ exports[`TextInput Tests TextInputs can autocomplete, address country 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -1479,7 +1479,7 @@ exports[`TextInput Tests TextInputs can autocomplete, country 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -1630,7 +1630,7 @@ exports[`TextInput Tests TextInputs can autocomplete, one-time-code 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -1781,7 +1781,7 @@ exports[`TextInput Tests TextInputs can autocomplete, sms-otp 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -1828,7 +1828,7 @@ exports[`TextInput Tests TextInputs can autogrow 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -1979,7 +1979,7 @@ exports[`TextInput Tests TextInputs can be editable 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -2026,7 +2026,7 @@ exports[`TextInput Tests TextInputs can be multiline, bottomright alignment 1`] 
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 255, 255)",
         },
         "Offset": [
           0,
@@ -2073,7 +2073,7 @@ exports[`TextInput Tests TextInputs can be multiline, center alignment 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -2120,7 +2120,7 @@ exports[`TextInput Tests TextInputs can be multiline, topleft alignment 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -2167,7 +2167,7 @@ exports[`TextInput Tests TextInputs can be set to not editable 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -2318,7 +2318,7 @@ exports[`TextInput Tests TextInputs can be set to not editable 2 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -2365,7 +2365,7 @@ exports[`TextInput Tests TextInputs can clear on submit 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -2412,7 +2412,7 @@ exports[`TextInput Tests TextInputs can clear on submit with custom submit key e
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -2459,7 +2459,7 @@ exports[`TextInput Tests TextInputs can clear on submit with custom submit key e
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -2506,7 +2506,7 @@ exports[`TextInput Tests TextInputs can customize its padding 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -2553,7 +2553,7 @@ exports[`TextInput Tests TextInputs can enable spellcheck 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -2704,7 +2704,7 @@ exports[`TextInput Tests TextInputs can have a background color 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -3006,7 +3006,7 @@ exports[`TextInput Tests TextInputs can have a font family 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -3157,7 +3157,7 @@ exports[`TextInput Tests TextInputs can have a font size 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -3308,7 +3308,7 @@ exports[`TextInput Tests TextInputs can have a font style 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -3459,7 +3459,7 @@ exports[`TextInput Tests TextInputs can have a font weight 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -3610,7 +3610,7 @@ exports[`TextInput Tests TextInputs can have attributed text 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -3657,7 +3657,7 @@ exports[`TextInput Tests TextInputs can have custom return key label, Compile 1`
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -3704,7 +3704,7 @@ exports[`TextInput Tests TextInputs can have custom return key label, React Nati
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -3751,7 +3751,7 @@ exports[`TextInput Tests TextInputs can have custom return key type, done 1`] = 
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -3798,7 +3798,7 @@ exports[`TextInput Tests TextInputs can have custom return key type, go 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -3845,7 +3845,7 @@ exports[`TextInput Tests TextInputs can have custom return key type, next 1`] = 
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -3892,7 +3892,7 @@ exports[`TextInput Tests TextInputs can have custom return key type, none 1`] = 
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -3939,7 +3939,7 @@ exports[`TextInput Tests TextInputs can have custom return key type, previous 1`
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -3986,7 +3986,7 @@ exports[`TextInput Tests TextInputs can have custom return key type, search 1`] 
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -4033,7 +4033,7 @@ exports[`TextInput Tests TextInputs can have custom return key type, send 1`] = 
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -4080,7 +4080,7 @@ exports[`TextInput Tests TextInputs can have customer letter spacing, spacing=-1
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -4127,7 +4127,7 @@ exports[`TextInput Tests TextInputs can have customer letter spacing, spacing=0 
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -4174,7 +4174,7 @@ exports[`TextInput Tests TextInputs can have customer letter spacing, spacing=2 
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -4221,7 +4221,7 @@ exports[`TextInput Tests TextInputs can have customer letter spacing, spacing=9 
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -4456,7 +4456,7 @@ exports[`TextInput Tests TextInputs can have customized letter spacing 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -4607,7 +4607,7 @@ exports[`TextInput Tests TextInputs can have customized line height 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -4654,7 +4654,7 @@ exports[`TextInput Tests TextInputs can have inline images 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -4701,7 +4701,7 @@ exports[`TextInput Tests TextInputs can have inline images, drawable props not s
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -4748,7 +4748,7 @@ exports[`TextInput Tests TextInputs can have inline images, drawableLeft and dra
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -4899,7 +4899,7 @@ exports[`TextInput Tests TextInputs can have text decoration lines 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -5050,7 +5050,7 @@ exports[`TextInput Tests TextInputs can have text shadows 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -5097,7 +5097,7 @@ exports[`TextInput Tests TextInputs can propagate events 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -5144,7 +5144,7 @@ exports[`TextInput Tests TextInputs can register press events 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -5295,7 +5295,7 @@ exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with C
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -5446,7 +5446,7 @@ exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with N
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -5597,7 +5597,7 @@ exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with U
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -5748,7 +5748,7 @@ exports[`TextInput Tests TextInputs can set their readOnly prop to false 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -5899,7 +5899,7 @@ exports[`TextInput Tests TextInputs can set their readOnly prop to true 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -5946,7 +5946,7 @@ exports[`TextInput Tests TextInputs can submit with custom key 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -5993,7 +5993,7 @@ exports[`TextInput Tests TextInputs have a custom background color 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -6040,7 +6040,7 @@ exports[`TextInput Tests TextInputs have a custom highlight color 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -6087,7 +6087,7 @@ exports[`TextInput Tests TextInputs have a custom placeholder text color 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -6134,7 +6134,7 @@ exports[`TextInput Tests TextInputs have a custom text color 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 128, 0, 255)",
         },
         "Offset": [
           0,
@@ -6181,7 +6181,7 @@ exports[`TextInput Tests TextInputs have a custom underline color 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -6228,7 +6228,7 @@ exports[`TextInput Tests TextInputs have a default placeholder text color 1`] = 
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -6275,7 +6275,7 @@ exports[`TextInput Tests TextInputs have a default text color 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -6322,7 +6322,7 @@ exports[`TextInput Tests TextInputs have a default underline color 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -6369,7 +6369,7 @@ exports[`TextInput Tests TextInputs support secure entry 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -6416,7 +6416,7 @@ exports[`TextInput Tests TextInputs support secure entry, with placeholder text 
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(255, 0, 0, 255)",
         },
         "Offset": [
           0,
@@ -6463,7 +6463,7 @@ exports[`TextInput Tests TextInputs with set height and padding from theme 1`] =
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
@@ -6614,7 +6614,7 @@ exports[`TextInput Tests Uncontrolled TextInput 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
