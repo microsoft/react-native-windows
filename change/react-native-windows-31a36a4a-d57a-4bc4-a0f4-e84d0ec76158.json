@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Enable `/PROFILE` linker flag for vulcan compatibility",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
