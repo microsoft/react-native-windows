@@ -603,6 +603,8 @@ void SetBorderLayerPropertiesCommon(
     FLOAT strokeWidth,
     const facebook::react::SharedColor &borderColor,
     facebook::react::BorderStyle borderStyle) {
+  layer.Offset({anchorOffset.x, anchorOffset.y, 0}, {anchorPoint.x, anchorPoint.y, 0});
+  layer.RelativeSizeWithOffset(size, relativeSizeAdjustment);
   if ((textureRect.right - textureRect.left) <= 0 || (textureRect.bottom - textureRect.top) <= 0)
     return;
 
@@ -613,8 +615,6 @@ void SetBorderLayerPropertiesCommon(
   surface.as(borderTexture);
 
   layer.Brush(surface);
-  layer.Offset({anchorOffset.x, anchorOffset.y, 0}, {anchorPoint.x, anchorPoint.y, 0});
-  layer.RelativeSizeWithOffset(size, relativeSizeAdjustment);
 
   AutoDrawHelper autoDraw(borderTexture);
 
