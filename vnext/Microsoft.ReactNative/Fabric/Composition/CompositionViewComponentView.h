@@ -18,6 +18,7 @@ struct CompContext;
 enum class CompositionComponentViewFeatures : std::uint_fast8_t {
   None = 0,
   NativeBorder = 1 << 0, // Standard border handling
+  ShadowProps = 1 << 1, // Apply shadow to visual
 
   Default = NativeBorder
 };
@@ -46,8 +47,8 @@ struct CompositionBaseComponentView : public IComponentView,
   IComponentView *parent() const noexcept override;
   facebook::react::Props::Shared props() noexcept override;
   virtual facebook::react::SharedViewProps viewProps() noexcept = 0;
-  void theme(const std::shared_ptr<Composition::Theme> &theme) noexcept override;
-  std::shared_ptr<Composition::Theme> &theme() const noexcept override;
+  void theme(winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme) noexcept override;
+  winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme() const noexcept override;
   void onThemeChanged() noexcept override;
   bool runOnChildren(bool forward, Mso::Functor<bool(IComponentView &)> &fn) noexcept override;
   void onFocusLost() noexcept override;
@@ -95,8 +96,8 @@ struct CompositionBaseComponentView : public IComponentView,
   void indexOffsetForBorder(uint32_t &index) const noexcept;
   void updateShadowProps(
       const facebook::react::ViewProps &oldViewProps,
-      const facebook::react::ViewProps &newViewProps,
-      winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual) noexcept;
+      const facebook::react::ViewProps &newViewProps) noexcept;
+  void applyShadowProps(const facebook::react::ViewProps &viewProps) noexcept;
   void updateTransformProps(
       const facebook::react::ViewProps &oldViewProps,
       const facebook::react::ViewProps &newViewProps,
@@ -149,7 +150,7 @@ struct CompositionBaseComponentView : public IComponentView,
       facebook::react::LayoutMetrics const &layoutMetrics,
       const facebook::react::ViewProps &viewProps) noexcept;
   bool TryUpdateSpecialBorderLayers(
-      Composition::Theme &theme,
+      winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme,
       std::array<winrt::Microsoft::ReactNative::Composition::ISpriteVisual, SpecialBorderLayerCount> &spBorderVisuals,
       facebook::react::LayoutMetrics const &layoutMetrics,
       const facebook::react::ViewProps &viewProps) noexcept;
@@ -158,7 +159,7 @@ struct CompositionBaseComponentView : public IComponentView,
   void UpdateCenterPropertySet() noexcept;
 
   CompositionComponentViewFeatures m_flags;
-  mutable std::shared_ptr<Composition::Theme> m_theme{nullptr};
+  mutable winrt::Microsoft::ReactNative::Composition::implementation::Theme *m_theme{nullptr};
   void showFocusVisual(bool show) noexcept;
   winrt::Microsoft::ReactNative::Composition::IFocusVisual m_focusVisual{nullptr};
   winrt::Microsoft::ReactNative::Composition::IVisual m_outerVisual{nullptr};
@@ -192,6 +193,7 @@ struct CompositionViewComponentView : public CompositionBaseComponentView {
   std::string DefaultControlType() const noexcept override;
 
   facebook::react::SharedViewProps viewProps() noexcept override;
+  void onThemeChanged() noexcept override;
 
   facebook::react::Tag hitTest(
       facebook::react::Point pt,

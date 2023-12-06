@@ -4425,8 +4425,8 @@ exports[`Home UIA Tree Dump Components Tab 1`] = `
               },
               {
                 "Offset": [
-                  0,
-                  0,
+                  -0,
+                  -0,
                   0,
                 ],
                 "Opacity": 1,
@@ -4452,7 +4452,7 @@ exports[`Home UIA Tree Dump Components Tab 1`] = `
               {
                 "Offset": [
                   0,
-                  0,
+                  -0,
                   0,
                 ],
                 "Opacity": 1,
