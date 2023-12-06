@@ -724,6 +724,22 @@ const examples: Array<RNTesterModuleExample> = [
       return <SpellCheckSample />;
     },
   },
+  {
+    title: 'CaretHidden set to True',
+    render: function (): React.Node {
+      return (
+        <View>
+          <Text>CaretHidden</Text>
+          <TextInput
+            style={styles.singleLine}
+            caretHidden={true}
+            placeholder="caretHidden={true}"
+            testID="textinput-carethidden"
+          />
+        </View>
+      );
+    },
+  },
   // Windows]
 ];
 

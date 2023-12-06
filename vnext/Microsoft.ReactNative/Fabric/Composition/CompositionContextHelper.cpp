@@ -1094,7 +1094,7 @@ struct CompCaretVisual
   }
 
  private:
-  bool m_isVisible{false};
+  bool m_isVisible{true};
   typename TTypeRedirects::SpriteVisual m_compVisual;
   winrt::Microsoft::ReactNative::Composition::IVisual m_visual;
   typename TTypeRedirects::ScalarKeyFrameAnimation m_opacityAnimation;
