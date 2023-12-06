@@ -124,22 +124,4 @@ ReactNativeSpecs::AppThemeSpec_AppThemeData AppTheme::GetConstants() noexcept {
   return (*pb.Get(AppThemeHolderPropertyId()))->GetConstants();
 }
 
-bool IsInHighContrastWin32() noexcept {
-  BOOL fResult;
-  HIGHCONTRAST info;
-
-  fResult = SystemParametersInfo(
-      SPI_GETHIGHCONTRAST, // Get contrast information
-      0, // Not used
-      &info, // Holds contrast information
-      0); // Not used
-
-  // Double it.
-  if (fResult) {
-    return !!(info.dwFlags & HCF_HIGHCONTRASTON);
-  }
-
-  return false;
-}
-
 } // namespace Microsoft::ReactNative
