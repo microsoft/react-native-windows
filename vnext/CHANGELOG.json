@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 06 Dec 2023 03:54:49 GMT",
+      "version": "0.0.0-canary.743",
+      "tag": "react-native-windows_v0.0.0-canary.743",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3bb7adb786eba1600e330fed4fe75f0cd09812dd",
+            "comment": "Enable `/PROFILE` linker flag for vulcan compatibility"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "04329dceb5554057ed7a24ac24deff2a03d5f11f",
+            "comment": "[Fabric] Add DeviceInfoModule"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "f24821d5c06452b4311b1db08f462b369aa2edde",
+            "comment": "[Fabric] Add support for custom theme's, and support runtime theme change"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3ac229a323e0acfd34e5667912a9531c2026b3b8",
+            "comment": "add caretHidden to Fabric's TextInput"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 29 Nov 2023 06:16:34 GMT",
       "version": "0.0.0-canary.742",
       "tag": "react-native-windows_v0.0.0-canary.742",

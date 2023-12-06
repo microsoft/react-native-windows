@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 29 Nov 2023 06:16:34 GMT and should not be manually modified.
+This log was last generated on Wed, 06 Dec 2023 03:54:49 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.743
+
+Wed, 06 Dec 2023 03:54:49 GMT
+
+### Changes
+
+- Enable `/PROFILE` linker flag for vulcan compatibility (jthysell@microsoft.com)
+- [Fabric] Add DeviceInfoModule (email not defined)
+- [Fabric] Add support for custom theme's, and support runtime theme change (30809111+acoates-ms@users.noreply.github.com)
+- add caretHidden to Fabric's TextInput (tatianakapos@microsoft.com)
 
 ## 0.0.0-canary.742
 
