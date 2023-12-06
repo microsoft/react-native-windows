@@ -8,8 +8,7 @@
 
 #include "Composition.CustomResourceResult.g.h"
 #include <Fabric/Composition/CompositionUIService.h>
-#include <Modules/AppThemeModuleUwp.h>
-#include <Modules/AppearanceModule.h>
+#include <Utils/ThemeUtils.h>
 #include <winrt/Windows.UI.ViewManagement.h>
 #include "ReactPropertyBag.h"
 #include "winrt/Microsoft.ReactNative.Composition.h"

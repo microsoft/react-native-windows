@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include "AppearanceModule.h"
+#include <Utils/ThemeUtils.h>
 #include <XamlUtils.h>
 #include <winrt/Windows.UI.ViewManagement.h>
 
@@ -39,10 +40,6 @@ void Appearance::Initialize(winrt::Microsoft::ReactNative::ReactContext const &r
           });
         }
       });
-}
-
-bool IsColorLight(const winrt::Windows::UI::Color &clr) noexcept {
-  return (((5 * clr.G) + (2 * clr.R) + clr.B) > (8 * 128));
 }
 
 ApplicationTheme CurrentThemeFromUISettings(const winrt::Windows::UI::ViewManagement::UISettings &uiSettings) {

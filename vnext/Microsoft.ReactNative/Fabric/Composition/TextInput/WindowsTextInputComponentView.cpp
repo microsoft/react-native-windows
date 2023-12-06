@@ -161,7 +161,7 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Show the caret
   BOOL TxShowCaret(BOOL fShow) override {
-    m_outer->ShowCaret(fShow);
+    m_outer->ShowCaret(m_outer->m_props->caretHidden ? false : fShow);
     return true;
   }
 

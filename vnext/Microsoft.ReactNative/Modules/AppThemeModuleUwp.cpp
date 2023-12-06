@@ -9,6 +9,7 @@
 #include <IReactContext.h>
 #include <ReactPropertyBag.h>
 #include <Utils/Helpers.h>
+#include <Utils/ThemeUtils.h>
 #include <Utils/ValueUtils.h>
 #include <XamlUIService.h>
 #include <XamlUtils.h>
