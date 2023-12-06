@@ -161,7 +161,7 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Show the caret
   BOOL TxShowCaret(BOOL fShow) override {
-    m_outer->ShowCaret(fShow);
+    m_outer->ShowCaret(m_outer->m_props->caretHidden ? false : fShow);
     return true;
   }
 
@@ -903,7 +903,6 @@ void WindowsTextInputComponentView::updateProps(
     m_visual.Comment(winrt::to_hstring(newTextInputProps.testId));
   }
   // update BaseComponentView props
-  updateShadowProps(oldTextInputProps, newTextInputProps, m_visual);
   updateTransformProps(oldTextInputProps, newTextInputProps, m_visual);
   Super::updateProps(props, oldProps);
 
@@ -1319,7 +1318,7 @@ winrt::com_ptr<::IDWriteTextLayout> WindowsTextInputComponentView::CreatePlaceho
 
 void WindowsTextInputComponentView::DrawText() noexcept {
   m_needsRedraw = true;
-  if (m_cDrawBlock) {
+  if (m_cDrawBlock || theme()->IsEmpty()) {
     return;
   }
 
@@ -1457,6 +1456,7 @@ void WindowsTextInputComponentView::onThemeChanged() noexcept {
   auto props = std::static_pointer_cast<const facebook::react::WindowsTextInputProps>(m_props);
   updateCursorColor(props->cursorColor, props->textAttributes.foregroundColor);
   DrawText();
+  Super::onThemeChanged();
 }
 
 winrt::Microsoft::ReactNative::Composition::IVisual WindowsTextInputComponentView::Visual() const noexcept {

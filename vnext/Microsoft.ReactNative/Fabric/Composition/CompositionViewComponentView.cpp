@@ -76,7 +76,8 @@ IComponentView *CompositionBaseComponentView::parent() const noexcept {
   return m_parent;
 }
 
-void CompositionBaseComponentView::theme(const std::shared_ptr<Composition::Theme> &value) noexcept {
+void CompositionBaseComponentView::theme(
+    winrt::Microsoft::ReactNative::Composition::implementation::Theme *value) noexcept {
   if (m_theme != value) {
     for (auto it = m_children.begin(); it != m_children.end(); ++it) {
       (*it)->theme(value);
@@ -88,15 +89,21 @@ void CompositionBaseComponentView::theme(const std::shared_ptr<Composition::Them
 }
 
 void CompositionBaseComponentView::onThemeChanged() noexcept {
-  // TODO redraw borders / anything using theme
-}
-
-std::shared_ptr<Composition::Theme> &CompositionBaseComponentView::theme() const noexcept {
-  if (!m_theme) {
-    m_theme = Composition::Theme::FromContext(m_context);
+  if ((m_flags & CompositionComponentViewFeatures::NativeBorder) == CompositionComponentViewFeatures::NativeBorder) {
+    m_needsBorderUpdate = true;
+    finalizeBorderUpdates(m_layoutMetrics, *viewProps());
   }
 
-  return m_theme;
+  if ((m_flags & CompositionComponentViewFeatures::ShadowProps) == CompositionComponentViewFeatures::ShadowProps) {
+    applyShadowProps(*viewProps());
+  }
+}
+
+winrt::Microsoft::ReactNative::Composition::implementation::Theme *CompositionBaseComponentView::theme()
+    const noexcept {
+  return m_theme ? m_theme
+                 : winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::Theme>(
+                       winrt::Microsoft::ReactNative::Composition::implementation::Theme::EmptyTheme());
 }
 
 bool CompositionBaseComponentView::runOnChildren(bool forward, Mso::Functor<bool(IComponentView &)> &fn) noexcept {
@@ -122,6 +129,9 @@ void CompositionBaseComponentView::updateProps(
 
   if ((m_flags & CompositionComponentViewFeatures::NativeBorder) == CompositionComponentViewFeatures::NativeBorder) {
     updateBorderProps(oldViewProps, newViewProps);
+  }
+  if ((m_flags & CompositionComponentViewFeatures::ShadowProps) == CompositionComponentViewFeatures::ShadowProps) {
+    updateShadowProps(oldViewProps, newViewProps);
   }
 }
 
@@ -580,7 +590,7 @@ struct AutoDrawHelper {
 
 template <typename TShape>
 void SetBorderLayerPropertiesCommon(
-    Composition::Theme &theme,
+    winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme,
     winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     winrt::Microsoft::ReactNative::Composition::ISpriteVisual &layer,
     TShape &shape,
@@ -593,7 +603,9 @@ void SetBorderLayerPropertiesCommon(
     FLOAT strokeWidth,
     const facebook::react::SharedColor &borderColor,
     facebook::react::BorderStyle borderStyle) {
-  if ((textureRect.right - textureRect.left) <= 0 && (textureRect.bottom - textureRect.top) <= 0)
+  layer.Offset({anchorOffset.x, anchorOffset.y, 0}, {anchorPoint.x, anchorPoint.y, 0});
+  layer.RelativeSizeWithOffset(size, relativeSizeAdjustment);
+  if ((textureRect.right - textureRect.left) <= 0 || (textureRect.bottom - textureRect.top) <= 0)
     return;
 
   auto surface = compContext.CreateDrawingSurfaceBrush(
@@ -603,8 +615,6 @@ void SetBorderLayerPropertiesCommon(
   surface.as(borderTexture);
 
   layer.Brush(surface);
-  layer.Offset({anchorOffset.x, anchorOffset.y, 0}, {anchorPoint.x, anchorPoint.y, 0});
-  layer.RelativeSizeWithOffset(size, relativeSizeAdjustment);
 
   AutoDrawHelper autoDraw(borderTexture);
 
@@ -628,7 +638,7 @@ void SetBorderLayerPropertiesCommon(
     return;
 
   winrt::com_ptr<ID2D1SolidColorBrush> spBorderBrush;
-  pRT->CreateSolidColorBrush(theme.D2DColor(*borderColor), spBorderBrush.put());
+  pRT->CreateSolidColorBrush(theme->D2DColor(*borderColor), spBorderBrush.put());
   assert(spBorderBrush);
   if (spBorderBrush == nullptr)
     return;
@@ -670,7 +680,7 @@ void SetBorderLayerPropertiesCommon(
 
 template <typename TShape>
 void SetBorderLayerProperties(
-    Composition::Theme &theme,
+    winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme,
     winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     winrt::Microsoft::ReactNative::Composition::ISpriteVisual &layer,
     TShape &shape,
@@ -704,7 +714,7 @@ void SetBorderLayerProperties(
       layer.Offset({anchorOffset.x, anchorOffset.y, 0}, {anchorPoint.x, anchorPoint.y, 0});
       layer.Size({textureRect.right - textureRect.left, textureRect.bottom - textureRect.top});
 
-      layer.Brush(theme.Brush(*borderColor));
+      layer.Brush(theme->Brush(*borderColor));
 
       winrt::com_ptr<ID2D1Factory1> spD2dFactory;
       compContext.as<Composition::ICompositionContextInterop>()->D2DFactory(spD2dFactory.put());
@@ -736,7 +746,7 @@ const float Bottom = 1.0;
 
 template <typename TShape>
 void DrawAllBorderLayers(
-    Composition::Theme &theme,
+    winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme,
     winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     std::array<
         winrt::Microsoft::ReactNative::Composition::ISpriteVisual,
@@ -1042,7 +1052,7 @@ facebook::react::BorderMetrics resolveAndAlignBorderMetrics(
 }
 
 bool CompositionBaseComponentView::TryUpdateSpecialBorderLayers(
-    Composition::Theme &theme,
+    winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme,
     std::array<winrt::Microsoft::ReactNative::Composition::ISpriteVisual, SpecialBorderLayerCount> &spBorderVisuals,
     facebook::react::LayoutMetrics const &layoutMetrics,
     const facebook::react::ViewProps &viewProps) noexcept {
@@ -1147,14 +1157,14 @@ bool CompositionBaseComponentView::TryUpdateSpecialBorderLayers(
 void CompositionBaseComponentView::finalizeBorderUpdates(
     facebook::react::LayoutMetrics const &layoutMetrics,
     const facebook::react::ViewProps &viewProps) noexcept {
-  if (!m_needsBorderUpdate) {
+  if (!m_needsBorderUpdate || theme()->IsEmpty()) {
     return;
   }
 
   m_needsBorderUpdate = false;
   auto spBorderLayers = FindSpecialBorderLayers();
 
-  if (!TryUpdateSpecialBorderLayers(*theme(), spBorderLayers, layoutMetrics, viewProps)) {
+  if (!TryUpdateSpecialBorderLayers(theme(), spBorderLayers, layoutMetrics, viewProps)) {
     for (auto &spBorderLayer : spBorderLayers) {
       if (spBorderLayer) {
         spBorderLayer.as<winrt::Microsoft::ReactNative::Composition::ISpriteVisual>().Brush(nullptr);
@@ -1193,20 +1203,23 @@ void CompositionBaseComponentView::updateBorderProps(
 
 void CompositionBaseComponentView::updateShadowProps(
     const facebook::react::ViewProps &oldViewProps,
-    const facebook::react::ViewProps &newViewProps,
-    winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual) noexcept {
+    const facebook::react::ViewProps &newViewProps) noexcept {
   // Shadow Properties
   if (oldViewProps.shadowOffset != newViewProps.shadowOffset || oldViewProps.shadowColor != newViewProps.shadowColor ||
       oldViewProps.shadowOpacity != newViewProps.shadowOpacity ||
       oldViewProps.shadowRadius != newViewProps.shadowRadius) {
-    auto shadow = m_compContext.CreateDropShadow();
-    shadow.Offset({newViewProps.shadowOffset.width, newViewProps.shadowOffset.height, 0});
-    shadow.Opacity(newViewProps.shadowOpacity);
-    shadow.BlurRadius(newViewProps.shadowRadius);
-    if (newViewProps.shadowColor)
-      shadow.Color(theme()->Color(*newViewProps.shadowColor));
-    m_visual.Shadow(shadow);
+    applyShadowProps(newViewProps);
   }
+}
+
+void CompositionBaseComponentView::applyShadowProps(const facebook::react::ViewProps &viewProps) noexcept {
+  auto shadow = m_compContext.CreateDropShadow();
+  shadow.Offset({viewProps.shadowOffset.width, viewProps.shadowOffset.height, 0});
+  shadow.Opacity(viewProps.shadowOpacity);
+  shadow.BlurRadius(viewProps.shadowRadius);
+  if (viewProps.shadowColor)
+    shadow.Color(theme()->Color(*viewProps.shadowColor));
+  Visual().as<winrt::Microsoft::ReactNative::Composition::ISpriteVisual>().Shadow(shadow);
 }
 
 void CompositionBaseComponentView::updateTransformProps(
@@ -1507,11 +1520,20 @@ void CompositionViewComponentView::updateProps(
 
   // update BaseComponentView props
   updateAccessibilityProps(oldViewProps, newViewProps);
-  updateShadowProps(oldViewProps, newViewProps, m_visual);
   updateTransformProps(oldViewProps, newViewProps, m_visual);
   Super::updateProps(props, oldProps);
 
   m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
+}
+
+void CompositionViewComponentView::onThemeChanged() noexcept {
+  if (m_props->backgroundColor) {
+    m_visual.Brush(theme()->Brush(*m_props->backgroundColor));
+  } else {
+    m_visual.Brush(nullptr);
+  }
+
+  Super::onThemeChanged();
 }
 
 facebook::react::Tag CompositionViewComponentView::hitTest(
