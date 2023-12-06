@@ -168,7 +168,6 @@ void ScrollViewComponentView::updateProps(
   }
 
   // update BaseComponentView props
-  updateShadowProps(oldViewProps, newViewProps, m_visual);
   updateTransformProps(oldViewProps, newViewProps, m_visual);
   Super::updateProps(props, oldProps);
 
@@ -263,6 +262,7 @@ void ScrollViewComponentView::OnPointerDown(const winrt::Windows::UI::Input::Poi
 
 void ScrollViewComponentView::onThemeChanged() noexcept {
   updateBackgroundColor(std::static_pointer_cast<const facebook::react::ScrollViewProps>(m_props)->backgroundColor);
+  Super::onThemeChanged();
 }
 
 void ScrollViewComponentView::onPointerWheelChanged(

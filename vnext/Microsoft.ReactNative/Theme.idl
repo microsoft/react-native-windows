@@ -1,0 +1,57 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+#include "DocString.h"
+import "CompositionSwitcher.idl";
+import "IReactContext.idl";
+import "IReactPropertyBag.idl";
+import "ReactInstanceSettings.idl";
+
+namespace Microsoft.ReactNative.Composition
+{
+  [experimental]
+  [webhosthidden]
+  enum ResourceType {
+    DOC_STRING("Resource type for a @Windows.UI.Color")
+    Color
+  };
+
+  [webhosthidden]
+  [experimental]
+  runtimeclass CustomResourceResult {
+    Object Resource;
+    DOC_STRING("The value of this resource should resolve to the value of another ResourceId")
+    String AlternateResourceId;
+  };
+
+  [webhosthidden]
+  [experimental]
+  DOC_STRING("Applications can implement this interface to provide custom values for native platform colors.")
+  interface ICustomResourceLoader {
+    DOC_STRING("Called when a theme is queried for a specific resource. "
+    "resourceId will be the name of the platform color. "
+    "Implementations should return an empty result if the resource is not being overridden.")
+    void GetResource(String resourceId, ResourceType resourceType, CustomResourceResult result);
+
+    DOC_STRING("Implementations should raise this event if the platform colors will return new values")
+    event Windows.Foundation.EventHandler<Object> ResourcesChanged;
+  };
+
+  [webhosthidden]
+  [experimental]
+  runtimeclass Theme {
+    Theme(Microsoft.ReactNative.IReactContext reactContext, ICustomResourceLoader resourceLoader);
+
+    Microsoft.ReactNative.Composition.IBrush PlatformBrush(String platformColor);
+    Boolean TryGetPlatformColor(String platformColor, out Windows.UI.Color color);
+    DOC_STRING("An empty theme is used when the final theme is not yet known.  It will generally return transparent colors.")
+    Boolean IsEmpty { get; };
+
+    event Windows.Foundation.EventHandler<Object> ThemeChanged;
+
+    static Theme GetDefaultTheme(Microsoft.ReactNative.IReactContext context);
+    static void SetDefaultTheme(Microsoft.ReactNative.ReactInstanceSettings settings, Theme theme);
+    static Microsoft.ReactNative.IReactPropertyName ThemeChangedEventName { get; };
+  };
+
+} // namespace Microsoft.ReactNative
