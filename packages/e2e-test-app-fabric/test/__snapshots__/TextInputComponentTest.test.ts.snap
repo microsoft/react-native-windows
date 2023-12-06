@@ -3657,7 +3657,7 @@ exports[`TextInput Tests TextInputs can have caretHidden 1`] = `
       {
         "Brush": {
           "Brush Type": "ColorBrush",
-          "Color": "rgba(0, 0, 0, 255)",
+          "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
           0,
