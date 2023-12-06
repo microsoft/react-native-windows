@@ -3,10 +3,10 @@
 #include "pch.h"
 #include "resource.h"
 
-#if __has_include("codegen\Native{{ name }}DataTypes.g.h")
-  #include "codegen\Native{{ name }}DataTypes.g.h"
+#if __has_include("codegen\Native{{ pascalName }}DataTypes.g.h")
+  #include "codegen\Native{{ pascalName }}DataTypes.g.h"
 #endif
-#include "codegen\Native{{ name }}Spec.g.h"
+#include "codegen\Native{{ pascalName }}Spec.g.h"
 
 #include "NativeModules.h"
 
@@ -16,7 +16,7 @@ namespace winrt::{{ namespaceCpp }}
 REACT_MODULE({{ name }})
 struct {{ name }}
 {
-  using ModuleSpec = {{ namespaceCpp }}Codegen::{{ name }}Spec;
+  using ModuleSpec = {{ namespaceCpp }}Codegen::{{ pascalName }}Spec;
 
   REACT_INIT(Initialize)
   void Initialize(React::ReactContext const &reactContext) noexcept;

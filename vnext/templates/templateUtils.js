@@ -12,6 +12,8 @@ const path = require('path');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 
+const _ = require('lodash');
+
 const pkgUtils = require('@react-native-windows/package-utils');
 
 const projectConfig = require('@react-native-windows/cli').projectConfig;
@@ -48,6 +50,11 @@ function getWindowsProjectConfig(root) {
   const userConfig = existsSync(userConfigPath) ? require(userConfigPath) : {};
 
   return projectConfig(root, userConfig);
+}
+
+function pascalCase(str) {
+  const camelCase = _.camelCase(str);
+  return camelCase[0].toUpperCase() + camelCase.substr(1);
 }
 
 async function replaceInFile(
@@ -104,6 +111,7 @@ async function updateProjectPackageJson(config = {}, options = {}, props = {}) {
 module.exports = {
   getRnwInfo,
   getWindowsProjectConfig,
+  pascalCase,
   replaceInFile,
   runNpmInstall,
   updateProjectPackageJson,

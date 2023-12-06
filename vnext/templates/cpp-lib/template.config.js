@@ -81,6 +81,7 @@ async function getFileMappings(config = {}, options = {}) {
     regExpPatternsToRemove: [],
 
     name: projectName,
+    pascalName: templateUtils.pascalCase(projectName),
     namespace: namespace,
     namespaceCpp: namespaceCpp,
 
@@ -165,15 +166,13 @@ async function postInstall(config = {}, options = {}) {
   const projectName =
     config?.project?.windows?.project?.projectName ?? options?.name ?? 'MyLib';
   const namespace = options?.namespace ?? projectName;
+  const namespaceCpp = namespace.replace(/\./g, '::');
 
   // Update package.json codegen
   await templateUtils.updateProjectPackageJson(config, options, {
     codegenConfig: {
-      name: projectName,
-      type: 'modules',
-      jsSrcsDir: 'src',
       windows: {
-        namespace: namespace + 'Codegen',
+        namespace: namespaceCpp + 'Codegen',
         outputDirectory: `windows/${projectName}/codegen`,
         separateDataTypes: true,
       },
