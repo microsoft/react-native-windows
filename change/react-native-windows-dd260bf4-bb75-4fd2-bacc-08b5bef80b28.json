@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "updated path to match upstream fork",
+  "packageName": "react-native-windows",
+  "email": "yajurgrover24@gmail.com",
+  "dependentChangeType": "patch"
+}
