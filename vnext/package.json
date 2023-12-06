@@ -91,11 +91,11 @@
     "react-native": "^0.73.0-rc.8"
   },
   "beachball": {
-    "defaultNpmTag": "preview",
+    "defaultNpmTag": "latest",
     "disallowedChangeTypes": [
       "major",
       "minor",
-      "patch"
+      "prerelease"
     ],
     "gitTags": true
   },
