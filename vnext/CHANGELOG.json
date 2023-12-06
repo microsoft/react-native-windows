@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 06 Dec 2023 17:36:24 GMT",
+      "tag": "react-native-windows_v0.70.22",
+      "version": "0.70.22",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "487f9ab9b295b4d839239fe4e93ab6f4b731e64a",
+            "comment": "Enable `/PROFILE` linker flag for vulcan compatibility"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 14 Aug 2023 19:08:18 GMT",
       "tag": "react-native-windows_v0.70.21",
       "version": "0.70.21",

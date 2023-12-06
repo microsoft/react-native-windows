@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 14 Aug 2023 19:08:18 GMT and should not be manually modified.
+This log was last generated on Wed, 06 Dec 2023 17:36:24 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.70.22
+
+Wed, 06 Dec 2023 17:36:24 GMT
+
+### Patches
+
+- Enable `/PROFILE` linker flag for vulcan compatibility (jthysell@microsoft.com)
 
 ## 0.70.21
 
