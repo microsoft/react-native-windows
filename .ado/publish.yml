@@ -328,6 +328,7 @@ jobs:
       - RnwNativeBuildWinAppSDK
     displayName: Sign Binaries and Publish NuGet
     pool: ${{ parameters.AgentPool.Medium }}
+    timeoutInMinutes: 120 # Protect against the long CodeSign task
 
     steps:
       - template: templates/checkout-shallow.yml
