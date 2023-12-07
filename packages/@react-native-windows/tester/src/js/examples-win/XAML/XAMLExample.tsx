@@ -30,6 +30,7 @@ import {
   MenuFlyout,
   MenuFlyoutPriority,
   MenuFlyoutItem,
+  // @ts-ignore
 } from 'react-native-xaml';
 
 export function XAMLExamples() {
