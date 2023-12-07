@@ -14,6 +14,11 @@ A test app, test library and test cases are in [`/packages/e2e-test-app/`](../pa
 
 This will be automatically done for you if you use the [RNW dependency script](https://microsoft.github.io/react-native-windows/docs/rnw-dependencies) with `rnwDev` as an argument.
 
+```powershell
+Set-ExecutionPolicy Unrestricted -Scope Process -Force;
+Invoke-Command -ScriptBlock ([scriptblock]::Create([System.Text.Encoding]::UTF8.GetString((New-Object Net.WebClient).DownloadData('https://aka.ms/rnw-vs2022-deps.ps1')))) -ArgumentList @($true, $false, $false, $false, 'All', @('rnwDev'), $false);
+```
+
 The E2E tests assume it is installed in the default location under `C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe`. If you choose a different path, you will need to specify it in [`/packages/e2e-test-app/jest.config.js`](../packages/e2e-test-app/jest.config.js).
 ```js
 module.exports = {
@@ -30,6 +35,8 @@ module.exports = {
 > C:\repo\react-native-windows> `cd packages\e2e-test-app`
 >
 > C:\repo\react-native-windows\packages\e2e-test-app> `yarn windows --no-launch`
+
+⚠ Fabric: Open the e2e-test-app-fabric solution in VS and set the build configuration to Release.
 
 **Running all tests**
 
