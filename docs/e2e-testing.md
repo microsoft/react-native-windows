@@ -30,13 +30,16 @@ module.exports = {
 };
 ```
 
-**Build the native test app**
+**Build the native test app (Paper)**
 
 > C:\repo\react-native-windows> `cd packages\e2e-test-app`
 >
 > C:\repo\react-native-windows\packages\e2e-test-app> `yarn windows --no-launch`
 
-⚠ Fabric: Open the e2e-test-app-fabric solution in VS and set the build configuration to Release.
+**Build the native test app (Fabric)**
+> C:\repo\react-native-windows> `cd packages\e2e-test-app-fabric`
+>
+> C:\repo\react-native-windows\packages\e2e-test-app-fabric> `yarn windows --no-launch --no-deploy`
 
 **Running all tests**
 
