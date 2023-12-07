@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "updated path to match upstream fork",
+  "comment": "Use form data as JSArray",
   "packageName": "react-native-windows",
-  "email": "yajurgrover24@gmail.com",
+  "email": "julio.rocha@microsoft.com",
   "dependentChangeType": "patch"
 }
