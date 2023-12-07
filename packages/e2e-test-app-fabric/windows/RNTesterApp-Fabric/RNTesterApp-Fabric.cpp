@@ -16,35 +16,7 @@
 #include <winrt/Windows.Foundation.h>
 #include "winrt/AutomationChannel.h"
 
-// Work around crash in DeviceInfo when running outside of XAML environment
-// TODO rework built-in DeviceInfo to allow it to be driven without use of HWNDs or XamlApps
-// Issue Tracking #11414
-#include "../../../../vnext/codegen/NativeDeviceInfoSpec.g.h"
-REACT_MODULE(DeviceInfo)
-struct DeviceInfo {
-  using ModuleSpec = Microsoft::ReactNativeSpecs::DeviceInfoSpec;
-
-  REACT_INIT(Initialize)
-  void Initialize(React::ReactContext const &reactContext) noexcept {
-    m_context = reactContext;
-  }
-
-  REACT_GET_CONSTANTS(GetConstants)
-  Microsoft::ReactNativeSpecs::DeviceInfoSpec_DeviceInfoConstants GetConstants() noexcept {
-    Microsoft::ReactNativeSpecs::DeviceInfoSpec_DeviceInfoConstants constants;
-    Microsoft::ReactNativeSpecs::DeviceInfoSpec_DisplayMetrics screenDisplayMetrics;
-    screenDisplayMetrics.fontScale = 1;
-    screenDisplayMetrics.height = 1024;
-    screenDisplayMetrics.width = 1024;
-    screenDisplayMetrics.scale = 1;
-    constants.Dimensions.screen = screenDisplayMetrics;
-    constants.Dimensions.window = screenDisplayMetrics;
-    return constants;
-  }
-
- private:
-  winrt::Microsoft::ReactNative::ReactContext m_context;
-};
+#include <NativeModules.h>
 
 struct RNTesterAppReactPackageProvider
     : winrt::implements<RNTesterAppReactPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
