@@ -172,7 +172,6 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModule.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleBinding.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleUtils.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\PropsParserContext.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\samples\ReactCommon\NativeSampleTurboCxxModuleSpecJSI.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\samples\ReactCommon\SampleTurboCxxModule.cpp" />
   </ItemGroup>

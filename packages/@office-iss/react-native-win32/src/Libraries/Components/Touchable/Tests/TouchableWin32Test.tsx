@@ -134,7 +134,7 @@ class TouchableWin32WithoutFeedback extends React.Component<ITouchableWin32Witho
     return this.props.pressRetentionOffset || PRESS_RETENTION_OFFSET;
   };
 
-  private readonly _touchableGetHitSlop = (): Insets => {
+  private readonly _touchableGetHitSlop = (): number | Insets => {
     return this.props.hitSlop;
   };
 
@@ -245,7 +245,7 @@ class TouchableWin32HighlightComponent extends React.Component<ITouchableWin32Hi
   private readonly _touchableGetPressRectOffset = (): Insets => {
     return this.props.pressRetentionOffset || PRESS_RETENTION_OFFSET;
   };
-  private readonly _touchableGetHitSlop = (): Insets => {
+  private readonly _touchableGetHitSlop = (): number | Insets => {
     return { left: 100, right: 100, top: 100, bottom: 100 };
   };
   private readonly _touchableGetHighlightDelayMS = (): number => {

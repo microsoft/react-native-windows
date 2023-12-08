@@ -11,6 +11,7 @@
 'use strict';
 
 import React from 'react'
+import {Insets} from 'react-native/types/public/Insets';
 import { NativeSyntheticEvent, StyleProp, UIManager, ViewStyle, ViewWin32 } from 'react-native';
 
 import { ITouchableWin32Props, ITouchableWin32State } from './TouchableWin32.Props';
@@ -338,6 +339,7 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
   /**
    * Handles move events
    */
+  // eslint-disable-next-line complexity
   private readonly _touchableHandleResponderMove = (e: IPressEvent) => {
     if (!this._positionOnActivate) {
       return;
@@ -360,13 +362,20 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
     let pressExpandBottom = pressRectOffset.bottom;
 
     // TODO implement touchableGetHitSlop natively
-    const hitSlop = this.props.touchableGetHitSlop ? this.props.touchableGetHitSlop() : null;
+    const hitSlop: number | Insets = this.props.touchableGetHitSlop ? this.props.touchableGetHitSlop() : null;
 
     if (hitSlop) {
-      pressExpandLeft += hitSlop.left || 0;
-      pressExpandTop += hitSlop.top || 0;
-      pressExpandRight += hitSlop.right || 0;
-      pressExpandBottom += hitSlop.bottom || 0;
+      if (typeof hitSlop === 'number') {
+        pressExpandLeft += hitSlop || 0;
+        pressExpandTop += hitSlop || 0;
+        pressExpandRight += hitSlop || 0;
+        pressExpandBottom += hitSlop || 0;
+      } else if (typeof hitSlop === 'object') {
+        pressExpandLeft += hitSlop?.left || 0;
+        pressExpandTop += hitSlop?.top || 0;
+        pressExpandRight += hitSlop?.right || 0;
+        pressExpandBottom += hitSlop?.bottom || 0;
+      }
     }
 
     const touch = extractSingleTouch(e);

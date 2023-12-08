@@ -15,6 +15,8 @@
 import type {ResolvedAssetSource} from './AssetSourceResolver';
 import type {ImageSource} from './ImageSource';
 
+import SourceCode from '../NativeModules/specs/NativeSourceCode';
+
 const AssetSourceResolver = require('./AssetSourceResolver');
 const Platform = require('../Utilities/Platform');
 const {pickScale} = require('./AssetUtils');
@@ -28,12 +30,7 @@ function getSourceCodeScriptURL(): ?string {
     return _sourceCodeScriptURL;
   }
 
-  let sourceCode =
-    global.nativeExtensions && global.nativeExtensions.SourceCode;
-  if (!sourceCode) {
-    sourceCode = require('../NativeModules/specs/NativeSourceCode').default;
-  }
-  _sourceCodeScriptURL = sourceCode.getConstants().scriptURL;
+  _sourceCodeScriptURL = SourceCode.getConstants().scriptURL;
   return _sourceCodeScriptURL;
 }
 

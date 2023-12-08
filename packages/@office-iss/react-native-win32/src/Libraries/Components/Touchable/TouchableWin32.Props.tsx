@@ -25,7 +25,7 @@ export interface ITouchableWin32Props extends Omit <IViewWin32Props, 'children'>
   touchableGetPressRectOffset?: () => Insets;
   touchableGetLongPressDelayMS?: () => number;
   touchableGetPressOutDelayMS?: () => number;
-  touchableGetHitSlop?: () => Insets;
+  touchableGetHitSlop?: () => number | Insets;
   touchSoundDisabled?: boolean;
   onLongPress?: () => void;
   children?: IRenderChild<ITouchableWin32State>;
