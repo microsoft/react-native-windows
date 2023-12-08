@@ -59,7 +59,7 @@ TEST_CLASS(BaseFileReaderResourceUnitTest)
 #pragma endregion IBlobPersistor
     };
 
-    constexpr char expected[] = "data:myType;base64,YWJjZAo=";
+    constexpr char expected[] = "data:string;base64,YWJjZAo=";
     constexpr char guid[] = "93252b5d-a419-4d98-a928-c3ef386f2445";
 
     string messageStr = "abcd";
@@ -81,7 +81,7 @@ TEST_CLASS(BaseFileReaderResourceUnitTest)
 
     persistor->StoreMessage(std::move(message), string{ guid });
 
-    reader->ReadAsDataUrl(guid, 0 /*offset*/, messageStr.size(), "myType", std::move(resolver), std::move(rejecter));
+    reader->ReadAsDataUrl(guid, 0 /*offset*/, messageStr.size(), "string", std::move(resolver), std::move(rejecter));
 
     Assert::AreEqual(expected, result.c_str());
   }
