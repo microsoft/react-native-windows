@@ -79,7 +79,7 @@ experience within the application:</p>
     <span class="token punctuation">}</span>
 
    <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">ShowNewError</span><span class="token punctuation">(</span><span class="token class-name">IRedBoxErrorInfo</span> info<span class="token punctuation">,</span> <span class="token class-name">RedBoxErrorType</span> type<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      <span class="token comment">// Dont report non-fatal errors (optional)</span>
+      <span class="token comment">// Do not report non-fatal errors (optional)</span>
       <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">!=</span> RedBoxErrorType<span class="token punctuation">.</span>JavaScriptSoft<span class="token punctuation">)</span>
         <span class="token function">ReportErrorToMyErrorReportingSystem</span><span class="token punctuation">(</span>info<span class="token punctuation">,</span> type<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
