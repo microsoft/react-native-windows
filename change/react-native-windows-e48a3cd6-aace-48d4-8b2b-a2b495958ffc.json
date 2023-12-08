@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix FileReader Base64 padding",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
