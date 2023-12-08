@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 04 Dec 2023 16:15:07 GMT and should not be manually modified.
+This log was last generated on Fri, 08 Dec 2023 00:26:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.73.1
+
+Fri, 08 Dec 2023 00:26:16 GMT
+
+### Patches
+
+- Enable `/PROFILE` linker flag for vulcan compatibility (jthysell@microsoft.com)
+- integrate rc8 (tatianakapos@microsoft.com)
+- Promote 0.73 to latest (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.73.0
+- Bump @react-native-windows/codegen to v0.73.0
 
 ## 0.73.0-preview.7
 
