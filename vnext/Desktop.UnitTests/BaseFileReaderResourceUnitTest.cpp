@@ -55,8 +55,8 @@ TEST_CLASS (BaseFileReaderResourceUnitTest) {
 #pragma endregion IBlobPersistor
     };
 
-    // Base64 expected value coputed with [System.Convert]::ToBase64String('abcd'.ToCharArray())
     string messageStr = "abcde";
+    // Computed using [System.Convert]::ToBase64String('abcd'.ToCharArray())
     constexpr char expected[] = "data:string;base64,YWJjZGU=";
     constexpr char guid[] = "93252b5d-a419-4d98-a928-c3ef386f2445";
 
