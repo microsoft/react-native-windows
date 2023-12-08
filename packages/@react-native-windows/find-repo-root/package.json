@@ -32,7 +32,7 @@
     "typescript": "^4.9.5"
   },
   "beachball": {
-    "defaultNpmTag": "latest",
+    "defaultNpmTag": "v0.72-stable",
     "disallowedChangeTypes": [
       "major",
       "minor",
