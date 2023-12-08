@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 07 Dec 2023 06:14:10 GMT and should not be manually modified.
+This log was last generated on Fri, 08 Dec 2023 06:14:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.745
+
+Fri, 08 Dec 2023 06:14:10 GMT
+
+### Changes
+
+- Use form data as JSArray (julio.rocha@microsoft.com)
+- [Fabric] Remove DeviceInfo stub from template and test app (email not defined)
 
 ## 0.0.0-canary.744
 
