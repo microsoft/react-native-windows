@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Mon, 21 Aug 2023 15:14:01 GMT and should not be manually modified.
+This log was last generated on Fri, 08 Dec 2023 00:49:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.72.3
+
+Fri, 08 Dec 2023 00:49:16 GMT
+
+### Patches
+
+- Promote 0.72 to legacy (tatianakapos@microsoft.com)
+- Bump @react-native-windows/fs to v0.72.1
 
 ## 0.72.2
 

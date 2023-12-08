@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 08 Dec 2023 00:49:17 GMT",
+      "tag": "react-native-windows_v0.72.21",
+      "version": "0.72.21",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "8b3ae070e778e7ad98edca19b425db50798d833c",
+            "comment": "Promote 0.72 to legacy"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "1cc629b844f1cdee16c8c93c3d8120a5a58b27bd",
+            "comment": "Enable `/PROFILE` linker flag for vulcan compatibility"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.72.4",
+            "commit": "8b3ae070e778e7ad98edca19b425db50798d833c"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.72.3",
+            "commit": "8b3ae070e778e7ad98edca19b425db50798d833c"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 20 Nov 2023 16:15:01 GMT",
       "tag": "react-native-windows_v0.72.20",
       "version": "0.72.20",

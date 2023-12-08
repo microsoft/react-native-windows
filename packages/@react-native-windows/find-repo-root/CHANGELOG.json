@@ -2,6 +2,27 @@
   "name": "@react-native-windows/find-repo-root",
   "entries": [
     {
+      "date": "Fri, 08 Dec 2023 00:49:16 GMT",
+      "tag": "@react-native-windows/find-repo-root_v0.72.1",
+      "version": "0.72.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@react-native-windows/find-repo-root",
+            "commit": "8b3ae070e778e7ad98edca19b425db50798d833c",
+            "comment": "Promote 0.72 to legacy"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/find-repo-root",
+            "comment": "Bump @react-native-windows/fs to v0.72.1",
+            "commit": "8b3ae070e778e7ad98edca19b425db50798d833c"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 23 Jun 2023 22:30:08 GMT",
       "tag": "@react-native-windows/find-repo-root_v0.72.0",
       "version": "0.72.0",

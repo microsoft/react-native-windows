@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/find-repo-root
 
-This log was last generated on Fri, 23 Jun 2023 22:30:08 GMT and should not be manually modified.
+This log was last generated on Fri, 08 Dec 2023 00:49:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.72.1
+
+Fri, 08 Dec 2023 00:49:16 GMT
+
+### Patches
+
+- Promote 0.72 to legacy (tatianakapos@microsoft.com)
+- Bump @react-native-windows/fs to v0.72.1
 
 ## 0.72.0
 
