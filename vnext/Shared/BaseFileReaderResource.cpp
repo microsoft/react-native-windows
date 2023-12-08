@@ -80,6 +80,12 @@ void BaseFileReaderResource::ReadAsDataUrl(
   std::copy(encode_base64(bytes.cbegin()), encode_base64(bytes.cend()), ostream_iterator<char>(oss));
   result += oss.str();
 
+  // https://unix.stackexchange.com/questions/631501
+  auto padLength = 4 - (oss.tellp() % 4);
+  for (auto i = 0; i < padLength; ++i) {
+    result += '=';
+  }
+
   resolver(std::move(result));
 }
 
