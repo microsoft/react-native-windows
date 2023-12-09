@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 08 Dec 2023 06:14:10 GMT and should not be manually modified.
+This log was last generated on Sat, 09 Dec 2023 06:15:28 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.746
+
+Sat, 09 Dec 2023 06:15:28 GMT
+
+### Changes
+
+- Fix FileReader Base64 padding (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.745
 
