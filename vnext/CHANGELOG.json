@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 11 Dec 2023 16:14:26 GMT",
+      "tag": "react-native-windows_v0.72.22",
+      "version": "0.72.22",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "705830d73147d111d3c40ca2d876806eaac89007",
+            "comment": "Fix FileReader Base64 padding (#12522)"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "527f97d68b92bef42f0cf5fe46320bb88e4baa70",
+            "comment": "Use HTTP form data as JSArray (#12506)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 08 Dec 2023 00:49:17 GMT",
       "tag": "react-native-windows_v0.72.21",
       "version": "0.72.21",

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Use HTTP form data as JSArray (#12506)",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}
