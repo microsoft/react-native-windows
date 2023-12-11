@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 08 Dec 2023 00:26:16 GMT and should not be manually modified.
+This log was last generated on Mon, 11 Dec 2023 16:15:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.73.2
+
+Mon, 11 Dec 2023 16:15:10 GMT
+
+### Patches
+
+- Use HTTP form data as JSArray (#12506) (julio.rocha@microsoft.com)
+- Fix FileReader Base64 padding (#12522) (julio.rocha@microsoft.com)
 
 ## 0.73.1
 
