@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 08 Dec 2023 06:14:10 GMT",
+      "version": "0.0.0-canary.745",
+      "tag": "react-native-windows_v0.0.0-canary.745",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "f0bb18d19cd65c7ac8802f7a2b0d714e391cfaed",
+            "comment": "Use form data as JSArray"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "830cf8a85ddd00c0055ba07a68362031f7ef20d3",
+            "comment": "[Fabric] Remove DeviceInfo stub from template and test app"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 07 Dec 2023 06:14:10 GMT",
       "version": "0.0.0-canary.744",
       "tag": "react-native-windows_v0.0.0-canary.744",
