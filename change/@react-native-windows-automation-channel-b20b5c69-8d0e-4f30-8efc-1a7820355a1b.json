@@ -1,6 +1,6 @@
 {
   "type": "patch",
-  "comment": "",
+  "comment": "testing integration",
   "packageName": "@react-native-windows/automation-channel",
   "email": "yajurgrover24@gmail.com",
   "dependentChangeType": "patch"
