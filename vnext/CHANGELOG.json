@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 09 Dec 2023 06:15:28 GMT",
+      "version": "0.0.0-canary.746",
+      "tag": "react-native-windows_v0.0.0-canary.746",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "34ae4174bbdd4991ba0432ed324da836922a7239",
+            "comment": "Fix FileReader Base64 padding"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 08 Dec 2023 06:14:10 GMT",
       "version": "0.0.0-canary.745",
       "tag": "react-native-windows_v0.0.0-canary.745",
