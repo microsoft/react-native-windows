@@ -1,0 +1,9 @@
+namespace PlaygroundNativeModules
+{
+    [webhosthidden]
+    [default_interface]
+    runtimeclass PlaygroundReactPackageProvider : Microsoft.ReactNative.IReactPackageProvider
+    {
+        PlaygroundReactPackageProvider();
+    };
+} // namespace PlaygroundNativeModules

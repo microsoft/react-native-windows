@@ -119,8 +119,8 @@
     </ClInclude>
     <ClInclude Include="GridItemViewManager.h" />
     <ClInclude Include="GridViewManager.h" />
-    <ClInclude Include="ReactPackageProvider.h">
-      <DependentUpon>ReactPackageProvider.idl</DependentUpon>
+    <ClInclude Include="PlaygroundReactPackageProvider.h">
+      <DependentUpon>PlaygroundReactPackageProvider.idl</DependentUpon>
     </ClInclude>
     <ClInclude Include="pch.h" />
   </ItemGroup>
@@ -133,14 +133,14 @@
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="ReactPackageProvider.cpp">
-      <DependentUpon>ReactPackageProvider.idl</DependentUpon>
+    <ClCompile Include="PlaygroundReactPackageProvider.cpp">
+      <DependentUpon>PlaygroundReactPackageProvider.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="GridItemView.idl" />
-    <Midl Include="ReactPackageProvider.idl" />
+    <Midl Include="PlaygroundReactPackageProvider.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

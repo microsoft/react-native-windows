@@ -167,6 +167,11 @@
     <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.targets" Condition="Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.targets')" />
   </ImportGroup>
   <ItemGroup>
+    <ProjectReference Include="$(ProjectDir)..\PlaygroundNativeModules\PlaygroundNativeModules.vcxproj">
+      <Project>{fbc281f9-e7fa-4d3f-9a15-f7507a803007}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="boost" Version="1.76.0.0" />
     <PackageReference Include="Microsoft.Toolkit.Win32.UI.XamlApplication" Version="6.1.3" />
     <PackageReference Include="Microsoft.VCRTForwarders.140" Version="1.0.2-rc" />
