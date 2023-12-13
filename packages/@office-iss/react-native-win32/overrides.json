@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.74.0-nightly-20231010-7b7f12896",
+  "baseVersion": "0.74.0-nightly-20231012-02957718d",
   "overrides": [
     {
       "type": "derived",
@@ -410,7 +410,7 @@
       "type": "patch",
       "file": "src/Libraries/ReactNative/PaperUIManager.win32.js",
       "baseFile": "packages/react-native/Libraries/ReactNative/PaperUIManager.js",
-      "baseHash": "64504c716b2c64116d1ec74702ce7754fa651c6f"
+      "baseHash": "d5bbe5273211e4f39e6468f0c90ec42e5fe0a9c0"
     },
     {
       "type": "derived",
