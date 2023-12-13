@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.74.0-nightly-20231012-02957718d",
+  "baseVersion": "0.74.0-nightly-20231013-a030224d1",
   "overrides": [
     {
       "type": "derived",
@@ -126,7 +126,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/node/Node.h",
       "baseFile": "packages/react-native/ReactCommon/yoga/yoga/node/Node.h",
-      "baseHash": "76df1a771215c4d133b823eb6edeafdfed01759d",
+      "baseHash": "d6cf4c67b92a230c874d7a9353fc9839fc9e5657",
       "issue": 12195
     },
     {
@@ -357,7 +357,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/View.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/View/View.js",
-      "baseHash": "f25ca9bd8f25d1dd05d98d40946a41b19fac87f1"
+      "baseHash": "d621a2fb669bbc2fc0657db1233c9a930a073fba"
     },
     {
       "type": "derived",
