@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.74.0-nightly-20231013-a030224d1",
+  "baseVersion": "0.74.0-nightly-20231014-a2f11895c",
   "overrides": [
     {
       "type": "copy",
@@ -425,7 +425,7 @@
       "type": "copy",
       "directory": "js/examples/TurboModule",
       "baseDirectory": "packages/rn-tester/js/examples/TurboModule",
-      "baseHash": "e1f2b81c6ccf3ba7f5b165b7a22350ef9cc607a1",
+      "baseHash": "f3a3463e3d5d78ae8624571504713bb46135f469",
       "issue": 4054
     },
     {
