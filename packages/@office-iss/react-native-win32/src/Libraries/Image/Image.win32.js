@@ -9,15 +9,16 @@
  */
 
 import type {RootTag} from '../Types/RootTagTypes';
-import type {ImageIOS} from './Image.flow';
+import type {AbstractImageIOS, ImageIOS} from './ImageTypes.flow';
 import TextAncestor from '../Text/TextAncestor'; // [Windows]
 import invariant from 'invariant'; // [Windows]
 
 import type {ImageProps as ImagePropsType} from './ImageProps';
 
-import type {ImageStyleProp} from '../StyleSheet/StyleSheet';
+import type {ImageStyle, ImageStyleProp} from '../StyleSheet/StyleSheet';
 import NativeImageLoaderWin32 from './NativeImageLoaderWin32'; // [Win32] Replace iOS
 
+import {createRootTag} from '../ReactNative/RootTag';
 import flattenStyle from '../StyleSheet/flattenStyle';
 import StyleSheet from '../StyleSheet/StyleSheet';
 import ImageAnalyticsTagContext from './ImageAnalyticsTagContext';
@@ -31,6 +32,7 @@ import * as React from 'react';
 function getSize(
   uri: string,
   success: (width: number, height: number) => void,
+  // $FlowFixMe[unclear-type]
   failure?: (error: any) => void,
 ) {
   //[Win32
@@ -48,6 +50,7 @@ function getSize(
   NativeImageLoaderWin32.getSize(
     uri,
     (width: number, height: number, err?: string) => {
+      // $FlowFixMe[sketchy-null-string]
       if (!err) {
         success(width, height);
       } else {
@@ -67,6 +70,7 @@ function getSizeWithHeaders(
   headers: {[string]: string, ...},
   success: (width: number, height: number) => void,
   failure?: (error: mixed) => void,
+  // $FlowFixMe[unclear-type]
 ): any {
   return NativeImageLoaderWin32.getSizeWithHeaders(uri, headers)
     .then(function (sizes) {

@@ -5205,36 +5205,28 @@ private:
   
 #pragma mark - PlatformConstantsBasePlatformConstantsWindows
 
-template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7>
+template <typename P0, typename P1, typename P2, typename P3>
 struct PlatformConstantsBasePlatformConstantsWindows {
   P0 isTesting;
   P1 isDisableAnimations;
   P2 reactNativeVersion;
-  P3 forceTouchAvailable;
-  P4 osVersion;
-  P5 systemName;
-  P6 interfaceIdiom;
-  P7 isMacCatalyst;
+  P3 osVersion;
   bool operator==(const PlatformConstantsBasePlatformConstantsWindows &other) const {
-    return isTesting == other.isTesting && isDisableAnimations == other.isDisableAnimations && reactNativeVersion == other.reactNativeVersion && forceTouchAvailable == other.forceTouchAvailable && osVersion == other.osVersion && systemName == other.systemName && interfaceIdiom == other.interfaceIdiom && isMacCatalyst == other.isMacCatalyst;
+    return isTesting == other.isTesting && isDisableAnimations == other.isDisableAnimations && reactNativeVersion == other.reactNativeVersion && osVersion == other.osVersion;
   }
 };
 
-template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7>
+template <typename P0, typename P1, typename P2, typename P3>
 struct PlatformConstantsBasePlatformConstantsWindowsBridging {
-  static PlatformConstantsBasePlatformConstantsWindows<P0, P1, P2, P3, P4, P5, P6, P7> fromJs(
+  static PlatformConstantsBasePlatformConstantsWindows<P0, P1, P2, P3> fromJs(
       jsi::Runtime &rt,
       const jsi::Object &value,
       const std::shared_ptr<CallInvoker> &jsInvoker) {
-    PlatformConstantsBasePlatformConstantsWindows<P0, P1, P2, P3, P4, P5, P6, P7> result{
+    PlatformConstantsBasePlatformConstantsWindows<P0, P1, P2, P3> result{
       bridging::fromJs<P0>(rt, value.getProperty(rt, "isTesting"), jsInvoker),
       bridging::fromJs<P1>(rt, value.getProperty(rt, "isDisableAnimations"), jsInvoker),
       bridging::fromJs<P2>(rt, value.getProperty(rt, "reactNativeVersion"), jsInvoker),
-      bridging::fromJs<P3>(rt, value.getProperty(rt, "forceTouchAvailable"), jsInvoker),
-      bridging::fromJs<P4>(rt, value.getProperty(rt, "osVersion"), jsInvoker),
-      bridging::fromJs<P5>(rt, value.getProperty(rt, "systemName"), jsInvoker),
-      bridging::fromJs<P6>(rt, value.getProperty(rt, "interfaceIdiom"), jsInvoker),
-      bridging::fromJs<P7>(rt, value.getProperty(rt, "isMacCatalyst"), jsInvoker)};
+      bridging::fromJs<P3>(rt, value.getProperty(rt, "osVersion"), jsInvoker)};
     return result;
   }
 
@@ -5251,30 +5243,14 @@ struct PlatformConstantsBasePlatformConstantsWindowsBridging {
     return bridging::toJs(rt, value);
   }
 
-  static bool forceTouchAvailableToJs(jsi::Runtime &rt, P3 value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static double osVersionToJs(jsi::Runtime &rt, P4 value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static jsi::String systemNameToJs(jsi::Runtime &rt, P5 value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static jsi::String interfaceIdiomToJs(jsi::Runtime &rt, P6 value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static bool isMacCatalystToJs(jsi::Runtime &rt, P7 value) {
+  static double osVersionToJs(jsi::Runtime &rt, P3 value) {
     return bridging::toJs(rt, value);
   }
 #endif
 
   static jsi::Object toJs(
       jsi::Runtime &rt,
-      const PlatformConstantsBasePlatformConstantsWindows<P0, P1, P2, P3, P4, P5, P6, P7> &value,
+      const PlatformConstantsBasePlatformConstantsWindows<P0, P1, P2, P3> &value,
       const std::shared_ptr<CallInvoker> &jsInvoker) {
     auto result = facebook::jsi::Object(rt);
     result.setProperty(rt, "isTesting", bridging::toJs(rt, value.isTesting, jsInvoker));
@@ -5282,13 +5258,7 @@ struct PlatformConstantsBasePlatformConstantsWindowsBridging {
       result.setProperty(rt, "isDisableAnimations", bridging::toJs(rt, value.isDisableAnimations.value(), jsInvoker));
     }
     result.setProperty(rt, "reactNativeVersion", bridging::toJs(rt, value.reactNativeVersion, jsInvoker));
-    result.setProperty(rt, "forceTouchAvailable", bridging::toJs(rt, value.forceTouchAvailable, jsInvoker));
     result.setProperty(rt, "osVersion", bridging::toJs(rt, value.osVersion, jsInvoker));
-    result.setProperty(rt, "systemName", bridging::toJs(rt, value.systemName, jsInvoker));
-    result.setProperty(rt, "interfaceIdiom", bridging::toJs(rt, value.interfaceIdiom, jsInvoker));
-    if (value.isMacCatalyst) {
-      result.setProperty(rt, "isMacCatalyst", bridging::toJs(rt, value.isMacCatalyst.value(), jsInvoker));
-    }
     return result;
   }
 };

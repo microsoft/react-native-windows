@@ -24,11 +24,7 @@ struct PlatformConstantsWinSpec_PlatformConstantsWindows {
     bool isTesting;
     std::optional<bool> isDisableAnimations;
     PlatformConstantsWinSpec_PlatformConstantsWindows_reactNativeVersion reactNativeVersion;
-    bool forceTouchAvailable;
     double osVersion;
-    std::string systemName;
-    std::string interfaceIdiom;
-    std::optional<bool> isMacCatalyst;
 };
 
 
@@ -47,11 +43,7 @@ inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PlatformConstantsWi
         {L"isTesting", &PlatformConstantsWinSpec_PlatformConstantsWindows::isTesting},
         {L"isDisableAnimations", &PlatformConstantsWinSpec_PlatformConstantsWindows::isDisableAnimations},
         {L"reactNativeVersion", &PlatformConstantsWinSpec_PlatformConstantsWindows::reactNativeVersion},
-        {L"forceTouchAvailable", &PlatformConstantsWinSpec_PlatformConstantsWindows::forceTouchAvailable},
         {L"osVersion", &PlatformConstantsWinSpec_PlatformConstantsWindows::osVersion},
-        {L"systemName", &PlatformConstantsWinSpec_PlatformConstantsWindows::systemName},
-        {L"interfaceIdiom", &PlatformConstantsWinSpec_PlatformConstantsWindows::interfaceIdiom},
-        {L"isMacCatalyst", &PlatformConstantsWinSpec_PlatformConstantsWindows::isMacCatalyst},
     };
     return fieldMap;
 }
