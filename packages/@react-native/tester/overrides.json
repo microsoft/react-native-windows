@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.74.0-nightly-20231015-a2f11895c",
+  "baseVersion": "0.74.0-nightly-20231016-44660019e",
   "overrides": [
     {
       "type": "copy",
@@ -495,7 +495,7 @@
       "type": "copy",
       "file": "NativeComponentExample/js/MyNativeView.js",
       "baseFile": "packages/rn-tester/NativeComponentExample/js/MyNativeView.js",
-      "baseHash": "e0baa4856412b840bb34b1b11d7962deb958850e",
+      "baseHash": "4c27c3b77e4260bfad8b920217ee6398806353a9",
       "issue": 4054
     },
     {

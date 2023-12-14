@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.74.0-nightly-20231015-a2f11895c",
+  "baseVersion": "0.74.0-nightly-20231016-44660019e",
   "overrides": [
     {
       "type": "derived",
@@ -26,7 +26,7 @@
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputShadowNode.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputShadowNode.cpp",
-      "baseHash": "3101aa0b5e379fd414a0aa036286dffaf56cdd1a"
+      "baseHash": "e43e6cb2df75b8f51422bdbef42e99f2c4f2018d"
     },
     {
       "type": "derived",
@@ -98,7 +98,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/uimanager/UIManagerBinding.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/uimanager/UIManagerBinding.cpp",
-      "baseHash": "4929ceaca86e5083b55ff9b4c44869686c99f4d7",
+      "baseHash": "f830b73ce7e480a1d3c49623bc0e44d4c8834a01",
       "issue": 12195
     },
     {
