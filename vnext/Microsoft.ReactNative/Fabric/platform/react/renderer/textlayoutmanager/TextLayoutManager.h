@@ -37,7 +37,7 @@ class TextLayoutManager {
   TextMeasurement measure(
       AttributedStringBox attributedStringBox,
       ParagraphAttributes paragraphAttributes,
-      const TextLayoutContext& layoutContext,
+      const TextLayoutContext &layoutContext,
       LayoutConstraints layoutConstraints,
       std::shared_ptr<void> /* hostTextStorage */) const;
 
