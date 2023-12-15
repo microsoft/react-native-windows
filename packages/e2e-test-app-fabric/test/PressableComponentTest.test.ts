@@ -122,12 +122,100 @@ describe('Pressable Tests', () => {
     );
   });
   test('Pressables can have delayed event handlers', async () => {
+    const searchBox = await app.findElementByTestID('example_search');
+    await app.waitUntil(
+      async () => {
+        await searchBox.setValue("del");
+        return (await searchBox.getText()) === "del";
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to enter correct search text into test searchbox.`,
+      },
+    );
     const component = await app.findElementByTestID(
       'pressable_delay_events_button',
     );
     await component.waitForDisplayed({timeout: 20000});
     const dump = await dumpVisualTree('pressable_delay_events_button');
     expect(dump).toMatchSnapshot();
+    await component.click();
+    const dump2 = await dumpVisualTree('pressable_delay_events_console');
+    expect(dump2).toMatchSnapshot();
+    await app.waitUntil(
+      async () => {
+        await searchBox.setValue(['Backspace', 'Backspace', 'Backspace']);
+        return (await searchBox.getText()) === "";
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to enter correct search text into test searchbox.`,
+      },
+    );
+  });
+  test('Pressables can be disabled, disabled = {true}', async () => {
+    const searchBox = await app.findElementByTestID('example_search');
+    await app.waitUntil(
+      async () => {
+        await searchBox.setValue("dis");
+        return (await searchBox.getText()) === "dis";
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to enter correct search text into test searchbox.`,
+      },
+    );
+    const component = await app.findElementByTestID(
+      'pressable_disabled_true',
+    );
+    await component.waitForDisplayed({timeout: 20000});
+    const dump = await dumpVisualTree('pressable_disabled_true');
+    expect(dump).toMatchSnapshot();
+    await app.waitUntil(
+      async () => {
+        await searchBox.setValue(['Backspace', 'Backspace', 'Backspace']);
+        return (await searchBox.getText()) === "";
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to enter correct search text into test searchbox.`,
+      },
+    );
+  });
+  test('Pressables can be disabled, disabled = {false}', async () => {
+    const searchBox = await app.findElementByTestID('example_search');
+    await app.waitUntil(
+      async () => {
+        await searchBox.setValue("dis");
+        return (await searchBox.getText()) === "dis";
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to enter correct search text into test searchbox.`,
+      },
+    );
+    const component = await app.findElementByTestID(
+      'pressable_disabled_false',
+    );
+    await component.waitForDisplayed({timeout: 20000});
+    const dump = await dumpVisualTree('pressable_disabled_false');
+    expect(dump).toMatchSnapshot();
+    await app.waitUntil(
+      async () => {
+        await searchBox.setValue(['Backspace', 'Backspace', 'Backspace']);
+        return (await searchBox.getText()) === "";
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to enter correct search text into test searchbox.`,
+      },
+    );
   });
   test('Pressables can have hit slop functionality', async () => {
     const component = await app.findElementByTestID(
@@ -137,6 +225,7 @@ describe('Pressable Tests', () => {
     const dump = await dumpVisualTree('pressable_hit_slop_button');
     expect(dump).toMatchSnapshot();
   });
+
   // Disable tests which don't exist upstream. TestId cannot be found.
   /*test('Pressables can have ranging opacity', async () => {
     const component = await app.findElementByTestID('opacity_pressable');
