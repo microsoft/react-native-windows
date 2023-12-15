@@ -171,7 +171,7 @@ function PressableDelayEvents() {
           <Text style={styles.button}>Press Me</Text>
         </Pressable>
       </View>
-      <View style={styles.eventLogBox} testID="pressable_delay_events_console">
+      <View style={styles.eventLogBox} testID="pressable_delay_events_console" accessible>
         {eventLog.map((e, ii) => (
           <Text key={ii}>{e}</Text>
         ))}
@@ -264,12 +264,13 @@ function PressableNativeMethods() {
 function PressableDisabled() {
   return (
     <>
-      <Pressable disabled={true} style={[styles.row, styles.block]}>
+      <Pressable disabled={true} style={[styles.row, styles.block]} testID='pressable_disabled_true'>
         <Text style={styles.disabledButton}>Disabled Pressable</Text>
       </Pressable>
 
       <Pressable
         disabled={false}
+        testID='pressable_disabled_false'
         style={({pressed}) => [
           {opacity: pressed ? 0.5 : 1},
           styles.row,
@@ -744,8 +745,9 @@ const examples = [
       'Pressables can have individual border width and radius per edge/corner.',
     render: function (): React.Node {
       return (
-        <View testID="advanced_borders_pressable">
+        <View>
           <Pressable
+            testID="advanced_borders_pressable"
             style={{
               height: 50,
               width: 50,
@@ -771,7 +773,7 @@ const examples = [
     description: 'Pressables can have ranging opacity values.',
     render: function (): React.Node {
       return (
-        <View testID="opacity_pressable">
+        <View testID="opacity_pressable" accessible>
           <Pressable
             style={{
               height: 50,
@@ -881,7 +883,7 @@ const examples = [
       'Pressables can have their keyboard and accessibility focus disabled.',
     render: function (): React.Node {
       return (
-        <View testID="accessible_pressable">
+        <View testID="accessible_pressable" accessible>
           <Pressable
             style={{
               height: 50,
@@ -923,8 +925,9 @@ const examples = [
     description: 'Pressables can have tooltips and nativeID.',
     render: function (): React.Node {
       return (
-        <View testID="tooltip_pressable">
+        <View>
           <Pressable
+            testID="tooltip_pressable"
             style={{
               borderRadius: 2,
             }}
@@ -942,8 +945,9 @@ const examples = [
     description: 'Pressables can hide accessibility focus for their children.',
     render: function (): React.Node {
       return (
-        <View testID="no_hide_pressable">
+        <View>
           <Pressable
+            testID="no_hide_pressable"
             onPress={() => {}}
             importantForAccessibility="no-hide-descendants"
             accessibilityHint="Button"
@@ -962,7 +966,7 @@ const examples = [
     description: 'Pressables can hide their backface.',
     render: function (): React.Node {
       return (
-        <View testID="backface_pressable">
+        <View testID="backface_pressable" accessible>
           <Text style={{paddingBottom: 10}}>
             View #1, front is visible, back is hidden.
           </Text>

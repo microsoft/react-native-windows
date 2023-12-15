@@ -225,9 +225,7 @@ describe('Pressable Tests', () => {
     const dump = await dumpVisualTree('pressable_hit_slop_button');
     expect(dump).toMatchSnapshot();
   });
-
-  // Disable tests which don't exist upstream. TestId cannot be found.
-  /*test('Pressables can have ranging opacity', async () => {
+  test('Pressables can have ranging opacity', async () => {
     const component = await app.findElementByTestID('opacity_pressable');
     await component.waitForDisplayed({timeout: 20000});
     const dump = await dumpVisualTree('opacity_pressable');
@@ -245,16 +243,10 @@ describe('Pressable Tests', () => {
     const dump = await dumpVisualTree('tooltip_pressable');
     expect(dump).toMatchSnapshot();
   });
-  test('Pressables can hide their children from accessibility focus', async () => {
-    const component = await app.findElementByTestID('no_hide_pressable');
-    await component.waitForDisplayed({timeout: 20000});
-    const dump = await dumpVisualTree('no_hide_pressable');
-    expect(dump).toMatchSnapshot();
-  });
   test('Pressables can hide their backface', async () => {
     const component = await app.findElementByTestID('backface_pressable');
     await component.waitForDisplayed({timeout: 20000});
     const dump = await dumpVisualTree('backface_pressable');
     expect(dump).toMatchSnapshot();
-  });*/
+  });
 });

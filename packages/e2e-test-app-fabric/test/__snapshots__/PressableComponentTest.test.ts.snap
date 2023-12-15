@@ -1050,6 +1050,1704 @@ exports[`Pressable Tests Pressables can have hit slop functionality 1`] = `
 }
 `;
 
+exports[`Pressable Tests Pressables can have ranging opacity 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "opacity_pressable",
+    "Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50026,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+        "Name": "",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50026,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+        "Name": "",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50026,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+        "Name": "",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50026,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+        "Name": "",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50026,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+        "Name": "",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50026,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+        "Name": "",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50026,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+        "Name": "",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50026,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+        "Name": "",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50026,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+        "Name": "",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50026,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+        "Name": "",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50026,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+        "Name": "",
+      },
+    ],
+    "ControlType": 50026,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "group",
+    "Name": "",
+  },
+  "Visual Tree": {
+    "Children": [
+      {
+        "Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 0, 255)",
+            },
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 0,
+            "Size": [
+              50,
+              50,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          50,
+          50,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 0, 255)",
+            },
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 0.10000000149011612,
+            "Size": [
+              50,
+              50,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          50,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          50,
+          50,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 0, 255)",
+            },
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 0.20000000298023224,
+            "Size": [
+              50,
+              50,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          100,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          50,
+          50,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 0, 255)",
+            },
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 0.30000001192092896,
+            "Size": [
+              50,
+              50,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          150,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          50,
+          50,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 0, 255)",
+            },
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 0.4000000059604645,
+            "Size": [
+              50,
+              50,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          200,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          50,
+          50,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 0, 255)",
+            },
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 0.5,
+            "Size": [
+              50,
+              50,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          250,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          50,
+          50,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 0, 255)",
+            },
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 0.6000000238418579,
+            "Size": [
+              50,
+              50,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          300,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          50,
+          50,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 0, 255)",
+            },
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 0.699999988079071,
+            "Size": [
+              50,
+              50,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          350,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          50,
+          50,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 0, 255)",
+            },
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 0.800000011920929,
+            "Size": [
+              50,
+              50,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          400,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          50,
+          50,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 0, 255)",
+            },
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 0.8999999761581421,
+            "Size": [
+              50,
+              50,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          450,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          50,
+          50,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 0, 255)",
+            },
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              50,
+              50,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          500,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          50,
+          50,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "opacity_pressable",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      916,
+      550,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Pressable Tests Pressables can have their accessibility and keyboard focus removed 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "accessible_pressable",
+    "Children": [
+      {
+        "AutomationId": "",
+        "Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "HelpText": "",
+            "IsEnabled": true,
+            "IsKeyboardFocusable": false,
+            "LocalizedControlType": "text",
+            "Name": "Pressable with accessible=true and focusable=true",
+          },
+        ],
+        "ControlType": 50026,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+        "Name": "",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Pressable with accessible=false",
+      },
+      {
+        "AutomationId": "",
+        "Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "HelpText": "",
+            "IsEnabled": true,
+            "IsKeyboardFocusable": false,
+            "LocalizedControlType": "text",
+            "Name": "Pressable with focusable=false",
+          },
+        ],
+        "ControlType": 50026,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "group",
+        "Name": "",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Pressable with accessible=false and focusable=false",
+      },
+    ],
+    "ControlType": 50026,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "group",
+    "Name": "",
+  },
+  "Visual Tree": {
+    "Children": [
+      {
+        "Children": [
+          {
+            "Children": [
+              {
+                "Children": [
+                  {
+                    "Offset": [
+                      0,
+                      0,
+                      0,
+                    ],
+                    "Opacity": 1,
+                    "Size": [
+                      916,
+                      20,
+                    ],
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": [
+                      0,
+                      0,
+                      0,
+                    ],
+                    "Opacity": 1,
+                    "Size": [
+                      0,
+                      0,
+                    ],
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+                "Offset": [
+                  0,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  916,
+                  20,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              916,
+              50,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          916,
+          50,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Children": [
+              {
+                "Children": [
+                  {
+                    "Offset": [
+                      0,
+                      0,
+                      0,
+                    ],
+                    "Opacity": 1,
+                    "Size": [
+                      916,
+                      20,
+                    ],
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": [
+                      0,
+                      0,
+                      0,
+                    ],
+                    "Opacity": 1,
+                    "Size": [
+                      0,
+                      0,
+                    ],
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+                "Offset": [
+                  0,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  916,
+                  20,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              916,
+              50,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          50,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          916,
+          50,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Children": [
+              {
+                "Children": [
+                  {
+                    "Offset": [
+                      0,
+                      0,
+                      0,
+                    ],
+                    "Opacity": 1,
+                    "Size": [
+                      916,
+                      20,
+                    ],
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": [
+                      0,
+                      0,
+                      0,
+                    ],
+                    "Opacity": 1,
+                    "Size": [
+                      0,
+                      0,
+                    ],
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+                "Offset": [
+                  0,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  916,
+                  20,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              916,
+              50,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          100,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          916,
+          50,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Children": [
+              {
+                "Children": [
+                  {
+                    "Offset": [
+                      0,
+                      0,
+                      0,
+                    ],
+                    "Opacity": 1,
+                    "Size": [
+                      916,
+                      20,
+                    ],
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": [
+                      0,
+                      0,
+                      0,
+                    ],
+                    "Opacity": 1,
+                    "Size": [
+                      0,
+                      0,
+                    ],
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+                "Offset": [
+                  0,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  916,
+                  20,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              916,
+              30,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          150,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          916,
+          30,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "accessible_pressable",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      916,
+      180,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Pressable Tests Pressables can have tooltips 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "tooltip_pressable",
+    "Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Pressable with ToolTip "Pressable"",
+      },
+    ],
+    "ControlType": 50026,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "Name": "",
+  },
+  "Visual Tree": {
+    "Children": [
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              916,
+              20,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          916,
+          20,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "tooltip_pressable",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      916,
+      18,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Pressable Tests Pressables can hide their backface 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "backface_pressable",
+    "Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "View #1, front is visible, back is hidden.",
+      },
+      {
+        "AutomationId": "",
+        "Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "HelpText": "",
+            "IsEnabled": true,
+            "IsKeyboardFocusable": false,
+            "LocalizedControlType": "text",
+            "Name": "Front",
+          },
+        ],
+        "ControlType": 50026,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+        "Name": "",
+      },
+      {
+        "AutomationId": "",
+        "Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "HelpText": "",
+            "IsEnabled": true,
+            "IsKeyboardFocusable": false,
+            "LocalizedControlType": "text",
+            "Name": "Back (You should not see this)",
+          },
+        ],
+        "ControlType": 50026,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+        "Name": "",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "View #2, front is hidden, back is visible.",
+      },
+      {
+        "AutomationId": "",
+        "Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "HelpText": "",
+            "IsEnabled": true,
+            "IsKeyboardFocusable": false,
+            "LocalizedControlType": "text",
+            "Name": "Front (You should not see this)",
+          },
+        ],
+        "ControlType": 50026,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+        "Name": "",
+      },
+      {
+        "AutomationId": "",
+        "Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "HelpText": "",
+            "IsEnabled": true,
+            "IsKeyboardFocusable": false,
+            "LocalizedControlType": "text",
+            "Name": "Back",
+          },
+        ],
+        "ControlType": 50026,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+        "Name": "",
+      },
+    ],
+    "ControlType": 50026,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "group",
+    "Name": "",
+  },
+  "Visual Tree": {
+    "Children": [
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              916,
+              30,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          916,
+          30,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 255, 255)",
+            },
+            "Children": [
+              {
+                "Children": [
+                  {
+                    "Offset": [
+                      0,
+                      0,
+                      0,
+                    ],
+                    "Opacity": 1,
+                    "Size": [
+                      34,
+                      20,
+                    ],
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": [
+                      0,
+                      0,
+                      0,
+                    ],
+                    "Opacity": 1,
+                    "Size": [
+                      0,
+                      0,
+                    ],
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+                "Offset": [
+                  83,
+                  90,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  34,
+                  20,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              200,
+              200,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          358,
+          29,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          200,
+          200,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(255, 0, 0, 255)",
+            },
+            "Children": [
+              {
+                "Children": [
+                  {
+                    "Offset": [
+                      0,
+                      0,
+                      0,
+                    ],
+                    "Opacity": 1,
+                    "Size": [
+                      184,
+                      20,
+                    ],
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": [
+                      0,
+                      0,
+                      0,
+                    ],
+                    "Opacity": 1,
+                    "Size": [
+                      0,
+                      0,
+                    ],
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+                "Offset": [
+                  8,
+                  90,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  184,
+                  20,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              200,
+              200,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          358,
+          29,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          200,
+          200,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              916,
+              39,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          228,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          916,
+          39,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 255, 255)",
+            },
+            "Children": [
+              {
+                "Children": [
+                  {
+                    "Offset": [
+                      0,
+                      0,
+                      0,
+                    ],
+                    "Opacity": 1,
+                    "Size": [
+                      188,
+                      19,
+                    ],
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": [
+                      0,
+                      0,
+                      0,
+                    ],
+                    "Opacity": 1,
+                    "Size": [
+                      0,
+                      0,
+                    ],
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+                "Offset": [
+                  6,
+                  90,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  188,
+                  19,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              200,
+              200,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          358,
+          267,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          200,
+          200,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(255, 0, 0, 255)",
+            },
+            "Children": [
+              {
+                "Children": [
+                  {
+                    "Offset": [
+                      0,
+                      0,
+                      0,
+                    ],
+                    "Opacity": 1,
+                    "Size": [
+                      30,
+                      19,
+                    ],
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": [
+                      0,
+                      0,
+                      0,
+                    ],
+                    "Opacity": 1,
+                    "Size": [
+                      0,
+                      0,
+                    ],
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+                "Offset": [
+                  85,
+                  90,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  30,
+                  19,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              200,
+              200,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          358,
+          267,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          200,
+          200,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "backface_pressable",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      916,
+      468,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
 exports[`Pressable Tests Text can have pressable behavior 1`] = `
 {
   "Automation Tree": {
