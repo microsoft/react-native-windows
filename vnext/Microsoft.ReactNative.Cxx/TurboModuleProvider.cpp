@@ -10,7 +10,7 @@ namespace winrt::Microsoft::ReactNative {
 struct AbiCallInvoker final : facebook::react::CallInvoker {
   AbiCallInvoker(IReactDispatcher const &jsDispatcher) : m_jsDispatcher(jsDispatcher) {}
 
-  void invokeAsync(std::function<void()> &&func) override {
+  void invokeAsync(std::function<void()> &&func) noexcept override {
     m_jsDispatcher.Post([func = std::move(func)]() { func(); });
   }
 

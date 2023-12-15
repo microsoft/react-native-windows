@@ -10,7 +10,6 @@
 
 import type {ViewProps} from './ViewPropTypes';
 
-import ReactNativeFeatureFlags from '../../ReactNative/ReactNativeFeatureFlags';
 import flattenStyle from '../../StyleSheet/flattenStyle';
 import TextAncestor from '../../Text/TextAncestor';
 import ViewNativeComponent from './ViewNativeComponent';
@@ -112,15 +111,6 @@ const View: React.AbstractComponent<
 
     // $FlowFixMe[sketchy-null-mixed]
     const newPointerEvents = style?.pointerEvents || pointerEvents;
-    const collapsableOverride =
-      ReactNativeFeatureFlags.shouldForceUnflattenForElevation()
-        ? {
-            collapsable:
-              style != null && style.elevation != null && style.elevation !== 0
-                ? false
-                : otherProps.collapsable,
-          }
-        : {};
 
     const _keyDown = (event: KeyEvent) => {
       if (otherProps.keyDownEvents && event.isPropagationStopped() !== true) {
@@ -238,7 +228,6 @@ const View: React.AbstractComponent<
           return (
             <ViewNativeComponent
               {...otherProps}
-              {...collapsableOverride}
               accessibilityLiveRegion={
                 ariaLive === 'off'
                   ? 'none'

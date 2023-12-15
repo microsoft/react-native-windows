@@ -5068,7 +5068,7 @@ private:
   
 #pragma mark - PlatformConstantsBasePlatformConstantsIOS
 
-template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6>
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7>
 struct PlatformConstantsBasePlatformConstantsIOS {
   P0 isTesting;
   P1 isDisableAnimations;
@@ -5077,25 +5077,27 @@ struct PlatformConstantsBasePlatformConstantsIOS {
   P4 osVersion;
   P5 systemName;
   P6 interfaceIdiom;
+  P7 isMacCatalyst;
   bool operator==(const PlatformConstantsBasePlatformConstantsIOS &other) const {
-    return isTesting == other.isTesting && isDisableAnimations == other.isDisableAnimations && reactNativeVersion == other.reactNativeVersion && forceTouchAvailable == other.forceTouchAvailable && osVersion == other.osVersion && systemName == other.systemName && interfaceIdiom == other.interfaceIdiom;
+    return isTesting == other.isTesting && isDisableAnimations == other.isDisableAnimations && reactNativeVersion == other.reactNativeVersion && forceTouchAvailable == other.forceTouchAvailable && osVersion == other.osVersion && systemName == other.systemName && interfaceIdiom == other.interfaceIdiom && isMacCatalyst == other.isMacCatalyst;
   }
 };
 
-template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6>
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7>
 struct PlatformConstantsBasePlatformConstantsIOSBridging {
-  static PlatformConstantsBasePlatformConstantsIOS<P0, P1, P2, P3, P4, P5, P6> fromJs(
+  static PlatformConstantsBasePlatformConstantsIOS<P0, P1, P2, P3, P4, P5, P6, P7> fromJs(
       jsi::Runtime &rt,
       const jsi::Object &value,
       const std::shared_ptr<CallInvoker> &jsInvoker) {
-    PlatformConstantsBasePlatformConstantsIOS<P0, P1, P2, P3, P4, P5, P6> result{
+    PlatformConstantsBasePlatformConstantsIOS<P0, P1, P2, P3, P4, P5, P6, P7> result{
       bridging::fromJs<P0>(rt, value.getProperty(rt, "isTesting"), jsInvoker),
       bridging::fromJs<P1>(rt, value.getProperty(rt, "isDisableAnimations"), jsInvoker),
       bridging::fromJs<P2>(rt, value.getProperty(rt, "reactNativeVersion"), jsInvoker),
       bridging::fromJs<P3>(rt, value.getProperty(rt, "forceTouchAvailable"), jsInvoker),
       bridging::fromJs<P4>(rt, value.getProperty(rt, "osVersion"), jsInvoker),
       bridging::fromJs<P5>(rt, value.getProperty(rt, "systemName"), jsInvoker),
-      bridging::fromJs<P6>(rt, value.getProperty(rt, "interfaceIdiom"), jsInvoker)};
+      bridging::fromJs<P6>(rt, value.getProperty(rt, "interfaceIdiom"), jsInvoker),
+      bridging::fromJs<P7>(rt, value.getProperty(rt, "isMacCatalyst"), jsInvoker)};
     return result;
   }
 
@@ -5127,11 +5129,15 @@ struct PlatformConstantsBasePlatformConstantsIOSBridging {
   static jsi::String interfaceIdiomToJs(jsi::Runtime &rt, P6 value) {
     return bridging::toJs(rt, value);
   }
+
+  static bool isMacCatalystToJs(jsi::Runtime &rt, P7 value) {
+    return bridging::toJs(rt, value);
+  }
 #endif
 
   static jsi::Object toJs(
       jsi::Runtime &rt,
-      const PlatformConstantsBasePlatformConstantsIOS<P0, P1, P2, P3, P4, P5, P6> &value,
+      const PlatformConstantsBasePlatformConstantsIOS<P0, P1, P2, P3, P4, P5, P6, P7> &value,
       const std::shared_ptr<CallInvoker> &jsInvoker) {
     auto result = facebook::jsi::Object(rt);
     result.setProperty(rt, "isTesting", bridging::toJs(rt, value.isTesting, jsInvoker));
@@ -5143,6 +5149,9 @@ struct PlatformConstantsBasePlatformConstantsIOSBridging {
     result.setProperty(rt, "osVersion", bridging::toJs(rt, value.osVersion, jsInvoker));
     result.setProperty(rt, "systemName", bridging::toJs(rt, value.systemName, jsInvoker));
     result.setProperty(rt, "interfaceIdiom", bridging::toJs(rt, value.interfaceIdiom, jsInvoker));
+    if (value.isMacCatalyst) {
+      result.setProperty(rt, "isMacCatalyst", bridging::toJs(rt, value.isMacCatalyst.value(), jsInvoker));
+    }
     return result;
   }
 };
@@ -5593,6 +5602,7 @@ public:
   virtual void setDurationThreshold(jsi::Runtime &rt, double entryType, double durationThreshold) = 0;
   virtual void clearEntries(jsi::Runtime &rt, double entryType, std::optional<jsi::String> entryName) = 0;
   virtual jsi::Array getEntries(jsi::Runtime &rt, std::optional<double> entryType, std::optional<jsi::String> entryName) = 0;
+  virtual jsi::Array getSupportedPerformanceEntryTypes(jsi::Runtime &rt) = 0;
 
 };
 
@@ -5695,6 +5705,14 @@ private:
 
       return bridging::callFromJs<jsi::Array>(
           rt, &T::getEntries, jsInvoker_, instance_, std::move(entryType), std::move(entryName));
+    }
+    jsi::Array getSupportedPerformanceEntryTypes(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::getSupportedPerformanceEntryTypes) == 1,
+          "Expected getSupportedPerformanceEntryTypes(...) to have 1 parameters");
+
+      return bridging::callFromJs<jsi::Array>(
+          rt, &T::getSupportedPerformanceEntryTypes, jsInvoker_, instance_);
     }
 
   private:
