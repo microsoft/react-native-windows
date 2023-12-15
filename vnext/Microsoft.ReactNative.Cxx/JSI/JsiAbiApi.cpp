@@ -362,9 +362,8 @@ String JsiAbiRuntime::bigintToString(const BigInt &bigint, int radix) try {
   throw;
 }
 bool JsiAbiRuntime::hasNativeState(const Object &obj) try {
-  // TODO: implement
-  UNREFERENCED_PARAMETER(obj);
-  VerifyElseCrash(false);
+  JsiObjectRef ref = AsJsiObjectRef(obj);
+  return m_runtime.HasNativeState(ref);
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
