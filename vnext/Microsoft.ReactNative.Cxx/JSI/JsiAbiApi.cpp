@@ -388,8 +388,6 @@ void JsiAbiRuntime::setNativeState(const Object &obj, std::shared_ptr<NativeStat
   IReactNonAbiValue value =
       winrt::make<implementation::ReactNonAbiValue<std::shared_ptr<NativeState>>>(std::move(state));
   m_runtime.SetNativeState(ref, value);
-  RethrowJsiError();
-  throw;
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
