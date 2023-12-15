@@ -3,13 +3,41 @@
 exports[`Pressable Tests Pressables can change text on press/rest, state rest 1`] = `
 {
   "Automation Tree": {
+    "AutomationId": "one_press_me_button",
+    "ControlType": 50020,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "text",
+    "Name": "Press Me",
+  },
+  "Visual Tree": {
+    "Comment": "one_press_me_button",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      64,
+      22,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Pressable Tests Pressables can change text on press/rest, state rest 2`] = `
+{
+  "Automation Tree": {
     "AutomationId": "pressable_press_console",
     "ControlType": 50020,
     "HelpText": "",
     "IsEnabled": true,
     "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
-    "Name": "",
+    "Name": "onPress",
   },
   "Visual Tree": {
     "Comment": "pressable_press_console",
@@ -192,6 +220,346 @@ exports[`Pressable Tests Pressables can have event handlers 1`] = `
 }
 `;
 
+exports[`Pressable Tests Pressables can have event handlers 2`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "pressable_feedback_events_console",
+    "Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "pressOut",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "press",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "pressIn",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "hover in",
+      },
+    ],
+    "ControlType": 50026,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "group",
+    "Name": "",
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(249, 249, 249, 255)",
+    },
+    "Children": [
+      {
+        "Offset": [
+          0,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          1,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          -1,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          -1,
+          1,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          -1,
+          -1,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          1,
+          -1,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          -2,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          0,
+          -1,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          0,
+          1,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          -2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              874,
+              19,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          11,
+          11,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          874,
+          19,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              874,
+              20,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          11,
+          29,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          874,
+          20,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              874,
+              20,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          11,
+          48,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          874,
+          20,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              874,
+              19,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          11,
+          66,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          874,
+          19,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "pressable_feedback_events_console",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      896,
+      120,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
 exports[`Pressable Tests Pressables can have hit slop functionality 1`] = `
 {
   "Automation Tree": {
@@ -272,6 +640,62 @@ exports[`Pressable Tests Pressables can have hit slop functionality 1`] = `
     "Size": [
       146,
       18,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Pressable Tests Text can have pressable behavior 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "tappable_text",
+    "ControlType": 50020,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "text",
+    "Name": "Text has built-in onPress handling",
+  },
+  "Visual Tree": {
+    "Comment": "tappable_text",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      916,
+      20,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Pressable Tests Text can have pressable behavior 2`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "tappable_text_console",
+    "ControlType": 50020,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "text",
+    "Name": "2x text onPress",
+  },
+  "Visual Tree": {
+    "Comment": "tappable_text_console",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      854,
+      19,
     ],
     "Visual Type": "SpriteVisual",
   },

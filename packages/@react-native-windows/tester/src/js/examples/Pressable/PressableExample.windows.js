@@ -137,6 +137,7 @@ function PressableFeedbackEvents() {
       </View>
       <View
         testID="pressable_feedback_events_console"
+        accessible
         style={styles.eventLogBox}>
         {eventLog.map((e, ii) => (
           <Text key={ii}>{e}</Text>
