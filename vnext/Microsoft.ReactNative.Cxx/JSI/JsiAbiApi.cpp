@@ -390,6 +390,9 @@ void JsiAbiRuntime::setNativeState(const Object &obj, std::shared_ptr<NativeStat
   m_runtime.SetNativeState(ref, value);
   RethrowJsiError();
   throw;
+} catch (hresult_error const &) {
+  RethrowJsiError();
+  throw;
 }
 
 ArrayBuffer JsiAbiRuntime::createArrayBuffer(std::shared_ptr<MutableBuffer> buffer) try {
