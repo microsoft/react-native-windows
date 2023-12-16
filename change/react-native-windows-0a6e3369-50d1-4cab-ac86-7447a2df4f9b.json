@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "testing integration",
-  "packageName": "react-native-windows",
-  "email": "yajurgrover24@gmail.com",
-  "dependentChangeType": "patch"
-}
