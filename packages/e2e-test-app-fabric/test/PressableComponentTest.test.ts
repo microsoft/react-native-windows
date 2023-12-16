@@ -54,6 +54,14 @@ describe('Pressable Tests', () => {
       },
     );
   });
+  test('Pressables can change style when pressed', async () => {
+    const component = await app.findElementByTestID(
+      'style-change-pressable',
+    );
+    await component.waitForDisplayed({timeout: 20000});
+    const dump = await dumpVisualTree('style-change-pressable');
+    expect(dump).toMatchSnapshot();
+  });
   test('Text can have pressable behavior', async () => {
     const searchBox = await app.findElementByTestID('example_search');
     await app.waitUntil(
@@ -225,6 +233,14 @@ describe('Pressable Tests', () => {
     const dump = await dumpVisualTree('pressable_hit_slop_button');
     expect(dump).toMatchSnapshot();
   });
+  test('Pressables can have advanced borders', async () => {
+    const component = await app.findElementByTestID(
+      'advanced_borders_pressable',
+    );
+    await component.waitForDisplayed({timeout: 20000});
+    const dump = await dumpVisualTree('pressable_hit_slop_button');
+    expect(dump).toMatchSnapshot();
+  });
   test('Pressables can have ranging opacity', async () => {
     const component = await app.findElementByTestID('opacity_pressable');
     await component.waitForDisplayed({timeout: 20000});
@@ -249,4 +265,7 @@ describe('Pressable Tests', () => {
     const dump = await dumpVisualTree('backface_pressable');
     expect(dump).toMatchSnapshot();
   });
+  // Add dumps for all other examples.
+  // Confirm no other click tests are needed. 
+  // Record additional types of testing to implement pressable.
 });

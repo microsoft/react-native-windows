@@ -294,7 +294,8 @@ function PressableHoverStyle() {
           styles.wrapperCustom,
         ]}
         onHoverIn={() => setHovered(true)}
-        onHoverOut={() => setHovered(false)}>
+        onHoverOut={() => setHovered(false)}
+        testID="hover-style-pressable">
         <Text style={styles.text}>Hover Me</Text>
       </Pressable>
     </View>
@@ -539,7 +540,8 @@ const examples = [
                 backgroundColor: pressed ? 'rgb(210, 230, 255)' : 'white',
               },
               styles.wrapperCustom,
-            ]}>
+            ]}
+            testID="style-change-pressable">
             <Text style={styles.text}>Press Me</Text>
           </Pressable>
         </View>

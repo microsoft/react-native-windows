@@ -164,6 +164,92 @@ exports[`Pressable Tests Pressables can be disabled, disabled = {true} 1`] = `
 }
 `;
 
+exports[`Pressable Tests Pressables can change style when pressed 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "style-change-pressable",
+    "Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Press Me",
+      },
+    ],
+    "ControlType": 50026,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "Name": "",
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 255, 255, 255)",
+    },
+    "Children": [
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              64,
+              22,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          6,
+          6,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          64,
+          22,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "style-change-pressable",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      76,
+      34,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
 exports[`Pressable Tests Pressables can change text on press/rest, state rest 1`] = `
 {
   "Automation Tree": {
@@ -214,6 +300,92 @@ exports[`Pressable Tests Pressables can change text on press/rest, state rest 2`
     "Size": [
       854,
       20,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Pressable Tests Pressables can have advanced borders 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "pressable_hit_slop_button",
+    "Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Press Outside This View",
+      },
+    ],
+    "ControlType": 50026,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "Name": "",
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 0, 0, 255)",
+    },
+    "Children": [
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              146,
+              20,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          146,
+          20,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "pressable_hit_slop_button",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      146,
+      18,
     ],
     "Visual Type": "SpriteVisual",
   },
