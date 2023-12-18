@@ -259,7 +259,4 @@ describe('Pressable Tests', () => {
     const dump = await dumpVisualTree('backface_pressable');
     expect(dump).toMatchSnapshot();
   });
-  // Add dumps for all other examples.
-  // Confirm no other click tests are needed.
-  // Record additional types of testing to implement pressable.
 });
