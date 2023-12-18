@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.74.0-nightly-20231016-44660019e",
+  "baseVersion": "0.74.0-nightly-20231031-572dd76ba",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "671a34717020278b7888dafa3b4fa88375e3d29b"
+      "baseHash": "55a2906a48f5d54bd1daf47d2b127ce2848199e9"
     },
     {
       "type": "derived",
@@ -70,7 +70,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/RawPropsParser.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/core/RawPropsParser.cpp",
-      "baseHash": "acf75448d8b37fcd3c5c860c856adec1567c684d",
+      "baseHash": "be5d1851ae27bb3a55620e7a33ecf082ebaa9aa6",
       "issue": 12300
     },
     {
@@ -103,13 +103,6 @@
     },
     {
       "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/bits/NumericBitfield.h",
-      "baseFile": "packages/react-native/ReactCommon/yoga/yoga/bits/NumericBitfield.h",
-      "baseHash": "26ae37f6d9d9bf6e8d9c6eb488d825bb6aba6fba",
-      "issue": 12195
-    },
-    {
-      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/config/Config.h",
       "baseFile": "packages/react-native/ReactCommon/yoga/yoga/config/Config.h",
       "baseHash": "c01a9fd4408d1df6419197990a4000a09d28bf52",
@@ -124,9 +117,16 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/node/Node.cpp",
+      "baseFile": "packages/react-native/ReactCommon/yoga/yoga/node/Node.cpp",
+      "baseHash": "f010fdfe6eeb66b408bbda402db253636dc580eb",
+      "issue": 12195
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/node/Node.h",
       "baseFile": "packages/react-native/ReactCommon/yoga/yoga/node/Node.h",
-      "baseHash": "d6cf4c67b92a230c874d7a9353fc9839fc9e5657",
+      "baseHash": "7f73689c88005d9f165e629dcc2026a68c57975a",
       "issue": 12195
     },
     {
@@ -140,7 +140,7 @@
       "type": "copy",
       "directory": "ReactCopies/IntegrationTests",
       "baseDirectory": "packages/rn-tester/IntegrationTests",
-      "baseHash": "8fd47c2c52cd707af269a848e3e80acbd5395e6c",
+      "baseHash": "8394f4326b8a190b899914d21210da6accd2dc0e",
       "issue": 4054
     },
     {
@@ -285,13 +285,13 @@
       "type": "patch",
       "file": "src/Libraries/Components/Pressable/Pressable.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Pressable/Pressable.js",
-      "baseHash": "6fb2aede8cff4c47e8e965fed9ed1a9d55d33cfc"
+      "baseHash": "63cc0b16c930ef07a0570d1b8e4abc51a77d06dc"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/RefreshControl/RefreshControl.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/RefreshControl/RefreshControl.js",
-      "baseHash": "7e6b0a8088ba49a28360a88fd59c08e8c0965130"
+      "baseHash": "d86c2a4b2ff6ae7947a4117d8ad81c8e58a9bb51"
     },
     {
       "type": "derived",
@@ -309,7 +309,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "4431d2d4ea39a5ce9b9fad8ed22c7896b77ca9d2"
+      "baseHash": "d12fe54e9da3be0b1003a5bc18fa3c6d09728564"
     },
     {
       "type": "patch",
@@ -363,7 +363,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/View/ViewAccessibility.d.ts",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewAccessibility.d.ts",
-      "baseHash": "085982a44202765d099caf13785e8b4a42628d86"
+      "baseHash": "eafbdb8db89b98aafd23514173360e07a942d205"
     },
     {
       "type": "patch",
@@ -375,13 +375,13 @@
       "type": "derived",
       "file": "src/Libraries/Components/View/ViewPropTypes.d.ts",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewPropTypes.d.ts",
-      "baseHash": "91d96e475fc55da6c6456a240edbd650c1ca4a26"
+      "baseHash": "8a7908f1ebfde292f2d70f6672c96c05eb7397c8"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewPropTypes.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewPropTypes.js",
-      "baseHash": "2bbe617e19537c49c2cbd7abad16580e386f1d65"
+      "baseHash": "6eecfbf0d3028d1838463a66b3acbda6f9a2c651"
     },
     {
       "type": "copy",
@@ -400,7 +400,7 @@
       "type": "patch",
       "file": "src/Libraries/Image/resolveAssetSource.windows.js",
       "baseFile": "packages/react-native/Libraries/Image/resolveAssetSource.js",
-      "baseHash": "6a1fdee0fb94ff7c6647d75fdcdc9e4d25c5085f",
+      "baseHash": "e8a001f301489c72ac5a0e798f28d7b6418c4c9f",
       "issue": 10619
     },
     {

@@ -34,7 +34,7 @@ import useAndroidRippleForView, {
   type RippleConfig,
 } from './useAndroidRippleForView';
 import * as React from 'react';
-import {useImperativeHandle, useMemo, useRef, useState} from 'react';
+import {useMemo, useRef, useState} from 'react';
 import type {HandledKeyboardEvent} from '../../Components/View/ViewPropTypes';
 
 type ViewStyleProp = $ElementType<React.ElementConfig<typeof View>, 'style'>;

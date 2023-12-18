@@ -3517,40 +3517,42 @@ struct PushNotificationManagerBasePermissionsBridging {
 
 #pragma mark - PushNotificationManagerBaseNotification
 
-template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8, typename P9>
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8, typename P9, typename P10>
 struct PushNotificationManagerBaseNotification {
   P0 alertTitle;
-  P1 fireDate;
-  P2 alertBody;
-  P3 alertAction;
-  P4 userInfo;
-  P5 category;
-  P6 repeatInterval;
-  P7 applicationIconBadgeNumber;
-  P8 isSilent;
-  P9 soundName;
+  P1 alertBody;
+  P2 userInfo;
+  P3 category;
+  P4 fireDate;
+  P5 fireIntervalSeconds;
+  P6 applicationIconBadgeNumber;
+  P7 isSilent;
+  P8 soundName;
+  P9 alertAction;
+  P10 repeatInterval;
   bool operator==(const PushNotificationManagerBaseNotification &other) const {
-    return alertTitle == other.alertTitle && fireDate == other.fireDate && alertBody == other.alertBody && alertAction == other.alertAction && userInfo == other.userInfo && category == other.category && repeatInterval == other.repeatInterval && applicationIconBadgeNumber == other.applicationIconBadgeNumber && isSilent == other.isSilent && soundName == other.soundName;
+    return alertTitle == other.alertTitle && alertBody == other.alertBody && userInfo == other.userInfo && category == other.category && fireDate == other.fireDate && fireIntervalSeconds == other.fireIntervalSeconds && applicationIconBadgeNumber == other.applicationIconBadgeNumber && isSilent == other.isSilent && soundName == other.soundName && alertAction == other.alertAction && repeatInterval == other.repeatInterval;
   }
 };
 
-template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8, typename P9>
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8, typename P9, typename P10>
 struct PushNotificationManagerBaseNotificationBridging {
-  static PushNotificationManagerBaseNotification<P0, P1, P2, P3, P4, P5, P6, P7, P8, P9> fromJs(
+  static PushNotificationManagerBaseNotification<P0, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10> fromJs(
       jsi::Runtime &rt,
       const jsi::Object &value,
       const std::shared_ptr<CallInvoker> &jsInvoker) {
-    PushNotificationManagerBaseNotification<P0, P1, P2, P3, P4, P5, P6, P7, P8, P9> result{
+    PushNotificationManagerBaseNotification<P0, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10> result{
       bridging::fromJs<P0>(rt, value.getProperty(rt, "alertTitle"), jsInvoker),
-      bridging::fromJs<P1>(rt, value.getProperty(rt, "fireDate"), jsInvoker),
-      bridging::fromJs<P2>(rt, value.getProperty(rt, "alertBody"), jsInvoker),
-      bridging::fromJs<P3>(rt, value.getProperty(rt, "alertAction"), jsInvoker),
-      bridging::fromJs<P4>(rt, value.getProperty(rt, "userInfo"), jsInvoker),
-      bridging::fromJs<P5>(rt, value.getProperty(rt, "category"), jsInvoker),
-      bridging::fromJs<P6>(rt, value.getProperty(rt, "repeatInterval"), jsInvoker),
-      bridging::fromJs<P7>(rt, value.getProperty(rt, "applicationIconBadgeNumber"), jsInvoker),
-      bridging::fromJs<P8>(rt, value.getProperty(rt, "isSilent"), jsInvoker),
-      bridging::fromJs<P9>(rt, value.getProperty(rt, "soundName"), jsInvoker)};
+      bridging::fromJs<P1>(rt, value.getProperty(rt, "alertBody"), jsInvoker),
+      bridging::fromJs<P2>(rt, value.getProperty(rt, "userInfo"), jsInvoker),
+      bridging::fromJs<P3>(rt, value.getProperty(rt, "category"), jsInvoker),
+      bridging::fromJs<P4>(rt, value.getProperty(rt, "fireDate"), jsInvoker),
+      bridging::fromJs<P5>(rt, value.getProperty(rt, "fireIntervalSeconds"), jsInvoker),
+      bridging::fromJs<P6>(rt, value.getProperty(rt, "applicationIconBadgeNumber"), jsInvoker),
+      bridging::fromJs<P7>(rt, value.getProperty(rt, "isSilent"), jsInvoker),
+      bridging::fromJs<P8>(rt, value.getProperty(rt, "soundName"), jsInvoker),
+      bridging::fromJs<P9>(rt, value.getProperty(rt, "alertAction"), jsInvoker),
+      bridging::fromJs<P10>(rt, value.getProperty(rt, "repeatInterval"), jsInvoker)};
     return result;
   }
 
@@ -3559,59 +3561,57 @@ struct PushNotificationManagerBaseNotificationBridging {
     return bridging::toJs(rt, value);
   }
 
-  static std::optional<double> fireDateToJs(jsi::Runtime &rt, P1 value) {
+  static std::optional<jsi::String> alertBodyToJs(jsi::Runtime &rt, P1 value) {
     return bridging::toJs(rt, value);
   }
 
-  static std::optional<jsi::String> alertBodyToJs(jsi::Runtime &rt, P2 value) {
+  static std::optional<jsi::Object> userInfoToJs(jsi::Runtime &rt, P2 value) {
     return bridging::toJs(rt, value);
   }
 
-  static std::optional<jsi::String> alertActionToJs(jsi::Runtime &rt, P3 value) {
+  static std::optional<jsi::String> categoryToJs(jsi::Runtime &rt, P3 value) {
     return bridging::toJs(rt, value);
   }
 
-  static std::optional<jsi::Object> userInfoToJs(jsi::Runtime &rt, P4 value) {
+  static std::optional<double> fireDateToJs(jsi::Runtime &rt, P4 value) {
     return bridging::toJs(rt, value);
   }
 
-  static std::optional<jsi::String> categoryToJs(jsi::Runtime &rt, P5 value) {
+  static std::optional<double> fireIntervalSecondsToJs(jsi::Runtime &rt, P5 value) {
     return bridging::toJs(rt, value);
   }
 
-  static std::optional<jsi::String> repeatIntervalToJs(jsi::Runtime &rt, P6 value) {
+  static std::optional<double> applicationIconBadgeNumberToJs(jsi::Runtime &rt, P6 value) {
     return bridging::toJs(rt, value);
   }
 
-  static std::optional<double> applicationIconBadgeNumberToJs(jsi::Runtime &rt, P7 value) {
+  static std::optional<bool> isSilentToJs(jsi::Runtime &rt, P7 value) {
     return bridging::toJs(rt, value);
   }
 
-  static std::optional<bool> isSilentToJs(jsi::Runtime &rt, P8 value) {
+  static std::optional<jsi::String> soundNameToJs(jsi::Runtime &rt, P8 value) {
     return bridging::toJs(rt, value);
   }
 
-  static std::optional<jsi::String> soundNameToJs(jsi::Runtime &rt, P9 value) {
+  static std::optional<jsi::String> alertActionToJs(jsi::Runtime &rt, P9 value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static std::optional<jsi::String> repeatIntervalToJs(jsi::Runtime &rt, P10 value) {
     return bridging::toJs(rt, value);
   }
 #endif
 
   static jsi::Object toJs(
       jsi::Runtime &rt,
-      const PushNotificationManagerBaseNotification<P0, P1, P2, P3, P4, P5, P6, P7, P8, P9> &value,
+      const PushNotificationManagerBaseNotification<P0, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10> &value,
       const std::shared_ptr<CallInvoker> &jsInvoker) {
     auto result = facebook::jsi::Object(rt);
     if (value.alertTitle) {
       result.setProperty(rt, "alertTitle", bridging::toJs(rt, value.alertTitle.value(), jsInvoker));
     }
-    if (value.fireDate) {
-      result.setProperty(rt, "fireDate", bridging::toJs(rt, value.fireDate.value(), jsInvoker));
-    }
     if (value.alertBody) {
       result.setProperty(rt, "alertBody", bridging::toJs(rt, value.alertBody.value(), jsInvoker));
-    }
-    if (value.alertAction) {
-      result.setProperty(rt, "alertAction", bridging::toJs(rt, value.alertAction.value(), jsInvoker));
     }
     if (value.userInfo) {
       result.setProperty(rt, "userInfo", bridging::toJs(rt, value.userInfo.value(), jsInvoker));
@@ -3619,8 +3619,11 @@ struct PushNotificationManagerBaseNotificationBridging {
     if (value.category) {
       result.setProperty(rt, "category", bridging::toJs(rt, value.category.value(), jsInvoker));
     }
-    if (value.repeatInterval) {
-      result.setProperty(rt, "repeatInterval", bridging::toJs(rt, value.repeatInterval.value(), jsInvoker));
+    if (value.fireDate) {
+      result.setProperty(rt, "fireDate", bridging::toJs(rt, value.fireDate.value(), jsInvoker));
+    }
+    if (value.fireIntervalSeconds) {
+      result.setProperty(rt, "fireIntervalSeconds", bridging::toJs(rt, value.fireIntervalSeconds.value(), jsInvoker));
     }
     if (value.applicationIconBadgeNumber) {
       result.setProperty(rt, "applicationIconBadgeNumber", bridging::toJs(rt, value.applicationIconBadgeNumber.value(), jsInvoker));
@@ -3630,6 +3633,12 @@ struct PushNotificationManagerBaseNotificationBridging {
     }
     if (value.soundName) {
       result.setProperty(rt, "soundName", bridging::toJs(rt, value.soundName.value(), jsInvoker));
+    }
+    if (value.alertAction) {
+      result.setProperty(rt, "alertAction", bridging::toJs(rt, value.alertAction.value(), jsInvoker));
+    }
+    if (value.repeatInterval) {
+      result.setProperty(rt, "repeatInterval", bridging::toJs(rt, value.repeatInterval.value(), jsInvoker));
     }
     return result;
   }

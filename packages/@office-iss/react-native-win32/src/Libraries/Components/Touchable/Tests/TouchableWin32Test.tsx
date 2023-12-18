@@ -135,7 +135,7 @@ class TouchableWin32WithoutFeedback extends React.Component<ITouchableWin32Witho
   };
 
   private readonly _touchableGetHitSlop = (): Insets => {
-    return this.props.hitSlop;
+    return this.props.hitSlop as Insets;
   };
 
   private readonly _touchableGetHighlightDelayMS = (): number => {

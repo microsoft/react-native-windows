@@ -29,9 +29,9 @@ class AbiViewComponentDescriptor : public facebook::react::ComponentDescriptor {
   facebook::react::ComponentHandle getComponentHandle() const override;
   facebook::react::ComponentName getComponentName() const override;
   facebook::react::ShadowNodeTraits getTraits() const override;
-  facebook::react::ShadowNode::Shared createShadowNode(
-      const facebook::react::ShadowNodeFragment &fragment,
-      facebook::react::ShadowNodeFamily::Shared const &family) const override;
+  std::shared_ptr<facebook::react::ShadowNode> createShadowNode(
+      const facebook::react::ShadowNodeFragment& fragment,
+      facebook::react::ShadowNodeFamily::Shared const& family) const override;
   facebook::react::ShadowNode::Unshared cloneShadowNode(
       const facebook::react::ShadowNode &sourceShadowNode,
       const facebook::react::ShadowNodeFragment &fragment) const override;

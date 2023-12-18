@@ -21,15 +21,16 @@ struct PushNotificationManagerIOSSpec_Permissions {
 
 struct PushNotificationManagerIOSSpec_Notification {
     std::optional<std::string> alertTitle;
-    std::optional<double> fireDate;
     std::optional<std::string> alertBody;
-    std::optional<std::string> alertAction;
     std::optional<::React::JSValue> userInfo;
     std::optional<std::string> category;
-    std::optional<std::string> repeatInterval;
+    std::optional<double> fireDate;
+    std::optional<double> fireIntervalSeconds;
     std::optional<double> applicationIconBadgeNumber;
     std::optional<bool> isSilent;
     std::optional<std::string> soundName;
+    std::optional<std::string> alertAction;
+    std::optional<std::string> repeatInterval;
 };
 
 struct PushNotificationManagerIOSSpec_requestPermissions_permission {
@@ -51,15 +52,16 @@ inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PushNotificationMan
 inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PushNotificationManagerIOSSpec_Notification*) noexcept {
     winrt::Microsoft::ReactNative::FieldMap fieldMap {
         {L"alertTitle", &PushNotificationManagerIOSSpec_Notification::alertTitle},
-        {L"fireDate", &PushNotificationManagerIOSSpec_Notification::fireDate},
         {L"alertBody", &PushNotificationManagerIOSSpec_Notification::alertBody},
-        {L"alertAction", &PushNotificationManagerIOSSpec_Notification::alertAction},
         {L"userInfo", &PushNotificationManagerIOSSpec_Notification::userInfo},
         {L"category", &PushNotificationManagerIOSSpec_Notification::category},
-        {L"repeatInterval", &PushNotificationManagerIOSSpec_Notification::repeatInterval},
+        {L"fireDate", &PushNotificationManagerIOSSpec_Notification::fireDate},
+        {L"fireIntervalSeconds", &PushNotificationManagerIOSSpec_Notification::fireIntervalSeconds},
         {L"applicationIconBadgeNumber", &PushNotificationManagerIOSSpec_Notification::applicationIconBadgeNumber},
         {L"isSilent", &PushNotificationManagerIOSSpec_Notification::isSilent},
         {L"soundName", &PushNotificationManagerIOSSpec_Notification::soundName},
+        {L"alertAction", &PushNotificationManagerIOSSpec_Notification::alertAction},
+        {L"repeatInterval", &PushNotificationManagerIOSSpec_Notification::repeatInterval},
     };
     return fieldMap;
 }
