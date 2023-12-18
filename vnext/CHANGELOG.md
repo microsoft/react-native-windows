@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 09 Dec 2023 06:15:28 GMT and should not be manually modified.
+This log was last generated on Sat, 16 Dec 2023 06:14:45 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.747
+
+Sat, 16 Dec 2023 06:14:45 GMT
+
+### Changes
+
+- testing integration (yajurgrover24@gmail.com)
 
 ## 0.0.0-canary.746
 
