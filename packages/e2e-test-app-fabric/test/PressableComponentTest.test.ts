@@ -26,8 +26,8 @@ describe('Pressable Tests', () => {
     const searchBox = await app.findElementByTestID('example_search');
     await app.waitUntil(
       async () => {
-        await searchBox.setValue("Cha");
-        return (await searchBox.getText()) === "Cha";
+        await searchBox.setValue('Cha');
+        return (await searchBox.getText()) === 'Cha';
       },
       {
         interval: 1500,
@@ -45,7 +45,7 @@ describe('Pressable Tests', () => {
     await app.waitUntil(
       async () => {
         await searchBox.setValue(['Backspace', 'Backspace', 'Backspace']);
-        return (await searchBox.getText()) === "";
+        return (await searchBox.getText()) === '';
       },
       {
         interval: 1500,
@@ -55,9 +55,7 @@ describe('Pressable Tests', () => {
     );
   });
   test('Pressables can change style when pressed', async () => {
-    const component = await app.findElementByTestID(
-      'style-change-pressable',
-    );
+    const component = await app.findElementByTestID('style-change-pressable');
     await component.waitForDisplayed({timeout: 20000});
     const dump = await dumpVisualTree('style-change-pressable');
     expect(dump).toMatchSnapshot();
@@ -66,8 +64,8 @@ describe('Pressable Tests', () => {
     const searchBox = await app.findElementByTestID('example_search');
     await app.waitUntil(
       async () => {
-        await searchBox.setValue("<Te");
-        return (await searchBox.getText()) === "<Te";
+        await searchBox.setValue('<Te');
+        return (await searchBox.getText()) === '<Te';
       },
       {
         interval: 1500,
@@ -86,7 +84,7 @@ describe('Pressable Tests', () => {
     await app.waitUntil(
       async () => {
         await searchBox.setValue(['Backspace', 'Backspace', 'Backspace']);
-        return (await searchBox.getText()) === "";
+        return (await searchBox.getText()) === '';
       },
       {
         interval: 1500,
@@ -99,8 +97,8 @@ describe('Pressable Tests', () => {
     const searchBox = await app.findElementByTestID('example_search');
     await app.waitUntil(
       async () => {
-        await searchBox.setValue("fee");
-        return (await searchBox.getText()) === "fee";
+        await searchBox.setValue('fee');
+        return (await searchBox.getText()) === 'fee';
       },
       {
         interval: 1500,
@@ -120,7 +118,7 @@ describe('Pressable Tests', () => {
     await app.waitUntil(
       async () => {
         await searchBox.setValue(['Backspace', 'Backspace', 'Backspace']);
-        return (await searchBox.getText()) === "";
+        return (await searchBox.getText()) === '';
       },
       {
         interval: 1500,
@@ -133,8 +131,8 @@ describe('Pressable Tests', () => {
     const searchBox = await app.findElementByTestID('example_search');
     await app.waitUntil(
       async () => {
-        await searchBox.setValue("del");
-        return (await searchBox.getText()) === "del";
+        await searchBox.setValue('del');
+        return (await searchBox.getText()) === 'del';
       },
       {
         interval: 1500,
@@ -154,7 +152,7 @@ describe('Pressable Tests', () => {
     await app.waitUntil(
       async () => {
         await searchBox.setValue(['Backspace', 'Backspace', 'Backspace']);
-        return (await searchBox.getText()) === "";
+        return (await searchBox.getText()) === '';
       },
       {
         interval: 1500,
@@ -167,8 +165,8 @@ describe('Pressable Tests', () => {
     const searchBox = await app.findElementByTestID('example_search');
     await app.waitUntil(
       async () => {
-        await searchBox.setValue("dis");
-        return (await searchBox.getText()) === "dis";
+        await searchBox.setValue('dis');
+        return (await searchBox.getText()) === 'dis';
       },
       {
         interval: 1500,
@@ -176,16 +174,14 @@ describe('Pressable Tests', () => {
         timeoutMsg: `Unable to enter correct search text into test searchbox.`,
       },
     );
-    const component = await app.findElementByTestID(
-      'pressable_disabled_true',
-    );
+    const component = await app.findElementByTestID('pressable_disabled_true');
     await component.waitForDisplayed({timeout: 20000});
     const dump = await dumpVisualTree('pressable_disabled_true');
     expect(dump).toMatchSnapshot();
     await app.waitUntil(
       async () => {
         await searchBox.setValue(['Backspace', 'Backspace', 'Backspace']);
-        return (await searchBox.getText()) === "";
+        return (await searchBox.getText()) === '';
       },
       {
         interval: 1500,
@@ -198,8 +194,8 @@ describe('Pressable Tests', () => {
     const searchBox = await app.findElementByTestID('example_search');
     await app.waitUntil(
       async () => {
-        await searchBox.setValue("dis");
-        return (await searchBox.getText()) === "dis";
+        await searchBox.setValue('dis');
+        return (await searchBox.getText()) === 'dis';
       },
       {
         interval: 1500,
@@ -207,16 +203,14 @@ describe('Pressable Tests', () => {
         timeoutMsg: `Unable to enter correct search text into test searchbox.`,
       },
     );
-    const component = await app.findElementByTestID(
-      'pressable_disabled_false',
-    );
+    const component = await app.findElementByTestID('pressable_disabled_false');
     await component.waitForDisplayed({timeout: 20000});
     const dump = await dumpVisualTree('pressable_disabled_false');
     expect(dump).toMatchSnapshot();
     await app.waitUntil(
       async () => {
         await searchBox.setValue(['Backspace', 'Backspace', 'Backspace']);
-        return (await searchBox.getText()) === "";
+        return (await searchBox.getText()) === '';
       },
       {
         interval: 1500,
@@ -266,6 +260,6 @@ describe('Pressable Tests', () => {
     expect(dump).toMatchSnapshot();
   });
   // Add dumps for all other examples.
-  // Confirm no other click tests are needed. 
+  // Confirm no other click tests are needed.
   // Record additional types of testing to implement pressable.
 });

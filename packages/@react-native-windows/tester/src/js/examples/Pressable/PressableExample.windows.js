@@ -171,7 +171,10 @@ function PressableDelayEvents() {
           <Text style={styles.button}>Press Me</Text>
         </Pressable>
       </View>
-      <View style={styles.eventLogBox} testID="pressable_delay_events_console" accessible>
+      <View
+        style={styles.eventLogBox}
+        testID="pressable_delay_events_console"
+        accessible>
         {eventLog.map((e, ii) => (
           <Text key={ii}>{e}</Text>
         ))}
@@ -264,13 +267,16 @@ function PressableNativeMethods() {
 function PressableDisabled() {
   return (
     <>
-      <Pressable disabled={true} style={[styles.row, styles.block]} testID='pressable_disabled_true'>
+      <Pressable
+        disabled={true}
+        style={[styles.row, styles.block]}
+        testID="pressable_disabled_true">
         <Text style={styles.disabledButton}>Disabled Pressable</Text>
       </Pressable>
 
       <Pressable
         disabled={false}
-        testID='pressable_disabled_false'
+        testID="pressable_disabled_false"
         style={({pressed}) => [
           {opacity: pressed ? 0.5 : 1},
           styles.row,
