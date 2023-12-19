@@ -117,13 +117,6 @@
     },
     {
       "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/node/Node.cpp",
-      "baseFile": "packages/react-native/ReactCommon/yoga/yoga/node/Node.cpp",
-      "baseHash": "f010fdfe6eeb66b408bbda402db253636dc580eb",
-      "issue": 12195
-    },
-    {
-      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/node/Node.h",
       "baseFile": "packages/react-native/ReactCommon/yoga/yoga/node/Node.h",
       "baseHash": "7f73689c88005d9f165e629dcc2026a68c57975a",
