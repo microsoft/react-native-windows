@@ -41,7 +41,7 @@ facebook::react::ShadowNodeTraits AbiViewComponentDescriptor::getTraits() const 
   return traits;
 }
 
-facebook::react::ShadowNode::Shared AbiViewComponentDescriptor::createShadowNode(
+std::shared_ptr<facebook::react::ShadowNode> AbiViewComponentDescriptor::createShadowNode(
     const facebook::react::ShadowNodeFragment &fragment,
     facebook::react::ShadowNodeFamily::Shared const &family) const {
   auto shadowNode = std::make_shared<ShadowNodeT>(fragment, family, getTraits());
