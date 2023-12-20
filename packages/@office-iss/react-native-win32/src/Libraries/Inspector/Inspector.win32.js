@@ -14,7 +14,6 @@ import type {TouchedViewDataAtPoint} from '../Renderer/shims/ReactNativeTypes';
 import type {ReactDevToolsAgent} from '../Types/ReactDevToolsTypes';
 import type {HostRef} from './getInspectorDataForViewAtPoint';
 
-const View = require('../Components/View/View');
 const PressabilityDebug = require('../Pressability/PressabilityDebug');
 const ReactNative = require('../Renderer/shims/ReactNative');
 const {findNodeHandle} = require('../ReactNative/RendererProxy');

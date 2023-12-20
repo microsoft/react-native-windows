@@ -18,6 +18,7 @@ import type {
 const TextInputSharedExamples = require('./TextInputSharedExamples.js');
 const React = require('react');
 const {StyleSheet, Switch, Text, TextInput, View} = require('react-native');
+const {useState} = React;
 
 class ToggleDefaultPaddingExample extends React.Component<
   $FlowFixMeProps,
