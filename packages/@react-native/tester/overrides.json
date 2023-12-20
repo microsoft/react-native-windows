@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.74.0-nightly-20231108-05d92bf2a",
+  "baseVersion": "0.74.0-nightly-20231110-9b33e752c",
   "overrides": [
     {
       "type": "copy",
@@ -425,7 +425,7 @@
       "type": "copy",
       "directory": "js/examples/TurboModule",
       "baseDirectory": "packages/rn-tester/js/examples/TurboModule",
-      "baseHash": "e650c9388ebd6b98c4acacee38059eff47c83466",
+      "baseHash": "b5578c95183bfbf584844d1c77d7c198ada306e1",
       "issue": 4054
     },
     {
@@ -509,7 +509,7 @@
       "type": "copy",
       "file": "NativeCxxModuleExample/NativeCxxModuleExample.js",
       "baseFile": "packages/rn-tester/NativeCxxModuleExample/NativeCxxModuleExample.js",
-      "baseHash": "b6a4867d9faf5ec35b6aaf0ed79700d520895c76",
+      "baseHash": "670876cfa79ed21fb40ab7215a023cb32cffb8bc",
       "issue": 4054
     },
     {

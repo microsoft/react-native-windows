@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.74.0-nightly-20231108-05d92bf2a",
+  "baseVersion": "0.74.0-nightly-20231110-9b33e752c",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "0b320bfe04e0c34b82dc624a1b9e2ccba9032f70"
+      "baseHash": "97736cc688fa8146658778aa32d6a22c49d96edd"
     },
     {
       "type": "derived",
@@ -170,7 +170,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/Touchable/TouchableNativeFeedback.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableNativeFeedback.js",
-      "baseHash": "2082604bf871d04091717d7808ebf0b2355fc8ae"
+      "baseHash": "ac429ef22142f8bb7a274a6eb98575f6de07295f"
     },
     {
       "type": "platform",
@@ -306,7 +306,7 @@
       "type": "patch",
       "file": "src/Libraries/Inspector/Inspector.win32.js",
       "baseFile": "packages/react-native/Libraries/Inspector/Inspector.js",
-      "baseHash": "db933614c0c15f0ce69907e37baae6b31dd39867"
+      "baseHash": "31755d5a4b40d8f2eeb84c2dc08b1a36357742ef"
     },
     {
       "type": "patch",
