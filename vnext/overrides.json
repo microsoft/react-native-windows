@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.74.0-nightly-20231031-572dd76ba",
+  "baseVersion": "0.74.0-nightly-20231106-1e21e3469",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "55a2906a48f5d54bd1daf47d2b127ce2848199e9"
+      "baseHash": "0b320bfe04e0c34b82dc624a1b9e2ccba9032f70"
     },
     {
       "type": "derived",
@@ -70,14 +70,14 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/RawPropsParser.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/core/RawPropsParser.cpp",
-      "baseHash": "be5d1851ae27bb3a55620e7a33ecf082ebaa9aa6",
+      "baseHash": "79fc21a9ad5ba440186d970c44021e25928b6f79",
       "issue": 12300
     },
     {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/ShadowNode.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/core/ShadowNode.cpp",
-      "baseHash": "e4feb272298f6625461f5bdca2fca4d64e1a5894",
+      "baseHash": "f313b178d1996b61527c16c44e41732ffca2651b",
       "issue": 12300
     },
     {
@@ -368,7 +368,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/View/ViewPropTypes.d.ts",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewPropTypes.d.ts",
-      "baseHash": "8a7908f1ebfde292f2d70f6672c96c05eb7397c8"
+      "baseHash": "7ab8da32f3f0390cd415db0c2c4127d8b7b930f8"
     },
     {
       "type": "patch",

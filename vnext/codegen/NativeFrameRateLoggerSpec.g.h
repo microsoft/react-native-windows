@@ -15,14 +15,12 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct FrameRateLoggerSpec_setGlobalOptions_options {
     std::optional<bool> debug;
-    std::optional<bool> reportStackTraces;
 };
 
 
 inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(FrameRateLoggerSpec_setGlobalOptions_options*) noexcept {
     winrt::Microsoft::ReactNative::FieldMap fieldMap {
         {L"debug", &FrameRateLoggerSpec_setGlobalOptions_options::debug},
-        {L"reportStackTraces", &FrameRateLoggerSpec_setGlobalOptions_options::reportStackTraces},
     };
     return fieldMap;
 }
