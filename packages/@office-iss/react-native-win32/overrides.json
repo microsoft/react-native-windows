@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.74.0-nightly-20231106-1e21e3469",
+  "baseVersion": "0.74.0-nightly-20231108-05d92bf2a",
   "overrides": [
     {
       "type": "derived",
@@ -19,7 +19,7 @@
       "type": "derived",
       "file": "src/index.win32.js",
       "baseFile": "packages/react-native/index.js",
-      "baseHash": "287445ef805383901c37da6026f8cf423ab0f078"
+      "baseHash": "b658f287732c27fdd28722a8765c3b1b0c1316fa"
     },
     {
       "type": "platform",

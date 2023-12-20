@@ -10,17 +10,14 @@
 
 'use strict';
 
-const React = require('react');
-
-const {Text, TextInput, View, StyleSheet, Switch} = require('react-native');
-
-const TextInputSharedExamples = require('./TextInputSharedExamples');
-const {useState} = React;
-
 import type {
   RNTesterModule,
   RNTesterModuleExample,
 } from '../../types/RNTesterTypes';
+
+const TextInputSharedExamples = require('./TextInputSharedExamples.js');
+const React = require('react');
+const {StyleSheet, Switch, Text, TextInput, View} = require('react-native');
 
 class ToggleDefaultPaddingExample extends React.Component<
   $FlowFixMeProps,

@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-#include <yoga/Yoga-internal.h>
-#include "Yoga.h"
+#include <yoga/Yoga.h>
+
 #include <yoga/algorithm/Cache.h>
 #include <yoga/algorithm/CalculateLayout.h>
 #include <yoga/algorithm/PixelGrid.h>
@@ -91,10 +91,6 @@ bool YGNodeIsDirty(YGNodeConstRef node) {
   return resolveRef(node)->isDirty();
 }
 
-void YGNodeMarkDirtyAndPropagateToDescendants(const YGNodeRef node) {
-  return resolveRef(node)->markDirtyAndPropagateDownwards();
-}
-
 YGNodeRef YGNodeNewWithConfig(const YGConfigConstRef config) {
   auto* node = new yoga::Node{resolveRef(config)};
   yoga::assertFatal(
@@ -139,10 +135,12 @@ void YGNodeFree(const YGNodeRef nodeRef) {
   }
 
   node->clearChildren();
-  YGNodeDeallocate(node);
+
+  Event::publish<Event::NodeDeallocation>(node, {YGNodeGetConfig(node)});
+  delete resolveRef(node);
 }
 
-void YGNodeDeallocate(const YGNodeRef node) {
+void YGNodeFinalize(const YGNodeRef node) {
   Event::publish<Event::NodeDeallocation>(node, {YGNodeGetConfig(node)});
   delete resolveRef(node);
 }
