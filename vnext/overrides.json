@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.74.0-nightly-20231110-9b33e752c",
+  "baseVersion": "0.74.0-nightly-20231113-6962b5fdd",
   "overrides": [
     {
       "type": "derived",
@@ -119,6 +119,7 @@
       "type": "patch",
       "file": "ReactCommon/Yoga.cpp",
       "baseFile": "packages/react-native/ReactCommon/yoga/yoga/Yoga.cpp",
+      "baseVersion": "0.74.0-nightly-20231110-9b33e752c",
       "baseHash": "1e3476df8da24ee99b4ea4f8a2f6796fa44120a6",
       "issue": 3994
     },

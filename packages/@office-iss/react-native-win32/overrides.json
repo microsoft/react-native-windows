@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.74.0-nightly-20231110-9b33e752c",
+  "baseVersion": "0.74.0-nightly-20231113-6962b5fdd",
   "overrides": [
     {
       "type": "derived",
@@ -306,13 +306,13 @@
       "type": "patch",
       "file": "src/Libraries/Inspector/Inspector.win32.js",
       "baseFile": "packages/react-native/Libraries/Inspector/Inspector.js",
-      "baseHash": "31755d5a4b40d8f2eeb84c2dc08b1a36357742ef"
+      "baseHash": "03565787cbe09078824ee3fcfc12401085995454"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Inspector/InspectorOverlay.win32.js",
       "baseFile": "packages/react-native/Libraries/Inspector/InspectorOverlay.js",
-      "baseHash": "e485323ee22cfae5c8b5e58b1283e2c00d650145"
+      "baseHash": "b2d22b7a448802373d619df28cf8a70756c0ce33"
     },
     {
       "type": "derived",

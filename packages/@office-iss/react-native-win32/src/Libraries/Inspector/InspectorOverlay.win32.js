@@ -10,8 +10,8 @@
 
 'use strict';
 
-import type {ViewStyleProp} from '../StyleSheet/StyleSheet';
 import type {PressEvent} from '../Types/CoreEventTypes';
+import type {InspectedElement} from './Inspector';
 
 // import Dimensions from '../Utilities/Dimensions'; [Win32]
 
@@ -20,27 +20,26 @@ const StyleSheet = require('../StyleSheet/StyleSheet');
 const ElementBox = require('./ElementBox');
 const React = require('react');
 
-type Inspected = $ReadOnly<{|
-  frame?: Object,
-  style?: ViewStyleProp,
-|}>;
-
 type Props = $ReadOnly<{|
-  inspected?: Inspected,
+  inspected?: ?InspectedElement,
   onTouchPoint: (locationX: number, locationY: number) => void,
 |}>;
 
-class InspectorOverlay extends React.Component<Props> {
-  findViewForTouchEvent: (e: PressEvent) => void = (e: PressEvent) => {
+function InspectorOverlay({inspected, onTouchPoint}: Props): React.Node {
+  const findViewForTouchEvent = (e: PressEvent) => {
     const {locationX, locationY} = e.nativeEvent.touches[0];
 
-    this.props.onTouchPoint(locationX, locationY);
+    onTouchPoint(locationX, locationY);
   };
 
-  shouldSetResponser: (e: PressEvent) => boolean = (e: PressEvent): boolean => {
-    this.findViewForTouchEvent(e);
+  const handleStartShouldSetResponder = (e: PressEvent): boolean => {
+    findViewForTouchEvent(e);
     return true;
   };
+
+  let content = null;
+  if (inspected) {
+    content = <ElementBox frame={inspected.frame} style={inspected.style} />;
 
   render(): React.Node {
     let content = null;
@@ -56,8 +55,8 @@ class InspectorOverlay extends React.Component<Props> {
     // [Win32, height replaced with 100% to avoid Dimensions call]
     return (
       <View
-        onStartShouldSetResponder={this.shouldSetResponser}
-        onResponderMove={this.findViewForTouchEvent}
+        onStartShouldSetResponder={handleStartShouldSetResponder}
+        onResponderMove={findViewForTouchEvent}
         nativeID="inspectorOverlay" /* TODO: T68258846. */
         style={[styles.inspector, {height: '100%'}]}>
         {content}
