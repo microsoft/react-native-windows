@@ -145,9 +145,7 @@ void YGNodeFinalize(const YGNodeRef node) {
   delete resolveRef(node);
 }
 
-void YGNodeFreeRecursiveWithCleanupFunc(
-    const YGNodeRef rootRef,
-    YGNodeCleanupFunc cleanup) {
+void YGNodeFreeRecursive(YGNodeRef rootRef) {
   const auto root = resolveRef(rootRef);
 
   size_t skipped = 0;
@@ -161,14 +159,7 @@ void YGNodeFreeRecursiveWithCleanupFunc(
       YGNodeFreeRecursive(child);
     }
   }
-  if (cleanup != nullptr) {
-    cleanup(root);
-  }
   YGNodeFree(root);
-}
-
-void YGNodeFreeRecursive(const YGNodeRef root) {
-  return YGNodeFreeRecursiveWithCleanupFunc(root, nullptr);
 }
 
 void YGNodeReset(YGNodeRef node) {
