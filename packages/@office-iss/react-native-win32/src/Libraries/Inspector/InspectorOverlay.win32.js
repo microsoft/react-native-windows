@@ -40,6 +40,7 @@ function InspectorOverlay({inspected, onTouchPoint}: Props): React.Node {
   let content = null;
   if (inspected) {
     content = <ElementBox frame={inspected.frame} style={inspected.style} />;
+  };
 
   render(): React.Node {
     let content = null;
