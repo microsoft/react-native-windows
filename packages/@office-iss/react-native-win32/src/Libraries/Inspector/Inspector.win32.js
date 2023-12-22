@@ -52,7 +52,6 @@ type Props = {
   reactDevToolsAgent?: ReactDevToolsAgent,
 };
 
-
 const UIManager = require('../ReactNative/UIManager'); // [Win32]
 
 function Inspector({

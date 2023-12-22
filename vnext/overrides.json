@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.74.0-nightly-20231113-6962b5fdd",
+  "baseVersion": "0.74.0-nightly-20231116-fa89dd68b",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "97736cc688fa8146658778aa32d6a22c49d96edd"
+      "baseHash": "397a9d59e4415e8758adc635d5e016070e6d85d7"
     },
     {
       "type": "derived",
@@ -77,14 +77,14 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mounting/ShadowTree.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/mounting/ShadowTree.cpp",
-      "baseHash": "7e52068b21ba500a397e344c943a4f732f07e848",
+      "baseHash": "430fa0d97835b073c9d3266d7d8d21096bae081b",
       "issue": 12195
     },
     {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/uimanager/UIManagerBinding.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/uimanager/UIManagerBinding.cpp",
-      "baseHash": "f830b73ce7e480a1d3c49623bc0e44d4c8834a01",
+      "baseHash": "5f60fee5a468fb960ab0e5c12c3a54837d2c8b92",
       "issue": 12195
     },
     {
