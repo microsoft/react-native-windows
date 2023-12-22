@@ -19,10 +19,6 @@
 using namespace facebook;
 using namespace facebook::yoga;
 
-bool YGFloatIsUndefined(const float value) {
-  return yoga::isUndefined(value);
-}
-
 void* YGNodeGetContext(YGNodeConstRef node) {
   return resolveRef(node)->getContext();
 }
