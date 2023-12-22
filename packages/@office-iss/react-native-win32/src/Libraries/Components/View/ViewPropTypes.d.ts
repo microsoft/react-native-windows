@@ -160,7 +160,7 @@ export interface ViewPropsAndroid {
    * -  0 (View is focusable)
    * - -1 (View is not focusable)
    */
-  // tabIndex?: 0 | -1 | undefined; [Windows fix to get react-native-picker working]
+  // tabIndex?: 0 | -1 | undefined; [Windows fix to get react-native-picker working #12548]
 }
 
 // [Win32
