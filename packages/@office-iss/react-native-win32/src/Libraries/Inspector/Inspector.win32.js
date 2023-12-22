@@ -115,18 +115,17 @@ function Inspector({
       }
 
       // [Win32 Avoid Dimensions call
-      const node = ReactNative.findNodeHandle(this);
+      const node = ReactNative.findNodeHandle(inspectedView);
       // $FlowFixMe[incompatible-call]
       UIManager.measure(node, (x, y, width, height, left, top) => {
-        this.setState({
-          panelPos: pointerY > height / 2 ? 'top' : 'bottom',
-          selection: selectedIndex,
-          hierarchy,
-          inspected: {
-            style: props.style,
-            frame,
-            source,
-          },
+        setPanelPosition(pointerY > height / 2 ? 'top' : 'bottom');
+        setSelectionIndex(selectedIndex);
+        setElementsHierarchy(hierarchy);
+        // $FlowFixMe[incompatible-call] `props` from InspectorData are defined as <string, string> dictionary, which is incompatible with ViewStyleProp
+        setInspectedElement({
+          frame,
+          source,
+          style: props.style,
         });
       });
     };

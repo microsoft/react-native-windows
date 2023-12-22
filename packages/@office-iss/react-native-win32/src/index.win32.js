@@ -18,6 +18,7 @@ import typeof * as AnimatedModule from './Libraries/Animated/Animated';
 import typeof Easing from './Libraries/Animated/Easing';
 import typeof useAnimatedValue from './Libraries/Animated/useAnimatedValue';
 import typeof AppState from './Libraries/AppState/AppState';
+import typeof FocusManager from './Libraries/Utilities/FocusManager';
 import typeof NativeModules from './Libraries/BatchedBridge/NativeModules';
 // Components
 import typeof AccessibilityInfo from './Libraries/Components/AccessibilityInfo/AccessibilityInfo';

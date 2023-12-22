@@ -40,30 +40,18 @@ function InspectorOverlay({inspected, onTouchPoint}: Props): React.Node {
   let content = null;
   if (inspected) {
     content = <ElementBox frame={inspected.frame} style={inspected.style} />;
-  };
-
-  render(): React.Node {
-    let content = null;
-    if (this.props.inspected) {
-      content = (
-        <ElementBox
-          frame={this.props.inspected.frame}
-          style={this.props.inspected.style}
-        />
-      );
-    }
-
-    // [Win32, height replaced with 100% to avoid Dimensions call]
-    return (
-      <View
-        onStartShouldSetResponder={handleStartShouldSetResponder}
-        onResponderMove={findViewForTouchEvent}
-        nativeID="inspectorOverlay" /* TODO: T68258846. */
-        style={[styles.inspector, {height: '100%'}]}>
-        {content}
-      </View>
-    );
   }
+
+  // [Win32, height replaced with 100% to avoid Dimensions call]
+  return (
+    <View
+      onStartShouldSetResponder={handleStartShouldSetResponder}
+      onResponderMove={findViewForTouchEvent}
+      nativeID="inspectorOverlay" /* TODO: T68258846. */
+      style={[styles.inspector, {height: '100%'}]}>
+      {content}
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
