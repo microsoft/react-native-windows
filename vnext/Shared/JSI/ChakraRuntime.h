@@ -463,6 +463,7 @@ class ChakraRuntime : public facebook::jsi::Runtime, public ChakraApi, ChakraApi
     JsRefHolder enumerable;
     JsRefHolder get;
     JsRefHolder getOwnPropertyDescriptor;
+    JsRefHolder has;
     JsRefHolder hostFunctionSymbol;
     JsRefHolder hostObjectSymbol;
     JsRefHolder length;
@@ -479,6 +480,11 @@ class ChakraRuntime : public facebook::jsi::Runtime, public ChakraApi, ChakraApi
   JsRefHolder m_undefinedValue;
   JsRefHolder m_proxyConstructor;
   JsRefHolder m_hostObjectProxyHandler;
+
+  JsRefHolder m_weakMapGet;
+  JsRefHolder m_weakMapHas;
+  JsRefHolder m_weakMapSet;
+  JsRefHolder m_nativeStateMap;
 
   static std::once_flag s_runtimeVersionInitFlag;
   static uint64_t s_runtimeVersion;

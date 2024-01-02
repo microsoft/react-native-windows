@@ -2999,6 +2999,28 @@ exports[`snapshotAllPages Animated 1`] = `
       }
     }
   />
+  <View
+    style={
+      {
+        "marginTop": 20,
+      }
+    }
+  >
+    <Text>
+      Should not crash when transform style key is undefined
+    </Text>
+    <View
+      collapsable={false}
+      style={
+        {
+          "backgroundColor": "blue",
+          "height": 100,
+          "transform": undefined,
+          "width": 100,
+        }
+      }
+    />
+  </View>
 </View>
 `;
 
