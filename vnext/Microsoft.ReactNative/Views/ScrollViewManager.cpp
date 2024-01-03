@@ -256,7 +256,7 @@ void ScrollViewShadowNode::AddHandlers(const winrt::ScrollViewer &scrollViewer) 
           EmitScrollEvent(
               scrollViewerNotNull,
               m_tag,
-              L"topScrollBeginMomentum",
+              L"topMomentumScrollBegin",
               args.NextView().HorizontalOffset(),
               args.NextView().VerticalOffset(),
               args.NextView().ZoomFactor(),
@@ -299,7 +299,7 @@ void ScrollViewShadowNode::AddHandlers(const winrt::ScrollViewer &scrollViewer) 
           EmitScrollEvent(
               scrollViewer,
               m_tag,
-              L"topScrollEndMomentum",
+              L"topMomentumScrollEnd",
               scrollViewer.HorizontalOffset(),
               scrollViewer.VerticalOffset(),
               scrollViewer.ZoomFactor(),
