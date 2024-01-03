@@ -9435,10 +9435,17 @@ metro-runtime@0.79.1:
     "@babel/runtime" "^7.0.0"
     react-refresh "^0.4.0"
 
-metro-runtime@0.80.1, metro-runtime@^0.80.0:
+metro-runtime@0.80.1:
   version "0.80.1"
   resolved "https://registry.yarnpkg.com/metro-runtime/-/metro-runtime-0.80.1.tgz#39835e38a0d283d5753af5b89aee1980dbe9d89c"
   integrity sha512-RQ+crdwbC4oUYzWom8USCvJWEfFyIuQAeV0bVcNvbpaaz3Q4imXSINJkjDth37DHnxUlhNhEeAcRG6JQIO1QeA==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+
+metro-runtime@^0.80.0:
+  version "0.80.2"
+  resolved "https://registry.yarnpkg.com/metro-runtime/-/metro-runtime-0.80.2.tgz#86add125576c4a3514f7cf2e6d45d5e2a2cea436"
+  integrity sha512-ruIlSEVnmJGbLnZIGf8/ra+qoD1Knft0R+5laUpp/KEGkD+GEr4XgP+5j5Uuq3v36qDLFTj1KXfQP5JVoeM8zw==
   dependencies:
     "@babel/runtime" "^7.0.0"
 
