@@ -20,7 +20,7 @@ constexpr bool isUndefined(T value) {
   return value != value;
 }
 
-// [Windows c++20 fix]
+// [Windows c++20 fix #12195]
 template <typename T>
 constexpr bool isDefined(T value) {
   return !isUndefined(value);

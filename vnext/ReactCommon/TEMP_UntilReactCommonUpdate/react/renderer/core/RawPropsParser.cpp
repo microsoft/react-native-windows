@@ -20,7 +20,7 @@ namespace facebook::react {
 const RawValue* RawPropsParser::at(
     const RawProps& rawProps,
     const RawPropsKey& key) const noexcept {
-  // [Windows c++20 fix
+  // [Windows c++20 fix #12195
   if (UNLIKELY(!ready_)) {
   // Windows]
     // Check against the same key being inserted more than once.
@@ -69,7 +69,7 @@ const RawValue* RawPropsParser::at(
 #endif
   do {
     rawProps.keyIndexCursor_++;
-    // [Windows c++20 fix
+    // [Windows c++20 fix #12195
     if (UNLIKELY(static_cast<size_t>(rawProps.keyIndexCursor_) >= keys_.size())) {
     // Windows]
 #ifdef REACT_NATIVE_DEBUG

@@ -116,7 +116,7 @@ T convertRawProp(
     const char* namePrefix = nullptr,
     const char* nameSuffix = nullptr) {
   const auto* rawValue = rawProps.at(name, namePrefix, nameSuffix);
-  // [Windows c++20 fix
+  // [Windows c++20 fix #12195
   if (LIKELY(rawValue == nullptr)) {
   // Windows]
     return sourceValue;
@@ -124,7 +124,7 @@ T convertRawProp(
 
   // Special case: `null` always means "the prop was removed, use default
   // value".
-  // [Windows c++20 fix
+  // [Windows c++20 fix #12195
   if (UNLIKELY(!rawValue->hasValue())) {
   // Windows]
     return defaultValue;
