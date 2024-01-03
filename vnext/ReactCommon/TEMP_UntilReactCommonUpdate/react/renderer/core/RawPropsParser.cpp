@@ -7,7 +7,6 @@
 
 #include "RawPropsParser.h"
 
-#include <folly/Likely.h>
 #include <react/debug/react_native_assert.h>
 #include <react/renderer/core/RawProps.h>
 
@@ -21,7 +20,9 @@ namespace facebook::react {
 const RawValue* RawPropsParser::at(
     const RawProps& rawProps,
     const RawPropsKey& key) const noexcept {
+  // [Windows c++20 fix #12195
   if (UNLIKELY(!ready_)) {
+  // Windows]
     // Check against the same key being inserted more than once.
     // This happens commonly with nested Props structs, where the higher-level
     // struct may access all fields, and then the nested Props struct may
@@ -33,9 +34,7 @@ const RawValue* RawPropsParser::at(
     // 4950 lookups and equality checks on initialization of the parser, which
     // happens exactly once per component.
     size_t size = keys_.size();
-    // [Windows Changed i to size_t, removal issue #12300
     for (size_t i = 0; i < size; i++) {
-    // Windows]
       if (keys_[i] == key) {
         return nullptr;
       }
@@ -70,7 +69,7 @@ const RawValue* RawPropsParser::at(
 #endif
   do {
     rawProps.keyIndexCursor_++;
-    // [Windows Added static_cast, removal issue #12300
+    // [Windows c++20 fix #12195
     if (UNLIKELY(static_cast<size_t>(rawProps.keyIndexCursor_) >= keys_.size())) {
     // Windows]
 #ifdef REACT_NATIVE_DEBUG
@@ -84,7 +83,7 @@ const RawValue* RawPropsParser::at(
 #endif
       rawProps.keyIndexCursor_ = 0;
     }
-  } while (UNLIKELY(key != keys_[rawProps.keyIndexCursor_]));
+  } while (key != keys_[rawProps.keyIndexCursor_]);
 
   auto valueIndex = rawProps.keyIndexToValueIndex_[rawProps.keyIndexCursor_];
   return valueIndex == kRawPropsValueIndexEmpty ? nullptr

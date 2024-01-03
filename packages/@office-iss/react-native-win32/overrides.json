@@ -7,19 +7,19 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.74.0-nightly-20231031-572dd76ba",
+  "baseVersion": "0.74.0-nightly-20231116-fa89dd68b",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "55a2906a48f5d54bd1daf47d2b127ce2848199e9"
+      "baseHash": "397a9d59e4415e8758adc635d5e016070e6d85d7"
     },
     {
       "type": "derived",
       "file": "src/index.win32.js",
       "baseFile": "packages/react-native/index.js",
-      "baseHash": "287445ef805383901c37da6026f8cf423ab0f078"
+      "baseHash": "b658f287732c27fdd28722a8765c3b1b0c1316fa"
     },
     {
       "type": "platform",
@@ -170,7 +170,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/Touchable/TouchableNativeFeedback.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableNativeFeedback.js",
-      "baseHash": "2082604bf871d04091717d7808ebf0b2355fc8ae"
+      "baseHash": "ac429ef22142f8bb7a274a6eb98575f6de07295f"
     },
     {
       "type": "platform",
@@ -212,7 +212,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/View/ViewPropTypes.d.ts",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewPropTypes.d.ts",
-      "baseHash": "8a7908f1ebfde292f2d70f6672c96c05eb7397c8"
+      "baseHash": "7ab8da32f3f0390cd415db0c2c4127d8b7b930f8"
     },
     {
       "type": "patch",
@@ -306,13 +306,13 @@
       "type": "patch",
       "file": "src/Libraries/Inspector/Inspector.win32.js",
       "baseFile": "packages/react-native/Libraries/Inspector/Inspector.js",
-      "baseHash": "db933614c0c15f0ce69907e37baae6b31dd39867"
+      "baseHash": "03565787cbe09078824ee3fcfc12401085995454"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Inspector/InspectorOverlay.win32.js",
       "baseFile": "packages/react-native/Libraries/Inspector/InspectorOverlay.js",
-      "baseHash": "e485323ee22cfae5c8b5e58b1283e2c00d650145"
+      "baseHash": "b2d22b7a448802373d619df28cf8a70756c0ce33"
     },
     {
       "type": "derived",
