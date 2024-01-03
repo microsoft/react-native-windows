@@ -5,6 +5,7 @@ import "CompositionContext.idl";
 import "IJSValueWriter.idl";
 import "ReactCoreInjection.idl";
 import "ReactNativeHost.idl";
+import "Theme.idl";
 #include "NamespaceRedirect.h"
 #include "DocString.h"
 
@@ -79,6 +80,9 @@ namespace Microsoft.ReactNative
     Int64 SendMessage(UInt32 Msg, UInt64 WParam, Int64 LParam);
 
     Object GetUiaProvider();
+
+    DOC_STRING("Theme used for Platform colors within this RootView")
+    Microsoft.ReactNative.Composition.Theme Theme;
 
 #ifdef USE_WINUI3
     Microsoft.UI.Content.ContentIsland Island { get; };

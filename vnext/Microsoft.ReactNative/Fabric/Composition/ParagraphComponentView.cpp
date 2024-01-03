@@ -61,7 +61,6 @@ void ParagraphComponentView::updateProps(
 
   // update BaseComponentView props
   updateAccessibilityProps(oldViewProps, newViewProps);
-  updateShadowProps(oldViewProps, newViewProps, m_visual);
   updateTransformProps(oldViewProps, newViewProps, m_visual);
   Super::updateProps(props, oldProps);
 
@@ -288,11 +287,12 @@ void ParagraphComponentView::updateVisualBrush() noexcept {
 
 void ParagraphComponentView::onThemeChanged() noexcept {
   DrawText();
+  Super::onThemeChanged();
 }
 
 // Renders the text into our composition surface
 void ParagraphComponentView::DrawText() noexcept {
-  if (!m_drawingSurface)
+  if (!m_drawingSurface || theme()->IsEmpty())
     return;
 
   if (m_layoutMetrics.frame.size.width == 0 || m_layoutMetrics.frame.size.height == 0) {

@@ -62,7 +62,7 @@ exports[`Home UIA Tree Dump APIs Tab 1`] = `
                   },
                 ],
                 "Offset": [
-                  151,
+                  235,
                   13,
                   0,
                 ],
@@ -103,7 +103,7 @@ exports[`Home UIA Tree Dump APIs Tab 1`] = `
                   },
                 ],
                 "Offset": [
-                  153,
+                  236,
                   33,
                   0,
                 ],
@@ -122,7 +122,7 @@ exports[`Home UIA Tree Dump APIs Tab 1`] = `
             ],
             "Opacity": 1,
             "Size": [
-              333,
+              499,
               65,
             ],
             "Visual Type": "SpriteVisual",
@@ -148,7 +148,7 @@ exports[`Home UIA Tree Dump APIs Tab 1`] = `
         ],
         "Opacity": 1,
         "Size": [
-          333,
+          499,
           65,
         ],
         "Visual Type": "SpriteVisual",
@@ -162,7 +162,7 @@ exports[`Home UIA Tree Dump APIs Tab 1`] = `
     ],
     "Opacity": 1,
     "Size": [
-      333,
+      499,
       65,
     ],
     "Visual Type": "SpriteVisual",
@@ -183,15 +183,6 @@ exports[`Home UIA Tree Dump Accessibility 1`] = `
         "IsKeyboardFocusable": false,
         "LocalizedControlType": "text",
         "Name": "Accessibility",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
       },
       {
         "AutomationId": "",
@@ -281,90 +272,6 @@ exports[`Home UIA Tree Dump Accessibility 1`] = `
         "Size": [
           107,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -565,15 +472,6 @@ exports[`Home UIA Tree Dump Accessibility Windows 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -660,90 +558,6 @@ exports[`Home UIA Tree Dump Accessibility Windows 1`] = `
         "Size": [
           194,
           27,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -944,15 +758,6 @@ exports[`Home UIA Tree Dump AccessibilityInfo 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -1039,90 +844,6 @@ exports[`Home UIA Tree Dump AccessibilityInfo 1`] = `
         "Size": [
           142,
           27,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -1323,15 +1044,6 @@ exports[`Home UIA Tree Dump ActivityIndicator 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -1418,90 +1130,6 @@ exports[`Home UIA Tree Dump ActivityIndicator 1`] = `
         "Size": [
           143,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -1702,15 +1330,6 @@ exports[`Home UIA Tree Dump Alerts 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -1797,90 +1416,6 @@ exports[`Home UIA Tree Dump Alerts 1`] = `
         "Size": [
           51,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -2081,15 +1616,6 @@ exports[`Home UIA Tree Dump Animated - Gratuitous App 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -2176,90 +1702,6 @@ exports[`Home UIA Tree Dump Animated - Gratuitous App 1`] = `
         "Size": [
           239,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -2460,15 +1902,6 @@ exports[`Home UIA Tree Dump Animated 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -2555,90 +1988,6 @@ exports[`Home UIA Tree Dump Animated 1`] = `
         "Size": [
           86,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -2839,15 +2188,6 @@ exports[`Home UIA Tree Dump AppState 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -2934,90 +2274,6 @@ exports[`Home UIA Tree Dump AppState 1`] = `
         "Size": [
           81,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -3218,15 +2474,6 @@ exports[`Home UIA Tree Dump Appearance 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -3313,90 +2560,6 @@ exports[`Home UIA Tree Dump Appearance 1`] = `
         "Size": [
           106,
           27,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -3597,15 +2760,6 @@ exports[`Home UIA Tree Dump Border 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -3692,90 +2846,6 @@ exports[`Home UIA Tree Dump Border 1`] = `
         "Size": [
           60,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -3976,15 +3046,6 @@ exports[`Home UIA Tree Dump Button 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -4071,90 +3132,6 @@ exports[`Home UIA Tree Dump Button 1`] = `
         "Size": [
           60,
           27,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -4425,8 +3402,8 @@ exports[`Home UIA Tree Dump Components Tab 1`] = `
               },
               {
                 "Offset": [
-                  0,
-                  0,
+                  -0,
+                  -0,
                   0,
                 ],
                 "Opacity": 1,
@@ -4452,7 +3429,7 @@ exports[`Home UIA Tree Dump Components Tab 1`] = `
               {
                 "Offset": [
                   0,
-                  0,
+                  -0,
                   0,
                 ],
                 "Opacity": 1,
@@ -4505,7 +3482,7 @@ exports[`Home UIA Tree Dump Components Tab 1`] = `
                   },
                 ],
                 "Offset": [
-                  156,
+                  240,
                   14,
                   0,
                 ],
@@ -4526,7 +3503,7 @@ exports[`Home UIA Tree Dump Components Tab 1`] = `
                     ],
                     "Opacity": 1,
                     "Size": [
-                      80,
+                      81,
                       19,
                     ],
                     "Visual Type": "SpriteVisual",
@@ -4546,13 +3523,13 @@ exports[`Home UIA Tree Dump Components Tab 1`] = `
                   },
                 ],
                 "Offset": [
-                  126,
+                  209,
                   34,
                   0,
                 ],
                 "Opacity": 1,
                 "Size": [
-                  80,
+                  81,
                   19,
                 ],
                 "Visual Type": "SpriteVisual",
@@ -4565,7 +3542,7 @@ exports[`Home UIA Tree Dump Components Tab 1`] = `
             ],
             "Opacity": 1,
             "Size": [
-              333,
+              499,
               65,
             ],
             "Visual Type": "SpriteVisual",
@@ -4591,7 +3568,7 @@ exports[`Home UIA Tree Dump Components Tab 1`] = `
         ],
         "Opacity": 1,
         "Size": [
-          333,
+          499,
           65,
         ],
         "Visual Type": "SpriteVisual",
@@ -4605,7 +3582,7 @@ exports[`Home UIA Tree Dump Components Tab 1`] = `
     ],
     "Opacity": 1,
     "Size": [
-      333,
+      499,
       65,
     ],
     "Visual Type": "SpriteVisual",
@@ -4626,15 +3603,6 @@ exports[`Home UIA Tree Dump Composition Bugs Example 1`] = `
         "IsKeyboardFocusable": false,
         "LocalizedControlType": "text",
         "Name": "Composition Bugs Example",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
       },
       {
         "AutomationId": "",
@@ -4724,90 +3692,6 @@ exports[`Home UIA Tree Dump Composition Bugs Example 1`] = `
         "Size": [
           241,
           27,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -5008,15 +3892,6 @@ exports[`Home UIA Tree Dump Crash 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -5103,90 +3978,6 @@ exports[`Home UIA Tree Dump Crash 1`] = `
         "Size": [
           50,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -5387,15 +4178,6 @@ exports[`Home UIA Tree Dump Cxx TurboModule 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -5482,90 +4264,6 @@ exports[`Home UIA Tree Dump Cxx TurboModule 1`] = `
         "Size": [
           157,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -5766,15 +4464,6 @@ exports[`Home UIA Tree Dump DevSettings 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -5861,90 +4550,6 @@ exports[`Home UIA Tree Dump DevSettings 1`] = `
         "Size": [
           106,
           27,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -6145,15 +4750,6 @@ exports[`Home UIA Tree Dump Dimensions 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -6240,90 +4836,6 @@ exports[`Home UIA Tree Dump Dimensions 1`] = `
         "Size": [
           103,
           27,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -6524,15 +5036,6 @@ exports[`Home UIA Tree Dump Display:none Style 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -6619,90 +5122,6 @@ exports[`Home UIA Tree Dump Display:none Style 1`] = `
         "Size": [
           161,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -6903,15 +5322,6 @@ exports[`Home UIA Tree Dump Fast Path Texts 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -6998,90 +5408,6 @@ exports[`Home UIA Tree Dump Fast Path Texts 1`] = `
         "Size": [
           128,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -7282,15 +5608,6 @@ exports[`Home UIA Tree Dump FlatList 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -7377,90 +5694,6 @@ exports[`Home UIA Tree Dump FlatList 1`] = `
         "Size": [
           62,
           27,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -7661,15 +5894,6 @@ exports[`Home UIA Tree Dump Flyout 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -7756,90 +5980,6 @@ exports[`Home UIA Tree Dump Flyout 1`] = `
         "Size": [
           55,
           27,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -8040,15 +6180,6 @@ exports[`Home UIA Tree Dump Glyph UWP 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -8135,90 +6266,6 @@ exports[`Home UIA Tree Dump Glyph UWP 1`] = `
         "Size": [
           101,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -8419,15 +6466,6 @@ exports[`Home UIA Tree Dump Image 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -8514,90 +6552,6 @@ exports[`Home UIA Tree Dump Image 1`] = `
         "Size": [
           55,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -8798,15 +6752,6 @@ exports[`Home UIA Tree Dump Keyboard 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -8893,90 +6838,6 @@ exports[`Home UIA Tree Dump Keyboard 1`] = `
         "Size": [
           84,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -9177,15 +7038,6 @@ exports[`Home UIA Tree Dump Keyboard 2`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -9272,90 +7124,6 @@ exports[`Home UIA Tree Dump Keyboard 2`] = `
         "Size": [
           84,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -9556,15 +7324,6 @@ exports[`Home UIA Tree Dump Keyboard Focus Example 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -9651,90 +7410,6 @@ exports[`Home UIA Tree Dump Keyboard Focus Example 1`] = `
         "Size": [
           220,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -9935,15 +7610,6 @@ exports[`Home UIA Tree Dump Keyboard extension Example 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -10030,90 +7696,6 @@ exports[`Home UIA Tree Dump Keyboard extension Example 1`] = `
         "Size": [
           254,
           27,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -10314,15 +7896,6 @@ exports[`Home UIA Tree Dump Layout - Flexbox 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -10409,90 +7982,6 @@ exports[`Home UIA Tree Dump Layout - Flexbox 1`] = `
         "Size": [
           145,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -10693,15 +8182,6 @@ exports[`Home UIA Tree Dump Layout Events 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -10788,90 +8268,6 @@ exports[`Home UIA Tree Dump Layout Events 1`] = `
         "Size": [
           122,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -11072,15 +8468,6 @@ exports[`Home UIA Tree Dump Legacy Native Module 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -11167,90 +8554,6 @@ exports[`Home UIA Tree Dump Legacy Native Module 1`] = `
         "Size": [
           197,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -11451,15 +8754,6 @@ exports[`Home UIA Tree Dump LegacyControlStyleTest 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -11546,90 +8840,6 @@ exports[`Home UIA Tree Dump LegacyControlStyleTest 1`] = `
         "Size": [
           203,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -11830,15 +9040,6 @@ exports[`Home UIA Tree Dump LegacyImageTest 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -11925,90 +9126,6 @@ exports[`Home UIA Tree Dump LegacyImageTest 1`] = `
         "Size": [
           150,
           27,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -12209,15 +9326,6 @@ exports[`Home UIA Tree Dump LegacyLoginTest 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -12304,90 +9412,6 @@ exports[`Home UIA Tree Dump LegacyLoginTest 1`] = `
         "Size": [
           145,
           27,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -12588,15 +9612,6 @@ exports[`Home UIA Tree Dump LegacySelectableTextTest 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -12683,90 +9698,6 @@ exports[`Home UIA Tree Dump LegacySelectableTextTest 1`] = `
         "Size": [
           220,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -12967,15 +9898,6 @@ exports[`Home UIA Tree Dump LegacyTextHitTestTest 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -13062,90 +9984,6 @@ exports[`Home UIA Tree Dump LegacyTextHitTestTest 1`] = `
         "Size": [
           190,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -13346,15 +10184,6 @@ exports[`Home UIA Tree Dump LegacyTextInputTest 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -13441,90 +10270,6 @@ exports[`Home UIA Tree Dump LegacyTextInputTest 1`] = `
         "Size": [
           177,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -13725,15 +10470,6 @@ exports[`Home UIA Tree Dump Linking 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -13820,90 +10556,6 @@ exports[`Home UIA Tree Dump Linking 1`] = `
         "Size": [
           64,
           27,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -14104,15 +10756,6 @@ exports[`Home UIA Tree Dump Mouse Click Events 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -14199,90 +10842,6 @@ exports[`Home UIA Tree Dump Mouse Click Events 1`] = `
         "Size": [
           169,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -14483,15 +11042,6 @@ exports[`Home UIA Tree Dump Mouse Events 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -14578,90 +11128,6 @@ exports[`Home UIA Tree Dump Mouse Events 1`] = `
         "Size": [
           123,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -14862,15 +11328,6 @@ exports[`Home UIA Tree Dump Native Animated Example 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -14957,90 +11414,6 @@ exports[`Home UIA Tree Dump Native Animated Example 1`] = `
         "Size": [
           227,
           27,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -15241,15 +11614,6 @@ exports[`Home UIA Tree Dump New App Screen 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -15336,90 +11700,6 @@ exports[`Home UIA Tree Dump New App Screen 1`] = `
         "Size": [
           147,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -15620,15 +11900,6 @@ exports[`Home UIA Tree Dump PanResponder Sample 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -15715,90 +11986,6 @@ exports[`Home UIA Tree Dump PanResponder Sample 1`] = `
         "Size": [
           197,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -15999,15 +12186,6 @@ exports[`Home UIA Tree Dump Performance API Examples 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -16094,90 +12272,6 @@ exports[`Home UIA Tree Dump Performance API Examples 1`] = `
         "Size": [
           234,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -16378,15 +12472,6 @@ exports[`Home UIA Tree Dump Performance Comparison Examples 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -16473,90 +12558,6 @@ exports[`Home UIA Tree Dump Performance Comparison Examples 1`] = `
         "Size": [
           312,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -16757,15 +12758,6 @@ exports[`Home UIA Tree Dump PlatformColor 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -16852,90 +12844,6 @@ exports[`Home UIA Tree Dump PlatformColor 1`] = `
         "Size": [
           123,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -17136,15 +13044,6 @@ exports[`Home UIA Tree Dump Pointer Events 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -17231,90 +13130,6 @@ exports[`Home UIA Tree Dump Pointer Events 1`] = `
         "Size": [
           125,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -17515,15 +13330,6 @@ exports[`Home UIA Tree Dump Popup 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -17610,90 +13416,6 @@ exports[`Home UIA Tree Dump Popup 1`] = `
         "Size": [
           58,
           27,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -17894,15 +13616,6 @@ exports[`Home UIA Tree Dump Pressable 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -17989,90 +13702,6 @@ exports[`Home UIA Tree Dump Pressable 1`] = `
         "Size": [
           83,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -18273,15 +13902,6 @@ exports[`Home UIA Tree Dump RTLExample 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -18368,90 +13988,6 @@ exports[`Home UIA Tree Dump RTLExample 1`] = `
         "Size": [
           105,
           27,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -18652,15 +14188,6 @@ exports[`Home UIA Tree Dump ScrollView 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -18747,90 +14274,6 @@ exports[`Home UIA Tree Dump ScrollView 1`] = `
         "Size": [
           91,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -19031,15 +14474,6 @@ exports[`Home UIA Tree Dump ScrollViewAnimated 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -19126,90 +14560,6 @@ exports[`Home UIA Tree Dump ScrollViewAnimated 1`] = `
         "Size": [
           176,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -19410,15 +14760,6 @@ exports[`Home UIA Tree Dump ScrollViewSimpleExample 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -19505,90 +14846,6 @@ exports[`Home UIA Tree Dump ScrollViewSimpleExample 1`] = `
         "Size": [
           224,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -19972,15 +15229,6 @@ exports[`Home UIA Tree Dump SectionList 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -20067,90 +15315,6 @@ exports[`Home UIA Tree Dump SectionList 1`] = `
         "Size": [
           95,
           27,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -20351,15 +15515,6 @@ exports[`Home UIA Tree Dump Share 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -20446,90 +15601,6 @@ exports[`Home UIA Tree Dump Share 1`] = `
         "Size": [
           50,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -20730,15 +15801,6 @@ exports[`Home UIA Tree Dump SwipeableCard 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -20825,90 +15887,6 @@ exports[`Home UIA Tree Dump SwipeableCard 1`] = `
         "Size": [
           131,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -21109,15 +16087,6 @@ exports[`Home UIA Tree Dump Switch 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -21204,90 +16173,6 @@ exports[`Home UIA Tree Dump Switch 1`] = `
         "Size": [
           57,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -21488,15 +16373,6 @@ exports[`Home UIA Tree Dump Text 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -21583,90 +16459,6 @@ exports[`Home UIA Tree Dump Text 1`] = `
         "Size": [
           35,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -21867,15 +16659,6 @@ exports[`Home UIA Tree Dump TextInput 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -21962,90 +16745,6 @@ exports[`Home UIA Tree Dump TextInput 1`] = `
         "Size": [
           82,
           27,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -22246,15 +16945,6 @@ exports[`Home UIA Tree Dump TextInputs with key prop 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -22341,90 +17031,6 @@ exports[`Home UIA Tree Dump TextInputs with key prop 1`] = `
         "Size": [
           217,
           27,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -22625,15 +17231,6 @@ exports[`Home UIA Tree Dump Timers 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -22720,90 +17317,6 @@ exports[`Home UIA Tree Dump Timers 1`] = `
         "Size": [
           59,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -23004,15 +17517,6 @@ exports[`Home UIA Tree Dump Touchable* and onPress 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -23099,90 +17603,6 @@ exports[`Home UIA Tree Dump Touchable* and onPress 1`] = `
         "Size": [
           211,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -23383,15 +17803,6 @@ exports[`Home UIA Tree Dump TransferProperties 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -23478,90 +17889,6 @@ exports[`Home UIA Tree Dump TransferProperties 1`] = `
         "Size": [
           159,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -23762,15 +18089,6 @@ exports[`Home UIA Tree Dump Transforms 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -23857,90 +18175,6 @@ exports[`Home UIA Tree Dump Transforms 1`] = `
         "Size": [
           97,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -24141,15 +18375,6 @@ exports[`Home UIA Tree Dump TransparentHitTestExample 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -24236,90 +18461,6 @@ exports[`Home UIA Tree Dump TransparentHitTestExample 1`] = `
         "Size": [
           237,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -24520,15 +18661,6 @@ exports[`Home UIA Tree Dump TurboModule 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -24615,90 +18747,6 @@ exports[`Home UIA Tree Dump TurboModule 1`] = `
         "Size": [
           121,
           27,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -24899,15 +18947,6 @@ exports[`Home UIA Tree Dump View 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -24994,90 +19033,6 @@ exports[`Home UIA Tree Dump View 1`] = `
         "Size": [
           43,
           27,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -25278,15 +19233,6 @@ exports[`Home UIA Tree Dump WebSocket 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -25373,90 +19319,6 @@ exports[`Home UIA Tree Dump WebSocket 1`] = `
         "Size": [
           99,
           27,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -25657,15 +19519,6 @@ exports[`Home UIA Tree Dump XAML 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -25752,90 +19605,6 @@ exports[`Home UIA Tree Dump XAML 1`] = `
         "Size": [
           53,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -26036,15 +19805,6 @@ exports[`Home UIA Tree Dump XMLHttpRequest 1`] = `
       },
       {
         "AutomationId": "",
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
-      },
-      {
-        "AutomationId": "",
         "ControlType": 50020,
         "HelpText": "",
         "IsEnabled": true,
@@ -26131,90 +19891,6 @@ exports[`Home UIA Tree Dump XMLHttpRequest 1`] = `
         "Size": [
           150,
           28,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      25,
-                      25,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  3,
-                  3,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  25,
-                  25,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              30,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          923,
-          7,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          30,
-          30,
         ],
         "Visual Type": "SpriteVisual",
       },

@@ -2,6 +2,222 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 20 Dec 2023 06:14:13 GMT",
+      "version": "0.0.0-canary.748",
+      "tag": "react-native-windows_v0.0.0-canary.748",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "8df470c1a01a2babc53af55b13e54725cede92d9",
+            "comment": "integrate 10/31"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 16 Dec 2023 06:14:45 GMT",
+      "version": "0.0.0-canary.747",
+      "tag": "react-native-windows_v0.0.0-canary.747",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "react-native-windows",
+            "commit": "6efa6bff7d437d5f75d98ddbbb7ed09c42c511cb",
+            "comment": "testing integration"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 09 Dec 2023 06:15:28 GMT",
+      "version": "0.0.0-canary.746",
+      "tag": "react-native-windows_v0.0.0-canary.746",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "34ae4174bbdd4991ba0432ed324da836922a7239",
+            "comment": "Fix FileReader Base64 padding"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 08 Dec 2023 06:14:10 GMT",
+      "version": "0.0.0-canary.745",
+      "tag": "react-native-windows_v0.0.0-canary.745",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "f0bb18d19cd65c7ac8802f7a2b0d714e391cfaed",
+            "comment": "Use form data as JSArray"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "830cf8a85ddd00c0055ba07a68362031f7ef20d3",
+            "comment": "[Fabric] Remove DeviceInfo stub from template and test app"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 07 Dec 2023 06:14:10 GMT",
+      "version": "0.0.0-canary.744",
+      "tag": "react-native-windows_v0.0.0-canary.744",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "react-native-windows",
+            "commit": "e0bf4cb412cd0a8e15591e7f844f8f0047333089",
+            "comment": "updated path to match upstream fork"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 06 Dec 2023 03:54:49 GMT",
+      "version": "0.0.0-canary.743",
+      "tag": "react-native-windows_v0.0.0-canary.743",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3bb7adb786eba1600e330fed4fe75f0cd09812dd",
+            "comment": "Enable `/PROFILE` linker flag for vulcan compatibility"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "04329dceb5554057ed7a24ac24deff2a03d5f11f",
+            "comment": "[Fabric] Add DeviceInfoModule"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "f24821d5c06452b4311b1db08f462b369aa2edde",
+            "comment": "[Fabric] Add support for custom theme's, and support runtime theme change"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3ac229a323e0acfd34e5667912a9531c2026b3b8",
+            "comment": "add caretHidden to Fabric's TextInput"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 29 Nov 2023 06:16:34 GMT",
+      "version": "0.0.0-canary.742",
+      "tag": "react-native-windows_v0.0.0-canary.742",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "46c26bbb890b3a9344ba70d528606f2775b16a1b",
+            "comment": "Update @react-native/react-native-picker"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "5fe8721f0c9898904319f9a27b9b7cf924d3cdc9",
+            "comment": "[Fabric] Add support for custom native component to have c++ state and custom measure"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 22 Nov 2023 06:16:28 GMT",
+      "version": "0.0.0-canary.741",
+      "tag": "react-native-windows_v0.0.0-canary.741",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "52a81d1f06829cb1a01ae9739bfbcd495c70272f",
+            "comment": "fix depcheck errors"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 18 Nov 2023 06:14:50 GMT",
+      "version": "0.0.0-canary.740",
+      "tag": "react-native-windows_v0.0.0-canary.740",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "f58718e589b02d79c42f4810d4971410755644be",
+            "comment": "Fabric: Enable react-test-renderer tests in the new cpp-app template"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "c7cc92b86285a915097b34ad13b7403b42ef20c8",
+            "comment": "Release long lived JSI objects ASAP"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b84ca2d75a1983c68e8896969edbf806d91bd454",
+            "comment": "Check HTTP handler property and value exist"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 17 Nov 2023 06:15:10 GMT",
+      "version": "0.0.0-canary.739",
+      "tag": "react-native-windows_v0.0.0-canary.739",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ericroz@meta.com",
+            "package": "react-native-windows",
+            "commit": "8090ee31063e18b49874a754fc27c67bbe8c30ee",
+            "comment": "Include RuntimeExecutor.h consistently"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "922e3bfb3442f030bf64eb90f36fc17abc42d373",
+            "comment": "Change Hermes package version to 0.1.18"
+          },
+          {
+            "author": "ericroz@meta.com",
+            "package": "react-native-windows",
+            "commit": "3bd050b27169bcb272db42f06ac66108e14f1bf5",
+            "comment": "Minor cleanup of recent RuntimeScheduler integration"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b3802eb84bd18e6bfd91c117c2bf1fd1f35365d0",
+            "comment": "Fixes for running without lifted composition"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "63f11aa7459940990270ad34becae6313df31f3d",
+            "comment": "update fmt to 10.1.0"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 16 Nov 2023 06:13:44 GMT",
       "version": "0.0.0-canary.738",
       "tag": "react-native-windows_v0.0.0-canary.738",

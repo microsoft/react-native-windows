@@ -8,6 +8,7 @@
 #include <Fabric/ComponentView.h>
 #include <Fabric/Composition/CompositionUIService.h>
 #include <Fabric/Composition/CompositionViewComponentView.h>
+#include <Fabric/Composition/RootComponentView.h>
 #include <Fabric/FabricUIManagerModule.h>
 #include <Fabric/ReactNativeConfigProperties.h>
 #include <Fabric/WindowsComponentDescriptorRegistry.h>
@@ -15,6 +16,7 @@
 #include <IReactContext.h>
 #include <IReactRootView.h>
 #include <JSI/jsi.h>
+#include <ReactCommon/RuntimeExecutor.h>
 #include <SchedulerSettings.h>
 #include <SynchronousEventBeat.h>
 #include <UI.Xaml.Controls.h>
@@ -27,7 +29,6 @@
 #include <react/renderer/scheduler/SchedulerToolbox.h>
 #include <react/utils/ContextContainer.h>
 #include <react/utils/CoreFeatures.h>
-#include <runtimeexecutor/ReactCommon/RuntimeExecutor.h>
 #include <winrt/Windows.Graphics.Display.h>
 #include <winrt/Windows.UI.Composition.Desktop.h>
 #include "Unicode.h"
@@ -52,7 +53,12 @@ FabricUIManager::FabricUIManager() {
   facebook::react::CoreFeatures::enablePropIteratorSetter = true;
 }
 
-FabricUIManager::~FabricUIManager() {}
+FabricUIManager::~FabricUIManager() {
+  // Make sure that we destroy UI components on UI thread.
+  if (!m_context.UIDispatcher().HasThreadAccess()) {
+    m_context.UIDispatcher().Post([registry = std::move(m_registry)]() {});
+  }
+}
 
 void FabricUIManager::installFabricUIManager() noexcept {
   std::shared_ptr<const facebook::react::ReactNativeConfig> config =
@@ -139,9 +145,12 @@ void FabricUIManager::startSurface(
     const folly::dynamic &initialProps) noexcept {
   m_surfaceRegistry.insert({surfaceId, {rootView.RootVisual(), rootView}});
 
-  m_context.UIDispatcher().Post([self = shared_from_this(), surfaceId]() {
+  m_context.UIDispatcher().Post([self = shared_from_this(), surfaceId, rootView]() {
     auto &rootComponentViewDescriptor = self->m_registry.dequeueComponentViewWithComponentHandle(
         facebook::react::RootShadowNode::Handle(), surfaceId, self->m_compContext);
+
+    static_cast<RootComponentView &>(*rootComponentViewDescriptor.view)
+        .theme(winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::Theme>(rootView.Theme()));
 
     self->m_surfaceRegistry.at(surfaceId).rootVisual.InsertAt(
         static_cast<const CompositionBaseComponentView &>(*rootComponentViewDescriptor.view).OuterVisual(), 0);

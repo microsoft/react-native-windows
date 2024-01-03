@@ -156,6 +156,7 @@ class Inspector extends React.Component<
 
       // [Win32 Avoid Dimensions call
       const node = ReactNative.findNodeHandle(this);
+      // $FlowFixMe[incompatible-call]
       UIManager.measure(node, (x, y, width, height, left, top) => {
         this.setState({
           panelPos: pointerY > height / 2 ? 'top' : 'bottom',

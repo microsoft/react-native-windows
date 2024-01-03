@@ -4,7 +4,7 @@
 #pragma once
 
 #include <Networking/WinRTWebSocketResource.h>
-#include <jsinspector/InspectorInterfaces.h>
+#include <jsinspector-modern/InspectorInterfaces.h>
 
 namespace Microsoft::ReactNative {
 
@@ -40,13 +40,14 @@ class InspectorPackagerConnection final : public std::enable_shared_from_this<In
   void sendMessageToVM(int32_t pageId, std::string &&message);
 
  private:
-  std::unordered_map<int32_t, std::unique_ptr<facebook::react::ILocalConnection>> m_localConnections;
+  std::unordered_map<int32_t, std::unique_ptr<facebook::react::jsinspector_modern::ILocalConnection>>
+      m_localConnections;
   std::shared_ptr<Microsoft::React::Networking::WinRTWebSocketResource> m_packagerWebSocketConnection;
   std::shared_ptr<IBundleStatusProvider> m_bundleStatusProvider;
   std::string m_url;
 };
 
-class RemoteConnection final : public facebook::react::IRemoteConnection {
+class RemoteConnection final : public facebook::react::jsinspector_modern::IRemoteConnection {
  public:
   RemoteConnection(int32_t pageId, const InspectorPackagerConnection &packagerConnection);
   void onMessage(std::string message) override;

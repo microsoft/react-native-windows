@@ -1,8 +1,99 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 16 Nov 2023 06:13:44 GMT and should not be manually modified.
+This log was last generated on Wed, 20 Dec 2023 06:14:13 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.748
+
+Wed, 20 Dec 2023 06:14:13 GMT
+
+### Changes
+
+- integrate 10/31 (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.747
+
+Sat, 16 Dec 2023 06:14:45 GMT
+
+### Changes
+
+- testing integration (yajurgrover24@gmail.com)
+
+## 0.0.0-canary.746
+
+Sat, 09 Dec 2023 06:15:28 GMT
+
+### Changes
+
+- Fix FileReader Base64 padding (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.745
+
+Fri, 08 Dec 2023 06:14:10 GMT
+
+### Changes
+
+- Use form data as JSArray (julio.rocha@microsoft.com)
+- [Fabric] Remove DeviceInfo stub from template and test app (email not defined)
+
+## 0.0.0-canary.744
+
+Thu, 07 Dec 2023 06:14:10 GMT
+
+### Changes
+
+- updated path to match upstream fork (yajurgrover24@gmail.com)
+
+## 0.0.0-canary.743
+
+Wed, 06 Dec 2023 03:54:49 GMT
+
+### Changes
+
+- Enable `/PROFILE` linker flag for vulcan compatibility (jthysell@microsoft.com)
+- [Fabric] Add DeviceInfoModule (email not defined)
+- [Fabric] Add support for custom theme's, and support runtime theme change (30809111+acoates-ms@users.noreply.github.com)
+- add caretHidden to Fabric's TextInput (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.742
+
+Wed, 29 Nov 2023 06:16:34 GMT
+
+### Changes
+
+- Update @react-native/react-native-picker (jthysell@microsoft.com)
+- [Fabric] Add support for custom native component to have c++ state and custom measure (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.741
+
+Wed, 22 Nov 2023 06:16:28 GMT
+
+### Changes
+
+- fix depcheck errors (email not defined)
+
+## 0.0.0-canary.740
+
+Sat, 18 Nov 2023 06:14:50 GMT
+
+### Changes
+
+- Fabric: Enable react-test-renderer tests in the new cpp-app template (jthysell@microsoft.com)
+- Release long lived JSI objects ASAP (vmorozov@microsoft.com)
+- Check HTTP handler property and value exist (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.739
+
+Fri, 17 Nov 2023 06:15:10 GMT
+
+### Changes
+
+- Include RuntimeExecutor.h consistently (ericroz@meta.com)
+- Change Hermes package version to 0.1.18 (vmorozov@microsoft.com)
+- Minor cleanup of recent RuntimeScheduler integration (ericroz@meta.com)
+- Fixes for running without lifted composition (30809111+acoates-ms@users.noreply.github.com)
+- update fmt to 10.1.0 (email not defined)
 
 ## 0.0.0-canary.738
 

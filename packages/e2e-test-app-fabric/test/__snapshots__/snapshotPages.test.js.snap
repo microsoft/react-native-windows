@@ -2999,6 +2999,28 @@ exports[`snapshotAllPages Animated 1`] = `
       }
     }
   />
+  <View
+    style={
+      {
+        "marginTop": 20,
+      }
+    }
+  >
+    <Text>
+      Should not crash when transform style key is undefined
+    </Text>
+    <View
+      collapsable={false}
+      style={
+        {
+          "backgroundColor": "blue",
+          "height": 100,
+          "transform": undefined,
+          "width": 100,
+        }
+      }
+    />
+  </View>
 </View>
 `;
 
@@ -73771,6 +73793,7 @@ exports[`snapshotAllPages TextInput 19`] = `
         },
       ]
     }
+    testID="textinput-default-color"
   />
   <TextInput
     defaultValue="Green Text"
@@ -73784,6 +73807,7 @@ exports[`snapshotAllPages TextInput 19`] = `
         },
       ]
     }
+    testID="textinput-custom-color"
   />
   <TextInput
     placeholder="Default placeholder text color"
@@ -73792,6 +73816,7 @@ exports[`snapshotAllPages TextInput 19`] = `
         "fontSize": 16,
       }
     }
+    testID="textinput-default-placeholder-color"
   />
   <TextInput
     placeholder="Red placeholder text color"
@@ -73801,6 +73826,7 @@ exports[`snapshotAllPages TextInput 19`] = `
         "fontSize": 16,
       }
     }
+    testID="textinput-custom-placeholder-color"
   />
   <TextInput
     placeholder="Default underline color"
@@ -73809,6 +73835,7 @@ exports[`snapshotAllPages TextInput 19`] = `
         "fontSize": 16,
       }
     }
+    testID="textinput-default-underline-color"
   />
   <TextInput
     placeholder="Blue underline color"
@@ -73817,6 +73844,7 @@ exports[`snapshotAllPages TextInput 19`] = `
         "fontSize": 16,
       }
     }
+    testID="textinput-custom-underline-color"
     underlineColorAndroid="blue"
   />
   <TextInput
@@ -73831,6 +73859,7 @@ exports[`snapshotAllPages TextInput 19`] = `
         },
       ]
     }
+    testID="textinput-custom-background-color"
   >
     <Text
       style={
@@ -73850,6 +73879,7 @@ exports[`snapshotAllPages TextInput 19`] = `
         "fontSize": 16,
       }
     }
+    testID="textinput-custom-highlight-color"
   />
 </View>
 `;
@@ -73865,6 +73895,7 @@ exports[`snapshotAllPages TextInput 20`] = `
         },
       ]
     }
+    testID="textinput-weight-default"
   />
   <TextInput
     defaultValue="Font Weight (normal)"
@@ -73878,6 +73909,7 @@ exports[`snapshotAllPages TextInput 20`] = `
         },
       ]
     }
+    testID="textinput-weight-normal"
   />
   <TextInput
     defaultValue="Font Weight (bold)"
@@ -73891,6 +73923,7 @@ exports[`snapshotAllPages TextInput 20`] = `
         },
       ]
     }
+    testID="textinput-weight-bold"
   />
   <TextInput
     defaultValue="Font Weight (900)"
@@ -73904,6 +73937,7 @@ exports[`snapshotAllPages TextInput 20`] = `
         },
       ]
     }
+    testID="textinput-weight-900"
   />
   <TextInput
     defaultValue="Font Weight (800)"
@@ -73917,6 +73951,7 @@ exports[`snapshotAllPages TextInput 20`] = `
         },
       ]
     }
+    testID="textinput-weight-800"
   />
   <TextInput
     defaultValue="Font Weight (700)"
@@ -73930,6 +73965,7 @@ exports[`snapshotAllPages TextInput 20`] = `
         },
       ]
     }
+    testID="textinput-weight-700"
   />
   <TextInput
     defaultValue="Font Weight (600)"
@@ -73943,6 +73979,7 @@ exports[`snapshotAllPages TextInput 20`] = `
         },
       ]
     }
+    testID="textinput-weight-600"
   />
   <TextInput
     defaultValue="Font Weight (500)"
@@ -73956,6 +73993,7 @@ exports[`snapshotAllPages TextInput 20`] = `
         },
       ]
     }
+    testID="textinput-weight-500"
   />
   <TextInput
     defaultValue="Font Weight (400)"
@@ -73969,6 +74007,7 @@ exports[`snapshotAllPages TextInput 20`] = `
         },
       ]
     }
+    testID="textinput-weight-400"
   />
   <TextInput
     defaultValue="Font Weight (300)"
@@ -73982,6 +74021,7 @@ exports[`snapshotAllPages TextInput 20`] = `
         },
       ]
     }
+    testID="textinput-weight-300"
   />
   <TextInput
     defaultValue="Font Weight (200)"
@@ -73995,6 +74035,7 @@ exports[`snapshotAllPages TextInput 20`] = `
         },
       ]
     }
+    testID="textinput-weight-200"
   />
   <TextInput
     defaultValue="Font Weight (100)"
@@ -74008,6 +74049,7 @@ exports[`snapshotAllPages TextInput 20`] = `
         },
       ]
     }
+    testID="textinput-weight-100"
   />
 </View>
 `;
@@ -74022,6 +74064,7 @@ exports[`snapshotAllPages TextInput 21`] = `
       },
     ]
   }
+  testID="textinput-theme-padding"
 />
 `;
 
@@ -74039,6 +74082,7 @@ exports[`snapshotAllPages TextInput 22`] = `
         },
       ]
     }
+    testID="textinput-letterspacing-0"
   />
   <TextInput
     placeholder="letterSpacing = 2"
@@ -74052,6 +74096,7 @@ exports[`snapshotAllPages TextInput 22`] = `
         },
       ]
     }
+    testID="textinput-letterspacing-2"
   />
   <TextInput
     placeholder="letterSpacing = 9"
@@ -74065,6 +74110,7 @@ exports[`snapshotAllPages TextInput 22`] = `
         },
       ]
     }
+    testID="textinput-letterspacing-9"
   />
   <TextInput
     placeholder="letterSpacing = -1"
@@ -74078,6 +74124,7 @@ exports[`snapshotAllPages TextInput 22`] = `
         },
       ]
     }
+    testID="textinput-letterspacing--1"
   />
 </View>
 `;
@@ -74092,6 +74139,7 @@ exports[`snapshotAllPages TextInput 23`] = `
         "fontSize": 16,
       }
     }
+    testID="textinput-password"
   />
   <TextInput
     placeholder="color is supported too"
@@ -74107,6 +74155,7 @@ exports[`snapshotAllPages TextInput 23`] = `
         },
       ]
     }
+    testID="textinput-password-placeholder"
   />
 </View>
 `;
@@ -74120,6 +74169,7 @@ exports[`snapshotAllPages TextInput 24`] = `
       "fontSize": 16,
     }
   }
+  testID="textinput-not-editable"
 />
 `;
 
@@ -74142,6 +74192,7 @@ exports[`snapshotAllPages TextInput 25`] = `
         },
       ]
     }
+    testID="textinput-multiline-topleft"
   />
   <TextInput
     autoCorrect={true}
@@ -74160,6 +74211,7 @@ exports[`snapshotAllPages TextInput 25`] = `
         },
       ]
     }
+    testID="textinput-multiline-center"
   />
   <TextInput
     autoCorrect={true}
@@ -74179,6 +74231,7 @@ exports[`snapshotAllPages TextInput 25`] = `
         },
       ]
     }
+    testID="textinput-multiline-bottomright"
   >
     <Text
       style={
@@ -74208,6 +74261,7 @@ exports[`snapshotAllPages TextInput 26`] = `
         "padding": 4,
       }
     }
+    testID="textinput-editable"
   />
   <TextInput
     editable={false}
@@ -74221,6 +74275,7 @@ exports[`snapshotAllPages TextInput 26`] = `
         "padding": 4,
       }
     }
+    testID="textinput-not-editable2"
   />
   <TextInput
     placeholder="editable text input using readOnly prop"
@@ -74234,6 +74289,7 @@ exports[`snapshotAllPages TextInput 26`] = `
         "padding": 4,
       }
     }
+    testID="textinput-readonly-false"
   />
   <TextInput
     placeholder="uneditable text input using readOnly prop"
@@ -74247,6 +74303,7 @@ exports[`snapshotAllPages TextInput 26`] = `
         "padding": 4,
       }
     }
+    testID="textinput-readyonly"
   />
 </View>
 `;
@@ -74334,6 +74391,7 @@ exports[`snapshotAllPages TextInput 28`] = `
           },
         ]
       }
+      testID="textinput-autogrow"
     >
       <Text
         style={
@@ -74385,6 +74443,7 @@ exports[`snapshotAllPages TextInput 29`] = `
         "padding": 4,
       }
     }
+    testID="textinput-autocomplete-country"
   />
   <TextInput
     autoComplete="postal-address-country"
@@ -74398,6 +74457,7 @@ exports[`snapshotAllPages TextInput 29`] = `
         "padding": 4,
       }
     }
+    testID="textinput-autocomplete-address-country"
   />
   <TextInput
     autoComplete="one-time-code"
@@ -74411,6 +74471,7 @@ exports[`snapshotAllPages TextInput 29`] = `
         "padding": 4,
       }
     }
+    testID="textinput-autocomplete-one-time-code"
   />
   <TextInput
     autoComplete="sms-otp"
@@ -74424,6 +74485,7 @@ exports[`snapshotAllPages TextInput 29`] = `
         "padding": 4,
       }
     }
+    testID="textinput-autocomplete-sms-otp"
   />
 </View>
 `;
@@ -74438,6 +74500,7 @@ exports[`snapshotAllPages TextInput 30`] = `
         "fontSize": 16,
       }
     }
+    testID="textinput-return-none"
   />
   <TextInput
     placeholder="returnKeyType: go"
@@ -74447,6 +74510,7 @@ exports[`snapshotAllPages TextInput 30`] = `
         "fontSize": 16,
       }
     }
+    testID="textinput-return-go"
   />
   <TextInput
     placeholder="returnKeyType: search"
@@ -74456,6 +74520,7 @@ exports[`snapshotAllPages TextInput 30`] = `
         "fontSize": 16,
       }
     }
+    testID="textinput-return-search"
   />
   <TextInput
     placeholder="returnKeyType: send"
@@ -74465,6 +74530,7 @@ exports[`snapshotAllPages TextInput 30`] = `
         "fontSize": 16,
       }
     }
+    testID="textinput-return-send"
   />
   <TextInput
     placeholder="returnKeyType: done"
@@ -74474,6 +74540,7 @@ exports[`snapshotAllPages TextInput 30`] = `
         "fontSize": 16,
       }
     }
+    testID="textinput-return-done"
   />
   <TextInput
     placeholder="returnKeyType: previous"
@@ -74483,6 +74550,7 @@ exports[`snapshotAllPages TextInput 30`] = `
         "fontSize": 16,
       }
     }
+    testID="textinput-return-previous"
   />
   <TextInput
     placeholder="returnKeyType: next"
@@ -74492,6 +74560,7 @@ exports[`snapshotAllPages TextInput 30`] = `
         "fontSize": 16,
       }
     }
+    testID="textinput-return-next"
   />
   <TextInput
     placeholder="returnKeyLabel: Compile"
@@ -74501,6 +74570,7 @@ exports[`snapshotAllPages TextInput 30`] = `
         "fontSize": 16,
       }
     }
+    testID="textinput-return-Compile"
   />
   <TextInput
     placeholder="returnKeyLabel: React Native"
@@ -74510,6 +74580,7 @@ exports[`snapshotAllPages TextInput 30`] = `
         "fontSize": 16,
       }
     }
+    testID="textinput-return-React Native"
   />
 </View>
 `;
@@ -74524,6 +74595,7 @@ exports[`snapshotAllPages TextInput 31`] = `
         "fontSize": 16,
       }
     }
+    testID="textinput-inline-images"
   />
   <TextInput
     inlineImageLeft="ic_menu_black_24dp"
@@ -74534,6 +74606,7 @@ exports[`snapshotAllPages TextInput 31`] = `
         "fontSize": 16,
       }
     }
+    testID="textinput-inline-images-2"
   />
   <TextInput
     placeholder="This does not have drawable props set"
@@ -74542,6 +74615,7 @@ exports[`snapshotAllPages TextInput 31`] = `
         "fontSize": 16,
       }
     }
+    testID="textinput-inline-images-3"
   />
 </View>
 `;
@@ -74550,6 +74624,7 @@ exports[`snapshotAllPages TextInput 32`] = `
 <View>
   <TextInput
     style={null}
+    testID="textinput-padding"
   />
   <Text
     onPress={[Function]}
@@ -74575,6 +74650,7 @@ exports[`snapshotAllPages TextInput 33`] = `
         },
       ]
     }
+    testID="textinput-press"
   />
 </View>
 `;
@@ -74591,6 +74667,7 @@ exports[`snapshotAllPages TextInput 34`] = `
         "fontSize": 16,
       }
     }
+    testID="textinput-clear-on-submit"
   />
   <Text>
     Custom submit key event (Shift + Enter), single-line:
@@ -74610,6 +74687,7 @@ exports[`snapshotAllPages TextInput 34`] = `
         },
       ]
     }
+    testID="textinput-clear-on-submit-2"
   />
   <Text>
     Custom submit key event (Shift + Enter), multi-line:
@@ -74631,6 +74709,7 @@ exports[`snapshotAllPages TextInput 34`] = `
         },
       ]
     }
+    testID="textinput-clear-on-submit-3"
   />
   <Text>
     Submit with Enter key, return key with Shift + Enter
@@ -74651,6 +74730,7 @@ exports[`snapshotAllPages TextInput 34`] = `
         },
       ]
     }
+    testID="textinput-clear-on-submit-4"
   />
 </View>
 `;
@@ -74700,6 +74780,7 @@ exports[`snapshotAllPages TextInput 35`] = `
           },
         ]
       }
+      testID="textinput-propagation"
     />
   </View>,
   <View />,
@@ -74735,8 +74816,27 @@ exports[`snapshotAllPages TextInput 36`] = `
         },
       ]
     }
+    testID="textinput-spellcheck"
   />,
 ]
+`;
+
+exports[`snapshotAllPages TextInput 37`] = `
+<View>
+  <Text>
+    CaretHidden
+  </Text>
+  <TextInput
+    caretHidden={true}
+    placeholder="caretHidden={true}"
+    style={
+      {
+        "fontSize": 16,
+      }
+    }
+    testID="textinput-carethidden"
+  />
+</View>
 `;
 
 exports[`snapshotAllPages TextInputs with key prop 1`] = `

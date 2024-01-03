@@ -107,8 +107,8 @@ struct JsiRuntime : JsiRuntimeT<JsiRuntime> {
   JsiStringRef BigintToString(JsiBigIntRef obj, int radix);
 
   bool HasNativeState(JsiObjectRef obj);
-  JsiObjectRef GetNativeState(JsiObjectRef obj);
-  void SetNativeState(JsiObjectRef obj, JsiObjectRef state);
+  IReactNonAbiValue GetNativeState(JsiObjectRef obj);
+  void SetNativeState(JsiObjectRef obj, IReactNonAbiValue const &state);
 
   JsiObjectRef CreateArrayBuffer(JsiObjectRef buffer);
 

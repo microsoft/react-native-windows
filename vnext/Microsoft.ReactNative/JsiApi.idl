@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #include "DocString.h"
+import "IReactNonAbiValue.idl";
 
 namespace Microsoft.ReactNative
 {
@@ -286,10 +287,6 @@ namespace Microsoft.ReactNative
     UInt64 Truncate(JsiBigIntRef bigInt);
     JsiStringRef BigintToString(JsiBigIntRef bigInt, Int32 val);
 
-    Boolean HasNativeState(JsiObjectRef obj);
-    JsiObjectRef GetNativeState(JsiObjectRef obj);
-    void SetNativeState(JsiObjectRef obj, JsiObjectRef state);
-
     JsiObjectRef CreateArrayBuffer(JsiObjectRef buffer);  
 
     JsiObjectRef CreateObject();
@@ -340,5 +337,9 @@ namespace Microsoft.ReactNative
 
     JsiError GetAndClearError();
     void SetError(JsiErrorType errorType, String errorDetails, JsiValueRef value);
+
+    Boolean HasNativeState(JsiObjectRef obj);
+    IReactNonAbiValue GetNativeState(JsiObjectRef obj);
+    void SetNativeState(JsiObjectRef obj, IReactNonAbiValue state);
   };
 }

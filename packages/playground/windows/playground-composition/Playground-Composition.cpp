@@ -12,8 +12,6 @@
 
 #include <winrt/Windows.Foundation.Collections.h>
 
-#include "../../../../vnext/codegen/NativeDeviceInfoSpec.g.h"
-
 #include <DispatcherQueue.h>
 #include <UIAutomation.h>
 #include <windows.ui.composition.interop.h>
@@ -22,6 +20,7 @@
 #include <winrt/Windows.UI.Composition.Desktop.h>
 #include <winrt/Windows.UI.Composition.h>
 
+#include <DesktopWindowBridge.h>
 #include "NativeModules.h"
 #include "ReactPropertyBag.h"
 
@@ -153,7 +152,6 @@ struct WindowData {
               std::wstring(L"file:").append(workingDir).append(L"\\Bundle\\").c_str());
           host.InstanceSettings().UseDeveloperSupport(true);
 
-          host.PackageProviders().Append(CreateStubDeviceInfoPackageProvider());
           host.PackageProviders().Append(winrt::make<CompReactPackageProvider>());
           winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
               host.InstanceSettings().Properties(), reinterpret_cast<uint64_t>(hwnd));
@@ -480,6 +478,9 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
     case WM_WINDOWPOSCHANGED: {
       auto windowData = WindowData::GetFromWindow(hwnd);
       windowData->UpdateSize(hwnd);
+
+      winrt::Microsoft::ReactNative::ReactNotificationService rns(windowData->InstanceSettings().Notifications());
+      winrt::Microsoft::ReactNative::ForwardWindowMessage(rns, hwnd, message, wparam, lparam);
       break;
     }
   }

@@ -6,6 +6,7 @@ import "Composition.Input.idl";
 import "CompositionSwitcher.idl";
 import "IJSValueReader.idl";
 import "IReactContext.idl";
+import "IReactViewComponentBuilder.idl";
 import "ViewProps.idl";
 
 namespace Microsoft.ReactNative.Composition
@@ -24,32 +25,32 @@ namespace Microsoft.ReactNative.Composition
   // TODO should make an event args, with a handled bit instead of return value
   [experimental]
   DOC_STRING("A delegate that handles commands for an instance of a ViewComponent. See @IReactCompositionViewComponentBuilder.SetCommandHandler")
-  delegate Boolean CommandHandler(Object handle, String commandName, Microsoft.ReactNative.IJSValueReader args);
+  delegate Boolean CommandHandler(Object componentHandle, String commandName, Microsoft.ReactNative.IJSValueReader args);
 
   [experimental]
   DOC_STRING("A delegate that updates the properties for an instance of a ViewComponent. See @IReactCompositionViewComponentBuilder.SetPropsUpdater")
-  delegate void PropsUpdater(Object handle, Microsoft.ReactNative.IComponentProps props);
+  delegate void PropsUpdater(Object componentHandle, Microsoft.ReactNative.IComponentProps props);
 
   [experimental]
   DOC_STRING("A delegate that updates the @LayoutMetrics for an instance of a ViewComponent. See @IReactCompositionViewComponentBuilder.SetLayoutMetricsUpdater")
-  delegate void LayoutMetricsUpdater(Object handle, LayoutMetrics metrics);
+  delegate void LayoutMetricsUpdater(Object componentHandle, LayoutMetrics metrics);
 
   [experimental]
   DOC_STRING("A delegate that finalizes the updates for an instance of a ViewComponent. See @IReactCompositionViewComponentBuilder.SetUpdateFinalizer")
-  delegate void UpdateFinalizer(Object handle);
+  delegate void UpdateFinalizer(Object componentHandle);
 
   [experimental]
   DOC_STRING("A delegate that creates the @IVisual for an instance of a ViewComponent. See @IReactCompositionViewComponentBuilder.SetVisualCreator")
-  delegate IVisual VisualCreator(Object handle);
+  delegate IVisual VisualCreator(Object componentHandle);
 
   [experimental]
-  delegate void KeyHandler(Object handle, Microsoft.ReactNative.Composition.Input.KeyboardSource source, Microsoft.ReactNative.Composition.Input.KeyRoutedEventArgs args);
+  delegate void KeyHandler(Object componentHandle, Microsoft.ReactNative.Composition.Input.KeyboardSource source, Microsoft.ReactNative.Composition.Input.KeyRoutedEventArgs args);
 
   [experimental]
-  delegate void CharacterReceivedHandler(Object handle, Microsoft.ReactNative.Composition.Input.KeyboardSource source, Microsoft.ReactNative.Composition.Input.CharacterReceivedRoutedEventArgs args);
+  delegate void CharacterReceivedHandler(Object componentHandle, Microsoft.ReactNative.Composition.Input.KeyboardSource source, Microsoft.ReactNative.Composition.Input.CharacterReceivedRoutedEventArgs args);
 
   [experimental]
-  delegate void PointerHandler(Object handle, Microsoft.ReactNative.Composition.Input.PointerRoutedEventArgs args);
+  delegate void PointerHandler(Object componentHandle, Microsoft.ReactNative.Composition.Input.PointerRoutedEventArgs args);
 
   [webhosthidden]
   [experimental]
@@ -99,8 +100,5 @@ namespace Microsoft.ReactNative.Composition
     void SetPointerExitedHandler(PointerHandler impl);
 
   };
-
-
-
 
 } // namespace Microsoft.ReactNative
