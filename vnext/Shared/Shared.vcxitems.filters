@@ -784,6 +784,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\V8RuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SafeLoadLibrary.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)V8JSIRuntimeHolder.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\Modal\WindowsModalHostViewSate.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)tracing\rnw.wprp">

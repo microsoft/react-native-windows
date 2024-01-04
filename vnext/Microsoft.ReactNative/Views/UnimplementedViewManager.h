@@ -7,11 +7,11 @@
 
 namespace Microsoft::ReactNative {
 
-class ModalViewManager : public ControlViewManager {
+class UnimplementedViewManager : public ControlViewManager {
   using Super = ControlViewManager;
 
  public:
-  ModalViewManager(const Mso::React::IReactContext &context);
+  UnimplementedViewManager(const Mso::React::IReactContext &context, std::wstring name);
 
   const wchar_t *GetName() const override;
   void GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
@@ -20,7 +20,8 @@ class ModalViewManager : public ControlViewManager {
  protected:
   XamlView CreateViewCore(int64_t tag, const winrt::Microsoft::ReactNative::JSValueObject &) override;
 
-  friend class ModalShadowNode;
+  friend class UnimplementedShadowNode;
+  std::wstring m_name;
 };
 
 } // namespace Microsoft::ReactNative
