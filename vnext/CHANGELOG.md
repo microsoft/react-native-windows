@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 11 Dec 2023 16:15:10 GMT and should not be manually modified.
+This log was last generated on Mon, 08 Jan 2024 16:14:08 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.73.3
+
+Mon, 08 Jan 2024 16:14:08 GMT
+
+### Patches
+
+- backport #12278 (Fix event dispatch names for momentum scroll) (tatianakapos@microsoft.com)
 
 ## 0.73.2
 
