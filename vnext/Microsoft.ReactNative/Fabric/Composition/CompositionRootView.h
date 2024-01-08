@@ -64,6 +64,9 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
   float ScaleFactor() noexcept;
   void ScaleFactor(float value) noexcept;
 
+  winrt::Microsoft::ReactNative::Composition::Theme Theme() noexcept;
+  void Theme(const winrt::Microsoft::ReactNative::Composition::Theme &value) noexcept;
+
   winrt::Windows::Foundation::Size Measure(winrt::Windows::Foundation::Size const &availableSize) const;
   winrt::Windows::Foundation::Size Arrange(winrt::Windows::Foundation::Size finalSize) const;
 
@@ -114,6 +117,10 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
   winrt::Microsoft::ReactNative::ReactViewOptions m_reactViewOptions;
   std::shared_ptr<::Microsoft::ReactNative::CompositionEventHandler> m_CompositionEventHandler;
   winrt::Microsoft::ReactNative::Composition::IVisual m_rootVisual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::Theme m_theme{nullptr};
+  winrt::Microsoft::ReactNative::ReactNotificationSubscription m_themeChangedSubscription{nullptr};
+  winrt::Microsoft::ReactNative::Composition::Theme::ThemeChanged_revoker m_themeChangedRevoker;
+
   void UpdateRootViewInternal() noexcept;
   void ClearLoadingUI() noexcept;
   void EnsureLoadingUI() noexcept;

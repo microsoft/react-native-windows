@@ -61,7 +61,6 @@ void SwitchComponentView::updateProps(
   }
 
   // update BaseComponentView props
-  updateShadowProps(oldViewProps, newViewProps, m_visual);
   updateTransformProps(oldViewProps, newViewProps, m_visual);
   Super::updateProps(props, oldProps);
   m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
@@ -94,6 +93,10 @@ void SwitchComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) 
 
 void SwitchComponentView::Draw() noexcept {
   POINT offset;
+
+  if (theme()->IsEmpty()) {
+    return;
+  }
 
   ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(m_drawingSurface, &offset);
   if (auto d2dDeviceContext = autoDraw.GetRenderTarget()) {
@@ -283,6 +286,7 @@ winrt::Microsoft::ReactNative::Composition::IVisual SwitchComponentView::Visual(
 
 void SwitchComponentView::onThemeChanged() noexcept {
   Draw();
+  Super::onThemeChanged();
 }
 
 void SwitchComponentView::onPointerPressed(

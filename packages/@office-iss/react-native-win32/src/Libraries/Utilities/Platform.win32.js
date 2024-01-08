@@ -23,15 +23,19 @@ const Platform: PlatformType = {
   },
   // $FlowFixMe[unsafe-getters-setters]
   get constants(): {|
+    forceTouchAvailable: boolean,
+    interfaceIdiom: string,
     isTesting: boolean,
     isDisableAnimations?: boolean,
+    osVersion: number,
     reactNativeVersion: {|
       major: number,
       minor: number,
       patch: number,
       prerelease: ?string | number,
     |},
-    osVersion: number,
+    systemName: string,
+    isMacCatalyst?: boolean,
   |} {
     // $FlowFixMe[object-this-reference]
     if (this.__constants == null) {

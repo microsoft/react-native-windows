@@ -82,6 +82,7 @@ struct ImageComponentView : CompositionBaseComponentView {
   void didReceiveFailureFromObserver() noexcept;
   void setStateAndResubscribeImageResponseObserver(
       facebook::react::ImageShadowNode::ConcreteState::Shared const &state) noexcept;
+  bool themeEffectsImage() const noexcept;
 
   std::shared_ptr<const facebook::react::ImageProps> m_props;
 

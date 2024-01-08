@@ -53,6 +53,11 @@ float CompositionRootView::ScaleFactor() noexcept {
 
 void CompositionRootView::ScaleFactor(float) noexcept {}
 
+winrt::Microsoft::ReactNative::Composition::Theme CompositionRootView::Theme() noexcept {
+  return nullptr;
+}
+void CompositionRootView::Theme(const winrt::Microsoft::ReactNative::Composition::Theme &) noexcept {}
+
 winrt::IInspectable CompositionRootView::GetUiaProvider() noexcept {
   return nullptr;
 }

@@ -40,7 +40,7 @@ public:
 protected:
   NativeActionSheetManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeActionSheetManagerCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeActionSheetManagerCxxSpecJSI {
@@ -231,7 +231,7 @@ public:
 protected:
   NativeAlertManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeAlertManagerCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeAlertManagerCxxSpecJSI {
@@ -390,7 +390,7 @@ public:
 protected:
   NativeDialogManagerWindowsCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeDialogManagerWindowsCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeDialogManagerWindowsCxxSpecJSI {
@@ -560,7 +560,7 @@ public:
 protected:
   NativeAnimatedModuleCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeAnimatedModuleCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeAnimatedModuleCxxSpecJSI {
@@ -906,7 +906,7 @@ public:
 protected:
   NativeAnimatedTurboModuleCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeAnimatedTurboModuleCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeAnimatedTurboModuleCxxSpecJSI {
@@ -1216,7 +1216,7 @@ public:
 protected:
   NativeAppStateCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeAppStateCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeAppStateCxxSpecJSI {
@@ -1419,7 +1419,7 @@ public:
 protected:
   NativeAppThemeCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeAppThemeCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeAppThemeCxxSpecJSI {
@@ -1471,7 +1471,7 @@ public:
 protected:
   NativeBlobModuleCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeBlobModuleCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeBlobModuleCxxSpecJSI {
@@ -1566,7 +1566,7 @@ public:
 protected:
   NativeFileReaderModuleCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeFileReaderModuleCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeFileReaderModuleCxxSpecJSI {
@@ -1622,7 +1622,7 @@ public:
 protected:
   NativeBugReportingCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeBugReportingCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeBugReportingCxxSpecJSI {
@@ -1846,7 +1846,7 @@ public:
 protected:
   NativeExceptionsManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeExceptionsManagerCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeExceptionsManagerCxxSpecJSI {
@@ -1927,7 +1927,7 @@ public:
 protected:
   NativeDevToolsSettingsManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeDevToolsSettingsManagerCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeDevToolsSettingsManagerCxxSpecJSI {
@@ -1997,7 +1997,7 @@ public:
 protected:
   NativeJSCHeapCaptureCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeJSCHeapCaptureCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeJSCHeapCaptureCxxSpecJSI {
@@ -2116,7 +2116,7 @@ public:
 protected:
   NativeImageEditorCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeImageEditorCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeImageEditorCxxSpecJSI {
@@ -2175,7 +2175,7 @@ public:
 protected:
   NativeImageLoaderAndroidCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeImageLoaderAndroidCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeImageLoaderAndroidCxxSpecJSI {
@@ -2266,7 +2266,7 @@ public:
 protected:
   NativeImageLoaderIOSCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeImageLoaderIOSCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeImageLoaderIOSCxxSpecJSI {
@@ -2353,7 +2353,7 @@ public:
 protected:
   NativeImageStoreAndroidCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeImageStoreAndroidCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeImageStoreAndroidCxxSpecJSI {
@@ -2411,7 +2411,7 @@ public:
 protected:
   NativeImageStoreIOSCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeImageStoreIOSCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeImageStoreIOSCxxSpecJSI {
@@ -2492,7 +2492,7 @@ public:
 protected:
   NativeFrameRateLoggerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeFrameRateLoggerCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeFrameRateLoggerCxxSpecJSI {
@@ -2699,7 +2699,7 @@ public:
 protected:
   NativeIntersectionObserverCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeIntersectionObserverCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeIntersectionObserverCxxSpecJSI {
@@ -2781,7 +2781,7 @@ public:
 protected:
   NativeIntentAndroidCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeIntentAndroidCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeIntentAndroidCxxSpecJSI {
@@ -2864,7 +2864,7 @@ public:
 protected:
   NativeLinkingManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeLinkingManagerCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeLinkingManagerCxxSpecJSI {
@@ -2951,7 +2951,7 @@ public:
 protected:
   NativeModalManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeModalManagerCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeModalManagerCxxSpecJSI {
@@ -3121,7 +3121,7 @@ public:
 protected:
   NativeMutationObserverCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeMutationObserverCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeMutationObserverCxxSpecJSI {
@@ -3203,7 +3203,7 @@ public:
 protected:
   NativeNetworkingAndroidCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeNetworkingAndroidCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeNetworkingAndroidCxxSpecJSI {
@@ -3285,7 +3285,7 @@ public:
 protected:
   NativeNetworkingIOSCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeNetworkingIOSCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeNetworkingIOSCxxSpecJSI {
@@ -3363,7 +3363,7 @@ public:
 protected:
   NativeJSCSamplingProfilerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeJSCSamplingProfilerCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeJSCSamplingProfilerCxxSpecJSI {
@@ -3412,7 +3412,7 @@ public:
 protected:
   NativePermissionsAndroidCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativePermissionsAndroidCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativePermissionsAndroidCxxSpecJSI {
@@ -3517,40 +3517,42 @@ struct PushNotificationManagerBasePermissionsBridging {
 
 #pragma mark - PushNotificationManagerBaseNotification
 
-template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8, typename P9>
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8, typename P9, typename P10>
 struct PushNotificationManagerBaseNotification {
   P0 alertTitle;
-  P1 fireDate;
-  P2 alertBody;
-  P3 alertAction;
-  P4 userInfo;
-  P5 category;
-  P6 repeatInterval;
-  P7 applicationIconBadgeNumber;
-  P8 isSilent;
-  P9 soundName;
+  P1 alertBody;
+  P2 userInfo;
+  P3 category;
+  P4 fireDate;
+  P5 fireIntervalSeconds;
+  P6 applicationIconBadgeNumber;
+  P7 isSilent;
+  P8 soundName;
+  P9 alertAction;
+  P10 repeatInterval;
   bool operator==(const PushNotificationManagerBaseNotification &other) const {
-    return alertTitle == other.alertTitle && fireDate == other.fireDate && alertBody == other.alertBody && alertAction == other.alertAction && userInfo == other.userInfo && category == other.category && repeatInterval == other.repeatInterval && applicationIconBadgeNumber == other.applicationIconBadgeNumber && isSilent == other.isSilent && soundName == other.soundName;
+    return alertTitle == other.alertTitle && alertBody == other.alertBody && userInfo == other.userInfo && category == other.category && fireDate == other.fireDate && fireIntervalSeconds == other.fireIntervalSeconds && applicationIconBadgeNumber == other.applicationIconBadgeNumber && isSilent == other.isSilent && soundName == other.soundName && alertAction == other.alertAction && repeatInterval == other.repeatInterval;
   }
 };
 
-template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8, typename P9>
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8, typename P9, typename P10>
 struct PushNotificationManagerBaseNotificationBridging {
-  static PushNotificationManagerBaseNotification<P0, P1, P2, P3, P4, P5, P6, P7, P8, P9> fromJs(
+  static PushNotificationManagerBaseNotification<P0, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10> fromJs(
       jsi::Runtime &rt,
       const jsi::Object &value,
       const std::shared_ptr<CallInvoker> &jsInvoker) {
-    PushNotificationManagerBaseNotification<P0, P1, P2, P3, P4, P5, P6, P7, P8, P9> result{
+    PushNotificationManagerBaseNotification<P0, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10> result{
       bridging::fromJs<P0>(rt, value.getProperty(rt, "alertTitle"), jsInvoker),
-      bridging::fromJs<P1>(rt, value.getProperty(rt, "fireDate"), jsInvoker),
-      bridging::fromJs<P2>(rt, value.getProperty(rt, "alertBody"), jsInvoker),
-      bridging::fromJs<P3>(rt, value.getProperty(rt, "alertAction"), jsInvoker),
-      bridging::fromJs<P4>(rt, value.getProperty(rt, "userInfo"), jsInvoker),
-      bridging::fromJs<P5>(rt, value.getProperty(rt, "category"), jsInvoker),
-      bridging::fromJs<P6>(rt, value.getProperty(rt, "repeatInterval"), jsInvoker),
-      bridging::fromJs<P7>(rt, value.getProperty(rt, "applicationIconBadgeNumber"), jsInvoker),
-      bridging::fromJs<P8>(rt, value.getProperty(rt, "isSilent"), jsInvoker),
-      bridging::fromJs<P9>(rt, value.getProperty(rt, "soundName"), jsInvoker)};
+      bridging::fromJs<P1>(rt, value.getProperty(rt, "alertBody"), jsInvoker),
+      bridging::fromJs<P2>(rt, value.getProperty(rt, "userInfo"), jsInvoker),
+      bridging::fromJs<P3>(rt, value.getProperty(rt, "category"), jsInvoker),
+      bridging::fromJs<P4>(rt, value.getProperty(rt, "fireDate"), jsInvoker),
+      bridging::fromJs<P5>(rt, value.getProperty(rt, "fireIntervalSeconds"), jsInvoker),
+      bridging::fromJs<P6>(rt, value.getProperty(rt, "applicationIconBadgeNumber"), jsInvoker),
+      bridging::fromJs<P7>(rt, value.getProperty(rt, "isSilent"), jsInvoker),
+      bridging::fromJs<P8>(rt, value.getProperty(rt, "soundName"), jsInvoker),
+      bridging::fromJs<P9>(rt, value.getProperty(rt, "alertAction"), jsInvoker),
+      bridging::fromJs<P10>(rt, value.getProperty(rt, "repeatInterval"), jsInvoker)};
     return result;
   }
 
@@ -3559,59 +3561,57 @@ struct PushNotificationManagerBaseNotificationBridging {
     return bridging::toJs(rt, value);
   }
 
-  static std::optional<double> fireDateToJs(jsi::Runtime &rt, P1 value) {
+  static std::optional<jsi::String> alertBodyToJs(jsi::Runtime &rt, P1 value) {
     return bridging::toJs(rt, value);
   }
 
-  static std::optional<jsi::String> alertBodyToJs(jsi::Runtime &rt, P2 value) {
+  static std::optional<jsi::Object> userInfoToJs(jsi::Runtime &rt, P2 value) {
     return bridging::toJs(rt, value);
   }
 
-  static std::optional<jsi::String> alertActionToJs(jsi::Runtime &rt, P3 value) {
+  static std::optional<jsi::String> categoryToJs(jsi::Runtime &rt, P3 value) {
     return bridging::toJs(rt, value);
   }
 
-  static std::optional<jsi::Object> userInfoToJs(jsi::Runtime &rt, P4 value) {
+  static std::optional<double> fireDateToJs(jsi::Runtime &rt, P4 value) {
     return bridging::toJs(rt, value);
   }
 
-  static std::optional<jsi::String> categoryToJs(jsi::Runtime &rt, P5 value) {
+  static std::optional<double> fireIntervalSecondsToJs(jsi::Runtime &rt, P5 value) {
     return bridging::toJs(rt, value);
   }
 
-  static std::optional<jsi::String> repeatIntervalToJs(jsi::Runtime &rt, P6 value) {
+  static std::optional<double> applicationIconBadgeNumberToJs(jsi::Runtime &rt, P6 value) {
     return bridging::toJs(rt, value);
   }
 
-  static std::optional<double> applicationIconBadgeNumberToJs(jsi::Runtime &rt, P7 value) {
+  static std::optional<bool> isSilentToJs(jsi::Runtime &rt, P7 value) {
     return bridging::toJs(rt, value);
   }
 
-  static std::optional<bool> isSilentToJs(jsi::Runtime &rt, P8 value) {
+  static std::optional<jsi::String> soundNameToJs(jsi::Runtime &rt, P8 value) {
     return bridging::toJs(rt, value);
   }
 
-  static std::optional<jsi::String> soundNameToJs(jsi::Runtime &rt, P9 value) {
+  static std::optional<jsi::String> alertActionToJs(jsi::Runtime &rt, P9 value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static std::optional<jsi::String> repeatIntervalToJs(jsi::Runtime &rt, P10 value) {
     return bridging::toJs(rt, value);
   }
 #endif
 
   static jsi::Object toJs(
       jsi::Runtime &rt,
-      const PushNotificationManagerBaseNotification<P0, P1, P2, P3, P4, P5, P6, P7, P8, P9> &value,
+      const PushNotificationManagerBaseNotification<P0, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10> &value,
       const std::shared_ptr<CallInvoker> &jsInvoker) {
     auto result = facebook::jsi::Object(rt);
     if (value.alertTitle) {
       result.setProperty(rt, "alertTitle", bridging::toJs(rt, value.alertTitle.value(), jsInvoker));
     }
-    if (value.fireDate) {
-      result.setProperty(rt, "fireDate", bridging::toJs(rt, value.fireDate.value(), jsInvoker));
-    }
     if (value.alertBody) {
       result.setProperty(rt, "alertBody", bridging::toJs(rt, value.alertBody.value(), jsInvoker));
-    }
-    if (value.alertAction) {
-      result.setProperty(rt, "alertAction", bridging::toJs(rt, value.alertAction.value(), jsInvoker));
     }
     if (value.userInfo) {
       result.setProperty(rt, "userInfo", bridging::toJs(rt, value.userInfo.value(), jsInvoker));
@@ -3619,8 +3619,11 @@ struct PushNotificationManagerBaseNotificationBridging {
     if (value.category) {
       result.setProperty(rt, "category", bridging::toJs(rt, value.category.value(), jsInvoker));
     }
-    if (value.repeatInterval) {
-      result.setProperty(rt, "repeatInterval", bridging::toJs(rt, value.repeatInterval.value(), jsInvoker));
+    if (value.fireDate) {
+      result.setProperty(rt, "fireDate", bridging::toJs(rt, value.fireDate.value(), jsInvoker));
+    }
+    if (value.fireIntervalSeconds) {
+      result.setProperty(rt, "fireIntervalSeconds", bridging::toJs(rt, value.fireIntervalSeconds.value(), jsInvoker));
     }
     if (value.applicationIconBadgeNumber) {
       result.setProperty(rt, "applicationIconBadgeNumber", bridging::toJs(rt, value.applicationIconBadgeNumber.value(), jsInvoker));
@@ -3630,6 +3633,12 @@ struct PushNotificationManagerBaseNotificationBridging {
     }
     if (value.soundName) {
       result.setProperty(rt, "soundName", bridging::toJs(rt, value.soundName.value(), jsInvoker));
+    }
+    if (value.alertAction) {
+      result.setProperty(rt, "alertAction", bridging::toJs(rt, value.alertAction.value(), jsInvoker));
+    }
+    if (value.repeatInterval) {
+      result.setProperty(rt, "repeatInterval", bridging::toJs(rt, value.repeatInterval.value(), jsInvoker));
     }
     return result;
   }
@@ -3674,7 +3683,7 @@ public:
 protected:
   NativePushNotificationManagerIOSCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativePushNotificationManagerIOSCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativePushNotificationManagerIOSCxxSpecJSI {
@@ -3865,7 +3874,7 @@ public:
 protected:
   NativeHeadlessJsTaskSupportCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeHeadlessJsTaskSupportCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeHeadlessJsTaskSupportCxxSpecJSI {
@@ -3976,7 +3985,7 @@ public:
 protected:
   NativeI18nManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeI18nManagerCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeI18nManagerCxxSpecJSI {
@@ -4071,7 +4080,7 @@ public:
 protected:
   NativeUIManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeUIManagerCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeUIManagerCxxSpecJSI {
@@ -4319,7 +4328,7 @@ public:
 protected:
   NativeSettingsManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeSettingsManagerCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeSettingsManagerCxxSpecJSI {
@@ -4382,7 +4391,7 @@ public:
 protected:
   NativeShareModuleCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeShareModuleCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeShareModuleCxxSpecJSI {
@@ -4439,7 +4448,7 @@ public:
 protected:
   NativeAppearanceCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeAppearanceCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeAppearanceCxxSpecJSI {
@@ -4751,7 +4760,7 @@ public:
 protected:
   NativeDeviceInfoCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeDeviceInfoCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeDeviceInfoCxxSpecJSI {
@@ -4798,7 +4807,7 @@ public:
 protected:
   NativeDevLoadingViewCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeDevLoadingViewCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeDevLoadingViewCxxSpecJSI {
@@ -5032,7 +5041,7 @@ public:
 protected:
   NativePlatformConstantsAndroidCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativePlatformConstantsAndroidCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativePlatformConstantsAndroidCxxSpecJSI {
@@ -5068,7 +5077,7 @@ private:
   
 #pragma mark - PlatformConstantsBasePlatformConstantsIOS
 
-template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6>
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7>
 struct PlatformConstantsBasePlatformConstantsIOS {
   P0 isTesting;
   P1 isDisableAnimations;
@@ -5077,25 +5086,27 @@ struct PlatformConstantsBasePlatformConstantsIOS {
   P4 osVersion;
   P5 systemName;
   P6 interfaceIdiom;
+  P7 isMacCatalyst;
   bool operator==(const PlatformConstantsBasePlatformConstantsIOS &other) const {
-    return isTesting == other.isTesting && isDisableAnimations == other.isDisableAnimations && reactNativeVersion == other.reactNativeVersion && forceTouchAvailable == other.forceTouchAvailable && osVersion == other.osVersion && systemName == other.systemName && interfaceIdiom == other.interfaceIdiom;
+    return isTesting == other.isTesting && isDisableAnimations == other.isDisableAnimations && reactNativeVersion == other.reactNativeVersion && forceTouchAvailable == other.forceTouchAvailable && osVersion == other.osVersion && systemName == other.systemName && interfaceIdiom == other.interfaceIdiom && isMacCatalyst == other.isMacCatalyst;
   }
 };
 
-template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6>
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7>
 struct PlatformConstantsBasePlatformConstantsIOSBridging {
-  static PlatformConstantsBasePlatformConstantsIOS<P0, P1, P2, P3, P4, P5, P6> fromJs(
+  static PlatformConstantsBasePlatformConstantsIOS<P0, P1, P2, P3, P4, P5, P6, P7> fromJs(
       jsi::Runtime &rt,
       const jsi::Object &value,
       const std::shared_ptr<CallInvoker> &jsInvoker) {
-    PlatformConstantsBasePlatformConstantsIOS<P0, P1, P2, P3, P4, P5, P6> result{
+    PlatformConstantsBasePlatformConstantsIOS<P0, P1, P2, P3, P4, P5, P6, P7> result{
       bridging::fromJs<P0>(rt, value.getProperty(rt, "isTesting"), jsInvoker),
       bridging::fromJs<P1>(rt, value.getProperty(rt, "isDisableAnimations"), jsInvoker),
       bridging::fromJs<P2>(rt, value.getProperty(rt, "reactNativeVersion"), jsInvoker),
       bridging::fromJs<P3>(rt, value.getProperty(rt, "forceTouchAvailable"), jsInvoker),
       bridging::fromJs<P4>(rt, value.getProperty(rt, "osVersion"), jsInvoker),
       bridging::fromJs<P5>(rt, value.getProperty(rt, "systemName"), jsInvoker),
-      bridging::fromJs<P6>(rt, value.getProperty(rt, "interfaceIdiom"), jsInvoker)};
+      bridging::fromJs<P6>(rt, value.getProperty(rt, "interfaceIdiom"), jsInvoker),
+      bridging::fromJs<P7>(rt, value.getProperty(rt, "isMacCatalyst"), jsInvoker)};
     return result;
   }
 
@@ -5127,11 +5138,15 @@ struct PlatformConstantsBasePlatformConstantsIOSBridging {
   static jsi::String interfaceIdiomToJs(jsi::Runtime &rt, P6 value) {
     return bridging::toJs(rt, value);
   }
+
+  static bool isMacCatalystToJs(jsi::Runtime &rt, P7 value) {
+    return bridging::toJs(rt, value);
+  }
 #endif
 
   static jsi::Object toJs(
       jsi::Runtime &rt,
-      const PlatformConstantsBasePlatformConstantsIOS<P0, P1, P2, P3, P4, P5, P6> &value,
+      const PlatformConstantsBasePlatformConstantsIOS<P0, P1, P2, P3, P4, P5, P6, P7> &value,
       const std::shared_ptr<CallInvoker> &jsInvoker) {
     auto result = facebook::jsi::Object(rt);
     result.setProperty(rt, "isTesting", bridging::toJs(rt, value.isTesting, jsInvoker));
@@ -5143,6 +5158,9 @@ struct PlatformConstantsBasePlatformConstantsIOSBridging {
     result.setProperty(rt, "osVersion", bridging::toJs(rt, value.osVersion, jsInvoker));
     result.setProperty(rt, "systemName", bridging::toJs(rt, value.systemName, jsInvoker));
     result.setProperty(rt, "interfaceIdiom", bridging::toJs(rt, value.interfaceIdiom, jsInvoker));
+    if (value.isMacCatalyst) {
+      result.setProperty(rt, "isMacCatalyst", bridging::toJs(rt, value.isMacCatalyst.value(), jsInvoker));
+    }
     return result;
   }
 };
@@ -5168,7 +5186,7 @@ public:
 protected:
   NativePlatformConstantsIOSCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativePlatformConstantsIOSCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativePlatformConstantsIOSCxxSpecJSI {
@@ -5275,7 +5293,7 @@ public:
 protected:
   NativePlatformConstantsWinCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativePlatformConstantsWinCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativePlatformConstantsWinCxxSpecJSI {
@@ -5324,7 +5342,7 @@ public:
 protected:
   NativeVibrationCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeVibrationCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeVibrationCxxSpecJSI {
@@ -5397,7 +5415,7 @@ public:
 protected:
   NativePerformanceCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativePerformanceCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativePerformanceCxxSpecJSI {
@@ -5593,6 +5611,7 @@ public:
   virtual void setDurationThreshold(jsi::Runtime &rt, double entryType, double durationThreshold) = 0;
   virtual void clearEntries(jsi::Runtime &rt, double entryType, std::optional<jsi::String> entryName) = 0;
   virtual jsi::Array getEntries(jsi::Runtime &rt, std::optional<double> entryType, std::optional<jsi::String> entryName) = 0;
+  virtual jsi::Array getSupportedPerformanceEntryTypes(jsi::Runtime &rt) = 0;
 
 };
 
@@ -5608,7 +5627,7 @@ public:
 protected:
   NativePerformanceObserverCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativePerformanceObserverCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativePerformanceObserverCxxSpecJSI {
@@ -5696,6 +5715,14 @@ private:
       return bridging::callFromJs<jsi::Array>(
           rt, &T::getEntries, jsInvoker_, instance_, std::move(entryType), std::move(entryName));
     }
+    jsi::Array getSupportedPerformanceEntryTypes(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::getSupportedPerformanceEntryTypes) == 1,
+          "Expected getSupportedPerformanceEntryTypes(...) to have 1 parameters");
+
+      return bridging::callFromJs<jsi::Array>(
+          rt, &T::getSupportedPerformanceEntryTypes, jsInvoker_, instance_);
+    }
 
   private:
     T *instance_;
@@ -5732,7 +5759,7 @@ public:
 protected:
   NativeWebSocketModuleCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeWebSocketModuleCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeWebSocketModuleCxxSpecJSI {
@@ -5831,7 +5858,7 @@ public:
 protected:
   NativeAccessibilityInfoCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeAccessibilityInfoCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeAccessibilityInfoCxxSpecJSI {
@@ -5927,7 +5954,7 @@ public:
 protected:
   NativeAccessibilityManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeAccessibilityManagerCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeAccessibilityManagerCxxSpecJSI {
@@ -6055,7 +6082,7 @@ public:
 protected:
   NativeClipboardCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeClipboardCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeClipboardCxxSpecJSI {
@@ -6118,7 +6145,7 @@ public:
 protected:
   NativeKeyboardObserverCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeKeyboardObserverCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeKeyboardObserverCxxSpecJSI {
@@ -6172,7 +6199,7 @@ public:
 protected:
   NativeSoundManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeSoundManagerCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeSoundManagerCxxSpecJSI {
@@ -6222,7 +6249,7 @@ public:
 protected:
   NativeStatusBarManagerAndroidCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeStatusBarManagerAndroidCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeStatusBarManagerAndroidCxxSpecJSI {
@@ -6306,7 +6333,7 @@ public:
 protected:
   NativeStatusBarManagerIOSCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeStatusBarManagerIOSCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeStatusBarManagerIOSCxxSpecJSI {
@@ -6403,7 +6430,7 @@ public:
 protected:
   NativeToastAndroidCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeToastAndroidCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeToastAndroidCxxSpecJSI {
@@ -6474,7 +6501,7 @@ public:
 protected:
   NativeSegmentFetcherCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeSegmentFetcherCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeSegmentFetcherCxxSpecJSI {
@@ -6530,7 +6557,7 @@ public:
 protected:
   NativeTimingCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeTimingCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeTimingCxxSpecJSI {
@@ -6593,7 +6620,7 @@ public:
 protected:
   NativeAnimationsDebugModuleCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeAnimationsDebugModuleCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeAnimationsDebugModuleCxxSpecJSI {
@@ -6647,7 +6674,7 @@ public:
 protected:
   NativeDeviceEventManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeDeviceEventManagerCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeDeviceEventManagerCxxSpecJSI {
@@ -6697,7 +6724,7 @@ public:
 protected:
   NativeDevMenuCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeDevMenuCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeDevMenuCxxSpecJSI {
@@ -6785,7 +6812,7 @@ public:
 protected:
   NativeDevSettingsCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeDevSettingsCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeDevSettingsCxxSpecJSI {
@@ -7006,7 +7033,7 @@ public:
 protected:
   NativeDialogManagerAndroidCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeDialogManagerAndroidCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeDialogManagerAndroidCxxSpecJSI {
@@ -7061,7 +7088,7 @@ public:
 protected:
   NativeLogBoxCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeLogBoxCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeLogBoxCxxSpecJSI {
@@ -7116,7 +7143,7 @@ public:
 protected:
   NativeRedBoxCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeRedBoxCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeRedBoxCxxSpecJSI {
@@ -7208,7 +7235,7 @@ public:
 protected:
   NativeSourceCodeCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeSourceCodeCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeSourceCodeCxxSpecJSI {
@@ -7299,7 +7326,7 @@ public:
 protected:
   NativeSampleTurboModuleCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeSampleTurboModuleCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeSampleTurboModuleCxxSpecJSI {

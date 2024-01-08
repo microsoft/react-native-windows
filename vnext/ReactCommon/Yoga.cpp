@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-#include <yoga/Yoga-internal.h>
-#include "Yoga.h"
+#include <yoga/Yoga.h>
+
 #include <yoga/algorithm/Cache.h>
 #include <yoga/algorithm/CalculateLayout.h>
 #include <yoga/algorithm/PixelGrid.h>
@@ -18,10 +18,6 @@
 
 using namespace facebook;
 using namespace facebook::yoga;
-
-bool YGFloatIsUndefined(const float value) {
-  return yoga::isUndefined(value);
-}
 
 void* YGNodeGetContext(YGNodeConstRef node) {
   return resolveRef(node)->getContext();
@@ -91,10 +87,6 @@ bool YGNodeIsDirty(YGNodeConstRef node) {
   return resolveRef(node)->isDirty();
 }
 
-void YGNodeMarkDirtyAndPropagateToDescendants(const YGNodeRef node) {
-  return resolveRef(node)->markDirtyAndPropagateDownwards();
-}
-
 YGNodeRef YGNodeNewWithConfig(const YGConfigConstRef config) {
   auto* node = new yoga::Node{resolveRef(config)};
   yoga::assertFatal(
@@ -139,17 +131,17 @@ void YGNodeFree(const YGNodeRef nodeRef) {
   }
 
   node->clearChildren();
-  YGNodeDeallocate(node);
-}
 
-void YGNodeDeallocate(const YGNodeRef node) {
   Event::publish<Event::NodeDeallocation>(node, {YGNodeGetConfig(node)});
   delete resolveRef(node);
 }
 
-void YGNodeFreeRecursiveWithCleanupFunc(
-    const YGNodeRef rootRef,
-    YGNodeCleanupFunc cleanup) {
+void YGNodeFinalize(const YGNodeRef node) {
+  Event::publish<Event::NodeDeallocation>(node, {YGNodeGetConfig(node)});
+  delete resolveRef(node);
+}
+
+void YGNodeFreeRecursive(YGNodeRef rootRef) {
   const auto root = resolveRef(rootRef);
 
   size_t skipped = 0;
@@ -163,14 +155,7 @@ void YGNodeFreeRecursiveWithCleanupFunc(
       YGNodeFreeRecursive(child);
     }
   }
-  if (cleanup != nullptr) {
-    cleanup(root);
-  }
   YGNodeFree(root);
-}
-
-void YGNodeFreeRecursive(const YGNodeRef root) {
-  return YGNodeFreeRecursiveWithCleanupFunc(root, nullptr);
 }
 
 void YGNodeReset(YGNodeRef node) {
@@ -634,11 +619,12 @@ void YGNodeStyleSetGap(
     const YGGutter gutter,
     const float gapLength) {
   auto length = CompactValue::ofMaybe<YGUnitPoint>(gapLength);
-  updateIndexedStyleProp<MSVC_HINT(gap)>(node, &Style::gap, gutter, length);
+  updateIndexedStyleProp<&Style::gap, &Style::setGap>(
+      node, scopedEnum(gutter), length);
 }
 
 float YGNodeStyleGetGap(const YGNodeConstRef node, const YGGutter gutter) {
-  auto gapLength = resolveRef(node)->getStyle().gap()[gutter];
+  auto gapLength = resolveRef(node)->getStyle().gap(scopedEnum(gutter));
   if (gapLength.isUndefined() || gapLength.isAuto()) {
     return YGUndefined;
   }

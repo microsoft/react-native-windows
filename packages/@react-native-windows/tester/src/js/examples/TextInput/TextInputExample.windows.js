@@ -5,22 +5,20 @@
  * LICENSE file in the root directory of this source tree.
  *
  * @format
- * @flow
+ * @flow strict-local
  */
 
 'use strict';
-
-const React = require('react');
-
-const {Text, TextInput, View, StyleSheet, Switch} = require('react-native');
-
-const TextInputSharedExamples = require('./TextInputSharedExamples');
-const {useState} = React;
 
 import type {
   RNTesterModule,
   RNTesterModuleExample,
 } from '../../types/RNTesterTypes';
+
+const TextInputSharedExamples = require('./TextInputSharedExamples.js');
+const React = require('react');
+const {StyleSheet, Switch, Text, TextInput, View} = require('react-native');
+const {useState} = React;
 
 class ToggleDefaultPaddingExample extends React.Component<
   $FlowFixMeProps,
@@ -722,6 +720,22 @@ const examples: Array<RNTesterModuleExample> = [
     title: 'Toggle spell check',
     render: function (): React.Node {
       return <SpellCheckSample />;
+    },
+  },
+  {
+    title: 'CaretHidden set to True',
+    render: function (): React.Node {
+      return (
+        <View>
+          <Text>CaretHidden</Text>
+          <TextInput
+            style={styles.singleLine}
+            caretHidden={true}
+            placeholder="caretHidden={true}"
+            testID="textinput-carethidden"
+          />
+        </View>
+      );
     },
   },
   // Windows]
