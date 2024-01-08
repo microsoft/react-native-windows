@@ -68,7 +68,6 @@ auto resume_in_queue(const Mso::DispatchQueue &queue) noexcept {
     void await_suspend(std::coroutine_handle<> resume) noexcept {
       m_callback = [context = resume.address()]() noexcept { std::coroutine_handle<>::from_address(context)(); };
       m_queue.Post(std::move(m_callback));
-      
     }
 
    private:
