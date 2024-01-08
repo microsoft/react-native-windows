@@ -20,9 +20,15 @@ constexpr bool isUndefined(T value) {
   return value != value;
 }
 
+// [Windows c++20 fix #12195]
+template <typename T>
+constexpr bool isDefined(T value) {
+  return !isUndefined(value);
+}
+
 template <typename T>
 constexpr auto maxOrDefined(T a, T b) {
-  if (!yoga::isUndefined(a) && !yoga::isUndefined(b)) {
+  if (yoga::isDefined(a) && yoga::isDefined(b)) {
     return std::max(a, b);
   }
   return yoga::isUndefined(a) ? b : a;
@@ -30,7 +36,7 @@ constexpr auto maxOrDefined(T a, T b) {
 
 template <typename T>
 constexpr auto minOrDefined(T a, T b) {
-  if (!yoga::isUndefined(a) && !yoga::isUndefined(b)) {
+  if (yoga::isDefined(a) && yoga::isDefined(b)) {
     return std::min(a, b);
   }
 
@@ -40,14 +46,14 @@ constexpr auto minOrDefined(T a, T b) {
 // Custom equality functions using a hardcoded epsilon of 0.0001f, or returning
 // true if both floats are NaN.
 inline bool inexactEquals(float a, float b) {
-  if (!yoga::isUndefined(a) && !yoga::isUndefined(b)) {
+  if (yoga::isDefined(a) && yoga::isDefined(b)) {
     return std::abs(a - b) < 0.0001f;
   }
   return yoga::isUndefined(a) && yoga::isUndefined(b);
 }
 
 inline bool inexactEquals(double a, double b) {
-  if (!yoga::isUndefined(a) && !yoga::isUndefined(b)) {
+ if (yoga::isDefined(a) && yoga::isDefined(b)) {
     return std::abs(a - b) < 0.0001;
   }
   return yoga::isUndefined(a) && yoga::isUndefined(b);

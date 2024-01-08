@@ -10,14 +10,15 @@
 
 'use strict';
 
-import {RNTesterModule} from '../../types/RNTesterTypes';
+import type {RNTesterModule} from '../../types/RNTesterTypes';
+
 import * as React from 'react';
 import {
+  Platform,
   StyleSheet,
   Text,
   TouchableWithoutFeedback,
   View,
-  Platform,
   Alert,
 } from 'react-native';
 
