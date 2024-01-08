@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 08 Jan 2024 16:15:05 GMT",
+      "tag": "react-native-windows_v0.72.23",
+      "version": "0.72.23",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "bc51446e195caa1fadab02ff142a5c137fdf2426",
+            "comment": "backport 12278 Fix event dispatch names for momentum scroll"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 11 Dec 2023 16:14:26 GMT",
       "tag": "react-native-windows_v0.72.22",
       "version": "0.72.22",

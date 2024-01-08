@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "backport 12278 Fix event dispatch names for momentum scroll",
-  "packageName": "react-native-windows",
-  "email": "tatianakapos@microsoft.com",
-  "dependentChangeType": "patch"
-}
