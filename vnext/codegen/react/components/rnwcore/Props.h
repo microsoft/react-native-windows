@@ -185,8 +185,8 @@ class ActivityIndicatorViewProps final : public ViewProps {
 
 #pragma mark - Props
 
-  bool hidesWhenStopped{false};
-  bool animating{false};
+  bool hidesWhenStopped{true};
+  bool animating{true};
   SharedColor color{};
   ActivityIndicatorViewSize size{ActivityIndicatorViewSize::Small};
 };

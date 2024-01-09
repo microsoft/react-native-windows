@@ -8,42 +8,42 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.74.0-nightly-20231124-c464b215e",
+  "baseVersion": "0.74.0-nightly-20231201-c30f2b620",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "397a9d59e4415e8758adc635d5e016070e6d85d7"
+      "baseHash": "172a4663d9243a77e3b35a2d8a5e403fd62062cf"
     },
     {
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputComponentDescriptor.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputComponentDescriptor.h",
-      "baseHash": "09b2d135a48cde87cd3a7da28cbf1648ce840fc4"
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/platform/android/react/renderer/components/androidtextinput/AndroidTextInputComponentDescriptor.h",
+      "baseHash": "59a160335ced7e8d4159d5bde94b113bf533e1ab"
     },
     {
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputShadowNode.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputShadowNode.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/platform/android/react/renderer/components/androidtextinput/AndroidTextInputShadowNode.cpp",
       "baseHash": "e43e6cb2df75b8f51422bdbef42e99f2c4f2018d"
     },
     {
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputShadowNode.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputShadowNode.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/platform/android/react/renderer/components/androidtextinput/AndroidTextInputShadowNode.h",
       "baseHash": "10cd4b533faa9503f7957fca6c9d282e1d432d48"
     },
     {
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputState.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputState.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/platform/android/react/renderer/components/androidtextinput/AndroidTextInputState.cpp",
       "baseHash": "e5fe1ab887bc6fdd353548276ccf414b11f35c61"
     },
     {
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputState.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputState.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/platform/android/react/renderer/components/androidtextinput/AndroidTextInputState.h",
       "baseHash": "e0cb62818f80a458ef28430a08a6a685805d3a91"
     },
     {
@@ -60,10 +60,24 @@
       "issue": 7821
     },
     {
+      "type": "copy",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/JSIDynamic.cpp",
+      "baseFile": "packages/react-native/ReactCommon/jsi/jsi/JSIDynamic.cpp",
+      "baseHash": "989722b8812d05adfc0f5e4c8dcbf42ab6026a7f",
+      "issue": 12210
+    },
+    {
+      "type": "copy",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/JSIDynamic.h",
+      "baseFile": "packages/react-native/ReactCommon/jsi/jsi/JSIDynamic.h",
+      "baseHash": "b3df8b8ce255b2d11184ba705407cb399c121a87",
+      "issue": 12210
+    },
+    {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/test/testlib.cpp",
       "baseFile": "packages/react-native/ReactCommon/jsi/jsi/test/testlib.cpp",
-      "baseHash": "224ddd5bc92672790e8875bf3078f0529aca05d0",
+      "baseHash": "daa77a3a77ebd409fde7133d9ab40a2efe5ab31b",
       "issue": 12210
     },
     {
@@ -161,14 +175,14 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/node/LayoutResults.h",
       "baseFile": "packages/react-native/ReactCommon/yoga/yoga/node/LayoutResults.h",
-      "baseHash": "052aadf02af395a25cea6703538e730e2c714cd6",
+      "baseHash": "f0a011a4eb145be9d85a01746d70ca2a6bfe66d1",
       "issue": 12195
     },
     {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/node/Node.h",
       "baseFile": "packages/react-native/ReactCommon/yoga/yoga/node/Node.h",
-      "baseHash": "c40a83f59704ffd6783cba257421aee668b681ad",
+      "baseHash": "aaf16b9303a01ca3dc4955061d97ef9577d8b5e7",
       "issue": 12195
     },
     {
@@ -345,13 +359,13 @@
       "type": "derived",
       "file": "src/Libraries/Components/Switch/Switch.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Switch/Switch.js",
-      "baseHash": "e34649d5441548e6c8c55ebefb472048480ecc4c"
+      "baseHash": "31b8cd62b5acb1a237f5373d1618869f5afebdd3"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "fa10fcf147f79ede6f3a49fac45faefed48e1693"
+      "baseHash": "f6742637eda13080bd175a45eb0edbc83fa260c5"
     },
     {
       "type": "patch",

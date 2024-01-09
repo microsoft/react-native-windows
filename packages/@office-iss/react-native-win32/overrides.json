@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.74.0-nightly-20231124-c464b215e",
+  "baseVersion": "0.74.0-nightly-20231201-c30f2b620",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "397a9d59e4415e8758adc635d5e016070e6d85d7"
+      "baseHash": "172a4663d9243a77e3b35a2d8a5e403fd62062cf"
     },
     {
       "type": "derived",
@@ -112,7 +112,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/ScrollView/ScrollView.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/ScrollView/ScrollView.js",
-      "baseHash": "6e3e4933173d1f910232f3f46602e2f525127eb5"
+      "baseHash": "6367cf4ba4637cd8292b68c629cb9d59df99ade1"
     },
     {
       "type": "platform",
@@ -130,7 +130,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "fa10fcf147f79ede6f3a49fac45faefed48e1693"
+      "baseHash": "f6742637eda13080bd175a45eb0edbc83fa260c5"
     },
     {
       "type": "patch",
@@ -511,7 +511,7 @@
       "type": "copy",
       "file": "src/Libraries/Utilities/useMergeRefs.js",
       "baseFile": "packages/react-native/Libraries/Utilities/useMergeRefs.js",
-      "baseHash": "d21cc9b2de5af9f398429e7a03c5f13ea7dc7227"
+      "baseHash": "1f1ca637132e6e0fe1549ba520d98508269ca2bd"
     }
   ]
 }
