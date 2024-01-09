@@ -54,13 +54,6 @@
     },
     {
       "type": "copy",
-      "file": "Microsoft.ReactNative/Fabric/platform/react/renderer/components/view/YogaLayoutableShadowNode.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/YogaLayoutableShadowNode.cpp",
-      "baseHash": "a5821ed70a5be50febe8f69dfbef10be1147b2d5",
-      "issue": 7821
-    },
-    {
-      "type": "copy",
       "file": "Microsoft.ReactNative/Fabric/platform/react/renderer/graphics/Float.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/graphics/platform/cxx/react/renderer/graphics/Float.h",
       "baseHash": "4a707c9cab0c6534094cd303e000265b664f05b4",
@@ -68,7 +61,7 @@
     },
     {
       "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUPdate/jsi/jsi/test/testlib.cpp",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/test/testlib.cpp",
       "baseFile": "packages/react-native/ReactCommon/jsi/jsi/test/testlib.cpp",
       "baseHash": "224ddd5bc92672790e8875bf3078f0529aca05d0",
       "issue": 12210
