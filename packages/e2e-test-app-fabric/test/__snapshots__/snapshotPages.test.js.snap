@@ -34624,6 +34624,7 @@ exports[`snapshotAllPages Pressable 2`] = `
         },
       ]
     }
+    testID="style-change-pressable"
   >
     <Text
       style={
@@ -34709,6 +34710,7 @@ exports[`snapshotAllPages Pressable 3`] = `
     </View>
   </View>
   <View
+    accessible={true}
     style={
       {
         "backgroundColor": "#f9f9f9",
@@ -35186,6 +35188,7 @@ exports[`snapshotAllPages Pressable 7`] = `
     </View>
   </View>
   <View
+    accessible={true}
     style={
       {
         "backgroundColor": "#f9f9f9",
@@ -35455,6 +35458,7 @@ exports[`snapshotAllPages Pressable 11`] = `
         },
       ]
     }
+    testID="pressable_disabled_true"
   >
     <Text
       style={
@@ -35514,6 +35518,7 @@ exports[`snapshotAllPages Pressable 11`] = `
         },
       ]
     }
+    testID="pressable_disabled_false"
   >
     <Text
       style={
@@ -35882,9 +35887,7 @@ exports[`snapshotAllPages Pressable 15`] = `
 `;
 
 exports[`snapshotAllPages Pressable 16`] = `
-<View
-  testID="advanced_borders_pressable"
->
+<View>
   <View
     accessibilityState={
       {
@@ -35934,12 +35937,14 @@ exports[`snapshotAllPages Pressable 16`] = `
         "width": 50,
       }
     }
+    testID="advanced_borders_pressable"
   />
 </View>
 `;
 
 exports[`snapshotAllPages Pressable 17`] = `
 <View
+  accessible={true}
   testID="opacity_pressable"
 >
   <View
@@ -36409,6 +36414,7 @@ exports[`snapshotAllPages Pressable 17`] = `
 
 exports[`snapshotAllPages Pressable 18`] = `
 <View
+  accessible={true}
   testID="accessible_pressable"
 >
   <View
@@ -36587,9 +36593,7 @@ exports[`snapshotAllPages Pressable 18`] = `
 `;
 
 exports[`snapshotAllPages Pressable 19`] = `
-<View
-  testID="tooltip_pressable"
->
+<View>
   <View
     accessibilityState={
       {
@@ -36629,6 +36633,7 @@ exports[`snapshotAllPages Pressable 19`] = `
         "borderRadius": 2,
       }
     }
+    testID="tooltip_pressable"
     tooltip="Pressable"
   >
     <Text>
@@ -36639,9 +36644,7 @@ exports[`snapshotAllPages Pressable 19`] = `
 `;
 
 exports[`snapshotAllPages Pressable 20`] = `
-<View
-  testID="no_hide_pressable"
->
+<View>
   <View
     accessibilityHint="Button"
     accessibilityState={
@@ -36677,6 +36680,7 @@ exports[`snapshotAllPages Pressable 20`] = `
     onResponderTerminate={[Function]}
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
+    testID="no_hide_pressable"
   >
     <Text>
       Parent Pressable
@@ -36725,6 +36729,7 @@ exports[`snapshotAllPages Pressable 20`] = `
 
 exports[`snapshotAllPages Pressable 21`] = `
 <View
+  accessible={true}
   testID="backface_pressable"
 >
   <Text
@@ -73872,7 +73877,7 @@ exports[`snapshotAllPages TextInput 19`] = `
     </Text>
   </TextInput>
   <TextInput
-    defaultValue="Highlight Color is red"
+    defaultValue="Selection Color is red"
     selectionColor="red"
     style={
       {
@@ -73880,6 +73885,24 @@ exports[`snapshotAllPages TextInput 19`] = `
       }
     }
     testID="textinput-custom-highlight-color"
+  />
+  <TextInput
+    defaultValue="Selection handles are red"
+    selectionHandleColor="red"
+    style={
+      {
+        "fontSize": 16,
+      }
+    }
+  />
+  <TextInput
+    cursorColor="red"
+    defaultValue="Cursor Color is red"
+    style={
+      {
+        "fontSize": 16,
+      }
+    }
   />
 </View>
 `;

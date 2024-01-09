@@ -114,7 +114,7 @@ function Inspector({
       }
 
       // [Win32 Avoid Dimensions call
-      const node = ReactNative.findNodeHandle(inspectedView);
+      const node = ReactNative.findNodeHandle(inspectedViewRef);
       // $FlowFixMe[incompatible-call]
       UIManager.measure(node, (x, y, width, height, left, top) => {
         setPanelPosition(pointerY > height / 2 ? 'top' : 'bottom');
