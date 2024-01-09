@@ -13,7 +13,7 @@
 #include "RootComponentView.h"
 #include "Unicode.h"
 
-namespace Microsoft::ReactNative {
+namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 AbiCompositionViewComponentView::AbiCompositionViewComponentView(
     winrt::Microsoft::ReactNative::ReactContext const &reactContext,
@@ -21,20 +21,19 @@ AbiCompositionViewComponentView::AbiCompositionViewComponentView(
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::IReactViewComponentBuilder builder)
     : Super(compContext, tag, reactContext, CompositionComponentViewFeatures::Default), m_builder(builder) {
-  static auto const defaultProps = std::make_shared<AbiViewProps const>();
+  static auto const defaultProps = std::make_shared<::Microsoft::ReactNative::AbiViewProps const>();
   m_props = defaultProps;
   m_handle = Builder().CreateView(reactContext.Handle(), compContext);
   m_visual = Builder().CreateVisual(m_handle);
   OuterVisual().InsertAt(m_visual, 0);
 }
 
-std::shared_ptr<AbiCompositionViewComponentView> AbiCompositionViewComponentView::Create(
+winrt::Microsoft::ReactNative::ComponentView AbiCompositionViewComponentView::Create(
     winrt::Microsoft::ReactNative::ReactContext const &reactContext,
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::IReactViewComponentBuilder builder) noexcept {
-  return std::shared_ptr<AbiCompositionViewComponentView>(
-      new AbiCompositionViewComponentView(reactContext, compContext, tag, builder));
+  return winrt::make<AbiCompositionViewComponentView>(reactContext, compContext, tag, builder);
 }
 
 winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder &
@@ -43,13 +42,13 @@ AbiCompositionViewComponentView::Builder() noexcept {
 }
 
 void AbiCompositionViewComponentView::mountChildComponentView(
-    IComponentView &childComponentView,
+    winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
     uint32_t index) noexcept {
   assert(false);
 }
 
 void AbiCompositionViewComponentView::unmountChildComponentView(
-    IComponentView &childComponentView,
+    winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
     uint32_t index) noexcept {
   assert(false);
 }
@@ -57,8 +56,8 @@ void AbiCompositionViewComponentView::unmountChildComponentView(
 void AbiCompositionViewComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
-  const auto &oldViewProps = *std::static_pointer_cast<const AbiViewProps>(m_props);
-  const auto &newViewProps = *std::static_pointer_cast<const AbiViewProps>(props);
+  const auto &oldViewProps = *std::static_pointer_cast<const ::Microsoft::ReactNative::AbiViewProps>(m_props);
+  const auto &newViewProps = *std::static_pointer_cast<const ::Microsoft::ReactNative::AbiViewProps>(props);
 
   if (oldViewProps.testId != newViewProps.testId) {
     m_visual.Comment(winrt::to_hstring(newViewProps.testId));
@@ -71,7 +70,7 @@ void AbiCompositionViewComponentView::updateProps(
 
   Builder().UpdateProps(m_handle, newViewProps.UserProps());
 
-  m_props = std::static_pointer_cast<AbiViewProps const>(props);
+  m_props = std::static_pointer_cast<::Microsoft::ReactNative::AbiViewProps const>(props);
 }
 
 void AbiCompositionViewComponentView::updateLayoutMetrics(
@@ -96,11 +95,12 @@ void AbiCompositionViewComponentView::updateLayoutMetrics(
 void AbiCompositionViewComponentView::updateState(
     facebook::react::State::Shared const &state,
     facebook::react::State::Shared const &oldState) noexcept {
-  m_state = winrt::make<AbiComponentState>(state);
+  m_state = winrt::make<::Microsoft::ReactNative::AbiComponentState>(state);
   Builder().UpdateState(m_handle, m_state);
 }
 
-void AbiCompositionViewComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
+void AbiCompositionViewComponentView::finalizeUpdates(
+    winrt::Microsoft::ReactNative::implementation::RNComponentViewUpdateMask updateMask) noexcept {
   Super::finalizeUpdates(updateMask);
   Builder().FinalizeUpdates(m_handle);
 }
@@ -192,7 +192,7 @@ facebook::react::Tag AbiCompositionViewComponentView::hitTest(
       ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
       ptLocal.y <= m_layoutMetrics.frame.size.height) {
     localPt = ptLocal;
-    return tag();
+    return Tag();
   }
 
   return -1;
@@ -200,10 +200,10 @@ facebook::react::Tag AbiCompositionViewComponentView::hitTest(
 
 winrt::IInspectable AbiCompositionViewComponentView::EnsureUiaProvider() noexcept {
   if (m_uiaProvider == nullptr) {
-    m_uiaProvider = winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>(
-        shared_from_this());
+    m_uiaProvider =
+        winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>(*get_strong());
   }
   return m_uiaProvider;
 }
 
-} // namespace Microsoft::ReactNative
+} // namespace winrt::Microsoft::ReactNative::Composition::implementation

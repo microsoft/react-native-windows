@@ -27,11 +27,10 @@
 
 extern "C" HRESULT WINAPI WICCreateImagingFactory_Proxy(UINT SDKVersion, IWICImagingFactory **ppIWICImagingFactory);
 
-namespace Microsoft::ReactNative {
+namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
-ImageComponentView::WindowsImageResponseObserver::WindowsImageResponseObserver(
-    std::shared_ptr<ImageComponentView> image) {
-  m_image = image;
+ImageComponentView::WindowsImageResponseObserver::WindowsImageResponseObserver(ImageComponentView &image) {
+  m_image.copy_from(&image);
 }
 
 void ImageComponentView::WindowsImageResponseObserver::didReceiveProgress(float progress) const {
@@ -58,11 +57,15 @@ ImageComponentView::ImageComponentView(
   m_props = defaultProps;
 }
 
-void ImageComponentView::mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
+void ImageComponentView::mountChildComponentView(
+    winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
+    uint32_t index) noexcept {
   assert(false);
 }
 
-void ImageComponentView::unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
+void ImageComponentView::unmountChildComponentView(
+    winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
+    uint32_t index) noexcept {
   assert(false);
 }
 
@@ -137,12 +140,13 @@ void ImageComponentView::updateState(
 
   if (!m_imageResponseObserver) {
     // Should ViewComponents enable_shared_from_this? then we don't need this dance to get a shared_ptr
-    std::shared_ptr<FabricUIManager> fabricuiManager =
+    std::shared_ptr<::Microsoft::ReactNative::FabricUIManager> fabricuiManager =
         ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties());
     auto componentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(m_tag);
 
     m_imageResponseObserver = std::make_shared<WindowsImageResponseObserver>(
-        std::static_pointer_cast<ImageComponentView>(componentViewDescriptor.view));
+        *componentViewDescriptor.view
+             .as<winrt::Microsoft::ReactNative::Composition::implementation::ImageComponentView>());
   }
 
   setStateAndResubscribeImageResponseObserver(newImageState);
@@ -395,7 +399,7 @@ facebook::react::Tag ImageComponentView::hitTest(
       ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
       ptLocal.y <= m_layoutMetrics.frame.size.height) {
     localPt = ptLocal;
-    return tag();
+    return Tag();
   }
 
   return -1;
@@ -420,11 +424,11 @@ std::string ImageComponentView::DefaultControlType() const noexcept {
   return "image";
 }
 
-std::shared_ptr<ImageComponentView> ImageComponentView::Create(
+winrt::Microsoft::ReactNative::ComponentView ImageComponentView::Create(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
-  return std::shared_ptr<ImageComponentView>(new ImageComponentView(compContext, tag, reactContext));
+  return winrt::make<ImageComponentView>(compContext, tag, reactContext);
 }
 
-} // namespace Microsoft::ReactNative
+} // namespace winrt::Microsoft::ReactNative::Composition::implementation

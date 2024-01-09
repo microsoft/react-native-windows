@@ -23,7 +23,7 @@ using namespace Windows::Foundation;
 
 namespace Microsoft::ReactNative {
 
-struct IComponentView;
+struct winrt::Microsoft::ReactNative::implementation::ComponentView;
 typedef int PointerId;
 
 class CompositionEventHandler {
@@ -61,7 +61,7 @@ class CompositionEventHandler {
       const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept;
 
   facebook::react::SurfaceId SurfaceId() noexcept;
-  RootComponentView &RootComponentView() noexcept;
+  winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView &RootComponentView() noexcept;
 
   enum class UITouchType {
     Mouse,
@@ -76,10 +76,10 @@ class CompositionEventHandler {
       winrt::Windows::System::VirtualKeyModifiers keyModifiers);
   void HandleIncomingPointerEvent(
       facebook::react::PointerEvent &pe,
-      IComponentView *targetView,
+      winrt::Microsoft::ReactNative::implementation::ComponentView *targetView,
       const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
       winrt::Windows::System::VirtualKeyModifiers keyModifiers,
-      std::function<void(std::vector<IComponentView *> &)> handler);
+      std::function<void(std::vector<winrt::Microsoft::ReactNative::ComponentView> &)> handler);
 
   struct ActiveTouch {
     facebook::react::Touch touch;

@@ -45,4 +45,10 @@ float UserViewProps::Opacity() noexcept {
   return m_viewProps ? m_viewProps->opacity : 1.0f;
 }
 
+ViewProps::ViewProps(facebook::react::SharedViewProps props) noexcept : m_props(props) {}
+
+float ViewProps::Opacity() noexcept {
+  return m_props->opacity;
+}
+
 } // namespace winrt::Microsoft::ReactNative::implementation

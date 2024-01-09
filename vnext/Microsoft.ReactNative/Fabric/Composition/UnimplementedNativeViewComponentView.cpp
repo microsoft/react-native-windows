@@ -11,13 +11,13 @@
 #include "CompositionDynamicAutomationProvider.h"
 #include "Unicode.h"
 
-namespace Microsoft::ReactNative {
+namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 UnimplementedNativeViewComponentView::UnimplementedNativeViewComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : Super(
+    : base_type(
           compContext,
           tag,
           reactContext,
@@ -27,20 +27,19 @@ UnimplementedNativeViewComponentView::UnimplementedNativeViewComponentView(
   m_visual = compContext.CreateSpriteVisual();
 }
 
-std::shared_ptr<UnimplementedNativeViewComponentView> UnimplementedNativeViewComponentView::Create(
+winrt::Microsoft::ReactNative::ComponentView UnimplementedNativeViewComponentView::Create(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
-  return std::shared_ptr<UnimplementedNativeViewComponentView>(
-      new UnimplementedNativeViewComponentView(compContext, tag, reactContext));
+  return winrt::make<UnimplementedNativeViewComponentView>(compContext, tag, reactContext);
 }
 
 void UnimplementedNativeViewComponentView::mountChildComponentView(
-    IComponentView &childComponentView,
+    winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
     uint32_t index) noexcept {}
 
 void UnimplementedNativeViewComponentView::unmountChildComponentView(
-    IComponentView &childComponentView,
+    winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
     uint32_t index) noexcept {}
 
 void UnimplementedNativeViewComponentView::updateProps(
@@ -96,7 +95,7 @@ void UnimplementedNativeViewComponentView::updateLayoutMetrics(
         float offsetY = static_cast<float>(offset.y / m_layoutMetrics.pointScaleFactor);
 
         winrt::com_ptr<IDWriteTextFormat> spTextFormat;
-        winrt::check_hresult(Microsoft::ReactNative::DWriteFactory()->CreateTextFormat(
+        winrt::check_hresult(::Microsoft::ReactNative::DWriteFactory()->CreateTextFormat(
             L"Segoe UI",
             nullptr, // Font collection (nullptr sets it to use the system font collection).
             DWRITE_FONT_WEIGHT_REGULAR,
@@ -114,7 +113,8 @@ void UnimplementedNativeViewComponentView::updateLayoutMetrics(
             static_cast<float>(offset.x), static_cast<float>(offset.y), width + offset.x, height + offset.y};
         // const D2D1_RECT_F rect = {0.f, 0.f, width, height};
 
-        auto label = Microsoft::Common::Unicode::Utf8ToUtf16(std::string("Unimplemented component: ") + m_props->name);
+        auto label =
+            ::Microsoft::Common::Unicode::Utf8ToUtf16(std::string("Unimplemented component: ") + m_props->name);
         d2dDeviceContext->DrawText(
             label.c_str(),
             static_cast<UINT32>(label.length()),
@@ -159,10 +159,10 @@ facebook::react::Tag UnimplementedNativeViewComponentView::hitTest(
       ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
       ptLocal.y <= m_layoutMetrics.frame.size.height) {
     localPt = ptLocal;
-    return tag();
+    return Tag();
   }
 
   return -1;
 }
 
-} // namespace Microsoft::ReactNative
+} // namespace winrt::Microsoft::ReactNative::Composition::implementation

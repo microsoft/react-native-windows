@@ -11,14 +11,16 @@
 
 #include <Fabric/Composition/ReactCompositionViewComponentBuilder.h>
 
+#include "Composition.AbiCompositionViewComponentView.g.h"
 #include <react/components/rnwcore/ShadowNodes.h>
 
-namespace Microsoft::ReactNative {
+namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
-struct AbiCompositionViewComponentView : CompositionBaseComponentView {
-  using Super = CompositionBaseComponentView;
+struct AbiCompositionViewComponentView
+    : public AbiCompositionViewComponentViewT<AbiCompositionViewComponentView, CompositionBaseComponentView> {
+  using Super = AbiCompositionViewComponentViewT<AbiCompositionViewComponentView, CompositionBaseComponentView>;
 
-  [[nodiscard]] static std::shared_ptr<AbiCompositionViewComponentView> Create(
+  [[nodiscard]] static winrt::Microsoft::ReactNative::ComponentView Create(
       winrt::Microsoft::ReactNative::ReactContext const &reactContext,
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
@@ -26,8 +28,12 @@ struct AbiCompositionViewComponentView : CompositionBaseComponentView {
 
   winrt::IInspectable EnsureUiaProvider() noexcept override;
 
-  void mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
-  void unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
+  void mountChildComponentView(
+      winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
+      uint32_t index) noexcept override;
+  void unmountChildComponentView(
+      winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
+      uint32_t index) noexcept override;
 
   void updateState(facebook::react::State::Shared const &state, facebook::react::State::Shared const &oldState) noexcept
       override;
@@ -37,7 +43,8 @@ struct AbiCompositionViewComponentView : CompositionBaseComponentView {
   void updateLayoutMetrics(
       facebook::react::LayoutMetrics const &layoutMetrics,
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
-  void finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept override;
+  void finalizeUpdates(
+      winrt::Microsoft::ReactNative::implementation::RNComponentViewUpdateMask updateMask) noexcept override;
   void prepareForRecycle() noexcept override;
   bool focusable() const noexcept override;
   void onKeyDown(
@@ -69,20 +76,20 @@ struct AbiCompositionViewComponentView : CompositionBaseComponentView {
       const noexcept override;
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
 
- private:
   AbiCompositionViewComponentView(
       winrt::Microsoft::ReactNative::ReactContext const &reactContext,
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::IReactViewComponentBuilder builder);
 
+ private:
   winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder &Builder() noexcept;
 
   winrt::IInspectable m_handle;
   winrt::Microsoft::ReactNative::IReactViewComponentBuilder m_builder;
   winrt::Microsoft::ReactNative::IComponentState m_state;
-  std::shared_ptr<AbiViewProps const> m_props;
+  std::shared_ptr<::Microsoft::ReactNative::AbiViewProps const> m_props;
   winrt::Microsoft::ReactNative::Composition::IVisual m_visual{nullptr};
 };
 
-} // namespace Microsoft::ReactNative
+} // namespace winrt::Microsoft::ReactNative::Composition::implementation

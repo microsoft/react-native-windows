@@ -73,7 +73,7 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
   winrt::Microsoft::ReactNative::FocusNavigationResult NavigateFocus(
       const winrt::Microsoft::ReactNative::FocusNavigationRequest &request) noexcept;
 
-  ::Microsoft::ReactNative::RootComponentView *GetComponentView() noexcept;
+  winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *GetComponentView() noexcept;
 
   IInspectable GetUiaProvider() noexcept;
 
