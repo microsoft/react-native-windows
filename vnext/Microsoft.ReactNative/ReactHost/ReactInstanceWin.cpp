@@ -16,7 +16,7 @@
 #endif
 #include "ReactErrorProvider.h"
 
-#include "Microsoft.ReactNative/IReactNotificationService.h"
+#include "IReactNotificationService.h"
 #include "NativeModules.h"
 #include "NativeModulesProvider.h"
 #include "Unicode.h"
