@@ -21,21 +21,22 @@ type IOSPlatform = {
   __constants: null,
   OS: $TEMPORARY$string<'ios'>,
   // $FlowFixMe[unsafe-getters-setters]
-  get Version(): string,
+  get Version(): number,
   // $FlowFixMe[unsafe-getters-setters]
   get constants(): {|
     forceTouchAvailable: boolean,
     interfaceIdiom: string,
     isTesting: boolean,
     isDisableAnimations?: boolean,
-    osVersion: string,
+    osVersion: number,
+    systemName: string,
     reactNativeVersion: {|
       major: number,
       minor: number,
       patch: number,
-      prerelease: ?number,
+      prerelease: ?string | number,
     |},
-    systemName: string,
+    isMacCatalyst?: boolean,
   |},
   // $FlowFixMe[unsafe-getters-setters]
   get isPad(): boolean,
@@ -45,6 +46,8 @@ type IOSPlatform = {
   get isTesting(): boolean,
   // $FlowFixMe[unsafe-getters-setters]
   get isDisableAnimations(): boolean,
+  // $FlowFixMe[unsafe-getters-setters]
+  get isMacCatalyst(): boolean,
   select: <T>(spec: PlatformSelectSpec<T>) => T,
 };
 
@@ -89,15 +92,19 @@ type Win32Platform = {
   get Version(): number,
   // $FlowFixMe[unsafe-getters-setters]
   get constants(): {|
+    forceTouchAvailable: boolean,
+    interfaceIdiom: string,
     isTesting: boolean,
     isDisableAnimations?: boolean,
+    osVersion: number,
     reactNativeVersion: {|
       major: number,
       minor: number,
       patch: number,
       prerelease: ?string | number,
     |},
-    osVersion: number,
+    systemName: string,
+    isMacCatalyst?: boolean,
   |},
   // $FlowFixMe[unsafe-getters-setters]
   get isTV(): boolean,

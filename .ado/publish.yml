@@ -13,6 +13,10 @@ parameters:
   displayName: Stop if latest commit is ***NO_CI***
   type: boolean
   default: true
+- name: performBeachballCheck
+  displayName: Perform Beachball Check (Disable when promoting)
+  type: boolean
+  default: true
 - name: AgentPool
   type: object
   default:
@@ -152,8 +156,11 @@ extends:
 
           - pwsh: |
               npx beachball check --verbose 2>&1 | Tee-Object -Variable beachballOutput
-              $beachballOutput | Where-Object { $_ -match "ERROR: *"} | ForEach { Write-Host "##vso[task.logissue type=error]$_" }
+              $beachballErrors = $beachballOutput | Where-Object { $_ -match "ERROR: *"}
+              $beachballErrors | ForEach { Write-Host "##vso[task.logissue type=error]$_" }
+              if ( $beachballErrors.Count -gt 0)  { throw "Beachball check found $($beachballErrors.Count) errors." }
             displayName: Beachball Check
+            condition: ${{ parameters.performBeachballCheck }}
 
           - script: npx beachball publish $(SkipNpmPublishArgs) $(SkipGitPushPublishArgs) --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes --bump-deps --verbose --access public --message "applying package updates ***NO_CI***"
             displayName: Beachball Publish
@@ -359,6 +366,7 @@ extends:
             - RnwNativeBuildUniversal
           displayName: Sign Binaries and Publish NuGet
           pool: ${{ parameters.AgentPool.Medium }}
+          timeoutInMinutes: 120 # Protect against the long CodeSign task
 
           steps:
           - template: .ado/templates/checkout-shallow.yml@self

@@ -2023,6 +2023,11 @@ static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_getEntries(
     count <= 1 || args[1].isNull() || args[1].isUndefined() ? std::nullopt : std::make_optional(args[1].asString(rt))
   );
 }
+static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_getSupportedPerformanceEntryTypes(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->getSupportedPerformanceEntryTypes(
+    rt
+  );
+}
 
 NativePerformanceObserverCxxSpecJSI::NativePerformanceObserverCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
   : TurboModule("NativePerformanceObserverCxx", jsInvoker) {
@@ -2036,6 +2041,7 @@ NativePerformanceObserverCxxSpecJSI::NativePerformanceObserverCxxSpecJSI(std::sh
   methodMap_["setDurationThreshold"] = MethodMetadata {2, __hostFunction_NativePerformanceObserverCxxSpecJSI_setDurationThreshold};
   methodMap_["clearEntries"] = MethodMetadata {2, __hostFunction_NativePerformanceObserverCxxSpecJSI_clearEntries};
   methodMap_["getEntries"] = MethodMetadata {2, __hostFunction_NativePerformanceObserverCxxSpecJSI_getEntries};
+  methodMap_["getSupportedPerformanceEntryTypes"] = MethodMetadata {0, __hostFunction_NativePerformanceObserverCxxSpecJSI_getSupportedPerformanceEntryTypes};
 }
 static jsi::Value __hostFunction_NativeWebSocketModuleCxxSpecJSI_connect(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeWebSocketModuleCxxSpecJSI *>(&turboModule)->connect(

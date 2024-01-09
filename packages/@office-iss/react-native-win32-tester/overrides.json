@@ -5,26 +5,19 @@
   "excludePatterns": [
     "src/js/examples-win32/**"
   ],
-  "baseVersion": "0.73.0-nightly-20231002-0371014a3",
+  "baseVersion": "0.74.0-nightly-20231116-fa89dd68b",
   "overrides": [
     {
       "type": "patch",
       "file": "src/js/components/ListExampleShared.win32.js",
       "baseFile": "packages/rn-tester/js/components/ListExampleShared.js",
-      "baseHash": "7bdaba03bf529cfb9920c1be2c8af1443fc628c9"
-    },
-    {
-      "type": "patch",
-      "file": "src/js/components/RNTesterEmptyBookmarksState.win32.js",
-      "baseFile": "packages/rn-tester/js/components/RNTesterEmptyBookmarksState.js",
-      "baseHash": "a1d1c6638e815f6dd53504983813fda92f3b5478",
-      "issue": 6341
+      "baseHash": "d3b62b2faecf0aa449cb438b3e09064b7ae5102f"
     },
     {
       "type": "patch",
       "file": "src/js/components/RNTesterExampleFilter.win32.js",
       "baseFile": "packages/rn-tester/js/components/RNTesterExampleFilter.js",
-      "baseHash": "76f3d045c6f4cdbd1538735c7c923da66de6974c"
+      "baseHash": "749b9de3afedb843fe9fe8c63c2e910b9f4e4c29"
     },
     {
       "type": "platform",
@@ -42,7 +35,7 @@
       "type": "copy",
       "file": "src/js/RNTesterApp.win32.js",
       "baseFile": "packages/rn-tester/js/RNTesterApp.android.js",
-      "baseHash": "d517675a1da173a7d57ac87d0ea9efc08f05b50d",
+      "baseHash": "5e73edb50a1156756f2d1bec70d95a92f701ec22",
       "issue": 4586
     },
     {

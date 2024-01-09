@@ -84,6 +84,7 @@ void ChakraRuntime::Init() noexcept {
   m_propertyId.enumerable = JsRefHolder{GetPropertyIdFromName(L"enumerable")};
   m_propertyId.get = JsRefHolder{GetPropertyIdFromName(L"get")};
   m_propertyId.getOwnPropertyDescriptor = JsRefHolder{GetPropertyIdFromName(L"getOwnPropertyDescriptor")};
+  m_propertyId.has = JsRefHolder{GetPropertyIdFromName(L"has")};
   m_propertyId.hostFunctionSymbol = JsRefHolder{GetPropertyIdFromSymbol(L"hostFunctionSymbol")};
   m_propertyId.hostObjectSymbol = JsRefHolder{GetPropertyIdFromSymbol(L"hostObjectSymbol")};
   m_propertyId.length = JsRefHolder{GetPropertyIdFromName(L"length")};
@@ -97,9 +98,22 @@ void ChakraRuntime::Init() noexcept {
   m_propertyId.writable = JsRefHolder{GetPropertyIdFromName(L"writable")};
 
   m_undefinedValue = JsRefHolder{GetUndefinedValue()};
+
+  JsValueRef global = GetGlobalObject();
+  JsValueRef weakMapPropertyId = GetPropertyIdFromName(L"WeakMap");
+  JsValueRef weakMapConstructor = GetProperty(global, weakMapPropertyId);
+  JsValueRef weakMapPrototype = GetProperty(weakMapConstructor, m_propertyId.prototype);
+  m_weakMapGet = JsRefHolder{GetProperty(weakMapPrototype, m_propertyId.get)};
+  m_weakMapHas = JsRefHolder{GetProperty(weakMapPrototype, m_propertyId.has)};
+  m_weakMapSet = JsRefHolder{GetProperty(weakMapPrototype, m_propertyId.set)};
+  m_nativeStateMap = JsRefHolder{ConstructObject(weakMapConstructor, Span<JsValueRef>{m_undefinedValue})};
 }
 
 /*virtual*/ ChakraRuntime::~ChakraRuntime() noexcept {
+  m_nativeStateMap = {};
+  m_weakMapSet = {};
+  m_weakMapHas = {};
+  m_weakMapGet = {};
   m_undefinedValue = {};
   m_propertyId = {};
   m_proxyConstructor = {};
@@ -189,8 +203,8 @@ facebook::jsi::Value ChakraRuntime::evaluateJavaScript(
     auto genPreparedScript = generatePreparedScript(sourceURL, *sharedScriptBuffer);
     if (!genPreparedScript)
       std::terminate(); // Cache generation can't fail unless something really
-                        // wrong. but we should get rid of this abort before
-                        // shipping.
+    // wrong. but we should get rid of this abort before
+    // shipping.
 
     sharedPreparedScript = std::shared_ptr<const facebook::jsi::Buffer>(std::move(genPreparedScript));
     runtimeArgs().preparedScriptStore->persistPreparedScript(
@@ -345,16 +359,25 @@ facebook::jsi::String ChakraRuntime::bigintToString(const facebook::jsi::BigInt 
   throw facebook::jsi::JSINativeException("Not implemented");
 }
 
-bool ChakraRuntime::hasNativeState(const facebook::jsi::Object &) {
-  throw facebook::jsi::JSINativeException("Not implemented");
+bool ChakraRuntime::hasNativeState(const facebook::jsi::Object &obj) {
+  return BooleanToBool(CallFunction(m_weakMapHas, {m_nativeStateMap, GetJsRef(obj)}));
 }
 
-std::shared_ptr<facebook::jsi::NativeState> ChakraRuntime::getNativeState(const facebook::jsi::Object &) {
-  throw facebook::jsi::JSINativeException("Not implemented");
+std::shared_ptr<facebook::jsi::NativeState> ChakraRuntime::getNativeState(const facebook::jsi::Object &obj) {
+  JsValueRef stateWrapper = CallFunction(m_weakMapGet, {m_nativeStateMap, GetJsRef(obj)});
+  if (GetValueType(stateWrapper) == JsValueType::JsObject) {
+    return *static_cast<std::shared_ptr<facebook::jsi::NativeState> *>(GetExternalData(stateWrapper));
+  } else {
+    return nullptr;
+  }
 }
 
-void ChakraRuntime::setNativeState(const facebook::jsi::Object &, std::shared_ptr<facebook::jsi::NativeState> state) {
-  throw facebook::jsi::JSINativeException("Not implemented");
+void ChakraRuntime::setNativeState(
+    const facebook::jsi::Object &obj,
+    std::shared_ptr<facebook::jsi::NativeState> state) {
+  JsValueRef stateWrapper =
+      CreateExternalObject(std::make_unique<std::shared_ptr<facebook::jsi::NativeState>>(std::move(state)));
+  CallFunction(m_weakMapSet, {m_nativeStateMap, GetJsRef(obj), stateWrapper});
 }
 
 facebook::jsi::ArrayBuffer ChakraRuntime::createArrayBuffer(std::shared_ptr<facebook::jsi::MutableBuffer> buffer) {

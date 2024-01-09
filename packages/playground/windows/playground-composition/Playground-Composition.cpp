@@ -12,8 +12,6 @@
 
 #include <winrt/Windows.Foundation.Collections.h>
 
-#include "../../../../vnext/codegen/NativeDeviceInfoSpec.g.h"
-
 #include <DispatcherQueue.h>
 #include <UIAutomation.h>
 #include <windows.ui.composition.interop.h>
