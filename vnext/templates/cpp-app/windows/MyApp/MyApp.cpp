@@ -6,8 +6,6 @@
 
 #include "AutolinkedNativeModules.g.h"
 
-#include "../../node_modules/react-native-windows/codegen/NativeDeviceInfoSpec.g.h"
-
 #include <DispatcherQueue.h>
 #include <UIAutomation.h>
 
