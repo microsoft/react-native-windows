@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <NativeFileReaderModuleSpec.g.h>
+#include <codegen/NativeFileReaderModuleSpec.g.h>
 
 #include <IFileReaderResource.h>
 #include <NativeModules.h>

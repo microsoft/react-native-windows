@@ -11,6 +11,7 @@
 #include <Views/ViewManager.h>
 #include <XamlUtils.h>
 #include <cxxreact/SystraceSection.h>
+#include <glog/logging.h>
 #include "ShadowNodeBase.h"
 #include "Unicode.h"
 #include "XamlUIService.h"
