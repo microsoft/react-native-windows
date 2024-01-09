@@ -2149,7 +2149,52 @@ private:
 };
 
 
-  class JSI_EXPORT NativeImageLoaderAndroidCxxSpecJSI : public TurboModule {
+  
+#pragma mark - ImageLoaderBaseImageSize
+
+template <typename P0, typename P1>
+struct ImageLoaderBaseImageSize {
+  P0 width;
+  P1 height;
+  bool operator==(const ImageLoaderBaseImageSize &other) const {
+    return width == other.width && height == other.height;
+  }
+};
+
+template <typename P0, typename P1>
+struct ImageLoaderBaseImageSizeBridging {
+  static ImageLoaderBaseImageSize<P0, P1> fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    ImageLoaderBaseImageSize<P0, P1> result{
+      bridging::fromJs<P0>(rt, value.getProperty(rt, "width"), jsInvoker),
+      bridging::fromJs<P1>(rt, value.getProperty(rt, "height"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static double widthToJs(jsi::Runtime &rt, P0 value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double heightToJs(jsi::Runtime &rt, P1 value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const ImageLoaderBaseImageSize<P0, P1> &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "width", bridging::toJs(rt, value.width, jsInvoker));
+    result.setProperty(rt, "height", bridging::toJs(rt, value.height, jsInvoker));
+    return result;
+  }
+};
+
+class JSI_EXPORT NativeImageLoaderAndroidCxxSpecJSI : public TurboModule {
 protected:
   NativeImageLoaderAndroidCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
 

@@ -18,6 +18,16 @@
 namespace facebook {
 namespace react {
 
+class DebuggingOverlayProps final : public ViewProps {
+ public:
+  DebuggingOverlayProps() = default;
+  DebuggingOverlayProps(const PropsParserContext& context, const DebuggingOverlayProps &sourceProps, const RawProps &rawProps);
+
+#pragma mark - Props
+
+  
+};
+
 enum class ModalHostViewAnimationType { None, Slide, Fade };
 
 static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, ModalHostViewAnimationType &result) {
@@ -417,16 +427,6 @@ class InputAccessoryProps final : public ViewProps {
 #pragma mark - Props
 
   SharedColor backgroundColor{};
-};
-
-class TraceUpdateOverlayProps final : public ViewProps {
- public:
-  TraceUpdateOverlayProps() = default;
-  TraceUpdateOverlayProps(const PropsParserContext& context, const TraceUpdateOverlayProps &sourceProps, const RawProps &rawProps);
-
-#pragma mark - Props
-
-  
 };
 
 class UnimplementedNativeViewProps final : public ViewProps {

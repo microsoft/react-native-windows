@@ -15,6 +15,13 @@
 namespace facebook {
 namespace react {
 
+DebuggingOverlayProps::DebuggingOverlayProps(
+    const PropsParserContext &context,
+    const DebuggingOverlayProps &sourceProps,
+    const RawProps &rawProps): ViewProps(context, sourceProps, rawProps)
+
+    
+      {}
 ModalHostViewProps::ModalHostViewProps(
     const PropsParserContext &context,
     const ModalHostViewProps &sourceProps,
@@ -177,13 +184,6 @@ InputAccessoryProps::InputAccessoryProps(
     const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
 
     backgroundColor(convertRawProp(context, rawProps, "backgroundColor", sourceProps.backgroundColor, {}))
-      {}
-TraceUpdateOverlayProps::TraceUpdateOverlayProps(
-    const PropsParserContext &context,
-    const TraceUpdateOverlayProps &sourceProps,
-    const RawProps &rawProps): ViewProps(context, sourceProps, rawProps)
-
-    
       {}
 UnimplementedNativeViewProps::UnimplementedNativeViewProps(
     const PropsParserContext &context,
