@@ -38,14 +38,18 @@ steps:
       buildEnvironment: ${{ parameters.buildEnvironment }}
 
   - ${{ if endsWith(parameters.template, '-app') }}:
-    - script: |
-        npx --yes react-native@$(reactNativeDevDependency) init testcli --template react-native@$(reactNativeDevDependency)
+    - pwsh: |
+        $cmd = "npx --yes react-native@$(reactNativeDevDependency) init testcli --template react-native@$(reactNativeDevDependency)"
+        Write-Host $cmd
+        iex $cmd
       displayName: Init new app project with react-native init
       workingDirectory: $(Agent.BuildDirectory)
 
   - ${{ if endsWith(parameters.template, '-lib') }}:
     - pwsh: |
-        npx --yes create-react-native-library@latest --slug testcli --description testcli --author-name "React-Native-Windows Bot" --author-email 53619745+rnbot@users.noreply.github.com --author-url http://example.com --repo-url http://example.com --languages java-objc --type module-new --react-native-version $(reactNativeDevDependency) testcli
+        $cmd = "npx --yes create-react-native-library@latest --slug testcli --description testcli --author-name `"React-Native-Windows Bot`" --author-email 53619745+rnbot@users.noreply.github.com --author-url http://example.com --repo-url http://example.com --languages java-objc --type module-new --react-native-version $(reactNativeDevDependency) testcli"
+        Write-Host $cmd
+        iex $cmd
         ((Get-Content -Path testcli\.yarnrc.yml -Raw) -replace "  - path: scripts/pod-install.cjs") | Set-Content -Encoding UTF8 testcli\.yarnrc.yml
       displayName: Init new lib project with create-react-native-library
       workingDirectory: $(Agent.BuildDirectory)

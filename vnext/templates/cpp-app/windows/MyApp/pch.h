@@ -12,16 +12,15 @@
 #define WINRT_LEAN_AND_MEAN 1
 
 // Windows Header Files
+#include <unknwn.h>
 #include <windows.h>
 
+// WinRT Header Files
+#include <winrt/base.h>
 #pragma push_macro("GetCurrentTime")
 #undef GetCurrentTime
-
-// Playground pch.h
 #include <CppWinRTIncludes.h>
 #include <winrt/Microsoft.ReactNative.h>
-#include <winrt/Windows.Foundation.Collections.h>
-#include <winrt/Windows.Foundation.h>
 #pragma pop_macro("GetCurrentTime")
 
 // C RunTime Header Files
@@ -30,6 +29,4 @@
 #include <stdlib.h>
 #include <tchar.h>
 
-// reference additional headers your program requires here
-#include <unknwn.h>
-#include <winrt/base.h>
+// Reference additional headers your project requires here
