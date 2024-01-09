@@ -4,8 +4,6 @@
 #include "pch.h"
 #include "{{ name }}.h"
 
-#include "../../node_modules/react-native-windows/codegen/NativeDeviceInfoSpec.g.h"
-
 #include <DispatcherQueue.h>
 #include <UIAutomation.h>
 
@@ -16,35 +14,6 @@
 #include "ReactPropertyBag.h"
 
 constexpr size_t MAX_LOADSTRING = 100;
-
-// Work around crash in DeviceInfo when running outside of XAML environment
-// TODO rework built-in DeviceInfo to allow it to be driven without use of HWNDs or XamlApps
-// Issue Tracking #11414
-REACT_MODULE(DeviceInfo)
-struct DeviceInfo {
-  using ModuleSpec = Microsoft::ReactNativeSpecs::DeviceInfoSpec;
-
-  REACT_INIT(Initialize)
-  void Initialize(React::ReactContext const &reactContext) noexcept {
-    m_context = reactContext;
-  }
-
-  REACT_GET_CONSTANTS(GetConstants)
-  Microsoft::ReactNativeSpecs::DeviceInfoSpec_DeviceInfoConstants GetConstants() noexcept {
-    Microsoft::ReactNativeSpecs::DeviceInfoSpec_DeviceInfoConstants constants;
-    Microsoft::ReactNativeSpecs::DeviceInfoSpec_DisplayMetrics screenDisplayMetrics;
-    screenDisplayMetrics.fontScale = 1;
-    screenDisplayMetrics.height = 1024;
-    screenDisplayMetrics.width = 1024;
-    screenDisplayMetrics.scale = 1;
-    constants.Dimensions.screen = screenDisplayMetrics;
-    constants.Dimensions.window = screenDisplayMetrics;
-    return constants;
-  }
-
- private:
-  winrt::Microsoft::ReactNative::ReactContext m_context;
-};
 
 // Have to use TurboModules to override built in modules.. so the standard attributed package provider doesn't work.
 struct CompReactPackageProvider

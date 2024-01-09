@@ -132,6 +132,7 @@ void TextLayoutManager::GetTextLayout(
 TextMeasurement TextLayoutManager::measure(
     AttributedStringBox attributedStringBox,
     ParagraphAttributes paragraphAttributes,
+    const TextLayoutContext &layoutContext,
     LayoutConstraints layoutConstraints,
     std::shared_ptr<void> /* hostTextStorage */) const {
   TextMeasurement measurement{};

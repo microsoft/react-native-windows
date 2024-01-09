@@ -148,6 +148,9 @@ type DataDetectorTypesType =
   | 'link'
   | 'address'
   | 'calendarEvent'
+  | 'trackingNumber'
+  | 'flightNumber'
+  | 'lookupSuggestion'
   | 'none'
   | 'all';
 
@@ -1083,8 +1086,8 @@ const emptyFunctionThatReturnsTrue = () => true;
  *     return (
  *       <TextInput
  *         {...this.props} // Inherit any props passed to it; e.g., multiline, numberOfLines below
- *         editable = {true}
- *         maxLength = {40}
+ *         editable={true}
+ *         maxLength={40}
  *       />
  *     );
  *   }
@@ -1108,8 +1111,8 @@ const emptyFunctionThatReturnsTrue = () => true;
  *        borderBottomWidth: 1 }}
  *      >
  *        <UselessTextInput
- *          multiline = {true}
- *          numberOfLines = {4}
+ *          multiline={true}
+ *          numberOfLines={4}
  *          onChangeText={(text) => this.setState({text})}
  *          value={this.state.text}
  *        />

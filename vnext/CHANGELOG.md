@@ -1,8 +1,57 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 06 Dec 2023 03:54:49 GMT and should not be manually modified.
+This log was last generated on Thu, 04 Jan 2024 06:15:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.749
+
+Thu, 04 Jan 2024 06:15:54 GMT
+
+### Changes
+
+- integrate 11/14 (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.748
+
+Wed, 20 Dec 2023 06:14:13 GMT
+
+### Changes
+
+- integrate 10/31 (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.747
+
+Sat, 16 Dec 2023 06:14:45 GMT
+
+### Changes
+
+- testing integration (yajurgrover24@gmail.com)
+
+## 0.0.0-canary.746
+
+Sat, 09 Dec 2023 06:15:28 GMT
+
+### Changes
+
+- Fix FileReader Base64 padding (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.745
+
+Fri, 08 Dec 2023 06:14:10 GMT
+
+### Changes
+
+- Use form data as JSArray (julio.rocha@microsoft.com)
+- [Fabric] Remove DeviceInfo stub from template and test app (email not defined)
+
+## 0.0.0-canary.744
+
+Thu, 07 Dec 2023 06:14:10 GMT
+
+### Changes
+
+- updated path to match upstream fork (yajurgrover24@gmail.com)
 
 ## 0.0.0-canary.743
 

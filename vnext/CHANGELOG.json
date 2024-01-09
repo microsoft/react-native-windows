@@ -2,6 +2,102 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 04 Jan 2024 06:15:54 GMT",
+      "version": "0.0.0-canary.749",
+      "tag": "react-native-windows_v0.0.0-canary.749",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "828085aa1b432f71580eb6b2295fbd5059ca5d6c",
+            "comment": "integrate 11/14"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 20 Dec 2023 06:14:13 GMT",
+      "version": "0.0.0-canary.748",
+      "tag": "react-native-windows_v0.0.0-canary.748",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "8df470c1a01a2babc53af55b13e54725cede92d9",
+            "comment": "integrate 10/31"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 16 Dec 2023 06:14:45 GMT",
+      "version": "0.0.0-canary.747",
+      "tag": "react-native-windows_v0.0.0-canary.747",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "react-native-windows",
+            "commit": "6efa6bff7d437d5f75d98ddbbb7ed09c42c511cb",
+            "comment": "testing integration"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 09 Dec 2023 06:15:28 GMT",
+      "version": "0.0.0-canary.746",
+      "tag": "react-native-windows_v0.0.0-canary.746",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "34ae4174bbdd4991ba0432ed324da836922a7239",
+            "comment": "Fix FileReader Base64 padding"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 08 Dec 2023 06:14:10 GMT",
+      "version": "0.0.0-canary.745",
+      "tag": "react-native-windows_v0.0.0-canary.745",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "f0bb18d19cd65c7ac8802f7a2b0d714e391cfaed",
+            "comment": "Use form data as JSArray"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "830cf8a85ddd00c0055ba07a68362031f7ef20d3",
+            "comment": "[Fabric] Remove DeviceInfo stub from template and test app"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 07 Dec 2023 06:14:10 GMT",
+      "version": "0.0.0-canary.744",
+      "tag": "react-native-windows_v0.0.0-canary.744",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "react-native-windows",
+            "commit": "e0bf4cb412cd0a8e15591e7f844f8f0047333089",
+            "comment": "updated path to match upstream fork"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 06 Dec 2023 03:54:49 GMT",
       "version": "0.0.0-canary.743",
       "tag": "react-native-windows_v0.0.0-canary.743",

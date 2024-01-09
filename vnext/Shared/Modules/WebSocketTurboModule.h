@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <NativeWebSocketModuleSpec.g.h>
+#include <codegen/NativeWebSocketModuleSpec.g.h>
 #include <Modules/IWebSocketModuleProxy.h>
 #include <NativeModules.h>
 #include <Networking/IWebSocketResource.h>

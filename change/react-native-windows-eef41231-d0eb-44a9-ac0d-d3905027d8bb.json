@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Switch ImageUtils.cpp to use co_return",
+  "packageName": "react-native-windows",
+  "email": "ericroz@meta.com",
+  "dependentChangeType": "patch"
+}

@@ -41,7 +41,7 @@ facebook::react::ShadowNodeTraits AbiViewComponentDescriptor::getTraits() const 
   return traits;
 }
 
-facebook::react::ShadowNode::Shared AbiViewComponentDescriptor::createShadowNode(
+std::shared_ptr<facebook::react::ShadowNode> AbiViewComponentDescriptor::createShadowNode(
     const facebook::react::ShadowNodeFragment &fragment,
     facebook::react::ShadowNodeFamily::Shared const &family) const {
   auto shadowNode = std::make_shared<ShadowNodeT>(fragment, family, getTraits());
@@ -93,7 +93,7 @@ facebook::react::Props::Shared AbiViewComponentDescriptor::cloneProps(
   // Call old-style constructor
   // auto shadowNodeProps = std::make_shared<ShadowNodeT::Props>(context, rawProps, props);
   auto shadowNodeProps = std::make_shared<AbiViewProps>(
-      context, props ? static_cast<AbiViewProps const &>(*props) : AbiViewProps(), rawProps);
+      context, props ? static_cast<AbiViewProps const &>(*props) : *ShadowNodeT::defaultSharedProps(), rawProps);
   auto viewProps = winrt::make<winrt::Microsoft::ReactNative::implementation::UserViewProps>(shadowNodeProps);
   auto userProps =
       winrt::get_self<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder>(m_builder)

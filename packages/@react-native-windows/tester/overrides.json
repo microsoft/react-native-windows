@@ -5,26 +5,19 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.73.0-nightly-20231002-0371014a3",
+  "baseVersion": "0.74.0-nightly-20231116-fa89dd68b",
   "overrides": [
-    {
-      "type": "patch",
-      "file": "src/js/components/RNTesterEmptyBookmarksState.windows.js",
-      "baseFile": "packages/rn-tester/js/components/RNTesterEmptyBookmarksState.js",
-      "baseHash": "a1d1c6638e815f6dd53504983813fda92f3b5478",
-      "issue": 6341
-    },
     {
       "type": "derived",
       "file": "src/js/examples-win/Button/ButtonExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Button/ButtonExample.js",
-      "baseHash": "36c55afe75ac9c6efdec22e5ceb1f114a84ebd45"
+      "baseHash": "e03b21d229ecb631c12e4ac04ddf73fbe6059da7"
     },
     {
       "type": "derived",
       "file": "src/js/examples-win/Switch/SwitchExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Switch/SwitchExample.js",
-      "baseHash": "ba4cd945121522ef59ed862bb6104d8767e66e5e"
+      "baseHash": "fdf533bef0d75f8126faf21186b160ae7616e81f"
     },
     {
       "type": "platform",
@@ -45,20 +38,20 @@
       "type": "patch",
       "file": "src/js/examples/TextInput/TextInputExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputExample.android.js",
-      "baseHash": "6b509d45d39695cb1ebf4cfea9ec30edbbe699b6",
+      "baseHash": "528b850e74260e8059797a7fbf771ce8a07f27dd",
       "issue": 5688
     },
     {
       "type": "patch",
       "file": "src/js/examples/View/ViewExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/View/ViewExample.js",
-      "baseHash": "49688bf21c5a2f64aa185180983fb1a81a0e1312"
+      "baseHash": "4904becf311eeeb2b3a324f7efb5c82531e50969"
     },
     {
       "type": "copy",
       "file": "src/js/RNTesterApp.windows.js",
       "baseFile": "packages/rn-tester/js/RNTesterApp.android.js",
-      "baseHash": "d517675a1da173a7d57ac87d0ea9efc08f05b50d",
+      "baseHash": "5e73edb50a1156756f2d1bec70d95a92f701ec22",
       "issue": 4586
     },
     {
