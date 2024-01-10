@@ -64,14 +64,14 @@
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/JSIDynamic.cpp",
       "baseFile": "packages/react-native/ReactCommon/jsi/jsi/JSIDynamic.cpp",
       "baseHash": "989722b8812d05adfc0f5e4c8dcbf42ab6026a7f",
-      "issue": 12210
+      "issue": 12581
     },
     {
       "type": "copy",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/JSIDynamic.h",
       "baseFile": "packages/react-native/ReactCommon/jsi/jsi/JSIDynamic.h",
       "baseHash": "b3df8b8ce255b2d11184ba705407cb399c121a87",
-      "issue": 12210
+      "issue": 12581
     },
     {
       "type": "patch",
@@ -189,6 +189,13 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/numeric/Comparison.h",
       "baseFile": "packages/react-native/ReactCommon/yoga/yoga/numeric/Comparison.h",
+      "baseHash": "c4150273aa8ab23568f31365cd678b9967521362",
+      "issue": 12195
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/style/Style.h",
+      "baseFile": "packages/react-native/ReactCommon/yoga/yoga/style/Style.h",
       "baseHash": "c4150273aa8ab23568f31365cd678b9967521362",
       "issue": 12195
     },

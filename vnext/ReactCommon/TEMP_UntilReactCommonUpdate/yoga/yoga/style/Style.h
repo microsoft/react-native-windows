@@ -54,7 +54,7 @@ class YG_EXPORT Style {
   static constexpr float DefaultFlexShrink = 0.0f;
   static constexpr float WebDefaultFlexShrink = 1.0f;
 
-  // [Windows C++20 fix
+  // [Windows C++20 fix #12195
   Style() : direction_(Direction::Inherit), flexDirection_(FlexDirection::Column),  justifyContent_(Justify::FlexStart), 
   alignContent_(Align::FlexStart), alignItems_(Align::Stretch), alignSelf_(Align::Auto), positionType_(PositionType::Relative), flexWrap_(Wrap::NoWrap), overflow_(Overflow::Visible),
   display_(Display::Flex) {}
@@ -270,7 +270,7 @@ class YG_EXPORT Style {
   using Edges = std::array<Style::Length, ordinalCount<Edge>()>;
   using Gutters = std::array<Style::Length, ordinalCount<Gutter>()>;
 
-  // [Window C++20 fix
+  // [Window C++20 fix #12195
   Direction direction_ : bitCount<Direction>();
   FlexDirection flexDirection_ : bitCount<FlexDirection>();
   Justify justifyContent_ : bitCount<Justify>();

@@ -20,7 +20,7 @@ namespace facebook::yoga {
 
 struct LayoutResults {
 
-  // [Windows C++20 fix
+  // [Windows C++20 fix #12195
   LayoutResults() : direction_(Direction::Inherit), hadOverflow_(false) {}
   // Windows]
 
@@ -124,7 +124,7 @@ struct LayoutResults {
         static_cast<int>(edge) <= 3, "Edge must be top/left/bottom/right");
   }
 
-  // [Windows c++20 fix
+  // [Windows c++20 fix #12195
   Direction direction_ : bitCount<Direction>();
   bool hadOverflow_ : 1;
   // Windows]
