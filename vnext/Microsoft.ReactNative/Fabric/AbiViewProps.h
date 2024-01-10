@@ -45,4 +45,13 @@ struct UserViewProps : ViewPropsT<UserViewProps> {
   ::Microsoft::ReactNative::AbiViewProps const *m_viewProps{nullptr};
 };
 
+struct ViewProps : ViewPropsT<ViewProps> {
+  ViewProps(facebook::react::SharedViewProps props) noexcept;
+
+  float Opacity() noexcept;
+
+ private:
+  facebook::react::SharedViewProps m_props;
+};
+
 } // namespace winrt::Microsoft::ReactNative::implementation

@@ -18,7 +18,7 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
                                                  IValueProvider> {
  public:
   CompositionDynamicAutomationProvider(
-      const std::shared_ptr<::Microsoft::ReactNative::CompositionBaseComponentView> &componentView) noexcept;
+      const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView) noexcept;
 
   // inherited via IRawElementProviderFragment
   virtual HRESULT __stdcall Navigate(NavigateDirection direction, IRawElementProviderFragment **pRetVal) override;
