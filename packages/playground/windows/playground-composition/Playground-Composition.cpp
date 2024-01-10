@@ -65,7 +65,7 @@ struct WindowData {
   winrt::Microsoft::ReactNative::CompositionRootView m_compRootView{nullptr};
   winrt::Microsoft::ReactNative::ReactNativeHost m_host{nullptr};
   winrt::Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
-  bool m_useLiftedComposition{false};
+  bool m_useLiftedComposition{true};
   winrt::Windows::UI::Composition::Desktop::DesktopWindowTarget m_target{nullptr};
   LONG m_height{0};
   LONG m_width{0};
@@ -153,7 +153,12 @@ struct WindowData {
               std::wstring(L"file:").append(workingDir).append(L"\\Bundle\\").c_str());
           host.InstanceSettings().UseDeveloperSupport(true);
 
-          host.PackageProviders().Append(winrt::make<CompReactPackageProvider>());
+          // Currently there is only SystemVisualSiteBridge which supports hosing ContentIslands within System Composition
+          // So our custom components do not run when running on lifted composition
+          // This can be enabled in lifted once we have a VisualSiteBridge that works in lifted
+          if (!m_useLiftedComposition) {
+            host.PackageProviders().Append(winrt::make<CompReactPackageProvider>());
+          }
           winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
               host.InstanceSettings().Properties(), reinterpret_cast<uint64_t>(hwnd));
 

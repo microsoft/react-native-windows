@@ -67,9 +67,7 @@ struct CustomComponent : winrt::implements<CustomComponent, winrt::IInspectable>
     auto displayScale = siteWindow.DisplayScale();
 
     site.ParentScale(displayScale);
-    site.ActualSize(
-        {layoutMetrics.Frame.Width,
-         layoutMetrics.Frame.Height});
+    site.ActualSize({layoutMetrics.Frame.Width, layoutMetrics.Frame.Height});
     site.ClientSize(winrt::Windows::Graphics::SizeInt32{
         static_cast<int32_t>(layoutMetrics.Frame.Width * layoutMetrics.PointScaleFactor),
         static_cast<int32_t>(layoutMetrics.Frame.Height * layoutMetrics.PointScaleFactor)});
