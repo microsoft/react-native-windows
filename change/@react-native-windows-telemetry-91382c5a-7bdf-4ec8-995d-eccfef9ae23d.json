@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "[0.72] Lock to applicationinsights@2.6.0 to prevent using newer broken versions",
-  "packageName": "@react-native-windows/telemetry",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}

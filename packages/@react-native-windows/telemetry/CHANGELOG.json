@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Wed, 10 Jan 2024 23:56:36 GMT",
+      "tag": "@react-native-windows/telemetry_v0.72.3",
+      "version": "0.72.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "9e5d8140581286fd254f4062f86d6e7155b703ba",
+            "comment": "Lock to applicationinsights@2.6.0 to prevent using newer broken versions"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 08 Dec 2023 00:49:17 GMT",
       "tag": "@react-native-windows/telemetry_v0.72.2",
       "version": "0.72.2",

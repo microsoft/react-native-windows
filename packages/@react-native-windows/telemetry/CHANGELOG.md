@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Fri, 08 Dec 2023 00:49:17 GMT and should not be manually modified.
+This log was last generated on Wed, 10 Jan 2024 23:56:36 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.72.3
+
+Wed, 10 Jan 2024 23:56:36 GMT
+
+### Patches
+
+- Lock to applicationinsights@2.6.0 to prevent using newer broken versions (jthysell@microsoft.com)
 
 ## 0.72.2
 
