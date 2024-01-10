@@ -22,7 +22,7 @@ class UnimplementedShadowNode : public ShadowNodeBase {
     std::string str;
     std::transform(name.begin(), name.end(), std::back_inserter(str), [](wchar_t c) { return (char)c; });
     m_name = str;
-  };  
+  };
 
   void createView(const winrt::Microsoft::ReactNative::JSValueObject &) override;
 
@@ -47,7 +47,8 @@ void UnimplementedShadowNode::createView(const winrt::Microsoft::ReactNative::JS
   RedBox(m_name + " is not implemented on RNW Paper");
 }
 
-UnimplementedViewManager::UnimplementedViewManager(const Mso::React::IReactContext &context, std::wstring name) : Super(context) {
+UnimplementedViewManager::UnimplementedViewManager(const Mso::React::IReactContext &context, std::wstring name)
+    : Super(context) {
   m_name = name;
 }
 
@@ -63,7 +64,9 @@ ShadowNode *UnimplementedViewManager::createShadow() const {
   return new UnimplementedShadowNode(m_name);
 }
 
-XamlView UnimplementedViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft::ReactNative::JSValueObject &) {
+XamlView UnimplementedViewManager::CreateViewCore(
+    int64_t /*tag*/,
+    const winrt::Microsoft::ReactNative::JSValueObject &) {
   return winrt::make<winrt::Microsoft::ReactNative::implementation::ViewControl>();
 }
 
