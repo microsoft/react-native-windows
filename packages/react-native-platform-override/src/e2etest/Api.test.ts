@@ -37,6 +37,10 @@ test('hasOverride', async () => {
     const manifestPath = path.join(repoPath, 'overrides.json');
 
     expect(
+      await Api.hasOverride('ReactCommon\\yoga\\yoga\\Yoga.cpp', manifestPath),
+    ).toBe(true);
+
+    expect(
       await Api.hasOverride(
         'ReactCommon\\yoga\\yoga\\Karate.cpp',
         manifestPath,
@@ -48,6 +52,13 @@ test('hasOverride', async () => {
 test('removeOverride', async () => {
   await usingRepository('sampleOverrideRepo', async (_, repoPath) => {
     const manifestPath = path.join(repoPath, 'overrides.json');
+
+    expect(
+      await Api.removeOverride(
+        'ReactCommon\\yoga\\yoga\\Yoga.cpp',
+        manifestPath,
+      ),
+    ).toBe(true);
 
     expect(
       await Api.removeOverride(
@@ -105,6 +116,11 @@ test('upgradeOverrides', async () => {
           'ReactCommon\\turbomodule\\samples\\SampleTurboCxxModule.h',
         ),
       },
+      {
+        filesWritten: false,
+        hasConflicts: true,
+        overrideName: normalizePath('ReactCommon\\yoga\\yoga\\Yoga.cpp'),
+      },
     ]);
 
     const manifest = JSON.parse(
@@ -114,8 +130,23 @@ test('upgradeOverrides', async () => {
     expect(manifest.baseVersion).toBe(opts.reactNativeVersion);
 
     for (const serializedOverride of manifest.overrides) {
-      expect(serializedOverride.baseVersion).toBeUndefined();
+      if (serializedOverride.file === 'ReactCommon/yoga/yoga/Yoga.cpp') {
+        expect(serializedOverride.baseVersion).toBe('0.0.0-56cf99a96');
+      } else {
+        expect(serializedOverride.baseVersion).toBeUndefined();
+      }
     }
+  });
+});
+
+test('diffOverride', async () => {
+  await usingRepository('sampleOverrideRepo', async (_, repoPath) => {
+    const manifestPath = path.join(repoPath, 'overrides.json');
+    const diff = await Api.diffOverride(
+      'ReactCommon/yoga/yoga/Yoga.cpp',
+      manifestPath,
+    );
+    expect(diff.length).toBeGreaterThan(0);
   });
 });
 
