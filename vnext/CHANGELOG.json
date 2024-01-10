@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 10 Jan 2024 06:13:20 GMT",
+      "version": "0.0.0-canary.750",
+      "tag": "react-native-windows_v0.0.0-canary.750",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ericroz@meta.com",
+            "package": "react-native-windows",
+            "commit": "6b765a775749814454bccdb07491268988d268c7",
+            "comment": "Normalizes headers for clang builds"
+          },
+          {
+            "author": "ericroz@meta.com",
+            "package": "react-native-windows",
+            "commit": "f358dc29db10f9f81db0f523b92939d35b8ab2e6",
+            "comment": "Switch ImageUtils.cpp to use co_return"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.195",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 04 Jan 2024 06:15:54 GMT",
       "version": "0.0.0-canary.749",
       "tag": "react-native-windows_v0.0.0-canary.749",
