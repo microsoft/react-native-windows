@@ -14,7 +14,5 @@ namespace PlaygroundApp
   [webhosthidden]
   runtimeclass YogaXamlPanel : XAML_NAMESPACE.Controls.Panel
   {
-    // Constructors
-    // YogaXamlPanel();
   }
 }

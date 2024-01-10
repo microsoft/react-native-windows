@@ -20,8 +20,8 @@
 #include <winrt/Windows.UI.Composition.Desktop.h>
 #include <winrt/Windows.UI.Composition.h>
 
-#include "App.xaml.h"
 #include <DesktopWindowBridge.h>
+#include "App.xaml.h"
 #include "NativeModules.h"
 #include "ReactPropertyBag.h"
 

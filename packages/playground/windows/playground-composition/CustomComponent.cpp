@@ -49,45 +49,54 @@ struct CustomComponent : winrt::implements<CustomComponent, winrt::IInspectable>
   ~CustomComponent() {
     m_xamlIsland.Close();
     m_siteBridge.Close();
-    m_contentIsland.Close();
+    // Hit a crash when calling m_contentIsland.Close?
+    // m_contentIsland.Close();
   }
 
   void UpdateProps(winrt::Microsoft::ReactNative::IComponentProps props) noexcept {
     auto customProps = props.as<CustomProps>();
   }
 
+  // This is called with the results of layout from RN.  We use this to set the size of the ContentIsland.
   void UpdateLayoutMetrics(winrt::Microsoft::ReactNative::Composition::LayoutMetrics layoutMetrics) noexcept {
-    m_layoutMetrics = layoutMetrics;
     m_visual.Size(
-        {m_layoutMetrics.Frame.Width * m_layoutMetrics.PointScaleFactor,
-         m_layoutMetrics.Frame.Height * m_layoutMetrics.PointScaleFactor});
+        {layoutMetrics.Frame.Width * layoutMetrics.PointScaleFactor,
+         layoutMetrics.Frame.Height * layoutMetrics.PointScaleFactor});
     auto site = m_siteBridge.Site();
     auto siteWindow = site.Environment();
     auto displayScale = siteWindow.DisplayScale();
 
     site.ParentScale(displayScale);
     site.ActualSize(
-        {m_layoutMetrics.Frame.Width /* * m_layoutMetrics.PointScaleFactor*/,
-         m_layoutMetrics.Frame.Height /* * m_layoutMetrics.PointScaleFactor*/});
+        {layoutMetrics.Frame.Width,
+         layoutMetrics.Frame.Height});
     site.ClientSize(winrt::Windows::Graphics::SizeInt32{
-        static_cast<int32_t>(m_layoutMetrics.Frame.Width * m_layoutMetrics.PointScaleFactor),
-        static_cast<int32_t>(m_layoutMetrics.Frame.Height * m_layoutMetrics.PointScaleFactor)});
+        static_cast<int32_t>(layoutMetrics.Frame.Width * layoutMetrics.PointScaleFactor),
+        static_cast<int32_t>(layoutMetrics.Frame.Height * layoutMetrics.PointScaleFactor)});
   }
 
-  static inline winrt::Microsoft::ReactNative::LayoutConstraints maxContraints{
-      {0, 0} /*min*/,
-      {std::numeric_limits<float>::max(), std::numeric_limits<float>::max()} /* max*/,
-      winrt::Microsoft::ReactNative::LayoutDirection::Undefined};
-
+  // Custom state used in when using native layout to store the desired size of the Xaml control for use during RN
+  // layout on a background thread
   struct MyStateData : winrt::implements<MyStateData, winrt::IInspectable> {
-    MyStateData(winrt::Microsoft::ReactNative::LayoutConstraints c, winrt::Windows::Foundation::Size ds)
-        : constraints(c), desiredSize(ds) {}
-
-    winrt::Microsoft::ReactNative::LayoutConstraints constraints;
+    MyStateData(winrt::Windows::Foundation::Size ds) : desiredSize(ds) {}
     winrt::Windows::Foundation::Size desiredSize;
   };
 
-  winrt::Microsoft::UI::Xaml::UIElement CreateExpanderContent() {
+  winrt::Microsoft::UI::Xaml::UIElement CreateXamlButtonContent() {
+    auto text = winrt::Microsoft::UI::Xaml::Controls::TextBlock();
+    text.Text(L"This is a Xaml Button set to ellipisify on truncation");
+    text.TextTrimming(winrt::Microsoft::UI::Xaml::TextTrimming::CharacterEllipsis);
+
+    auto button = winrt::Microsoft::UI::Xaml::Controls::Button();
+    button.Margin({3, 3, 3, 3});
+    button.Content(text);
+
+    // If we are using native layout then wrap the element in a YogaXamlPanel which reports any changes to desired size
+    // of the XAML element.
+    if (!m_nativeLayout) {
+      return button;
+    }
+
     auto yogaXamlPanel = winrt::make<winrt::PlaygroundApp::implementation::YogaXamlPanel>(
         [&](winrt::Windows::Foundation::Size desiredSize) {
           if (m_state) {
@@ -95,111 +104,35 @@ struct CustomComponent : winrt::implements<CustomComponent, winrt::IInspectable>
             if (desiredSize != state->desiredSize) {
               m_state.UpdateStateWithMutation([desiredSize](winrt::Windows::Foundation::IInspectable data) {
                 auto oldData = winrt::get_self<MyStateData>(data);
-                return winrt::make<MyStateData>(oldData->constraints, desiredSize);
+                return winrt::make<MyStateData>(desiredSize);
               });
             }
           }
-        },
-        [&]() -> const winrt::Microsoft::ReactNative::LayoutConstraints & {
-          return maxContraints;
-          /*
-          if (!m_state)
-          {
-              return maxContraints;
-          }
-            auto state = winrt::get_self<MyStateData>(m_state.Data());
-            return state->constraints;
-          */
         });
 
     // yogaXamlPanel.Background(winrt::Microsoft::UI::Xaml::Media::SolidColorBrush({255, 124, 124, 155}));
     yogaXamlPanel.VerticalAlignment(winrt::Microsoft::UI::Xaml::VerticalAlignment::Stretch);
     yogaXamlPanel.HorizontalAlignment(winrt::Microsoft::UI::Xaml::HorizontalAlignment::Stretch);
 
-    auto expander = winrt::Microsoft::UI::Xaml::Controls::Expander();
-
-    auto button1 = winrt::Microsoft::UI::Xaml::Controls::Button();
-    button1.Content(winrt::box_value(L"This is a Xaml Button in Xaml Expander Header"));
-    m_clickRevoker = button1.Click(
-        winrt::auto_revoke,
-        [wkExpander = winrt::weak_ref(expander)](
-            winrt::Windows::Foundation::IInspectable const &sender,
-            winrt::Microsoft::UI::Xaml::RoutedEventArgs const &e) noexcept {
-          if (auto expander = wkExpander.get()) {
-            sender.as<winrt::Microsoft::UI::Xaml::Controls::Button>().Content(
-                winrt::box_value(L"String with \nnew lines\nand more"));
-
-            auto desiredSize = expander.DesiredSize();
-          }
-        });
-    expander.Header(button1);
-
-    auto button2 = winrt::Microsoft::UI::Xaml::Controls::Button();
-    auto textblock = winrt::Microsoft::UI::Xaml::Controls::TextBlock();
-    textblock.Text(L"This is a Xaml TextBlock within the Expanders Content");
-    textblock.TextTrimming(winrt::Microsoft::UI::Xaml::TextTrimming::CharacterEllipsis);
-    // textblock.TextWrapping(winrt::Microsoft::UI::Xaml::TextWrapping::Wrap);
-    button2.Content(winrt::box_value(L"This is a Xaml Button in the Expander's content"));
-    button2.Margin({5, 5, 5, 5});
-
-    // expander.Content(button2);
-    expander.Content(textblock);
-
-    yogaXamlPanel.Children().Append(expander);
+    yogaXamlPanel.Children().Append(button);
 
     return yogaXamlPanel;
   }
 
-  winrt::Microsoft::UI::Xaml::Controls::StackPanel CreateXamlContent() {
-    // TextBox tries to use an HWND currently.. so doesn't work while hosted in a Visual
-    // auto textBox = winrt::Microsoft::UI::Xaml::Controls::TextBox();
-    // textBox.Text(L"Text Edit");
-
-    auto button1 = winrt::Microsoft::UI::Xaml::Controls::Button();
-    button1.Content(winrt::box_value(L"Test Xaml Button 1"));
-
-    auto button2 = winrt::Microsoft::UI::Xaml::Controls::Button();
-    button2.Content(winrt::box_value(L"Test Xaml Button 2"));
-
-    auto toggle = winrt::Microsoft::UI::Xaml::Controls::ToggleSwitch();
-    toggle.Header(winrt::box_value(L"This is a Xaml ToggleSwitch"));
-
-    auto text = winrt::Microsoft::UI::Xaml::Controls::TextBlock();
-    text.Text(L"This is a Xaml TextBlock with a long string to test ellipisification.");
-    text.TextTrimming(winrt::Microsoft::UI::Xaml::TextTrimming::CharacterEllipsis);
-
-    auto stackPanel = winrt::Microsoft::UI::Xaml::Controls::StackPanel();
-    stackPanel.Spacing(10);
-    stackPanel.Margin(winrt::Microsoft::UI::Xaml::ThicknessHelper::FromUniformLength(5.0));
-
-    // stackPanel.Background(winrt::Microsoft::UI::Xaml::Media::SolidColorBrush({ 255,255,0,0 } /* red */));
-    stackPanel.MinHeight(50);
-    stackPanel.MinWidth(50);
-    // stackPanel.Children().Append(textBox);
-    stackPanel.Children().Append(button1);
-    stackPanel.Children().Append(button2);
-    stackPanel.Children().Append(toggle);
-    stackPanel.Children().Append(text);
-
-    return stackPanel;
-  }
-
   winrt::Microsoft::ReactNative::Composition::IVisual CreateVisual() noexcept {
     m_xamlIsland = winrt::Microsoft::UI::Xaml::XamlIsland{};
-    // m_xamlIsland.Content(CreateXamlContent());
-    m_xamlIsland.Content(CreateExpanderContent());
+    m_xamlIsland.Content(CreateXamlButtonContent());
 
     m_contentIsland = m_xamlIsland.ContentIsland();
-    m_contentIsland.RequestSize({100, 100});
-
-    auto hwnd = reinterpret_cast<HWND>(
-        winrt::Microsoft::ReactNative::ReactCoreInjection::GetTopLevelWindowId(m_reactContext.Properties()));
 
     m_visual = m_compContext.CreateSpriteVisual();
     // m_visual.Brush(m_compContext.CreateColorBrush({255, 255, 0, 255}));
     auto parentSystemVisual =
         winrt::Microsoft::ReactNative::Composition::WindowsCompositionContextHelper::InnerVisual(m_visual)
             .as<winrt::Windows::UI::Composition::ContainerVisual>();
+
+    auto hwnd = reinterpret_cast<HWND>(
+        winrt::Microsoft::ReactNative::ReactCoreInjection::GetTopLevelWindowId(m_reactContext.Properties()));
 
     m_siteBridge = winrt::Microsoft::UI::Content::SystemVisualSiteBridge::Create(
         m_contentIsland.Compositor(), parentSystemVisual, winrt::Microsoft::UI::GetWindowIdFromWindow(hwnd));
@@ -211,26 +144,7 @@ struct CustomComponent : winrt::implements<CustomComponent, winrt::IInspectable>
   }
 
   void UpdateState(winrt::Microsoft::ReactNative::IComponentState state) noexcept {
-    bool newState = !!m_state;
-
     m_state = state;
-
-    auto statedata = winrt::get_self<MyStateData>(m_state.Data());
-    if (newState || m_layoutConstraints != statedata->constraints) {
-      m_layoutConstraints = statedata->constraints;
-      // m_xamlIsland.Content().Measure(m_layoutConstraints.MaximumSize);
-      m_xamlIsland.Content().InvalidateMeasure();
-    }
-
-    // auto desiredSize = m_xamlIsland.Content().DesiredSize();
-    // if (desiredSize != statedata->desiredSize)
-    //{
-    //     m_state.UpdateStateWithMutation([desiredSize](winrt::Windows::Foundation::IInspectable data)
-    //     {
-    //         auto oldData = winrt::get_self<MyStateData>(data);
-    //         return winrt::make<MyStateData>(oldData->constraints, desiredSize);
-    //     });
-    // }
   }
 
   static void RegisterViewComponent(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) {
@@ -270,33 +184,23 @@ struct CustomComponent : winrt::implements<CustomComponent, winrt::IInspectable>
 
                 auto currentState = winrt::get_self<MyStateData>(shadowNode.StateData());
 
-                // return {std::min(layoutContraints.MaximumSize.Width,currentState->desiredSize.width,
-                // layoutContraints.MaximumSize.Height,currentState->desiredSize.height)}
+                if (currentState) {
+                  // Snap up to the nearest whole pixel to avoid pixel snapping truncations
+                  auto size = winrt::Windows::Foundation::Size{
+                      std::ceil(currentState->desiredSize.Width * layoutContext.PointScaleFactor()) /
+                              layoutContext.PointScaleFactor() +
+                          1.0f,
+                      std::ceil(currentState->desiredSize.Height * layoutContext.PointScaleFactor()) /
+                              layoutContext.PointScaleFactor() +
+                          1.0f,
+                  };
+                  return size;
+                }
 
-                return currentState ? currentState->desiredSize : winrt::Windows::Foundation::Size{0, 0};
+                return winrt::Windows::Foundation::Size{0, 0};
               });
-
-          builder.SetLayoutHandler([](winrt::Microsoft::ReactNative::ShadowNode shadowNode,
-                                      winrt::Microsoft::ReactNative::LayoutContext layoutContext) noexcept {
-            auto currentState = winrt::get_self<MyStateData>(shadowNode.StateData());
-
-            auto constraints = winrt::unbox_value_or<winrt::Microsoft::ReactNative::LayoutConstraints>(
-                shadowNode.Tag(), maxContraints);
-            if (currentState && constraints == currentState->constraints) {
-              return;
-            }
-
-            // Now we are about to mutate the Shadow Node.
-            shadowNode.EnsureUnsealed();
-            /*
-            shadowNode.StateData(winrt::make<MyStateData>(
-                constraints, currentState ? currentState->desiredSize : winrt::Windows::Foundation::Size{0, 0}));
- */
-            shadowNode.as<winrt::Microsoft::ReactNative::YogaLayoutableShadowNode>().Layout(layoutContext);
-          });
-
           builder.SetInitialStateDataFactory([](const winrt::Microsoft::ReactNative::IComponentProps & /*props*/) {
-            return winrt::make<MyStateData>(maxContraints, winrt::Windows::Foundation::Size{0, 0});
+            return winrt::make<MyStateData>(winrt::Windows::Foundation::Size{0, 0});
           });
         });
 
@@ -333,11 +237,7 @@ struct CustomComponent : winrt::implements<CustomComponent, winrt::IInspectable>
 #endif
 
   bool m_nativeLayout;
-  winrt::Microsoft::ReactNative::LayoutConstraints m_layoutConstraints;
-  winrt::Microsoft::UI::Xaml::Controls::Button::Click_revoker m_clickRevoker;
-  winrt::Microsoft::UI::Xaml::Controls::Expander::Loaded_revoker m_loadedRevoker;
   winrt::Microsoft::ReactNative::IComponentState m_state;
-  winrt::Microsoft::ReactNative::Composition::LayoutMetrics m_layoutMetrics;
   winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
   winrt::Microsoft::ReactNative::Composition::ICompositionContext m_compContext;
   winrt::Microsoft::ReactNative::IReactContext m_reactContext;

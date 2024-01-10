@@ -14,7 +14,6 @@
 #include <XamlUIService.h>
 #include <XamlUtils.h>
 #include <cxxreact/CxxModule.h>
-#include <winuser.h>
 #include <functional>
 #include <memory>
 #if _MSC_VER <= 1913

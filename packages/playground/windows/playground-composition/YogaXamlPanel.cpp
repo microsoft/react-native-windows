@@ -24,19 +24,13 @@ const winrt::Windows::UI::Xaml::Interop::TypeName yogaXamlPanelTypeName{
     winrt::hstring{L"YogaXamlPanel"},
     winrt::Windows::UI::Xaml::Interop::TypeKind::Metadata};
 
-YogaXamlPanel::YogaXamlPanel(
-    std::function<void(winrt::Windows::Foundation::Size size)> &&onMeasured,
-    std::function<const winrt::Microsoft::ReactNative::LayoutConstraints &()> &&getConstraints)
-    : Super(), m_onMeasured(std::move(onMeasured)), m_getConstraints(std::move(getConstraints)) {}
+YogaXamlPanel::YogaXamlPanel(std::function<void(winrt::Windows::Foundation::Size size)> &&onMeasured)
+    : Super(), m_onMeasured(std::move(onMeasured)) {}
 
 winrt::Size YogaXamlPanel::MeasureOverride(winrt::Windows::Foundation::Size availableSize) {
-  auto &constraints = m_getConstraints();
-  // winrt::Size availableSize{{constraints.MaximumSize.Width, constraints.MaximumSize.Height}};
-
   assert(Children().Size() == 1);
   auto child = Children().GetAt(0);
 
-  // child.Measure(availableSize);
   child.Measure({std::numeric_limits<float>::max(), std::numeric_limits<float>::max()});
 
   auto desiredSize = child.DesiredSize();
@@ -45,11 +39,6 @@ winrt::Size YogaXamlPanel::MeasureOverride(winrt::Windows::Foundation::Size avai
   child.Measure(availableSize);
   auto desiredSize2 = child.DesiredSize();
   return desiredSize2;
-
-  // YogaXamlPanel never choose their size, that is completely up to yoga -
-  // so return no size
-  // return winrt::Size(0, 0);
-  // return desiredSize;
 }
 
 winrt::Size YogaXamlPanel::ArrangeOverride(winrt::Windows::Foundation::Size finalSize) {
