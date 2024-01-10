@@ -11,7 +11,6 @@
 #pragma warning(push)
 #pragma warning(disable : 4305)
 #include <react/renderer/components/scrollview/ScrollViewProps.h>
-#include <react/renderer/components/scrollview/ScrollViewShadowNode.h>
 #pragma warning(pop)
 #include <winrt/Windows.UI.Composition.interactions.h>
 
@@ -107,7 +106,6 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   bool scrollLeft(float delta, bool aniamte) noexcept;
   bool scrollRight(float delta, bool animate) noexcept;
   void updateBackgroundColor(const facebook::react::SharedColor &color) noexcept;
-  void updateStateWithContentOffset() noexcept;
 
   facebook::react::Size m_contentSize;
   winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
@@ -122,7 +120,6 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   bool m_isHorizontal = false;
   bool m_changeViewAfterLoaded = false;
   bool m_dismissKeyboardOnDrag = false;
-  std::shared_ptr<facebook::react::ScrollViewShadowNode::ConcreteState const> m_state;
 
  private:
   bool shouldBeControl() const noexcept;

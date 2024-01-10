@@ -177,22 +177,10 @@ void ScrollViewComponentView::updateProps(
 void ScrollViewComponentView::updateState(
     facebook::react::State::Shared const &state,
     facebook::react::State::Shared const &oldState) noexcept {
-  m_state = std::static_pointer_cast<facebook::react::ScrollViewShadowNode::ConcreteState const>(state);
-  m_contentSize = m_state->getData().getContentSize();
+  const auto &newState = *std::static_pointer_cast<facebook::react::ScrollViewShadowNode::ConcreteState const>(state);
+
+  m_contentSize = newState.getData().getContentSize();
   updateContentVisualSize();
-}
-
-void ScrollViewComponentView::updateStateWithContentOffset() noexcept {
-  if (!m_state) {
-    return;
-  }
-
-  m_state->updateState([contentOffset = m_scrollVisual.ScrollPosition()](
-                           const facebook::react::ScrollViewShadowNode::ConcreteState::Data &data) {
-    auto newData = data;
-    newData.contentOffset = {contentOffset.x, contentOffset.y};
-    return std::make_shared<facebook::react::ScrollViewShadowNode::ConcreteState::Data const>(newData);
-  });
 }
 
 void ScrollViewComponentView::updateLayoutMetrics(
@@ -536,7 +524,6 @@ void ScrollViewComponentView::ensureVisual() noexcept {
         [this](
             winrt::IInspectable const & /*sender*/,
             winrt::Microsoft::ReactNative::Composition::IScrollPositionChangedArgs const &args) {
-          updateStateWithContentOffset();
           auto eventEmitter = GetEventEmitter();
           if (eventEmitter) {
             facebook::react::ScrollViewMetrics scrollMetrics;
