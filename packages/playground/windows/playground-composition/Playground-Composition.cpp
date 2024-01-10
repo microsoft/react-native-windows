@@ -153,9 +153,9 @@ struct WindowData {
               std::wstring(L"file:").append(workingDir).append(L"\\Bundle\\").c_str());
           host.InstanceSettings().UseDeveloperSupport(true);
 
-          // Currently there is only SystemVisualSiteBridge which supports hosing ContentIslands within System Composition
-          // So our custom components do not run when running on lifted composition
-          // This can be enabled in lifted once we have a VisualSiteBridge that works in lifted
+          // Currently there is only SystemVisualSiteBridge which supports hosing ContentIslands within System
+          // Composition So our custom components do not run when running on lifted composition. This can be enabled in
+          // lifted once we have a VisualSiteBridge that works in lifted
           if (!m_useLiftedComposition) {
             host.PackageProviders().Append(winrt::make<CompReactPackageProvider>());
           }
