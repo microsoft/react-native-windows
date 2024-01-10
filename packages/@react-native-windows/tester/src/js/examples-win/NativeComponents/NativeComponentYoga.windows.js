@@ -19,7 +19,8 @@ exports.framework = 'React';
 exports.category = 'UI';
 exports.title = 'Fabric Native Component Yoga';
 //exports.documentationURL = 'https://reactnative.dev/docs/button';
-exports.description = 'Sample Fabric Native Component that places native XAML inside a container sized by yoga';
+exports.description =
+  'Sample Fabric Native Component that places native XAML inside a container sized by yoga';
 
 exports.examples = [
   {
@@ -32,21 +33,24 @@ exports.examples = [
             margin: 10,
             borderWidth: 2,
             flexWrap: 'wrap',
-            flexDirection:'row',
+            flexDirection: 'row',
             gap: 5,
           }}>
-            <View style={{width: 100, height: 100, backgroundColor: 'green'}}/>
-            <View style={{width: 100, height: 100, backgroundColor: 'red'}}/>
-            <View style={{width: 100, height: 100, backgroundColor: 'blue'}}/>
-            <View style={{width: 100, height: 100, backgroundColor: 'pink'}}/>
-            <View style={{width: 100, height: 100, backgroundColor: 'gray'}}/>
-            <Text style={{color:'gray'}}>This is RN Text</Text>
-            <MyCustomComponentYoga label="test" style={{flex: 1, minWidth: 100}} />
-            <View style={{width: 100, height: 100, backgroundColor: 'green'}}/>
-            <View style={{width: 100, height: 100, backgroundColor: 'red'}}/>
-            <View style={{width: 100, height: 100, backgroundColor: 'blue'}}/>
-            <View style={{width: 100, height: 100, backgroundColor: 'pink'}}/>
-            <View style={{width: 100, height: 100, backgroundColor: 'gray'}}/>
+          <View style={{width: 100, height: 100, backgroundColor: 'green'}} />
+          <View style={{width: 100, height: 100, backgroundColor: 'red'}} />
+          <View style={{width: 100, height: 100, backgroundColor: 'blue'}} />
+          <View style={{width: 100, height: 100, backgroundColor: 'pink'}} />
+          <View style={{width: 100, height: 100, backgroundColor: 'gray'}} />
+          <Text style={{color: 'gray'}}>This is RN Text</Text>
+          <MyCustomComponentYoga
+            label="test"
+            style={{flex: 1, minWidth: 100}}
+          />
+          <View style={{width: 100, height: 100, backgroundColor: 'green'}} />
+          <View style={{width: 100, height: 100, backgroundColor: 'red'}} />
+          <View style={{width: 100, height: 100, backgroundColor: 'blue'}} />
+          <View style={{width: 100, height: 100, backgroundColor: 'pink'}} />
+          <View style={{width: 100, height: 100, backgroundColor: 'gray'}} />
         </View>
       );
     },

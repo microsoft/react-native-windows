@@ -32,5 +32,3 @@ const MyCustomComponentYoga = get<NativeProps>('MyCustomComponentYoga', () => {
 });
 
 exports.MyCustomComponentYoga = MyCustomComponentYoga;
-
-

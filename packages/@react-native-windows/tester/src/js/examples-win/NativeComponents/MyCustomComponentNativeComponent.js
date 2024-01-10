@@ -32,5 +32,3 @@ const MyCustomComponent = get<NativeProps>('MyCustomComponent', () => {
 });
 
 exports.MyCustomComponent = MyCustomComponent;
-
-

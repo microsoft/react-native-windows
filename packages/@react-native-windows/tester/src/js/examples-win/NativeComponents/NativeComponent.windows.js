@@ -19,7 +19,8 @@ exports.framework = 'React';
 exports.category = 'UI';
 exports.title = 'Fabric Native Component';
 //exports.documentationURL = 'https://reactnative.dev/docs/button';
-exports.description = 'Sample Fabric Native Component that sizes based on max desired size of native XAML contained within';
+exports.description =
+  'Sample Fabric Native Component that sizes based on max desired size of native XAML contained within';
 
 exports.examples = [
   {
@@ -32,21 +33,21 @@ exports.examples = [
             margin: 10,
             borderWidth: 2,
             flexWrap: 'wrap',
-            flexDirection:'row',
+            flexDirection: 'row',
             gap: 5,
           }}>
-            <View style={{width: 100, height: 100, backgroundColor: 'green'}}/>
-            <View style={{width: 100, height: 100, backgroundColor: 'red'}}/>
-            <View style={{width: 100, height: 100, backgroundColor: 'blue'}}/>
-            <View style={{width: 100, height: 100, backgroundColor: 'pink'}}/>
-            <View style={{width: 100, height: 100, backgroundColor: 'gray'}}/>
-            <Text style={{color:'gray'}}>This is RN Text</Text>
-            <MyCustomComponent label="test" style={{flexShrink: 1}} />
-            <View style={{width: 100, height: 100, backgroundColor: 'green'}}/>
-            <View style={{width: 100, height: 100, backgroundColor: 'red'}}/>
-            <View style={{width: 100, height: 100, backgroundColor: 'blue'}}/>
-            <View style={{width: 100, height: 100, backgroundColor: 'pink'}}/>
-            <View style={{width: 100, height: 100, backgroundColor: 'gray'}}/>
+          <View style={{width: 100, height: 100, backgroundColor: 'green'}} />
+          <View style={{width: 100, height: 100, backgroundColor: 'red'}} />
+          <View style={{width: 100, height: 100, backgroundColor: 'blue'}} />
+          <View style={{width: 100, height: 100, backgroundColor: 'pink'}} />
+          <View style={{width: 100, height: 100, backgroundColor: 'gray'}} />
+          <Text style={{color: 'gray'}}>This is RN Text</Text>
+          <MyCustomComponent label="test" style={{flexShrink: 1}} />
+          <View style={{width: 100, height: 100, backgroundColor: 'green'}} />
+          <View style={{width: 100, height: 100, backgroundColor: 'red'}} />
+          <View style={{width: 100, height: 100, backgroundColor: 'blue'}} />
+          <View style={{width: 100, height: 100, backgroundColor: 'pink'}} />
+          <View style={{width: 100, height: 100, backgroundColor: 'gray'}} />
         </View>
       );
     },
