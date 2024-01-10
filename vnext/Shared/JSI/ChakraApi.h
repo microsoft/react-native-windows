@@ -350,6 +350,11 @@ struct ChakraApi {
   static bool InstanceOf(JsValueRef object, JsValueRef constructor);
 
   /**
+   * @brief test.
+   */
+  static void setExternalMemoryPressure(JsValueRef object, size_t amt);
+
+  /**
    * @brief Gets an object's property.
    */
   static JsValueRef GetProperty(JsValueRef object, JsPropertyIdRef propertyId);

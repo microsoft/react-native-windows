@@ -196,7 +196,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/style/Style.h",
       "baseFile": "packages/react-native/ReactCommon/yoga/yoga/style/Style.h",
-      "baseHash": "c4150273aa8ab23568f31365cd678b9967521362",
+      "baseHash": "97d57900ffa9a3ade3f3278811d07f267e48f706",
       "issue": 12195
     },
     {

@@ -185,6 +185,7 @@ struct RuntimeAccessor : facebook::jsi::Runtime {
   using facebook::jsi::Runtime::lockWeakObject;
   using facebook::jsi::Runtime::popScope;
   using facebook::jsi::Runtime::pushScope;
+  using facebook::jsi::Runtime::setExternalMemoryPressure;
   using facebook::jsi::Runtime::setNativeState;
   using facebook::jsi::Runtime::setPropertyValue;
   using facebook::jsi::Runtime::setValueAtIndexImpl;
@@ -1079,6 +1080,13 @@ bool JsiRuntime::InstanceOf(JsiObjectRef obj, JsiObjectRef constructor) try {
   auto objPtr = RuntimeAccessor::AsPointerValue(obj);
   auto ctorPtr = RuntimeAccessor::AsPointerValue(constructor);
   return m_runtimeAccessor->instanceOf(RuntimeAccessor::AsObject(&objPtr), RuntimeAccessor::AsFunction(&ctorPtr));
+} catch (JSI_SET_ERROR) {
+  throw;
+}
+
+void JsiRuntime::setExternalMemoryPressure(JsiObjectRef obj, uint32_t size) try {
+  auto objPtr = RuntimeAccessor::AsPointerValue(obj);
+  m_runtimeAccessor->setExternalMemoryPressure(RuntimeAccessor::AsObject(&objPtr), size);
 } catch (JSI_SET_ERROR) {
   throw;
 }

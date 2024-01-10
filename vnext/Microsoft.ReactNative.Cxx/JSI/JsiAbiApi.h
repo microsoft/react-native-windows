@@ -179,6 +179,7 @@ struct JsiAbiRuntime : facebook::jsi::Runtime {
   bool strictEquals(const facebook::jsi::String &a, const facebook::jsi::String &b) const override;
   bool strictEquals(const facebook::jsi::Object &a, const facebook::jsi::Object &b) const override;
   bool instanceOf(const facebook::jsi::Object &o, const facebook::jsi::Function &f) override;
+  void setExternalMemoryPressure(const facebook::jsi::Object &, size_t) override;
 
   void RethrowJsiError() const;
 

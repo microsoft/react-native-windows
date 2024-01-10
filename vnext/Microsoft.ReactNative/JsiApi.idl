@@ -328,6 +328,7 @@ namespace Microsoft.ReactNative
     Boolean ObjectStrictEquals(JsiObjectRef left, JsiObjectRef right);
 
     Boolean InstanceOf(JsiObjectRef obj, JsiObjectRef constructor);
+    void setExternalMemoryPressure(JsiObjectRef obj, UInt32 amt);
 
     void ReleaseSymbol(JsiSymbolRef symbol);
     void ReleaseBigInt(JsiBigIntRef bigInt);
