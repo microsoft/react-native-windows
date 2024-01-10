@@ -20,7 +20,7 @@
   "dependencies": {
     "@react-native-windows/fs": "0.73.0",
     "@xmldom/xmldom": "^0.7.7",
-    "applicationinsights": "^2.3.1",
+    "applicationinsights": "2.9.1",
     "ci-info": "^3.2.0",
     "envinfo": "^7.8.1",
     "lodash": "^4.17.21",
