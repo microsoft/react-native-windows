@@ -8,6 +8,8 @@
     <ReactNativeDir Condition="'$(ReactNativeDir)' == '' AND Exists('$(MSBuildThisFileDirectory)..\..\..\node_modules\react-native\package.json')">$(MSBuildThisFileDirectory)..\..\..\node_modules\react-native</ReactNativeDir>
     <JSI_SourcePath Condition="'$(JSI_SourcePath)' == '' AND '$(ReactNativeDir)' != ''">$(ReactNativeDir)\ReactCommon\jsi</JSI_SourcePath>
     <JSI_SourcePath Condition="'$(JSI_SourcePath)' == '' AND Exists('$(MSBuildThisFileDirectory)jsi\jsi.h')">$(MSBuildThisFileDirectory)</JSI_SourcePath>
+    <JSIExecutor_SourcePath Condition="'$(JSIExecutor_SourcePath)' == '' AND '$(ReactNativeDir)' != ''">$(ReactNativeDir)\ReactCommon\jsiexecutor</JSIExecutor_SourcePath>
+    <JSIExecutor_SourcePath Condition="'$(JSIExecutor_SourcePath)' == '' AND Exists('$(MSBuildThisFileDirectory)jsireact\JSIExecutor.h')">$(MSBuildThisFileDirectory)</JSIExecutor_SourcePath>
     <CallInvoker_SourcePath Condition="'$(CallInvoker_SourcePath)' == '' AND '$(ReactNativeDir)' != ''">$(ReactNativeDir)\ReactCommon\callinvoker</CallInvoker_SourcePath>
     <CallInvoker_SourcePath Condition="'$(CallInvoker_SourcePath)' == '' AND Exists('$(MSBuildThisFileDirectory)ReactCommon\CallInvoker.h')">$(MSBuildThisFileDirectory)</CallInvoker_SourcePath>
     <CallInvoker_SourcePath Condition="'$(CallInvoker_SourcePath)' == '' AND Exists('$(MSBuildThisFileDirectory)ReactCommon\SchedulerPriority.h')">$(MSBuildThisFileDirectory)</CallInvoker_SourcePath>
@@ -29,6 +31,7 @@
       <AdditionalIncludeDirectories>
         $(MSBuildThisFileDirectory);
         $(JSI_SourcePath);
+        $(JSIExecutor_SourcePath);
         $(CallInvoker_SourcePath);
         $(TurboModule_SourcePath);
         $(Bridging_SourcePath);

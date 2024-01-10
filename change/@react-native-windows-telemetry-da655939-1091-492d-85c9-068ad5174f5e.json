@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Revert back to applicationinsights@2.9.1",
+  "packageName": "@react-native-windows/telemetry",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}

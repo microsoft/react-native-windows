@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <NativeBlobModuleSpec.g.h>
+#include <codegen/NativeBlobModuleSpec.g.h>
 
 #include <Networking/IBlobResource.h>
 
