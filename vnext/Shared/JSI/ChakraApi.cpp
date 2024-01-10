@@ -319,6 +319,8 @@ ChakraApi::JsRefHolder::~JsRefHolder() noexcept {
   return result;
 }
 
+/*static*/ void ChakraApi::setExternalMemoryPressure(JsValueRef object, size_t amt) {}
+
 /*static*/ JsValueRef ChakraApi::GetProperty(JsValueRef object, JsPropertyIdRef propertyId) {
   JsValueRef result{JS_INVALID_REFERENCE};
   ChakraVerifyJsErrorElseThrow(JsGetProperty(object, propertyId, &result));
