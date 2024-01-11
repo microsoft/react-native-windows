@@ -9458,17 +9458,17 @@ metro-source-map@0.80.1:
     source-map "^0.5.6"
     vlq "^1.0.0"
 
-metro-source-map@0.80.3, metro-source-map@^0.80.0:
-  version "0.80.3"
-  resolved "https://registry.yarnpkg.com/metro-source-map/-/metro-source-map-0.80.3.tgz#25d88b05cb3383e9802d7543e29a57deacca07d7"
-  integrity sha512-5DYcOLPjDLx84ZCZ1i0DuWSPU7AY5G/7tR+u/WN6CZNxLyYEe3TwUBdIUgQj4HgZJl/zZ/7bGYJQOHd7ubuO0w==
+metro-source-map@0.80.4, metro-source-map@^0.80.0:
+  version "0.80.4"
+  resolved "https://registry.yarnpkg.com/metro-source-map/-/metro-source-map-0.80.4.tgz#809d7d0eb36ccf912eecb4dc80ab50177f9fb5e1"
+  integrity sha512-x+0By55ml6IcGqY9x9HE0hyU0S+uDssrTQ0bPvuydG+iKCX85DzGnlT8k0Vs+EYgZl3KMWcvQ9TpGHW4LRL4GQ==
   dependencies:
     "@babel/traverse" "^7.20.0"
     "@babel/types" "^7.20.0"
     invariant "^2.2.4"
-    metro-symbolicate "0.80.3"
+    metro-symbolicate "0.80.4"
     nullthrows "^1.1.1"
-    ob1 "0.80.3"
+    ob1 "0.80.4"
     source-map "^0.5.6"
     vlq "^1.0.0"
 
@@ -9496,13 +9496,13 @@ metro-symbolicate@0.80.1:
     through2 "^2.0.1"
     vlq "^1.0.0"
 
-metro-symbolicate@0.80.3:
-  version "0.80.3"
-  resolved "https://registry.yarnpkg.com/metro-symbolicate/-/metro-symbolicate-0.80.3.tgz#7c7dacad94db3ef6a8576eff7efd32510d24a022"
-  integrity sha512-baIt8Ss2vTGbxolRTa5yg+tKVAIAB1OpwMzJ0FSUjLs+HDAzaOtSpGbNd3DPc+pzX8Gj/rdbDOA0wPuOhVsHKQ==
+metro-symbolicate@0.80.4:
+  version "0.80.4"
+  resolved "https://registry.yarnpkg.com/metro-symbolicate/-/metro-symbolicate-0.80.4.tgz#1c72c5c7b29941ecd95e53f2a25570e61dfd4eec"
+  integrity sha512-UmtH96G5TrcAgbIqdE4xA8MBS9fbZW9Pln+n7eJ0tQ0Fw0M/jzdpiZzhx3bIB2zzqbdm6Nv/kB1+aEo0WvXdyg==
   dependencies:
     invariant "^2.2.4"
-    metro-source-map "0.80.3"
+    metro-source-map "0.80.4"
     nullthrows "^1.1.1"
     source-map "^0.5.6"
     through2 "^2.0.1"
@@ -10102,10 +10102,10 @@ ob1@0.80.1:
   resolved "https://registry.yarnpkg.com/ob1/-/ob1-0.80.1.tgz#6507f8c95ff30a9ddb07f96fccbd8f3d4ccafc04"
   integrity sha512-o9eYflOo+QnbC/k9GYQuAy90zOGQ/OBgrjlIeW6VrKhevSxth83JSdEvKuKaV7SMGJVQhSY3Zp8eGa3g0rLP0A==
 
-ob1@0.80.3:
-  version "0.80.3"
-  resolved "https://registry.yarnpkg.com/ob1/-/ob1-0.80.3.tgz#dd867fdf1ffe7863a3b32dc36dc220335a6e55f9"
-  integrity sha512-lKJ/Wp6eSyYKYKYds1lgiDRtD2j9nNhrhx4hwegxYXTBkWz4dqermZV+Bq0iw0SszUIb+fC+btNSXwc4AG1lBQ==
+ob1@0.80.4:
+  version "0.80.4"
+  resolved "https://registry.yarnpkg.com/ob1/-/ob1-0.80.4.tgz#a2e77e2dbe144c76356c834b994e147e19bb472f"
+  integrity sha512-Lku8OBpq+fhF1ZdKUjbPnTNeqG+3OL0psGAEVJ8zcUiCB5/DPGR/rm3kLcjKDylzC9Rfv540/7I08+oImzfrhw==
 
 object-assign@^4.1.0, object-assign@^4.1.1:
   version "4.1.1"
