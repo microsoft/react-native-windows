@@ -14,14 +14,12 @@
 // Windows Header Files
 #include <unknwn.h>
 #include <windows.h>
+#undef GetCurrentTime
 
 // WinRT Header Files
 #include <winrt/base.h>
-#pragma push_macro("GetCurrentTime")
-#undef GetCurrentTime
 #include <CppWinRTIncludes.h>
 #include <winrt/Microsoft.ReactNative.h>
-#pragma pop_macro("GetCurrentTime")
 
 // C RunTime Header Files
 #include <malloc.h>
