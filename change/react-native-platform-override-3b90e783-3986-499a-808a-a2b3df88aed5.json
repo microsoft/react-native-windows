@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Unfork Yoga",
-  "packageName": "react-native-platform-override",
-  "email": "email not defined",
-  "dependentChangeType": "patch"
-}
