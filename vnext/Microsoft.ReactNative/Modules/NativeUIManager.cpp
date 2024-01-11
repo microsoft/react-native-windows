@@ -163,7 +163,7 @@ NativeUIManager::NativeUIManager(winrt::Microsoft::ReactNative::ReactContext con
   // To Debug Yoga layout, uncomment the following line.
   // YGConfigSetPrintTreeFlag(m_yogaConfig, true);
 
-  // Additional logging can be enabled editing yoga.cpp (e.g. gPrintChanges,
+  // Additional logging can be enabled editing CalculateLayout.cpp (e.g. gPrintChanges,
   // gPrintSkips)
 #endif
 }
