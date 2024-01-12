@@ -31,13 +31,13 @@ WindowsModalHostComponentView::WindowsModalHostComponentView(
 void WindowsModalHostComponentView::mountChildComponentView(
     winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
     uint32_t index) noexcept {
-  assert(false);
+  // assert(false);
 }
 
 void WindowsModalHostComponentView::unmountChildComponentView(
     winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
     uint32_t index) noexcept {
-  assert(false);
+  // assert(false);
 }
 
 void WindowsModalHostComponentView::handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept {

@@ -56,8 +56,12 @@ const wchar_t *UnimplementedViewManager::GetName() const {
   return m_name.c_str();
 }
 
-void UnimplementedViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &props) const {
-  Super::GetNativeProps(props);
+void UnimplementedViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
+  Super::GetNativeProps(writer);
+
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"animationType", L"string");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"presentationStyle", L"string");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"focusable", L"boolean");
 }
 
 ShadowNode *UnimplementedViewManager::createShadow() const {
