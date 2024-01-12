@@ -22,7 +22,7 @@ afterEach(async () => {
   await searchBox('');
 });
 
-const searchBox = (async (input: string) => {
+const searchBox = async (input: string) => {
   const searchBox = await app.findElementByTestID('example_search');
   await app.waitUntil(
     async () => {
@@ -35,7 +35,7 @@ const searchBox = (async (input: string) => {
       timeoutMsg: `Unable to enter correct search text into test searchbox.`,
     },
   );
-});
+};
 
 describe('Button Tests', () => {
   test('Buttons have default styling', async () => {
@@ -61,7 +61,6 @@ describe('Button Tests', () => {
     await alert.isDisplayed();
     const alertButton = await app.findElementByTestID('Button0');
     await alertButton.click();
-    
   });
   test('Buttons can have flexbox styling', async () => {
     const component = await app.findElementByTestID('two_button_container');
@@ -123,13 +122,19 @@ describe('Button Tests', () => {
   });
   test('Buttons can have custom focusable and accessible props', async () => {
     await searchBox('prop');
-    const componentNotAccessible = await app.findElementByTestID('accessible_false_button');
+    const componentNotAccessible = await app.findElementByTestID(
+      'accessible_false_button',
+    );
     const dump = await dumpVisualTree('accessible_false_button');
     expect(dump).toMatchSnapshot();
-    const componentNotFocusable = await app.findElementByTestID('focusable_false_button');
+    const componentNotFocusable = await app.findElementByTestID(
+      'focusable_false_button',
+    );
     const dump2 = await dumpVisualTree('focusable_false_button');
     expect(dump2).toMatchSnapshot();
-    const componentNotAccessibleFocusable = await app.findElementByTestID('accessible_focusable_false_button');
+    const componentNotAccessibleFocusable = await app.findElementByTestID(
+      'accessible_focusable_false_button',
+    );
     const dump3 = await dumpVisualTree('accessible_focusable_false_button');
     expect(dump3).toMatchSnapshot();
   });
