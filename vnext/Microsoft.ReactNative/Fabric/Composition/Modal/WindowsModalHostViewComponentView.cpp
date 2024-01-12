@@ -11,37 +11,38 @@
 #include "Composition/AutoDraw.h"
 #include "Unicode.h"
 
-namespace Microsoft::ReactNative {
+namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
+winrt::Microsoft::ReactNative::ComponentView WindowsModalHostComponentView::Create(
+    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    facebook::react::Tag tag,
+    winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
+  return winrt::make<WindowsModalHostComponentView>(compContext, tag, reactContext);
+}
 WindowsModalHostComponentView::WindowsModalHostComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : Super(
-          compContext,
-          tag,
-          reactContext,
-          (CompositionComponentViewFeatures::Default & ~CompositionComponentViewFeatures::NativeBorder)) {
-  static auto const defaultProps = std::make_shared<facebook::react::ModalHostViewProps const>();
-  m_props = defaultProps;
+    : Super(compContext, tag, reactContext, CompositionComponentViewFeatures::Default) {
+  m_props = std::make_shared<facebook::react::ModalHostViewProps const>();
   m_visual = compContext.CreateSpriteVisual();
 }
 
-std::shared_ptr<WindowsModalHostComponentView> WindowsModalHostComponentView::Create(
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-    facebook::react::Tag tag,
-    winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
-  return std::shared_ptr<WindowsModalHostComponentView>(
-      new WindowsModalHostComponentView(compContext, tag, reactContext));
+void WindowsModalHostComponentView::mountChildComponentView(
+    winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
+    uint32_t index) noexcept {
+  assert(false);
 }
 
-void WindowsModalHostComponentView::mountChildComponentView(
-    IComponentView &childComponentView,
-    uint32_t index) noexcept {}
-
 void WindowsModalHostComponentView::unmountChildComponentView(
-    IComponentView &childComponentView,
-    uint32_t index) noexcept {}
+    winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
+    uint32_t index) noexcept {
+  assert(false);
+}
+
+void WindowsModalHostComponentView::handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept {
+  Super::handleCommand(commandName, arg);
+}
 
 void WindowsModalHostComponentView::updateProps(
     facebook::react::Props::Shared const &props,
@@ -95,25 +96,6 @@ void WindowsModalHostComponentView::updateLayoutMetrics(
 
         float offsetX = static_cast<float>(offset.x / m_layoutMetrics.pointScaleFactor);
         float offsetY = static_cast<float>(offset.y / m_layoutMetrics.pointScaleFactor);
-
-        winrt::com_ptr<IDWriteTextFormat> spTextFormat;
-        winrt::check_hresult(Microsoft::ReactNative::DWriteFactory()->CreateTextFormat(
-            L"Segoe UI",
-            nullptr, // Font collection (nullptr sets it to use the system font collection).
-            DWRITE_FONT_WEIGHT_REGULAR,
-            DWRITE_FONT_STYLE_NORMAL,
-            DWRITE_FONT_STRETCH_NORMAL,
-            12,
-            L"",
-            spTextFormat.put()));
-
-        winrt::com_ptr<ID2D1SolidColorBrush> textBrush;
-        winrt::check_hresult(
-            d2dDeviceContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::White), textBrush.put()));
-
-        const D2D1_RECT_F rect = {
-            static_cast<float>(offset.x), static_cast<float>(offset.y), width + offset.x, height + offset.y};
-        // const D2D1_RECT_F rect = {0.f, 0.f, width, height};
       }
     }
   }
@@ -135,10 +117,6 @@ winrt::Microsoft::ReactNative::Composition::IVisual WindowsModalHostComponentVie
   return m_visual;
 }
 
-winrt::Microsoft::ReactNative::Composition::IVisual WindowsModalHostComponentView::OuterVisual() const noexcept {
-  return m_visual;
-}
-
 facebook::react::Tag WindowsModalHostComponentView::hitTest(
     facebook::react::Point pt,
     facebook::react::Point &localPt,
@@ -150,10 +128,18 @@ facebook::react::Tag WindowsModalHostComponentView::hitTest(
       ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
       ptLocal.y <= m_layoutMetrics.frame.size.height) {
     localPt = ptLocal;
-    return tag();
+    return Tag();
   }
 
   return -1;
 }
 
-} // namespace Microsoft::ReactNative
+bool WindowsModalHostComponentView::focusable() const noexcept {
+  return false;
+}
+
+std::string WindowsModalHostComponentView::DefaultControlType() const noexcept {
+  return "modal";
+}
+
+} // namespace winrt::Microsoft::ReactNative::Composition::implementation

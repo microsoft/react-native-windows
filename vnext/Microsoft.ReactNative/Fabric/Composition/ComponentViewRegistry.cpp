@@ -60,7 +60,8 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
     view = winrt::Microsoft::ReactNative::Composition::implementation::ImageComponentView::Create(
         compContext, tag, m_context);
   } else if (componentHandle == facebook::react::WindowsModalHostViewShadowNode::Handle()) {
-    view = WindowsModalHostComponentView::Create(compContext, tag, m_context);
+    view = winrt::Microsoft::ReactNative::Composition::implementation::WindowsModalHostComponentView::Create(
+        compContext, tag, m_context);
   } else if (componentHandle == facebook::react::WindowsTextInputShadowNode::Handle()) {
     view = winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView::Create(
         compContext, tag, m_context);
