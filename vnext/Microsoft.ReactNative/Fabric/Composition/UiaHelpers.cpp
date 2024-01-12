@@ -9,7 +9,7 @@
 namespace winrt::Microsoft::ReactNative::implementation {
 
 HRESULT UiaNavigateHelper(
-    ::Microsoft::ReactNative::IComponentView *view,
+    winrt::Microsoft::ReactNative::implementation::ComponentView *view,
     NavigateDirection direction,
     IRawElementProviderFragment *&retVal) noexcept {
   retVal = nullptr;
@@ -21,7 +21,9 @@ HRESULT UiaNavigateHelper(
 
   switch (direction) {
     case NavigateDirection_Parent: {
-      auto pParentCV = static_cast<::Microsoft::ReactNative::CompositionBaseComponentView *>(view->parent());
+      auto pParentCV =
+          static_cast<winrt::Microsoft::ReactNative::Composition::implementation::CompositionBaseComponentView *>(
+              view->parent());
       if (pParentCV != nullptr) {
         uiaProvider = pParentCV->EnsureUiaProvider();
       } else {
@@ -49,28 +51,40 @@ HRESULT UiaNavigateHelper(
       auto index = direction == NavigateDirection_FirstChild ? 0 : children.size() - 1;
       if (!children.empty()) {
         uiaProvider =
-            static_cast<::Microsoft::ReactNative::CompositionBaseComponentView *>(children[index])->EnsureUiaProvider();
+            static_cast<winrt::Microsoft::ReactNative::Composition::implementation::CompositionBaseComponentView *>(
+                children[index])
+                ->EnsureUiaProvider();
       }
     } break;
 
     case NavigateDirection_NextSibling: {
-      auto pParentCV = static_cast<::Microsoft::ReactNative::CompositionBaseComponentView *>(view->parent());
+      auto pParentCV =
+          static_cast<winrt::Microsoft::ReactNative::Composition::implementation::CompositionBaseComponentView *>(
+              view->parent());
       if (pParentCV != nullptr) {
         auto children = pParentCV->children();
         auto it = std::find(children.begin(), children.end(), view);
         if (++it != children.end()) {
-          uiaProvider = static_cast<::Microsoft::ReactNative::CompositionBaseComponentView *>(*it)->EnsureUiaProvider();
+          uiaProvider =
+              static_cast<winrt::Microsoft::ReactNative::Composition::implementation::CompositionBaseComponentView *>(
+                  *it)
+                  ->EnsureUiaProvider();
         }
       }
     } break;
 
     case NavigateDirection_PreviousSibling: {
-      auto pParentCV = static_cast<::Microsoft::ReactNative::CompositionBaseComponentView *>(view->parent());
+      auto pParentCV =
+          static_cast<winrt::Microsoft::ReactNative::Composition::implementation::CompositionBaseComponentView *>(
+              view->parent());
       if (pParentCV != nullptr) {
         auto children = pParentCV->children();
         auto it = std::find(children.rbegin(), children.rend(), view);
         if (++it != children.rend()) {
-          uiaProvider = static_cast<::Microsoft::ReactNative::CompositionBaseComponentView *>(*it)->EnsureUiaProvider();
+          uiaProvider =
+              static_cast<winrt::Microsoft::ReactNative::Composition::implementation::CompositionBaseComponentView *>(
+                  *it)
+                  ->EnsureUiaProvider();
         }
       }
     } break;
@@ -91,7 +105,8 @@ HRESULT UiaGetBoundingRectangleHelper(::Microsoft::ReactNative::ReactTaggedView 
     return UIA_E_ELEMENTNOTAVAILABLE;
   }
 
-  auto clientRect = strongView->getClientRect();
+  auto clientRect =
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->getClientRect();
 
   rect.left = clientRect.left;
   rect.top = clientRect.top;
@@ -107,11 +122,12 @@ HRESULT UiaSetFocusHelper(::Microsoft::ReactNative::ReactTaggedView &view) noexc
   if (!strongView)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  auto rootCV = strongView->rootComponentView();
+  auto rootCV =
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->rootComponentView();
   if (rootCV == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  return rootCV->TrySetFocusedComponent(*strongView) ? S_OK : E_FAIL;
+  return rootCV->TrySetFocusedComponent(strongView) ? S_OK : E_FAIL;
 }
 
 bool WasUiaPropertyAdvised(winrt::com_ptr<IRawElementProviderSimple> &providerSimple, PROPERTYID propId) noexcept {

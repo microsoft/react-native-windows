@@ -15,7 +15,7 @@
 #include "CompositionDynamicAutomationProvider.h"
 #include "CompositionHelpers.h"
 
-namespace Microsoft::ReactNative {
+namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 ParagraphComponentView::ParagraphComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
@@ -26,13 +26,17 @@ ParagraphComponentView::ParagraphComponentView(
   m_props = defaultProps;
 }
 
-void ParagraphComponentView::mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
+void ParagraphComponentView::mountChildComponentView(
+    winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
+    uint32_t index) noexcept {
   // auto v = static_cast<ParagraphComponentView &>(childComponentView);
   assert(false);
   // m_element.Children().InsertAt(index, v.Element());
 }
 
-void ParagraphComponentView::unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
+void ParagraphComponentView::unmountChildComponentView(
+    winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
+    uint32_t index) noexcept {
   assert(false);
   // m_element.Children().RemoveAt(index);
 }
@@ -95,7 +99,8 @@ void ParagraphComponentView::updateLayoutMetrics(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
 }
-void ParagraphComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
+void ParagraphComponentView::finalizeUpdates(
+    winrt::Microsoft::ReactNative::implementation::RNComponentViewUpdateMask updateMask) noexcept {
   ensureVisual();
   updateVisualBrush();
   Super::finalizeUpdates(updateMask);
@@ -129,7 +134,7 @@ facebook::react::Tag ParagraphComponentView::hitTest(
       ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
       ptLocal.y <= m_layoutMetrics.frame.size.height) {
     localPt = ptLocal;
-    return tag();
+    return Tag();
   }
 
   return -1;
@@ -492,11 +497,11 @@ winrt::Microsoft::ReactNative::Composition::IVisual ParagraphComponentView::Visu
   return m_visual;
 }
 
-std::shared_ptr<ParagraphComponentView> ParagraphComponentView::Create(
+winrt::Microsoft::ReactNative::ComponentView ParagraphComponentView::Create(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
-  return std::shared_ptr<ParagraphComponentView>(new ParagraphComponentView(compContext, tag, reactContext));
+  return winrt::make<ParagraphComponentView>(compContext, tag, reactContext);
 }
 
-} // namespace Microsoft::ReactNative
+} // namespace winrt::Microsoft::ReactNative::Composition::implementation

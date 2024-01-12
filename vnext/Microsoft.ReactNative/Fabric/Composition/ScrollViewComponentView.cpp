@@ -20,15 +20,15 @@
 #include "CompositionDynamicAutomationProvider.h"
 #include "RootComponentView.h"
 
-namespace Microsoft::ReactNative {
+namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 constexpr float c_scrollerLineDelta = 16.0f;
 
-std::shared_ptr<ScrollViewComponentView> ScrollViewComponentView::Create(
+winrt::Microsoft::ReactNative::ComponentView ScrollViewComponentView::Create(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
-  return std::shared_ptr<ScrollViewComponentView>(new ScrollViewComponentView(compContext, tag, reactContext));
+  return winrt::make<ScrollViewComponentView>(compContext, tag, reactContext);
 }
 
 ScrollViewComponentView::ScrollViewComponentView(
@@ -128,7 +128,9 @@ ScrollViewComponentView::ScrollViewComponentView(
         */
 }
 
-void ScrollViewComponentView::mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
+void ScrollViewComponentView::mountChildComponentView(
+    winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
+    uint32_t index) noexcept {
   ensureVisual();
 
   m_children.insert(std::next(m_children.begin(), index), &childComponentView);
@@ -137,7 +139,9 @@ void ScrollViewComponentView::mountChildComponentView(IComponentView &childCompo
   m_scrollVisual.InsertAt(static_cast<CompositionBaseComponentView &>(childComponentView).OuterVisual(), index);
 }
 
-void ScrollViewComponentView::unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
+void ScrollViewComponentView::unmountChildComponentView(
+    winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
+    uint32_t index) noexcept {
   m_children.erase(std::next(m_children.begin(), index));
 
   m_scrollVisual.Remove(static_cast<CompositionBaseComponentView &>(childComponentView).OuterVisual());
@@ -177,10 +181,22 @@ void ScrollViewComponentView::updateProps(
 void ScrollViewComponentView::updateState(
     facebook::react::State::Shared const &state,
     facebook::react::State::Shared const &oldState) noexcept {
-  const auto &newState = *std::static_pointer_cast<facebook::react::ScrollViewShadowNode::ConcreteState const>(state);
-
-  m_contentSize = newState.getData().getContentSize();
+  m_state = std::static_pointer_cast<facebook::react::ScrollViewShadowNode::ConcreteState const>(state);
+  m_contentSize = m_state->getData().getContentSize();
   updateContentVisualSize();
+}
+
+void ScrollViewComponentView::updateStateWithContentOffset() noexcept {
+  if (!m_state) {
+    return;
+  }
+
+  m_state->updateState([contentOffset = m_scrollVisual.ScrollPosition()](
+                           const facebook::react::ScrollViewShadowNode::ConcreteState::Data &data) {
+    auto newData = data;
+    newData.contentOffset = {contentOffset.x, contentOffset.y};
+    return std::make_shared<facebook::react::ScrollViewShadowNode::ConcreteState::Data const>(newData);
+  });
 }
 
 void ScrollViewComponentView::updateLayoutMetrics(
@@ -422,7 +438,8 @@ void ScrollViewComponentView::handleCommand(std::string const &commandName, foll
   }
 }
 
-void ScrollViewComponentView::StartBringIntoView(BringIntoViewOptions &&options) noexcept {
+void ScrollViewComponentView::StartBringIntoView(
+    winrt::Microsoft::ReactNative::implementation::BringIntoViewOptions &&options) noexcept {
   RECT rc{getClientRect()};
 
   if (!options.TargetRect) {
@@ -524,6 +541,7 @@ void ScrollViewComponentView::ensureVisual() noexcept {
         [this](
             winrt::IInspectable const & /*sender*/,
             winrt::Microsoft::ReactNative::Composition::IScrollPositionChangedArgs const &args) {
+          updateStateWithContentOffset();
           auto eventEmitter = GetEventEmitter();
           if (eventEmitter) {
             facebook::react::ScrollViewMetrics scrollMetrics;
@@ -568,7 +586,7 @@ facebook::react::Tag ScrollViewComponentView::hitTest(
 
     if (ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
         m_props->pointerEvents == facebook::react::PointerEventsMode::BoxOnly) {
-      return this->tag();
+      return this->Tag();
     }
   }
 
@@ -589,4 +607,4 @@ std::string ScrollViewComponentView::DefaultControlType() const noexcept {
   return "scrollbar";
 }
 
-} // namespace Microsoft::ReactNative
+} // namespace winrt::Microsoft::ReactNative::Composition::implementation

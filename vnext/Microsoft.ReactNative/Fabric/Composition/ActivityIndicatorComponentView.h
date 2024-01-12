@@ -8,22 +8,26 @@
 
 #include "CompositionViewComponentView.h"
 
+#include "Composition.ActivityIndicatorComponentView.g.h"
 #include <react/components/rnwcore/ShadowNodes.h>
 
-namespace Microsoft::ReactNative {
+namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
-struct ActivityIndicatorComponentView;
+struct ActivityIndicatorComponentView
+    : ActivityIndicatorComponentViewT<ActivityIndicatorComponentView, CompositionBaseComponentView> {
+  using Super = ActivityIndicatorComponentViewT<ActivityIndicatorComponentView, CompositionBaseComponentView>;
 
-struct ActivityIndicatorComponentView : CompositionBaseComponentView {
-  using Super = CompositionBaseComponentView;
-
-  [[nodiscard]] static std::shared_ptr<ActivityIndicatorComponentView> Create(
+  [[nodiscard]] static winrt::Microsoft::ReactNative::ComponentView Create(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
-  void mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
-  void unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
+  void mountChildComponentView(
+      winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
+      uint32_t index) noexcept override;
+  void unmountChildComponentView(
+      winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
+      uint32_t index) noexcept override;
   void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept override;
   void updateProps(facebook::react::Props::Shared const &props, facebook::react::Props::Shared const &oldProps) noexcept
       override;
@@ -42,12 +46,12 @@ struct ActivityIndicatorComponentView : CompositionBaseComponentView {
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
   virtual std::string DefaultControlType() const noexcept;
 
- private:
   ActivityIndicatorComponentView(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
+ private:
   void ensureVisual() noexcept;
   void updateProgressColor(const facebook::react::SharedColor &color) noexcept;
 
@@ -56,4 +60,4 @@ struct ActivityIndicatorComponentView : CompositionBaseComponentView {
   facebook::react::SharedViewProps m_props;
 };
 
-} // namespace Microsoft::ReactNative
+} // namespace winrt::Microsoft::ReactNative::Composition::implementation

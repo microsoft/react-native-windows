@@ -5,32 +5,37 @@
 #pragma once
 
 #include "SwitchComponentView.h"
+#include <Fabric/AbiViewProps.h>
 #include "Composition/AutoDraw.h"
 #include "CompositionDynamicAutomationProvider.h"
 #include "RootComponentView.h"
 
-namespace Microsoft::ReactNative {
+namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 SwitchComponentView::SwitchComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : Super(compContext, tag, reactContext, CompositionComponentViewFeatures::Default) {
+    : base_type(compContext, tag, reactContext, CompositionComponentViewFeatures::Default) {
   m_props = std::make_shared<facebook::react::SwitchProps const>();
 }
 
-std::shared_ptr<SwitchComponentView> SwitchComponentView::Create(
+winrt::Microsoft::ReactNative::ComponentView SwitchComponentView::Create(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
-  return std::shared_ptr<SwitchComponentView>(new SwitchComponentView(compContext, tag, reactContext));
+  return winrt::make<SwitchComponentView>(compContext, tag, reactContext);
 }
 
-void SwitchComponentView::mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
+void SwitchComponentView::mountChildComponentView(
+    winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
+    uint32_t index) noexcept {
   assert(false);
 }
 
-void SwitchComponentView::unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
+void SwitchComponentView::unmountChildComponentView(
+    winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
+    uint32_t index) noexcept {
   assert(false);
 }
 
@@ -86,7 +91,8 @@ void SwitchComponentView::updateLayoutMetrics(
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
 }
 
-void SwitchComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
+void SwitchComponentView::finalizeUpdates(
+    winrt::Microsoft::ReactNative::implementation::RNComponentViewUpdateMask updateMask) noexcept {
   ensureDrawingSurface();
   Super::finalizeUpdates(updateMask);
 }
@@ -274,7 +280,7 @@ facebook::react::Tag SwitchComponentView::hitTest(
       ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
       ptLocal.y <= m_layoutMetrics.frame.size.height) {
     localPt = ptLocal;
-    return tag();
+    return Tag();
   }
 
   return -1;
@@ -302,7 +308,7 @@ void SwitchComponentView::onPointerPressed(
     m_pressed = true;
 
     if (auto root = rootComponentView()) {
-      root->TrySetFocusedComponent(*this);
+      root->TrySetFocusedComponent(*get_strong());
     }
     if (toggle()) {
       args.Handled(true);
@@ -354,7 +360,7 @@ bool SwitchComponentView::toggle() noexcept {
 
   facebook::react::SwitchEventEmitter::OnChange args;
   args.value = !(switchProps->value);
-  args.target = tag();
+  args.target = Tag();
 
   switchEventEmitter->onChange(args);
   return true;
@@ -368,4 +374,4 @@ std::string SwitchComponentView::DefaultControlType() const noexcept {
   return "switch";
 }
 
-} // namespace Microsoft::ReactNative
+} // namespace winrt::Microsoft::ReactNative::Composition::implementation
