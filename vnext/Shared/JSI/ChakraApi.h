@@ -350,12 +350,6 @@ struct ChakraApi {
   static bool InstanceOf(JsValueRef object, JsValueRef constructor);
 
   /**
-   * @brief Inform the runtime that there is additional memory associated with a given JavaScript object that is not
-   * visible to the GC.
-   */
-  static void setExternalMemoryPressure(JsValueRef object, size_t amt);
-
-  /**
    * @brief Gets an object's property.
    */
   static JsValueRef GetProperty(JsValueRef object, JsPropertyIdRef propertyId);

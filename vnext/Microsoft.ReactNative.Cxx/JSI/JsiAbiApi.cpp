@@ -739,10 +739,6 @@ bool JsiAbiRuntime::instanceOf(const Object &o, const Function &f) try {
   throw;
 }
 
-void JsiAbiRuntime::setExternalMemoryPressure(const Object &o, size_t amt) {
-  return m_runtime.setExternalMemoryPressure(AsJsiObjectRef(o), static_cast<unsigned int>(amt));
-}
-
 template <typename T>
 struct AutoRestore {
   AutoRestore(T *var, T value) : m_var{var}, m_value{std::exchange(*var, value)} {}

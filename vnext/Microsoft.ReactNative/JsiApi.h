@@ -160,7 +160,6 @@ struct JsiRuntime : JsiRuntimeT<JsiRuntime> {
   bool StringStrictEquals(JsiStringRef left, JsiStringRef right);
   bool ObjectStrictEquals(JsiObjectRef left, JsiObjectRef right);
   bool InstanceOf(JsiObjectRef obj, JsiObjectRef constructor);
-  void setExternalMemoryPressure(JsiObjectRef obj, uint32_t size);
 
   void ReleaseSymbol(JsiSymbolRef const &symbol);
   void ReleaseBigInt(JsiBigIntRef const &bigInt);

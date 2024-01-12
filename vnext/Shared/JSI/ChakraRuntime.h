@@ -152,7 +152,6 @@ class ChakraRuntime : public facebook::jsi::Runtime, public ChakraApi, ChakraApi
   bool strictEquals(const facebook::jsi::Object &a, const facebook::jsi::Object &b) const override;
 
   bool instanceOf(const facebook::jsi::Object &obj, const facebook::jsi::Function &func) override;
-  void setExternalMemoryPressure(const facebook::jsi::Object &obj, size_t amt) override;
 
 #pragma endregion Functions_inherited_from_Runtime
 
